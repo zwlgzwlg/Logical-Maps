@@ -277,9 +277,17 @@ inductive of *Elimination* Appendix A with decidable equality; intrinsically typ
 Bruijn terms over a signature, with the paper's six logical constants and Figure 1's
 abbreviations; renaming and substitution with the identity laws and all four composition
 laws proved; β and η as immediate, one-step and equivalence-closed relations, with
-conversion `≡` proved a congruence. The examples file checks a β-step by `rfl`. Nothing
-here is trusted for anything yet; the trusted base will be the definition of `Derivable`,
-which is next.
+conversion `≡` proved a congruence. The examples file checks a β-step by `rfl`.
+
+Then `Derivable Ax Δ p` (`Meta/Derivation.lean`), an inductive relation over an axiom set
+with the rules of `H` in natural-deduction form and no special rule; weakening,
+monotonicity in the axioms, and the `→`/`↔` rules are proved. `Meta/Axioms.lean` writes the
+eleven identities as sentences and defines `C.axiomsMinus` and `C.axioms`. The examples
+derive `⊤`, each axiom, `∃F` from `∀F` in a context, `∧`-symmetry from a hypothesis, and
+Existence at a relational type from `λx. ⊤`. The definition of `Derivable` is the trusted
+base of this layer: what it means for a sentence to be a theorem of Classicism is that
+inductive, and nothing else. Its soundness with respect to a denotation is the next
+thing to establish.
 
 ## Records proved
 

@@ -343,8 +343,31 @@ What exists so far:
   closure; `Conv` is βη-conversion, written `≡`, and is proved a congruence.
 * `Meta/Examples.lean`: a β-step computing by `rfl`, an η-step, and purity decided.
 
-Next: derivations, natural-deduction style with Equivalence as a constructor whose premise
-is a closed derivation; then the denotation and the translator.
+* `Meta/Derivation.lean`: **derivability**, `Derivable Ax Δ p`, an inductive relation
+  parametrized by an axiom set, in natural-deduction form: introduction and elimination
+  rules for `∧`, `∨`, `¬` with excluded middle, `UI`, `Gen`, `EG`, `Inst`, `Ref`, `LL`, and
+  conversion. Weakening and monotonicity in the axioms are proved admissible, and the
+  rules for the defined `→` and `↔` are derived.
+* `Meta/Axioms.lean`: the eleven identities as sentences, `C.axiomsMinus`, and
+  `C.axioms` adding Existence at `e`; `C.Derivable`, `C.Theorem`.
+
+Two decisions taken with this step. **Derivations are not a separate datatype.** An
+inductive predicate is by definition the smallest relation closed under its rules, which
+is the paper's notion of an `H`-theory, and a proof of it is a derivation tree; a
+`Type`-valued twin would add the ability to compute with derivations at the price of proof
+relevance in every lemma, and nothing planned needs it. **No rule is special.** The
+official system is `H` plus an axiom set, and Classicism is the eleven identities as that
+set, so a map record "`C` plus BF proves this instance" is `Derivable` over the union of
+the axiom sets, in the paper's own framework of `H`-theories. The rule of Equivalence is
+then Appendix A's theorem about this system, not a constructor of it, and the translator
+into it will read the **strict** proofs, whose statements are already in the object
+language and whose only special constants are the eleven axioms.
+
+The contextual form draws the `C`/`C⁻` line by itself: a closed derivation has no
+variable of type `e` to instantiate `EG` at, so Existence at `e` is an axiom of `C` and
+not of `C⁻`, while at every relational type it is derivable from the closed term `λx. ⊤`.
+
+Next: the denotation into Lean's `Prop`, and the translator from strict proofs.
 
 ## Files
 
@@ -366,7 +389,9 @@ Classicism/Transformed.lean     the transformer run over the library; home of fo
 Classicism/Meta/Types.lean      metalogical layer: the types of R as an inductive
 Classicism/Meta/Term.lean       intrinsically typed de Bruijn terms; renaming, substitution
 Classicism/Meta/Conversion.lean β, η, one-step and equivalence closures; ≡
-Classicism/Meta/Examples.lean   small computed checks
+Classicism/Meta/Derivation.lean derivability in H plus an axiom set, natural-deduction form
+Classicism/Meta/Axioms.lean     the eleven identities as sentences; C and C⁻ as axiom sets
+Classicism/Meta/Examples.lean   small computed checks and derivations
 Classicism/Modal.lean           K, T, 4, NI, CBF, Intensionality and its corollaries
 Classicism/Order.lean           the algebraic order and its pointwise characterisation
 Classicism/Comprehension.lean   persistence, inextensibility and the rigidity variants

@@ -1,10 +1,12 @@
-import Classicism.Meta.Conversion
+import Classicism.Meta.Axioms
 
 /-!
 # Examples for the syntax
 
 Small checks that the definitions compute as intended: a β-step reduces by `rfl`, the
-paper's abbreviations have the types they should, and purity is decided.
+paper's abbreviations have the types they should, purity is decided, and a few
+derivations go through, among them the axioms as theorems and Existence at a relational
+type from a closed term.
 -/
 
 namespace Classicism.Meta.Examples
@@ -38,5 +40,38 @@ example : Term.lam (Sig := sig₁) (Γ := []) (.app (Term.const ()).weaken (.var
 
 /-- Every type is `e` or ends in `t`; here `e → t → t` has argument types `[e, t]`. -/
 example : (Ty.e ⇒ RTy.t ⇒ RTy.t).args = [Ty.e, Ty.t] := rfl
+
+/-! ### Derivations -/
+
+open Derivable in
+/-- `⊤` is a theorem of `C⁻`, being an instance of excluded middle. -/
+example : C.TheoremMinus (Sig := Signature.pure) top := Derivable.top
+
+/-- Each axiom is a theorem of its theory. -/
+example : C.TheoremMinus (Sig := Signature.pure) C.commutativity_and :=
+  Derivable.axiom .commutativity_and
+example : C.Theorem (Sig := Signature.pure) C.existence_e := Derivable.axiom .existence_e
+example : C.TheoremMinus (Sig := sig₁) (C.identity_identity Ty.e) :=
+  Derivable.axiom (.identity_identity _)
+
+open Derivable in
+/-- In a context with a variable, `∀F` yields `∃F`: UI at the variable, then EG. -/
+example {Ax : AxiomSet sig₁} {σ : Ty} (F : Term sig₁ [σ] (σ ⇒ RTy.t)) :
+    Derivable Ax [Term.app (.all σ) F] (.app (.ex σ) F) :=
+  exI v0 (allE hyp₀ v0)
+
+open Derivable in
+/-- Existence at a relational type is a theorem of `C⁻`, the witness being the closed
+term `λx. ⊤`: `Ref` at it, β, then EG. No such derivation exists at `e`, where the empty
+context has no term, which is why Existence at `e` is an axiom of `C` and not of `C⁻`. -/
+example {σ : Ty} :
+    C.TheoremMinus (Sig := Signature.pure) (exists' (σ := σ ⇒ RTy.t) (eq' v0 v0)) :=
+  exI (lam top) (conv (refl (lam top)) (Conv.symm (Conv.beta _ _)))
+
+open Derivable in
+/-- Symmetry of `∧`, from a hypothesis. -/
+example {Ax : AxiomSet sig₁} (p q : Formula sig₁ []) :
+    Derivable Ax [conj p q] (conj q p) :=
+  andI (andE₂ hyp₀) (andE₁ hyp₀)
 
 end Classicism.Meta.Examples

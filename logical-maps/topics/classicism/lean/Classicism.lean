@@ -24,4 +24,6 @@ import Classicism.Tests
 import Classicism.Meta.Types
 import Classicism.Meta.Term
 import Classicism.Meta.Conversion
+import Classicism.Meta.Derivation
+import Classicism.Meta.Axioms
 import Classicism.Meta.Examples

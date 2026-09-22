@@ -337,10 +337,16 @@ theorem subst_subst : ∀ {Γ Δ Θ : Ctx} (s : Sub Sig Δ Θ) (s' : Sub Sig Γ 
   | _, _, _, s, s', _, .lam b => by
     simp [subst, subst_subst (Sub.lift s) (Sub.lift s') b, Sub.lift_comp]
 
+/-- Substituting under a `cons` into a weakened term drops the `cons`. -/
+@[simp] theorem _root_.Classicism.Meta.Sub.compRen_cons_shift {Γ Δ : Ctx} {σ : Ty}
+    (a : Term Sig Δ σ) (s : Sub Sig Γ Δ) :
+    Sub.compRen (Sub.cons a s) (Ren.shift (σ := σ)) = s := by
+  funext τ v; rfl
+
 /-- Substituting into a weakened term, for the innermost variable, does nothing. -/
 theorem instantiate_weaken {Γ : Ctx} {σ τ : Ty} (a : Term Sig Γ τ) (b : Term Sig Γ σ) :
     (a.weaken (τ := σ)).instantiate b = a := by
-  rw [instantiate, weaken, subst_rename]
+  rw [instantiate, weaken, subst_rename, Sub.compRen_cons_shift]
   exact subst_id a
 
 end Term
