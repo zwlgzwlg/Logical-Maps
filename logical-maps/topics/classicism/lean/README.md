@@ -17,8 +17,21 @@ removing them leaves a system in which Classicism can be stated and its theorems
 | `funext` (via `Quot.sound`) | Functionality |
 | `Classical.choice` | Functional Choice, and more |
 
-None of the three is a theorem of Classicism, so none may be used freely. Lean's
-remaining rules for `→`, `∀`, `∧`, `∨`, `¬`, `↔`, `∃`, `=`, `True` and `False` are the
+None of the three is a theorem of Classicism, so none may be used freely.
+
+## Three layers
+
+| layer | what it does | where |
+| --- | --- | --- |
+| **shallow** | states and proves theorems of Classicism in ordinary Lean, under a *gate* admitting `propext` and `funext` only with closed arguments | `Core` to `Proofs` |
+| **strict** | re-proves every theorem from the eleven closed identities alone, by a transformer carrying out Appendix A on Lean proof terms | `Axiomatization` to `Transformed` |
+| **metalogical** | makes the object language, its derivations and its models into objects of Lean, for statements *about* Classicism | `Meta/`, with its own README |
+
+Each is held to what it claims by a check that runs at build time. Everything the shallow
+layer certifies is within the strict layer's reach, by design: no statement quantifies
+over types, so every theorem is a formula of the paper's language with type parameters.
+
+Lean's remaining rules for `→`, `∀`, `∧`, `∨`, `¬`, `↔`, `∃`, `=`, `True` and `False` are the
 rules of the paper's `H`, short of two things, which this library adds as axioms:
 excluded middle (`em`), and `∃ x : e, x = x` (`e_exists`), since Lean allows empty types
 and `H` proves Existence at every type.
@@ -96,8 +109,8 @@ be a class field, discharged once per shape. That is how `boxAt`, `boxImp` and t
 law `Order.le_iff` are supplied. `Order` has to be a class of its own rather than another
 `Rel` field, because its arrow instance needs Modalized Functionality at `σ → τ`, which
 is proved *from* the `Rel (σ → τ)` fields; as a field it would be circular. This is the
-main structural constraint the shallow layer imposes, and a deep embedding is what would
-lift it.
+main structural constraint the shallow layer imposes, and the metalogical layer, whose
+types are an inductive, is what lifts it.
 `Rel` also carries the pointwise Boolean structure that the paper writes with type
 subscripts, and two closed identities that let Intensionality be proved uniformly at
 every relational type. `Ty` is declared in `Type` rather than `Prop` so that an instance
@@ -309,8 +322,9 @@ Each is reported, never guessed at.
 The third layer, begun 22 September 2026, makes the terms of the object language, their
 derivations and their models into objects of Lean, so that statements *about* the language
 can be made: that a schema implies a schema, that a closed pure sentence is a theorem, that
-a sentence holds in a model. (Earlier notes called this the "deep" layer.) It lives under
-`Classicism/Meta/` and is ordinary Lean, with `funext` and the rest available, since it is
+a sentence holds in a model. Earlier notes called this the "deep" layer; metalogical is
+the name now. It lives under `Classicism/Meta/`, which has its own README, and is ordinary
+Lean, with `funext` and the rest available, since it is
 not itself a proof in Classicism but a theory of Classicism's proofs. It is related to the
 other two layers by a denotation, to come, reading its terms as Lean propositions.
 

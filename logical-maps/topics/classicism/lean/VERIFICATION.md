@@ -338,7 +338,7 @@ discharged once per shape. That is how `boxAt`, `boxImp` and `Order.le_iff` are 
 `Order` also had to become a class separate from `Rel`: its arrow instance needs
 Modalized Functionality at `σ → τ`, which is proved from the `Rel (σ → τ)` fields, so as
 a field of `Rel` it would be circular. This is the main structural cost of the shallow
-approach and is what a deep embedding would remove.
+approach and is what the metalogical layer's inductive types remove.
 
 **Defining the comprehension predicates in unpacked form was the right call.** They are
 written with `boxImp` and `boxAt`, so they need only `Rel τ`, and `persistent_iff_le`,
@@ -409,10 +409,10 @@ is Prior's, as the record says.
   Its one weakening: inside an elaboration auxiliary only the constant whitelist runs,
   because Lean drops instance arguments such an auxiliary does not literally use, so its
   statement can fall outside `R` while every use of it is inside.
-- **No deep embedding yet.** There is no inductive syntax, no `Derivable`, and no
-  translation of a shallow proof into a derivation. Consequently nothing here can state
-  a Maximalist principle, which quantifies over syntax, and nothing here supplies model
-  evidence. The models on the map remain hand-verified.
+- **The metalogical layer has no denotation and no translator yet.** Its syntax and
+  `Derivable` exist, but nothing yet connects a strict proof to a derivation, and no model
+  evidence is supplied. The models on the map remain hand-verified, and the Maximalist
+  principles are not yet stated.
 - **57 principles have no definition**, including every comprehension, choice,
   completeness, infinity, signature and fundamentality principle. Those need the lattice
   apparatus, Frege cardinalities, and the purity side conditions.
