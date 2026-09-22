@@ -74,11 +74,21 @@ needed.
 
 The paper's type system `R` admits `e`, `t`, and `σ → τ` only when `τ ≠ e`. The class
 `Ty σ` certifies that `σ` is an `R`-type and `Rel τ` that it is a relational one; the
-only instances are `e`, `Prop` and arrows into relational types. So `∀ᵀʸ σ` is
-`∀ {σ : Type} [Ty σ]`, and a schema over relational types is `∀ {τ : Type} [Rel τ]`.
-`Ty` carries no inhabitation claim, for the reason given above; where a schema's proof
-is *not* uniform across `e` and the relational types, as Existence is not, the schema is
-written as the conjunction of its two cases instead.
+only instances are `e`, `Prop` and arrows into relational types. So the map's `∀ᵀʸ σ` is
+a parameter `(σ : Type) [Ty σ]` of a declaration, and a schema over relational types
+takes a parameter `(τ : Type) [Rel τ]`.
+
+**No formula quantifies over types.** A principle of the map is a schema, a family of
+formulas indexed by types, and it is stated as exactly that: `Functionality σ τ` is a
+formula once `σ` and `τ` are fixed, and there is no proposition `∀ {σ τ}, Functionality σ τ`.
+A record about principles is an implication between *instances*, with the types the
+argument needs as parameters, which the paper reads as a metatheorem. The type check
+enforces this: a binder over a type, guarded or not, may be a parameter of a declaration
+and nothing else. It is what keeps everything the shallow layer certifies within reach of
+the strict layer, since a formula with type parameters is what Appendix A's induction
+handles, whereas a quantifier over types has no algebra to live in. `Ty` carries no
+inhabitation claim, for the reason given above; Existence at `e` and Existence at a
+relational type are two instances of one family, with different proofs.
 
 Because `Rel` is a class and not an inductive code, **there is no induction on the
 structure of a relational type.** Anything whose proof recurses on that structure has to
@@ -251,47 +261,29 @@ The transformer learns which constant mirrors which from two commands,
 `#classicism_nec` for the necessitation of a law field. So a new class costs a mirror, but
 no change to the transformer, and a new theorem about an existing class costs nothing.
 
-### The outer mode, for records
+### Records, between instances
 
-A principle such as Functionality is a **schema**: a proposition that quantifies over
-types. A quantifier over types has no algebra to live in, so a record such as
-`Functionality → Tractarianism` has no necessitation and the induction cannot start on it.
-Such a theorem is transformed in the *outer mode*: its natural deduction is **copied** in
-the paper's vocabulary, and the induction runs inside each gated site.
+A record "Schema A implies Schema B" is a metatheorem in the paper: from the instances of
+A one derives each instance of B. The theorem stated here is the object-level content of
+that, an implication between instances with the types as parameters,
 
-| proof term | copy |
-| --- | --- |
-| `fun h : H => b` | `Copy.lam`, which is where `em` enters |
-| application to a proof | `Copy.app`, modus ponens at `imp` |
-| `fun x : σ => b`, `fun {σ} [inst] => b` | the same binder, its type read in the vocabulary |
-| a hypothesis | the copied hypothesis |
-| a constant with a necessitation | that necessitation, unboxed |
-| a constant that is itself a schema | its strict restatement, made on demand |
-| gated `propext s`, `funext …` | the induction, with no hypotheses in scope |
+    theorem functionality_r_implies_tractarianism_r {σ : Type} [Ty σ] :
+        Functionality σ Prop → Tractarianism σ
 
-The gate is what makes the two modes compose: the argument of a gated site mentions no
-hypothesis, so the induction can run there with an empty context whatever the outer proof
-has in scope, and the two never meet on a hypothesis. The result of the outer mode is the
-record's statement with each principle read in the paper's vocabulary, for example
+which names the instance of the premise the argument consumes. Since it is a formula once
+`σ` is fixed, the induction reaches it, and its strict form is the record's statement
+between the instances read in the paper's vocabulary,
 
-    Classicism.imp P.Functionality.strict P.Tractarianism.strict
+    Classicism.imp (P.Functionality.strict σ Prop) (P.Tractarianism.strict σ)
 
-where `P.Functionality.strict` unfolds to
-`∀ {σ τ} [Ty σ] [SRel τ] (X Y : σ → τ), imp (∀ z, X z = Y z) (X = Y)`. The transformer
-chooses the mode from the statement, and `#classicism_transform` says which it used.
-
-One point to be aware of. The copy of `⟨h₁, h₂⟩ : A ∧ B` cites the necessitation of
-`And.intro` at `A` and `B`, and when `B` is a schema that instantiates a quantifier over
-`Prop` at something that is not a formula of the paper's language. The shallow statement
-already makes that move, in bundling the instances of a schema into one proposition, and
-the strict statement inherits it; the type check accepts both. The paper would state such
-a record as a metatheorem about instances.
+and its necessitation gives the boxed record by `K`: `□Functionality σ t → □Tractarianism σ`.
+That is how the map's necessitated records are read, and the tests check one.
 
 ### Coverage
 
 `Classicism/Transformed.lean` runs the transformer over the whole library, once, and is the
 one home of what it declares. `Classicism/Audit.lean` then holds all of it to the strict
-check and the type check: 208 generated theorems, 208 strict, 208 inside `R`.
+check and the type check: 222 generated theorems, 222 strict, 222 inside `R`.
 
 | module | transformed |
 | --- | --- |
@@ -300,7 +292,7 @@ check and the type check: 208 generated theorems, 208 strict, 208 inside `R`.
 | `Modal` | 18 of 18 |
 | `Order` | 6 of 6 |
 | `Comprehension` | 10 of 10 |
-| `Proofs` | 31 of 31, 20 of them in the outer mode |
+| `Proofs` | 31 of 31 |
 
 **Every theorem of the shallow layer has a strict form**, from the eleven identities, `e`,
 `e_exists` and `em`, with no `propext` and no `funext`. Nothing was proved by hand for any
@@ -367,15 +359,17 @@ The gate says nothing about type theory, so it is not by itself enough: a proof 
 quantifies over `Type`, forms `e → e`, or recurses over `Nat` passes it. `Tests.lean`
 contains three such proofs, and they do pass. `#classicism_types foo`, in
 `Classicism/TypeSystem.lean`, is the second check, and `#classicism_types_audit` runs it
-over a module. It enforces three things.
+over a module. It enforces four things.
 
 * **Types are types of `R`.** An `R`-type as a Lean expression is `e`, `Prop`, or a
   *non-dependent* arrow whose domain is an `R`-type and whose codomain is a relational
   one. Dependency is what excludes the rest of Lean's type theory.
-* **Type variables are guarded.** A schema over types is written `∀ {σ : Type} [Ty σ] …`,
-  so a bound type variable counts as an `R`-type exactly when the telescope guards it
-  with a `Ty`, `Rel` or `Order` instance. An unguarded `∀ {σ : Type}` is a real quantifier
-  over Lean types and is rejected.
+* **Type variables are guarded parameters.** A type parameter `{σ : Type} [Ty σ]` counts
+  as an `R`-type exactly when the telescope guards it with a `Ty`, `Rel` or `Order`
+  instance; an unguarded one is a real quantifier over Lean types and is rejected. And a
+  binder over a type may occur only in the leading telescope of a declaration, never inside
+  a formula: a principle is a family of formulas indexed by types, not one formula
+  quantifying over them.
 * **Constants come from a whitelist**, in three named groups: the logical inductives with
   their constructors and recursors, which are the constants of `L` and the rules of `H`;
   the `Eq` plumbing that `rw`, `calc` and `▸` emit, which is all Leibniz's Law; and the

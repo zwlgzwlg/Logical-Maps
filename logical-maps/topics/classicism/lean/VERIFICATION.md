@@ -6,8 +6,9 @@ no Logical Equivalence at all: it derives Boolean algebras at every relational t
 six Boolean Identities, and from all eleven the necessitations of the primitive proof
 constants. The transformer, which is Appendix A as an induction on Lean proof terms, turns
 every one of the 125 gated theorems into a proof from the eleven axioms, `e`, `e_exists`
-and `em`, with no `propext` or `funext`; the 208 theorems it declares all pass the strict
-and type audits.**
+and `em`, with no `propext` or `funext`; the 222 theorems it declares all pass the strict
+and type audits. No statement quantifies over types: principles are families of formulas
+indexed by types, and records are implications between instances.**
 
 ## Revision, 21 September 2026
 
@@ -16,7 +17,7 @@ field. That field made `classicism-implies-existence-r` report no axiom dependen
 all, because declaring `e` an `R`-type discharged `e_exists` silently, and it made the
 paper's `C⁻` inexpressible, since in `C⁻` the type `e` is an `R`-type whose inhabitation
 is unprovable. `Ty` is now a marker class, Existence is the two theorems `existence_rel`
-and `existence_e`, and `P.Existence` is the conjunction of the schema's two cases. The
+and `existence_e`, and `P.Existence σ` is a family with those two as its instances. The
 checker now also reports, per theorem and per module, whether the axioms stay inside
 `C⁻`, and `Tests.lean` asserts that split.
 
@@ -234,24 +235,29 @@ A structural fix came with this. The transformer declares its outputs in the mod
 runs it, and the audit and the tests both ran it, so generated *definitions* clashed on
 import. The outputs now have one home, `Classicism/Transformed.lean`, which both import.
 
-**The outer mode, 21 September.** The last twenty theorems, all records with a schema for
-hypothesis or conclusion, are handled by copying the natural deduction in the paper's
-vocabulary (`copy`, `copyApp`, `cfeed`, `ccoerce` in `Classicism/Transform.lean`), with
-three lemmas `Copy.lam`, `Copy.app`, `Copy.notApp` in `Classicism/Primitives.lean`, the
-first using `em`. The induction runs inside each gated site with an empty context, which
-the gate licenses. The mode is chosen by `isSchematic` on the statement, and the commands
-report it. One addition to the primitive table was needed, `Exists.elim` restated through
-`Prim.exists_rec`. **Coverage is now 125 of 125**, and the 208 generated theorems all pass
-the strict and type audits.
+**Principles as families, 22 September.** The outer mode was built and then removed.
+Cian's ruling: `□S` for a schema `S` is the family of boxed instances, and "schema A
+implies schema B" is a metalogical statement; what belongs in either layer is the
+instance-level statement, with type variables as parameters, and the shallow layer must
+certify nothing the strict layer cannot reach. So every principle is now a family
+`P.Name σ τ … : Prop` with explicit type parameters, every record is an implication between
+instances naming the types the argument uses, and the type-system check rejects a binder
+over a type, guarded or not, anywhere but in the leading telescope of a declaration
+(three negative controls pin this in `Tests.lean`). With no schema left, every theorem has
+a necessitation, and the boxed records follow by `K`; one is checked in the tests.
 
-Two things to be clear about. The strict form of a record is its statement with each
-principle read in the vocabulary, `imp Functionality.strict Tractarianism.strict`, an
-implication between schemas; the paper would state the same as a metatheorem, and the copy
-of a conjunction with a schema in it instantiates the necessitation of `And.intro` at that
-schema, which is not a formula of the paper's language. That is inherited from the shallow
-statement, which bundles a schema's instances into one proposition. And the outer mode
-gives no `.nec`, only `.strict`, so a schematic theorem can be cited by another only in the
-outer mode; the transformer arranges that.
+The outer mode as built had copied a schema hypothesis as a schema hypothesis, so its
+output still quantified over types; the version that would have matched the instance-level
+reading, extracting the instances a proof uses, was never built. Its removal deletes the
+`Copy` lemmas, `isSchematic`, `copy`, `cfeed`, `ccoerce` and `ensureCopy`, and the
+transformer has one mode again. **Coverage is 125 of 125**, and the 222 theorems the
+transformer declares all pass the strict and type audits.
+
+Two changes were forced by this. `Exists.elim` is restated through `Prim.exists_rec`,
+which the choice record needs. And the type audit now walks a whole module in one pass,
+descending into each library constant once, with the heartbeat cap lifted for that pass;
+before, each declaration re-walked the library, and the audit of the generated theorems
+took longer than a build step is allowed.
 
 **Known limits of the induction itself.** A motive that depends on the identity proof, a
 recursor eliminating into data, and a type or instance abstraction inside a formula are

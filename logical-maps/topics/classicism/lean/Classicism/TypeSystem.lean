@@ -104,12 +104,19 @@ the constants already seen. -/
 structure TState where
   guarded : Std.HashSet FVarId := {}
   visited : NameSet := {}
-  errors : Array MessageData := #[]
+  errors : Array (Name × MessageData) := #[]
+  /-- Are we still in the leading telescope of the declaration being walked, where a
+  binder over a type is a *parameter*? Anywhere else it is a quantifier over types inside
+  a formula, which no formula of `R` has. -/
+  leading : Bool := true
+  /-- Which binders make up that telescope: `∀`s at the root of a type, `fun`s at the root
+  of a value. -/
+  leadingIsLam : Bool := false
 
 abbrev T := StateRefT TState MetaM
 
-def terror (msg : MessageData) : T Unit :=
-  modify fun s => { s with errors := s.errors.push msg }
+def terror (decl : Name) (msg : MessageData) : T Unit :=
+  modify fun s => { s with errors := s.errors.push (decl, msg) }
 
 /-- `Prop`, the paper's `t`. -/
 def isPropSort (e : Expr) : Bool := e matches .sort .zero
@@ -179,7 +186,7 @@ def checkBinder (decl : Name) (nm : Name) (ty : Expr) : T Unit := do
   if ty.isSort then return
   if ← isRType ty then return
   if isMetaType ty then return
-  terror m!"{decl}: the binder `{nm} : {ty}` is neither a proof, an object of an \
+  terror decl m!"{decl}: the binder `{nm} : {ty}` is neither a proof, an object of an \
 R-type, nor type-system evidence"
 
 /-- Walk a declaration's own term.
@@ -201,29 +208,51 @@ partial def tvisit (decl : Name) (e : Expr) : T Unit := do
     if isAuxiliary decl then
       for a in e.getAppArgs do tvisit decl a
       return
-    terror m!"{decl}: the type `{e}` is not a type of the relational system R"
+    terror decl m!"{decl}: the type `{e}` is not a type of the relational system R"
     return
   match e with
-  | .app f a => tvisit decl f; tvisit decl a
-  | .lam nm t b bi => tbinder decl nm t b bi
-  | .forallE nm t b bi => tbinder decl nm t b bi
+  | .app f a => inner (tvisit decl f); inner (tvisit decl a)
+  | .lam nm t b bi => tbinder decl nm t b bi true
+  | .forallE nm t b bi => tbinder decl nm t b bi false
   | .letE nm t v b _ =>
     checkBinder decl nm t
-    tvisit decl t; tvisit decl v
-    withLetDecl nm t v fun x => tvisit decl (b.instantiate1 x)
+    inner (tvisit decl t); inner (tvisit decl v)
+    withLetDecl nm t v fun x => inner (tvisit decl (b.instantiate1 x))
   | .mdata _ b => tvisit decl b
-  | .proj _ _ b => tvisit decl b
+  | .proj _ _ b => inner (tvisit decl b)
   | .const c _ => tvisitConst c
   | _ => pure ()
 where
+  /-- Run a walk of a subterm that is not part of the leading telescope. -/
+  inner (k : T Unit) : T Unit := do
+    let saved := (← get).leading
+    modify fun s => { s with leading := false }
+    k
+    modify fun s => { s with leading := saved }
+
   /-- One binder of a telescope. A `Ty`/`Rel`/`Order` binder registers its subject as a
   guarded type variable **before** anything is walked, since the binder's own type
-  mentions that variable. -/
-  tbinder (decl : Name) (nm : Name) (t b : Expr) (bi : BinderInfo) : T Unit := do
+  mentions that variable.
+
+  A binder over a type, or over type-system evidence, is allowed only in the leading
+  telescope: as a parameter of the declaration. Inside a formula it would be a quantifier
+  over types, and no formula of `R` has one; a principle is a family of formulas indexed
+  by types, never one formula quantifying over them. This is what keeps everything the
+  shallow layer certifies within the reach of the strict layer. -/
+  tbinder (decl : Name) (nm : Name) (t b : Expr) (bi : BinderInfo) (isLam : Bool) : T Unit := do
     if let some (.fvar fid) := guardTarget t then
       modify fun s => { s with guarded := s.guarded.insert fid }
+    let typeBinder := (t.isSort && !isPropSort t) || (guardTarget t).isSome
+    let st ← get
+    if typeBinder then
+      if !(st.leading && st.leadingIsLam == isLam) && !isAuxiliary decl then
+        terror decl m!"{decl}: the binder `{nm} : {t}` quantifies over types inside a formula. \
+A type variable may only be a parameter of a declaration; a principle is a family of \
+formulas indexed by types, not one formula quantifying over them"
+    else
+      modify fun s => { s with leading := false }
     if !isAuxiliary decl then checkBinder decl nm t
-    tvisit decl t
+    inner (tvisit decl t)
     withLocalDecl nm bi t fun x => do
       -- Inside an internal auxiliary, a `Sort`-typed binder counts as guarded. Lean
       -- lifts the proof fields of an instance into separate `_proof_N` declarations and
@@ -242,18 +271,22 @@ where
     modify fun s => { s with visited := s.visited.insert c }
     let env ← getEnv
     if !allowedConstant env c then
-      terror m!"{decl}: uses the constant `{c}`, which is not part of Classicism's \
+      terror decl m!"{decl}: uses the constant `{c}`, which is not part of Classicism's \
 language, its logic, or the formalisation's own metalanguage"
       return
     -- Descend only into this library's own definitions; a whitelisted core constant is
     -- an accepted primitive, not something to audit the innards of.
     if !(`Classicism).isPrefixOf c then return
-    -- Report against `c`, so a finding names the declaration it is really in.
+    -- Report against `c`, so a finding names the declaration it is really in. Its value
+    -- has its own leading telescope, of `fun`s.
+    let saved := (← get)
+    modify fun s => { s with leading := true, leadingIsLam := true }
     match env.find? c with
     | some (.thmInfo v) => tvisit c v.value
     | some (.defnInfo v) => tvisit c v.value
     | some (.opaqueInfo v) => tvisit c v.value
     | _ => pure ()
+    modify fun s => { s with leading := saved.leading, leadingIsLam := saved.leadingIsLam }
 
 /-- Every bound type variable in a declaration's *statement* must be guarded by a `Ty`,
 `Rel` or `Order` instance. An unguarded one is a quantifier over Lean types. -/
@@ -270,24 +303,33 @@ def checkTypeBindersGuarded (decl : Name) (stmt : Expr) : T Unit := do
       go b pending (depth + 1)
     | _ =>
       for (nm, _) in pending do
-        terror m!"{decl}: the type variable `{nm}` is not guarded by a `Ty`, `Rel` or \
+        terror decl m!"{decl}: the type variable `{nm}` is not guarded by a `Ty`, `Rel` or \
 `Order` instance, so the statement quantifies over Lean types rather than over the types of R"
   go stmt [] 0
 
+/-- Run the type-system check on several declarations in one walk. A library constant is
+descended into once, however many of the declarations use it, and its findings are
+reported under its own name. -/
+def checkTypeSystemMany (names : Array Name) : MetaM (Array (Name × Array MessageData)) := do
+  let env ← getEnv
+  let (_, s) ← (do
+    for n in names do
+      match env.find? n with
+      | some info =>
+        checkTypeBindersGuarded n info.type
+        modify fun st : TState => { st with leading := true, leadingIsLam := false }
+        tvisit n info.type
+        modify fun st : TState => { st with leading := true, leadingIsLam := true }
+        match info with
+        | .thmInfo v => tvisit n v.value
+        | .defnInfo v => tvisit n v.value
+        | _ => pure ()
+      | none => terror n m!"{n}: not found").run {}
+  return names.map fun n => (n, (s.errors.filter (·.1 == n)).map (·.2))
+
 /-- Run the type-system check on one declaration. -/
 def checkTypeSystem (n : Name) : MetaM (Array MessageData) := do
-  let env ← getEnv
-  match env.find? n with
-  | some info =>
-    let (_, s) ← (do
-      checkTypeBindersGuarded n info.type
-      tvisit n info.type
-      match info with
-      | .thmInfo v => tvisit n v.value
-      | .defnInfo v => tvisit n v.value
-      | _ => pure ()).run {}
-    return s.errors
-  | none => return #[m!"{n}: not found"]
+  return ((← checkTypeSystemMany #[n])[0]!).2
 
 /-- `#classicism_types foo` checks that `foo` stays inside the relational type system. -/
 syntax (name := classicismTypes) "#classicism_types " ident+ : command
@@ -314,8 +356,11 @@ syntax (name := classicismTypesAudit) "#classicism_types_audit " ident+ : comman
       then acc.push n else acc
     let names := names.qsort Name.lt
     let mut ok : Nat := 0
-    for n in names do
-      let errors ← liftTermElabM (checkTypeSystem n)
+    -- one walk for the whole module, so the heartbeat budget of a single command is not
+    -- the right measure of it
+    let results ← withScope (fun sc => { sc with opts := maxHeartbeats.set sc.opts 0 })
+      (liftTermElabM (checkTypeSystemMany names))
+    for (_, errors) in results do
       if errors.isEmpty then ok := ok + 1
       else for e in errors do logError e
     if ok = names.size then

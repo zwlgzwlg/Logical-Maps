@@ -4,9 +4,23 @@ import Classicism.Principles
 # Proofs of map records
 
 One theorem per record of `topics/classicism/results/`, named after the record id with
-hyphens replaced by underscores, whose type is the record's statement: the conjunction
-of its premise principles implying its conclusion. Records with no premises are
-theorems of C. Each docstring names the record and the source of the argument.
+hyphens replaced by underscores. Records with no premises are theorems of C. Each
+docstring names the record and the source of the argument.
+
+## Records are stated between instances
+
+A record "Schema A implies Schema B" is, in the paper, a metatheorem: from the instances
+of A one derives each instance of B. What is stated here is the object-level content of
+that, an implication between **instances** with the types as parameters:
+
+    theorem functionality_r_implies_tractarianism_r {σ : Type} [Ty σ] :
+        Functionality σ Prop → Tractarianism σ
+
+says which instance of the premise the argument consumes, Functionality at `σ → t`, for
+the conclusion at `σ`. Where an argument uses a premise at several types, each is a
+separate hypothesis. This is the form the type-system check requires, since no formula
+quantifies over types, and it is what puts every record within the strict layer's reach:
+each theorem here has a necessitation, from which the boxed record follows by `K`.
 -/
 
 namespace Classicism.Proofs
@@ -23,22 +37,25 @@ theorem classicism_implies_modal_four : ModalFour := modal_four
 /-- `classicism-implies-modalized-fregean`. -/
 theorem classicism_implies_modalized_fregean : ModalizedFregean := modalized_fregean
 /-- `classicism-implies-intensionality-r`. -/
-theorem classicism_implies_intensionality_r : Intensionality := fun X Y => intensionality X Y
+theorem classicism_implies_intensionality_r {τ : Type} [Rel τ] : Intensionality τ :=
+  fun X Y => intensionality X Y
 /-- `classicism-implies-modalized-functionality-r`. -/
-theorem classicism_implies_modalized_functionality_r : ModalizedFunctionality :=
-  fun X Y => modalized_functionality X Y
+theorem classicism_implies_modalized_functionality_r {σ τ : Type} [Ty σ] [Rel τ] :
+    ModalizedFunctionality σ τ := fun X Y => modalized_functionality X Y
 /-- `classicism-implies-identity-necessary-r`. -/
-theorem classicism_implies_identity_necessary_r : NecessityOfIdentity :=
+theorem classicism_implies_identity_necessary_r {σ : Type} [Ty σ] : NecessityOfIdentity σ :=
   fun x y => necessity_of_identity x y
 /-- `classicism-implies-converse-barcan-r`. -/
-theorem classicism_implies_converse_barcan_r : ConverseBarcan := fun X => converse_barcan X
-/-- `classicism-implies-existence-r`. The relational conjunct is `C⁻`; the `e` conjunct
-is `e_exists`, so this is the one record proof whose axiom report names that axiom. -/
-theorem classicism_implies_existence_r : Existence := ⟨existence_e, fun {_} [Rel _] => existence_rel⟩
+theorem classicism_implies_converse_barcan_r {σ : Type} [Ty σ] : ConverseBarcan σ :=
+  fun X => converse_barcan X
+/-- `classicism-implies-existence-r`, the instance at `e`: the axiom `e_exists`. This is
+the one record proof whose axiom report names that axiom. -/
+theorem classicism_implies_existence_e : Existence e := existence_e
 
-/-- The `C⁻`-provable half of the same record, recorded separately so that the axiom
-report shows Existence at relational types costing nothing. -/
-theorem existence_at_relational_types : ExistenceRel := fun {_} [Rel _] => existence_rel
+/-- `classicism-implies-existence-r`, the instances at relational types: a theorem of
+`C⁻`, whose axiom report shows Existence there costing nothing. Together with the instance
+at `e` this covers every type of `R`, which is the record. -/
+theorem classicism_implies_existence_rel {τ : Type} [Rel τ] : Existence τ := existence_rel
 
 /-! ### Modal principles (Classicism, Proposition 2.2) -/
 
@@ -60,8 +77,9 @@ theorem ne_of_dia_ne {σ : Type} [Ty σ] (x y : σ) : ◇ (x ≠ y) → x ≠ y 
 
 /-- `modal-b-implies-distinctness-necessary-r` (Prior): `B` gives `□◇(x ≠ y)`; the
 necessitation of the closed lemma and `K` give `□(x ≠ y)`. -/
-theorem modal_b_implies_distinctness_necessary_r : ModalB → NecessityOfDistinctness := by
-  intro b σ _ x y hne
+theorem modal_b_implies_distinctness_necessary_r {σ : Type} [Ty σ] :
+    ModalB → NecessityOfDistinctness σ := by
+  intro b x y hne
   exact modal_K _ _ (nec% (ne_of_dia_ne x y)) (b (x ≠ y) hne)
 
 /-- `necessary-barcan-t-implies-barcan-t`: `T`. -/
@@ -71,19 +89,20 @@ theorem necessary_barcan_t_implies_barcan_t : NecBarcanT → BarcanT := box_elim
 theorem necessary_distinctness_necessary_t_implies_distinctness_necessary_t :
     NecNecessityOfDistinctnessT → NecessityOfDistinctnessT := box_elim
 
-/-- `barcan-r-implies-barcan-t`: specialise the type block to `t`. -/
-theorem barcan_r_implies_barcan_t : Barcan → BarcanT := fun bf X => bf X
+/-- `barcan-r-implies-barcan-t`: BF at type `t` is the instance of the schema at `t`. -/
+theorem barcan_r_implies_barcan_t : Barcan Prop → BarcanT := fun bf => bf
 
 /-! ### Extensionality (Classicism, §1.4) -/
 
 /-- `extensionality-r-implies-fregean-axiom`: the nullary instance. -/
-theorem extensionality_r_implies_fregean_axiom : Extensionality → FregeanAxiom :=
+theorem extensionality_r_implies_fregean_axiom : Extensionality Prop → FregeanAxiom :=
   fun ext p q h => ext p q h
 
 /-- `fregean-axiom-implies-extensionality-r`: the Fregean Axiom makes the true
 coextension sentence identical to `True`, and Intensionality finishes. -/
-theorem fregean_axiom_implies_extensionality_r : FregeanAxiom → Extensionality := by
-  intro fa τ _ X Y h
+theorem fregean_axiom_implies_extensionality_r {τ : Type} [Rel τ] :
+    FregeanAxiom → Extensionality τ := by
+  intro fa X Y h
   exact intensionality X Y (fa (coext X Y) True ⟨fun _ => trivial, fun _ => h⟩)
 
 /-! ### Tractarianism, Functionality and BF (Classicism, Proposition 2.1, n. 27) -/
@@ -94,24 +113,26 @@ theorem true_entails_eq_box (q : Prop) : (True ≤ q) = □ q := by
   rw [true_or_eq]
 
 /-- `tractarianism-r-implies-barcan-r`: take `p := True`. -/
-theorem tractarianism_r_implies_barcan_r : Tractarianism → Barcan := by
-  intro tr σ _ X h
+theorem tractarianism_r_implies_barcan_r {σ : Type} [Ty σ] : Tractarianism σ → Barcan σ := by
+  intro tr X h
   rw [← true_entails_eq_box]
   exact tr True X (fun x => by rw [true_entails_eq_box]; exact h x)
 
-/-- `functionality-r-implies-tractarianism-r`: Functionality identifies `X` with
-`λx. p ∨ Xx`; then `∀x. Xx = ∀x. p ∨ Xx = p ∨ ∀x. Xx` by Distribution-∨∀. -/
-theorem functionality_r_implies_tractarianism_r : Functionality → Tractarianism := by
-  intro fn σ _ p X h
+/-- `functionality-r-implies-tractarianism-r`: Functionality at `σ → t` identifies `X`
+with `λx. p ∨ Xx`; then `∀x. Xx = ∀x. p ∨ Xx = p ∨ ∀x. Xx` by Distribution-∨∀. -/
+theorem functionality_r_implies_tractarianism_r {σ : Type} [Ty σ] :
+    Functionality σ Prop → Tractarianism σ := by
+  intro fn p X h
   have hX : X = fun x => p ∨ X x := fn X (fun x => p ∨ X x) h
   show (∀ x, X x) = (p ∨ ∀ x, X x)
   calc (∀ x, X x) = (∀ x, p ∨ X x) := by conv => lhs; rw [hX]
     _ = (p ∨ ∀ x, X x) := (or_forall_distrib_eq X p).symm
 
-/-- `barcan-r-implies-functionality-r`: NI pointwise, BF to box the quantifier,
+/-- `barcan-r-implies-functionality-r`: NI pointwise, BF at `σ` to box the quantifier,
 then Modalized Functionality. -/
-theorem barcan_r_implies_functionality_r : Barcan → Functionality := by
-  intro bf σ τ _ _ X Y h
+theorem barcan_r_implies_functionality_r {σ τ : Type} [Ty σ] [Rel τ] :
+    Barcan σ → Functionality σ τ := by
+  intro bf X Y h
   exact modalized_functionality X Y
     (bf (fun z => X z = Y z) (fun z => necessity_of_identity _ _ (h z)))
 
@@ -119,42 +140,42 @@ theorem barcan_r_implies_functionality_r : Barcan → Functionality := by
 /-! ### Comprehension (Classicism, §2.3; Dorr, *BC does not imply RC*) -/
 
 /-- `rigid-comprehension-r-implies-persistent-comprehension-r`: the first conjunct. -/
-theorem rigid_comprehension_r_implies_persistent_comprehension_r :
-    RigidComprehension → PersistentComprehension := by
-  intro rc τ _ X
+theorem rigid_comprehension_r_implies_persistent_comprehension_r {τ : Type} [Rel τ] :
+    RigidComprehension τ → PersistentComprehension τ := by
+  intro rc X
   obtain ⟨Y, hY, hco⟩ := rc X
   exact ⟨Y, hY.1, hco⟩
 
 /-- `rigid-comprehension-r-implies-inextensible-comprehension-r`: the second conjunct. -/
-theorem rigid_comprehension_r_implies_inextensible_comprehension_r :
-    RigidComprehension → InextensibleComprehension := by
-  intro rc τ _ X
+theorem rigid_comprehension_r_implies_inextensible_comprehension_r {τ : Type} [Rel τ] :
+    RigidComprehension τ → InextensibleComprehension τ := by
+  intro rc X
   obtain ⟨Y, hY, hco⟩ := rc X
   exact ⟨Y, hY.2, hco⟩
 
 /-- `rigid-comprehension-r-implies-weak-rigid-comprehension-r`: a rigid relation is
 persistent by definition, and `T` strips the leading box from its inextensibility
 conjunct. So the rigid coextension already witnesses the weaker principle. -/
-theorem rigid_comprehension_r_implies_weak_rigid_comprehension_r :
-    RigidComprehension → WeakRigidComprehension := by
-  intro rc τ _ X
+theorem rigid_comprehension_r_implies_weak_rigid_comprehension_r {τ : Type} [Rel τ] :
+    RigidComprehension τ → WeakRigidComprehension τ := by
+  intro rc X
   obtain ⟨Y, hY, hco⟩ := rc X
   exact ⟨Y, weaklyRigid_of_rigid hY, hco⟩
 
 /-- `weak-rigid-comprehension-r-implies-very-weak-rigid-comprehension-r`: `Persistent(Y)`
 unpacks as `□∀x̄. Y[x̄] → □Y[x̄]`, and `T` gives weak persistence. The inextensibility
 conjunct is the same in both conditions. -/
-theorem weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r :
-    WeakRigidComprehension → VeryWeakRigidComprehension := by
-  intro wrc τ _ X
+theorem weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r {τ : Type} [Rel τ] :
+    WeakRigidComprehension τ → VeryWeakRigidComprehension τ := by
+  intro wrc X
   obtain ⟨Y, hY, hco⟩ := wrc X
   exact ⟨Y, veryWeaklyRigid_of_weaklyRigid hY, hco⟩
 
 /-- `weak-rigid-comprehension-r-implies-persistent-comprehension-r`: the first conjunct
 of weak rigidity is persistence itself. -/
-theorem weak_rigid_comprehension_r_implies_persistent_comprehension_r :
-    WeakRigidComprehension → PersistentComprehension := by
-  intro wrc τ _ X
+theorem weak_rigid_comprehension_r_implies_persistent_comprehension_r {τ : Type} [Rel τ] :
+    WeakRigidComprehension τ → PersistentComprehension τ := by
+  intro wrc X
   obtain ⟨Y, hY, hco⟩ := wrc X
   exact ⟨Y, hY.1, hco⟩
 
@@ -167,10 +188,11 @@ theorem ne_of_holds_and_not_holds {σ : Type} [Ty σ] (Y : σ → Prop) (a b : �
 `λx^σ. x = a`, of the admitted type `σt`, and let `Y` be the coextension supplied.
 Coextensiveness gives `Ya` from `a = a` and `¬Yb` from `b ≠ a`; persistence of `Y` and of
 `¬Y` boxes each. The box distributes over the conjunction, and the closed lemma above
-necessitates, so `K` yields `□(a ≠ b)`. The type was arbitrary, which is the schema. -/
-theorem gallin_comprehension_implies_nd :
-    GallinExtensionalComprehension → NecessityOfDistinctness := by
-  intro gec σ _ a b hne
+necessitates, so `K` yields `□(a ≠ b)`. The instance of the premise used is the one at
+`σ → t`, for ND at `σ`. -/
+theorem gallin_comprehension_implies_nd {σ : Type} [Ty σ] :
+    GallinExtensionalComprehension (σ → Prop) → NecessityOfDistinctness σ := by
+  intro gec a b hne
   obtain ⟨Y, hY, hnY, hco⟩ := gec (fun x : σ => x = a)
   have hYa : Y a := (hco a).1 rfl
   have hnYb : ¬ Y b := fun hb => hne ((hco b).2 hb).symm
@@ -189,10 +211,11 @@ choose among haecceities instead: the relation `λx H. ∃y. H = (λw. w = y) �
 serial because `U` is, so Functional Choice supplies `X : σ → τ → Prop` with `X x` a
 haecceity of some `U`-successor of `x`. That `X` is itself the required subrelation, since
 haecceities are injective by identity elimination. The record's argument treats the `e`
-case separately; the haecceity detour is uniform, so no case split is needed. -/
-theorem functional_choice_r_implies_relational_choice_r :
-    FunctionalChoice → RelationalChoice := by
-  intro fc σ τ _ _ U hser
+case separately; the haecceity detour is uniform, so no case split is needed. The instance
+of Functional Choice used is the one at `σ`, `τ → t`, for Relational Choice at `σ`, `τ`. -/
+theorem functional_choice_r_implies_relational_choice_r {σ τ : Type} [Ty σ] [Ty τ] :
+    FunctionalChoice σ (τ → Prop) → RelationalChoice σ τ := by
+  intro fc U hser
   -- The relation between an argument and the haecceities of its `U`-successors.
   have hser' : Serial (fun (x : σ) (H : τ → Prop) => ∃ y, H = (fun w => w = y) ∧ U x y) := by
     intro x

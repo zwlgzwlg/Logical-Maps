@@ -16,8 +16,7 @@ This is the one home of those declarations. Anything that wants `modal_K.strict`
 this module; running `#classicism_transform` elsewhere only reports, since the transformer
 does not redeclare what exists.
 
-The report lists any theorem not reached, with the reason, and says how many were done in
-the outer mode. Today every theorem is reached.
+The report lists any theorem not reached, with the reason. Today every theorem is reached.
 -/
 
 #classicism_transform_audit Classicism.Booleanism Classicism.Identities Classicism.Modal

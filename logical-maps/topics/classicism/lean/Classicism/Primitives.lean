@@ -241,27 +241,4 @@ theorem «Classicism.e_exists» : (∃ x : e, x = x) = Top :=
 
 end Nec
 
-/-! ### The outer mode
-
-A record such as `Functionality → Tractarianism` has a schema for a hypothesis: a
-proposition that quantifies over types. A quantifier over types has no algebra to live in,
-so such a proof has no necessitation and the induction does not apply to it. What the
-transformer does instead is **copy** the natural deduction in the paper's vocabulary, with
-these three lemmas at each implication, and run the induction inside each gated site. The
-first is where `em`, an axiom of the theory, is used. -/
-
-namespace Copy
-
-/-- `fun h : a => b`, read at `imp a b`. -/
-theorem lam {a b : Prop} (f : a → b) : imp a b :=
-  (em a).elim (fun ha => Or.inr (f ha)) Or.inl
-
-/-- Modus ponens at `imp`. -/
-theorem app {a b : Prop} (h : imp a b) (ha : a) : b := h.elim (fun hn => absurd ha hn) id
-
-/-- Modus ponens at `¬`, landing in the paper's `⊥`. -/
-theorem notApp {a : Prop} (h : ¬ a) (ha : a) : Bot := (h ha).elim
-
-end Copy
-
 end Classicism.Strict

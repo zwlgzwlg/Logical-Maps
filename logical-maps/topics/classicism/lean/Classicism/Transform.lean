@@ -13,9 +13,12 @@ closed identities and no `propext` or `funext` at all,
 
 where `S'` is `S` read in the paper's vocabulary (`True ↦ ⊤`, `False ↦ ⊥`, `→ ↦ imp`,
 `↔ ↦ iff`). The kernel checks both, so a bug here yields a rejected declaration, never a
-false theorem. A theorem whose statement is a *schema*, quantifying over types, has no
-necessitation; it gets `foo.strict` alone, by the outer mode described below the
-induction.
+false theorem.
+
+No statement quantifies over types: the type-system check allows a binder over a type
+only as a parameter of a declaration, so every theorem is a formula of the paper's
+language once its type parameters are fixed, and every theorem has a necessitation. That
+is what puts the whole shallow layer within reach of one induction.
 
 ## The method
 
@@ -101,13 +104,6 @@ initialize necExt : SimplePersistentEnvExtension (Name × Name) (NameMap Name) �
     addImportedFn := fun ass => ass.foldl (fun m as => as.foldl (fun m (a, b) => m.insert a b) m) {}
   }
 
-/-- How a theorem was made strict: by the induction, which also gives its necessitation, or
-by the outer mode, which copies the proof and gives only the strict restatement. -/
-inductive Mode
-  | induction
-  | copy
-  deriving BEq, Repr
-
 /-- Context of the induction: the object variables `v̄` in scope, and the hypotheses in
 scope with their formulas already read in the paper's vocabulary. -/
 structure ICtx where
@@ -121,8 +117,6 @@ structure ICtx where
 structure TrState where
   twins : NameMap (Option Name) := {}
   inProgress : NameSet := {}
-  /-- Which definitions are schemas: propositions that quantify over types. -/
-  schematic : NameMap Bool := {}
 
 abbrev TrM := ReaderT ICtx (StateRefT TrState MetaM)
 
@@ -698,201 +692,6 @@ partial def ensureNec (c : Name) : TrM Unit := do
     addDecl (.thmDecl { name := strictName c, levelParams := [], type := strictTy, value := strictVal })
   modify fun s => { s with inProgress := s.inProgress.erase c }
 
-/- ### The outer mode
-
-A **schema** is a proposition that quantifies over types, such as Functionality. Read in
-the algebra of some `v̄ → Prop` it is meaningless, since a quantifier over types has no
-algebra to live in, so a proof whose statement involves a schema has no necessitation and
-the induction cannot start on it. Such proofs are handled in the *outer mode*: the natural
-deduction is copied in the paper's vocabulary, and the induction runs inside each gated
-site, whose argument the gate guarantees mentions no hypothesis. The two modes therefore
-never meet on a hypothesis. The copy uses `Copy.lam` at each `fun h => …`, which is where
-`em` enters, and `Copy.app` at each application to a proof; a constant is cited through its
-necessitation or, for one that is itself a schema, its strict restatement. -/
-
-/-- Does the proposition quantify over types, at any depth, through definitions? -/
-partial def isSchematic (e : Expr) : TrM Bool := do
-  match e with
-  | .forallE nm d b bi =>
-    if ← isParam' d then return true
-    if ← isSchematic d then return true
-    withLocalDecl nm bi d fun x => isSchematic (b.instantiate1 x)
-  | .lam nm d b bi =>
-    if ← isSchematic d then return true
-    withLocalDecl nm bi d fun x => isSchematic (b.instantiate1 x)
-  | .app .. =>
-    if ← isSchematic e.getAppFn then return true
-    e.getAppArgs.anyM isSchematic
-  | .mdata _ b => isSchematic b
-  | .const c _ =>
-    if !(`Classicism).isPrefixOf c then return false
-    if let some r := (← get).schematic.find? c then return r
-    let some (.defnInfo info) := (← getEnv).find? c | return false
-    -- a definition that is a proposition, as opposed to an object or a type
-    unless (← whnf info.type).isProp do return false
-    modify fun s => { s with schematic := s.schematic.insert c false }
-    let r ← isSchematic info.value
-    modify fun s => { s with schematic := s.schematic.insert c r }
-    return r
-  | _ => return false
-
-/-- The copy of a proof `t : A`: the formula `A'` it establishes, and a proof of it. -/
-partial def copy (t : Expr) : TrM (Expr × Expr) := do
-  let t := (← instantiateMVars t).consumeMData.headBeta
-  match t with
-  | .letE _ _ v b _ => copy (b.instantiate1 v)
-  | .fvar id =>
-    let some h' := (← read).subst.get? id
-      | throwError "transform: {t} is not a hypothesis in scope"
-    return (← inferType h', h')
-  | .lam nm d b bi =>
-    if ← isProp d then
-      -- `fun h : H => b`, read at `imp H' B'`
-      let H' ← translate d
-      withLocalDecl nm bi d fun h => withLocalDecl nm bi H' fun h' =>
-        withReader (fun c => { c with subst := c.subst.insert h.fvarId! h' }) do
-          let (B', pb) ← copy (b.instantiate1 h)
-          let f ← mkLambdaFVars #[h'] pb
-          return (mkApp2 (mkConst ``Classicism.imp) H' B',
-                  mkApp3 (mkConst ``Classicism.Strict.Copy.lam) H' B' f)
-    else
-      let d' ← translate d
-      if d' == d then
-        -- an object, or a type
-        withLocalDecl nm bi d fun x => do
-          let (B', pb) ← copy (b.instantiate1 x)
-          return (← mkForallFVars #[x] B', ← mkLambdaFVars #[x] pb)
-      else
-        -- an instance of a mirrored class
-        withLocalDecl nm bi d fun x => withLocalDecl nm bi d' fun x' =>
-          withReader (fun c => { c with subst := c.subst.insert x.fvarId! x' }) do
-            let (B', pb) ← copy (b.instantiate1 x)
-            return (← mkForallFVars #[x'] B', ← mkLambdaFVars #[x'] pb)
-  | .proj S i e =>
-    let ty ← whnf (← inferType e)
-    match S, i, ty.getAppFnArgs with
-    | ``And, 0, (_, #[a, b]) => copy (mkApp3 (mkConst ``And.left) a b e)
-    | ``And, 1, (_, #[a, b]) => copy (mkApp3 (mkConst ``And.right) a b e)
-    | ``Iff, 0, (_, #[a, b]) => copy (mkApp3 (mkConst ``Iff.mp) a b e)
-    | ``Iff, 1, (_, #[a, b]) => copy (mkApp3 (mkConst ``Iff.mpr) a b e)
-    | _, _, _ => throwError "transform: projection {t} is not handled"
-  | .app .. | .const .. => copyApp t.getAppFn t.getAppArgs
-  | _ => throwError "transform: proof term of an unexpected form: {t}"
-
-partial def copyApp (f : Expr) (args : Array Expr) : TrM (Expr × Expr) := do
-  if let .const c ls := f then
-    if let some t' ← restate c ls args then return ← copy t'
-    if c == ``propext || c == ``funext then
-      -- a gated site: the induction, with no hypotheses and the variables in scope as
-      -- parameters, gives the identity outright
-      let n := if c == ``propext then 3 else 5
-      let site := mkAppN f (args.extract 0 n)
-      let E ← withReader (fun ctx => { ctx with vars := #[], hyps := #[] }) (interpEq site)
-      return ← cfeed (← translate (← inferType site)) E (args.extract n args.size)
-    let mut k := 0
-    for a in args do
-      if ← isParam a then k := k + 1 else break
-    let (S, pf) ← citeStrict c ls (args.extract 0 k)
-    return ← cfeed S pf (args.extract k args.size)
-  let (F, pf) ← copy f
-  cfeed F pf args
-
-/-- A constant `c : S` at its type parameters, as a proof of `S'`: from its necessitation
-where it has one, and otherwise, for a schema, from its strict restatement. -/
-partial def citeStrict (c : Name) (ls : List Level) (params : Array Expr) :
-    TrM (Expr × Expr) := do
-  let params' ← params.mapM translate
-  let saturate (pf : Expr) : TrM Expr := do
-    let mut pf := pf
-    repeat
-      match ← whnf (← inferType pf) with
-      | .forallE _ d _ .instImplicit => pf := mkApp pf (← synthInstance d)
-      | _ => break
-    return pf
-  if (`Classicism).isPrefixOf c then
-    if let some (.thmInfo _) := (← getEnv).find? c then
-      if (← ensureStrict c) == .copy then
-        let pf ← saturate (mkAppN (mkConst (strictName c) ls) params')
-        return (← inferType pf, pf)
-  let necPf ← saturate (mkAppN (mkConst (← necFor c)) params')
-  let some (_, S, _) := (← inferType necPf).eq?
-    | throwError "transform: the necessitation of {c} is not of the form `S = ⊤`"
-  return (S, mkApp2 (mkConst ``Classicism.Strict.of_eq_top) S necPf)
-
-/-- Feed arguments to a copied head whose formula is `F`. -/
-partial def cfeed (F : Expr) (pf : Expr) (args : Array Expr) : TrM (Expr × Expr) := do
-  let mut F := F
-  let mut pf := pf
-  for a in args do
-    F ← expose F
-    match F.getAppFnArgs with
-    | (``Classicism.imp, #[A, B]) =>
-      let (got, pa) ← copy a
-      let pa ← ccoerce pa got A
-      pf := mkApp4 (mkConst ``Classicism.Strict.Copy.app) A B pf pa
-      F := B
-    | (``Not, #[A]) =>
-      let (got, pa) ← copy a
-      let pa ← ccoerce pa got A
-      pf := mkApp3 (mkConst ``Classicism.Strict.Copy.notApp) A pf pa
-      F := mkConst ``Classicism.Strict.Bot
-    | _ =>
-      let .forallE _ d b _ := F | throwError "transform: internal error in cfeed"
-      if ← isProp d then
-        throwError "transform: a formula depends on a proof:{indentExpr F}"
-      -- a type, an instance or an object: applied as it is, read in the vocabulary
-      let a' ← translate a
-      pf := mkApp pf a'
-      F := b.instantiate1 a'
-  return (F, pf)
-
-/-- Use a copied proof of `got` at the formula `exp`. Where the two are readings of one
-Lean formula, `bridge` supplies the identity; under a quantifier over types, where there is
-no algebra to bridge in, the proof is η-expanded and coerced inside. -/
-partial def ccoerce (pf got exp : Expr) : TrM Expr := do
-  if ← isDefEq got exp then return pf
-  try
-    let E ← withReader (fun c => { c with vars := #[] }) (bridge got exp)
-    return ← mkEqMP E pf
-  catch _ => pure ()
-  let got' ← expose got
-  let exp' ← expose exp
-  match got'.getAppFnArgs, exp'.getAppFnArgs with
-  | (``Classicism.imp, #[A₁, B₁]), (``Classicism.imp, #[A₂, B₂]) =>
-    let f ← withLocalDeclD `h A₂ fun h => do
-      let ha ← ccoerce h A₂ A₁
-      let hb ← ccoerce (mkApp4 (mkConst ``Classicism.Strict.Copy.app) A₁ B₁ pf ha) B₁ B₂
-      mkLambdaFVars #[h] hb
-    return mkApp3 (mkConst ``Classicism.Strict.Copy.lam) A₂ B₂ f
-  | _, _ =>
-    match got', exp' with
-    | .forallE nm d b bi, .forallE _ d₂ b₂ _ =>
-      unless ← isDefEq d d₂ do
-        throwError "transform: cannot coerce{indentExpr got}\nto{indentExpr exp}"
-      withLocalDecl nm bi d fun x => do
-        let inner ← ccoerce (mkApp pf x) (b.instantiate1 x) (b₂.instantiate1 x)
-        mkLambdaFVars #[x] inner
-    | _, _ => throwError "transform: cannot coerce{indentExpr got}\nto{indentExpr exp}"
-
-/-- Make `c.strict` for a schema, by the outer mode. -/
-partial def ensureCopy (c : Name) : TrM Unit := do
-  if (← getEnv).contains (strictName c) then return
-  if (← get).inProgress.contains c then throwError "transform: {c} depends on itself"
-  let .thmInfo info ← getConstInfo c | throwError "transform: {c} is not a theorem"
-  modify fun s => { s with inProgress := s.inProgress.insert c }
-  let k ← leadingParams info.type
-  let (strictTy, strictVal) ←
-    forallBoundedTelescope info.type (some k) fun xs stmt => do
-      let body := (info.value.beta xs).headBeta
-      withReader (fun _ => {}) <| withMirroredParams xs.toList #[] fun ys => do
-        let (got, pf) ← copy body
-        let S ← translate stmt
-        let pf ← ccoerce pf got S
-        return (← mkForallFVars ys S, ← mkLambdaFVars ys pf)
-  withOptions (Elab.async.set · false) do
-    addDecl (.thmDecl { name := strictName c, levelParams := [], type := strictTy, value := strictVal })
-  modify fun s => { s with inProgress := s.inProgress.erase c }
-
 /-- How many leading binders of a statement are types or instances. -/
 partial def leadingParams (ty : Expr) : TrM Nat :=
   forallTelescope ty fun xs _ => do
@@ -901,23 +700,11 @@ partial def leadingParams (ty : Expr) : TrM Nat :=
       if ← isParam' (← inferType x) then k := k + 1 else break
     return k
 
-/-- Make the strict form of `c`, choosing the mode by its statement: the induction unless
-the statement is a schema, and then the outer mode. Returns the mode used. -/
-partial def ensureStrict (c : Name) : TrM Mode := do
-  let env ← getEnv
-  if env.contains (necName c) then return .induction
-  if env.contains (strictName c) then return .copy
-  let .thmInfo info ← getConstInfo c | throwError "transform: {c} is not a theorem"
-  let k ← leadingParams info.type
-  let schema ← forallBoundedTelescope info.type (some k) fun _ stmt => isSchematic stmt
-  if schema then ensureCopy c; return .copy
-  else ensureNec c; return .induction
-
 end
 
-/-- Run the transformer on one theorem, and say which mode it used. -/
-def transform (c : Name) : MetaM Mode := do
-  ((ensureStrict c).run {}).run' {}
+/-- Run the transformer on one theorem. -/
+def transform (c : Name) : MetaM Unit := do
+  ((ensureNec c).run {}).run' {}
 
 /-! ### Commands -/
 
@@ -928,19 +715,16 @@ syntax (name := classicismTransform) "#classicism_transform " ident+ : command
 @[command_elab classicismTransform] def elabTransform : CommandElab := fun stx => do
   for id in stx[1].getArgs do
     let n ← liftCoreM (realizeGlobalConstNoOverloadWithInfo id)
-    let mode ← try
+    try
       liftTermElabM (transform n)
     catch ex =>
       logError m!"{n}: not transformed — {ex.toMessageData}"
       continue
     let ax ← liftTermElabM (collectAxioms (strictName n))
     let bad := ax.filter (fun a => !strictAllowedAxiom a)
-    let how := match mode with
-      | .induction => "by the induction"
-      | .copy => "by the outer mode, the statement being a schema"
     if bad.isEmpty then
       let ty := ((← getEnv).find? (strictName n)).map (·.type)
-      logInfo m!"{n} ⟶ {strictName n} : {ty.getD default}\nstrict ✓ {how} (axioms: {ax.toList})"
+      logInfo m!"{n} ⟶ {strictName n} : {ty.getD default}\nstrict ✓ (axioms: {ax.toList})"
     else
       logError m!"{n} ⟶ {strictName n}: still depends on {bad.toList}"
 
@@ -982,20 +766,16 @@ syntax (name := classicismTransformAudit) "#classicism_transform_audit " ident+ 
           if !n.isInternalDetail && !isProj then names := names.push n
     names := names.qsort (fun a b => a.toString < b.toString)
     let mut ok : Nat := 0
-    let mut copied : Nat := 0
     let mut failures : Array MessageData := #[]
     for n in names do
       try
-        let mode ← liftTermElabM (transform n)
+        liftTermElabM (transform n)
         let ax ← liftTermElabM (collectAxioms (strictName n))
-        if ax.all strictAllowedAxiom then
-          ok := ok + 1
-          if mode == .copy then copied := copied + 1
+        if ax.all strictAllowedAxiom then ok := ok + 1
         else failures := failures.push m!"{n}: result depends on {(ax.filter (!strictAllowedAxiom ·)).toList}"
       catch ex =>
         failures := failures.push m!"{n}: {ex.toMessageData}"
-    let byCopy := if copied == 0 then m!"" else m!" ({copied} by the outer mode)"
-    logInfo m!"{modId.getId}: {ok} of {names.size} theorems transformed{byCopy}\n\
+    logInfo m!"{modId.getId}: {ok} of {names.size} theorems transformed\n\
 {MessageData.joinSep failures.toList "\n"}"
 
 end Classicism.Check

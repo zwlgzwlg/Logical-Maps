@@ -149,9 +149,9 @@ biconditionals that generate them (n. 21). -/
 #classicism_expect_c_minus Classicism.Identities.distribution_or_forall
 #classicism_expect_c_minus Classicism.Identities.dissolution_and_or
 #classicism_expect_c_minus Classicism.Proofs.barcan_r_implies_functionality_r
-#classicism_expect_c_minus Classicism.Proofs.existence_at_relational_types
+#classicism_expect_c_minus Classicism.Proofs.classicism_implies_existence_rel
 
-#classicism_expect_needs_e existence_e Classicism.Proofs.classicism_implies_existence_r
+#classicism_expect_needs_e existence_e Classicism.Proofs.classicism_implies_existence_e
 
 /-! ### Controls for the type-system check
 
@@ -317,31 +317,53 @@ theorem mirrorArrowLaw {σ τ : Type} [Ty σ] [Strict.SRel τ] :
 
 #classicism_strict mirrorArrowLaw
 
-/-! ### The outer mode
+/-! ### Records, between instances
 
-A record whose hypothesis or conclusion is a schema over types has no necessitation, and
-is transformed by copying its natural deduction in the paper's vocabulary, with the
-induction run inside each gated site. The result is the record's statement with each
-principle read strictly, `Functionality ⟹ Tractarianism` and so on, and it uses `em`. -/
+A record is an implication between instances of principles, with the types as parameters,
+so it is a formula and the induction reaches it: each gets a necessitation, from which the
+boxed record follows by `K`. -/
 
 #classicism_transform Classicism.Proofs.functionality_r_implies_tractarianism_r
 #classicism_transform Classicism.Proofs.barcan_r_implies_functionality_r
-#classicism_transform Classicism.Proofs.classicism_implies_existence_r
 #classicism_transform Classicism.Proofs.gallin_comprehension_implies_nd
 #classicism_transform Classicism.Proofs.functional_choice_r_implies_relational_choice_r
+#classicism_transform Classicism.Proofs.classicism_implies_existence_e
 
-#classicism_strict Classicism.Proofs.functionality_r_implies_tractarianism_r.strict
-#classicism_strict Classicism.Proofs.functional_choice_r_implies_relational_choice_r.strict
-#classicism_types Classicism.Proofs.functionality_r_implies_tractarianism_r.strict
-#classicism_types Classicism.Proofs.gallin_comprehension_implies_nd.strict
+#classicism_strict Classicism.Proofs.functionality_r_implies_tractarianism_r.nec
+#classicism_strict Classicism.Proofs.functional_choice_r_implies_relational_choice_r.nec
+#classicism_types Classicism.Proofs.functionality_r_implies_tractarianism_r.nec
+#classicism_types Classicism.Proofs.gallin_comprehension_implies_nd.nec
 
-/-- The strict statement of a record is the paper's, with each principle read in the
-paper's vocabulary: Functionality with `imp` and `SRel`. -/
-example : type_of% Classicism.Proofs.functionality_r_implies_tractarianism_r.strict
-    = Classicism.imp P.Functionality.strict P.Tractarianism.strict := rfl
+/-- The strict statement of a record is the paper's, between instances read in the
+paper's vocabulary: Functionality at `σ → t` with `imp` and `SRel`. -/
+example {σ : Type} [Ty σ] :
+    type_of% (Classicism.Proofs.functionality_r_implies_tractarianism_r.strict (σ := σ))
+    = Classicism.imp (P.Functionality.strict σ Prop) (P.Tractarianism.strict σ) := rfl
 
-example : P.Functionality.strict
-    = ∀ {σ τ : Type} [Ty σ] [Strict.SRel τ] (X Y : σ → τ),
-        Classicism.imp (∀ z, X z = Y z) (X = Y) := rfl
+/-- The boxed record, `□Functionality at σ → t` implies `□Tractarianism at σ`, from the
+necessitation and `K`; this is how the map's necessitated records are read. -/
+example {σ : Type} [Ty σ] :
+    □ (P.Functionality σ Prop) → □ (P.Tractarianism σ) :=
+  modal_K _ _ (nec% (Classicism.Proofs.functionality_r_implies_tractarianism_r (σ := σ)))
+
+/-! ### No quantifier over types inside a formula
+
+A principle is a family of formulas indexed by types, and the type-system check rejects a
+proposition that quantifies over types, guarded or not, anywhere but in the leading
+telescope of a declaration. These would otherwise pass every other check. -/
+
+/-- A schema written as one proposition. -/
+def schemaAsProposition : Prop := ∀ {σ : Type} [Ty σ] (x : σ), x = x
+#classicism_types_expect_rejection schemaAsProposition
+
+/-- A hypothesis that is a schema. -/
+theorem schemaAsHypothesis (h : ∀ {σ : Type} [Ty σ] (x : σ), x = x) : ∀ p : Prop, p = p :=
+  fun p => h p
+#classicism_types_expect_rejection schemaAsHypothesis
+
+/-- Even a schema as the conclusion, with parameters in front. -/
+theorem schemaAsConclusion (p : Prop) : p → ∀ {σ : Type} [Ty σ] (x : σ), x = x :=
+  fun _ {_} [Ty _] x => rfl
+#classicism_types_expect_rejection schemaAsConclusion
 
 end Classicism.Tests
