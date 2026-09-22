@@ -101,8 +101,9 @@ abbrev bot : Formula Sig Γ :=
   conj (forall' (.var .zero)) (neg (forall' (.var .zero)))
 /-- `□P := (P = ⊤)`. -/
 abbrev box (p : Formula Sig Γ) : Formula Sig Γ := eq' p top
-/-- `◇P := ¬□¬P`. -/
-abbrev dia (p : Formula Sig Γ) : Formula Sig Γ := neg (box (neg p))
+/-- `◇P := ¬(P = ⊥)`, as the map and the strict layer define it; that this is `¬□¬P` is
+a theorem, `dia_eq_not_box_not`. -/
+abbrev dia (p : Formula Sig Γ) : Formula Sig Γ := neg (eq' p bot)
 
 /-! ### Purity
 

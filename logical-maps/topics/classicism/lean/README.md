@@ -387,8 +387,16 @@ The contextual form draws the `C`/`C⁻` line by itself: a closed derivation has
 variable of type `e` to instantiate `EG` at, so Existence at `e` is an axiom of `C` and
 not of `C⁻`, while at every relational type it is derivable from the closed term `λx. ⊤`.
 
-Next: the translator from strict proofs, its quotation of statements checked by `rfl`
-against the denotation.
+* `Meta/Quote.lean`, `Meta/Quoted.lean`: the **quoter**, the translator's first half.
+  `#classicism_quote foo` reads the strict statement of `foo` as a sentence with its type
+  parameters as object-type variables and declares the reflection theorem, that reading
+  the sentence back gives the statement, checked by the kernel by `rfl`. Run over the
+  library at build time: 90 of the 111 strict statements quote and reflect; the rest
+  have a parameter of class `SRel` or `SOrder`, whose operations at a type variable have
+  no object-language counterpart yet.
+
+Next: the class mirrors' object-language counterparts, by recursion on types, and then
+the translation of strict proofs into derivations.
 
 ## Files
 
@@ -414,6 +422,8 @@ Classicism/Meta/Derivation.lean derivability in H plus an axiom set, natural-ded
 Classicism/Meta/Axioms.lean     the eleven identities as sentences; C and C⁻ as axiom sets
 Classicism/Meta/Denotation.lean the standard model in Prop; soundness; C is consistent
 Classicism/Meta/Examples.lean   small computed checks, derivations, and reflection by rfl
+Classicism/Meta/Quote.lean      the quoter: strict statements as sentences, reflection by rfl
+Classicism/Meta/Quoted.lean     the quoter run over the library; home of foo.strict.quoted
 Classicism/Modal.lean           K, T, 4, NI, CBF, Intensionality and its corollaries
 Classicism/Order.lean           the algebraic order and its pointwise characterisation
 Classicism/Comprehension.lean   persistence, inextensibility and the rigidity variants

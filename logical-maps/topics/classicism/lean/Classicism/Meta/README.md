@@ -70,6 +70,8 @@ All were settled with Cian on 22 September 2026.
 | `Axioms.lean` | The eleven identities as sentences; `C.axiomsMinus` and `C.axioms`, the latter adding Existence at `e`; `C.Derivable`, `C.Theorem`. |
 | `Denotation.lean` | `Ty.denote`, `Env`, `Interp`, `Term.denote`: the standard reading of the syntax in Lean, with `t` as `Prop` and `e` as a chosen domain. Renaming and substitution commute with it; conversion preserves it; **soundness** of `Derivable`; the eleven identities hold in `Prop`, so `Prop` is a model of `C` and **`C` is consistent**. |
 | `Examples.lean` | A β-step by `rfl`, an η-step, purity decided, small derivations, and the reflection checks: sentences read back are the strict layer's own propositions, by `rfl`. |
+| `Quote.lean` | **The quoter**, first half of the translator: `#classicism_quote foo` reads the strict statement of `foo` as a sentence, `foo.quoted`, with type parameters as object-type variables, and declares `foo.reflect`, the `rfl` that reading it back gives the statement. `#classicism_quote_audit` runs it over a module. |
+| `Quoted.lean` | The quoter run over the library at build time; home of every `foo.strict.quoted` and `foo.strict.reflect`. |
 
 ## Conventions worth knowing
 
@@ -106,8 +108,28 @@ strict layer's proposition, by `rfl`: `⊤` reads back as `Strict.Top`, `→` as
 each axiom as the statement of the corresponding Lean axiom. That equation, `⟦⌜p⌝⟧ = p`,
 is what the translator's quotations will be held to.
 
+## The quoter
+
+`Quote.lean` is a meta-program reading a strict statement as object syntax: `Prop`, `e`,
+arrows and guarded type parameters as types; the connectives, quantifiers, identity, the
+paper's `imp`, `iff`, `Top`, `Bot`, `Box`, `Dia`, λ and application as terms; and any other
+constant of the library through its definition, so a principle such as
+`P.Functionality.strict` quotes through its body and a class operation at a concrete type
+through its instance. The sentence is built as Lean syntax and elaborated against
+`Sentence Signature.pure`, so an ill-formed quotation fails to elaborate. The quoter is not
+trusted: the reflection theorem `foo.reflect`, that reading the sentence back in the
+interpretation with domain `e` gives the strict statement with each type variable read as
+its denotation, is checked by the kernel by `rfl`. If the quoter produced the wrong
+sentence the check would fail, as it did once during development, when `◇` had been
+defined as `¬□¬` where the strict layer has `¬(· = ⊥)`.
+
+At present every strict statement quotes and reflects except those with a parameter of
+class `SRel` or `SOrder`: a class operation at a *type variable* has no object-language
+counterpart until the class mirrors are given one, by recursion on the type. That is the
+next piece.
+
 ## Next
 
-The translator from strict proofs: the quotation of statements first, checked by `rfl`
-against the denotation, then the translation of proofs; then Appendix A, and the
-coincidence with the Equivalence-rule system.
+The class mirrors' object-language counterparts, by recursion on types; then the
+translation of strict proofs into derivations; then Appendix A, and the coincidence with
+the Equivalence-rule system.

@@ -295,8 +295,22 @@ denotation, conversion preserves it, and `Derivable.sound` is proved by inductio
 derivation. The eleven identities are verified in `Prop` one by one, each by `propext` and
 `funext`, so `C.Theorem.holds` and `C.consistent` follow. The examples check by `rfl` that
 sentences read back are the strict layer's propositions: `⊤` is `Strict.Top`, `→` is
-`imp`, and the axioms are the statements of the Lean axioms. One Lean point worth
-recording: a rewrite whose motive's codomain is `Ty.denote D t` fails, since that is
+`imp`, and the axioms are the statements of the Lean axioms.
+
+Then the quoter (`Meta/Quote.lean`), the first half of the translator. It builds the
+sentence as syntax and elaborates it, so well-typedness is Lean's; and the reflection
+theorem is checked by the kernel by `rfl`, so a wrong quotation cannot pass. It caught one
+during development: `Term.dia` had been written as `¬□¬`, where the strict layer's `Dia`
+is `¬(· = ⊥)`, and seven statements failed to reflect until the definition matched. The
+reflection interpretation has domain the Lean type `e` itself, since statements mention
+it. Run over the library at build time (`Meta/Quoted.lean`): 90 of 111 strict statements
+in `Transformed`, and 16 of 22 in `Mirror`, quote and reflect; every failure is a
+parameter of class `SRel` or `SOrder`. Two primitives, `Prim.congr_arg` and
+`Prim.congr_fun`, had their codomain guarded by `Ty` rather than `RelTy`, which the type
+check had accepted because the arrow's own `Ty` instance was assumed; the quoter refused
+them, and they now say `RelTy`.
+
+One Lean point worth recording: a rewrite whose motive's codomain is `Ty.denote D t` fails, since that is
 `Prop` only after unfolding, so the formula-level lemmas are stated at `Prop` or applied
 through `Eq.mp`.
 
@@ -420,9 +434,10 @@ is Prior's, as the record says.
   Its one weakening: inside an elaboration auxiliary only the constant whitelist runs,
   because Lean drops instance arguments such an auxiliary does not literally use, so its
   statement can fall outside `R` while every use of it is inside.
-- **The metalogical layer has no translator yet.** Its syntax, `Derivable` and the
-  standard model exist, and `C` is proved consistent, but nothing yet connects a strict
-  proof to a derivation. The map's other models remain hand-verified, and the Maximalist
+- **The metalogical layer translates statements but not yet proofs.** Its syntax,
+  `Derivable`, the standard model and the quoter exist, and `C` is proved consistent, but
+  nothing yet connects a strict proof to a derivation, and statements with a class
+  parameter do not yet quote. The map's other models remain hand-verified, and the Maximalist
   principles are not yet stated.
 - **57 principles have no definition**, including every comprehension, choice,
   completeness, infinity, signature and fundamentality principle. Those need the lattice

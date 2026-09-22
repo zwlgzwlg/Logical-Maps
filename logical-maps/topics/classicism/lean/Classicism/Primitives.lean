@@ -116,9 +116,9 @@ theorem eq_subst {σ : Type} [Ty σ] {motive : σ → Prop} {a b : σ} (h₁ : a
     (h₂ : motive a) : motive b := ll a b motive h₁ h₂
 theorem eq_mp {α β : Prop} (h : α = β) (a : α) : β := ll α β (fun z => z) h a
 theorem eq_mpr {α β : Prop} (h : α = β) (b : β) : α := ll β α (fun z => z) (eq_symm h) b
-theorem congr_arg {σ ρ : Type} [Ty σ] [Ty ρ] [Ty (σ → ρ)] {a₁ a₂ : σ} (f : σ → ρ) (h : a₁ = a₂) :
+theorem congr_arg {σ ρ : Type} [Ty σ] [RelTy ρ] {a₁ a₂ : σ} (f : σ → ρ) (h : a₁ = a₂) :
     f a₁ = f a₂ := ll a₁ a₂ (fun z => f a₁ = f z) h (Eq.refl (f a₁))
-theorem congr_fun {σ ρ : Type} [Ty σ] [Ty ρ] [Ty (σ → ρ)] {f g : σ → ρ} (h : f = g) (a : σ) :
+theorem congr_fun {σ ρ : Type} [Ty σ] [RelTy ρ] {f g : σ → ρ} (h : f = g) (a : σ) :
     f a = g a := ll f g (fun k => f a = k a) h (Eq.refl (f a))
 theorem iff_of_eq {a b : Prop} (h : a = b) : a ↔ b :=
   ll a b (fun z => a ↔ z) h (Iff.intro (fun x => x) (fun x => x))
