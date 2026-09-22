@@ -268,6 +268,19 @@ than `Prop` that does not end in `propext` is not handled. Axiom reports are now
 the six Boolean Identities are bundled in the `BA Prop` instance, so a transformed theorem
 reports all six even if it uses one.
 
+## The metalogical layer, 22 September
+
+Begun after the shallow and strict layers were complete. Four modules under
+`Classicism/Meta/`, all ordinary Lean (this layer is a theory *of* Classicism's proofs, so
+`funext` and the other axioms are available and no audit runs over it): types as the mutual
+inductive of *Elimination* Appendix A with decidable equality; intrinsically typed de
+Bruijn terms over a signature, with the paper's six logical constants and Figure 1's
+abbreviations; renaming and substitution with the identity laws and all four composition
+laws proved; β and η as immediate, one-step and equivalence-closed relations, with
+conversion `≡` proved a congruence. The examples file checks a β-step by `rfl`. Nothing
+here is trusted for anything yet; the trusted base will be the definition of `Derivable`,
+which is next.
+
 ## Records proved
 
 Twenty results, each stated as the conjunction of its recorded premises implying its

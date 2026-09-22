@@ -21,3 +21,7 @@ import Classicism.Check
 import Classicism.TypeSystem
 import Classicism.Audit
 import Classicism.Tests
+import Classicism.Meta.Types
+import Classicism.Meta.Term
+import Classicism.Meta.Conversion
+import Classicism.Meta.Examples

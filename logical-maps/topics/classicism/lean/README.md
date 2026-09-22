@@ -304,6 +304,48 @@ depends on the identity proof, a recursor eliminating into data, and a bare gate
 whose body is an identity at a relational type other than `Prop` not ending in `propext`.
 Each is reported, never guessed at.
 
+## The metalogical layer
+
+The third layer, begun 22 September 2026, makes the terms of the object language, their
+derivations and their models into objects of Lean, so that statements *about* the language
+can be made: that a schema implies a schema, that a closed pure sentence is a theorem, that
+a sentence holds in a model. (Earlier notes called this the "deep" layer.) It lives under
+`Classicism/Meta/` and is ordinary Lean, with `funext` and the rest available, since it is
+not itself a proof in Classicism but a theory of Classicism's proofs. It is related to the
+other two layers by a denotation, to come, reading its terms as Lean propositions.
+
+Four decisions fixed its shape.
+
+* **The syntax is its own datatype**, not a subtype of Lean's `Expr`. Substitution and
+  conversion are things this layer proves theorems about, and `Expr`'s are implemented
+  behind `extern` with no equations; a typing relation for `Expr` would be the Lean4Lean
+  project; and the metalogical statements need a small closed grammar with decidable
+  notions of "closed" and "pure". The bridge to the shallow layer will be the standard
+  reflection pattern, a denotation checked by `rfl` per theorem.
+* **Terms are intrinsically typed**, `Term Σ Γ σ`, so an ill-typed term cannot be written.
+* **Variables are de Bruijn indices**, so α-equivalence is identity and only β and η remain.
+  No higher-order abstract syntax.
+* **The type system is fixed**, `e` and `t` the only base types, with nonlogical vocabulary
+  entering through a signature `Σ` of constants; the pure language is the empty signature.
+
+What exists so far:
+
+* `Meta/Types.lean`: types and relational types as the mutual inductive of *Elimination*,
+  Appendix A, with decidable equality and the case split every type is `e` or
+  `σ₁ → … → σₙ → t`, which the shallow layer's classes could not perform.
+* `Meta/Term.lean`: signatures, contexts, variables and terms, with the paper's logical
+  constants `∧`, `∨`, `¬`, `∀σ`, `∃σ`, `=σ` as constants and its abbreviations `→`, `↔`,
+  `⊤`, `⊥`, `□`, `◇` as definitions; purity; renaming and substitution as maps on variables
+  lifted through binders, with the identity laws and the four composition laws
+  (`rename_rename`, `subst_rename`, `rename_subst`, `subst_subst`).
+* `Meta/Conversion.lean`: β and η in three grades, the immediate conversion of a redex,
+  the one-step closure `Step` that applies it anywhere in a term, and the equivalence
+  closure; `Conv` is βη-conversion, written `≡`, and is proved a congruence.
+* `Meta/Examples.lean`: a β-step computing by `rfl`, an η-step, and purity decided.
+
+Next: derivations, natural-deduction style with Equivalence as a constructor whose premise
+is a closed derivation; then the denotation and the translator.
+
 ## Files
 
 ```
@@ -321,6 +363,10 @@ Classicism/Primitives.lean      necessitations of the core proof constants; Ref,
 Classicism/Transform.lean       #classicism_transform: Appendix A as an induction on proof terms
 Classicism/Mirror.lean          SRel and SOrder, the strict mirrors of the classes Rel and Order
 Classicism/Transformed.lean     the transformer run over the library; home of foo.nec and foo.strict
+Classicism/Meta/Types.lean      metalogical layer: the types of R as an inductive
+Classicism/Meta/Term.lean       intrinsically typed de Bruijn terms; renaming, substitution
+Classicism/Meta/Conversion.lean β, η, one-step and equivalence closures; ≡
+Classicism/Meta/Examples.lean   small computed checks
 Classicism/Modal.lean           K, T, 4, NI, CBF, Intensionality and its corollaries
 Classicism/Order.lean           the algebraic order and its pointwise characterisation
 Classicism/Comprehension.lean   persistence, inextensibility and the rigidity variants
