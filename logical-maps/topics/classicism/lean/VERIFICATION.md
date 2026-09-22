@@ -286,8 +286,19 @@ eleven identities as sentences and defines `C.axiomsMinus` and `C.axioms`. The e
 derive `⊤`, each axiom, `∃F` from `∀F` in a context, `∧`-symmetry from a hypothesis, and
 Existence at a relational type from `λx. ⊤`. The definition of `Derivable` is the trusted
 base of this layer: what it means for a sentence to be a theorem of Classicism is that
-inductive, and nothing else. Its soundness with respect to a denotation is the next
-thing to establish.
+inductive, and nothing else.
+
+Then `Meta/Denotation.lean`: the denotation of types, environments (an inductive family,
+after nested pairs proved not reducibly equal to the context's reading and broke every
+rewrite), interpretations, and terms; renaming and substitution commute with the
+denotation, conversion preserves it, and `Derivable.sound` is proved by induction on the
+derivation. The eleven identities are verified in `Prop` one by one, each by `propext` and
+`funext`, so `C.Theorem.holds` and `C.consistent` follow. The examples check by `rfl` that
+sentences read back are the strict layer's propositions: `⊤` is `Strict.Top`, `→` is
+`imp`, and the axioms are the statements of the Lean axioms. One Lean point worth
+recording: a rewrite whose motive's codomain is `Ty.denote D t` fails, since that is
+`Prop` only after unfolding, so the formula-level lemmas are stated at `Prop` or applied
+through `Eq.mp`.
 
 ## Records proved
 
@@ -409,9 +420,9 @@ is Prior's, as the record says.
   Its one weakening: inside an elaboration auxiliary only the constant whitelist runs,
   because Lean drops instance arguments such an auxiliary does not literally use, so its
   statement can fall outside `R` while every use of it is inside.
-- **The metalogical layer has no denotation and no translator yet.** Its syntax and
-  `Derivable` exist, but nothing yet connects a strict proof to a derivation, and no model
-  evidence is supplied. The models on the map remain hand-verified, and the Maximalist
+- **The metalogical layer has no translator yet.** Its syntax, `Derivable` and the
+  standard model exist, and `C` is proved consistent, but nothing yet connects a strict
+  proof to a derivation. The map's other models remain hand-verified, and the Maximalist
   principles are not yet stated.
 - **57 principles have no definition**, including every comprehension, choice,
   completeness, infinity, signature and fundamentality principle. Those need the lattice

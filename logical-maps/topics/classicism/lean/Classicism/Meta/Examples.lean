@@ -1,4 +1,5 @@
-import Classicism.Meta.Axioms
+import Classicism.Meta.Denotation
+import Classicism.Strict
 
 /-!
 # Examples for the syntax
@@ -6,7 +7,8 @@ import Classicism.Meta.Axioms
 Small checks that the definitions compute as intended: a β-step reduces by `rfl`, the
 paper's abbreviations have the types they should, purity is decided, and a few
 derivations go through, among them the axioms as theorems and Existence at a relational
-type from a closed term.
+type from a closed term. The last group is the **reflection** check: a sentence read back
+through the denotation is, by `rfl`, the Lean proposition the strict layer writes.
 -/
 
 namespace Classicism.Meta.Examples
@@ -25,7 +27,7 @@ example (y : Var [Ty.e] Ty.e) :
 
 /-- `∀x. Wise x → Wise x` is a sentence over `sig₁`, and is not pure. -/
 def wiseSelf : Sentence sig₁ :=
-  forall' (imp (.app (.const ()) (.var .zero)) (.app (.const ()) (.var .zero)))
+  forall' (Term.imp (.app (.const ()) (.var .zero)) (.app (.const ()) (.var .zero)))
 
 example : wiseSelf.pure = false := by decide
 
@@ -73,5 +75,49 @@ open Derivable in
 example {Ax : AxiomSet sig₁} (p q : Formula sig₁ []) :
     Derivable Ax [conj p q] (conj q p) :=
   andI (andE₂ hyp₀) (andE₁ hyp₀)
+
+/-! ### Reflection: the denotation reads back the strict layer's own propositions
+
+These are the checks the translator's quotations will be held to. `⌜p⌝` is written by
+hand here; each `rfl` says that reading it in the standard interpretation gives exactly
+the proposition `p` of the strict layer. -/
+
+/-- The standard interpretation of the pure language over a domain. -/
+abbrev std (D : Type) : Interp Signature.pure := Interp.ofDomain D
+
+/-- `⊤`, read back, is the strict layer's `Top`, which is `(∀p. p) ∨ ¬(∀p. p)`. -/
+example (D : Type) : Sentence.holds (std D) top = Classicism.Strict.Top := rfl
+
+/-- `⊥` likewise. -/
+example (D : Type) : Sentence.holds (std D) bot = Classicism.Strict.Bot := rfl
+
+/-- `□⊤`, read back, is `Strict.Box Top`. -/
+example (D : Type) : Sentence.holds (std D) (box top) = Classicism.Strict.Box Classicism.Strict.Top :=
+  rfl
+
+/-- The paper's `→` reads back as the strict layer's `imp`. -/
+example (D : Type) (p q : Sentence Signature.pure) :
+    Sentence.holds (std D) (Term.imp p q)
+      = Classicism.imp (Sentence.holds (std D) p) (Sentence.holds (std D) q) :=
+  rfl
+
+/-- Commutativity of `∧`, read back, is the statement of the Lean axiom
+`Classicism.Axiomatic.commutativity_and`. -/
+example (D : Type) :
+    Sentence.holds (std D) C.commutativity_and = ((fun p q : Prop => p ∧ q) = (fun p q => q ∧ p)) :=
+  rfl
+
+/-- Absorption-∨∀ at `e`, read back, is the Lean axiom's statement at `D`. -/
+example (D : Type) :
+    Sentence.holds (std D) (C.absorption_or_forall Ty.e)
+      = ((fun (X : D → Prop) y => X y ∨ ∀ x, X x) = (fun X y => X y)) :=
+  rfl
+
+/-- Existence at `e`, read back, over the naturals. -/
+example : Sentence.holds (std Nat) C.existence_e = ∃ x : Nat, x = x := rfl
+
+/-- And soundness makes such readings theorems: `⊤` holds over any domain. -/
+example (D : Type) : Sentence.holds (std D) top :=
+  C.TheoremMinus.holds (std D) Derivable.top
 
 end Classicism.Meta.Examples

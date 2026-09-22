@@ -364,6 +364,12 @@ What exists so far:
   rules for the defined `→` and `↔` are derived.
 * `Meta/Axioms.lean`: the eleven identities as sentences, `C.axiomsMinus`, and
   `C.axioms` adding Existence at `e`; `C.Derivable`, `C.Theorem`.
+* `Meta/Denotation.lean`: the **denotation** of types and terms in Lean, `t` as `Prop`
+  and `e` as a chosen domain, which is the paper's full Henkin model; renaming and
+  substitution commute with it and conversion preserves it; **soundness** of `Derivable`;
+  the eleven identities hold in `Prop`, so **`C` is consistent**. The reflection examples
+  check by `rfl` that a sentence read back is the strict layer's own proposition, `⊤` as
+  `Strict.Top`, `→` as `imp`, an axiom as the Lean axiom's statement.
 
 Two decisions taken with this step. **Derivations are not a separate datatype.** An
 inductive predicate is by definition the smallest relation closed under its rules, which
@@ -381,7 +387,8 @@ The contextual form draws the `C`/`C⁻` line by itself: a closed derivation has
 variable of type `e` to instantiate `EG` at, so Existence at `e` is an axiom of `C` and
 not of `C⁻`, while at every relational type it is derivable from the closed term `λx. ⊤`.
 
-Next: the denotation into Lean's `Prop`, and the translator from strict proofs.
+Next: the translator from strict proofs, its quotation of statements checked by `rfl`
+against the denotation.
 
 ## Files
 
@@ -405,7 +412,8 @@ Classicism/Meta/Term.lean       intrinsically typed de Bruijn terms; renaming, s
 Classicism/Meta/Conversion.lean β, η, one-step and equivalence closures; ≡
 Classicism/Meta/Derivation.lean derivability in H plus an axiom set, natural-deduction form
 Classicism/Meta/Axioms.lean     the eleven identities as sentences; C and C⁻ as axiom sets
-Classicism/Meta/Examples.lean   small computed checks and derivations
+Classicism/Meta/Denotation.lean the standard model in Prop; soundness; C is consistent
+Classicism/Meta/Examples.lean   small computed checks, derivations, and reflection by rfl
 Classicism/Modal.lean           K, T, 4, NI, CBF, Intensionality and its corollaries
 Classicism/Order.lean           the algebraic order and its pointwise characterisation
 Classicism/Comprehension.lean   persistence, inextensibility and the rigidity variants

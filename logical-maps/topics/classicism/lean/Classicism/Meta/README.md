@@ -68,7 +68,8 @@ All were settled with Cian on 22 September 2026.
 | `Conversion.lean` | β and η in three grades: the immediate conversion of a redex, the one-step closure `Step`, and the equivalence closure. `Conv`, written `≡`, is βη-conversion, proved a congruence. |
 | `Derivation.lean` | `Derivable Ax Δ p`: hypotheses, axioms, the rules for `∧`, `∨`, `¬` with excluded middle, `UI`, `Gen`, `EG`, `Inst`, `Ref`, `LL`, conversion. Weakening and monotonicity admissible; `→` and `↔` rules derived. |
 | `Axioms.lean` | The eleven identities as sentences; `C.axiomsMinus` and `C.axioms`, the latter adding Existence at `e`; `C.Derivable`, `C.Theorem`. |
-| `Examples.lean` | A β-step by `rfl`, an η-step, purity decided, and small derivations. |
+| `Denotation.lean` | `Ty.denote`, `Env`, `Interp`, `Term.denote`: the standard reading of the syntax in Lean, with `t` as `Prop` and `e` as a chosen domain. Renaming and substitution commute with it; conversion preserves it; **soundness** of `Derivable`; the eleven identities hold in `Prop`, so `Prop` is a model of `C` and **`C` is consistent**. |
+| `Examples.lean` | A β-step by `rfl`, an η-step, purity decided, small derivations, and the reflection checks: sentences read back are the strict layer's own propositions, by `rfl`. |
 
 ## Conventions worth knowing
 
@@ -93,7 +94,20 @@ existentially neutral at `e` by itself, the paper's `H⁻`. At every relational 
 closed term `λx. ⊤` exists and Existence is derivable. That is the line the shallow layer
 drew with the axiom `e_exists`, here for a structural reason.
 
+## The denotation
+
+`Term.denote I` reads a term as a Lean value, given an interpretation `I` of `e` and of the
+constants; `t` is `Prop`, so a sentence denotes a proposition. With `Prop` as `t` this is
+the paper's full Henkin model. Soundness says a theorem of an axiom set that holds in `I`
+holds in `I`; the eleven identities hold in `Prop`, each by `propext` and `funext`, so
+Lean's `Prop` is a model of Classicism and `C` proves no falsehood of it, in particular
+not `⊥`. The reflection examples check that reading back a sentence gives exactly the
+strict layer's proposition, by `rfl`: `⊤` reads back as `Strict.Top`, `→` as `imp`, and
+each axiom as the statement of the corresponding Lean axiom. That equation, `⟦⌜p⌝⟧ = p`,
+is what the translator's quotations will be held to.
+
 ## Next
 
-The denotation into `Prop`, with soundness of `Derivable`; the translator from strict
-proofs; then Appendix A, and the coincidence with the Equivalence-rule system.
+The translator from strict proofs: the quotation of statements first, checked by `rfl`
+against the denotation, then the translation of proofs; then Appendix A, and the
+coincidence with the Equivalence-rule system.
