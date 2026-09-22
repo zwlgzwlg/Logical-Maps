@@ -35,6 +35,17 @@ Neither affected a proof, but both made statements stronger and wider than the m
 schemata, which is exactly the sort of drift the check is for. The original 20 September
 report follows.
 
+**Gate bypass, found and closed the same evening.** The gate recognised `propext`,
+`funext` and `Quot.sound` only as the head of an application. Bound to a local name, as in
+`have pe := @propext; pe ⟨fun _ => trivial, fun _ => h⟩`, the constant is an argument and
+the body applies the variable `pe`, so no gated head is ever seen, and the walk did not
+descend into `opaque` bodies at all. Both routes certified the Fregean Axiom `p → p = True`
+as a theorem of `C⁻`, and the `funext` alias certified Functionality; the type check caught
+the `funext` and `Quot.sound` aliases only by accident of their binder types. The walk now
+rejects any bare occurrence of a gated primitive and descends into `opaque`s, which makes
+every occurrence in the reachable term graph either checked or rejected. Five negative
+controls in `Tests.lean` pin it. The library is unaffected: all 124 theorems still pass.
+
 This is the first stage of the Lean layer. It establishes the setting and the
 discipline, and ports a connected fragment of the map to test both. It does not yet
 certify anything in the database: every classicism record still reads `lean: none`, and

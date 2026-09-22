@@ -297,7 +297,10 @@ and reports an error unless both hold:
    `e_exists`, `em`. So `Classical.choice`, `sorryAx` and the alternative axioms of
    `Classicism.Axiomatization` are all rejected.
 2. **The gate.** Every `propext` and `funext` occurrence reached has a closed argument,
-   in the sense above. A `have`-bound proof is looked through to its value.
+   in the sense above. A `have`-bound proof is looked through to its value. A gated
+   primitive that occurs other than as the head of an application, say bound to a local
+   name by `have`, is rejected outright, since its argument is never seen; and `opaque`
+   bodies are walked like theorem bodies.
 
 `#classicism_audit Mod₁ Mod₂ …` runs it over every theorem declared in those modules.
 `Classicism/Audit.lean` runs the audit over the whole library, so `lake build` fails if

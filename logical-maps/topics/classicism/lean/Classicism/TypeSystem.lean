@@ -249,6 +249,7 @@ language, its logic, or the formalisation's own metalanguage"
     match env.find? c with
     | some (.thmInfo v) => tvisit c v.value
     | some (.defnInfo v) => tvisit c v.value
+    | some (.opaqueInfo v) => tvisit c v.value
     | _ => pure ()
 
 /-- Every bound type variable in a declaration's *statement* must be guarded by a `Ty`,

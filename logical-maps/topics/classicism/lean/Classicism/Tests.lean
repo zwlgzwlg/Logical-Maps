@@ -80,6 +80,40 @@ theorem viaSmuggledLemma (p q : Prop) (h : p ↔ q) : □ (p = q) :=
 #classicism_expect_rejection fregeanAxiomViaNec fregeanAxiomViaBoxIdentity
 #classicism_expect_rejection viaSimp viaSorry viaSmuggledLemma
 
+/-! ### The gated primitive reached other than by name
+
+The gate recognises `propext`, `funext` and `Quot.sound` as the head of an application.
+Bound to a local name, or hidden in an `opaque`, the constant never stands at a head, and
+the application in the body has a variable as its head. Each proof below was certified as
+a theorem of `C⁻` before the walk rejected a bare occurrence of a gated primitive and
+descended into `opaque` bodies. They are the Fregean Axiom and Functionality again. -/
+
+/-- `propext` under a `have`-bound alias. `have` is `letFun`, so `@propext` is an argument
+and the body applies the local `pe`. -/
+theorem fregeanViaHave (p : Prop) (h : p) : p = True :=
+  have pe := @propext; pe ⟨fun _ => trivial, fun _ => h⟩
+
+/-- The same through `let`, which is a separate node of the walk. -/
+theorem fregeanViaLet (p : Prop) (h : p) : p = True :=
+  let pe := @propext; pe ⟨fun _ => trivial, fun _ => h⟩
+
+/-- `funext` under an alias: Functionality. -/
+theorem functionalityViaHave {σ : Type} [Ty σ] (X Y : σ → Prop) (h : ∀ z, X z = Y z) :
+    X = Y :=
+  have fe := @funext; fe h
+
+/-- The alias inside a global lemma, reached transitively. -/
+theorem fregeanViaAliasLemma (p : Prop) (h : p) : □ p := fregeanViaHave p h
+
+/-- An `opaque` body is a proof term like any other. `#print axioms` sees through it, so
+the walk must too. -/
+opaque hiddenFregean : ∀ p : Prop, p → p = True :=
+  fun _ h => propext ⟨fun _ => trivial, fun _ => h⟩
+theorem fregeanViaOpaque (p : Prop) (h : p) : p = True := hiddenFregean p h
+
+#classicism_expect_rejection fregeanViaHave fregeanViaLet functionalityViaHave
+#classicism_expect_rejection fregeanViaAliasLemma fregeanViaOpaque
+
 /-! ### Positive controls
 
 These must pass: the gate has to admit the shapes the library actually relies on. -/

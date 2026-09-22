@@ -22,6 +22,14 @@ and reports an error unless two conditions hold.
    applied to a hypothesis is the Fregean Axiom and a `funext` applied to one is
    Functionality, and both are rejected here.
 
+   The gate identifies a rule by the head of an application, so a gated primitive that
+   occurs anywhere else is rejected outright: bound to a local name by `have` or `let`,
+   or passed as an argument, `propext` would be applied through a variable and its
+   argument never seen. With that rule every occurrence of `propext`, `funext` or
+   `Quot.sound` in the reachable term graph is either checked or rejected, and the graph
+   is complete because every constant that carries a proof term, theorems, definitions
+   and `opaque`s alike, is descended into.
+
 The walk visits core theorems too, so a core lemma that applies `funext` to a
 hypothesis (for instance `forall_congr`, which `simp` uses) is rejected when reached.
 
@@ -76,6 +84,11 @@ abbrev M := StateRefT State MetaM
 def report (msg : MessageData) : M Unit :=
   modify fun s => { s with errors := s.errors.push msg }
 
+/-- The constants the gate polices. Each may appear only as the head of a fully applied
+application, where its argument is checked (`propext`, `funext`) or the use is rejected
+(`Quot.sound`). -/
+def gatedPrimitives : List Name := [``propext, ``funext, ``Quot.sound]
+
 /-- The argument of `propext`/`funext` may mention object variables (whose types are
 types) but no proof variables (whose types are propositions). -/
 partial def checkClosed (decl : Name) (rule : Name) (h : Expr) : M Unit := do
@@ -101,7 +114,10 @@ partial def visit (decl : Name) (e : Expr) : M Unit := do
       else report m!"{decl}: partially applied `funext`"
     else if f.isConstOf ``Quot.sound then
       report m!"{decl}: direct use of `Quot.sound`"
-    visit decl f
+    else
+      -- A gated head has been dealt with above; visiting it again would trip the
+      -- bare-occurrence check in the `.const` case.
+      visit decl f
     for a in args do visit decl a
   | .lam n t b bi =>
     visit decl t
@@ -115,7 +131,14 @@ partial def visit (decl : Name) (e : Expr) : M Unit := do
     withLetDecl n t v fun x => visit decl (b.instantiate1 x)
   | .mdata _ b => visit decl b
   | .proj _ _ b => visit decl b
-  | .const c _ => visitConst c
+  | .const c _ =>
+    -- A gated primitive that is not the head of an application has escaped the argument
+    -- check, whatever it is later applied to: `have pe := @propext; pe h` applies it
+    -- through the variable `pe`. Reject the bare occurrence.
+    if gatedPrimitives.contains c then
+      report m!"{decl}: `{c}` occurs other than as the head of an application, so its \
+argument cannot be checked"
+    else visitConst c
   | _ => pure ()
 where
   visitConst (c : Name) : M Unit := do
@@ -127,6 +150,8 @@ where
     match (← getEnv).find? c with
     | some (.thmInfo v) => visit c v.value
     | some (.defnInfo v) => visit c v.value
+    -- An `opaque` body is a proof term like any other, and `collectAxioms` sees it.
+    | some (.opaqueInfo v) => visit c v.value
     | _ => pure ()
 
 /-- Run both checks on a declaration; return the errors and the axioms used. -/
