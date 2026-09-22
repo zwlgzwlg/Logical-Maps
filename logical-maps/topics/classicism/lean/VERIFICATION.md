@@ -310,6 +310,18 @@ parameter of class `SRel` or `SOrder`. Two primitives, `Prim.congr_arg` and
 check had accepted because the arrow's own `Ty` instance was assumed; the quoter refused
 them, and they now say `RelTy`.
 
+Then `Meta/Relational.lean`: the relational operations by recursion on the type, the
+instances `instSRelDenote` and `instSOrderDenote` on the readings of relational types by
+the same recursion, and seven lemmas by induction on the type that reading each operation
+back gives the strict layer's. The quoter now sends a class parameter to a variable of
+type `RTy` and a class operation to the recursive one, and proves reflection by
+`reflect_by_rewriting`, a `simp only` with those lemmas followed by `rfl` for the
+unfolding of `⟦t⟧` to `Prop`. A tactic failure is fatal: an earlier version had let an
+elaboration error become `sorry` and reported success, which was caught when a residual
+goal was printed; `Term.withoutErrToSorry` and a `hasSorry` check now guard it. With this,
+**every strict statement quotes and reflects**: 111 of 111 in `Transformed`, 22 of 22 in
+`Mirror`.
+
 One Lean point worth recording: a rewrite whose motive's codomain is `Ty.denote D t` fails, since that is
 `Prop` only after unfolding, so the formula-level lemmas are stated at `Prop` or applied
 through `Eq.mp`.
@@ -435,9 +447,9 @@ is Prior's, as the record says.
   because Lean drops instance arguments such an auxiliary does not literally use, so its
   statement can fall outside `R` while every use of it is inside.
 - **The metalogical layer translates statements but not yet proofs.** Its syntax,
-  `Derivable`, the standard model and the quoter exist, and `C` is proved consistent, but
-  nothing yet connects a strict proof to a derivation, and statements with a class
-  parameter do not yet quote. The map's other models remain hand-verified, and the Maximalist
+  `Derivable`, the standard model and the quoter exist, every strict statement quotes and
+  reflects, and `C` is proved consistent, but nothing yet connects a strict proof to a
+  derivation. The map's other models remain hand-verified, and the Maximalist
   principles are not yet stated.
 - **57 principles have no definition**, including every comprehension, choice,
   completeness, infinity, signature and fundamentality principle. Those need the lattice

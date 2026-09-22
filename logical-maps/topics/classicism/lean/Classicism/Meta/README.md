@@ -70,6 +70,7 @@ All were settled with Cian on 22 September 2026.
 | `Axioms.lean` | The eleven identities as sentences; `C.axiomsMinus` and `C.axioms`, the latter adding Existence at `e`; `C.Derivable`, `C.Theorem`. |
 | `Denotation.lean` | `Ty.denote`, `Env`, `Interp`, `Term.denote`: the standard reading of the syntax in Lean, with `t` as `Prop` and `e` as a chosen domain. Renaming and substitution commute with it; conversion preserves it; **soundness** of `Derivable`; the eleven identities hold in `Prop`, so `Prop` is a model of `C` and **`C` is consistent**. |
 | `Examples.lean` | A β-step by `rfl`, an η-step, purity decided, small derivations, and the reflection checks: sentences read back are the strict layer's own propositions, by `rfl`. |
+| `Relational.lean` | The relational operations `∧_τ`, `¬_τ`, `∨_τ`, coextension, the pointwise box and implication, and `⊤_τ`, `≤_τ`, as **functions on terms by recursion on the type**; the standard reading's `SRel` and `SOrder` instances by the same recursion; and one lemma per operation, by induction on the type, that reading it back gives the strict layer's. Purpose four of this layer, at work. |
 | `Quote.lean` | **The quoter**, first half of the translator: `#classicism_quote foo` reads the strict statement of `foo` as a sentence, `foo.quoted`, with type parameters as object-type variables, and declares `foo.reflect`, the `rfl` that reading it back gives the statement. `#classicism_quote_audit` runs it over a module. |
 | `Quoted.lean` | The quoter run over the library at build time; home of every `foo.strict.quoted` and `foo.strict.reflect`. |
 
@@ -123,13 +124,16 @@ its denotation, is checked by the kernel by `rfl`. If the quoter produced the wr
 sentence the check would fail, as it did once during development, when `◇` had been
 defined as `¬□¬` where the strict layer has `¬(· = ⊥)`.
 
-At present every strict statement quotes and reflects except those with a parameter of
-class `SRel` or `SOrder`: a class operation at a *type variable* has no object-language
-counterpart until the class mirrors are given one, by recursion on the type. That is the
-next piece.
+A strict statement with a parameter of class `SRel` or `SOrder` quotes through
+`Relational.lean`: the parameter becomes a variable of type `RTy`, each class operation at
+it becomes the object-language operation by recursion on the type, and the reflection
+interpretation reads the variable with the strict layer's instance, `instSRelDenote`.
+Reflection is then not `rfl`, since both sides are stuck on the type variable, but
+rewriting with the lemma for each operation, `reflect_by_rewriting`, and a failure of that
+tactic is fatal, not turned into `sorry`. **Every strict statement of the library quotes
+and reflects**, 111 of 111 in `Transformed` and 22 of 22 in `Mirror`.
 
 ## Next
 
-The class mirrors' object-language counterparts, by recursion on types; then the
-translation of strict proofs into derivations; then Appendix A, and the coincidence with
-the Equivalence-rule system.
+The translation of strict proofs into derivations; then Appendix A, and the coincidence
+with the Equivalence-rule system.

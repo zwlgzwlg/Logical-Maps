@@ -1,6 +1,5 @@
 import Lean
-import Classicism.Meta.Denotation
-import Classicism.Strict
+import Classicism.Meta.Relational
 
 /-!
 # Quotation of statements
@@ -26,12 +25,14 @@ The vocabulary of strict statements: `Prop`, `e`, arrows, local variables, `∧`
 `∀`, `∃`, `=`, the paper's `imp`, `iff`, `Top`, `Bot`, `Box`, `Dia`, `everything`, and
 λ-abstraction and application. Any other constant of this library is unfolded and the
 result quoted; so a definition such as `P.Functionality.strict` quotes through its body.
-A class operation at a *concrete* type unfolds through its instance; at a type variable it
-does not, and that is the one thing reported as unquotable for now, the class mirrors'
-object-language counterparts being the next piece of work.
+A class operation of `SRel`, at any type, becomes the corresponding operation of
+`Meta/Relational.lean`, defined by recursion on the type; at a concrete type that computes
+to the pointwise formula, and at a type variable it stays as `andR τ'` and the like.
 
-Type parameters guarded by `Ty` or `RelTy` become variables of type `Ty` or `RTy`; those
-guarded by `SRel` or `SOrder` wait on that same piece.
+Type parameters guarded by `Ty` become variables of type `Ty`; those guarded by `RelTy`,
+`SRel` or `SOrder`, variables of type `RTy`, whose readings carry the strict layer's
+instances by `instSRelDenote`. Reflection is then no longer `rfl` but rewriting with the
+lemma for each operation, `reflect_by_rewriting`.
 -/
 
 open Lean Meta Elab Term Command
@@ -108,6 +109,19 @@ private def withObj {α} (nm : Name) (ty : Expr) (k : Expr → QM α) : QM α :=
   withLocalDeclD nm ty fun x =>
     withReader (fun c => { c with objVars := (x.fvarId!, σ) :: c.objVars }) (k x)
 
+mutual
+
+/-- A relational operation of the strict layer's class `SRel`, at the type `τ`: the
+object-language operation `op τ' …` of `Meta/Relational.lean`, by recursion on the type,
+whether `τ` is a type variable or a concrete type. -/
+partial def relOp (τ : Expr) (op : Name) (args : Array Expr) : QM (TSyntax `term) := do
+  let ρ ← quoteRTy τ
+  let ρs ← exprToSyntax ρ
+  let mut acc ← `($(mkIdent op) $ρs)
+  for a in args do
+    acc ← `($acc $(← quoteTerm a))
+  return acc
+
 /-- Read a strict statement, or a subterm of one, as the syntax of an object term. -/
 partial def quoteTerm (e : Expr) : QM (TSyntax `term) := do
   let e ← instantiateMVars e
@@ -162,6 +176,13 @@ partial def quoteTerm (e : Expr) : QM (TSyntax `term) := do
       -- `∃ F` with `F` not a lambda: `∃σ F`
       let σs ← exprToSyntax (← quoteTy α)
       `(Classicism.Meta.Term.app (Classicism.Meta.Term.ex $σs) $(← quoteTerm F))
+    | (``Classicism.Strict.SRel.constP, #[τ, _, p]) => relOp τ ``Classicism.Meta.Term.constR #[p]
+    | (``Classicism.Strict.SRel.neg, #[τ, _, X]) => relOp τ ``Classicism.Meta.Term.negR #[X]
+    | (``Classicism.Strict.SRel.and, #[τ, _, X, Y]) => relOp τ ``Classicism.Meta.Term.andR #[X, Y]
+    | (``Classicism.Strict.SRel.or, #[τ, _, X, Y]) => relOp τ ``Classicism.Meta.Term.orR #[X, Y]
+    | (``Classicism.Strict.SRel.coext, #[τ, _, X, Y]) => relOp τ ``Classicism.Meta.Term.coextR #[X, Y]
+    | (``Classicism.Strict.SRel.boxAt, #[τ, _, X]) => relOp τ ``Classicism.Meta.Term.boxR #[X]
+    | (``Classicism.Strict.SRel.boxImp, #[τ, _, X, Y]) => relOp τ ``Classicism.Meta.Term.boxImpR #[X, Y]
     | _ =>
       let f := e.getAppFn
       let args := e.getAppArgs
@@ -184,8 +205,25 @@ partial def quoteTerm (e : Expr) : QM (TSyntax `term) := do
           -- a projection of an instance at a concrete type reduces under `whnfR`
           let e'' ← whnfR e
           if e'' != e then quoteTerm e''
-          else throwError "quote: cannot read {e} as an object term; a class operation \
-at a type variable has no object-language counterpart yet"
+          else throwError "quote: cannot read {e} as an object term"
+
+end
+
+/-- Reflection for a statement with a relational operation at a type variable: unfold the
+denotation and read each operation back through its lemma. -/
+macro "reflect_by_rewriting" : tactic => `(tactic|
+  (intros
+   simp only [Classicism.Meta.Sentence.holds, Classicism.Meta.Term.denote,
+     Classicism.Meta.Var.denote, Classicism.Meta.Term.denote_constR,
+     Classicism.Meta.Term.denote_negR, Classicism.Meta.Term.denote_andR,
+     Classicism.Meta.Term.denote_orR, Classicism.Meta.Term.denote_coextR,
+     Classicism.Meta.Term.denote_boxR, Classicism.Meta.Term.denote_boxImpR,
+     Classicism.Meta.Term.denote_weaken, Classicism.imp, Classicism.iff,
+     Classicism.Strict.Top, Classicism.Strict.Bot, Classicism.Strict.Box, Classicism.Strict.Dia,
+     Classicism.Strict.everything, Classicism.Strict.SRel.top, Classicism.Strict.SRel.bot,
+     Classicism.Strict.SRel.le]
+   -- what remains differs only by unfolding the readings of types, `⟦t⟧` to `Prop`
+   try rfl))
 
 /-! ### The command -/
 
@@ -210,10 +248,11 @@ def quoteStatement (ty : Expr) : TermElabM (Expr × Expr × Expr) := do
       else if let some cls := (← isClass? t) then
         let σ := t.getAppArgs[0]!
         if cls == ``Classicism.Ty then pure ()
-        else if cls == ``Classicism.RelTy then
-          -- a `RelTy` guard on a parameter makes it a relational-type variable
+        else if cls == ``Classicism.RelTy || cls == ``Classicism.Strict.SRel
+            || cls == ``Classicism.Strict.SOrder then
+          -- a relational guard on a parameter makes it a relational-type variable
           if let some idx := kinds.findIdx? (·.1 == σ) then kinds := kinds.set! idx (σ, .rty)
-        else throwError "quote: a parameter of class {cls} has no object-language reading yet"
+        else throwError "quote: a parameter of class {cls} has no object-language reading"
         insts := insts.push x; k := k + 1
       else break
     let stmt ← mkForallFVars (xs.extract k xs.size) body
@@ -255,11 +294,33 @@ def quoteStatement (ty : Expr) : TermElabM (Expr × Expr × Expr) := do
               else
                 let cls := d.getAppFn.constName!
                 let subject := d.getAppArgs[0]!
-                pure (if cls == ``Classicism.Ty then tyMk subject else relTyMk subject)
+                if cls == ``Classicism.Ty then pure (tyMk subject)
+                else if cls == ``Classicism.RelTy then pure (relTyMk subject)
+                else
+                  -- `SRel`/`SOrder` on the reading of a relational-type variable: the
+                  -- recursive instances of `Meta/Relational.lean`
+                  let some (_, ρ) := subject.app2? ``Classicism.Meta.RTy.denote
+                    | throwError "quote: an instance of {cls} on {subject}, which is not the reading of a type variable"
+                  if cls == ``Classicism.Strict.SRel then
+                    pure (mkApp2 (mkConst ``Classicism.Meta.instSRelDenote) D ρ)
+                  else pure (mkApp2 (mkConst ``Classicism.Meta.instSOrderDenote) D ρ)
             rhs := b.instantiate1 arg
           let eq ← mkEq lhs rhs
           let reflectTy ← mkForallFVars tvs eq
-          let reflectVal ← mkLambdaFVars tvs (← mkEqRefl lhs)
+          -- by `rfl` when the two sides are definitionally equal, which they are unless a
+          -- relational operation sits at a type variable; otherwise by rewriting with the
+          -- lemmas of `Meta/Relational.lean`, one per operation, proved by induction
+          let reflectVal ←
+            if ← withReducible (pure ()) *> isDefEq lhs rhs then
+              mkLambdaFVars tvs (← mkEqRefl lhs)
+            else
+              let stx ← `(by reflect_by_rewriting)
+              let v ← Term.withoutErrToSorry do
+                let v ← elabTermEnsuringType stx (some reflectTy)
+                synthesizeSyntheticMVarsNoPostponing
+                instantiateMVars v
+              if v.hasSorry then throwError "quote: reflection by rewriting failed"
+              pure v
           return (quoted, reflectTy, reflectVal)
     go 0 {} #[]
 

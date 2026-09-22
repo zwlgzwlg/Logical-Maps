@@ -27,6 +27,7 @@ import Classicism.Meta.Conversion
 import Classicism.Meta.Derivation
 import Classicism.Meta.Axioms
 import Classicism.Meta.Denotation
+import Classicism.Meta.Relational
 import Classicism.Meta.Quote
 import Classicism.Meta.Quoted
 import Classicism.Meta.Examples

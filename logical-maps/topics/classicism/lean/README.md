@@ -387,16 +387,20 @@ The contextual form draws the `C`/`C⁻` line by itself: a closed derivation has
 variable of type `e` to instantiate `EG` at, so Existence at `e` is an axiom of `C` and
 not of `C⁻`, while at every relational type it is derivable from the closed term `λx. ⊤`.
 
+* `Meta/Relational.lean`: the paper's type-subscripted operations `∧_τ`, `¬_τ`,
+  coextension, the pointwise box and the rest, as functions on terms **by recursion on
+  the type**, which the shallow layer's classes could not do; the standard reading's
+  `SRel` instances by the same recursion; and a lemma per operation, by induction on the
+  type, that reading it back gives the strict layer's operation.
 * `Meta/Quote.lean`, `Meta/Quoted.lean`: the **quoter**, the translator's first half.
   `#classicism_quote foo` reads the strict statement of `foo` as a sentence with its type
   parameters as object-type variables and declares the reflection theorem, that reading
-  the sentence back gives the statement, checked by the kernel by `rfl`. Run over the
-  library at build time: 90 of the 111 strict statements quote and reflect; the rest
-  have a parameter of class `SRel` or `SOrder`, whose operations at a type variable have
-  no object-language counterpart yet.
+  the sentence back gives the statement, checked by the kernel: by `rfl`, or where a
+  relational operation sits at a type variable, by rewriting with the lemmas above. Run
+  over the library at build time: **every strict statement quotes and reflects**, 111 of
+  111.
 
-Next: the class mirrors' object-language counterparts, by recursion on types, and then
-the translation of strict proofs into derivations.
+Next: the translation of strict proofs into derivations.
 
 ## Files
 
@@ -422,7 +426,8 @@ Classicism/Meta/Derivation.lean derivability in H plus an axiom set, natural-ded
 Classicism/Meta/Axioms.lean     the eleven identities as sentences; C and C⁻ as axiom sets
 Classicism/Meta/Denotation.lean the standard model in Prop; soundness; C is consistent
 Classicism/Meta/Examples.lean   small computed checks, derivations, and reflection by rfl
-Classicism/Meta/Quote.lean      the quoter: strict statements as sentences, reflection by rfl
+Classicism/Meta/Relational.lean ∧_τ, ¬_τ, coext and the rest by recursion on the type; their readings
+Classicism/Meta/Quote.lean      the quoter: strict statements as sentences, reflection checked
 Classicism/Meta/Quoted.lean     the quoter run over the library; home of foo.strict.quoted
 Classicism/Modal.lean           K, T, 4, NI, CBF, Intensionality and its corollaries
 Classicism/Order.lean           the algebraic order and its pointwise characterisation
