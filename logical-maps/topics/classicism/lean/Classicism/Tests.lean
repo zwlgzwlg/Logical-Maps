@@ -6,7 +6,7 @@ import Classicism.Proofs
 import Classicism.Strict
 import Classicism.Tautology
 import Classicism.Quantifier
-import Classicism.Transform
+import Classicism.Transformed
 
 /-!
 # Controls for the checker
@@ -292,5 +292,56 @@ anything written by hand. -/
 #classicism_strict Classicism.modal_K.nec Classicism.modal_K.strict
 #classicism_strict Classicism.converse_barcan.nec Classicism.forall_and_distrib_eq.strict
 #classicism_types Classicism.modal_K.nec Classicism.converse_barcan.nec
+
+/-! ### Through the class mirrors
+
+Proofs that cite the laws of `Rel` and `Order` transform once those classes have strict
+mirrors (`Classicism/Mirror.lean`). Intensionality and Modalized Functionality are the
+paper's §1.5; the last line is the order law at function types, whose transform *is* the
+law of the mirror instance. -/
+
+#classicism_transform Classicism.intensionality Classicism.modalized_fregean
+#classicism_transform Classicism.modalized_functionality Classicism.le_iff_arrow
+#classicism_transform Classicism.persistent_iff_le Classicism.rigid_iff_box_veryWeaklyRigid
+
+#classicism_strict Classicism.intensionality.nec Classicism.modalized_functionality.nec
+#classicism_strict Classicism.le_iff_arrow.nec Classicism.persistent_iff_le.nec
+#classicism_types Classicism.intensionality.nec Classicism.le_iff_arrow.nec
+
+/-- The mirror instances themselves rest on the eleven identities alone. -/
+theorem mirrorArrowLaw {σ τ : Type} [Ty σ] [Strict.SRel τ] :
+    (∀ (X Y : σ → τ) (p : Prop),
+      Strict.SRel.and X (Strict.SRel.constP (p ∧ Strict.SRel.coext X Y))
+        = Strict.SRel.and Y (Strict.SRel.constP (p ∧ Strict.SRel.coext X Y))) = Strict.Top :=
+  Strict.SRel.and_constP_coext_nec (σ → τ)
+
+#classicism_strict mirrorArrowLaw
+
+/-! ### The outer mode
+
+A record whose hypothesis or conclusion is a schema over types has no necessitation, and
+is transformed by copying its natural deduction in the paper's vocabulary, with the
+induction run inside each gated site. The result is the record's statement with each
+principle read strictly, `Functionality ⟹ Tractarianism` and so on, and it uses `em`. -/
+
+#classicism_transform Classicism.Proofs.functionality_r_implies_tractarianism_r
+#classicism_transform Classicism.Proofs.barcan_r_implies_functionality_r
+#classicism_transform Classicism.Proofs.classicism_implies_existence_r
+#classicism_transform Classicism.Proofs.gallin_comprehension_implies_nd
+#classicism_transform Classicism.Proofs.functional_choice_r_implies_relational_choice_r
+
+#classicism_strict Classicism.Proofs.functionality_r_implies_tractarianism_r.strict
+#classicism_strict Classicism.Proofs.functional_choice_r_implies_relational_choice_r.strict
+#classicism_types Classicism.Proofs.functionality_r_implies_tractarianism_r.strict
+#classicism_types Classicism.Proofs.gallin_comprehension_implies_nd.strict
+
+/-- The strict statement of a record is the paper's, with each principle read in the
+paper's vocabulary: Functionality with `imp` and `SRel`. -/
+example : type_of% Classicism.Proofs.functionality_r_implies_tractarianism_r.strict
+    = Classicism.imp P.Functionality.strict P.Tractarianism.strict := rfl
+
+example : P.Functionality.strict
+    = ∀ {σ τ : Type} [Ty σ] [Strict.SRel τ] (X Y : σ → τ),
+        Classicism.imp (∀ z, X z = Y z) (X = Y) := rfl
 
 end Classicism.Tests

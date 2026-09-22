@@ -13,8 +13,10 @@ import Classicism.Transform
 import Classicism.Modal
 import Classicism.Order
 import Classicism.Comprehension
+import Classicism.Mirror
 import Classicism.Principles
 import Classicism.Proofs
+import Classicism.Transformed
 import Classicism.Check
 import Classicism.TypeSystem
 import Classicism.Audit

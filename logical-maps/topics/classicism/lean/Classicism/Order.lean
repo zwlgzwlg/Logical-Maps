@@ -40,8 +40,7 @@ export Order (le_iff)
 
 /-- At `t`: `q = (p ∨ q)` iff `□(p → q)`. Both directions are Leibniz's Law over closed
 Logical-Equivalence instances. -/
-instance instOrderProp : Order Prop where
-  le_iff p q :=
+theorem le_iff_prop (p q : Prop) : Rel.le p q ↔ □ (boxImp p q) :=
     ⟨fun h =>
         -- `p → q` is identical to `p → (p ∨ q)`, which is a tautology, hence `⊤`.
         calc (p → q) = (p → (p ∨ q)) := congrArg (fun r => p → r) h
@@ -54,6 +53,11 @@ instance instOrderProp : Order Prop where
                        fun ⟨hpq, himp⟩ => hpq.elim himp id⟩
           _ = ((p ∨ q) ∧ True) := by rw [h']
           _ = (p ∨ q) := and_true_eq _⟩
+
+/-- The law is stated as a theorem first so that it has a name of its own: the strict
+mirror of this instance takes its law from the transform of `le_iff_prop`. -/
+instance instOrderProp : Order Prop where
+  le_iff := le_iff_prop
 
 /-! ### Relational function types -/
 
@@ -75,8 +79,7 @@ theorem forall_eq_of_box_boxImp (X Y : σ → τ) :
   (le_iff (X z) (Y z)).2 (converse_barcan (fun z => boxImp (X z) (Y z)) h z)
 
 /-- `σ → τ` satisfies the law when `τ` does. -/
-instance instOrderArrow : Order (σ → τ) where
-  le_iff X Y :=
+theorem le_iff_arrow (X Y : σ → τ) : Rel.le X Y ↔ □ (boxImp X Y) :=
     ⟨fun h =>
         -- Box the identity with `NI`, then push the closed lemma through with `K`.
         modal_K _ _ (nec% (boxImp_of_le_arrow X Y)) (necessity_of_identity _ _ h),
@@ -85,6 +88,9 @@ instance instOrderArrow : Order (σ → τ) where
         -- Modalized Functionality turns those back into an identity of relations.
         modalized_functionality Y (fun z => Rel.or (X z) (Y z))
           (modal_K _ _ (nec% (forall_eq_of_box_boxImp X Y)) (modal_four _ h))⟩
+
+instance instOrderArrow : Order (σ → τ) where
+  le_iff := le_iff_arrow
 
 end arrow
 

@@ -229,38 +229,88 @@ used at another reading of the same Lean formula, a bridge identity is supplied:
 they agree up to unfolding, `boolean_eq` between λ-terms if they are Boolean-equivalent,
 and congruence under a shared connective or quantifier otherwise.
 
+### Mirrors of the classes
+
+`Rel τ` carries three laws, stated with Lean's `True` and proved in its instances by gated
+Equivalence: `propext` at `Prop`, and at `σ → τ` a `funext` of a closed identity, which is
+ζ. A proof that cites one of those laws has nothing to transform into until the class has
+a strict counterpart. `Classicism/Mirror.lean` supplies it, built the way `BA` is: `SRel`
+holds the three laws as **closed identities between λ-terms**, so that at `Prop` each is a
+tautology for `boolean_eq`, and at `σ → τ` each follows from the law at `τ` by one
+`congrArg`, the operations there being pointwise and β free. The third law, the identity
+behind Intensionality, needs one further step, that `∀u.Cu` is identical to `(∀u.Cu) ∧ Cz`,
+which is Absorption-∨∀. There is no `funext` anywhere in it.
+
+`Order τ` needs no new proof at all. Its one law is proved in the shallow instances from
+`K`, `4`, `NI`, `CBF` and Modalized Functionality, all of which transform, so the law of
+each instance of the mirror `SOrder` is **the transformer's own output** on the shallow
+proof.
+
+The transformer learns which constant mirrors which from two commands,
+`#classicism_mirror` for a class, its data projections and its instances, and
+`#classicism_nec` for the necessitation of a law field. So a new class costs a mirror, but
+no change to the transformer, and a new theorem about an existing class costs nothing.
+
+### The outer mode, for records
+
+A principle such as Functionality is a **schema**: a proposition that quantifies over
+types. A quantifier over types has no algebra to live in, so a record such as
+`Functionality → Tractarianism` has no necessitation and the induction cannot start on it.
+Such a theorem is transformed in the *outer mode*: its natural deduction is **copied** in
+the paper's vocabulary, and the induction runs inside each gated site.
+
+| proof term | copy |
+| --- | --- |
+| `fun h : H => b` | `Copy.lam`, which is where `em` enters |
+| application to a proof | `Copy.app`, modus ponens at `imp` |
+| `fun x : σ => b`, `fun {σ} [inst] => b` | the same binder, its type read in the vocabulary |
+| a hypothesis | the copied hypothesis |
+| a constant with a necessitation | that necessitation, unboxed |
+| a constant that is itself a schema | its strict restatement, made on demand |
+| gated `propext s`, `funext …` | the induction, with no hypotheses in scope |
+
+The gate is what makes the two modes compose: the argument of a gated site mentions no
+hypothesis, so the induction can run there with an empty context whatever the outer proof
+has in scope, and the two never meet on a hypothesis. The result of the outer mode is the
+record's statement with each principle read in the paper's vocabulary, for example
+
+    Classicism.imp P.Functionality.strict P.Tractarianism.strict
+
+where `P.Functionality.strict` unfolds to
+`∀ {σ τ} [Ty σ] [SRel τ] (X Y : σ → τ), imp (∀ z, X z = Y z) (X = Y)`. The transformer
+chooses the mode from the statement, and `#classicism_transform` says which it used.
+
+One point to be aware of. The copy of `⟨h₁, h₂⟩ : A ∧ B` cites the necessitation of
+`And.intro` at `A` and `B`, and when `B` is a schema that instantiates a quantifier over
+`Prop` at something that is not a formula of the paper's language. The shallow statement
+already makes that move, in bundling the instances of a schema into one proposition, and
+the strict statement inherits it; the type check accepts both. The paper would state such
+a record as a metatheorem about instances.
+
 ### Coverage
 
-Run over the whole library at build time by `Classicism/Audit.lean`:
+`Classicism/Transformed.lean` runs the transformer over the whole library, once, and is the
+one home of what it declares. `Classicism/Audit.lean` then holds all of it to the strict
+check and the type check: 208 generated theorems, 208 strict, 208 inside `R`.
 
 | module | transformed |
 | --- | --- |
 | `Booleanism` | 47 of 47 |
 | `Identities` | 13 of 13 |
-| `Modal` | 14 of 18 |
-| `Order` | 0 of 5 |
-| `Comprehension` | 5 of 10 |
-| `Proofs` | 10 of 31 |
+| `Modal` | 18 of 18 |
+| `Order` | 6 of 6 |
+| `Comprehension` | 10 of 10 |
+| `Proofs` | 31 of 31, 20 of them in the outer mode |
 
-That includes `K`, `T`, `4`, the Necessity of Identity, the Converse Barcan Formula,
-`□(p ∧ q) = (□p ∧ □q)`, both quantifier dualities and Existence at `e`. What is not yet
-reached has two causes, and **both are one-time work on the transformer, not per-theorem
-work**:
+**Every theorem of the shallow layer has a strict form**, from the eleven identities, `e`,
+`e_exists` and `em`, with no `propext` and no `funext`. Nothing was proved by hand for any
+particular theorem; the transformer is a fixed program, and a new theorem whose proof is
+built from the constructors it knows costs nothing.
 
-1. **Law fields of the classes `Rel` and `Order`.** A proof that cites `Rel.coext_refl` or
-   `Order.le_iff` needs that field's necessitation, and the instances' proofs of the fields
-   are themselves gated. The classes need a strict mirror whose law fields are closed
-   identities, as `BA` is for the Boolean laws. This blocks Intensionality and everything
-   downstream of it.
-2. **Schemas as hypotheses.** A principle such as Functionality quantifies over types
-   inside a proposition, and a quantifier over types has no algebra to live in, so a record
-   `Functionality → …` has no single necessitation. Such proofs need an outer mode that
-   copies the natural deduction, translating as it goes, and runs the induction inside each
-   gated site. The gate guarantees no hypothesis crosses into a gated site, so the two
-   modes cannot interfere.
-
-A bare gated `funext` whose body is an identity at a relational type other than `Prop`, not
-ending in `propext`, is also not handled yet; it needs congruence down to `Prop` first.
+What the transformer does not handle, none of it needed by the library: a motive that
+depends on the identity proof, a recursor eliminating into data, and a bare gated `funext`
+whose body is an identity at a relational type other than `Prop` not ending in `propext`.
+Each is reported, never guessed at.
 
 ## Files
 
@@ -277,6 +327,8 @@ Classicism/Quantifier.lean      Proposition A.1, UI, EG, Ref, Gen, Inst at Prop
 Classicism/Rules.lean           one lemma per proof rule, in any such algebra
 Classicism/Primitives.lean      necessitations of the core proof constants; Ref, LL, ∃-elim
 Classicism/Transform.lean       #classicism_transform: Appendix A as an induction on proof terms
+Classicism/Mirror.lean          SRel and SOrder, the strict mirrors of the classes Rel and Order
+Classicism/Transformed.lean     the transformer run over the library; home of foo.nec and foo.strict
 Classicism/Modal.lean           K, T, 4, NI, CBF, Intensionality and its corollaries
 Classicism/Order.lean           the algebraic order and its pointwise characterisation
 Classicism/Comprehension.lean   persistence, inextensibility and the rigidity variants

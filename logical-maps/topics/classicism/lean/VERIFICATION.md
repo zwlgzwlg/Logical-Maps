@@ -5,8 +5,9 @@ certificate. 122 of the library's 124 theorems are theorems of `C⁻`. The stric
 no Logical Equivalence at all: it derives Boolean algebras at every relational type from the
 six Boolean Identities, and from all eleven the necessitations of the primitive proof
 constants. The transformer, which is Appendix A as an induction on Lean proof terms, turns
-89 of the 124 gated theorems into proofs from the eleven axioms; the rest wait on two
-one-time pieces of work described under stage four.**
+every one of the 125 gated theorems into a proof from the eleven axioms, `e`, `e_exists`
+and `em`, with no `propext` or `funext`; the 208 theorems it declares all pass the strict
+and type audits.**
 
 ## Revision, 21 September 2026
 
@@ -212,22 +213,45 @@ time. The type check needed one change: `BA` is registered as type-system eviden
 arrow instance carries `[Ty σ]`, so that a `BA τ` exists exactly when `τ` is `v̄ → Prop` for
 `R`-types `v̄`.
 
-**Coverage, measured by `#classicism_transform_audit` at build time: 89 of 124.**
-`Booleanism` 47/47, `Identities` 13/13, `Modal` 14/18, `Order` 0/5, `Comprehension` 5/10,
-`Proofs` 10/31. Sample outputs are checked in `Classicism/Tests.lean` with
-`#classicism_strict` and `#classicism_types`, among them `modal_K.nec`,
-`converse_barcan.nec` and `forall_and_distrib_eq.strict`. The last was on the earlier list
-of obligations said to need hand-written derivations.
+**Coverage after the mirrors, measured at build time by `Classicism/Transformed.lean`: 105 of 125.**
+`Booleanism` 47/47, `Identities` 13/13, `Modal` 18/18, `Order` 6/6, `Comprehension` 10/10,
+`Proofs` 11/31. The library count rose by one net, because the two `Order` instance laws
+were given names (`le_iff_prop`, `le_iff_arrow`) and the class projection `Order.le_iff` is
+no longer listed as a theorem to transform. Everything the transformer declares, 182
+theorems, passes `#classicism_strict_audit` and `#classicism_types_audit` at build time.
 
-**What is not reached, and why.** Both causes are one-time work on the transformer.
+**The class mirrors, 21 September.** `Classicism/Mirror.lean` defines `SRel` and `SOrder`.
+`SRel`'s three laws are closed λ-identities. Its instance at `Prop` is three uses of
+`boolean_eq` between λ-terms. Its instance at `σ → τ` lifts each law from `τ` by
+`congrArg`; the third uses Absorption-∨∀ under the binders and a Boolean lemma, and contains
+no `funext`, where the shallow instance has two. `SOrder`'s law at each instance is the
+`.nec` the transformer produces from the shallow proof, so nothing about `Order` was proved
+by hand. The type check caught two helper lemmas of mine with unguarded type variables, now
+guarded. The transformer gained a registry (`#classicism_mirror`, `#classicism_nec`) and
+translation of a theorem's parameters, so that `[Rel τ]` becomes `[SRel τ]`.
 
-1. Law fields of the classes `Rel` and `Order` have no necessitations, because the classes
-   have no strict mirror. This accounts for every failure in `Modal`, `Order` and
-   `Comprehension`. Two `Comprehension` theorems transform but their results still name
-   `propext`, because their *statements* mention the `Rel` instances, whose law fields are
-   proved by gated Equivalence; the mirror fixes that too.
-2. Records whose hypothesis or conclusion is a schema over types have no single
-   necessitation and need an outer mode. This accounts for the failures in `Proofs`.
+A structural fix came with this. The transformer declares its outputs in the module that
+runs it, and the audit and the tests both ran it, so generated *definitions* clashed on
+import. The outputs now have one home, `Classicism/Transformed.lean`, which both import.
+
+**The outer mode, 21 September.** The last twenty theorems, all records with a schema for
+hypothesis or conclusion, are handled by copying the natural deduction in the paper's
+vocabulary (`copy`, `copyApp`, `cfeed`, `ccoerce` in `Classicism/Transform.lean`), with
+three lemmas `Copy.lam`, `Copy.app`, `Copy.notApp` in `Classicism/Primitives.lean`, the
+first using `em`. The induction runs inside each gated site with an empty context, which
+the gate licenses. The mode is chosen by `isSchematic` on the statement, and the commands
+report it. One addition to the primitive table was needed, `Exists.elim` restated through
+`Prim.exists_rec`. **Coverage is now 125 of 125**, and the 208 generated theorems all pass
+the strict and type audits.
+
+Two things to be clear about. The strict form of a record is its statement with each
+principle read in the vocabulary, `imp Functionality.strict Tractarianism.strict`, an
+implication between schemas; the paper would state the same as a metatheorem, and the copy
+of a conjunction with a schema in it instantiates the necessitation of `And.intro` at that
+schema, which is not a formula of the paper's language. That is inherited from the shallow
+statement, which bundles a schema's instances into one proposition. And the outer mode
+gives no `.nec`, only `.strict`, so a schematic theorem can be cited by another only in the
+outer mode; the transformer arranges that.
 
 **Known limits of the induction itself.** A motive that depends on the identity proof, a
 recursor eliminating into data, and a type or instance abstraction inside a formula are

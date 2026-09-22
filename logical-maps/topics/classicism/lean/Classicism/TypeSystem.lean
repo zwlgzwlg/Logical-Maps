@@ -120,7 +120,8 @@ def guardTarget (e : Expr) : Option Expr :=
   let args := e.getAppArgs
   if (f.isConstOf ``Classicism.Ty || f.isConstOf ``Classicism.RelTy
       || f.isConstOf ``Classicism.Rel || f.isConstOf ``Classicism.Order
-      || f.isConstOf `Classicism.Strict.BA)
+      || f.isConstOf `Classicism.Strict.BA || f.isConstOf `Classicism.Strict.SRel
+      || f.isConstOf `Classicism.Strict.SOrder)
       && args.size ≥ 1 then
     some args[0]!
   else none
@@ -154,6 +155,8 @@ partial def isMetaType (e : Expr) : Bool :=
     || f.isConstOf ``Classicism.Rel || f.isConstOf ``Classicism.Order
     -- the strict layer's Boolean-algebra class, whose instances are `Prop` and `σ → τ`
     || f.isConstOf `Classicism.Strict.BA
+    -- the strict mirrors of `Rel` and `Order`
+    || f.isConstOf `Classicism.Strict.SRel || f.isConstOf `Classicism.Strict.SOrder
     || f.isConstOf ``Unit || f.isConstOf ``PUnit
     || f.isConstOf ``Trans
 

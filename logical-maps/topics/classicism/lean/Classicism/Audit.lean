@@ -4,7 +4,7 @@ import Classicism.Proofs
 import Classicism.Identities
 import Classicism.Strict
 import Classicism.Quantifier
-import Classicism.Transform
+import Classicism.Transformed
 
 /-!
 # Audit
@@ -36,6 +36,7 @@ the formalisation's own metalanguage. -/
 #classicism_types_audit Classicism.Order Classicism.Comprehension Classicism.Proofs
 #classicism_types_audit Classicism.Algebra Classicism.Strict Classicism.Tautology
 #classicism_types_audit Classicism.Quantifier Classicism.Rules Classicism.Primitives
+#classicism_types_audit Classicism.Mirror
 
 /-! ### The strict layer
 
@@ -46,15 +47,12 @@ primitive proof constants. -/
 
 #classicism_strict_audit Classicism.Algebra Classicism.Strict Classicism.Tautology
 #classicism_strict_audit Classicism.Quantifier Classicism.Rules Classicism.Primitives
+#classicism_strict_audit Classicism.Mirror
 
-/-! ### The transformer, over the whole library
+/-! ### The transformer's outputs
 
-Every theorem of the shallow layer is run through the Appendix A transformer, which
-declares its necessitation and its strict restatement; the kernel checks each, and the
-report says which rest on the eleven identities alone. The theorems it does not yet reach
-are listed with the reason, which today is one of two things: a law field of the classes
-`Rel` and `Order`, which have no strict mirror yet, or a record whose hypothesis is a
-schema over types, which needs the outer mode. -/
+`Classicism/Transformed.lean` runs the transformer over the library. What it declares is
+held to the same two checks as anything written by hand. -/
 
-#classicism_transform_audit Classicism.Booleanism Classicism.Identities Classicism.Modal
-#classicism_transform_audit Classicism.Order Classicism.Comprehension Classicism.Proofs
+#classicism_strict_audit Classicism.Transformed
+#classicism_types_audit Classicism.Transformed
