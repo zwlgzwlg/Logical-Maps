@@ -577,9 +577,12 @@ right for model theory and irrelevant to the shallow and strict layers' audit si
 nothing there imports these modules.
 
 Mathlib was added for this (tag `v4.33.1`, matching the toolchain), as the plan of 22
-September had foreseen but never done. At Cian's request it lives in one directory shared
-by every Lean project on the machine, `packagesDir = "/Users/cd50/lean-packages"`, outside
-Dropbox and the repository; `.lake/` is marked ignored for Dropbox.
+September had foreseen but never done. At Cian's request there is one copy shared by every
+Lean project on the machine: `.lake/packages` is a symlink to `~/lean-packages`, outside
+Dropbox and the repository, and `.lake/` is marked ignored for Dropbox. (A first version
+put that path in `lakefile.toml` as `packagesDir`, which broke the repository's
+continuous-integration build, since the runner cannot create it; the symlink keeps the
+configuration free of anything machine-specific.)
 
 Not yet done: any construction of an action model. That is the next work — full models
 over a rooted category, M-set models, the intrinsic fullness criterion, truncation, and

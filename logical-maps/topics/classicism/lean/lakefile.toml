@@ -7,10 +7,10 @@ defaultTargets = ["Classicism"]
 # Classical.choice) is available except where the Classicism prelude admits
 # it. See README.md.
 #
-# Dependencies are checked out into one directory shared by every Lean project
-# on this machine, outside Dropbox and outside this repository, so that there
-# is a single copy of Mathlib. Pinned to the tag matching `lean-toolchain`.
-packagesDir = "/Users/cd50/lean-packages"
+# Pinned to the Mathlib tag matching `lean-toolchain`. Dependencies go to the
+# default `.lake/packages`; to keep a single copy of Mathlib shared by every
+# Lean project on a machine, make that directory a symlink to a shared one
+# (see README.md, Building). `.lake/` is not committed.
 
 [[require]]
 name = "mathlib"

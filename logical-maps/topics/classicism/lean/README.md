@@ -543,8 +543,9 @@ lake build
 The toolchain is pinned in `lean-toolchain`. Since 23 September 2026 the package requires
 Mathlib, for the metalogical layer's action models only (`Classicism/Meta/Action*.lean`);
 no other module imports it. It is pinned to the Mathlib tag matching the toolchain, and
-`lake build` fetches its prebuilt cache rather than compiling it. `packagesDir` in
-`lakefile.toml` checks it out into `~/lean-packages`, one copy shared by every Lean
-project on the machine and outside both Dropbox and this repository; on another machine,
-change that path or delete the line to use the default `.lake/packages`. The project's
-own modules build in about a minute from cold.
+`lake build` fetches its prebuilt cache rather than compiling it, into the default
+`.lake/packages`, which is not committed. To keep one copy of Mathlib shared by every
+Lean project on a machine (each copy is several GB), make that directory a symlink to a
+shared one outside Dropbox, `ln -s ~/lean-packages .lake/packages`, before the first
+build; the configuration itself has no machine-specific path, so continuous integration
+builds unchanged. The project's own modules build in about a minute from cold.

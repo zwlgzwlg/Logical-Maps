@@ -69,8 +69,8 @@ All were settled with Cian on 22 September 2026.
 - **Mathlib, for the model theory only** (23 September). The layer was built in base Lean
   through the translator; the action models import Mathlib (categories, functors to
   `Type`, sets), pinned to the tag matching the toolchain and checked out into one
-  directory shared by every Lean project on the machine (`packagesDir` in
-  `lakefile.toml`). The shallow and strict layers never import it, so their axiom audit is
+  directory shared by every Lean project on the machine (`.lake/packages` a symlink to
+  it; the configuration has no machine-specific path). The shallow and strict layers never import it, so their axiom audit is
   unaffected.
 
 ## The modules, in order
