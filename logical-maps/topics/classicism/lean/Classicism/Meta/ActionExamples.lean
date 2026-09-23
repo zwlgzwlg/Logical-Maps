@@ -163,6 +163,28 @@ theorem not_nd_t : ¬ (MSet.model Idem).HoldsSentence (Sentence.nd (.rel .t)) :=
 theorem not_fregean : ¬ (MSet.model Idem).HoldsSentence Sentence.fregean :=
   MSet.not_fregean Idem k k_ne_one
 
+/-- `k^t` is not surjective — `{1}` is not `k^t` of anything — so by the paper's (iii)
+`BF_t` fails: the record violates `barcan-t`. -/
+theorem not_bf_t : ¬ (MSet.model Idem).HoldsSentence (Sentence.bf (.rel .t)) := by
+  intro H
+  have hs := @Premodel.full_bf_surjective _ _ (MSet.unitAction Idem) _ _ _ _ _ (.rel .t) H
+    (SingleObj.star Idem) (k : SingleObj.star Idem ⟶ SingleObj.star Idem)
+  change Function.Surjective (fun X : Set (Σ V : SingleObj Idem, SingleObj.star Idem ⟶ V) =>
+    ({p : Σ V : SingleObj Idem, SingleObj.star Idem ⟶ V |
+      (⟨p.1, (k : SingleObj.star Idem ⟶ SingleObj.star Idem) ≫ p.2⟩ :
+        Σ V : SingleObj Idem, SingleObj.star Idem ⟶ V) ∈ X} :
+      Set (Σ V : SingleObj Idem, SingleObj.star Idem ⟶ V))) at hs
+  obtain ⟨X, hX⟩ := hs {MSet.arrow Idem 1}
+  have h1 : (⟨SingleObj.star Idem, (k : SingleObj.star Idem ⟶ SingleObj.star Idem) ≫
+      (MSet.arrow Idem 1).2⟩ : Σ V : SingleObj Idem, _ ⟶ V) ∈ X := by
+    have h := Set.mem_singleton (MSet.arrow Idem 1)
+    rw [← hX] at h
+    exact h
+  have hk : MSet.arrow Idem k ∈ ({MSet.arrow Idem 1} : Set _) := by
+    rw [← hX]
+    exact h1
+  exact k_ne_one (MSet.arrow_injective Idem (Set.mem_singleton_iff.mp hk))
+
 end Idem
 
 /-! ### The two-element group `{1, k}`, `k·k = 1` -/

@@ -1,4 +1,5 @@
 import Classicism.Meta.ActionSoundness
+import Classicism.Meta.ActionFacts
 
 /-!
 # Full action models
@@ -394,6 +395,49 @@ termination_by n
 /-- **A full premodel is an action model.** -/
 theorem full_isModel : (A).IsModel :=
   fun h t g => (fullP_all De (t.rsize + 1) t (Nat.lt_succ_self _) h g).1
+
+/-! ### `BF_σ` forces surjectivity
+
+The paper's Proposition, (iii): in a full model, if `BF_σ` holds at the root then every
+`h^σ` out of the root is surjective. The witness is the predicate "is the image, under
+the arrow, of something at the root", an element of the full domain at `σ → t`. -/
+
+/-- `α⟨i, b⟩ = {k | k^σ b = k^σ (i^σ a) for some a ∈ W₀^σ}`. -/
+noncomputable def rootImage (σ : Ty) : (FullR De (.arr σ .t)).obj W₀ :=
+  ⟨fun U i b => {q : Σ T : C, U ⟶ T | ∃ a : (FullT De σ).obj W₀,
+      (FullT De σ).map q.2 b = (FullT De σ).map q.2 ((FullT De σ).map i a)},
+   fun U T i j b => by
+     ext ⟨S, l⟩
+     show (∃ a : (FullT De σ).obj W₀, (FullT De σ).map (j ≫ l) b
+         = (FullT De σ).map (j ≫ l) ((FullT De σ).map i a)) ↔
+       (∃ a : (FullT De σ).obj W₀, (FullT De σ).map l ((FullT De σ).map j b)
+         = (FullT De σ).map l ((FullT De σ).map (i ≫ j) a))
+     simp only [Functor.map_comp, types_comp_apply]⟩
+
+theorem full_bf_surjective (σ : Ty) (H : (A).HoldsSentence (Sentence.bf σ)) :
+    ∀ {V : C} (k : W₀ ⟶ V), Function.Surjective ((FullT De σ).map k) := by
+  intro V k c
+  have M : (A).IsModel := full_isModel De
+  rw [HoldsSentence, Sentence.bf, (A).holds_forall M] at H
+  have H := H (rootImage De σ)
+  rw [(A).holds_imp M] at H
+  have H := H (by
+    rw [(A).holds_forall M]
+    intro b
+    rw [(A).holds_box M]
+    intro U j
+    rw [(A).holds_app _ _ _ _ (a' := (FullT De σ).map j b) rfl]
+    show (⟨U, 𝟙 U⟩ : Σ T, U ⟶ T) ∈ (rootImage De σ).1 U (j ≫ 𝟙 U) ((FullT De σ).map j b)
+    exact ⟨b, by rw [Category.comp_id]⟩)
+  rw [(A).holds_box M] at H
+  have H := H k
+  rw [(A).holds_forall M] at H
+  have H := H c
+  rw [(A).holds_app _ _ _ _ (a' := c) rfl] at H
+  obtain ⟨a, ha⟩ : ∃ a : (FullT De σ).obj W₀,
+      (FullT De σ).map (𝟙 V) c = (FullT De σ).map (𝟙 V) ((FullT De σ).map (k ≫ 𝟙 V) a) := H
+  simp only [Functor.map_id, types_id_apply, Category.comp_id] at ha
+  exact ⟨a, ha.symm⟩
 
 end Premodel
 

@@ -592,14 +592,14 @@ a combined induction with a second induction on the size of the type subscripts)
 `ActionFacts.lean` (the paper's characterizations of `ND_σ`, `BF_σ` and the Fregean Axiom
 at an object) and `ActionExamples.lean` (the full M-set models on the idempotent monoid
 and the two-element group). Verified against the records: `full-idempotent-monoid`
-violates `distinctness-necessary-t` and `fregean-axiom`; `full-involution-group` satisfies
+violates `distinctness-necessary-t`, `barcan-t` (by the paper's (iii), `full_bf_surjective`,
+with the "image of the root" predicate as the inner witness) and `fregean-axiom`; `full-involution-group` satisfies
 `necessary-distinctness-necessary-r` (and `□BF_σ` at every type, not yet on the record)
 and violates `fregean-axiom`. No flaw in the definitions surfaced; the difficulties were
 Lean's (bundled morphisms in `Type`, projections of a concrete structure not reducing
 syntactically). The axioms used remain `propext`, `Classical.choice`, `Quot.sound`.
 
-Not yet done: the remaining verdicts of those two records (in particular `BF_t` failing in
-the idempotent model, which needs the paper's (iii)), truncation, and the map's other
+Not yet done: the remaining verdicts of those two records, truncation, and the map's other
 models.
 
 ## Certificates
