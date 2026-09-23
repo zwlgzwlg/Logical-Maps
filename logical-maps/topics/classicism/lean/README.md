@@ -7,7 +7,8 @@
 > the *Classicism* topic of that repository.
 
 A formalisation of Bacon and Dorr's **Classicism** inside base Lean 4, with no Mathlib
-and none of Lean's own classical axioms taken for granted. The point is that the fit is
+in the shallow and strict layers and none of Lean's own classical axioms taken for
+granted there. (The metalogical layer's model theory imports Mathlib; see Building.) The point is that the fit is
 exact rather than approximate: Lean's three axioms are three principles of this map, and
 removing them leaves a system in which Classicism can be stated and its theorems proved.
 
@@ -326,7 +327,9 @@ a sentence holds in a model. Earlier notes called this the "deep" layer; metalog
 the name now. It lives under `Classicism/Meta/`, which has its own README, and is ordinary
 Lean, with `funext` and the rest available, since it is
 not itself a proof in Classicism but a theory of Classicism's proofs. It is related to the
-other two layers by a denotation, to come, reading its terms as Lean propositions.
+other two layers by a denotation reading its terms as Lean propositions, and since 23
+September it has the paper's **action models** with a soundness theorem, the model
+theory the map's non-implication records need.
 
 Four decisions fixed its shape.
 
@@ -537,5 +540,11 @@ Contingency, whose instances are closed pure sentences. Avoid `simp`, `by_cases`
 lake build
 ```
 
-The toolchain is pinned in `lean-toolchain` and there are no dependencies, so the build
-is self-contained and takes about a minute from cold.
+The toolchain is pinned in `lean-toolchain`. Since 23 September 2026 the package requires
+Mathlib, for the metalogical layer's action models only (`Classicism/Meta/Action*.lean`);
+no other module imports it. It is pinned to the Mathlib tag matching the toolchain, and
+`lake build` fetches its prebuilt cache rather than compiling it. `packagesDir` in
+`lakefile.toml` checks it out into `~/lean-packages`, one copy shared by every Lean
+project on the machine and outside both Dropbox and this repository; on another machine,
+change that path or delete the line to use the default `.lake/packages`. The project's
+own modules build in about a minute from cold.

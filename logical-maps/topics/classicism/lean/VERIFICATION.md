@@ -548,6 +548,43 @@ is Prior's, as the record says.
   completeness, infinity, signature and fundamentality principle. Those need the lattice
   apparatus, Frege cardinalities, and the purity side conditions.
 
+## Action models, 23 September
+
+The next project after the translator, at Cian's direction, was models rather than
+Appendix A: the map's non-implication records need a model of `C` and an antecedent
+refuting the consequent, and a soundness theorem for the class of models, and the paper's
+own notion is the *action model* (§"Action models", Appendix "Soundness and
+completeness"). `Classicism/Meta/Action.lean` has the definitions and
+`ActionSoundness.lean` the soundness half, 1,026 lines together, proved in one session.
+
+Two choices of encoding are worth recording. Cian's outer/inner formulation replaces the
+paper's partial interpretation function by a total one: each type has an outer action
+defined by recursion from the inner ones (powerset at `t`; at `σ→ρ`, functions from
+inner arguments to outer values), the inner action is a subaction of it, the value of a
+term is outer, and "model" says the values of terms under inner assignments are inner.
+The paper's interpretation is undefined at one place only, an application whose argument
+is not inner, and there the outer reading takes a default (`Classical.choice` on the
+nonemptiness of `W^e`); in a model the two agree. And the outer domain at `t` is written
+through `RTy.rec` as a reducible definition so that it *is* a `Set` to instance search.
+
+What is proved: transport (`sem_push`), renaming, substitution (`sem_subst`, with the
+substituted terms' inner elements supplied by the model condition), β, η, δ (by `rfl`:
+each constant's reading was written as the reading of its unfolding), conversion; every
+rule of `Derivable` (`sound`); the eleven identities and Existence at every arrow of every
+action model (`axioms_holds`); hence `theorem_holds` and `theoremWith_holds`. The axioms
+used are `propext`, `Classical.choice` and `Quot.sound`, the classical base, which is
+right for model theory and irrelevant to the shallow and strict layers' audit since
+nothing there imports these modules.
+
+Mathlib was added for this (tag `v4.33.1`, matching the toolchain), as the plan of 22
+September had foreseen but never done. At Cian's request it lives in one directory shared
+by every Lean project on the machine, `packagesDir = "/Users/cd50/lean-packages"`, outside
+Dropbox and the repository; `.lake/` is marked ignored for Dropbox.
+
+Not yet done: any construction of an action model. That is the next work — full models
+over a rooted category, M-set models, the intrinsic fullness criterion, truncation, and
+the map's models as instances.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

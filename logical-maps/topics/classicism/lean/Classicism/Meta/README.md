@@ -66,6 +66,13 @@ All were settled with Cian on 22 September 2026.
   the type must. So `Term.andR ρ` is a constructor, and the recursion is the δ-rule of
   conversion, `∧_t ≡ ∧` and `∧_{σ→ρ} ≡ λX Y z. X z ∧_ρ Y z`, alongside β and η.
 
+- **Mathlib, for the model theory only** (23 September). The layer was built in base Lean
+  through the translator; the action models import Mathlib (categories, functors to
+  `Type`, sets), pinned to the tag matching the toolchain and checked out into one
+  directory shared by every Lean project on the machine (`packagesDir` in
+  `lakefile.toml`). The shallow and strict layers never import it, so their axiom audit is
+  unaffected.
+
 ## The modules, in order
 
 | module | contents |
@@ -83,6 +90,8 @@ All were settled with Cian on 22 September 2026.
 | `Normalize.lean` | A **verified βη-normalizer** on the syntax, `Term.nf`, with `Conv.of_nf`: two terms with the same normal form convert, the hypothesis decided by evaluation. |
 | `Translate.lean` | **The translator**, second half: `#classicism_derive foo` reads the strict proof of `foo` and declares `foo.derivable`, a kernel-checked derivation of `foo.quoted`. `#classicism_derive_audit` runs it over a module. |
 | `Derived.lean` | Two quick derivations run at build time, as a check that the whole chain works. |
+| `Action.lean` | **Action premodels and action models**, the paper's models of Classicism, directly: a rooted category, an inner action per type, the outer actions by recursion on the type, the subaction conditions, the total interpretation function `sem`, `Holds`, and `IsModel`. |
+| `ActionSoundness.lean` | **Soundness of action models**: transport, renaming, substitution, β, η, δ, conversion; every rule of `Derivable`; the eleven identities and Existence hold at every arrow of every action model; `theorem_holds`, `theoremWith_holds`. |
 
 ## Conventions worth knowing
 
@@ -233,6 +242,62 @@ it, and set `maxHeartbeats` high but finite, so that a theorem that runs away fa
 its own rather than being found hours later. `Derived.lean` runs two quick ones at
 build time.
 
+## Action models
+
+`Action.lean` and `ActionSoundness.lean` (23 September) are the paper's §"Action models"
+and the soundness half of its appendix "Soundness and completeness of action models for
+Classicism", formalized directly, for the purpose of model evidence on the map: a
+non-implication record is an action model of `C` and the antecedent refuting the
+consequent, and soundness makes that a proof of non-derivability.
+
+**The definitions.** An action of a category is a functor `C ⥤ Type`. An action
+premodel (`Premodel Sig C`) on a rooted category supplies an *inner* action `-^σ` for
+every type, nonempty at `e`, and a value at the root for each constant. Following Cian's
+reformulation, every type also has an *outer* action `-^[σ]`, *defined* from the inner
+ones by recursion on the type (`RawR`, `RawT`): `-^[e] = -^e`; `-^[t]` the powerset
+action, sets of arrows out of `W` with `h` acting by division; `-^[σ→ρ]` the functions on
+pairs `⟨h : W → V, x ∈ V^σ⟩` — an inner argument — into `V^[ρ]`, an outer value, with no
+well-behavedness asked. The premodel then supplies the subaction, an injective natural
+map `incl` from each inner relational domain into the outer one, and the paper's two
+conditions on inner elements of arrow type: they are well-behaved
+(`i^ρ (α⟨h, x⟩) = α⟨h ≫ i, i^σ x⟩`) and take inner values.
+
+`RawR` is written through `RTy.rec` as a reducible definition, so that `RawR inner .t W`
+*is* a `Set` to instance search and the `∈`, `∩`, `ᶜ` and `ext` of sets apply to it.
+
+**The interpretation** `sem h t g` is total: the value of a term relative to an arrow
+`h : W₀ → W` and an assignment `g` of inner elements at `W` is an outer element at `W`,
+by the paper's nine clauses. The paper's interpretation is partial at exactly one place,
+an application whose argument's value is not inner; there `apply` takes a default. An
+**action model** (`IsModel`) is a premodel in which no value is ever outside the inner
+domain — the paper's definition — and in a model the two interpretations agree
+everywhere. `Holds h p g` is `id_W ∈ ⟦p⟧^g_h`.
+
+The seven type-subscripted constants are read by recursion on the type, each clause
+written as the reading of its unfolding, so the δ-rule preserves the value by `rfl`.
+
+**Soundness.** `sem_push` is the transport lemma `⟦A⟧^{i∘g}_{i∘h} = i^σ ⟦A⟧^g_h`; its
+application case is where the model condition is used, through well-behavedness.
+`sem_rename` and `sem_subst` pull an assignment back (the substituted terms' inner
+elements, provided by the model condition); `sem_beta`, `sem_eta`, `sem_delta`, and
+`sem_conv`. The "more helpful form" of the clauses — `holds_conj`, `holds_forall`,
+`holds_eq` and the rest — then carries each rule of `Derivable`: `sound` says a
+derivation from hypotheses holding at an arrow and assignment, in a theory whose axioms
+hold at that arrow, has a conclusion holding there. The eleven identities and Existence
+hold at every arrow of every action model (`axioms_holds`), each identity reduced by
+`holds_eq_lam2`/`holds_eq_lam3` to its two bodies holding together at every arrow and
+assignment. So: `theorem_holds`, a theorem of `C` holds in every action model, and
+`theoremWith_holds`, a theorem of `C` plus an axiom set holds in every action model of
+that set.
+
+What is *not* there yet: any construction. Full action models over a rooted category,
+M-set models, the footnote's intrinsic criterion for a non-full premodel to be a model,
+truncation and `◇P holds iff P holds in a truncation`, and the map's own models as
+instances.
+
 ## Next
 
-Appendix A as a theorem, and the coincidence with the Equivalence-rule system.
+The constructions of action models: full models over a rooted category (M-set models
+first), the intrinsic fullness criterion, truncation, and the map's models as instances,
+each a kernel-checked non-implication record. Appendix A as a theorem, and the
+coincidence with the Equivalence-rule system, is deferred: nothing depends on it.

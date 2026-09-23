@@ -34,3 +34,5 @@ import Classicism.Meta.Normalize
 import Classicism.Meta.Translate
 import Classicism.Meta.Derived
 import Classicism.Meta.Examples
+import Classicism.Meta.Action
+import Classicism.Meta.ActionSoundness
