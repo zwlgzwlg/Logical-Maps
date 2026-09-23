@@ -584,9 +584,23 @@ put that path in `lakefile.toml` as `packagesDir`, which broke the repository's
 continuous-integration build, since the runner cannot create it; the symlink keeps the
 configuration free of anything machine-specific.)
 
-Not yet done: any construction of an action model. That is the next work — full models
-over a rooted category, M-set models, the intrinsic fullness criterion, truncation, and
-the map's models as instances.
+Later the same day, at Cian's direction to try some of the map's models and see whether
+the system has hidden flaws: `ActionFull.lean` (full action models on any rooted category,
+and the theorem `full_isModel` that a full premodel is a model — the one place the paper
+says "uniquely determines a full action model" and the formalization has to prove it, by
+a combined induction with a second induction on the size of the type subscripts),
+`ActionFacts.lean` (the paper's characterizations of `ND_σ`, `BF_σ` and the Fregean Axiom
+at an object) and `ActionExamples.lean` (the full M-set models on the idempotent monoid
+and the two-element group). Verified against the records: `full-idempotent-monoid`
+violates `distinctness-necessary-t` and `fregean-axiom`; `full-involution-group` satisfies
+`necessary-distinctness-necessary-r` (and `□BF_σ` at every type, not yet on the record)
+and violates `fregean-axiom`. No flaw in the definitions surfaced; the difficulties were
+Lean's (bundled morphisms in `Type`, projections of a concrete structure not reducing
+syntactically). The axioms used remain `propext`, `Classical.choice`, `Quot.sound`.
+
+Not yet done: the remaining verdicts of those two records (in particular `BF_t` failing in
+the idempotent model, which needs the paper's (iii)), truncation, and the map's other
+models.
 
 ## Certificates
 

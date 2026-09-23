@@ -36,3 +36,6 @@ import Classicism.Meta.Derived
 import Classicism.Meta.Examples
 import Classicism.Meta.Action
 import Classicism.Meta.ActionSoundness
+import Classicism.Meta.ActionFull
+import Classicism.Meta.ActionFacts
+import Classicism.Meta.ActionExamples

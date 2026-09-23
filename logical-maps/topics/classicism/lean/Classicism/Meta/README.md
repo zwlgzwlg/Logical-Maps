@@ -92,6 +92,9 @@ All were settled with Cian on 22 September 2026.
 | `Derived.lean` | Two quick derivations run at build time, as a check that the whole chain works. |
 | `Action.lean` | **Action premodels and action models**, the paper's models of Classicism, directly: a rooted category, an inner action per type, the outer actions by recursion on the type, the subaction conditions, the total interpretation function `sem`, `Holds`, and `IsModel`. |
 | `ActionSoundness.lean` | **Soundness of action models**: transport, renaming, substitution, β, η, δ, conversion; every rule of `Derivable`; the eleven identities and Existence hold at every arrow of every action model; `theorem_holds`, `theoremWith_holds`. |
+| `ActionFull.lean` | **Full action models**: the powerset and exponential actions as functors; the full inner domains by recursion on the type; `Premodel.full` on any rooted category from an action for `e` and an interpretation; **`full_isModel`**, that a full premodel is a model, by the combined induction (inner-ness and transport together, the type-subscripted constants by a second induction on the size of the type). |
+| `ActionFacts.lean` | `ND_σ`, `BF_σ` and the Fregean Axiom as sentences; the clause for `□`; the paper's generalizations: `ND_σ` holds iff every `h^σ` out of the object is injective, `BF_σ` holds if every `h^σ` is surjective, the Fregean Axiom holds iff propositions agreeing at the identity are equal. |
+| `ActionExamples.lean` | Full M-set models (`MSet.model`): the idempotent monoid `{1, k}` (`ND_t` and the Fregean Axiom fail — the map's `full-idempotent-monoid`) and the two-element group (the Fregean Axiom fails, `□ND_σ` and `□BF_σ` hold at every type — `full-involution-group`); at an object whose out-arrows are isomorphisms, `ND_σ` and `BF_σ`; in a groupoid, their necessitations. |
 
 ## Conventions worth knowing
 
@@ -290,14 +293,47 @@ assignment. So: `theorem_holds`, a theorem of `C` holds in every action model, a
 `theoremWith_holds`, a theorem of `C` plus an axiom set holds in every action model of
 that set.
 
-What is *not* there yet: any construction. Full action models over a rooted category,
-M-set models, the footnote's intrinsic criterion for a non-full premodel to be a model,
-truncation and `◇P holds iff P holds in a truncation`, and the map's own models as
-instances.
+**Full models** (`ActionFull.lean`, later on 23 September). The powerset action and the
+exponential action of two actions are functors `C ⥤ Type`; the full inner domain at a
+type is defined from them by recursion (through the recursor, as a reducible definition,
+so that the domain at `t` *is* a `Set` to instance search); `Premodel.full` is the full
+premodel on any rooted category given an action for `e` with nonempty domains and an
+interpretation of the constants. **`full_isModel`**: it is an action model. The paper
+states this as evident; the proof is a combined induction on terms — inner-ness and the
+transport lemma together, since the application case of each needs the other — with the
+six logical constants checked one by one to be well-behaved at both levels, and the
+type-subscripted constants by an outer induction on the size of their type, each reading
+as its unfolding does (`Term.rsize`, `fullP_all`).
+
+**Facts and examples** (`ActionFacts.lean`, `ActionExamples.lean`). `ND_σ`, `BF_σ` and
+the Fregean Axiom as sentences; `holds_box`; the paper's Proposition: `ND_σ` at an object
+iff every `h^σ` out of it is injective (`holds_nd_iff`), `BF_σ` if every `h^σ` is
+surjective (`holds_bf_of_surjective`); and the Fregean Axiom iff propositions agreeing at
+the identity arrow are equal (`holds_fregean_iff`). Then the first two of the map's
+models: `MSet.model M`, the full model on the one-object category of a monoid `M` with
+one individual. On the idempotent monoid `{1, k}`, `k·k = k`: `k^t` sends both `∅` and
+`{1}` to `∅`, so `ND_t` fails (`Idem.not_nd_t`), and `⊤` and `{1}` agree at the identity
+but differ, so the Fregean Axiom fails (`Idem.not_fregean`) — the record
+`full-idempotent-monoid`'s `distinctness-necessary-t` and `fregean-axiom`. On the
+two-element group, every arrow is an isomorphism, so `□ND_σ` and `□BF_σ` hold at every
+type (`Invol.box_nd`, `Invol.box_bf`) and the Fregean Axiom fails — `full-involution-group`'s
+`necessary-distinctness-necessary-r` and `fregean-axiom`. Each verdict is a theorem about
+the same object-language sentence the derivations use, so these are the first
+kernel-checked model verdicts on the map.
+
+Two Lean lessons from the day, for whoever continues: the projections of a concrete
+premodel (`(full …).W₀`, `.incl`) are definitionally but not syntactically the plain
+values, and `rw` and instance search see the syntax, so a proof about a particular model
+should first `change` its goal to the plain form; and a Mathlib morphism in `Type` is a
+bundled structure, made with `TypeCat.ofHom`, whose application is `rfl`.
+
+Not yet: `BF_t` failing in the idempotent model (the paper's (iii), which needs the
+"image of the root" predicate as an inner element), the remaining verdicts of the two
+records, the intrinsic fullness criterion, truncation and `◇`, and the infinite models.
 
 ## Next
 
-The constructions of action models: full models over a rooted category (M-set models
-first), the intrinsic fullness criterion, truncation, and the map's models as instances,
-each a kernel-checked non-implication record. Appendix A as a theorem, and the
-coincidence with the Equivalence-rule system, is deferred: nothing depends on it.
+The remaining verdicts of the two M-set records and the paper's (iii); truncation and
+`◇P holds iff P holds in a truncation`; then the map's other models as instances, the
+symmetric and coalesced ones included. Appendix A as a theorem, and the coincidence with
+the Equivalence-rule system, is deferred: nothing depends on it.
