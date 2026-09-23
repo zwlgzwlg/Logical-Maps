@@ -322,6 +322,47 @@ goal was printed; `Term.withoutErrToSorry` and a `hasSorry` check now guard it. 
 **every strict statement quotes and reflects**: 111 of 111 in `Transformed`, 22 of 22 in
 `Mirror`.
 
+Then the translator (`Meta/Translate.lean`, with `Meta/Normalize.lean`). A survey of the
+strict layer's proof terms found them almost entirely equational, the eleven axioms
+entering through the fields of the Boolean-algebra instances, and the natural-deduction
+constructors a handful of times; so the translation is Leibniz's Law at a predicate for
+each of Lean's identity lemmas, with derived rules `eqCongr`, `eqTrans`, `eqMp` and
+β-contracted variants `allEβ`, `substβ`, `eqCongrβ` whose conclusions are stated with
+`Term.instantiate`, as Lean's typing of an application substitutes. A cited library
+theorem is translated at its instantiation and declared as `c.derivable_n`, weakened
+into the context by `Derivable.ofTheorem`, which needed `Derivable.rename`, proved. The
+verified normalizer `Term.nf` (β by parallel passes, η by a strengthening that is proved
+a section of weakening) gives conversion by reflection, `Conv.of_nf n a b rfl`; an untyped
+shadow of the syntax decides where a conversion is needed and with what fuel.
+
+The first derivations checked were `Strict.meet_comm`, `meet_top`, `join_idem`,
+`compl_join` and `and_comm_eq.strict`, the last going through the whole strict machinery,
+176 specializations of library lemmas among them. Getting there found: a memoization
+keyed by context depth rather than context, which reused a quotation under the wrong
+binder; the untyped shadow carrying each constant's context, so the same constant under
+two binders compared unequal; η-reduction at the quoter, which made the hand-written
+axioms mismatch, since `(λpq. p ∧ q)` became `∧`; and the kernel's cost of evaluating the
+normalizer, which was the whole cost and was cut ten-fold by giving it exact fuel,
+quoting faithfully so that most conversions vanish, using the β-contracted rules, and
+evaluating on one side only where the other is normal. What remained cost about a minute
+for that theorem, most of it the kernel evaluating substitutions.
+
+Then the library-wide run, which taught three things. A run that printed nothing for an
+hour was taken for a runaway and killed, twice; it was only slow, and its progress
+lines had gone nowhere, since Lean captures what elaboration prints into the message
+log. The audit now appends a line per theorem to a file named by an option, and runs
+under a finite `maxHeartbeats`, with `checkSystem` calls in the translator's own loops so
+that the limit is felt. Second, the elaborator's own normalization cost, 17 seconds of
+that minute, was Meta-level `whnf` evaluating the same substitutions the kernel would;
+the shadow now performs `instantiate`, `weaken` and `close` on itself, and that phase
+is a second. Third, a micro-benchmark of the kernel found a 40-node substitution costing
+17 ms, and the same function written through `Term.rec` directly 1.5 ms: `brecOn` is
+what the kernel is slow at. `rename`, `subst`, `prename` and `step` are now defined by
+the recursor, with `rfl` equations as their simp set and the structural definitions
+kept for the compiler by `implemented_by`; the proofs that unfolded them needed only
+the equation names. `absorption_and_exists.strict` went from 120 s to 44 s, the kernel's
+share from 109 s to 33 s, with 407 specializations of library lemmas.
+
 One Lean point worth recording: a rewrite whose motive's codomain is `Ty.denote D t` fails, since that is
 `Prop` only after unfolding, so the formula-level lemmas are stated at `Prop` or applied
 through `Eq.mp`.

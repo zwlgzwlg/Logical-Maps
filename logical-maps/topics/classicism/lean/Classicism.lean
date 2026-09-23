@@ -30,4 +30,7 @@ import Classicism.Meta.Denotation
 import Classicism.Meta.Relational
 import Classicism.Meta.Quote
 import Classicism.Meta.Quoted
+import Classicism.Meta.Normalize
+import Classicism.Meta.Translate
+import Classicism.Meta.Derived
 import Classicism.Meta.Examples

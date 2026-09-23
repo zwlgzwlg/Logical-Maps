@@ -161,12 +161,12 @@ namespace Term
 
 variable {Sig : Signature}
 
-/-- Apply a renaming to a term. -/
-def rename : ∀ {Γ Δ : Ctx}, Ren Γ Δ → ∀ {σ : Ty}, Term Sig Γ σ → Term Sig Δ σ
+/-- Apply a renaming to a term, by structural recursion: the implementation of `rename`. -/
+def renameImpl : ∀ {Γ Δ : Ctx}, Ren Γ Δ → ∀ {σ : Ty}, Term Sig Γ σ → Term Sig Δ σ
   | _, _, r, _, .var v => .var (r _ v)
   | _, _, _, _, .const c => .const c
-  | _, _, r, _, .app f a => .app (f.rename r) (a.rename r)
-  | _, _, r, _, .lam b => .lam (b.rename (Ren.lift r))
+  | _, _, r, _, .app f a => .app (renameImpl r f) (renameImpl r a)
+  | _, _, r, _, .lam b => .lam (renameImpl (Ren.lift r) b)
   | _, _, _, _, .and => .and
   | _, _, _, _, .or => .or
   | _, _, _, _, .not => .not
@@ -174,23 +174,58 @@ def rename : ∀ {Γ Δ : Ctx}, Ren Γ Δ → ∀ {σ : Ty}, Term Sig Γ σ → 
   | _, _, _, _, .ex σ => .ex σ
   | _, _, _, _, .eq σ => .eq σ
 
+/-- Apply a renaming to a term.
+
+Written through `Term.rec` directly rather than by structural recursion, as are `subst`
+and the normalizer's `prename` and `step`: the kernel evaluates such a definition about
+ten times faster than one compiled through `brecOn`, and the translator's derivations
+are checked by evaluating these. The equations `rename_var` … `rename_eq` below hold by
+`rfl` and are the simp set; the structural `renameImpl` is what the compiler runs. -/
+@[implemented_by renameImpl]
+def rename : ∀ {Γ Δ : Ctx}, Ren Γ Δ → ∀ {σ : Ty}, Term Sig Γ σ → Term Sig Δ σ :=
+  fun {_ Δ} r {_} t =>
+    Term.rec (motive := fun Γ σ _ => ∀ Δ : Ctx, Ren Γ Δ → Term Sig Δ σ)
+      (var := fun v _ r => Term.var (r _ v))
+      (const := fun c _ _ => Term.const c)
+      (app := fun _ _ f a Δ' r => Term.app (f Δ' r) (a Δ' r))
+      (lam := fun _ b _ r => Term.lam (b _ (Ren.lift r)))
+      (and := fun _ _ => Term.and) (or := fun _ _ => Term.or) (not := fun _ _ => Term.not)
+      (all := fun σ _ _ => Term.all σ) (ex := fun σ _ _ => Term.ex σ) (eq := fun σ _ _ => Term.eq σ)
+      t Δ r
+
+section
+variable {Γ Δ : Ctx} (r : Ren Γ Δ)
+@[simp] theorem rename_var {σ : Ty} (v : Var Γ σ) : rename (Sig := Sig) r (.var v) = .var (r _ v) := rfl
+@[simp] theorem rename_const (c : Sig.Const) : rename r (.const c) = .const c := rfl
+@[simp] theorem rename_app {σ : Ty} {ρ : RTy} (f : Term Sig Γ (σ ⇒ ρ)) (a : Term Sig Γ σ) :
+    rename r (.app f a) = .app (rename r f) (rename r a) := rfl
+@[simp] theorem rename_lam {σ : Ty} {ρ : RTy} (b : Term Sig (σ :: Γ) ρ) :
+    rename r (.lam b) = .lam (rename (Ren.lift r) b) := rfl
+@[simp] theorem rename_and : rename (Sig := Sig) r .and = .and := rfl
+@[simp] theorem rename_or : rename (Sig := Sig) r .or = .or := rfl
+@[simp] theorem rename_not : rename (Sig := Sig) r .not = .not := rfl
+@[simp] theorem rename_all (σ : Ty) : rename (Sig := Sig) r (.all σ) = .all σ := rfl
+@[simp] theorem rename_ex (σ : Ty) : rename (Sig := Sig) r (.ex σ) = .ex σ := rfl
+@[simp] theorem rename_eq (σ : Ty) : rename (Sig := Sig) r (.eq σ) = .eq σ := rfl
+end
+
 /-- Weakening: the same term, with a new innermost variable it does not mention. -/
 abbrev weaken {Γ : Ctx} {τ σ : Ty} (a : Term Sig Γ σ) : Term Sig (τ :: Γ) σ := a.rename Ren.shift
 
 theorem rename_id : ∀ {Γ : Ctx} {σ : Ty} (a : Term Sig Γ σ), a.rename Ren.id = a
   | _, _, .var _ | _, _, .const _ | _, _, .and | _, _, .or | _, _, .not
   | _, _, .all _ | _, _, .ex _ | _, _, .eq _ => rfl
-  | _, _, .app f a => by simp [rename, rename_id f, rename_id a]
-  | _, _, .lam b => by simp [rename, Ren.lift_id, rename_id b]
+  | _, _, .app f a => by simp [rename_id f, rename_id a]
+  | _, _, .lam b => by simp [Ren.lift_id, rename_id b]
 
 theorem rename_rename : ∀ {Γ Δ Θ : Ctx} (r : Ren Δ Θ) (r' : Ren Γ Δ) {σ : Ty} (a : Term Sig Γ σ),
     (a.rename r').rename r = a.rename (Ren.comp r r')
   | _, _, _, _, _, _, .var _ | _, _, _, _, _, _, .const _ | _, _, _, _, _, _, .and
   | _, _, _, _, _, _, .or | _, _, _, _, _, _, .not | _, _, _, _, _, _, .all _
   | _, _, _, _, _, _, .ex _ | _, _, _, _, _, _, .eq _ => rfl
-  | _, _, _, r, r', _, .app f a => by simp [rename, rename_rename r r' f, rename_rename r r' a]
+  | _, _, _, r, r', _, .app f a => by simp [rename_rename r r' f, rename_rename r r' a]
   | _, _, _, r, r', _, .lam b => by
-    simp [rename, rename_rename (Ren.lift r) (Ren.lift r') b, Ren.lift_comp]
+    simp [rename_rename (Ren.lift r) (Ren.lift r') b, Ren.lift_comp]
 
 end Term
 
@@ -240,18 +275,48 @@ namespace Term
 
 variable {Sig : Signature}
 
-/-- Apply a substitution to a term. -/
-def subst : ∀ {Γ Δ : Ctx}, Sub Sig Γ Δ → ∀ {σ : Ty}, Term Sig Γ σ → Term Sig Δ σ
+/-- Apply a substitution to a term, by structural recursion: the implementation of `subst`. -/
+def substImpl : ∀ {Γ Δ : Ctx}, Sub Sig Γ Δ → ∀ {σ : Ty}, Term Sig Γ σ → Term Sig Δ σ
   | _, _, s, _, .var v => s _ v
   | _, _, _, _, .const c => .const c
-  | _, _, s, _, .app f a => .app (f.subst s) (a.subst s)
-  | _, _, s, _, .lam b => .lam (b.subst (Sub.lift s))
+  | _, _, s, _, .app f a => .app (substImpl s f) (substImpl s a)
+  | _, _, s, _, .lam b => .lam (substImpl (Sub.lift s) b)
   | _, _, _, _, .and => .and
   | _, _, _, _, .or => .or
   | _, _, _, _, .not => .not
   | _, _, _, _, .all σ => .all σ
   | _, _, _, _, .ex σ => .ex σ
   | _, _, _, _, .eq σ => .eq σ
+
+/-- Apply a substitution to a term. Through `Term.rec`, as `rename` is, and for the same
+reason. -/
+@[implemented_by substImpl]
+def subst : ∀ {Γ Δ : Ctx}, Sub Sig Γ Δ → ∀ {σ : Ty}, Term Sig Γ σ → Term Sig Δ σ :=
+  fun {_ Δ} s {_} t =>
+    Term.rec (motive := fun Γ σ _ => ∀ Δ : Ctx, Sub Sig Γ Δ → Term Sig Δ σ)
+      (var := fun v _ s => s _ v)
+      (const := fun c _ _ => Term.const c)
+      (app := fun _ _ f a Δ' s => Term.app (f Δ' s) (a Δ' s))
+      (lam := fun _ b _ s => Term.lam (b _ (Sub.lift s)))
+      (and := fun _ _ => Term.and) (or := fun _ _ => Term.or) (not := fun _ _ => Term.not)
+      (all := fun σ _ _ => Term.all σ) (ex := fun σ _ _ => Term.ex σ) (eq := fun σ _ _ => Term.eq σ)
+      t Δ s
+
+section
+variable {Γ Δ : Ctx} (s : Sub Sig Γ Δ)
+@[simp] theorem subst_var {σ : Ty} (v : Var Γ σ) : subst s (.var v) = s _ v := rfl
+@[simp] theorem subst_const (c : Sig.Const) : subst s (.const c) = .const c := rfl
+@[simp] theorem subst_app {σ : Ty} {ρ : RTy} (f : Term Sig Γ (σ ⇒ ρ)) (a : Term Sig Γ σ) :
+    subst s (.app f a) = .app (subst s f) (subst s a) := rfl
+@[simp] theorem subst_lam {σ : Ty} {ρ : RTy} (b : Term Sig (σ :: Γ) ρ) :
+    subst s (.lam b) = .lam (subst (Sub.lift s) b) := rfl
+@[simp] theorem subst_and : subst (Sig := Sig) s .and = .and := rfl
+@[simp] theorem subst_or : subst (Sig := Sig) s .or = .or := rfl
+@[simp] theorem subst_not : subst (Sig := Sig) s .not = .not := rfl
+@[simp] theorem subst_all (σ : Ty) : subst (Sig := Sig) s (.all σ) = .all σ := rfl
+@[simp] theorem subst_ex (σ : Ty) : subst (Sig := Sig) s (.ex σ) = .ex σ := rfl
+@[simp] theorem subst_eq (σ : Ty) : subst (Sig := Sig) s (.eq σ) = .eq σ := rfl
+end
 
 /-- `b[a]`: substitute `a` for the innermost variable of `b`. This is what a β-step
 does, and what instantiating a quantifier does. -/
@@ -262,17 +327,17 @@ abbrev instantiate {Γ : Ctx} {σ τ : Ty} (b : Term Sig (σ :: Γ) τ) (a : Ter
 theorem subst_id : ∀ {Γ : Ctx} {σ : Ty} (a : Term Sig Γ σ), a.subst Sub.id = a
   | _, _, .var _ | _, _, .const _ | _, _, .and | _, _, .or | _, _, .not
   | _, _, .all _ | _, _, .ex _ | _, _, .eq _ => rfl
-  | _, _, .app f a => by simp [subst, subst_id f, subst_id a]
-  | _, _, .lam b => by simp [subst, Sub.lift_id, subst_id b]
+  | _, _, .app f a => by simp [subst_id f, subst_id a]
+  | _, _, .lam b => by simp [Sub.lift_id, subst_id b]
 
 /-- A renaming is the substitution that sends each variable to a variable. -/
 theorem rename_eq_subst : ∀ {Γ Δ : Ctx} (r : Ren Γ Δ) {σ : Ty} (a : Term Sig Γ σ),
     a.rename r = a.subst (Sub.ofRen r)
   | _, _, _, _, .var _ | _, _, _, _, .const _ | _, _, _, _, .and | _, _, _, _, .or
   | _, _, _, _, .not | _, _, _, _, .all _ | _, _, _, _, .ex _ | _, _, _, _, .eq _ => rfl
-  | _, _, r, _, .app f a => by simp [rename, subst, rename_eq_subst r f, rename_eq_subst r a]
+  | _, _, r, _, .app f a => by simp [rename_eq_subst r f, rename_eq_subst r a]
   | _, _, r, _, .lam b => by
-    simp [rename, subst, rename_eq_subst (Ren.lift r) b, Sub.lift_ofRen]
+    simp [rename_eq_subst (Ren.lift r) b, Sub.lift_ofRen]
 
 /-! The four composition laws. `subst_rename` and `rename_subst` are the two mixed cases,
 which the lifting lemmas need, and `subst_subst` is the one that matters downstream. -/
@@ -296,9 +361,9 @@ theorem subst_rename : ∀ {Γ Δ Θ : Ctx} (s : Sub Sig Δ Θ) (r : Ren Γ Δ) 
   | _, _, _, _, _, _, .var _ | _, _, _, _, _, _, .const _ | _, _, _, _, _, _, .and
   | _, _, _, _, _, _, .or | _, _, _, _, _, _, .not | _, _, _, _, _, _, .all _
   | _, _, _, _, _, _, .ex _ | _, _, _, _, _, _, .eq _ => rfl
-  | _, _, _, s, r, _, .app f a => by simp [rename, subst, subst_rename s r f, subst_rename s r a]
+  | _, _, _, s, r, _, .app f a => by simp [subst_rename s r f, subst_rename s r a]
   | _, _, _, s, r, _, .lam b => by
-    simp [rename, subst, subst_rename (Sub.lift s) (Ren.lift r) b, Sub.lift_compRen]
+    simp [subst_rename (Sub.lift s) (Ren.lift r) b, Sub.lift_compRen]
 
 theorem _root_.Classicism.Meta.Ren.lift_compSub {Γ Δ Θ : Ctx} (r : Ren Δ Θ) (s : Sub Sig Γ Δ) {σ : Ty} :
     Sub.lift (Ren.compSub r s) (σ := σ) = Ren.compSub (Ren.lift r) (Sub.lift s) := by
@@ -315,9 +380,9 @@ theorem rename_subst : ∀ {Γ Δ Θ : Ctx} (r : Ren Δ Θ) (s : Sub Sig Γ Δ) 
   | _, _, _, _, _, _, .var _ | _, _, _, _, _, _, .const _ | _, _, _, _, _, _, .and
   | _, _, _, _, _, _, .or | _, _, _, _, _, _, .not | _, _, _, _, _, _, .all _
   | _, _, _, _, _, _, .ex _ | _, _, _, _, _, _, .eq _ => rfl
-  | _, _, _, r, s, _, .app f a => by simp [rename, subst, rename_subst r s f, rename_subst r s a]
+  | _, _, _, r, s, _, .app f a => by simp [rename_subst r s f, rename_subst r s a]
   | _, _, _, r, s, _, .lam b => by
-    simp [rename, subst, rename_subst (Ren.lift r) (Sub.lift s) b, Ren.lift_compSub]
+    simp [rename_subst (Ren.lift r) (Sub.lift s) b, Ren.lift_compSub]
 
 theorem _root_.Classicism.Meta.Sub.lift_comp {Γ Δ Θ : Ctx} (s : Sub Sig Δ Θ) (s' : Sub Sig Γ Δ) {σ : Ty} :
     Sub.lift (Sub.comp s s') (σ := σ) = Sub.comp (Sub.lift s) (Sub.lift s') := by
@@ -334,9 +399,9 @@ theorem subst_subst : ∀ {Γ Δ Θ : Ctx} (s : Sub Sig Δ Θ) (s' : Sub Sig Γ 
   | _, _, _, _, _, _, .var _ | _, _, _, _, _, _, .const _ | _, _, _, _, _, _, .and
   | _, _, _, _, _, _, .or | _, _, _, _, _, _, .not | _, _, _, _, _, _, .all _
   | _, _, _, _, _, _, .ex _ | _, _, _, _, _, _, .eq _ => rfl
-  | _, _, _, s, s', _, .app f a => by simp [subst, subst_subst s s' f, subst_subst s s' a]
+  | _, _, _, s, s', _, .app f a => by simp [subst_subst s s' f, subst_subst s s' a]
   | _, _, _, s, s', _, .lam b => by
-    simp [subst, subst_subst (Sub.lift s) (Sub.lift s') b, Sub.lift_comp]
+    simp [subst_subst (Sub.lift s) (Sub.lift s') b, Sub.lift_comp]
 
 /-- Substituting under a `cons` into a weakened term drops the `cons`. -/
 @[simp] theorem _root_.Classicism.Meta.Sub.compRen_cons_shift {Γ Δ : Ctx} {σ : Ty}

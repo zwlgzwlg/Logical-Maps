@@ -134,4 +134,56 @@ theorem lam_congr {σ : Ty} {ρ : RTy} {b b' : Term Sig (σ :: Γ) ρ} (h : b �
 
 end Conv
 
+/-! ### Conversion is stable under renaming -/
+
+theorem Term.weaken_rename {Γ Δ : Ctx} {σ τ : Ty} (r : Ren Γ Δ) (a : Term Sig Γ σ) :
+    (a.rename r).weaken (τ := τ) = a.weaken.rename (Ren.lift r) := by
+  simp only [Term.weaken, Term.rename_rename]; rfl
+
+theorem Term.instantiate_rename {Γ Δ : Ctx} {σ τ : Ty} (r : Ren Γ Δ) (b : Term Sig (σ :: Γ) τ)
+    (a : Term Sig Γ σ) :
+    (b.instantiate a).rename r = (b.rename (Ren.lift r)).instantiate (a.rename r) := by
+  simp only [Term.instantiate, Term.rename_subst, Term.subst_rename]
+  congr 1
+  funext υ v
+  cases v with
+  | zero => rfl
+  | succ v => rfl
+
+theorem Beta.rename {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ) {a b : Term Sig Γ σ} (h : Beta a b) :
+    Beta (a.rename r) (b.rename r) := by
+  cases h with
+  | intro b a =>
+    rw [Term.instantiate_rename]
+    exact Beta.intro _ _
+
+theorem Eta.rename {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ) {a b : Term Sig Γ σ} (h : Eta a b) :
+    Eta (a.rename r) (b.rename r) := by
+  cases h with
+  | intro f =>
+    show Eta (.lam (.app (f.weaken.rename (Ren.lift r)) (.var .zero))) (f.rename r)
+    rw [← Term.weaken_rename]
+    exact Eta.intro _
+
+theorem BetaEta.rename {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ) {a b : Term Sig Γ σ} (h : BetaEta a b) :
+    BetaEta (a.rename r) (b.rename r) :=
+  h.elim (fun h => Or.inl (Beta.rename r h)) (fun h => Or.inr (Eta.rename r h))
+
+theorem Step.rename {R : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Term Sig Γ σ → Prop}
+    (hR : ∀ {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ) {a b : Term Sig Γ σ}, R a b → R (a.rename r) (b.rename r)) :
+    ∀ {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ) {a b : Term Sig Γ σ}, Step R a b →
+      Step R (a.rename r) (b.rename r)
+  | _, _, _, r, _, _, .here h => .here (hR r h)
+  | _, _, _, r, _, _, .appL h => .appL (Step.rename hR r h)
+  | _, _, _, r, _, _, .appR h => .appR (Step.rename hR r h)
+  | _, _, _, r, _, _, .lam h => .lam (Step.rename hR (Ren.lift r) h)
+
+theorem Conv.rename {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ) {a b : Term Sig Γ σ} (h : a ≡ b) :
+    a.rename r ≡ b.rename r := by
+  induction h with
+  | rel h => exact EqvGen.rel (Step.rename BetaEta.rename r h)
+  | refl _ => exact EqvGen.refl _
+  | symm _ ih => exact EqvGen.symm ih
+  | trans _ _ ih₁ ih₂ => exact EqvGen.trans ih₁ ih₂
+
 end Classicism.Meta

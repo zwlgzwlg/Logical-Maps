@@ -22,8 +22,8 @@ def sig₁ : Signature := ⟨Unit, fun _ => Ty.e ⇒ RTy.t⟩
 example (y : Var [Ty.e] Ty.e) :
     (Term.lam (Sig := sig₁) (.app (.const ()) (.var .zero))).app (.var y)
       ≡ .app (.const ()) (.var y) := by
-  have := Conv.beta (Sig := sig₁) (Γ := [Ty.e]) (.app (.const ()) (.var .zero)) (.var y)
-  simpa [Term.instantiate, Term.subst, Sub.cons, Sub.id] using this
+  -- the substitution evaluates: the two sides are definitionally equal
+  exact Conv.beta (Sig := sig₁) (Γ := [Ty.e]) (.app (.const ()) (.var .zero)) (.var y)
 
 /-- `∀x. Wise x → Wise x` is a sentence over `sig₁`, and is not pure. -/
 def wiseSelf : Sentence sig₁ :=

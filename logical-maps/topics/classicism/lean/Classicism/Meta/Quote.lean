@@ -183,6 +183,24 @@ partial def quoteTerm (e : Expr) : QM (TSyntax `term) := do
     | (``Classicism.Strict.SRel.coext, #[τ, _, X, Y]) => relOp τ ``Classicism.Meta.Term.coextR #[X, Y]
     | (``Classicism.Strict.SRel.boxAt, #[τ, _, X]) => relOp τ ``Classicism.Meta.Term.boxR #[X]
     | (``Classicism.Strict.SRel.boxImp, #[τ, _, X, Y]) => relOp τ ``Classicism.Meta.Term.boxImpR #[X, Y]
+    | (``Eq, args) =>
+      -- identity unapplied or partially applied, as η-reduction of `fun z => a = z` leaves it
+      let σs ← exprToSyntax (← quoteTy args[0]!)
+      let mut acc ← `(Classicism.Meta.Term.eq $σs)
+      for a in args.extract 1 args.size do
+        acc ← `(Classicism.Meta.Term.app $acc $(← quoteTerm a))
+      return acc
+    | (``Exists, #[α]) => do
+      let σs ← exprToSyntax (← quoteTy α)
+      `(Classicism.Meta.Term.ex $σs)
+    | (``And, args) | (``Or, args) | (``Not, args) =>
+      -- a connective unapplied or partially applied
+      let c := e.getAppFn.constName!
+      let mut acc ← if c == ``And then `(Classicism.Meta.Term.and)
+        else if c == ``Or then `(Classicism.Meta.Term.or) else `(Classicism.Meta.Term.not)
+      for a in args do
+        acc ← `(Classicism.Meta.Term.app $acc $(← quoteTerm a))
+      return acc
     | _ =>
       let f := e.getAppFn
       let args := e.getAppArgs

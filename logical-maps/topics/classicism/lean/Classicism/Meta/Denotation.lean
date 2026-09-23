@@ -130,10 +130,10 @@ theorem Term.denote_rename (I : Interp Sig) :
   | _, _, _, _, .const _, _ | _, _, _, _, .and, _ | _, _, _, _, .or, _ | _, _, _, _, .not, _
   | _, _, _, _, .all _, _ | _, _, _, _, .ex _, _ | _, _, _, _, .eq _, _ => rfl
   | _, _, r, _, .app f a, env => by
-    simp only [Term.rename, Term.denote, Term.denote_rename I r f, Term.denote_rename I r a]
+    simp only [Term.rename_app, Term.denote, Term.denote_rename I r f, Term.denote_rename I r a]
     rfl
   | _, _, r, _, .lam b, env => by
-    simp only [Term.rename, Term.denote]
+    simp only [Term.rename_lam, Term.denote]
     funext x
     rw [Term.denote_rename I (Ren.lift r) b, Ren.denote_lift]
 
@@ -190,10 +190,10 @@ theorem Term.denote_subst (I : Interp Sig) :
   | _, _, _, _, .const _, _ | _, _, _, _, .and, _ | _, _, _, _, .or, _ | _, _, _, _, .not, _
   | _, _, _, _, .all _, _ | _, _, _, _, .ex _, _ | _, _, _, _, .eq _, _ => rfl
   | _, _, s, _, .app f a, env => by
-    simp only [Term.subst, Term.denote, Term.denote_subst I s f, Term.denote_subst I s a]
+    simp only [Term.subst_app, Term.denote, Term.denote_subst I s f, Term.denote_subst I s a]
     rfl
   | _, _, s, _, .lam b, env => by
-    simp only [Term.subst, Term.denote]
+    simp only [Term.subst_lam, Term.denote]
     funext x
     rw [Term.denote_subst I (Sub.lift s) b, Sub.denote_lift]
 

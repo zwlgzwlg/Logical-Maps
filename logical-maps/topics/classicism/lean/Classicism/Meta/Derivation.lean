@@ -154,6 +154,62 @@ theorem weaken : ∀ {Γ : Ctx} {Δ Δ' : List (Formula Sig Γ)} {p : Formula Si
   | _, _, _, _, subst F h₁ h₂, hs => subst F (weaken h₁ hs) (weaken h₂ hs)
   | _, _, _, _, conv h c, hs => conv (weaken h hs) c
 
+/-- Hypotheses, renamed. -/
+abbrev _root_.Classicism.Meta.Hyps.rename {Γ Δ : Ctx} (r : Ren Γ Δ) (Δ' : List (Formula Sig Γ)) :
+    List (Formula Sig Δ) := Δ'.map (Term.rename r)
+
+theorem _root_.Classicism.Meta.Hyps.weaken_rename {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ)
+    (Δ' : List (Formula Sig Γ)) :
+    Hyps.weaken (σ := σ) (Hyps.rename r Δ') = Hyps.rename (Ren.lift r) (Hyps.weaken Δ') := by
+  simp only [Hyps.weaken, Hyps.rename, List.map_map]
+  congr 1
+  funext a
+  exact Term.weaken_rename r a
+
+/-- Renaming the variables: a derivation in one context gives a derivation in any context
+it maps into. Admissible by induction; the eigenvariable rules lift the renaming. -/
+theorem rename : ∀ {Γ Δ : Ctx} (r : Ren Γ Δ) {Δ' : List (Formula Sig Γ)} {p : Formula Sig Γ},
+    Derivable Ax Δ' p → Derivable Ax (Hyps.rename r Δ') (p.rename r)
+  | _, _, r, _, _, hyp h => hyp (List.mem_map.2 ⟨_, h, rfl⟩)
+  | _, _, r, _, _, ax (a := a) h => by
+    have : (Term.close a).rename r = Term.close a := by
+      simp only [Term.close, Term.rename_rename]
+      congr 1; funext σ v; exact nomatch v
+    rw [this]; exact ax h
+  | _, _, r, _, _, andI h₁ h₂ => andI (rename r h₁) (rename r h₂)
+  | _, _, r, _, _, andE₁ h => andE₁ (rename r h)
+  | _, _, r, _, _, andE₂ h => andE₂ (rename r h)
+  | _, _, r, _, _, orI₁ h => orI₁ (rename r h)
+  | _, _, r, _, _, orI₂ h => orI₂ (rename r h)
+  | _, _, r, _, _, orE h h₁ h₂ => orE (rename r h) (rename r h₁) (rename r h₂)
+  | _, _, r, _, _, notI h₁ h₂ => notI (rename r h₁) (rename r h₂)
+  | _, _, r, _, _, notE h₁ h₂ => notE (rename r h₁) (rename r h₂)
+  | _, _, r, _, _, em p => em _
+  | _, _, r, _, _, allE h a => allE (rename r h) (a.rename r)
+  | _, _, r, _, _, allI h => by
+    have := rename (Ren.lift r) h
+    rw [← Hyps.weaken_rename] at this
+    exact allI this
+  | _, _, r, _, _, exI a h => exI (a.rename r) (rename r h)
+  | _, _, r, Δ', _, exE (σ := σ) (F := F) (r := q) h h' => by
+    have this := rename (Ren.lift r) h'
+    have e₁ : Hyps.rename (Ren.lift r) (Term.app F.weaken (.var .zero) :: Hyps.weaken Δ')
+        = Term.app (F.rename r).weaken (.var .zero) :: Hyps.weaken (Hyps.rename r Δ') := by
+      simp only [Hyps.rename, List.map_cons, Hyps.weaken_rename, Term.weaken_rename]
+      rfl
+    have e₂ : q.weaken.rename (Ren.lift r) = (q.rename r).weaken (τ := σ) :=
+      (Term.weaken_rename (τ := σ) r q).symm
+    rw [e₁, e₂] at this
+    exact exE (rename r h) this
+  | _, _, r, _, _, refl a => refl _
+  | _, _, r, _, _, subst F h₁ h₂ => subst (F.rename r) (rename r h₁) (rename r h₂)
+  | _, _, r, _, _, conv h c => conv (rename r h) (Conv.rename r c)
+
+/-- A theorem holds in every context, from any hypotheses. -/
+theorem ofTheorem {Γ : Ctx} {Δ : List (Formula Sig Γ)} {p : Sentence Sig} (h : Theorem Ax p) :
+    Derivable Ax Δ p.close :=
+  weaken (rename Ren.ofEmpty h) (fun _ h => nomatch h)
+
 /-- A hypothesis just added. -/
 theorem hyp₀ {Γ : Ctx} {Δ : List (Formula Sig Γ)} {p : Formula Sig Γ} :
     Derivable Ax (p :: Δ) p := hyp (List.mem_cons_self ..)
@@ -223,10 +279,103 @@ theorem eqSymm {σ : Ty} {a b : Term Sig Γ σ} (h : Derivable Ax Δ (Term.eq' a
     subst (.lam (Term.eq' (.var .zero) a.weaken)) h
       (conv (refl a) (Conv.symm (by
         have := Conv.beta (Sig := Sig) (Γ := Γ) (Term.eq' (.var .zero) a.weaken) a
-        simpa [Term.instantiate, Term.subst, Term.subst_rename, Term.subst_id] using this)))
+        simpa [Term.instantiate, Term.subst_rename, Term.subst_id] using this)))
   conv h₁ (by
     have := Conv.beta (Sig := Sig) (Γ := Γ) (Term.eq' (.var .zero) a.weaken) b
-    simpa [Term.instantiate, Term.subst, Term.subst_rename, Term.subst_id] using this)
+    simpa [Term.instantiate, Term.subst_rename, Term.subst_id] using this)
+
+/-! ### Leibniz's Law in the forms the translator meets
+
+The strict layer's proofs are equational: Lean's `congrArg`, `Eq.trans`, `Eq.symm`,
+`Eq.mpr` and `congrFun` are each `LL` at a particular predicate, and these are their
+derivations. Each ends in a `conv` that β-reduces the predicate's application. -/
+
+/-- The conversion `(λz. B) a ≡ B[a]`, for use in the rules below. -/
+theorem _root_.Classicism.Meta.Conv.beta' {σ : Ty} {ρ : RTy} (b : Term Sig (σ :: Γ) ρ)
+    (a : Term Sig Γ σ) : Term.app (.lam b) a ≡ b.instantiate a := Conv.beta b a
+
+/-- Transitivity: from `a = b` and `b = c`, `a = c`, by `LL` at `λz. a = z`. -/
+theorem eqTrans {σ : Ty} {a b c : Term Sig Γ σ} (h₁ : Derivable Ax Δ (Term.eq' a b))
+    (h₂ : Derivable Ax Δ (Term.eq' b c)) : Derivable Ax Δ (Term.eq' a c) :=
+  have h : Derivable Ax Δ (.app (.lam (Term.eq' a.weaken (.var .zero))) c) :=
+    subst (.lam (Term.eq' a.weaken (.var .zero))) h₂ (conv h₁ (Conv.symm (by
+      have := Conv.beta' (Sig := Sig) (Γ := Γ) (Term.eq' a.weaken (.var .zero)) b
+      simpa [Term.instantiate, Term.subst_rename, Term.subst_id] using this)))
+  conv h (by
+    have := Conv.beta' (Sig := Sig) (Γ := Γ) (Term.eq' a.weaken (.var .zero)) c
+    simpa [Term.instantiate, Term.subst_rename, Term.subst_id] using this)
+
+/-- Congruence: from `a = b`, `F a = F b`, by `LL` at `λz. F a = F z`. This is Lean's
+`congrArg`. -/
+theorem eqCongr {σ : Ty} {ρ : RTy} (F : Term Sig Γ (σ ⇒ ρ)) {a b : Term Sig Γ σ}
+    (h : Derivable Ax Δ (Term.eq' a b)) :
+    Derivable Ax Δ (Term.eq' (.app F a) (.app F b)) :=
+  have h' : Derivable Ax Δ (.app (.lam (Term.eq' (.app F.weaken a.weaken) (.app F.weaken (.var .zero)))) b) :=
+    subst _ h (conv (refl (.app F a)) (Conv.symm (by
+      have := Conv.beta' (Sig := Sig) (Γ := Γ)
+        (Term.eq' (.app F.weaken a.weaken) (.app F.weaken (.var .zero))) a
+      simpa [Term.instantiate, Term.subst_rename, Term.subst_id] using this)))
+  conv h' (by
+    have := Conv.beta' (Sig := Sig) (Γ := Γ)
+      (Term.eq' (.app F.weaken a.weaken) (.app F.weaken (.var .zero))) b
+    simpa [Term.instantiate, Term.subst_rename, Term.subst_id] using this)
+
+/-- From `f = g`, `f a = g a`, by `LL` at `λz. f a = z a`. This is Lean's `congrFun`. -/
+theorem eqCongrFun {σ : Ty} {ρ : RTy} {f g : Term Sig Γ (σ ⇒ ρ)}
+    (h : Derivable Ax Δ (Term.eq' f g)) (a : Term Sig Γ σ) :
+    Derivable Ax Δ (Term.eq' (.app f a) (.app g a)) :=
+  have h' : Derivable Ax Δ (.app (.lam (Term.eq' (.app f.weaken a.weaken) (.app (.var .zero) a.weaken))) g) :=
+    subst _ h (conv (refl (.app f a)) (Conv.symm (by
+      have := Conv.beta' (Sig := Sig) (Γ := Γ)
+        (Term.eq' (.app f.weaken a.weaken) (.app (.var .zero) a.weaken)) f
+      simpa [Term.instantiate, Term.subst_rename, Term.subst_id] using this)))
+  conv h' (by
+    have := Conv.beta' (Sig := Sig) (Γ := Γ)
+      (Term.eq' (.app f.weaken a.weaken) (.app (.var .zero) a.weaken)) g
+    simpa [Term.instantiate, Term.subst_rename, Term.subst_id] using this)
+
+/-- From `p = q` and `p`, `q`: `LL` at the identity predicate `λz. z`. Lean's `Eq.mp`. -/
+theorem eqMp {p q : Formula Sig Γ} (h : Derivable Ax Δ (Term.eq' p q)) (hp : Derivable Ax Δ p) :
+    Derivable Ax Δ q :=
+  conv (subst (.lam (.var .zero)) h (conv hp (Conv.symm (Conv.beta' (.var .zero) p))))
+    (Conv.beta' (.var .zero) q)
+
+/-- From `p = q` and `q`, `p`. Lean's `Eq.mpr`. -/
+theorem eqMpr {p q : Formula Sig Γ} (h : Derivable Ax Δ (Term.eq' p q)) (hq : Derivable Ax Δ q) :
+    Derivable Ax Δ p :=
+  eqMp (eqSymm h) hq
+
+/-! ### The same rules, with the β-redex contracted
+
+Lean's typing of an application substitutes, so the type of `h a` is the instantiated
+body, where the rule `allE` yields the application `F a`. These variants conclude with
+`instantiate`, which computes to the same tree the quoter reads from Lean's type, so no
+conversion step is needed at the use site; the kernel evaluates the substitution. -/
+
+theorem allEβ {σ : Ty} {b : Formula Sig (σ :: Γ)} (h : Derivable Ax Δ (Term.forall' b))
+    (a : Term Sig Γ σ) : Derivable Ax Δ (b.instantiate a) :=
+  conv (allE h a) (Conv.beta' b a)
+
+theorem exIβ {σ : Ty} {b : Formula Sig (σ :: Γ)} (a : Term Sig Γ σ)
+    (h : Derivable Ax Δ (b.instantiate a)) : Derivable Ax Δ (Term.exists' b) :=
+  exI a (conv h (Conv.symm (Conv.beta' b a)))
+
+theorem substβ {σ : Ty} {a b : Term Sig Γ σ} (P : Formula Sig (σ :: Γ))
+    (h₁ : Derivable Ax Δ (Term.eq' a b)) (h₂ : Derivable Ax Δ (P.instantiate a)) :
+    Derivable Ax Δ (P.instantiate b) :=
+  conv (subst (.lam P) h₁ (conv h₂ (Conv.symm (Conv.beta' P a)))) (Conv.beta' P b)
+
+theorem eqCongrβ {σ : Ty} {ρ : RTy} (B : Term Sig (σ :: Γ) ρ) {a b : Term Sig Γ σ}
+    (h : Derivable Ax Δ (Term.eq' a b)) :
+    Derivable Ax Δ (Term.eq' (B.instantiate a) (B.instantiate b)) :=
+  have h' := eqCongr (.lam B) h
+  conv h' (Conv.app_congr (Conv.app_congr (Conv.refl _) (Conv.beta' B a)) (Conv.beta' B b))
+
+theorem eqCongrFunβ {σ : Ty} {ρ : RTy} {b₁ b₂ : Term Sig (σ :: Γ) ρ}
+    (h : Derivable Ax Δ (Term.eq' (Term.lam b₁) (Term.lam b₂))) (a : Term Sig Γ σ) :
+    Derivable Ax Δ (Term.eq' (b₁.instantiate a) (b₂.instantiate a)) :=
+  have h' := eqCongrFun h a
+  conv h' (Conv.app_congr (Conv.app_congr (Conv.refl _) (Conv.beta' b₁ a)) (Conv.beta' b₂ a))
 
 end Derivable
 

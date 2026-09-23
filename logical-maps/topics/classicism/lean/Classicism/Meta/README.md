@@ -73,6 +73,9 @@ All were settled with Cian on 22 September 2026.
 | `Relational.lean` | The relational operations `∧_τ`, `¬_τ`, `∨_τ`, coextension, the pointwise box and implication, and `⊤_τ`, `≤_τ`, as **functions on terms by recursion on the type**; the standard reading's `SRel` and `SOrder` instances by the same recursion; and one lemma per operation, by induction on the type, that reading it back gives the strict layer's. Purpose four of this layer, at work. |
 | `Quote.lean` | **The quoter**, first half of the translator: `#classicism_quote foo` reads the strict statement of `foo` as a sentence, `foo.quoted`, with type parameters as object-type variables, and declares `foo.reflect`, the `rfl` that reading it back gives the statement. `#classicism_quote_audit` runs it over a module. |
 | `Quoted.lean` | The quoter run over the library at build time; home of every `foo.strict.quoted` and `foo.strict.reflect`. |
+| `Normalize.lean` | A **verified βη-normalizer** on the syntax, `Term.nf`, with `Conv.of_nf`: two terms with the same normal form convert, the hypothesis decided by evaluation. |
+| `Translate.lean` | **The translator**, second half: `#classicism_derive foo` reads the strict proof of `foo` and declares `foo.derivable`, a kernel-checked derivation of `foo.quoted`. `#classicism_derive_audit` runs it over a module. |
+| `Derived.lean` | Two quick derivations run at build time, as a check that the whole chain works. |
 
 ## Conventions worth knowing
 
@@ -133,7 +136,53 @@ rewriting with the lemma for each operation, `reflect_by_rewriting`, and a failu
 tactic is fatal, not turned into `sorry`. **Every strict statement of the library quotes
 and reflects**, 111 of 111 in `Transformed` and 22 of 22 in `Mirror`.
 
+## The translator
+
+`Translate.lean` is the second half: `#classicism_derive foo` reads the **strict** proof
+of `foo` and declares `foo.derivable : ∀ σ' …, Theorem C.axioms(Minus) (foo.quoted σ' …)`,
+a derivation of the quoted statement that the kernel checks. With it the chain is
+complete for each theorem it reaches: the shallow proof in Lean, the transformer's strict
+proof from the eleven axioms, and a derivation in `H` plus the eleven identities as an
+object of Lean, every link kernel-checked and every translator untrusted.
+
+Strict proofs are almost entirely equational, so the translation is chiefly Leibniz's
+Law: each of Lean's `congrArg`, `Eq.trans`, `Eq.symm`, `Eq.mpr` and `congrFun` is `LL` at a
+predicate, and `Derivation.lean` has the derived rule for each. The natural-deduction
+constructors that remain, `Or.elim`, `And.intro`, `Exists.elim` and a few more, map to
+the rules by name. A library theorem cited in a proof is translated **at the types it is
+used at**, once per instantiation, as `c.derivable_n`, and cited through
+`Derivable.ofTheorem`, so that class-parametric lemmas such as `BA.rule_imp_intro` never
+have to be given a single object-language statement.
+
+Two things make it tractable. Everything is built directly as an expression with every
+implicit argument supplied, never through unification; the option
+`Classicism.Meta.Translate.check` type-checks each node for debugging. And conversion,
+where Lean's kernel silently β-reduced, is one reflective lemma: `Normalize.lean` has a
+verified βη-normalizer `Term.nf`, and `Conv.of_nf n a b rfl` is a conversion proof the
+kernel discharges by evaluation. An untyped shadow of the syntax, `Tm`, decides where a
+conversion is needed and with how much fuel; where none is, the derivation is used as it
+is and the kernel evaluates the substitution. Rule variants concluding with
+`Term.instantiate`, `allEβ` and friends, match Lean's typing of an application, which
+substitutes.
+
+**What it costs.** A library theorem takes seconds to a minute, and nearly all of it is
+the kernel evaluating substitutions: a derivation of `absorption_and_exists` has some
+8,500 places where a rule concludes `b[a]` and the quoted formula is its value, and each
+is a kernel evaluation of `Term.subst`. That is why `rename`, `subst`, `prename` and
+`step` are written through `Term.rec` directly rather than by structural recursion,
+with `rfl` equations as their simp set and the structural version kept for the compiler
+(`implemented_by`): the kernel evaluates a definition compiled through `brecOn` about ten
+times slower. A cited lemma is specialized once per instantiation and reused across a
+file, so the first theorem of a run pays for the Boolean-algebra lemmas and later ones
+are quick. `Classicism.Meta.Translate.profile` prints the time by phase.
+
+**Running the audit.** `#classicism_derive_audit Classicism.Transformed` takes the
+better part of an hour; Lean captures what elaboration prints, so set
+`Classicism.Meta.Translate.progress` to a file to watch it, and set `maxHeartbeats`
+high but finite, so that a theorem that runs away fails on its own rather than being
+found hours later. `Derived.lean` runs two quick ones at build time.
+
 ## Next
 
-The translation of strict proofs into derivations; then Appendix A, and the coincidence
-with the Equivalence-rule system.
+The audit of the translator over the library; then Appendix A, and the coincidence with
+the Equivalence-rule system.

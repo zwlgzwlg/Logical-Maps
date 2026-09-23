@@ -400,7 +400,20 @@ not of `C⁻`, while at every relational type it is derivable from the closed te
   over the library at build time: **every strict statement quotes and reflects**, 111 of
   111.
 
-Next: the translation of strict proofs into derivations.
+* `Meta/Normalize.lean`, `Meta/Translate.lean`: the **translator**, the second half.
+  `#classicism_derive foo` reads the strict proof of `foo` and declares `foo.derivable`, a
+  derivation in `H` plus the eleven identities of the quoted statement, checked by the
+  kernel. Strict proofs are almost all Leibniz's Law, so the translation is equational;
+  library theorems are translated at the types they are used at; and where the kernel had
+  β-reduced silently, a verified normalizer on the syntax supplies the conversion by
+  reflection. With it the chain from a shallow proof to an object of the metalogical
+  layer is complete, each link kernel-checked and each translator untrusted. The cost
+  is the kernel's evaluation of substitutions, so the syntax's recursive functions are
+  written through `Term.rec` directly, which the kernel evaluates ten times faster than
+  structural recursion. `Meta/Derived.lean` runs two derivations at build time; the
+  library-wide audit is run by hand.
+
+Next: the translator over the whole library; then Appendix A.
 
 ## Files
 
@@ -429,6 +442,9 @@ Classicism/Meta/Examples.lean   small computed checks, derivations, and reflecti
 Classicism/Meta/Relational.lean ∧_τ, ¬_τ, coext and the rest by recursion on the type; their readings
 Classicism/Meta/Quote.lean      the quoter: strict statements as sentences, reflection checked
 Classicism/Meta/Quoted.lean     the quoter run over the library; home of foo.strict.quoted
+Classicism/Meta/Normalize.lean  a verified βη-normalizer; conversion by reflection
+Classicism/Meta/Translate.lean  the translator: strict proofs to derivations
+Classicism/Meta/Derived.lean    two derivations checked at build time
 Classicism/Modal.lean           K, T, 4, NI, CBF, Intensionality and its corollaries
 Classicism/Order.lean           the algebraic order and its pointwise characterisation
 Classicism/Comprehension.lean   persistence, inextensibility and the rigidity variants
