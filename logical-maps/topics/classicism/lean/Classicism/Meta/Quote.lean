@@ -58,6 +58,24 @@ private def rtyE : Expr := mkConst ``Classicism.Meta.RTy
 private def relE (ρ : Expr) : Expr := mkApp (mkConst ``Classicism.Meta.Ty.rel) ρ
 private def tE : Expr := relE (mkConst ``Classicism.Meta.RTy.t)
 
+/-- Reduce a raw projection of anything but a variable: `whnfCore` projects out of a
+constructor once the instance unfolds, and reducible unfolding is the fallback. -/
+def reduceProj (f : Expr) : MetaM Expr := do
+  let f' ← whnfCore f
+  if f' != f then return f'
+  let f' ← whnfR f
+  if f' != f then return f'
+  whnf f
+
+/-- A raw projection `e.k` of a structure, as its projection function applied: the
+structure's parameters, then `e`. -/
+def projAsApp (S : Name) (k : Nat) (e : Expr) : MetaM (Option Expr) := do
+  let some sinfo := getStructureInfo? (← getEnv) S | return none
+  let some field := sinfo.fieldNames[k]? | return none
+  let ty ← whnf (← inferType e)
+  unless ty.isAppOf S do return none
+  return some (mkAppN (mkConst (S ++ field)) (ty.getAppArgs ++ #[e]))
+
 mutual
 
 /-- Read a Lean type as an object type. -/
@@ -112,14 +130,22 @@ private def withObj {α} (nm : Name) (ty : Expr) (k : Expr → QM α) : QM α :=
 mutual
 
 /-- A relational operation of the strict layer's class `SRel`, at the type `τ`: the
-object-language operation `op τ' …` of `Meta/Relational.lean`, by recursion on the type,
-whether `τ` is a type variable or a concrete type. -/
-partial def relOp (τ : Expr) (op : Name) (args : Array Expr) : QM (TSyntax `term) := do
+object-language constant `op τ'` of `Meta/Term.lean` applied to the arguments, when `τ`
+is a type variable; at a constructor type the strict instance unfolds and the operation
+is read through it, so the constants stand only at type variables. -/
+partial def relOp (e τ : Expr) (op : Name) (args : Array Expr) : QM (TSyntax `term) := do
   let ρ ← quoteRTy τ
+  if ρ.isConstOf ``Classicism.Meta.RTy.t || ρ.isAppOfArity ``Classicism.Meta.RTy.arr 2 then
+    -- a constructor type: the instance unfolds, and the operation is read through it
+    let e' ← match ← unfoldDefinition? e with
+      | some e' => pure e'
+      | none => whnfR e
+    if e' == e then throwError "quote: the operation {e} at a constructor type does not unfold"
+    return ← quoteTerm e'
   let ρs ← exprToSyntax ρ
   let mut acc ← `($(mkIdent op) $ρs)
   for a in args do
-    acc ← `($acc $(← quoteTerm a))
+    acc ← `(Classicism.Meta.Term.app $acc $(← quoteTerm a))
   return acc
 
 /-- Read a strict statement, or a subterm of one, as the syntax of an object term. -/
@@ -128,6 +154,14 @@ partial def quoteTerm (e : Expr) : QM (TSyntax `term) := do
   match e with
   | .mdata _ b => quoteTerm b
   | .letE _ _ v b _ => quoteTerm (b.instantiate1 v)
+  | .proj S k b =>
+    if b.isFVar then
+      let some e' ← projAsApp S k b | throwError "quote: cannot read the projection {e}"
+      quoteTerm e'
+    else
+      let e' ← reduceProj e
+      if e' == e then throwError "quote: cannot reduce the projection {e}"
+      quoteTerm e'
   | .fvar id =>
     let some i := (← read).objVars.findIdx? (·.1 == id)
       | throwError "quote: the variable {e} is not an object variable in scope"
@@ -176,13 +210,19 @@ partial def quoteTerm (e : Expr) : QM (TSyntax `term) := do
       -- `∃ F` with `F` not a lambda: `∃σ F`
       let σs ← exprToSyntax (← quoteTy α)
       `(Classicism.Meta.Term.app (Classicism.Meta.Term.ex $σs) $(← quoteTerm F))
-    | (``Classicism.Strict.SRel.constP, #[τ, _, p]) => relOp τ ``Classicism.Meta.Term.constR #[p]
-    | (``Classicism.Strict.SRel.neg, #[τ, _, X]) => relOp τ ``Classicism.Meta.Term.negR #[X]
-    | (``Classicism.Strict.SRel.and, #[τ, _, X, Y]) => relOp τ ``Classicism.Meta.Term.andR #[X, Y]
-    | (``Classicism.Strict.SRel.or, #[τ, _, X, Y]) => relOp τ ``Classicism.Meta.Term.orR #[X, Y]
-    | (``Classicism.Strict.SRel.coext, #[τ, _, X, Y]) => relOp τ ``Classicism.Meta.Term.coextR #[X, Y]
-    | (``Classicism.Strict.SRel.boxAt, #[τ, _, X]) => relOp τ ``Classicism.Meta.Term.boxR #[X]
-    | (``Classicism.Strict.SRel.boxImp, #[τ, _, X, Y]) => relOp τ ``Classicism.Meta.Term.boxImpR #[X, Y]
+    | (``Classicism.Strict.SRel.constP, #[τ, _, p]) => relOp e τ ``Classicism.Meta.Term.constR #[p]
+    | (``Classicism.Strict.SRel.neg, #[τ, _, X]) => relOp e τ ``Classicism.Meta.Term.negR #[X]
+    | (``Classicism.Strict.SRel.and, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.andR #[X, Y]
+    | (``Classicism.Strict.SRel.or, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.orR #[X, Y]
+    | (``Classicism.Strict.SRel.coext, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.coextR #[X, Y]
+    | (``Classicism.Strict.SRel.boxAt, #[τ, _, X]) => relOp e τ ``Classicism.Meta.Term.boxR #[X]
+    | (``Classicism.Strict.SRel.boxImp, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.boxImpR #[X, Y]
+    -- the Boolean-algebra class's operations, the same constants; its unit at `Prop` is
+    -- `everything`, so at `ρ` it is `const_ρ everything`
+    | (``Classicism.Strict.BA.and, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.andR #[X, Y]
+    | (``Classicism.Strict.BA.or, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.orR #[X, Y]
+    | (``Classicism.Strict.BA.neg, #[τ, _, X]) => relOp e τ ``Classicism.Meta.Term.negR #[X]
+    | (``Classicism.Strict.BA.unit, #[τ, _]) => relOp e τ ``Classicism.Meta.Term.constR #[mkConst ``Classicism.Strict.everything]
     | (``Eq, args) =>
       -- identity unapplied or partially applied, as η-reduction of `fun z => a = z` leaves it
       let σs ← exprToSyntax (← quoteTy args[0]!)
@@ -204,6 +244,16 @@ partial def quoteTerm (e : Expr) : QM (TSyntax `term) := do
     | _ =>
       let f := e.getAppFn
       let args := e.getAppArgs
+      if let .proj S k b := f then
+        -- an applied raw projection: of an instance variable, as the projection
+        -- function applied; of anything else, reduced
+        if b.isFVar then
+          let some f' ← projAsApp S k b | throwError "quote: cannot read the projection {f}"
+          return ← quoteTerm (mkAppN f' args)
+        else
+          let f' ← reduceProj f
+          if f' == f then throwError "quote: cannot reduce the projection {f}"
+          return ← quoteTerm (mkAppN f' args)
       if f.isFVar then
         -- an object variable applied to arguments
         let mut acc ← quoteTerm f
@@ -215,7 +265,10 @@ partial def quoteTerm (e : Expr) : QM (TSyntax `term) := do
       -- anything else: unfold one step and try again, so that this library's definitions
       -- and its instances at concrete types quote through their bodies
       match ← unfoldDefinition? e with
-      | some e' => quoteTerm e'
+      | some e' =>
+        if let .proj _ _ b := e'.getAppFn then
+          if b.isFVar then throwError "quote: no reading of the field {f} of an instance variable"
+        quoteTerm e'
       | none =>
         let e' ← whnfCore e
         if e' != e then quoteTerm e'
@@ -232,10 +285,10 @@ denotation and read each operation back through its lemma. -/
 macro "reflect_by_rewriting" : tactic => `(tactic|
   (intros
    simp only [Classicism.Meta.Sentence.holds, Classicism.Meta.Term.denote,
-     Classicism.Meta.Var.denote, Classicism.Meta.Term.denote_constR,
-     Classicism.Meta.Term.denote_negR, Classicism.Meta.Term.denote_andR,
-     Classicism.Meta.Term.denote_orR, Classicism.Meta.Term.denote_coextR,
-     Classicism.Meta.Term.denote_boxR, Classicism.Meta.Term.denote_boxImpR,
+     Classicism.Meta.Var.denote, Classicism.Meta.RTy.constD_eq,
+     Classicism.Meta.RTy.negD_eq, Classicism.Meta.RTy.andD_eq,
+     Classicism.Meta.RTy.orD_eq, Classicism.Meta.RTy.coextD_eq,
+     Classicism.Meta.RTy.boxD_eq, Classicism.Meta.RTy.boxImpD_eq,
      Classicism.Meta.Term.denote_weaken, Classicism.imp, Classicism.iff,
      Classicism.Strict.Top, Classicism.Strict.Bot, Classicism.Strict.Box, Classicism.Strict.Dia,
      Classicism.Strict.everything, Classicism.Strict.SRel.top, Classicism.Strict.SRel.bot,

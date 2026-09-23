@@ -61,10 +61,49 @@ def Var.denote {D : Type} : ∀ {Γ : Ctx} {σ : Ty}, Var Γ σ → Env D Γ →
   | _, _, .zero, .cons x _ => x
   | _, _, .succ v, .cons _ env => v.denote env
 
+/-! ### The type-subscripted operations, on the reading of a type
+
+Each by recursion on the type, as the paper defines it; at `t` written out as the
+reading of the unfolding, so that the δ-rule preserves denotation by `rfl`. That these
+are the strict layer's `SRel` operations is `Relational.lean`. -/
+
+section
+variable (D : Type)
+/-- `const_ρ`. -/
+def RTy.constD : ∀ ρ : RTy, Prop → ρ.denote D
+  | .t, p => p
+  | .arr _ ρ, p => fun _ => constD ρ p
+/-- `¬_ρ`. -/
+def RTy.negD : ∀ ρ : RTy, ρ.denote D → ρ.denote D
+  | .t, p => ¬ p
+  | .arr _ ρ, X => fun z => negD ρ (X z)
+/-- `∧_ρ`. -/
+def RTy.andD : ∀ ρ : RTy, ρ.denote D → ρ.denote D → ρ.denote D
+  | .t, p, q => p ∧ q
+  | .arr _ ρ, X, Y => fun z => andD ρ (X z) (Y z)
+/-- `∨_ρ`. -/
+def RTy.orD : ∀ ρ : RTy, ρ.denote D → ρ.denote D → ρ.denote D
+  | .t, p, q => p ∨ q
+  | .arr _ ρ, X, Y => fun z => orD ρ (X z) (Y z)
+/-- Coextensiveness at `ρ`; at `t`, `p ↔ q` as `(¬p ∨ q) ∧ (¬q ∨ p)`. -/
+def RTy.coextD : ∀ ρ : RTy, ρ.denote D → ρ.denote D → Prop
+  | .t, p, q => (¬ p ∨ q) ∧ (¬ q ∨ p)
+  | .arr _ ρ, X, Y => ∀ z, coextD ρ (X z) (Y z)
+/-- `□_ρ`; at `t`, `p = ⊤` with `⊤` read as the sentence `∀p. p ∨ ¬∀p. p` is. -/
+def RTy.boxD : ∀ ρ : RTy, ρ.denote D → ρ.denote D
+  | .t, p => p = ((∀ q : Prop, q) ∨ ¬ ∀ q : Prop, q)
+  | .arr _ ρ, X => fun z => boxD ρ (X z)
+/-- Pointwise implication at `ρ`; at `t`, `¬p ∨ q`. -/
+def RTy.boxImpD : ∀ ρ : RTy, ρ.denote D → ρ.denote D → Prop
+  | .t, p, q => ¬ p ∨ q
+  | .arr _ ρ, X, Y => ∀ z, boxImpD ρ (X z) (Y z)
+end
+
 /-! ### Terms -/
 
 /-- The value of a term in an environment. The logical constants denote Lean's own
-connectives, quantifiers and identity. -/
+connectives, quantifiers and identity, and the type-subscripted operations the recursions
+above. -/
 def Term.denote (I : Interp Sig) :
     ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Env I.D Γ → Ty.denote I.D σ
   | _, _, .var v, env => v.denote env
@@ -77,6 +116,13 @@ def Term.denote (I : Interp Sig) :
   | _, _, .all _, _ => fun F => ∀ x, F x
   | _, _, .ex _, _ => fun F => ∃ x, F x
   | _, _, .eq _, _ => fun a b => a = b
+  | _, _, .constR ρ, _ => RTy.constD I.D ρ
+  | _, _, .negR ρ, _ => RTy.negD I.D ρ
+  | _, _, .andR ρ, _ => RTy.andD I.D ρ
+  | _, _, .orR ρ, _ => RTy.orD I.D ρ
+  | _, _, .coextR ρ, _ => RTy.coextD I.D ρ
+  | _, _, .boxR ρ, _ => RTy.boxD I.D ρ
+  | _, _, .boxImpR ρ, _ => RTy.boxImpD I.D ρ
 
 /-- A sentence holds in an interpretation. -/
 abbrev Sentence.holds (I : Interp Sig) (p : Sentence Sig) : Prop := p.denote I .nil
@@ -128,7 +174,9 @@ theorem Term.denote_rename (I : Interp Sig) :
       (a.rename r).denote I env = a.denote I (Ren.denote r env)
   | _, _, r, _, .var v, env => (Var.denote_ren r v env).symm
   | _, _, _, _, .const _, _ | _, _, _, _, .and, _ | _, _, _, _, .or, _ | _, _, _, _, .not, _
-  | _, _, _, _, .all _, _ | _, _, _, _, .ex _, _ | _, _, _, _, .eq _, _ => rfl
+  | _, _, _, _, .all _, _ | _, _, _, _, .ex _, _ | _, _, _, _, .eq _, _
+  | _, _, _, _, .constR _, _ | _, _, _, _, .negR _, _ | _, _, _, _, .andR _, _ | _, _, _, _, .orR _, _
+  | _, _, _, _, .coextR _, _ | _, _, _, _, .boxR _, _ | _, _, _, _, .boxImpR _, _ => rfl
   | _, _, r, _, .app f a, env => by
     simp only [Term.rename_app, Term.denote, Term.denote_rename I r f, Term.denote_rename I r a]
     rfl
@@ -188,7 +236,9 @@ theorem Term.denote_subst (I : Interp Sig) :
       (a.subst s).denote I env = a.denote I (Sub.denote I s env)
   | _, _, s, _, .var v, env => (Var.denote_sub I s v env).symm
   | _, _, _, _, .const _, _ | _, _, _, _, .and, _ | _, _, _, _, .or, _ | _, _, _, _, .not, _
-  | _, _, _, _, .all _, _ | _, _, _, _, .ex _, _ | _, _, _, _, .eq _, _ => rfl
+  | _, _, _, _, .all _, _ | _, _, _, _, .ex _, _ | _, _, _, _, .eq _, _
+  | _, _, _, _, .constR _, _ | _, _, _, _, .negR _, _ | _, _, _, _, .andR _, _ | _, _, _, _, .orR _, _
+  | _, _, _, _, .coextR _, _ | _, _, _, _, .boxR _, _ | _, _, _, _, .boxImpR _, _ => rfl
   | _, _, s, _, .app f a, env => by
     simp only [Term.subst_app, Term.denote, Term.denote_subst I s f, Term.denote_subst I s a]
     rfl
@@ -224,6 +274,21 @@ theorem Eta.denote (I : Interp Sig) {Γ : Ctx} {σ : Ty} {a b : Term Sig Γ σ} 
     show (fun x => (f.weaken.denote I (.cons x env)) (Var.denote Var.zero (.cons x env))) = _
     funext x; rw [Term.denote_weaken]; rfl
 
+/-- The δ-rule preserves denotation: each unfolding reads as the recursion it unfolds,
+by `rfl` at both shapes of type. -/
+theorem Delta.denote (I : Interp Sig) : ∀ {Γ : Ctx} {σ : Ty} {a b : Term Sig Γ σ}, Delta a b →
+    ∀ (env : Env I.D Γ), a.denote I env = b.denote I env
+  | _, _, .constR ρ, _, h, _ => by cases ρ <;> cases h <;> rfl
+  | _, _, .negR ρ, _, h, _ => by cases ρ <;> cases h <;> rfl
+  | _, _, .andR ρ, _, h, _ => by cases ρ <;> cases h <;> rfl
+  | _, _, .orR ρ, _, h, _ => by cases ρ <;> cases h <;> rfl
+  | _, _, .coextR ρ, _, h, _ => by cases ρ <;> cases h <;> rfl
+  | _, _, .boxR ρ, _, h, _ => by cases ρ <;> cases h <;> rfl
+  | _, _, .boxImpR ρ, _, h, _ => by cases ρ <;> cases h <;> rfl
+  | _, _, .var _, _, h, _ | _, _, .const _, _, h, _ | _, _, .app _ _, _, h, _ | _, _, .lam _, _, h, _
+  | _, _, .and, _, h, _ | _, _, .or, _, h, _ | _, _, .not, _, h, _ | _, _, .all _, _, h, _
+  | _, _, .ex _, _, h, _ | _, _, .eq _, _, h, _ => nomatch h
+
 theorem Step.denote (I : Interp Sig)
     {R : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Term Sig Γ σ → Prop}
     (hR : ∀ {Γ : Ctx} {σ : Ty} {a b : Term Sig Γ σ}, R a b →
@@ -244,7 +309,8 @@ theorem Step.denote (I : Interp Sig)
 theorem Conv.denote (I : Interp Sig) {Γ : Ctx} {σ : Ty} {a b : Term Sig Γ σ} (h : a ≡ b)
     (env : Env I.D Γ) : a.denote I env = b.denote I env := by
   induction h with
-  | rel h => exact Step.denote I (fun h env => h.elim (Beta.denote I · env) (Eta.denote I · env)) h env
+  | rel h => exact Step.denote I (fun h env => h.elim (Beta.denote I · env)
+      (fun h => h.elim (Eta.denote I · env) (Delta.denote I · env))) h env
   | refl _ => rfl
   | symm _ ih => exact ih.symm
   | trans _ _ ih₁ ih₂ => exact ih₁.trans ih₂

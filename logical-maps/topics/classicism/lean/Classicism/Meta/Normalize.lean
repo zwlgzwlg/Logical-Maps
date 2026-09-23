@@ -3,7 +3,8 @@ import Classicism.Meta.Conversion
 /-!
 # A verified βη-normalizer
 
-`Term.nf n t` performs `n` passes of parallel β-reduction on `t`, and `Conv.nf` proves
+`Term.nf n t` performs `n` passes of parallel β-reduction on `t`, with η at each
+abstraction,, and `Conv.nf` proves
 that a term converts to its normal form. So two terms whose normal forms coincide are
 convertible by one lemma, `Conv.of_nf`, whose hypothesis the kernel discharges by
 evaluation: `Conv.of_nf n a b rfl`.
@@ -63,6 +64,13 @@ def prenameImpl : ∀ {Γ Δ : Ctx}, PRen Γ Δ → ∀ {σ : Ty}, Term Sig Γ �
   | _, _, _, _, .all σ => some (.all σ)
   | _, _, _, _, .ex σ => some (.ex σ)
   | _, _, _, _, .eq σ => some (.eq σ)
+  | _, _, _, _, .constR ρ => some (.constR ρ)
+  | _, _, _, _, .negR ρ => some (.negR ρ)
+  | _, _, _, _, .andR ρ => some (.andR ρ)
+  | _, _, _, _, .orR ρ => some (.orR ρ)
+  | _, _, _, _, .coextR ρ => some (.coextR ρ)
+  | _, _, _, _, .boxR ρ => some (.boxR ρ)
+  | _, _, _, _, .boxImpR ρ => some (.boxImpR ρ)
 
 /-- Rename along a partial renaming, failing if a variable has no image. Through
 `Term.rec`, as `Term.rename` is: the kernel evaluates it in the translator's
@@ -78,6 +86,10 @@ def prename : ∀ {Γ Δ : Ctx}, PRen Γ Δ → ∀ {σ : Ty}, Term Sig Γ σ �
       (and := fun _ _ => some Term.and) (or := fun _ _ => some Term.or)
       (not := fun _ _ => some Term.not) (all := fun σ _ _ => some (Term.all σ))
       (ex := fun σ _ _ => some (Term.ex σ)) (eq := fun σ _ _ => some (Term.eq σ))
+      (constR := fun ρ _ _ => some (Term.constR ρ)) (negR := fun ρ _ _ => some (Term.negR ρ))
+      (andR := fun ρ _ _ => some (Term.andR ρ)) (orR := fun ρ _ _ => some (Term.orR ρ))
+      (coextR := fun ρ _ _ => some (Term.coextR ρ)) (boxR := fun ρ _ _ => some (Term.boxR ρ))
+      (boxImpR := fun ρ _ _ => some (Term.boxImpR ρ))
       t Δ r
 
 section
@@ -95,6 +107,13 @@ variable {Γ Δ : Ctx} (r : PRen Γ Δ)
 @[simp] theorem prename_all (σ : Ty) : prename (Sig := Sig) r (.all σ) = some (.all σ) := rfl
 @[simp] theorem prename_ex (σ : Ty) : prename (Sig := Sig) r (.ex σ) = some (.ex σ) := rfl
 @[simp] theorem prename_eq (σ : Ty) : prename (Sig := Sig) r (.eq σ) = some (.eq σ) := rfl
+@[simp] theorem prename_constR (ρ : RTy) : prename (Sig := Sig) r (.constR ρ) = some (.constR ρ) := rfl
+@[simp] theorem prename_negR (ρ : RTy) : prename (Sig := Sig) r (.negR ρ) = some (.negR ρ) := rfl
+@[simp] theorem prename_andR (ρ : RTy) : prename (Sig := Sig) r (.andR ρ) = some (.andR ρ) := rfl
+@[simp] theorem prename_orR (ρ : RTy) : prename (Sig := Sig) r (.orR ρ) = some (.orR ρ) := rfl
+@[simp] theorem prename_coextR (ρ : RTy) : prename (Sig := Sig) r (.coextR ρ) = some (.coextR ρ) := rfl
+@[simp] theorem prename_boxR (ρ : RTy) : prename (Sig := Sig) r (.boxR ρ) = some (.boxR ρ) := rfl
+@[simp] theorem prename_boxImpR (ρ : RTy) : prename (Sig := Sig) r (.boxImpR ρ) = some (.boxImpR ρ) := rfl
 end
 
 /-- A partial renaming is a section of a renaming: what it sends `u` to, `w` sends back. -/
@@ -134,7 +153,10 @@ theorem prename_sound : ∀ {Γ Δ : Ctx} {r : PRen Γ Δ} {w : Ren Δ Γ} (_ : 
     obtain ⟨b', hb, rfl⟩ := e
     rw [Term.rename_lam, ← prename_sound (h.lift _) b b' hb]
   | _, _, _, _, _, _, .and, _, e | _, _, _, _, _, _, .or, _, e | _, _, _, _, _, _, .not, _, e
-  | _, _, _, _, _, _, .all _, _, e | _, _, _, _, _, _, .ex _, _, e | _, _, _, _, _, _, .eq _, _, e => by
+  | _, _, _, _, _, _, .all _, _, e | _, _, _, _, _, _, .ex _, _, e | _, _, _, _, _, _, .eq _, _, e
+  | _, _, _, _, _, _, .constR _, _, e | _, _, _, _, _, _, .negR _, _, e | _, _, _, _, _, _, .andR _, _, e
+  | _, _, _, _, _, _, .orR _, _, e | _, _, _, _, _, _, .coextR _, _, e | _, _, _, _, _, _, .boxR _, _, e
+  | _, _, _, _, _, _, .boxImpR _, _, e => by
     cases e; rfl
 
 /-- The partial renaming that drops the innermost variable. -/
@@ -215,7 +237,13 @@ theorem conv_etaRed {Γ : Ctx} {σ : Ty} {ρ : RTy} (t : Term Sig Γ (σ ⇒ ρ)
   · exact Conv.refl _
 
 /-- One pass of parallel β-reduction, with η-reduction at each abstraction, by
-structural recursion: the implementation of `step`. -/
+structural recursion: the implementation of `step`.
+
+No δ: the type-subscripted operations are left as they are, even at a constructor type.
+The normalizer is evaluated by the kernel, and at a type *variable* an unfolding decided
+by matching on the type is stuck, a term the kernel can compare with nothing; the
+translator unfolds an operation at a constructor type itself, by `Conv.delta` under
+congruences, before it appeals to the normalizer. -/
 def stepImpl : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Term Sig Γ σ
   | _, _, .app f a => apply (stepImpl f) (stepImpl a)
   | _, _, .lam b => etaRed (.lam (stepImpl b))
@@ -230,7 +258,11 @@ def step : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Term Sig Γ σ :=
       (var := fun v => Term.var v) (const := fun c => Term.const c)
       (app := fun _ _ f a => apply f a) (lam := fun _ b => etaRed (Term.lam b))
       (and := Term.and) (or := Term.or) (not := Term.not)
-      (all := fun σ => Term.all σ) (ex := fun σ => Term.ex σ) (eq := fun σ => Term.eq σ) t
+      (all := fun σ => Term.all σ) (ex := fun σ => Term.ex σ) (eq := fun σ => Term.eq σ)
+      (constR := fun ρ => Term.constR ρ) (negR := fun ρ => Term.negR ρ)
+      (andR := fun ρ => Term.andR ρ) (orR := fun ρ => Term.orR ρ)
+      (coextR := fun ρ => Term.coextR ρ) (boxR := fun ρ => Term.boxR ρ)
+      (boxImpR := fun ρ => Term.boxImpR ρ) t
 
 section
 variable {Γ : Ctx}
@@ -246,6 +278,13 @@ variable {Γ : Ctx}
 @[simp] theorem step_all (σ : Ty) : step (Sig := Sig) (Γ := Γ) (.all σ) = .all σ := rfl
 @[simp] theorem step_ex (σ : Ty) : step (Sig := Sig) (Γ := Γ) (.ex σ) = .ex σ := rfl
 @[simp] theorem step_eq (σ : Ty) : step (Sig := Sig) (Γ := Γ) (.eq σ) = .eq σ := rfl
+@[simp] theorem step_constR (ρ : RTy) : step (Sig := Sig) (Γ := Γ) (.constR ρ) = .constR ρ := rfl
+@[simp] theorem step_negR (ρ : RTy) : step (Sig := Sig) (Γ := Γ) (.negR ρ) = .negR ρ := rfl
+@[simp] theorem step_andR (ρ : RTy) : step (Sig := Sig) (Γ := Γ) (.andR ρ) = .andR ρ := rfl
+@[simp] theorem step_orR (ρ : RTy) : step (Sig := Sig) (Γ := Γ) (.orR ρ) = .orR ρ := rfl
+@[simp] theorem step_coextR (ρ : RTy) : step (Sig := Sig) (Γ := Γ) (.coextR ρ) = .coextR ρ := rfl
+@[simp] theorem step_boxR (ρ : RTy) : step (Sig := Sig) (Γ := Γ) (.boxR ρ) = .boxR ρ := rfl
+@[simp] theorem step_boxImpR (ρ : RTy) : step (Sig := Sig) (Γ := Γ) (.boxImpR ρ) = .boxImpR ρ := rfl
 end
 
 theorem conv_step : ∀ {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ), t ≡ step t
@@ -254,6 +293,8 @@ theorem conv_step : ∀ {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ), t ≡ step t
   | _, _, .lam b => Conv.trans (Conv.lam_congr (conv_step b)) (conv_etaRed _)
   | _, _, .var _ | _, _, .const _ | _, _, .and | _, _, .or | _, _, .not
   | _, _, .all _ | _, _, .ex _ | _, _, .eq _ => Conv.refl _
+  | _, _, .constR _ | _, _, .negR _ | _, _, .andR _ | _, _, .orR _ | _, _, .coextR _
+  | _, _, .boxR _ | _, _, .boxImpR _ => Conv.refl _
 
 /-- `n` passes of parallel β-reduction. Through `Nat.rec`, for the kernel. -/
 def nf {Γ : Ctx} {σ : Ty} (n : Nat) (t : Term Sig Γ σ) : Term Sig Γ σ :=

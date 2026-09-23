@@ -58,19 +58,26 @@ All were settled with Cian on 22 September 2026.
 - **The translator will read strict proofs**, not shallow ones. Their statements are
   already in the paper's vocabulary, their only special constants are the eleven axioms,
   and the proof walk then exists once, in the transformer.
+- **The type-subscripted operations are constants of the syntax with an unfolding rule**
+  (23 September, with Cian). `∧_τ`, `¬_τ`, coextension and the rest were first
+  functions on terms by recursion on the type. A function stuck at a type *variable* is
+  not a node of the syntax: renaming and substitution could not pass through it, and no
+  derivation could mention `∧_τ` for `τ` a variable, which a derivation by induction on
+  the type must. So `Term.andR ρ` is a constructor, and the recursion is the δ-rule of
+  conversion, `∧_t ≡ ∧` and `∧_{σ→ρ} ≡ λX Y z. X z ∧_ρ Y z`, alongside β and η.
 
 ## The modules, in order
 
 | module | contents |
 | --- | --- |
 | `Types.lean` | `Ty` and `RTy`, the mutual inductive of Dorr's *Elimination*, Appendix A: `e`, `t`, and `σ ⇒ ρ` for a type `σ` and a relational `ρ`. Decidable equality; every type is `e` or `σ₁ → … → σₙ → t`. |
-| `Term.lean` | `Signature`; contexts; `Var`; `Term Sig Γ σ` with the paper's six logical constants `∧`, `∨`, `¬`, `∀σ`, `∃σ`, `=σ` as constructors and Figure 1's abbreviations `→`, `↔`, `⊤`, `⊥`, `□`, `◇` as definitions; purity; renaming and substitution with the identity laws and the four composition laws. |
-| `Conversion.lean` | β and η in three grades: the immediate conversion of a redex, the one-step closure `Step`, and the equivalence closure. `Conv`, written `≡`, is βη-conversion, proved a congruence. |
+| `Term.lean` | `Signature`; contexts; `Var`; `Term Sig Γ σ` with the paper's six logical constants `∧`, `∨`, `¬`, `∀σ`, `∃σ`, `=σ` and the seven type-subscripted operations `∧_ρ`, `¬_ρ`, … as constructors, Figure 1's abbreviations `→`, `↔`, `⊤`, `⊥`, `□`, `◇` as definitions, and `Term.unfoldR`, the one-step unfolding of an operation at a constructor type; purity; renaming and substitution, through `Term.rec` for the kernel's sake, with the identity laws and the four composition laws. |
+| `Conversion.lean` | β, η and δ in three grades: the immediate conversion of a redex, the one-step closure `Step`, and the equivalence closure. `Conv`, written `≡`, is βηδ-conversion, proved a congruence and stable under renaming. |
 | `Derivation.lean` | `Derivable Ax Δ p`: hypotheses, axioms, the rules for `∧`, `∨`, `¬` with excluded middle, `UI`, `Gen`, `EG`, `Inst`, `Ref`, `LL`, conversion. Weakening and monotonicity admissible; `→` and `↔` rules derived. |
 | `Axioms.lean` | The eleven identities as sentences; `C.axiomsMinus` and `C.axioms`, the latter adding Existence at `e`; `C.Derivable`, `C.Theorem`. |
 | `Denotation.lean` | `Ty.denote`, `Env`, `Interp`, `Term.denote`: the standard reading of the syntax in Lean, with `t` as `Prop` and `e` as a chosen domain. Renaming and substitution commute with it; conversion preserves it; **soundness** of `Derivable`; the eleven identities hold in `Prop`, so `Prop` is a model of `C` and **`C` is consistent**. |
 | `Examples.lean` | A β-step by `rfl`, an η-step, purity decided, small derivations, and the reflection checks: sentences read back are the strict layer's own propositions, by `rfl`. |
-| `Relational.lean` | The relational operations `∧_τ`, `¬_τ`, `∨_τ`, coextension, the pointwise box and implication, and `⊤_τ`, `≤_τ`, as **functions on terms by recursion on the type**; the standard reading's `SRel` and `SOrder` instances by the same recursion; and one lemma per operation, by induction on the type, that reading it back gives the strict layer's. Purpose four of this layer, at work. |
+| `Relational.lean` | The bridge for the type-subscripted operations `∧_τ`, `¬_τ`, `∨_τ`, coextension, the pointwise box and implication (constants of `Term.lean`, read in `Denotation.lean` by recursion on the type): the standard reading's `SRel` and `SOrder` instances by the same recursion, and one lemma per operation, by induction on the type, that its reading is the strict layer's. Purpose four of this layer, at work. |
 | `Quote.lean` | **The quoter**, first half of the translator: `#classicism_quote foo` reads the strict statement of `foo` as a sentence, `foo.quoted`, with type parameters as object-type variables, and declares `foo.reflect`, the `rfl` that reading it back gives the statement. `#classicism_quote_audit` runs it over a module. |
 | `Quoted.lean` | The quoter run over the library at build time; home of every `foo.strict.quoted` and `foo.strict.reflect`. |
 | `Normalize.lean` | A **verified βη-normalizer** on the syntax, `Term.nf`, with `Conv.of_nf`: two terms with the same normal form convert, the hypothesis decided by evaluation. |
@@ -129,8 +136,11 @@ defined as `¬□¬` where the strict layer has `¬(· = ⊥)`.
 
 A strict statement with a parameter of class `SRel` or `SOrder` quotes through
 `Relational.lean`: the parameter becomes a variable of type `RTy`, each class operation at
-it becomes the object-language operation by recursion on the type, and the reflection
-interpretation reads the variable with the strict layer's instance, `instSRelDenote`.
+it becomes the object-language constant `andR τ'` and the like, and the reflection
+interpretation reads the variable with the strict layer's instance, `instSRelDenote`. At
+a constructor type the operation is not quoted as the constant: the strict instance
+unfolds and the operation is read through it, so the constants stand only at type
+variables, where the kernel and the normalizer agree that they are stuck.
 Reflection is then not `rfl`, since both sides are stuck on the type variable, but
 rewriting with the lemma for each operation, `reflect_by_rewriting`, and a failure of that
 tactic is fatal, not turned into `sorry`. **Every strict statement of the library quotes
@@ -149,10 +159,19 @@ Strict proofs are almost entirely equational, so the translation is chiefly Leib
 Law: each of Lean's `congrArg`, `Eq.trans`, `Eq.symm`, `Eq.mpr` and `congrFun` is `LL` at a
 predicate, and `Derivation.lean` has the derived rule for each. The natural-deduction
 constructors that remain, `Or.elim`, `And.intro`, `Exists.elim` and a few more, map to
-the rules by name. A library theorem cited in a proof is translated **at the types it is
-used at**, once per instantiation, as `c.derivable_n`, and cited through
-`Derivable.ofTheorem`, so that class-parametric lemmas such as `BA.rule_imp_intro` never
-have to be given a single object-language statement.
+the rules by name. A library theorem cited in a proof is translated **once, at
+object-type variables** for its type parameters, as `c.derivable : ∀ σ' … ρ' …,
+Theorem Ax (S σ' … ρ' …)`, and cited through `Derivable.ofTheorem` applied to the object
+types the citation's type parameters quote to. A class instance among a lemma's
+parameters becomes nothing: the class's operations at the variable are the object
+constants `andR ρ'` and the like, and its laws are derived by induction on the type,
+below. So `BA.meet_comm`, proved in the strict layer for any Boolean algebra, has one
+derivation, with `∧_ρ'` in it, and its use at `σ → Prop` is that derivation at
+`σ' ⇒ t` — which is what a type variable in a derivation is for. A first version
+specialized each lemma at each type it was used at, and re-derived the Boolean-algebra
+laws through the arrow instances' congruence proofs at every type: `ll_lam`, whose
+tautology sits three arrows deep, took the kernel hours that way, and takes 17 seconds
+now.
 
 Two things make it tractable. Everything is built directly as an expression with every
 implicit argument supplied, never through unification; the option
@@ -165,16 +184,46 @@ is and the kernel evaluates the substitution. Rule variants concluding with
 `Term.instantiate`, `allEβ` and friends, match Lean's typing of an application, which
 substitutes.
 
-**What it costs.** A library theorem takes seconds to a minute, and nearly all of it is
-the kernel evaluating substitutions: a derivation of `absorption_and_exists` has some
-8,500 places where a rule concludes `b[a]` and the quoted formula is its value, and each
-is a kernel evaluation of `Term.subst`. That is why `rename`, `subst`, `prename` and
-`step` are written through `Term.rec` directly rather than by structural recursion,
-with `rfl` equations as their simp set and the structural version kept for the compiler
-(`implemented_by`): the kernel evaluates a definition compiled through `brecOn` about ten
-times slower. A cited lemma is specialized once per instantiation and reused across a
-file, so the first theorem of a run pays for the Boolean-algebra lemmas and later ones
-are quick. `Classicism.Meta.Translate.profile` prints the time by phase.
+**What it costs.** A library theorem takes seconds to a few minutes, most of it the
+kernel evaluating substitutions where a rule concludes `b[a]` and the quoted formula is
+its value. That is why `rename`, `subst`, `prename` and `step` are written through
+`Term.rec` directly rather than by structural recursion, with `rfl` equations as their
+simp set and the structural version kept for the compiler (`implemented_by`): the kernel
+evaluates a definition compiled through `brecOn` about ten times slower. A cited lemma is
+translated once and reused across a file, and the proof term is walked as the DAG it is
+(`ll_lam`'s is 4,407 nodes shared, 1,516,016 as a tree). `Classicism.Meta.Translate.profile`
+prints the time by phase, and with `.progress` set, a line per translation with its
+kernel time.
+
+**A law of a class at a type variable is derived by induction on the type.** The strict
+layer holds the six Boolean identities as the fields of `BA`, and `SRel.coext_refl`,
+`and_constP_true`, `and_constP_coext` and `SOrder.le_iff` as fields of the mirrors, each
+proved once at `Prop` and once at `σ → τ` from the law at `τ`.
+A strict proof that cites such a law at a type *variable* cites no axiom and no theorem,
+and there is no one derivation of the law: there is one for every object type, by
+induction on it. `ensureFieldInduction` builds it, `SRel.coext_refl.derivable : ∀ τ',
+Theorem Ax (S τ')`, through `RTy.rec`: the base case is the translation of the `Prop`
+instance's proof, the step is the translation of the arrow instance's proof with the law
+at the smaller type, cited through the instance variable, as the induction hypothesis,
+and a lemma cited under the hypothesis takes it as a parameter. The law at a constructor
+type has its operations unfolded first, `unfoldConv`, by `Conv.delta` under congruences,
+as does any theorem cited at a constructor type; the normalizer itself knows no δ,
+since an unfolding decided by matching on the type is stuck at a type variable, and a
+stuck term is one the kernel can compare with nothing. This is the use of the
+metalogical layer that the shallow and strict layers could not provide: induction on
+the structure of a relational type.
+
+**What the kernel is given.** Three findings, each measured, shape the conversion
+certificate. The kernel evaluates one side against a tree as written quickly, and
+compares two forms it must unfold lazily against each other slowly: so each side of a
+coercion is first bridged to its canonical tree (the shadow written back, `canon`), and
+`Conv.of_nf` is used only in its one-sided forms — given `nf n a = nf n b` the kernel
+unfolds both sides in step, comparing the recursor's minor premises at every level,
+and a theorem that took 17 seconds took an hour. The normalizer is evaluated only on
+what differs: the two trees are descended together by congruence while their roots are
+stable under normalization, and `of_nf` joins the subterms at the first difference
+(`diffConv`). And explicit β- and η-steps for every pass, tried in between, cost more
+than either, since they write out every intermediate formula.
 
 **Running the audit.** `#classicism_derive_audit Classicism.Transformed` takes the
 better part of an hour; Lean captures what elaboration prints, so set
@@ -184,5 +233,5 @@ found hours later. `Derived.lean` runs two quick ones at build time.
 
 ## Next
 
-The audit of the translator over the library; then Appendix A, and the coincidence with
-the Equivalence-rule system.
+The audit of the translator over the library with the class laws by induction; then
+Appendix A, and the coincidence with the Equivalence-rule system.

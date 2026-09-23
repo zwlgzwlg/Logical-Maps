@@ -6,9 +6,10 @@ import Classicism.Meta.Term
 The three relations between terms that the metatheory uses, in the three grades Cian
 asked for: the **immediate** conversions, a redex and its contractum; the **one-step**
 conversions, an immediate conversion applied somewhere inside a term; and **conversion**
-proper, the equivalence relation those generate. There is one of each for β and for η,
-and `Conv` combines them. This is Definition A.3 of Dorr's *Elimination*, with the
-congruence rules made explicit as the one-step closure.
+proper, the equivalence relation those generate. There is one of each for β, for η and
+for δ, the unfolding of the type-subscripted operations, and `Conv` combines them. This
+is Definition A.3 of Dorr's *Elimination*, with the congruence rules made explicit as the
+one-step closure and the defined operations' unfolding as a conversion.
 
 There is no α: variables are de Bruijn indices, so terms that differ only by the names of
 bound variables are the same term, and α-equivalence is identity. That is the reason for
@@ -32,8 +33,12 @@ inductive Eta : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Term Sig Γ σ → 
   | intro {Γ : Ctx} {σ : Ty} {ρ : RTy} (f : Term Sig Γ (σ ⇒ ρ)) :
       Eta (.lam (.app f.weaken (.var .zero))) f
 
-/-- An immediate β- or η-conversion. -/
-def BetaEta {Γ : Ctx} {σ : Ty} (a b : Term Sig Γ σ) : Prop := Beta a b ∨ Eta a b
+/-- An immediate δ-conversion: a type-subscripted operation at a constructor type to its
+unfolding, `Term.unfoldR`. -/
+def Delta {Γ : Ctx} {σ : Ty} (a b : Term Sig Γ σ) : Prop := a.unfoldR = some b
+
+/-- An immediate β-, η- or δ-conversion. -/
+def BetaEta {Γ : Ctx} {σ : Ty} (a b : Term Sig Γ σ) : Prop := Beta a b ∨ Eta a b ∨ Delta a b
 
 /-! ### One-step conversions
 
@@ -61,7 +66,7 @@ inductive Step (R : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Term Sig Γ σ 
 abbrev BetaStep {Γ : Ctx} {σ : Ty} : Term Sig Γ σ → Term Sig Γ σ → Prop := Step Beta
 /-- A one-step η-conversion. -/
 abbrev EtaStep {Γ : Ctx} {σ : Ty} : Term Sig Γ σ → Term Sig Γ σ → Prop := Step Eta
-/-- A one-step β- or η-conversion. -/
+/-- A one-step β-, η- or δ-conversion. -/
 abbrev BetaEtaStep {Γ : Ctx} {σ : Ty} : Term Sig Γ σ → Term Sig Γ σ → Prop := Step BetaEta
 
 /-! ### Conversion proper -/
@@ -79,7 +84,7 @@ inductive EqvGen (R : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Term Sig Γ �
 abbrev BetaEq {Γ : Ctx} {σ : Ty} : Term Sig Γ σ → Term Sig Γ σ → Prop := EqvGen BetaStep
 /-- η-equivalence. -/
 abbrev EtaEq {Γ : Ctx} {σ : Ty} : Term Sig Γ σ → Term Sig Γ σ → Prop := EqvGen EtaStep
-/-- Conversion: βη-equivalence, the relation `≡` of the paper. -/
+/-- Conversion: βηδ-equivalence, the relation `≡` of the paper. -/
 abbrev Conv {Γ : Ctx} {σ : Ty} : Term Sig Γ σ → Term Sig Γ σ → Prop := EqvGen BetaEtaStep
 
 @[inherit_doc] infix:50 " ≡ " => Conv
@@ -101,7 +106,11 @@ theorem beta {σ : Ty} {ρ : RTy} (b : Term Sig (σ :: Γ) ρ) (a : Term Sig Γ 
 /-- The η rule. -/
 theorem eta {σ : Ty} {ρ : RTy} (f : Term Sig Γ (σ ⇒ ρ)) :
     Term.lam (.app f.weaken (.var .zero)) ≡ f :=
-  EqvGen.rel (Step.here (Or.inr (Eta.intro f)))
+  EqvGen.rel (Step.here (Or.inr (Or.inl (Eta.intro f))))
+
+/-- The δ rule: an operation unfolds. -/
+theorem delta {σ : Ty} {a b : Term Sig Γ σ} (h : a.unfoldR = some b) : a ≡ b :=
+  EqvGen.rel (Step.here (Or.inr (Or.inr h)))
 
 /-- Conversion is a congruence: the one-step closure lifts through the equivalence
 closure, so `EqvGen (Step R)` is closed under each of the term formers. -/
@@ -165,9 +174,24 @@ theorem Eta.rename {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ) {a b : Term Sig Γ σ
     rw [← Term.weaken_rename]
     exact Eta.intro _
 
+/-- The unfoldings are closed terms: renaming passes through them. -/
+theorem Term.unfoldR_rename : ∀ {Γ Δ : Ctx} (r : Ren Γ Δ) {σ : Ty} (a : Term Sig Γ σ),
+    (a.rename r).unfoldR = a.unfoldR.map (Term.rename r)
+  | _, _, _, _, .var _ | _, _, _, _, .const _ | _, _, _, _, .and | _, _, _, _, .or
+  | _, _, _, _, .not | _, _, _, _, .all _ | _, _, _, _, .ex _ | _, _, _, _, .eq _
+  | _, _, _, _, .app _ _ | _, _, _, _, .lam _ => rfl
+  | _, _, _, _, .constR ρ | _, _, _, _, .negR ρ | _, _, _, _, .andR ρ | _, _, _, _, .orR ρ
+  | _, _, _, _, .coextR ρ | _, _, _, _, .boxR ρ | _, _, _, _, .boxImpR ρ => by cases ρ <;> rfl
+
+theorem Delta.rename {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ) {a b : Term Sig Γ σ} (h : Delta a b) :
+    Delta (a.rename r) (b.rename r) := by
+  unfold Delta at *
+  rw [Term.unfoldR_rename, h]; rfl
+
 theorem BetaEta.rename {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ) {a b : Term Sig Γ σ} (h : BetaEta a b) :
     BetaEta (a.rename r) (b.rename r) :=
-  h.elim (fun h => Or.inl (Beta.rename r h)) (fun h => Or.inr (Eta.rename r h))
+  h.elim (fun h => Or.inl (Beta.rename r h))
+    (fun h => h.elim (fun h => Or.inr (Or.inl (Eta.rename r h))) (fun h => Or.inr (Or.inr (Delta.rename r h))))
 
 theorem Step.rename {R : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Term Sig Γ σ → Prop}
     (hR : ∀ {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ) {a b : Term Sig Γ σ}, R a b → R (a.rename r) (b.rename r)) :

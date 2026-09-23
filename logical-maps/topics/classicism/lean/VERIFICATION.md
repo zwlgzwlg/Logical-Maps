@@ -363,6 +363,53 @@ kept for the compiler by `implemented_by`; the proofs that unfolded them needed 
 the equation names. `absorption_and_exists.strict` went from 120 s to 44 s, the kernel's
 share from 109 s to 33 s, with 407 specializations of library lemmas.
 
+The library-wide run on the faster build found, in its first sixty theorems, twelve
+failures with one cause: a law of a mirror class — `SRel.and_constP_true`, `coext_refl`,
+`SOrder.le_iff`, held as fields and proved once at `Prop` and once at an arrow from the
+law at the smaller type — cited at a type *variable*, which is neither an axiom nor a
+theorem. There is no single derivation of such a law; there is one for every object
+type, by induction on the type, and the translator now builds it through `RTy.rec`,
+the `Prop` instance's proof translated as the base case and the arrow instance's as the
+step, with the law at the smaller type as induction hypothesis and any lemma cited
+under it taking the hypothesis as a parameter. A first version translated such lemmas in
+place instead and thrashed for forty minutes.
+
+The first derivation by induction then failed in the kernel, and the failure was a
+design fault: the relational operations were functions on terms by recursion on the
+type, and a function stuck at a type variable is not a node of the syntax, so `close`,
+`weaken` and `instantiate` could not pass through it and the kernel could not see
+`close S ≡ S`. With Cian's agreement (23 September) `∧_τ` and the other six are now
+constructors of `Term`, their recursion the δ-rule of conversion (`Term.unfoldR`,
+`Conv.delta`), their reading a recursion on the Lean side, and the bridge to the strict
+layer's `SRel` a lemma per operation as before. Every proof over the syntax gained seven
+trivial cases. A first attempt put δ into the kernel-evaluated normalizer, where it is
+stuck at a type variable and so useless — a stuck term on one side of `nf n a = b`
+matches nothing — so δ stays out of the normalizer: the translator unfolds an operation
+at a constructor type itself, by `Conv.delta rfl` under congruences, and the quoters
+emit an operation constant only at a type variable, reading it through the unfolded
+instance at a constructor type. After that `SRel.coext_refl_nec.derivable : ∀ τ',
+Theorem C⁻ (∀X. coext_τ' X X = ⊤)` checked in two seconds, the first theorem of this
+project proved by induction on the structure of a relational type. Reflection over the
+library still holds, 111 of 111 and 22 of 22.
+
+The rest of that day went to the cost, and found the architecture. Each derivation was
+specializing every cited lemma at the types it was used at, re-deriving the Boolean
+identities through the arrow instances' congruence proofs at each type; `ll_lam`, whose
+tautology sits three arrows deep, spent hours in the kernel. With the operations now
+constants at a type variable, every class-parametric lemma is translated **once, at
+object-type variables**, `BA` joins `SRel` and `SOrder` in the induction on the type, and a
+citation applies the one derivation to the object types it needs. The proof term is
+walked as a DAG (memoized): `ll_lam`'s is 4,407 nodes shared and 1,516,016 as a tree.
+Then three measurements about the kernel: a two-sided `Conv.of_nf n a b` makes it
+unfold both sides in step and compare the recursor's minor premises at every level, so
+the certificate is always one-sided; comparing a substitution form with another lazily
+is its slowest path, so each side of a coercion is bridged to its canonical tree first;
+and the normalizer is evaluated only on the subterms that differ, reached by
+congruence. Explicit β-certificates for every pass were tried in between and cost more
+than any of these, in the elaborator and the kernel both. Results: `and_comm_eq.strict`
+17 s (from 73), `absorption_and_exists.strict` 10 s of kernel (from 109), `ll_lam` 17 s
+(from hours), the four class laws and the audit's first failures all deriving.
+
 One Lean point worth recording: a rewrite whose motive's codomain is `Ty.denote D t` fails, since that is
 `Prop` only after unfolding, so the formula-level lemmas are stated at `Prop` or applied
 through `Eq.mp`.

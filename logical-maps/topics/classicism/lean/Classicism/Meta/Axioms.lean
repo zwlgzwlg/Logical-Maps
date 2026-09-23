@@ -25,16 +25,6 @@ namespace Classicism.Meta
 
 variable {Sig : Signature}
 
-namespace Term
-
-/-- Short names for the three innermost variables. -/
-abbrev v0 {Γ : Ctx} {σ : Ty} : Term Sig (σ :: Γ) σ := .var .zero
-@[inherit_doc v0] abbrev v1 {Γ : Ctx} {σ τ : Ty} : Term Sig (τ :: σ :: Γ) σ := .var (.succ .zero)
-@[inherit_doc v0] abbrev v2 {Γ : Ctx} {σ τ υ : Ty} : Term Sig (υ :: τ :: σ :: Γ) σ :=
-  .var (.succ (.succ .zero))
-
-end Term
-
 namespace C
 
 open Term
