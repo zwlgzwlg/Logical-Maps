@@ -419,9 +419,10 @@ not of `C⁻`, while at every relational type it is derivable from the closed te
   on the object type** through `RTy.rec`, the `Prop` instance's proof the base case and
   the arrow instance's the step: the use of this layer the other two could not provide.
   `Meta/Derived.lean` runs two derivations at build time; the library-wide audit is run
-  by hand.
+  by hand, and **derives every strict theorem of the library, 111 of 111**, in eleven
+  minutes.
 
-Next: the translator over the whole library; then Appendix A.
+Next: Appendix A as a theorem.
 
 ## Files
 

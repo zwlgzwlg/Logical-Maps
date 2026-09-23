@@ -408,7 +408,12 @@ and the normalizer is evaluated only on the subterms that differ, reached by
 congruence. Explicit β-certificates for every pass were tried in between and cost more
 than any of these, in the elaborator and the kernel both. Results: `and_comm_eq.strict`
 17 s (from 73), `absorption_and_exists.strict` 10 s of kernel (from 109), `ll_lam` 17 s
-(from hours), the four class laws and the audit's first failures all deriving.
+(from hours), the four class laws and the audit's first failures all deriving. Then the
+library-wide run on this build: **111 of 111 strict theorems derived**, in eleven
+minutes, the slowest 85 seconds. Every theorem of the library now has, kernel-checked,
+a shallow proof, a strict proof from the eleven identities, and a derivation in the
+metalogical layer's `H` plus the eleven identities as an axiom set, each link produced
+by an untrusted program and checked by the kernel.
 
 One Lean point worth recording: a rewrite whose motive's codomain is `Ty.denote D t` fails, since that is
 `Prop` only after unfolding, so the formula-level lemmas are stated at `Prop` or applied
