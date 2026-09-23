@@ -73,8 +73,7 @@ def unitAction : SingleObj M ⥤ Type := (Functor.const (SingleObj M)).obj Unit
 
 /-- The full action model on the monoid `M`, with one individual and no constants. -/
 noncomputable def model : Premodel Signature.pure (SingleObj M) :=
-  Premodel.full (unitAction M) (SingleObj.star M) (fun _ => ⟨(1 : M)⟩) (fun _ => ⟨()⟩)
-    (fun c => nomatch c)
+  Premodel.full (unitAction M) (SingleObj.star M) (fun _ => ⟨()⟩) (fun c => nomatch c)
 
 theorem model_isModel : (model M).IsModel := Premodel.full_isModel _
 
@@ -167,7 +166,7 @@ theorem not_fregean : ¬ (MSet.model Idem).HoldsSentence Sentence.fregean :=
 `BF_t` fails: the record violates `barcan-t`. -/
 theorem not_bf_t : ¬ (MSet.model Idem).HoldsSentence (Sentence.bf (.rel .t)) := by
   intro H
-  have hs := @Premodel.full_bf_surjective _ _ (MSet.unitAction Idem) _ _ _ _ _ (.rel .t) H
+  have hs := @Premodel.full_bf_surjective _ _ (MSet.unitAction Idem) _ _ _ _ (.rel .t) H
     (SingleObj.star Idem) (k : SingleObj.star Idem ⟶ SingleObj.star Idem)
   change Function.Surjective (fun X : Set (Σ V : SingleObj Idem, SingleObj.star Idem ⟶ V) =>
     ({p : Σ V : SingleObj Idem, SingleObj.star Idem ⟶ V |

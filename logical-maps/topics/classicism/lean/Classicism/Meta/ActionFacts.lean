@@ -66,6 +66,21 @@ theorem holds_box {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (p : Formula Sig Γ) (g 
   · rintro H ⟨V, k⟩
     exact (A.mem_sem_iff M h g p k).2 (H k)
 
+theorem sem_bot {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (g : IEnv (A.Dom W) Γ) :
+    A.sem h (bot : Formula Sig Γ) g = ∅ := by
+  rw [bot, A.sem_conj M, A.sem_neg M]
+  exact Set.inter_compl_self _
+
+/-- `A, h, g ⊩ ◇P` iff `A, k∘h, k∘g ⊩ P` for some arrow `k` out of the object. -/
+theorem holds_dia {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (p : Formula Sig Γ) (g : IEnv (A.Dom W) Γ) :
+    A.Holds h (dia p) g ↔ ∃ (V : C) (k : W ⟶ V), A.Holds (h ≫ k) p (A.push k g) := by
+  rw [dia, A.holds_neg M, A.holds_eq M, A.sem_bot M, ← Ne, ← Set.nonempty_iff_ne_empty]
+  constructor
+  · rintro ⟨⟨V, k⟩, hk⟩
+    exact ⟨V, k, (A.mem_sem_iff M h g p k).1 hk⟩
+  · rintro ⟨V, k, hk⟩
+    exact ⟨⟨V, k⟩, (A.mem_sem_iff M h g p k).2 hk⟩
+
 /-! ### `ND_σ` and injectivity -/
 
 theorem holds_nd_iff (σ : Ty) {W : C} (h : A.W₀ ⟶ W) :
@@ -102,6 +117,188 @@ theorem holds_fregean_iff {W : C} (h : A.W₀ ⟶ W) :
     exact A.Incl_injective _ W (H p q e)
   · intro H p q e
     exact congrArg (A.Incl _ W) (H p q e)
+
+end Premodel
+
+/-! ### Truncation
+
+The truncation of a premodel by an arrow `h : W₀ → V` (Classicism, §"Maximalism"): the
+same actions with `V` as base and each constant's value moved along `h`. The paper also
+discards the objects with no arrow from `V`, which change nothing (see the docstring of
+`Premodel`); keeping them makes the paper's transfer lemma `⟦A⟧_{A_h, i} = ⟦A⟧_{A, i∘h}`
+an induction on the same category. Consequences: a truncation of a model is a model, and
+`◇P` holds iff `P` holds in some truncation, `□P` iff in every one. -/
+
+namespace Premodel
+
+variable {C : Type} [SmallCategory C] (A : Premodel Sig C)
+
+/-- The truncation of `A` by `h`. Reducible, so that its fields are `A`'s to the
+elaborator. -/
+abbrev truncate {V : C} (h : A.W₀ ⟶ V) : Premodel Sig C :=
+  { A with W₀ := V, I := fun c => (A.inner _).map h (A.I c) }
+
+variable {V : C} (h : A.W₀ ⟶ V)
+
+/-! The readings depend on the actions and the inclusion only, not on the base or the
+constants; but as functions of the whole premodel, stuck at a type variable, Lean cannot
+see that, so each is transferred by hand. -/
+
+theorem truncate_Incl (σ : Ty) (W : C) : (A.truncate h).Incl σ W = A.Incl σ W := by
+  cases σ <;> rfl
+
+theorem truncate_dflt : ∀ (σ : Ty) (W : C), (A.truncate h).dflt σ W = A.dflt σ W
+  | .e, _ => by simp only [dflt]
+  | .rel .t, _ => by simp only [dflt]
+  | .rel (.arr _ ρ), _ => by
+    simp only [dflt]
+    funext U _ _
+    exact truncate_dflt (.rel ρ) U
+
+theorem truncate_apply {σ : Ty} {ρ : RTy} {W : C} (F : RawR A.inner (.arr σ ρ) W)
+    (x : RawT A.inner σ W) : (A.truncate h).apply F x = A.apply F x := by
+  by_cases hx : x ∈ Set.range (A.Incl σ W)
+  · obtain ⟨b, rfl⟩ := hx
+    rw [A.apply_Incl, ← congrFun (truncate_Incl A h σ W) b, (A.truncate h).apply_Incl]
+  · have hx' : x ∉ Set.range ((A.truncate h).Incl σ W) := by rw [truncate_Incl A h]; exact hx
+    unfold apply
+    rw [dif_neg hx, dif_neg hx', truncate_dflt]
+
+theorem truncate_andRead (W : C) : (A.truncate h).andRead W = A.andRead W := rfl
+theorem truncate_orRead (W : C) : (A.truncate h).orRead W = A.orRead W := rfl
+theorem truncate_notRead (W : C) : (A.truncate h).notRead W = A.notRead W := rfl
+theorem truncate_allRead (σ : Ty) (W : C) : (A.truncate h).allRead σ W = A.allRead σ W := rfl
+theorem truncate_exRead (σ : Ty) (W : C) : (A.truncate h).exRead σ W = A.exRead σ W := rfl
+theorem truncate_eqRead (σ : Ty) (W : C) : (A.truncate h).eqRead σ W = A.eqRead σ W := rfl
+
+theorem truncate_topRead (W : C) : (A.truncate h).topRead W = A.topRead W := by
+  simp only [topRead, truncate_apply, truncate_allRead, truncate_orRead, truncate_notRead]
+
+theorem truncate_constRead : ∀ (ρ : RTy) (W : C), (A.truncate h).constRead ρ W = A.constRead ρ W
+  | .t, _ => rfl
+  | .arr _ ρ, _ => by
+    funext _ _ _ U _ _
+    simp only [constRead, truncate_apply, truncate_constRead ρ U]
+
+theorem truncate_negRead : ∀ (ρ : RTy) (W : C), (A.truncate h).negRead ρ W = A.negRead ρ W
+  | .t, _ => rfl
+  | .arr _ ρ, _ => by
+    funext _ _ _ U _ _
+    simp only [negRead, truncate_apply, truncate_negRead ρ U, truncate_Incl]
+
+theorem truncate_andRRead : ∀ (ρ : RTy) (W : C), (A.truncate h).andRRead ρ W = A.andRRead ρ W
+  | .t, _ => rfl
+  | .arr _ ρ, _ => by
+    funext _ _ _ _ _ _ T _ _
+    simp only [andRRead, truncate_apply, truncate_andRRead ρ T, truncate_Incl]
+
+theorem truncate_orRRead : ∀ (ρ : RTy) (W : C), (A.truncate h).orRRead ρ W = A.orRRead ρ W
+  | .t, _ => rfl
+  | .arr _ ρ, _ => by
+    funext _ _ _ _ _ _ T _ _
+    simp only [orRRead, truncate_apply, truncate_orRRead ρ T, truncate_Incl]
+
+theorem truncate_coextRead : ∀ (ρ : RTy) (W : C), (A.truncate h).coextRead ρ W = A.coextRead ρ W
+  | .t, _ => by
+    funext _ _ _ U _ _
+    simp only [coextRead, truncate_apply, truncate_andRead, truncate_orRead, truncate_notRead]
+  | .arr _ ρ, _ => by
+    funext _ _ _ U _ _
+    simp only [coextRead, truncate_apply, truncate_allRead, truncate_coextRead ρ, truncate_Incl]
+
+theorem truncate_boxRead : ∀ (ρ : RTy) (W : C), (A.truncate h).boxRead ρ W = A.boxRead ρ W
+  | .t, _ => by
+    funext V _ _
+    simp only [boxRead, truncate_apply, truncate_eqRead, truncate_topRead]
+  | .arr _ ρ, _ => by
+    funext _ _ _ U _ _
+    simp only [boxRead, truncate_apply, truncate_boxRead ρ U, truncate_Incl]
+
+theorem truncate_boxImpRead : ∀ (ρ : RTy) (W : C), (A.truncate h).boxImpRead ρ W = A.boxImpRead ρ W
+  | .t, _ => by
+    funext _ _ _ U _ _
+    simp only [boxImpRead, truncate_apply, truncate_orRead, truncate_notRead]
+  | .arr _ ρ, _ => by
+    funext _ _ _ U _ _
+    simp only [boxImpRead, truncate_apply, truncate_allRead, truncate_boxImpRead ρ, truncate_Incl]
+
+/-- The paper's transfer lemma: `⟦A⟧_{A_h, i} = ⟦A⟧_{A, i∘h}`. -/
+theorem sem_truncate :
+    ∀ {Γ : Ctx} {σ : Ty} {W : C} (i : V ⟶ W) (t : Term Sig Γ σ) (g : IEnv (A.Dom W) Γ),
+      (A.truncate h).sem i t g = A.sem (h ≫ i) t g
+  | _, _, _, _, .var v, g => by
+    show (A.truncate h).Incl _ _ (g.get v) = A.Incl _ _ (g.get v)
+    rw [truncate_Incl]
+  | _, _, _, i, .const c, _ => by
+    show (A.truncate h).Incl _ _ ((A.inner _).map i ((A.inner _).map h (A.I c)))
+      = A.Incl _ _ ((A.inner _).map (h ≫ i) (A.I c))
+    rw [truncate_Incl, Functor.map_comp]; rfl
+  | _, _, _, i, .app f a, g => by
+    show (A.truncate h).apply ((A.truncate h).sem i f g) ((A.truncate h).sem i a g)
+      = A.apply (A.sem (h ≫ i) f g) (A.sem (h ≫ i) a g)
+    rw [truncate_apply, sem_truncate i f g, sem_truncate i a g]
+  | _, _, _, i, .lam b, g => by
+    show (fun U j x => (A.truncate h).sem (i ≫ j) b (.cons x (A.push j g)))
+      = (fun U j x => A.sem ((h ≫ i) ≫ j) b (.cons x (A.push j g)))
+    funext U j x
+    exact (sem_truncate (i ≫ j) b _).trans
+      (congrArg (fun k => A.sem k b (.cons x (A.push j g))) (Category.assoc h i j).symm)
+  | _, _, _, _, .and, _ => truncate_andRead A h _
+  | _, _, _, _, .or, _ => truncate_orRead A h _
+  | _, _, _, _, .not, _ => truncate_notRead A h _
+  | _, _, _, _, .all σ, _ => truncate_allRead A h σ _
+  | _, _, _, _, .ex σ, _ => truncate_exRead A h σ _
+  | _, _, _, _, .eq σ, _ => truncate_eqRead A h σ _
+  | _, _, _, _, .constR ρ, _ => truncate_constRead A h ρ _
+  | _, _, _, _, .negR ρ, _ => truncate_negRead A h ρ _
+  | _, _, _, _, .andR ρ, _ => truncate_andRRead A h ρ _
+  | _, _, _, _, .orR ρ, _ => truncate_orRRead A h ρ _
+  | _, _, _, _, .coextR ρ, _ => truncate_coextRead A h ρ _
+  | _, _, _, _, .boxR ρ, _ => truncate_boxRead A h ρ _
+  | _, _, _, _, .boxImpR ρ, _ => truncate_boxImpRead A h ρ _
+
+theorem isModel_truncate (M : A.IsModel) : (A.truncate h).IsModel :=
+  fun i t g => by rw [A.sem_truncate h, A.truncate_Incl h]; exact M (h ≫ i) t g
+
+theorem holds_truncate {Γ : Ctx} {W : C} (i : V ⟶ W) (p : Formula Sig Γ)
+    (g : IEnv (A.Dom W) Γ) : (A.truncate h).Holds i p g ↔ A.Holds (h ≫ i) p g := by
+  unfold Holds; rw [A.sem_truncate h]
+
+theorem holdsSentence_truncate (p : Sentence Sig) :
+    (A.truncate h).HoldsSentence p ↔ A.Holds h p .nil := by
+  rw [HoldsSentence, A.holds_truncate h, Category.comp_id]
+
+/-- **`◇P` holds in `A` iff `P` holds in one of its truncations.** -/
+theorem dia_iff_truncate (M : A.IsModel) (p : Sentence Sig) :
+    A.HoldsSentence (dia p) ↔ ∃ (V : C) (h : A.W₀ ⟶ V), (A.truncate h).HoldsSentence p := by
+  rw [HoldsSentence, A.holds_dia M]
+  constructor
+  · rintro ⟨V, k, hk⟩
+    refine ⟨V, k, ?_⟩
+    rw [A.holdsSentence_truncate]
+    rw [Category.id_comp, IEnv.nil_eq (A.push k IEnv.nil)] at hk
+    exact hk
+  · rintro ⟨V, k, hk⟩
+    refine ⟨V, k, ?_⟩
+    rw [A.holdsSentence_truncate] at hk
+    rw [Category.id_comp, IEnv.nil_eq (A.push k IEnv.nil)]
+    exact hk
+
+/-- **`□P` holds in `A` iff `P` holds in every truncation.** -/
+theorem box_iff_truncate (M : A.IsModel) (p : Sentence Sig) :
+    A.HoldsSentence (box p) ↔ ∀ (V : C) (h : A.W₀ ⟶ V), (A.truncate h).HoldsSentence p := by
+  rw [HoldsSentence, A.holds_box M]
+  constructor
+  · intro H V k
+    rw [A.holdsSentence_truncate]
+    have := H k
+    rw [Category.id_comp, IEnv.nil_eq (A.push k IEnv.nil)] at this
+    exact this
+  · intro H V k
+    have := H V k
+    rw [A.holdsSentence_truncate] at this
+    rw [Category.id_comp, IEnv.nil_eq (A.push k IEnv.nil)]
+    exact this
 
 end Premodel
 

@@ -93,7 +93,7 @@ All were settled with Cian on 22 September 2026.
 | `Action.lean` | **Action premodels and action models**, the paper's models of Classicism, directly: a rooted category, an inner action per type, the outer actions by recursion on the type, the subaction conditions, the total interpretation function `sem`, `Holds`, and `IsModel`. |
 | `ActionSoundness.lean` | **Soundness of action models**: transport, renaming, substitution, β, η, δ, conversion; every rule of `Derivable`; the eleven identities and Existence hold at every arrow of every action model; `theorem_holds`, `theoremWith_holds`. |
 | `ActionFull.lean` | **Full action models**: the powerset and exponential actions as functors; the full inner domains by recursion on the type; `Premodel.full` on any rooted category from an action for `e` and an interpretation; **`full_isModel`**, that a full premodel is a model, by the combined induction (inner-ness and transport together, the type-subscripted constants by a second induction on the size of the type); `full_bf_surjective`, the paper's (iii). |
-| `ActionFacts.lean` | `ND_σ`, `BF_σ` and the Fregean Axiom as sentences; the clause for `□`; the paper's generalizations: `ND_σ` holds iff every `h^σ` out of the object is injective, `BF_σ` holds if every `h^σ` is surjective, the Fregean Axiom holds iff propositions agreeing at the identity are equal. |
+| `ActionFacts.lean` | `ND_σ`, `BF_σ` and the Fregean Axiom as sentences; the clauses for `□` and `◇`; **truncation** (`Premodel.truncate`, `sem_truncate`, `isModel_truncate`, `dia_iff_truncate`, `box_iff_truncate`); the paper's generalizations: `ND_σ` holds iff every `h^σ` out of the object is injective, `BF_σ` holds if every `h^σ` is surjective, the Fregean Axiom holds iff propositions agreeing at the identity are equal. |
 | `ActionExamples.lean` | Full M-set models (`MSet.model`): the idempotent monoid `{1, k}` (`ND_t`, `BF_t` and the Fregean Axiom fail — the map's `full-idempotent-monoid`) and the two-element group (the Fregean Axiom fails, `□ND_σ` and `□BF_σ` hold at every type — `full-involution-group`); at an object whose out-arrows are isomorphisms, `ND_σ` and `BF_σ`; in a groupoid, their necessitations. |
 
 ## Conventions worth knowing
@@ -332,12 +332,25 @@ to be surjective — is `full_bf_surjective`, with the "image of the root" predi
 `rootImage` as the inner element; so `BF_t` fails in the idempotent model (`Idem.not_bf_t`,
 the record's `barcan-t`), since `k^t` misses `{1}`.
 
+**Truncation** (`ActionFacts.lean`, last on 23 September). The paper's truncation of a
+premodel by `h : W₀ → V` is `Premodel.truncate`: the same actions with `V` as base and
+each constant's value moved along `h`. The paper also discards the objects with no arrow
+from `V`; nothing here needs rootedness (the paper's footnote says as much), so the
+`rooted` field was dropped from `Premodel` and the truncation lives on the same
+category, which makes the transfer lemma `sem_truncate`, `⟦A⟧_{A_h, i} = ⟦A⟧_{A, i∘h}`,
+an induction on the same terms. One thing had to be done by hand that the paper does not
+mention: the readings of the constants are stuck recursions on the type with the whole
+premodel as an argument, so Lean cannot see that they ignore the base and the constants,
+and each is transferred by its own lemma (`truncate_constRead` and the rest). Then
+`isModel_truncate`, the clause for `◇` (`holds_dia`), and **`dia_iff_truncate`**: `◇P`
+holds in `A` iff `P` holds in one of its truncations; `box_iff_truncate` likewise for
+`□`.
+
 Not yet: the remaining verdicts of the two records, the intrinsic fullness criterion,
-truncation and `◇`, and the infinite models.
+and the infinite models.
 
 ## Next
 
-The remaining verdicts of the two M-set records; truncation and
-`◇P holds iff P holds in a truncation`; then the map's other models as instances, the
-symmetric and coalesced ones included. Appendix A as a theorem, and the coincidence with
-the Equivalence-rule system, is deferred: nothing depends on it.
+The remaining verdicts of the two M-set records; then the map's other models as
+instances, the symmetric and coalesced ones included. Appendix A as a theorem, and the
+coincidence with the Equivalence-rule system, is deferred: nothing depends on it.

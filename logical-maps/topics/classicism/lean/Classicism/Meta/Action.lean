@@ -148,16 +148,21 @@ end IEnv
 
 /-! ### Action premodels -/
 
-/-- An action premodel for `Sig` on the category `C`: a root `W₀` with an arrow to every
-object; an inner action for each type, nonempty at `e`; the inclusion of each inner
-relational domain into the outer one, natural and injective; the paper's conditions on
-the inner elements of arrow type, well-behavedness and values in the inner domain; and a
-value at the root for each constant. -/
+/-- An action premodel for `Sig` on the category `C`: a base object `W₀`; an inner action
+for each type, nonempty at `e`; the inclusion of each inner relational domain into the
+outer one, natural and injective; the paper's conditions on the inner elements of arrow
+type, well-behavedness and values in the inner domain; and a value at the base for each
+constant.
+
+The paper asks the category to be *rooted*, every object having an arrow from `W₀`, and
+says in a footnote that this "is just a convenience, since [other objects] would make no
+difference if they were present". Nothing here uses it, so it is not asked: what holds at
+the base is determined by the objects reachable from it, and the *truncation* of a
+premodel by an arrow (`ActionFacts.lean`) is then simply the same premodel with a new
+base. -/
 structure Premodel (Sig : Signature) (C : Type) [SmallCategory C] where
   /-- The base object. -/
   W₀ : C
-  /-- Rooted: an arrow from the base to every object. -/
-  rooted : ∀ W : C, Nonempty (W₀ ⟶ W)
   /-- The inner action at each type. -/
   inner : Ty → C ⥤ Type
   /-- `W^e` is nonempty. -/

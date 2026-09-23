@@ -6,8 +6,8 @@ import Classicism.Meta.ActionFacts
 
 The paper's *full* action models (Classicism, §"Exploring action models"): the inner
 domain at `t` is the whole powerset action, and at `σ → ρ` the whole exponential action of
-the inner domains at `σ` and `ρ`, the well-behaved functions on pairs `⟨h, x⟩`. A rooted
-category, an action for `e` with nonempty domains, and an interpretation of the constants
+the inner domains at `σ` and `ρ`, the well-behaved functions on pairs `⟨h, x⟩`. A base
+object, an action for `e` with nonempty domains, and an interpretation of the constants
 then determine a full action premodel, and the theorem of this module is that it is an
 action **model**: the value of every term is inner.
 
@@ -105,13 +105,12 @@ theorem fullIncl_wellBehaved (σ : Ty) (ρ : RTy) {W V U : C} (α : (FullR De (.
       = fullIncl De (.arr σ ρ) W α U (h ≫ i) ((FullT De σ).map i x) := by
   exact (fullIncl_map De ρ i (α.1 V h x)).symm.trans (congrArg (fullIncl De ρ U) (α.2 V U h i x))
 
-/-- The full action premodel on a rooted category, given the action for `e` and the
+/-- The full action premodel on a category with a chosen base, given the action for `e` and the
 constants. -/
-noncomputable def Premodel.full {Sig : Signature} (W₀ : C) (rooted : ∀ W : C, Nonempty (W₀ ⟶ W))
+noncomputable def Premodel.full {Sig : Signature} (W₀ : C)
     (nonempty_e : ∀ W : C, Nonempty (De.obj W))
     (I : ∀ c : Sig.Const, (FullT De (Sig.typeOf c)).obj W₀) : Premodel Sig C where
   W₀ := W₀
-  rooted := rooted
   inner := FullT De
   nonempty_e := nonempty_e
   incl := fullIncl De
@@ -125,11 +124,11 @@ noncomputable def Premodel.full {Sig : Signature} (W₀ : C) (rooted : ∀ W : C
 
 namespace Premodel
 
-variable {Sig : Signature} {W₀ : C} {rooted : ∀ W : C, Nonempty (W₀ ⟶ W)}
+variable {Sig : Signature} {W₀ : C}
   {nonempty_e : ∀ W : C, Nonempty (De.obj W)}
   {I : ∀ c : Sig.Const, (FullT De (Sig.typeOf c)).obj W₀}
 
-local notation "A" => Premodel.full De W₀ rooted nonempty_e I
+local notation "A" => Premodel.full De W₀ nonempty_e I
 
 /-- In a full premodel, an outer element of arrow type is inner iff its values are inner
 and it is well-behaved. -/
@@ -267,17 +266,17 @@ theorem Ty.sizeOf_pos : ∀ σ : Ty, 0 < sizeOf σ
 
 theorem fullP_of_unfold {Γ : Ctx} {σ : Ty} (t u : Term Sig Γ σ)
     (e : ∀ {W : C} (h : W₀ ⟶ W) (g : IEnv ((A).Dom W) Γ), (A).sem h t g = (A).sem h u g)
-    (hu : FullP De (I := I) (rooted := rooted) (nonempty_e := nonempty_e) u)
+    (hu : FullP De (I := I) (nonempty_e := nonempty_e) u)
     (hb : ∀ {W : C} (h : W₀ ⟶ W) (g : IEnv ((A).Dom W) Γ) {V : C} (i : W ⟶ V),
       (A).sem (h ≫ i) t ((A).push i g) = RawT.map (A).inner σ i ((A).sem h t g)) :
-    FullP De (I := I) (rooted := rooted) (nonempty_e := nonempty_e) t :=
+    FullP De (I := I) (nonempty_e := nonempty_e) t :=
   fun h g => ⟨e h g ▸ (hu h g).1, hb h g⟩
 
 theorem full_step (n : Nat)
     (ih : ∀ m < n, ∀ {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ), t.rsize < m →
-      FullP De (I := I) (rooted := rooted) (nonempty_e := nonempty_e) t) :
+      FullP De (I := I) (nonempty_e := nonempty_e) t) :
     ∀ {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ), t.rsize < n →
-      FullP De (I := I) (rooted := rooted) (nonempty_e := nonempty_e) t
+      FullP De (I := I) (nonempty_e := nonempty_e) t
   | _, _, .var v, _ => fun h g => ⟨⟨g.get v, rfl⟩, fun i => by
       simp only [sem, push, IEnv.get_map]; rw [(A).Incl_map]⟩
   | _, _, .const c, _ => fun h g => ⟨⟨_, rfl⟩, fun i => by
@@ -388,7 +387,7 @@ theorem full_step (n : Nat)
           (by simp [Term.unfoldBoxImp, Term.rsize])) (by intros; rfl))
 
 theorem fullP_all (n : Nat) : ∀ {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ), t.rsize < n →
-    FullP De (I := I) (rooted := rooted) (nonempty_e := nonempty_e) t :=
+    FullP De (I := I) (nonempty_e := nonempty_e) t :=
   full_step De n fun m _ => fullP_all m
 termination_by n
 

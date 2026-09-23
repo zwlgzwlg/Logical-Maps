@@ -599,8 +599,14 @@ and violates `fregean-axiom`. No flaw in the definitions surfaced; the difficult
 Lean's (bundled morphisms in `Type`, projections of a concrete structure not reducing
 syntactically). The axioms used remain `propext`, `Classical.choice`, `Quot.sound`.
 
-Not yet done: the remaining verdicts of those two records, truncation, and the map's other
-models.
+Truncation followed (`Premodel.truncate`, with the `rooted` field dropped from `Premodel`
+since nothing used it and the paper calls it a convenience): `sem_truncate`,
+`isModel_truncate`, `holds_dia`, and `dia_iff_truncate` / `box_iff_truncate`, the facts
+the map's `◇`- and `□`-verdicts run through. The readings of the constants had to be
+transferred to the truncation one by one, being stuck recursions on the type with the
+whole premodel as argument.
+
+Not yet done: the remaining verdicts of those two records and the map's other models.
 
 ## Certificates
 
