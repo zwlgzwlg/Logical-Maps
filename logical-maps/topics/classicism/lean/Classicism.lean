@@ -37,8 +37,6 @@ import Classicism.Meta.Translate
 import Classicism.Meta.Derived
 import Classicism.Meta.Schema
 import Classicism.Meta.Schemas
-import Classicism.Meta.Derivations
-import Classicism.Meta.Entailed
 import Classicism.Meta.Examples
 import Classicism.Meta.Action
 import Classicism.Meta.ActionSoundness

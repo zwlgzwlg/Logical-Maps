@@ -19,3 +19,11 @@ rev = "v4.33.1"
 
 [[lean_lib]]
 name = "Classicism"
+
+# The certification of the map's records as entailments: the derivations of the record
+# theorems (half an hour) and the entailments they yield. Not a default target, so that
+# `lake build` and continuous integration skip it; `lake build ClassicismCertified`
+# builds it.
+[[lean_lib]]
+name = "ClassicismCertified"
+roots = ["Classicism.Meta.Derivations", "Classicism.Meta.Entailed"]
