@@ -1,8 +1,9 @@
 import Classicism.Transform
 import Classicism.Order
+import Classicism.Pointwise
 
 /-!
-# Strict mirrors of the classes `Rel` and `Order`
+# Strict mirrors of the classes `Rel`, `Order` and `Pointwise`
 
 `Rel τ` says that `τ` is a relational type, and carries three laws: `coext` is reflexive,
 `X ∧_τ ⊤ = X`, and the identity behind Intensionality. The shallow layer states them with
@@ -27,6 +28,11 @@ Nothing about it needs a new proof. The shallow instances prove it from `K`, `4`
 Necessity of Identity, the Converse Barcan Formula and Modalized Functionality, all of
 which transform; so the law at each instance of the mirror `SOrder` is *the transformer's
 own output* on the shallow proof.
+
+`Pointwise τ` (`Classicism/Pointwise.lean`) holds the pointwise laws of the implication
+`⊑` at a relational type, each proved at `Prop` as a tautology and at `σ → τ` from the
+law at `τ`. Its mirror `SPointwise` is set up exactly as `SOrder`: each law is held as a
+necessitation, and each instance's law is the transform of the shallow instance's proof.
 
 The registrations at the end tell the transformer which constant mirrors which.
 -/
@@ -167,6 +173,56 @@ theorem SOrder.le_iff_nec (τ : Type) [SRel τ] [SOrder τ] :
     (∀ X Y : τ, Classicism.iff (SRel.le X Y) (Strict.Box (SRel.boxImp X Y))) = Top :=
   SOrder.le_iff
 
+/-! ### `SPointwise` -/
+
+/-- The strict mirror of `Pointwise`: the pointwise laws of `⊑`, each as a necessitation. -/
+class SPointwise (τ : Type) [SRel τ] : Type where
+  boxImp_refl : (∀ X : τ, SRel.boxImp X X) = Top
+  boxImp_trans : (∀ X Y Z : τ, Classicism.imp (SRel.boxImp X Y)
+    (Classicism.imp (SRel.boxImp Y Z) (SRel.boxImp X Z))) = Top
+  boxImp_and : (∀ X Y Z : τ, Classicism.imp (SRel.boxImp Z X)
+    (Classicism.imp (SRel.boxImp Z Y) (SRel.boxImp Z (SRel.and X Y)))) = Top
+  boxImp_and_left : (∀ X Y : τ, SRel.boxImp (SRel.and X Y) X) = Top
+  boxImp_and_right : (∀ X Y : τ, SRel.boxImp (SRel.and X Y) Y) = Top
+  boxImp_and_neg : (∀ X Y : τ, SRel.boxImp (SRel.and X (SRel.neg X)) Y) = Top
+  boxImp_constP : (∀ (X : τ) (p : Prop), Classicism.imp p (SRel.boxImp X (SRel.constP p))) = Top
+  boxImp_of_constP :
+    (∀ (X : τ) (p : Prop), Classicism.imp (¬ p) (SRel.boxImp (SRel.constP p) X)) = Top
+  coext_of_boxImp : (∀ X Y : τ, Classicism.imp (SRel.boxImp X Y)
+    (Classicism.imp (SRel.boxImp Y X) (SRel.coext X Y))) = Top
+  boxImp_of_coext : (∀ X Y : τ, Classicism.imp (SRel.coext X Y) (SRel.boxImp X Y)) = Top
+  boxImp_of_coext' : (∀ X Y : τ, Classicism.imp (SRel.coext X Y) (SRel.boxImp Y X)) = Top
+
+section
+variable (τ : Type) [SRel τ] [SPointwise τ]
+theorem SPointwise.boxImp_refl_nec : (∀ X : τ, SRel.boxImp X X) = Top := SPointwise.boxImp_refl
+theorem SPointwise.boxImp_trans_nec : (∀ X Y Z : τ, Classicism.imp (SRel.boxImp X Y)
+    (Classicism.imp (SRel.boxImp Y Z) (SRel.boxImp X Z))) = Top := SPointwise.boxImp_trans
+theorem SPointwise.boxImp_and_nec : (∀ X Y Z : τ, Classicism.imp (SRel.boxImp Z X)
+    (Classicism.imp (SRel.boxImp Z Y) (SRel.boxImp Z (SRel.and X Y)))) = Top :=
+  SPointwise.boxImp_and
+theorem SPointwise.boxImp_and_left_nec : (∀ X Y : τ, SRel.boxImp (SRel.and X Y) X) = Top :=
+  SPointwise.boxImp_and_left
+theorem SPointwise.boxImp_and_right_nec : (∀ X Y : τ, SRel.boxImp (SRel.and X Y) Y) = Top :=
+  SPointwise.boxImp_and_right
+theorem SPointwise.boxImp_and_neg_nec :
+    (∀ X Y : τ, SRel.boxImp (SRel.and X (SRel.neg X)) Y) = Top := SPointwise.boxImp_and_neg
+theorem SPointwise.boxImp_constP_nec :
+    (∀ (X : τ) (p : Prop), Classicism.imp p (SRel.boxImp X (SRel.constP p))) = Top :=
+  SPointwise.boxImp_constP
+theorem SPointwise.boxImp_of_constP_nec :
+    (∀ (X : τ) (p : Prop), Classicism.imp (¬ p) (SRel.boxImp (SRel.constP p) X)) = Top :=
+  SPointwise.boxImp_of_constP
+theorem SPointwise.coext_of_boxImp_nec : (∀ X Y : τ, Classicism.imp (SRel.boxImp X Y)
+    (Classicism.imp (SRel.boxImp Y X) (SRel.coext X Y))) = Top := SPointwise.coext_of_boxImp
+theorem SPointwise.boxImp_of_coext_nec :
+    (∀ X Y : τ, Classicism.imp (SRel.coext X Y) (SRel.boxImp X Y)) = Top :=
+  SPointwise.boxImp_of_coext
+theorem SPointwise.boxImp_of_coext'_nec :
+    (∀ X Y : τ, Classicism.imp (SRel.coext X Y) (SRel.boxImp Y X)) = Top :=
+  SPointwise.boxImp_of_coext'
+end
+
 end Classicism.Strict
 
 /-! ### Registrations -/
@@ -214,3 +270,63 @@ instance Classicism.Strict.instSOrderArrow {σ τ : Type} [Classicism.Ty σ]
   ⟨Classicism.le_iff_arrow.nec⟩
 
 #classicism_mirror Classicism.instOrderArrow Classicism.Strict.instSOrderArrow
+
+/-! ### `SPointwise`, from the transformer
+
+As for `SOrder`: the class is registered first, then each shallow instance's law is
+transformed, and the mirror instance is made of the transforms. -/
+
+#classicism_mirror Classicism.Pointwise Classicism.Strict.SPointwise
+#classicism_nec Classicism.Pointwise.boxImp_refl Classicism.Strict.SPointwise.boxImp_refl_nec
+#classicism_nec Classicism.Pointwise.boxImp_trans Classicism.Strict.SPointwise.boxImp_trans_nec
+#classicism_nec Classicism.Pointwise.boxImp_and Classicism.Strict.SPointwise.boxImp_and_nec
+#classicism_nec Classicism.Pointwise.boxImp_and_left Classicism.Strict.SPointwise.boxImp_and_left_nec
+#classicism_nec Classicism.Pointwise.boxImp_and_right Classicism.Strict.SPointwise.boxImp_and_right_nec
+#classicism_nec Classicism.Pointwise.boxImp_and_neg Classicism.Strict.SPointwise.boxImp_and_neg_nec
+#classicism_nec Classicism.Pointwise.boxImp_constP Classicism.Strict.SPointwise.boxImp_constP_nec
+#classicism_nec Classicism.Pointwise.boxImp_of_constP Classicism.Strict.SPointwise.boxImp_of_constP_nec
+#classicism_nec Classicism.Pointwise.coext_of_boxImp Classicism.Strict.SPointwise.coext_of_boxImp_nec
+#classicism_nec Classicism.Pointwise.boxImp_of_coext Classicism.Strict.SPointwise.boxImp_of_coext_nec
+#classicism_nec Classicism.Pointwise.boxImp_of_coext' Classicism.Strict.SPointwise.boxImp_of_coext'_nec
+
+#classicism_transform Classicism.boxImp_refl_prop Classicism.boxImp_trans_prop
+  Classicism.boxImp_and_prop Classicism.boxImp_and_left_prop Classicism.boxImp_and_right_prop
+  Classicism.boxImp_and_neg_prop Classicism.boxImp_constP_prop Classicism.boxImp_of_constP_prop
+  Classicism.coext_of_boxImp_prop Classicism.boxImp_of_coext_prop Classicism.boxImp_of_coext'_prop
+
+instance Classicism.Strict.instSPointwiseProp : Classicism.Strict.SPointwise Prop where
+  boxImp_refl := Classicism.boxImp_refl_prop.nec
+  boxImp_trans := Classicism.boxImp_trans_prop.nec
+  boxImp_and := Classicism.boxImp_and_prop.nec
+  boxImp_and_left := Classicism.boxImp_and_left_prop.nec
+  boxImp_and_right := Classicism.boxImp_and_right_prop.nec
+  boxImp_and_neg := Classicism.boxImp_and_neg_prop.nec
+  boxImp_constP := Classicism.boxImp_constP_prop.nec
+  boxImp_of_constP := Classicism.boxImp_of_constP_prop.nec
+  coext_of_boxImp := Classicism.coext_of_boxImp_prop.nec
+  boxImp_of_coext := Classicism.boxImp_of_coext_prop.nec
+  boxImp_of_coext' := Classicism.boxImp_of_coext'_prop.nec
+
+#classicism_mirror Classicism.instPointwiseProp Classicism.Strict.instSPointwiseProp
+
+#classicism_transform Classicism.boxImp_refl_arrow Classicism.boxImp_trans_arrow
+  Classicism.boxImp_and_arrow Classicism.boxImp_and_left_arrow Classicism.boxImp_and_right_arrow
+  Classicism.boxImp_and_neg_arrow Classicism.boxImp_constP_arrow Classicism.boxImp_of_constP_arrow
+  Classicism.coext_of_boxImp_arrow Classicism.boxImp_of_coext_arrow Classicism.boxImp_of_coext'_arrow
+
+instance Classicism.Strict.instSPointwiseArrow {σ τ : Type} [Classicism.Ty σ]
+    [Classicism.Strict.SRel τ] [Classicism.Strict.SPointwise τ] :
+    Classicism.Strict.SPointwise (σ → τ) where
+  boxImp_refl := Classicism.boxImp_refl_arrow.nec
+  boxImp_trans := Classicism.boxImp_trans_arrow.nec
+  boxImp_and := Classicism.boxImp_and_arrow.nec
+  boxImp_and_left := Classicism.boxImp_and_left_arrow.nec
+  boxImp_and_right := Classicism.boxImp_and_right_arrow.nec
+  boxImp_and_neg := Classicism.boxImp_and_neg_arrow.nec
+  boxImp_constP := Classicism.boxImp_constP_arrow.nec
+  boxImp_of_constP := Classicism.boxImp_of_constP_arrow.nec
+  coext_of_boxImp := Classicism.coext_of_boxImp_arrow.nec
+  boxImp_of_coext := Classicism.boxImp_of_coext_arrow.nec
+  boxImp_of_coext' := Classicism.boxImp_of_coext'_arrow.nec
+
+#classicism_mirror Classicism.instPointwiseArrow Classicism.Strict.instSPointwiseArrow

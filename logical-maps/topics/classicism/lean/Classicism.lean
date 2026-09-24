@@ -13,6 +13,8 @@ import Classicism.Transform
 import Classicism.Modal
 import Classicism.Order
 import Classicism.Comprehension
+import Classicism.Pointwise
+import Classicism.Lattice
 import Classicism.Mirror
 import Classicism.Principles
 import Classicism.Proofs

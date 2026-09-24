@@ -419,6 +419,93 @@ def declareEntails (foo : Name) : TermElabM Unit := do
   let tv : TheoremVal := { name := foo ++ `entails, levelParams := [], type := stmt, value := proof }
   withOptions (Elab.async.set · false) do addDecl (.thmDecl tv)
 
+/-! ### Rules
+
+An entailment between schemas forgets which instance of the premise yields which instance
+of the conclusion. A metalogical proof that descends into the object language needs to
+keep that: a step "from Atomicity at `ρ` and BF at `σ`, Atomicity at `σ → ρ`" is applied
+at particular types, inside an induction on the type. `foo.rule` is the derivation of the
+record theorem read that way, as a theorem of `C` for every choice of object types,
+
+    foo.rule : ∀ σ' ρ' …, C.Theorem (imp (P₁.quoted …) (… (imp (Pₙ.quoted …) (Q.quoted …))))
+
+each instance written through its schema's `quoted`, so that the rule composes with
+`Theorem.mp` and the schemas' membership. -/
+
+/-- Declare `foo.rule`. -/
+def declareRule (foo : Name) : TermElabM Unit := do
+  let info ← getConstInfo (foo ++ `strict)
+  let (ps, q) ← recordShape info.type
+  let dname := foo ++ `strict ++ `derivable
+  unless (← getEnv).contains dname do
+    throwError "rule: no derivation {dname}; run `#classicism_derive {foo ++ `strict}` first"
+  for p in q :: ps do
+    unless (← getEnv).contains (p ++ `schema) do
+      throwError "rule: no schema {p ++ `schema}; run `#classicism_schema {p}` first"
+  let dty ← inferType (Lean.mkConst dname)
+  let pureSig := Lean.mkConst ``Classicism.Meta.Signature.pure
+  let axiomsC := mkApp (Lean.mkConst ``Classicism.Meta.C.axioms) pureSig
+  let (stmt, proof) ← forallTelescope dty fun tvs body => do
+    let (pargs, cargs) ← instanceArgsOf info.type tvs
+    let nil := mkApp (Lean.mkConst ``List.nil [Level.zero]) Translate.tyE
+    let mut exp := mkAppN (Lean.mkConst (q ++ `quoted)) cargs
+    for (p, args) in (ps.zip pargs.toList).reverse do
+      exp := Translate.impE nil (mkAppN (Lean.mkConst (p ++ `quoted)) args) exp
+    let d := mkAppN (Lean.mkConst dname) tvs
+    let some (Ax, got) := derivableParts? (← whnf body)
+      | throwError "rule: {dname} does not have a `Theorem` type"
+    -- a derivation in `C⁻` is one in `C`
+    let d ← if Ax.isAppOf ``Classicism.Meta.C.axioms then pure d else do
+      let lift ← withLocalDeclD `a (mkApp (Lean.mkConst ``Classicism.Meta.Sentence) pureSig) fun a =>
+        withLocalDeclD `h (mkApp Ax a) fun h => do
+          mkLambdaFVars #[a, h] (← mkAppM ``Classicism.Meta.C.axioms.minus #[h])
+      mkAppM ``Classicism.Meta.Derivable.mono #[lift, d]
+    let D ← convertDeriv axiomsC d got exp
+    let thm ← mkAppM ``Classicism.Meta.Theorem #[axiomsC, exp]
+    return (← mkForallFVars tvs thm, ← mkLambdaFVars tvs D)
+  let proof ← instantiateMVars proof
+  let tv : TheoremVal := { name := foo ++ `rule, levelParams := [], type := stmt, value := proof }
+  withOptions (Elab.async.set · false) do addDecl (.thmDecl tv)
+
+/-- `#classicism_rule foo …`: each record theorem `foo` with a derivation becomes the rule
+`foo.rule`. -/
+syntax (name := classicismRule) "#classicism_rule " ident+ : command
+
+@[command_elab classicismRule] def elabRule : CommandElab := fun stx => do
+  for id in stx[1].getArgs do
+    let n ← liftCoreM (realizeGlobalConstNoOverloadWithInfo id)
+    try
+      liftTermElabM (declareRule n)
+      logInfo m!"{n} ⟶ {n ++ `rule} : {(← getConstInfo (n ++ `rule)).type}"
+    catch ex =>
+      logError m!"{n}: no rule — {ex.toMessageData}"
+
+/-- `#classicism_certify foo …`: the whole chain for a theorem `foo : P₁ … → … → Q …` of
+the shallow layer, at the point where it is stated. It transforms `foo` (Appendix A, giving
+`foo.strict` from the eleven identities), makes schemas of the principles it mentions that
+have none yet, derives `foo.strict` in the object language (`foo.strict.derivable`), and
+declares the rule `foo.rule`; each step is skipped when its declaration already exists. The
+report gives the rule and the axioms it rests on. -/
+syntax (name := classicismCertify) "#classicism_certify " ident+ : command
+
+@[command_elab classicismCertify] def elabCertify : CommandElab := fun stx => do
+  for id in stx[1].getArgs do
+    let n ← liftCoreM (realizeGlobalConstNoOverloadWithInfo id)
+    try
+      unless (← getEnv).contains (n ++ `strict) do
+        liftTermElabM (Classicism.Check.transform n)
+      let (ps, q) ← liftTermElabM do recordShape (← getConstInfo (n ++ `strict)).type
+      for p in q :: ps do
+        unless (← getEnv).contains (p ++ `schema) do liftTermElabM (declareSchema p)
+      unless (← getEnv).contains (n ++ `strict ++ `derivable) do
+        withScope (fun sc => { sc with opts := maxHeartbeats.set sc.opts 0 })
+          (liftTermElabM (Translate.derive (n ++ `strict)))
+      liftTermElabM (declareRule n)
+      let ax ← liftTermElabM (collectAxioms (n ++ `rule))
+      logInfo m!"{n} ⟶ {n ++ `rule} : {(← getConstInfo (n ++ `rule)).type}\ncertified ✓ (axioms: {ax.toList})"
+    catch ex =>
+      logError m!"{n}: not certified — {ex.toMessageData}"
+
 /-- `#classicism_entails foo …`: each record theorem `foo : P₁ … → … → Q …` with a derivation
 `foo.strict.derivable` becomes `foo.entails : P₁.schema ∪ … ⟹ Q.schema`. -/
 syntax (name := classicismEntails) "#classicism_entails " ident+ : command

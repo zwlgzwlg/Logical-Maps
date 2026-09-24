@@ -638,6 +638,40 @@ minute to fail. Entailments rest on `propext` and `Quot.sound` only. The derivat
 the expensive part, live in `Derivations.lean` so that the entailments and schemas can
 change without re-deriving.
 
+## A metalogical proof with object-level steps, 24 September
+
+Cian asked how integral the separate directory and the slow build are to formalizing a
+proof that alternates between metalanguage and object language, and for an experiment.
+`Classicism/Meta/Atomicity.lean` is the map's arrow "Atomicity (`t`) and BF imply
+Atomicity", a metatheorem "for every `n`" with object-level reasoning inside. The step
+`Atomicity τ → BF σ → Atomicity (σ → τ)` is proved in the shallow layer with ordinary
+tactics; `#classicism_certify` (new, `Schema.lean`) transforms it, derives it, and reads
+the derivation as a rule between schema instances, `atomicity_step.rule`; the theorem
+`atomicity_of_atomicityT_barcan : P.AtomicityT.schema ∪ P.Barcan.schema ⟹ P.Atomicity.schema`
+is an induction on the relational type (`RTy.induction`) whose step cites the rule. The
+tools added: the shallow class `Pointwise` with its mirror `SPointwise` (the pointwise
+laws at an abstract relational type, which `Rel` lacks), `Atom` and `Atomicity`,
+`Theorem.ax`/`ofC`/`mp`, `#classicism_rule`, `#classicism_certify`; the mirror is
+registered with the transformer, quoter, translator and type check like `SOrder`.
+
+What is verified: the whole file elaborates without error by `lake env lean` in twelve
+minutes, both certifications reporting `propext` and `Quot.sound` only, and the final
+theorem type-checking. What is not: the file is not in any library, because writing its
+`.olean` does not finish (Lean's export of every declaration's axioms walks each body;
+the module holds the derivations of nine lemmas and all they cite; a module with one of
+them writes in seconds). Two other things went wrong on the way and are fixed: the
+step as one forty-line tactic proof made the translator's process grow to 27 GB
+(now nine closed lemmas, which is also the paper's style); and a file that certifies
+without importing `Schemas` re-transforms the shallow library in memory (the import is
+now required and stated). The translator also restores its memo tables after each nested
+declaration. The audits (`Audit.lean`) cover `Pointwise.lean`, `Lattice.lean` and the
+two new instances.
+
+The experiment's conclusion, taken with Cian the same day, is to move certification off
+the strict layer: a direct translation of gated shallow proofs into `Derivable`, with
+`Derivable` defined by Elimination's rule Subst and the axiom set as an index, the
+eleven identities becoming Appendix A's theorem. `Meta/README.md` has the design.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

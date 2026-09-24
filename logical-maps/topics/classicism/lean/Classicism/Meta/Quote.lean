@@ -30,7 +30,7 @@ A class operation of `SRel`, at any type, becomes the corresponding operation of
 to the pointwise formula, and at a type variable it stays as `andR τ'` and the like.
 
 Type parameters guarded by `Ty` become variables of type `Ty`; those guarded by `RelTy`,
-`SRel` or `SOrder`, variables of type `RTy`, whose readings carry the strict layer's
+`SRel`, `SOrder` or `SPointwise`, variables of type `RTy`, whose readings carry the strict layer's
 instances by `instSRelDenote`. Reflection is then no longer `rfl` but rewriting with the
 lemma for each operation, `reflect_by_rewriting`.
 -/
@@ -320,7 +320,7 @@ def quoteStatement (ty : Expr) : TermElabM (Expr × Expr × Expr) := do
         let σ := t.getAppArgs[0]!
         if cls == ``Classicism.Ty then pure ()
         else if cls == ``Classicism.RelTy || cls == ``Classicism.Strict.SRel
-            || cls == ``Classicism.Strict.SOrder then
+            || cls == ``Classicism.Strict.SOrder || cls == ``Classicism.Strict.SPointwise then
           -- a relational guard on a parameter makes it a relational-type variable
           if let some idx := kinds.findIdx? (·.1 == σ) then kinds := kinds.set! idx (σ, .rty)
         else throwError "quote: a parameter of class {cls} has no object-language reading"
@@ -368,12 +368,14 @@ def quoteStatement (ty : Expr) : TermElabM (Expr × Expr × Expr) := do
                 if cls == ``Classicism.Ty then pure (tyMk subject)
                 else if cls == ``Classicism.RelTy then pure (relTyMk subject)
                 else
-                  -- `SRel`/`SOrder` on the reading of a relational-type variable: the
+                  -- `SRel`/`SOrder`/`SPointwise` on the reading of a relational-type variable: the
                   -- recursive instances of `Meta/Relational.lean`
                   let some (_, ρ) := subject.app2? ``Classicism.Meta.RTy.denote
                     | throwError "quote: an instance of {cls} on {subject}, which is not the reading of a type variable"
                   if cls == ``Classicism.Strict.SRel then
                     pure (mkApp2 (mkConst ``Classicism.Meta.instSRelDenote) D ρ)
+                  else if cls == ``Classicism.Strict.SPointwise then
+                    pure (mkApp2 (mkConst ``Classicism.Meta.instSPointwiseDenote) D ρ)
                   else pure (mkApp2 (mkConst ``Classicism.Meta.instSOrderDenote) D ρ)
             rhs := b.instantiate1 arg
           let eq ← mkEq lhs rhs

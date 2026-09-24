@@ -197,7 +197,13 @@ structure TState where
   shadows : Std.HashMap Expr Tm := {}
   /-- Derivations already made, by object context, hypotheses and proof term. A strict
   proof term is a DAG whose tree can be hundreds of times larger (`ll_lam`: 4,407 nodes
-  shared, 1,516,016 as a tree), and the walk must be over the DAG. -/
+  shared, 1,516,016 as a tree), and the walk must be over the DAG.
+
+  The memo tables are restored at the end of each nested declaration (a cited lemma's
+  generic translation, a specialization, a law by induction): what they hold for the
+  nested proof is of no use to the enclosing one, and keeping it across every cited
+  lemma made one run grow past six gigabytes while the same lemmas, derived one per
+  command, peaked at 664 MB. -/
   interps : Std.HashMap (Expr × Expr × Expr) (Expr × Expr) := {}
   /-- Phases being timed, so that a recursive phase is not counted once per level. -/
   activePhases : Std.HashSet String := {}
@@ -205,6 +211,12 @@ structure TState where
   qdepth : Nat := 0
 
 abbrev TrM := ReaderT TCtx (StateRefT TState TermElabM)
+
+/-- Restore the memo tables to `saved`, keeping the bookkeeping that spans declarations
+(the specializations in progress and the profile). Called at the end of a nested
+declaration; see `TState.interps`. -/
+def restoreMemo (saved : TState) : TrM Unit :=
+  modify fun s => { saved with specs := s.specs, timing := s.timing }
 
 /-- Time an action, under a phase name; an action already inside its phase is not timed
 again. -/
@@ -941,6 +953,7 @@ and the arrow instance's the step, with the law at the smaller type as hypothesi
 def inductionInstances : Name → Option (Name × Name)
   | ``Classicism.Strict.SRel => some (``Classicism.Strict.instSRelProp, ``Classicism.Strict.instSRelArrow)
   | ``Classicism.Strict.SOrder => some (``Classicism.Strict.instSOrderProp, ``Classicism.Strict.instSOrderArrow)
+  | ``Classicism.Strict.SPointwise => some (``Classicism.Strict.instSPointwiseProp, ``Classicism.Strict.instSPointwiseArrow)
   | ``Classicism.Strict.BA => some (``Classicism.Strict.instBAProp, ``Classicism.Strict.instBAArrow)
   | _ => none
 
@@ -1377,6 +1390,7 @@ instance among its parameters becomes nothing: the class's operations at the var
 are the object constants, and its laws are derived by induction on the type. -/
 partial def translateGeneric (c : Name) (ls : List Level) (name : Name) : TrM Unit := do
   let keyS := name.toString
+  let saved ← get
   if (← get).specs.contains keyS then
     throwError "derive: {c} depends on itself"
   modify fun s => { s with specs := s.specs.insert keyS }
@@ -1414,6 +1428,7 @@ partial def translateGeneric (c : Name) (ls : List Level) (name : Name) : TrM Un
     addDecl (.thmDecl { name := name, levelParams := [], type := dty, value := dval }))
   trace s!"  ✓ {c}: kernel {(← IO.monoMsNow) - t₀} ms, depth {dval.approxDepth}"
   modify fun s => { s with timing := s.timing.insert "translations" (s.timing.getD "translations" 0 + 1) }
+  restoreMemo saved
 
 /-- The library theorem `c` cited at the parameters `params`, as a `Theorem`: its
 generic translation `c.derivable`, made on first use, applied to the object types the
@@ -1461,6 +1476,7 @@ partial def specializeUnderIH (c : Name) (ls : List Level) (params : Array Expr)
   let keyS := s!"{(← read).axIsC}|{key}"
   let name := c ++ Name.mkSimple s!"derivable_{hash keyS}"
   if (← getEnv).contains name then return mkAppN (mkConst name) (tvs ++ ihArgs)
+  let saved ← get
   if (← get).specs.contains keyS then
     throwError "derive: {c} depends on itself at these types"
   let info ← getConstInfo c
@@ -1481,6 +1497,7 @@ partial def specializeUnderIH (c : Name) (ls : List Level) (params : Array Expr)
     addDecl (.thmDecl { name := name, levelParams := [], type := ty, value := val }))
   trace s!"  ✓ {c} (under a hypothesis): kernel {(← IO.monoMsNow) - t₀} ms"
   modify fun s => { s with timing := s.timing.insert "specializations" (s.timing.getD "specializations" 0 + 1) }
+  restoreMemo saved
   return mkAppN (mkConst name) (tvs ++ ihArgs)
 
 /-- The law `i` of the mirror class `cls`, derived for every object type by induction on
@@ -1501,6 +1518,7 @@ partial def ensureFieldInduction (cls : Name) (i : Nat) : TrM Name := do
   let keyS := name.toString
   if (← get).specs.contains keyS then
     throwError "derive: the law {cls ++ field} depends on itself at the same type"
+  let saved ← get
   modify fun s => { s with specs := s.specs.insert keyS }
   trace s!"  deriving {cls ++ field} by induction on the type"
   let rtyE : Expr := Lean.mkConst ``Classicism.Meta.RTy
@@ -1571,6 +1589,7 @@ partial def ensureFieldInduction (cls : Name) (i : Nat) : TrM Name := do
     addDecl (.thmDecl { name := name, levelParams := [], type := ty, value := val }))
   trace s!"  ✓ {cls ++ field} by induction: kernel {(← IO.monoMsNow) - t₀} ms"
   modify fun s => { s with timing := s.timing.insert "inductions" (s.timing.getD "inductions" 0 + 1) }
+  restoreMemo saved
   return name
 
 end

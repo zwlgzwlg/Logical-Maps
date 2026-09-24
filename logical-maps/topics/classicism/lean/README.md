@@ -270,6 +270,14 @@ which is Absorption-∨∀. There is no `funext` anywhere in it.
 each instance of the mirror `SOrder` is **the transformer's own output** on the shallow
 proof.
 
+`Pointwise τ` (`Classicism/Pointwise.lean`, 24 September) is a third class of the same
+kind: the pointwise laws of the implication `⊑` at a relational type — a preorder under
+which `∧_τ` is a meet, with `const_τ` and coextension — which `Rel` does not supply and
+without which nothing can be proved pointwise at a type variable. Its instances are
+tautologies at `Prop` and the law at `τ` under a `∀` at `σ → τ`; its mirror `SPointwise`
+is set up exactly as `SOrder`, each law a necessitation that is the transformer's output
+on the shallow instance's proof.
+
 The transformer learns which constant mirrors which from two commands,
 `#classicism_mirror` for a class, its data projections and its instances, and
 `#classicism_nec` for the necessitation of a law field. So a new class costs a mirror, but
@@ -442,7 +450,7 @@ Classicism/Quantifier.lean      Proposition A.1, UI, EG, Ref, Gen, Inst at Prop
 Classicism/Rules.lean           one lemma per proof rule, in any such algebra
 Classicism/Primitives.lean      necessitations of the core proof constants; Ref, LL, ∃-elim
 Classicism/Transform.lean       #classicism_transform: Appendix A as an induction on proof terms
-Classicism/Mirror.lean          SRel and SOrder, the strict mirrors of the classes Rel and Order
+Classicism/Mirror.lean          SRel, SOrder and SPointwise, the strict mirrors of the classes
 Classicism/Transformed.lean     the transformer run over the library; home of foo.nec and foo.strict
 Classicism/Meta/Types.lean      metalogical layer: the types of R as an inductive
 Classicism/Meta/Term.lean       intrinsically typed de Bruijn terms; renaming, substitution
@@ -457,9 +465,13 @@ Classicism/Meta/Quoted.lean     the quoter run over the library; home of foo.str
 Classicism/Meta/Normalize.lean  a verified βη-normalizer; conversion by reflection
 Classicism/Meta/Translate.lean  the translator: strict proofs to derivations
 Classicism/Meta/Derived.lean    two derivations checked at build time
+Classicism/Meta/Schema.lean     principles as schemas; records as entailments and as rules; #classicism_certify
+Classicism/Meta/Atomicity.lean  a metalogical proof with object-level steps: Atomicity (t) and BF imply Atomicity (not in the build; see its header)
 Classicism/Modal.lean           K, T, 4, NI, CBF, Intensionality and its corollaries
 Classicism/Order.lean           the algebraic order and its pointwise characterisation
 Classicism/Comprehension.lean   persistence, inextensibility and the rigidity variants
+Classicism/Pointwise.lean       the pointwise laws of ⊑ at a relational type, as a class
+Classicism/Lattice.lean         Atom
 Classicism/Principles.lean      one Prop per principle of the map
 Classicism/Proofs.lean          one theorem per record of the map
 Classicism/Check.lean           #classicism_check and #classicism_audit

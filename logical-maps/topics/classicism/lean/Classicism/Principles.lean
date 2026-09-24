@@ -1,4 +1,5 @@
 import Classicism.Comprehension
+import Classicism.Lattice
 
 /-!
 # Principle statements
@@ -83,6 +84,15 @@ def Existence (σ : Type) [Ty σ] : Prop := ∃ x : σ, x = x
 /-- `tractarianism-r` at `σ`: `∀pX. (∀x. p ≤ Xx) → p ≤ ∀x. Xx`. -/
 def Tractarianism (σ : Type) [Ty σ] : Prop :=
   ∀ (p : Prop) (X : σ → Prop), (∀ x, p ≤ X x) → p ≤ (∀ x, X x)
+
+/-! ### Lattice principles, at a relational type -/
+
+/-- `atomicity-r` at `τ`: `∀x. x ≤ ¬x ∨ ∃y. Atom(y) ∧ y ≤ x`, every non-bottom entity has
+an atom below it. -/
+def Atomicity (τ : Type) [Rel τ] : Prop :=
+  ∀ x : τ, Rel.le x (Rel.neg x) ∨ ∃ y : τ, Atom y ∧ Rel.le y x
+/-- `atomicity-t`: Atomicity at type `t`. -/
+def AtomicityT : Prop := Atomicity Prop
 
 /-! ### Comprehension, at a relational type
 

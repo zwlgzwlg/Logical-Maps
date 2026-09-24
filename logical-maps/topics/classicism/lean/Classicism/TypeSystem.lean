@@ -127,8 +127,9 @@ def guardTarget (e : Expr) : Option Expr :=
   let args := e.getAppArgs
   if (f.isConstOf ``Classicism.Ty || f.isConstOf ``Classicism.RelTy
       || f.isConstOf ``Classicism.Rel || f.isConstOf ``Classicism.Order
+      || f.isConstOf `Classicism.Pointwise
       || f.isConstOf `Classicism.Strict.BA || f.isConstOf `Classicism.Strict.SRel
-      || f.isConstOf `Classicism.Strict.SOrder)
+      || f.isConstOf `Classicism.Strict.SOrder || f.isConstOf `Classicism.Strict.SPointwise)
       && args.size ≥ 1 then
     some args[0]!
   else none
@@ -160,10 +161,12 @@ partial def isMetaType (e : Expr) : Bool :=
   let f := e.getAppFn
   f.isConstOf ``Classicism.Ty || f.isConstOf ``Classicism.RelTy
     || f.isConstOf ``Classicism.Rel || f.isConstOf ``Classicism.Order
+    || f.isConstOf `Classicism.Pointwise
     -- the strict layer's Boolean-algebra class, whose instances are `Prop` and `σ → τ`
     || f.isConstOf `Classicism.Strict.BA
-    -- the strict mirrors of `Rel` and `Order`
+    -- the strict mirrors of `Rel`, `Order` and `Pointwise`
     || f.isConstOf `Classicism.Strict.SRel || f.isConstOf `Classicism.Strict.SOrder
+    || f.isConstOf `Classicism.Strict.SPointwise
     || f.isConstOf ``Unit || f.isConstOf ``PUnit
     || f.isConstOf ``Trans
 

@@ -47,6 +47,13 @@ instance instSOrderDenote (D : Type) : ∀ τ : RTy,
   | .t => Classicism.Strict.instSOrderProp
   | .arr _ ρ => @Classicism.Strict.instSOrderArrow _ _ ⟨()⟩ (instSRelDenote D ρ) (instSOrderDenote D ρ)
 
+/-- Likewise `SPointwise`. -/
+instance instSPointwiseDenote (D : Type) : ∀ τ : RTy,
+    @Classicism.Strict.SPointwise (RTy.denote D τ) (instSRelDenote D τ)
+  | .t => Classicism.Strict.instSPointwiseProp
+  | .arr _ ρ =>
+    @Classicism.Strict.instSPointwiseArrow _ _ ⟨()⟩ (instSRelDenote D ρ) (instSPointwiseDenote D ρ)
+
 /-! ### Reading each operation back gives the strict layer's -/
 
 open Classicism.Strict

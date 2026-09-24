@@ -104,6 +104,15 @@ theorem RTy.ofArgs_args : ∀ ρ : RTy, RTy.ofArgs ρ.args = ρ
   | .t => rfl
   | .arr σ ρ => by simp [RTy.args, RTy.ofArgs, RTy.ofArgs_args ρ]
 
+/-- Induction on a relational type alone, the mutual motive on `Ty` being trivial: a
+property of relational types that holds at `t` and passes from `ρ` to `σ → ρ` holds of
+all of them. This is the induction on the structure of types that the shallow layer
+cannot perform, where `Rel` is a class and not a code. -/
+theorem RTy.induction {motive : RTy → Prop} (t : motive .t)
+    (arr : ∀ σ ρ, motive ρ → motive (.arr σ ρ)) : ∀ ρ, motive ρ :=
+  fun ρ => RTy.rec (motive_1 := fun _ => True) (motive_2 := motive)
+    trivial (fun _ _ => trivial) t (fun σ ρ _ ih => arr σ ρ ih) ρ
+
 /-- Every type of `R` is `e` or `σ₁ → … → σₙ → t`; this is the case split the shallow
 layer could not perform, since there `Rel` is a class and not a code. -/
 theorem Ty.cases (σ : Ty) : σ = Ty.e ∨ ∃ σs : List Ty, σ = Ty.rel (RTy.ofArgs σs) := by

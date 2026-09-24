@@ -95,6 +95,35 @@ theorem cut {Ax₁ Ax' : AxiomSet Sig} (hA : ∀ a, Ax' a → Theorem (Ax ∪ Ax
 
 end Derivable
 
+/-! ### Theorems of `C` with an axiom set, as rules
+
+The three moves a metalogical proof makes when it descends into the object language:
+cite an axiom of the set, cite a theorem of Classicism, and apply an implication. -/
+
+namespace Theorem
+
+variable {Ax : AxiomSet Sig}
+
+/-- An axiom of the set is a theorem of `C` with the set. -/
+theorem ax {a : Sentence Sig} (h : Ax a) : Theorem (C.axioms ∪ Ax) a :=
+  Derivable.axiom (Or.inr h)
+
+/-- A theorem of Classicism is a theorem of Classicism with any axiom set. -/
+theorem ofC {a : Sentence Sig} (h : C.Theorem a) : Theorem (C.axioms ∪ Ax) a :=
+  Derivable.mono (fun _ => Or.inl) h
+
+/-- Modus ponens. -/
+theorem mp {p q : Sentence Sig} (h : Theorem Ax (Term.imp p q)) (hp : Theorem Ax p) :
+    Theorem Ax q :=
+  Derivable.impE h hp
+
+/-- Modus ponens with two premises. -/
+theorem mp₂ {p q r : Sentence Sig} (h : Theorem Ax (Term.imp p (Term.imp q r)))
+    (hp : Theorem Ax p) (hq : Theorem Ax q) : Theorem Ax r :=
+  Derivable.impE (Derivable.impE h hp) hq
+
+end Theorem
+
 /-! ### Entailment -/
 
 namespace AxiomSet
