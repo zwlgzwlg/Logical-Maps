@@ -1,24 +1,19 @@
 import Classicism.Meta.Derivation
 
 /-!
-# Classicism, as an axiom set
+# Classicism, as a theory
 
-The eleven closed identities of Figures 2 and 3, as sentences of the object language, and
-Classicism as the theory they axiomatize: `C.Derivable Δ p` is `Derivable C.axioms Δ p`.
-These are the same eleven that `Classicism/Axiomatization.lean` states as Lean axioms and
-that the strict layer proves everything from, now written in de Bruijn syntax; in each,
-`v0` is the innermost bound variable, `v1` the next out, `v2` the next.
+Classicism is `Derivable Logical`: `H` closed under Subst, with Existence at `e` as its one
+axiom beyond the rules. This module names it, `C.axioms`, and its existentially neutral
+variant `C.axiomsMinus` (the paper's `C⁻`, nn. 12–13), with `C.Derivable`, `C.Theorem`
+and their `Minus` forms.
 
-## `C` and `C⁻`
-
-A derivation in context `Γ` may use the variables of `Γ`, and a closed derivation has
-none. So from no hypotheses in the empty context nothing of type `e` is ever available,
-and `∃x:e. x = x` is not derivable from the eleven identities alone: the system of
-`Classicism/Meta/Derivation.lean` is existentially neutral at `e`, the paper's `H⁻`
-(Classicism, nn. 12–13), where `H` assumes every type inhabited. At every relational type
-a closed term exists, `λx. ⊤`, so Existence there is derivable. This is the same line the
-shallow layer draws with the axiom `e_exists`: `C⁻` is the eleven, and `C` adds Existence
-at `e`.
+It also states the **eleven closed identities** of Figures 2 and 3 as sentences, in de
+Bruijn syntax (`v0` the innermost bound variable, `v1` the next out, `v2` the next), as
+the set `C.identities`. Appendix A of *Classicism* shows they axiomatize the theory over
+`H`; here they are theorems of `Derivable Logical`, each a Subst at the hole
+`λ… P = λ… ⬚` from the two derivations `P ⊢ Q`, `Q ⊢ P` in `H`, and the axiomatization is
+a theorem to be proved, not a definition.
 -/
 
 namespace Classicism.Meta
@@ -75,27 +70,29 @@ def distribution_and_exists (σ : Ty) : Sentence Sig :=
   eq' (lam (lam (conj (v0 : Term Sig [Ty.t, σ ⇒ RTy.t] Ty.t) (app (ex σ) v1))))
       (lam (lam (exists' (σ := σ) (conj v1 (app (v2 : Term Sig [σ, Ty.t, σ ⇒ RTy.t] (σ ⇒ RTy.t)) v0)))))
 
-/-- Existence at `e`: `∃x:e. x = x`. -/
-def existence_e : Sentence Sig := exists' (σ := Ty.e) (eq' v0 v0)
+/-- Existence at `e`: `∃x:e. x = x`, the logical axiom of `Derivation.lean`. -/
+abbrev existence_e : Sentence Sig := Meta.existence_e
 
-/-- The axioms of `C⁻`: the eleven identities, the Classicist ones at every type. -/
-inductive axiomsMinus : AxiomSet Sig
-  | commutativity_and : axiomsMinus commutativity_and
-  | commutativity_or : axiomsMinus commutativity_or
-  | distribution_and_or : axiomsMinus distribution_and_or
-  | distribution_or_and : axiomsMinus distribution_or_and
-  | dissolution_and_or : axiomsMinus dissolution_and_or
-  | dissolution_or_and : axiomsMinus dissolution_or_and
-  | identity_identity (σ : Ty) : axiomsMinus (identity_identity σ)
-  | absorption_or_forall (σ : Ty) : axiomsMinus (absorption_or_forall σ)
-  | distribution_or_forall (σ : Ty) : axiomsMinus (distribution_or_forall σ)
-  | absorption_and_exists (σ : Ty) : axiomsMinus (absorption_and_exists σ)
-  | distribution_and_exists (σ : Ty) : axiomsMinus (distribution_and_exists σ)
+/-- The eleven identities, the Classicist ones at every type, as a set of sentences. -/
+inductive identities : AxiomSet Sig
+  | commutativity_and : identities commutativity_and
+  | commutativity_or : identities commutativity_or
+  | distribution_and_or : identities distribution_and_or
+  | distribution_or_and : identities distribution_or_and
+  | dissolution_and_or : identities dissolution_and_or
+  | dissolution_or_and : identities dissolution_or_and
+  | identity_identity (σ : Ty) : identities (identity_identity σ)
+  | absorption_or_forall (σ : Ty) : identities (absorption_or_forall σ)
+  | distribution_or_forall (σ : Ty) : identities (distribution_or_forall σ)
+  | absorption_and_exists (σ : Ty) : identities (absorption_and_exists σ)
+  | distribution_and_exists (σ : Ty) : identities (distribution_and_exists σ)
 
-/-- The axioms of `C`: those of `C⁻` and Existence at `e`. -/
-inductive axioms : AxiomSet Sig
-  | minus {a : Sentence Sig} : axiomsMinus a → axioms a
-  | existence_e : axioms existence_e
+/-- The axioms of `C`: the logical axioms, Existence at `e`. -/
+abbrev axioms : AxiomSet Sig := Logical
+/-- The axioms of `C⁻`: none. -/
+abbrev axiomsMinus : AxiomSet Sig := fun _ => False
+
+theorem axioms.existence_e : axioms (Sig := Sig) existence_e := rfl
 
 /-- Derivability in Classicism. -/
 abbrev Derivable {Γ : Ctx} (Δ : List (Formula Sig Γ)) (p : Formula Sig Γ) : Prop :=
@@ -110,7 +107,7 @@ abbrev TheoremMinus (p : Sentence Sig) : Prop := Meta.Theorem axiomsMinus p
 
 theorem Derivable.of_minus {Γ : Ctx} {Δ : List (Formula Sig Γ)} {p : Formula Sig Γ}
     (h : DerivableMinus Δ p) : Derivable Δ p :=
-  Meta.Derivable.mono (fun _ h => axioms.minus h) h
+  Meta.Derivable.mono (fun _ h => h.elim) h
 
 end C
 

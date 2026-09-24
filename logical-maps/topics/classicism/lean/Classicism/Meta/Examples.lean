@@ -49,12 +49,18 @@ open Derivable in
 /-- `⊤` is a theorem of `C⁻`, being an instance of excluded middle. -/
 example : C.TheoremMinus (Sig := Signature.pure) top := Derivable.top
 
-/-- Each axiom is a theorem of its theory. -/
+/-- The logical axiom is a theorem of `C`. -/
+example : C.Theorem (Sig := Signature.pure) C.existence_e := Derivable.axiom rfl
+
+open Derivable in
+/-- **Commutativity of `∧`, by Subst**: `p ∧ q ⊢ q ∧ p` and back, each on its own, and the
+identity `(λpq. p ∧ q) = (λpq. p ∧ q)` by `Ref`; then the right-hand `p ∧ q`, the hole
+under two abstractions, becomes `q ∧ p`. This is how each of the eleven identities is a
+theorem of `C⁻`. -/
 example : C.TheoremMinus (Sig := Signature.pure) C.commutativity_and :=
-  Derivable.axiom .commutativity_and
-example : C.Theorem (Sig := Signature.pure) C.existence_e := Derivable.axiom .existence_e
-example : C.TheoremMinus (Sig := sig₁) (C.identity_identity Ty.e) :=
-  Derivable.axiom (.identity_identity _)
+  subst (P := conj v1 v0) (Q := conj v0 v1)
+    (Hole.appR (.app (.eq _) (lam (lam (conj v1 v0)))) (Hole.lam (Hole.lam Hole.hole)))
+    (andI (andE₂ hyp₀) (andE₁ hyp₀)) (andI (andE₂ hyp₀) (andE₁ hyp₀)) (refl _)
 
 open Derivable in
 /-- In a context with a variable, `∀F` yields `∃F`: UI at the variable, then EG. -/

@@ -2,54 +2,45 @@ import Classicism.Meta.Quote
 import Classicism.Meta.Normalize
 
 /-!
-# Translation of strict proofs into derivations
+# Translation of shallow proofs into derivations
 
-The second half of the translator. `#classicism_derive foo` reads the strict proof of
+The translator. `#classicism_derive foo` reads the proof term of a gated shallow theorem
 `foo` and declares
 
     foo.derivable : ∀ σ' …, Theorem C.axioms(Minus) (foo.quoted σ' …)
 
-a derivation, in the metalogical layer's system, of the sentence the quoter made of
-`foo`'s statement, with the theorem's type parameters as object-type variables. The
-kernel checks it. So, for each theorem it reaches, the chain is complete: a shallow proof
-in Lean, the transformer's strict proof from the eleven axioms, and a derivation in `H`
-plus the eleven identities as an object of Lean, each link kernel-checked and each
-translator untrusted.
+a derivation, in the metalogical layer's system, of the sentence the quoter makes of
+`foo`'s statement, with the theorem's type parameters as object-type variables. The kernel
+checks it. So, for each theorem it reaches, the chain is two links: a proof in Lean under
+the gate of `Classicism/Check.lean`, and a derivation in `H` closed under Subst as an
+object of Lean, the translator untrusted.
 
-## What a strict proof is made of
+## What a gated shallow proof is made of
 
-Almost entirely Leibniz's Law. A survey of the strict layer's proof terms found `Eq`,
-`congrArg`, `Eq.trans`, `Eq.symm`, `Eq.mpr`, `congrFun` and `Eq.rec` in the thousands,
-the eleven axioms entering mostly through the fields of the Boolean-algebra instances,
-and the natural-deduction constructors, `Or.elim`, `And.intro`, `Exists.elim` and the
-rest, a handful of times. So the translation is chiefly equational: each Lean identity
-lemma is `LL` at a predicate, and `Classicism/Meta/Derivation.lean` has the derived rule
-for each, `eqCongr`, `eqTrans`, `eqMpr` and so on.
+A proof term under the gate is natural-deduction shaped already. Its constants are the
+logical inductives' constructors, eliminators and recursors (`And.intro`, `Or.elim`,
+`Exists.casesOn`, …), the identity plumbing that `rw` and `▸` emit (`Eq.mpr`, `congrArg`,
+`Eq.ndrec`, …), lambdas over hypotheses and over objects, applications, the axioms `em`
+and `e_exists`, theorems of this library, and the two gated primitives. Each of the first
+kinds is one rule of `Derivable`, or a derived rule of `Derivation.lean`; a cited theorem
+is translated once, generically, and cited by name; and the two primitives are where the
+gate pays off: `propext h`, whose `h` mentions no hypothesis, is **Subst** at the hole
+`P = ⬚` with the two directions of `h` as its premises, and `funext (fun x => h)` is
+`substEq`, the induction on the type that carries Subst to identities at every type.
+The premises of a Subst are derived at the *logical part* of the axiom set, since that is
+what the rule asks; a theorem cited there is lifted into it.
 
-## The three things the translation has to supply
+A class law used at a type variable — `Rel.and_constP_true` at `τ`, `Order.le_iff`,
+a law of `Pointwise` — is not an axiom: it is derived once for every object type by
+induction on the type, the `Prop` instance's proof the base case and the arrow instance's
+the step (`ensureFieldInduction`).
 
-* **Conversion.** Lean's kernel applies β silently; `congrArg f h` has the type
-  `f a = f b` with `f a` a redex, and what uses it expects the reduct. The object language
-  has a `conv` rule, so wherever the formula a derivation proves and the formula its use
-  expects differ, `coerce` bridges them. The proof is one reflective lemma, `Conv.of_nf`,
-  whose hypothesis the kernel discharges by evaluating the verified normalizer of
-  `Classicism/Meta/Normalize.lean` on both sides. η is reduced at the source by both
-  quoters, so it does not arise.
-* **Citations.** A library theorem used in the proof is translated at the types it is
-  used at, once per distinct instantiation, and declared as `c.derivable_n`; its citation
-  is that declaration, weakened into the current context by `Derivable.ofTheorem`. This
-  sidesteps the class-parametric statement of, say, `BA.rule_imp_intro`, which in the
-  object language is a different sentence at each type.
-* **Unfolding.** Fields of the class instances, `BA.comm_and instBAProp`, are unfolded to
-  what they are, an axiom or a congruence; `BA.and` and the like in statements are quoted
-  through their instances.
+## Conversion
 
-## How it is built
-
-Everything is constructed directly as expressions with every implicit argument supplied,
-never through unification, since the formulas involved are large and the derivations
-contain thousands of nodes. The option `Classicism.Meta.Translate.check` type-checks every
-node as it is built, for debugging; the kernel checks the whole in any case.
+Lean's kernel converts silently; the object language has the rule `conv`. Where a term's
+quotation and the quotation of its type differ by βηδ, the translator supplies the
+conversion, checked by the verified normalizer of `Normalize.lean` through its untyped
+shadow of the syntax.
 -/
 
 open Lean Meta Elab Term Command Classicism.Meta.Quote
@@ -169,6 +160,9 @@ structure TCtx where
   /-- The axiom set, `C.axioms` or `C.axiomsMinus`. -/
   ax : Expr
   axIsC : Bool
+  /-- How many times inside the premises of a Subst: the current axiom set is `ax.logical`
+  that many times over, and a theorem cited here is lifted into it. -/
+  logicalDepth : Nat := 0
   /-- Induction hypotheses in scope, while a class law is being derived by induction on
   the object type: for the instance variable and field index, a proof of the law at the
   smaller type, a `Theorem`. -/
@@ -211,6 +205,19 @@ structure TState where
   qdepth : Nat := 0
 
 abbrev TrM := ReaderT TCtx (StateRefT TState TermElabM)
+
+/-- The axiom set of the current position: the run's set, or its logical part when inside
+the premises of a Subst. -/
+def curAx : TrM Expr := do
+  let c ← read
+  let mut ax := c.ax
+  for _ in [0:c.logicalDepth] do
+    ax := mkAppN (mkConst ``Classicism.Meta.AxiomSet.logical) #[mkConst ``Classicism.Meta.Signature.pure, ax]
+  return ax
+
+/-- Enter the premises of a Subst: no hypotheses, the logical part of the axiom set. -/
+def withLogical {α} (k : TrM α) : TrM α :=
+  withReader (fun c => { c with logicalDepth := c.logicalDepth + 1, hyps := [] }) k
 
 /-- Restore the memo tables to `saved`, keeping the bookkeeping that spans declarations
 (the specializations in progress and the profile). Called at the end of a nested
@@ -319,6 +326,11 @@ def varE (i : Nat) (σ : Expr) : TrM Expr := do
 /-- `a.weaken` at the new variable's type `τ`, in the context `Γ` of `a`. -/
 def weakenE (Γ τ σ a : Expr) : Expr :=
   mkAppN (mkConst ``Classicism.Meta.Term.weaken) #[sigE, Γ, τ, σ, a]
+
+/-- β-reduce every redex in an expression, so that a codomain mentioning a bound proof
+only through a motive's redex, `(fun _ => C) h`, is seen not to depend on it. -/
+partial def betaDeep (e : Expr) : Expr :=
+  e.replace fun t => if t.isHeadBetaTarget then some (betaDeep t.headBeta) else none
 
 /-- The body of a quoted abstraction `Term.lam Sig Γ σ ρ b`, if it is one. -/
 def lamBody? (e : Expr) : Option Expr :=
@@ -438,6 +450,7 @@ where
         return (mkTLam Γ σ ρ b', tRel (tArr σ ρ))
     | .forallE nm d b _ =>
       if ← timed "quote.isProp" (isProp d) then
+        let b := betaDeep b
         if b.hasLooseBVars then throwError "derive: a formula depends on a proof: {e}"
         let (d', _) ← q d
         if b.isConstOf ``False then formula Γ ``Classicism.Meta.Term.neg #[d']
@@ -460,8 +473,9 @@ where
         let v0 := mkTVar (mkAppN (mkConst ``List.cons [Level.zero]) #[tyE, tyT, Γ]) tyT
           (mkAppN (mkConst ``Classicism.Meta.Var.zero) #[Γ, tyT])
         return (mkAppN (mkConst ``Classicism.Meta.Term.forall') #[sigE, Γ, tyT, v0], tyT)
-      | (``Classicism.Strict.Box, #[a]) => formula Γ ``Classicism.Meta.Term.box #[(← q a).1]
-      | (``Classicism.Strict.Dia, #[a]) => formula Γ ``Classicism.Meta.Term.dia #[(← q a).1]
+      | (``Classicism.Strict.Box, #[a]) | (``Classicism.Box, #[a]) => formula Γ ``Classicism.Meta.Term.box #[(← q a).1]
+      | (``Classicism.Strict.Dia, #[a]) | (``Classicism.Dia, #[a]) => formula Γ ``Classicism.Meta.Term.dia #[(← q a).1]
+      | (``Iff, #[a, b]) => formula Γ ``Classicism.Meta.Term.iff #[(← q a).1, (← q b).1]
       | (``Eq, #[α, a, b]) =>
         let σ ← ty α
         return (mkAppN (mkConst ``Classicism.Meta.Term.eq') #[sigE, Γ, σ, (← q a).1, (← q b).1], tyT)
@@ -477,8 +491,20 @@ where
           return (mkTApp Γ (tRel (tArr σ rtE)) rtE ex (← q F).1, tyT)
       -- a relational operation: at a type variable, the object constant `andR τ'` applied;
       -- at a constructor type, the instance unfolds and the operation is read through it
-      | (``Classicism.Strict.SRel.constP, #[τ, _, p]) =>
+      | (``Classicism.Rel.constP, #[τ, _, p]) | (``Classicism.Strict.SRel.constP, #[τ, _, p]) =>
         relOpAt e τ fun ρ => return (mkRel ``Classicism.Meta.Term.constR ρ Γ #[(← q p).1], tRel ρ)
+      | (``Classicism.Rel.neg, #[τ, _, X]) =>
+        relOpAt e τ fun ρ => return (mkRel ``Classicism.Meta.Term.negR ρ Γ #[(← q X).1], tRel ρ)
+      | (``Classicism.Rel.and, #[τ, _, X, Y]) =>
+        relOpAt e τ fun ρ => return (mkRel ``Classicism.Meta.Term.andR ρ Γ #[(← q X).1, (← q Y).1], tRel ρ)
+      | (``Classicism.Rel.or, #[τ, _, X, Y]) =>
+        relOpAt e τ fun ρ => return (mkRel ``Classicism.Meta.Term.orR ρ Γ #[(← q X).1, (← q Y).1], tRel ρ)
+      | (``Classicism.Rel.coext, #[τ, _, X, Y]) =>
+        relOpAt e τ fun ρ => return (mkRel ``Classicism.Meta.Term.coextR ρ Γ #[(← q X).1, (← q Y).1], tyT)
+      | (``Classicism.Rel.boxAt, #[τ, _, X]) =>
+        relOpAt e τ fun ρ => return (mkRel ``Classicism.Meta.Term.boxR ρ Γ #[(← q X).1], tRel ρ)
+      | (``Classicism.Rel.boxImp, #[τ, _, X, Y]) =>
+        relOpAt e τ fun ρ => return (mkRel ``Classicism.Meta.Term.boxImpR ρ Γ #[(← q X).1, (← q Y).1], tyT)
       | (``Classicism.Strict.SRel.neg, #[τ, _, X]) =>
         relOpAt e τ fun ρ => return (mkRel ``Classicism.Meta.Term.negR ρ Γ #[(← q X).1], tRel ρ)
       | (``Classicism.Strict.SRel.and, #[τ, _, X, Y]) =>
@@ -581,7 +607,7 @@ def quoteT (e : Expr) : TrM Expr := return (← quoteE e).1
 /-- A rule of `Derivable`, with every argument given: the parameters `Sig` and `Ax`, then
 the constructor's own in order. -/
 def rule (n : Name) (args : Array Expr) : TrM Expr := timed "rule" do
-  let r := mkAppN (mkConst n) (#[sigE, (← read).ax] ++ args)
+  let r := mkAppN (mkConst n) (#[sigE, ← curAx] ++ args)
   if Classicism.Meta.Translate.check.get (← getOptions) then
     try Meta.check r catch ex =>
       throwError "derive: internal error building {n}:\n{ex.toMessageData}"
@@ -938,19 +964,41 @@ def isParam (a : Expr) : MetaM Bool := do
   if let .sort l := t then return !l.isZero
   return (← isClass? t).isSome
 
-/-- A proof of `Ax a` for an axiom of `C⁻`, in the current axiom set. -/
-def axiomProof (ctor : Name) (tyArgs : Array Expr) : TrM Expr := do
-  let h := mkAppN (mkConst (`Classicism.Meta.C.axiomsMinus ++ ctor)) (#[sigE] ++ tyArgs)
-  if (← read).axIsC then
-    let a := mkAppN (mkConst (`Classicism.Meta.C ++ ctor)) (#[sigE] ++ tyArgs)
-    return mkAppN (mkConst ``Classicism.Meta.C.axioms.minus) #[sigE, a, h]
-  else return h
+/-- A proof that the logical axiom is in the current axiom set: `Eq.refl` for
+`C.axioms`, which is `Logical`, and `And.intro` once per logical depth. -/
+def logicalMember (a : Expr) : TrM Expr := do
+  let c ← read
+  unless c.axIsC do throwError "derive: `e_exists` used, but the theorem was to be derived in C⁻"
+  let base ← mkEqRefl a
+  let mut pf := base
+  for _ in [0:c.logicalDepth] do
+    pf ← mkAppM ``And.intro #[pf, base]
+  return pf
+
+/-- Lift a theorem of the run's axiom set into the current one, inside the premises of a
+Subst: `mono` along the inclusion of the set in its logical part. -/
+def liftLogical (thm : Expr) : TrM Expr := do
+  let c ← read
+  if c.logicalDepth == 0 then return thm
+  let sentenceTy := mkApp (mkConst ``Classicism.Meta.Sentence) sigE
+  let hA ← withLocalDeclD `a sentenceTy fun a => withLocalDeclD `h (mkApp c.ax a) fun h => do
+    let mut pf := h
+    if c.axIsC then
+      for _ in [0:c.logicalDepth] do
+        pf ← mkAppM ``And.intro #[pf, h]
+    else
+      pf ← mkAppOptM ``False.elim #[mkApp (← curAx) a, h]
+    mkLambdaFVars #[a, h] pf
+  mkAppM ``Classicism.Meta.Derivable.mono #[hA, thm]
 
 /-- The mirror classes whose laws are held as fields, with their instances at `Prop` and
 at `σ → τ`. A law cited at a type *variable* is not an axiom: it is derived once for
 every object type, by induction on the type, the `Prop` instance's proof the base case
 and the arrow instance's the step, with the law at the smaller type as hypothesis. -/
 def inductionInstances : Name → Option (Name × Name)
+  | ``Classicism.Rel => some (``Classicism.instRelProp, ``Classicism.instRelArrow)
+  | ``Classicism.Order => some (``Classicism.instOrderProp, ``Classicism.instOrderArrow)
+  | ``Classicism.Pointwise => some (``Classicism.instPointwiseProp, ``Classicism.instPointwiseArrow)
   | ``Classicism.Strict.SRel => some (``Classicism.Strict.instSRelProp, ``Classicism.Strict.instSRelArrow)
   | ``Classicism.Strict.SOrder => some (``Classicism.Strict.instSOrderProp, ``Classicism.Strict.instSOrderArrow)
   | ``Classicism.Strict.SPointwise => some (``Classicism.Strict.instSPointwiseProp, ``Classicism.Strict.instSPointwiseArrow)
@@ -965,6 +1013,22 @@ def disjE (Γ A B : Expr) : Expr := mkAbbr ``Classicism.Meta.Term.disj Γ #[A, B
 def iffE (Γ A B : Expr) : Expr := mkAbbr ``Classicism.Meta.Term.iff Γ #[A, B]
 def botE (Γ : Expr) : Expr := mkAbbr ``Classicism.Meta.Term.bot Γ #[]
 def eqE (Γ σ a b : Expr) : Expr := mkAppN (mkConst ``Classicism.Meta.Term.eq') #[sigE, Γ, σ, a, b]
+
+/-- The arity at which a core constant is one rule; applied to more arguments, the rest
+are fed to the result. -/
+def coreArity : Name → Option Nat
+  | ``id => some 2 | ``Eq.refl => some 2 | ``rfl => some 2
+  | ``Eq.symm => some 4 | ``Eq.trans => some 6 | ``congrArg => some 6 | ``congrFun => some 6
+  | ``Eq.mpr => some 4 | ``Eq.mp => some 4 | ``Eq.subst => some 6
+  | ``And.intro => some 4 | ``And.left => some 3 | ``And.right => some 3
+  | ``Or.inl => some 3 | ``Or.inr => some 3 | ``Or.elim => some 6
+  | ``absurd => some 4 | ``False.elim => some 2
+  | ``Iff.intro => some 4 | ``Iff.mp => some 3 | ``Iff.mpr => some 3
+  | ``Iff.refl => some 1 | ``Iff.rfl => some 1 | ``Iff.symm => some 3 | ``Iff.trans => some 5
+  | ``Exists.intro => some 4 | ``Exists.elim => some 5
+  | ``propext => some 3 | ``funext => some 5
+  | ``Classicism.em => some 1 | ``True.intro => some 0 | ``trivial => some 0
+  | _ => none
 
 mutual
 
@@ -1069,21 +1133,20 @@ partial def branch (f : Expr) (A : Expr) (AF CF : Expr) : TrM Expr := do
       let (got, d) ← interp (b.instantiate1 h)
       coerce d got CF
   | _ =>
-    let (got, d) ← interp f
-    let Γ ← ctxE
-    let Δ ← hypsE
-    let imp := impE Γ AF CF
-    let d ← coerce d got imp
-    let d' ← rule ``Classicism.Meta.Derivable.weaken₁ #[Γ, Δ, imp, AF, d]
-    let h0 ← rule ``Classicism.Meta.Derivable.hyp₀ #[Γ, Δ, AF]
-    let Δ' := mkAppN (mkConst ``List.cons [Level.zero]) #[mkApp2 (mkConst ``Classicism.Meta.Formula) sigE Γ, AF, Δ]
-    rule ``Classicism.Meta.Derivable.impE #[Γ, Δ', AF, CF, d', h0]
+    -- a branch that is not an abstraction (`Or.inl`, a lemma): η-expand it
+    withHyp `h A AF fun h => do
+      let (got, d) ← interp (mkApp f h)
+      coerce d got CF
 
 partial def interpApp (f : Expr) (args : Array Expr) : TrM (Expr × Expr) := do
   let t := mkAppN f args
   let Γ ← ctxE
   let Δ ← hypsE
   if let .const c ls := f then
+    if let some k := coreArity c then
+      if args.size > k then
+        let (F, d) ← interpApp f (args.extract 0 k)
+        return ← feed (mkAppN f (args.extract 0 k)) F d (args.extract k args.size)
     match c, args with
     | ``id, #[_, a] => return ← interp a
     | ``Eq.refl, #[_, a] | ``rfl, #[_, a] =>
@@ -1148,6 +1211,11 @@ partial def interpApp (f : Expr) (args : Array Expr) : TrM (Expr × Expr) := do
       let dh ← coerce dh gh (eqE Γ tyT α' β')
       let dp ← coerce dp gp α'
       return (β', ← rule ``Classicism.Meta.Derivable.eqMp #[Γ, Δ, α', β', dh, dp])
+    | ``Eq.subst, _ =>
+      -- `Eq.subst {α} {motive} {a b} h m`: the recursor with its arguments reordered
+      if args.size < 6 then throwError "derive: a partially applied `Eq.subst`"
+      return ← interpApp (mkConst ``Eq.ndrec ls)
+        (#[args[0]!, args[2]!, args[1]!, args[5]!, args[3]!, args[4]!] ++ args.extract 6 args.size)
     | ``Eq.rec, _ | ``Eq.ndrec, _ =>
       if args.size < 6 then throwError "derive: a partially applied recursor"
       let a := args[1]!; let motive := args[2]!
@@ -1168,7 +1236,7 @@ partial def interpApp (f : Expr) (args : Array Expr) : TrM (Expr × Expr) := do
         | throwError "derive: a motive that is not an abstraction"
       let dm ← coerce dm gm (instE Γ σ tyT Pb a')
       let F := instE Γ σ tyT Pb b'
-      let d ← rule ``Classicism.Meta.Derivable.substβ #[Γ, Δ, σ, a', b', Pb, dh, dm]
+      let d ← rule ``Classicism.Meta.Derivable.llβ #[Γ, Δ, σ, a', b', Pb, dh, dm]
       return ← feed (mkAppN f (args.extract 0 6)) F d (args.extract 6 args.size)
     | ``And.intro, #[a, b, ha, hb] =>
       let (ga, da) ← interp ha; let (gb, db) ← interp hb
@@ -1261,23 +1329,134 @@ partial def interpApp (f : Expr) (args : Array Expr) : TrM (Expr × Expr) := do
           coerce d g (weakenE Γ σ tyT b')
       return (b', ← rule ``Classicism.Meta.Derivable.exE #[Γ, Δ, σ, p', b', dh, d'])
     | ``Classicism.e_exists, #[] =>
-      unless (← read).axIsC do throwError "derive: `e_exists` used, but the theorem was to be derived in C⁻"
-      let a := mkApp (mkConst ``Classicism.Meta.C.existence_e) sigE
-      let pf := mkApp (mkConst ``Classicism.Meta.C.axioms.existence_e) sigE
+      let a := mkApp (mkConst ``Classicism.Meta.existence_e) sigE
+      let pf ← logicalMember a
       let d ← rule ``Classicism.Meta.Derivable.ax #[Γ, Δ, a, pf]
       let F ← quoteF (← inferType t)
       return (F, ← coerce d (closeE Γ tyT a) F)
+    | ``Classicism.em, #[p] =>
+      let p' ← quoteF p
+      return (disjE Γ p' (negE Γ p'), ← rule ``Classicism.Meta.Derivable.em #[Γ, Δ, p'])
+    | ``True.intro, #[] | ``trivial, #[] =>
+      return (mkAbbr ``Classicism.Meta.Term.top Γ #[], ← rule ``Classicism.Meta.Derivable.top #[Γ, Δ])
+    | ``propext, #[a, b, h] =>
+      -- Subst at the hole `a = ⬚`: the premises are the two directions of `h`, each on
+      -- its own, at the logical part of the axiom set
+      let a' ← quoteF a; let b' ← quoteF b
+      let (d₁, d₂) ← withLogical <| withCaches do
+        let (got, dh) ← interp h
+        let dh ← coerce dh got (iffE Γ a' b')
+        let Δ₀ ← hypsE
+        let fty := mkApp2 (mkConst ``Classicism.Meta.Formula) sigE Γ
+        let Δa := mkAppN (mkConst ``List.cons [Level.zero]) #[fty, a', Δ₀]
+        let Δb := mkAppN (mkConst ``List.cons [Level.zero]) #[fty, b', Δ₀]
+        let iff := iffE Γ a' b'
+        let d₁ ← rule ``Classicism.Meta.Derivable.iffE₁ #[Γ, Δa, a', b',
+          ← rule ``Classicism.Meta.Derivable.weaken₁ #[Γ, Δ₀, iff, a', dh],
+          ← rule ``Classicism.Meta.Derivable.hyp₀ #[Γ, Δ₀, a']]
+        let d₂ ← rule ``Classicism.Meta.Derivable.iffE₂ #[Γ, Δb, a', b',
+          ← rule ``Classicism.Meta.Derivable.weaken₁ #[Γ, Δ₀, iff, b', dh],
+          ← rule ``Classicism.Meta.Derivable.hyp₀ #[Γ, Δ₀, b']]
+        pure (d₁, d₂)
+      let eqA := mkTApp Γ tyT (tArr tyT rtE) (mkAppN (mkConst ``Classicism.Meta.Term.eq) #[sigE, Γ, tyT]) a'
+      let K := mkAppN (mkConst ``Classicism.Meta.Hole.appR) #[sigE, Γ, Γ, tyT, rtE, tyT, eqA,
+        mkAppN (mkConst ``Classicism.Meta.Hole.hole) #[sigE, Γ, tyT]]
+      let hK ← rule ``Classicism.Meta.Derivable.refl #[Γ, Δ, tyT, a']
+      let d ← rule ``Classicism.Meta.Derivable.subst #[Γ, Γ, Δ, a', b', K, d₁, d₂, hK]
+      return (eqE Γ tyT a' b', d)
+    | ``funext, #[_, _, f, g, h] =>
+      -- ξ: the identity at a fresh variable, closed, then `substEq` at the hole
+      -- `f = λv. ⬚`, and η at both ends
+      let (f', fT) ← quoteE f; let (g', _) ← quoteE g
+      let (σ, ρ) ← splitArrow fT
+      let .lam nm d b _ := h
+        | throwError "derive: `funext` whose argument is not an abstraction over the variable"
+      let hd ← withLogical <| withObj nm d fun x => do
+        let (got, dd) ← interp (b.instantiate1 x)
+        let Γ' ← ctxE
+        let v0 := mkTVar Γ' σ (mkAppN (mkConst ``Classicism.Meta.Var.zero) #[Γ, σ])
+        let exp := eqE Γ' (tRel ρ) (mkTApp Γ' σ ρ (weakenE Γ σ fT f') v0)
+          (mkTApp Γ' σ ρ (weakenE Γ σ fT g') v0)
+        coerce dd got exp
+      let Γ' := mkAppN (mkConst ``List.cons [Level.zero]) #[tyE, σ, Γ]
+      let v0 := mkTVar Γ' σ (mkAppN (mkConst ``Classicism.Meta.Var.zero) #[Γ, σ])
+      let eqF := mkTApp Γ fT (tArr fT rtE) (mkAppN (mkConst ``Classicism.Meta.Term.eq) #[sigE, Γ, fT]) f'
+      let K := mkAppN (mkConst ``Classicism.Meta.Hole.appR) #[sigE, Γ, Γ', fT, rtE, tRel ρ, eqF,
+        mkAppN (mkConst ``Classicism.Meta.Hole.lam) #[sigE, Γ, Γ', σ, ρ, tRel ρ,
+          mkAppN (mkConst ``Classicism.Meta.Hole.hole) #[sigE, Γ', tRel ρ]]]
+      let etaF := mkTLam Γ σ ρ (mkTApp Γ' σ ρ (weakenE Γ σ fT f') v0)
+      let etaG := mkTLam Γ σ ρ (mkTApp Γ' σ ρ (weakenE Γ σ fT g') v0)
+      let conv₁ := mkAppN (mkConst ``Classicism.Meta.Conv.app_congr)
+        #[sigE, Γ, fT, rtE, eqF, eqF, f', etaF, convRefl Γ (tRel (tArr fT rtE)) eqF,
+          convSymm Γ fT etaF f' (mkAppN (mkConst ``Classicism.Meta.Conv.eta) #[sigE, Γ, σ, ρ, f'])]
+      let hK ← rule ``Classicism.Meta.Derivable.conv #[Γ, Δ, eqE Γ fT f' f', eqE Γ fT f' etaF,
+        ← rule ``Classicism.Meta.Derivable.refl #[Γ, Δ, fT, f'], conv₁]
+      let d ← rule ``Classicism.Meta.Derivable.substEq #[ρ, Γ, Γ', Δ, K,
+        mkTApp Γ' σ ρ (weakenE Γ σ fT f') v0, mkTApp Γ' σ ρ (weakenE Γ σ fT g') v0, hd, hK]
+      let conv₂ := mkAppN (mkConst ``Classicism.Meta.Conv.app_congr)
+        #[sigE, Γ, fT, rtE, eqF, eqF, etaG, g', convRefl Γ (tRel (tArr fT rtE)) eqF,
+          mkAppN (mkConst ``Classicism.Meta.Conv.eta) #[sigE, Γ, σ, ρ, g']]
+      let d ← rule ``Classicism.Meta.Derivable.conv #[Γ, Δ, eqE Γ fT f' etaG, eqE Γ fT f' g', d, conv₂]
+      return (eqE Γ fT f' g', d)
+    | ``Or.casesOn, _ =>
+      if args.size < 6 then throwError "derive: a partially applied `Or.casesOn`"
+      let C' := (args[2]!.beta #[args[3]!]).headBeta
+      return ← interpApp (mkConst ``Or.elim) (#[args[0]!, args[1]!, C', args[3]!, args[4]!, args[5]!] ++ args.extract 6 args.size)
+    | ``Exists.casesOn, _ =>
+      if args.size < 5 then throwError "derive: a partially applied `Exists.casesOn`"
+      let C' := (args[2]!.beta #[args[3]!]).headBeta
+      return ← interpApp (mkConst ``Exists.elim ls) (#[args[0]!, args[1]!, C', args[3]!, args[4]!] ++ args.extract 5 args.size)
+    | ``And.casesOn, _ =>
+      if args.size < 5 then throwError "derive: a partially applied `And.casesOn`"
+      let a := args[0]!; let b := args[1]!; let t' := args[3]!; let k := args[4]!
+      return ← interp (mkAppN k (#[mkApp3 (mkConst ``And.left) a b t', mkApp3 (mkConst ``And.right) a b t'] ++ args.extract 5 args.size)).headBeta
+    | ``Iff.casesOn, _ =>
+      if args.size < 5 then throwError "derive: a partially applied `Iff.casesOn`"
+      let a := args[0]!; let b := args[1]!; let t' := args[3]!; let k := args[4]!
+      return ← interp (mkAppN k (#[mkApp3 (mkConst ``Iff.mp) a b t', mkApp3 (mkConst ``Iff.mpr) a b t'] ++ args.extract 5 args.size)).headBeta
+    | ``False.casesOn, _ =>
+      if args.size < 2 then throwError "derive: a partially applied `False.casesOn`"
+      let C' := (args[0]!.beta #[args[1]!]).headBeta
+      return ← interpApp (mkConst ``False.elim ls) (#[C', args[1]!] ++ args.extract 2 args.size)
+    | ``Iff.refl, #[a] | ``Iff.rfl, #[a] =>
+      let a' ← quoteF a
+      let fty := mkApp2 (mkConst ``Classicism.Meta.Formula) sigE Γ
+      let Δa := mkAppN (mkConst ``List.cons [Level.zero]) #[fty, a', Δ]
+      let h0 ← rule ``Classicism.Meta.Derivable.hyp₀ #[Γ, Δ, a']
+      let _ := Δa
+      return (iffE Γ a' a', ← rule ``Classicism.Meta.Derivable.iffI #[Γ, Δ, a', a', h0, h0])
+    | ``Iff.symm, #[a, b, h] =>
+      let (g, d) ← interp h
+      let a' ← quoteF a; let b' ← quoteF b
+      let iff := iffE Γ a' b'
+      let d ← coerce d g iff
+      let fty := mkApp2 (mkConst ``Classicism.Meta.Formula) sigE Γ
+      let Δa := mkAppN (mkConst ``List.cons [Level.zero]) #[fty, a', Δ]
+      let Δb := mkAppN (mkConst ``List.cons [Level.zero]) #[fty, b', Δ]
+      let d₁ ← rule ``Classicism.Meta.Derivable.iffE₂ #[Γ, Δb, a', b',
+        ← rule ``Classicism.Meta.Derivable.weaken₁ #[Γ, Δ, iff, b', d],
+        ← rule ``Classicism.Meta.Derivable.hyp₀ #[Γ, Δ, b']]
+      let d₂ ← rule ``Classicism.Meta.Derivable.iffE₁ #[Γ, Δa, a', b',
+        ← rule ``Classicism.Meta.Derivable.weaken₁ #[Γ, Δ, iff, a', d],
+        ← rule ``Classicism.Meta.Derivable.hyp₀ #[Γ, Δ, a']]
+      return (iffE Γ b' a', ← rule ``Classicism.Meta.Derivable.iffI #[Γ, Δ, b', a', d₁, d₂])
+    | ``Iff.trans, #[a, b, c', h₁, h₂] =>
+      let (g₁, d₁) ← interp h₁; let (g₂, d₂) ← interp h₂
+      let a' ← quoteF a; let b' ← quoteF b; let c'' ← quoteF c'
+      let d₁ ← coerce d₁ g₁ (iffE Γ a' b'); let d₂ ← coerce d₂ g₂ (iffE Γ b' c'')
+      let fty := mkApp2 (mkConst ``Classicism.Meta.Formula) sigE Γ
+      let Δa := mkAppN (mkConst ``List.cons [Level.zero]) #[fty, a', Δ]
+      let Δc := mkAppN (mkConst ``List.cons [Level.zero]) #[fty, c'', Δ]
+      let w₁a ← rule ``Classicism.Meta.Derivable.weaken₁ #[Γ, Δ, iffE Γ a' b', a', d₁]
+      let w₂a ← rule ``Classicism.Meta.Derivable.weaken₁ #[Γ, Δ, iffE Γ b' c'', a', d₂]
+      let w₁c ← rule ``Classicism.Meta.Derivable.weaken₁ #[Γ, Δ, iffE Γ a' b', c'', d₁]
+      let w₂c ← rule ``Classicism.Meta.Derivable.weaken₁ #[Γ, Δ, iffE Γ b' c'', c'', d₂]
+      let e₁ ← rule ``Classicism.Meta.Derivable.iffE₁ #[Γ, Δa, b', c'', w₂a,
+        ← rule ``Classicism.Meta.Derivable.iffE₁ #[Γ, Δa, a', b', w₁a, ← rule ``Classicism.Meta.Derivable.hyp₀ #[Γ, Δ, a']]]
+      let e₂ ← rule ``Classicism.Meta.Derivable.iffE₂ #[Γ, Δc, a', b', w₁c,
+        ← rule ``Classicism.Meta.Derivable.iffE₂ #[Γ, Δc, b', c'', w₂c, ← rule ``Classicism.Meta.Derivable.hyp₀ #[Γ, Δ, c'']]]
+      return (iffE Γ a' c'', ← rule ``Classicism.Meta.Derivable.iffI #[Γ, Δ, a', c'', e₁, e₂])
     | _, _ =>
-      if (`Classicism.Axiomatic).isPrefixOf c then
-        let short := c.components.getLast!
-        let tyArgs ← (args.filterM fun a => do return (← whnf (← inferType a)).isSort)
-        let qc := (← read).q
-        let tyArgs' ← tyArgs.mapM fun a => (quoteTy a).run qc
-        let a := mkAppN (mkConst (`Classicism.Meta.C ++ short)) (#[sigE] ++ tyArgs')
-        let pf ← axiomProof short tyArgs'
-        let d ← rule ``Classicism.Meta.Derivable.ax #[Γ, Δ, a, pf]
-        let F ← quoteF (← inferType t)
-        return (F, ← coerce d (closeE Γ tyT a) F)
       if (`Classicism).isPrefixOf c then
         if let some (.thmInfo _) := (← getEnv).find? c then
           let mut k := 0
@@ -1314,8 +1493,10 @@ partial def feed (cur : Expr) (F d : Expr) (args : Array Expr) : TrM (Expr × Ex
     let Δ ← hypsE
     let .forallE nm dom body _ ← whnf (← inferType cur)
       | throwError "derive: {cur} is applied to {a} but is not a function"
+    -- a codomain mentioning the bound variable only through a motive's redex does not depend on it
+    let body := betaDeep body
     if ← isProp dom then
-      if body.hasLooseBVars then throwError "derive: a formula depends on a proof"
+      if body.hasLooseBVars then throwError "derive: a formula depends on a proof: {cur}"
       let (ga, da) ← interp a
       let A ← quoteF dom
       let da ← coerce da ga A
@@ -1351,6 +1532,7 @@ partial def citeTheorem (t thm : Expr) : TrM (Expr × Expr) := do
   let thmTy ← instantiateMVars (← inferType thm)
   let some S₀ := thmTy.getAppArgs[2]?
     | throwError "derive: internal error, a citation of{indentExpr thm}\nwhich is not a theorem"
+  let thm ← liftLogical thm
   let d ← rule ``Classicism.Meta.Derivable.ofTheorem #[Γ, Δ, S₀, thm]
   -- a theorem cited at a constructor type has its operations there unfolded, by δ in
   -- the empty context, carried into this one by renaming
@@ -1415,7 +1597,7 @@ partial def translateGeneric (c : Name) (ls : List Level) (name : Name) : TrM Un
           withLocalDeclD ((← x.fvarId!.getUserName).appendAfter "'") tyOfKind fun tv =>
             go (i + 1) ((x.fvarId!, kind, tv) :: tyVars) (tvs.push tv)
       else
-        withReader (fun c => { c with q := { tyVars := tyVars }, hyps := [], ihs := [] }) <| withCaches do
+        withReader (fun c => { c with q := { tyVars := tyVars }, hyps := [], ihs := [], logicalDepth := 0 }) <| withCaches do
           let S ← quoteF stmt
           let (got, d) ← interp val
           let d ← coerce d got S
@@ -1485,7 +1667,7 @@ partial def specializeUnderIH (c : Name) (ls : List Level) (params : Array Expr)
   let body := (((info.value! (allowOpaque := true)).instantiateLevelParams info.levelParams ls).beta params).headBeta
   let stmt ← instantiateForall info.type params
   modify fun s => { s with specs := s.specs.insert keyS }
-  let (ty, val) ← withReader (fun c => { c with q := { c.q with objVars := [] }, hyps := [] }) <| withCaches do
+  let (ty, val) ← withReader (fun c => { c with q := { c.q with objVars := [] }, hyps := [], logicalDepth := 0 }) <| withCaches do
     let S ← quoteF stmt
     let (got, d) ← interp body
     let d ← coerce d got S
@@ -1523,11 +1705,15 @@ partial def ensureFieldInduction (cls : Name) (i : Nat) : TrM Name := do
   trace s!"  deriving {cls ++ field} by induction on the type"
   let rtyE : Expr := Lean.mkConst ``Classicism.Meta.RTy
   let fresh (q : QCtx) (ihs : List (FVarId × Nat × Expr)) : TCtx → TCtx :=
-    fun c => { c with q := q, hyps := [], ihs := ihs }
+    fun c => { c with q := q, hyps := [], ihs := ihs, logicalDepth := 0 }
   -- the law as a sentence, a function of the object type
   let projTy := (← getConstInfo (cls ++ field)).type
+  let some pinfo ← getProjectionFnInfo? (cls ++ field)
+    | throwError "derive: {cls ++ field} is not a projection"
   let (motive, S) ← withLocalDeclD `τ' rtyE fun tv => do
-    forallTelescope projTy fun xs stmt => do
+    -- only the class's parameters and the instance: the law's own binders stay in the
+    -- statement, as the quantifiers they are
+    forallBoundedTelescope projTy (some (pinfo.numParams + 1)) fun xs stmt => do
       let τ := xs[0]!
       let q : QCtx := { tyVars := [(τ.fvarId!, .rty, tv)] }
       let S ← withReader (fresh q []) (withCaches (quoteF stmt))
@@ -1615,15 +1801,17 @@ syntax (name := classicismDerive) "#classicism_derive " ident+ : command
   for id in stx[1].getArgs do
     let n ← liftCoreM (realizeGlobalConstNoOverloadWithInfo id)
     try
-      withScope (fun sc => { sc with opts := maxHeartbeats.set sc.opts 0 }) (liftTermElabM (derive n))
-      let ty := (← getConstInfo (n ++ `derivable)).type
+      let env ← getEnv
+      unless env.contains (n ++ `derivable) || env.contains (n ++ `derivableC) do
+        withScope (fun sc => { sc with opts := maxHeartbeats.set sc.opts 0 }) (liftTermElabM (derive n))
+      let dn := if (← getEnv).contains (n ++ `derivable) then n ++ `derivable else n ++ `derivableC
+      let ty := (← getConstInfo dn).type
       let inC := ty.find? (·.isConstOf ``Classicism.Meta.C.axioms) |>.isSome
-      logInfo m!"{n} ⟶ {n ++ `derivable} : {ty}\nderived ✓ in {if inC then "C" else "C⁻"}"
+      logInfo m!"{n} ⟶ {dn} : {ty}\nderived ✓ in {if inC then "C" else "C⁻"}"
     catch ex =>
       logError m!"{n}: not derived — {ex.toMessageData}"
 
-/-- `#classicism_derive_audit Mod …` derives every theorem of the modules whose name ends
-in `strict`, and reports. -/
+/-- `#classicism_derive_audit Mod …` derives every theorem of the modules, and reports. -/
 syntax (name := classicismDeriveAudit) "#classicism_derive_audit " ident+ : command
 
 @[command_elab classicismDeriveAudit] def elabDeriveAudit : CommandElab := fun stx => do
@@ -1635,7 +1823,9 @@ syntax (name := classicismDeriveAudit) "#classicism_derive_audit " ident+ : comm
     for (n, ci) in env.constants.toList do
       if env.getModuleIdxFor? n == some idx then
         if let .thmInfo _ := ci then
-          if n.components.getLast? == some `strict then names := names.push n
+          -- a class field is derived by induction on the type, on demand, not on its own
+          unless n.isInternal || (← liftTermElabM (getProjectionFnInfo? n)).isSome do
+            names := names.push n
     names := names.qsort (fun a b => a.toString < b.toString)
     let mut ok : Nat := 0
     let mut failures : Array MessageData := #[]
@@ -1652,7 +1842,9 @@ syntax (name := classicismDeriveAudit) "#classicism_derive_audit " ident+ : comm
       i := i + 1
       let t₀ ← IO.monoMsNow
       let line ← try
-          liftTermElabM (derive n)
+          let env ← getEnv
+          unless env.contains (n ++ `derivable) || env.contains (n ++ `derivableC) do
+            liftTermElabM (derive n)
           ok := ok + 1
           pure s!"[{i}/{names.size}] {n} ✓ {(← IO.monoMsNow) - t₀} ms"
         catch ex =>
@@ -1660,7 +1852,7 @@ syntax (name := classicismDeriveAudit) "#classicism_derive_audit " ident+ : comm
           pure s!"[{i}/{names.size}] {n} ✗ {(← IO.monoMsNow) - t₀} ms"
       times := times.push line
       report line
-    logInfo m!"{modId.getId}: {ok} of {names.size} strict theorems derived\n\
+    logInfo m!"{modId.getId}: {ok} of {names.size} theorems derived\n\
 {MessageData.joinSep failures.toList "\n"}\n{"\n".intercalate times.toList}"
 
 end Classicism.Meta.Translate

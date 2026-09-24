@@ -195,8 +195,9 @@ partial def quoteTerm (e : Expr) : QM (TSyntax `term) := do
     | (``False, #[]) => `(Classicism.Meta.Term.bot)
     | (``Classicism.Strict.everything, #[]) =>
       `(Classicism.Meta.Term.forall' (σ := Classicism.Meta.Ty.t) Classicism.Meta.Term.v0)
-    | (``Classicism.Strict.Box, #[a]) => do `(Classicism.Meta.Term.box $(← quoteTerm a))
-    | (``Classicism.Strict.Dia, #[a]) => do `(Classicism.Meta.Term.dia $(← quoteTerm a))
+    | (``Classicism.Strict.Box, #[a]) | (``Classicism.Box, #[a]) => do `(Classicism.Meta.Term.box $(← quoteTerm a))
+    | (``Classicism.Strict.Dia, #[a]) | (``Classicism.Dia, #[a]) => do `(Classicism.Meta.Term.dia $(← quoteTerm a))
+    | (``Iff, #[a, b]) => do `(Classicism.Meta.Term.iff $(← quoteTerm a) $(← quoteTerm b))
     | (``Eq, #[α, a, b]) => do
       let σs ← exprToSyntax (← quoteTy α)
       `(Classicism.Meta.Term.eq' (σ := $σs) $(← quoteTerm a) $(← quoteTerm b))
@@ -210,6 +211,13 @@ partial def quoteTerm (e : Expr) : QM (TSyntax `term) := do
       -- `∃ F` with `F` not a lambda: `∃σ F`
       let σs ← exprToSyntax (← quoteTy α)
       `(Classicism.Meta.Term.app (Classicism.Meta.Term.ex $σs) $(← quoteTerm F))
+    | (``Classicism.Rel.constP, #[τ, _, p]) => relOp e τ ``Classicism.Meta.Term.constR #[p]
+    | (``Classicism.Rel.neg, #[τ, _, X]) => relOp e τ ``Classicism.Meta.Term.negR #[X]
+    | (``Classicism.Rel.and, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.andR #[X, Y]
+    | (``Classicism.Rel.or, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.orR #[X, Y]
+    | (``Classicism.Rel.coext, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.coextR #[X, Y]
+    | (``Classicism.Rel.boxAt, #[τ, _, X]) => relOp e τ ``Classicism.Meta.Term.boxR #[X]
+    | (``Classicism.Rel.boxImp, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.boxImpR #[X, Y]
     | (``Classicism.Strict.SRel.constP, #[τ, _, p]) => relOp e τ ``Classicism.Meta.Term.constR #[p]
     | (``Classicism.Strict.SRel.neg, #[τ, _, X]) => relOp e τ ``Classicism.Meta.Term.negR #[X]
     | (``Classicism.Strict.SRel.and, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.andR #[X, Y]
@@ -280,23 +288,44 @@ partial def quoteTerm (e : Expr) : QM (TSyntax `term) := do
 
 end
 
-/-- Reflection for a statement with a relational operation at a type variable: unfold the
-denotation and read each operation back through its lemma. -/
-macro "reflect_by_rewriting" : tactic => `(tactic|
-  (intros
-   simp only [Classicism.Meta.Sentence.holds, Classicism.Meta.Term.denote,
-     Classicism.Meta.Var.denote, Classicism.Meta.RTy.constD_eq,
-     Classicism.Meta.RTy.negD_eq, Classicism.Meta.RTy.andD_eq,
-     Classicism.Meta.RTy.orD_eq, Classicism.Meta.RTy.coextD_eq,
-     Classicism.Meta.RTy.boxD_eq, Classicism.Meta.RTy.boxImpD_eq,
-     Classicism.Meta.Term.denote_weaken, Classicism.imp, Classicism.iff,
-     Classicism.Strict.Top, Classicism.Strict.Bot, Classicism.Strict.Box, Classicism.Strict.Dia,
-     Classicism.Strict.everything, Classicism.Strict.SRel.top, Classicism.Strict.SRel.bot,
-     Classicism.Strict.SRel.le]
-   -- what remains differs only by unfolding the readings of types, `⟦t⟧` to `Prop`
-   try rfl))
+/-- The simp set for reflection of a shallow statement: the readings of the syntax, the
+readings of the type-subscripted operations as the shallow classes' operations (by the
+lemmas of `Meta/Relational.lean`), and the shallow connectives' identifications with the
+object readings. Definitions of the shallow layer that the statement uses are added per
+statement by `reflectDefs`. -/
+def reflectSimpSet : Array Name :=
+  #[``Classicism.Meta.Sentence.holds, ``Classicism.Meta.Term.denote, ``Classicism.Meta.Var.denote,
+    ``Classicism.Meta.RTy.constD_eq_rel, ``Classicism.Meta.RTy.negD_eq_rel,
+    ``Classicism.Meta.RTy.andD_eq_rel, ``Classicism.Meta.RTy.orD_eq_rel,
+    ``Classicism.Meta.RTy.coextD_eq_rel, ``Classicism.Meta.RTy.boxD_eq_rel,
+    ``Classicism.Meta.RTy.boxImpD_eq_rel, ``Classicism.Meta.Term.denote_weaken,
+    ``Classicism.imp, ``Classicism.iff, ``Classicism.Box, ``Classicism.Dia,
+    ``Classicism.Rel.top, ``Classicism.Rel.bot, ``Classicism.Rel.le,
+    ``Classicism.Meta.top_eq, ``Classicism.Meta.bot_eq, ``Classicism.Meta.imp_eq,
+    ``Classicism.Meta.iff_eq, ``Classicism.Meta.iff_eq', ``Classicism.Meta.box_eq]
 
-/-! ### The command -/
+/-- The definitions of this library that a statement uses, transitively through their
+bodies: what reflection must unfold on the statement's side. Instances are included,
+since an operation at a concrete type reads through its instance; theorems are not. -/
+partial def reflectDefs (e : Expr) : MetaM (Array Name) := do
+  let env ← getEnv
+  let mut seen : NameSet := {}
+  let mut out : Array Name := #[]
+  let mut todo := e.getUsedConstants.toList
+  while !todo.isEmpty do
+    let c := todo.head!
+    todo := todo.tail!
+    if seen.contains c then continue
+    seen := seen.insert c
+    unless (`Classicism).isPrefixOf c && !(`Classicism.Meta).isPrefixOf c do continue
+    match env.find? c with
+    | some (.defnInfo v) =>
+      out := out.push c
+      todo := v.value.getUsedConstants.toList ++ todo
+    | _ => pure ()
+  return out
+
+/-! ### The command -//-! ### The command -/
 
 /-- The `Ty` marker instance at a type. -/
 private def tyMk (σ : Expr) : Expr :=
@@ -319,7 +348,8 @@ def quoteStatement (ty : Expr) : TermElabM (Expr × Expr × Expr) := do
       else if let some cls := (← isClass? t) then
         let σ := t.getAppArgs[0]!
         if cls == ``Classicism.Ty then pure ()
-        else if cls == ``Classicism.RelTy || cls == ``Classicism.Strict.SRel
+        else if cls == ``Classicism.RelTy || cls == ``Classicism.Rel || cls == ``Classicism.Order
+            || cls == ``Classicism.Pointwise || cls == ``Classicism.Strict.SRel
             || cls == ``Classicism.Strict.SOrder || cls == ``Classicism.Strict.SPointwise then
           -- a relational guard on a parameter makes it a relational-type variable
           if let some idx := kinds.findIdx? (·.1 == σ) then kinds := kinds.set! idx (σ, .rty)
@@ -376,7 +406,13 @@ def quoteStatement (ty : Expr) : TermElabM (Expr × Expr × Expr) := do
                     pure (mkApp2 (mkConst ``Classicism.Meta.instSRelDenote) D ρ)
                   else if cls == ``Classicism.Strict.SPointwise then
                     pure (mkApp2 (mkConst ``Classicism.Meta.instSPointwiseDenote) D ρ)
-                  else pure (mkApp2 (mkConst ``Classicism.Meta.instSOrderDenote) D ρ)
+                  else if cls == ``Classicism.Strict.SOrder then
+                    pure (mkApp2 (mkConst ``Classicism.Meta.instSOrderDenote) D ρ)
+                  else if cls == ``Classicism.Rel then
+                    pure (mkApp2 (mkConst ``Classicism.Meta.instRelDenote) D ρ)
+                  else if cls == ``Classicism.Order then
+                    pure (mkApp2 (mkConst ``Classicism.Meta.instOrderDenote) D ρ)
+                  else pure (mkApp2 (mkConst ``Classicism.Meta.instPointwiseDenote) D ρ)
             rhs := b.instantiate1 arg
           let eq ← mkEq lhs rhs
           let reflectTy ← mkForallFVars tvs eq
@@ -387,7 +423,10 @@ def quoteStatement (ty : Expr) : TermElabM (Expr × Expr × Expr) := do
             if ← withReducible (pure ()) *> isDefEq lhs rhs then
               mkLambdaFVars tvs (← mkEqRefl lhs)
             else
-              let stx ← `(by reflect_by_rewriting)
+              let defs ← reflectDefs rhs
+              let lemmas ← (reflectSimpSet ++ defs).mapM fun n =>
+                `(Lean.Parser.Tactic.simpLemma| $(mkIdent n):ident)
+              let stx ← `(by intros; simp only [$lemmas,*]; try rfl)
               let v ← Term.withoutErrToSorry do
                 let v ← elabTermEnsuringType stx (some reflectTy)
                 synthesizeSyntheticMVarsNoPostponing

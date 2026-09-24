@@ -25,12 +25,12 @@ None of the three is a theorem of Classicism, so none may be used freely.
 | layer | what it does | where |
 | --- | --- | --- |
 | **shallow** | states and proves theorems of Classicism in ordinary Lean, under a *gate* admitting `propext` and `funext` only with closed arguments | `Core` to `Proofs` |
-| **strict** | re-proves every theorem from the eleven closed identities alone, by a transformer carrying out Appendix A on Lean proof terms | `Axiomatization` to `Transformed` |
-| **metalogical** | makes the object language, its derivations and its models into objects of Lean, for statements *about* Classicism | `Meta/`, with its own README |
+| **metalogical** | makes the object language, its derivations and its models into objects of Lean, for statements *about* Classicism; its translator turns a gated shallow proof into a kernel-checked derivation of the object language | `Meta/`, with its own README |
+| **strict** | re-proves every theorem from the eleven closed identities alone, by a transformer carrying out Appendix A on Lean proof terms; the exploration of how the paper's type system sits inside Lean's, no longer on the route to certification (24 September 2026) | `Axiomatization` to `Transformed` |
 
-Each is held to what it claims by a check that runs at build time. Everything the shallow
-layer certifies is within the strict layer's reach, by design: no statement quantifies
-over types, so every theorem is a formula of the paper's language with type parameters.
+Each is held to what it claims by a check that runs at build time. No statement quantifies
+over types, so every theorem is a formula of the paper's language with type parameters,
+which is what lets the metalogical layer read it.
 
 Lean's remaining rules for `→`, `∀`, `∧`, `∨`, `¬`, `↔`, `∃`, `=`, `True` and `False` are the
 rules of the paper's `H`, short of two things, which this library adds as axioms:
@@ -455,18 +455,18 @@ Classicism/Transformed.lean     the transformer run over the library; home of fo
 Classicism/Meta/Types.lean      metalogical layer: the types of R as an inductive
 Classicism/Meta/Term.lean       intrinsically typed de Bruijn terms; renaming, substitution
 Classicism/Meta/Conversion.lean β, η, one-step and equivalence closures; ≡
-Classicism/Meta/Derivation.lean derivability in H plus an axiom set, natural-deduction form
-Classicism/Meta/Axioms.lean     the eleven identities as sentences; C and C⁻ as axiom sets
+Classicism/Meta/Derivation.lean derivability in H closed under Subst, plus an axiom set; terms with a hole
+Classicism/Meta/Axioms.lean     C and C⁻ as theories; the eleven identities as sentences
 Classicism/Meta/Denotation.lean the standard model in Prop; soundness; C is consistent
 Classicism/Meta/Examples.lean   small computed checks, derivations, and reflection by rfl
 Classicism/Meta/Relational.lean the readings of ∧_τ, ¬_τ, coext and the rest are the strict layer's
 Classicism/Meta/Quote.lean      the quoter: strict statements as sentences, reflection checked
-Classicism/Meta/Quoted.lean     the quoter run over the library; home of foo.strict.quoted
+Classicism/Meta/Quoted.lean     the quoter run over the record theorems; home of foo.quoted
 Classicism/Meta/Normalize.lean  a verified βη-normalizer; conversion by reflection
-Classicism/Meta/Translate.lean  the translator: strict proofs to derivations
+Classicism/Meta/Translate.lean  the translator: gated shallow proofs to derivations
 Classicism/Meta/Derived.lean    two derivations checked at build time
 Classicism/Meta/Schema.lean     principles as schemas; records as entailments and as rules; #classicism_certify
-Classicism/Meta/Atomicity.lean  a metalogical proof with object-level steps: Atomicity (t) and BF imply Atomicity (not in the build; see its header)
+Classicism/Meta/Atomicity.lean  a metalogical proof with object-level steps: Atomicity (t) and BF imply Atomicity
 Classicism/Modal.lean           K, T, 4, NI, CBF, Intensionality and its corollaries
 Classicism/Order.lean           the algebraic order and its pointwise characterisation
 Classicism/Comprehension.lean   persistence, inextensibility and the rigidity variants

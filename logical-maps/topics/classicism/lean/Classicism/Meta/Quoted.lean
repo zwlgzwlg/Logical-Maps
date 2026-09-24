@@ -1,18 +1,15 @@
 import Classicism.Meta.Quote
-import Classicism.Transformed
+import Classicism.Proofs
 
 /-!
-# The library, quoted
+# The record theorems, quoted
 
-Every strict statement of the library, quoted into the object language and checked by
-reflection: for each `foo.strict : p` that the quoter reaches, `foo.strict.quoted` is the
-sentence and `foo.strict.reflect` is the kernel-checked `rfl` that reading it back gives
-`p`. This is the one home of those declarations, as `Classicism/Transformed.lean` is for
-the transformer's.
-
-The report lists any statement not reached, with the reason. Today every statement is
-reached: a relational operation at a type variable becomes the corresponding operation of
-`Meta/Relational.lean`, and reflection there is by rewriting rather than `rfl`.
+Every record theorem of `Classicism/Proofs.lean`, quoted into the object language and
+checked by reflection: for each `foo : p` that the quoter reaches, `foo.quoted` is the
+sentence and `foo.reflect` the kernel-checked proof that reading it back gives `p`, by
+`rfl` where the reading is definitional and by rewriting where a relational operation
+sits at a type variable or the shallow connectives are read (`Meta/Relational.lean`).
+This is the one home of those declarations.
 -/
 
-#classicism_quote_audit Classicism.Transformed Classicism.Mirror
+#classicism_quote_audit Classicism.Proofs

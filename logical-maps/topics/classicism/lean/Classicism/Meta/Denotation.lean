@@ -35,6 +35,10 @@ mutual
     | .arr σ ρ => σ.denote D → ρ.denote D
 end
 
+-- Reducible, so that `⟦t⟧` *is* `Prop` to instance search and to `simp`'s matching: the
+-- reflection of a shallow statement rewrites `¬p ∨ q` to `p → q` under binders of type `⟦t⟧`.
+attribute [reducible] Ty.denote RTy.denote
+
 /-- An environment: a value for each variable of the context, innermost first. An
 inductive family rather than nested pairs, so that its type is always literally
 `Env D Γ`. -/
@@ -179,7 +183,6 @@ theorem Term.denote_rename (I : Interp Sig) :
   | _, _, _, _, .coextR _, _ | _, _, _, _, .boxR _, _ | _, _, _, _, .boxImpR _, _ => rfl
   | _, _, r, _, .app f a, env => by
     simp only [Term.rename_app, Term.denote, Term.denote_rename I r f, Term.denote_rename I r a]
-    rfl
   | _, _, r, _, .lam b, env => by
     simp only [Term.rename_lam, Term.denote]
     funext x
@@ -241,7 +244,6 @@ theorem Term.denote_subst (I : Interp Sig) :
   | _, _, _, _, .coextR _, _ | _, _, _, _, .boxR _, _ | _, _, _, _, .boxImpR _, _ => rfl
   | _, _, s, _, .app f a, env => by
     simp only [Term.subst_app, Term.denote, Term.denote_subst I s f, Term.denote_subst I s a]
-    rfl
   | _, _, s, _, .lam b, env => by
     simp only [Term.subst_lam, Term.denote]
     funext x
@@ -330,19 +332,36 @@ theorem Hyps.holds_weaken (I : Interp Sig) {Γ : Ctx} {σ : Ty} (Δ : List (Form
   exact Eq.mp (congrArg (fun q => Term.denote I q (.cons x env)) e)
     (Eq.mpr (Formula.denote_weaken I q' x env) (h q' hq'))
 
+/-- Filling a hole with terms of the same value gives terms of the same value. -/
+theorem Hole.plug_denote_congr (I : Interp Sig) : ∀ {Γ Γ' : Ctx} {σ τ : Ty} (K : Hole Sig Γ σ Γ' τ)
+    {a b : Term Sig Γ' τ}, (∀ env', a.denote I env' = b.denote I env') →
+    ∀ env : Env I.D Γ, (K.plug a).denote I env = (K.plug b).denote I env
+  | _, _, _, _, .hole, _, _, e, env => e env
+  | _, _, _, _, .appL K c, a, b, e, env => by
+    show (K.plug a).denote I env (c.denote I env) = (K.plug b).denote I env (c.denote I env)
+    rw [plug_denote_congr I K e env]
+  | _, _, _, _, .appR f K, a, b, e, env => by
+    show f.denote I env ((K.plug a).denote I env) = f.denote I env ((K.plug b).denote I env)
+    rw [plug_denote_congr I K e env]
+  | _, _, _, _, .lam K, a, b, e, env => by
+    show (fun x => (K.plug a).denote I (.cons x env)) = (fun x => (K.plug b).denote I (.cons x env))
+    funext x
+    exact plug_denote_congr I K e (.cons x env)
+
 /-- **Soundness.** A derivation from hypotheses true in an environment, in a theory whose
 axioms hold in the interpretation, has a true conclusion. -/
-theorem Derivable.sound (I : Interp Sig) {Ax : AxiomSet Sig} (hAx : Ax.holds I) :
+theorem Derivable.sound (I : Interp Sig) :
+    ∀ {Ax : AxiomSet Sig}, Ax.holds I →
     ∀ {Γ : Ctx} {Δ : List (Formula Sig Γ)} {p : Formula Sig Γ}, Derivable Ax Δ p →
       ∀ env : Env I.D Γ, Hyps.holds I Δ env → p.denote I env
-  | _, _, _, .hyp h, _, hΔ => hΔ _ h
-  | _, _, _, .ax h, env, _ => by rw [Term.denote_close]; exact hAx _ h
-  | _, _, _, .andI h₁ h₂, env, hΔ => ⟨sound I hAx h₁ env hΔ, sound I hAx h₂ env hΔ⟩
-  | _, _, _, .andE₁ h, env, hΔ => (sound I hAx h env hΔ).1
-  | _, _, _, .andE₂ h, env, hΔ => (sound I hAx h env hΔ).2
-  | _, _, _, .orI₁ h, env, hΔ => Or.inl (sound I hAx h env hΔ)
-  | _, _, _, .orI₂ h, env, hΔ => Or.inr (sound I hAx h env hΔ)
-  | _, _, _, .orE h h₁ h₂, env, hΔ =>
+  | _, hAx, _, _, _, .hyp h, _, hΔ => hΔ _ h
+  | _, hAx, _, _, _, .ax h, env, _ => by rw [Term.denote_close]; exact hAx _ h
+  | _, hAx, _, _, _, .andI h₁ h₂, env, hΔ => ⟨sound I hAx h₁ env hΔ, sound I hAx h₂ env hΔ⟩
+  | _, hAx, _, _, _, .andE₁ h, env, hΔ => (sound I hAx h env hΔ).1
+  | _, hAx, _, _, _, .andE₂ h, env, hΔ => (sound I hAx h env hΔ).2
+  | _, hAx, _, _, _, .orI₁ h, env, hΔ => Or.inl (sound I hAx h env hΔ)
+  | _, hAx, _, _, _, .orI₂ h, env, hΔ => Or.inr (sound I hAx h env hΔ)
+  | _, hAx, _, _, _, .orE h h₁ h₂, env, hΔ =>
     (sound I hAx h env hΔ).elim
       (fun hp => sound I hAx h₁ env (fun q hq => by
         rcases List.mem_cons.1 hq with rfl | hq
@@ -352,18 +371,18 @@ theorem Derivable.sound (I : Interp Sig) {Ax : AxiomSet Sig} (hAx : Ax.holds I) 
         rcases List.mem_cons.1 hq with rfl | hq
         · exact hq'
         · exact hΔ q hq))
-  | _, _, _, .notI h₁ h₂, env, hΔ => fun hp =>
+  | _, hAx, _, _, _, .notI h₁ h₂, env, hΔ => fun hp =>
     have hΔ' : Hyps.holds I (_ :: _) env := fun q hq => by
       rcases List.mem_cons.1 hq with rfl | hq
       · exact hp
       · exact hΔ q hq
     sound I hAx h₂ env hΔ' (sound I hAx h₁ env hΔ')
-  | _, _, _, .notE h₁ h₂, env, hΔ => absurd (sound I hAx h₁ env hΔ) (sound I hAx h₂ env hΔ)
-  | _, _, _, .em p, env, _ => Classical.em (p.denote I env)
-  | _, _, _, .allE h a, env, hΔ => sound I hAx h env hΔ (a.denote I env)
-  | _, _, _, .allI h, env, hΔ => fun x => sound I hAx h (.cons x env) (Hyps.holds_weaken I _ x env hΔ)
-  | _, _, _, .exI a h, env, hΔ => ⟨a.denote I env, sound I hAx h env hΔ⟩
-  | _, _, _, .exE (F := F) (r := r) h h', env, hΔ => by
+  | _, hAx, _, _, _, .notE h₁ h₂, env, hΔ => absurd (sound I hAx h₁ env hΔ) (sound I hAx h₂ env hΔ)
+  | _, hAx, _, _, _, .em p, env, _ => Classical.em (p.denote I env)
+  | _, hAx, _, _, _, .allE h a, env, hΔ => sound I hAx h env hΔ (a.denote I env)
+  | _, hAx, _, _, _, .allI h, env, hΔ => fun x => sound I hAx h (.cons x env) (Hyps.holds_weaken I _ x env hΔ)
+  | _, hAx, _, _, _, .exI a h, env, hΔ => ⟨a.denote I env, sound I hAx h env hΔ⟩
+  | _, hAx, _, _, _, .exE (F := F) (r := r) h h', env, hΔ => by
     obtain ⟨x, hx⟩ := sound I hAx h env hΔ
     have := sound I hAx h' (.cons x env) (fun q hq => by
       rcases List.mem_cons.1 hq with rfl | hq
@@ -371,14 +390,21 @@ theorem Derivable.sound (I : Interp Sig) {Ax : AxiomSet Sig} (hAx : Ax.holds I) 
         exact Eq.mpr (congrFun (Term.denote_weaken I F x env) _) hx
       · exact Hyps.holds_weaken I _ x env hΔ q hq)
     exact Eq.mp (Formula.denote_weaken I r x env) this
-  | _, _, _, .refl a, _, _ => rfl
-  | _, _, _, .subst (a := a) (b := b) F h₁ h₂, env, hΔ => by
+  | _, hAx, _, _, _, .refl a, _, _ => rfl
+  | _, hAx, _, _, _, .ll (a := a) (b := b) F h₁ h₂, env, hΔ => by
     have e : a.denote I env = b.denote I env := sound I hAx h₁ env hΔ
     have h : F.denote I env (a.denote I env) := sound I hAx h₂ env hΔ
     show F.denote I env (b.denote I env)
     rw [← e]; exact h
-  | _, _, _, .conv h c, env, hΔ => by
+  | _, hAx, _, _, _, .conv h c, env, hΔ => by
     rw [← Conv.denote I c env]; exact sound I hAx h env hΔ
+  | Ax, hAx, _, _, _, .subst (P := P) (Q := Q) K h₁ h₂ h₃, env, hΔ => by
+    have hL : AxiomSet.holds I Ax.logical := fun a ha => hAx a ha.1
+    have e : ∀ env', P.denote I env' = Q.denote I env' := fun env' => propext
+      ⟨fun hp => sound I hL h₁ env' (fun q hq => by rw [List.mem_singleton.1 hq]; exact hp),
+       fun hq => sound I hL h₂ env' (fun q hq' => by rw [List.mem_singleton.1 hq']; exact hq)⟩
+    rw [← Hole.plug_denote_congr I K e env]
+    exact sound I hAx h₃ env hΔ
 
 /-- A theorem of a theory holds in every model of the theory. -/
 theorem Theorem.holds (I : Interp Sig) {Ax : AxiomSet Sig} (hAx : Ax.holds I) {p : Sentence Sig}
@@ -392,13 +418,15 @@ theorem AxiomSet.Entails.holds (I : Interp Sig) (hC : C.axioms.holds I) {Ax₁ A
 
 /-! ### `Prop` is a model of Classicism
 
-Each of the eleven identities is true when read in `Prop`: the two sides denote functions
-that agree at every argument by a propositional or quantifier equivalence, so `propext`
-and `funext` identify them. Existence at `e` needs the domain inhabited. -/
+Existence at `e` needs the domain inhabited; that is all `C.axioms` asks. The eleven
+identities are true in `Prop` too: the two sides denote functions that agree at every
+argument by a propositional or quantifier equivalence, so `propext` and `funext` identify
+them. That they are theorems of `C` makes this a corollary of soundness; it is kept as a
+direct check. -/
 
 namespace C
 
-theorem axiomsMinus_holds (I : Interp Sig) : C.axiomsMinus.holds I := by
+theorem identities_holds (I : Interp Sig) : C.identities.holds I := by
   intro a h
   cases h with
   | commutativity_and =>
@@ -441,11 +469,9 @@ theorem axiomsMinus_holds (I : Interp Sig) : C.axiomsMinus.holds I := by
 
 theorem axioms_holds (I : Interp Sig) [Nonempty I.D] : C.axioms.holds I := by
   intro a h
-  cases h with
-  | minus h => exact axiomsMinus_holds I a h
-  | existence_e =>
-    show ∃ x : I.D, x = x
-    exact ⟨Classical.ofNonempty, rfl⟩
+  rw [show a = existence_e from h]
+  show ∃ x : I.D, x = x
+  exact ⟨Classical.ofNonempty, rfl⟩
 
 /-- A theorem of `C` holds in `Prop`, for any inhabited domain; a theorem of `C⁻`, for any
 domain. -/
@@ -455,7 +481,7 @@ theorem Theorem.holds (I : Interp Sig) [Nonempty I.D] {p : Sentence Sig} (h : C.
 
 theorem TheoremMinus.holds (I : Interp Sig) {p : Sentence Sig} (h : C.TheoremMinus p) :
     p.holds I :=
-  Meta.Theorem.holds I (axiomsMinus_holds I) h
+  Meta.Theorem.holds I (fun _ h => h.elim) h
 
 /-- **Classicism is consistent**: `⊥` is not a theorem. -/
 theorem consistent : ¬ C.Theorem (Sig := Signature.pure) Term.bot := fun h =>

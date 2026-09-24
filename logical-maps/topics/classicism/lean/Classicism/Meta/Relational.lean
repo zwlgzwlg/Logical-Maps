@@ -54,6 +54,24 @@ instance instSPointwiseDenote (D : Type) : ∀ τ : RTy,
   | .arr _ ρ =>
     @Classicism.Strict.instSPointwiseArrow _ _ ⟨()⟩ (instSRelDenote D ρ) (instSPointwiseDenote D ρ)
 
+/-! ### The shallow layer's instances, likewise -/
+
+/-- The `Rel` instance on the reading of a relational type. -/
+instance instRelDenote (D : Type) : ∀ τ : RTy, Classicism.Rel (RTy.denote D τ)
+  | .t => Classicism.instRelProp
+  | .arr _ ρ => @Classicism.instRelArrow _ _ ⟨()⟩ (instRelDenote D ρ)
+
+instance instOrderDenote (D : Type) : ∀ τ : RTy,
+    @Classicism.Order (RTy.denote D τ) (instRelDenote D τ)
+  | .t => Classicism.instOrderProp
+  | .arr _ ρ => @Classicism.instOrderArrow _ _ ⟨()⟩ (instRelDenote D ρ) (instOrderDenote D ρ)
+
+instance instPointwiseDenote (D : Type) : ∀ τ : RTy,
+    @Classicism.Pointwise (RTy.denote D τ) (instRelDenote D τ)
+  | .t => Classicism.instPointwiseProp
+  | .arr _ ρ =>
+    @Classicism.instPointwiseArrow _ _ ⟨()⟩ (instRelDenote D ρ) (instPointwiseDenote D ρ)
+
 /-! ### Reading each operation back gives the strict layer's -/
 
 open Classicism.Strict
@@ -102,6 +120,54 @@ theorem RTy.boxImpD_eq (D : Type) : ∀ τ : RTy, RTy.boxImpD D τ = @SRel.boxIm
   | .arr _ ρ => by
     funext X Y
     exact congrArg (fun r => ∀ z, r z) (funext fun z => congrFun (congrFun (RTy.boxImpD_eq D ρ) (X z)) (Y z))
+
+/-! ### And the shallow layer's
+
+The shallow `Rel` at `Prop` reads `coext` as `↔`, `boxImp` as `→` and `boxAt` as
+`□p := (p = True)`, where the recursions of `Denotation.lean`, following the object
+syntax, read them as `(¬p ∨ q) ∧ (¬q ∨ p)`, `¬p ∨ q` and `p = ⊤` with `⊤` the sentence
+`∀p.p ∨ ¬∀p.p`. The two agree by `propext`, which is what reflection of a shallow statement
+rewrites with. -/
+
+theorem top_eq : ((∀ q : Prop, q) ∨ ¬ ∀ q : Prop, q) = True :=
+  propext ⟨fun _ => trivial, fun _ => Classical.em _⟩
+theorem bot_eq : ((∀ q : Prop, q) ∧ ¬ ∀ q : Prop, q) = False :=
+  propext ⟨fun ⟨h, hn⟩ => hn h, fun h => h.elim⟩
+theorem imp_eq (p q : Prop) : (¬ p ∨ q) = (p → q) :=
+  propext ⟨fun h hp => h.elim (fun hn => absurd hp hn) id,
+    fun h => (Classical.em p).elim (fun hp => Or.inr (h hp)) Or.inl⟩
+theorem iff_eq (p q : Prop) : ((¬ p ∨ q) ∧ (¬ q ∨ p)) = (p ↔ q) := by
+  rw [imp_eq, imp_eq]; exact propext ⟨fun ⟨h₁, h₂⟩ => ⟨h₁, h₂⟩, fun h => ⟨h.1, h.2⟩⟩
+theorem box_eq (p : Prop) : (p = ((∀ q : Prop, q) ∨ ¬ ∀ q : Prop, q)) = (p = True) := by
+  rw [top_eq]
+theorem iff_eq' (p q : Prop) : ((p → q) ∧ (q → p)) = (p ↔ q) :=
+  propext ⟨fun ⟨h₁, h₂⟩ => ⟨h₁, h₂⟩, fun h => ⟨h.1, h.2⟩⟩
+
+theorem RTy.constD_eq_rel (D : Type) : ∀ τ : RTy, RTy.constD D τ = @Classicism.Rel.constP _ (instRelDenote D τ)
+  | .t => rfl
+  | .arr _ ρ => by funext p z; exact congrFun (RTy.constD_eq_rel D ρ) p
+theorem RTy.negD_eq_rel (D : Type) : ∀ τ : RTy, RTy.negD D τ = @Classicism.Rel.neg _ (instRelDenote D τ)
+  | .t => rfl
+  | .arr _ ρ => by funext X z; exact congrFun (RTy.negD_eq_rel D ρ) (X z)
+theorem RTy.andD_eq_rel (D : Type) : ∀ τ : RTy, RTy.andD D τ = @Classicism.Rel.and _ (instRelDenote D τ)
+  | .t => rfl
+  | .arr _ ρ => by funext X Y z; exact congrFun (congrFun (RTy.andD_eq_rel D ρ) (X z)) (Y z)
+theorem RTy.orD_eq_rel (D : Type) : ∀ τ : RTy, RTy.orD D τ = @Classicism.Rel.or _ (instRelDenote D τ)
+  | .t => rfl
+  | .arr _ ρ => by funext X Y z; exact congrFun (congrFun (RTy.orD_eq_rel D ρ) (X z)) (Y z)
+theorem RTy.coextD_eq_rel (D : Type) : ∀ τ : RTy, RTy.coextD D τ = @Classicism.Rel.coext _ (instRelDenote D τ)
+  | .t => by funext p q; exact iff_eq p q
+  | .arr _ ρ => by
+    funext X Y
+    exact congrArg (fun r => ∀ z, r z) (funext fun z => congrFun (congrFun (RTy.coextD_eq_rel D ρ) (X z)) (Y z))
+theorem RTy.boxD_eq_rel (D : Type) : ∀ τ : RTy, RTy.boxD D τ = @Classicism.Rel.boxAt _ (instRelDenote D τ)
+  | .t => by funext p; exact box_eq p
+  | .arr _ ρ => by funext X z; exact congrFun (RTy.boxD_eq_rel D ρ) (X z)
+theorem RTy.boxImpD_eq_rel (D : Type) : ∀ τ : RTy, RTy.boxImpD D τ = @Classicism.Rel.boxImp _ (instRelDenote D τ)
+  | .t => by funext p q; exact imp_eq p q
+  | .arr _ ρ => by
+    funext X Y
+    exact congrArg (fun r => ∀ z, r z) (funext fun z => congrFun (congrFun (RTy.boxImpD_eq_rel D ρ) (X z)) (Y z))
 
 namespace Term
 

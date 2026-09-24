@@ -55,43 +55,51 @@ theorem mem_ofFamily {ι : Sort u} (P : ι → Sentence Sig) (i : ι) : ofFamily
 
 end AxiomSet
 
+/-- The logical part of `C` with any axioms is `C`. -/
+theorem C.logical_union (Ax : AxiomSet Sig) : ∀ a, (C.axioms ∪ Ax).logical a ↔ C.axioms a :=
+  fun _ => ⟨fun h => h.2, fun h => ⟨Or.inl h, h⟩⟩
+
 /-! ### Replacing axioms by their derivations -/
 
 namespace Derivable
 
-variable {Ax : AxiomSet Sig}
-
 /-- A derivation from axioms each of which is a theorem of another set is a derivation
-from that set: `mono`, with derivations in place of axioms. The closed derivation of an
-axiom is renamed into the context and weakened. -/
-theorem replaceAx {Ax' : AxiomSet Sig} (hA : ∀ a, Ax a → Theorem Ax' a) :
+from that set: `mono`, with derivations in place of axioms, provided the logical part
+of the one set is included in the other's, for Subst's premises. The closed derivation
+of an axiom is renamed into the context and weakened. -/
+theorem replaceAx : ∀ {Ax Ax' : AxiomSet Sig}, (∀ a, Ax a → Theorem Ax' a) →
+    (∀ a, Ax.logical a → Ax'.logical a) →
     ∀ {Γ : Ctx} {Δ : List (Formula Sig Γ)} {p : Formula Sig Γ},
       Derivable Ax Δ p → Derivable Ax' Δ p
-  | _, _, _, hyp h => hyp h
-  | Γ, _, _, ax (a := a) h =>
+  | _, _, _, _, _, _, _, hyp h => hyp h
+  | _, _, hA, _, Γ, _, _, ax (a := a) h =>
     weaken (rename (Ren.ofEmpty (Γ := Γ)) (hA a h)) (List.nil_subset _)
-  | _, _, _, andI h₁ h₂ => andI (replaceAx hA h₁) (replaceAx hA h₂)
-  | _, _, _, andE₁ h => andE₁ (replaceAx hA h)
-  | _, _, _, andE₂ h => andE₂ (replaceAx hA h)
-  | _, _, _, orI₁ h => orI₁ (replaceAx hA h)
-  | _, _, _, orI₂ h => orI₂ (replaceAx hA h)
-  | _, _, _, orE h h₁ h₂ => orE (replaceAx hA h) (replaceAx hA h₁) (replaceAx hA h₂)
-  | _, _, _, notI h₁ h₂ => notI (replaceAx hA h₁) (replaceAx hA h₂)
-  | _, _, _, notE h₁ h₂ => notE (replaceAx hA h₁) (replaceAx hA h₂)
-  | _, _, _, em p => em p
-  | _, _, _, allE h a => allE (replaceAx hA h) a
-  | _, _, _, allI h => allI (replaceAx hA h)
-  | _, _, _, exI a h => exI a (replaceAx hA h)
-  | _, _, _, exE h h' => exE (replaceAx hA h) (replaceAx hA h')
-  | _, _, _, refl a => refl a
-  | _, _, _, subst F h₁ h₂ => subst F (replaceAx hA h₁) (replaceAx hA h₂)
-  | _, _, _, conv h c => conv (replaceAx hA h) c
-/-- Cut for axiom sets: if every sentence of `Ax'` is a theorem of `Ax ∪ Ax₁`, a derivation
-from `Ax ∪ Ax'` is one from `Ax ∪ Ax₁`. -/
-theorem cut {Ax₁ Ax' : AxiomSet Sig} (hA : ∀ a, Ax' a → Theorem (Ax ∪ Ax₁) a)
-    {Γ : Ctx} {Δ : List (Formula Sig Γ)} {p : Formula Sig Γ} (h : Derivable (Ax ∪ Ax') Δ p) :
-    Derivable (Ax ∪ Ax₁) Δ p :=
-  replaceAx (fun a ha => ha.elim (fun h => Derivable.axiom (Or.inl h)) (hA a)) h
+  | _, _, hA, hL, _, _, _, andI h₁ h₂ => andI (replaceAx hA hL h₁) (replaceAx hA hL h₂)
+  | _, _, hA, hL, _, _, _, andE₁ h => andE₁ (replaceAx hA hL h)
+  | _, _, hA, hL, _, _, _, andE₂ h => andE₂ (replaceAx hA hL h)
+  | _, _, hA, hL, _, _, _, orI₁ h => orI₁ (replaceAx hA hL h)
+  | _, _, hA, hL, _, _, _, orI₂ h => orI₂ (replaceAx hA hL h)
+  | _, _, hA, hL, _, _, _, orE h h₁ h₂ => orE (replaceAx hA hL h) (replaceAx hA hL h₁) (replaceAx hA hL h₂)
+  | _, _, hA, hL, _, _, _, notI h₁ h₂ => notI (replaceAx hA hL h₁) (replaceAx hA hL h₂)
+  | _, _, hA, hL, _, _, _, notE h₁ h₂ => notE (replaceAx hA hL h₁) (replaceAx hA hL h₂)
+  | _, _, hA, hL, _, _, _, em p => em p
+  | _, _, hA, hL, _, _, _, allE h a => allE (replaceAx hA hL h) a
+  | _, _, hA, hL, _, _, _, allI h => allI (replaceAx hA hL h)
+  | _, _, hA, hL, _, _, _, exI a h => exI a (replaceAx hA hL h)
+  | _, _, hA, hL, _, _, _, exE h h' => exE (replaceAx hA hL h) (replaceAx hA hL h')
+  | _, _, hA, hL, _, _, _, refl a => refl a
+  | _, _, hA, hL, _, _, _, ll F h₁ h₂ => ll F (replaceAx hA hL h₁) (replaceAx hA hL h₂)
+  | _, _, hA, hL, _, _, _, subst C h₁ h₂ h₃ =>
+    subst C (mono hL h₁) (mono hL h₂) (replaceAx hA hL h₃)
+  | _, _, hA, hL, _, _, _, conv h c => conv (replaceAx hA hL h) c
+/-- Cut for axiom sets over Classicism: if every sentence of `Ax'` is a theorem of
+`C ∪ Ax₁`, a derivation from `C ∪ Ax'` is one from `C ∪ Ax₁`. The logical part of both
+sets is `C` itself, which is what lets Subst's premises carry over. -/
+theorem cut {Ax₁ Ax' : AxiomSet Sig} (hA : ∀ a, Ax' a → Theorem (C.axioms ∪ Ax₁) a)
+    {Γ : Ctx} {Δ : List (Formula Sig Γ)} {p : Formula Sig Γ} (h : Derivable (C.axioms ∪ Ax') Δ p) :
+    Derivable (C.axioms ∪ Ax₁) Δ p :=
+  replaceAx (fun a ha => ha.elim (fun h => Derivable.axiom (Or.inl h)) (hA a))
+    (fun a ha => (C.logical_union Ax₁ a).2 ((C.logical_union Ax' a).1 ha)) h
 
 end Derivable
 

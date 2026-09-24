@@ -41,7 +41,6 @@ open Lean Elab Command Term Meta Classicism.Meta.Quote
 `P.strict` when the transformer has made one (the twin is in the paper's vocabulary, which
 the quoter reads and reflection checks by `rfl`). -/
 def principleStatement (n : Name) : MetaM Expr := do
-  let n := if (← getEnv).contains (n ++ `strict) then n ++ `strict else n
   let info ← getConstInfo n
   forallTelescope info.type fun xs body => do
     unless body.isProp do throwError "{n} is not a principle: its type is not `Prop`"
@@ -114,10 +113,26 @@ partial def recordShapeGo (e : Expr) (acc : List Name) : MetaM (List Name × Nam
       | throwError "entails: the conclusion is not a principle:{indentExpr e}"
     pure (acc, principleOf hn)
 
-/-- Read a strict statement `imp (P₁ …) (… (Q …))` (under its parameters) into the list of
-its premises' principle names and its conclusion's. -/
-def recordShape (ty : Expr) : MetaM (List Name × Name) := do
-  forallTelescope ty fun _ body => recordShapeGo body []
+/-- Telescope the *parameters* of a statement — its leading type and instance binders —
+and hand the rest to `k`. Unlike `forallTelescope`, this stops at the first hypothesis,
+so that a record's premises `P … → … → Q …`, arrows in the shallow layer, are left in the
+body. -/
+partial def paramTelescope {α} (ty : Expr) (k : Array Expr → Expr → TermElabM α) : TermElabM α :=
+  go ty #[]
+where
+  go (e : Expr) (xs : Array Expr) : TermElabM α := do
+    match e with
+    | .forallE nm d b bi =>
+      let d' ← whnf d
+      if (d'.isSort && !d'.isProp) || (← isClass? d').isSome then
+        withLocalDecl nm bi d fun x => go (b.instantiate1 x) (xs.push x)
+      else k xs e
+    | _ => k xs e
+
+/-- Read a statement `P₁ … → … → Q …` (under its parameters) into the list of its
+premises' principle names and its conclusion's. -/
+def recordShape (ty : Expr) : TermElabM (List Name × Name) := do
+  paramTelescope ty fun _ body => recordShapeGo body []
 
 /-- The union `P₁.schema ∪ … ∪ Pₙ.schema`, or `AxiomSet.empty`. -/
 def premisesSet (ps : List Name) : MetaM Expr := do
@@ -196,7 +211,7 @@ theorem's type parameters read as the object-type variables `tvs` (the derivatio
 order). -/
 def instanceArgsOf (strictTy : Expr) (tvs : Array Expr) :
     TermElabM (Array (Array Expr) × Array Expr) := do
-  forallTelescope strictTy fun xs body => do
+  paramTelescope strictTy fun xs body => do
     let mut tyVars : List (FVarId × Quote.Kind × Expr) := []
     let mut j := 0
     for x in xs do
@@ -224,9 +239,14 @@ def instanceArgsOf (strictTy : Expr) (tvs : Array Expr) :
       return args
     let mut e := body
     let mut out : Array (Array Expr) := #[]
-    while e.isAppOfArity ``Classicism.imp 2 do
-      out := out.push (← argsOf e.getAppArgs[0]!)
-      e := e.getAppArgs[1]!
+    repeat
+      if e.isAppOfArity ``Classicism.imp 2 then
+        out := out.push (← argsOf e.getAppArgs[0]!)
+        e := e.getAppArgs[1]!
+      else if e.isArrow then
+        out := out.push (← argsOf e.bindingDomain!)
+        e := e.bindingBody!
+      else break
     return (out, ← argsOf e)
 
 /-- Convert `d : Theorem target got` into a derivation of `exp`, when the two are the same
@@ -281,8 +301,7 @@ def dischargePremises (ps : List Name) (Ps : Expr) (pargs : Array (Array Expr)) 
     else
       withLocalDeclD `a (mkApp (Lean.mkConst ``Classicism.Meta.Sentence) pureSig) fun a =>
       withLocalDeclD `h (mkApp Ax a) fun h => do
-        let m ← mkAppM ``Classicism.Meta.C.axioms.minus #[h]
-        mkLambdaFVars #[a, h] (← mkAppOptM ``Or.inl #[mkApp (mkApp axioms pureSig) a, mkApp Ps a, m])
+        mkLambdaFVars #[a, h] (← mkAppOptM ``False.elim #[← mkAppM ``Union.union #[mkApp axioms pureSig, Ps] <&> (mkApp · a), h])
   let mut cur ← mkAppM ``Classicism.Meta.Derivable.mono #[lift, d]
   let schemas := ps.map fun p => Lean.mkConst (p ++ `schema)
   for (p, i) in ps.zipIdx do
@@ -377,11 +396,11 @@ partial def entailsElim (ps : List Name) (Ps : Expr) (dname : Name) (strictTy : 
 
 /-- Declare `foo.entails`. -/
 def declareEntails (foo : Name) : TermElabM Unit := do
-  let info ← getConstInfo (foo ++ `strict)
+  let info ← getConstInfo foo
   let (ps, q) ← recordShape info.type
-  let dname := foo ++ `strict ++ `derivable
+  let dname := foo ++ `derivable
   let some _dinfo := (← getEnv).find? dname
-    | throwError "entails: no derivation {dname}; run `#classicism_derive {foo ++ `strict}` first"
+    | throwError "entails: no derivation {dname}; run `#classicism_derive {foo}` first"
   for p in q :: ps do
     unless (← getEnv).contains (p ++ `schema) do
       throwError "entails: no schema {p ++ `schema}; run `#classicism_schema {p}` first"
@@ -434,11 +453,11 @@ each instance written through its schema's `quoted`, so that the rule composes w
 
 /-- Declare `foo.rule`. -/
 def declareRule (foo : Name) : TermElabM Unit := do
-  let info ← getConstInfo (foo ++ `strict)
+  let info ← getConstInfo foo
   let (ps, q) ← recordShape info.type
-  let dname := foo ++ `strict ++ `derivable
+  let dname := foo ++ `derivable
   unless (← getEnv).contains dname do
-    throwError "rule: no derivation {dname}; run `#classicism_derive {foo ++ `strict}` first"
+    throwError "rule: no derivation {dname}; run `#classicism_derive {foo}` first"
   for p in q :: ps do
     unless (← getEnv).contains (p ++ `schema) do
       throwError "rule: no schema {p ++ `schema}; run `#classicism_schema {p}` first"
@@ -458,7 +477,7 @@ def declareRule (foo : Name) : TermElabM Unit := do
     let d ← if Ax.isAppOf ``Classicism.Meta.C.axioms then pure d else do
       let lift ← withLocalDeclD `a (mkApp (Lean.mkConst ``Classicism.Meta.Sentence) pureSig) fun a =>
         withLocalDeclD `h (mkApp Ax a) fun h => do
-          mkLambdaFVars #[a, h] (← mkAppM ``Classicism.Meta.C.axioms.minus #[h])
+          mkLambdaFVars #[a, h] (← mkAppOptM ``False.elim #[mkApp axiomsC a, h])
       mkAppM ``Classicism.Meta.Derivable.mono #[lift, d]
     let D ← convertDeriv axiomsC d got exp
     let thm ← mkAppM ``Classicism.Meta.Theorem #[axiomsC, exp]
@@ -481,9 +500,8 @@ syntax (name := classicismRule) "#classicism_rule " ident+ : command
       logError m!"{n}: no rule — {ex.toMessageData}"
 
 /-- `#classicism_certify foo …`: the whole chain for a theorem `foo : P₁ … → … → Q …` of
-the shallow layer, at the point where it is stated. It transforms `foo` (Appendix A, giving
-`foo.strict` from the eleven identities), makes schemas of the principles it mentions that
-have none yet, derives `foo.strict` in the object language (`foo.strict.derivable`), and
+the shallow layer, at the point where it is stated. It makes schemas of the principles it
+mentions that have none yet, derives `foo` in the object language (`foo.derivable`), and
 declares the rule `foo.rule`; each step is skipped when its declaration already exists. The
 report gives the rule and the axioms it rests on. -/
 syntax (name := classicismCertify) "#classicism_certify " ident+ : command
@@ -492,14 +510,12 @@ syntax (name := classicismCertify) "#classicism_certify " ident+ : command
   for id in stx[1].getArgs do
     let n ← liftCoreM (realizeGlobalConstNoOverloadWithInfo id)
     try
-      unless (← getEnv).contains (n ++ `strict) do
-        liftTermElabM (Classicism.Check.transform n)
-      let (ps, q) ← liftTermElabM do recordShape (← getConstInfo (n ++ `strict)).type
+      let (ps, q) ← liftTermElabM do recordShape (← getConstInfo n).type
       for p in q :: ps do
         unless (← getEnv).contains (p ++ `schema) do liftTermElabM (declareSchema p)
-      unless (← getEnv).contains (n ++ `strict ++ `derivable) do
+      unless (← getEnv).contains (n ++ `derivable) do
         withScope (fun sc => { sc with opts := maxHeartbeats.set sc.opts 0 })
-          (liftTermElabM (Translate.derive (n ++ `strict)))
+          (liftTermElabM (Translate.derive n))
       liftTermElabM (declareRule n)
       let ax ← liftTermElabM (collectAxioms (n ++ `rule))
       logInfo m!"{n} ⟶ {n ++ `rule} : {(← getConstInfo (n ++ `rule)).type}\ncertified ✓ (axioms: {ax.toList})"
@@ -534,11 +550,11 @@ syntax (name := classicismEntailsAudit) "#classicism_entails_audit " ident+ : co
     for (n, ci) in env.constants.toList do
       if env.getModuleIdxFor? n == some idx then
         if let .thmInfo _ := ci then
-          if env.contains (n ++ `strict) then
+          if !n.isInternal then
             -- a record theorem is built from the map's principles; a helper lemma is not
             let isRecord ← liftTermElabM do
               try
-                let (ps, q) ← recordShape (← getConstInfo (n ++ `strict)).type
+                let (ps, q) ← recordShape (← getConstInfo n).type
                 pure ((q :: ps).all fun p => (`Classicism.P).isPrefixOf p)
               catch _ => pure false
             if isRecord then names := names.push n else skipped := skipped.push n
@@ -549,9 +565,9 @@ syntax (name := classicismEntailsAudit) "#classicism_entails_audit " ident+ : co
     for n in names do
       let t₀ ← IO.monoMsNow
       try
-        unless (← getEnv).contains (n ++ `strict ++ `derivable) do
+        unless (← getEnv).contains (n ++ `derivable) do
           withScope (fun sc => { sc with opts := maxHeartbeats.set sc.opts 0 })
-            (liftTermElabM (Classicism.Meta.Translate.derive (n ++ `strict)))
+            (liftTermElabM (Classicism.Meta.Translate.derive n))
         liftTermElabM (declareEntails n)
         ok := ok + 1
         lines := lines.push s!"{n} ✓ {(← IO.monoMsNow) - t₀} ms : {← liftTermElabM do

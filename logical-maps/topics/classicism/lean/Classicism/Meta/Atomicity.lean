@@ -32,13 +32,10 @@ argument type at a time:
 Only the type-`t` instance of Atomicity is used, and BF only at the argument types of
 the conclusion's type, exactly as the write-up says.
 
-**Build status (24 September).** The file elaborates in full, every command succeeding
-(`lake env lean Classicism/Meta/Atomicity.lean`, twelve minutes, the rules resting on
-`propext` and `Quot.sound`), but it is not part of any library: writing its `.olean`
-does not finish in half an hour, since the module holds the derivations of the nine
-lemmas and everything they cite, and Lean's export walks each declaration's body. A
-single lemma's module writes in seconds; the whole does not. This is one of the reasons
-the certification is being moved off the strict layer (see `Meta/README.md`).
+**Build status.** Certified by the direct route (evening of 24 September): the module
+builds in eleven seconds, the rules resting on `propext` and `Quot.sound`. Through the
+strict route earlier that day the same file elaborated in twelve minutes and its `.olean`
+never finished writing; that is what led to the change of route (see `Meta/README.md`).
 -/
 
 namespace Classicism

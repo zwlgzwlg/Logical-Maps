@@ -401,9 +401,9 @@ family over the derivation's parameters when it builds them (`Existence (σ → 
 map's `existence-rel`). A record with no premise gives `empty ⟹ …`.
 `#classicism_entails_audit Classicism.Proofs` certifies every record theorem of a module,
 skipping helper lemmas, and reports; `Entailed.lean` is its home, `Derivations.lean` the
-home of the derivations it cites; the two are the library `ClassicismCertified`, built by
-`lake build ClassicismCertified` and not by `lake build`, since the derivations take half
-an hour. **All 28 record theorems certify.** These `foo.entails`
+home of the derivations it cites; both are in the default build, since the derivations
+take seconds on the direct route (they took half an hour on the strict one, and lived in a
+separate library then). **All 28 record theorems certify.** These `foo.entails`
 are what the map's arrows can cite as certificates, once the map's generator is taught
 the statement shape.
 

@@ -672,6 +672,52 @@ the strict layer: a direct translation of gated shallow proofs into `Derivable`,
 `Derivable` defined by Elimination's rule Subst and the axiom set as an index, the
 eleven identities becoming Appendix A's theorem. `Meta/README.md` has the design.
 
+## The direct route, 24 September (evening)
+
+At Cian's direction, and for a presentation the next day, the certification was moved
+off the strict layer the same evening. The tag `strict-route-final` marks the last commit
+of the old route.
+
+*Derivability.* `Derivable` (`Meta/Derivation.lean`) is now `H` closed under
+*Elimination*'s rule Subst, with the axiom set as an index and the rule's two premises at
+the logical part of that set (`AxiomSet.logical`: Existence at `e`, nothing proper to the
+theory), which is what keeps `C + BF` from proving `□BF`. The hole of Subst is a term with
+a hole, `Hole Sig Γ σ Γ' τ`, so that it may lie under binders; `Hole.plug`, composition,
+renaming and the congruence for conversion are proved, and `substEq`, substitution of
+provably identical terms at any depth, by induction on the type, gives ξ. `C.axioms` is
+the logical set; the eleven identities are `C.identities`, theorems of the system
+(commutativity of `∧` is derived by Subst in `Examples.lean`). Both soundness theorems
+carry the new rule through a plug-congruence lemma in each model (`Hole.plug_denote_congr`,
+`Premodel.sem_plug_congr`); cut for axiom sets takes the logical side condition. The
+readings of types are reducible now, so that `⟦t⟧` is `Prop` to `simp`.
+
+*Translation.* The translator reads gated shallow proofs directly: `propext` is Subst at
+`a = ⬚`, `funext` is `substEq` at `f = λv. ⬚`, cited theorems are lifted into the logical
+part inside premises, the shallow classes `Rel`, `Order`, `Pointwise` supply the type
+inductions, and the recursors of tactic proofs (`Or.casesOn`, `Exists.casesOn`,
+`And.casesOn`, `Iff.casesOn`, `False.casesOn`) and the `Iff` combinators are handled;
+point-free case branches are η-expanded. The quoter reads the shallow vocabulary, and
+reflection of a shallow statement is by rewriting with the readings of the operations as
+the shallow classes' and the identifications `(¬p ∨ q) = (p → q)` and the like
+(`Meta/Relational.lean`), unfolding the definitions the statement uses. The pipeline
+telescopes only the parameters of a statement, since a record's premises are now arrows.
+
+*Checked.* `#classicism_derive_audit` over `Modal`, `Order`, `Comprehension`,
+`Pointwise`, `Lattice` and `Proofs` derives **95 of 95 theorems, in nine seconds for the
+whole run** (the old route took eleven minutes for the strict library and half an hour
+for the records); `modal_K` and `converse_barcan` at build time (`Derived.lean`); the
+record theorems quote and reflect (`Quoted.lean`); all 29 principles quote into schemas
+from their shallow statements (`Schemas.lean`); `Atomicity.lean` certifies through
+`#classicism_certify` with no transform step (its build is reported below). The
+strict-layer modules still build and are audited as before; nothing on the route to a
+certificate uses them. Three translator gaps the shallow proofs exposed, each a few
+lines: a class-law induction must telescope only the class's parameters (the shallow
+laws have their own `∀`s where the strict mirrors held closed necessitations); a
+hypothesis binder whose codomain mentions the proof only through a motive's redex is
+not dependent (`betaDeep`); and the recursors, `Eq.subst` and the `Iff` combinators of
+tactic proofs, with point-free branches η-expanded and constants of known arity fed
+their extra arguments.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

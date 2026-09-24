@@ -452,55 +452,94 @@ theorem holdsHyps_cons {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) {Δ : List (Formula
   · exact hp
   · exact hΔ q hq
 
+/-- Filling a hole with terms of the same value at every arrow and assignment gives terms
+of the same value. -/
+theorem sem_plug_congr : ∀ {Γ Γ' : Ctx} {σ τ : Ty} (K : Hole Sig Γ σ Γ' τ) {a b : Term Sig Γ' τ},
+    (∀ {V : C} (h' : A.W₀ ⟶ V) (g' : IEnv (A.Dom V) Γ'), A.sem h' a g' = A.sem h' b g') →
+    ∀ {W : C} (h : A.W₀ ⟶ W) (g : IEnv (A.Dom W) Γ), A.sem h (K.plug a) g = A.sem h (K.plug b) g
+  | _, _, _, _, .hole, _, _, e, _, h, g => e h g
+  | _, _, _, _, .appL K c, a, b, e, _, h, g => by
+    show A.apply (A.sem h (K.plug a) g) (A.sem h c g) = A.apply (A.sem h (K.plug b) g) (A.sem h c g)
+    rw [sem_plug_congr K e h g]
+  | _, _, _, _, .appR f K, a, b, e, _, h, g => by
+    show A.apply (A.sem h f g) (A.sem h (K.plug a) g) = A.apply (A.sem h f g) (A.sem h (K.plug b) g)
+    rw [sem_plug_congr K e h g]
+  | _, _, _, _, .lam K, a, b, e, _, h, g => by
+    show (fun U i x => A.sem (h ≫ i) (K.plug a) (.cons x (A.push i g)))
+      = (fun U i x => A.sem (h ≫ i) (K.plug b) (.cons x (A.push i g)))
+    funext U i x
+    exact sem_plug_congr K e (h ≫ i) _
+
+/-- Existence at `e` holds at every arrow: the domain of individuals is nonempty. -/
+theorem existence_e_holds (M : A.IsModel) {W : C} (h : A.W₀ ⟶ W) :
+    A.Holds h (existence_e : Sentence Sig) .nil := by
+  rw [existence_e, A.holds_exists M]
+  exact ⟨Classical.choice (A.nonempty_e W), (A.holds_eq M h _ _ _).2 rfl⟩
+
+/-- The logical part of any axiom set holds at every arrow. -/
+theorem logical_holds (M : A.IsModel) (Ax : AxiomSet Sig) {W : C} (h : A.W₀ ⟶ W) :
+    ∀ a, Ax.logical a → A.Holds h a .nil := fun _ ha => by
+  rw [show _ = existence_e from ha.2]; exact A.existence_e_holds M h
+
 /-- **Soundness.** In an action model, a derivation from hypotheses holding at an arrow and
 assignment, in a theory whose axioms hold at that arrow, has a conclusion holding there. -/
-theorem sound (M : A.IsModel) {Ax : AxiomSet Sig} {W : C} (h : A.W₀ ⟶ W)
-    (hAx : ∀ a, Ax a → A.Holds h a .nil) :
+theorem sound (M : A.IsModel) :
+    ∀ {Ax : AxiomSet Sig} {W : C} (h : A.W₀ ⟶ W), (∀ a, Ax a → A.Holds h a .nil) →
     ∀ {Γ : Ctx} {Δ : List (Formula Sig Γ)} {p : Formula Sig Γ}, Derivable Ax Δ p →
       ∀ g : IEnv (A.Dom W) Γ, A.HoldsHyps h Δ g → A.Holds h p g
-  | _, _, _, .hyp hp, _, hΔ => hΔ _ hp
-  | _, _, _, .ax ha, g, _ => (A.holds_close h g _).2 (hAx _ ha)
-  | _, _, _, .andI h₁ h₂, g, hΔ =>
+  | _, _, h, hAx, _, _, _, .hyp hp, _, hΔ => hΔ _ hp
+  | _, _, h, hAx, _, _, _, .ax ha, g, _ => (A.holds_close h g _).2 (hAx _ ha)
+  | _, _, h, hAx, _, _, _, .andI h₁ h₂, g, hΔ =>
     (A.holds_conj M h g _ _).2 ⟨sound M h hAx h₁ g hΔ, sound M h hAx h₂ g hΔ⟩
-  | _, _, _, .andE₁ h₁, g, hΔ => ((A.holds_conj M h g _ _).1 (sound M h hAx h₁ g hΔ)).1
-  | _, _, _, .andE₂ h₁, g, hΔ => ((A.holds_conj M h g _ _).1 (sound M h hAx h₁ g hΔ)).2
-  | _, _, _, .orI₁ h₁, g, hΔ => (A.holds_disj M h g _ _).2 (Or.inl (sound M h hAx h₁ g hΔ))
-  | _, _, _, .orI₂ h₁, g, hΔ => (A.holds_disj M h g _ _).2 (Or.inr (sound M h hAx h₁ g hΔ))
-  | _, _, _, .orE h₁ h₂ h₃, g, hΔ =>
+  | _, _, h, hAx, _, _, _, .andE₁ h₁, g, hΔ => ((A.holds_conj M h g _ _).1 (sound M h hAx h₁ g hΔ)).1
+  | _, _, h, hAx, _, _, _, .andE₂ h₁, g, hΔ => ((A.holds_conj M h g _ _).1 (sound M h hAx h₁ g hΔ)).2
+  | _, _, h, hAx, _, _, _, .orI₁ h₁, g, hΔ => (A.holds_disj M h g _ _).2 (Or.inl (sound M h hAx h₁ g hΔ))
+  | _, _, h, hAx, _, _, _, .orI₂ h₁, g, hΔ => (A.holds_disj M h g _ _).2 (Or.inr (sound M h hAx h₁ g hΔ))
+  | _, _, h, hAx, _, _, _, .orE h₁ h₂ h₃, g, hΔ =>
     ((A.holds_disj M h g _ _).1 (sound M h hAx h₁ g hΔ)).elim
       (fun hp => sound M h hAx h₂ g (A.holdsHyps_cons h hp hΔ))
       (fun hq => sound M h hAx h₃ g (A.holdsHyps_cons h hq hΔ))
-  | _, _, _, .notI h₁ h₂, g, hΔ => (A.holds_neg M h g _).2 fun hp =>
+  | _, _, h, hAx, _, _, _, .notI h₁ h₂, g, hΔ => (A.holds_neg M h g _).2 fun hp =>
     (A.holds_neg M h g _).1 (sound M h hAx h₂ g (A.holdsHyps_cons h hp hΔ))
       (sound M h hAx h₁ g (A.holdsHyps_cons h hp hΔ))
-  | _, _, _, .notE h₁ h₂, g, hΔ =>
+  | _, _, h, hAx, _, _, _, .notE h₁ h₂, g, hΔ =>
     absurd (sound M h hAx h₁ g hΔ) ((A.holds_neg M h g _).1 (sound M h hAx h₂ g hΔ))
-  | _, _, _, .em p, g, _ =>
+  | _, _, h, hAx, _, _, _, .em p, g, _ =>
     (A.holds_disj M h g _ _).2 ((Classical.em (A.Holds h p g)).imp id (A.holds_neg M h g p).2)
-  | _, _, _, .allE (F := F) h₁ a, g, hΔ => by
+  | _, _, h, hAx, _, _, _, .allE (F := F) h₁ a, g, hΔ => by
     obtain ⟨a', ha⟩ := Set.mem_range.mp (M h a g)
     exact (A.holds_app h g F a ha).2 ((A.holds_all M h g F).1 (sound M h hAx h₁ g hΔ) a')
-  | _, _, _, .allI h₁, g, hΔ => (A.holds_forall M h g _).2 fun a =>
+  | _, _, h, hAx, _, _, _, .allI h₁, g, hΔ => (A.holds_forall M h g _).2 fun a =>
     sound M h hAx h₁ (.cons a g) (A.holdsHyps_weaken h _ a g hΔ)
-  | _, _, _, .exI (F := F) a h₁, g, hΔ => by
+  | _, _, h, hAx, _, _, _, .exI (F := F) a h₁, g, hΔ => by
     obtain ⟨a', ha⟩ := Set.mem_range.mp (M h a g)
     exact (A.holds_ex M h g F).2 ⟨a', (A.holds_app h g F a ha).1 (sound M h hAx h₁ g hΔ)⟩
-  | _, _, _, .exE (F := F) (r := r) h₁ h₂, g, hΔ => by
+  | _, _, h, hAx, _, _, _, .exE (F := F) (r := r) h₁ h₂, g, hΔ => by
     obtain ⟨a, ha⟩ := (A.holds_ex M h g F).1 (sound M h hAx h₁ g hΔ)
     have hF : A.Holds h (.app F.weaken (.var .zero)) (.cons a g) := by
       rw [A.holds_app h (.cons a g) F.weaken (.var .zero) (a' := a) rfl, A.sem_weaken]
       exact ha
     exact (A.holds_weaken h g r a).1
       (sound M h hAx h₂ (.cons a g) (A.holdsHyps_cons h hF (A.holdsHyps_weaken h _ a g hΔ)))
-  | _, _, _, .refl a, g, _ => (A.holds_eq M h g a a).2 rfl
-  | _, _, _, .subst (a := a) (b := b) F h₁ h₂, g, hΔ => by
+  | _, _, h, hAx, _, _, _, .refl a, g, _ => (A.holds_eq M h g a a).2 rfl
+  | _, W, h, hAx, _, _, _, .ll (a := a) (b := b) F h₁ h₂, g, hΔ => by
     have e := (A.holds_eq M h g a b).1 (sound M h hAx h₁ g hΔ)
     have hFa := sound M h hAx h₂ g hΔ
     unfold Holds at hFa ⊢
     show (⟨W, 𝟙 W⟩ : Σ V, W ⟶ V) ∈ A.apply (ρ := .t) (A.sem h F g) (A.sem h b g)
     rw [← e]; exact hFa
-  | _, _, _, .conv h₁ c, g, hΔ => by
+  | _, _, h, hAx, _, _, _, .conv h₁ c, g, hΔ => by
     unfold Holds; rw [← A.sem_conv M c]; exact sound M h hAx h₁ g hΔ
+  | Ax, _, h, hAx, _, _, _, .subst (P := P) (Q := Q) K h₁ h₂ h₃, g, hΔ => by
+    have e : ∀ {V : C} (h' : A.W₀ ⟶ V) (g' : IEnv (A.Dom V) _), A.sem h' P g' = A.sem h' Q g' :=
+      fun h' g' => A.sem_eq_of_holds_iff M h' g' P Q fun h'' g'' =>
+        ⟨fun hp => sound M h'' (A.logical_holds M Ax h'') h₁ g''
+            (fun q hq => by rw [List.mem_singleton.1 hq]; exact hp),
+         fun hq => sound M h'' (A.logical_holds M Ax h'') h₂ g''
+            (fun q hq' => by rw [List.mem_singleton.1 hq']; exact hq)⟩
+    unfold Holds
+    rw [← A.sem_plug_congr K e h g]
+    exact sound M h hAx h₃ g hΔ
 
 /-- A theorem of a theory holds in every action model of the theory. -/
 theorem Theorem.holds (M : A.IsModel) {Ax : AxiomSet Sig} (hAx : A.HoldsAx Ax) {p : Sentence Sig}
@@ -510,7 +549,9 @@ theorem Theorem.holds (M : A.IsModel) {Ax : AxiomSet Sig} (hAx : A.HoldsAx Ax) {
 /-! ### The eleven identities hold in every action model
 
 Each is `λ… P = λ… Q` with `P` and `Q` holding together at every arrow and assignment, by
-the clauses above; the abstractions then have the same value at every argument. -/
+the clauses above; the abstractions then have the same value at every argument. Since
+the identities are theorems of `C`, this is a corollary of soundness; it is kept as a
+direct check, and as the semantic side of the paper's Appendix A. -/
 
 section Axioms
 
@@ -537,7 +578,7 @@ theorem holds_eq_lam3 {σ τ υ : Ty} (b₁ b₂ : Formula Sig [υ, τ, σ])
   funext V i x U j y T k z
   exact A.sem_eq_of_holds_iff M _ _ b₁ b₂ hb
 
-theorem axiomsMinus_holds : ∀ a, Meta.C.axiomsMinus a → A.Holds h a .nil := by
+theorem identities_holds : ∀ a, Meta.C.identities a → A.Holds h a .nil := by
   intro a ha
   cases ha with
   | commutativity_and =>
@@ -633,13 +674,8 @@ theorem axiomsMinus_holds : ∀ a, Meta.C.axiomsMinus a → A.Holds h a .nil := 
       rw [A.holds_conj M, A.holds_app h _ _ _ (a' := a) rfl] at ha
       exact ⟨ha.1, a, ha.2⟩
 
-theorem axioms_holds : ∀ a, Meta.C.axioms a → A.Holds h a .nil := by
-  intro a ha
-  cases ha with
-  | minus ha => exact A.axiomsMinus_holds M h a ha
-  | existence_e =>
-    rw [Meta.C.existence_e, A.holds_exists M]
-    exact ⟨Classical.choice (A.nonempty_e W), (A.holds_eq M h _ _ _).2 rfl⟩
+theorem axioms_holds : ∀ a, Meta.C.axioms a → A.Holds h a .nil := fun _ ha => by
+  rw [show _ = existence_e from ha]; exact A.existence_e_holds M h
 
 end Axioms
 
@@ -650,7 +686,7 @@ theorem theorem_holds (M : A.IsModel) {p : Sentence Sig} (hp : Meta.C.Theorem p)
 
 theorem theoremMinus_holds (M : A.IsModel) {p : Sentence Sig} (hp : Meta.C.TheoremMinus p) :
     A.HoldsSentence p :=
-  A.sound M (𝟙 A.W₀) (A.axiomsMinus_holds M _) hp .nil (fun _ hq => nomatch hq)
+  A.sound M (𝟙 A.W₀) (fun _ h => h.elim) hp .nil (fun _ hq => nomatch hq)
 
 /-- Soundness for `C` extended by an axiom set: what a non-implication on the map needs.
 An axiom set holding at every arrow (as a necessitated one does) supports derivations at
