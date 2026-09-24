@@ -1,5 +1,12 @@
 # Verification report — 21 September 2026
 
+*Paths.* On the evening of 24 September 2026 the project was rearranged: the metalogical
+modules moved from `Classicism/Meta/` to `Classicism/Syntax/`, `Semantics/`, `Results/`,
+`Tools/` and `Certified/`, the checkers from `Classicism/` to `Classicism/Tools/`, and the
+strict layer to `Classicism/Strict/` (`Strict.lean` became `Strict/Vocabulary.lean`,
+`SyntaxSchemas.lean` became `Syntax/SentenceSchemas.lean`). The sections below keep the
+paths of their day; `README.md` has the current map.
+
 **29/77 principles defined; 27/208 records proved in Lean; 0 records carry a Lean
 certificate. 122 of the library's 124 theorems are theorems of `C⁻`. The strict layer uses
 no Logical Equivalence at all: it derives Boolean algebras at every relational type from the

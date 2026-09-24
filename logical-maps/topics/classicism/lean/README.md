@@ -20,13 +20,26 @@ removing them leaves a system in which Classicism can be stated and its theorems
 
 None of the three is a theorem of Classicism, so none may be used freely.
 
-## Three layers
+## The shape of the project
 
 | layer | what it does | where |
 | --- | --- | --- |
-| **shallow** | states and proves theorems of Classicism in ordinary Lean, under a *gate* admitting `propext` and `funext` only with closed arguments | `Core` to `Proofs` |
-| **metalogical** | makes the object language, its derivations and its models into objects of Lean, for statements *about* Classicism; its translator turns a gated shallow proof into a kernel-checked derivation of the object language | `Meta/`, with its own README |
-| **strict** | re-proves every theorem from the eleven closed identities alone, by a transformer carrying out Appendix A on Lean proof terms; the exploration of how the paper's type system sits inside Lean's, no longer on the route to certification (24 September 2026) | `Axiomatization` to `Transformed` |
+| **shallow** | states and proves theorems of Classicism in ordinary Lean, under a *gate* admitting `propext` and `funext` only with closed arguments | `Classicism/*.lean` |
+| **metalogical** | makes the object language, its derivations and its models into objects of Lean, for statements *about* Classicism; its translator turns a gated shallow proof into a kernel-checked derivation of the object language | `Syntax/`, `Semantics/`, `Results/`, with the tools in `Tools/` and their outputs in `Certified/` |
+| **strict** | re-proves every theorem from the eleven closed identities alone, by a transformer carrying out Appendix A on Lean proof terms: the exploration of how the paper's type system sits inside Lean's, no longer on the route to certification | `Strict/`, with its own README |
+
+The directories separate the mathematics from the metaprogramming, and within the
+mathematics keep the metalogic next to the object level it is about:
+
+```
+Classicism/            the formalization proper — theorems of Classicism in the paper's vocabulary
+Classicism/Syntax/     the object language as an object of Lean: terms, conversion, derivability
+Classicism/Semantics/  its models: the reading in Prop, action models, the map's models
+Classicism/Results/    metalogical proofs of the map's arrows, object-level steps and all
+Classicism/Tools/      the checkers, the quoter, the translator, the pipeline, and their audits
+Classicism/Certified/  the pipeline run at build time: the map's records as certificates
+Classicism/Strict/     the strict layer: Appendix A on Lean proof terms, reading the proofs above
+```
 
 Each is held to what it claims by a check that runs at build time. No statement quantifies
 over types, so every theorem is a formula of the paper's language with type parameters,
@@ -54,7 +67,7 @@ triviality rather than a theorem with a stated cost. Note that an instance argum
 `[Ty σ]` is a parameter, so it never propagates an axiom by itself; only instantiating at
 `e` can do that.
 
-`#classicism_audit` reports the split, and `Classicism/Tests.lean` asserts it with
+`#classicism_audit` reports the split, and `Classicism/Tools/Tests.lean` asserts it with
 `#classicism_expect_c_minus` and `#classicism_expect_needs_e`. At present 122 of the
 library's 124 theorems are theorems of `C⁻`; the two exceptions are the Existence
 theorem at `e` and the record that depends on it. The eleven identities are all `C⁻`,
@@ -117,367 +130,90 @@ subscripts, and two closed identities that let Intensionality be proved uniforml
 every relational type. `Ty` is declared in `Type` rather than `Prop` so that an instance
 argument is type-system evidence rather than a hypothesis, which matters to the gate.
 
-## The strict policy
-
-Under the gate, `propext` and `funext` are permitted in the ζ-Equivalence shape. Under the
-**strict policy** they are banned outright and the eleven closed identities stand in their
-place. `#classicism_strict` enforces it: the admitted axioms are the eleven, `e`, `e_exists`
-and `em`, and nothing else. The strict modules do not even use `em`, since excluded middle
-is already carried by the two Dissolution identities.
-
-Appendix A of the paper is the metatheorem that the two policies prove the same theorems.
-The strict layer is that appendix carried out on Lean proof terms: a **transformer** that
-takes any gated proof and returns a strict one, by induction on the proof.
-
-## Boolean algebras from the six identities
-
-Appendix A reasons, at every step, about identities between **λ-terms**: its induction
-hypothesis is `(λv̄. P) = (λv̄. ⊤)`, and "Booleanism" is invoked under the `λv̄`. Lean's
-`funext` would turn a pointwise law into such an identity, but it is banned, and rightly,
-since that is the rule ξ the paper avoids. `Classicism/Algebra.lean` gets the λ-level laws
-another way. The six Boolean Identities are *closed*, so they transfer to every relational
-type by Leibniz's Law alone:
-
-* `BA τ` is a type with `and`, `or`, `neg` and the six identities in closed form;
-* `BA Prop` is the six axioms, verbatim;
-* `BA (σ → τ)` takes each field from the field at `τ` by **one** `congrArg`.
-
-Huntington's derivation of a Boolean algebra from those six is then done once, about
-elements `X Y Z : τ` of an arbitrary such algebra: bounds, complements, idempotence,
-annihilation, absorption, a cancellation lemma, associativity of both operations,
-uniqueness of complements, double negation, both De Morgan laws. At `τ := v̄ → Prop` the
-operations unfold by β to the pointwise ones, so a law proved there *is* the λ-level
-identity Appendix A needs. `Classicism/Strict.lean` restates the laws at `Prop` with Lean's
-`∧`, `∨`, `¬`, for `rw`.
-
-Two points of substance. The six identities are Huntington's axioms, so **associativity is
-not among them and has to be derived**, through the cancellation lemma `eq_of_meet_eq`: two
-elements agreeing under `p` and under `¬p` are identical. And the strict layer keeps **its
-own `⊤` and `⊥`**, the paper's Figure 1 pair, because no axiom mentions Lean's `True`: an
-identity can only enter from an axiom, from `rfl`, from congruence, or from `propext`, so
-`(q ∨ ¬q) = True` is not reachable strictly. The same goes for Lean's `→` and `Iff`, in
-place of which the strict layer has the paper's abbreviations `imp` and `iff`.
-
-## `boolean_eq`
-
-`Classicism/Tautology.lean` turns the algebra into a decision procedure. `boolean_eq`
-proves any goal `P = Q` in any `BA τ`, where both sides are built from atoms by the Boolean
-operations, the bounds, `imp` and `iff`, provided they are tautologically equivalent, and
-it emits only the six Boolean Identities. It looks under λ-binders, so it proves identities
-between propositions and identities between λ-terms alike:
-
-    example (F G : σ → ρ → Prop) :
-        (fun x u => F x u ∧ (G x u ∨ ¬ G x u)) = (fun x u => ¬ ¬ F x u) := by boolean_eq
-
-The method is Shannon expansion, driven by the same cancellation lemma that gave
-associativity. To prove `P = Q`, pick an atom `a` and prove `a ∧ P = a ∧ Q` and
-`¬a ∧ P = ¬a ∧ Q`; each is settled by substituting `⊤` or `⊥` for `a`, which removes an
-atom, so the recursion bottoms out at formulas of bounds only. Substitution is itself a
-proof-generating recursion: conjunction and disjunction go through the distribution laws,
-and negation through `relative_compl`, since `l ∧ Q = l ∧ Q'` does not give
-`l ∧ ¬Q = l ∧ ¬Q'` by congruence alone.
-
-This is the only decision procedure in the strict layer, and the transformer never calls it
-on a theorem's content. It proves the fixed rule lemmas below, once, and bridges `¬A` to
-`A → ⊥` where Lean identifies them.
-
-## The transformer
-
-`#classicism_transform foo` takes `foo : S`, proved under the gate, and declares
-
-* `foo.nec : S' = ⊤`, the **necessitation** of `foo`, and
-* `foo.strict : S'`,
-
-from the eleven identities and no `propext` or `funext`, where `S'` is `S` read in the
-paper's vocabulary (`True ↦ ⊤`, `False ↦ ⊥`, `→ ↦ imp`, `↔ ↦ iff`). The kernel checks both,
-so a bug in the transformer yields a rejected declaration, never a false theorem. The
-outputs pass `#classicism_strict` and `#classicism_types` like anything written by hand.
-
-### It is an induction on the proof, and decides nothing
-
-This is Appendix A's `hardlemma` done as the paper does it. Each constructor of a proof term
-has **one fixed lemma**, and the transform of a proof is those lemmas composed in the shape
-of the proof. Nothing is searched for or re-proved, so a new shallow theorem needs no new
-strict work.
-
-`H` is a Hilbert system and a Lean term is a natural deduction, in which `fun h => …` puts
-hypotheses in scope. So the induction hypothesis is carried in sequent form: for `t : A` in
-a context with object variables `v̄` and hypotheses `H₁ … Hₙ`, the transform of `t` proves
-
-    (λv̄. Γ → A') = (λv̄. ⊤)          Γ := ⊤ ∧ H₁' ∧ … ∧ Hₙ'
-
-which is an identity in the algebra `v̄ → Prop`. The paper's own `Gen` already has this
-relativised shape, `P' → ∀u.Q` from `P' → Q`.
-
-| proof term | what carries the induction |
-| --- | --- |
-| a hypothesis | `rule_hyp`, then `rule_weaken` past later hypotheses |
-| `fun h : H => b` | `rule_imp_intro` |
-| application to a proof | `rule_imp_elim`: Appendix A step (i) |
-| `fun u : σ => b` | Distribution-∨∀, the hypothesis under `∀u`, Proposition A.1: step (ii) |
-| application to a term | Absorption-∨∀, then `rule_absorb`: case (ii) |
-| a constant `c : S` | its necessitation `S' = ⊤`, then `rule_const` |
-| gated `propext s` | `s` transformed with `Γ` empty, then Proposition A.3 |
-| gated `funext (fun x => s)` | `s` transformed with `x` added to `v̄`; η does the rest |
-
-The propositional rule lemmas are in `Classicism/Rules.lean`, proved once for any `BA τ`.
-A **library theorem is a constant like any other**, its necessitation being its own
-transform, made on demand. The core constants (`And.intro`, `Or.elim`, `Eq.refl`,
-`Exists.intro`, …, about thirty in all) have theirs in `Classicism/Primitives.lean`, where
-`Ref` and `LL` come from the Identity Identity and `∃`-elimination from Distribution-∧∃.
-Lean's recursors take a motive, which is not an object of any `R`-type, so they are first
-restated with the motive instantiated (`Prim.ll`, `Prim.and_rec`, `Prim.exists_rec`). The
-identity lemmas of core Lean (`Eq.symm`, `congrArg`, `Eq.mpr`, which is what `rw` emits)
-are each Leibniz's Law at some property, and their necessitations are not proved by hand:
-the transformer makes them.
-
-Every step is `congrArg` on a closed identity with β for free, which is Ref and Leibniz's
-Law. **There is no ξ**: nothing is ever proved pointwise and then abstracted.
-
-### Why the gate is exactly the right condition
-
-The `propext` case transforms its argument with `Γ` *empty*, because Equivalence needs
-`(λv̄. A ↔ B) = (λv̄. ⊤)` outright and not under hypotheses. That is sound only if the
-argument mentions no hypothesis in scope, which is what the gate checks. The
-natural-deduction presentation of `C` says the same from the other side: its special rule
-has premises `P ⊢ Q` and `Q ⊢ P` with no side premises. And since the hypothesis is already
-abstracted over `v̄`, the result of that case is the rule of Equivalence in the paper's
-**bundled** form `λv̄.A = λv̄.B`; a `funext` wrapped around a `propext` needs no treatment of
-its own.
-
-### `¬A` and `A → False`
-
-Lean identifies these; their readings `¬A'` and `¬A' ∨ ⊥` are Boolean-equivalent but not
-identical. So the induction tracks the formula it has actually proved, and where a proof is
-used at another reading of the same Lean formula, a bridge identity is supplied: `rfl` if
-they agree up to unfolding, `boolean_eq` between λ-terms if they are Boolean-equivalent,
-and congruence under a shared connective or quantifier otherwise.
-
-### Mirrors of the classes
-
-`Rel τ` carries three laws, stated with Lean's `True` and proved in its instances by gated
-Equivalence: `propext` at `Prop`, and at `σ → τ` a `funext` of a closed identity, which is
-ζ. A proof that cites one of those laws has nothing to transform into until the class has
-a strict counterpart. `Classicism/Mirror.lean` supplies it, built the way `BA` is: `SRel`
-holds the three laws as **closed identities between λ-terms**, so that at `Prop` each is a
-tautology for `boolean_eq`, and at `σ → τ` each follows from the law at `τ` by one
-`congrArg`, the operations there being pointwise and β free. The third law, the identity
-behind Intensionality, needs one further step, that `∀u.Cu` is identical to `(∀u.Cu) ∧ Cz`,
-which is Absorption-∨∀. There is no `funext` anywhere in it.
-
-`Order τ` needs no new proof at all. Its one law is proved in the shallow instances from
-`K`, `4`, `NI`, `CBF` and Modalized Functionality, all of which transform, so the law of
-each instance of the mirror `SOrder` is **the transformer's own output** on the shallow
-proof.
-
-`Pointwise τ` (`Classicism/Pointwise.lean`, 24 September) is a third class of the same
-kind: the pointwise laws of the implication `⊑` at a relational type — a preorder under
-which `∧_τ` is a meet, with `const_τ` and coextension — which `Rel` does not supply and
-without which nothing can be proved pointwise at a type variable. Its instances are
-tautologies at `Prop` and the law at `τ` under a `∀` at `σ → τ`; its mirror `SPointwise`
-is set up exactly as `SOrder`, each law a necessitation that is the transformer's output
-on the shallow instance's proof.
-
-The transformer learns which constant mirrors which from two commands,
-`#classicism_mirror` for a class, its data projections and its instances, and
-`#classicism_nec` for the necessitation of a law field. So a new class costs a mirror, but
-no change to the transformer, and a new theorem about an existing class costs nothing.
-
-### Records, between instances
-
-A record "Schema A implies Schema B" is a metatheorem in the paper: from the instances of
-A one derives each instance of B. The theorem stated here is the object-level content of
-that, an implication between instances with the types as parameters,
-
-    theorem functionality_r_implies_tractarianism_r {σ : Type} [Ty σ] :
-        Functionality σ Prop → Tractarianism σ
-
-which names the instance of the premise the argument consumes. Since it is a formula once
-`σ` is fixed, the induction reaches it, and its strict form is the record's statement
-between the instances read in the paper's vocabulary,
-
-    Classicism.imp (P.Functionality.strict σ Prop) (P.Tractarianism.strict σ)
-
-and its necessitation gives the boxed record by `K`: `□Functionality σ t → □Tractarianism σ`.
-That is how the map's necessitated records are read, and the tests check one.
-
-### Coverage
-
-`Classicism/Transformed.lean` runs the transformer over the whole library, once, and is the
-one home of what it declares. `Classicism/Audit.lean` then holds all of it to the strict
-check and the type check: 222 generated theorems, 222 strict, 222 inside `R`.
-
-| module | transformed |
-| --- | --- |
-| `Booleanism` | 47 of 47 |
-| `Identities` | 13 of 13 |
-| `Modal` | 18 of 18 |
-| `Order` | 6 of 6 |
-| `Comprehension` | 10 of 10 |
-| `Proofs` | 31 of 31 |
-
-**Every theorem of the shallow layer has a strict form**, from the eleven identities, `e`,
-`e_exists` and `em`, with no `propext` and no `funext`. Nothing was proved by hand for any
-particular theorem; the transformer is a fixed program, and a new theorem whose proof is
-built from the constructors it knows costs nothing.
-
-What the transformer does not handle, none of it needed by the library: a motive that
-depends on the identity proof, a recursor eliminating into data, and a bare gated `funext`
-whose body is an identity at a relational type other than `Prop` not ending in `propext`.
-Each is reported, never guessed at.
-
 ## The metalogical layer
 
-The third layer, begun 22 September 2026, makes the terms of the object language, their
-derivations and their models into objects of Lean, so that statements *about* the language
-can be made: that a schema implies a schema, that a closed pure sentence is a theorem, that
-a sentence holds in a model. Earlier notes called this the "deep" layer; metalogical is
-the name now. It lives under `Classicism/Meta/`, which has its own README, and is ordinary
-Lean, with `funext` and the rest available, since it is
-not itself a proof in Classicism but a theory of Classicism's proofs. It is related to the
-other two layers by a denotation reading its terms as Lean propositions, and since 23
-September it has the paper's **action models** with a soundness theorem, the model
-theory the map's non-implication records need.
+The centre of the project since 22 September 2026: the terms of the object language,
+their derivations and their models as objects of Lean, so that statements *about*
+Classicism can be made and proved — that a schema entails a schema, that a closed pure
+sentence is a theorem, that a sentence holds in a model — and so that a proof in the
+shallow layer can be turned into a kernel-checked derivation in the object language. It
+is ordinary Lean, with `funext` and Mathlib available, since it is not itself a proof in
+Classicism but a theory of Classicism's proofs. `Classicism/README.md` is its README, with
+the design decisions, a module-by-module account and the record of what is checked. In
+outline:
 
-Four decisions fixed its shape.
-
-* **The syntax is its own datatype**, not a subtype of Lean's `Expr`. Substitution and
-  conversion are things this layer proves theorems about, and `Expr`'s are implemented
-  behind `extern` with no equations; a typing relation for `Expr` would be the Lean4Lean
-  project; and the metalogical statements need a small closed grammar with decidable
-  notions of "closed" and "pure". The bridge to the shallow layer will be the standard
-  reflection pattern, a denotation checked by `rfl` per theorem.
-* **Terms are intrinsically typed**, `Term Σ Γ σ`, so an ill-typed term cannot be written.
-* **Variables are de Bruijn indices**, so α-equivalence is identity and only β and η remain.
-  No higher-order abstract syntax.
-* **The type system is fixed**, `e` and `t` the only base types, with nonlogical vocabulary
-  entering through a signature `Σ` of constants; the pure language is the empty signature.
-
-What exists so far:
-
-* `Meta/Types.lean`: types and relational types as the mutual inductive of *Elimination*,
-  Appendix A, with decidable equality and the case split every type is `e` or
-  `σ₁ → … → σₙ → t`, which the shallow layer's classes could not perform.
-* `Meta/Term.lean`: signatures, contexts, variables and terms, with the paper's logical
-  constants `∧`, `∨`, `¬`, `∀σ`, `∃σ`, `=σ` as constants and its abbreviations `→`, `↔`,
-  `⊤`, `⊥`, `□`, `◇` as definitions; purity; renaming and substitution as maps on variables
-  lifted through binders, with the identity laws and the four composition laws
-  (`rename_rename`, `subst_rename`, `rename_subst`, `subst_subst`).
-* `Meta/Conversion.lean`: β and η in three grades, the immediate conversion of a redex,
-  the one-step closure `Step` that applies it anywhere in a term, and the equivalence
-  closure; `Conv` is βη-conversion, written `≡`, and is proved a congruence.
-* `Meta/Examples.lean`: a β-step computing by `rfl`, an η-step, and purity decided.
-
-* `Meta/Derivation.lean`: **derivability**, `Derivable Ax Δ p`, an inductive relation
-  parametrized by an axiom set, in natural-deduction form: introduction and elimination
-  rules for `∧`, `∨`, `¬` with excluded middle, `UI`, `Gen`, `EG`, `Inst`, `Ref`, `LL`, and
-  conversion. Weakening and monotonicity in the axioms are proved admissible, and the
-  rules for the defined `→` and `↔` are derived.
-* `Meta/Axioms.lean`: the eleven identities as sentences, `C.axiomsMinus`, and
-  `C.axioms` adding Existence at `e`; `C.Derivable`, `C.Theorem`.
-* `Meta/Denotation.lean`: the **denotation** of types and terms in Lean, `t` as `Prop`
-  and `e` as a chosen domain, which is the paper's full Henkin model; renaming and
-  substitution commute with it and conversion preserves it; **soundness** of `Derivable`;
-  the eleven identities hold in `Prop`, so **`C` is consistent**. The reflection examples
-  check by `rfl` that a sentence read back is the strict layer's own proposition, `⊤` as
-  `Strict.Top`, `→` as `imp`, an axiom as the Lean axiom's statement.
-
-Two decisions taken with this step. **Derivations are not a separate datatype.** An
-inductive predicate is by definition the smallest relation closed under its rules, which
-is the paper's notion of an `H`-theory, and a proof of it is a derivation tree; a
-`Type`-valued twin would add the ability to compute with derivations at the price of proof
-relevance in every lemma, and nothing planned needs it. **No rule is special.** The
-official system is `H` plus an axiom set, and Classicism is the eleven identities as that
-set, so a map record "`C` plus BF proves this instance" is `Derivable` over the union of
-the axiom sets, in the paper's own framework of `H`-theories. The rule of Equivalence is
-then Appendix A's theorem about this system, not a constructor of it, and the translator
-into it will read the **strict** proofs, whose statements are already in the object
-language and whose only special constants are the eleven axioms.
-
-The contextual form draws the `C`/`C⁻` line by itself: a closed derivation has no
-variable of type `e` to instantiate `EG` at, so Existence at `e` is an axiom of `C` and
-not of `C⁻`, while at every relational type it is derivable from the closed term `λx. ⊤`.
-
-* `Meta/Relational.lean`: the paper's type-subscripted operations `∧_τ`, `¬_τ`,
-  coextension, the pointwise box and the rest are **constants of the syntax** whose
-  recursion on the type is the δ-rule of conversion, `∧_{σ→ρ} ≡ λX Y z. X z ∧_ρ Y z`;
-  their reading is that recursion on the Lean side; this module gives the standard
-  reading's `SRel` instances by the same recursion, and a lemma per operation, by
-  induction on the type, that its reading is the strict layer's operation. Constants
-  rather than functions by recursion on the type, which they were first, so that at a
-  type variable they are nodes of the syntax a derivation can mention.
-* `Meta/Quote.lean`, `Meta/Quoted.lean`: the **quoter**, the translator's first half.
-  `#classicism_quote foo` reads the strict statement of `foo` as a sentence with its type
-  parameters as object-type variables and declares the reflection theorem, that reading
-  the sentence back gives the statement, checked by the kernel: by `rfl`, or where a
-  relational operation sits at a type variable, by rewriting with the lemmas above. Run
-  over the library at build time: **every strict statement quotes and reflects**, 111 of
-  111.
-
-* `Meta/Normalize.lean`, `Meta/Translate.lean`: the **translator**, the second half.
-  `#classicism_derive foo` reads the strict proof of `foo` and declares `foo.derivable`, a
-  derivation in `H` plus the eleven identities of the quoted statement, checked by the
-  kernel. Strict proofs are almost all Leibniz's Law, so the translation is equational;
-  library theorems are translated at the types they are used at; and where the kernel had
-  β-reduced silently, a verified normalizer on the syntax supplies the conversion by
-  reflection. With it the chain from a shallow proof to an object of the metalogical
-  layer is complete, each link kernel-checked and each translator untrusted. The cost
-  is the kernel's evaluation of substitutions, so the syntax's recursive functions are
-  written through `Term.rec` directly, which the kernel evaluates ten times faster than
-  structural recursion. Every class-parametric lemma is translated **once, at
-  object-type variables**, and a law of a class cited at a type variable — the six
-  Boolean identities of `BA`, `SRel.coext_refl` and its kin — is derived **by induction
-  on the object type** through `RTy.rec`, the `Prop` instance's proof the base case and
-  the arrow instance's the step: the use of this layer the other two could not provide.
-  `Meta/Derived.lean` runs two derivations at build time; the library-wide audit is run
-  by hand, and **derives every strict theorem of the library, 111 of 111**, in eleven
-  minutes.
-
-Next: Appendix A as a theorem.
+* `Classicism/Syntax/`: types, intrinsically typed de Bruijn terms, βηδ-conversion, and
+  **derivability**, `Derivable Ax Δ p`: `H` closed under *Elimination*'s rule Subst, the
+  axiom set an index, the hole of Subst a term with a hole so that it may lie under
+  binders; Classicism is `Derivable Logical`, and the eleven identities are its theorems.
+  Entailment between axiom sets, `⟹`, is the form of the map's arrows; the schemas over
+  sentences (No Pure Contingency, Distinctness, Possibility, maximalization) are here too.
+* `Classicism/Semantics/`: the standard reading in `Prop` with soundness (so `C` is
+  consistent), and the paper's **action models** with their soundness theorem, full
+  models, truncation, and the first models of the map with their verdicts.
+* `Classicism/Results/`: metalogical proofs of the map's arrows, each file carrying the
+  shallow lemmas its object-level steps rest on, certified in place, and the meta-level
+  argument — an induction on the type, a case split on the syntax — right after them.
+* `Classicism/Tools/`: the metaprogramming. The gate and the type-system check on
+  shallow proofs; the **quoter**, reading a shallow statement as a sentence with a
+  reflection theorem; the **translator**, reading a gated shallow proof as a derivation
+  (`propext` on a closed biconditional is Subst, `funext` its consequence at every type,
+  a class law at a type variable is derived by induction on the type); and the pipeline
+  that reads principles as schemas and records as entailments and rules.
+* `Classicism/Certified/`: what the pipeline certifies at build time — every record
+  theorem quoted, derived and read as an entailment, 28 of 28, in seconds.
 
 ## Files
 
 ```
-Classicism/Core.lean            e, em, e_exists, □ and ◇, the classes Ty and Rel
-Classicism/Equivalence.lean     the gate, the nec% macro, tactic conventions
-Classicism/Booleanism.lean      the propositional and quantifier identities, pointwise
-Classicism/Identities.lean      the eleven closed identities in the paper's λ-form
-Classicism/Axiomatization.lean  the same eleven as axioms, for the strict policy
-Classicism/Algebra.lean         Boolean algebras from the six identities, at every relational type
-Classicism/Strict.lean          the same laws restated at Prop, for rw
-Classicism/Tautology.lean       the boolean_eq tactic, between propositions or λ-terms
-Classicism/Quantifier.lean      Proposition A.1, UI, EG, Ref, Gen, Inst at Prop
-Classicism/Rules.lean           one lemma per proof rule, in any such algebra
-Classicism/Primitives.lean      necessitations of the core proof constants; Ref, LL, ∃-elim
-Classicism/Transform.lean       #classicism_transform: Appendix A as an induction on proof terms
-Classicism/Mirror.lean          SRel, SOrder and SPointwise, the strict mirrors of the classes
-Classicism/Transformed.lean     the transformer run over the library; home of foo.nec and foo.strict
-Classicism/Meta/Types.lean      metalogical layer: the types of R as an inductive
-Classicism/Meta/Term.lean       intrinsically typed de Bruijn terms; renaming, substitution
-Classicism/Meta/Conversion.lean β, η, one-step and equivalence closures; ≡
-Classicism/Meta/Derivation.lean derivability in H closed under Subst, plus an axiom set; terms with a hole
-Classicism/Meta/Axioms.lean     C and C⁻ as theories; the eleven identities as sentences
-Classicism/Meta/Denotation.lean the standard model in Prop; soundness; C is consistent
-Classicism/Meta/Examples.lean   small computed checks, derivations, and reflection by rfl
-Classicism/Meta/Relational.lean the readings of ∧_τ, ¬_τ, coext and the rest are the strict layer's
-Classicism/Meta/Quote.lean      the quoter: strict statements as sentences, reflection checked
-Classicism/Meta/Quoted.lean     the quoter run over the record theorems; home of foo.quoted
-Classicism/Meta/Normalize.lean  a verified βη-normalizer; conversion by reflection
-Classicism/Meta/Translate.lean  the translator: gated shallow proofs to derivations
-Classicism/Meta/Derived.lean    two derivations checked at build time
-Classicism/Meta/Schema.lean     principles as schemas; records as entailments and as rules; #classicism_certify
-Classicism/Meta/Atomicity.lean  a metalogical proof with object-level steps: Atomicity (t) and BF imply Atomicity
-Classicism/Modal.lean           K, T, 4, NI, CBF, Intensionality and its corollaries
-Classicism/Order.lean           the algebraic order and its pointwise characterisation
-Classicism/Comprehension.lean   persistence, inextensibility and the rigidity variants
-Classicism/Pointwise.lean       the pointwise laws of ⊑ at a relational type, as a class
-Classicism/Lattice.lean         Atom
-Classicism/Principles.lean      one Prop per principle of the map
-Classicism/Proofs.lean          one theorem per record of the map
-Classicism/Check.lean           #classicism_check and #classicism_audit
-Classicism/TypeSystem.lean      #classicism_types: the relational type system
-Classicism/Audit.lean           runs the audit over the library at build time
-Classicism/Tests.lean           negative and positive controls for the checker
+Classicism/Core.lean                    e, em, e_exists, □ and ◇, the classes Ty and Rel
+Classicism/Equivalence.lean             the gate, the nec% macro, tactic conventions
+Classicism/Booleanism.lean              the propositional and quantifier identities, pointwise
+Classicism/Identities.lean              the eleven closed identities in the paper's λ-form
+Classicism/Modal.lean                   K, T, 4, NI, CBF, Intensionality and its corollaries
+Classicism/Order.lean                   the algebraic order and its pointwise characterisation
+Classicism/Comprehension.lean           persistence, inextensibility and the rigidity variants
+Classicism/Pointwise.lean               the pointwise laws of ⊑ at a relational type, as a class
+Classicism/Lattice.lean                 Atom
+Classicism/Principles.lean              one Prop per principle of the map
+Classicism/Proofs.lean                  one theorem per record of the map
+
+Classicism/Syntax/Types.lean            the types of R as an inductive; induction on relational types
+Classicism/Syntax/Term.lean             intrinsically typed de Bruijn terms; renaming, substitution
+Classicism/Syntax/Conversion.lean       β, η, δ, one-step and equivalence closures; ≡
+Classicism/Syntax/Derivation.lean       derivability in H closed under Subst; terms with a hole; substEq
+Classicism/Syntax/Axioms.lean           C and C⁻ as theories; the eleven identities as sentences
+Classicism/Syntax/Entailment.lean       entailment between axiom sets, ⟹, with cut and its algebra
+Classicism/Syntax/SentenceSchemas.lean  No Pure Contingency, Distinctness, Possibility, maximalization
+Classicism/Syntax/Normalize.lean        a verified βη-normalizer; conversion by reflection
+Classicism/Syntax/Examples.lean         computed checks, hand derivations, reflection by rfl
+
+Classicism/Semantics/Denotation.lean    the standard model in Prop; soundness; C is consistent
+Classicism/Semantics/Relational.lean    the readings of ∧_τ, ¬_τ, coext and the rest are the classes' operations
+Classicism/Semantics/Action.lean        action premodels and models
+Classicism/Semantics/ActionSoundness.lean  soundness of action models
+Classicism/Semantics/ActionFull.lean    full action models are models; BF forces surjectivity
+Classicism/Semantics/ActionFacts.lean   ND, BF, the Fregean Axiom in a model; truncation; □ and ◇
+Classicism/Semantics/ActionProperties.lean  properties of models and what holds in all of them
+Classicism/Semantics/ActionExamples.lean  the map's M-set models and their verdicts
+
+Classicism/Results/Atomicity.lean       Atomicity (t) and BF imply Atomicity: a metalogical proof with object-level steps
+
+Classicism/Tools/Check.lean             #classicism_check and #classicism_audit: the gate
+Classicism/Tools/TypeSystem.lean        #classicism_types: the relational type system
+Classicism/Tools/Quote.lean             the quoter: statements as sentences, reflection checked
+Classicism/Tools/Translate.lean         the translator: gated shallow proofs to derivations
+Classicism/Tools/Schema.lean            principles as schemas; records as entailments and rules; #classicism_certify
+Classicism/Tools/Audit.lean             the audits over the shallow layer, run at build time
+Classicism/Tools/Tests.lean             negative and positive controls for the checkers
+
+Classicism/Certified/Quoted.lean        the record theorems quoted; home of foo.quoted
+Classicism/Certified/Derived.lean       two derivations checked at build time
+Classicism/Certified/Schemas.lean       the principles as schemas; home of P.schema
+Classicism/Certified/Derivations.lean   the record theorems derived; home of foo.derivable
+Classicism/Certified/Entailed.lean      the records as entailments; home of foo.entails
+
+Classicism/Strict/                      the strict layer; see its README
 ```
 
 ## The checker
@@ -553,7 +289,7 @@ lake build
 ```
 
 The toolchain is pinned in `lean-toolchain`. Since 23 September 2026 the package requires
-Mathlib, for the metalogical layer's action models only (`Classicism/Meta/Action*.lean`);
+Mathlib, for the metalogical layer's action models only (`Classicism/Semantics/Action*.lean`);
 no other module imports it. It is pinned to the Mathlib tag matching the toolchain, and
 `lake build` fetches its prebuilt cache rather than compiling it, into the default
 `.lake/packages`, which is not committed. To keep one copy of Mathlib shared by every
