@@ -656,9 +656,20 @@ theorem theoremMinus_holds (M : A.IsModel) {p : Sentence Sig} (hp : Meta.C.Theor
 An axiom set holding at every arrow (as a necessitated one does) supports derivations at
 every arrow; one holding at the root supports derivations at the root. -/
 theorem theoremWith_holds (M : A.IsModel) {Ax : AxiomSet Sig} (hAx : A.HoldsAx Ax)
-    {p : Sentence Sig} (hp : Theorem (fun a => Meta.C.axioms a ∨ Ax a) p) : A.HoldsSentence p :=
+    {p : Sentence Sig} (hp : Theorem (Meta.C.axioms ∪ Ax) p) : A.HoldsSentence p :=
   A.sound M (𝟙 A.W₀) (fun a ha => ha.elim (A.axioms_holds M _ a) (hAx a)) hp .nil
     (fun _ hq => nomatch hq)
+
+/-- **Entailment transfers holding**: in an action model of `Ax₁`, `Ax₂` holds. So a model
+of `Ax₁` refuting a sentence of `Ax₂` shows that `Ax₁` does not entail `Ax₂` — the map's
+non-implication records. -/
+theorem entails_holds (M : A.IsModel) {Ax₁ Ax₂ : AxiomSet Sig} (e : Ax₁ ⟹ Ax₂)
+    (h₁ : A.HoldsAx Ax₁) : A.HoldsAx Ax₂ :=
+  fun a ha => A.theoremWith_holds M h₁ (e a ha)
+
+theorem not_entails_of_model (M : A.IsModel) {Ax₁ Ax₂ : AxiomSet Sig} (h₁ : A.HoldsAx Ax₁)
+    {a : Sentence Sig} (ha : Ax₂ a) (hn : ¬ A.HoldsSentence a) : ¬ (Ax₁ ⟹ Ax₂) :=
+  fun e => hn (A.entails_holds M e h₁ a ha)
 
 end Premodel
 

@@ -26,6 +26,8 @@ import Classicism.Meta.Term
 import Classicism.Meta.Conversion
 import Classicism.Meta.Derivation
 import Classicism.Meta.Axioms
+import Classicism.Meta.Entailment
+import Classicism.Meta.SyntaxSchemas
 import Classicism.Meta.Denotation
 import Classicism.Meta.Relational
 import Classicism.Meta.Quote
@@ -33,9 +35,14 @@ import Classicism.Meta.Quoted
 import Classicism.Meta.Normalize
 import Classicism.Meta.Translate
 import Classicism.Meta.Derived
+import Classicism.Meta.Schema
+import Classicism.Meta.Schemas
+import Classicism.Meta.Derivations
+import Classicism.Meta.Entailed
 import Classicism.Meta.Examples
 import Classicism.Meta.Action
 import Classicism.Meta.ActionSoundness
 import Classicism.Meta.ActionFull
 import Classicism.Meta.ActionFacts
 import Classicism.Meta.ActionExamples
+import Classicism.Meta.ActionProperties

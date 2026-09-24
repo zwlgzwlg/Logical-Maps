@@ -1,4 +1,4 @@
-import Classicism.Meta.Axioms
+import Classicism.Meta.Entailment
 
 /-!
 # Denotation, and soundness
@@ -384,6 +384,11 @@ theorem Derivable.sound (I : Interp Sig) {Ax : AxiomSet Sig} (hAx : Ax.holds I) 
 theorem Theorem.holds (I : Interp Sig) {Ax : AxiomSet Sig} (hAx : Ax.holds I) {p : Sentence Sig}
     (h : Theorem Ax p) : p.holds I :=
   Derivable.sound I hAx h .nil (fun _ h => nomatch h)
+
+/-- Entailment transfers holding: in a model of `C` and `Ax₁`, `Ax₂` holds too. -/
+theorem AxiomSet.Entails.holds (I : Interp Sig) (hC : C.axioms.holds I) {Ax₁ Ax₂ : AxiomSet Sig}
+    (e : Ax₁ ⟹ Ax₂) (h₁ : Ax₁.holds I) : Ax₂.holds I :=
+  fun a ha => Theorem.holds I (fun b hb => hb.elim (hC b) (h₁ b)) (e a ha)
 
 /-! ### `Prop` is a model of Classicism
 

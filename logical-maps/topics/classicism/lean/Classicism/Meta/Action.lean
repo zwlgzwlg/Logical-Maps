@@ -1,7 +1,7 @@
 import Mathlib.CategoryTheory.Functor.Basic
 import Mathlib.CategoryTheory.Types.Basic
 import Mathlib.Data.Set.Basic
-import Classicism.Meta.Axioms
+import Classicism.Meta.Entailment
 
 /-!
 # Action premodels and action models

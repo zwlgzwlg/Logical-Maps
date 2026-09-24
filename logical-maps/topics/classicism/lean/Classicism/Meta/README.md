@@ -82,6 +82,8 @@ All were settled with Cian on 22 September 2026.
 | `Conversion.lean` | β, η and δ in three grades: the immediate conversion of a redex, the one-step closure `Step`, and the equivalence closure. `Conv`, written `≡`, is βηδ-conversion, proved a congruence and stable under renaming. |
 | `Derivation.lean` | `Derivable Ax Δ p`: hypotheses, axioms, the rules for `∧`, `∨`, `¬` with excluded middle, `UI`, `Gen`, `EG`, `Inst`, `Ref`, `LL`, conversion. Weakening and monotonicity admissible; `→` and `↔` rules derived. |
 | `Axioms.lean` | The eleven identities as sentences; `C.axiomsMinus` and `C.axioms`, the latter adding Existence at `e`; `C.Derivable`, `C.Theorem`. |
+| `Entailment.lean` | **Entailment between axiom sets**, `Ax₁ ⟹ Ax₂`: every sentence of `Ax₂` a theorem of `C ∪ Ax₁` — the form of the map's arrows. Unions and inclusions of axiom sets; cut (`Derivable.replaceAx`, axioms replaced by their derivations); `refl`, `trans`, monotonicity, unions; `of_imp_family`; `Consistent`. |
+| `SyntaxSchemas.lean` | The map's schemas over *sentences*, which no shallow definition can express: No Pure Contingency, No Contingency and B for a signature, Distinctness and Possibility relative to a theory, and `max`, the maximalization, with Maximalist Classicism `max empty`. |
 | `Denotation.lean` | `Ty.denote`, `Env`, `Interp`, `Term.denote`: the standard reading of the syntax in Lean, with `t` as `Prop` and `e` as a chosen domain. Renaming and substitution commute with it; conversion preserves it; **soundness** of `Derivable`; the eleven identities hold in `Prop`, so `Prop` is a model of `C` and **`C` is consistent**. |
 | `Examples.lean` | A β-step by `rfl`, an η-step, purity decided, small derivations, and the reflection checks: sentences read back are the strict layer's own propositions, by `rfl`. |
 | `Relational.lean` | The bridge for the type-subscripted operations `∧_τ`, `¬_τ`, `∨_τ`, coextension, the pointwise box and implication (constants of `Term.lean`, read in `Denotation.lean` by recursion on the type): the standard reading's `SRel` and `SOrder` instances by the same recursion, and one lemma per operation, by induction on the type, that its reading is the strict layer's. Purpose four of this layer, at work. |
@@ -90,10 +92,15 @@ All were settled with Cian on 22 September 2026.
 | `Normalize.lean` | A **verified βη-normalizer** on the syntax, `Term.nf`, with `Conv.of_nf`: two terms with the same normal form convert, the hypothesis decided by evaluation. |
 | `Translate.lean` | **The translator**, second half: `#classicism_derive foo` reads the strict proof of `foo` and declares `foo.derivable`, a kernel-checked derivation of `foo.quoted`. `#classicism_derive_audit` runs it over a module. |
 | `Derived.lean` | Two quick derivations run at build time, as a check that the whole chain works. |
+| `Schema.lean` | **Principles as schemas and records as entailments.** `#classicism_schema P` quotes the principle `P` (its strict twin) into `P.quoted`, `P.reflect` and `P.schema`, the axiom set of its instances over its object types. `#classicism_entails foo` reads the strict statement `P₁ … → … → Q …` of a record theorem and its derivation `foo.strict.derivable` into `foo.entails : P₁.schema ∪ … ⟹ Q.schema`, specializing the derivation to each instance of `Q` and citing the premises as axioms; `#classicism_entails_audit Mod` does it for a module, deriving first. |
+| `Schemas.lean` | The 28 principles with strict twins, as schemas: the home of every `P.quoted`, `P.reflect`, `P.schema`. |
+| `Derivations.lean` | Every record theorem of `Proofs.lean` derived in the object language: the home of every `foo.strict.derivable`, kept apart because it is the expensive part of the build. |
+| `Entailed.lean` | The record theorems of `Proofs.lean` certified as entailments: the home of every `foo.entails`. All 28 certify. |
 | `Action.lean` | **Action premodels and action models**, the paper's models of Classicism, directly: a rooted category, an inner action per type, the outer actions by recursion on the type, the subaction conditions, the total interpretation function `sem`, `Holds`, and `IsModel`. |
 | `ActionSoundness.lean` | **Soundness of action models**: transport, renaming, substitution, β, η, δ, conversion; every rule of `Derivable`; the eleven identities and Existence hold at every arrow of every action model; `theorem_holds`, `theoremWith_holds`. |
 | `ActionFull.lean` | **Full action models**: the powerset and exponential actions as functors; the full inner domains by recursion on the type; `Premodel.full` on any rooted category from an action for `e` and an interpretation; **`full_isModel`**, that a full premodel is a model, by the combined induction (inner-ness and transport together, the type-subscripted constants by a second induction on the size of the type); `full_bf_surjective`, the paper's (iii). |
 | `ActionFacts.lean` | `ND_σ`, `BF_σ` and the Fregean Axiom as sentences; the clauses for `□` and `◇`; **truncation** (`Premodel.truncate`, `sem_truncate`, `isModel_truncate`, `dia_iff_truncate`, `box_iff_truncate`); the paper's generalizations: `ND_σ` holds iff every `h^σ` out of the object is injective, `BF_σ` holds if every `h^σ` is surjective, the Fregean Axiom holds iff propositions agreeing at the identity are equal. |
+| `ActionProperties.lean` | Properties of action models — propositionally full, quasi-functionally full, full — and what holds in all models with a property: the value of a pure term does not see the arrow (`sem_pure`), so **No Pure Contingency holds in every one-object model** (`holdsAx_npc`); the Fregean Axiom fails in every propositionally full model with a second arrow out of the base. |
 | `ActionExamples.lean` | Full M-set models (`MSet.model`): the idempotent monoid `{1, k}` (`ND_t`, `BF_t` and the Fregean Axiom fail — the map's `full-idempotent-monoid`) and the two-element group (the Fregean Axiom fails, `□ND_σ` and `□BF_σ` hold at every type — `full-involution-group`); at an object whose out-arrows are isomorphisms, `ND_σ` and `BF_σ`; in a groupoid, their necessitations. |
 
 ## Conventions worth knowing
@@ -348,6 +355,53 @@ holds in `A` iff `P` holds in one of its truncations; `box_iff_truncate` likewis
 
 Not yet: the remaining verdicts of the two records, the intrinsic fullness criterion,
 and the infinite models.
+
+## Schemas and entailments
+
+The map's principles are type-indexed families, and its arrows say that one family
+entails another. Both now have a form in this layer (24 September, at Cian's direction).
+
+**Axiom sets and `⟹`** (`Entailment.lean`). `Ax₁ ⟹ Ax₂` says every sentence of `Ax₂`
+is a theorem of `C.axioms ∪ Ax₁`; a derivation that used only `C⁻` is lifted. The
+algebra is what one expects, the one lemma of substance being cut: a derivation from
+`C ∪ Ax₂` is one from `C ∪ Ax₁` when each sentence of `Ax₂` is a theorem of `C ∪ Ax₁`,
+by replacing each use of an axiom by its (closed, renamed, weakened) derivation
+(`Derivable.replaceAx`, which subsumes `mono`). Semantically, entailment transfers
+holding: in `Prop` (`AxiomSet.Entails.holds`, `Denotation.lean`) and in an action model
+(`entails_holds`, `ActionSoundness.lean`), so a model of `Ax₁` refuting a sentence of
+`Ax₂` shows `¬ (Ax₁ ⟹ Ax₂)` (`not_entails_of_model`) — the map's non-implication records.
+
+**Principles as schemas** (`Schema.lean`, `Schemas.lean`). A principle `P` of the shallow
+layer with parameters `σ …` has a strict twin `P.strict` in the paper's vocabulary
+(the transformer's), and `#classicism_schema P` quotes `∀ σ …, P.strict σ …` with the
+quoter of `Quote.lean`: `P.quoted : Ty → … → Sentence`, `P.reflect` (by `rfl`), and
+`P.schema = {P.quoted σ' … | σ' …}`. A parameter-free principle gives a singleton. All
+28 principles with twins are quoted; the map's schemas over sentences rather than types
+— No Pure Contingency, Distinctness, Possibility, `max` — are written by hand in
+`SyntaxSchemas.lean`.
+
+**Records as entailments** (`Schema.lean`, `Entailed.lean`). A record theorem
+`foo : P₁ … → … → Q …` has `foo.strict` and, from `#classicism_derive`,
+`foo.strict.derivable : ∀ σ' …, Theorem C (imp X₁ (… Y))` with the principles' bodies
+unfolded. `#classicism_entails foo` declares `foo.entails : P₁.schema ∪ … ⟹ Q.schema`:
+every instance's object types are read off the strict statement (`P.strict σ Prop`
+reads as `P.quoted σ' t`, with the quoter's `quoteTy`/`quoteRTy`); for each instance
+`Q.quoted x⃗` of the conclusion the derivation is specialized to the parameters making its
+consequent that instance (any type for a parameter the consequent does not mention), each
+premise is cited as an axiom of its schema — an instance by `rfl` — and converted, where
+an operation at a constructor type has been unfolded in the derivation's statement, by
+the translator's `unfoldConv` and `coerce`; then the instance's equation is rewritten
+along. The proof is `Exists.elim`, `Derivable.impE`, `Derivable.axiom`, `Derivable.conv`
+and `Eq.mpr`, checked by the kernel; it rests on `propext` and `Quot.sound` only, no
+choice. The conclusion set is `Q.schema` when the statement's conclusion is `Q` at its
+own parameters; the singleton `{Q.quoted τ}` when it fixes them (`Existence e`); the
+family over the derivation's parameters when it builds them (`Existence (σ → t)`, the
+map's `existence-rel`). A record with no premise gives `empty ⟹ …`.
+`#classicism_entails_audit Classicism.Proofs` certifies every record theorem of a module,
+skipping helper lemmas, and reports; `Entailed.lean` is its home, `Derivations.lean` the
+home of the derivations it cites. **All 28 record theorems certify.** These `foo.entails`
+are what the map's arrows can cite as certificates, once the map's generator is taught
+the statement shape.
 
 ## Next
 

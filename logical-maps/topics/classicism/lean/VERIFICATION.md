@@ -608,6 +608,36 @@ whole premodel as argument.
 
 Not yet done: the remaining verdicts of those two records and the map's other models.
 
+## Schemas, entailments, and the pipeline, 24 September
+
+At Cian's direction the layer now states the map's arrows: `AxiomSet.Entails`
+(`Entailment.lean`), with cut proved by replacing axioms by derivations; the map's
+principles quoted into schemas from their strict twins (`Schema.lean`, `Schemas.lean`,
+28 of them, each with a `rfl` reflection); and a command that reads a record theorem's
+kernel-checked derivation into `P.schema ⟹ Q.schema` (`#classicism_entails`,
+`Entailed.lean`). The schemas over sentences (No Pure Contingency, Distinctness,
+Possibility, maximalization in the paper's official form) are in `SyntaxSchemas.lean`;
+`ActionProperties.lean` has the first "holds in every model with this property" fact,
+No Pure Contingency in one-object models, from the arrow-independence of pure terms.
+
+The pipeline certifies all 28 record theorems of `Proofs.lean` (three helper lemmas are
+skipped as not records). Getting there took three refinements, each a real fact about the
+material rather than a bug: a principle with a relational parameter has an `RTy`
+parameter in its schema, so the instance's types must be read with the quoter's
+`quoteRTy`; a premise cited at a *constructor* type has its relational operations
+unfolded there (`coext` at `t` is `↔`), so it matches its schema's instance only up to
+δβ-conversion, and the command converts by the translator's `unfoldConv` and `coerce`,
+as `citeTheorem` does — which also required the declared quotations to be reducible;
+and a conclusion whose types the statement fixes (`Existence e`) or builds from the
+parameters (`Existence (σ → t)`) is not the whole schema but a singleton or a family
+over the derivation's parameters, and the certificate says so:
+`empty ⟹ single (Existence.quoted e)`, `empty ⟹ fun a => ∃ τ', a = Existence.quoted (Ty.rel τ')`.
+Every instance's types are now read off the strict statement, never by unification
+against the derivation's formulas, which on the comprehension records took over a
+minute to fail. Entailments rest on `propext` and `Quot.sound` only. The derivations,
+the expensive part, live in `Derivations.lean` so that the entailments and schemas can
+change without re-deriving.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen
