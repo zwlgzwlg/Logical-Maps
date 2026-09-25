@@ -20,7 +20,10 @@ and reports an error unless two conditions hold.
    is a proposition. A `have`-bound proof variable is looked through, to its value.
    This is the ζ-Equivalence discipline of `Classicism/Equivalence.lean`; a `propext`
    applied to a hypothesis is the Fregean Axiom and a `funext` applied to one is
-   Functionality, and both are rejected here.
+   Functionality, and both are rejected here. The same check is made at three core
+   theorems that are `propext` or `funext` applied to their own hypothesis, `eq_true`,
+   `eq_false` and `forall_congr` (`gatedRules`): they are what `simp` leaves in a proof
+   term, and at a closed argument each is an instance of the rule.
 
    The gate identifies a rule by the head of an application, so a gated primitive that
    occurs anywhere else is rejected outright: bound to a local name by `have` or `let`,
@@ -30,8 +33,12 @@ and reports an error unless two conditions hold.
    is complete because every constant that carries a proof term, theorems, definitions
    and `opaque`s alike, is descended into.
 
-The walk visits core theorems too, so a core lemma that applies `funext` to a
-hypothesis (for instance `forall_congr`, which `simp` uses) is rejected when reached.
+The walk visits core theorems too, so a core lemma that applies `propext` or `funext` to
+a hypothesis is rejected when reached, unless it is one of the three gated at the use
+site. That is what decides which tactics are usable: `rw`, `calc`, `funext`, `ext` and
+`simp` with closed identities pass; `by_cases`, `decide` and `tauto` reach
+`Classical.choice` and fail; and `simp [h]` with a hypothesis `h` fails exactly when the
+rewrite it performs is the Fregean Axiom, Functionality or BF.
 
 ## The other half
 
@@ -84,10 +91,23 @@ abbrev M := StateRefT State MetaM
 def report (msg : MessageData) : M Unit :=
   modify fun s => { s with errors := s.errors.push msg }
 
-/-- The constants the gate polices. Each may appear only as the head of a fully applied
-application, where its argument is checked (`propext`, `funext`) or the use is rejected
-(`Quot.sound`). -/
-def gatedPrimitives : List Name := [``propext, ``funext, ``Quot.sound]
+/-- The rules the gate polices, each with the position of the argument it checks. Each may
+appear only as the head of a fully applied application whose argument at that position is
+closed. `propext` and `funext` are the primitives. The other three are core theorems that
+are nothing but `propext` or `funext` applied to their own hypothesis: `eq_true h` is
+`propext ⟨_, fun _ => h⟩`, `eq_false h` likewise, and `forall_congr h` is `funext h` under
+a `∀`. As *theorems* they are the Fregean Axiom and Functionality, and descending into
+their bodies would rightly reject them; at a *use* with a closed argument each is an
+instance of the rule, exactly as `propext` at a closed argument is. They are gated here
+because `simp` leaves all three in its proof terms (`eq_self` is `eq_true rfl`; rewriting
+under a binder is `forall_congr`), and this is what lets `simp` through the gate on the
+same terms as everything else. -/
+def gatedRules : List (Name × Nat) :=
+  [(``propext, 2), (``funext, 4), (``forall_congr, 3), (``eq_true, 1), (``eq_false, 1)]
+
+/-- The constants that may not occur bare: the gated rules, and `Quot.sound`, which is
+rejected wherever it occurs. -/
+def gatedPrimitives : List Name := ``Quot.sound :: gatedRules.map (·.1)
 
 /-- The argument of `propext`/`funext` may mention object variables (whose types are
 types) but no proof variables (whose types are propositions). -/
@@ -106,14 +126,11 @@ partial def visit (decl : Name) (e : Expr) : M Unit := do
   | .app .. =>
     let f := e.getAppFn
     let args := e.getAppArgs
-    if f.isConstOf ``propext then
-      if hlt : 2 < args.size then checkClosed decl ``propext args[2]
-      else report m!"{decl}: partially applied `propext`"
-    else if f.isConstOf ``funext then
-      if hlt : 4 < args.size then checkClosed decl ``funext args[4]
-      else report m!"{decl}: partially applied `funext`"
-    else if f.isConstOf ``Quot.sound then
+    if f.isConstOf ``Quot.sound then
       report m!"{decl}: direct use of `Quot.sound`"
+    else if let some (c, i) := f.constName?.bind fun c => gatedRules.find? (·.1 == c) then
+      if hlt : i < args.size then checkClosed decl c args[i]
+      else report m!"{decl}: partially applied `{c}`"
     else
       -- A gated head has been dealt with above; visiting it again would trip the
       -- bare-occurrence check in the `.const` case.
@@ -142,9 +159,10 @@ argument cannot be checked"
   | _ => pure ()
 where
   visitConst (c : Name) : M Unit := do
-    -- `funext` is the gated primitive itself; its own proof (via `Quot.sound`) is not
-    -- part of any Classicism derivation.
-    if c == ``funext then return
+    -- A gated rule is checked where it is applied; its own proof (`funext` via
+    -- `Quot.sound`, the three core lemmas via `propext` or `funext` on their hypothesis)
+    -- is not part of any Classicism derivation.
+    if gatedRules.any (·.1 == c) then return
     if (← get).visited.contains c then return
     modify fun s => { s with visited := s.visited.insert c }
     match (← getEnv).find? c with

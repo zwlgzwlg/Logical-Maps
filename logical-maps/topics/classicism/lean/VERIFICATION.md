@@ -17,6 +17,34 @@ and `em`, with no `propext` or `funext`; the 222 theorems it declares all pass t
 and type audits. No statement quantifies over types: principles are families of formulas
 indexed by types, and records are implications between instances.**
 
+## Revision, 25 September 2026: `simp` through the gate
+
+The gate now checks three core theorems at their use site exactly as it checks `propext`
+and `funext`: `eq_true`, `eq_false` and `forall_congr`, each of which is `propext` or
+`funext` applied to its own hypothesis (`Check.gatedRules`). They are what `simp` leaves in
+a proof term (`eq_self` is `eq_true rfl`; rewriting under `∀` is `forall_congr`), and until
+now the walk descended into their bodies and rejected every goal-closing `simp`. The type
+whitelist admits the eight core constants `simp` emits, and the translator unfolds them at
+their use (`Translate.coreUnfolded`) and η-expands a partially applied relational operation,
+as `simp`'s congruence lemmas leave it. Verified: `simp only` with closed identities passes
+all three checks, at the top level and under `∀` and `∃` (`Tests.simpCloses`,
+`simpUnderForall`, `simpUnderExists`); `simp [h]` with a hypothesis is still rejected, as
+BF under a binder (`viaSimp`, now naming `forall_congr`) and as the Fregean Axiom at the
+top level (`fregeanViaSimp`, new). Two library proofs were rewritten with `simp` as the
+demonstration and re-certified: `dia_ne_imp_ne` (derived in `C⁻`) and the Atomicity step
+lemma `pin_boxImp` (the step certifies in four seconds). The strict transformer needed the
+same unfolding (`Strict.Transform.coreUnfolded`); with it, the `simp` controls transform
+into proofs from the eleven identities. `by_cases`, `decide` and `tauto` remain unusable,
+since they reach `Classical.choice`.
+
+**The paper's symbols** (same day): `⊆` for `boxImp` in `Core.lean`, always on; and in
+`Classicism/Paper.lean`, scope `Classicism.Paper`, the paper's own `∧`, `∨`, `¬`, `⊤`, `⊥` at
+every relational type, plus `≡` for coextension. The connectives are elaborators that decide
+by type, `And`/`Or`/`Not` at `Prop` and the `Rel` operation elsewhere, so a file opening the
+scope loses nothing at `Prop`. Elaboration only: every term is unchanged, and the whole
+library re-certified without any change to the checks. `Results/Atomicity.lean` is written
+in them.
+
 ## Revision, 21 September 2026
 
 Existence was moved out of the class `Ty`, which previously carried an `exists_self`

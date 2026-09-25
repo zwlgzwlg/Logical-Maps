@@ -45,6 +45,14 @@ shadow of the syntax.
 
 open Lean Meta Elab Term Command Classicism.Meta.Quote
 
+/-- The arity, instance included, of each relational operation of `Rel`, for reading a
+partial application of one. -/
+def relOpArity? : Name → Option Nat
+  | ``Classicism.Rel.constP | ``Classicism.Rel.neg | ``Classicism.Rel.boxAt => some 3
+  | ``Classicism.Rel.and | ``Classicism.Rel.or | ``Classicism.Rel.coext
+  | ``Classicism.Rel.boxImp => some 4
+  | _ => none
+
 namespace Classicism.Meta.Translate
 
 register_option Classicism.Meta.Translate.check : Bool := {
@@ -531,6 +539,14 @@ where
       | _ =>
         let f := e.getAppFn
         let args := e.getAppArgs
+        -- a relational operation partially applied, as `simp`'s congruence lemmas leave
+        -- it (`congrArg _ (constP τ)`): η-expand it, and read the abstraction
+        if let some n := f.constName? then
+          if let some k := relOpArity? n then
+            if args.size < k then
+              let e' ← forallTelescopeReducing (← inferType e) fun xs _ =>
+                mkLambdaFVars xs (mkAppN e xs)
+              return ← q e'
         if let .proj S k b := f then
           -- an applied raw projection: the head as above, then the arguments
           if b.isFVar then
@@ -1000,6 +1016,16 @@ def coreArity : Name → Option Nat
   | ``Classicism.em => some 1 | ``True.intro => some 0 | ``trivial => some 0
   | _ => none
 
+/-- Core theorems the translator unfolds at their use, rather than cites: the ones `simp`
+leaves in a proof term. Each body is a few nodes of `propext`, `funext`, `Eq.rec` and
+`Iff.intro` applied to the theorem's arguments, so after β-reduction the rules above take
+over; `eq_true h` becomes `propext ⟨_, fun _ => h⟩`, Subst with `h` closed, and
+`forall_congr h` becomes `funext h` under Leibniz's Law. The gate has already checked
+that the hypothesis argument of each is closed (`Check.gatedRules`). -/
+def coreUnfolded : List Name :=
+  [``of_eq_true, ``of_eq_false, ``eq_true, ``eq_false, ``eq_self, ``congr, ``congrFun',
+   ``forall_congr]
+
 mutual
 
 /-- The derivation of a strict proof term `t : A`: the formula it proves, and the proof of
@@ -1436,7 +1462,7 @@ partial def interpApp (f : Expr) (args : Array Expr) : TrM (Expr × Expr) := do
           let thm ← ensureSpecialized c ls params
           let (S, d) ← citeTheorem (mkAppN f params) thm
           return ← feed (mkAppN f params) S d (args.extract k args.size)
-      if ← isMatcher c then
+      if coreUnfolded.contains c || (← isMatcher c) then
         let info ← getConstInfo c
         return ← interp (((info.value! (allowOpaque := true)).instantiateLevelParams info.levelParams ls).beta args).headBeta
       if let some t' ← unfoldDefinition? t then return ← interp t'

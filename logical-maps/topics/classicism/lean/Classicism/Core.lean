@@ -218,4 +218,15 @@ abbrev Rel.le {τ : Type} [Rel τ] (X Y : τ) : Prop := Y = Rel.or X Y
 
 @[inherit_doc] scoped infix:50 " ≼ " => Rel.le
 
+/-! ### The paper's symbols
+
+`⊆` is `boxImp`, the unboxed inclusion `∀x̄. X[x̄] → Y[x̄]`, as notation. It overloads core
+Lean's subset symbol; no relational type has a `HasSubset` instance, so at a relation only
+this reading elaborates. The other symbols of the paper, `∧`, `∨`, `¬`, `⊤`, `⊥` at every
+relational type, and `≡` for coextension, are in `Classicism/Paper.lean`, in the scope
+`Classicism.Paper`, since at `Prop` they must still mean `And`, `Or`, `Not`, `True` and
+`False`, which takes an elaborator rather than a notation. -/
+
+@[inherit_doc Rel.boxImp] scoped infix:50 " ⊆ " => Rel.boxImp
+
 end Classicism

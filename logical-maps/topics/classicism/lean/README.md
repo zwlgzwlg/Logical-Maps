@@ -272,10 +272,13 @@ and reports an error unless both hold:
 
 `#classicism_audit Mod₁ Mod₂ …` runs it over every theorem declared in those modules.
 `Classicism/Audit.lean` runs the audit over the whole library, so `lake build` fails if
-a proof strays. The walk reaches core lemmas too, which is why `simp` is unusable here:
-it rewrites under binders through `forall_congr`, which applies `funext` to a
-hypothesis. `Classicism/Tests.lean` asserts that each of these is rejected, and that the
-shapes the library relies on are accepted.
+a proof strays. The walk reaches core lemmas too. Three of them, `eq_true`, `eq_false`
+and `forall_congr`, are `propext` or `funext` applied to their own hypothesis and are
+what `simp` leaves in a proof term; the gate checks them at the use site as it checks
+`propext`, so `simp` with closed identities passes, and `simp [h]` with a hypothesis is
+rejected exactly when the rewrite is the Fregean Axiom, Functionality or BF.
+`Classicism/Tests.lean` asserts that each of these is rejected, and that the shapes the
+library relies on are accepted.
 
 ## The type-system check
 
@@ -319,8 +322,9 @@ Law. `rfl` proves only `βηδ`-conversions, which `H` proves. Case on a proposi
 `em_cases`, which uses this theory's `em`. Necessitate a closed theorem with
 `nec% (theorem_name args)`, never `nec% h` for a hypothesis `h`: that yields `p → □p`
 with `p` a variable, which is a form of the Fregean Axiom, not the map's No Pure
-Contingency, whose instances are closed pure sentences. Avoid `simp`, `by_cases`,
-`by_contra`, `decide` and `tauto`.
+Contingency, whose instances are closed pure sentences. `simp only` with the library's
+closed identities is fine (`Classicism/Equivalence.lean`); avoid `by_cases`, `by_contra`,
+`decide` and `tauto`, which reach `Classical.choice`.
 
 ## Building
 
