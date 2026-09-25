@@ -2,6 +2,10 @@ import Classicism.Tools.Schema
 import Classicism.Certified.Schemas
 import Classicism.Principles
 import Classicism.Pointwise
+import Classicism.Paper
+
+-- goals and hover print `fun y ↦ …`, matching the source
+set_option pp.unicode.fun true
 
 /-!
 # Atomicity at type `t` and BF imply Atomicity
@@ -17,7 +21,9 @@ of object-level reasoning inside. Here it is an induction on the relational type
 argument type at a time:
 
 1. **The step**, in the shallow layer: `Atomicity τ → BF σ → Atomicity (σ → τ)`, a
-   theorem of Classicism at the type variables `σ`, `τ`, proved with Lean's own tactics.
+   theorem of Classicism at the type variables `σ`, `τ`, proved with Lean's own tactics,
+   `simp` among them: its proof terms cite `eq_self`, which is `eq_true rfl`, and the
+   gate checks `eq_true` at the use site as it checks `propext` (see `Tools/Check.lean`).
    The pointwise reasoning at `τ` ("by Leibniz's law", "under the box") is the class
    `Pointwise`; the passage from `X ≠ ⊥` to an instance `Xz ≠ ⊥` is BF at `σ`; and each
    fact carried under the box is a closed lemma necessitated with `nec%` and pushed
@@ -39,8 +45,15 @@ never finished writing; that is what led to the change of route (see `Meta/READM
 -/
 
 namespace Classicism
+open Paper
 
-/-! ## 1. The step -/
+/-! ## 1. The step
+
+Written in the paper's symbols (`Classicism/Paper.lean`): `⊆` is the unboxed inclusion
+`boxImp`, `≼` the algebraic order, `∧` and `¬` the pointwise connectives at `τ`, `≡`
+coextension; and an abstraction that builds an object-language term is written `λ y ↦ …`,
+which is core Lean's own spelling of `fun y => …`, kept for proofs. They are notation only;
+the certified terms are the same. -/
 
 section pointwise
 variable {σ τ : Type} [Ty σ] [Rel τ] [Pointwise τ]
@@ -49,38 +62,39 @@ variable {σ τ : Type} [Ty σ] [Rel τ] [Pointwise τ]
 each a closed lemma so that it can be carried under the box. In the paper each is "by
 Leibniz's law"; here Leibniz's law is the case split on `y = z` and a rewrite. -/
 
-/-- `w ⊑ Xz` gives `(λy. w ∧ y = z) ⊑ X`. -/
+/-- `w ⊆ Xz` gives `(λy. w ∧ y = z) ⊆ X`: at `z` the relation is `w ∧ ⊤`, which is `w`;
+elsewhere it is `w ∧ ⊥`. The first case is one `simp`, whose `eq_self` step is
+Necessitation of `z = z` at its closed argument. -/
 theorem pin_boxImp (X : σ → τ) (w : τ) (z : σ) :
-    boxImp w (X z) → boxImp (fun y => Rel.and w (constP (y = z))) X := fun h y =>
+    w ⊆ X z → (λ y ↦ w ∧ constP (y = z)) ⊆ X := fun h y =>
   (em (y = z)).elim
     (fun hyz => by
-      show boxImp (Rel.and w (constP (y = z))) (X y)
-      rw [hyz]
-      exact boxImp_trans _ w _ (boxImp_and_left w _) h)
+      show (w ∧ constP (y = z)) ⊆ X y
+      simp only [hyz, eq_self, Rel.and_constP_true]
+      exact h)
     (fun hyz => boxImp_of_and_constP w (X y) (y = z) hyz)
 
-/-- `Z ⊑ (λy. w ∧ y = z)` and `Zz = w` give `Z ≡ (λy. w ∧ y = z)`. -/
+/-- `Z ⊆ (λy. w ∧ y = z)` and `Zz = w` give `Z ≡ (λy. w ∧ y = z)`. -/
 theorem pin_coext (Z : σ → τ) (w : τ) (z : σ) :
-    boxImp Z (fun y => Rel.and w (constP (y = z))) → Z z = w →
-      coext Z (fun y => Rel.and w (constP (y = z))) := fun h₁ h₂ y =>
+    Z ⊆ (λ y ↦ w ∧ constP (y = z)) → Z z = w →
+      Z ≡ (λ y ↦ w ∧ constP (y = z)) := fun h₁ h₂ y =>
   (em (y = z)).elim
     (fun hyz => by
-      show coext (Z y) (Rel.and w (constP (y = z)))
+      show Z y ≡ (w ∧ constP (y = z))
       rw [hyz, h₂]
       exact coext_of_boxImp _ _ (boxImp_and_constP_self w _ rfl) (boxImp_and_left w _))
     (fun hyz => coext_of_boxImp _ _ (h₁ y) (boxImp_of_and_constP w (Z y) (y = z) hyz))
 
-/-- `Z ⊑ (λy. w ∧ y = z)` and `Zz ⊑ ¬Zz` give `Z ⊑ ¬Z`. -/
+/-- `Z ⊆ (λy. w ∧ y = z)` and `Zz ⊆ ¬Zz` give `Z ⊆ ¬Z`. -/
 theorem pin_bot (Z : σ → τ) (w : τ) (z : σ) :
-    boxImp Z (fun y => Rel.and w (constP (y = z))) → boxImp (Z z) (Rel.neg (Z z)) →
-      boxImp Z (Rel.neg Z) := fun h₁ h₂ y =>
+    Z ⊆ (λ y ↦ w ∧ constP (y = z)) → Z z ⊆ ¬ Z z → Z ⊆ ¬ Z := fun h₁ h₂ y =>
   (em (y = z)).elim
     (fun hyz => by
-      show boxImp (Z y) (Rel.neg (Z y))
+      show Z y ⊆ ¬ Z y
       rw [hyz]
       exact h₂)
     (fun hyz => boxImp_trans _ _ _ (boxImp_and_elim_right w _ _ (h₁ y))
-      (boxImp_of_constP (Rel.neg (Z y)) _ hyz))
+      (boxImp_of_constP (¬ Z y) _ hyz))
 
 end pointwise
 
@@ -95,56 +109,54 @@ omit [Pointwise τ] in
 /-- A possible instance: `X ≠ ⊥` gives some `Xz ≠ ⊥`, for were every `Xz ≤ ¬Xz`, BF would
 make `X ≤ ¬X`. -/
 theorem instance_of_ne_bot (X : σ → τ) :
-    P.Barcan σ → ¬ Rel.le X (Rel.neg X) → ∃ z, ¬ Rel.le (X z) (Rel.neg (X z)) := fun hBF hX =>
-  (em (∃ z, ¬ Rel.le (X z) (Rel.neg (X z)))).elim id fun hno =>
-    absurd ((le_iff X (Rel.neg X)).2 (hBF (fun z => boxImp (X z) (Rel.neg (X z))) fun z =>
-      (em (Rel.le (X z) (Rel.neg (X z)))).elim (fun h => (le_iff _ _).1 h)
+    P.Barcan σ → ¬ X ≼ ¬ X → ∃ z, ¬ X z ≼ ¬ X z := fun hBF hX =>
+  (em (∃ z, ¬ X z ≼ ¬ X z)).elim id fun hno =>
+    absurd ((le_iff X (¬ X)).2 (hBF (λ z ↦ X z ⊆ ¬ X z) fun z =>
+      (em (X z ≼ ¬ X z)).elim (fun h => (le_iff _ _).1 h)
         (fun h => absurd ⟨z, h⟩ hno))) hX
 
-/-- `w ≤ Xz` gives `(λy. w ∧ y = z) ≤ X`: `w ⊑ Xz` under the box. -/
+/-- `w ≤ Xz` gives `(λy. w ∧ y = z) ≤ X`: `w ⊆ Xz` under the box. -/
 theorem pin_le (X : σ → τ) (w : τ) (z : σ) :
-    Rel.le w (X z) → Rel.le (fun y => Rel.and w (constP (y = z))) X := fun hwX =>
+    w ≼ X z → (λ y ↦ w ∧ constP (y = z)) ≼ X := fun hwX =>
   (le_iff _ _).2 (modal_K _ _ (nec% (pin_boxImp X w z)) ((le_iff _ _).1 hwX))
 
 /-- `Z ≤ (λy. w ∧ y = z)` gives `Zz ≤ w`. -/
 theorem pin_le_apply (Z : σ → τ) (w : τ) (z : σ) :
-    Rel.le Z (fun y => Rel.and w (constP (y = z))) → Rel.le (Z z) w := fun hZA =>
+    Z ≼ (λ y ↦ w ∧ constP (y = z)) → Z z ≼ w := fun hZA =>
   (le_iff _ _).2 (modal_K _ _ (nec% (boxImp_and_elim_left w (constP (z = z)) (Z z)))
-    (converse_barcan (fun y => boxImp (Z y) (Rel.and w (constP (y = z))))
+    (converse_barcan (λ y ↦ Z y ⊆ (w ∧ constP (y = z)))
       ((le_iff _ _).1 hZA) z))
 
 /-- `Z ≤ (λy. w ∧ y = z)` and `Zz = w` give `Z = (λy. w ∧ y = z)`, by Intensionality. -/
 theorem pin_eq (Z : σ → τ) (w : τ) (z : σ) :
-    Rel.le Z (fun y => Rel.and w (constP (y = z))) → Z z = w →
-      Z = (fun y => Rel.and w (constP (y = z))) := fun hZA hZw =>
+    Z ≼ (λ y ↦ w ∧ constP (y = z)) → Z z = w →
+      Z = (λ y ↦ w ∧ constP (y = z)) := fun hZA hZw =>
   intensionality Z _ (modal_K _ _ (modal_K _ _ (nec% (pin_coext Z w z))
     ((le_iff _ _).1 hZA)) (necessity_of_identity _ _ hZw))
 
 /-- `Z ≤ (λy. w ∧ y = z)` and `Zz ≤ ¬Zz` give `Z ≤ ¬Z`. -/
 theorem pin_le_neg (Z : σ → τ) (w : τ) (z : σ) :
-    Rel.le Z (fun y => Rel.and w (constP (y = z))) → Rel.le (Z z) (Rel.neg (Z z)) →
-      Rel.le Z (Rel.neg Z) := fun hZA hbot =>
+    Z ≼ (λ y ↦ w ∧ constP (y = z)) → Z z ≼ ¬ Z z → Z ≼ ¬ Z := fun hZA hbot =>
   (le_iff _ _).2 (modal_K _ _ (modal_K _ _ (nec% (pin_bot Z w z))
     ((le_iff _ _).1 hZA)) ((le_iff _ _).1 hbot))
 
 /-- `Z ≤ ¬Z` gives `Z ≤ A` for any `A`. -/
-theorem le_of_le_neg (Z A : σ → τ) : Rel.le Z (Rel.neg Z) → Rel.le Z A := fun hZ =>
+theorem le_of_le_neg (Z A : σ → τ) : Z ≼ ¬ Z → Z ≼ A := fun hZ =>
   (le_iff _ _).2 (modal_K _ _ (nec% (boxImp_of_boxImp_neg Z A)) ((le_iff _ _).1 hZ))
 
 /-- `(λy. w ∧ y = z) ≤ ¬(λy. w ∧ y = z)` gives `w ≤ ¬w`: instantiate at `z`, where the
 relation is `w ∧ ⊤`. -/
 theorem le_neg_of_pin_le_neg (w : τ) (z : σ) :
-    Rel.le (fun y => Rel.and w (constP (y = z))) (Rel.neg (fun y => Rel.and w (constP (y = z)))) →
-      Rel.le w (Rel.neg w) := fun hA =>
+    (λ y ↦ w ∧ constP (y = z)) ≼ ¬ (λ y ↦ w ∧ constP (y = z)) → w ≼ ¬ w := fun hA =>
   (le_iff _ _).2 (modal_K _ _ (modal_K _ _ (nec% (boxImp_neg_of_and_constP w (z = z)))
     (necessity_of_identity z z rfl))
     (converse_barcan
-      (fun y => boxImp (Rel.and w (constP (y = z))) (Rel.neg (Rel.and w (constP (y = z)))))
+      (λ y ↦ (w ∧ constP (y = z)) ⊆ ¬ (w ∧ constP (y = z)))
       ((le_iff _ _).1 hA) z))
 
 /-- If `w` is an atom, so is `λy. w ∧ y = z`: what is strictly below it is `⊥`, since its
 value at `z` is `w` or `⊥`; and `⊥` is strictly below it, since it is not `⊥`. -/
-theorem pin_atom (w : τ) (z : σ) : Atom w → Atom (fun y => Rel.and w (constP (y = z))) :=
+theorem pin_atom (w : τ) (z : σ) : Atom w → Atom (λ y ↦ w ∧ constP (y = z)) :=
   fun hw Z => Iff.intro
     (fun h => (em (Z z = w)).elim
       (fun hZw => absurd (pin_eq Z w z h.1 hZw) h.2)
@@ -156,21 +168,17 @@ theorem pin_atom (w : τ) (z : σ) : Atom w → Atom (fun y => Rel.and w (constP
 BF gives `z` with `Xz ≠ ⊥`, Atomicity at `τ` an atom `w ≤ Xz`, and `λy. w ∧ y = z` is an
 atom below `X`. -/
 theorem atomicity_step : P.Atomicity τ → P.Barcan σ → P.Atomicity (σ → τ) := fun hAt hBF X =>
-  (em (Rel.le X (Rel.neg X))).elim Or.inl fun hX => Or.inr <|
+  (em (X ≼ ¬ X)).elim Or.inl fun hX => Or.inr <|
     (instance_of_ne_bot X hBF hX).elim fun z hz =>
       ((hAt (X z)).elim (fun h => absurd h hz) id).elim fun w hw =>
-        ⟨fun y => Rel.and w (constP (y = z)), pin_atom w z hw.1, pin_le X w z hw.2⟩
+        ⟨λ y ↦ w ∧ constP (y = z), pin_atom w z hw.1, pin_le X w z hw.2⟩
 
 end step
 
 /-- Atomicity at `t` is the instance of Atomicity at `t`, in the map's two spellings. -/
 theorem atomicityT_step : P.AtomicityT → P.Atomicity Prop := fun h => h
 
-/-! ## 2. Certification
-
-Each theorem of the step becomes a rule of the object language: Appendix A on its proof,
-then the translation of the strict proof into a derivation, then the derivation read
-through the schemas. -/
+/-! ## 2. Certification -/
 
 #classicism_certify Classicism.atomicityT_step Classicism.atomicity_step
 
