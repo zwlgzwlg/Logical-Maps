@@ -30,7 +30,7 @@ lemma of the shallow layer is carried into a signature by `Term.ofPure`
 | `possibility-schema-r-implies-distinctness-schema-r` | `possibility_entails_distinctness` |
 | `distinctness-signature-r-implies-possibility-signature-r` | `distinctness_entails_possibility` (any `Sig`) |
 | `possibility-signature-r-implies-distinctness-signature-r` | `possibility_entails_distinctness` |
-| `no-pure-contingency-and-X-imply-necessary-X` (twenty records) | `npc_union_entails_box_pure`; named: `npc_barcanT_entails_necBarcanT`, `npc_ndT_entails_necNdT`, `npc_barcan_entails_box`, `npc_nd_entails_box`, `npc_fregean_entails_box` |
+| `no-pure-contingency-and-X-imply-necessary-X` (twenty records) | `npc_union_entails_box_pure`; named: `npc_barcanT_entails_necBarcanT`, `npc_ndT_entails_necNdT`, `npc_barcan_entails_box`, `npc_nd_entails_box`, `npc_fregean_entails_box`, `npc_actuality_entails_necActuality`, `npc_booleanCompleteness_entails_box`, `npc_atomicity_entails_box` |
 | `no-contingency-signature-r-implies-no-pure-contingency-r` | `noContingency_entails_npc` |
 | `no-contingency-signature-r-implies-signature-b-r` | `noContingency_entails_signatureB` |
 | `no-pure-contingency-r-implies-pure-b-r` | `npc_entails_pureB` |
@@ -61,13 +61,15 @@ record is about them.
 - **Principles not in the shallow layer**: Witnessed Possibility and its kin (substitution
   of constants for variables), Possibility+, Strong Possibility (`◇_≠`), Separated
   Structure, Independence, Modal Freedom, Logical Necessity, the Infinity principles, the
-  Necessity of Arithmetic, Actuality, Boolean Completeness.
+  Necessity of Arithmetic. (Actuality, Boolean Completeness, Atomlessness and Plenitude
+  are now in `Principles.lean`, with their shallow records in `Results/Records.lean`.)
 - **Models not yet built**: the incompatibilities of Possibility with `□`Strong Leibniz
   (`t`) and `□`Relational Choice need the coalesced sums and a Henkin model without
   choice; with Countable Boolean Completeness, Gödel. The maximalist incompatibilities with
   `□`Actuality, `□`Atomicity, `□`Boolean Completeness, `□`Functionality and Rigid
   Comprehension need models refuting those principles, which the two M-set models do not
-  (every proposition of a finite full M-set model has an atom below it).
+  (every proposition of a finite full M-set model has an atom below it); the ideally full
+  models of Appendix D are where they come from.
 - **`c5-and-atomicity(-t)-imply-no-pure-contingency`**: the automorphism exchanging two
   atoms, extended by conjugation to every type, is a substantial metalogical proof by
   induction on terms; a candidate for the next experiment of the Atomicity kind.

@@ -93,6 +93,33 @@ def Atomicity (τ : Type) [Rel τ] : Prop :=
   ∀ x : τ, Rel.le x (Rel.neg x) ∨ ∃ y : τ, Atom y ∧ Rel.le y x
 /-- `atomicity-t`: Atomicity at type `t`. -/
 def AtomicityT : Prop := Atomicity Prop
+/-- `necessary-atomicity-r` at `τ`: the instance boxed. -/
+def NecAtomicity (τ : Type) [Rel τ] : Prop := □ (Atomicity τ)
+
+/-- `atomlessness`: `∀p. ◇p → ∃q. ◇q ∧ q ≤ p ∧ q ≠ p`, every possible proposition has a
+possible proposition strictly below it. -/
+def Atomlessness : Prop := ∀ p : Prop, ◇ p → ∃ q : Prop, ◇ q ∧ Rel.le q p ∧ q ≠ p
+
+/-- `boolean-completeness-r` at `τ`: `∀X. ∃y. GLB_τ(y, X)`, every property of entities
+of the type has a greatest lower bound. -/
+def BooleanCompleteness (τ : Type) [Rel τ] : Prop := ∀ X : τ → Prop, ∃ y : τ, GLB y X
+/-- `boolean-completeness-t`: Boolean Completeness at type `t`. -/
+def BooleanCompletenessT : Prop := BooleanCompleteness Prop
+/-- `necessary-boolean-completeness-r` at `τ`: the instance boxed. -/
+def NecBooleanCompleteness (τ : Type) [Rel τ] : Prop := □ (BooleanCompleteness τ)
+
+/-- `actuality`: `∃p. p ∧ ∀q. q → p ≤ q`, there is a true proposition that entails every
+truth — a true atom, an actual world. -/
+def Actuality : Prop := ∃ p : Prop, p ∧ ∀ q : Prop, q → Rel.le p q
+/-- `necessary-actuality`: Actuality boxed. -/
+def NecActuality : Prop := □ Actuality
+
+/-- `actual-profile-r` at `σ`, for one argument: `∀x. ∃Y. Yx ∧ ∀Z. Zx → Y ≤ Z`, every
+individual of the type has a true property entailing every property it has. The map's
+principle is over finite argument tuples; this is the unary instance, and its nullary
+instance is Actuality itself. -/
+def ActualProfile (σ : Type) [Ty σ] : Prop :=
+  ∀ x : σ, ∃ Y : σ → Prop, Y x ∧ ∀ Z : σ → Prop, Z x → Rel.le Y Z
 
 /-! ### Comprehension, at a relational type
 
@@ -115,6 +142,8 @@ def PersistentComprehension (τ : Type) [Rel τ] : Prop :=
 /-- `inextensible-comprehension-r` at `τ`. -/
 def InextensibleComprehension (τ : Type) [Rel τ] : Prop :=
   ∀ X : τ, ∃ Y : τ, Inextensible Y ∧ coext X Y
+/-- `necessary-rigid-comprehension-r` at `τ`: the instance boxed. -/
+def NecRigidComprehension (τ : Type) [Rel τ] : Prop := □ (RigidComprehension τ)
 /-- `gallin-extensional-comprehension-r` at `τ`: every relation is coextensive with one
 that is persistent and has a persistent pointwise negation. Gallin's rigidity convention. -/
 def GallinExtensionalComprehension (τ : Type) [Rel τ] : Prop :=
@@ -142,5 +171,10 @@ def FunctionalChoice (σ τ : Type) [Ty σ] [Rel τ] : Prop :=
 subrelation. The output type is unrestricted. -/
 def RelationalChoice (σ τ : Type) [Ty σ] [Ty τ] : Prop :=
   ∀ U : σ → τ → Prop, Serial U → ∃ S : σ → τ → Prop, Functional S ∧ ∀ x y, S x y → U x y
+
+/-- `plenitude-r` at `σ`, `τ`: every functional relation `U : σ → τ → Prop` is represented
+by an operation, whose output type `τ` is relational (Classicism, §2.4). -/
+def Plenitude (σ τ : Type) [Ty σ] [Rel τ] : Prop :=
+  ∀ U : σ → τ → Prop, Functional U → ∃ X : σ → τ, ∀ y, U y (X y)
 
 end Classicism.P

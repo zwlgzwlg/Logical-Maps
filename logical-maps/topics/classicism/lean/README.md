@@ -212,7 +212,7 @@ Classicism/Modal.lean                   K, T, 4, NI, CBF, Intensionality and its
 Classicism/Order.lean                   the algebraic order and its pointwise characterisation
 Classicism/Comprehension.lean           persistence, inextensibility and the rigidity variants
 Classicism/Pointwise.lean               the pointwise laws of ⊑ at a relational type, as a class
-Classicism/Lattice.lean                 Atom
+Classicism/Lattice.lean                 Atom, the bounds LB/GLB/UB/LUB, the order at t as identities
 Classicism/Principles.lean              one Prop per principle of the map
 
 Classicism/Syntax/Types.lean            the types of R as an inductive; induction on relational types

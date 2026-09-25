@@ -22,3 +22,7 @@ parameters; `P.reflect`, that reading it back gives the strict twin, by `rfl`; a
   Classicism.P.VeryWeakRigidComprehension Classicism.P.PersistentComprehension
   Classicism.P.InextensibleComprehension Classicism.P.GallinExtensionalComprehension
   Classicism.P.FunctionalChoice Classicism.P.RelationalChoice Classicism.P.Existence
+  Classicism.P.Atomicity Classicism.P.AtomicityT Classicism.P.NecAtomicity
+  Classicism.P.Atomlessness Classicism.P.BooleanCompleteness Classicism.P.BooleanCompletenessT
+  Classicism.P.NecBooleanCompleteness Classicism.P.Actuality Classicism.P.NecActuality
+  Classicism.P.ActualProfile Classicism.P.NecRigidComprehension Classicism.P.Plenitude

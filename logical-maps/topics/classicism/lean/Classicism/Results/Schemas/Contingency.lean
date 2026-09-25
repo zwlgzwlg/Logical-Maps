@@ -86,6 +86,22 @@ theorem npc_nd_entails_box :
     npc Signature.pure ∪ P.NecessityOfDistinctness.schema ⟹ AxiomSet.box P.NecessityOfDistinctness.schema :=
   npc_union_entails_box_pure _
 
+/-- `no-pure-contingency-and-actuality-imply-necessary-actuality`. -/
+theorem npc_actuality_entails_necActuality :
+    npc Signature.pure ∪ P.Actuality.schema ⟹ P.NecActuality.schema := by
+  rintro a rfl
+  exact npc_union_entails_box_pure P.Actuality.schema _ (AxiomSet.mem_box rfl)
+
+/-- `no-pure-contingency-and-completeness-imply-necessary-completeness`, at every type. -/
+theorem npc_booleanCompleteness_entails_box :
+    npc Signature.pure ∪ P.BooleanCompleteness.schema ⟹ AxiomSet.box P.BooleanCompleteness.schema :=
+  npc_union_entails_box_pure _
+
+/-- `no-pure-contingency-and-atomicity-imply-necessary-atomicity`, at every type. -/
+theorem npc_atomicity_entails_box :
+    npc Signature.pure ∪ P.Atomicity.schema ⟹ AxiomSet.box P.Atomicity.schema :=
+  npc_union_entails_box_pure _
+
 /-- `no-pure-contingency-and-fregean-imply-necessary-fregean`. -/
 theorem npc_fregean_entails_box :
     npc Signature.pure ∪ P.FregeanAxiom.schema ⟹ AxiomSet.box P.FregeanAxiom.schema :=

@@ -713,7 +713,7 @@ telescopes only the parameters of a statement, since a record's premises are now
 `Pointwise`, `Lattice` and `Proofs` derives **95 of 95 theorems, in nine seconds for the
 whole run** (the old route took eleven minutes for the strict library and half an hour
 for the records); `modal_K` and `converse_barcan` at build time (`Derived.lean`); the
-record theorems quote and reflect (`Quoted.lean`); all 29 principles quote into schemas
+record theorems quote and reflect (`Quoted.lean`); all 44 principles quote into schemas
 from their shallow statements (`Schemas.lean`); `Atomicity.lean` certifies through
 `#classicism_certify` with no transform step (its build is reported below). The
 strict-layer modules still build and are audited as before; nothing on the route to a
