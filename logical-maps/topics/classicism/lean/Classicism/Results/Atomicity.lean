@@ -178,7 +178,30 @@ end step
 /-- Atomicity at `t` is the instance of Atomicity at `t`, in the map's two spellings. -/
 theorem atomicityT_step : P.AtomicityT → P.Atomicity Prop := fun h => h
 
-/-! ## 2. Certification -/
+/-! ## 2. Certification
+
+Each theorem of the step becomes a rule of the object language. For a shallow theorem
+`foo : P₁ … → … → Q …`, `#classicism_certify foo` quotes into schemas any principle it
+mentions that has none yet (here all come from `Certified/Schemas.lean`), translates its
+proof into a derivation, and reads the derivation through the schemas, declaring two
+kernel-checked theorems, with `foo`'s type parameters as object types (`σ' : Ty` for a
+`[Ty σ]`, `τ' : RTy` for a `[Rel τ]`):
+
+* `foo.derivable : ∀ σ' τ', Meta.Theorem C.axiomsMinus ⌜foo σ' τ'⌝`, the derivation of the
+  quoted statement of `foo`, in `C⁻` (in `C` when the proof uses Existence at `e`);
+* `foo.rule : ∀ σ' τ', C.Theorem (Term.imp (P₁.quoted …) (… (Q.quoted …)))`, the same
+  derivation lifted to `C` and stated as a rule between *instances* of the schemas, each
+  written through its principle's `quoted` so that it composes with `Theorem.ax` and
+  `Theorem.mp`.
+
+So the command below makes available
+
+    atomicityT_step.rule : C.Theorem (Term.imp P.AtomicityT.quoted (P.Atomicity.quoted RTy.t))
+    atomicity_step.rule  : ∀ (σ' : Ty) (τ' : RTy), C.Theorem (Term.imp (P.Atomicity.quoted τ')
+                             (Term.imp (P.Barcan.quoted σ') (P.Atomicity.quoted (σ' ⇒ τ'))))
+
+which part 3 applies at the types of the induction. The report prints each rule's type and
+the Lean axioms it rests on. -/
 
 #classicism_certify Classicism.atomicityT_step Classicism.atomicity_step
 
