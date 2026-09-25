@@ -16,6 +16,7 @@ import Classicism.Syntax.Term
 import Classicism.Syntax.Conversion
 import Classicism.Syntax.Derivation
 import Classicism.Syntax.Axioms
+import Classicism.Syntax.Pure
 import Classicism.Syntax.Entailment
 import Classicism.Syntax.SentenceSchemas
 import Classicism.Syntax.Normalize
@@ -31,6 +32,10 @@ import Classicism.Semantics.ActionProperties
 import Classicism.Semantics.ActionExamples
 -- Metalogical results, each with the object-level reasoning it rests on
 import Classicism.Results.Atomicity
+import Classicism.Results.Schemas.Consistency
+import Classicism.Results.Schemas.PossibilityDistinctness
+import Classicism.Results.Schemas.Contingency
+import Classicism.Results.Schemas.Incompatibilities
 -- The tools: checkers, the quoter, the translator, the pipeline, and their audits
 import Classicism.Tools.Check
 import Classicism.Tools.TypeSystem

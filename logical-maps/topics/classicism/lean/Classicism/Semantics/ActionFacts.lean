@@ -81,6 +81,47 @@ theorem holds_dia {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (p : Formula Sig Γ) (g 
   · rintro ⟨V, k, hk⟩
     exact ⟨⟨V, k⟩, (A.mem_sem_iff M h g p k).2 hk⟩
 
+/-! ### Sentences at the root, and consistency
+
+What a model verdict needs to become a fact about the theory: `⊥` fails, `¬P` holds iff
+`P` fails, `□P` gives `P` (the identity arrow), and the consequences for the axiom sets
+that hold in the model — they are consistent, and no sentence failing in the model is
+their theorem. -/
+
+theorem not_holds_bot : ¬ A.HoldsSentence Term.bot := fun h => by
+  rw [HoldsSentence, Holds, A.sem_bot M] at h
+  exact h
+
+theorem holdsSentence_neg (p : Sentence Sig) :
+    A.HoldsSentence (Term.neg p) ↔ ¬ A.HoldsSentence p := A.holds_neg M (𝟙 A.W₀) IEnv.nil p
+
+/-- `T` at the root: `□P` holding gives `P` holding, at the identity arrow. -/
+theorem holdsSentence_of_box {p : Sentence Sig} (h : A.HoldsSentence (Term.box p)) :
+    A.HoldsSentence p := by
+  have := (A.holds_box M _ _ _).1 h (𝟙 A.W₀)
+  rw [Category.comp_id, IEnv.nil_eq (A.push (𝟙 A.W₀) IEnv.nil)] at this
+  exact this
+
+omit M in
+theorem holdsAx_empty : A.HoldsAx AxiomSet.empty := fun _ h => h.elim
+
+omit M in
+theorem holdsAx_single {a : Sentence Sig} (h : A.HoldsSentence a) : A.HoldsAx (AxiomSet.single a) :=
+  fun _ hb => hb ▸ h
+
+omit M in
+theorem holdsAx_union {Ax₁ Ax₂ : AxiomSet Sig} (h₁ : A.HoldsAx Ax₁) (h₂ : A.HoldsAx Ax₂) :
+    A.HoldsAx (Ax₁ ∪ Ax₂) := fun a ha => ha.elim (h₁ a) (h₂ a)
+
+/-- **An axiom set true in an action model is consistent** with Classicism. -/
+theorem _root_.Classicism.Meta.AxiomSet.Consistent.of_model {Ax : AxiomSet Sig} (h : A.HoldsAx Ax) :
+    Ax.Consistent := fun hb => A.not_holds_bot M (A.theoremWith_holds M h hb)
+
+/-- A sentence failing in a model of `C ∪ Ax` is not a theorem of `C ∪ Ax`. -/
+theorem not_theorem_of_model {Ax : AxiomSet Sig} (h : A.HoldsAx Ax) {p : Sentence Sig}
+    (hp : ¬ A.HoldsSentence p) : ¬ Theorem (Meta.C.axioms ∪ Ax) p :=
+  fun hd => hp (A.theoremWith_holds M h hd)
+
 /-! ### `ND_σ` and injectivity -/
 
 theorem holds_nd_iff (σ : Ty) {W : C} (h : A.W₀ ⟶ W) :

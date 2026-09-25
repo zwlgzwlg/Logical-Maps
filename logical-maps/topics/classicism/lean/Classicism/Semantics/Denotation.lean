@@ -491,4 +491,32 @@ theorem consistent : ¬ C.Theorem (Sig := Signature.pure) Term.bot := fun h =>
 
 end C
 
+/-- **An axiom set true in `Prop` is consistent** with Classicism: the model refutes `⊥`.
+The consistency facts that the side conditions of Possibility and Distinctness ask for
+come from here when the full Henkin model gives them. -/
+theorem AxiomSet.Consistent.of_interp (I : Interp Sig) [Nonempty I.D] {Ax : AxiomSet Sig}
+    (h : Ax.holds I) : Ax.Consistent := fun hb =>
+  have : Sentence.holds I Term.bot :=
+    Meta.Theorem.holds I (fun a ha => ha.elim (C.axioms_holds I a) (h a)) hb
+  this.2 this.1
+
+/-- A sentence false in `Prop` is not a theorem of `C` with an axiom set true there. -/
+theorem not_theorem_of_interp (I : Interp Sig) [Nonempty I.D] {Ax : AxiomSet Sig}
+    (h : Ax.holds I) {p : Sentence Sig} (hp : ¬ p.holds I) : ¬ Theorem (C.axioms ∪ Ax) p :=
+  fun hd => hp (Meta.Theorem.holds I (fun a ha => ha.elim (C.axioms_holds I a) (h a)) hd)
+
+/-- Every object type is inhabited once `e` is: a default element, by recursion. -/
+theorem Ty.denote_nonempty (D : Type) [Nonempty D] : ∀ σ : Ty, Nonempty (Ty.denote D σ)
+  | .e => inferInstance
+  | .rel ρ => RTy.induction (motive := fun ρ => Nonempty (RTy.denote D ρ)) ⟨True⟩
+      (fun _ _ ⟨x⟩ => ⟨fun _ => x⟩) ρ
+
+/-- An interpretation of any signature over a nonempty domain: each constant denotes
+some element of its type. -/
+noncomputable def Interp.trivial (Sig : Signature) (D : Type) [Nonempty D] : Interp Sig :=
+  ⟨D, fun c => Classical.choice (Ty.denote_nonempty D (Sig.typeOf c))⟩
+
+instance (Sig : Signature) (D : Type) [Nonempty D] : Nonempty (Interp.trivial Sig D).D :=
+  inferInstanceAs (Nonempty D)
+
 end Classicism.Meta

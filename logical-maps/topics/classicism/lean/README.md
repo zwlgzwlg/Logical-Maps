@@ -35,7 +35,7 @@ mathematics keep the metalogic next to the object level it is about:
 Classicism/            the theory in Lean: its vocabulary, the discipline, a library of its theorems, the map's principles
 Classicism/Syntax/     the object language as an object of Lean: terms, conversion, derivability
 Classicism/Semantics/  its models: the reading in Prop, action models, the map's models
-Classicism/Results/    the map's arrows, proved: the shallow records, and the metalogical proofs with their object-level steps
+Classicism/Results/    the map's arrows, proved: the shallow records, the metalogical proofs with their object-level steps, and Schemas/, the results about the schemas over sentences
 Classicism/Tools/      the checkers, the quoter, the translator, the pipeline, and their audits
 Classicism/Certified/  the pipeline run at build time: the map's records as certificates
 Classicism/Strict/     the strict layer: Appendix A on Lean proof terms, reading the proofs above
@@ -222,6 +222,7 @@ Classicism/Syntax/Derivation.lean       derivability in H closed under Subst; te
 Classicism/Syntax/Axioms.lean           C and C⁻ as theories; the eleven identities as sentences
 Classicism/Syntax/Entailment.lean       entailment between axiom sets, ⟹, with cut and its algebra
 Classicism/Syntax/SentenceSchemas.lean  No Pure Contingency, Distinctness, Possibility, maximalization
+Classicism/Syntax/Pure.lean             the pure language inside every signature: terms and derivations carried across
 Classicism/Syntax/Normalize.lean        a verified βη-normalizer; conversion by reflection
 Classicism/Syntax/Examples.lean         computed checks, hand derivations, reflection by rfl
 
@@ -236,6 +237,7 @@ Classicism/Semantics/ActionExamples.lean  the map's M-set models and their verdi
 
 Classicism/Results/Records.lean         the map's records proved in the shallow layer, one theorem per record
 Classicism/Results/Atomicity.lean       Atomicity (t) and BF imply Atomicity: a metalogical proof with object-level steps
+Classicism/Results/Schemas/             results about Distinctness, Possibility, No Pure Contingency and their kin, from the models
 
 Classicism/Tools/Check.lean             #classicism_check and #classicism_audit: the gate
 Classicism/Tools/TypeSystem.lean        #classicism_types: the relational type system

@@ -533,6 +533,29 @@ theorem eqCongrFunβ {σ : Ty} {ρ : RTy} {b₁ b₂ : Term Sig (σ :: Γ) ρ}
   have h' := eqCongrFun h a
   conv h' (Conv.app_congr (Conv.app_congr (Conv.refl _) (Conv.beta' b₁ a)) (Conv.beta' b₂ a))
 
+/-- The composite of `[a]` with a lifted substitution is the extended substitution:
+`[a] ∘ ⇑s = (a, s)`. -/
+theorem _root_.Classicism.Meta.Sub.comp_cons_lift {Γ Δ : Ctx} {σ : Ty} (a : Term Sig Δ σ)
+    (s : Sub Sig Γ Δ) : Sub.comp (Sub.cons a Sub.id) (Sub.lift s) = Sub.cons a s := by
+  funext τ v
+  cases v with
+  | zero => rfl
+  | succ v => exact Term.instantiate_weaken _ _
+
+/-- Two quantifiers instantiated at once: `∀x y. b` at `a₁, a₂` gives `b` under the
+simultaneous substitution `(a₂, a₁)`. Instantiating one binder at a time would put
+`a₁` *weakened* under the second binder, and where `a₁` is an arbitrary closed term the
+renaming does not compute; the simultaneous substitution never renames the terms, so
+the kernel evaluates it to the expected formula. This is how a certified `∀x y` lemma is
+applied to two named closed terms inside a metalogical proof. -/
+theorem allE₂β {σ τ : Ty} {b : Formula Sig (τ :: σ :: Γ)}
+    (h : Derivable Ax Δ (Term.forall' (Term.forall' b))) (a₁ : Term Sig Γ σ) (a₂ : Term Sig Γ τ) :
+    Derivable Ax Δ (b.subst (Sub.cons a₂ (Sub.cons a₁ Sub.id))) := by
+  have h₂ : Derivable Ax Δ ((b.subst (Sub.lift (Sub.cons a₁ Sub.id))).subst (Sub.cons a₂ Sub.id)) :=
+    allEβ (allEβ h a₁) a₂
+  rw [Term.subst_subst, Sub.comp_cons_lift] at h₂
+  exact h₂
+
 end Derivable
 
 end Classicism.Meta

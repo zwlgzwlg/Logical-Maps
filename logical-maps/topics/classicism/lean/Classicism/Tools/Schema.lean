@@ -16,12 +16,12 @@ reads each record theorem `P … → Q …` together with its kernel-checked der
   object types `σ' …`.
 - `#classicism_entails_audit Mod …` does that for every record theorem of a module, deriving
   first where no derivation exists, and reports.
-- `#classicism_entails foo …` reads the strict statement of `foo`, of the form
-  `P₁ … → … → Pₙ … → Q …`, and its derivation `foo.strict.derivable` (from
+- `#classicism_entails foo …` reads the statement of `foo`, of the form
+  `P₁ … → … → Pₙ … → Q …`, and its derivation `foo.derivable` (from
   `#classicism_derive`), and declares `foo.entails : P₁.schema ∪ … ∪ Pₙ.schema ⟹ Q.schema`.
   For each instance of `Q` it specializes the derivation to the object types that make
   its consequent that instance (any type for a parameter the consequent does not mention),
-  and cites the premises as axioms of their schemas — the instances read off the strict
+  and cites the premises as axioms of their schemas — the instances read off the
   statement, converted by the translator where an operation at a constructor type has
   been unfolded. When the statement fixes the conclusion's types (`Existence e`) the
   conclusion is the singleton; when they are expressions in its parameters
