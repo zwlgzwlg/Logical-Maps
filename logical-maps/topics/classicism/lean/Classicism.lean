@@ -9,7 +9,7 @@ import Classicism.Comprehension
 import Classicism.Pointwise
 import Classicism.Lattice
 import Classicism.Principles
-import Classicism.Proofs
+import Classicism.Results.Records
 -- The object language as an object of Lean
 import Classicism.Syntax.Types
 import Classicism.Syntax.Term

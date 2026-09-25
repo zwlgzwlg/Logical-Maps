@@ -24,7 +24,7 @@ None of the three is a theorem of Classicism, so none may be used freely.
 
 | layer | what it does | where |
 | --- | --- | --- |
-| **shallow** | states and proves theorems of Classicism in ordinary Lean, under a *gate* admitting `propext` and `funext` only with closed arguments | `Classicism/*.lean` |
+| **shallow** | states and proves theorems of Classicism in ordinary Lean, under a *gate* admitting `propext` and `funext` only with closed arguments | `Classicism/*.lean`, `Results/Records.lean` |
 | **metalogical** | makes the object language, its derivations and its models into objects of Lean, for statements *about* Classicism; its translator turns a gated shallow proof into a kernel-checked derivation of the object language | `Syntax/`, `Semantics/`, `Results/`, with the tools in `Tools/` and their outputs in `Certified/` |
 | **strict** | re-proves every theorem from the eleven closed identities alone, by a transformer carrying out Appendix A on Lean proof terms: the exploration of how the paper's type system sits inside Lean's, no longer on the route to certification | `Strict/`, with its own README |
 
@@ -32,14 +32,17 @@ The directories separate the mathematics from the metaprogramming, and within th
 mathematics keep the metalogic next to the object level it is about:
 
 ```
-Classicism/            the formalization proper — theorems of Classicism in the paper's vocabulary
+Classicism/            the theory in Lean: its vocabulary, the discipline, a library of its theorems, the map's principles
 Classicism/Syntax/     the object language as an object of Lean: terms, conversion, derivability
 Classicism/Semantics/  its models: the reading in Prop, action models, the map's models
-Classicism/Results/    metalogical proofs of the map's arrows, object-level steps and all
+Classicism/Results/    the map's arrows, proved: the shallow records, and the metalogical proofs with their object-level steps
 Classicism/Tools/      the checkers, the quoter, the translator, the pipeline, and their audits
 Classicism/Certified/  the pipeline run at build time: the map's records as certificates
 Classicism/Strict/     the strict layer: Appendix A on Lean proof terms, reading the proofs above
 ```
+
+A `Models/` directory, for theorems about particular models that verify the map's claims
+about them, is the next to come; for now those live in `Semantics/ActionExamples.lean`.
 
 Each is held to what it claims by a check that runs at build time. No statement quantifies
 over types, so every theorem is a formula of the paper's language with type parameters,
@@ -49,6 +52,41 @@ Lean's remaining rules for `→`, `∀`, `∧`, `∨`, `¬`, `↔`, `∃`, `=`, 
 rules of the paper's `H`, short of two things, which this library adds as axioms:
 excluded middle (`em`), and `∃ x : e, x = x` (`e_exists`), since Lean allows empty types
 and `H` proves Existence at every type.
+
+## The theory in Lean
+
+The files at the top of `Classicism/` are the **shallow layer**: Classicism as a theory in
+Lean, everything in them available to a shallow proof and audited by the gate. They are
+three things, in order of dependence.
+
+*The vocabulary and the discipline.* `Core.lean` fixes the language: the type `e` of
+individuals, `Prop` as the type `t` of propositions, the classes `Ty` and `Rel` that say
+which Lean types are types of the paper's system `R` and supply the pointwise operations
+at a relational type, `□` and `◇`, and the two axioms `em` and `e_exists`.
+`Equivalence.lean` is the discipline: the gate that admits `propext` and `funext` only
+with closed arguments, which is exactly the rule of Equivalence (and ξ) and nothing more,
+and the `nec%` macro for necessitating a closed theorem.
+
+*A library of theorems of Classicism*, of the kind any shallow proof draws on.
+`Booleanism.lean` has the propositional and quantifier identities as they are used, in
+`rw` form; `Identities.lean` the paper's eleven closed identities in λ-form, each an
+instance of the gate; `Modal.lean` the modal logic of the defined box — `K`, `T`, `4`,
+the Necessity of Identity, the Converse Barcan Formula, Intensionality and its
+corollaries; `Order.lean` the algebraic order `≤_τ` and its equivalence with the boxed
+pointwise implication, as the class `Order`; `Comprehension.lean` persistence,
+inextensibility and the rigidity variants; `Pointwise.lean` the class `Pointwise`, what
+can be said about the pointwise operations at an abstract relational type; and
+`Lattice.lean` the lattice predicates such as `Atom`. The three classes `Rel`, `Order`,
+`Pointwise` share a design: a law that holds by recursion on the structure of a
+relational type is a field, proved once at `Prop` and once at `σ → τ`, since the shallow
+layer has no induction on types (the metalogical layer does, and derives each such law
+for every object type from those two proofs).
+
+*The map's principles.* `Principles.lean` states each principle of the Logical Map as a
+proposition with its types as parameters, `Barcan σ`, `Atomicity τ`, in the map's own
+formal wording. The records that relate them — the map's arrows — are proved in
+`Results/Records.lean`, one theorem per record, and it is those theorems, together with
+the metalogical results beside them, that the pipeline certifies.
 
 ## C and C⁻
 
@@ -176,7 +214,6 @@ Classicism/Comprehension.lean           persistence, inextensibility and the rig
 Classicism/Pointwise.lean               the pointwise laws of ⊑ at a relational type, as a class
 Classicism/Lattice.lean                 Atom
 Classicism/Principles.lean              one Prop per principle of the map
-Classicism/Proofs.lean                  one theorem per record of the map
 
 Classicism/Syntax/Types.lean            the types of R as an inductive; induction on relational types
 Classicism/Syntax/Term.lean             intrinsically typed de Bruijn terms; renaming, substitution
@@ -197,6 +234,7 @@ Classicism/Semantics/ActionFacts.lean   ND, BF, the Fregean Axiom in a model; tr
 Classicism/Semantics/ActionProperties.lean  properties of models and what holds in all of them
 Classicism/Semantics/ActionExamples.lean  the map's M-set models and their verdicts
 
+Classicism/Results/Records.lean         the map's records proved in the shallow layer, one theorem per record
 Classicism/Results/Atomicity.lean       Atomicity (t) and BF imply Atomicity: a metalogical proof with object-level steps
 
 Classicism/Tools/Check.lean             #classicism_check and #classicism_audit: the gate

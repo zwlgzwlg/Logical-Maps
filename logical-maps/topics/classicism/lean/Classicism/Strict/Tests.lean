@@ -2,7 +2,7 @@ import Classicism.Tools.Check
 import Classicism.Tools.TypeSystem
 import Classicism.Modal
 import Classicism.Identities
-import Classicism.Proofs
+import Classicism.Results.Records
 import Classicism.Strict.Vocabulary
 import Classicism.Strict.Tautology
 import Classicism.Strict.Quantifier

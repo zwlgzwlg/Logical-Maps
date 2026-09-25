@@ -4,7 +4,7 @@ import Classicism.Booleanism
 import Classicism.Identities
 import Classicism.Pointwise
 import Classicism.Lattice
-import Classicism.Proofs
+import Classicism.Results.Records
 
 /-!
 # Audit
@@ -16,7 +16,7 @@ audit, `Classicism/Strict/Audit.lean`.
 
 -- Every theorem of the shallow layer: the prelude, the identities, the classes, the records.
 #classicism_audit Classicism.Booleanism Classicism.Identities Classicism.Modal
-#classicism_audit Classicism.Order Classicism.Comprehension Classicism.Proofs
+#classicism_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records
 #classicism_audit Classicism.Pointwise Classicism.Lattice
 
 -- The type-class instances carry the Logical-Equivalence instances that Intensionality
@@ -35,5 +35,5 @@ not guard, no type outside `R`, and no constant beyond the logical inductives, t
 plumbing and the formalisation's own metalanguage. -/
 
 #classicism_types_audit Classicism.Booleanism Classicism.Identities Classicism.Modal
-#classicism_types_audit Classicism.Order Classicism.Comprehension Classicism.Proofs
+#classicism_types_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records
 #classicism_types_audit Classicism.Pointwise Classicism.Lattice

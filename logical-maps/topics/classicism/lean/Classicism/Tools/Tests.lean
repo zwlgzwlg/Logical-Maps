@@ -2,7 +2,7 @@ import Classicism.Tools.Check
 import Classicism.Tools.TypeSystem
 import Classicism.Modal
 import Classicism.Identities
-import Classicism.Proofs
+import Classicism.Results.Records
 
 /-!
 # Controls for the checker
