@@ -1,13 +1,14 @@
-import Classicism.Semantics.ActionSoundness
+import Classicism.Semantics.IntensionalSoundness
 import Classicism.Syntax.Sentences
 
 /-!
-# Facts about action models
+# Facts about intensional action models
 
 The generalizations of Classicism, §"Exploring action models", that make particular
-models easy to check: the clause for `□`, and three characterizations at the evaluation
-object of an action model, for `ND_σ` (necessity of distinctness), `BF_σ` (the Barcan
-formula) and the Fregean Axiom, each in terms of the arrows out of that object.
+models easy to check, for the intensional form: the clauses for `□` and `◇`, and three
+characterizations at the evaluation object of a model, for `ND_σ` (necessity of
+distinctness), `BF_σ` (the Barcan formula) and the Fregean Axiom, each in terms of the
+arrows out of that object.
 
 - **ND_σ holds iff `h^σ` is injective for every arrow `h` out of the object** (the paper's
   Proposition, (i)).
@@ -15,12 +16,13 @@ formula) and the Fregean Axiom, each in terms of the arrows out of that object.
 - **The Fregean Axiom holds iff any two propositions that agree on the identity arrow are
   equal.**
 
-Each principle is a closed sentence of the object language, written here once; the
-characterizations are for any arrow `h : W₀ → W`, so they serve at the root and at any
-truncation.
+Then **truncation**: the same premodel with a new base, in which `◇P` holds iff `P` holds
+in some truncation and `□P` iff in every one. Where the action models of
+`ActionFacts.lean` needed a lemma per reading to transfer to the truncation, here the
+readings are defined from the actions and the inclusion alone, and transfer by `rfl`.
 -/
 
-namespace Classicism.Meta
+namespace Classicism.Meta.Intensional
 
 open CategoryTheory Term
 
@@ -31,12 +33,7 @@ namespace Premodel
 variable {C : Type} [SmallCategory C] (A : Premodel Sig C) (M : A.IsModel)
 include M
 
-/-! ### The clause for `□` -/
-
-theorem sem_top {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (g : IEnv (A.Dom W) Γ) :
-    A.sem h (top : Formula Sig Γ) g = Set.univ := by
-  rw [top, A.sem_disj M, A.sem_neg M]
-  exact Set.union_compl_self _
+/-! ### The clauses for `□` and `◇` -/
 
 /-- `A, h, g ⊩ □P` iff `A, k∘h, k∘g ⊩ P` for every arrow `k` out of the object. -/
 theorem holds_box {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (p : Formula Sig Γ) (g : IEnv (A.Dom W) Γ) :
@@ -44,30 +41,25 @@ theorem holds_box {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (p : Formula Sig Γ) (g 
   rw [box, A.holds_eq M, A.sem_top M, Set.eq_univ_iff_forall]
   constructor
   · intro H V k
-    exact (A.mem_sem_iff M h g p k).1 (H ⟨V, k⟩)
-  · rintro H ⟨V, k⟩
-    exact (A.mem_sem_iff M h g p k).2 (H k)
-
-theorem sem_bot {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (g : IEnv (A.Dom W) Γ) :
-    A.sem h (bot : Formula Sig Γ) g = ∅ := by
-  rw [bot, A.sem_conj M, A.sem_neg M]
-  exact Set.inter_compl_self _
+    exact (A.mem_sem_iff h g p k).1 (H ⟨V, PUnit.unit, k⟩)
+  · rintro H ⟨V, ⟨⟩, k⟩
+    exact (A.mem_sem_iff h g p k).2 (H k)
 
 /-- `A, h, g ⊩ ◇P` iff `A, k∘h, k∘g ⊩ P` for some arrow `k` out of the object. -/
 theorem holds_dia {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (p : Formula Sig Γ) (g : IEnv (A.Dom W) Γ) :
     A.Holds h (dia p) g ↔ ∃ (V : C) (k : W ⟶ V), A.Holds (h ≫ k) p (A.push k g) := by
   rw [dia, A.holds_neg M, A.holds_eq M, A.sem_bot M, ← Ne, ← Set.nonempty_iff_ne_empty]
   constructor
-  · rintro ⟨⟨V, k⟩, hk⟩
-    exact ⟨V, k, (A.mem_sem_iff M h g p k).1 hk⟩
+  · rintro ⟨⟨V, ⟨⟩, k⟩, hk⟩
+    exact ⟨V, k, (A.mem_sem_iff h g p k).1 hk⟩
   · rintro ⟨V, k, hk⟩
-    exact ⟨⟨V, k⟩, (A.mem_sem_iff M h g p k).2 hk⟩
+    exact ⟨⟨V, PUnit.unit, k⟩, (A.mem_sem_iff h g p k).2 hk⟩
 
-/-! ### Sentences at the root, and consistency
+/-! ### Sentences at the base, and consistency
 
 What a model verdict needs to become a fact about the theory: `⊥` fails, `¬P` holds iff
 `P` fails, `□P` gives `P` (the identity arrow), and the consequences for the axiom sets
-that hold in the model — they are consistent, and no sentence failing in the model is
+that hold in the model: they are consistent, and no sentence failing in the model is
 their theorem. -/
 
 theorem not_holds_bot : ¬ A.HoldsSentence Term.bot := fun h => by
@@ -77,7 +69,7 @@ theorem not_holds_bot : ¬ A.HoldsSentence Term.bot := fun h => by
 theorem holdsSentence_neg (p : Sentence Sig) :
     A.HoldsSentence (Term.neg p) ↔ ¬ A.HoldsSentence p := A.holds_neg M (𝟙 A.W₀) IEnv.nil p
 
-/-- `T` at the root: `□P` holding gives `P` holding, at the identity arrow. -/
+/-- `T` at the base: `□P` holding gives `P` holding, at the identity arrow. -/
 theorem holdsSentence_of_box {p : Sentence Sig} (h : A.HoldsSentence (Term.box p)) :
     A.HoldsSentence p := by
   have := (A.holds_box M _ _ _).1 h (𝟙 A.W₀)
@@ -95,9 +87,10 @@ omit M in
 theorem holdsAx_union {Ax₁ Ax₂ : AxiomSet Sig} (h₁ : A.HoldsAx Ax₁) (h₂ : A.HoldsAx Ax₂) :
     A.HoldsAx (Ax₁ ∪ Ax₂) := fun a ha => ha.elim (h₁ a) (h₂ a)
 
-/-- **An axiom set true in an action model is consistent** with Classicism. -/
-theorem _root_.Classicism.Meta.AxiomSet.Consistent.of_model {Ax : AxiomSet Sig} (h : A.HoldsAx Ax) :
-    Ax.Consistent := fun hb => A.not_holds_bot M (A.theoremWith_holds M h hb)
+/-- **An axiom set true in an intensional action model is consistent** with Classicism. -/
+theorem _root_.Classicism.Meta.AxiomSet.Consistent.of_intensional_model {Ax : AxiomSet Sig}
+    (h : A.HoldsAx Ax) : Ax.Consistent :=
+  fun hb => A.not_holds_bot M (A.theoremWith_holds M h hb)
 
 /-- A sentence failing in a model of `C ∪ Ax` is not a theorem of `C ∪ Ax`. -/
 theorem not_theorem_of_model {Ax : AxiomSet Sig} (h : A.HoldsAx Ax) {p : Sentence Sig}
@@ -133,7 +126,8 @@ theorem holds_bf_of_surjective (σ : Ty) {W : C} (h : A.W₀ ⟶ W)
 theorem holds_fregean_iff {W : C} (h : A.W₀ ⟶ W) :
     A.Holds h Sentence.fregean .nil ↔
       ∀ p q : A.Dom W (.rel .t),
-        ((⟨W, 𝟙 W⟩ : Σ V, W ⟶ V) ∈ A.incl .t W p ↔ (⟨W, 𝟙 W⟩ : Σ V, W ⟶ V) ∈ A.incl .t W q) → p = q := by
+        ((⟨W, PUnit.unit, 𝟙 W⟩ : Tuple A.inner .t W) ∈ A.incl .t W p ↔
+          (⟨W, PUnit.unit, 𝟙 W⟩ : Tuple A.inner .t W) ∈ A.incl .t W q) → p = q := by
   simp only [Sentence.fregean, A.holds_forall M, A.holds_imp M, A.holds_iff M, A.holds_eq M]
   constructor
   · intro H p q e
@@ -163,89 +157,16 @@ abbrev truncate {V : C} (h : A.W₀ ⟶ V) : Premodel Sig C :=
 
 variable {V : C} (h : A.W₀ ⟶ V)
 
-/-! The readings depend on the actions and the inclusion only, not on the base or the
-constants; but as functions of the whole premodel, stuck at a type variable, Lean cannot
-see that, so each is transferred by hand. -/
-
 theorem truncate_Incl (σ : Ty) (W : C) : (A.truncate h).Incl σ W = A.Incl σ W := by
   cases σ <;> rfl
 
-theorem truncate_dflt : ∀ (σ : Ty) (W : C), (A.truncate h).dflt σ W = A.dflt σ W
-  | .e, _ => by simp only [dflt]
-  | .rel .t, _ => by simp only [dflt]
-  | .rel (.arr _ ρ), _ => by
-    simp only [dflt]
-    funext U _ _
-    exact truncate_dflt (.rel ρ) U
+theorem truncate_apply {σ : Ty} {ρ : RTy} {W : C} (F : Intension A.inner (.arr σ ρ) W)
+    (x : Outer A.inner σ W) : (A.truncate h).apply F x = A.apply F x := by
+  ext ⟨U, a, j⟩
+  simp only [apply, Set.mem_ofPred_eq, truncate_Incl]
 
-theorem truncate_apply {σ : Ty} {ρ : RTy} {W : C} (F : RawR A.inner (.arr σ ρ) W)
-    (x : RawT A.inner σ W) : (A.truncate h).apply F x = A.apply F x := by
-  by_cases hx : x ∈ Set.range (A.Incl σ W)
-  · obtain ⟨b, rfl⟩ := hx
-    rw [A.apply_Incl, ← congrFun (truncate_Incl A h σ W) b, (A.truncate h).apply_Incl]
-  · have hx' : x ∉ Set.range ((A.truncate h).Incl σ W) := by rw [truncate_Incl A h]; exact hx
-    unfold apply
-    rw [dif_neg hx, dif_neg hx', truncate_dflt]
-
-theorem truncate_andRead (W : C) : (A.truncate h).andRead W = A.andRead W := rfl
-theorem truncate_orRead (W : C) : (A.truncate h).orRead W = A.orRead W := rfl
-theorem truncate_notRead (W : C) : (A.truncate h).notRead W = A.notRead W := rfl
-theorem truncate_allRead (σ : Ty) (W : C) : (A.truncate h).allRead σ W = A.allRead σ W := rfl
-theorem truncate_exRead (σ : Ty) (W : C) : (A.truncate h).exRead σ W = A.exRead σ W := rfl
-theorem truncate_eqRead (σ : Ty) (W : C) : (A.truncate h).eqRead σ W = A.eqRead σ W := rfl
-
-theorem truncate_topRead (W : C) : (A.truncate h).topRead W = A.topRead W := by
-  simp only [topRead, truncate_apply, truncate_allRead, truncate_orRead, truncate_notRead]
-
-theorem truncate_constRead : ∀ (ρ : RTy) (W : C), (A.truncate h).constRead ρ W = A.constRead ρ W
-  | .t, _ => rfl
-  | .arr _ ρ, _ => by
-    funext _ _ _ U _ _
-    simp only [constRead, truncate_apply, truncate_constRead ρ U]
-
-theorem truncate_negRead : ∀ (ρ : RTy) (W : C), (A.truncate h).negRead ρ W = A.negRead ρ W
-  | .t, _ => rfl
-  | .arr _ ρ, _ => by
-    funext _ _ _ U _ _
-    simp only [negRead, truncate_apply, truncate_negRead ρ U, truncate_Incl]
-
-theorem truncate_andRRead : ∀ (ρ : RTy) (W : C), (A.truncate h).andRRead ρ W = A.andRRead ρ W
-  | .t, _ => rfl
-  | .arr _ ρ, _ => by
-    funext _ _ _ _ _ _ T _ _
-    simp only [andRRead, truncate_apply, truncate_andRRead ρ T, truncate_Incl]
-
-theorem truncate_orRRead : ∀ (ρ : RTy) (W : C), (A.truncate h).orRRead ρ W = A.orRRead ρ W
-  | .t, _ => rfl
-  | .arr _ ρ, _ => by
-    funext _ _ _ _ _ _ T _ _
-    simp only [orRRead, truncate_apply, truncate_orRRead ρ T, truncate_Incl]
-
-theorem truncate_coextRead : ∀ (ρ : RTy) (W : C), (A.truncate h).coextRead ρ W = A.coextRead ρ W
-  | .t, _ => by
-    funext _ _ _ U _ _
-    simp only [coextRead, truncate_apply, truncate_andRead, truncate_orRead, truncate_notRead]
-  | .arr _ ρ, _ => by
-    funext _ _ _ U _ _
-    simp only [coextRead, truncate_apply, truncate_allRead, truncate_coextRead ρ, truncate_Incl]
-
-theorem truncate_boxRead : ∀ (ρ : RTy) (W : C), (A.truncate h).boxRead ρ W = A.boxRead ρ W
-  | .t, _ => by
-    funext V _ _
-    simp only [boxRead, truncate_apply, truncate_eqRead, truncate_topRead]
-  | .arr _ ρ, _ => by
-    funext _ _ _ U _ _
-    simp only [boxRead, truncate_apply, truncate_boxRead ρ U, truncate_Incl]
-
-theorem truncate_boxImpRead : ∀ (ρ : RTy) (W : C), (A.truncate h).boxImpRead ρ W = A.boxImpRead ρ W
-  | .t, _ => by
-    funext _ _ _ U _ _
-    simp only [boxImpRead, truncate_apply, truncate_orRead, truncate_notRead]
-  | .arr _ ρ, _ => by
-    funext _ _ _ U _ _
-    simp only [boxImpRead, truncate_apply, truncate_allRead, truncate_boxImpRead ρ, truncate_Incl]
-
-/-- The paper's transfer lemma: `⟦A⟧_{A_h, i} = ⟦A⟧_{A, i∘h}`. -/
+/-- The paper's transfer lemma: `⟦A⟧_{A_h, i} = ⟦A⟧_{A, i∘h}`. The readings of the
+constants are `A`'s by `rfl`, being defined from the actions and the inclusion alone. -/
 theorem sem_truncate :
     ∀ {Γ : Ctx} {σ : Ty} {W : C} (i : V ⟶ W) (t : Term Sig Γ σ) (g : IEnv (A.Dom W) Γ),
       (A.truncate h).sem i t g = A.sem (h ≫ i) t g
@@ -261,24 +182,12 @@ theorem sem_truncate :
       = A.apply (A.sem (h ≫ i) f g) (A.sem (h ≫ i) a g)
     rw [truncate_apply, sem_truncate i f g, sem_truncate i a g]
   | _, _, _, i, .lam b, g => by
-    show (fun U j x => (A.truncate h).sem (i ≫ j) b (.cons x (A.push j g)))
-      = (fun U j x => A.sem ((h ≫ i) ≫ j) b (.cons x (A.push j g)))
-    funext U j x
-    exact (sem_truncate (i ≫ j) b _).trans
-      (congrArg (fun k => A.sem k b (.cons x (A.push j g))) (Category.assoc h i j).symm)
-  | _, _, _, _, .and, _ => truncate_andRead A h _
-  | _, _, _, _, .or, _ => truncate_orRead A h _
-  | _, _, _, _, .not, _ => truncate_notRead A h _
-  | _, _, _, _, .all σ, _ => truncate_allRead A h σ _
-  | _, _, _, _, .ex σ, _ => truncate_exRead A h σ _
-  | _, _, _, _, .eq σ, _ => truncate_eqRead A h σ _
-  | _, _, _, _, .constR ρ, _ => truncate_constRead A h ρ _
-  | _, _, _, _, .negR ρ, _ => truncate_negRead A h ρ _
-  | _, _, _, _, .andR ρ, _ => truncate_andRRead A h ρ _
-  | _, _, _, _, .orR ρ, _ => truncate_orRRead A h ρ _
-  | _, _, _, _, .coextR ρ, _ => truncate_coextRead A h ρ _
-  | _, _, _, _, .boxR ρ, _ => truncate_boxRead A h ρ _
-  | _, _, _, _, .boxImpR ρ, _ => truncate_boxImpRead A h ρ _
+    ext ⟨U, ⟨x, a⟩, j⟩
+    rw [mem_sem_lam, mem_sem_lam, sem_truncate (i ≫ j) b, Category.assoc]
+  | _, _, _, _, .and, _ | _, _, _, _, .or, _ | _, _, _, _, .not, _ | _, _, _, _, .all _, _
+  | _, _, _, _, .ex _, _ | _, _, _, _, .eq _, _ | _, _, _, _, .constR _, _ | _, _, _, _, .negR _, _
+  | _, _, _, _, .andR _, _ | _, _, _, _, .orR _, _ | _, _, _, _, .coextR _, _ | _, _, _, _, .boxR _, _
+  | _, _, _, _, .boxImpR _, _ => rfl
 
 theorem isModel_truncate (M : A.IsModel) : (A.truncate h).IsModel :=
   fun i t g => by rw [A.sem_truncate h, A.truncate_Incl h]; exact M (h ≫ i) t g
@@ -325,4 +234,4 @@ theorem box_iff_truncate (M : A.IsModel) (p : Sentence Sig) :
 
 end Premodel
 
-end Classicism.Meta
+end Classicism.Meta.Intensional

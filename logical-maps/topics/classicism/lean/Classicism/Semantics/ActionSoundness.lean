@@ -18,51 +18,6 @@ namespace Classicism.Meta
 
 open CategoryTheory
 
-namespace IEnv
-
-variable {Dom : Ty → Type}
-
-theorem ext : ∀ {Γ : Ctx} {g g' : IEnv Dom Γ}, (∀ σ (v : Var Γ σ), g.get v = g'.get v) → g = g'
-  | [], .nil, .nil, _ => rfl
-  | _ :: _, .cons x g, .cons x' g', h => by
-    have h0 := h _ .zero
-    simp only [get] at h0
-    rw [h0, ext (fun _ v => h _ (.succ v))]
-
-theorem nil_eq (g : IEnv Dom []) : g = .nil := by cases g; rfl
-
-/-- The assignment with the given values. -/
-def ofFun : ∀ {Γ : Ctx}, (∀ σ, Var Γ σ → Dom σ) → IEnv Dom Γ
-  | [], _ => .nil
-  | _ :: _, f => .cons (f _ .zero) (ofFun fun _ v => f _ (.succ v))
-
-@[simp] theorem get_ofFun : ∀ {Γ : Ctx} (f : ∀ σ, Var Γ σ → Dom σ) {σ : Ty} (v : Var Γ σ),
-    (ofFun f).get v = f σ v
-  | _, _, _, .zero => rfl
-  | _, f, _, .succ v => get_ofFun (fun _ v => f _ (.succ v)) v
-
-/-- The assignment a renaming pulls back. -/
-def ren {Γ Δ : Ctx} (r : Ren Γ Δ) (g : IEnv Dom Δ) : IEnv Dom Γ :=
-  ofFun fun _ v => g.get (r _ v)
-
-@[simp] theorem get_ren {Γ Δ : Ctx} (r : Ren Γ Δ) (g : IEnv Dom Δ) {σ : Ty} (v : Var Γ σ) :
-    (ren r g).get v = g.get (r _ v) :=
-  get_ofFun _ v
-
-theorem ren_lift {Γ Δ : Ctx} (r : Ren Γ Δ) {σ : Ty} (x : Dom σ) (g : IEnv Dom Δ) :
-    ren (Ren.lift r (σ := σ)) (.cons x g) = .cons x (ren r g) :=
-  ext fun _ v => by cases v <;> rfl
-
-theorem ren_shift {Γ : Ctx} {σ : Ty} (x : Dom σ) (g : IEnv Dom Γ) :
-    ren (Ren.shift (σ := σ)) (.cons x g) = g :=
-  ext fun _ v => by simp [Ren.shift, get]
-
-theorem map_ren {Dom' : Ty → Type} (f : ∀ σ, Dom σ → Dom' σ) {Γ Δ : Ctx} (r : Ren Γ Δ)
-    (g : IEnv Dom Δ) : (ren r g).map f = ren r (g.map f) :=
-  ext fun _ v => by simp
-
-end IEnv
-
 namespace Premodel
 
 variable {Sig : Signature} {C : Type} [SmallCategory C] (A : Premodel Sig C)

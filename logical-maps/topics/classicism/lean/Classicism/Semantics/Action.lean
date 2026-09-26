@@ -2,6 +2,7 @@ import Mathlib.CategoryTheory.Functor.Basic
 import Mathlib.CategoryTheory.Types.Basic
 import Mathlib.Data.Set.Basic
 import Classicism.Syntax.Entailment
+import Classicism.Semantics.Env
 
 /-!
 # Action premodels and action models
@@ -114,37 +115,6 @@ theorem RawT.map_comp : ∀ (σ : Ty) {W V U : C} (h : W ⟶ V) (i : V ⟶ U) (x
   | .rel ρ, _, _, _, h, i, x => RawR.map_comp inner ρ h i x
 
 end Outer
-
-/-! ### Environments over a family of domains -/
-
-/-- An assignment: an element of `Dom σ` for each variable of type `σ` in the context,
-innermost first. -/
-inductive IEnv (Dom : Ty → Type) : Ctx → Type
-  /-- The empty assignment. -/
-  | nil : IEnv Dom []
-  /-- A value for the innermost variable, and the rest. -/
-  | cons {Γ : Ctx} {σ : Ty} : Dom σ → IEnv Dom Γ → IEnv Dom (σ :: Γ)
-
-namespace IEnv
-
-variable {Dom Dom' : Ty → Type}
-
-/-- The value of a variable. -/
-def get : ∀ {Γ : Ctx} {σ : Ty}, Var Γ σ → IEnv Dom Γ → Dom σ
-  | _, _, .zero, .cons x _ => x
-  | _, _, .succ v, .cons _ g => get v g
-
-/-- Apply a family of functions to every value. -/
-def map (f : ∀ σ, Dom σ → Dom' σ) : ∀ {Γ : Ctx}, IEnv Dom Γ → IEnv Dom' Γ
-  | _, .nil => .nil
-  | _, .cons x g => .cons (f _ x) (map f g)
-
-@[simp] theorem get_map (f : ∀ σ, Dom σ → Dom' σ) :
-    ∀ {Γ : Ctx} {σ : Ty} (v : Var Γ σ) (g : IEnv Dom Γ), (g.map f).get v = f σ (g.get v)
-  | _, _, .zero, .cons _ _ => rfl
-  | _, _, .succ v, .cons _ g => get_map f v g
-
-end IEnv
 
 /-! ### Action premodels -/
 
