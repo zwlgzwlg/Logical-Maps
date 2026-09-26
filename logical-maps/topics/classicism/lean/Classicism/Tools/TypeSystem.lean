@@ -64,7 +64,13 @@ def plumbingConstants : List Name :=
    ``Eq.mp, ``Eq.mpr, ``Eq.ndrec, ``Eq.subst, ``Eq.symm, ``Eq.trans,
    ``congrArg, ``congrFun,
    -- the gated primitives themselves, and what `funext` is built from
-   ``propext, ``funext, ``Quot, ``Quot.mk, ``Quot.lift, ``Quot.liftOn, ``Quot.sound]
+   ``propext, ``funext, ``Quot, ``Quot.mk, ``Quot.lift, ``Quot.liftOn, ``Quot.sound,
+   -- what `simp` leaves in a proof term: `eq_self` is `eq_true rfl`, `of_eq_true` closes
+   -- a goal, `forall_congr` rewrites under `∀`, `congr` and `congrFun'` are Leibniz's Law.
+   -- The gate checks the three that take a hypothesis (`Check.gatedRules`); the
+   -- translator unfolds all of them (`Translate.coreUnfolded`).
+   ``eq_true, ``eq_false, ``eq_self, ``of_eq_true, ``of_eq_false, ``forall_congr,
+   ``congr, ``congrFun']
 
 /-- Is `n` a `match` auxiliary? Those are allowed by name, because the walk descends
 into the body and checks the recursor it is compiled to, so a `match` on a forbidden

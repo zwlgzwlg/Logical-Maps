@@ -254,6 +254,12 @@ rather than recomputed from Lean's types, because Lean identifies `¬A` with `A 
 while their readings, `¬A'` and `¬A' ∨ ⊥`, are Boolean-equivalent but not identical. Where
 a proof is used at a formula other than the one it was built at, `coerce` bridges the two. -/
 
+/-- Core theorems unfolded at their use rather than cited: the ones `simp` leaves in a
+proof term. The same list as the translator's `Classicism.Meta.Translate.coreUnfolded`. -/
+def coreUnfolded : List Name :=
+  [``of_eq_true, ``of_eq_false, ``eq_true, ``eq_false, ``eq_self, ``congr, ``congrFun',
+   ``forall_congr]
+
 mutual
 
 /-- The transform of a proof `t : A`: the formula `A'` it establishes, and a proof of
@@ -596,10 +602,15 @@ partial def restate (c : Name) (ls : List Level) (args : Array Expr) : TrM (Opti
         return ← prim ``Classicism.Strict.Prim.eq_trans #[args[0]!] (rest 7)
     return none
   | _ =>
-    -- a compiled `match`: unfold it to the recursor it abbreviates
-    if ← isMatcher c then
+    -- a compiled `match`: unfold it to the recursor it abbreviates; likewise the core
+    -- lemmas `simp` leaves in a proof term, whose bodies are `propext`, `funext`, `Eq.rec`
+    -- and `Iff.intro` on their arguments (the gate has checked that the hypothesis
+    -- argument of `eq_true`, `eq_false` and `forall_congr` is closed, so after unfolding
+    -- the gated site is `propext` or `funext` at a closed argument, as usual)
+    if coreUnfolded.contains c || (← isMatcher c) then
       let info ← getConstInfo c
-      return some ((info.instantiateValueLevelParams! ls).beta args).headBeta
+      let v := (info.value! (allowOpaque := true)).instantiateLevelParams info.levelParams ls
+      return some (v.beta args).headBeta
     return none
 
 /-- The λ-level identity a gated site proves. `t : a = b` mentions no hypothesis, so it is

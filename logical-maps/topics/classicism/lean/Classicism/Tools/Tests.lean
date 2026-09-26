@@ -58,9 +58,9 @@ omits it. -/
 theorem fregeanAxiomViaBoxIdentity (p : Prop) : (p = True) = p :=
   propext ⟨fun h => h ▸ trivial, fun h => propext ⟨fun _ => trivial, fun _ => h⟩⟩
 
-/-- `simp` rewrites under binders with `forall_congr`, which applies `funext` to a
-hypothesis. Any `simp` call that does so is rejected, which is why the prelude avoids
-the tactic. -/
+/-- `simp [h]` with a hypothesis under a binder: `forall_congr` applied to `h`, which is
+`funext` applied to `h`, which is BF at `σ`. `simp` itself is admissible (see the positive
+controls below); what is rejected is this use of it, and the gate names `forall_congr`. -/
 theorem viaSimp {σ : Type} [Ty σ] (X : σ → Prop) (h : ∀ z, X z = True) : (∀ z, X z) = True := by
   simp [h]
 
@@ -72,9 +72,14 @@ appeals to a rejected lemma. -/
 theorem viaSmuggledLemma (p q : Prop) (h : p ↔ q) : □ (p = q) :=
   nec% (fregeanAxiom p q h)
 
+/-- `simp [h]` with a biconditional hypothesis at the top level: `propext h`, the Fregean
+Axiom, reached through `simp` instead of `rw`. -/
+theorem fregeanViaSimp (p q : Prop) (h : p ↔ q) : (p ∧ True) = q := by
+  simp only [h, and_true_eq]
+
 #classicism_expect_rejection fregeanAxiom functionality extensionality viaChoice
 #classicism_expect_rejection fregeanAxiomViaNec fregeanAxiomViaBoxIdentity
-#classicism_expect_rejection viaSimp viaSorry viaSmuggledLemma
+#classicism_expect_rejection viaSimp viaSorry viaSmuggledLemma fregeanViaSimp
 
 /-! ### The gated primitive reached other than by name
 
@@ -129,7 +134,24 @@ theorem necessitation (p : Prop) : □ (p ∨ ¬ p) := nec% (em p)
 /-- Leibniz's Law on a hypothesis is unrestricted. -/
 theorem leibniz (p q : Prop) (h : p = q) (hp : □ p) : □ q := h ▸ hp
 
+/-- `simp` closing a goal cites `eq_self`, which is `eq_true rfl`: Necessitation of a
+closed identity, gated at the use site (`Check.gatedRules`). -/
+theorem simpCloses (p : Prop) : ((p ∧ True) ∨ False) = p := by
+  simp only [and_true_eq, or_false_eq]
+
+/-- `simp` under `∀` cites `forall_congr` at a closed argument: the rule ξ. -/
+theorem simpUnderForall {σ : Type} [Ty σ] (X : σ → Prop) :
+    (∀ z, X z ∧ True) = (∀ z, X z) := by
+  simp only [and_true_eq]
+
+/-- `simp` under `∃` applies `funext` directly, at a closed argument. -/
+theorem simpUnderExists {σ : Type} [Ty σ] (X : σ → Prop) :
+    (∃ z, X z ∧ True) = (∃ z, X z) := by
+  simp only [and_true_eq]
+
 #classicism_check zetaEquivalence xiRule necessitation leibniz
+#classicism_check simpCloses simpUnderForall simpUnderExists
+#classicism_types simpCloses simpUnderForall simpUnderExists
 
 /-! ### Where `e_exists` is and is not needed
 

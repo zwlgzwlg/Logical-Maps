@@ -117,6 +117,22 @@ which re-proved each identity instead of transforming its proof, could do none o
 #classicism_transform Classicism.necessity_of_identity Classicism.converse_barcan
 #classicism_transform Classicism.box_and_eq Classicism.dia_intro Classicism.existence_e
 
+/-! `simp`: its proof terms cite `eq_self`, `of_eq_true`, `congr` and `forall_congr`, which
+the transformer unfolds at their use (`Transform.coreUnfolded`); after unfolding, the gated
+sites are `propext` and `funext` at closed arguments, as everywhere else. -/
+
+theorem simpTransformCloses (p : Prop) : ((p ∧ True) ∨ False) = p := by
+  simp only [and_true_eq, or_false_eq]
+theorem simpTransformForall {σ : Type} [Ty σ] (X : σ → Prop) :
+    (∀ z, X z ∧ True) = (∀ z, X z) := by
+  simp only [and_true_eq]
+theorem simpTransformExists {σ : Type} [Ty σ] (X : σ → Prop) :
+    (∃ z, X z ∧ True) = (∃ z, X z) := by
+  simp only [and_true_eq]
+
+#classicism_transform Classicism.Tests.simpTransformCloses Classicism.Tests.simpTransformForall
+#classicism_transform Classicism.Tests.simpTransformExists
+
 /-! The outputs are ordinary theorems. They pass the strict check and the type check like
 anything written by hand. -/
 

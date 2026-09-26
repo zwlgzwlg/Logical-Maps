@@ -30,9 +30,12 @@ The maximalization of a theory contains its Distinctness schema, so `Max T` enta
 namespace Classicism
 
 /-- What is possibly distinct is distinct: `◇(x ≠ y) → x ≠ y`, the contrapositive of the
-necessity of identity. -/
+necessity of identity. The object-level work is one `simp`: given `x = y`, `x ≠ y` is
+`¬(y = y)`, which is `¬⊤`, which is `⊥`. The `eq_self` step is `propext` at the closed
+argument `rfl`, Necessitation of `y = y`, which the gate checks at the use site and the
+translator turns into Subst. -/
 theorem dia_ne_imp_ne {σ : Type} [Ty σ] (x y : σ) : ◇ (x ≠ y) → x ≠ y :=
-  fun h hxy => h (by rw [hxy]; exact propext ⟨fun hne => hne rfl, False.elim⟩)
+  fun h hxy => h (by simp only [hxy, ne_eq_not, eq_self, not_true_eq])
 
 #classicism_derive Classicism.dia_ne_imp_ne
 
