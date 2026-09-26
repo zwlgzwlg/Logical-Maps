@@ -129,8 +129,11 @@ The first five were settled with Cian on 22 September 2026, the rest on the days
 | `Semantics/IntensionalProperties.lean` | Propositionally full and full; `sem_pure`; **No Pure Contingency in every one-object model**; the Fregean Axiom fails in every propositionally full model with a second arrow out of the base. |
 | `Semantics/IntensionalExamples.lean` | The M-set models ported: `Intensional.MSet.model`, `Idem.not_nd_t`, `Idem.not_bf_t`, `Idem.not_fregean`, `Invol.box_nd`, `Invol.box_bf`, `Invol.not_fregean`; these are what `Results/Schemas/Consistency.lean` now cites. |
 | `Syntax/Constants.lean` | `Term.consts`, the constants a term mentions, finite. |
-| `Semantics/IdeallyFull.lean` | **Appendix D's technique** (26 September): agreement of arrows on a set of individuals, pinning, finite pinning, the subaction of finitely pinned elements; the ideally full domains by the mutual recursor and `Premodel.ideal`; pinning in any premodel (`PinnedO`), closed under the set operations and application; the induction `sem_pinned` and **Proposition D.4** in two forms, `isModel_of_pinned` for any premodel whose inner elements are exactly the finitely pinned ones, and `ideal_isModel` for the construction. |
+| `Semantics/IdeallyFull.lean` | **Appendix D's technique** (26 September): agreement of arrows on a set of individuals, pinning, finite pinning, the subaction of finitely pinned elements; the ideally full domains by the mutual recursor and `Premodel.ideal`; pinning in any premodel (`PinnedO`), closed under the set operations and application; the induction `sem_pinned` and **Proposition D.4** in two forms, `isModel_of_pinned` for any premodel whose inner elements are exactly the finitely pinned ones, and `ideal_isModel` for the construction; **Proposition D.6**, `BF_σ` at every type when every arrow out of the base is surjective on individuals (`ideal_bf_of_surjective`, by pulling an intension back along the arrow). |
 | `Models/Permutations.lean` | **Appendix D, Part 1**: the ideally full model over the permutations of `ℕ`. `□ND_σ`, `□BF_σ`; Actuality fails, Atomlessness holds, Atomicity at `t` fails, each a theorem about the quoted principle, from one cut lemma. |
+| `Models/MonoidModel.lean` | **The ideally full model over any monoid acting on `ℕ`** (26 September, later): a proposition is a set of monoid elements, pinned down by `N` iff membership depends only on the values on `N` (`pinnedO_iff`); the cut lemma; the verdict lemmas parametrized by the fact about the monoid that decides each: `ND_e` fails at a non-injective arrow, `BF_σ` holds when every arrow is surjective (D.6), `BF_e` fails at a test property, Actuality iff `{1}` is finitely pinned (`Free 1` against), Atomlessness when every arrow is free, Atomicity at `t` when every nonzero proposition contains a finitely pinned singleton. |
+| `Models/Monoids.lean` | **Appendix D, Parts 2 to 8**: the monotone surjections, the monotone functions, those collapsing `0, 1` unless the identity, the surjective ones among them, the truncations `gₙ`, the roundings `f_{2^j}`, the shifts `kₙ`, each a `Submonoid (Function.End ℕ)`, each verdict an instance. |
+| `Models/README.md` | The verdict table of all eight parts, and the **survey of two-object variants** — which further consistency facts the paper's "adjoin a second object with no arrows back" would add to the map, and how many. |
 
 ## Conventions worth knowing
 
@@ -463,14 +466,56 @@ type-indexed schema, whose `¬_t` and `∨_t` read as `¬` and `∨` do, by `rfl
 `Incompatibilities.lean` gets `maximalist_necActuality_inconsistent` and
 `maximalist_necAtomicity_inconsistent`, two of the maximalist incompatibilities that were
 waiting on a model. The model's Boolean Completeness failure, which the paper gets from
-Proposition 2.5, waits on that proposition's certification. Parts 2 to 8 are next, on the
-monoids of surjections and of the paper's `gₙ`, `fₙ`, `kₙ`, with Proposition D.6 (`BF`
-from surjectivity on individuals) for the ones where `BF` holds.
+Proposition 2.5, waits on that proposition's certification.
 
-Two Lean lessons from Part 1. A model built by a `def` should be an `abbrev`, so that its
-projections are the plain values to `rw` and instance search; and an arrow of a one-object
-category is its monoid element only definitionally, so name the coercion (`perm`) and
-apply that, never the arrow.
+**Proposition D.6** (`ideal_bf_of_surjective`, in `IdeallyFull.lean`). If every arrow
+out of the base is surjective on individuals, `BF_σ` holds at every type in the ideally
+full model. The paper argues through a right inverse; here an intension `b` at the far
+end of an arrow `k` is pulled back to `pullback k X b` at the near end, the tuples whose
+image agrees on `X` with something in `b`, which is pinned by `X` when `b` is pinned by
+`k[X]` and is sent onto `b` by `k` when `k[X] = Y`; so the action of every arrow is
+surjective on the inner domain at every type, and `holds_bf_of_surjective` finishes.
+
+**Parts 2 to 8** (`Models/MonoidModel.lean`, `Models/Monoids.lean`). The seven remaining
+one-object models are all of one shape, the ideally full model over a monoid `M` acting
+on `ℕ`, so the shape is done once: `MonoidModel.model M` for any `[Monoid M]
+[MulAction M ℕ]`, a proposition a set of monoid elements (`tup g`), pinned down by `N`
+iff membership depends only on the values on `N` (`pinnedO_iff`), the cut lemma of
+Part 1 generalized (`exists_ssubset_of_mem`), and the verdicts each parametrized by the
+one fact about the monoid that decides it: `ND_e` fails at any non-injective arrow
+(`not_nd_e_of_not_injective`); `BF_σ` holds when every arrow is surjective, by D.6
+(`bf_of_surjective`); `BF_e` fails when some property `λy. ψz → φy`, pinned by `{z}`,
+is necessarily true of every actual individual yet not of all (`not_bf_e`, the paper's
+"any arrow sending `1` to `0` sends everything to `0`"); Actuality holds iff `{1}` is
+finitely pinned, which fails when the identity is *free* — perturbable off any finite
+set (`actuality_of_pinned_one`, `not_actuality_of_free`); Atomlessness holds when every
+arrow is free (`atomlessness_of_free`); Atomicity at `t` holds when every nonzero
+proposition contains a finitely pinned singleton (`atomicityT_of_singletons`) and fails
+when some nonzero pinned proposition consists of free arrows (`not_atomicityT_of_free`).
+`Monoids.lean` then instantiates: each monoid a `Submonoid (Function.End ℕ)`, the
+paper's perturbations made concrete (`k ∘ rep m` for a monotone surjection, with `rep m`
+repeating the value at `m`, which differs from `k` because a monotone surjection steps
+up beyond any bound; `raise k m` for a monotone function; `gₘ` itself for the
+truncations), and the singletons `{gₙ}`, `{f_{2^j}}`, `{kₙ}` pinned by two points or
+one. The table is in `Models/README.md`. No Pure Contingency holds in every model on a
+monoid (`holdsAx_npc`), so the necessitations come with the verdicts, and
+`Results/Schemas/Consistency.lean` has one section per part: what holds, what fails,
+their union consistent (the paper's Proposition D.5 without its Boolean Completeness
+column), and the non-theoremhood of each failing principle from the holding ones —
+`BF_e` from Actuality and Atomicity, Actuality from Atomicity, Atomicity from `BF` and
+Actuality, `ND_e` from all three. The Boolean Completeness failures are still to do; the
+two-object models at the end of the appendix and the symmetric model are not built, but
+`Models/README.md` surveys what the two-object variants would add.
+
+Lean lessons from Parts 1 to 8. A model built by a `def` should be an `abbrev`, so that
+its projections are the plain values to `rw` and instance search; an arrow of a
+one-object category is its monoid element only definitionally, so name the coercion
+(`perm`, `arrow`) and apply that, never the arrow; with `variable (M)` in force an
+`abbrev arrow {X Y : SingleObj M}` takes `M` explicitly and misparses, so declare it under
+`variable {M} in`; a theorem named `not_bf_e` inside a namespace shadows the general
+`MonoidModel.not_bf_e` it is proved from, so qualify; a numeral set at a domain type
+needs the ascription `({0, 1} : Set ℕ)`; and `omega` treats `2 ^ j` as an atom but not
+`(fun n => n / 2) (2 * y)`, which a `show` must beta-reduce first.
 
 ## Schemas, entailments and rules
 

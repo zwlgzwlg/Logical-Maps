@@ -74,7 +74,11 @@ record is about them.
   models of Appendix D are where they come from, and the first of them
   (`Models/Permutations.lean`) supplies `□`Actuality and `□`Atomicity; `□`Boolean
   Completeness waits on Proposition 2.5 or a direct argument, `□`Functionality and Rigid
-  Comprehension on further models.
+  Comprehension on further models. Parts 2 to 8 (`Models/Monoids.lean`) add, in
+  `Consistency.lean`, one section per part: the paper's Proposition D.5 rows without the
+  Boolean Completeness column, and the non-theoremhood of each failing principle from
+  the holding ones (`BF_e` from Actuality and Atomicity, Actuality from Atomicity,
+  Atomicity from `BF` and Actuality, `ND_e` from all three).
 - **`c5-and-atomicity(-t)-imply-no-pure-contingency`**: the automorphism exchanging two
   atoms, extended by conjugation to every type, is a substantial metalogical proof by
   induction on terms; a candidate for the next experiment of the Atomicity kind.

@@ -3,6 +3,7 @@ import Classicism.Certified.Entailed
 import Classicism.Semantics.IntensionalExamples
 import Classicism.Semantics.IntensionalProperties
 import Classicism.Models.Permutations
+import Classicism.Models.Monoids
 import Classicism.Syntax.SentenceSchemas
 
 /-!
@@ -34,8 +35,22 @@ sentences the results are stated in. Two models do all the work:
   `¬`Atomicity (`t`) are consistent with `□ND`, `□BF` and Atomlessness, and neither is a
   theorem of `C` with them.
 
-The model verdicts themselves stay in `Semantics/IntensionalExamples.lean` and
-`Models/Permutations.lean`; this file turns
+- **The monoid models of Appendix D, Parts 2 to 8** (`Models/Monoids.lean`, each an
+  ideally full model over a submonoid of the functions on `ℕ`, built by
+  `Models/MonoidModel.lean`): one section per part. Each has `holdsAx_pos`, the principles
+  that hold there (No Pure Contingency, which holds in every model on a monoid, and
+  `BF`, Actuality, Atomlessness, Atomicity at `t` as the part has them), `holdsAx_neg`,
+  the negations of those that fail (`ND_e` in every part, `BF_e`, Actuality, Atomicity at
+  `t`), `consistent`, their union consistent — the row of the paper's Proposition D.5 for
+  that part, without its Boolean Completeness column — and, for each principle that
+  fails, that it is not a theorem of `C` with the ones that hold: `BF_e` is not a
+  theorem of `C` with Actuality and Atomicity (Part 7), Actuality not of `C` with
+  Atomicity (Part 6), Atomicity not of `C` with `BF` and Actuality (Part 5), `ND_e` not of
+  `C` with all three (Part 8). The necessitations follow from No Pure Contingency
+  (`Contingency.lean`, `npc_union_entails_box`) and are not restated.
+
+The model verdicts themselves stay in `Semantics/IntensionalExamples.lean`,
+`Models/Permutations.lean` and `Models/Monoids.lean`; this file turns
 them into facts about the theory with `Consistent.of_model`, `not_theorem_of_model`,
 `Consistent.of_interp` and `not_theorem_of_interp`.
 -/
@@ -245,5 +260,275 @@ theorem atomicityT_not_theorem :
   not_theorem_of_model A M holdsAx_nd_bf_atomless not_atomicityT
 
 end Perms
+
+/-! ### Appendix D, Part 2: the monotone surjections -/
+
+namespace MonoSurj
+
+open Intensional.Premodel Intensional.MonoidModel Intensional.Monoids.MonoSurj
+
+local notation "A" => Intensional.MonoidModel.model Intensional.Monoids.monoSurj
+local notation "M" => Intensional.MonoidModel.model_isModel Intensional.Monoids.monoSurj
+
+/-- What holds: No Pure Contingency, `BF`, Atomlessness. -/
+theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Barcan.schema ∪ P.Atomlessness.schema) :=
+  holdsAx_union A (holdsAx_union A (holdsAx_npc A M)
+      (by rintro _ ⟨σ, rfl⟩; exact bf σ))
+      (by rintro _ rfl; exact atomlessness)
+
+/-- What fails: `ND_e`, Actuality, Atomicity at `t`. -/
+theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg P.Actuality.quoted) ∪ single (Term.neg P.AtomicityT.quoted)) :=
+  holdsAx_union A (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_actuality)))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_atomicityT))
+
+/-- The verdicts of Part 2, jointly consistent. -/
+theorem consistent :
+    Consistent (npc Signature.pure ∪ P.Barcan.schema ∪ P.Atomlessness.schema ∪
+      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg P.Actuality.quoted) ∪ single (Term.neg P.AtomicityT.quoted))) :=
+  Consistent.of_model A M (holdsAx_union A holdsAx_pos holdsAx_neg)
+
+theorem nd_e_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Barcan.schema ∪ P.Atomlessness.schema)) (Sentence.nd .e) :=
+  not_theorem_of_model A M holdsAx_pos not_nd_e
+
+theorem actuality_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Barcan.schema ∪ P.Atomlessness.schema)) (P.Actuality.quoted) :=
+  not_theorem_of_model A M holdsAx_pos not_actuality
+
+theorem atomicityT_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Barcan.schema ∪ P.Atomlessness.schema)) (P.AtomicityT.quoted) :=
+  not_theorem_of_model A M holdsAx_pos not_atomicityT
+
+end MonoSurj
+
+/-! ### Appendix D, Part 3: the monotone functions -/
+
+namespace Mono
+
+open Intensional.Premodel Intensional.MonoidModel Intensional.Monoids.Mono
+
+local notation "A" => Intensional.MonoidModel.model Intensional.Monoids.mono
+local notation "M" => Intensional.MonoidModel.model_isModel Intensional.Monoids.mono
+
+/-- What holds: No Pure Contingency, Atomlessness. -/
+theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Atomlessness.schema) :=
+  holdsAx_union A (holdsAx_npc A M)
+      (by rintro _ rfl; exact atomlessness)
+
+/-- What fails: `ND_e`, `BF_e`, Actuality, Atomicity at `t`. -/
+theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.Actuality.quoted) ∪ single (Term.neg P.AtomicityT.quoted)) :=
+  holdsAx_union A (holdsAx_union A (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_bf_e)))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_actuality)))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_atomicityT))
+
+/-- The verdicts of Part 3, jointly consistent. -/
+theorem consistent :
+    Consistent (npc Signature.pure ∪ P.Atomlessness.schema ∪
+      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.Actuality.quoted) ∪ single (Term.neg P.AtomicityT.quoted))) :=
+  Consistent.of_model A M (holdsAx_union A holdsAx_pos holdsAx_neg)
+
+theorem nd_e_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Atomlessness.schema)) (Sentence.nd .e) :=
+  not_theorem_of_model A M holdsAx_pos not_nd_e
+
+theorem bf_e_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Atomlessness.schema)) (Sentence.bf .e) :=
+  not_theorem_of_model A M holdsAx_pos not_bf_e
+
+theorem actuality_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Atomlessness.schema)) (P.Actuality.quoted) :=
+  not_theorem_of_model A M holdsAx_pos not_actuality
+
+theorem atomicityT_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Atomlessness.schema)) (P.AtomicityT.quoted) :=
+  not_theorem_of_model A M holdsAx_pos not_atomicityT
+
+end Mono
+
+/-! ### Appendix D, Part 4: the monotone functions collapsing `0` and `1`, and the identity -/
+
+namespace Mono01
+
+open Intensional.Premodel Intensional.MonoidModel Intensional.Monoids.Mono01
+
+local notation "A" => Intensional.MonoidModel.model Intensional.Monoids.mono01
+local notation "M" => Intensional.MonoidModel.model_isModel Intensional.Monoids.mono01
+
+/-- What holds: No Pure Contingency, Actuality. -/
+theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Actuality.schema) :=
+  holdsAx_union A (holdsAx_npc A M)
+      (by rintro _ rfl; exact actuality)
+
+/-- What fails: `ND_e`, `BF_e`, Atomicity at `t`. -/
+theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.AtomicityT.quoted)) :=
+  holdsAx_union A (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_bf_e)))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_atomicityT))
+
+/-- The verdicts of Part 4, jointly consistent. -/
+theorem consistent :
+    Consistent (npc Signature.pure ∪ P.Actuality.schema ∪
+      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.AtomicityT.quoted))) :=
+  Consistent.of_model A M (holdsAx_union A holdsAx_pos holdsAx_neg)
+
+theorem nd_e_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Actuality.schema)) (Sentence.nd .e) :=
+  not_theorem_of_model A M holdsAx_pos not_nd_e
+
+theorem bf_e_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Actuality.schema)) (Sentence.bf .e) :=
+  not_theorem_of_model A M holdsAx_pos not_bf_e
+
+theorem atomicityT_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Actuality.schema)) (P.AtomicityT.quoted) :=
+  not_theorem_of_model A M holdsAx_pos not_atomicityT
+
+end Mono01
+
+/-! ### Appendix D, Part 5: the surjective ones among those -/
+
+namespace MonoSurj01
+
+open Intensional.Premodel Intensional.MonoidModel Intensional.Monoids.MonoSurj01
+
+local notation "A" => Intensional.MonoidModel.model Intensional.Monoids.monoSurj01
+local notation "M" => Intensional.MonoidModel.model_isModel Intensional.Monoids.monoSurj01
+
+/-- What holds: No Pure Contingency, `BF`, Actuality. -/
+theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema) :=
+  holdsAx_union A (holdsAx_union A (holdsAx_npc A M)
+      (by rintro _ ⟨σ, rfl⟩; exact bf σ))
+      (by rintro _ rfl; exact actuality)
+
+/-- What fails: `ND_e`, Atomicity at `t`. -/
+theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg P.AtomicityT.quoted)) :=
+  holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_atomicityT))
+
+/-- The verdicts of Part 5, jointly consistent. -/
+theorem consistent :
+    Consistent (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema ∪
+      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg P.AtomicityT.quoted))) :=
+  Consistent.of_model A M (holdsAx_union A holdsAx_pos holdsAx_neg)
+
+theorem nd_e_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema)) (Sentence.nd .e) :=
+  not_theorem_of_model A M holdsAx_pos not_nd_e
+
+theorem atomicityT_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema)) (P.AtomicityT.quoted) :=
+  not_theorem_of_model A M holdsAx_pos not_atomicityT
+
+end MonoSurj01
+
+/-! ### Appendix D, Part 6: the identity and the truncations -/
+
+namespace Truncs
+
+open Intensional.Premodel Intensional.MonoidModel Intensional.Monoids.Truncs
+
+local notation "A" => Intensional.MonoidModel.model Intensional.Monoids.truncs
+local notation "M" => Intensional.MonoidModel.model_isModel Intensional.Monoids.truncs
+
+/-- What holds: No Pure Contingency, Atomicity at `t`. -/
+theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.AtomicityT.schema) :=
+  holdsAx_union A (holdsAx_npc A M)
+      (by rintro _ rfl; exact atomicityT)
+
+/-- What fails: `ND_e`, `BF_e`, Actuality. -/
+theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.Actuality.quoted)) :=
+  holdsAx_union A (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_bf_e)))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_actuality))
+
+/-- The verdicts of Part 6, jointly consistent. -/
+theorem consistent :
+    Consistent (npc Signature.pure ∪ P.AtomicityT.schema ∪
+      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.Actuality.quoted))) :=
+  Consistent.of_model A M (holdsAx_union A holdsAx_pos holdsAx_neg)
+
+theorem nd_e_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.AtomicityT.schema)) (Sentence.nd .e) :=
+  not_theorem_of_model A M holdsAx_pos not_nd_e
+
+theorem bf_e_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.AtomicityT.schema)) (Sentence.bf .e) :=
+  not_theorem_of_model A M holdsAx_pos not_bf_e
+
+theorem actuality_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.AtomicityT.schema)) (P.Actuality.quoted) :=
+  not_theorem_of_model A M holdsAx_pos not_actuality
+
+end Truncs
+
+/-! ### Appendix D, Part 7: the roundings to multiples of powers of `2` -/
+
+namespace Pow2
+
+open Intensional.Premodel Intensional.MonoidModel Intensional.Monoids.Pow2
+
+local notation "A" => Intensional.MonoidModel.model Intensional.Monoids.pow2
+local notation "M" => Intensional.MonoidModel.model_isModel Intensional.Monoids.pow2
+
+/-- What holds: No Pure Contingency, Actuality, Atomicity at `t`. -/
+theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Actuality.schema ∪ P.AtomicityT.schema) :=
+  holdsAx_union A (holdsAx_union A (holdsAx_npc A M)
+      (by rintro _ rfl; exact actuality))
+      (by rintro _ rfl; exact atomicityT)
+
+/-- What fails: `ND_e`, `BF_e`. -/
+theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e))) :=
+  holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_bf_e))
+
+/-- The verdicts of Part 7, jointly consistent. -/
+theorem consistent :
+    Consistent (npc Signature.pure ∪ P.Actuality.schema ∪ P.AtomicityT.schema ∪
+      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)))) :=
+  Consistent.of_model A M (holdsAx_union A holdsAx_pos holdsAx_neg)
+
+theorem nd_e_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Actuality.schema ∪ P.AtomicityT.schema)) (Sentence.nd .e) :=
+  not_theorem_of_model A M holdsAx_pos not_nd_e
+
+theorem bf_e_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Actuality.schema ∪ P.AtomicityT.schema)) (Sentence.bf .e) :=
+  not_theorem_of_model A M holdsAx_pos not_bf_e
+
+end Pow2
+
+/-! ### Appendix D, Part 8: the shifts -/
+
+namespace Shifts
+
+open Intensional.Premodel Intensional.MonoidModel Intensional.Monoids.Shifts
+
+local notation "A" => Intensional.MonoidModel.model Intensional.Monoids.shifts
+local notation "M" => Intensional.MonoidModel.model_isModel Intensional.Monoids.shifts
+
+/-- What holds: No Pure Contingency, `BF`, Actuality, Atomicity at `t`. -/
+theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema ∪ P.AtomicityT.schema) :=
+  holdsAx_union A (holdsAx_union A (holdsAx_union A (holdsAx_npc A M)
+      (by rintro _ ⟨σ, rfl⟩; exact bf σ))
+      (by rintro _ rfl; exact actuality))
+      (by rintro _ rfl; exact atomicityT)
+
+/-- What fails: `ND_e`. -/
+theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e))) :=
+  holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e)
+
+/-- The verdicts of Part 8, jointly consistent. -/
+theorem consistent :
+    Consistent (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema ∪ P.AtomicityT.schema ∪
+      (single (Term.neg (Sentence.nd .e)))) :=
+  Consistent.of_model A M (holdsAx_union A holdsAx_pos holdsAx_neg)
+
+theorem nd_e_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema ∪ P.AtomicityT.schema)) (Sentence.nd .e) :=
+  not_theorem_of_model A M holdsAx_pos not_nd_e
+
+end Shifts
 
 end Classicism.Meta

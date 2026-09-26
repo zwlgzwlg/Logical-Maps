@@ -819,6 +819,46 @@ Atomlessness) the cut is `{h ∈ p | h n = k n}` and the witness that it is stri
 function that agrees with `h` except that `h′n = n + 1`" does not quite give, since
 `n + 1` may lie in `k[X]`.
 
+## Appendix D: D.6 and Parts 2 to 8, 26 September (later still)
+
+Proposition D.6 in `Semantics/IdeallyFull.lean` (`pullback`, `pullback_pinned`,
+`map_pullback`, `ideal_map_surjective`, `ideal_bf_of_surjective`: `BF_σ` at every type
+when every arrow out of the base is surjective on individuals); `Models/MonoidModel.lean`,
+the ideally full model over any monoid acting on `ℕ` with the verdict lemmas
+parametrized by the deciding fact (`not_nd_e_of_not_injective`, `bf_of_surjective`,
+`not_bf_e`, `actuality_of_pinned_one`, `not_actuality_of_free`, `atomlessness_of_free`,
+`atomicityT_of_singletons`, `not_atomicityT_of_free`); `Models/Monoids.lean`, Parts 2 to
+8 as instances, every entry of the paper's table but the Boolean Completeness column;
+`Results/Schemas/Consistency.lean`, a section per part with `holdsAx_pos`, `holdsAx_neg`,
+`consistent`, and `*_not_theorem` for each failing principle.
+
+*Checked.* Every module builds with no `sorry`; the full project builds (899 jobs). The
+verdicts are stated against the quoted principles as before; the packages use
+`P.Barcan.schema`, `P.Actuality.schema`, `P.Atomlessness.schema`, `P.AtomicityT.schema`
+and `single (Term.neg …)` for the failures, and `npc Signature.pure` for No Pure
+Contingency, which `Premodel.holdsAx_npc` gives in every one-object model, so the
+necessitated forms are left to `npc_union_entails_box` rather than restated.
+
+*Where the paper was sketchy and the proof had to choose.* The paper's perturbations
+"let `h'` agree with `h` except beyond `m`" are made concrete per monoid: for a monotone
+surjection `k`, `k ∘ rep m` with `rep m` repeating the value at `m` (monotone and
+surjective, and different from `k` because a monotone surjection steps up beyond any
+bound, `exists_step`); for a monotone function, `raise k m`, one more beyond `m`; for
+Part 5, `k ∘ rep (max m 1)`, so that the perturbation still collapses `0` and `1`. The
+paper's Part 7 indexes by the power of two and pins `{fₙ}` by three points; here by the
+exponent, and two points suffice (`{2^j - 1, 2^j}`), since an arrow of the monoid fixing
+`2^j` and sending `2^j - 1` to `0` is `f_{2^j}`. In Part 6 the paper pins `{gₙ}` by
+`{n - 1, n, n + 1}`; `{n, n + 1}` suffices. The `BF_e` failures are all instances of one
+lemma, `not_bf_e`, whose test property `λy. ψz → φy` is the paper's "any arrow that
+sends `1` to `0` sends everything to `0`" (Part 6), "to an even number" (Part 7), "any
+arrow sending `0` to something positive sends everything to something positive" (Part
+3, with `ψ = φ = (· ≠ 0)`).
+
+*Not verified, and said so.* The Boolean Completeness column; the remark at the end of
+the appendix about two-object variants, which `Models/README.md` analyses without
+formalizing, and where it corrects the paper on two points (`ND` and Atomlessness fail
+at the base of every such variant).
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

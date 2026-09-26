@@ -250,6 +250,9 @@ Classicism/Semantics/IntensionalExamples.lean  the M-set models in the intension
 Classicism/Semantics/IdeallyFull.lean   Appendix D's technique: pinning, ideally full models, Proposition D.4
 
 Classicism/Models/Permutations.lean     Appendix D, Part 1: the permutation model; ND, BF, Atomlessness hold, Actuality and Atomicity fail
+Classicism/Models/MonoidModel.lean      the ideally full model over any monoid acting on ℕ; the verdict lemmas, parametrized
+Classicism/Models/Monoids.lean          Appendix D, Parts 2 to 8: the seven monoids of functions on ℕ, the verdicts as instances
+Classicism/Models/README.md             the verdict table; the survey of two-object variants and what they would add to the map
 
 Classicism/Results/Records.lean         the map's records proved in the shallow layer, one theorem per record
 Classicism/Results/Atomicity.lean       Atomicity (t) and BF imply Atomicity: a metalogical proof with object-level steps

@@ -62,6 +62,20 @@ theorem AgreeOn.union_right {W V : C} {N M : Set (De.obj W)} {h i : W ⟶ V}
     (ha : AgreeOn De (N ∪ M) h i) : AgreeOn De M h i :=
   ha.mono De Set.subset_union_right
 
+theorem AgreeOn.refl {W V : C} (N : Set (De.obj W)) (h : W ⟶ V) : AgreeOn De N h h := fun _ _ => rfl
+
+theorem AgreeOn.symm {W V : C} {N : Set (De.obj W)} {h i : W ⟶ V} (ha : AgreeOn De N h i) :
+    AgreeOn De N i h := fun x hx => (ha x hx).symm
+
+theorem AgreeOn.trans {W V : C} {N : Set (De.obj W)} {h i j : W ⟶ V} (h₁ : AgreeOn De N h i)
+    (h₂ : AgreeOn De N i j) : AgreeOn De N h j := fun x hx => (h₁ x hx).trans (h₂ x hx)
+
+/-- Arrows agreeing on `N` still agree after a further arrow. -/
+theorem AgreeOn.comp_right {W V U : C} {N : Set (De.obj W)} {h i : W ⟶ V} (ha : AgreeOn De N h i)
+    (l : V ⟶ U) : AgreeOn De N (h ≫ l) (i ≫ l) := fun x hx => by
+  simp only [Functor.map_comp, types_comp_apply]
+  rw [ha x hx]
+
 /-- If `h', i'` agree on `h[N]`, then `h ≫ h'` and `h ≫ i'` agree on `N`. -/
 theorem AgreeOn.comp {W V U : C} {N : Set (De.obj W)} (h : W ⟶ V) {h' i' : V ⟶ U}
     (ha : AgreeOn De (De.map h '' N) h' i') : AgreeOn De N (h ≫ h') (h ≫ i') := by
@@ -439,6 +453,80 @@ theorem ideal_pinned_inner (ρ : RTy) (W : C) (F : Intension (A).inner ρ W)
 /-- **Proposition D.4: an ideally full premodel is an intensional action model.** -/
 theorem ideal_isModel : (A).IsModel :=
   (A).isModel_of_pinned (ideal_inner_finPinned De) (ideal_pinned_inner De)
+
+/-! ### Proposition D.6: surjectivity on individuals gives `BF`
+
+If every arrow out of the base is surjective on individuals, then it is surjective on
+the ideally full domain of every type, so `BF_σ` holds at the base for every `σ`. Given
+`b` at `V` pinned down by a finite `Y`, choose a finite `X` at the base with `k[X] = Y`;
+the intension of tuples `⟨x̄, i⟩` such that `i` agrees on `X` with `k ∘ j` for some
+`⟨x̄, j⟩ ∈ b` is pinned down by `X`, and `k` sends it to `b`. -/
+
+/-- A finite set in the image of a surjection is the image of a finite set. -/
+theorem exists_finite_image_eq {α β : Type} {f : α → β} (hf : Function.Surjective f)
+    {Y : Set β} (hY : Y.Finite) : ∃ X : Set α, X.Finite ∧ f '' X = Y := by
+  classical
+  choose g hg using hf
+  refine ⟨g '' Y, hY.image g, ?_⟩
+  rw [Set.image_image]
+  exact (Set.image_congr fun y _ => hg y).trans (Set.image_id Y)
+
+/-- The witness at the base: the tuples whose arrow agrees on `X` with `k ∘ j` for some
+`⟨x̄, j⟩` in the intension. -/
+def pullback {ρ : RTy} {V : C} (k : W₀ ⟶ V) (X : Set ((A).Dom W₀ .e)) (b : Intension (A).inner ρ V) :
+    Intension (A).inner ρ W₀ :=
+  {p | ∃ j : V ⟶ p.1, AgreeOn ((A).inner .e) X p.2.2 (k ≫ j) ∧ (⟨p.1, p.2.1, j⟩ : Tuple (A).inner ρ V) ∈ b}
+
+theorem pullback_pinned {ρ : RTy} {V : C} (k : W₀ ⟶ V) (X : Set ((A).Dom W₀ .e))
+    (b : Intension (A).inner ρ V) : (A).PinnedO (.rel ρ) X (pullback De k X b) := by
+  intro U h i ha
+  simp only [Outer.map_rel]
+  ext ⟨T, a, l⟩
+  simp only [Intension.mem_map, pullback, Set.mem_ofPred_eq]
+  constructor
+  · rintro ⟨j, hj, hb⟩
+    exact ⟨j, ((ha.comp_right _ l).symm _).trans _ hj, hb⟩
+  · rintro ⟨j, hj, hb⟩
+    exact ⟨j, (ha.comp_right _ l).trans _ hj, hb⟩
+
+theorem map_pullback {ρ : RTy} {V : C} (k : W₀ ⟶ V) {X : Set ((A).Dom W₀ .e)} {Y : Set ((A).Dom V .e)}
+    (hXY : ((A).inner .e).map k '' X = Y) {b : Intension (A).inner ρ V} (hb : (A).PinnedO (.rel ρ) Y b) :
+    Intension.map (A).inner k (pullback De k X b) = b := by
+  subst hXY
+  ext ⟨T, a, l⟩
+  simp only [Intension.mem_map, pullback, Set.mem_ofPred_eq]
+  constructor
+  · rintro ⟨j, hj, hb'⟩
+    -- `l` and `j` agree on `k[X]`, so `b` contains `⟨a, l⟩` iff it contains `⟨a, j⟩`
+    have e := hb T l j (by
+      rintro y ⟨x, hx, rfl⟩
+      have := hj x hx
+      simpa [Functor.map_comp, types_comp_apply] using this)
+    simp only [Outer.map_rel] at e
+    have := congrArg (fun S : Intension (A).inner ρ T => (⟨T, a, 𝟙 T⟩ : Tuple (A).inner ρ T) ∈ S) e
+    simp only [Intension.mem_map, Category.comp_id] at this
+    exact this.mpr hb'
+  · intro hb'
+    exact ⟨l, AgreeOn.refl _ _ _, hb'⟩
+
+/-- Every arrow out of the base surjective on individuals is surjective on every domain. -/
+theorem ideal_map_surjective (hs : ∀ {V : C} (k : W₀ ⟶ V), Function.Surjective (De.map k)) :
+    ∀ (σ : Ty) {V : C} (k : W₀ ⟶ V), Function.Surjective (((A).inner σ).map k)
+  | .e, _, k => hs k
+  | .rel ρ, V, k => by
+    intro b
+    obtain ⟨Y, hY, hb⟩ := ideal_inner_finPinned De (.rel ρ) V b
+    obtain ⟨X, hX, hXY⟩ := exists_finite_image_eq (f := ((A).inner .e).map k) (hs k) hY
+    obtain ⟨a, ha⟩ := ideal_pinned_inner De ρ W₀ (pullback De k X ((A).Incl _ V b))
+      ⟨X, hX, pullback_pinned De k X _⟩
+    refine ⟨a, (A).Incl_injective _ V ?_⟩
+    rw [(A).Incl_map, Outer.map_rel, (A).Incl_rel ρ W₀ a, ha, map_pullback De k hXY hb]
+
+/-- **Proposition D.6.** If every arrow out of the base is surjective on individuals,
+`BF_σ` holds at the base for every `σ`. -/
+theorem ideal_bf_of_surjective (hs : ∀ {V : C} (k : W₀ ⟶ V), Function.Surjective (De.map k)) (σ : Ty) :
+    (A).HoldsSentence (Sentence.bf σ) :=
+  (A).holds_bf_of_surjective (ideal_isModel De) σ (𝟙 W₀) fun k => ideal_map_surjective De hs σ k
 
 end Premodel
 
