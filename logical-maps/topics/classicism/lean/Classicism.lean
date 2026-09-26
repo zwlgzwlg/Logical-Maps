@@ -21,6 +21,8 @@ import Classicism.Syntax.Entailment
 import Classicism.Syntax.SentenceSchemas
 import Classicism.Syntax.Normalize
 import Classicism.Syntax.Examples
+import Classicism.Syntax.Sentences
+import Classicism.Syntax.Constants
 -- Its models
 import Classicism.Semantics.Denotation
 import Classicism.Semantics.Relational
@@ -30,6 +32,16 @@ import Classicism.Semantics.ActionFull
 import Classicism.Semantics.ActionFacts
 import Classicism.Semantics.ActionProperties
 import Classicism.Semantics.ActionExamples
+import Classicism.Semantics.Env
+import Classicism.Semantics.Intensional
+import Classicism.Semantics.IntensionalSoundness
+import Classicism.Semantics.IntensionalFacts
+import Classicism.Semantics.IntensionalFull
+import Classicism.Semantics.IntensionalProperties
+import Classicism.Semantics.IntensionalExamples
+import Classicism.Semantics.IdeallyFull
+-- The map's models, from Appendix D
+import Classicism.Models.Permutations
 -- Metalogical results, each with the object-level reasoning it rests on
 import Classicism.Results.Atomicity
 import Classicism.Results.Schemas.Consistency

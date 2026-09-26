@@ -786,6 +786,39 @@ the full actions, and the full arguments by the mutual recursor) are related by 
 explicit bijection, and facts about a particular model are stated in the plain form of
 its domains, since the model's projections are the plain values only definitionally.
 
+## Appendix D: ideally full models, 26 September (later)
+
+The paper's Appendix D in the intensional form: `Semantics/IdeallyFull.lean` (agreement,
+pinning, the finitely pinned subaction, the ideally full domains by the mutual recursor,
+`Premodel.ideal`; pinning in any premodel, closed under the set operations and
+application; `sem_congr_const`; the induction `sem_pinned`; Proposition D.4 as
+`isModel_of_pinned` for any premodel whose inner elements are exactly the finitely
+pinned ones, and `ideal_isModel` for the construction), `Syntax/Constants.lean`
+(`Term.consts`, finite, so that the model condition is checked over any signature), and
+`Models/Permutations.lean`, Part 1: the permutation model, with `box_nd`, `box_bf`,
+`not_actuality`, `atomlessness`, `not_atomicityT`, `not_atomicity_t`, each about the
+quoted principle. `Results/Schemas/Consistency.lean` gains the facts they give and
+`Incompatibilities.lean` the maximalist incompatibilities with `□`Actuality and
+`□`Atomicity, two of those the previous audit listed as waiting on models.
+
+*Checked.* Every module builds with no `sorry`; the full project builds; the new
+theorems are stated against `P.Actuality.quoted`, `P.Atomlessness.quoted`,
+`P.AtomicityT.quoted` and `P.Atomicity.quoted RTy.t` as `Certified/Schemas.lean`
+declares them, so a verdict is about the very sentence the map's records name. The
+`t`-instance of the type-indexed Atomicity is spelled with `¬_t` and `∨_t`, and its
+value in an intensional model is by `rfl` that of the spelling with `¬` and `∨`, which is
+how `not_atomicity_t` follows from `not_atomicityT`.
+
+*Where the paper was sketchy and the proof had to choose.* D.4 is proved by induction on
+terms rather than through the combinator criterion, and for any premodel first; the
+model condition of a term uses only the constants the term mentions, which is what makes
+the construction a model over any signature, a point the paper leaves implicit. In Part
+1 the paper takes the cut `{h ∈ p | h n = n}`; relative to an arbitrary `k` in `p` (for
+Atomlessness) the cut is `{h ∈ p | h n = k n}` and the witness that it is strict is
+`swap (k n) m ∘ k` for `m` outside `k[X] ∪ {k n}`, which the paper's "let `h′` be the
+function that agrees with `h` except that `h′n = n + 1`" does not quite give, since
+`n + 1` may lie in `k[X]`.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

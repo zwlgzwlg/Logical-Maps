@@ -17,7 +17,7 @@ lemma of the shallow layer is carried into a signature by `Term.ofPure`
 
 | file | contents |
 | --- | --- |
-| `Consistency.lean` | The facts the side conditions need, from two models: `Prop` (the full Henkin model on `e`) makes the Fregean Axiom, `□FA` and No Contingency for any signature consistent; the M-set models make `¬ND_t`, `¬BF_t`, `¬FA`, `¬□FA` and `¬`Tractarianism at `t` consistent (the last through the certified record that Tractarianism implies BF), and `□ND`, `□BF` at every type consistent with `¬FA`. |
+| `Consistency.lean` | The facts the side conditions need, from three models: `Prop` (the full Henkin model on `e`) makes the Fregean Axiom, `□FA` and No Contingency for any signature consistent; the M-set models make `¬ND_t`, `¬BF_t`, `¬FA`, `¬□FA` and `¬`Tractarianism at `t` consistent (the last through the certified record that Tractarianism implies BF), and `□ND`, `□BF` at every type consistent with `¬FA`; the permutation model of Appendix D makes `¬`Actuality and `¬`Atomicity (`t`) consistent with `□ND`, `□BF` and Atomlessness. |
 | `PossibilityDistinctness.lean` | Distinctness and Possibility are equivalent, relative to any theory over any signature; `Max T` entails both. The one object-level step, `◇(x ≠ y) → x ≠ y`, is a shallow lemma certified once. |
 | `Contingency.lean` | No Pure Contingency necessitates every schema of pure sentences, `NPC ∪ Ax ⟹ Ax.box` — the map's twenty `no-pure-contingency-and-X-imply-necessary-X` records as one theorem; the arrows among No Contingency, No Pure Contingency, B for the signature and B for pure sentences; B and the Fregean Axiom as sources. |
 | `Incompatibilities.lean` | Possibility, Distinctness and `Max T` refute the necessitation of anything refutable in a model (`possibility_box_inconsistent`); Maximalist Classicism against `ND`; Possibility against No Pure Contingency and against B for pure sentences. |
@@ -44,6 +44,8 @@ lemma of the shallow layer is carried into a signature by `Term.ofPure`
 | `maximalist-distinctness-incompatible-with-nd` | `maximalist_nd_inconsistent` (through `ND_t`) |
 | `maximalist-distinctness-incompatible-with-necessary-barcan-r` | `maximalist_necBarcan_inconsistent` (through `□BF_t`) |
 | `maximalist-distinctness-incompatible-with-necessary-tractarianism-r` | `maximalist_necTractarianism_inconsistent` (through `t`) |
+| `maximalist-distinctness-incompatible-with-necessary-actuality` | `maximalist_necActuality_inconsistent` (the permutation model) |
+| `maximalist-distinctness-incompatible-with-necessary-atomicity-r` | `maximalist_necAtomicity_inconsistent` (through `t`, the permutation model) |
 | consistency of `no-contingency-signature-r` (its notes) | `noContingency_consistent` |
 
 The necessitation of a principle is `AxiomSet.box P.schema`; the two boxed principles the
@@ -69,7 +71,10 @@ record is about them.
   `□`Actuality, `□`Atomicity, `□`Boolean Completeness, `□`Functionality and Rigid
   Comprehension need models refuting those principles, which the two M-set models do not
   (every proposition of a finite full M-set model has an atom below it); the ideally full
-  models of Appendix D are where they come from.
+  models of Appendix D are where they come from, and the first of them
+  (`Models/Permutations.lean`) supplies `□`Actuality and `□`Atomicity; `□`Boolean
+  Completeness waits on Proposition 2.5 or a direct argument, `□`Functionality and Rigid
+  Comprehension on further models.
 - **`c5-and-atomicity(-t)-imply-no-pure-contingency`**: the automorphism exchanging two
   atoms, extended by conjugation to every type, is a substantial metalogical proof by
   induction on terms; a candidate for the next experiment of the Atomicity kind.

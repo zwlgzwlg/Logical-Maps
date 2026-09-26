@@ -103,6 +103,22 @@ theorem Intension.map_comp {ρ : RTy} {W V U : C} (h : W ⟶ V) (i : V ⟶ U) (A
     Intension.map inner (h ≫ i) A = Intension.map inner i (Intension.map inner h A) := by
   ext ⟨T, a, j⟩; simp [Intension.map, Category.assoc]
 
+/-- The action of an arrow is a preimage, so it commutes with the set operations. -/
+theorem Intension.map_inter {ρ : RTy} {W V : C} (h : W ⟶ V) (A B : Intension inner ρ W) :
+    Intension.map inner h (A ∩ B) = Intension.map inner h A ∩ Intension.map inner h B := rfl
+
+theorem Intension.map_union {ρ : RTy} {W V : C} (h : W ⟶ V) (A B : Intension inner ρ W) :
+    Intension.map inner h (A ∪ B) = Intension.map inner h A ∪ Intension.map inner h B := rfl
+
+theorem Intension.map_compl {ρ : RTy} {W V : C} (h : W ⟶ V) (A : Intension inner ρ W) :
+    Intension.map inner h Aᶜ = (Intension.map inner h A)ᶜ := rfl
+
+theorem Intension.map_univ {ρ : RTy} {W V : C} (h : W ⟶ V) :
+    Intension.map inner h (Set.univ : Intension inner ρ W) = Set.univ := rfl
+
+theorem Intension.map_empty {ρ : RTy} {W V : C} (h : W ⟶ V) :
+    Intension.map inner h (∅ : Intension inner ρ W) = ∅ := rfl
+
 /-- The same at a type: the inner action at `e`. -/
 def Outer.map : ∀ (σ : Ty) {W V : C}, (W ⟶ V) → Outer inner σ W → Outer inner σ V
   | .e, _, _, h, x => (inner .e).map h x

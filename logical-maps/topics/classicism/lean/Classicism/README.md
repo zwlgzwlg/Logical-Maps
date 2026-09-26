@@ -128,6 +128,9 @@ The first five were settled with Cian on 22 September 2026, the rest on the days
 | `Semantics/IntensionalFull.lean` | **Full intensional models**: the actions of intensions, of products and of the point; the full domains by the mutual recursor (`FullT`, `FullArgs`, `FullR`), the bijection `fullArgs` between the two spellings of the arguments, the inclusion as its preimage; `Premodel.full`; **`full_isModel` in two lines**, every intension being inner; `full_bf_surjective`. |
 | `Semantics/IntensionalProperties.lean` | Propositionally full and full; `sem_pure`; **No Pure Contingency in every one-object model**; the Fregean Axiom fails in every propositionally full model with a second arrow out of the base. |
 | `Semantics/IntensionalExamples.lean` | The M-set models ported: `Intensional.MSet.model`, `Idem.not_nd_t`, `Idem.not_bf_t`, `Idem.not_fregean`, `Invol.box_nd`, `Invol.box_bf`, `Invol.not_fregean`; these are what `Results/Schemas/Consistency.lean` now cites. |
+| `Syntax/Constants.lean` | `Term.consts`, the constants a term mentions, finite. |
+| `Semantics/IdeallyFull.lean` | **Appendix D's technique** (26 September): agreement of arrows on a set of individuals, pinning, finite pinning, the subaction of finitely pinned elements; the ideally full domains by the mutual recursor and `Premodel.ideal`; pinning in any premodel (`PinnedO`), closed under the set operations and application; the induction `sem_pinned` and **Proposition D.4** in two forms, `isModel_of_pinned` for any premodel whose inner elements are exactly the finitely pinned ones, and `ideal_isModel` for the construction. |
+| `Models/Permutations.lean` | **Appendix D, Part 1**: the ideally full model over the permutations of `ℕ`. `□ND_σ`, `□BF_σ`; Actuality fails, Atomlessness holds, Atomicity at `t` fails, each a theorem about the quoted principle, from one cut lemma. |
 
 ## Conventions worth knowing
 
@@ -405,10 +408,69 @@ Two Lean lessons. An arrow of a one-object category written `(k : star ⟶ star)
 at reducible transparency, so the actions of intensions, products and the point are
 `abbrev`s, and where `∈` is used the elements of a full domain are typed as sets.
 
-Next in this form: Appendix D's ideally full models, whose Proposition D.4 (an ideally
-full premodel is a model) is the induction on terms that full models no longer need, with
-the draft's closure lemma (pinning and symmetry preserved by the action of arrows and by
-application) as its cases.
+## Appendix D: ideally full models
+
+`Semantics/IdeallyFull.lean` and `Models/Permutations.lean` (26 September) are the paper's
+Appendix D, "Consistency results using non-full action models", in the intensional form,
+and its Part 1. Cian's own appendix; its descriptions are, in his word, sketchy, and this
+is the rigorous version.
+
+**The technique.** Fix the action for `e`. Two arrows agree on a set `N` of individuals
+when they send its members alike (`AgreeOn`); an element of an action is pinned down by
+`N` when two arrows agreeing on `N` act on it alike (`PinnedBy`, Definition D.2), and
+finitely pinned when some finite `N` does (`FinPinned`): the ideal of finite subsets, the
+one ideal the paper's examples use, is built in rather than parametrized. The finitely
+pinned elements of an action form a subaction (`pinnedAction`, closure (i) of the draft:
+the action of `h` on an element pinned by `N` is pinned by `h[N]`). The ideally full
+domains are then defined exactly as the full ones, with `pinnedAction` around the
+intensions at each relational type (`IdealT`, `IdealArgs`, `IdealR`, the bijection
+`idealArgs` between the two spellings of the arguments, and `Premodel.ideal`).
+
+**Proposition D.4.** The paper proves that an ideally full premodel is a model through the
+combinator form of the sufficiency condition. Here it is the induction on terms that full
+models no longer needed, and it is stated for any premodel first: `PinnedO B σ N x` reads
+pinning through the premodel's own action for `e` and its outer action at `σ`, and
+`sem_pinned` says that if `N` pins every value of the assignment and every constant the
+term mentions, it pins the term's value. The cases are the draft's closure lemma. A
+variable or constant by hypothesis; the logical constants by `rfl`, their readings not
+seeing the arrow; an application because application commutes with the action of arrows
+for every intension (closure (iii), `pinnedO_apply`); and an abstraction because its value
+depends on the arrow only through the constants (`sem_congr_const`, the generalization of
+`sem_pure`) and on the assignment, both of which two arrows agreeing on `N` treat alike.
+`isModel_of_pinned` then makes a model of any premodel whose inner elements are exactly
+the finitely pinned ones, taking for a term the union of the finite sets that pin the
+assignment's values and the term's constants (`Term.consts`, finite, is what lets this
+work over any signature); `ideal_isModel` is its instance for the construction.
+
+**Part 1** (`Models/Permutations.lean`). The one-object category of the permutations of
+`ℕ`, the identity action for `e`, the ideally full model over it (`Perms.model`, a model
+by D.4). A proposition is a set of tuples `⟨(), g⟩`, one per permutation, pinned down by a
+finite `X` when two permutations agreeing on `X` are in it together
+(`mem_iff_of_pinned`). One lemma does the work, **the cut** (`exists_ssubset_of_mem`): a
+finitely pinned proposition containing `k` has a finitely pinned proposition strictly
+below it still containing `k`, namely its intersection with "`h n = k n`" for an `n`
+outside the pinning set; it is strictly below because the proposition also contains
+`swap (k n) m ∘ k`, which agrees with `k` on the pinning set and sends `n` elsewhere. Then
+the verdicts, each about the quoted principle: `□ND_σ` and `□BF_σ` (`box_nd`, `box_bf`,
+every arrow an isomorphism); **Actuality fails** (`not_actuality`, the cut at `k = 1`);
+**Atomlessness holds** (`atomlessness`, the cut at any `k` in `p`); **Atomicity at `t`
+fails** (`not_atomicityT`, `⊤` has no atom below it, since the cut refutes atomhood of
+any nonzero proposition). `not_atomicity_t` restates the last for the `t`-instance of the
+type-indexed schema, whose `¬_t` and `∨_t` read as `¬` and `∨` do, by `rfl`.
+
+`Results/Schemas/Consistency.lean` turns these into the facts the map's records need
+(`Perms.not_actuality_consistent`, `Perms.nd_bf_atomless_consistent`, …), and
+`Incompatibilities.lean` gets `maximalist_necActuality_inconsistent` and
+`maximalist_necAtomicity_inconsistent`, two of the maximalist incompatibilities that were
+waiting on a model. The model's Boolean Completeness failure, which the paper gets from
+Proposition 2.5, waits on that proposition's certification. Parts 2 to 8 are next, on the
+monoids of surjections and of the paper's `gₙ`, `fₙ`, `kₙ`, with Proposition D.6 (`BF`
+from surjectivity on individuals) for the ones where `BF` holds.
+
+Two Lean lessons from Part 1. A model built by a `def` should be an `abbrev`, so that its
+projections are the plain values to `rw` and instance search; and an arrow of a one-object
+category is its monoid element only definitionally, so name the coercion (`perm`) and
+apply that, never the arrow.
 
 ## Schemas, entailments and rules
 

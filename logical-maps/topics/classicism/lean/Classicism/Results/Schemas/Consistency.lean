@@ -2,6 +2,7 @@ import Classicism.Certified.Schemas
 import Classicism.Certified.Entailed
 import Classicism.Semantics.IntensionalExamples
 import Classicism.Semantics.IntensionalProperties
+import Classicism.Models.Permutations
 import Classicism.Syntax.SentenceSchemas
 
 /-!
@@ -27,7 +28,14 @@ sentences the results are stated in. Two models do all the work:
   at every type while the Fregean Axiom fails, so `¬FA` and `¬□FA` are consistent with
   `□ND ∪ □BF`. The map's `full-idempotent-monoid` and `full-involution-group`.
 
-The model verdicts themselves stay in `Semantics/IntensionalExamples.lean`; this file turns
+- **The permutation model of Appendix D, Part 1** (`Models/Permutations.lean`): ideally
+  full over the permutations of `ℕ`. `□ND_σ` and `□BF_σ` hold at every type and
+  Atomlessness holds, while Actuality and Atomicity at `t` fail; so `¬`Actuality and
+  `¬`Atomicity (`t`) are consistent with `□ND`, `□BF` and Atomlessness, and neither is a
+  theorem of `C` with them.
+
+The model verdicts themselves stay in `Semantics/IntensionalExamples.lean` and
+`Models/Permutations.lean`; this file turns
 them into facts about the theory with `Consistent.of_model`, `not_theorem_of_model`,
 `Consistent.of_interp` and `not_theorem_of_interp`.
 -/
@@ -180,5 +188,62 @@ theorem fregean_not_theorem : ¬ Theorem (C.axioms ∪ empty) P.FregeanAxiom.quo
   not_theorem_of_model A M (holdsAx_empty A) not_fregean
 
 end Invol
+
+/-! ### The permutation model: `□ND`, `□BF`, Atomlessness hold, Actuality and Atomicity (`t`) fail -/
+
+namespace Perms
+
+open Intensional.Premodel Intensional.Perms
+
+local notation "A" => Intensional.Perms.model
+local notation "M" => Intensional.Perms.model_isModel
+
+theorem necActuality_quoted_eq : P.NecActuality.quoted = Term.box P.Actuality.quoted := rfl
+
+/-- `□ND`, `□BF` at every type and Atomlessness hold in the model. -/
+theorem holdsAx_nd_bf_atomless :
+    (A).HoldsAx (AxiomSet.box P.NecessityOfDistinctness.schema ∪ AxiomSet.box P.Barcan.schema ∪
+      P.Atomlessness.schema) := by
+  rintro a ((⟨_, ⟨σ, rfl⟩, rfl⟩ | ⟨_, ⟨σ, rfl⟩, rfl⟩) | rfl)
+  · exact box_nd σ
+  · exact box_bf σ
+  · exact atomlessness
+
+/-- `□ND`, `□BF` and Atomlessness are jointly consistent. -/
+theorem nd_bf_atomless_consistent :
+    Consistent (AxiomSet.box P.NecessityOfDistinctness.schema ∪ AxiomSet.box P.Barcan.schema ∪
+      P.Atomlessness.schema) :=
+  Consistent.of_model A M holdsAx_nd_bf_atomless
+
+/-- `¬`Actuality is consistent, on its own and with `□ND`, `□BF` and Atomlessness. -/
+theorem not_actuality_consistent : Consistent (single (Term.neg P.Actuality.quoted)) :=
+  Consistent.of_model A M (holdsAx_single A ((holdsSentence_neg A M _).2 not_actuality))
+
+theorem not_actuality_nd_bf_atomless_consistent :
+    Consistent (single (Term.neg P.Actuality.quoted) ∪
+      (AxiomSet.box P.NecessityOfDistinctness.schema ∪ AxiomSet.box P.Barcan.schema ∪
+        P.Atomlessness.schema)) :=
+  Consistent.of_model A M
+    (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_actuality)) holdsAx_nd_bf_atomless)
+
+/-- Actuality is not a theorem of `C` with `□ND`, `□BF` and Atomlessness. -/
+theorem actuality_not_theorem :
+    ¬ Theorem (C.axioms ∪ (AxiomSet.box P.NecessityOfDistinctness.schema ∪ AxiomSet.box P.Barcan.schema ∪
+      P.Atomlessness.schema)) P.Actuality.quoted :=
+  not_theorem_of_model A M holdsAx_nd_bf_atomless not_actuality
+
+/-- `¬`Atomicity at `t` likewise. -/
+theorem not_atomicityT_consistent : Consistent (single (Term.neg P.AtomicityT.quoted)) :=
+  Consistent.of_model A M (holdsAx_single A ((holdsSentence_neg A M _).2 not_atomicityT))
+
+theorem not_atomicity_t_consistent : Consistent (single (Term.neg (P.Atomicity.quoted RTy.t))) :=
+  Consistent.of_model A M (holdsAx_single A ((holdsSentence_neg A M _).2 not_atomicity_t))
+
+theorem atomicityT_not_theorem :
+    ¬ Theorem (C.axioms ∪ (AxiomSet.box P.NecessityOfDistinctness.schema ∪ AxiomSet.box P.Barcan.schema ∪
+      P.Atomlessness.schema)) P.AtomicityT.quoted :=
+  not_theorem_of_model A M holdsAx_nd_bf_atomless not_atomicityT
+
+end Perms
 
 end Classicism.Meta

@@ -124,6 +124,26 @@ theorem maximalist_necBarcan_inconsistent :
     (fun a ha => ha.elim Or.inl (fun h => Or.inr (by
       subst (h : a = P.NecBarcanT.quoted); exact AxiomSet.mem_box ⟨Ty.t, rfl⟩))) hc)
 
+/-- `maximalist-distinctness-incompatible-with-necessary-actuality`: Actuality fails in
+the permutation model of Appendix D, Part 1. -/
+theorem maximalist_necActuality_inconsistent :
+    ¬ Consistent (maximalist (Sig := Signature.pure) ∪ P.NecActuality.schema) :=
+  max_box_inconsistent (Consistent.empty_union Perms.not_actuality_consistent)
+
+/-- And with `□`Atomicity at `t`, which fails there too. -/
+theorem maximalist_necAtomicityT_inconsistent :
+    ¬ Consistent (maximalist (Sig := Signature.pure) ∪ single (Term.box P.AtomicityT.quoted)) :=
+  max_box_inconsistent (Consistent.empty_union Perms.not_atomicityT_consistent)
+
+/-- `maximalist-distinctness-incompatible-with-necessary-atomicity-r`, through the `t`
+instance of the schema. -/
+theorem maximalist_necAtomicity_inconsistent :
+    ¬ Consistent (maximalist (Sig := Signature.pure) ∪ AxiomSet.box P.Atomicity.schema) := fun hc =>
+  max_box_inconsistent (Y := P.Atomicity.quoted RTy.t)
+    (Consistent.empty_union Perms.not_atomicity_t_consistent)
+    (Consistent.mono (fun a ha => ha.elim Or.inl (fun h => Or.inr (by
+      subst (h : a = Term.box (P.Atomicity.quoted RTy.t)); exact AxiomSet.mem_box ⟨RTy.t, rfl⟩))) hc)
+
 /-- `maximalist-distinctness-incompatible-with-necessary-tractarianism-r`, through the
 `t` instance, which fails in the idempotent-monoid model because it implies `BF_t`. -/
 theorem maximalist_necTractarianism_inconsistent :

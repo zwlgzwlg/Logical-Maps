@@ -227,6 +227,7 @@ Classicism/Syntax/Axioms.lean           C and C⁻ as theories; the eleven ident
 Classicism/Syntax/Entailment.lean       entailment between axiom sets, ⟹, with cut and its algebra
 Classicism/Syntax/SentenceSchemas.lean  No Pure Contingency, Distinctness, Possibility, maximalization
 Classicism/Syntax/Sentences.lean        ND, BF and the Fregean Axiom as sentences, for both semantic layers
+Classicism/Syntax/Constants.lean        the constants a term mentions
 Classicism/Syntax/Pure.lean             the pure language inside every signature: terms and derivations carried across
 Classicism/Syntax/Normalize.lean        a verified βη-normalizer; conversion by reflection
 Classicism/Syntax/Examples.lean         computed checks, hand derivations, reflection by rfl
@@ -246,6 +247,9 @@ Classicism/Semantics/IntensionalFacts.lean  □ and ◇; consistency from a mode
 Classicism/Semantics/IntensionalFull.lean  full intensional models are models, at once; BF forces surjectivity
 Classicism/Semantics/IntensionalProperties.lean  fullness; NPC in every one-object model
 Classicism/Semantics/IntensionalExamples.lean  the M-set models in the intensional form, cited by the results
+Classicism/Semantics/IdeallyFull.lean   Appendix D's technique: pinning, ideally full models, Proposition D.4
+
+Classicism/Models/Permutations.lean     Appendix D, Part 1: the permutation model; ND, BF, Atomlessness hold, Actuality and Atomicity fail
 
 Classicism/Results/Records.lean         the map's records proved in the shallow layer, one theorem per record
 Classicism/Results/Atomicity.lean       Atomicity (t) and BF imply Atomicity: a metalogical proof with object-level steps
