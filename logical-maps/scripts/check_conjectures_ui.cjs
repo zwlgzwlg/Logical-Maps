@@ -1,5 +1,5 @@
 // Run with Node and jsdom available (e.g. NODE_PATH=/path/to/node_modules).
-// Rebuild unbounded-utility first; the final checks use its current data.json.
+// Rebuild the maps first; the final checks use their current data.json.
 // The Conjectures tab renders the rankings pmap.py stores at build time; the fixture carries them.
 const fs=require('node:fs'), path=require('node:path'), assert=require('node:assert/strict');
 const {JSDOM,VirtualConsole}=require('jsdom');
@@ -87,6 +87,7 @@ try {
   const graphCheckbox=doc.querySelector('#pr-filters [data-show-positive="e"]');
   graphCheckbox.click();
   const originalGraph=graphMembership(dom);
+  const graphRowLayout=dom.window.getComputedStyle(graphCheckbox.closest('.pr-row')).gridTemplateColumns;
 
   // A single sidebar is moved, preserving its controls, selection, source state
   // and resize handles, rather than duplicating state across the two tabs.
@@ -100,10 +101,13 @@ try {
   assert.equal(doc.getElementById('source-filter-heading').textContent,'Evidence sources');
   assert.ok(!visible(dom,doc.getElementById('graph-options')));
   assert.ok(visible(dom,doc.getElementById('conjecture-options')));
-  assert.ok(!visible(dom,graphCheckbox));
-  assert.ok(!visible(dom,doc.querySelector('.pr-category-actions')));
-  assert.ok(!visible(dom,doc.getElementById('pr-all')));
-  assert.ok(!visible(dom,doc.getElementById('pr-none')));
+  assert.ok(visible(dom,graphCheckbox));
+  assert.ok(visible(dom,doc.querySelector('#pr-filters [data-show-negative="e"]')));
+  assert.ok(visible(dom,doc.querySelector('.pr-category-actions')));
+  assert.ok(visible(dom,doc.querySelector('#pr-filters .pr-category-count')));
+  assert.ok(visible(dom,doc.getElementById('pr-all')));
+  assert.ok(visible(dom,doc.getElementById('pr-none')));
+  assert.equal(dom.window.getComputedStyle(graphCheckbox.closest('.pr-row')).gridTemplateColumns,graphRowLayout,'identical principle row layout on both tabs');
   assert.ok(visible(dom,doc.querySelector('#pr-filters [data-principle="a"]')));
   assert.ok(visible(dom,doc.querySelector('#pr-filters [data-add-background="a"]')));
   assert.equal(doc.getElementById('open-warning').hidden,true);
@@ -230,6 +234,23 @@ try {
   dom.window.resetBackground();sourceCheckbox.click();
   assert.deepEqual(keys(dom),['q|b|a','q|a|b','q|b|false']);
   assert.equal(progressEl().textContent,settled);
+
+  // Real Classicism: hide either version of Distinctness Maximalism from
+  // Central Questions and Automatically Generated Conjectures, then restore it.
+  const classic=page(JSON.parse(fs.readFileSync(path.join(root,'build/classicism/data.json'),'utf8')));
+  const cd=classic.window.document;
+  show(classic,'open');
+  const sections=['lynchpins','open-auto'];
+  const listed=id=>[...cd.querySelectorAll(`#${id} [data-lynchpin]`)].map(tr=>tr.dataset.lynchpin);
+  sections.forEach(id=>openSection(classic,id));
+  const baseline=Object.fromEntries(sections.map(id=>[id,listed(id)]));
+  const hidden=['distinctness-schema-r','distinctness-signature-r'];
+  assert.ok(baseline.lynchpins.some(k=>k.split(/[|+]/).includes(hidden[1])));
+  assert.ok(baseline['open-auto'].some(k=>k.split(/[|+]/).includes(hidden[0])));
+  for(const id of hidden) cd.querySelector(`#pr-filters [data-show-positive="${id}"]`).click();
+  for(const id of sections) assert.deepEqual(listed(id),baseline[id].filter(k=>!hidden.some(p=>k.split(/[|+]/).includes(p))),`${id}: Distinctness Maximalism is hidden`);
+  for(const id of hidden) cd.querySelector(`#pr-filters [data-show-positive="${id}"]`).click();
+  for(const id of sections) assert.deepEqual(listed(id),baseline[id],'showing the principles restores the real ranking');
   assert.deepEqual(errors,[]);
   console.log('PASS: conjectures in the central-questions format, in their records\' direction with verdicts once settled, tiered stars with a details link, stable shares under source filters, shared sidebar controls, ad-hoc and incompatible backgrounds, and the silver conjecture on the real map.');
 } finally { pages.forEach(dom=>dom.window.close()); }

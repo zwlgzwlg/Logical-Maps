@@ -272,6 +272,53 @@ try {
   for(const id of ['lynchpins','open-auto','open-recorded']) assert.match(doc4.getElementById(id).querySelector('.note').textContent,/inconsistent/);
   assert.equal(doc4.getElementById('open-progress').hidden,true,'no settled share under an inconsistent background');
 
+  // The graph's exact same controls filter every question list immediately.
+  const filtered=page(fixture),fd=filtered.window.document;
+  const sections=['lynchpins','open-auto','open-recorded'];
+  show(filtered,'open');
+  sections.forEach(id=>open(filtered,true,id));
+  const original=Object.fromEntries(sections.map(id=>[id,keys(filtered,id)]));
+  const positive=id=>fd.querySelector(`#pr-filters [data-show-positive="${id}"]`);
+  const negative=id=>fd.querySelector(`#pr-filters [data-show-negative="${id}"]`);
+  positive('r').click();
+  const withoutR={
+    lynchpins:['q|p+s|false','q|s|p','q|q+s|false'],
+    'open-auto':['q|s|false','q|q+s|false','q||p'],
+    'open-recorded':['q|q+s|false','q|q+s|p'],
+  };
+  for(const id of sections) assert.deepEqual(keys(filtered,id),withoutR[id],`${id}: hide R in either premise, conclusion or model check`);
+  assert.deepEqual(scores(filtered,'q|p+s|false'),[5,2],'filtering preserves the scores');
+  assert.equal(fd.querySelector('#lynchpins [data-lynchpin="q|p+s|false"] td.rank').textContent,'7','filtering preserves the ranks');
+  assert.equal(fd.querySelector('#pr-filters .pr-category-count').textContent,'3/4');
+  negative('r').click();
+  for(const id of sections) assert.deepEqual(keys(filtered,id),withoutR[id],'showing ¬R does not restore positive R questions, including non-entailments');
+  negative('r').click();
+  show(filtered,'graph');
+  assert.equal(positive('r').getAttribute('aria-pressed'),'false','selection survives switching tabs');
+  positive('r').click();
+  show(filtered,'open');
+  for(const id of sections) assert.deepEqual(keys(filtered,id),original[id],'showing R on the graph restores the lists');
+
+  const category=fd.querySelector('#pr-filters [data-category-select]');
+  category.click();
+  for(const id of sections) {
+    assert.deepEqual(keys(filtered,id),[],'category hide filters all lists');
+    assert.match(fd.querySelector(`#${id} .note`).textContent,/No questions match the shown principles/,'empty filtering is distinguished from settled questions');
+  }
+  assert.equal(category.textContent,'show positive');
+  category.click();
+  for(const id of sections) assert.deepEqual(keys(filtered,id),original[id],'category show restores the lists');
+  fd.getElementById('pr-none').click();
+  sections.forEach(id=>assert.deepEqual(keys(filtered,id),[]));
+  fd.getElementById('pr-all').click();
+  sections.forEach(id=>assert.deepEqual(keys(filtered,id),original[id]));
+
+  positive('s').click();
+  fd.getElementById('show-resolved').click();
+  assert.ok(!keys(filtered,'open-recorded').some(k=>k.split(/[|+]/).includes('s')),'Show resolved respects hidden principles too');
+  positive('s').click();
+  assert.ok(keys(filtered,'open-recorded').includes('q|p|s'),'showing S restores its resolved conjecture');
+
   assert.deepEqual(errors,[]);
   console.log('PASS: settled share, Central Questions by the harmonic mean, Automatically Generated Conjectures stated as the answer to expect, and Conjectures in their records\' direction at their central rank, all in one format with tiered stars and a details link, collapsed and lazy, True class under a stored background, none for an ad-hoc background, sparse maps, and inconsistent backgrounds.');
 } finally {
