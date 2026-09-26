@@ -198,7 +198,7 @@ So the command below makes available
 
     atomicityT_step.rule : C.Theorem (Term.imp P.AtomicityT.quoted (P.Atomicity.quoted RTy.t))
     atomicity_step.rule  : ∀ (σ' : Ty) (τ' : RTy), C.Theorem (Term.imp (P.Atomicity.quoted τ')
-                             (Term.imp (P.Barcan.quoted σ') (P.Atomicity.quoted (σ' ⇒ τ'))))
+       (Term.imp (P.Barcan.quoted σ') (P.Atomicity.quoted (σ' ⇒ τ'))))
 
 which part 3 applies at the types of the induction. The report prints each rule's type and
 the Lean axioms it rests on. -/
