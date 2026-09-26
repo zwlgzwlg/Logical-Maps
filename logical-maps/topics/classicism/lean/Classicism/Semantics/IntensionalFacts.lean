@@ -88,7 +88,7 @@ theorem holdsAx_union {Ax₁ Ax₂ : AxiomSet Sig} (h₁ : A.HoldsAx Ax₁) (h�
     A.HoldsAx (Ax₁ ∪ Ax₂) := fun a ha => ha.elim (h₁ a) (h₂ a)
 
 /-- **An axiom set true in an intensional action model is consistent** with Classicism. -/
-theorem _root_.Classicism.Meta.AxiomSet.Consistent.of_intensional_model {Ax : AxiomSet Sig}
+theorem _root_.Classicism.Meta.AxiomSet.Consistent.of_model {Ax : AxiomSet Sig}
     (h : A.HoldsAx Ax) : Ax.Consistent :=
   fun hb => A.not_holds_bot M (A.theoremWith_holds M h hb)
 

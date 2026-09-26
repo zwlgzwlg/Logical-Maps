@@ -1,7 +1,7 @@
 import Classicism.Certified.Schemas
 import Classicism.Certified.Entailed
-import Classicism.Semantics.ActionExamples
-import Classicism.Semantics.ActionProperties
+import Classicism.Semantics.IntensionalExamples
+import Classicism.Semantics.IntensionalProperties
 import Classicism.Syntax.SentenceSchemas
 
 /-!
@@ -18,7 +18,8 @@ sentences the results are stated in. Two models do all the work:
   and, since there is one world, everything true is necessary, so No Contingency holds —
   for any signature, the constants interpreted anyhow (`Interp.trivial`). The map's
   `full-henkin-singleton-base`.
-- **The full M-set models on the two two-element monoids** (`Semantics/ActionExamples.lean`):
+- **The full M-set models on the two two-element monoids** (`Semantics/IntensionalExamples.lean`,
+  intensional action models):
   on the idempotent monoid `ND_t`, `BF_t` and the Fregean Axiom fail, so their
   negations are consistent and they are not theorems; Tractarianism at `t` fails there
   too, since it implies `BF_t` — the record `tractarianism-r-implies-barcan-r`, certified,
@@ -26,14 +27,14 @@ sentences the results are stated in. Two models do all the work:
   at every type while the Fregean Axiom fails, so `¬FA` and `¬□FA` are consistent with
   `□ND ∪ □BF`. The map's `full-idempotent-monoid` and `full-involution-group`.
 
-The model verdicts themselves stay in `Semantics/ActionExamples.lean`; this file turns
+The model verdicts themselves stay in `Semantics/IntensionalExamples.lean`; this file turns
 them into facts about the theory with `Consistent.of_model`, `not_theorem_of_model`,
 `Consistent.of_interp` and `not_theorem_of_interp`.
 -/
 
 namespace Classicism.Meta
 
-open AxiomSet CategoryTheory
+open AxiomSet CategoryTheory Intensional
 
 /-! ### `Prop`: the full Henkin model on `e` -/
 
@@ -100,7 +101,7 @@ theorem necNdT_quoted_eq : P.NecNecessityOfDistinctnessT.quoted = Term.box P.Nec
 
 namespace Idem
 
-open Premodel
+open Intensional.Premodel Intensional.Idem
 
 /-- The model, with its model proof. -/
 local notation "A" => MSet.model Idem
@@ -136,7 +137,7 @@ end Idem
 
 namespace Invol
 
-open Premodel
+open Intensional.Premodel Intensional.Invol
 
 local notation "A" => MSet.model Invol
 local notation "M" => MSet.model_isModel Invol

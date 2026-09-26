@@ -115,11 +115,19 @@ The first five were settled with Cian on 22 September 2026, the rest on the days
 | `Semantics/Action.lean` | **Action premodels and action models**, the paper's models of Classicism, directly: a rooted category, an inner action per type, the outer actions by recursion on the type, the subaction conditions, the total interpretation function `sem`, `Holds`, and `IsModel`. |
 | `Semantics/ActionSoundness.lean` | **Soundness of action models**: transport, renaming, substitution, β, η, δ, conversion; every rule of `Derivable`; the eleven identities and Existence hold at every arrow of every action model; `theorem_holds`, `theoremWith_holds`. |
 | `Semantics/ActionFull.lean` | **Full action models**: the powerset and exponential actions as functors; the full inner domains by recursion on the type; `Premodel.full` on any rooted category from an action for `e` and an interpretation; **`full_isModel`**, that a full premodel is a model, by the combined induction (inner-ness and transport together, the type-subscripted constants by a second induction on the size of the type); `full_bf_surjective`, the paper's (iii). |
-| `Semantics/ActionFacts.lean` | `ND_σ`, `BF_σ` and the Fregean Axiom as sentences; the clauses for `□` and `◇`; **truncation** (`Premodel.truncate`, `sem_truncate`, `isModel_truncate`, `dia_iff_truncate`, `box_iff_truncate`); the paper's generalizations: `ND_σ` holds iff every `h^σ` out of the object is injective, `BF_σ` holds if every `h^σ` is surjective, the Fregean Axiom holds iff propositions agreeing at the identity are equal; and what a model verdict needs to become a fact about the theory: `⊥` fails, `¬P` holds iff `P` fails, `□P` gives `P`, **an axiom set true in an action model is consistent** (`Consistent.of_model`) and a sentence failing in it is not a theorem (`not_theorem_of_model`). |
+| `Semantics/ActionFacts.lean` | `ND_σ`, `BF_σ` and the Fregean Axiom as sentences; the clauses for `□` and `◇`; **truncation** (`Premodel.truncate`, `sem_truncate`, `isModel_truncate`, `dia_iff_truncate`, `box_iff_truncate`); the paper's generalizations: `ND_σ` holds iff every `h^σ` out of the object is injective, `BF_σ` holds if every `h^σ` is surjective, the Fregean Axiom holds iff propositions agreeing at the identity are equal; and what a model verdict needs to become a fact about the theory: `⊥` fails, `¬P` holds iff `P` fails, `□P` gives `P`, **an axiom set true in an action model is consistent** (`Consistent.of_action_model`) and a sentence failing in it is not a theorem (`not_theorem_of_model`). |
 | `Semantics/ActionProperties.lean` | Properties of action models — propositionally full, quasi-functionally full, full — and what holds in all models with a property: the value of a pure term does not see the arrow (`sem_pure`), so **No Pure Contingency holds in every one-object model** (`holdsAx_npc`); the Fregean Axiom fails in every propositionally full model with a second arrow out of the base. |
 | `Results/Atomicity.lean` | **A metalogical proof with object-level steps**, the map's arrow "Atomicity (`t`) and BF imply Atomicity": the step `Atomicity τ → BF σ → Atomicity (σ → τ)` as shallow lemmas proved with ordinary tactics, certified in place by `#classicism_certify` into the rule `atomicity_step.rule`, and the theorem by induction on the relational type, `P.AtomicityT.schema ∪ P.Barcan.schema ⟹ P.Atomicity.schema`. Builds in about ten seconds by the direct route (see the record of the experiment below). |
 | `Results/Schemas/` | **The results about the schemas over sentences**, the first use of the semantics to prove arrows: `Consistency.lean` (the side conditions' facts, from `Prop` and the M-set models), `PossibilityDistinctness.lean` (Distinctness and Possibility equivalent, relative to any theory over any signature), `Contingency.lean` (No Pure Contingency necessitates every pure schema — twenty records as one theorem — and the arrows among the contingency schemas), `Incompatibilities.lean` (Possibility, Distinctness and `Max T` against the necessitation of anything refutable; Maximalist Classicism against `ND`; Possibility against No Pure Contingency and pure B). Its README lists the records covered and the ones that wait on models or definitions. |
 | `Semantics/ActionExamples.lean` | Full M-set models (`MSet.model`): the idempotent monoid `{1, k}` (`ND_t`, `BF_t` and the Fregean Axiom fail — the map's `full-idempotent-monoid`) and the two-element group (the Fregean Axiom fails, `□ND_σ` and `□BF_σ` hold at every type — `full-involution-group`); at an object whose out-arrows are isomorphisms, `ND_σ` and `BF_σ`; in a groupoid, their necessitations. |
+| `Semantics/Env.lean` | `IEnv`, the assignment of inner elements to the variables of a context, shared by the action models and the intensional action models, with the facts renaming and substitution need. |
+| `Syntax/Sentences.lean` | `ND_σ`, `BF_σ` and the Fregean Axiom as sentences, written once for both semantic layers. |
+| `Semantics/Intensional.lean` | **Intensional action premodels and models** (26 September), the form of Cian's draft *Boolean Completeness without Rigid Comprehension*: a relation is an intension, a set of tuples `⟨x̄, h⟩` with the arrow last (`Args`, `Tuple`, `Intension`), an arrow acting by precomposition; application `A @ x` commutes with the action of arrows for every intension; the premodel supplies the inner actions and an injective natural inclusion into the intensions, and nothing else; the readings of the constants as sets of tuples, the type-subscripted operations uniformly at every relational type; `sem`, `Holds`, `IsModel`. |
+| `Semantics/IntensionalSoundness.lean` | **Soundness of intensional action models.** Transport and η in every premodel; **the Boolean operations are set operations** (`app_negRead`, `app_andRead`, …); substitution, β, δ (a lemma per operation), conversion; the rules of `Derivable`; the eleven identities and Existence; `theorem_holds`, `theoremWith_holds`, `entails_holds`. |
+| `Semantics/IntensionalFacts.lean` | The clauses for `□` and `◇`; `⊥` fails, `¬P` holds iff `P` fails, `□P` gives `P`; **an axiom set true in an intensional action model is consistent** (`Consistent.of_model`, the name the results use) and a sentence failing in it is not a theorem; `ND_σ` iff injective, `BF_σ` if surjective, the Fregean Axiom iff propositions agreeing at the identity are equal; **truncation**, the readings transferring by `rfl`. |
+| `Semantics/IntensionalFull.lean` | **Full intensional models**: the actions of intensions, of products and of the point; the full domains by the mutual recursor (`FullT`, `FullArgs`, `FullR`), the bijection `fullArgs` between the two spellings of the arguments, the inclusion as its preimage; `Premodel.full`; **`full_isModel` in two lines**, every intension being inner; `full_bf_surjective`. |
+| `Semantics/IntensionalProperties.lean` | Propositionally full and full; `sem_pure`; **No Pure Contingency in every one-object model**; the Fregean Axiom fails in every propositionally full model with a second arrow out of the base. |
+| `Semantics/IntensionalExamples.lean` | The M-set models ported: `Intensional.MSet.model`, `Idem.not_nd_t`, `Idem.not_bf_t`, `Idem.not_fregean`, `Invol.box_nd`, `Invol.box_bf`, `Invol.not_fregean`; these are what `Results/Schemas/Consistency.lean` now cites. |
 
 ## Conventions worth knowing
 
@@ -341,6 +349,66 @@ holds in `A` iff `P` holds in one of its truncations; `box_iff_truncate` likewis
 
 Not yet: the remaining verdicts of the two records, the intrinsic fullness criterion,
 and the infinite models.
+
+## Intensional action models
+
+`Semantics/Intensional.lean` and the five modules after it (26 September) are the same
+theory in the **intensional** form of Cian's draft *Boolean Completeness without Rigid
+Comprehension* (§"Intensional action models"), which *Classicism* sketches and whose
+Appendix E uses under the names `Int` and `App`. The decision (26 September, Cian): the
+models of Appendix D and the draft's symmetric ideally-full models are built in this
+form; the applicative modules `Action*.lean` stay as they are, a piece of formalized
+mathematics and a resource, with nothing on the route to a certificate depending on them;
+`Results/Schemas/Consistency.lean` takes its model facts from the intensional M-set
+models. The two layers share `Semantics/Env.lean` (assignments) and
+`Syntax/Sentences.lean` (`ND_σ`, `BF_σ`, the Fregean Axiom).
+
+**The definitions.** An outer element at `τ = σ₁ → ⋯ → σₙ → t` is an *intension*: a set
+of tuples `⟨x₁, …, xₙ, h⟩` with `h : W → V` and each `xₖ` inner at `V^{σₖ}` (`Args`,
+`Tuple`, `Intension`), an arrow acting by precomposition (`Intension.map`). Where the
+applicative form takes an element of `W^{σ→ρ}` to be a well-behaved function on pairs
+`⟨h, x⟩`, here it is the set of the tuples the function accepts; application is
+`A @ x = {⟨ȳ, h⟩ | ⟨h^σ x, ȳ, h⟩ ∈ A}` (`Intension.app`), and it commutes with the action
+of arrows for *every* intension (`app_map`), which is what well-behavedness bought
+before. A premodel supplies the inner actions, nonempty at `e`, an injective natural
+inclusion of each inner relational domain into the intensions, and the constants; the
+two conditions on inner elements of arrow type are gone. `apply`, the application of an
+intension to an outer argument, is total: the tuples with an inner witness for the
+argument's transport, which is `A @ x` when the argument is inner (`apply_Incl`). The
+readings of the logical constants are sets of tuples whose membership ignores the arrow,
+and the seven type-subscripted operations read *uniformly* at every relational type:
+`¬_ρ` is complement, `∧_ρ` intersection, `≡_ρ` agreement of extensions, `□_ρ` holding
+under every arrow, `⊑_ρ` inclusion of extensions (`negRead`, `andRead`, …). `IsModel` is
+as before.
+
+**What it bought.** Transport (`sem_push`) and η hold in every premodel, the model
+condition entering only where an inner witness is chosen: substitution, β, δ, and the
+clauses for the connectives. The **Boolean operations are set operations** at every
+relational type (`app_negRead`, `app_andRead`, `app_boxImpRead`, …), the draft's lemma of
+that name, so the δ-rule is a lemma per operation (`sem_delta`), where the applicative
+form read each constant by recursion on the type. The readings depend on the actions and
+the inclusion alone, so they transfer to a truncation by `rfl`, and the per-reading
+`truncate_*` lemmas are gone. And **a full premodel is a model at once**
+(`full_isModel`): every intension is the inclusion of an element of the full domain, so
+the combined induction of `ActionFull.lean`, with its second induction on the size of the
+type subscripts, becomes two lines. The full domains are built by the mutual recursor
+(`FullT`, `FullArgs`, `FullR`, from `intensionAction`, `prodAction`, `pointAction`); at a
+variable type the arguments `Args (FullT De) ρ V` and `(FullArgs De ρ).obj V` are the same
+product written twice, related by the explicit bijection `fullArgs`, and the inclusion is
+the preimage under it. The M-set models and their verdicts port with the same statements
+(`Intensional.MSet.model`, `Idem.not_nd_t`, `Idem.not_bf_t`, `Invol.box_nd`, …), a
+proposition now a set of tuples `⟨(), m⟩`.
+
+Two Lean lessons. An arrow of a one-object category written `(k : star ⟶ star)` for
+`k : M` does not fix the objects of a functor's `map`, which then wants them named
+(`(X := …) (Y := …)`). And a membership `p ∈ F.obj W` needs `F.obj W` to reduce to a `Set`
+at reducible transparency, so the actions of intensions, products and the point are
+`abbrev`s, and where `∈` is used the elements of a full domain are typed as sets.
+
+Next in this form: Appendix D's ideally full models, whose Proposition D.4 (an ideally
+full premodel is a model) is the induction on terms that full models no longer need, with
+the draft's closure lemma (pinning and symmetry preserved by the action of arrows and by
+application) as its cases.
 
 ## Schemas, entailments and rules
 

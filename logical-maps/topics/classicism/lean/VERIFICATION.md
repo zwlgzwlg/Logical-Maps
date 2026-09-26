@@ -753,6 +753,39 @@ not dependent (`betaDeep`); and the recursors, `Eq.subst` and the `Iff` combinat
 tactic proofs, with point-free branches η-expanded and constants of known arity fed
 their extra arguments.
 
+## Intensional action models, 26 September
+
+The action models again in the intensional form of Cian's draft *Boolean Completeness
+without Rigid Comprehension*, at his decision, as the form new models are built in:
+`Semantics/Intensional.lean` (premodels, readings, `sem`, `Holds`, `IsModel`),
+`IntensionalSoundness.lean` (transport and η in every premodel; the Boolean operations
+are set operations; substitution, β, δ, conversion; the rules; the eleven identities;
+`theorem_holds`, `theoremWith_holds`, `entails_holds`), `IntensionalFacts.lean` (`□`, `◇`,
+consistency from a model, the ND/BF/Fregean criteria, truncation), `IntensionalFull.lean`
+(full models are models; `BF_σ` forces surjectivity), `IntensionalProperties.lean` (NPC in
+every one-object model; propositional fullness refutes the Fregean Axiom),
+`IntensionalExamples.lean` (the two M-set models, the same verdicts). `IEnv` moved to
+`Semantics/Env.lean` and the sentences `ND_σ`, `BF_σ`, FA to `Syntax/Sentences.lean`,
+shared by both forms; the applicative modules are otherwise untouched and keep building.
+
+*Checked.* Every new module builds with no `sorry` and no axiom beyond the classical
+three, in a few seconds each; the full project builds (815 jobs).
+`Results/Schemas/Consistency.lean` now imports the intensional examples and every
+consistency fact and non-theoremhood fact it states, and everything downstream
+(`Incompatibilities.lean`, the records' entailments), builds unchanged: the model
+facts have the same statements in both forms. The applicative `Consistent.of_model` is
+renamed `Consistent.of_action_model`; the intensional one takes the plain name.
+
+*What the port tested.* The claim that the intensional form is easier to reason about
+formally holds up where it was expected to: `full_isModel` is two lines instead of three
+hundred, the δ-rule is a lemma per operation instead of a reading by recursion on the
+type with nothing to prove, transport and η need no model hypothesis, and truncation
+transfers the readings by `rfl`. The costs were in elaboration rather than mathematics:
+the two spellings of the arguments of a relational type at a variable type (`Args` over
+the full actions, and the full arguments by the mutual recursor) are related by an
+explicit bijection, and facts about a particular model are stated in the plain form of
+its domains, since the model's projections are the plain values only definitionally.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

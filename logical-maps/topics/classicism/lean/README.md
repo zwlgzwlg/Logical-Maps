@@ -188,7 +188,11 @@ outline:
   sentences (No Pure Contingency, Distinctness, Possibility, maximalization) are here too.
 * `Classicism/Semantics/`: the standard reading in `Prop` with soundness (so `C` is
   consistent), and the paper's **action models** with their soundness theorem, full
-  models, truncation, and the first models of the map with their verdicts.
+  models, truncation, and the first models of the map with their verdicts, in two forms:
+  the applicative form of *Classicism* (`Action*.lean`) and the **intensional** form of
+  Cian's draft *Boolean Completeness without Rigid Comprehension* (`Intensional*.lean`),
+  in which a relation is a set of tuples and the Boolean operations are set operations.
+  The intensional form is the one the results cite and the one new models are built in.
 * `Classicism/Results/`: metalogical proofs of the map's arrows, each file carrying the
   shallow lemmas its object-level steps rest on, certified in place, and the meta-level
   argument — an induction on the type, a case split on the syntax — right after them.
@@ -222,6 +226,7 @@ Classicism/Syntax/Derivation.lean       derivability in H closed under Subst; te
 Classicism/Syntax/Axioms.lean           C and C⁻ as theories; the eleven identities as sentences
 Classicism/Syntax/Entailment.lean       entailment between axiom sets, ⟹, with cut and its algebra
 Classicism/Syntax/SentenceSchemas.lean  No Pure Contingency, Distinctness, Possibility, maximalization
+Classicism/Syntax/Sentences.lean        ND, BF and the Fregean Axiom as sentences, for both semantic layers
 Classicism/Syntax/Pure.lean             the pure language inside every signature: terms and derivations carried across
 Classicism/Syntax/Normalize.lean        a verified βη-normalizer; conversion by reflection
 Classicism/Syntax/Examples.lean         computed checks, hand derivations, reflection by rfl
@@ -234,6 +239,13 @@ Classicism/Semantics/ActionFull.lean    full action models are models; BF forces
 Classicism/Semantics/ActionFacts.lean   ND, BF, the Fregean Axiom in a model; truncation; □ and ◇
 Classicism/Semantics/ActionProperties.lean  properties of models and what holds in all of them
 Classicism/Semantics/ActionExamples.lean  the map's M-set models and their verdicts
+Classicism/Semantics/Env.lean           assignments, shared by both forms of action model
+Classicism/Semantics/Intensional.lean   intensional action premodels and models: relations as sets of tuples
+Classicism/Semantics/IntensionalSoundness.lean  soundness; the Boolean operations are set operations
+Classicism/Semantics/IntensionalFacts.lean  □ and ◇; consistency from a model; ND, BF, FA criteria; truncation
+Classicism/Semantics/IntensionalFull.lean  full intensional models are models, at once; BF forces surjectivity
+Classicism/Semantics/IntensionalProperties.lean  fullness; NPC in every one-object model
+Classicism/Semantics/IntensionalExamples.lean  the M-set models in the intensional form, cited by the results
 
 Classicism/Results/Records.lean         the map's records proved in the shallow layer, one theorem per record
 Classicism/Results/Atomicity.lean       Atomicity (t) and BF imply Atomicity: a metalogical proof with object-level steps
