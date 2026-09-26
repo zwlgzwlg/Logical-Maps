@@ -237,20 +237,40 @@ try {
 
   // Real Classicism: hide either version of Distinctness Maximalism from
   // Central Questions and Automatically Generated Conjectures, then restore it.
-  const classic=page(JSON.parse(fs.readFileSync(path.join(root,'build/classicism/data.json'),'utf8')));
+  const classicData=JSON.parse(fs.readFileSync(path.join(root,'build/classicism/data.json'),'utf8'));
+  const classic=page(classicData);
   const cd=classic.window.document;
   show(classic,'open');
   const sections=['lynchpins','open-auto'];
   const listed=id=>[...cd.querySelectorAll(`#${id} [data-lynchpin]`)].map(tr=>tr.dataset.lynchpin);
   sections.forEach(id=>openSection(classic,id));
   const baseline=Object.fromEntries(sections.map(id=>[id,listed(id)]));
+  const baselineProgress=cd.getElementById('open-progress').textContent;
+  const report=classicData.lynchpins.reports.find(r=>r.background===null);
+  const rowKey=r=>r.kind==='check'?`check|${r.model}|${r.principle}`:`q|${r.premises.join('+')}|${r.conclusion}`;
+  const expected=id=>{
+    const hidden=new Set([...cd.querySelectorAll('#pr-filters [data-show-positive][aria-pressed="false"]')].map(b=>b.dataset.showPositive));
+    return report[id==='lynchpins'?'rows':'auto'].map(rowKey).filter(k=>!k.split(/[|+]/).some(p=>hidden.has(p))).slice(0,30);
+  };
+  assert.ok(report.rows.length>30 && report.auto.length>30,'the export retains questions beyond the initial top 30');
   const hidden=['distinctness-schema-r','distinctness-signature-r'];
   assert.ok(baseline.lynchpins.some(k=>k.split(/[|+]/).includes(hidden[1])));
   assert.ok(baseline['open-auto'].some(k=>k.split(/[|+]/).includes(hidden[0])));
   for(const id of hidden) cd.querySelector(`#pr-filters [data-show-positive="${id}"]`).click();
-  for(const id of sections) assert.deepEqual(listed(id),baseline[id].filter(k=>!hidden.some(p=>k.split(/[|+]/).includes(p))),`${id}: Distinctness Maximalism is hidden`);
+  for(const id of sections) assert.deepEqual(listed(id),expected(id),`${id}: Distinctness Maximalism is hidden and later questions fill the list`);
   for(const id of hidden) cd.querySelector(`#pr-filters [data-show-positive="${id}"]`).click();
   for(const id of sections) assert.deepEqual(listed(id),baseline[id],'showing the principles restores the real ranking');
+  assert.equal(cd.getElementById('open-progress').textContent,baselineProgress,'showing the principles restores the percentage and count');
+  cd.querySelector('#pr-filters [data-category="signature"] [data-category-select]').click();
+  for(const id of sections) {
+    assert.equal(listed(id).length,30,'hiding the Σ category still gives 30 questions');
+    assert.deepEqual(listed(id),expected(id),'the highest-ranked eligible questions replace hidden Σ questions');
+    assert.ok(listed(id).some(k=>!baseline[id].includes(k)),'later entries fill the gaps');
+  }
+  const sigmaProgress=cd.getElementById('open-progress').textContent;
+  assert.notEqual(sigmaProgress,baselineProgress,'the real map’s progress follows the Σ filter');
+  const questionCount=text=>Number(text.match(/of ([\d,]+) questions/)[1].replaceAll(',',''));
+  assert.ok(questionCount(sigmaProgress)<questionCount(baselineProgress),'hidden Σ questions are removed from the denominator');
   assert.deepEqual(errors,[]);
   console.log('PASS: conjectures in the central-questions format, in their records\' direction with verdicts once settled, tiered stars with a details link, stable shares under source filters, shared sidebar controls, ad-hoc and incompatible backgrounds, and the silver conjecture on the real map.');
 } finally { pages.forEach(dom=>dom.window.close()); }

@@ -67,11 +67,15 @@ and reports unless it is asked for by name.
   recorded conjecture asks about carries that record (a bronze star and a details
   link; silver or gold when the record sets `tier`). The viewer's sections are
   "Central Questions" and "Conjectures". `Lynchpins`
-  in `scripts/pmap.py` is the only implementation: `build` stores its rankings and
+  in `scripts/pmap.py` is the only implementation: `build` stores its full rankings and
   settled share per background preset in `data.json` (also `derived.json` and the
   bundle's OPEN-QUESTIONS.md §2, which skip a sparse map with over three quarters of
   its questions open), and the viewer's Conjectures tab only looks them up, so an
-  ad-hoc background shows none. `check_lynchpins_ui.cjs` guards the tab.
+  ad-hoc background shows none. The viewer filters by shown principles before
+  taking the top 30 central questions and automatic conjectures; recorded
+  conjectures are uncapped. The settled percentage and question count use the
+  same shown principles, counting stored statuses for all eligible questions.
+  `check_lynchpins_ui.cjs` guards the tab.
 - `python3 scripts/pmap.py starter` — build the reusable starter ZIP. Normal
   builds also regenerate it and add a relative Contribute download. Keep its
   allowlist limited to shared tooling and `starter/` assets. Run

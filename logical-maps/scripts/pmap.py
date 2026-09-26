@@ -590,14 +590,22 @@ class Lynchpins:
         out += [(S, FALSE) for (S, _, _), st in zip(self.sets, self.qfalse) if st == "open"]
         return out
 
-    def progress(self) -> dict:
-        """Share of the questions settled; see the class docstring."""
+    def progress(self, *, include_selection: bool = False) -> dict:
+        """Share of the questions settled; optionally include counts filterable by shown principles."""
         by = [[0, 0], [0, 0], [0, 0]]
         for (S, _, _), g, s, st in zip(self.sets, self.qmask, self.settled, self.qfalse):
             by[len(S)][0] += self._count(g) + (st is not None)
             by[len(S)][1] += self._count(s) + (st in ("proved", "refuted"))
         questions, settled = sum(q for q, _ in by), sum(x for _, x in by)
         out = {"premises": PROGRESS_PREMISES, "questions": questions, "settled": settled, "open": questions - settled, "by_premises": by}
+        if include_selection:
+            # Each group is [premises, question-conclusion mask, settled-conclusion
+            # mask, consistency status]. Hex strings preserve masks beyond 53 bits
+            # in JavaScript; their bit positions follow the principle IDs below.
+            out["selection"] = {"principles": self.ids, "groups": [
+                [list(S), hex(g), hex(s), st]
+                for (S, _, _), g, s, st in zip(self.sets, self.qmask, self.settled, self.qfalse)
+            ]}
         if self.inconsistent:
             out["inconsistent_background"] = True
         return out
@@ -783,9 +791,9 @@ class Lynchpins:
             r["no"] = self.with_model(S, [c] if c != FALSE else [], (j, c))
         r["score"] = round(2 * r["yes"] * r["no"] / (r["yes"] + r["no"]), 1) if r["yes"] + r["no"] else 0.0
 
-    def rank(self, top: int = 50, score_all: bool = True) -> dict:
+    def rank(self, top: int | None = 50, score_all: bool = True) -> dict:
         """The open questions and model checks scored for both answers, in two orders, and the
-        questions recorded conjectures ask.
+        questions recorded conjectures ask. With top=None, retain every ranked row.
 
         The central questions are ranked by the harmonic mean of the two scores: if each answer is
         as likely as the map leaves room for it, inversely to how much it would settle, that is the
@@ -853,11 +861,11 @@ def _open_share(p: dict) -> float:
 
 def progress_report(data: dict) -> list[dict]:
     """The settled share under the topic background and under each preset; see Lynchpins.progress."""
-    return [{"background": bid, "name": name, "principles": L.background, "negative": [], **L.progress()}
+    return [{"background": bid, "name": name, "principles": L.background, "negative": [], **L.progress(include_selection=True)}
             for bid, name, L in _engines(data)]
 
 
-def lynchpin_report(data: dict, *, sparse_ok: bool = True, top: int = 50) -> dict:
+def lynchpin_report(data: dict, *, sparse_ok: bool = True, top: int | None = 50) -> dict:
     """Rankings under the topic background alone and under each background preset.
 
     With sparse_ok false, a map in which most questions are still open is not ranked: there
@@ -1197,7 +1205,8 @@ def export_json(topic_id: str) -> dict:
         "models": [clean(m) | {"file": m["_file"]} for m in data["models"]],
         "generated": _dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds"),
         "progress": progress_report(data),
-        "lynchpins": lynchpin_report(data, sparse_ok=False, top=30),
+        # The viewer takes its top 30 after applying the shown-principle filter.
+        "lynchpins": lynchpin_report(data, sparse_ok=False, top=None),
         "server_analysis": {
             "classes": an["classes"],
             "open_pairs": an["open_pairs"],
@@ -2836,6 +2845,10 @@ def selftest():
     assert [r["rank"] for r in Ln.rank(top=100)["rows"]] == list(range(1, 29)), "every row carries its rank"
     short = Ln.rank(top=2)
     assert [r["rank"] for r in short["rows"]] == [1, 2], "the ranking keeps only its top"
+    complete = Ln.rank(top=None)
+    assert complete["rows"] == Ln.rank(top=100)["rows"], "unlimited export keeps every central question"
+    assert complete["auto"] == Ln.rank(top=100)["auto"], "unlimited export keeps every automatically generated conjecture"
+    assert [r["rank"] for r in complete["rows"]] == list(range(1, 29))
     assert sorted(r["rank"] for r in short["recorded"]) == sorted(rows[q]["rank"] for q in [(("r",), "p"), (("p",), "r"), (("r", "s"), "p"), (("r", "s"), FALSE)]), "recorded conjectures are the questions the records ask, at their rank"
     # A settled question and one with more than two premises are listed without rank or scores.
     more = {**noted, "results": [*noted["results"], dict(R("pq2", ["p"], "q"), status="conjectured", notes="Long proved."),
@@ -2860,7 +2873,7 @@ def selftest():
     assert Ln.question_of(["p", "q", "s"], "r") == (("p", "s"), "r"), "q is dropped as p gives it; the pair remains"
     assert Ln.question_of(["p", "r", "s"], "q") == (("p", "r", "s"), "q"), "three premises that give nothing of each other stay three"
 
-    def brute_progress(L):
+    def brute_progress(L, shown=None):
         import itertools
         E, A = L.E, [a for a in L.reps if a not in L.trivial]
         bad = lambda S: E.conflict(S) is not None
@@ -2880,11 +2893,20 @@ def selftest():
             if not bad([a, b]):
                 qs += [((a, b), c) for c in A if c not in (a, b) and not bad([c]) and c not in cl([a]) and c not in cl([b])
                        and not bad([a, c]) and not bad([b, c])]
+        if shown is not None:
+            qs = [(S, c) for S, c in qs if set(S) <= shown and (c == FALSE or c in shown)]
         return len(qs), sum(settled(S, c) for S, c in qs)
 
     def same_share(L):
         p = L.progress()
         assert brute_progress(L) == (p["questions"], p["settled"]), (p, brute_progress(L))
+        selection = L.progress(include_selection=True)["selection"]
+        for shown in (set(L.ids), set(), set(L.ids[:1]), set(L.ids[::2]), set(L.ids) - {L.ids[-1]}):
+            mask = sum(1 << i for i, pid in enumerate(selection["principles"]) if pid in shown)
+            groups = [g for g in selection["groups"] if set(g[0]) <= shown]
+            total = sum(L._count(int(g, 16) & mask) + (st is not None) for _, g, s, st in groups)
+            done = sum(L._count(int(s, 16) & mask) + (st in ("proved", "refuted")) for _, g, s, st in groups)
+            assert (total, done) == brute_progress(L, shown), (shown, total, done)
         return p
     # Settled share: 4 theorem questions, 16 with one premise, 13 with two (p ∧ q is redundant);
     # settled: (∅ ⇒ s) refuted by m1; p ⇒ q proved; p ⇒ s, q ⇒ s refuted; p and q consistent.

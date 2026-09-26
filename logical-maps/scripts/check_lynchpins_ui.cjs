@@ -43,6 +43,15 @@ const principles=['p','q','r','s'].map(id=>({id,name:id.toUpperCase(),statement:
 const conjectures=[conjecture('qr',['q'],'r','Try a two-point frame; see the *Notes* field.'),conjecture('rp',['r'],'p','A permutation model might do.','gold'),
   conjecture('ps',['p'],'s','Settled long ago.'),conjecture('prs',['p','r','s'],'q','Three premises.')];
 const share=(principles,questions,settled)=>({background:null,name:null,principles,negative:[],premises:2,questions,settled,open:questions-settled});
+// Stored statuses for the p ⇒ q / m1 fixture; p, q, r, s occupy bits 0–3.
+const selection={principles:['p','q','r','s'],groups:[
+  [[], '0xf', '0x8', null],
+  [['p'], '0xe', '0xa', 'refuted'], [['q'], '0xd', '0x8', 'refuted'],
+  [['r'], '0xb', '0x0', 'open'], [['s'], '0x7', '0x0', 'open'],
+  [['p','r'], '0x8', '0x0', 'open'], [['p','s'], '0x4', '0x0', 'open'],
+  [['q','r'], '0x9', '0x0', 'open'], [['q','s'], '0x5', '0x0', 'open'],
+  [['r','s'], '0x3', '0x0', 'open'],
+]};
 const q=(premises,conclusion,yes,no)=>({kind:'question',premises,conclusion,yes,no});
 const check=(model,principle,yes,no)=>({kind:'check',model,principle,yes,no});
 const rec=(id,notes,tier,kind='result')=>({id,kind,notes,tier:tier||null});
@@ -88,7 +97,7 @@ const rowsP=[row({premises:['r','s'],conclusion:'false',yes:2,no:2,score:2,auto_
 const autoP=[rowsP[3],rowsP[4],rowsP[5],rowsP[0],rowsP[1],rowsP[6],rowsP[2]];
 const recordedP=[rowsP[4],rowsP[5],row({premises:[],conclusion:'s',rank:null,yes:null,no:null,status:'refuted',conjectures:[rec('ps','Settled long ago.'),mrec('m5','Two points.')],claim:'entails',tier:'bronze',verdict:'refuted'})];
 const fixture={topic,principles,results:[rule('pq',['p'],'q'),...conjectures],models:[model('m1',['p'],['s']),model('m3',['q','s'],['p'],'conjectured','A two-point model.'),model('m5',['q'],['s'],'conjectured','Two points.')],
-  progress:[share([],33,6),share(['p'],7,1)],
+  progress:[{...share([],33,6),selection},share(['p'],7,1)],
   lynchpins:{skipped:null,reports:[
     report([],[['p'],['q'],['r'],['s']],[],share([],33,6),rowsNone,autoNone,recordedNone),
     report(['p'],[['p','q'],['r'],['s']],['p','q'],share(['p'],7,1),rowsP,autoP,recordedP)]}};
@@ -281,6 +290,8 @@ try {
   const positive=id=>fd.querySelector(`#pr-filters [data-show-positive="${id}"]`);
   const negative=id=>fd.querySelector(`#pr-filters [data-show-negative="${id}"]`);
   positive('r').click();
+  assert.equal(fd.getElementById('open-progress').textContent,'40% of 15 questions with up to two premises are settled.','percentage and count follow the shown principles');
+  assert.match(fd.getElementById('open-progress').title,/^6 of 15 questions/);
   const withoutR={
     lynchpins:['q|p+s|false','q|s|p','q|q+s|false'],
     'open-auto':['q|s|false','q|q+s|false','q||p'],
@@ -292,15 +303,18 @@ try {
   assert.equal(fd.querySelector('#pr-filters .pr-category-count').textContent,'3/4');
   negative('r').click();
   for(const id of sections) assert.deepEqual(keys(filtered,id),withoutR[id],'showing ¬R does not restore positive R questions, including non-entailments');
+  assert.equal(fd.getElementById('open-progress').textContent,'40% of 15 questions with up to two premises are settled.');
   negative('r').click();
   show(filtered,'graph');
   assert.equal(positive('r').getAttribute('aria-pressed'),'false','selection survives switching tabs');
   positive('r').click();
   show(filtered,'open');
   for(const id of sections) assert.deepEqual(keys(filtered,id),original[id],'showing R on the graph restores the lists');
+  assert.equal(fd.getElementById('open-progress').textContent,'18% of 33 questions with up to two premises are settled.');
 
   const category=fd.querySelector('#pr-filters [data-category-select]');
   category.click();
+  assert.equal(fd.getElementById('open-progress').textContent,'0 questions with up to two premises are shown.','no misleading percentage when the denominator is zero');
   for(const id of sections) {
     assert.deepEqual(keys(filtered,id),[],'category hide filters all lists');
     assert.match(fd.querySelector(`#${id} .note`).textContent,/No questions match the shown principles/,'empty filtering is distinguished from settled questions');
@@ -312,12 +326,40 @@ try {
   sections.forEach(id=>assert.deepEqual(keys(filtered,id),[]));
   fd.getElementById('pr-all').click();
   sections.forEach(id=>assert.deepEqual(keys(filtered,id),original[id]));
+  assert.equal(fd.getElementById('open-progress').textContent,'18% of 33 questions with up to two premises are settled.');
 
   positive('s').click();
   fd.getElementById('show-resolved').click();
   assert.ok(!keys(filtered,'open-recorded').some(k=>k.split(/[|+]/).includes('s')),'Show resolved respects hidden principles too');
   positive('s').click();
   assert.ok(keys(filtered,'open-recorded').includes('q|p|s'),'showing S restores its resolved conjecture');
+
+  // More than 30 rows: hiding a principle that occupies the original top 30
+  // must fill both rankings from later entries, in each list's own order.
+  const pool=['p','q','r','s','t'];
+  const premiseSets=[[],...pool.map(p=>[p]),...pool.flatMap((p,i)=>pool.slice(i+1).map(q=>[p,q]))];
+  const candidates=premiseSets.flatMap(premises=>[...pool,'false'].filter(c=>!premises.includes(c)).map(conclusion=>q(premises,conclusion,2,1)));
+  const mentionsR=r=>[...r.premises,r.conclusion].includes('r');
+  const hiddenRows=candidates.filter(mentionsR),visibleRows=candidates.filter(r=>!mentionsR(r));
+  assert.ok(hiddenRows.length>30 && visibleRows.length>30);
+  const central=[...hiddenRows,...visibleRows];
+  central.forEach((r,i)=>r.rank=i+1);
+  const automatic=[...hiddenRows].reverse().concat([...visibleRows].reverse());
+  automatic.forEach((r,i)=>{r.auto_rank=i+1;r.auto_claim='not';});
+  const fullReport=report([],pool.map(p=>[p]),[],share([],candidates.length,0),central,automatic,central);
+  const full=page({topic,principles:pool.map(id=>({id,name:id.toUpperCase(),statement:id,category:'basic'})),results:[],models:[],lynchpins:{reports:[fullReport]}});
+  const fullDoc=full.window.document;
+  show(full,'open');sections.forEach(id=>open(full,true,id));
+  const rowKey=r=>`q|${r.premises.join('+')}|${r.conclusion}`;
+  for(const [id,list] of [['lynchpins',central],['open-auto',automatic]]) assert.deepEqual(keys(full,id),list.slice(0,30).map(rowKey),'initial top 30');
+  fullDoc.querySelector('#pr-filters [data-show-positive="r"]').click();
+  for(const [id,list] of [['lynchpins',central],['open-auto',automatic]]) {
+    assert.deepEqual(keys(full,id),list.filter(r=>!mentionsR(r)).slice(0,30).map(rowKey),'filter before taking the top 30');
+    assert.ok([...fullDoc.querySelectorAll(`#${id} td.rank`)].every(td=>Number(td.textContent)>30),'these questions were outside the original top 30');
+  }
+  assert.equal(keys(full,'open-recorded').length,visibleRows.length,'recorded conjectures remain uncapped');
+  fullDoc.getElementById('pr-all').click();
+  for(const [id,list] of [['lynchpins',central],['open-auto',automatic]]) assert.deepEqual(keys(full,id),list.slice(0,30).map(rowKey),'show all restores the original top 30');
 
   assert.deepEqual(errors,[]);
   console.log('PASS: settled share, Central Questions by the harmonic mean, Automatically Generated Conjectures stated as the answer to expect, and Conjectures in their records\' direction at their central rank, all in one format with tiered stars and a details link, collapsed and lazy, True class under a stored background, none for an ad-hoc background, sparse maps, and inconsistent backgrounds.');
