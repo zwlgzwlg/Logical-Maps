@@ -194,7 +194,7 @@ try {
   const silver=()=>rd.querySelector('#open-recorded [data-starred="silver"]');
   // Under DU the silver conjecture keeps Totality among its premises, three in all, so it
   // is listed unranked; under DTU it is the open two-premise question CDF-Area Extension ∧
-  // Comonotonic Sum Invariance ⊬ False, at its rank.
+  // Comonotonic Sum Invariance ⊬ ⊥, at its rank.
   assert.ok(silver(),'listed under DU'); assert.equal(silver().dataset.status,'outside','with more than two premises there');
   assert.equal(silver().dataset.claim,'not','a model conjectures against the entailment');
   assert.ok(keys(real).every(k=>!rowOf(real,k).dataset.status||rowOf(real,k).dataset.status==='outside'),'settled ones wait for Show resolved');
@@ -203,7 +203,7 @@ try {
   assert.ok(silver(),'open under DTU as a two-premise question');
   assert.equal(silver().dataset.status,undefined);
   assert.match(silver().querySelector('td.rank').textContent,/^\d+$/,'at its rank');
-  assert.match(silver().textContent,/⊬ False/);
+  assert.match(silver().textContent,/⊬ ⊥/);
   assert.ok(silver().querySelector('.links button[data-open-model]'),'with a link to the record');
   assert.ok(visible(real,rd.querySelector('#background-dock [data-background-preset="du"]')));
   assert.ok(visible(real,rd.querySelector('#background-dock [data-background-preset="dtu"]')));

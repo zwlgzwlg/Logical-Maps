@@ -22,7 +22,8 @@ try {
     const input = d.getElementById('graph-search'); input.value = 'reflexive';
     input.dispatchEvent(new dom.window.Event('input', {bubbles: true}));
     if (topic === 'my-map') {
-      assert.equal(d.querySelectorAll('#graph .node').length, 0);
+      assert.equal(d.querySelectorAll('#graph .node').length, 1);
+      assert.equal(d.querySelector('#graph [data-constant="truth"]').textContent, '⊤');
       assert.equal(d.getElementById('graph-search-status').textContent, 'No matching principles');
     } else {
       assert.ok(d.querySelector('#graph .node.search-current'));

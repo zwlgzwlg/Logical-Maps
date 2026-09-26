@@ -129,7 +129,7 @@ try {
   assert.equal(keys(dom,'lynchpins').includes('q|r|false'),false);
   assert.deepEqual(scores(dom,'check|m1|r'),[6,3],'a model check sits in the same list');
   assert.deepEqual(scores(dom,'q|p+r|s'),[3,5]);
-  assert.equal(stmt(dom,'q|p+r|false'),'P ∧ R ⊢ False (⊥)','a turnstile: no denies the entailment, not the conditional');
+  assert.equal(stmt(dom,'q|p+r|false'),'P ∧ R ⊢ ⊥','a turnstile: no denies the entailment, not the conditional');
   assert.equal(stmt(dom,'check|m1|r'),'M1: R');
   assert.deepEqual([...det().querySelectorAll('tbody tr td.rank')].map(td=>td.textContent).slice(0,3),['1','2','3'],'every row shows its rank');
   assert.equal(det().querySelector('th.num').textContent,'Rank');
@@ -142,7 +142,7 @@ try {
   assert.equal(det().querySelectorAll('[data-starred]').length,3,'rows without a noted conjecture carry no star');
   assert.ok(det().querySelector('[data-lynchpin="q|r|p"] .star.iridescent.gold'),'a record ranked gold by hand shows a gold star');
   assert.match(det().querySelector('[data-lynchpin="q|r|p"] .star').title,/^gold: /);
-  assert.equal(stmt(dom,'q|q+s|false'),'★Q ∧ S ⊢ False (⊥) details','a central question reads as a question whatever a record claims');
+  assert.equal(stmt(dom,'q|q+s|false'),'★Q ∧ S ⊢ ⊥ details','a central question reads as a question whatever a record claims');
   // The verdict is what the question is about, so there is nothing for a
   // verdict readout to say. The principle reads as it does in the tables above.
   assert.equal(det().querySelector('[data-lynchpin="check|m1|r"] button[data-verdict]'),null,'model checks do not offer an empty verdict');
@@ -167,7 +167,7 @@ try {
   assert.deepEqual(keys(dom,'open-auto').slice(0,4),['q|r|false','q|s|false','q|q+r|false','q||r'],'by the larger side');
   assert.deepEqual([...auto().querySelectorAll('tbody tr td.rank')].map(td=>td.textContent).slice(0,3),['1','2','3'],'with its own rank');
   assert.equal(auto().querySelector('th.num').textContent,'“If no” rank','a different ranking, labelled as one');
-  assert.equal(stmt(dom,'q|r|false','open-auto'),'R ⊬ False (⊥)','a proof of r ⊢ ⊥ would settle 17, a refutation none: expect the refutation');
+  assert.equal(stmt(dom,'q|r|false','open-auto'),'R ⊬ ⊥','a proof of r ⊢ ⊥ would settle 17, a refutation none: expect the refutation');
   assert.deepEqual(scores(dom,'q|r|false','open-auto'),[0,17],'if yes: confirming r ⊬ ⊥; if no: the surprise');
   assert.equal(auto().querySelector('[data-lynchpin="q|r|false"]').dataset.claim,'not');
   assert.equal(stmt(dom,'q|r+s|q','open-auto'),'R ∧ S ⊢ Q','a refutation would settle 10, a proof none: expect the proof');
@@ -186,7 +186,7 @@ try {
   assert.equal(stmt(dom,'q|q+s|p','open-recorded'),'★Q ∧ S ⊬ P details');
   assert.deepEqual(scores(dom,'q|q+s|p','open-recorded'),[5,0],'flipped from the question\'s 0 / 5');
   assert.equal(recorded().querySelector('[data-lynchpin="q|q+s|p"]').dataset.claim,'not');
-  assert.equal(stmt(dom,'q|q+s|false','open-recorded'),'★Q ∧ S ⊬ False (⊥) details'); assert.deepEqual(scores(dom,'q|q+s|false','open-recorded'),[1,10]);
+  assert.equal(stmt(dom,'q|q+s|false','open-recorded'),'★Q ∧ S ⊬ ⊥ details'); assert.deepEqual(scores(dom,'q|q+s|false','open-recorded'),[1,10]);
   assert.equal(stmt(dom,'q|q|r','open-recorded'),'★Q ⊢ R details','a result claims the entailment');
   assert.equal(recorded().querySelector('th:nth-child(2)').textContent,'Conjecture');
   assert.ok(recorded().querySelector('[data-lynchpin="q|r|p"] .star.iridescent.gold'),'a record ranked gold by hand shows a gold star');
@@ -246,12 +246,12 @@ try {
   assert.equal(doc2.getElementById('open-progress').textContent,'14% of 7 questions with up to two premises are settled.','the stored share for the p background');
   assert.equal(det2.querySelectorAll('tbody tr').length,rowsP.length);
   assert.deepEqual(keys(dom2,'lynchpins').slice(0,2),['q|r+s|false','check|m1|r'],'r ∧ s ⊢ ⊥ at 2 / 2 leads under p');
-  assert.ok(stmt(dom2,'q||r').replace(/^★/,'').startsWith('True (⊤) ⊢ R'),'q ⊢ r reads as ⊤ ⊢ r under p, starred');
+  assert.ok(stmt(dom2,'q||r').replace(/^★/,'').startsWith('⊤ ⊢ R'),'q ⊢ r reads as ⊤ ⊢ r under p, starred');
   assert.equal(det2.querySelector('[data-lynchpin="q|q|r"]'),null,'q is in the True class and asks nothing');
   assert.deepEqual(scores(dom2,'q|r+s|false'),[2,2]);
-  assert.equal(stmt(dom2,'q||r','open-auto'),'★True (⊤) ⊬ R details','expected to fail: a proof would settle 3, a refutation none');
+  assert.equal(stmt(dom2,'q||r','open-auto'),'★⊤ ⊬ R details','expected to fail: a proof would settle 3, a refutation none');
   assert.deepEqual(keys(dom2,'open-recorded'),['q|s|false','q||r'],'q ⊢ r becomes ⊤ ⊢ r under p; p ⊢ s is settled');
-  assert.equal(stmt(dom2,'q|s|false','open-recorded'),'★S ⊬ False (⊥) details'); assert.deepEqual(scores(dom2,'q|s|false','open-recorded'),[0,3]);
+  assert.equal(stmt(dom2,'q|s|false','open-recorded'),'★S ⊬ ⊥ details'); assert.deepEqual(scores(dom2,'q|s|false','open-recorded'),[0,3]);
 
   // A sparse map is not ranked, but its recorded conjectures are still listed and scored.
   const sparseReport=report([],[['p'],['q'],['r'],['s']],[],share([],38,0),[],[],[row({premises:['q'],conclusion:'r',yes:2,no:2,rank:null,tier:'bronze',claim:'entails',conjectures:qr})]);

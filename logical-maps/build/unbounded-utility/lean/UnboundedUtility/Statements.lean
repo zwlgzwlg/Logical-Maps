@@ -327,7 +327,7 @@ def dominance_implies_statewise : Prop :=
 
 /-- `dominance-refutes-antitonic-sum`
 
-Rich Outcomes ∧ Stochastic Dominance ∧ Antitonic Sum Invariance ⇒ False (⊥) -/
+Rich Outcomes ∧ Stochastic Dominance ∧ Antitonic Sum Invariance ⇒ ⊥ -/
 def dominance_refutes_antitonic_sum : Prop :=
   ∀ {O : Type*} [MeasurableSpace O] [LinearOrder O] (P : Pref O) [P.Regular],
     UnboundedUtility.RichOutcomes P →
@@ -337,7 +337,7 @@ def dominance_refutes_antitonic_sum : Prop :=
 
 /-- `dominance-refutes-full-sum`
 
-Rich Outcomes ∧ Stochastic Dominance ∧ Full Sum Invariance ⇒ False (⊥) -/
+Rich Outcomes ∧ Stochastic Dominance ∧ Full Sum Invariance ⇒ ⊥ -/
 def dominance_refutes_full_sum : Prop :=
   ∀ {O : Type*} [MeasurableSpace O] [LinearOrder O] (P : Pref O) [P.Regular],
     UnboundedUtility.RichOutcomes P →
@@ -361,7 +361,7 @@ def dtu_l1_implies_eu : Prop :=
 
 /-- `dtu-refutes-archimedean-gambles`
 
-Rich Outcomes ∧ Totality ∧ Stochastic Equivalence ∧ Simple Expected Utility ∧ Stochastic Dominance ∧ Mixture Independence ∧ Archimedean Gambles ⇒ False (⊥) -/
+Rich Outcomes ∧ Totality ∧ Stochastic Equivalence ∧ Simple Expected Utility ∧ Stochastic Dominance ∧ Mixture Independence ∧ Archimedean Gambles ⇒ ⊥ -/
 def dtu_refutes_archimedean_gambles : Prop :=
   ∀ {O : Type*} [MeasurableSpace O] [LinearOrder O] (P : Pref O) [P.Regular],
     UnboundedUtility.RichOutcomes P →
@@ -569,7 +569,7 @@ def l1_implies_vanishing_shift_continuity : Prop :=
 
 /-- `levy-refutes-neutral-independent-preservation`
 
-Rich Outcomes ∧ Stochastic Dominance ∧ Mixture Independence ∧ Symmetric Gambles Are Neutral ∧ Independent Sum Preservation ⇒ False (⊥) -/
+Rich Outcomes ∧ Stochastic Dominance ∧ Mixture Independence ∧ Symmetric Gambles Are Neutral ∧ Independent Sum Preservation ⇒ ⊥ -/
 def levy_refutes_neutral_independent_preservation : Prop :=
   ∀ {O : Type*} [MeasurableSpace O] [LinearOrder O] (P : Pref O) [P.Regular],
     UnboundedUtility.RichOutcomes P →
@@ -767,7 +767,7 @@ def rich_archimedean_dominance_independence_imply_simple_eu : Prop :=
 
 /-- `rich-simple-dominance-refutes-archimedean-gambles`
 
-Rich Outcomes ∧ Simple Expected Utility ∧ Stochastic Dominance ∧ Archimedean Gambles ⇒ False (⊥) -/
+Rich Outcomes ∧ Simple Expected Utility ∧ Stochastic Dominance ∧ Archimedean Gambles ⇒ ⊥ -/
 def rich_simple_dominance_refutes_archimedean_gambles : Prop :=
   ∀ {O : Type*} [MeasurableSpace O] [LinearOrder O] (P : Pref O) [P.Regular],
     UnboundedUtility.RichOutcomes P →
@@ -778,7 +778,7 @@ def rich_simple_dominance_refutes_archimedean_gambles : Prop :=
 
 /-- `rich-simple-sure-thing-refutes-countable`
 
-Rich Outcomes ∧ Simple Expected Utility ∧ Sure-Thing ∧ Countable Sure-Thing ⇒ False (⊥) -/
+Rich Outcomes ∧ Simple Expected Utility ∧ Sure-Thing ∧ Countable Sure-Thing ⇒ ⊥ -/
 def rich_simple_sure_thing_refutes_countable : Prop :=
   ∀ {O : Type*} [MeasurableSpace O] [LinearOrder O] (P : Pref O) [P.Regular],
     UnboundedUtility.RichOutcomes P →
@@ -873,7 +873,7 @@ def sure_thing_to_independence : Prop :=
 
 /-- `symmetric-dtu-refutes-independent-sum-candidate`
 
-Rich Outcomes ∧ Totality ∧ Stochastic Equivalence ∧ Simple Expected Utility ∧ Stochastic Dominance ∧ Mixture Independence ∧ Symmetric Gambles Are Neutral ∧ Independent Sum Invariance ⇒ False (⊥) -/
+Rich Outcomes ∧ Totality ∧ Stochastic Equivalence ∧ Simple Expected Utility ∧ Stochastic Dominance ∧ Mixture Independence ∧ Symmetric Gambles Are Neutral ∧ Independent Sum Invariance ⇒ ⊥ -/
 def symmetric_dtu_refutes_independent_sum_candidate : Prop :=
   ∀ {O : Type*} [MeasurableSpace O] [LinearOrder O] (P : Pref O) [P.Regular],
     UnboundedUtility.RichOutcomes P →

@@ -32,7 +32,8 @@ try {
   const node = id => [...d.querySelectorAll('#nodes .node')].find(n => n.dataset.members.split(',').includes(id));
   assert.equal(node('x'), node('y')); assert.ok(node('x').classList.contains('falsity'));
   assert.equal(node('t'), node('u')); assert.ok(node('t').classList.contains('from-background'));
-  assert.match(node('x').textContent, /False/); assert.match(node('t').textContent, /True/);
+  assert.equal(node('x').querySelector('[data-constant="falsity"]').textContent, '⊥');
+  assert.equal(node('t').querySelector('[data-constant="truth"]').textContent, '⊤');
   assert.ok(node('true').querySelector('[data-principle="true"]'), 'The display constant does not reserve an existing principle ID');
   assert.equal(d.querySelectorAll('.edge.trivial').length, 0);
   const parent = w.eval("layout.byId.get('j:abc').parent");

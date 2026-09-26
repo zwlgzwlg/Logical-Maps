@@ -1,4 +1,4 @@
-# B for sentences of Σ ∧ Witnessed Possibility ⇒ False (⊥)
+# B for sentences of Σ ∧ Witnessed Possibility ⇒ ⊥
 
 <p class='cert'>Result — Source: Misc.; produced by Cian Dorr, suggestion of 22 September 2026; proof written out by Claude Fable 5.1 (Anthropic), 22 September 2026; recorded by Claude Fable 5.1 (Anthropic), 22 September 2026.</p>
 
@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **False (⊥).** These premises cannot all hold together.
+- **⊥.** These premises cannot all hold together.
 
 ## Proof
 

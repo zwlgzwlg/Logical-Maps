@@ -1,4 +1,4 @@
-# Possibility Maximalism (pure) ∧ Countable Boolean Completeness ⇒ False (⊥)
+# Possibility Maximalism (pure) ∧ Countable Boolean Completeness ⇒ ⊥
 
 <p class='cert'>Result — Source: Arithmetic is Necessary (2024 draft); produced by Zachary Goodsell; recorded by Claude Fable 5.1 (Anthropic), 20 September 2026.</p>
 
@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **False (⊥).** These premises cannot all hold together.
+- **⊥.** These premises cannot all hold together.
 
 ## Proof
 

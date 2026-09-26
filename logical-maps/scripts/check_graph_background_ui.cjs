@@ -44,6 +44,15 @@ try{
  assert.equal(w.eval("literalFollows('b')"),false);assert.equal(w.eval("literalFollows('!z')"),false);
  const conjecture=JSON.parse(w.eval("JSON.stringify(buildGraph().edges.find(e=>e.key==='cfe'))"));
  assert.deepEqual(conjecture.premises,['c','f'],'Removing the resolving background restores the now-open conjecture');
+ // Truth remains a labelled anchor with no assumptions, visible theorems or arrows.
+ assert.equal(d.querySelectorAll('#graph [data-constant="truth"]').length,1);
+ assert.equal(d.querySelector('#graph [data-constant="truth"]').textContent,'⊤');
+ assert.ok(w.eval('layout.visible.filter(n=>n.id!=="truth").every(n=>layout.y.get("truth")+layout.size.get("truth").h/2 < layout.y.get(n.id)-layout.size.get(n.id).h/2)'), 'Standalone truth sits above the graph');
+ w.eval('state.showConj=false; state.showIso=false; state.allowed.clear(); state.leanOnly=true; state.conjectureOnly=true; state.excluded=new Set(ids); renderAll(true);');
+ assert.equal(d.querySelectorAll('#graph .node').length,1,'Filters and hiding every principle still leave truth');
+ assert.equal(d.querySelector('#graph [data-constant="truth"]').textContent,'⊤');
+ w.handleGraphClick(d.querySelector('#graph [data-constant="truth"]'));
+ assert.equal(d.querySelector('#pop .pop-t').textContent,'⊤');
  assert.deepEqual(errors.map(String),[]);
  console.log('PASS: assumptions shown in the True box, settled principles hidden by default, hidden background proofs remain automatic and traceable, preserve exclusions and consistency, and never use conjectures as facts.');
 }finally{w.close();}

@@ -11,7 +11,7 @@ const dom=page(fixture),w=dom.window,d=w.document;
 assert.ok(d.querySelector('#graph .falsity'));
 assert.equal(d.querySelector('[data-pid="false"]'),null);
 w.eval("handleGraphClick(document.querySelector('#graph .falsity text'))");
-assert.match(d.getElementById('pop').textContent,/False/);
+assert.equal(d.querySelector('#pop .pop-t').textContent,'⊥');
 d.querySelector('#pop [data-goto]').click();assert.match(d.getElementById('page').textContent,/not another optional principle/);
 for(const candidate of 'abcd'){
   d.getElementById('background-reset').click();
@@ -21,7 +21,7 @@ for(const candidate of 'abcd'){
   w.eval(`select({type:'principle',id:'${candidate}'})`);
   assert.match(d.querySelector('#pop').textContent,/Ruled out by the background/);
   d.querySelector('#pop [data-result="conflict"]').click();
-  assert.match(d.querySelector('#pop').textContent,/A ∧ B ∧ C ∧ D ⇒ False/);
+  assert.match(d.querySelector('#pop').textContent,/A ∧ B ∧ C ∧ D ⇒ ⊥/);
   d.querySelector('#pop [data-goto]').click();assert.match(d.getElementById('page').textContent,/These premises cannot all hold together/);
 }
 w.eval("changeBackground('d',true)");
@@ -36,7 +36,7 @@ d.querySelector('#models [data-model="m"]').click();
 const verdict=d.querySelector('#models [data-verdict="d"]');assert.match(verdict.textContent,/✗/);
 verdict.click();assert.match(d.getElementById('pop').textContent,/A paper/);assert.match(d.getElementById('pop').textContent,/A submission/);
 d.querySelector('#pop [data-goto]').click();
-assert.match(d.getElementById('page').textContent,/False.*contradiction/);
+assert.match(d.getElementById('page').textContent,/⊥.*contradiction/);
 d.querySelector('[data-source-filter="submission"]').click();assert.equal(d.querySelector('#models [data-verdict="d"]'),null);
 d.querySelector('[data-source-filter="submission"]').click();
 // Explorer assumptions update the graph and surface the same contradiction.

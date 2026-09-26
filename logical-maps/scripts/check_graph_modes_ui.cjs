@@ -52,7 +52,8 @@ try{
  assert.ok(!graph(real).edges.some(e=>e.key==='conjectured-dtu-shift-implies-transfer'),'The refuted transfer conjecture has no arrow');
  assert.ok(!graph(real).edges.some(e=>e.premises.includes('simple-eu')));
  real.window.document.getElementById('unpublished-only').click();
- assert.equal(graph(real).edges.length,0);assert.equal(real.window.document.getElementById('graph-empty').hidden,false,'Resolved questions leave a valid empty conjecture-only graph');
+ assert.ok(real.window.eval('buildGraph().edges.every(e=>e.r?.status==="conjectured"&&sourceOf(e.r).kind!=="published-paper")'),'Only unpublished conjectures remain; current open questions need not be empty');
+ assert.equal(real.window.document.getElementById('graph-empty').hidden,graph(real).edges.length>0,'The empty-state message follows the current open questions');
  // Redrawing after a change of content leaves the reader's pan and zoom alone.
  // Only the first fit, the fit button, and a change in pane size move it.
  const vp=page(fixture,'https://maps.example/?assume=background'),vw=vp.window,vd=vw.document;

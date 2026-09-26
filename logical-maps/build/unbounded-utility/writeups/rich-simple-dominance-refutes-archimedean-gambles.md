@@ -1,4 +1,4 @@
-# Rich Outcomes ∧ Simple Expected Utility ∧ Stochastic Dominance ∧ Archimedean Gambles ⇒ False (⊥)
+# Rich Outcomes ∧ Simple Expected Utility ∧ Stochastic Dominance ∧ Archimedean Gambles ⇒ ⊥
 
 <p class='cert'>Result — Source: Misc.; produced by Zachary Goodsell (St Petersburg argument); GPT-6 (Codex), explicit reduction of the sufficient premises; recorded by GPT-6 (Codex), 2026-09-09.</p>
 
@@ -11,7 +11,7 @@
 
 ## Conclusion
 
-- **False (⊥).** These premises cannot all hold together.
+- **⊥.** These premises cannot all hold together.
 
 ## Proof
 

@@ -1,4 +1,4 @@
-# Distinctness Maximalism (pure) ∧ Rigid Comprehension ⇒ False (⊥)
+# Distinctness Maximalism (pure) ∧ Rigid Comprehension ⇒ ⊥
 
 <p class='cert'>Result — Source: Arithmetic is Necessary (2024 draft); produced by Zachary Goodsell; recorded by OpenAI Codex (GPT-6), 17 September 2026; proof supplied by Claude Fable 5.1 (Anthropic), 20 September 2026, from Goodsell's draft.</p>
 
@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **False (⊥).** These premises cannot all hold together.
+- **⊥.** These premises cannot all hold together.
 
 ## Proof
 

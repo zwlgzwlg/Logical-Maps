@@ -36,8 +36,9 @@ function verifyDirections(g,label){
   const connected=g.nodes.filter(n=>n.parent||n.kind==='falsity'||n.kind==='truth'||g.nodes.some(j=>j.parent===n.id)||g.edges.some(e=>e.from===n.id||e.to===n.id));
   if(falsity) for(const n of connected) if(n!==falsity) assert.ok(n.y<falsity.y,`${label}: ⊥ is the lowest node (${n.id})`);
   const isolated=g.nodes.filter(n=>!connected.includes(n));
-  if(isolated.length&&connected.length){
-    const top=Math.min(...connected.map(n=>n.y-n.h/2));
+  const core=connected.filter(n=>n.kind!=='truth'||n.members.length>1);
+  if(isolated.length&&core.length){
+    const top=Math.min(...core.map(n=>n.y-n.h/2));
     for(const n of isolated) assert.ok(n.y+n.h/2<top,`${label}: isolated ${n.id} sits above the diagram`);
     const background=isolated.filter(n=>n.fromBackground),unconnected=isolated.filter(n=>!n.fromBackground);
     if(background.length&&unconnected.length) assert.ok(Math.max(...unconnected.map(n=>n.y))<Math.min(...background.map(n=>n.y)),`${label}: background consequences sit nearest the diagram`);

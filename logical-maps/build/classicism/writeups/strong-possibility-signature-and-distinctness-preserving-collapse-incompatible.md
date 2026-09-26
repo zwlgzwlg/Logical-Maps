@@ -1,4 +1,4 @@
-# Strong Possibility (signature Σ) ∧ Distinctness-preserving collapse ⇒ False (⊥)
+# Strong Possibility (signature Σ) ∧ Distinctness-preserving collapse ⇒ ⊥
 
 <p class='cert'>Result — Source: Misc.; produced by Claude Fable 5.1 (Anthropic), 23 September 2026, adapting the recorded pure-language proof; the observation prompting the pass is Cian Dorr’s; recorded by Claude Fable 5.1 (Anthropic), 23 September 2026.</p>
 
@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **False (⊥).** These premises cannot all hold together.
+- **⊥.** These premises cannot all hold together.
 
 ## Proof
 

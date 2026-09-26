@@ -1,4 +1,4 @@
-# Strong Possibility (pure) ∧ Distinctness-preserving collapse ⇒ False (⊥)
+# Strong Possibility (pure) ∧ Distinctness-preserving collapse ⇒ ⊥
 
 <p class='cert'>Result — Source: Classicism (2024); produced by Andrew Bacon and Cian Dorr; stated as a result at Cian Dorr’s suggestion, 22 September 2026, with the proof written out by Claude Fable 5.1 (Anthropic); recorded by Claude Fable 5.1 (Anthropic), 22 September 2026.</p>
 
@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **False (⊥).** These premises cannot all hold together.
+- **⊥.** These premises cannot all hold together.
 
 ## Proof
 

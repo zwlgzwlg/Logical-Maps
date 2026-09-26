@@ -96,7 +96,7 @@ try {
   // An inconsistent antecedent can still display its real DU subpackage.
   // It must not manufacture Totality or use the inconsistent named preset.
   const falseResult = fixture.results.find(r => r.id === 'false-result');
-  assert.equal(stmt(dom, 'result', {...falseResult, conclusion: 'false'}), 'DU ∧ X ⇒ False (⊥)');
+  assert.equal(stmt(dom, 'result', {...falseResult, conclusion: 'false'}), 'DU ∧ X ⇒ ⊥');
   assert.deepEqual(named(dom, falseResult.premises).presets.map(p => p.id), ['du']);
 
   // Selected assumptions and visible conjectures are not proof resources for

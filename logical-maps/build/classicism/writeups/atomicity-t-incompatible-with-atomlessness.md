@@ -1,4 +1,4 @@
-# Atomicity (type t) ∧ Atomlessness ⇒ False (⊥)
+# Atomicity (type t) ∧ Atomlessness ⇒ ⊥
 
 <p class='cert'>Result — Source: Misc.; produced by OpenAI Codex (GPT-6), 17 September 2026; recorded by OpenAI Codex (GPT-6), 17 September 2026.</p>
 
@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **False (⊥).** These premises cannot all hold together.
+- **⊥.** These premises cannot all hold together.
 
 ## Proof
 

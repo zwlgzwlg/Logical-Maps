@@ -271,7 +271,14 @@ sky blue replaces green, orange replaces red, and independence combines both
 coloured halves. Open nodes keep their normal fill.
 
 Lattice: a separate Hasse diagram of the conjunctions a chosen handful of
-principles generate. It opens with False and True alone; the sidebar offers the same
+principles generate. It opens with False and True alone. Two routes carry a choice of principles in:
+**lattice**, on a selection's own controls in the graph's details pane, draws
+the lattice of what is selected and opens this view; **from the graph**, beside
+the Lattice heading, takes whatever the graph is showing, negations included and
+assumptions left out. The graph reads well at seventy principles and the lattice
+at about eight, which is why the two keep separate lists rather than one. Past
+the node cap nothing is drawn and the readout says how many would be workable.
+The sidebar offers the same
 choices per principle as the graph, ✓ for the principle, ✗ for its negation and
 a move to the background, and each adds its literal together with its meets
 against everything already shown. Each group has the graph's own
@@ -306,14 +313,14 @@ the converse is settled, the model that settles it. The relation shading and
 its legend are the graph's too. The node count grows with the subsets, so the
 view stops at a few hundred and says so.
 
-Graph: implications, ∧ nodes for multi-premise results, stronger principles lower and False (⊥) at the bottom; see [Graph layout](#graph-layout). The arrow options (conjecture arrows, conjectures only, unpublished only, Lean-verified only, implied and trivial arrows, isolated principles) are set aside for now and keep their defaults. Theory explorer: principles use the same categories and ordering as Graph; mark them positive/negative to edit the shared background; models known to fit are listed, those whose status is unknown below. Clicking a model highlights its row and shows its verdicts beside each principle while preserving the model list and shared assumptions. Click a verdict’s evidence link for its sources and write-up. Click a model for its sources, write-up links, and any unknown assumptions. A model's own page sorts every principle by what the model says about it, satisfied, violated or unknown, each group counted; the principle leads the row and its evidence follows. A model records a few properties and the rest follow from them, so the derived verdicts of a group wait behind a closed disclosure rather than burying the recorded ones. Derived verdicts list the supporting implications and show every direct source used. Unknown verdicts remain unknown. Conjectures: current and previously conjectured results and models, with answers computed from the selected evidence and background. Changes: every principle, result and model by date, and every logged revision of a record (its `changes` entries) under the revision's own date; the details button opens the record page, which shows a hand-written write-up in full when one exists (the record's own summary otherwise, or until the write-up loads), with the Lean source when present. Header downloads: **Content bundle (ZIP)** is a complete working copy with topic sources, summaries, viewer, and build tools; **Lean files**, when present, opens the formalisation files. Hover over a link for its contents.
+Graph: implications, ∧ nodes for multi-premise results, stronger principles lower and ⊥ at the bottom; see [Graph layout](#graph-layout). The arrow options (conjecture arrows, conjectures only, unpublished only, implied and trivial arrows, isolated principles) are set aside for now and keep their defaults. Theory explorer: principles use the same categories and ordering as Graph; mark them positive/negative to edit the shared background; models known to fit are listed, those whose status is unknown below. Clicking a model highlights its row and shows its verdicts beside each principle while preserving the model list and shared assumptions. Click a verdict’s evidence link for its sources and write-up. Click a model for its sources, write-up links, and any unknown assumptions. A model's own page sorts every principle by what the model says about it, satisfied, violated or unknown, each group counted; the principle leads the row and its evidence follows. A model records a few properties and the rest follow from them, so the derived verdicts of a group wait behind a closed disclosure rather than burying the recorded ones. Derived verdicts list the supporting implications and show every direct source used. Unknown verdicts remain unknown. Conjectures: current and previously conjectured results and models, with answers computed from the selected evidence and background. Changes: every principle, result and model by date, and every logged revision of a record (its `changes` entries) under the revision's own date; the details button opens the record page, which shows a hand-written write-up in full when one exists (the record's own summary otherwise, or until the write-up loads), with the Lean source when present. Header downloads: **Content bundle (ZIP)** is a complete working copy with topic sources, summaries, viewer, and build tools; **Lean files**, when present, opens the formalisation files. Hover over a link for its contents.
 
 ### Graph layout
 
 Vertical position is logical strength: stronger principles sit lower and
 implication arrows ascend. Principles inconsistent with the background share
-an **equivalent** box with False (⊥), at the bottom. Principles that follow
-from the background share a box with True (⊤). **Trivial arrows**, off by
+an **equivalent** box with ⊥, at the bottom. Principles that follow
+from the background share a box with ⊤. **Trivial arrows**, off by
 default, shows False ⇒ every displayed node and every displayed node ⇒ True.
 These logical arrows have their own explanation and do not change source
 filters, proof evidence, or the treatment of inconsistent assumptions.
@@ -336,7 +343,9 @@ fit button restore the whole diagram.
 Principles are ranked by their implication order. Barycenter sweeps and
 adjacent swaps reduce crossings; separate connected clusters are packed side
 by side. Isolated principles occupy compact labelled bands above the diagram.
-False and True remain visible when their trivial arrows are hidden.
+⊤ always appears, including when every principle is hidden. Both constant
+boxes use just their symbols, ⊤ and ⊥, and remain visible when their trivial
+arrows are hidden.
 
 Arrowheads are filled. Each arrow's details panel reports the converse, and for multi-premise arrows whether the remaining
 premises still suffice without each one. **Transitive reduction**, on by default, hides an
@@ -464,8 +473,12 @@ Sources come in two collapsed groups, **Published papers** and **Unpublished**,
 each toggling its members together, with **Show papers** or **Show sources** to
 expand individual choices. Partial selection is shown on the group checkbox. The
 catch-all `misc` source stands on its own, since neither group describes it.
-**Lean-verified only** sits with the other filters; a Lean-verified arrow is
-drawn thicker than the rest whether or not it is checked.
+**Lean-verified only** sits with the sources, so the graph, the lattice and the
+conjectures view all reach the one control; a Lean-verified arrow is drawn
+thicker than the rest whether or not it is checked. A verdict carries a
+**Lean ✓** badge when everything under it is verified, the model and, for a
+derived verdict, every result in the chain; the consistency line at the foot of
+the details pane carries it beside the witness it names.
 Background consequences always use all recorded proved results, including
 hidden arrows. For example, DTU still supplies Simple Expected Utility in a
 conjectures-only view, so conjecture arrows retain only their additional
@@ -571,7 +584,7 @@ Outcomes in a record already assuming Simple EU need not be repeated. The
 selected background and conjectures never supply missing premises for an abbreviation. Result pop-ups offer
 **Show full conjunction**, and result write-ups retain every exact premise.
 
-Implications to **False (⊥)** appear as arrows to one special logical node.
+Implications to **⊥** appear as arrows to one special logical node.
 A principle ruled out by the selected background has a red outline; its
 popup gives the supporting results and sources. False does not appear in the
 principle selection list. Model verdicts use the same incompatibility rules

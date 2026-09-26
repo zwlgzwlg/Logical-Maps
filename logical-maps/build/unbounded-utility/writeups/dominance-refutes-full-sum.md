@@ -1,4 +1,4 @@
-# Rich Outcomes ∧ Stochastic Dominance ∧ Full Sum Invariance ⇒ False (⊥)
+# Rich Outcomes ∧ Stochastic Dominance ∧ Full Sum Invariance ⇒ ⊥
 
 <p class='cert'>Result — Source: Preference for Equivalent RVs; produced by Teddy Seidenfeld, Mark J. Schervish and Joseph B. Kadane (impossibility result); Zachary Goodsell (sum-invariance presentation); recorded by GPT-6 (Codex), 2026-09-09; extraction and random-variable translation.</p>
 
@@ -10,7 +10,7 @@
 
 ## Conclusion
 
-- **False (⊥).** These premises cannot all hold together.
+- **⊥.** These premises cannot all hold together.
 
 ## Proof
 

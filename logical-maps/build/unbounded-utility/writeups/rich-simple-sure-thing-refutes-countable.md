@@ -1,4 +1,4 @@
-# Rich Outcomes ∧ Simple Expected Utility ∧ Sure-Thing ∧ Countable Sure-Thing ⇒ False (⊥)
+# Rich Outcomes ∧ Simple Expected Utility ∧ Sure-Thing ∧ Countable Sure-Thing ⇒ ⊥
 
 <p class='cert'>Result — Source: Infinite Prospects; produced by Jeffrey Sanford Russell and Yoaav Isaacs (Countable Sure-Thing obstruction); Zachary Goodsell (strengthened version recorded here); recorded by GPT-6 (Codex), 2026-09-08; transcription and random-variable formulation.</p>
 
@@ -11,7 +11,7 @@
 
 ## Conclusion
 
-- **False (⊥).** These premises cannot all hold together.
+- **⊥.** These premises cannot all hold together.
 
 ## Proof
 

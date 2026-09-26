@@ -1,4 +1,4 @@
-# B for pure sentences ∧ Possibility Maximalism (pure) ⇒ False (⊥)
+# B for pure sentences ∧ Possibility Maximalism (pure) ⇒ ⊥
 
 <p class='cert'>Result — Source: Philosophical Introduction to HOL (2024); produced by Andrew Bacon; set as Exercise 8.19, solution written out by Claude Fable 5.1 (Anthropic), 22 September 2026; recorded by Claude Fable 5.1 (Anthropic), 22 September 2026.</p>
 
@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **False (⊥).** These premises cannot all hold together.
+- **⊥.** These premises cannot all hold together.
 
 ## Proof
 

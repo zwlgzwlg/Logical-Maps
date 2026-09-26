@@ -26,6 +26,7 @@ function geometry(dom) {
       nodes:L.visible.map(n => {
         const size=L.size.get(n.id), x=L.x.get(n.id), y=L.y.get(n.id);
         return {id:n.id, kind:n.kind, parent:n.parent||null, members:n.members || [], x,y,
+          anchor:n.kind==='truth'&&n.members.length===1,
           left:x-size.w/2, right:x+size.w/2, top:y-size.h/2, bottom:y+size.h/2,
           connected:!!n.parent||n.kind==='falsity'||n.kind==='truth'||!!n.junctions?.length||edges.some(e => e.from===n.id || e.to===n.id)};
       }), edges,
@@ -61,7 +62,7 @@ function verifyMembership(g) {
 }
 function verifyIsolation(g, requireIsolates=true) {
   verifyMembership(g);
-  const isolated=g.nodes.filter(n=>!n.connected), core=g.nodes.filter(n=>n.connected);
+  const isolated=g.nodes.filter(n=>!n.connected), core=g.nodes.filter(n=>n.connected&&!n.anchor);
   if (requireIsolates) assert.ok(isolated.length, 'This fixture must exercise isolated nodes.');
   for(let i=0;i<isolated.length;i++) {
     for(let j=i+1;j<isolated.length;j++) assert.ok(!overlaps(isolated[i],isolated[j]), `Isolated nodes overlap: ${isolated[i].id}, ${isolated[j].id}.`);
@@ -82,7 +83,7 @@ function verifyStableCore(dom, requireIsolates=true) {
   verifyMembership(hidden);
   assert.ok(hidden.nodes.every(n=>n.connected), 'Show isolated off must remove all isolated nodes.');
   assert.deepEqual(hidden.edges,before.edges);
-  assert.deepEqual(hidden.nodes.map(n=>n.id).sort(),core.map(n=>n.id).sort());
+  assert.deepEqual(hidden.nodes.filter(n=>!n.anchor).map(n=>n.id).sort(),core.map(n=>n.id).sort());
   for(const n of core) {
     const other=hidden.nodes.find(m=>m.id===n.id);
     assert.ok(Math.abs(n.x-other.x)<EPS&&Math.abs(n.y-other.y)<EPS,
@@ -112,7 +113,7 @@ function fixture(count,{chain=true,longNames=false,tall=false}={}) {
 }
 
 function components(g) {
-  const remaining=new Set(g.nodes.filter(n=>n.connected).map(n=>n.id)), groups=[];
+  const remaining=new Set(g.nodes.filter(n=>n.connected&&!n.anchor).map(n=>n.id)), groups=[];
   while(remaining.size) {
     const ids=[remaining.values().next().value]; remaining.delete(ids[0]);
     for(let i=0;i<ids.length;i++)for(const e of [...g.edges,...g.layoutEdges,...g.nodes.filter(n=>n.parent).map(n=>({from:n.id,to:n.parent}))]) {
@@ -194,8 +195,7 @@ try {
     verifyStableCore(dom);
   }
 
-  // No edges: packing needs no connected anchor, and hiding isolates leaves a
-  // valid empty graph rather than invalid coordinates or a phantom node.
+  // No edges: hiding isolated principles leaves only the truth anchor.
   const all=page(fixture(32,{chain:false}));
   const allGeometry=geometry(all), {isolated}=verifyIsolation(allGeometry);
   assert.equal(allGeometry.edges.length,0);
@@ -207,9 +207,10 @@ try {
   toggleIsolated(all);
   const empty=geometry(all);
   verifyMembership(empty);
-  assert.deepEqual(empty.nodes,[]);
+  assert.deepEqual(empty.nodes.map(n=>n.id),['truth']);
+  assert.deepEqual(empty.nodes[0].members,['⊤']);
   assert.deepEqual(empty.edges,[]);
-  assert.equal(all.window.document.querySelectorAll('#graph .node,#graph .junction,#graph .edge').length,0);
+  assert.equal(all.window.document.querySelectorAll('#graph .node,#graph .junction,#graph .edge').length,1);
   toggleIsolated(all);
   assert.deepEqual(geometry(all).nodes,allGeometry.nodes);
 

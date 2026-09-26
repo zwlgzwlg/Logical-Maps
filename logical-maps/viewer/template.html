@@ -629,7 +629,7 @@
     <aside class="controls" id="graph-sidebar">
       <div class="controls-scroll" id="principle-controls">
       <div id="lat-controls">
-        <h2>Lattice <button class="lnk dim" id="lat-clear">hide all</button></h2>
+        <h2>Lattice <button class="lnk dim" id="lat-from-graph" title="Draw the lattice of whatever the graph is showing.">from the graph</button> <button class="lnk dim" id="lat-clear">hide all</button></h2>
         <p class="background-hint">A Hasse diagram showing all the conjunctions of the selected principles. Solid arrows denote implications shown to be non-reversible by models in the selected sources; dashed arrows denote implications which might be reversible (as far as the selected sources are concerned).</p>
         <p id="lat-count" class="lat-count" role="status" aria-live="polite"></p>
       </div>
@@ -640,6 +640,9 @@
       <div id="source-controls">
         <h2 id="source-filter-heading" title="Filter displayed arrows. Background consequences always use all recorded proofs.">Arrow sources</h2>
         <div class="ctl" id="source-filters"></div>
+        <div class="ctl">
+          <label title="Use only what a Lean proof settles. A Lean-verified arrow is drawn thicker than the rest whether or not this is checked."><input type="checkbox" id="lean-only"><span class="sw lean"></span>Lean-verified only</label>
+        </div>
       </div>
       <div id="graph-options">
         <p class="graph-hint" title="Solid neutral arrows are derived proofs. Click an arrow for its proof steps and sources; intermediate principles may be hidden or combined."><input type="checkbox" class="ctl-spacer" tabindex="-1" aria-hidden="true"><span class="sw derived"></span>Derived proofs</p>
@@ -647,7 +650,6 @@
           <label title="Show conjectures independently of source selection, simplifying their premises using all proved background consequences. Lean-verified only still excludes unverified arrows."><input type="checkbox" id="show-conj"><span class="sw conj dashed"></span>Conjecture arrows</label>
           <label title="Show only conjecture arrows and their connected principles. Proved background consequences still apply."><input type="checkbox" id="conjecture-only">Conjectures only</label>
           <label title="Show arrows from online submissions and miscellaneous sources, including unpublished manuscripts. Combine with Conjectures only for unpublished conjectures."><input type="checkbox" id="unpublished-only">Unpublished only</label>
-          <label title="Show only arrows with a Lean proof. A Lean-verified arrow is drawn thicker than the rest whether or not this is checked."><input type="checkbox" id="lean-only"><span class="sw lean"></span>Lean-verified only</label>
           <label title="Hide an arrow that the displayed diagram already gives: one that a chain of other displayed arrows yields, as in a Hasse diagram, and one that repeats a premise stroke, as when C is equivalent to A ∧ B and C ⇒ A restates the stroke from A into the ∧, and one of several arrows that leave the same box for the same target because its ∧ circles each carry the consequence. Recorded theorems may then be hidden; a proved arrow is never hidden on the strength of a conjecture."><input type="checkbox" id="reduce-arrows" checked>Transitive reduction</label>
           <label title="Show the logical arrows from False to every node and from every node to True."><input type="checkbox" id="trivial-arrows">Trivial arrows</label>
           <label><input type="checkbox" id="show-iso" checked><span class="sw" style="border-style:dashed;border-color:var(--node-stroke)"></span>Isolated principles</label>
@@ -927,7 +929,7 @@ function pairStatus(a, b) {
   if (base.status !== 'open' || !state.showConj) return base;
   const c = EC.pair(a, b); return c.status !== 'open' ? { ...c, status: c.status + '?' } : base;
 }
-function name(id) { if (isNegative(id)) return '¬' + name(baseId(id)); return id === TRUE ? "True (⊤)" : id === FALSE ? "False (⊥)" : byPid.get(id)?.name || id; }
+function name(id) { if (isNegative(id)) return '¬' + name(baseId(id)); return id === TRUE ? "⊤" : id === FALSE ? "⊥" : byPid.get(id)?.name || id; }
 function esc(s) { return String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 function renderSubscripts(root) {
   window.renderMapMath?.(root);
@@ -1309,7 +1311,7 @@ function groupGraph(g) {
     let parent;
     if (conflict.status === 'inconsistent') {
       parent = constant(FALSE);
-      j.equivalence = [{label: 'Conjunction ⇒ False', status: {status: 'implies', via: conflict.via}}];
+      j.equivalence = [{label: 'Conjunction ⇒ ⊥', status: {status: 'implies', via: conflict.via}}];
     } else {
       parent = nodes.find(n => n.kind === 'class'
         && literalImplication(j.premises, n.members[0]).status === 'implies'
@@ -1339,7 +1341,8 @@ function groupGraph(g) {
       })));
     }
   }
-  if (state.trivial) { constant(FALSE); constant(TRUE); }
+  constant(TRUE);
+  if (state.trivial) constant(FALSE);
   nodes.push(...constants.values());
   const byId = new Map(nodes.map(n => [n.id, n]));
   const resolve = id => redirect.get(id) || id;
@@ -1359,11 +1362,13 @@ function groupGraph(g) {
   const layoutEdges = [];
   const add = (from, to, display) => (state.trivial ? edges : layoutEdges).push({id: 'trivial:' + from + '>' + to, key: 'trivial:' + from + '>' + to, from, to, type: 'trivial', display, premises: [], trivial: true, layoutOnly: !state.trivial});
   const label = n => expressionName(graphNodeExpression(n));
+  // A standalone ⊤ anchors the graph without joining otherwise separate components.
+  const truthEdges = state.trivial || constants.get(TRUE).members.length > 1;
   for (const n of ordinary.filter(n => state.trivial || incident.has(n.id))) {
-    if (constants.has(FALSE)) add('falsity', n.id, 'False (⊥) ⇒ ' + label(n));
-    if (constants.has(TRUE)) add(n.id, 'truth', label(n) + ' ⇒ True (⊤)');
+    if (constants.has(FALSE)) add('falsity', n.id, '⊥ ⇒ ' + label(n));
+    if (truthEdges) add(n.id, 'truth', label(n) + ' ⇒ ⊤');
   }
-  if (constants.has(FALSE) && constants.has(TRUE)) add('falsity', 'truth', 'False (⊥) ⇒ True (⊤)');
+  if (constants.has(FALSE) && truthEdges) add('falsity', 'truth', '⊥ ⇒ ⊤');
   return {...g, nodes, edges, layoutEdges};
 }
 
@@ -2036,7 +2041,7 @@ function selectionConsistencyLine(consistency) {
   if (consistency.status === 'inconsistent') return {kind: 'inconsistent', text: 'Selection is inconsistent with the background (⇒ ⊥); every box is excluded.'};
   if (consistency.status === 'consistent') {
     const model = byMid.get(consistency.models[0]), who = model ? ` (${model.name})` : '';
-    return {kind: 'implies', text: consistency.limited
+    return {kind: 'implies', lean: !!model && leanChecked([model]), text: consistency.limited
       ? `Consistent with the background outside selected sources${who}.`
       : `Consistent with the background${who}.`};
   }
@@ -2157,8 +2162,13 @@ function modelEvidence(m, c) {
   } else return null;
   return { value, rules, contradiction, direct: false, items: [m, ...rules.map(id => byRid.get(id))] };
 }
+// A verdict is Lean-checked only when everything it rests on is: the model
+// and, for a derived verdict, every result in the chain.
+const leanChecked = items => items.length && items.every(x => x.certificate?.lean === 'verified');
 function evidenceBadges(e) {
-  return [...new Set(e.items.map(sourceOf))].map(sourceBadge).join('') + (e.items.some(x => x.status === 'conjectured') ? '<span class="badge conj">conjecture</span>' : '');
+  return [...new Set(e.items.map(sourceOf))].map(sourceBadge).join('')
+    + (leanChecked(e.items) ? '<span class="badge lean verified">Lean ✓</span>' : '')
+    + (e.items.some(x => x.status === 'conjectured') ? '<span class="badge conj">conjecture</span>' : '');
 }
 function sourceBadge(s) { return `<span class="badge source" data-source="${esc(s.id)}" style="--source-color:${sourceColor(s)}">${esc(s.name)}</span>`; }
 function verdictButton(m, c, e, compact = false, showValue = true) {
@@ -2589,12 +2599,12 @@ function loadWriteup(el, x) {
     box.querySelectorAll('a[data-open-writeup]').forEach(a => a.addEventListener('click', ev => { ev.preventDefault(); const id = a.dataset.openWriteup; openPage({ type: byRid.has(id) ? 'result' : 'model', id }); }));
   }).catch(() => {});
 }
-function pstmt(id) { if (id === FALSE) return "<li><b>False (⊥).</b> These premises cannot all hold together.</li>"; const p = byPid.get(id); return `<li><button class="lnk" data-principle="${id}"><b>${esc(p.name)}</b></button> ${esc(p.statement)}</li>`; }
+function pstmt(id) { if (id === FALSE) return "<li><b>⊥.</b> These premises cannot all hold together.</li>"; const p = byPid.get(id); return `<li><button class="lnk" data-principle="${id}"><b>${esc(p.name)}</b></button> ${esc(p.statement)}</li>`; }
 function renderPage(sel) {
   const el = document.getElementById('page');
   let h = `<button class="btn small" id="page-back">← back</button>`;
   if (sel.type === 'falsity') {
-    h += '<h1>False (⊥)</h1><p>An implication to False says that its premises cannot all hold together. False is a logical constant, not another optional principle.</p>';
+    h += '<h1>⊥</h1><p>An implication to False says that its premises cannot all hold together. False is a logical constant, not another optional principle.</p>';
     h += `<h2>Incompatibilities</h2><ul>${R.filter(r => r.conclusion === FALSE && passes(r) && (r.status === 'proved' || state.showConj)).map(r => `<li><button class="lnk" data-result="${r.id}">${resultStmt(r)}</button> ${certBadges(r)}</li>`).join('')}</ul>`;
   } else if (sel.type === 'result') {
     const r = byRid.get(sel.id);
@@ -2770,7 +2780,7 @@ function renderDetail() {
     else if (!sel.to.length) h += `<p class="dim">${relHead('Why')}Everything entails what the background already gives.</p>`;
     else h += sel.to.map((q, i) => statusLine(`${esc(sel.fromLabel)} ⇒ ${esc(name(q))}`, implicationStatus(sel.from, q), false, i ? '' : 'Why')).join('');
     if (!sel.from) {
-      h += statusLine(`${esc(sel.toLabel)} ⇒ False (⊥)`, consistencyStatus(sel.to), false, 'Converse');
+      h += statusLine(`${esc(sel.toLabel)} ⇒ ⊥`, consistencyStatus(sel.to), false, 'Converse');
       h += `<p class="dim">${sel.reverses === 'ruled out'
         ? 'A model satisfies it alongside the background, so it is not the contradiction.'
         : 'Nothing recorded shows it can hold with the background, so it might yet be the contradiction.'}</p>`;
@@ -2785,13 +2795,13 @@ function renderDetail() {
   } else if (sel.type === 'trivial') {
     h += `<div class="pop-t">${esc(sel.display)}</div><p>${sel.from === 'falsity' ? 'False implies every proposition (explosion).' : 'Every proposition implies True.'}</p>`;
   } else if (sel.type === 'truth') {
-    h += '<div class="pop-t">True (⊤)</div><p>This box contains principles that follow from the background. Every proposition implies True.</p>';
+    h += '<div class="pop-t">⊤</div><p>This box contains principles that follow from the background. Every proposition implies True.</p>';
   } else if (sel.type === 'pair') {
     const via = sel.via || pairStatus(sel.a, sel.b).via || [];
     h += `<div class="pop-t">${esc((sel.premises || [sel.a]).map(name).join(' ∧ '))} ⇒ ${esc(name(sel.b))}</div><p class="note">${sel.conjectured ? 'Conditional on the conjectures below, under the current background.' : 'Derived proof using the results below and the current background. Intermediate principles may be hidden or used together.'}</p><ol>${via.map(id => `<li><button class="lnk" data-result="${id}">${resultStmt(byRid.get(id))}</button> ${certBadges(byRid.get(id))}</li>`).join('')}</ol>`;
     h += edgeContext(sel.premises || [sel.a], sel.b);
   } else if (sel.type === 'falsity') {
-    h += '<div class="pop-t">False (⊥)</div><div class="pop-s">The incoming premises cannot all hold together. This is not an optional principle.</div><div class="links"><button class="lnk" data-goto="1">details</button></div>';
+    h += '<div class="pop-t">⊥</div><div class="pop-s">The incoming premises cannot all hold together. This is not an optional principle.</div><div class="links"><button class="lnk" data-goto="1">details</button></div>';
   } else if (sel.type === 'principle') {
     for (const mid of [sel.id]) {
       const m = byPid.get(mid);
@@ -2977,6 +2987,8 @@ function selectionActions(literals) {
   if (active.some(literalShown)) h += button('hide', 'Hide', `Take the selected ${plural ? 'principles' : 'principle'} off the diagram, as unchecking ${plural ? 'them' : 'it'} in the sidebar would.`);
   if (active.some(l => !literalShown(negate(l)))) h += button('negate', plural ? 'Add negations' : 'Add negation', `Show the ${plural ? 'negations' : 'negation'} too, as checking ✗ in the sidebar would.`);
   if (active.some(l => !topicBackground.includes(baseId(l)))) h += button('background', 'background', `Assume the selected ${plural ? 'principles' : 'principle'} throughout, as the sidebar's background control would.`);
+  // The lattice wants a handful, and a joint selection is already a handful.
+  if (state.tab === 'graph') h += button('lattice', 'lattice', `Draw the lattice of the conjunctions ${plural ? 'these principles generate' : 'this principle generates'}.`);
   const peers = equivalentPeers(active);
   if (peers.length) h += button('equivalents', 'hide equivalents', `Take ${peers.map(name).join(', ')} off the diagram: the background makes ${peers.length > 1 ? 'them' : 'it'} equivalent to what is selected, so ${peers.length > 1 ? 'they add' : 'it adds'} nothing beside it.`);
   return h;
@@ -3017,7 +3029,8 @@ function setDetailFoot(id, line) {
   const foot = document.getElementById(id);
   if (!foot) return;
   foot.hidden = !line;
-  foot.innerHTML = line ? `<span class="rel-status ${line.kind}">${esc(line.text)}</span>` : '';
+  foot.innerHTML = line ? `<span class="rel-status ${line.kind}">${esc(line.text)}</span>`
+    + (line.lean ? ' <span class="badge lean verified">Lean ✓</span>' : '') : '';
 }
 function syncDetailHint() {
   const hint = document.getElementById('graph-details-hint');
@@ -3040,6 +3053,13 @@ function applySelectionAction(kind) {
     // What is now assumed is no longer something to shade relative to.
     state.modelId = null; state.selected = null; state.focus = null;
     saveBackground(); refreshPrincipleControls(); renderAll(true);
+    return;
+  }
+  if (kind === 'lattice') {
+    lattice.shown = active.slice();
+    lattice.selected = null; lattice.builtKey = null;
+    showTab('lattice');
+    renderLatticeFilters(); latticeFit();
     return;
   }
   if (kind === 'equivalents') {
@@ -3440,6 +3460,9 @@ window.addEventListener('resize', () => { if (state.tab === 'graph') fit(); });
 // turns out to be equivalent to a named principle is drawn once, under that
 // principle's name.
 const LATTICE_CAP = 220;
+// Where the diagram stops being worth reading, which is well below the cap:
+// ten principles already give four hundred arrows.
+const LATTICE_COMFORTABLE = 8;
 const lattice = {shown: [], nodes: [], edges: [], selected: null, capped: 0, view: {k: 1, tx: 0, ty: 0}, fitted: false};
 
 // Entailment answers are memoised per evidence version and background. The
@@ -3455,7 +3478,10 @@ function latticeMemo() {
 // nothing here looks at. The engine caches each closure it is asked for.
 function latticeHolds(premises, c) {
   const positive = premises.filter(p => !isNegative(p)), negative = premises.filter(isNegative).map(baseId);
-  if (graphInferenceE.conflict(positive, negative)) return false;
+  // Premises that cannot hold together entail everything. Reading them as
+  // entailing nothing would send a contradiction to the ceiling instead of
+  // the floor, and leave it there under the same name as ⊤.
+  if (graphInferenceE.conflict(positive, negative)) return true;
   if (isNegative(c)) return !!graphInferenceE.conflict([...positive, baseId(c)], negative);
   return graphInferenceE.cl(positive).facts.has(c);
 }
@@ -3472,7 +3498,10 @@ function latticeEntails(premises, conclusions) {
 // closure from the engine, read once per chosen literal.
 function latticeClosure(premises) {
   const positive = premises.filter(p => !isNegative(p)), negative = premises.filter(isNegative).map(baseId);
-  if (graphInferenceE.conflict(positive, negative)) return [];
+  // The same reading as latticeHolds, short-circuited: an inconsistent meet
+  // entails everything, so it closes to the whole of what is shown, which is
+  // the floor.
+  if (graphInferenceE.conflict(positive, negative)) return lattice.shown.slice();
   const facts = graphInferenceE.cl(positive).facts;
   return lattice.shown.filter(p => isNegative(p) ? !!graphInferenceE.conflict([...positive, baseId(p)], negative) : facts.has(p));
 }
@@ -3843,14 +3872,14 @@ function latticeDraw(svg) {
     </defs><g id="lat-vp">${lattice.capped ? '' : lattice.edges.map(edge).join('') + lattice.nodes.map(node).join('')}</g>`;
   latticeApplyView();
   document.getElementById('lat-count').textContent = lattice.capped
-    ? `Stopped at ${LATTICE_CAP} nodes, from ${lattice.shown.length} chosen; nothing drawn.`
+    ? `${lattice.shown.length} chosen: more than ${LATTICE_CAP} conjunctions, so nothing is drawn.`
     : lattice.shown.length
     ? `${lattice.nodes.length} nodes, ${lattice.edges.length} arrows, from ${lattice.shown.length} chosen`
     : 'Choose a principle to begin.';
   const warn = document.getElementById('lat-warning');
   warn.hidden = !lattice.capped;
   warn.closest('.graph-area').classList.toggle('warned', !!lattice.capped);
-  if (lattice.capped) warn.textContent = `Stopped at ${LATTICE_CAP} nodes. The meets of these principles outrun the diagram; remove one to see the rest.`;
+  if (lattice.capped) warn.textContent = `These ${lattice.shown.length} choices generate more than ${LATTICE_CAP} conjunctions, past what the diagram can show or anyone can read. Choose about ${LATTICE_COMFORTABLE}.`;
   refreshLatticeControls();
 }
 // How a node stands to the selection, memoised with the entailments: a
@@ -4013,6 +4042,14 @@ function renderLatticeFilters() {
       changeBackground(id, true);
       renderLatticeFilters();
     }
+  });
+  // Everything the graph is showing, in the form it shows it: a principle, its
+  // negation, or both. Assumptions are not generators, so they stay out.
+  document.getElementById('lat-from-graph').addEventListener('click', () => {
+    lattice.shown = ids.flatMap(id => inBackground(id) ? []
+      : [...(state.excluded.has(id) ? [] : [id]), ...(state.negativeShown.has(id) ? ['!' + id] : [])]);
+    lattice.selected = null; lattice.builtKey = null;
+    renderLatticeFilters(); renderLattice(); latticeFit();
   });
   document.getElementById('lat-clear').addEventListener('click', () => { lattice.shown = []; lattice.selected = null; renderLattice(); latticeFit(); });
   document.getElementById('lat-fit').addEventListener('click', latticeFit);

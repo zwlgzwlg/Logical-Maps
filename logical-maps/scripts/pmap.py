@@ -396,7 +396,7 @@ class Lynchpins:
     """
 
     def __init__(self, data: dict, background=(), negative_background=()):
-        self.names = {FALSE: "False (⊥)", **{p["id"]: p["name"] for p in data["principles"]}}
+        self.names = {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
         self.ids = ids = [p["id"] for p in data["principles"]]
         results = [r for r in data["results"] if r["status"] == "proved"]
         models = [m for m in data["models"] if m["status"] == "proved"]
@@ -907,7 +907,7 @@ def lynchpin_row_text(r: dict, nm, conjecture: bool = False, auto: bool = False)
     star = f" ★ {r['tier']}" if r.get("tier") else ""
     claim = r.get("auto_claim") if auto else r.get("claim") if conjecture else None
     turnstile = "⊬" if claim == "not" else "⊢"
-    return f"{' ∧ '.join(nm(x) for x in r['premises']) or 'True (⊤)'} {turnstile} {nm(r['conclusion'])}{star}"
+    return f"{' ∧ '.join(nm(x) for x in r['premises']) or '⊤'} {turnstile} {nm(r['conclusion'])}{star}"
 
 
 def lynchpin_scores(r: dict) -> tuple:
@@ -969,7 +969,7 @@ def _status_text(r: dict) -> str:
 def lynchpin_md(lynch: dict, data: dict, topic_id: str, top: int = 5) -> list[str]:
     """Markdown section for OPEN-QUESTIONS.md."""
     names = {p["id"]: p["name"] for p in data["principles"]}
-    names[FALSE] = "False (⊥)"
+    names[FALSE] = "⊥"
     if lynch["skipped"]:
         o = [f"Not ranked: {lynch['skipped']}. A map is ranked once at most {LYNCHPIN_MAX_OPEN:.0%} of its "
              "questions are open. Its conjectures are still listed and scored below.", ""]
@@ -1032,7 +1032,7 @@ def lynchpin_md(lynch: dict, data: dict, topic_id: str, top: int = 5) -> list[st
 
 def lynchpins(topic_id: str, backgrounds=None, top: int = 10, as_json: bool = False):
     data = load_topic(topic_id)
-    names = {FALSE: "False (⊥)", **{p["id"]: p["name"] for p in data["principles"]}}
+    names = {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
     presets = {p["id"]: p for p in data["topic"].get("background_presets", [])}
     wanted = backgrounds or ["none", *presets]
     for key in wanted:
@@ -1398,7 +1398,7 @@ def paper_references_md(item: dict, data: dict) -> str:
 
 def generate_writeup(item: dict, data: dict) -> str:
     """Markdown write-up generated from the YAML record."""
-    names = {FALSE: "False (⊥)", **{p["id"]: p["name"] for p in data["principles"]}}
+    names = {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
     stmts = {FALSE: "These premises cannot all hold together.", **{p["id"]: p["statement"] for p in data["principles"]}}
     c = item["certificate"]
     source = next((s['name'] for s in data['topic'].get('source_catalog', []) if s['id'] == c.get('source_id')), 'Misc.')
@@ -1643,7 +1643,7 @@ def generate_lean_statements(topic_id: str) -> Path | None:
         return None
     root, lib = loc
     cov, cfg = lean_coverage(data), lean_config(data)
-    defs, names = cov["defs"], {FALSE: "False (⊥)", **{p["id"]: p["name"] for p in data["principles"]}}
+    defs, names = cov["defs"], {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
     ns = cfg["namespace"]
     fill = lambda template, pid: template.replace("{def}", defs[pid])
 
@@ -1917,7 +1917,7 @@ def _handwritten(topic_id: str) -> dict:
 def bundle_map_md(topic_id: str, data: dict, an: dict) -> str:
     """MAP.md — the whole topic as one readable document."""
     topic = data["topic"]
-    names = {FALSE: "False (⊥)", **{p["id"]: p["name"] for p in data["principles"]}}
+    names = {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
     catalog = {s["id"]: s["name"] for s in topic.get("source_catalog", [])}
     catalog.setdefault("misc", "Misc.")
     hand = _handwritten(topic_id)
@@ -2115,7 +2115,7 @@ def bundle_map_md(topic_id: str, data: dict, an: dict) -> str:
 def bundle_open_md(topic_id: str, data: dict, an: dict, lynch=None) -> str:
     """OPEN-QUESTIONS.md — what is unsettled, and how to settle it."""
     topic = data["topic"]
-    names = {FALSE: "False (⊥)", **{p["id"]: p["name"] for p in data["principles"]}}
+    names = {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
     label = lambda i: f"{names.get(i, i)} (`{i}`)"
     E = an["engine"]
     conj = [item for item in [*data["results"], *data["models"]]
@@ -2473,7 +2473,7 @@ def bundle_agents_md(topic_id: str, data: dict) -> str:
 
 
 def bundle_derived_json(data: dict, an: dict, lynch=None) -> dict:
-    names = {FALSE: "False (⊥)", **{p["id"]: p["name"] for p in data["principles"]}}
+    names = {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
     pairs = []
     for (a, b), v in sorted(an["pair"].items()):
         row = {"from": a, "to": b, "status": v["status"]}
@@ -2571,7 +2571,7 @@ def bundle_topic(topic_id: str) -> Path:
 def status(topic_id: str):
     data = load_topic(topic_id)
     an = analyse(data)
-    names = {FALSE: "False (⊥)", **{p["id"]: p["name"] for p in data["principles"]}}
+    names = {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
     n = len(data["principles"])
     print(f"== {data['topic']['title']} ==")
     print(f"{n} principles, {len(data['results'])} results, {len(data['models'])} models, background = {data['topic'].get('background', [])}")

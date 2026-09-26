@@ -1,4 +1,4 @@
-# Fregean Axiom ∧ Infinity Schema (type t) ⇒ False (⊥)
+# Fregean Axiom ∧ Infinity Schema (type t) ⇒ ⊥
 
 <p class='cert'>Result — Source: Classicism (2024); produced by Andrew Bacon and Cian Dorr; recorded by OpenAI Codex (GPT-6), 17 September 2026.</p>
 
@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **False (⊥).** These premises cannot all hold together.
+- **⊥.** These premises cannot all hold together.
 
 ## Proof
 
