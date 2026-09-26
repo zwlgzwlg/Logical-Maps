@@ -6756,6 +6756,47 @@
    }
   },
   {
+   "id": "necessary-bf-and-actuality-imply-inextensible-comprehension",
+   "premises": [
+    "necessary-barcan-r",
+    "actuality"
+   ],
+   "conclusion": "inextensible-comprehension-r",
+   "status": "proved",
+   "certificate": {
+    "source_id": "misc",
+    "produced_by": "Christopher Sun (the witness and the argument), 26 September 2026; Claude Fable 5.1 (Anthropic) supplied the boxed form of the BF hypothesis",
+    "recorded_by": "Claude Fable 5.1 (Anthropic), 26 September 2026",
+    "checked_by": [],
+    "date": "2026-09-26",
+    "lean": "none"
+   },
+   "sources": [
+    "Christopher Sun, argument reported by Cian Dorr on 26 September 2026; see the write-up.",
+    "Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §2.3, pp. 28–30 (inextensibility); Proposition 2.1, pp. 20–21 (BF)."
+   ],
+   "source_names": [
+    "Sun, 26 Sep",
+    "Classicism"
+   ],
+   "proof": "Let $w$ witness Actuality and fix $F$ of type $\\bar\\sigma t$. Put $C:=\\lambda\\bar z\\, .\\,\\Diamond(w\\land F[\\bar z])$. $C$ is coextensive with $F$: if $F[\\bar z]$ then $w\\land F[\\bar z]$ is true, hence possible; if $\\neg F[\\bar z]$ then $w\\le\\neg F[\\bar z]$ by Actuality, so $\\neg\\Diamond(w\\land F[\\bar z])$. For inextensibility, two theorems of C: (i) $\\neg C[\\bar z]$ is $\\Box(w\\to\\neg F[\\bar z])$, so by 4 $\\neg C[\\bar z]\\to\\Box\\neg C[\\bar z]$, and hence $(C[\\bar z]\\to\\Box X[\\bar z])\\to\\Box(C[\\bar z]\\to X[\\bar z])$; (ii) therefore $(\\forall\\bar z\\, .\\,C[\\bar z]\\to\\Box X[\\bar z])\\to\\forall\\bar z\\, .\\,\\Box(C[\\bar z]\\to X[\\bar z])$. The closed instance of BF for the property $\\lambda\\bar z\\, .\\,C[\\bar z]\\to X[\\bar z]$, universally closed in $X$, turns the consequent of (ii) into $\\Box\\forall\\bar z\\, .\\,C[\\bar z]\\to X[\\bar z]$, which is $C\\le X$. So BF (this instance) implies $\\forall X\\, .\\,(\\forall\\bar z\\, .\\,C[\\bar z]\\to\\Box X[\\bar z])\\to C\\le X$ in C; necessitating and using the necessity of that instance gives $\\Box\\forall X\\, .\\,(\\forall\\bar z\\, .\\,C[\\bar z]\\to\\Box X[\\bar z])\\to C\\le X$, which is $\\operatorname{Inextensible}(C)$. The box on BF is used exactly once, to discharge the instance under the leading box of inextensibility.",
+   "references": [
+    {
+     "paper": "bacon-dorr-classicism",
+     "role": "background",
+     "locator": "§2.3, pp. 28–30; Proposition 2.1, pp. 20–21",
+     "note": "Definitions of inextensibility and the BF principle. The witness is not one the paper uses."
+    }
+   ],
+   "notes": "Actuality alone gives the coextensive witness and its weak inextensibility at the actual world; □BF is what makes the same witness inextensible at every world. The map records that BF alone does not give □BF (the two-object all-maps model), so the argument does not establish the claim from Actuality and unboxed BF; whether Actuality and BF give □BF, or Inextensible Comprehension by another witness, is open. Together with the recorded routes, Inextensible Comprehension now follows from Actuality with any of □BF, Distinctness-preserving collapse, or C5 (through Rigid Comprehension); the □BF route explains the verdict in the full permutation-group, involution-group and surjection-monoid models, which have Actuality and □BF but not Distinctness-preserving collapse.",
+   "file": "topics/classicism/results/necessary-bf-and-actuality-imply-inextensible-comprehension.yaml",
+   "files": {
+    "md": "writeups/necessary-bf-and-actuality-imply-inextensible-comprehension.md",
+    "html": "writeups/necessary-bf-and-actuality-imply-inextensible-comprehension.html",
+    "handwritten": true
+   }
+  },
+  {
    "id": "necessary-boolean-completeness-r-implies-boolean-completeness-r",
    "premises": [
     "necessary-boolean-completeness-r"
@@ -11358,6 +11399,52 @@
    "files": {
     "md": "writeups/strong-leibniz-t-implies-atomicity-t.md",
     "html": "writeups/strong-leibniz-t-implies-atomicity-t.html",
+    "handwritten": false
+   }
+  },
+  {
+   "id": "strong-leibniz-t-implies-necessary-actuality",
+   "premises": [
+    "strong-leibniz-t"
+   ],
+   "conclusion": "necessary-actuality",
+   "status": "proved",
+   "certificate": {
+    "source_id": "misc",
+    "produced_by": "Cian Dorr, 26 September 2026; the omission was noticed by Branden Fitelson",
+    "recorded_by": "Claude Fable 5.1 (Anthropic), 26 September 2026",
+    "checked_by": [],
+    "date": "2026-09-26",
+    "lean": "none"
+   },
+   "sources": [
+    "Cian Dorr, argument given 26 September 2026, after Branden Fitelson pointed out at a conference that day that the map lacked this arrow.",
+    "Andrew Bacon, A Philosophical Introduction to Higher-Order Logics, Routledge, 2024, §8.2, pp. 165–170 (strong worlds and the Strong Leibniz Biconditionals)."
+   ],
+   "source_names": [
+    "Dorr, 26 Sep (Fitelson)",
+    "Philosophical Introduction to HOL"
+   ],
+   "proof": "Write $A$ for Actuality, $\\exists p\\, .\\,p\\land\\forall q\\, .\\,q\\to p\\le q$. Every strong world proposition entails $A$. For any $w$, $(\\forall q\\, .\\,w\\le q\\lor w\\le\\neg q)\\to(w\\to A)$ is a theorem of H: given $w$ and a true $q$, $w\\le\\neg q$ would give $\\neg q$ by T, so $w\\le q$; thus $w$ is true and entails every truth, and is itself the witness for $A$. Necessitate the universal closure in $w$, distribute by CBF, and apply K to the second conjunct of $\\operatorname{SWorld}_t(w)$, which is $\\Box\\forall q\\, .\\,w\\le q\\lor w\\le\\neg q$: this gives $\\Box(w\\to A)$, i.e. $w\\le A$. Now suppose $\\Diamond\\neg A$. The Strong Leibniz Biconditionals at type $t$ supply a strong world $w$ with $w\\le\\neg A$. Together with $w\\le A$ this gives $w\\le A\\land\\neg A=\\bot$, so $w=\\bot$, contradicting $\\Diamond w$. Hence $\\neg\\Diamond\\neg A$, which is $\\Box A$. Actuality has no type parameters, so $\\Box A$ is its only closed instance.",
+   "references": [
+    {
+     "paper": "bacon-2024-book",
+     "role": "background",
+     "locator": "§8.2, pp. 165–170",
+     "note": "Strong worlds and the Strong Leibniz Biconditionals; the argument that a strong world entails Actuality is the observation that a strong world, wherever it holds, is the least truth there."
+    },
+    {
+     "paper": "bacon-dorr-classicism",
+     "role": "background",
+     "locator": "Proposition 2.7, p. 26",
+     "note": "The recorded derivation of □Actuality from Atomicity and BF goes through the same step, that a world proposition entails Actuality, using Tractarianism to combine the case split; a strong world has the combined form built in."
+    }
+   ],
+   "notes": "The map already had □Actuality from Atomicity and BF (Proposition 2.7) and from □Plenitude and □Rigid Comprehension. This record is stronger in one direction: only the type-$t$ instance of the Strong Leibniz Biconditionals is used, so with the recorded derivation of that instance from Atomicity (type $t$) and BF (type $t$), □Actuality now follows from those two type-$t$ principles without BF at other types. Every model in the map that satisfies the Strong Leibniz Biconditionals already satisfied □Actuality, so no recorded verdict changes.",
+   "file": "topics/classicism/results/strong-leibniz-t-implies-necessary-actuality.yaml",
+   "files": {
+    "md": "writeups/strong-leibniz-t-implies-necessary-actuality.md",
+    "html": "writeups/strong-leibniz-t-implies-necessary-actuality.html",
     "handwritten": false
    }
   },
@@ -17065,7 +17152,7 @@
    }
   }
  ],
- "generated": "2026-09-25T20:24:35+00:00",
+ "generated": "2026-09-26T14:04:29+00:00",
  "progress": [
   {
    "background": null,
@@ -17073,9 +17160,9 @@
    "principles": [],
    "negative": [],
    "premises": 2,
-   "questions": 49304,
-   "settled": 37650,
-   "open": 11654,
+   "questions": 47754,
+   "settled": 36966,
+   "open": 10788,
    "by_premises": [
     [
      57,
@@ -17083,11 +17170,11 @@
     ],
     [
      3249,
-     2966
+     2982
     ],
     [
-     45998,
-     34627
+     44448,
+     33927
     ]
    ]
   },
@@ -17178,21 +17265,21 @@
    ],
    "negative": [],
    "premises": 2,
-   "questions": 4765,
-   "settled": 1178,
-   "open": 3587,
+   "questions": 3671,
+   "settled": 1006,
+   "open": 2665,
    "by_premises": [
     [
      65,
      56
     ],
     [
-     571,
-     261
+     485,
+     229
     ],
     [
-     4129,
-     861
+     3121,
+     721
     ]
    ]
   }
@@ -17463,9 +17550,9 @@
     ],
     "progress": {
      "premises": 2,
-     "questions": 49304,
-     "settled": 37650,
-     "open": 11654,
+     "questions": 47754,
+     "settled": 36966,
+     "open": 10788,
      "by_premises": [
       [
        57,
@@ -17473,195 +17560,193 @@
       ],
       [
        3249,
-       2966
+       2982
       ],
       [
-       45998,
-       34627
+       44448,
+       33927
       ]
      ]
     },
-    "open": 11654,
+    "open": 10788,
     "rows": [
      {
       "kind": "question",
       "premises": [
-       "distinctness-signature-r",
-       "strong-leibniz-t"
+       "converse-witnessed-possibility-r",
+       "general-separated-structure-r"
       ],
-      "conclusion": "false",
-      "yes": 175,
-      "no": 173,
-      "score": 174.0,
-      "auto_rank": 1138,
-      "auto_claim": "not",
+      "conclusion": "actual-profile-r",
+      "yes": 110,
+      "no": 120,
+      "score": 114.8,
+      "auto_rank": 1633,
+      "auto_claim": "entails",
       "rank": 1
      },
      {
       "kind": "question",
       "premises": [
-       "atomicity-r",
-       "distinctness-signature-r"
+       "converse-witnessed-possibility-r",
+       "general-separated-structure-r"
       ],
-      "conclusion": "false",
-      "yes": 163,
-      "no": 143,
-      "score": 152.3,
-      "auto_rank": 1287,
-      "auto_claim": "not",
+      "conclusion": "necessary-actuality",
+      "yes": 110,
+      "no": 120,
+      "score": 114.8,
+      "auto_rank": 1634,
+      "auto_claim": "entails",
       "rank": 2
      },
      {
       "kind": "question",
       "premises": [
-       "distinctness-schema-r",
-       "strong-leibniz-r"
+       "converse-witnessed-possibility-r",
+       "witnessed-possibility-r"
       ],
-      "conclusion": "false",
-      "yes": 149,
-      "no": 123,
-      "score": 134.8,
-      "auto_rank": 1484,
-      "auto_claim": "not",
+      "conclusion": "actual-profile-r",
+      "yes": 110,
+      "no": 120,
+      "score": 114.8,
+      "auto_rank": 1635,
+      "auto_claim": "entails",
       "rank": 3
      },
      {
       "kind": "question",
       "premises": [
-       "distinctness-signature-r",
-       "strong-leibniz-r"
+       "converse-witnessed-possibility-r",
+       "witnessed-possibility-r"
       ],
-      "conclusion": "false",
-      "yes": 81,
-      "no": 355,
-      "score": 131.9,
-      "auto_rank": 237,
+      "conclusion": "necessary-actuality",
+      "yes": 110,
+      "no": 120,
+      "score": 114.8,
+      "auto_rank": 1636,
       "auto_claim": "entails",
       "rank": 4
      },
      {
       "kind": "question",
       "premises": [
-       "distinctness-signature-r",
-       "strong-leibniz-t"
+       "general-separated-structure-r",
+       "modal-freedom-signature-r"
       ],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 91,
-      "no": 204,
-      "score": 125.9,
-      "auto_rank": 833,
+      "conclusion": "actual-profile-r",
+      "yes": 110,
+      "no": 120,
+      "score": 114.8,
+      "auto_rank": 1637,
       "auto_claim": "entails",
       "rank": 5
      },
      {
       "kind": "question",
       "premises": [
-       "atomicity-t",
-       "distinctness-signature-r"
+       "general-separated-structure-r",
+       "modal-freedom-signature-r"
       ],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 170,
-      "no": 97,
-      "score": 123.5,
-      "auto_rank": 1203,
-      "auto_claim": "not",
+      "conclusion": "necessary-actuality",
+      "yes": 110,
+      "no": 120,
+      "score": 114.8,
+      "auto_rank": 1638,
+      "auto_claim": "entails",
       "rank": 6
      },
      {
       "kind": "question",
       "premises": [
-       "atomicity-r",
-       "distinctness-signature-r"
+       "logical-necessity-r"
       ],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 87,
-      "no": 174,
-      "score": 116.0,
-      "auto_rank": 1157,
+      "conclusion": "actual-profile-r",
+      "yes": 110,
+      "no": 120,
+      "score": 114.8,
+      "auto_rank": 1639,
       "auto_claim": "entails",
       "rank": 7
      },
      {
       "kind": "question",
       "premises": [
-       "atomicity-t",
-       "distinctness-signature-r"
+       "logical-necessity-r"
       ],
-      "conclusion": "false",
-      "yes": 312,
-      "no": 71,
-      "score": 115.7,
-      "auto_rank": 363,
-      "auto_claim": "not",
+      "conclusion": "necessary-actuality",
+      "yes": 110,
+      "no": 120,
+      "score": 114.8,
+      "auto_rank": 1640,
+      "auto_claim": "entails",
       "rank": 8
      },
      {
       "kind": "question",
       "premises": [
-       "atomicity-t",
-       "strong-possibility-signature-r"
+       "modal-freedom-signature-r",
+       "witnessed-possibility-r"
       ],
-      "conclusion": "false",
-      "yes": 130,
-      "no": 101,
-      "score": 113.7,
-      "auto_rank": 1805,
-      "auto_claim": "not",
+      "conclusion": "actual-profile-r",
+      "yes": 110,
+      "no": 120,
+      "score": 114.8,
+      "auto_rank": 1641,
+      "auto_claim": "entails",
       "rank": 9
      },
      {
       "kind": "question",
       "premises": [
-       "strong-leibniz-t",
-       "strong-possibility-signature-r"
+       "modal-freedom-signature-r",
+       "witnessed-possibility-r"
       ],
-      "conclusion": "false",
-      "yes": 71,
-      "no": 209,
-      "score": 106.0,
-      "auto_rank": 803,
+      "conclusion": "necessary-actuality",
+      "yes": 110,
+      "no": 120,
+      "score": 114.8,
+      "auto_rank": 1642,
       "auto_claim": "entails",
       "rank": 10
      },
      {
       "kind": "question",
       "premises": [
-       "general-separated-structure-r",
-       "strong-leibniz-r"
+       "atomicity-t",
+       "distinctness-signature-r"
       ],
-      "conclusion": "necessity-of-arithmetic",
-      "yes": 83,
-      "no": 124,
-      "score": 99.4,
-      "auto_rank": 1925,
-      "auto_claim": "entails",
+      "conclusion": "false",
+      "yes": 136,
+      "no": 80,
+      "score": 100.7,
+      "auto_rank": 1391,
+      "auto_claim": "not",
       "rank": 11
      },
      {
       "kind": "question",
       "premises": [
        "atomicity-r",
-       "strong-possibility-signature-r"
+       "distinctness-signature-r"
       ],
       "conclusion": "false",
-      "yes": 67,
-      "no": 179,
-      "score": 97.5,
-      "auto_rank": 1096,
+      "yes": 69,
+      "no": 161,
+      "score": 96.6,
+      "auto_rank": 1032,
       "auto_claim": "entails",
       "rank": 12
      },
      {
       "kind": "question",
       "premises": [
-       "distinctness-schema-r",
-       "strong-leibniz-t"
+       "barcan-t",
+       "distinctness-signature-r"
       ],
       "conclusion": "false",
-      "yes": 323,
-      "no": 57,
-      "score": 96.9,
-      "auto_rank": 331,
+      "yes": 142,
+      "no": 72,
+      "score": 95.6,
+      "auto_rank": 1318,
       "auto_claim": "not",
       "rank": 13
      },
@@ -17673,25 +17758,11 @@
       ],
       "conclusion": "false",
       "yes": 69,
-      "no": 157,
-      "score": 95.9,
-      "auto_rank": 1364,
+      "no": 149,
+      "score": 94.3,
+      "auto_rank": 1198,
       "auto_claim": "entails",
       "rank": 14
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "distinctness-schema-r",
-       "strong-leibniz-r"
-      ],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 76,
-      "no": 128,
-      "score": 95.4,
-      "auto_rank": 1833,
-      "auto_claim": "entails",
-      "rank": 15
      },
      {
       "kind": "question",
@@ -17703,9 +17774,9 @@
       "yes": 160,
       "no": 64,
       "score": 91.4,
-      "auto_rank": 1330,
+      "auto_rank": 1050,
       "auto_claim": "not",
-      "rank": 16
+      "rank": 15
      },
      {
       "kind": "question",
@@ -17717,7 +17788,21 @@
       "yes": 160,
       "no": 64,
       "score": 91.4,
-      "auto_rank": 1331,
+      "auto_rank": 1051,
+      "auto_claim": "not",
+      "rank": 16
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "converse-witnessed-possibility-r",
+       "witnessed-possibility-r"
+      ],
+      "conclusion": "boolean-completeness-r",
+      "yes": 160,
+      "no": 64,
+      "score": 91.4,
+      "auto_rank": 1052,
       "auto_claim": "not",
       "rank": 17
      },
@@ -17727,25 +17812,25 @@
        "converse-witnessed-possibility-r",
        "witnessed-possibility-r"
       ],
-      "conclusion": "boolean-completeness-r",
+      "conclusion": "necessary-boolean-completeness-r",
       "yes": 160,
       "no": 64,
       "score": 91.4,
-      "auto_rank": 1332,
+      "auto_rank": 1053,
       "auto_claim": "not",
       "rank": 18
      },
      {
       "kind": "question",
       "premises": [
-       "converse-witnessed-possibility-r",
-       "witnessed-possibility-r"
+       "general-separated-structure-r",
+       "modal-freedom-signature-r"
       ],
-      "conclusion": "necessary-boolean-completeness-r",
+      "conclusion": "boolean-completeness-r",
       "yes": 160,
       "no": 64,
       "score": 91.4,
-      "auto_rank": 1333,
+      "auto_rank": 1054,
       "auto_claim": "not",
       "rank": 19
      },
@@ -17755,25 +17840,24 @@
        "general-separated-structure-r",
        "modal-freedom-signature-r"
       ],
-      "conclusion": "boolean-completeness-r",
+      "conclusion": "necessary-boolean-completeness-r",
       "yes": 160,
       "no": 64,
       "score": 91.4,
-      "auto_rank": 1334,
+      "auto_rank": 1055,
       "auto_claim": "not",
       "rank": 20
      },
      {
       "kind": "question",
       "premises": [
-       "general-separated-structure-r",
-       "modal-freedom-signature-r"
+       "logical-necessity-r"
       ],
-      "conclusion": "necessary-boolean-completeness-r",
+      "conclusion": "boolean-completeness-r",
       "yes": 160,
       "no": 64,
       "score": 91.4,
-      "auto_rank": 1335,
+      "auto_rank": 1056,
       "auto_claim": "not",
       "rank": 21
      },
@@ -17782,24 +17866,25 @@
       "premises": [
        "logical-necessity-r"
       ],
-      "conclusion": "boolean-completeness-r",
+      "conclusion": "necessary-boolean-completeness-r",
       "yes": 160,
       "no": 64,
       "score": 91.4,
-      "auto_rank": 1336,
+      "auto_rank": 1057,
       "auto_claim": "not",
       "rank": 22
      },
      {
       "kind": "question",
       "premises": [
-       "logical-necessity-r"
+       "modal-freedom-signature-r",
+       "witnessed-possibility-r"
       ],
-      "conclusion": "necessary-boolean-completeness-r",
+      "conclusion": "boolean-completeness-r",
       "yes": 160,
       "no": 64,
       "score": 91.4,
-      "auto_rank": 1337,
+      "auto_rank": 1058,
       "auto_claim": "not",
       "rank": 23
      },
@@ -17809,96 +17894,95 @@
        "modal-freedom-signature-r",
        "witnessed-possibility-r"
       ],
-      "conclusion": "boolean-completeness-r",
+      "conclusion": "necessary-boolean-completeness-r",
       "yes": 160,
       "no": 64,
       "score": 91.4,
-      "auto_rank": 1338,
+      "auto_rank": 1059,
       "auto_claim": "not",
       "rank": 24
      },
      {
       "kind": "question",
       "premises": [
-       "modal-freedom-signature-r",
-       "witnessed-possibility-r"
+       "atomicity-t",
+       "distinctness-signature-r"
       ],
-      "conclusion": "necessary-boolean-completeness-r",
-      "yes": 160,
-      "no": 64,
-      "score": 91.4,
-      "auto_rank": 1339,
-      "auto_claim": "not",
+      "conclusion": "distinctness-preserving-collapse",
+      "yes": 78,
+      "no": 106,
+      "score": 89.9,
+      "auto_rank": 1992,
+      "auto_claim": "entails",
       "rank": 25
      },
      {
       "kind": "question",
       "premises": [
-       "general-separated-structure-r",
-       "strong-leibniz-t"
+       "barcan-t",
+       "distinctness-signature-r"
       ],
-      "conclusion": "necessity-of-arithmetic",
-      "yes": 179,
-      "no": 61,
-      "score": 91.0,
-      "auto_rank": 1097,
-      "auto_claim": "not",
+      "conclusion": "distinctness-preserving-collapse",
+      "yes": 80,
+      "no": 98,
+      "score": 88.1,
+      "auto_rank": 2228,
+      "auto_claim": "entails",
       "rank": 26
      },
      {
       "kind": "question",
       "premises": [
-       "atomicity-r",
+       "converse-witnessed-possibility-r",
        "general-separated-structure-r"
       ],
-      "conclusion": "necessity-of-arithmetic",
-      "yes": 167,
-      "no": 61,
-      "score": 89.4,
-      "auto_rank": 1244,
-      "auto_claim": "not",
+      "conclusion": "atomicity-t",
+      "yes": 85,
+      "no": 90,
+      "score": 87.4,
+      "auto_rank": 2469,
+      "auto_claim": "entails",
       "rank": 27
      },
      {
       "kind": "question",
       "premises": [
-       "barcan-t",
-       "distinctness-signature-r"
+       "converse-witnessed-possibility-r",
+       "witnessed-possibility-r"
       ],
-      "conclusion": "false",
-      "yes": 166,
-      "no": 60,
-      "score": 88.1,
-      "auto_rank": 1267,
-      "auto_claim": "not",
+      "conclusion": "atomicity-t",
+      "yes": 85,
+      "no": 90,
+      "score": 87.4,
+      "auto_rank": 2470,
+      "auto_claim": "entails",
       "rank": 28
      },
      {
       "kind": "question",
       "premises": [
-       "distinctness-schema-r",
-       "strong-leibniz-t"
+       "general-separated-structure-r",
+       "modal-freedom-signature-r"
       ],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 161,
-      "no": 60,
+      "conclusion": "atomicity-t",
+      "yes": 85,
+      "no": 90,
       "score": 87.4,
-      "auto_rank": 1299,
-      "auto_claim": "not",
+      "auto_rank": 2471,
+      "auto_claim": "entails",
       "rank": 29
      },
      {
       "kind": "question",
       "premises": [
-       "barcan-t",
-       "distinctness-signature-r"
+       "logical-necessity-r"
       ],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 88,
-      "no": 86,
-      "score": 87.0,
-      "auto_rank": 2912,
-      "auto_claim": "not",
+      "conclusion": "atomicity-t",
+      "yes": 85,
+      "no": 90,
+      "score": 87.4,
+      "auto_rank": 2472,
+      "auto_claim": "entails",
       "rank": 30
      }
     ],
@@ -17909,12 +17993,12 @@
        "strong-leibniz-t"
       ],
       "conclusion": "necessary-barcan-r",
-      "yes": 1932,
+      "yes": 1239,
       "no": 0,
       "score": 0.0,
       "auto_rank": 1,
       "auto_claim": "not",
-      "rank": 10977
+      "rank": 10145
      },
      {
       "kind": "question",
@@ -17922,65 +18006,12 @@
        "strong-leibniz-t"
       ],
       "conclusion": "barcan-r",
-      "yes": 1605,
+      "yes": 837,
       "no": 1,
       "score": 2.0,
       "auto_rank": 2,
       "auto_claim": "not",
-      "rank": 9427
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "distinctness-schema-r"
-      ],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 902,
-      "no": 0,
-      "score": 0.0,
-      "auto_rank": 3,
-      "auto_claim": "not",
-      "rank": 10978
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-r",
-       "strong-leibniz-t"
-      ],
-      "conclusion": "necessary-barcan-r",
-      "yes": 901,
-      "no": 1,
-      "score": 2.0,
-      "auto_rank": 4,
-      "auto_claim": "not",
-      "rank": 9428
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-t"
-      ],
-      "conclusion": "necessary-atomicity-r",
-      "yes": 889,
-      "no": 0,
-      "score": 0.0,
-      "auto_rank": 5,
-      "auto_claim": "not",
-      "rank": 10979
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "necessary-strong-leibniz-t"
-      ],
-      "conclusion": "necessary-barcan-r",
-      "yes": 884,
-      "no": 1,
-      "score": 2.0,
-      "auto_rank": 6,
-      "auto_claim": "not",
-      "rank": 9429
+      "rank": 8692
      },
      {
       "kind": "question",
@@ -17988,51 +18019,118 @@
        "independence-signature-r"
       ],
       "conclusion": "distinctness-preserving-collapse",
-      "yes": 879,
+      "yes": 795,
+      "no": 0,
+      "score": 0.0,
+      "auto_rank": 3,
+      "auto_claim": "not",
+      "rank": 10146
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "distinctness-schema-r"
+      ],
+      "conclusion": "distinctness-preserving-collapse",
+      "yes": 740,
+      "no": 0,
+      "score": 0.0,
+      "auto_rank": 4,
+      "auto_claim": "not",
+      "rank": 10147
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "necessary-strong-leibniz-t"
+      ],
+      "conclusion": "necessary-barcan-r",
+      "yes": 680,
+      "no": 1,
+      "score": 2.0,
+      "auto_rank": 5,
+      "auto_claim": "not",
+      "rank": 8693
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "witnessed-possibility-r"
+      ],
+      "conclusion": "distinctness-preserving-collapse",
+      "yes": 604,
+      "no": 0,
+      "score": 0.0,
+      "auto_rank": 6,
+      "auto_claim": "not",
+      "rank": 10148
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "actual-profile-r",
+       "signature-b-r"
+      ],
+      "conclusion": "rigid-comprehension-r",
+      "yes": 595,
       "no": 0,
       "score": 0.0,
       "auto_rank": 7,
       "auto_claim": "not",
-      "rank": 10980
+      "rank": 10149
      },
      {
       "kind": "question",
       "premises": [
-       "strong-leibniz-t"
+       "distinctness-necessary-r",
+       "weakly-inextensible-comprehension-r"
       ],
-      "conclusion": "necessary-strong-leibniz-r",
-      "yes": 842,
+      "conclusion": "rigid-comprehension-r",
+      "yes": 574,
       "no": 0,
       "score": 0.0,
       "auto_rank": 8,
       "auto_claim": "not",
-      "rank": 10981
+      "rank": 10150
      },
      {
       "kind": "question",
       "premises": [
-       "strong-leibniz-r"
+       "modal-freedom-signature-r"
       ],
-      "conclusion": "necessary-barcan-r",
-      "yes": 811,
-      "no": 2,
-      "score": 4.0,
+      "conclusion": "barcan-r",
+      "yes": 568,
+      "no": 1,
+      "score": 2.0,
       "auto_rank": 9,
       "auto_claim": "not",
-      "rank": 8571
+      "rank": 8694
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "modal-freedom-signature-r"
+      ],
+      "conclusion": "necessary-barcan-r",
+      "yes": 568,
+      "no": 1,
+      "score": 2.0,
+      "auto_rank": 10,
+      "auto_claim": "not",
+      "rank": 8695
      },
      {
       "kind": "question",
       "premises": [
        "atomicity-t"
       ],
-      "conclusion": "necessity-of-arithmetic",
-      "yes": 778,
+      "conclusion": "necessary-atomicity-r",
+      "yes": 550,
       "no": 0,
       "score": 0.0,
-      "auto_rank": 10,
+      "auto_rank": 11,
       "auto_claim": "not",
-      "rank": 10982
+      "rank": 10151
      },
      {
       "kind": "question",
@@ -18040,106 +18138,13 @@
        "atomicity-r",
        "strong-leibniz-t"
       ],
-      "conclusion": "barcan-r",
-      "yes": 749,
-      "no": 3,
-      "score": 6.0,
-      "auto_rank": 11,
-      "auto_claim": "not",
-      "rank": 6900
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "strong-leibniz-t"
-      ],
-      "conclusion": "necessary-actuality",
-      "yes": 747,
-      "no": 2,
-      "score": 4.0,
-      "auto_rank": 12,
-      "auto_claim": "not",
-      "rank": 8572
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "necessary-strong-leibniz-t"
-      ],
-      "conclusion": "barcan-r",
-      "yes": 699,
-      "no": 3,
-      "score": 6.0,
-      "auto_rank": 13,
-      "auto_claim": "not",
-      "rank": 6901
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "witnessed-possibility-r"
-      ],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 688,
-      "no": 0,
-      "score": 0.0,
-      "auto_rank": 14,
-      "auto_claim": "not",
-      "rank": 10983
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "strong-leibniz-r"
-      ],
-      "conclusion": "barcan-r",
-      "yes": 681,
-      "no": 5,
-      "score": 9.9,
-      "auto_rank": 15,
-      "auto_claim": "not",
-      "rank": 5026
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "logical-necessity-r",
-       "necessary-strong-leibniz-r"
-      ],
-      "conclusion": "weakly-inextensible-comprehension-r",
-      "yes": 1,
-      "no": 673,
-      "score": 2.0,
-      "auto_rank": 16,
-      "auto_claim": "entails",
-      "rank": 9430
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "logical-necessity-r",
-       "strong-leibniz-r"
-      ],
-      "conclusion": "weakly-inextensible-comprehension-r",
-      "yes": 1,
-      "no": 673,
-      "score": 2.0,
-      "auto_rank": 17,
-      "auto_claim": "entails",
-      "rank": 9431
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "strong-leibniz-t"
-      ],
-      "conclusion": "necessary-barcan-t",
-      "yes": 645,
+      "conclusion": "necessary-barcan-r",
+      "yes": 547,
       "no": 1,
       "score": 2.0,
-      "auto_rank": 18,
+      "auto_rank": 12,
       "auto_claim": "not",
-      "rank": 9432
+      "rank": 8696
      },
      {
       "kind": "question",
@@ -18148,26 +18153,26 @@
        "witnessed-possibility-r"
       ],
       "conclusion": "distinctness-preserving-collapse",
-      "yes": 613,
+      "yes": 529,
       "no": 2,
       "score": 4.0,
-      "auto_rank": 19,
+      "auto_rank": 13,
       "auto_claim": "not",
-      "rank": 8573
+      "rank": 7884
      },
      {
       "kind": "question",
       "premises": [
-       "atomicity-t",
-       "infinity-t"
+       "independence-signature-r",
+       "pure-b-r"
       ],
-      "conclusion": "necessary-relational-choice-r",
-      "yes": 612,
+      "conclusion": "necessary-rigid-comprehension-r",
+      "yes": 529,
       "no": 0,
       "score": 0.0,
-      "auto_rank": 20,
+      "auto_rank": 14,
       "auto_claim": "not",
-      "rank": 10984
+      "rank": 10152
      },
      {
       "kind": "question",
@@ -18175,26 +18180,26 @@
        "general-separated-structure-r"
       ],
       "conclusion": "distinctness-preserving-collapse",
-      "yes": 610,
+      "yes": 526,
       "no": 3,
       "score": 6.0,
-      "auto_rank": 21,
+      "auto_rank": 15,
       "auto_claim": "not",
-      "rank": 6902
+      "rank": 6353
      },
      {
       "kind": "question",
       "premises": [
-       "atomicity-t",
-       "possible-infinity-t"
+       "independence-signature-r",
+       "necessity-of-arithmetic"
       ],
-      "conclusion": "necessary-relational-choice-r",
-      "yes": 607,
+      "conclusion": "necessary-strong-leibniz-r",
+      "yes": 522,
       "no": 0,
       "score": 0.0,
-      "auto_rank": 22,
+      "auto_rank": 16,
       "auto_claim": "not",
-      "rank": 10985
+      "rank": 10153
      },
      {
       "kind": "question",
@@ -18203,12 +18208,12 @@
        "infinity-t"
       ],
       "conclusion": "distinctness-preserving-collapse",
-      "yes": 605,
+      "yes": 509,
       "no": 1,
       "score": 2.0,
-      "auto_rank": 23,
+      "auto_rank": 17,
       "auto_claim": "not",
-      "rank": 9433
+      "rank": 8697
      },
      {
       "kind": "question",
@@ -18217,12 +18222,40 @@
        "possible-infinity-t"
       ],
       "conclusion": "distinctness-preserving-collapse",
-      "yes": 601,
+      "yes": 505,
       "no": 1,
       "score": 2.0,
-      "auto_rank": 24,
+      "auto_rank": 18,
       "auto_claim": "not",
-      "rank": 9434
+      "rank": 8698
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "independence-signature-r",
+       "necessity-of-arithmetic"
+      ],
+      "conclusion": "necessary-rigid-comprehension-r",
+      "yes": 504,
+      "no": 0,
+      "score": 0.0,
+      "auto_rank": 19,
+      "auto_claim": "not",
+      "rank": 10154
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "pure-b-r",
+       "strong-leibniz-t"
+      ],
+      "conclusion": "modal-freedom-signature-r",
+      "yes": 501,
+      "no": 0,
+      "score": 0.0,
+      "auto_rank": 20,
+      "auto_claim": "not",
+      "rank": 10155
      },
      {
       "kind": "question",
@@ -18231,82 +18264,136 @@
        "independence-signature-r"
       ],
       "conclusion": "distinctness-preserving-collapse",
-      "yes": 595,
+      "yes": 499,
       "no": 3,
       "score": 6.0,
-      "auto_rank": 25,
+      "auto_rank": 21,
       "auto_claim": "not",
-      "rank": 6903
+      "rank": 6354
      },
      {
       "kind": "question",
       "premises": [
-       "atomicity-t",
-       "axiom-of-infinity-t"
+       "pure-b-r",
+       "strong-leibniz-t"
       ],
-      "conclusion": "necessary-relational-choice-r",
-      "yes": 593,
+      "conclusion": "necessary-barcan-r",
+      "yes": 499,
+      "no": 1,
+      "score": 2.0,
+      "auto_rank": 22,
+      "auto_claim": "not",
+      "rank": 8699
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "strong-leibniz-r"
+      ],
+      "conclusion": "necessary-barcan-r",
+      "yes": 497,
       "no": 2,
       "score": 4.0,
+      "auto_rank": 23,
+      "auto_claim": "not",
+      "rank": 7885
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "independence-signature-r",
+       "pure-b-r"
+      ],
+      "conclusion": "rigid-comprehension-r",
+      "yes": 496,
+      "no": 1,
+      "score": 2.0,
+      "auto_rank": 24,
+      "auto_claim": "not",
+      "rank": 8700
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "actual-profile-r",
+       "distinctness-necessary-r"
+      ],
+      "conclusion": "rigid-comprehension-r",
+      "yes": 494,
+      "no": 2,
+      "score": 4.0,
+      "auto_rank": 25,
+      "auto_claim": "not",
+      "rank": 7886
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "independence-signature-r"
+      ],
+      "conclusion": "actual-profile-r",
+      "yes": 494,
+      "no": 0,
+      "score": 0.0,
       "auto_rank": 26,
       "auto_claim": "not",
-      "rank": 8574
+      "rank": 10156
      },
      {
       "kind": "question",
       "premises": [
-       "atomicity-t",
-       "infinity-t"
+       "atomicity-r",
+       "logical-necessity-r"
       ],
-      "conclusion": "necessary-atomicity-r",
-      "yes": 585,
-      "no": 1,
+      "conclusion": "weakly-inextensible-comprehension-r",
+      "yes": 1,
+      "no": 491,
       "score": 2.0,
       "auto_rank": 27,
-      "auto_claim": "not",
-      "rank": 9435
+      "auto_claim": "entails",
+      "rank": 8701
      },
      {
       "kind": "question",
       "premises": [
-       "atomicity-t",
-       "possible-infinity-e"
+       "logical-necessity-r",
+       "necessary-atomicity-r"
       ],
-      "conclusion": "necessary-atomicity-r",
-      "yes": 585,
-      "no": 1,
+      "conclusion": "weakly-inextensible-comprehension-r",
+      "yes": 1,
+      "no": 491,
       "score": 2.0,
       "auto_rank": 28,
-      "auto_claim": "not",
-      "rank": 9436
+      "auto_claim": "entails",
+      "rank": 8702
      },
      {
       "kind": "question",
       "premises": [
-       "atomicity-t",
-       "possible-infinity-t"
+       "necessity-of-arithmetic",
+       "witnessed-possibility-r"
       ],
-      "conclusion": "necessary-atomicity-r",
-      "yes": 585,
-      "no": 1,
-      "score": 2.0,
+      "conclusion": "necessary-strong-leibniz-r",
+      "yes": 488,
+      "no": 0,
+      "score": 0.0,
       "auto_rank": 29,
       "auto_claim": "not",
-      "rank": 9437
+      "rank": 10157
      },
      {
       "kind": "question",
       "premises": [
-       "atomicity-t",
-       "infinity-t"
+       "infinity-t",
+       "witnessed-possibility-r"
       ],
-      "conclusion": "necessity-of-arithmetic",
-      "yes": 583,
+      "conclusion": "distinctness-preserving-collapse",
+      "yes": 485,
       "no": 1,
       "score": 2.0,
       "auto_rank": 30,
       "auto_claim": "not",
-      "rank": 9438
+      "rank": 8703
      }
     ],
     "recorded": [
@@ -18316,12 +18403,12 @@
        "strong-possibility-signature-r"
       ],
       "conclusion": "strong-possibility-r",
-      "yes": 17,
+      "yes": 15,
       "no": 22,
-      "score": 19.2,
-      "auto_rank": 8480,
+      "score": 17.8,
+      "auto_rank": 7777,
       "auto_claim": "entails",
-      "rank": 2299,
+      "rank": 2422,
       "conjectures": [
        {
         "id": "strong-possibility-signature-r-implies-strong-possibility-r",
@@ -18342,9 +18429,9 @@
       "yes": 113,
       "no": 0,
       "score": 0.0,
-      "auto_rank": 2159,
+      "auto_rank": 1840,
       "auto_claim": "not",
-      "rank": 11201,
+      "rank": 10349,
       "conjectures": [
        {
         "id": "relational-choice-r-implies-transversal-choice-r",
@@ -18365,9 +18452,9 @@
       "yes": 72,
       "no": 0,
       "score": 0.0,
-      "auto_rank": 3756,
+      "auto_rank": 3308,
       "auto_claim": "not",
-      "rank": 11298,
+      "rank": 10444,
       "conjectures": [
        {
         "id": "possible-infinity-t-implies-axiom-of-infinity-t",
@@ -21530,25 +21617,25 @@
     ],
     "progress": {
      "premises": 2,
-     "questions": 4765,
-     "settled": 1178,
-     "open": 3587,
+     "questions": 3671,
+     "settled": 1006,
+     "open": 2665,
      "by_premises": [
       [
        65,
        56
       ],
       [
-       571,
-       261
+       485,
+       229
       ],
       [
-       4129,
-       861
+       3121,
+       721
       ]
      ]
     },
-    "open": 3587,
+    "open": 2665,
     "rows": [
      {
       "kind": "question",
@@ -21558,11 +21645,22 @@
       ],
       "conclusion": "false",
       "yes": 38,
-      "no": 77,
-      "score": 50.9,
-      "auto_rank": 337,
+      "no": 43,
+      "score": 40.3,
+      "auto_rank": 449,
       "auto_claim": "entails",
       "rank": 1
+     },
+     {
+      "kind": "check",
+      "model": "coalesced-single-individual-root",
+      "principle": "distinctness-signature-r",
+      "yes": 50,
+      "no": 33,
+      "score": 39.8,
+      "auto_rank": 369,
+      "auto_claim": "not",
+      "rank": 2
      },
      {
       "kind": "question",
@@ -21572,53 +21670,53 @@
       ],
       "conclusion": "distinctness-preserving-collapse",
       "yes": 46,
-      "no": 56,
-      "score": 50.5,
-      "auto_rank": 541,
-      "auto_claim": "entails",
-      "rank": 2
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-r",
-       "distinctness-signature-r"
-      ],
-      "conclusion": "false",
-      "yes": 94,
-      "no": 33,
-      "score": 48.9,
-      "auto_rank": 267,
+      "no": 32,
+      "score": 37.7,
+      "auto_rank": 418,
       "auto_claim": "not",
       "rank": 3
      },
      {
       "kind": "question",
       "premises": [
-       "strong-leibniz-r",
+       "atomicity-r",
        "strong-possibility-signature-r"
       ],
       "conclusion": "false",
-      "yes": 44,
-      "no": 45,
-      "score": 44.5,
-      "auto_rank": 735,
-      "auto_claim": "entails",
+      "yes": 39,
+      "no": 26,
+      "score": 31.2,
+      "auto_rank": 506,
+      "auto_claim": "not",
       "rank": 4
      },
      {
       "kind": "question",
       "premises": [
-       "distinctness-signature-r",
-       "strong-leibniz-r"
+       "atomlessness",
+       "strong-possibility-signature-r"
       ],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 52,
-      "no": 38,
-      "score": 43.9,
-      "auto_rank": 599,
+      "conclusion": "false",
+      "yes": 41,
+      "no": 22,
+      "score": 28.6,
+      "auto_rank": 481,
       "auto_claim": "not",
       "rank": 5
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "axiom-of-infinity-e",
+       "strong-possibility-signature-r"
+      ],
+      "conclusion": "atomicity-t",
+      "yes": 45,
+      "no": 21,
+      "score": 28.6,
+      "auto_rank": 429,
+      "auto_claim": "not",
+      "rank": 6
      },
      {
       "kind": "question",
@@ -21628,203 +21726,11 @@
       ],
       "conclusion": "false",
       "yes": 44,
-      "no": 43,
-      "score": 43.5,
-      "auto_rank": 757,
-      "auto_claim": "not",
-      "rank": 6
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-r",
-       "boolean-completeness-t"
-      ],
-      "conclusion": "false",
-      "yes": 47,
-      "no": 36,
-      "score": 40.8,
-      "auto_rank": 700,
+      "no": 21,
+      "score": 28.4,
+      "auto_rank": 435,
       "auto_claim": "not",
       "rank": 7
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-t",
-       "strong-possibility-signature-r"
-      ],
-      "conclusion": "atomicity-t",
-      "yes": 43,
-      "no": 38,
-      "score": 40.3,
-      "auto_rank": 778,
-      "auto_claim": "not",
-      "rank": 8
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-t",
-       "strong-possibility-signature-r"
-      ],
-      "conclusion": "strong-leibniz-t",
-      "yes": 43,
-      "no": 38,
-      "score": 40.3,
-      "auto_rank": 779,
-      "auto_claim": "not",
-      "rank": 9
-     },
-     {
-      "kind": "check",
-      "model": "coalesced-single-individual-root",
-      "principle": "distinctness-signature-r",
-      "yes": 50,
-      "no": 33,
-      "score": 39.8,
-      "auto_rank": 638,
-      "auto_claim": "not",
-      "rank": 10
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-r",
-       "independence-signature-r"
-      ],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 50,
-      "no": 33,
-      "score": 39.8,
-      "auto_rank": 639,
-      "auto_claim": "not",
-      "rank": 11
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-r",
-       "witnessed-possibility-r"
-      ],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 50,
-      "no": 33,
-      "score": 39.8,
-      "auto_rank": 640,
-      "auto_claim": "not",
-      "rank": 12
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "strong-leibniz-t",
-       "strong-possibility-signature-r"
-      ],
-      "conclusion": "false",
-      "yes": 96,
-      "no": 25,
-      "score": 39.7,
-      "auto_rank": 263,
-      "auto_claim": "not",
-      "rank": 13
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-r",
-       "strong-possibility-signature-r"
-      ],
-      "conclusion": "false",
-      "yes": 90,
-      "no": 25,
-      "score": 39.1,
-      "auto_rank": 283,
-      "auto_claim": "not",
-      "rank": 14
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-r",
-       "possibility-plus-signature-r"
-      ],
-      "conclusion": "false",
-      "yes": 30,
-      "no": 45,
-      "score": 36.0,
-      "auto_rank": 736,
-      "auto_claim": "entails",
-      "rank": 15
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-r",
-       "independence-signature-r"
-      ],
-      "conclusion": "false",
-      "yes": 122,
-      "no": 21,
-      "score": 35.8,
-      "auto_rank": 178,
-      "auto_claim": "not",
-      "rank": 16
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-r",
-       "witnessed-possibility-r"
-      ],
-      "conclusion": "false",
-      "yes": 122,
-      "no": 21,
-      "score": 35.8,
-      "auto_rank": 179,
-      "auto_claim": "not",
-      "rank": 17
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-r"
-      ],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 94,
-      "no": 22,
-      "score": 35.7,
-      "auto_rank": 268,
-      "auto_claim": "not",
-      "rank": 18
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-r",
-       "weakly-inextensible-comprehension-r"
-      ],
-      "conclusion": "false",
-      "yes": 93,
-      "no": 21,
-      "score": 34.3,
-      "auto_rank": 271,
-      "auto_claim": "not",
-      "rank": 19
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "distinctness-signature-r",
-       "strong-leibniz-t"
-      ],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 112,
-      "no": 20,
-      "score": 33.9,
-      "auto_rank": 200,
-      "auto_claim": "not",
-      "rank": 20
      },
      {
       "kind": "question",
@@ -21833,23 +21739,199 @@
        "distinctness-signature-r"
       ],
       "conclusion": "distinctness-preserving-collapse",
-      "yes": 106,
+      "yes": 47,
       "no": 20,
-      "score": 33.7,
-      "auto_rank": 220,
+      "score": 28.1,
+      "auto_rank": 399,
       "auto_claim": "not",
-      "rank": 21
+      "rank": 8
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "atomicity-t",
+       "strong-possibility-signature-r"
+      ],
+      "conclusion": "false",
+      "yes": 78,
+      "no": 17,
+      "score": 27.9,
+      "auto_rank": 192,
+      "auto_claim": "not",
+      "rank": 9
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "barcan-t",
+       "strong-possibility-signature-r"
+      ],
+      "conclusion": "false",
+      "yes": 80,
+      "no": 16,
+      "score": 26.7,
+      "auto_rank": 187,
+      "auto_claim": "not",
+      "rank": 10
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "axiom-of-infinity-e",
+       "strong-possibility-signature-r"
+      ],
+      "conclusion": "atomicity-r",
+      "yes": 46,
+      "no": 18,
+      "score": 25.9,
+      "auto_rank": 419,
+      "auto_claim": "not",
+      "rank": 11
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "barcan-r",
+       "independence-signature-r"
+      ],
+      "conclusion": "distinctness-preserving-collapse",
+      "yes": 50,
+      "no": 17,
+      "score": 25.4,
+      "auto_rank": 370,
+      "auto_claim": "not",
+      "rank": 12
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "barcan-r",
+       "witnessed-possibility-r"
+      ],
+      "conclusion": "distinctness-preserving-collapse",
+      "yes": 50,
+      "no": 17,
+      "score": 25.4,
+      "auto_rank": 371,
+      "auto_claim": "not",
+      "rank": 13
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "atomlessness",
+       "distinctness-signature-r"
+      ],
+      "conclusion": "distinctness-preserving-collapse",
+      "yes": 49,
+      "no": 17,
+      "score": 25.2,
+      "auto_rank": 381,
+      "auto_claim": "not",
+      "rank": 14
+     },
+     {
+      "kind": "check",
+      "model": "coalesced-single-individual-root",
+      "principle": "independence-signature-r",
+      "yes": 16,
+      "no": 59,
+      "score": 25.2,
+      "auto_rank": 298,
+      "auto_claim": "entails",
+      "rank": 15
+     },
+     {
+      "kind": "check",
+      "model": "coalesced-single-individual-root",
+      "principle": "witnessed-possibility-r",
+      "yes": 16,
+      "no": 59,
+      "score": 25.2,
+      "auto_rank": 299,
+      "auto_claim": "entails",
+      "rank": 16
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "axiom-of-infinity-e",
+       "strong-possibility-signature-r"
+      ],
+      "conclusion": "false",
+      "yes": 73,
+      "no": 15,
+      "score": 24.9,
+      "auto_rank": 213,
+      "auto_claim": "not",
+      "rank": 17
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "actual-profile-r",
+       "distinctness-signature-r"
+      ],
+      "conclusion": "infinity-e",
+      "yes": 35,
+      "no": 19,
+      "score": 24.6,
+      "auto_rank": 569,
+      "auto_claim": "not",
+      "rank": 18
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "distinctness-signature-r",
+       "inextensible-comprehension-r"
+      ],
+      "conclusion": "infinity-e",
+      "yes": 35,
+      "no": 19,
+      "score": 24.6,
+      "auto_rank": 570,
+      "auto_claim": "not",
+      "rank": 19
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "distinctness-signature-r",
+       "transversal-choice-r"
+      ],
+      "conclusion": "infinity-e",
+      "yes": 35,
+      "no": 19,
+      "score": 24.6,
+      "auto_rank": 571,
+      "auto_claim": "not",
+      "rank": 20
      },
      {
       "kind": "question",
       "premises": [
        "barcan-r"
       ],
-      "conclusion": "actual-profile-r",
-      "yes": 71,
-      "no": 22,
-      "score": 33.6,
-      "auto_rank": 386,
+      "conclusion": "distinctness-signature-r",
+      "yes": 36,
+      "no": 18,
+      "score": 24.0,
+      "auto_rank": 554,
+      "auto_claim": "not",
+      "rank": 21
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "actual-profile-r",
+       "strong-possibility-signature-r"
+      ],
+      "conclusion": "false",
+      "yes": 34,
+      "no": 17,
+      "score": 22.7,
+      "auto_rank": 592,
       "auto_claim": "not",
       "rank": 22
      },
@@ -21861,92 +21943,93 @@
       ],
       "conclusion": "false",
       "yes": 44,
-      "no": 27,
-      "score": 33.5,
-      "auto_rank": 758,
+      "no": 15,
+      "score": 22.4,
+      "auto_rank": 436,
       "auto_claim": "not",
       "rank": 23
      },
      {
       "kind": "question",
       "premises": [
-       "axiom-of-infinity-e",
+       "infinity-e",
        "strong-possibility-signature-r"
       ],
       "conclusion": "atomicity-t",
-      "yes": 42,
-      "no": 27,
-      "score": 32.9,
-      "auto_rank": 807,
+      "yes": 52,
+      "no": 14,
+      "score": 22.1,
+      "auto_rank": 352,
       "auto_claim": "not",
       "rank": 24
      },
      {
       "kind": "question",
       "premises": [
-       "barcan-r"
+       "boolean-completeness-t",
+       "strong-possibility-signature-r"
       ],
-      "conclusion": "distinctness-signature-r",
-      "yes": 36,
-      "no": 30,
-      "score": 32.7,
-      "auto_rank": 935,
+      "conclusion": "false",
+      "yes": 50,
+      "no": 14,
+      "score": 21.9,
+      "auto_rank": 372,
       "auto_claim": "not",
       "rank": 25
      },
      {
       "kind": "question",
       "premises": [
-       "barcan-t",
-       "strong-possibility-signature-r"
+       "possibility-plus-signature-r",
+       "strong-possibility-r"
       ],
-      "conclusion": "atomicity-r",
-      "yes": 44,
-      "no": 26,
-      "score": 32.7,
-      "auto_rank": 759,
+      "conclusion": "false",
+      "yes": 40,
+      "no": 15,
+      "score": 21.8,
+      "auto_rank": 498,
       "auto_claim": "not",
       "rank": 26
      },
      {
       "kind": "question",
       "premises": [
-       "barcan-t",
-       "distinctness-signature-r"
+       "barcan-r",
+       "boolean-completeness-t"
       ],
-      "conclusion": "atomicity-t",
-      "yes": 109,
-      "no": 19,
-      "score": 32.4,
-      "auto_rank": 207,
+      "conclusion": "false",
+      "yes": 47,
+      "no": 14,
+      "score": 21.6,
+      "auto_rank": 400,
       "auto_claim": "not",
       "rank": 27
      },
      {
       "kind": "question",
       "premises": [
-       "barcan-t",
-       "distinctness-signature-r"
+       "inextensible-comprehension-r",
+       "strong-possibility-signature-r"
       ],
-      "conclusion": "strong-leibniz-t",
-      "yes": 109,
-      "no": 19,
-      "score": 32.4,
-      "auto_rank": 208,
+      "conclusion": "false",
+      "yes": 37,
+      "no": 15,
+      "score": 21.3,
+      "auto_rank": 537,
       "auto_claim": "not",
       "rank": 28
      },
      {
       "kind": "question",
       "premises": [
-       "barcan-r",
-       "relational-choice-r"
+       "strong-possibility-signature-r",
+       "transversal-choice-r"
       ],
       "conclusion": "false",
-      "yes": 66,
-      "no": 21,
-      "score": 31.9,
-      "auto_rank": 435,
+      "yes": 37,
+      "no": 15,
+      "score": 21.3,
+      "auto_rank": 538,
       "auto_claim": "not",
       "rank": 29
      },
@@ -21954,13 +22037,13 @@
       "kind": "question",
       "premises": [
        "barcan-t",
-       "possibility-plus-signature-r"
+       "distinctness-signature-r"
       ],
-      "conclusion": "atomicity-t",
-      "yes": 35,
-      "no": 29,
-      "score": 31.7,
-      "auto_rank": 971,
+      "conclusion": "distinctness-preserving-collapse",
+      "yes": 96,
+      "no": 12,
+      "score": 21.3,
+      "auto_rank": 138,
       "auto_claim": "not",
       "rank": 30
      }
@@ -21968,40 +22051,25 @@
     "auto": [
      {
       "kind": "question",
-      "premises": [
-       "atomicity-t"
-      ],
-      "conclusion": "false",
-      "yes": 1530,
+      "premises": [],
+      "conclusion": "distinctness-preserving-collapse",
+      "yes": 913,
       "no": 0,
       "score": 0.0,
       "auto_rank": 1,
       "auto_claim": "not",
-      "rank": 3214
+      "rank": 2336
      },
      {
       "kind": "question",
       "premises": [],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 1148,
+      "conclusion": "actual-profile-r",
+      "yes": 672,
       "no": 0,
       "score": 0.0,
       "auto_rank": 2,
       "auto_claim": "not",
-      "rank": 3215
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "strong-leibniz-t"
-      ],
-      "conclusion": "false",
-      "yes": 921,
-      "no": 1,
-      "score": 2.0,
-      "auto_rank": 3,
-      "auto_claim": "not",
-      "rank": 2570
+      "rank": 2337
      },
      {
       "kind": "question",
@@ -22009,36 +22077,25 @@
        "barcan-t"
       ],
       "conclusion": "false",
-      "yes": 850,
+      "yes": 640,
       "no": 0,
       "score": 0.0,
-      "auto_rank": 4,
+      "auto_rank": 3,
       "auto_claim": "not",
-      "rank": 3216
+      "rank": 2338
      },
      {
       "kind": "question",
       "premises": [
-       "atomicity-r"
+       "atomicity-t"
       ],
       "conclusion": "false",
-      "yes": 819,
-      "no": 1,
-      "score": 2.0,
-      "auto_rank": 5,
-      "auto_claim": "not",
-      "rank": 2571
-     },
-     {
-      "kind": "question",
-      "premises": [],
-      "conclusion": "actual-profile-r",
-      "yes": 744,
+      "yes": 608,
       "no": 0,
       "score": 0.0,
-      "auto_rank": 6,
+      "auto_rank": 4,
       "auto_claim": "not",
-      "rank": 3217
+      "rank": 2339
      },
      {
       "kind": "question",
@@ -22046,12 +22103,12 @@
        "independence-signature-r"
       ],
       "conclusion": "distinctness-preserving-collapse",
-      "yes": 633,
+      "yes": 512,
       "no": 1,
       "score": 2.0,
-      "auto_rank": 7,
+      "auto_rank": 5,
       "auto_claim": "not",
-      "rank": 2572
+      "rank": 1831
      },
      {
       "kind": "question",
@@ -22059,12 +22116,12 @@
        "witnessed-possibility-r"
       ],
       "conclusion": "distinctness-preserving-collapse",
-      "yes": 633,
+      "yes": 512,
       "no": 1,
       "score": 2.0,
-      "auto_rank": 8,
+      "auto_rank": 6,
       "auto_claim": "not",
-      "rank": 2573
+      "rank": 1832
      },
      {
       "kind": "question",
@@ -22072,23 +22129,23 @@
        "boolean-completeness-t"
       ],
       "conclusion": "false",
-      "yes": 603,
+      "yes": 488,
       "no": 0,
       "score": 0.0,
-      "auto_rank": 9,
+      "auto_rank": 7,
       "auto_claim": "not",
-      "rank": 3218
+      "rank": 2340
      },
      {
       "kind": "question",
       "premises": [],
       "conclusion": "distinctness-signature-r",
-      "yes": 576,
+      "yes": 481,
       "no": 0,
       "score": 0.0,
-      "auto_rank": 10,
+      "auto_rank": 8,
       "auto_claim": "not",
-      "rank": 3219
+      "rank": 2341
      },
      {
       "kind": "question",
@@ -22097,40 +22154,12 @@
        "witnessed-possibility-r"
       ],
       "conclusion": "distinctness-preserving-collapse",
-      "yes": 573,
+      "yes": 460,
       "no": 3,
       "score": 6.0,
-      "auto_rank": 11,
+      "auto_rank": 9,
       "auto_claim": "not",
-      "rank": 1496
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-t",
-       "independence-signature-r"
-      ],
-      "conclusion": "false",
-      "yes": 571,
-      "no": 1,
-      "score": 2.0,
-      "auto_rank": 12,
-      "auto_claim": "not",
-      "rank": 2574
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-t",
-       "witnessed-possibility-r"
-      ],
-      "conclusion": "false",
-      "yes": 571,
-      "no": 1,
-      "score": 2.0,
-      "auto_rank": 13,
-      "auto_claim": "not",
-      "rank": 2575
+      "rank": 974
      },
      {
       "kind": "question",
@@ -22138,12 +22167,12 @@
        "distinctness-signature-r"
       ],
       "conclusion": "distinctness-preserving-collapse",
-      "yes": 570,
+      "yes": 457,
       "no": 4,
       "score": 7.9,
-      "auto_rank": 14,
+      "auto_rank": 10,
       "auto_claim": "not",
-      "rank": 1148
+      "rank": 675
      },
      {
       "kind": "question",
@@ -22151,141 +22180,12 @@
        "strong-possibility-r"
       ],
       "conclusion": "false",
-      "yes": 556,
-      "no": 1,
-      "score": 2.0,
-      "auto_rank": 15,
-      "auto_claim": "not",
-      "rank": 2576
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-r",
-       "strong-leibniz-t"
-      ],
-      "conclusion": "false",
-      "yes": 506,
-      "no": 3,
-      "score": 6.0,
-      "auto_rank": 16,
-      "auto_claim": "not",
-      "rank": 1497
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "strong-possibility-signature-r"
-      ],
-      "conclusion": "false",
-      "yes": 447,
-      "no": 5,
-      "score": 9.9,
-      "auto_rank": 17,
-      "auto_claim": "not",
-      "rank": 764
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-t",
-       "weakly-inextensible-comprehension-r"
-      ],
-      "conclusion": "false",
       "yes": 447,
       "no": 1,
       "score": 2.0,
-      "auto_rank": 18,
+      "auto_rank": 11,
       "auto_claim": "not",
-      "rank": 2577
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-t",
-       "distinctness-signature-r"
-      ],
-      "conclusion": "false",
-      "yes": 439,
-      "no": 3,
-      "score": 6.0,
-      "auto_rank": 19,
-      "auto_claim": "not",
-      "rank": 1498
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-t"
-      ],
-      "conclusion": "distinctness-preserving-collapse",
-      "yes": 428,
-      "no": 2,
-      "score": 4.0,
-      "auto_rank": 20,
-      "auto_claim": "not",
-      "rank": 2244
-     },
-     {
-      "kind": "question",
-      "premises": [],
-      "conclusion": "transversal-choice-r",
-      "yes": 423,
-      "no": 0,
-      "score": 0.0,
-      "auto_rank": 21,
-      "auto_claim": "not",
-      "rank": 3220
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-t"
-      ],
-      "conclusion": "strong-leibniz-r",
-      "yes": 417,
-      "no": 1,
-      "score": 2.0,
-      "auto_rank": 22,
-      "auto_claim": "not",
-      "rank": 2578
-     },
-     {
-      "kind": "question",
-      "premises": [],
-      "conclusion": "inextensible-comprehension-r",
-      "yes": 403,
-      "no": 0,
-      "score": 0.0,
-      "auto_rank": 23,
-      "auto_claim": "not",
-      "rank": 3221
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "strong-leibniz-r"
-      ],
-      "conclusion": "false",
-      "yes": 401,
-      "no": 4,
-      "score": 7.9,
-      "auto_rank": 24,
-      "auto_claim": "not",
-      "rank": 1149
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-t"
-      ],
-      "conclusion": "atomicity-r",
-      "yes": 397,
-      "no": 2,
-      "score": 4.0,
-      "auto_rank": 25,
-      "auto_claim": "not",
-      "rank": 2245
+      "rank": 1833
      },
      {
       "kind": "question",
@@ -22294,51 +22194,12 @@
        "infinity-e"
       ],
       "conclusion": "false",
-      "yes": 393,
+      "yes": 369,
       "no": 1,
       "score": 2.0,
-      "auto_rank": 26,
+      "auto_rank": 12,
       "auto_claim": "not",
-      "rank": 2579
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-t"
-      ],
-      "conclusion": "atomicity-t",
-      "yes": 378,
-      "no": 4,
-      "score": 7.9,
-      "auto_rank": 27,
-      "auto_claim": "not",
-      "rank": 1150
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "barcan-t"
-      ],
-      "conclusion": "strong-leibniz-t",
-      "yes": 378,
-      "no": 4,
-      "score": 7.9,
-      "auto_rank": 28,
-      "auto_claim": "not",
-      "rank": 1151
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-t"
-      ],
-      "conclusion": "strong-possibility-signature-r",
-      "yes": 363,
-      "no": 1,
-      "score": 2.0,
-      "auto_rank": 29,
-      "auto_claim": "not",
-      "rank": 2580
+      "rank": 1834
      },
      {
       "kind": "question",
@@ -22349,9 +22210,232 @@
       "yes": 354,
       "no": 1,
       "score": 2.0,
+      "auto_rank": 13,
+      "auto_claim": "not",
+      "rank": 1835
+     },
+     {
+      "kind": "question",
+      "premises": [],
+      "conclusion": "transversal-choice-r",
+      "yes": 351,
+      "no": 0,
+      "score": 0.0,
+      "auto_rank": 14,
+      "auto_claim": "not",
+      "rank": 2342
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "strong-possibility-signature-r"
+      ],
+      "conclusion": "false",
+      "yes": 350,
+      "no": 5,
+      "score": 9.9,
+      "auto_rank": 15,
+      "auto_claim": "not",
+      "rank": 382
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "axiom-of-infinity-e",
+       "barcan-t"
+      ],
+      "conclusion": "false",
+      "yes": 333,
+      "no": 2,
+      "score": 4.0,
+      "auto_rank": 16,
+      "auto_claim": "not",
+      "rank": 1513
+     },
+     {
+      "kind": "question",
+      "premises": [],
+      "conclusion": "inextensible-comprehension-r",
+      "yes": 333,
+      "no": 0,
+      "score": 0.0,
+      "auto_rank": 17,
+      "auto_claim": "not",
+      "rank": 2343
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "atomicity-r"
+      ],
+      "conclusion": "false",
+      "yes": 312,
+      "no": 1,
+      "score": 2.0,
+      "auto_rank": 18,
+      "auto_claim": "not",
+      "rank": 1836
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "barcan-r"
+      ],
+      "conclusion": "false",
+      "yes": 296,
+      "no": 3,
+      "score": 5.9,
+      "auto_rank": 19,
+      "auto_claim": "not",
+      "rank": 983
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "weakly-inextensible-comprehension-r"
+      ],
+      "conclusion": "distinctness-preserving-collapse",
+      "yes": 283,
+      "no": 1,
+      "score": 2.0,
+      "auto_rank": 20,
+      "auto_claim": "not",
+      "rank": 1837
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "infinity-e"
+      ],
+      "conclusion": "distinctness-preserving-collapse",
+      "yes": 272,
+      "no": 1,
+      "score": 2.0,
+      "auto_rank": 21,
+      "auto_claim": "not",
+      "rank": 1838
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "barcan-t",
+       "independence-signature-r"
+      ],
+      "conclusion": "false",
+      "yes": 257,
+      "no": 1,
+      "score": 2.0,
+      "auto_rank": 22,
+      "auto_claim": "not",
+      "rank": 1839
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "barcan-t",
+       "witnessed-possibility-r"
+      ],
+      "conclusion": "false",
+      "yes": 257,
+      "no": 1,
+      "score": 2.0,
+      "auto_rank": 23,
+      "auto_claim": "not",
+      "rank": 1840
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "independence-signature-r"
+      ],
+      "conclusion": "actual-profile-r",
+      "yes": 252,
+      "no": 1,
+      "score": 2.0,
+      "auto_rank": 24,
+      "auto_claim": "not",
+      "rank": 1841
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "witnessed-possibility-r"
+      ],
+      "conclusion": "actual-profile-r",
+      "yes": 252,
+      "no": 1,
+      "score": 2.0,
+      "auto_rank": 25,
+      "auto_claim": "not",
+      "rank": 1842
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "atomicity-t",
+       "independence-signature-r"
+      ],
+      "conclusion": "false",
+      "yes": 249,
+      "no": 1,
+      "score": 2.0,
+      "auto_rank": 26,
+      "auto_claim": "not",
+      "rank": 1843
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "atomicity-t",
+       "witnessed-possibility-r"
+      ],
+      "conclusion": "false",
+      "yes": 249,
+      "no": 1,
+      "score": 2.0,
+      "auto_rank": 27,
+      "auto_claim": "not",
+      "rank": 1844
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "infinity-e"
+      ],
+      "conclusion": "actual-profile-r",
+      "yes": 206,
+      "no": 1,
+      "score": 2.0,
+      "auto_rank": 28,
+      "auto_claim": "not",
+      "rank": 1845
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "barcan-t",
+       "distinctness-signature-r"
+      ],
+      "conclusion": "false",
+      "yes": 198,
+      "no": 3,
+      "score": 5.9,
+      "auto_rank": 29,
+      "auto_claim": "not",
+      "rank": 984
+     },
+     {
+      "kind": "question",
+      "premises": [
+       "barcan-t"
+      ],
+      "conclusion": "distinctness-preserving-collapse",
+      "yes": 197,
+      "no": 2,
+      "score": 4.0,
       "auto_rank": 30,
       "auto_claim": "not",
-      "rank": 2581
+      "rank": 1514
      }
     ],
     "recorded": [
@@ -22361,12 +22445,12 @@
        "strong-possibility-signature-r"
       ],
       "conclusion": "strong-possibility-r",
-      "yes": 17,
+      "yes": 15,
       "no": 6,
-      "score": 8.9,
-      "auto_rank": 2000,
+      "score": 8.6,
+      "auto_rank": 1403,
       "auto_claim": "not",
-      "rank": 921,
+      "rank": 555,
       "conjectures": [
        {
         "id": "strong-possibility-signature-r-implies-strong-possibility-r",
@@ -22384,12 +22468,12 @@
        "relational-choice-r"
       ],
       "conclusion": "transversal-choice-r",
-      "yes": 21,
+      "yes": 19,
       "no": 1,
       "score": 1.9,
-      "auto_rank": 1683,
+      "auto_rank": 1145,
       "auto_claim": "not",
-      "rank": 2886,
+      "rank": 2056,
       "conjectures": [
        {
         "id": "relational-choice-r-implies-transversal-choice-r",
@@ -23401,14 +23485,6 @@
    ],
    [
     "necessary-strong-leibniz-r",
-    "actual-profile-r"
-   ],
-   [
-    "necessary-strong-leibniz-r",
-    "actuality"
-   ],
-   [
-    "necessary-strong-leibniz-r",
     "barcan-r"
    ],
    [
@@ -23422,10 +23498,6 @@
    [
     "necessary-strong-leibniz-r",
     "inextensible-comprehension-r"
-   ],
-   [
-    "necessary-strong-leibniz-r",
-    "necessary-actuality"
    ],
    [
     "necessary-strong-leibniz-r",
@@ -23449,23 +23521,7 @@
    ],
    [
     "necessary-strong-leibniz-r",
-    "persistent-comprehension-r"
-   ],
-   [
-    "necessary-strong-leibniz-r",
     "tractarianism-r"
-   ],
-   [
-    "necessary-strong-leibniz-r",
-    "weakly-inextensible-comprehension-r"
-   ],
-   [
-    "necessary-strong-leibniz-t",
-    "actual-profile-r"
-   ],
-   [
-    "necessary-strong-leibniz-t",
-    "actuality"
    ],
    [
     "necessary-strong-leibniz-t",
@@ -23486,10 +23542,6 @@
    [
     "necessary-strong-leibniz-t",
     "inextensible-comprehension-r"
-   ],
-   [
-    "necessary-strong-leibniz-t",
-    "necessary-actuality"
    ],
    [
     "necessary-strong-leibniz-t",
@@ -23521,19 +23573,11 @@
    ],
    [
     "necessary-strong-leibniz-t",
-    "persistent-comprehension-r"
-   ],
-   [
-    "necessary-strong-leibniz-t",
     "strong-leibniz-r"
    ],
    [
     "necessary-strong-leibniz-t",
     "tractarianism-r"
-   ],
-   [
-    "necessary-strong-leibniz-t",
-    "weakly-inextensible-comprehension-r"
    ],
    [
     "necessary-tractarianism-r",
@@ -23929,14 +23973,6 @@
    ],
    [
     "strong-leibniz-r",
-    "actual-profile-r"
-   ],
-   [
-    "strong-leibniz-r",
-    "actuality"
-   ],
-   [
-    "strong-leibniz-r",
     "barcan-r"
    ],
    [
@@ -23950,10 +23986,6 @@
    [
     "strong-leibniz-r",
     "inextensible-comprehension-r"
-   ],
-   [
-    "strong-leibniz-r",
-    "necessary-actuality"
    ],
    [
     "strong-leibniz-r",
@@ -23989,23 +24021,7 @@
    ],
    [
     "strong-leibniz-r",
-    "persistent-comprehension-r"
-   ],
-   [
-    "strong-leibniz-r",
     "tractarianism-r"
-   ],
-   [
-    "strong-leibniz-r",
-    "weakly-inextensible-comprehension-r"
-   ],
-   [
-    "strong-leibniz-t",
-    "actual-profile-r"
-   ],
-   [
-    "strong-leibniz-t",
-    "actuality"
    ],
    [
     "strong-leibniz-t",
@@ -24029,10 +24045,6 @@
    ],
    [
     "strong-leibniz-t",
-    "necessary-actuality"
-   ],
-   [
-    "strong-leibniz-t",
     "necessary-atomicity-r"
    ],
    [
@@ -24065,19 +24077,11 @@
    ],
    [
     "strong-leibniz-t",
-    "persistent-comprehension-r"
-   ],
-   [
-    "strong-leibniz-t",
     "strong-leibniz-r"
    ],
    [
     "strong-leibniz-t",
     "tractarianism-r"
-   ],
-   [
-    "strong-leibniz-t",
-    "weakly-inextensible-comprehension-r"
    ],
    [
     "strong-possibility-r",
@@ -24169,14 +24173,6 @@
    ],
    [
     "strong-possibility-r",
-    "strong-leibniz-r"
-   ],
-   [
-    "strong-possibility-r",
-    "strong-leibniz-t"
-   ],
-   [
-    "strong-possibility-r",
     "strong-possibility-signature-r"
    ],
    [
@@ -24258,14 +24254,6 @@
    [
     "strong-possibility-signature-r",
     "relational-choice-r"
-   ],
-   [
-    "strong-possibility-signature-r",
-    "strong-leibniz-r"
-   ],
-   [
-    "strong-possibility-signature-r",
-    "strong-leibniz-t"
    ],
    [
     "strong-possibility-signature-r",
@@ -24559,6 +24547,7 @@
    "no-pure-contingency-and-plenitude-imply-necessary-plenitude is redundant: derivable from ['plenitude-r-implies-actuality', 'no-pure-contingency-and-actuality-imply-necessary-actuality', 'plenitude-r-implies-distinctness-necessary-r', 'no-pure-contingency-and-nd-imply-necessary-nd', 'c5-and-necessary-actuality-imply-atomicity', 'c5-and-atomicity-imply-necessary-plenitude']",
    "no-pure-contingency-and-tractarianism-imply-necessary-tractarianism is redundant: derivable from ['tractarianism-r-implies-barcan-r', 'barcan-r-implies-functionality-r', 'no-pure-contingency-and-functionality-imply-necessary-functionality', 'necessary-functionality-r-implies-necessary-tractarianism-r']",
    "possibility-and-countable-boolean-completeness-incompatible is redundant: derivable from ['countable-boolean-completeness-implies-necessity-of-arithmetic', 'possibility-and-necessity-of-arithmetic-incompatible']",
+   "possibility-and-necessary-strong-leibniz-t-incompatible is redundant: derivable from ['possibility-schema-r-implies-distinctness-schema-r', 'necessary-strong-leibniz-t-implies-strong-leibniz-t', 'strong-leibniz-t-implies-necessary-actuality', 'maximalist-distinctness-incompatible-with-necessary-actuality']",
    "possibility-and-no-pure-contingency-incompatible is redundant: derivable from ['no-pure-contingency-implies-necessity-of-arithmetic', 'possibility-and-necessity-of-arithmetic-incompatible']",
    "possibility-schema-r-implies-possible-infinity-t is redundant: derivable from ['pure-possibility-implies-axiom-of-infinity-t', 'axiom-of-infinity-t-implies-possible-infinity-t']",
    "possibility-signature-r-implies-possibility-schema-r is redundant: derivable from ['possibility-signature-r-implies-distinctness-signature-r', 'distinctness-signature-r-implies-distinctness-schema-r', 'distinctness-schema-r-implies-possibility-schema-r']",
@@ -24784,6 +24773,7 @@
      "possibly-witnessed-possibility-r-implies-witnessed-possibility-r",
      "distinctness-signature-r-implies-distinctness-schema-r",
      "maximalist-distinctness-incompatible-with-necessary-atomicity-r",
+     "strong-leibniz-t-implies-necessary-actuality",
      "atomicity-r-implies-atomicity-t",
      "atomicity-t-and-bf-t-imply-strong-leibniz-t"
     ],
