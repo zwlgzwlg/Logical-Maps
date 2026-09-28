@@ -167,9 +167,9 @@ biconditionals that generate them (n. 21). -/
 #classicism_expect_c_minus Classicism.Identities.distribution_or_forall
 #classicism_expect_c_minus Classicism.Identities.dissolution_and_or
 #classicism_expect_c_minus Classicism.Proofs.barcan_r_implies_functionality_r
-#classicism_expect_c_minus Classicism.Proofs.classicism_implies_existence_rel
+#classicism_expect_c_minus Classicism.Proofs.classicism_implies_existence_r_relational
 
-#classicism_expect_needs_e existence_e Classicism.Proofs.classicism_implies_existence_e
+#classicism_expect_needs_e existence_e Classicism.Proofs.classicism_implies_existence_r_at_e
 
 /-! ### Controls for the type-system check
 

@@ -174,7 +174,7 @@ boxed record follows by `K`. -/
 #classicism_transform Classicism.Proofs.barcan_r_implies_functionality_r
 #classicism_transform Classicism.Proofs.gallin_comprehension_implies_nd
 #classicism_transform Classicism.Proofs.functional_choice_r_implies_relational_choice_r
-#classicism_transform Classicism.Proofs.classicism_implies_existence_e
+#classicism_transform Classicism.Proofs.classicism_implies_existence_r_at_e
 
 #classicism_strict Classicism.Proofs.functionality_r_implies_tractarianism_r.nec
 #classicism_strict Classicism.Proofs.functional_choice_r_implies_relational_choice_r.nec

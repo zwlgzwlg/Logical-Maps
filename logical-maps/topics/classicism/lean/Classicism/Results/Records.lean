@@ -51,12 +51,12 @@ theorem classicism_implies_converse_barcan_r {σ : Type} [Ty σ] : ConverseBarca
   fun X => converse_barcan X
 /-- `classicism-implies-existence-r`, the instance at `e`: the axiom `e_exists`. This is
 the one record proof whose axiom report names that axiom. -/
-theorem classicism_implies_existence_e : Existence e := existence_e
+theorem classicism_implies_existence_r_at_e : Existence e := existence_e
 
 /-- `classicism-implies-existence-r`, the instances at relational types: a theorem of
 `C⁻`, whose axiom report shows Existence there costing nothing. Together with the instance
 at `e` this covers every type of `R`, which is the record. -/
-theorem classicism_implies_existence_rel {τ : Type} [Rel τ] : Existence τ := existence_rel
+theorem classicism_implies_existence_r_relational {τ : Type} [Rel τ] : Existence τ := existence_rel
 
 /-! ### Modal principles (Classicism, Proposition 2.2) -/
 
@@ -568,12 +568,12 @@ theorem b_forall_dia_box_imp {σ : Type} [Ty σ] (F : σ → Prop) :
 theorem forall_imp_forall {σ : Type} [Ty σ] (G F : σ → Prop) :
     G ⊆ F → (∀ x, G x) → ∀ x, F x := fun h g x => h x (g x)
 
-/-- `necessary-distinctness-necessary-t-implies-barcan-r` (Proposition 2.3; Prior, and the
+/-- `necessary-nd-implies-bf` (Proposition 2.3; Prior, and the
 proof Prior attributes to Lemmon): from `∀x. □Fx`, `B` gives `□◇∀x. □Fx`; inside the box
 `◇∀ → ∀◇` gives `∀x. ◇□Fx`, and the necessitation of `B` in the form `◇□p → p` gives
 `∀x. Fx`. -/
-theorem necessary_distinctness_necessary_t_implies_barcan_r {σ : Type} [Ty σ] :
-    NecNecessityOfDistinctnessT → Barcan σ := fun hnd F hF =>
+theorem necessary_nd_implies_bf {σ : Type} [Ty σ] :
+    NecNecessityOfDistinctness Prop → Barcan σ := fun hnd F hF =>
   have hb : ∀ p : Prop, p → □ ◇ p := b_of_nd_t (box_elim hnd)
   have h1 : □ (∀ x, ◇ □ (F x)) :=
     modal_K _ _ (nec% (dia_forall_imp (λ x ↦ □ (F x)))) (hb _ hF)
@@ -601,12 +601,12 @@ theorem necessary_distinctness_necessary_t_implies_necessary_distinctness_necess
 /-- `□ND_t` gives `BF` at `σ`, unfolded, for necessitation. -/
 theorem bf_of_box_nd_t {σ : Type} [Ty σ] :
     □ (∀ x y : Prop, x ≠ y → □ (x ≠ y)) → ∀ X : σ → Prop, (∀ x, □ (X x)) → □ (∀ x, X x) :=
-  necessary_distinctness_necessary_t_implies_barcan_r
+  necessary_nd_implies_bf
 
-/-- `necessary-distinctness-necessary-t-implies-necessary-barcan-r`: Proposition 2.3
+/-- `necessary-distinctness-necessary-r-implies-necessary-barcan-r`: Proposition 2.3
 necessitated, with `4`. -/
-theorem necessary_distinctness_necessary_t_implies_necessary_barcan_r {σ : Type} [Ty σ] :
-    NecNecessityOfDistinctnessT → NecBarcan σ := fun hnd =>
+theorem necessary_distinctness_necessary_r_implies_necessary_barcan_r {σ : Type} [Ty σ] :
+    NecNecessityOfDistinctness Prop → NecBarcan σ := fun hnd =>
   modal_K _ _ (nec% (bf_of_box_nd_t (σ := σ))) (modal_four _ hnd)
 
 /-- `x = y` makes anything follow from `x ≠ y`. -/
@@ -624,10 +624,10 @@ theorem box_nd_instance {σ : Type} [Ty σ] (nd : ∀ x y : σ, x ≠ y → □ 
     (fun h => modal_K _ _ (nec% (eq_imp_ne_imp x y (□ (x ≠ y)))) (necessity_of_identity x y h))
     (fun h => modal_K _ _ (nec% (imp_intro' (x ≠ y) (□ (x ≠ y)))) (modal_four _ (nd x y h)))
 
-/-- `distinctness-necessary-r-and-barcan-r-imply-necessary-distinctness-necessary-r`
+/-- `nd-and-bf-imply-necessary-nd`
 (Proposition 2.4): each instance of `ND` is necessary, and `BF`, twice, boxes the two
 quantifiers. -/
-theorem distinctness_necessary_r_and_barcan_r_imply_necessary_distinctness_necessary_r
+theorem nd_and_bf_imply_necessary_nd
     {σ : Type} [Ty σ] : NecessityOfDistinctness σ → Barcan σ → NecNecessityOfDistinctness σ :=
   fun nd bf => bf (λ x ↦ ∀ y, x ≠ y → □ (x ≠ y))
     (fun x => bf (λ y ↦ x ≠ y → □ (x ≠ y)) (fun y => box_nd_instance nd x y))
@@ -636,7 +636,7 @@ theorem distinctness_necessary_r_and_barcan_r_imply_necessary_distinctness_neces
 (Proposition 2.4 at `t`). -/
 theorem distinctness_necessary_t_and_barcan_t_imply_necessary_distinctness_necessary_t :
     NecessityOfDistinctnessT → BarcanT → NecNecessityOfDistinctnessT :=
-  distinctness_necessary_r_and_barcan_r_imply_necessary_distinctness_necessary_r
+  nd_and_bf_imply_necessary_nd
 
 /-! In `C5` persistence is inextensibility (Classicism, n. 41). -/
 
@@ -672,24 +672,24 @@ theorem inextensible_of_persistent_c5 {σ : Type} [Ty σ]
     (hnd : □ (∀ x y : Prop, x ≠ y → □ (x ≠ y))) (Y : σ → Prop) (hP : Persistent Y) :
     Inextensible Y :=
   modal_K _ _ (modal_K _ _ (modal_K _ _ (nec% (weaklyInextensible_of_persistent_b_bf Y))
-    (box_b_of_box_nd_t hnd)) (necessary_distinctness_necessary_t_implies_necessary_barcan_r hnd))
+    (box_b_of_box_nd_t hnd)) (necessary_distinctness_necessary_r_implies_necessary_barcan_r hnd))
     (modal_four _ hP)
 
-/-- `actuality-and-necessary-distinctness-necessary-t-imply-rigid-comprehension-r`
+/-- `c5-and-actuality-imply-rigid-comprehension` (for relations of type `σ → t` only)
 (Proposition 2.10), at `σ → t`: Actuality gives a persistent coextension,
 `λy. w ≤ Xy` (n. 38), and in `C5` it is inextensible. -/
-theorem actuality_and_necessary_distinctness_necessary_t_imply_rigid_comprehension_r
+theorem c5_and_actuality_imply_rigid_comprehension_unary
     {σ : Type} [Ty σ] :
-    Actuality → NecNecessityOfDistinctnessT → RigidComprehension (σ → Prop) := fun act hnd X =>
+    Actuality → NecNecessityOfDistinctness Prop → RigidComprehension (σ → Prop) := fun act hnd X =>
   (actuality_implies_persistent_comprehension_r act X).elim fun Y hY =>
     ⟨Y, ⟨hY.1, inextensible_of_persistent_c5 hnd Y hY.1⟩, hY.2⟩
 
-/-- `actuality-and-necessary-distinctness-necessary-t-imply-boolean-completeness-r`
+/-- `c5-and-actuality-imply-completeness` (at type `t` only)
 (Proposition 2.5, right to left), at `t`: Propositions 2.10 and 2.8. -/
-theorem actuality_and_necessary_distinctness_necessary_t_imply_boolean_completeness_r :
-    Actuality → NecNecessityOfDistinctnessT → BooleanCompleteness Prop := fun act hnd =>
+theorem c5_and_actuality_imply_completeness_at_t :
+    Actuality → NecNecessityOfDistinctness Prop → BooleanCompleteness Prop := fun act hnd =>
   rigid_comprehension_r_implies_boolean_completeness_r
-    (actuality_and_necessary_distinctness_necessary_t_imply_rigid_comprehension_r act hnd)
+    (c5_and_actuality_imply_rigid_comprehension_unary act hnd)
 
 /-! Boolean Completeness gives Plenitude in `C5` (Proposition 2.14, n. 48). For `R`
 functional, let `F_R X := ∀y p. Ryp → Xy ≤ p`, and `G` the greatest lower bound of the
@@ -768,12 +768,12 @@ theorem ga_le_of {σ : Type} [Ty σ] (a : σ) (pa : Prop) (G : σ → Prop)
   le_trans_prop (G a) (a ≠ a ∨ pa) pa (le_apply_of_le G _ a h)
     ((le_iff_prop _ _).2 (nec% (ne_self_or_imp a pa)))
 
-/-- `boolean-completeness-r-and-necessary-distinctness-necessary-t-imply-plenitude-r`
+/-- `c5-and-completeness-imply-plenitude` (for output type `t` only)
 (Proposition 2.14), for relations of type `σ → t → t`: Boolean Completeness at `σ → t`
 gives the least upper bound `G` of `F_R`, and `Ga = pₐ` at every `a`. -/
-theorem boolean_completeness_r_and_necessary_distinctness_necessary_t_imply_plenitude_r
+theorem c5_and_completeness_imply_plenitude_at_t
     {σ : Type} [Ty σ] :
-    BooleanCompleteness (σ → Prop) → NecNecessityOfDistinctnessT → Plenitude σ Prop :=
+    BooleanCompleteness (σ → Prop) → NecNecessityOfDistinctness Prop → Plenitude σ Prop :=
   fun bc hnd R hR =>
     have nd := nd_of_nd_t (σ := σ) (box_elim hnd)
     have bf := bf_of_box_nd_t (σ := σ) hnd
@@ -784,13 +784,13 @@ theorem boolean_completeness_r_and_necessary_distinctness_necessary_t_imply_plen
           (ga_le_of a pa G (glb_ub_least _ G hG _ (ne_or_ub nd bf R a pa hpa.1)))
         e ▸ hpa.1⟩
 
-/-- `boolean-completeness-r-and-necessary-distinctness-necessary-t-imply-actuality`
+/-- `c5-and-completeness-imply-actuality`
 (Proposition 2.5, left to right): Boolean Completeness at `t → t` gives Plenitude at
 `t → t` (Proposition 2.14), and Plenitude gives Actuality (Proposition 2.15). -/
-theorem boolean_completeness_r_and_necessary_distinctness_necessary_t_imply_actuality :
-    BooleanCompleteness (Prop → Prop) → NecNecessityOfDistinctnessT → Actuality := fun bc hnd =>
+theorem c5_and_completeness_imply_actuality :
+    BooleanCompleteness (Prop → Prop) → NecNecessityOfDistinctness Prop → Actuality := fun bc hnd =>
   plenitude_r_implies_actuality
-    (boolean_completeness_r_and_necessary_distinctness_necessary_t_imply_plenitude_r bc hnd)
+    (c5_and_completeness_imply_plenitude_at_t bc hnd)
 
 /-! Atomicity is `□`Actuality and `□`Boolean Completeness in `C5` (Proposition 2.6). -/
 
@@ -799,12 +799,12 @@ theorem boolean_completeness_r_and_necessary_distinctness_necessary_t_imply_actu
 theorem atomicity_t_and_necessary_distinctness_necessary_t_imply_necessary_actuality :
     AtomicityT → NecNecessityOfDistinctnessT → NecActuality := fun at_ hnd =>
   atomicity_t_and_bf_imply_necessary_actuality at_
-    (necessary_distinctness_necessary_t_implies_barcan_r hnd)
+    (necessary_nd_implies_bf hnd)
 
 /-- Actuality and `□ND_t` give Boolean Completeness at `t`, unfolded, for necessitation. -/
 theorem bc_of_actuality_box_nd_t :
     Actuality → □ (∀ x y : Prop, x ≠ y → □ (x ≠ y)) → BooleanCompleteness Prop :=
-  actuality_and_necessary_distinctness_necessary_t_imply_boolean_completeness_r
+  c5_and_actuality_imply_completeness_at_t
 
 /-- `necessary-actuality-and-necessary-distinctness-necessary-t-imply-necessary-boolean-completeness-r`,
 at `t`: Proposition 2.5 necessitated, with `4`. -/
@@ -812,10 +812,10 @@ theorem necessary_actuality_and_necessary_distinctness_necessary_t_imply_necessa
     NecActuality → NecNecessityOfDistinctnessT → NecBooleanCompleteness Prop := fun hna hnd =>
   modal_K _ _ (modal_K _ _ (nec% bc_of_actuality_box_nd_t) hna) (modal_four _ hnd)
 
-/-- `atomicity-t-and-necessary-distinctness-necessary-t-imply-necessary-boolean-completeness-r`
+/-- `c5-and-atomicity-imply-necessary-completeness` (at type `t` only)
 (Proposition 2.6), at `t`. -/
-theorem atomicity_t_and_necessary_distinctness_necessary_t_imply_necessary_boolean_completeness_r :
-    AtomicityT → NecNecessityOfDistinctnessT → NecBooleanCompleteness Prop := fun at_ hnd =>
+theorem c5_and_atomicity_imply_necessary_completeness_at_t :
+    Atomicity Prop → NecNecessityOfDistinctness Prop → NecBooleanCompleteness Prop := fun at_ hnd =>
   necessary_actuality_and_necessary_distinctness_necessary_t_imply_necessary_boolean_completeness_r
     (atomicity_t_and_necessary_distinctness_necessary_t_imply_necessary_actuality at_ hnd) hnd
 
@@ -894,13 +894,13 @@ theorem and_actuality_eq (x : Prop) :
     (x ∧ ∃ w : Prop, w ∧ ∀ q, q → w ≤ q) = ∃ w : Prop, x ∧ (w ∧ ∀ q, q → w ≤ q) :=
   and_exists_distrib_eq _ x
 
-/-- `necessary-actuality-and-necessary-distinctness-necessary-t-imply-atomicity-t`
+/-- `c5-and-necessary-actuality-imply-atomicity` (at type `t` only)
 (Proposition 2.6, right to left, through `□`Actuality): a non-bottom `x` is compatible
 with Actuality; by `BF` some `w` is possibly true with `x` and an actual world; then
 `w ≤ x` is possible, hence true by `ND`; and `w`, possibly non-bottom and deciding every
 proposition, is so, by `ND`, hence an atom. -/
-theorem necessary_actuality_and_necessary_distinctness_necessary_t_imply_atomicity_t :
-    NecActuality → NecNecessityOfDistinctnessT → AtomicityT := fun hna hnd x =>
+theorem c5_and_necessary_actuality_imply_atomicity_at_t :
+    NecActuality → NecNecessityOfDistinctness Prop → Atomicity Prop := fun hna hnd x =>
   have nd : ∀ x y : Prop, x ≠ y → □ (x ≠ y) := box_elim hnd
   have bf := bf_of_box_nd_t (σ := Prop) hnd
   (em (x = False)).elim (fun h => Or.inl (le_neg_of_eq_false x h)) fun hx => Or.inr (by
@@ -914,7 +914,7 @@ theorem necessary_actuality_and_necessary_distinctness_necessary_t_imply_atomici
 /-- Boolean Completeness at `t → t` and `□ND_t` give Actuality, unfolded, for necessitation. -/
 theorem actuality_of_bc_box_nd_t :
     BooleanCompleteness (Prop → Prop) → □ (∀ x y : Prop, x ≠ y → □ (x ≠ y)) → Actuality :=
-  boolean_completeness_r_and_necessary_distinctness_necessary_t_imply_actuality
+  c5_and_completeness_imply_actuality
 
 /-- `necessary-boolean-completeness-r-and-necessary-distinctness-necessary-t-imply-necessary-actuality`:
 Proposition 2.5 necessitated. -/
@@ -922,25 +922,25 @@ theorem necessary_boolean_completeness_r_and_necessary_distinctness_necessary_t_
     NecBooleanCompleteness (Prop → Prop) → NecNecessityOfDistinctnessT → NecActuality := fun hnb hnd =>
   modal_K _ _ (modal_K _ _ (nec% actuality_of_bc_box_nd_t) hnb) (modal_four _ hnd)
 
-/-- `necessary-boolean-completeness-r-and-necessary-distinctness-necessary-t-imply-atomicity-t`
+/-- `c5-and-necessary-completeness-imply-atomicity` (at type `t` only)
 (Proposition 2.6, right to left). -/
-theorem necessary_boolean_completeness_r_and_necessary_distinctness_necessary_t_imply_atomicity_t :
-    NecBooleanCompleteness (Prop → Prop) → NecNecessityOfDistinctnessT → AtomicityT := fun hnb hnd =>
-  necessary_actuality_and_necessary_distinctness_necessary_t_imply_atomicity_t
+theorem c5_and_necessary_completeness_imply_atomicity_at_t :
+    NecBooleanCompleteness (Prop → Prop) → NecNecessityOfDistinctness Prop → Atomicity Prop := fun hnb hnd =>
+  c5_and_necessary_actuality_imply_atomicity_at_t
     (necessary_boolean_completeness_r_and_necessary_distinctness_necessary_t_imply_necessary_actuality hnb hnd) hnd
 
 /-- Actuality and `□ND_t` give Rigid Comprehension at `σ → t`, unfolded, for necessitation. -/
 theorem rc_of_actuality_box_nd_t {σ : Type} [Ty σ] :
     Actuality → □ (∀ x y : Prop, x ≠ y → □ (x ≠ y)) → RigidComprehension (σ → Prop) :=
-  actuality_and_necessary_distinctness_necessary_t_imply_rigid_comprehension_r
+  c5_and_actuality_imply_rigid_comprehension_unary
 
-/-- `atomicity-t-and-necessary-distinctness-necessary-t-imply-necessary-rigid-comprehension-r`
+/-- `c5-and-atomicity-imply-necessary-rigid-comprehension` (for relations of type `σ → t` only)
 (Classicism, §2.3: `C5` + Atomicity = `C5` + `□`Rigid Comprehension), at `σ → t`:
 `□`Actuality, and Proposition 2.10 necessitated. The converse is
 `necessary_rigid_comprehension_r_implies_necessary_actuality` with the last record. -/
-theorem atomicity_t_and_necessary_distinctness_necessary_t_imply_necessary_rigid_comprehension_r
+theorem c5_and_atomicity_imply_necessary_rigid_comprehension_unary
     {σ : Type} [Ty σ] :
-    AtomicityT → NecNecessityOfDistinctnessT → NecRigidComprehension (σ → Prop) := fun at_ hnd =>
+    Atomicity Prop → NecNecessityOfDistinctness Prop → NecRigidComprehension (σ → Prop) := fun at_ hnd =>
   modal_K _ _ (modal_K _ _ (nec% (rc_of_actuality_box_nd_t (σ := σ)))
     (atomicity_t_and_necessary_distinctness_necessary_t_imply_necessary_actuality at_ hnd))
     (modal_four _ hnd)
@@ -950,7 +950,7 @@ theorem atomicity_t_and_necessary_distinctness_necessary_t_imply_necessary_rigid
 `C5` then gives Atomicity. -/
 theorem necessary_rigid_comprehension_r_and_necessary_distinctness_necessary_t_imply_atomicity_t :
     NecRigidComprehension (Prop → Prop) → NecNecessityOfDistinctnessT → AtomicityT := fun hrc hnd =>
-  necessary_actuality_and_necessary_distinctness_necessary_t_imply_atomicity_t
+  c5_and_necessary_actuality_imply_atomicity_at_t
     (necessary_rigid_comprehension_r_implies_necessary_actuality hrc) hnd
 
 /-! Rigid Comprehension and `BF` give `□BF` (Proposition 2.12, n. 43); Rigid Comprehension
@@ -962,10 +962,10 @@ theorem bf_of_weaklyInextensible {σ : Type} [Ty σ] (F : σ → Prop) :
   fun hI hall Y hY =>
     modal_K _ _ (modal_K _ _ (nec% (forall_imp_forall F Y)) (hI Y (fun z _ => hY z))) hall
 
-/-- `rigid-comprehension-r-and-barcan-r-imply-necessary-barcan-r` (Proposition 2.12): a
+/-- `rigid-comprehension-and-bf-imply-necessary-bf` (Proposition 2.12): a
 rigid `F` coextensive with self-identity holds necessarily of everything, so by `BF`
 `□∀x. Fx`; its inextensibility, necessitated, then gives `BF` in every world. -/
-theorem rigid_comprehension_r_and_barcan_r_imply_necessary_barcan_r {σ : Type} [Ty σ] :
+theorem rigid_comprehension_and_bf_imply_necessary_bf {σ : Type} [Ty σ] :
     RigidComprehension (σ → Prop) → Barcan σ → NecBarcan σ := fun rc bf =>
   (rc (λ x ↦ x = x)).elim fun F hF =>
     have hall : □ (∀ x, F x) :=
@@ -987,12 +987,12 @@ theorem box_ne_or_eq {σ : Type} [Ty σ] (nd : ∀ x y : σ, x ≠ y → □ (x 
   (fun hne => modal_K _ _ (nec% (fun (h : y ≠ x) => (Or.inl h : y ≠ x ∨ p = q))) (nd y x hne))
   (fun he => modal_K _ _ (nec% (fun (h : p = q) => (Or.inr h : y ≠ x ∨ p = q))) (necessity_of_identity p q he))
 
-/-- `rigid-comprehension-r-and-distinctness-necessary-r-imply-plenitude-r` (Proposition
+/-- `rigid-comprehension-and-nd-imply-plenitude` (for output type `t` only) (Proposition
 2.16), for relations of type `σ → t → t`: with `Rs` rigid and coextensive with the
 functional `R`, `Z := λy. ∀p. Rs y p → p` represents it. At `x` with `Rxq`: `Rs x q` is
 necessary, so `Zx ≤ q`; and every `Rs y p` has `y ≠ x ∨ p = q`, necessarily so by `ND`
 and `NI`, so by inextensibility necessarily, which gives `q ≤ Zx`. -/
-theorem rigid_comprehension_r_and_distinctness_necessary_r_imply_plenitude_r {σ : Type} [Ty σ] :
+theorem rigid_comprehension_and_nd_imply_plenitude_at_t {σ : Type} [Ty σ] :
     RigidComprehension (σ → Prop → Prop) → NecessityOfDistinctness σ → Plenitude σ Prop :=
   fun rc nd R hR => (rc R).elim fun Rs hRs =>
     ⟨λ y ↦ ∀ p, Rs y p → p, fun x => (hR x).elim fun q hq =>
