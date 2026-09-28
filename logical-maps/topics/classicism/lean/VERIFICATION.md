@@ -859,6 +859,28 @@ the appendix about two-object variants, which `Models/README.md` analyses withou
 formalizing, and where it corrects the paper on two points (`ND` and Atomlessness fail
 at the base of every such variant).
 
+## Results at every arity, 28 September (night)
+
+`Results/Arity.lean`, with six modal laws added to `Pointwise`, two principles
+(`NecGallinExtensionalComprehension`, `NecPlenitude`) and two auxiliary schemas
+(`BarcanArgs`, `NecBarcanArgs`) added to `Principles.lean` and quoted, and six routine
+records added to `Results/Records.lean`. Twelve records of the map proved at every arity,
+listed in `HANDOFF.md` §4a.
+
+*Checked.* The full build passes; every shallow step and kernel is certified by
+`#classicism_certify` (a derivation checked by the kernel, read as a rule between schema
+instances) and `#classicism_entails`; the new `Pointwise` laws are derived for every type
+by the translator's induction; the metalogical theorems are kernel-checked compositions
+of certified entailments (`Entails.trans`, `Entails.union`) and inductions on `RTy`. The
+record audits report 157 of 157 derived and 73 of 73 certified.
+
+*Choices.* BF over a tuple is stated as `(⊤ ⊆ □X) → □(⊤ ⊆ X)` at the relational type, so
+that it needs no tuple syntax, and it is not a map principle: every result that uses it
+reaches the map's premises by composing with `barcanArgs_of_barcan` or its boxed form.
+Atomicity at `t` in the compositions is the `t`-instance of the type-indexed Atomicity,
+not the separate principle `AtomicityT`; `atomicity_of_atomicity_at_t_barcan` is the
+Atomicity induction from that instance.
+
 ## Proposition 2.11, 28 September
 
 Cian asked (28 September) for Proposition 2.11 with `BF` strengthened to `□BF`, after the

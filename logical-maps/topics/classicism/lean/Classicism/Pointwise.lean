@@ -55,10 +55,30 @@ class Pointwise (τ : Type) [Rel τ] : Type where
   boxImp_of_coext : ∀ X Y : τ, X ≡ Y → X ⊆ Y
   /-- `X ≡ Y → Y ⊑ X`. -/
   boxImp_of_coext' : ∀ X Y : τ, X ≡ Y → Y ⊆ X
+  -- The modal laws, added 28 September for the results at every arity
+  -- (`Results/Arity.lean`): each is a fact about `□` at `t`, read pointwise.
+  /-- `⊤ ⊑ ¬X ∨ Y → X ⊑ Y`. -/
+  boxImp_of_top_or : ∀ X Y : τ, boxImp (Rel.top τ) (Rel.or (Rel.neg X) Y) → boxImp X Y
+  /-- `□(X ⊑ Y) → ⊤ ⊑ □(¬X ∨ Y)`: the converse Barcan formula, pointwise. -/
+  top_boxAt_of_box : ∀ X Y : τ, □ (boxImp X Y) → boxImp (Rel.top τ) (boxAt (Rel.or (Rel.neg X) Y))
+  /-- With `B`: `Y ⊑ □Z` and `⊤ ⊑ □(¬Y ∨ □Y)` give `⊤ ⊑ □(¬Y ∨ Z)`; where `Y` fails, `B` and
+  persistence make it fail necessarily. -/
+  top_boxAt_of_b : ∀ Y Z : τ, (∀ p : Prop, p → □ ◇ p) → boxImp Y (boxAt Z) →
+    boxImp (Rel.top τ) (boxAt (Rel.or (Rel.neg Y) (boxAt Y))) →
+    boxImp (Rel.top τ) (boxAt (Rel.or (Rel.neg Y) Z))
+  /-- `Y ⊑ □Z` and `¬Y ⊑ □¬Y` give `⊤ ⊑ □(¬Y ∨ Z)`. -/
+  top_boxAt_of_neg : ∀ Y Z : τ, boxImp Y (boxAt Z) → boxImp (Rel.neg Y) (boxAt (Rel.neg Y)) →
+    boxImp (Rel.top τ) (boxAt (Rel.or (Rel.neg Y) Z))
+  /-- `□X ⊑ □□X`: 4, pointwise. -/
+  boxAt_four : ∀ X : τ, boxImp (boxAt X) (boxAt (boxAt X))
+  /-- If every `q` is `□(¬w ∨ q)` exactly when true, `X` is coextensive with `λx̄. □(¬w ∨ X[x̄])`. -/
+  coext_boxAt_actual : ∀ (X : τ) (w : Prop), (∀ q : Prop, q ↔ □ (¬ w ∨ q)) →
+    coext X (boxAt (Rel.or (Rel.neg (constP w)) X))
 
 export Pointwise (boxImp_refl boxImp_trans boxImp_and boxImp_and_left boxImp_and_right
   boxImp_and_neg boxImp_constP boxImp_of_constP coext_of_boxImp boxImp_of_coext
-  boxImp_of_coext')
+  boxImp_of_coext' boxImp_of_top_or top_boxAt_of_box top_boxAt_of_b top_boxAt_of_neg boxAt_four
+  coext_boxAt_actual)
 
 /-! ### Type `t`
 
@@ -83,6 +103,34 @@ theorem coext_of_boxImp_prop (X Y : Prop) : X ⊆ Y → Y ⊆ X → X ≡ Y :=
 theorem boxImp_of_coext_prop (X Y : Prop) : X ≡ Y → X ⊆ Y := fun h => h.1
 theorem boxImp_of_coext'_prop (X Y : Prop) : X ≡ Y → Y ⊆ X := fun h => h.2
 
+theorem not_or_of_imp (x y : Prop) : (x → y) → ¬ x ∨ y :=
+  fun h => (em x).elim (fun hx => Or.inr (h hx)) (fun hn => Or.inl hn)
+theorem not_or_of_right (x y : Prop) : y → ¬ x ∨ y := fun hy => Or.inr hy
+theorem not_or_of_left (x y : Prop) : ¬ x → ¬ x ∨ y := fun hn => Or.inl hn
+theorem not_or_of_dia_not (y z : Prop) : ◇ (¬ y) → (¬ y ∨ □ y) → ¬ y ∨ z :=
+  fun hd h => Or.elim h (fun hn => Or.inl hn) (fun hb => (hd (by rw [hb]; exact not_true_eq)).elim)
+
+theorem boxImp_of_top_or_prop (X Y : Prop) :
+    Rel.top Prop ⊆ Rel.or (Rel.neg X) Y → X ⊆ Y :=
+  fun h hx => Or.elim (h trivial) (fun hn => absurd hx hn) (fun hy => hy)
+theorem top_boxAt_of_box_prop (X Y : Prop) :
+    □ (X ⊆ Y) → Rel.top Prop ⊆ boxAt (Rel.or (Rel.neg X) Y) :=
+  fun h _ => modal_K _ _ (nec% (not_or_of_imp X Y)) h
+theorem top_boxAt_of_b_prop (Y Z : Prop) : (∀ p : Prop, p → □ ◇ p) → Y ⊆ boxAt Z →
+    Rel.top Prop ⊆ boxAt (Rel.or (Rel.neg Y) (boxAt Y)) →
+    Rel.top Prop ⊆ boxAt (Rel.or (Rel.neg Y) Z) :=
+  fun b h1 h2 _ => (em Y).elim
+    (fun hy => modal_K _ _ (nec% (not_or_of_right Y Z)) (h1 hy))
+    (fun hny => modal_K _ _ (modal_K _ _ (nec% (not_or_of_dia_not Y Z)) (b _ hny)) (h2 trivial))
+theorem top_boxAt_of_neg_prop (Y Z : Prop) : Y ⊆ boxAt Z → Rel.neg Y ⊆ boxAt (Rel.neg Y) →
+    Rel.top Prop ⊆ boxAt (Rel.or (Rel.neg Y) Z) :=
+  fun h1 h2 _ => (em Y).elim
+    (fun hy => modal_K _ _ (nec% (not_or_of_right Y Z)) (h1 hy))
+    (fun hny => modal_K _ _ (nec% (not_or_of_left Y Z)) (h2 hny))
+theorem boxAt_four_prop (X : Prop) : boxAt X ⊆ boxAt (boxAt X) := modal_four X
+theorem coext_boxAt_actual_prop (X w : Prop) : (∀ q : Prop, q ↔ □ (¬ w ∨ q)) →
+    X ≡ boxAt (Rel.or (Rel.neg (constP w)) X) := fun h => h X
+
 instance instPointwiseProp : Pointwise Prop where
   boxImp_refl := boxImp_refl_prop
   boxImp_trans := boxImp_trans_prop
@@ -95,6 +143,12 @@ instance instPointwiseProp : Pointwise Prop where
   coext_of_boxImp := coext_of_boxImp_prop
   boxImp_of_coext := boxImp_of_coext_prop
   boxImp_of_coext' := boxImp_of_coext'_prop
+  boxImp_of_top_or := boxImp_of_top_or_prop
+  top_boxAt_of_box := top_boxAt_of_box_prop
+  top_boxAt_of_b := top_boxAt_of_b_prop
+  top_boxAt_of_neg := top_boxAt_of_neg_prop
+  boxAt_four := boxAt_four_prop
+  coext_boxAt_actual := coext_boxAt_actual_prop
 
 /-! ### Relational function types
 
@@ -127,6 +181,23 @@ theorem boxImp_of_coext_arrow (X Y : σ → τ) : X ≡ Y → X ⊆ Y :=
 theorem boxImp_of_coext'_arrow (X Y : σ → τ) : X ≡ Y → Y ⊆ X :=
   fun h z => boxImp_of_coext' (X z) (Y z) (h z)
 
+theorem boxImp_of_top_or_arrow (X Y : σ → τ) :
+    Rel.top (σ → τ) ⊆ Rel.or (Rel.neg X) Y → X ⊆ Y :=
+  fun h z => boxImp_of_top_or (X z) (Y z) (h z)
+theorem top_boxAt_of_box_arrow (X Y : σ → τ) :
+    □ (X ⊆ Y) → Rel.top (σ → τ) ⊆ boxAt (Rel.or (Rel.neg X) Y) :=
+  fun h z => top_boxAt_of_box (X z) (Y z) (converse_barcan (λ z ↦ X z ⊆ Y z) h z)
+theorem top_boxAt_of_b_arrow (Y Z : σ → τ) : (∀ p : Prop, p → □ ◇ p) → Y ⊆ boxAt Z →
+    Rel.top (σ → τ) ⊆ boxAt (Rel.or (Rel.neg Y) (boxAt Y)) →
+    Rel.top (σ → τ) ⊆ boxAt (Rel.or (Rel.neg Y) Z) :=
+  fun b h1 h2 z => top_boxAt_of_b (Y z) (Z z) b (h1 z) (h2 z)
+theorem top_boxAt_of_neg_arrow (Y Z : σ → τ) : Y ⊆ boxAt Z → Rel.neg Y ⊆ boxAt (Rel.neg Y) →
+    Rel.top (σ → τ) ⊆ boxAt (Rel.or (Rel.neg Y) Z) :=
+  fun h1 h2 z => top_boxAt_of_neg (Y z) (Z z) (h1 z) (h2 z)
+theorem boxAt_four_arrow (X : σ → τ) : boxAt X ⊆ boxAt (boxAt X) := fun z => boxAt_four (X z)
+theorem coext_boxAt_actual_arrow (X : σ → τ) (w : Prop) : (∀ q : Prop, q ↔ □ (¬ w ∨ q)) →
+    X ≡ boxAt (Rel.or (Rel.neg (constP w)) X) := fun h z => coext_boxAt_actual (X z) w h
+
 instance instPointwiseArrow : Pointwise (σ → τ) where
   boxImp_refl := boxImp_refl_arrow
   boxImp_trans := boxImp_trans_arrow
@@ -139,6 +210,12 @@ instance instPointwiseArrow : Pointwise (σ → τ) where
   coext_of_boxImp := coext_of_boxImp_arrow
   boxImp_of_coext := boxImp_of_coext_arrow
   boxImp_of_coext' := boxImp_of_coext'_arrow
+  boxImp_of_top_or := boxImp_of_top_or_arrow
+  top_boxAt_of_box := top_boxAt_of_box_arrow
+  top_boxAt_of_b := top_boxAt_of_b_arrow
+  top_boxAt_of_neg := top_boxAt_of_neg_arrow
+  boxAt_four := boxAt_four_arrow
+  coext_boxAt_actual := coext_boxAt_actual_arrow
 
 end arrow
 

@@ -266,6 +266,7 @@ Classicism/Tools/Schema.lean            principles as schemas; records as entail
 Classicism/Tools/Audit.lean             the audits over the shallow layer, run at build time
 Classicism/Tools/Tests.lean             negative and positive controls for the checkers
 
+Classicism/Results/Arity.lean           the map's arity results: BF over tuples by induction, kernels at a type variable, composition
 scripts/FunKinds.lean                   which `fun`s in a file are terms (written λ … ↦) and which are proofs
 
 Classicism/Certified/Quoted.lean        the record theorems quoted; home of foo.quoted

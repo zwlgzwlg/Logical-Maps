@@ -152,6 +152,9 @@ def NecRigidComprehension (τ : Type) [Rel τ] : Prop := □ (RigidComprehension
 that is persistent and has a persistent pointwise negation. Gallin's rigidity convention. -/
 def GallinExtensionalComprehension (τ : Type) [Rel τ] : Prop :=
   ∀ X : τ, ∃ Y : τ, Persistent Y ∧ Persistent (Rel.neg Y) ∧ coext X Y
+/-- `necessary-gallin-extensional-comprehension-r` at `τ`: the instance boxed. -/
+def NecGallinExtensionalComprehension (τ : Type) [Rel τ] : Prop :=
+  □ (GallinExtensionalComprehension τ)
 
 /-! ### Choice
 
@@ -180,5 +183,20 @@ def RelationalChoice (σ τ : Type) [Ty σ] [Ty τ] : Prop :=
 by an operation, whose output type `τ` is relational (Classicism, §2.4). -/
 def Plenitude (σ τ : Type) [Ty σ] [Rel τ] : Prop :=
   ∀ U : σ → τ → Prop, Functional U → ∃ X : σ → τ, ∀ y, U y (X y)
+/-- `necessary-plenitude-r` at `σ`, `τ`: the instance boxed. -/
+def NecPlenitude (σ τ : Type) [Ty σ] [Rel τ] : Prop := □ (Plenitude σ τ)
+
+/-! ### Auxiliary schemas
+
+Not principles of the map. The results at every arity (`Results/Arity.lean`) use them as
+premises, and derive them once, by induction on the type, from the map's principles. -/
+
+/-- BF over the whole argument tuple of `τ`: `∀X. (∀x̄. □X[x̄]) → □∀x̄. X[x̄]`, the tuple
+quantifier written as inclusion from `⊤_τ`. At `t` a theorem; at `σ → τ` it follows from
+BF at `σ` and itself at `τ` (`Results/Arity.lean`, `barcanArgs_of_barcan`). -/
+def BarcanArgs (τ : Type) [Rel τ] : Prop :=
+  ∀ X : τ, boxImp (Rel.top τ) (boxAt X) → □ (boxImp (Rel.top τ) X)
+/-- `□`BF over the argument tuple of `τ`. -/
+def NecBarcanArgs (τ : Type) [Rel τ] : Prop := □ (BarcanArgs τ)
 
 end Classicism.P

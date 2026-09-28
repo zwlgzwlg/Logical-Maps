@@ -27,3 +27,4 @@ parameters; `P.reflect`, that reading it back gives the strict twin, by `rfl`; a
   Classicism.P.Atomlessness Classicism.P.BooleanCompleteness Classicism.P.BooleanCompletenessT
   Classicism.P.NecBooleanCompleteness Classicism.P.Actuality Classicism.P.NecActuality
   Classicism.P.ActualProfile Classicism.P.NecRigidComprehension Classicism.P.Plenitude
+  Classicism.P.BarcanArgs Classicism.P.NecBarcanArgs Classicism.P.NecGallinExtensionalComprehension Classicism.P.NecPlenitude

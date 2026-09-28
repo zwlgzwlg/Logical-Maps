@@ -203,6 +203,22 @@ theorem gallin_comprehension_implies_nd {σ : Type} [Ty σ] :
   have hconj : □ (Y a ∧ ¬ Y b) := by rw [box_and_eq]; exact hbox
   exact modal_K _ _ (nec% (ne_of_holds_and_not_holds Y a b)) hconj
 
+/-- `necessary-gallin-comprehension-implies-gallin-comprehension`: `T`. -/
+theorem necessary_gallin_comprehension_implies_gallin_comprehension {τ : Type} [Rel τ] :
+    NecGallinExtensionalComprehension τ → GallinExtensionalComprehension τ := box_elim
+
+/-- `necessary-gallin-comprehension-implies-necessary-nd`: the last record necessitated. -/
+theorem necessary_gallin_comprehension_implies_necessary_nd {σ : Type} [Ty σ] :
+    NecGallinExtensionalComprehension (σ → Prop) → NecNecessityOfDistinctness σ :=
+  modal_K _ _ (nec% (gallin_comprehension_implies_nd (σ := σ)))
+
+/-- `fregean-axiom-implies-necessary-distinctness-necessary-r`: under the Fregean Axiom
+what is true is `⊤`, so necessary; apply that to each distinctness and then to ND. -/
+theorem fregean_axiom_implies_necessary_distinctness_necessary_r {σ : Type} [Ty σ] :
+    FregeanAxiom → NecNecessityOfDistinctness σ := fun fa =>
+  have box : ∀ p : Prop, p → □ p := fun p hp => fa p True ⟨fun _ => trivial, fun _ => hp⟩
+  box _ (fun x y hne => box _ hne)
+
 /-! ### Choice (Classicism, §2.4) -/
 
 /-- `functional-choice-r-implies-relational-choice-r`. Functional Choice cannot be
@@ -293,7 +309,7 @@ theorem le_apply_box {σ : Type} [Ty σ] (w : Prop) (X : σ → Prop) :
 /-- `actuality-implies-persistent-comprehension-r` at `σ → t` (Classicism, n. 38): with
 `w` the actual world, `λy. w ≤ Xy` is persistent, since entailments are necessary when
 true, and coextensive with `X`, since `w` entails exactly the truths. -/
-theorem actuality_implies_persistent_comprehension_r {σ : Type} [Ty σ] :
+theorem actuality_implies_persistent_comprehension_r_unary {σ : Type} [Ty σ] :
     Actuality → PersistentComprehension (σ → Prop) := fun act X =>
   act.elim fun w (hw : ActualWorld w) =>
     ⟨λ y ↦ w ≤ X y, nec% (le_apply_box w X),
@@ -323,7 +339,7 @@ theorem profile_of_w_imp {σ : Type} [Ty σ] (w : Prop) (Z : σ → Prop) (x : �
 
 /-- `actuality-implies-actual-profile-r` at `σ` (Classicism, n. 36): `λy. w ∧ y = x` is
 the true profile of `x`, and it entails every `Z` with `Zx`, since `w` entails `Zx`. -/
-theorem actuality_implies_actual_profile_r {σ : Type} [Ty σ] : Actuality → ActualProfile σ :=
+theorem actuality_implies_actual_profile_r_unary {σ : Type} [Ty σ] : Actuality → ActualProfile σ :=
   fun act x => act.elim fun w (hw : ActualWorld w) =>
     ⟨λ y ↦ w ∧ y = x, ⟨hw.1, rfl⟩, fun Z hZ =>
       (le_iff _ _).2 (modal_K _ _ (nec% (profile_of_w_imp w Z x))
@@ -359,15 +375,15 @@ theorem very_weak_rigid_comprehension_implies_boolean_completeness_t :
   (vrc X).elim fun T hT => ⟨∀ p, T p → p, glb_of_veryWeaklyRigid X T hT.1 hT.2⟩
 
 /-- `weak-rigid-comprehension-r-implies-boolean-completeness-r`, at `t`. -/
-theorem weak_rigid_comprehension_r_implies_boolean_completeness_r :
+theorem weak_rigid_comprehension_r_implies_boolean_completeness_r_at_t :
     WeakRigidComprehension (Prop → Prop) → BooleanCompleteness Prop := fun wrc =>
   very_weak_rigid_comprehension_implies_boolean_completeness_t
     (weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r wrc)
 
 /-- `rigid-comprehension-r-implies-boolean-completeness-r` (Proposition 2.8), at `t`. -/
-theorem rigid_comprehension_r_implies_boolean_completeness_r :
+theorem rigid_comprehension_r_implies_boolean_completeness_r_at_t :
     RigidComprehension (Prop → Prop) → BooleanCompleteness Prop := fun rc =>
-  weak_rigid_comprehension_r_implies_boolean_completeness_r
+  weak_rigid_comprehension_r_implies_boolean_completeness_r_at_t
     (rigid_comprehension_r_implies_weak_rigid_comprehension_r rc)
 
 /-- Under the Fregean Axiom, `V ≤ p` is `V → p`. -/
@@ -377,7 +393,7 @@ theorem le_iff_imp_of_fregean (fa : FregeanAxiom) (V p : Prop) : V ≤ p ↔ (V 
 /-- `extensionality-r-implies-boolean-completeness-r`, at `t` (Classicism, n. 33): under
 the Fregean Axiom the order is material implication, and `∀p. Xp → p` is a greatest
 lower bound of `X` outright. -/
-theorem extensionality_r_implies_boolean_completeness_r :
+theorem extensionality_r_implies_boolean_completeness_r_at_t :
     Extensionality Prop → BooleanCompleteness Prop := fun ext X =>
   ⟨∀ p, X p → p, fun V =>
     ⟨fun hlb => (le_iff_imp_of_fregean ext V _).2
@@ -392,9 +408,9 @@ theorem necessary_rigid_comprehension_r_implies_necessary_actuality :
   modal_K _ _ (nec% rigid_comprehension_r_implies_actuality)
 
 /-- `necessary-rigid-comprehension-r-implies-necessary-boolean-completeness-r`, at `t`. -/
-theorem necessary_rigid_comprehension_r_implies_necessary_boolean_completeness_r :
+theorem necessary_rigid_comprehension_r_implies_necessary_boolean_completeness_r_at_t :
     NecRigidComprehension (Prop → Prop) → NecBooleanCompleteness Prop :=
-  modal_K _ _ (nec% rigid_comprehension_r_implies_boolean_completeness_r)
+  modal_K _ _ (nec% rigid_comprehension_r_implies_boolean_completeness_r_at_t)
 
 /-- `actuality-incompatible-with-atomlessness`: a strongest truth `a` is an atom. It is
 possible, so Atomlessness gives a possible `q` strictly below it; `q` is not true, else
@@ -456,6 +472,21 @@ theorem plenitude_r_implies_distinctness_necessary_r {σ : Type} [Ty σ] :
     have hy : Z y = False := (hZ y).elim (fun h => absurd h.1 hxy) (fun h => h.2)
     modal_K _ _ (modal_K _ _ (nec% (ne_of_values Z x y)) (necessity_of_identity _ _ hx))
       (necessity_of_identity _ _ hy)
+
+/-- `necessary-plenitude-r-implies-plenitude-r`: `T`. -/
+theorem necessary_plenitude_r_implies_plenitude_r {σ τ : Type} [Ty σ] [Rel τ] :
+    NecPlenitude σ τ → Plenitude σ τ := box_elim
+
+/-- `necessary-plenitude-r-implies-necessary-distinctness-necessary-r`: Proposition 2.13
+necessitated. -/
+theorem necessary_plenitude_r_implies_necessary_distinctness_necessary_r {σ : Type} [Ty σ] :
+    NecPlenitude σ Prop → NecNecessityOfDistinctness σ :=
+  modal_K _ _ (nec% (plenitude_r_implies_distinctness_necessary_r (σ := σ)))
+
+/-- `necessary-plenitude-r-implies-necessary-actuality`: Proposition 2.15 necessitated. -/
+theorem necessary_plenitude_r_implies_necessary_actuality :
+    NecPlenitude Prop Prop → NecActuality :=
+  modal_K _ _ (nec% plenitude_r_implies_actuality)
 
 /-- `functional-choice-r-implies-plenitude-r`: a functional relation is serial. -/
 theorem functional_choice_r_implies_plenitude_r {σ τ : Type} [Ty σ] [Rel τ] :
@@ -681,14 +712,14 @@ theorem inextensible_of_persistent_c5 {σ : Type} [Ty σ]
 theorem c5_and_actuality_imply_rigid_comprehension_unary
     {σ : Type} [Ty σ] :
     Actuality → NecNecessityOfDistinctness Prop → RigidComprehension (σ → Prop) := fun act hnd X =>
-  (actuality_implies_persistent_comprehension_r act X).elim fun Y hY =>
+  (actuality_implies_persistent_comprehension_r_unary act X).elim fun Y hY =>
     ⟨Y, ⟨hY.1, inextensible_of_persistent_c5 hnd Y hY.1⟩, hY.2⟩
 
 /-- `c5-and-actuality-imply-completeness` (at type `t` only)
 (Proposition 2.5, right to left), at `t`: Propositions 2.10 and 2.8. -/
 theorem c5_and_actuality_imply_completeness_at_t :
     Actuality → NecNecessityOfDistinctness Prop → BooleanCompleteness Prop := fun act hnd =>
-  rigid_comprehension_r_implies_boolean_completeness_r
+  rigid_comprehension_r_implies_boolean_completeness_r_at_t
     (c5_and_actuality_imply_rigid_comprehension_unary act hnd)
 
 /-! Boolean Completeness gives Plenitude in `C5` (Proposition 2.14, n. 48). For `R`
