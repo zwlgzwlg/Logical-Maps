@@ -874,6 +874,13 @@ by the translator's induction; the metalogical theorems are kernel-checked compo
 of certified entailments (`Entails.trans`, `Entails.union`) and inductions on `RTy`. The
 record audits report 157 of 157 derived and 73 of 73 certified.
 
+Later the same night, 38 routine records in `Results/Records.lean` and four more arity
+results in `Results/Arity.lean`, with sixteen principles and three `Pointwise` laws
+(`HANDOFF.md` §4a); the record audits then report 199 of 199 derived and 111 of 111
+certified. Each new principle is the record's `formal` field with its type quantifier made
+a parameter; `SWorld` is Bacon's strong world with `◇_τ W := W ≠ ⊥_τ`, and `BoxNe` the
+distinctness-preserving necessity of §2.6, both as the map's Background defines them.
+
 *Choices.* BF over a tuple is stated as `(⊤ ⊆ □X) → □(⊤ ⊆ X)` at the relational type, so
 that it needs no tuple syntax, and it is not a map principle: every result that uses it
 reaches the map's premises by composing with `barcanArgs_of_barcan` or its boxed form.

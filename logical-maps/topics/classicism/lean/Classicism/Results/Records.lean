@@ -1163,4 +1163,190 @@ theorem restriction_of_box_b (hb : □ (∀ p : Prop, p → □ ◇ p)) :
     fun s h => (le_iff_prop _ _).2 (modal_K _ _ (modal_K _ _ (nec% (le_of_and_dia_of_b p q s)) hb)
       (modal_four _ ((le_iff_prop _ _).1 h)))⟩
 
+/-! ### Routine records (28 September, night)
+
+Specializations to `t`, `T` stripping a box, necessitations of records already proved
+(`K` with the box of the premise), and a few short arguments at `t`. -/
+
+/-- `atomicity-r-implies-atomicity-t`: the `t`-instance. -/
+theorem atomicity_r_implies_atomicity_t : Atomicity Prop → AtomicityT := fun h => h
+/-- `distinctness-necessary-r-implies-distinctness-necessary-t`: the `t`-instance. -/
+theorem distinctness_necessary_r_implies_distinctness_necessary_t :
+    NecessityOfDistinctness Prop → NecessityOfDistinctnessT := fun h => h
+/-- `necessary-barcan-r-implies-necessary-barcan-t`: the `t`-instance. -/
+theorem necessary_barcan_r_implies_necessary_barcan_t : NecBarcan Prop → NecBarcanT := fun h => h
+/-- `necessary-distinctness-necessary-r-implies-necessary-distinctness-necessary-t`. -/
+theorem necessary_distinctness_necessary_r_implies_necessary_distinctness_necessary_t :
+    NecNecessityOfDistinctness Prop → NecNecessityOfDistinctnessT := fun h => h
+/-- `strong-leibniz-r-implies-strong-leibniz-t`: the `t`-instance. -/
+theorem strong_leibniz_r_implies_strong_leibniz_t : StrongLeibniz Prop → StrongLeibnizT :=
+  fun h => h
+/-- `necessary-strong-leibniz-r-implies-necessary-strong-leibniz-t`. -/
+theorem necessary_strong_leibniz_r_implies_necessary_strong_leibniz_t :
+    NecStrongLeibniz Prop → NecStrongLeibnizT := fun h => h
+
+/-- `necessary-atomicity-r-implies-atomicity-r`: `T`. -/
+theorem necessary_atomicity_r_implies_atomicity_r {τ : Type} [Rel τ] :
+    NecAtomicity τ → Atomicity τ := box_elim
+/-- `necessary-barcan-r-implies-barcan-r`: `T`. -/
+theorem necessary_barcan_r_implies_barcan_r {σ : Type} [Ty σ] : NecBarcan σ → Barcan σ := box_elim
+/-- `necessary-distinctness-necessary-r-implies-distinctness-necessary-r`: `T`. -/
+theorem necessary_distinctness_necessary_r_implies_distinctness_necessary_r {σ : Type} [Ty σ] :
+    NecNecessityOfDistinctness σ → NecessityOfDistinctness σ := box_elim
+/-- `necessary-rigid-comprehension-r-implies-rigid-comprehension-r`: `T`. -/
+theorem necessary_rigid_comprehension_r_implies_rigid_comprehension_r {τ : Type} [Rel τ] :
+    NecRigidComprehension τ → RigidComprehension τ := box_elim
+/-- `necessary-extensionality-r-implies-extensionality-r`: `T`. -/
+theorem necessary_extensionality_r_implies_extensionality_r {τ : Type} [Rel τ] :
+    NecExtensionality τ → Extensionality τ := box_elim
+/-- `necessary-fregean-axiom-implies-fregean-axiom`: `T`. -/
+theorem necessary_fregean_axiom_implies_fregean_axiom : NecFregeanAxiom → FregeanAxiom := box_elim
+/-- `necessary-functional-choice-r-implies-functional-choice-r`: `T`. -/
+theorem necessary_functional_choice_r_implies_functional_choice_r {σ τ : Type} [Ty σ] [Rel τ] :
+    NecFunctionalChoice σ τ → FunctionalChoice σ τ := box_elim
+/-- `necessary-functionality-r-implies-functionality-r`: `T`. -/
+theorem necessary_functionality_r_implies_functionality_r {σ τ : Type} [Ty σ] [Rel τ] :
+    NecFunctionality σ τ → Functionality σ τ := box_elim
+/-- `necessary-modal-b-implies-modal-b`: `T`. -/
+theorem necessary_modal_b_implies_modal_b : NecModalB → ModalB := box_elim
+/-- `necessary-modal-five-implies-modal-five`: `T`. -/
+theorem necessary_modal_five_implies_modal_five : NecModalFive → ModalFive := box_elim
+/-- `necessary-relational-choice-r-implies-relational-choice-r`: `T`. -/
+theorem necessary_relational_choice_r_implies_relational_choice_r {σ τ : Type} [Ty σ] [Ty τ] :
+    NecRelationalChoice σ τ → RelationalChoice σ τ := box_elim
+/-- `necessary-tractarianism-r-implies-tractarianism-r`: `T`. -/
+theorem necessary_tractarianism_r_implies_tractarianism_r {σ : Type} [Ty σ] :
+    NecTractarianism σ → Tractarianism σ := box_elim
+/-- `necessary-strong-leibniz-t-implies-strong-leibniz-t`: `T`. -/
+theorem necessary_strong_leibniz_t_implies_strong_leibniz_t : NecStrongLeibnizT → StrongLeibnizT :=
+  box_elim
+
+/-- `necessary-barcan-r-implies-necessary-functionality-r`: Proposition 2.1 necessitated. -/
+theorem necessary_barcan_r_implies_necessary_functionality_r {σ τ : Type} [Ty σ] [Rel τ] :
+    NecBarcan σ → NecFunctionality σ τ :=
+  modal_K _ _ (nec% (barcan_r_implies_functionality_r (σ := σ) (τ := τ)))
+/-- `necessary-distinctness-necessary-r-implies-necessary-modal-five`. -/
+theorem necessary_distinctness_necessary_r_implies_necessary_modal_five :
+    NecNecessityOfDistinctness Prop → NecModalFive :=
+  modal_K _ _ (nec% distinctness_necessary_t_implies_modal_five)
+/-- `necessary-modal-five-implies-necessary-modal-b`. -/
+theorem necessary_modal_five_implies_necessary_modal_b : NecModalFive → NecModalB :=
+  modal_K _ _ (nec% modal_five_implies_modal_b)
+/-- `necessary-modal-b-implies-necessary-distinctness-necessary-r`. -/
+theorem necessary_modal_b_implies_necessary_distinctness_necessary_r {σ : Type} [Ty σ] :
+    NecModalB → NecNecessityOfDistinctness σ :=
+  modal_K _ _ (nec% (modal_b_implies_distinctness_necessary_r (σ := σ)))
+/-- `necessary-functional-choice-r-implies-necessary-plenitude-r`. -/
+theorem necessary_functional_choice_r_implies_necessary_plenitude_r {σ τ : Type} [Ty σ] [Rel τ] :
+    NecFunctionalChoice σ τ → NecPlenitude σ τ :=
+  modal_K _ _ (nec% (functional_choice_r_implies_plenitude_r (σ := σ) (τ := τ)))
+/-- `necessary-functional-choice-r-implies-necessary-relational-choice-r`. -/
+theorem necessary_functional_choice_r_implies_necessary_relational_choice_r {σ τ : Type} [Ty σ]
+    [Ty τ] : NecFunctionalChoice σ (τ → Prop) → NecRelationalChoice σ τ :=
+  modal_K _ _ (nec% (functional_choice_r_implies_relational_choice_r (σ := σ) (τ := τ)))
+/-- `necessary-functionality-r-implies-necessary-tractarianism-r`. -/
+theorem necessary_functionality_r_implies_necessary_tractarianism_r {σ : Type} [Ty σ] :
+    NecFunctionality σ Prop → NecTractarianism σ :=
+  modal_K _ _ (nec% (functionality_r_implies_tractarianism_r (σ := σ)))
+/-- `necessary-tractarianism-r-implies-necessary-barcan-r`. -/
+theorem necessary_tractarianism_r_implies_necessary_barcan_r {σ : Type} [Ty σ] :
+    NecTractarianism σ → NecBarcan σ :=
+  modal_K _ _ (nec% (tractarianism_r_implies_barcan_r (σ := σ)))
+
+/-- `relational-choice-and-plenitude-imply-functional-choice-r`: Relational Choice selects
+a functional subrelation, and Plenitude represents it by an operation. -/
+theorem relational_choice_and_plenitude_imply_functional_choice_r {σ τ : Type} [Ty σ] [Rel τ] :
+    RelationalChoice σ τ → Plenitude σ τ → FunctionalChoice σ τ := fun rc pl U hser =>
+  (rc U hser).elim fun S hS => (pl S hS.1).elim fun X hX => ⟨X, fun x => hS.2 x (X x) (hX x)⟩
+/-- `necessary-relational-choice-and-necessary-plenitude-imply-necessary-functional-choice`. -/
+theorem necessary_relational_choice_and_necessary_plenitude_imply_necessary_functional_choice
+    {σ τ : Type} [Ty σ] [Rel τ] :
+    NecRelationalChoice σ τ → NecPlenitude σ τ → NecFunctionalChoice σ τ := fun h₁ h₂ =>
+  modal_K _ _ (modal_K _ _
+    (nec% (relational_choice_and_plenitude_imply_functional_choice_r (σ := σ) (τ := τ))) h₁) h₂
+
+/-- `classicism-implies-broad-necessitism-r`: necessitate `∀x. ∃y. y = x`, then `CBF`. -/
+theorem classicism_implies_broad_necessitism_r {σ : Type} [Ty σ] : BroadNecessitism σ := fun x =>
+  converse_barcan (λ x ↦ ∃ y : σ, y = x) (nec% (fun (x : σ) => (⟨x, rfl⟩ : ∃ y, y = x))) x
+
+/-- `extensionality-r-implies-functionality-r`: pointwise identity is coextension. -/
+theorem extensionality_r_implies_functionality_r {σ τ : Type} [Ty σ] [Rel τ] :
+    Extensionality (σ → τ) → Functionality σ τ := fun ext X Y h =>
+  ext X Y (fun z => by show Rel.coext (X z) (Y z); rw [h z]; exact Rel.coext_refl (Y z))
+
+/-- A truth is `⊤` under the Fregean Axiom, so necessary. -/
+theorem box_of_fregean (fa : FregeanAxiom) (p : Prop) (hp : p) : □ p :=
+  fa p True ⟨fun _ => trivial, fun _ => hp⟩
+
+/-- `fregean-axiom-implies-necessary-fregean-axiom`. -/
+theorem fregean_axiom_implies_necessary_fregean_axiom : FregeanAxiom → NecFregeanAxiom :=
+  fun fa => box_of_fregean fa _ fa
+
+/-- `extensionality-r-implies-necessary-extensionality-r`: the nullary instance is the
+Fregean Axiom, which makes every truth necessary. -/
+theorem extensionality_r_implies_necessary_extensionality_r {τ : Type} [Rel τ] :
+    Extensionality τ → Extensionality Prop → NecExtensionality τ := fun ext extP =>
+  box_of_fregean (extensionality_r_implies_fregean_axiom extP) _ ext
+
+/-- `fregean-axiom-implies-distinctness-preserving-collapse`: `⊤` is a true `q` with
+`□(◇⊤ → p)`, since `p` is necessary. -/
+theorem fregean_axiom_implies_distinctness_preserving_collapse :
+    FregeanAxiom → DistinctnessPreservingCollapse := fun fa p hp =>
+  ⟨True, trivial, box_of_fregean fa _ (fun _ => hp)⟩
+
+/-- `distinctness-preserving-collapse-and-nd-imply-fregean-axiom`: under `ND_t` the two
+necessities coincide, so every truth is `⊤` and every falsehood `⊥`. -/
+theorem distinctness_preserving_collapse_and_nd_imply_fregean_axiom :
+    DistinctnessPreservingCollapse → NecessityOfDistinctness Prop → FregeanAxiom :=
+  fun col nd p q hpq =>
+    have box : ∀ r : Prop, r → □ r := fun r hr => (col r hr).elim fun s hs =>
+      modal_K _ _ hs.2 (nd s False (fun e => (e ▸ hs.1 : False)))
+    (em p).elim
+      (fun hp => (box p hp).trans (box q (hpq.1 hp)).symm)
+      (fun hnp =>
+        have hp0 : p = False := by rw [← box_not_eq]; exact box _ hnp
+        have hq0 : q = False := by rw [← box_not_eq]; exact box _ (fun hq => hnp (hpq.2 hq))
+        hp0.trans hq0.symm)
+
+/-- `atomicity-t-incompatible-with-atomlessness`: an atom below `⊤` has nothing possible
+strictly below it. -/
+theorem atomicity_t_incompatible_with_atomlessness : AtomicityT → Atomlessness → False :=
+  fun at_ atl => ((at_ True).elim
+    (fun h => absurd (eq_false_of_le_neg True h) (fun e => e ▸ trivial))
+    (fun h => h.elim fun q hq =>
+      have hdq : ◇ q := fun e => not_le_neg_of_atom hq.1 (le_neg_of_eq_false q e)
+      (atl q hdq).elim fun r hr =>
+        hr.1 (eq_false_of_le_neg r ((hq.1 r).1 ⟨hr.2.1, hr.2.2⟩))))
+
+/-- A non-bottom proposition is not below its negation. -/
+theorem not_le_neg_of_ne_false (p : Prop) (h : p ≠ False) : ¬ p ≤ ¬ p :=
+  fun hle => h (eq_false_of_le_neg p hle)
+
+/-- `strong-leibniz-t-implies-atomicity-t`: a strong world is a weak one, `T`, hence an
+atom. -/
+theorem strong_leibniz_t_implies_atomicity_t : StrongLeibnizT → AtomicityT := fun sl x =>
+  (em (x ≤ ¬ x)).elim Or.inl fun hx =>
+    have hne : x ≠ False := fun e => hx (le_neg_of_eq_false x e)
+    (sl x hne).elim fun w hw => Or.inr ⟨w, atom_of_decides w ⟨hw.1.1, box_elim hw.1.2⟩, hw.2⟩
+
+/-- `w ≤ q ∨ w ≤ ¬q` is necessary once true: each disjunct is. -/
+theorem box_le_or_le (w q : Prop) (h : w ≤ q ∨ w ≤ ¬ q) : □ (w ≤ q ∨ w ≤ ¬ q) :=
+  h.elim (fun h => modal_K _ _ (nec% (fun (h' : w ≤ q) => (Or.inl h' : w ≤ q ∨ w ≤ ¬ q)))
+      (box_le_prop w q h))
+    (fun h => modal_K _ _ (nec% (fun (h' : w ≤ ¬ q) => (Or.inr h' : w ≤ q ∨ w ≤ ¬ q)))
+      (box_le_prop w (¬ q) h))
+
+/-- `atomicity-t-and-bf-t-imply-strong-leibniz-t`: an atom below `p` decides every `q`,
+each decision is necessary, and BF at `t` boxes the quantifier. -/
+theorem atomicity_t_and_bf_t_imply_strong_leibniz_t : AtomicityT → BarcanT → StrongLeibnizT :=
+  fun at_ bf p hp => ((at_ p).elim (fun h => absurd h (not_le_neg_of_ne_false p hp))
+    (fun h => h.elim fun w hw =>
+      ⟨w, ⟨fun e => not_le_neg_of_atom hw.1 (le_neg_of_eq_false w e),
+        bf (λ q ↦ w ≤ q ∨ w ≤ ¬ q) fun q => box_le_or_le w q (atom_le_or_le_neg w q hw.1)⟩, hw.2⟩))
+
+/-- `necessary-atomicity-and-necessary-bf-t-imply-necessary-strong-leibniz-t`. -/
+theorem necessary_atomicity_and_necessary_bf_t_imply_necessary_strong_leibniz_t :
+    NecAtomicity Prop → NecBarcanT → NecStrongLeibnizT := fun h₁ h₂ =>
+  modal_K _ _ (modal_K _ _ (nec% atomicity_t_and_bf_t_imply_strong_leibniz_t) h₁) h₂
+
 end Classicism.Proofs

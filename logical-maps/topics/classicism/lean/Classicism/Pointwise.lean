@@ -74,11 +74,18 @@ class Pointwise (τ : Type) [Rel τ] : Type where
   /-- If every `q` is `□(¬w ∨ q)` exactly when true, `X` is coextensive with `λx̄. □(¬w ∨ X[x̄])`. -/
   coext_boxAt_actual : ∀ (X : τ) (w : Prop), (∀ q : Prop, q ↔ □ (¬ w ∨ q)) →
     coext X (boxAt (Rel.or (Rel.neg (constP w)) X))
+  /-- `□X ⊑ X`: T, pointwise. -/
+  boxAt_T : ∀ X : τ, boxImp (boxAt X) X
+  /-- If every truth is necessary, `X ⊑ □X`. -/
+  boxImp_boxAt_of_all : ∀ X : τ, (∀ p : Prop, p → □ p) → boxImp X (boxAt X)
+  /-- With `B`, where `Y` fails and `□(Y → □Y)`, `Y` fails necessarily: `¬Y ⊑ □¬Y`. -/
+  neg_boxImp_boxAt_of_b : ∀ Y : τ, (∀ p : Prop, p → □ ◇ p) →
+    boxImp (Rel.top τ) (boxAt (Rel.or (Rel.neg Y) (boxAt Y))) → boxImp (Rel.neg Y) (boxAt (Rel.neg Y))
 
 export Pointwise (boxImp_refl boxImp_trans boxImp_and boxImp_and_left boxImp_and_right
   boxImp_and_neg boxImp_constP boxImp_of_constP coext_of_boxImp boxImp_of_coext
   boxImp_of_coext' boxImp_of_top_or top_boxAt_of_box top_boxAt_of_b top_boxAt_of_neg boxAt_four
-  coext_boxAt_actual)
+  coext_boxAt_actual boxAt_T boxImp_boxAt_of_all neg_boxImp_boxAt_of_b)
 
 /-! ### Type `t`
 
@@ -130,6 +137,14 @@ theorem top_boxAt_of_neg_prop (Y Z : Prop) : Y ⊆ boxAt Z → Rel.neg Y ⊆ box
 theorem boxAt_four_prop (X : Prop) : boxAt X ⊆ boxAt (boxAt X) := modal_four X
 theorem coext_boxAt_actual_prop (X w : Prop) : (∀ q : Prop, q ↔ □ (¬ w ∨ q)) →
     X ≡ boxAt (Rel.or (Rel.neg (constP w)) X) := fun h => h X
+theorem neg_of_dia_neg_persist (y : Prop) : ◇ (¬ y) → (¬ y ∨ □ y) → ¬ y :=
+  fun hd h => Or.elim h (fun hn => hn) (fun hb => (hd (by rw [hb]; exact not_true_eq)).elim)
+theorem boxAt_T_prop (X : Prop) : boxAt X ⊆ X := fun h => box_elim h
+theorem boxImp_boxAt_of_all_prop (X : Prop) : (∀ p : Prop, p → □ p) → X ⊆ boxAt X :=
+  fun h hx => h X hx
+theorem neg_boxImp_boxAt_of_b_prop (Y : Prop) : (∀ p : Prop, p → □ ◇ p) →
+    Rel.top Prop ⊆ boxAt (Rel.or (Rel.neg Y) (boxAt Y)) → Rel.neg Y ⊆ boxAt (Rel.neg Y) :=
+  fun b h hny => modal_K _ _ (modal_K _ _ (nec% (neg_of_dia_neg_persist Y)) (b _ hny)) (h trivial)
 
 instance instPointwiseProp : Pointwise Prop where
   boxImp_refl := boxImp_refl_prop
@@ -149,6 +164,9 @@ instance instPointwiseProp : Pointwise Prop where
   top_boxAt_of_neg := top_boxAt_of_neg_prop
   boxAt_four := boxAt_four_prop
   coext_boxAt_actual := coext_boxAt_actual_prop
+  boxAt_T := boxAt_T_prop
+  boxImp_boxAt_of_all := boxImp_boxAt_of_all_prop
+  neg_boxImp_boxAt_of_b := neg_boxImp_boxAt_of_b_prop
 
 /-! ### Relational function types
 
@@ -197,6 +215,12 @@ theorem top_boxAt_of_neg_arrow (Y Z : σ → τ) : Y ⊆ boxAt Z → Rel.neg Y �
 theorem boxAt_four_arrow (X : σ → τ) : boxAt X ⊆ boxAt (boxAt X) := fun z => boxAt_four (X z)
 theorem coext_boxAt_actual_arrow (X : σ → τ) (w : Prop) : (∀ q : Prop, q ↔ □ (¬ w ∨ q)) →
     X ≡ boxAt (Rel.or (Rel.neg (constP w)) X) := fun h z => coext_boxAt_actual (X z) w h
+theorem boxAt_T_arrow (X : σ → τ) : boxAt X ⊆ X := fun z => boxAt_T (X z)
+theorem boxImp_boxAt_of_all_arrow (X : σ → τ) : (∀ p : Prop, p → □ p) → X ⊆ boxAt X :=
+  fun h z => boxImp_boxAt_of_all (X z) h
+theorem neg_boxImp_boxAt_of_b_arrow (Y : σ → τ) : (∀ p : Prop, p → □ ◇ p) →
+    Rel.top (σ → τ) ⊆ boxAt (Rel.or (Rel.neg Y) (boxAt Y)) → Rel.neg Y ⊆ boxAt (Rel.neg Y) :=
+  fun b h z => neg_boxImp_boxAt_of_b (Y z) b (h z)
 
 instance instPointwiseArrow : Pointwise (σ → τ) where
   boxImp_refl := boxImp_refl_arrow
@@ -216,6 +240,9 @@ instance instPointwiseArrow : Pointwise (σ → τ) where
   top_boxAt_of_neg := top_boxAt_of_neg_arrow
   boxAt_four := boxAt_four_arrow
   coext_boxAt_actual := coext_boxAt_actual_arrow
+  boxAt_T := boxAt_T_arrow
+  boxImp_boxAt_of_all := boxImp_boxAt_of_all_arrow
+  neg_boxImp_boxAt_of_b := neg_boxImp_boxAt_of_b_arrow
 
 end arrow
 

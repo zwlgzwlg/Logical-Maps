@@ -18,12 +18,12 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 
 | class | results | proved in Lean | in part only | not yet |
 | --- | --- | --- | --- | --- |
-| Per-type routine | 112 | 53 | 1 | 58 |
+| Per-type routine | 112 | 96 | 1 | 15 |
 | Per-instance routine over sentences | 48 | 27 | 0 | 21 |
 | Sweet spot | 40 | 15 | 8 | 17 |
 | Metalogic-dominated | 26 | 9 | 0 | 17 |
 | Conjectured | 4 | 0 | 0 | 4 |
-| total | 230 | 104 | 9 | 117 |
+| total | 230 | 147 | 9 | 74 |
 
 ## Sweet spot (40)
 
@@ -156,10 +156,10 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `actuality-incompatible-with-atomlessness` — **Lean: full**
 - `atomicity-and-bf-imply-necessary-actuality` — **Lean: full**
 - `atomicity-and-bf-imply-strong-leibniz`
-- `atomicity-r-implies-atomicity-t`
+- `atomicity-r-implies-atomicity-t` — **Lean: full**
 - `atomicity-t-and-bf-imply-necessary-actuality` — **Lean: full**
-- `atomicity-t-and-bf-t-imply-strong-leibniz-t`
-- `atomicity-t-incompatible-with-atomlessness`
+- `atomicity-t-and-bf-t-imply-strong-leibniz-t` — **Lean: full**
+- `atomicity-t-incompatible-with-atomlessness` — **Lean: full**
 - `atomlessness-implies-axiom-of-infinity-t`
 - `axiom-of-infinity-e-implies-possible-infinity-e`
 - `axiom-of-infinity-t-implies-possible-infinity-t`
@@ -168,9 +168,9 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `boolean-completeness-r-implies-boolean-completeness-t` — **Lean: full**
 - `boolean-completeness-r-implies-countable-boolean-completeness-r`
 - `c5-and-completeness-imply-actuality` — **Lean: full**
-- `c5-and-necessary-rigid-comprehension-imply-necessary-gallin-comprehension`
-- `c5-and-persistent-comprehension-imply-gallin`
-- `classicism-implies-broad-necessitism-r`
+- `c5-and-necessary-rigid-comprehension-imply-necessary-gallin-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
+- `c5-and-persistent-comprehension-imply-gallin` — **Lean: at every arity, `Results/Arity.lean`**
+- `classicism-implies-broad-necessitism-r` — **Lean: full**
 - `classicism-implies-converse-barcan-r` — **Lean: full**
 - `classicism-implies-existence-r` — **Lean: full**
 - `classicism-implies-identity-necessary-r` — **Lean: full**
@@ -181,18 +181,18 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `classicism-implies-modalized-fregean` — **Lean: full**
 - `classicism-implies-modalized-functionality-r` — **Lean: full**
 - `classicism-implies-ordinary-comprehension-r`
-- `distinctness-necessary-r-implies-distinctness-necessary-t`
+- `distinctness-necessary-r-implies-distinctness-necessary-t` — **Lean: full**
 - `distinctness-necessary-t-implies-modal-five` — **Lean: full**
-- `distinctness-preserving-collapse-and-nd-imply-fregean-axiom`
+- `distinctness-preserving-collapse-and-nd-imply-fregean-axiom` — **Lean: full**
 - `extensionality-r-implies-actuality` — **Lean: full**
 - `extensionality-r-implies-fregean-axiom` — **Lean: full**
-- `extensionality-r-implies-functionality-r`
-- `extensionality-r-implies-necessary-extensionality-r`
-- `extensionality-r-implies-rigid-comprehension-r`
-- `fregean-axiom-implies-distinctness-preserving-collapse`
+- `extensionality-r-implies-functionality-r` — **Lean: full**
+- `extensionality-r-implies-necessary-extensionality-r` — **Lean: full**
+- `extensionality-r-implies-rigid-comprehension-r` — **Lean: at every arity, `Results/Arity.lean`**
+- `fregean-axiom-implies-distinctness-preserving-collapse` — **Lean: full**
 - `fregean-axiom-implies-extensionality-r` — **Lean: full**
 - `fregean-axiom-implies-necessary-distinctness-necessary-r` — **Lean: full**
-- `fregean-axiom-implies-necessary-fregean-axiom`
+- `fregean-axiom-implies-necessary-fregean-axiom` — **Lean: full**
 - `fregean-incompatible-with-infinity-t`
 - `functional-choice-r-implies-plenitude-r` — **Lean: full**
 - `functional-choice-r-implies-relational-choice-r` — **Lean: full**
@@ -203,63 +203,63 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `nd-and-bf-imply-necessary-nd` — **Lean: full**
 - `necessary-actuality-implies-actuality` — **Lean: full**
 - `necessary-atomicity-and-necessary-bf-imply-necessary-strong-leibniz`
-- `necessary-atomicity-and-necessary-bf-t-imply-necessary-strong-leibniz-t`
-- `necessary-atomicity-r-implies-atomicity-r`
-- `necessary-barcan-r-implies-barcan-r`
-- `necessary-barcan-r-implies-necessary-barcan-t`
-- `necessary-barcan-r-implies-necessary-functionality-r`
+- `necessary-atomicity-and-necessary-bf-t-imply-necessary-strong-leibniz-t` — **Lean: full**
+- `necessary-atomicity-r-implies-atomicity-r` — **Lean: full**
+- `necessary-barcan-r-implies-barcan-r` — **Lean: full**
+- `necessary-barcan-r-implies-necessary-barcan-t` — **Lean: full**
+- `necessary-barcan-r-implies-necessary-functionality-r` — **Lean: full**
 - `necessary-barcan-t-implies-barcan-t` — **Lean: full**
 - `necessary-boolean-completeness-r-implies-boolean-completeness-r` — **Lean: full**
-- `necessary-distinctness-necessary-r-implies-distinctness-necessary-r`
+- `necessary-distinctness-necessary-r-implies-distinctness-necessary-r` — **Lean: full**
 - `necessary-distinctness-necessary-r-implies-necessary-barcan-r` — **Lean: full**
-- `necessary-distinctness-necessary-r-implies-necessary-distinctness-necessary-t`
-- `necessary-distinctness-necessary-r-implies-necessary-modal-five`
+- `necessary-distinctness-necessary-r-implies-necessary-distinctness-necessary-t` — **Lean: full**
+- `necessary-distinctness-necessary-r-implies-necessary-modal-five` — **Lean: full**
 - `necessary-distinctness-necessary-t-implies-distinctness-necessary-t` — **Lean: full**
 - `necessary-distinctness-necessary-t-implies-necessary-distinctness-necessary-r` — **Lean: full**
-- `necessary-extensionality-r-implies-extensionality-r`
-- `necessary-fregean-axiom-implies-fregean-axiom`
-- `necessary-functional-choice-r-implies-functional-choice-r`
-- `necessary-functional-choice-r-implies-necessary-plenitude-r`
-- `necessary-functional-choice-r-implies-necessary-relational-choice-r`
-- `necessary-functionality-r-implies-functionality-r`
-- `necessary-functionality-r-implies-necessary-tractarianism-r`
+- `necessary-extensionality-r-implies-extensionality-r` — **Lean: full**
+- `necessary-fregean-axiom-implies-fregean-axiom` — **Lean: full**
+- `necessary-functional-choice-r-implies-functional-choice-r` — **Lean: full**
+- `necessary-functional-choice-r-implies-necessary-plenitude-r` — **Lean: full**
+- `necessary-functional-choice-r-implies-necessary-relational-choice-r` — **Lean: full**
+- `necessary-functionality-r-implies-functionality-r` — **Lean: full**
+- `necessary-functionality-r-implies-necessary-tractarianism-r` — **Lean: full**
 - `necessary-gallin-comprehension-implies-gallin-comprehension` — **Lean: full**
 - `necessary-gallin-comprehension-implies-necessary-nd` — **Lean: full**
-- `necessary-modal-b-implies-modal-b`
-- `necessary-modal-b-implies-necessary-distinctness-necessary-r`
-- `necessary-modal-five-implies-modal-five`
-- `necessary-modal-five-implies-necessary-modal-b`
+- `necessary-modal-b-implies-modal-b` — **Lean: full**
+- `necessary-modal-b-implies-necessary-distinctness-necessary-r` — **Lean: full**
+- `necessary-modal-five-implies-modal-five` — **Lean: full**
+- `necessary-modal-five-implies-necessary-modal-b` — **Lean: full**
 - `necessary-nd-implies-bf` — **Lean: full**
 - `necessary-plenitude-r-implies-necessary-actuality` — **Lean: full**
 - `necessary-plenitude-r-implies-necessary-distinctness-necessary-r` — **Lean: full**
 - `necessary-plenitude-r-implies-plenitude-r` — **Lean: full**
-- `necessary-relational-choice-and-necessary-plenitude-imply-necessary-functional-choice`
-- `necessary-relational-choice-r-implies-relational-choice-r`
+- `necessary-relational-choice-and-necessary-plenitude-imply-necessary-functional-choice` — **Lean: full**
+- `necessary-relational-choice-r-implies-relational-choice-r` — **Lean: full**
 - `necessary-rigid-comprehension-r-implies-necessary-actuality` — **Lean: full**
 - `necessary-rigid-comprehension-r-implies-necessary-boolean-completeness-r` — Lean: in part
-- `necessary-rigid-comprehension-r-implies-rigid-comprehension-r`
+- `necessary-rigid-comprehension-r-implies-rigid-comprehension-r` — **Lean: full**
 - `necessary-strong-leibniz-and-rigid-comprehension-imply-necessary-bf-t`
 - `necessary-strong-leibniz-implies-necessary-atomicity`
-- `necessary-strong-leibniz-r-implies-necessary-strong-leibniz-t`
-- `necessary-strong-leibniz-t-implies-strong-leibniz-t`
-- `necessary-tractarianism-r-implies-necessary-barcan-r`
-- `necessary-tractarianism-r-implies-tractarianism-r`
+- `necessary-strong-leibniz-r-implies-necessary-strong-leibniz-t` — **Lean: full**
+- `necessary-strong-leibniz-t-implies-strong-leibniz-t` — **Lean: full**
+- `necessary-tractarianism-r-implies-necessary-barcan-r` — **Lean: full**
+- `necessary-tractarianism-r-implies-tractarianism-r` — **Lean: full**
 - `persistent-comprehension-r-implies-actuality` — **Lean: full**
 - `plenitude-r-implies-actuality` — **Lean: full**
 - `plenitude-r-implies-distinctness-necessary-r` — **Lean: full**
 - `possible-infinity-e-and-bf-imply-axiom-of-infinity-e`
 - `possible-infinity-t-and-bf-t-imply-axiom-of-infinity-t`
-- `relational-choice-and-plenitude-imply-functional-choice-r`
+- `relational-choice-and-plenitude-imply-functional-choice-r` — **Lean: full**
 - `rigid-comprehension-and-bf-imply-necessary-bf` — **Lean: full**
 - `rigid-comprehension-r-implies-actuality` — **Lean: full**
 - `rigid-comprehension-r-implies-inextensible-comprehension-r` — **Lean: full**
 - `rigid-comprehension-r-implies-persistent-comprehension-r` — **Lean: full**
 - `rigid-comprehension-r-implies-weak-rigid-comprehension-r` — **Lean: full**
 - `strong-leibniz-r-implies-atomicity-r`
-- `strong-leibniz-r-implies-strong-leibniz-t`
-- `strong-leibniz-t-implies-atomicity-t`
+- `strong-leibniz-r-implies-strong-leibniz-t` — **Lean: full**
+- `strong-leibniz-t-implies-atomicity-t` — **Lean: full**
 - `tractarianism-r-implies-barcan-r` — **Lean: full**
-- `very-weak-rigid-comprehension-r-implies-weak-rigid-comprehension-r`
+- `very-weak-rigid-comprehension-r-implies-weak-rigid-comprehension-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `weak-rigid-comprehension-r-implies-persistent-comprehension-r` — **Lean: full**
 - `weak-rigid-comprehension-r-implies-very-weak-rigid-comprehension-r` — **Lean: full**
 

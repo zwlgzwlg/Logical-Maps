@@ -186,6 +186,49 @@ def Plenitude (σ τ : Type) [Ty σ] [Rel τ] : Prop :=
 /-- `necessary-plenitude-r` at `σ`, `τ`: the instance boxed. -/
 def NecPlenitude (σ τ : Type) [Ty σ] [Rel τ] : Prop := □ (Plenitude σ τ)
 
+/-! ### Further principles of the map (28 September)
+
+Boxed forms of principles above, the Strong Leibniz Biconditionals with Bacon's strong
+worlds, the distinctness-preserving modality of §2.6, and Broad Necessitism. -/
+
+/-- `necessary-modal-b`: `B` boxed. -/
+def NecModalB : Prop := □ ModalB
+/-- `necessary-modal-five`: `5` boxed. -/
+def NecModalFive : Prop := □ ModalFive
+/-- `necessary-fregean-axiom`. -/
+def NecFregeanAxiom : Prop := □ FregeanAxiom
+/-- `necessary-extensionality-r` at `τ`. -/
+def NecExtensionality (τ : Type) [Rel τ] : Prop := □ (Extensionality τ)
+/-- `necessary-functionality-r` at `σ`, `τ`. -/
+def NecFunctionality (σ τ : Type) [Ty σ] [Rel τ] : Prop := □ (Functionality σ τ)
+/-- `necessary-tractarianism-r` at `σ`. -/
+def NecTractarianism (σ : Type) [Ty σ] : Prop := □ (Tractarianism σ)
+/-- `necessary-functional-choice-r` at `σ`, `τ`. -/
+def NecFunctionalChoice (σ τ : Type) [Ty σ] [Rel τ] : Prop := □ (FunctionalChoice σ τ)
+/-- `necessary-relational-choice-r` at `σ`, `τ`. -/
+def NecRelationalChoice (σ τ : Type) [Ty σ] [Ty τ] : Prop := □ (RelationalChoice σ τ)
+
+/-- `SWorld_τ(W) := ◇_τ W ∧ □∀Y. W ≤ Y ∨ W ≤ ¬Y`, with `◇_τ W := W ≠ ⊥_τ` (Bacon §8.2). -/
+def SWorld {τ : Type} [Rel τ] (W : τ) : Prop :=
+  W ≠ Rel.bot τ ∧ □ (∀ Y : τ, Rel.le W Y ∨ Rel.le W (Rel.neg Y))
+/-- `strong-leibniz-r` at `τ`: every possible entity is entailed by a strong world. -/
+def StrongLeibniz (τ : Type) [Rel τ] : Prop :=
+  ∀ X : τ, X ≠ Rel.bot τ → ∃ W : τ, SWorld W ∧ Rel.le W X
+/-- `strong-leibniz-t`. -/
+def StrongLeibnizT : Prop := StrongLeibniz Prop
+/-- `necessary-strong-leibniz-r` at `τ`. -/
+def NecStrongLeibniz (τ : Type) [Rel τ] : Prop := □ (StrongLeibniz τ)
+/-- `necessary-strong-leibniz-t`. -/
+def NecStrongLeibnizT : Prop := □ StrongLeibnizT
+
+/-- `□_≠p := ∃q. q ∧ □(◇q → p)`, the distinctness-preserving necessity (Classicism, §2.6). -/
+def BoxNe (p : Prop) : Prop := ∃ q : Prop, q ∧ □ (◇ q → p)
+/-- `distinctness-preserving-collapse`: `∀p. p → □_≠p`. -/
+def DistinctnessPreservingCollapse : Prop := ∀ p : Prop, p → BoxNe p
+
+/-- `broad-necessitism-r` at `σ`: `∀x. □∃y. y = x`. -/
+def BroadNecessitism (σ : Type) [Ty σ] : Prop := ∀ x : σ, □ (∃ y : σ, y = x)
+
 /-! ### Auxiliary schemas
 
 Not principles of the map. The results at every arity (`Results/Arity.lean`) use them as

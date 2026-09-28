@@ -28,3 +28,9 @@ parameters; `P.reflect`, that reading it back gives the strict twin, by `rfl`; a
   Classicism.P.NecBooleanCompleteness Classicism.P.Actuality Classicism.P.NecActuality
   Classicism.P.ActualProfile Classicism.P.NecRigidComprehension Classicism.P.Plenitude
   Classicism.P.BarcanArgs Classicism.P.NecBarcanArgs Classicism.P.NecGallinExtensionalComprehension Classicism.P.NecPlenitude
+  Classicism.P.NecModalB Classicism.P.NecModalFive Classicism.P.NecFregeanAxiom
+  Classicism.P.NecExtensionality Classicism.P.NecFunctionality Classicism.P.NecTractarianism
+  Classicism.P.NecFunctionalChoice Classicism.P.NecRelationalChoice
+  Classicism.P.StrongLeibniz Classicism.P.StrongLeibnizT Classicism.P.NecStrongLeibniz
+  Classicism.P.NecStrongLeibnizT Classicism.P.DistinctnessPreservingCollapse
+  Classicism.P.BroadNecessitism
