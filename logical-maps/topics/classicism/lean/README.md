@@ -216,7 +216,7 @@ Classicism/Modal.lean                   K, T, 4, NI, CBF, Intensionality and its
 Classicism/Order.lean                   the algebraic order and its pointwise characterisation
 Classicism/Comprehension.lean           persistence, inextensibility and the rigidity variants
 Classicism/Pointwise.lean               the pointwise laws of ⊑ at a relational type, as a class
-Classicism/Lattice.lean                 Atom, the bounds LB/GLB/UB/LUB, the order at t as identities
+Classicism/Lattice.lean                 Atom, the bounds LB/GLB/UB/LUB, ActualWorld, the order at t as identities
 Classicism/Principles.lean              one Prop per principle of the map
 
 Classicism/Syntax/Types.lean            the types of R as an inductive; induction on relational types
@@ -265,6 +265,8 @@ Classicism/Tools/Translate.lean         the translator: gated shallow proofs to 
 Classicism/Tools/Schema.lean            principles as schemas; records as entailments and rules; #classicism_certify
 Classicism/Tools/Audit.lean             the audits over the shallow layer, run at build time
 Classicism/Tools/Tests.lean             negative and positive controls for the checkers
+
+scripts/FunKinds.lean                   which `fun`s in a file are terms (written λ … ↦) and which are proofs
 
 Classicism/Certified/Quoted.lean        the record theorems quoted; home of foo.quoted
 Classicism/Certified/Derived.lean       two derivations checked at build time

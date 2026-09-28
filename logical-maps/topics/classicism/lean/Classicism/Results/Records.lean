@@ -1,3 +1,4 @@
+import Classicism.Paper
 import Classicism.Principles
 
 /-!
@@ -24,7 +25,7 @@ each theorem here has a necessitation, from which the boxed record follows by `K
 -/
 
 namespace Classicism.Proofs
-open Classicism.P
+open Classicism.P Classicism.Paper
 
 /-! ### Theorems of Classicism (records with no premises) -/
 
@@ -103,12 +104,12 @@ coextension sentence identical to `True`, and Intensionality finishes. -/
 theorem fregean_axiom_implies_extensionality_r {τ : Type} [Rel τ] :
     FregeanAxiom → Extensionality τ := by
   intro fa X Y h
-  exact intensionality X Y (fa (coext X Y) True ⟨fun _ => trivial, fun _ => h⟩)
+  exact intensionality X Y (fa (X ≡ Y) True ⟨fun _ => trivial, fun _ => h⟩)
 
 /-! ### Tractarianism, Functionality and BF (Classicism, Proposition 2.1, n. 27) -/
 
 /-- `True ≤ q` is `□q`: `q = (True ∨ q)` iff `q = True`. -/
-theorem true_entails_eq_box (q : Prop) : (True ≤ q) = □ q := by
+theorem true_entails_eq_box (q : Prop) : entails True q = □ q := by
   show (q = (True ∨ q)) = (q = True)
   rw [true_or_eq]
 
@@ -123,9 +124,9 @@ with `λx. p ∨ Xx`; then `∀x. Xx = ∀x. p ∨ Xx = p ∨ ∀x. Xx` by Distr
 theorem functionality_r_implies_tractarianism_r {σ : Type} [Ty σ] :
     Functionality σ Prop → Tractarianism σ := by
   intro fn p X h
-  have hX : X = fun x => p ∨ X x := fn X (fun x => p ∨ X x) h
+  have hX : X = λ x ↦ p ∨ X x := fn X (λ x ↦ p ∨ X x) h
   show (∀ x, X x) = (p ∨ ∀ x, X x)
-  calc (∀ x, X x) = (∀ x, p ∨ X x) := by conv => lhs; rw [hX]
+  calc (∀ x, X x) = (∀ x, p ∨ X x) := congrArg (λ Y : σ → Prop ↦ ∀ x, Y x) hX
     _ = (p ∨ ∀ x, X x) := (or_forall_distrib_eq X p).symm
 
 /-- `barcan-r-implies-functionality-r`: NI pointwise, BF at `σ` to box the quantifier,
@@ -134,7 +135,7 @@ theorem barcan_r_implies_functionality_r {σ τ : Type} [Ty σ] [Rel τ] :
     Barcan σ → Functionality σ τ := by
   intro bf X Y h
   exact modalized_functionality X Y
-    (bf (fun z => X z = Y z) (fun z => necessity_of_identity _ _ (h z)))
+    (bf (λ z ↦ X z = Y z) (fun z => necessity_of_identity _ _ (h z)))
 
 
 /-! ### Comprehension (Classicism, §2.3; Dorr, *BC does not imply RC*) -/
@@ -193,7 +194,7 @@ necessitates, so `K` yields `□(a ≠ b)`. The instance of the premise used is 
 theorem gallin_comprehension_implies_nd {σ : Type} [Ty σ] :
     GallinExtensionalComprehension (σ → Prop) → NecessityOfDistinctness σ := by
   intro gec a b hne
-  obtain ⟨Y, hY, hnY, hco⟩ := gec (fun x : σ => x = a)
+  obtain ⟨Y, hY, hnY, hco⟩ := gec (λ x : σ ↦ x = a)
   have hYa : Y a := (hco a).1 rfl
   have hnYb : ¬ Y b := fun hb => hne ((hco b).2 hb).symm
   have hbox : □ (Y a) ∧ □ (¬ Y b) :=
@@ -217,10 +218,10 @@ theorem functional_choice_r_implies_relational_choice_r {σ τ : Type} [Ty σ] [
     FunctionalChoice σ (τ → Prop) → RelationalChoice σ τ := by
   intro fc U hser
   -- The relation between an argument and the haecceities of its `U`-successors.
-  have hser' : Serial (fun (x : σ) (H : τ → Prop) => ∃ y, H = (fun w => w = y) ∧ U x y) := by
+  have hser' : Serial (λ (x : σ) (H : τ → Prop) ↦ ∃ y, H = (λ w ↦ w = y) ∧ U x y) := by
     intro x
     obtain ⟨y, hy⟩ := hser x
-    exact ⟨fun w => w = y, y, rfl, hy⟩
+    exact ⟨λ w ↦ w = y, y, rfl, hy⟩
   obtain ⟨X, hX⟩ := fc _ hser'
   refine ⟨X, ?_, ?_⟩
   · -- `X x` is the haecceity of one `U`-successor, so it holds of exactly that one.
@@ -274,7 +275,7 @@ theorem all_of_T_imp (T : Prop → Prop) (q : Prop) : T q → (∀ p, T p → p)
 is used, not inextensibility. -/
 theorem persistent_comprehension_r_implies_actuality :
     PersistentComprehension (Prop → Prop) → Actuality := fun pc =>
-  (pc (fun p => p)).elim fun T hT =>
+  (pc (λ p ↦ p)).elim fun T hT =>
     ⟨∀ p, T p → p, fun p hTp => (hT.2 p).2 hTp, fun q hq =>
       le_of_box_boxImp (modal_K _ _ (nec% (all_of_T_imp T q))
         (weaklyPersistent_apply (weaklyPersistent_of_persistent hT.1) q ((hT.2 q).1 hq)))⟩
@@ -287,15 +288,15 @@ theorem rigid_comprehension_r_implies_actuality : RigidComprehension (Prop → P
 
 /-- `w ≤ Xy` is an identity, so it is necessary when true: `λy. w ≤ Xy` is persistent. -/
 theorem le_apply_box {σ : Type} [Ty σ] (w : Prop) (X : σ → Prop) :
-    ∀ y, Rel.le w (X y) → □ (Rel.le w (X y)) := fun y h => necessity_of_identity _ _ h
+    ∀ y, w ≤ X y → □ (w ≤ X y) := fun y h => necessity_of_identity _ _ h
 
 /-- `actuality-implies-persistent-comprehension-r` at `σ → t` (Classicism, n. 38): with
 `w` the actual world, `λy. w ≤ Xy` is persistent, since entailments are necessary when
 true, and coextensive with `X`, since `w` entails exactly the truths. -/
 theorem actuality_implies_persistent_comprehension_r {σ : Type} [Ty σ] :
     Actuality → PersistentComprehension (σ → Prop) := fun act X =>
-  act.elim fun w hw =>
-    ⟨fun y => Rel.le w (X y), nec% (le_apply_box w X),
+  act.elim fun w (hw : ActualWorld w) =>
+    ⟨λ y ↦ w ≤ X y, nec% (le_apply_box w X),
       fun y => ⟨fun hX => hw.2 (X y) hX, fun h => imp_of_le_prop w (X y) h hw.1⟩⟩
 
 /-- `w → ∀y. w ∧ Xy → Zy` gives `∀y. w ∧ Xy → Zy`. -/
@@ -309,9 +310,9 @@ it, which is `□∀y. w ∧ Xy → Zy`. This is the argument of Classicism, n. 
 and the box the map's `Inextensible` carries would need `w` to entail the truths at every
 world, which Actuality does not say. So the record is not stated here. -/
 theorem actuality_implies_weakly_inextensible_comprehension {σ : Type} [Ty σ] :
-    Actuality → ∀ X : σ → Prop, ∃ Y : σ → Prop, WeaklyInextensible Y ∧ coext X Y := fun act X =>
-  act.elim fun w hw =>
-    ⟨fun y => w ∧ X y,
+    Actuality → ∀ X : σ → Prop, ∃ Y : σ → Prop, WeaklyInextensible Y ∧ X ≡ Y := fun act X =>
+  act.elim fun w (hw : ActualWorld w) =>
+    ⟨λ y ↦ w ∧ X y,
       fun Z hZ => modal_K _ _ (nec% (imp_of_w_imp w X Z))
         ((le_iff_prop _ _).1 (hw.2 _ (fun y hy => box_elim (hZ y hy)))),
       fun y => ⟨fun hX => ⟨hw.1, hX⟩, fun h => h.2⟩⟩
@@ -323,8 +324,8 @@ theorem profile_of_w_imp {σ : Type} [Ty σ] (w : Prop) (Z : σ → Prop) (x : �
 /-- `actuality-implies-actual-profile-r` at `σ` (Classicism, n. 36): `λy. w ∧ y = x` is
 the true profile of `x`, and it entails every `Z` with `Zx`, since `w` entails `Zx`. -/
 theorem actuality_implies_actual_profile_r {σ : Type} [Ty σ] : Actuality → ActualProfile σ :=
-  fun act x => act.elim fun w hw =>
-    ⟨fun y => w ∧ y = x, ⟨hw.1, rfl⟩, fun Z hZ =>
+  fun act x => act.elim fun w (hw : ActualWorld w) =>
+    ⟨λ y ↦ w ∧ y = x, ⟨hw.1, rfl⟩, fun Z hZ =>
       (le_iff _ _).2 (modal_K _ _ (nec% (profile_of_w_imp w Z x))
         ((le_iff_prop _ _).1 (hw.2 (Z x) hZ)))⟩
 
@@ -343,10 +344,10 @@ theorem meet_of_forall_imp (T : Prop → Prop) (V : Prop) : (∀ q, T q → V �
 coextensive with `X`. A lower bound `V` of `X` is one of `X*`, so `∀q. X*q → □(V → q)`;
 weak inextensibility boxes the universal, `□∀q. X*q → V → q`, which is `V ≤ U`.
 Conversely from `V ≤ U` and `X*p`, `□X*p` by weak persistence, and `K` gives `V ≤ p`. -/
-theorem glb_of_veryWeaklyRigid (X T : Prop → Prop) (hT : VeryWeaklyRigid T) (hco : coext X T) :
+theorem glb_of_veryWeaklyRigid (X T : Prop → Prop) (hT : VeryWeaklyRigid T) (hco : X ≡ T) :
     GLB (∀ p, T p → p) X := fun V =>
   ⟨fun hlb => (le_iff_prop _ _).2 (modal_K _ _ (nec% (meet_of_forall_imp T V))
-      (hT.2 (fun q => V → q) (fun q hTq => (le_iff_prop _ _).1 (hlb q ((hco q).2 hTq))))),
+      (hT.2 (λ q ↦ V → q) (fun q hTq => (le_iff_prop _ _).1 (hlb q ((hco q).2 hTq))))),
    fun hle p hXp => (le_iff_prop _ _).2 (modal_K _ _ (modal_K _ _ (nec% (meet_imp T V p))
       ((le_iff_prop _ _).1 hle)) (weaklyPersistent_apply hT.1 p ((hco p).1 hXp)))⟩
 
@@ -370,7 +371,7 @@ theorem rigid_comprehension_r_implies_boolean_completeness_r :
     (rigid_comprehension_r_implies_weak_rigid_comprehension_r rc)
 
 /-- Under the Fregean Axiom, `V ≤ p` is `V → p`. -/
-theorem le_iff_imp_of_fregean (fa : FregeanAxiom) (V p : Prop) : Rel.le V p ↔ (V → p) :=
+theorem le_iff_imp_of_fregean (fa : FregeanAxiom) (V p : Prop) : V ≤ p ↔ (V → p) :=
   ⟨imp_of_le_prop V p, fun h => fa p (V ∨ p) ⟨fun hp => Or.inr hp, fun hvp => hvp.elim h id⟩⟩
 
 /-- `extensionality-r-implies-boolean-completeness-r`, at `t` (Classicism, n. 33): under
@@ -433,7 +434,7 @@ theorem plenitude_r_implies_actuality : Plenitude Prop Prop → Actuality := fun
 
 /-- The relation mapping `x` to `⊤` and everything else to `⊥` is functional. -/
 theorem haec_rel_functional {σ : Type} [Ty σ] (x : σ) :
-    Functional (fun z (w : Prop) => (x = z ∧ w = True) ∨ (x ≠ z ∧ w = False)) := fun z =>
+    Functional (λ z (w : Prop) ↦ (x = z ∧ w = True) ∨ (x ≠ z ∧ w = False)) := fun z =>
   (em (x = z)).elim
     (fun h => ⟨True, Or.inl ⟨h, rfl⟩, fun w hw => hw.elim (fun h' => h'.2.symm) (fun h' => absurd h h'.1)⟩)
     (fun h => ⟨False, Or.inr ⟨h, rfl⟩, fun w hw => hw.elim (fun h' => absurd h'.1 h) (fun h' => h'.2.symm)⟩)
@@ -465,34 +466,34 @@ theorem functional_choice_r_implies_plenitude_r {σ τ : Type} [Ty σ] [Rel τ] 
 
 /-- An atom `w` entails `q → w ≤ q`, for every `q`: if `w ≤ q`, then `w ≤ q` is
 necessary, so `q → w ≤ q` is `⊤`; if `w ≤ ¬q`, then `w ≤ ¬q ∨ r` for any `r`. -/
-theorem atom_le_imp_le (w q : Prop) (hw : Atom w) : Rel.le w (q → Rel.le w q) :=
+theorem atom_le_imp_le (w q : Prop) (hw : Atom w) : w ≤ (q → w ≤ q) :=
   (atom_le_or_le_neg w q hw).elim
     (fun h => by
-      rw [show Rel.le w q = True from box_le_prop w q h, imp_true_eq]
+      rw [show (w ≤ q) = True from box_le_prop w q h, imp_true_eq]
       exact le_top_prop w)
     (fun h => by
-      rw [imp_eq_not_or q (Rel.le w q)]
+      rw [imp_eq_not_or q (w ≤ q)]
       exact le_or_of_le_left_prop w (¬ q) _ h)
 
 /-- `(p → q) → (q → r) → p → r`. -/
 theorem imp_trans_aux (p q r : Prop) : (p → q) → (q → r) → p → r := fun h₁ h₂ hp => h₂ (h₁ hp)
 
 /-- `p ≤ q` and `□(q → r)` give `p ≤ r`. -/
-theorem le_of_le_of_box_imp (p q r : Prop) (h : Rel.le p q) (hb : □ (q → r)) : Rel.le p r :=
+theorem le_of_le_of_box_imp (p q r : Prop) (h : p ≤ q) (hb : □ (q → r)) : p ≤ r :=
   (le_iff_prop _ _).2 (modal_K _ _ (modal_K _ _ (nec% (imp_trans_aux p q r)) ((le_iff_prop _ _).1 h)) hb)
 
 /-- `w ∧ ∀q. q → w ≤ q` gives Actuality, with `w` as witness. -/
-theorem actuality_of_witness (w : Prop) : (w ∧ ∀ q, q → Rel.le w q) → Actuality := fun h => ⟨w, h.1, h.2⟩
+theorem actuality_of_witness (w : Prop) : ActualWorld w → Actuality := fun h => ⟨w, h.1, h.2⟩
 
 /-- Given Tractarianism at `t`, an atom entails Actuality: it entails `q → w ≤ q` for
 each `q`, so by Tractarianism it entails `∀q. q → w ≤ q`, and it entails itself. -/
-theorem atom_le_actuality (w : Prop) (hw : Atom w) (tr : Tractarianism Prop) : Rel.le w Actuality :=
+theorem atom_le_actuality (w : Prop) (hw : Atom w) (tr : Tractarianism Prop) : w ≤ Actuality :=
   le_of_le_of_box_imp w _ _
-    (le_and_prop w w _ (le_refl_prop w) (tr w (fun q => q → Rel.le w q) (fun q => atom_le_imp_le w q hw)))
+    (le_and_prop w w _ (le_refl_prop w) (tr w (λ q ↦ q → w ≤ q) (fun q => atom_le_imp_le w q hw)))
     (nec% (actuality_of_witness w))
 
 /-- `¬A ≤ ¬¬A` says `¬A = ⊥`, that is `□A`. -/
-theorem box_of_neg_le_neg_neg (A : Prop) (h : Rel.le (¬ A) (¬ ¬ A)) : □ A := by
+theorem box_of_neg_le_neg_neg (A : Prop) (h : (¬ A) ≤ (¬ ¬ A)) : □ A := by
   have h' : (¬ A) = False := eq_false_of_le_neg (¬ A) h
   show A = True
   calc A = ¬ ¬ A := (not_not_eq A).symm
@@ -511,7 +512,7 @@ theorem atomicity_t_and_bf_imply_necessary_actuality : AtomicityT → Barcan Pro
       (at_ (¬ Actuality)).elim
         (fun h => absurd (box_of_neg_le_neg_neg Actuality h) hn)
         (fun h => h.elim fun w hw => by
-          have h1 : Rel.le w (Actuality ∧ ¬ Actuality) :=
+          have h1 : w ≤ (Actuality ∧ ¬ Actuality) :=
             le_and_prop w Actuality (¬ Actuality) (atom_le_actuality w hw.1 tr) hw.2
           rw [and_not_self_eq Actuality] at h1
           exact (not_le_neg_of_atom hw.1 (le_trans_prop w False (¬ w) h1 (bot_le_prop (¬ w)))).elim)
@@ -563,9 +564,9 @@ theorem b_dia_box_imp : (∀ p : Prop, p → □ ◇ p) → ∀ p : Prop, ◇ �
 theorem b_forall_dia_box_imp {σ : Type} [Ty σ] (F : σ → Prop) :
     (∀ p : Prop, p → □ ◇ p) → ∀ x, ◇ □ (F x) → F x := fun b x => b_dia_box_imp b (F x)
 
-/-- `∀x. Gx → Fx` and `∀x. Gx` give `∀x. Fx`. -/
+/-- `G ⊆ F` and `∀x. Gx` give `∀x. Fx`. -/
 theorem forall_imp_forall {σ : Type} [Ty σ] (G F : σ → Prop) :
-    (∀ x, G x → F x) → (∀ x, G x) → ∀ x, F x := fun h g x => h x (g x)
+    G ⊆ F → (∀ x, G x) → ∀ x, F x := fun h g x => h x (g x)
 
 /-- `necessary-distinctness-necessary-t-implies-barcan-r` (Proposition 2.3; Prior, and the
 proof Prior attributes to Lemmon): from `∀x. □Fx`, `B` gives `□◇∀x. □Fx`; inside the box
@@ -575,10 +576,10 @@ theorem necessary_distinctness_necessary_t_implies_barcan_r {σ : Type} [Ty σ] 
     NecNecessityOfDistinctnessT → Barcan σ := fun hnd F hF =>
   have hb : ∀ p : Prop, p → □ ◇ p := b_of_nd_t (box_elim hnd)
   have h1 : □ (∀ x, ◇ □ (F x)) :=
-    modal_K _ _ (nec% (dia_forall_imp (fun x => □ (F x)))) (hb _ hF)
+    modal_K _ _ (nec% (dia_forall_imp (λ x ↦ □ (F x)))) (hb _ hF)
   have h2 : □ (∀ x, ◇ □ (F x) → F x) :=
     modal_K _ _ (nec% (b_forall_dia_box_imp F)) (box_b_of_box_nd_t hnd)
-  modal_K _ _ (modal_K _ _ (nec% (forall_imp_forall (fun x => ◇ □ (F x)) F)) h2) h1
+  modal_K _ _ (modal_K _ _ (nec% (forall_imp_forall (λ x ↦ ◇ □ (F x)) F)) h2) h1
 
 /-- `necessary-distinctness-necessary-t-implies-distinctness-necessary-r`: `B`, then
 Prior's argument. -/
@@ -628,8 +629,8 @@ theorem box_nd_instance {σ : Type} [Ty σ] (nd : ∀ x y : σ, x ≠ y → □ 
 quantifiers. -/
 theorem distinctness_necessary_r_and_barcan_r_imply_necessary_distinctness_necessary_r
     {σ : Type} [Ty σ] : NecessityOfDistinctness σ → Barcan σ → NecNecessityOfDistinctness σ :=
-  fun nd bf => bf (fun x => ∀ y, x ≠ y → □ (x ≠ y))
-    (fun x => bf (fun y => x ≠ y → □ (x ≠ y)) (fun y => box_nd_instance nd x y))
+  fun nd bf => bf (λ x ↦ ∀ y, x ≠ y → □ (x ≠ y))
+    (fun x => bf (λ y ↦ x ≠ y → □ (x ≠ y)) (fun y => box_nd_instance nd x y))
 
 /-- `distinctness-necessary-t-and-barcan-t-imply-necessary-distinctness-necessary-t`
 (Proposition 2.4 at `t`). -/
@@ -658,12 +659,12 @@ persistence make `□¬Yz`; either way `□(Yz → Zz)`, and `BF` boxes the quan
 theorem weaklyInextensible_of_persistent_b_bf {σ : Type} [Ty σ] (Y : σ → Prop) :
     (∀ p : Prop, p → □ ◇ p) → (∀ X : σ → Prop, (∀ x, □ (X x)) → □ (∀ x, X x)) →
       Persistent Y → WeaklyInextensible Y := fun b bf hP Z hZ =>
-  bf (fun z => Y z → Z z) fun z =>
+  bf (λ z ↦ Y z → Z z) fun z =>
     (em (Y z)).elim
       (fun hy => box_imp_of_box (Y z) (Z z) (hZ z hy))
       (fun hn => box_imp_of_box_not (Y z) (Z z)
         (modal_K _ _ (modal_K _ _ (nec% (not_of_dia_not_of_persist (Y z))) (b _ hn))
-          (converse_barcan (fun z => Y z → □ (Y z)) hP z)))
+          (converse_barcan (λ z ↦ Y z → □ (Y z)) hP z)))
 
 /-- In `C5` a persistent property is inextensible: the last lemma necessitated, with `□B`,
 `□BF` and `4` for persistence. -/
@@ -698,24 +699,22 @@ and `λx. x ≠ a ∨ pₐ` is an upper bound of `F_R` (by `ND` and `BF`), so `G
 and `Ga ≤ pₐ`. -/
 
 /-- `X ≤ Y` at `σ → t` gives `Xa ≤ Ya`. -/
-theorem le_apply_of_le {σ : Type} [Ty σ] (X Y : σ → Prop) (a : σ) (h : Rel.le X Y) :
-    Rel.le (X a) (Y a) :=
-  (le_iff_prop _ _).2 (converse_barcan (fun z => X z → Y z) ((le_iff X Y).1 h) a)
+theorem le_apply_of_le {σ : Type} [Ty σ] (X Y : σ → Prop) (a : σ) (h : X ≤ Y) :
+    X a ≤ Y a :=
+  (le_iff_prop _ _).2 (converse_barcan (λ z ↦ X z → Y z) ((le_iff X Y).1 h) a)
 
 /-- `G ≤ G` at `σ → t`. -/
-theorem le_refl_arrow_prop {σ : Type} [Ty σ] (G : σ → Prop) : Rel.le G G :=
+theorem le_refl_arrow_prop {σ : Type} [Ty σ] (G : σ → Prop) : G ≤ G :=
   (le_iff G G).2 (nec% (fun (z : σ) (h : G z) => h))
 
-/-- A greatest lower bound of the upper bounds of `F` is above everything `F` holds of. -/
+/-- A greatest lower bound of the upper bounds of `F` is an upper bound of `F`. -/
 theorem glb_ub_upper {σ : Type} [Ty σ] (F : (σ → Prop) → Prop) (G : σ → Prop)
-    (hG : ∀ z : σ → Prop, (∀ w : σ → Prop, (∀ X, F X → Rel.le X w) → Rel.le z w) ↔ Rel.le z G) :
-    ∀ X, F X → Rel.le X G :=
+    (hG : GLB G (λ w ↦ UB w F)) : UB G F :=
   fun X hX => (hG X).1 (fun _ hY => hY X hX)
 
 /-- And below every upper bound. -/
 theorem glb_ub_least {σ : Type} [Ty σ] (F : (σ → Prop) → Prop) (G : σ → Prop)
-    (hG : ∀ z : σ → Prop, (∀ w : σ → Prop, (∀ X, F X → Rel.le X w) → Rel.le z w) ↔ Rel.le z G) :
-    ∀ Y : σ → Prop, (∀ X, F X → Rel.le X Y) → Rel.le G Y :=
+    (hG : GLB G (λ w ↦ UB w F)) : ∀ Y : σ → Prop, UB Y F → G ≤ Y :=
   fun Y hY => (hG G).2 (le_refl_arrow_prop G) Y hY
 
 /-- `y ≠ a` refutes `y = a ∧ p`. -/
@@ -725,7 +724,7 @@ theorem ne_imp_and_imp {σ : Type} [Ty σ] (y a : σ) (p q : Prop) : y ≠ a →
 /-- `λx. x = a ∧ pₐ` satisfies `F_R`, given `ND`. -/
 theorem haec_and_le {σ : Type} [Ty σ] (nd : ∀ x y : σ, x ≠ y → □ (x ≠ y))
     (R : σ → Prop → Prop) (a : σ) (pa : Prop) (huniq : ∀ z, R a z → pa = z) :
-    ∀ y p, R y p → Rel.le (y = a ∧ pa) p := fun y p hRy =>
+    ∀ y p, R y p → (y = a ∧ pa) ≤ p := fun y p hRy =>
   (em (y = a)).elim
     (fun h => by
       rw [h] at hRy ⊢
@@ -735,7 +734,7 @@ theorem haec_and_le {σ : Type} [Ty σ] (nd : ∀ x y : σ, x ≠ y → □ (x �
 
 /-- So `pₐ ≤ Ga`. -/
 theorem pa_le_of {σ : Type} [Ty σ] (a : σ) (pa : Prop) (G : σ → Prop)
-    (h : Rel.le (fun x => x = a ∧ pa) G) : Rel.le pa (G a) :=
+    (h : (λ x ↦ x = a ∧ pa) ≤ G) : pa ≤ G a :=
   le_trans_prop pa (a = a ∧ pa) (G a)
     (le_and_prop pa (a = a) pa ((le_iff_prop _ _).2 (nec% (fun (_ : pa) => (rfl : a = a))))
       (le_refl_prop pa))
@@ -751,8 +750,8 @@ theorem imp_or_left' (r q p : Prop) : r → q → r ∨ p := fun h _ => Or.inl h
 theorem ne_or_ub {σ : Type} [Ty σ] (nd : ∀ x y : σ, x ≠ y → □ (x ≠ y))
     (bf : ∀ X : σ → Prop, (∀ x, □ (X x)) → □ (∀ x, X x))
     (R : σ → Prop → Prop) (a : σ) (pa : Prop) (hRa : R a pa) :
-    ∀ X : σ → Prop, (∀ y p, R y p → Rel.le (X y) p) → Rel.le X (fun x => x ≠ a ∨ pa) :=
-  fun X hX => (le_iff X _).2 (bf (fun x => X x → x ≠ a ∨ pa) fun x =>
+    ∀ X : σ → Prop, (∀ y p, R y p → X y ≤ p) → X ≤ (λ x ↦ x ≠ a ∨ pa) :=
+  fun X hX => (le_iff X _).2 (bf (λ x ↦ X x → x ≠ a ∨ pa) fun x =>
     (em (x = a)).elim
       (fun h => by
         rw [h]
@@ -765,7 +764,7 @@ theorem ne_self_or_imp {σ : Type} [Ty σ] (a : σ) (p : Prop) : (a ≠ a ∨ p)
 
 /-- So `Ga ≤ pₐ`. -/
 theorem ga_le_of {σ : Type} [Ty σ] (a : σ) (pa : Prop) (G : σ → Prop)
-    (h : Rel.le G (fun x => x ≠ a ∨ pa)) : Rel.le (G a) pa :=
+    (h : G ≤ (λ x ↦ x ≠ a ∨ pa)) : G a ≤ pa :=
   le_trans_prop (G a) (a ≠ a ∨ pa) pa (le_apply_of_le G _ a h)
     ((le_iff_prop _ _).2 (nec% (ne_self_or_imp a pa)))
 
@@ -778,7 +777,7 @@ theorem boolean_completeness_r_and_necessary_distinctness_necessary_t_imply_plen
   fun bc hnd R hR =>
     have nd := nd_of_nd_t (σ := σ) (box_elim hnd)
     have bf := bf_of_box_nd_t (σ := σ) hnd
-    (bc (fun Y => ∀ X : σ → Prop, (∀ y p, R y p → Rel.le (X y) p) → Rel.le X Y)).elim fun G hG =>
+    (bc (λ Y ↦ UB Y (λ X ↦ ∀ y p, R y p → X y ≤ p))).elim fun G hG =>
       ⟨G, fun a => (hR a).elim fun pa hpa =>
         have e : pa = G a := le_antisymm_prop pa (G a)
           (pa_le_of a pa G (glb_ub_upper _ G hG _ (haec_and_le nd R a pa hpa.2)))
@@ -863,17 +862,17 @@ theorem eq_of_dia_eq {σ : Type} [Ty σ] (nd : ∀ x y : σ, x ≠ y → □ (x 
     exact (hd h').elim
 
 /-- The actual world, inside the diamond: `x ∧ w ∧ ∀q. q → w ≤ q` gives `w ≤ x`. -/
-theorem le_of_actual_and (x w : Prop) : (x ∧ (w ∧ ∀ q, q → Rel.le w q)) → Rel.le w x :=
+theorem le_of_actual_and (x w : Prop) : (x ∧ ActualWorld w) → w ≤ x :=
   fun h => h.2.2 x h.1
 
 /-- A true proposition entailing every truth is non-bottom and decides every proposition. -/
 theorem decides_of_actual (x w : Prop) :
-    (x ∧ (w ∧ ∀ q, q → Rel.le w q)) → (¬ (w = False) ∧ ∀ z, Rel.le w z ∨ Rel.le w (¬ z)) :=
+    (x ∧ ActualWorld w) → (¬ (w = False) ∧ ∀ z, w ≤ z ∨ w ≤ ¬ z) :=
   fun h => ⟨fun e => e ▸ h.2.1, fun z => (em z).elim (fun hz => Or.inl (h.2.2 z hz))
     (fun hz => Or.inr (h.2.2 (¬ z) hz))⟩
 
 /-- A non-bottom proposition deciding every proposition is an atom. -/
-theorem atom_of_decides (w : Prop) (h : ¬ (w = False) ∧ ∀ z, Rel.le w z ∨ Rel.le w (¬ z)) : Atom w :=
+theorem atom_of_decides (w : Prop) (h : ¬ (w = False) ∧ ∀ z, w ≤ z ∨ w ≤ ¬ z) : Atom w :=
   fun z => ⟨fun hz => (h.2 z).elim
       (fun hwz => absurd (le_antisymm_prop z w hz.1 hwz) hz.2)
       (fun hwn => le_trans_prop z w (¬ z) hz.1 hwn),
@@ -883,16 +882,16 @@ theorem atom_of_decides (w : Prop) (h : ¬ (w = False) ∧ ∀ z, Rel.le w z ∨
 
 /-- With `ND_t`, a proposition possibly non-bottom and possibly deciding everything is so. -/
 theorem decides_of_dia (nd : ∀ x y : Prop, x ≠ y → □ (x ≠ y)) (w : Prop) :
-    ◇ (¬ (w = False) ∧ ∀ z, Rel.le w z ∨ Rel.le w (¬ z)) →
-      (¬ (w = False) ∧ ∀ z, Rel.le w z ∨ Rel.le w (¬ z)) := fun hd =>
-  ⟨ne_of_dia_ne w False (dia_mono _ _ (nec% (fun (h : ¬ (w = False) ∧ ∀ z, Rel.le w z ∨ Rel.le w (¬ z)) => h.1)) hd),
-   fun z => (dia_or _ _ (dia_forall_imp (fun z => Rel.le w z ∨ Rel.le w (¬ z))
-      (dia_mono _ _ (nec% (fun (h : ¬ (w = False) ∧ ∀ z, Rel.le w z ∨ Rel.le w (¬ z)) => h.2)) hd) z)).elim
+    ◇ (¬ (w = False) ∧ ∀ z, w ≤ z ∨ w ≤ ¬ z) →
+      (¬ (w = False) ∧ ∀ z, w ≤ z ∨ w ≤ ¬ z) := fun hd =>
+  ⟨ne_of_dia_ne w False (dia_mono _ _ (nec% (fun (h : ¬ (w = False) ∧ ∀ z, w ≤ z ∨ w ≤ ¬ z) => h.1)) hd),
+   fun z => (dia_or _ _ (dia_forall_imp (λ z ↦ w ≤ z ∨ w ≤ ¬ z)
+      (dia_mono _ _ (nec% (fun (h : ¬ (w = False) ∧ ∀ z, w ≤ z ∨ w ≤ ¬ z) => h.2)) hd) z)).elim
      (fun h => Or.inl (eq_of_dia_eq nd _ _ h)) (fun h => Or.inr (eq_of_dia_eq nd _ _ h))⟩
 
 /-- `x ∧ Actuality` is `∃w. x ∧ (w ∧ ∀q. q → w ≤ q)`. -/
 theorem and_actuality_eq (x : Prop) :
-    (x ∧ ∃ w : Prop, w ∧ ∀ q, q → Rel.le w q) = ∃ w : Prop, x ∧ (w ∧ ∀ q, q → Rel.le w q) :=
+    (x ∧ ∃ w : Prop, w ∧ ∀ q, q → w ≤ q) = ∃ w : Prop, x ∧ (w ∧ ∀ q, q → w ≤ q) :=
   and_exists_distrib_eq _ x
 
 /-- `necessary-actuality-and-necessary-distinctness-necessary-t-imply-atomicity-t`
@@ -906,7 +905,7 @@ theorem necessary_actuality_and_necessary_distinctness_necessary_t_imply_atomici
   have bf := bf_of_box_nd_t (σ := Prop) hnd
   (em (x = False)).elim (fun h => Or.inl (le_neg_of_eq_false x h)) fun hx => Or.inr (by
     have h1 : ◇ (x ∧ Actuality) := dia_and_of_dia_box x Actuality hx hna
-    have h2 : ◇ (∃ w : Prop, x ∧ (w ∧ ∀ q, q → Rel.le w q)) := by
+    have h2 : ◇ (∃ w : Prop, x ∧ (w ∧ ∀ q, q → w ≤ q)) := by
       rw [← and_actuality_eq]; exact h1
     obtain ⟨w, hw⟩ := dia_exists_of_bf bf _ h2
     exact ⟨w, atom_of_decides w (decides_of_dia nd w (dia_mono _ _ (nec% (decides_of_actual x w)) hw)),
@@ -968,7 +967,7 @@ rigid `F` coextensive with self-identity holds necessarily of everything, so by 
 `□∀x. Fx`; its inextensibility, necessitated, then gives `BF` in every world. -/
 theorem rigid_comprehension_r_and_barcan_r_imply_necessary_barcan_r {σ : Type} [Ty σ] :
     RigidComprehension (σ → Prop) → Barcan σ → NecBarcan σ := fun rc bf =>
-  (rc (fun x => x = x)).elim fun F hF =>
+  (rc (λ x ↦ x = x)).elim fun F hF =>
     have hall : □ (∀ x, F x) :=
       bf F (fun x => weaklyPersistent_apply (weaklyPersistent_of_persistent hF.1.1) x ((hF.2 x).1 rfl))
     modal_K _ _ (modal_K _ _ (nec% (bf_of_weaklyInextensible F)) hF.1.2) (modal_four _ hall)
@@ -996,19 +995,19 @@ and `NI`, so by inextensibility necessarily, which gives `q ≤ Zx`. -/
 theorem rigid_comprehension_r_and_distinctness_necessary_r_imply_plenitude_r {σ : Type} [Ty σ] :
     RigidComprehension (σ → Prop → Prop) → NecessityOfDistinctness σ → Plenitude σ Prop :=
   fun rc nd R hR => (rc R).elim fun Rs hRs =>
-    ⟨fun y => ∀ p, Rs y p → p, fun x => (hR x).elim fun q hq =>
+    ⟨λ y ↦ ∀ p, Rs y p → p, fun x => (hR x).elim fun q hq =>
       have hRsq : Rs x q := (hRs.2 x q).1 hq.1
       have hfun : ∀ y p, Rs y p → y ≠ x ∨ p = q := fun y p hp =>
         (em (y = x)).elim (fun e => Or.inr (by
             rw [e] at hp
             exact (hq.2 p ((hRs.2 x p).2 hp)).symm))
           Or.inl
-      have hle1 : Rel.le (∀ p, Rs x p → p) q := (le_iff_prop _ _).2
+      have hle1 : (∀ p, Rs x p → p) ≤ q := (le_iff_prop _ _).2
         (modal_K _ _ (nec% (z_imp_of_rs Rs x q))
           (weaklyPersistent_of_persistent hRs.1.1 x q hRsq))
-      have hle2 : Rel.le q (∀ p, Rs x p → p) := (le_iff_prop _ _).2
+      have hle2 : q ≤ (∀ p, Rs x p → p) := (le_iff_prop _ _).2
         (modal_K _ _ (nec% (z_of_functional Rs x q))
-          (weaklyInextensible_of_inextensible hRs.1.2 (fun y p => y ≠ x ∨ p = q)
+          (weaklyInextensible_of_inextensible hRs.1.2 (λ y p ↦ y ≠ x ∨ p = q)
             (fun y p hp => box_ne_or_eq nd y x p q (hfun y p hp))))
       show R x (∀ p, Rs x p → p) by
         rw [← le_antisymm_prop q _ hle2 hle1]; exact hq.1⟩
@@ -1039,7 +1038,7 @@ theorem haec_imp {σ : Type} [Ty σ] (u : σ) (H : σ → Prop) : H u → ∀ z,
 
 /-- The haecceity `λx. u = x` is below `H` when `Hu` is necessary. -/
 theorem haec_le_of_box {σ : Type} [Ty σ] (u : σ) (H : σ → Prop) (h : □ (H u)) :
-    Rel.le (fun x => u = x) H :=
+    (λ x ↦ u = x) ≤ H :=
   (le_iff _ _).2 (modal_K _ _ (nec% (haec_imp u H)) h)
 
 /-- `(u = u → p) → p`. -/
@@ -1048,17 +1047,15 @@ theorem imp_of_rfl_imp {σ : Type} [Ty σ] (u : σ) (p : Prop) : (u = u → p) �
 /-- The least upper bound `G` of the haecceities of the `X`s, as the greatest lower
 bound of their upper bounds, is below every `H` that is necessary of each `X`. -/
 theorem lub_haec_le {σ : Type} [Ty σ] (X G : σ → Prop)
-    (hG : ∀ z : σ → Prop, (∀ w : σ → Prop,
-      (∀ Y, (∃ u, X u ∧ Y = fun x => u = x) → Rel.le Y w) → Rel.le z w) ↔ Rel.le z G)
-    (H : σ → Prop) (hH : ∀ u, X u → □ (H u)) : Rel.le G H :=
+    (hG : GLB G (λ w ↦ UB w (λ Y ↦ ∃ u, X u ∧ Y = λ x ↦ u = x)))
+    (H : σ → Prop) (hH : X ⊆ boxAt H) : G ≤ H :=
   glb_ub_least _ G hG H fun Y hY => hY.elim fun u hu => by
     rw [hu.2]
     exact haec_le_of_box u H (hH u hu.1)
 
 /-- And `Gu` is necessary for each `X`, `u` (n. 42, (i) and (iii)). -/
 theorem box_lub_haec_of {σ : Type} [Ty σ] (X G : σ → Prop)
-    (hG : ∀ z : σ → Prop, (∀ w : σ → Prop,
-      (∀ Y, (∃ u, X u ∧ Y = fun x => u = x) → Rel.le Y w) → Rel.le z w) ↔ Rel.le z G)
+    (hG : GLB G (λ w ↦ UB w (λ Y ↦ ∃ u, X u ∧ Y = λ x ↦ u = x)))
     (u : σ) (hu : X u) : □ (G u) :=
   modal_K _ _ (nec% (imp_of_rfl_imp u (G u)))
     ((le_iff_prop _ _).1 (le_apply_of_le _ G u (glb_ub_upper _ G hG _ ⟨u, hu, rfl⟩)))
@@ -1066,27 +1063,26 @@ theorem box_lub_haec_of {σ : Type} [Ty σ] (X G : σ → Prop)
 /-- `Gu → Xu`, given the actual world `w` (n. 42, (ii)): `λy. w → Xy` is necessary of
 each `X`, so above `G`. -/
 theorem lub_haec_imp {σ : Type} [Ty σ] (act : Actuality) (X G : σ → Prop)
-    (hG : ∀ z : σ → Prop, (∀ w : σ → Prop,
-      (∀ Y, (∃ u, X u ∧ Y = fun x => u = x) → Rel.le Y w) → Rel.le z w) ↔ Rel.le z G)
+    (hG : GLB G (λ w ↦ UB w (λ Y ↦ ∃ u, X u ∧ Y = λ x ↦ u = x)))
     (u : σ) (hu : G u) : X u :=
-  act.elim fun w hw =>
+  act.elim fun w (hw : ActualWorld w) =>
     imp_of_le_prop (G u) (w → X u)
-      (le_apply_of_le G (fun y => w → X y) u
+      (le_apply_of_le G (λ y ↦ w → X y) u
         (lub_haec_le X G hG _ fun v hv => (le_iff_prop _ _).1 (hw.2 (X v) hv))) hu hw.1
 
 /-- `Gu`, then `∀z. Gz → □Yz` makes `q ≤ Yu`. -/
 theorem le_of_inext_premise {σ : Type} [Ty σ] (G Y : σ → Prop) (q : Prop) (u : σ) :
-    G u → (∀ z, G z → □ (Y z)) → Rel.le q (Y u) :=
+    G u → G ⊆ boxAt Y → q ≤ Y u :=
   fun hg hA => (le_iff_prop _ _).2 (box_imp_of_box q (Y u) (hA u hg))
 
 /-- `r = ∃z. Gz ∧ ¬Yz` and `∀z. Gz → r → Yz` give `∀z. Gz → Yz`. -/
 theorem forall_of_restricted {σ : Type} [Ty σ] (G Y : σ → Prop) (r : Prop) :
-    r = (∃ z, G z ∧ ¬ Y z) → (∀ z, G z → r → Y z) → ∀ z, G z → Y z :=
+    r = (∃ z, G z ∧ ¬ Y z) → G ⊆ (λ z ↦ r → Y z) → G ⊆ Y :=
   fun e h z hg => (em (Y z)).elim id fun hn => h z hg (e ▸ ⟨z, hg, hn⟩)
 
 /-- Inside the box: where `p` holds, `r = q`, so `□∀z. Gz → r → Yz` gives `□∀z. Gz → Yz`. -/
 theorem box_forall_of_restricted {σ : Type} [Ty σ] (G Y : σ → Prop) (p r : Prop) :
-    (p → r = (∃ z, G z ∧ ¬ Y z)) → □ (∀ z, G z → r → Y z) → p → □ (∀ z, G z → Y z) :=
+    (p → r = (∃ z, G z ∧ ¬ Y z)) → □ (G ⊆ λ z ↦ r → Y z) → p → □ (G ⊆ Y) :=
   fun hrq hb hp => modal_K _ _ (modal_K _ _ (nec% (forall_of_restricted G Y r))
     (necessity_of_identity r _ (hrq hp))) hb
 
@@ -1099,19 +1095,19 @@ haecceities of the `X`s. For inextensibility, fix `Y`; with `p := ∀z. X*z → 
 so `X* ≤ Y` there. `BF` at `σ → t` boxes the quantifier over `Y`. -/
 theorem rigid_comprehension_r_of_restriction {σ : Type} [Ty σ] (act : Actuality)
     (bc : BooleanCompleteness (σ → Prop)) (bf : Barcan (σ → Prop))
-    (res : ∀ p q : Prop, ∃ r : Prop, Rel.le p (r = q) ∧ ∀ s : Prop, Rel.le p (Rel.le q s) → Rel.le r s) :
+    (res : ∀ p q : Prop, ∃ r : Prop, p ≤ (r = q) ∧ ∀ s : Prop, p ≤ (q ≤ s) → r ≤ s) :
     RigidComprehension (σ → Prop) := fun X =>
-  (bc (fun Y => ∀ Z, (∃ u, X u ∧ Z = fun x => u = x) → Rel.le Z Y)).elim fun G hG =>
-    have hbox : ∀ u, X u → □ (G u) := box_lub_haec_of X G hG
+  (bc (λ Y ↦ UB Y (λ Z ↦ ∃ u, X u ∧ Z = λ x ↦ u = x))).elim fun G hG =>
+    have hbox : X ⊆ boxAt G := box_lub_haec_of X G hG
     have hpers : Persistent G :=
-      (le_iff G (fun x => □ (G x))).1 (lub_haec_le X G hG _ fun u hu => modal_four _ (hbox u hu))
+      (le_iff G (boxAt G)).1 (lub_haec_le X G hG _ fun u hu => modal_four _ (hbox u hu))
     have hinext : Inextensible G :=
-      bf (fun Y => (∀ z, G z → □ (Y z)) → □ (∀ z, G z → Y z)) fun Y =>
-        (res (∀ z, G z → □ (Y z)) (∃ z, G z ∧ ¬ Y z)).elim fun r hr =>
-          have hGr : Rel.le G (fun x => r → Y x) := lub_haec_le X G hG _ fun u hu =>
+      bf (λ Y ↦ G ⊆ boxAt Y → □ (G ⊆ Y)) fun Y =>
+        (res (G ⊆ boxAt Y) (∃ z, G z ∧ ¬ Y z)).elim fun r hr =>
+          have hGr : G ≤ (λ x ↦ r → Y x) := lub_haec_le X G hG _ fun u hu =>
             (le_iff_prop _ _).1 (hr.2 (Y u) ((le_iff_prop _ _).2
               (modal_K _ _ (nec% (le_of_inext_premise G Y (∃ z, G z ∧ ¬ Y z) u)) (hbox u hu))))
-          modal_K _ _ (modal_K _ _ (nec% (box_forall_of_restricted G Y (∀ z, G z → □ (Y z)) r))
+          modal_K _ _ (modal_K _ _ (nec% (box_forall_of_restricted G Y (G ⊆ boxAt Y) r))
             ((le_iff_prop _ _).1 hr.1)) (modal_four _ ((le_iff G _).1 hGr))
     ⟨G, ⟨hpers, hinext⟩, fun u =>
       ⟨fun hu => box_elim (hbox u hu), lub_haec_imp act X G hG u⟩⟩
@@ -1121,16 +1117,16 @@ theorem and_dia_eq_of_b (p q : Prop) : (∀ p : Prop, p → □ ◇ p) → p →
   fun b hp => by rw [b p hp]; exact and_true_eq q
 
 /-- `q ≤ s` gives `□(q → s)`, unfolded. -/
-theorem box_imp_of_le' (q s : Prop) : Rel.le q s → □ (q → s) := fun h => (le_iff_prop q s).1 h
+theorem box_imp_of_le' (q s : Prop) : q ≤ s → □ (q → s) := fun h => (le_iff_prop q s).1 h
 
 /-- With `B`: `□(p → q ≤ s)`, `q` and `◇p` give `s`. -/
 theorem le_of_and_dia_of_b (p q s : Prop) :
-    (∀ p : Prop, p → □ ◇ p) → □ (p → Rel.le q s) → q ∧ ◇ p → s := fun b h hq =>
+    (∀ p : Prop, p → □ ◇ p) → □ (p → q ≤ s) → q ∧ ◇ p → s := fun b h hq =>
   b_dia_box_imp b (q → s) (dia_mono _ _ (nec% (box_imp_of_le' q s)) (dia_mono _ _ h hq.2)) hq.1
 
 /-- The restriction principle holds in `C5`, with `r := q ∧ ◇p`. -/
 theorem restriction_of_box_b (hb : □ (∀ p : Prop, p → □ ◇ p)) :
-    ∀ p q : Prop, ∃ r : Prop, Rel.le p (r = q) ∧ ∀ s : Prop, Rel.le p (Rel.le q s) → Rel.le r s :=
+    ∀ p q : Prop, ∃ r : Prop, p ≤ (r = q) ∧ ∀ s : Prop, p ≤ (q ≤ s) → r ≤ s :=
   fun p q => ⟨q ∧ ◇ p,
     (le_iff_prop _ _).2 (modal_K _ _ (nec% (and_dia_eq_of_b p q)) hb),
     fun s h => (le_iff_prop _ _).2 (modal_K _ _ (modal_K _ _ (nec% (le_of_and_dia_of_b p q s)) hb)

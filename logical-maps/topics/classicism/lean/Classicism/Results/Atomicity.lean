@@ -50,7 +50,7 @@ open Paper
 /-! ## 1. The step
 
 Written in the paper's symbols (`Classicism/Paper.lean`): `⊆` is the unboxed inclusion
-`boxImp`, `≼` the algebraic order, `∧` and `¬` the pointwise connectives at `τ`, `≡`
+`boxImp`, `≤` the algebraic order (`Rel.le`, at every type in the scope), `∧` and `¬` the pointwise connectives at `τ`, `≡`
 coextension; and an abstraction that builds an object-language term is written `λ y ↦ …`,
 which is core Lean's own spelling of `fun y => …`, kept for proofs. They are notation only;
 the certified terms are the same. -/
@@ -109,45 +109,45 @@ omit [Pointwise τ] in
 /-- A possible instance: `X ≠ ⊥` gives some `Xz ≠ ⊥`, for were every `Xz ≤ ¬Xz`, BF would
 make `X ≤ ¬X`. -/
 theorem instance_of_ne_bot (X : σ → τ) :
-    P.Barcan σ → ¬ X ≼ ¬ X → ∃ z, ¬ X z ≼ ¬ X z := fun hBF hX =>
-  (em (∃ z, ¬ X z ≼ ¬ X z)).elim id fun hno =>
+    P.Barcan σ → ¬ X ≤ ¬ X → ∃ z, ¬ X z ≤ ¬ X z := fun hBF hX =>
+  (em (∃ z, ¬ X z ≤ ¬ X z)).elim id fun hno =>
     absurd ((le_iff X (¬ X)).2 (hBF (λ z ↦ X z ⊆ ¬ X z) fun z =>
-      (em (X z ≼ ¬ X z)).elim (fun h => (le_iff _ _).1 h)
+      (em (X z ≤ ¬ X z)).elim (fun h => (le_iff _ _).1 h)
         (fun h => absurd ⟨z, h⟩ hno))) hX
 
 /-- `w ≤ Xz` gives `(λy. w ∧ y = z) ≤ X`: `w ⊆ Xz` under the box. -/
 theorem pin_le (X : σ → τ) (w : τ) (z : σ) :
-    w ≼ X z → (λ y ↦ w ∧ constP (y = z)) ≼ X := fun hwX =>
+    w ≤ X z → (λ y ↦ w ∧ constP (y = z)) ≤ X := fun hwX =>
   (le_iff _ _).2 (modal_K _ _ (nec% (pin_boxImp X w z)) ((le_iff _ _).1 hwX))
 
 /-- `Z ≤ (λy. w ∧ y = z)` gives `Zz ≤ w`. -/
 theorem pin_le_apply (Z : σ → τ) (w : τ) (z : σ) :
-    Z ≼ (λ y ↦ w ∧ constP (y = z)) → Z z ≼ w := fun hZA =>
+    Z ≤ (λ y ↦ w ∧ constP (y = z)) → Z z ≤ w := fun hZA =>
   (le_iff _ _).2 (modal_K _ _ (nec% (boxImp_and_elim_left w (constP (z = z)) (Z z)))
     (converse_barcan (λ y ↦ Z y ⊆ (w ∧ constP (y = z)))
       ((le_iff _ _).1 hZA) z))
 
 /-- `Z ≤ (λy. w ∧ y = z)` and `Zz = w` give `Z = (λy. w ∧ y = z)`, by Intensionality. -/
 theorem pin_eq (Z : σ → τ) (w : τ) (z : σ) :
-    Z ≼ (λ y ↦ w ∧ constP (y = z)) → Z z = w →
+    Z ≤ (λ y ↦ w ∧ constP (y = z)) → Z z = w →
       Z = (λ y ↦ w ∧ constP (y = z)) := fun hZA hZw =>
   intensionality Z _ (modal_K _ _ (modal_K _ _ (nec% (pin_coext Z w z))
     ((le_iff _ _).1 hZA)) (necessity_of_identity _ _ hZw))
 
 /-- `Z ≤ (λy. w ∧ y = z)` and `Zz ≤ ¬Zz` give `Z ≤ ¬Z`. -/
 theorem pin_le_neg (Z : σ → τ) (w : τ) (z : σ) :
-    Z ≼ (λ y ↦ w ∧ constP (y = z)) → Z z ≼ ¬ Z z → Z ≼ ¬ Z := fun hZA hbot =>
+    Z ≤ (λ y ↦ w ∧ constP (y = z)) → Z z ≤ ¬ Z z → Z ≤ ¬ Z := fun hZA hbot =>
   (le_iff _ _).2 (modal_K _ _ (modal_K _ _ (nec% (pin_bot Z w z))
     ((le_iff _ _).1 hZA)) ((le_iff _ _).1 hbot))
 
 /-- `Z ≤ ¬Z` gives `Z ≤ A` for any `A`. -/
-theorem le_of_le_neg (Z A : σ → τ) : Z ≼ ¬ Z → Z ≼ A := fun hZ =>
+theorem le_of_le_neg (Z A : σ → τ) : Z ≤ ¬ Z → Z ≤ A := fun hZ =>
   (le_iff _ _).2 (modal_K _ _ (nec% (boxImp_of_boxImp_neg Z A)) ((le_iff _ _).1 hZ))
 
 /-- `(λy. w ∧ y = z) ≤ ¬(λy. w ∧ y = z)` gives `w ≤ ¬w`: instantiate at `z`, where the
 relation is `w ∧ ⊤`. -/
 theorem le_neg_of_pin_le_neg (w : τ) (z : σ) :
-    (λ y ↦ w ∧ constP (y = z)) ≼ ¬ (λ y ↦ w ∧ constP (y = z)) → w ≼ ¬ w := fun hA =>
+    (λ y ↦ w ∧ constP (y = z)) ≤ ¬ (λ y ↦ w ∧ constP (y = z)) → w ≤ ¬ w := fun hA =>
   (le_iff _ _).2 (modal_K _ _ (modal_K _ _ (nec% (boxImp_neg_of_and_constP w (z = z)))
     (necessity_of_identity z z rfl))
     (converse_barcan
@@ -168,7 +168,7 @@ theorem pin_atom (w : τ) (z : σ) : Atom w → Atom (λ y ↦ w ∧ constP (y =
 BF gives `z` with `Xz ≠ ⊥`, Atomicity at `τ` an atom `w ≤ Xz`, and `λy. w ∧ y = z` is an
 atom below `X`. -/
 theorem atomicity_step : P.Atomicity τ → P.Barcan σ → P.Atomicity (σ → τ) := fun hAt hBF X =>
-  (em (X ≼ ¬ X)).elim Or.inl fun hX => Or.inr <|
+  (em (X ≤ ¬ X)).elim Or.inl fun hX => Or.inr <|
     (instance_of_ne_bot X hBF hX).elim fun z hz =>
       ((hAt (X z)).elim (fun h => absurd h hz) id).elim fun w hw =>
         ⟨λ y ↦ w ∧ constP (y = z), pin_atom w z hw.1, pin_le X w z hw.2⟩

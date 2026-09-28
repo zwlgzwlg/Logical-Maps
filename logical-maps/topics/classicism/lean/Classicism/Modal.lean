@@ -1,3 +1,4 @@
+import Classicism.Paper
 import Classicism.Booleanism
 
 /-!
@@ -13,6 +14,7 @@ only with closed arguments (see `Classicism/Equivalence.lean`).
 -/
 
 namespace Classicism
+open Paper
 
 /-! ### Basic facts about `□` and `◇` -/
 
@@ -37,7 +39,7 @@ theorem modal_K (p q : Prop) : □ (p → q) → □ p → □ q := fun hpq hp =
 /-- Necessity of Identity, `NI`: `x = y → □(x = y)` at every type, including `e`.
 Necessitate `x = x`, then substitute `y` for the second `x` (Classicism, §2.1). -/
 theorem necessity_of_identity {σ : Type} [Ty σ] (x y : σ) : x = y → □ (x = y) := fun h =>
-  Eq.subst (motive := fun z => □ (x = z)) h (nec% (Eq.refl x))
+  Eq.subst (motive := λ z ↦ □ (x = z)) h (nec% (Eq.refl x))
 
 /-- `4`: `□p → □□p`. This is `NI` applied to the identity `p = True`. -/
 theorem modal_four (p : Prop) : □ p → □ □ p := necessity_of_identity p True
@@ -109,11 +111,11 @@ theorem existence_e : ∃ x : e, x = x := e_exists
 identical. The proof is the paper's: `X = X ∧_τ ⊤ = X ∧_τ (⊤ ∧ H) = Y ∧_τ (⊤ ∧ H) = Y`
 where `H` is the coextension sentence, the middle step being the closed identity
 `Rel.and_constP_coext`, and the box supplying `H = True` for Leibniz's Law. -/
-theorem intensionality {τ : Type} [Rel τ] (X Y : τ) : □ (coext X Y) → X = Y := fun h =>
-  calc X = Rel.and X (constP True) := (Rel.and_constP_true X).symm
-    _ = Rel.and X (constP (True ∧ coext X Y)) := by rw [h, and_self_eq]
-    _ = Rel.and Y (constP (True ∧ coext X Y)) := Rel.and_constP_coext X Y True
-    _ = Rel.and Y (constP True) := by rw [h, and_self_eq]
+theorem intensionality {τ : Type} [Rel τ] (X Y : τ) : □ (X ≡ Y) → X = Y := fun h =>
+  calc X = (X ∧ constP True) := (Rel.and_constP_true X).symm
+    _ = (X ∧ constP (True ∧ X ≡ Y)) := by rw [h, and_self_eq]
+    _ = (Y ∧ constP (True ∧ X ≡ Y)) := Rel.and_constP_coext X Y True
+    _ = (Y ∧ constP True) := by rw [h, and_self_eq]
     _ = Y := Rel.and_constP_true Y
 
 /-- The Modalized Fregean Axiom: `□(p ↔ q) → p = q`, the nullary case of
@@ -122,7 +124,7 @@ theorem modalized_fregean (p q : Prop) : □ (p ↔ q) → p = q := intensionali
 
 /-- Pointwise identity gives coextension: `(∀ z. Xz = Yz) → coext X Y`. Closed. -/
 theorem coext_of_forall_eq {σ τ : Type} [Ty σ] [Rel τ] (X Y : σ → τ) :
-    (∀ z, X z = Y z) → coext X Y :=
+    (∀ z, X z = Y z) → X ≡ Y :=
   fun h z => h z ▸ Rel.coext_refl (X z)
 
 /-- Modalized Functionality (Classicism, §1.5, p. 18): `□(∀z. Xz = Yz) → X = Y` when

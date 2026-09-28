@@ -1,3 +1,4 @@
+import Classicism.Paper
 import Classicism.Order
 
 /-!
@@ -28,31 +29,32 @@ and the translator derives each law for every object type by induction on the ty
 -/
 
 namespace Classicism
+open Paper
 
 /-- The pointwise laws at a relational type. -/
 class Pointwise (τ : Type) [Rel τ] : Type where
   /-- `X ⊑ X`. -/
-  boxImp_refl : ∀ X : τ, boxImp X X
+  boxImp_refl : ∀ X : τ, X ⊆ X
   /-- `X ⊑ Y → Y ⊑ Z → X ⊑ Z`. -/
-  boxImp_trans : ∀ X Y Z : τ, boxImp X Y → boxImp Y Z → boxImp X Z
+  boxImp_trans : ∀ X Y Z : τ, X ⊆ Y → Y ⊆ Z → X ⊆ Z
   /-- `Z ⊑ X → Z ⊑ Y → Z ⊑ X ∧_τ Y`. -/
-  boxImp_and : ∀ X Y Z : τ, boxImp Z X → boxImp Z Y → boxImp Z (Rel.and X Y)
+  boxImp_and : ∀ X Y Z : τ, Z ⊆ X → Z ⊆ Y → Z ⊆ (X ∧ Y)
   /-- `X ∧_τ Y ⊑ X`. -/
-  boxImp_and_left : ∀ X Y : τ, boxImp (Rel.and X Y) X
+  boxImp_and_left : ∀ X Y : τ, (X ∧ Y) ⊆ X
   /-- `X ∧_τ Y ⊑ Y`. -/
-  boxImp_and_right : ∀ X Y : τ, boxImp (Rel.and X Y) Y
+  boxImp_and_right : ∀ X Y : τ, (X ∧ Y) ⊆ Y
   /-- `X ∧_τ ¬_τ X ⊑ Y`: a contradiction at a tuple yields anything there. -/
-  boxImp_and_neg : ∀ X Y : τ, boxImp (Rel.and X (Rel.neg X)) Y
+  boxImp_and_neg : ∀ X Y : τ, (X ∧ ¬ X) ⊆ Y
   /-- `p → X ⊑ const_τ p`. -/
-  boxImp_constP : ∀ (X : τ) (p : Prop), p → boxImp X (constP p)
+  boxImp_constP : ∀ (X : τ) (p : Prop), p → X ⊆ constP p
   /-- `¬p → const_τ p ⊑ X`. -/
-  boxImp_of_constP : ∀ (X : τ) (p : Prop), ¬ p → boxImp (constP p) X
+  boxImp_of_constP : ∀ (X : τ) (p : Prop), ¬ p → constP p ⊆ X
   /-- `X ⊑ Y → Y ⊑ X → X ≡ Y`. -/
-  coext_of_boxImp : ∀ X Y : τ, boxImp X Y → boxImp Y X → coext X Y
+  coext_of_boxImp : ∀ X Y : τ, X ⊆ Y → Y ⊆ X → X ≡ Y
   /-- `X ≡ Y → X ⊑ Y`. -/
-  boxImp_of_coext : ∀ X Y : τ, coext X Y → boxImp X Y
+  boxImp_of_coext : ∀ X Y : τ, X ≡ Y → X ⊆ Y
   /-- `X ≡ Y → Y ⊑ X`. -/
-  boxImp_of_coext' : ∀ X Y : τ, coext X Y → boxImp Y X
+  boxImp_of_coext' : ∀ X Y : τ, X ≡ Y → Y ⊆ X
 
 export Pointwise (boxImp_refl boxImp_trans boxImp_and boxImp_and_left boxImp_and_right
   boxImp_and_neg boxImp_constP boxImp_of_constP coext_of_boxImp boxImp_of_coext
@@ -64,22 +66,22 @@ Each law is a propositional fact about `p → q`, `p ∧ q`, `¬p`, `p ↔ q`. T
 as theorems of their own so that the strict mirror can take its laws from their
 transforms. -/
 
-theorem boxImp_refl_prop (X : Prop) : boxImp X X := fun h => h
-theorem boxImp_trans_prop (X Y Z : Prop) : boxImp X Y → boxImp Y Z → boxImp X Z :=
+theorem boxImp_refl_prop (X : Prop) : X ⊆ X := fun h => h
+theorem boxImp_trans_prop (X Y Z : Prop) : X ⊆ Y → Y ⊆ Z → X ⊆ Z :=
   fun h₁ h₂ h => h₂ (h₁ h)
-theorem boxImp_and_prop (X Y Z : Prop) : boxImp Z X → boxImp Z Y → boxImp Z (Rel.and X Y) :=
+theorem boxImp_and_prop (X Y Z : Prop) : Z ⊆ X → Z ⊆ Y → Z ⊆ Rel.and X Y :=
   fun h₁ h₂ h => ⟨h₁ h, h₂ h⟩
-theorem boxImp_and_left_prop (X Y : Prop) : boxImp (Rel.and X Y) X := fun h => h.1
-theorem boxImp_and_right_prop (X Y : Prop) : boxImp (Rel.and X Y) Y := fun h => h.2
-theorem boxImp_and_neg_prop (X Y : Prop) : boxImp (Rel.and X (Rel.neg X)) Y :=
+theorem boxImp_and_left_prop (X Y : Prop) : Rel.and X Y ⊆ X := fun h => h.1
+theorem boxImp_and_right_prop (X Y : Prop) : Rel.and X Y ⊆ Y := fun h => h.2
+theorem boxImp_and_neg_prop (X Y : Prop) : (Rel.and X (Rel.neg X)) ⊆ Y :=
   fun h => absurd h.1 h.2
-theorem boxImp_constP_prop (X : Prop) (p : Prop) : p → boxImp X (constP p) := fun hp _ => hp
-theorem boxImp_of_constP_prop (X : Prop) (p : Prop) : ¬ p → boxImp (constP p) X :=
+theorem boxImp_constP_prop (X : Prop) (p : Prop) : p → X ⊆ constP p := fun hp _ => hp
+theorem boxImp_of_constP_prop (X : Prop) (p : Prop) : ¬ p → constP p ⊆ X :=
   fun hn hp => absurd hp hn
-theorem coext_of_boxImp_prop (X Y : Prop) : boxImp X Y → boxImp Y X → coext X Y :=
+theorem coext_of_boxImp_prop (X Y : Prop) : X ⊆ Y → Y ⊆ X → X ≡ Y :=
   fun h₁ h₂ => ⟨h₁, h₂⟩
-theorem boxImp_of_coext_prop (X Y : Prop) : coext X Y → boxImp X Y := fun h => h.1
-theorem boxImp_of_coext'_prop (X Y : Prop) : coext X Y → boxImp Y X := fun h => h.2
+theorem boxImp_of_coext_prop (X Y : Prop) : X ≡ Y → X ⊆ Y := fun h => h.1
+theorem boxImp_of_coext'_prop (X Y : Prop) : X ≡ Y → Y ⊆ X := fun h => h.2
 
 instance instPointwiseProp : Pointwise Prop where
   boxImp_refl := boxImp_refl_prop
@@ -102,27 +104,27 @@ the law at `τ` under a `∀`. -/
 section arrow
 variable {σ τ : Type} [Ty σ] [Rel τ] [Pointwise τ]
 
-theorem boxImp_refl_arrow (X : σ → τ) : boxImp X X := fun z => boxImp_refl (X z)
-theorem boxImp_trans_arrow (X Y Z : σ → τ) : boxImp X Y → boxImp Y Z → boxImp X Z :=
+theorem boxImp_refl_arrow (X : σ → τ) : X ⊆ X := fun z => boxImp_refl (X z)
+theorem boxImp_trans_arrow (X Y Z : σ → τ) : X ⊆ Y → Y ⊆ Z → X ⊆ Z :=
   fun h₁ h₂ z => boxImp_trans (X z) (Y z) (Z z) (h₁ z) (h₂ z)
 theorem boxImp_and_arrow (X Y Z : σ → τ) :
-    boxImp Z X → boxImp Z Y → boxImp Z (Rel.and X Y) :=
+    Z ⊆ X → Z ⊆ Y → Z ⊆ (X ∧ Y) :=
   fun h₁ h₂ z => boxImp_and (X z) (Y z) (Z z) (h₁ z) (h₂ z)
-theorem boxImp_and_left_arrow (X Y : σ → τ) : boxImp (Rel.and X Y) X :=
+theorem boxImp_and_left_arrow (X Y : σ → τ) : (X ∧ Y) ⊆ X :=
   fun z => boxImp_and_left (X z) (Y z)
-theorem boxImp_and_right_arrow (X Y : σ → τ) : boxImp (Rel.and X Y) Y :=
+theorem boxImp_and_right_arrow (X Y : σ → τ) : (X ∧ Y) ⊆ Y :=
   fun z => boxImp_and_right (X z) (Y z)
-theorem boxImp_and_neg_arrow (X Y : σ → τ) : boxImp (Rel.and X (Rel.neg X)) Y :=
+theorem boxImp_and_neg_arrow (X Y : σ → τ) : (X ∧ ¬ X) ⊆ Y :=
   fun z => boxImp_and_neg (X z) (Y z)
-theorem boxImp_constP_arrow (X : σ → τ) (p : Prop) : p → boxImp X (constP p) :=
+theorem boxImp_constP_arrow (X : σ → τ) (p : Prop) : p → X ⊆ constP p :=
   fun hp z => boxImp_constP (X z) p hp
-theorem boxImp_of_constP_arrow (X : σ → τ) (p : Prop) : ¬ p → boxImp (constP p) X :=
+theorem boxImp_of_constP_arrow (X : σ → τ) (p : Prop) : ¬ p → constP p ⊆ X :=
   fun hn z => boxImp_of_constP (X z) p hn
-theorem coext_of_boxImp_arrow (X Y : σ → τ) : boxImp X Y → boxImp Y X → coext X Y :=
+theorem coext_of_boxImp_arrow (X Y : σ → τ) : X ⊆ Y → Y ⊆ X → X ≡ Y :=
   fun h₁ h₂ z => coext_of_boxImp (X z) (Y z) (h₁ z) (h₂ z)
-theorem boxImp_of_coext_arrow (X Y : σ → τ) : coext X Y → boxImp X Y :=
+theorem boxImp_of_coext_arrow (X Y : σ → τ) : X ≡ Y → X ⊆ Y :=
   fun h z => boxImp_of_coext (X z) (Y z) (h z)
-theorem boxImp_of_coext'_arrow (X Y : σ → τ) : coext X Y → boxImp Y X :=
+theorem boxImp_of_coext'_arrow (X Y : σ → τ) : X ≡ Y → Y ⊆ X :=
   fun h z => boxImp_of_coext' (X z) (Y z) (h z)
 
 instance instPointwiseArrow : Pointwise (σ → τ) where
@@ -146,38 +148,38 @@ section consequences
 variable {τ : Type} [Rel τ] [Pointwise τ]
 
 /-- `Z ⊑ X ∧_τ Y → Z ⊑ X`. -/
-theorem boxImp_and_elim_left (X Y Z : τ) : boxImp Z (Rel.and X Y) → boxImp Z X :=
-  fun h => boxImp_trans Z (Rel.and X Y) X h (boxImp_and_left X Y)
+theorem boxImp_and_elim_left (X Y Z : τ) : Z ⊆ (X ∧ Y) → Z ⊆ X :=
+  fun h => boxImp_trans Z (X ∧ Y) X h (boxImp_and_left X Y)
 
 /-- `Z ⊑ X ∧_τ Y → Z ⊑ Y`. -/
-theorem boxImp_and_elim_right (X Y Z : τ) : boxImp Z (Rel.and X Y) → boxImp Z Y :=
-  fun h => boxImp_trans Z (Rel.and X Y) Y h (boxImp_and_right X Y)
+theorem boxImp_and_elim_right (X Y Z : τ) : Z ⊆ (X ∧ Y) → Z ⊆ Y :=
+  fun h => boxImp_trans Z (X ∧ Y) Y h (boxImp_and_right X Y)
 
 /-- `X ⊑ ¬_τ X → X ⊑ Y`: what is below its own negation is below everything. -/
-theorem boxImp_of_boxImp_neg (X Y : τ) : boxImp X (Rel.neg X) → boxImp X Y :=
-  fun h => boxImp_trans X (Rel.and X (Rel.neg X)) Y
-    (boxImp_and X (Rel.neg X) X (boxImp_refl X) h) (boxImp_and_neg X Y)
+theorem boxImp_of_boxImp_neg (X Y : τ) : X ⊆ ¬ X → X ⊆ Y :=
+  fun h => boxImp_trans X (X ∧ ¬ X) Y
+    (boxImp_and X (¬ X) X (boxImp_refl X) h) (boxImp_and_neg X Y)
 
 /-- `X ⊑ Y → Y ⊑ ¬_τ Y → X ⊑ ¬_τ X`. -/
 theorem boxImp_neg_of_boxImp (X Y : τ) :
-    boxImp X Y → boxImp Y (Rel.neg Y) → boxImp X (Rel.neg X) :=
-  fun h₁ h₂ => boxImp_trans X (Rel.and Y (Rel.neg Y)) (Rel.neg X)
-    (boxImp_and Y (Rel.neg Y) X h₁ (boxImp_trans X Y (Rel.neg Y) h₁ h₂))
-    (boxImp_and_neg Y (Rel.neg X))
+    X ⊆ Y → Y ⊆ ¬ Y → X ⊆ ¬ X :=
+  fun h₁ h₂ => boxImp_trans X (Y ∧ ¬ Y) (¬ X)
+    (boxImp_and Y (¬ Y) X h₁ (boxImp_trans X Y (¬ Y) h₁ h₂))
+    (boxImp_and_neg Y (¬ X))
 
 /-- `p → X ⊑ X ∧_τ const_τ p`. -/
-theorem boxImp_and_constP_self (X : τ) (p : Prop) : p → boxImp X (Rel.and X (constP p)) :=
+theorem boxImp_and_constP_self (X : τ) (p : Prop) : p → X ⊆ (X ∧ constP p) :=
   fun hp => boxImp_and X (constP p) X (boxImp_refl X) (boxImp_constP X p hp)
 
 /-- `¬p → X ∧_τ const_τ p ⊑ Y`. -/
-theorem boxImp_of_and_constP (X Y : τ) (p : Prop) : ¬ p → boxImp (Rel.and X (constP p)) Y :=
-  fun hn => boxImp_trans (Rel.and X (constP p)) (constP p) Y
+theorem boxImp_of_and_constP (X Y : τ) (p : Prop) : ¬ p → (X ∧ constP p) ⊆ Y :=
+  fun hn => boxImp_trans (X ∧ constP p) (constP p) Y
     (boxImp_and_right X (constP p)) (boxImp_of_constP Y p hn)
 
 /-- `p → X ∧_τ const_τ p ⊑ ¬_τ (X ∧_τ const_τ p) → X ⊑ ¬_τ X`. -/
 theorem boxImp_neg_of_and_constP (X : τ) (p : Prop) :
-    p → boxImp (Rel.and X (constP p)) (Rel.neg (Rel.and X (constP p))) → boxImp X (Rel.neg X) :=
-  fun hp h => boxImp_neg_of_boxImp X (Rel.and X (constP p)) (boxImp_and_constP_self X p hp) h
+    p → (X ∧ constP p) ⊆ (¬ (X ∧ constP p)) → X ⊆ ¬ X :=
+  fun hp h => boxImp_neg_of_boxImp X (X ∧ constP p) (boxImp_and_constP_self X p hp) h
 
 end consequences
 

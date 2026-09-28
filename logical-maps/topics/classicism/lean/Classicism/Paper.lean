@@ -6,7 +6,8 @@ import Classicism.Core
 
 Notation for the pointwise operations at every relational type, so that statements read as
 the paper writes them: `X ∧ Y`, `X ∨ Y`, `¬X`, `⊤`, `⊥` for `Rel.and`, `Rel.or`, `Rel.neg`,
-`Rel.top`, `Rel.bot`, and `X ≡ Y` for coextension `∀x̄. X[x̄] ↔ Y[x̄]`. (`X ⊆ Y` for the
+`Rel.top`, `Rel.bot`, `X ≤ Y` for the algebraic order `Rel.le`, and `X ≡ Y` for
+coextension `∀x̄. X[x̄] ↔ Y[x̄]`. (`X ⊆ Y` for the
 inclusion `boxImp` is in `Core.lean`, always on.) Everything here is elaboration only: the
 terms are the same `Rel` operations as before, so the checker, the quoter and the
 translator see exactly what they see without it.
@@ -42,12 +43,22 @@ scoped syntax (name := pbot) (priority := high) "⊥" : term
 /-- `∀x̄. X[x̄] ↔ Y[x̄]`, coextension. Not the paper's symbol; it has none. -/
 scoped infix:50 " ≡ " => Rel.coext
 
+/-- `X ≤ Y`, the algebraic order `Rel.le` at every relational type, `Prop` included. Outside
+the scope `≤` at `Prop` is `entails` (`Core.lean`), the same relation by definition
+(`q = (p ∨ q)`) but a different constant; inside it `≤` is always `Rel.le`, the constant
+the principles and the records are stated with. -/
+scoped syntax:50 (name := ple) (priority := high) term:51 " ≤ " term:51 : term
+
 /-! ### The elaborators -/
 
-/-- Is this type `Prop`? `none` while it is still a metavariable. -/
+/-- Is this type `Prop`? `none` while it is still a metavariable. A sort whose level is not
+yet known (`Sort ?u`, the expected type of a type position such as `have h : A ∧ B` or a
+theorem's statement) counts as `Prop`: what stands there is a proposition, so the
+connective is the logical one. -/
 private def isPropType? (t : Expr) : TermElabM (Option Bool) := do
   let t ← whnfR (← instantiateMVars t)
   if t.getAppFn.isMVar then return none
+  if t.isSort then return some true
   return some t.isProp
 
 /-- Build the connective once the type is decided: `logical` at `Prop`, else `rel`. The
@@ -85,6 +96,11 @@ give the type of an operand or of the whole"
   | `($a ∨ $b) => elabPointwise ``Or ``Rel.or #[a, b] expectedType?
   | _ => throwUnsupportedSyntax
 
+@[scoped term_elab ple] def elabLe : TermElab := fun stx expectedType? =>
+  match stx with
+  | `($a ≤ $b) => do elabTerm (← `(Rel.le $a $b)) expectedType?
+  | _ => throwUnsupportedSyntax
+
 @[scoped term_elab pnot] def elabNot : TermElab := fun stx expectedType? =>
   match stx with
   | `(¬ $a) => elabPointwise ``Not ``Rel.neg #[a] expectedType?
@@ -115,6 +131,9 @@ private def elabConst (logical rel : Name) (expectedType? : Option Expr) : TermE
   | _ => throw ()
 @[scoped app_unexpander Rel.neg] def unexpandNeg : Lean.PrettyPrinter.Unexpander
   | `($_ $a) => `(¬ $a)
+  | _ => throw ()
+@[scoped app_unexpander Rel.le] def unexpandLe : Lean.PrettyPrinter.Unexpander
+  | `($_ $a $b) => `($a ≤ $b)
   | _ => throw ()
 @[scoped app_unexpander Rel.top] def unexpandTop : Lean.PrettyPrinter.Unexpander
   | `($_ $_) => `(⊤)
