@@ -1013,4 +1013,127 @@ theorem rigid_comprehension_r_and_distinctness_necessary_r_imply_plenitude_r {σ
       show R x (∀ p, Rs x p → p) by
         rw [← le_antisymm_prop q _ hle2 hle1]; exact hq.1⟩
 
+/-! Proposition 2.11 (n. 42), reduced to a restriction principle.
+
+The paper derives Rigid Comprehension from `□`Atomicity, Boolean Completeness and `BF`
+with `X*`, the least upper bound of the haecceities of the `X`s. Parts (i) to (iii) of
+n. 42 (`X*` is coextensive with `X`, given Actuality, and persistent) go through as
+written. Part (iv), inextensibility, has two steps that do not: it boxes a pointwise
+claim with `BF` where `□BF` would be needed, and its "without loss of generality" step
+assumes that, for `w` an atom and `w′` possibly an atom below `X*z ∧ ¬Yz`, the greatest
+lower bound `w″` of the `p` with `w ≤ (p = w′)` is still identical to `w′` wherever `w`
+is true, which nothing in the premises gives (see `HANDOFF.md`, §4).
+
+What part (iv) needs from `w″` is only this: for a proposition `p` (here `∀x. X*x →
+□Yx`) and a proposition `q` (here `∃z. X*z ∧ ¬Yz`), a proposition `r` that is identical
+to `q` wherever `p` is true (`p ≤ (r = q)`) and that entails everything `p` makes `q`
+entail (`p ≤ (q ≤ s)` gives `r ≤ s`): `q` restricted to what is accessible from the
+`p`-worlds. Given that, for every `p` and `q`, inextensibility follows with `BF` at the
+type of properties only, and without atoms. The restriction principle holds in `C5`,
+with `r := q ∧ ◇p` (`restriction_of_box_b`); whether `□`Atomicity, Boolean Completeness
+and `BF` or `□BF` give it is open. -/
+
+/-- `Hu` gives `∀z. u = z → Hz`. -/
+theorem haec_imp {σ : Type} [Ty σ] (u : σ) (H : σ → Prop) : H u → ∀ z, u = z → H z :=
+  fun h z e => e ▸ h
+
+/-- The haecceity `λx. u = x` is below `H` when `Hu` is necessary. -/
+theorem haec_le_of_box {σ : Type} [Ty σ] (u : σ) (H : σ → Prop) (h : □ (H u)) :
+    Rel.le (fun x => u = x) H :=
+  (le_iff _ _).2 (modal_K _ _ (nec% (haec_imp u H)) h)
+
+/-- `(u = u → p) → p`. -/
+theorem imp_of_rfl_imp {σ : Type} [Ty σ] (u : σ) (p : Prop) : (u = u → p) → p := fun h => h rfl
+
+/-- The least upper bound `G` of the haecceities of the `X`s, as the greatest lower
+bound of their upper bounds, is below every `H` that is necessary of each `X`. -/
+theorem lub_haec_le {σ : Type} [Ty σ] (X G : σ → Prop)
+    (hG : ∀ z : σ → Prop, (∀ w : σ → Prop,
+      (∀ Y, (∃ u, X u ∧ Y = fun x => u = x) → Rel.le Y w) → Rel.le z w) ↔ Rel.le z G)
+    (H : σ → Prop) (hH : ∀ u, X u → □ (H u)) : Rel.le G H :=
+  glb_ub_least _ G hG H fun Y hY => hY.elim fun u hu => by
+    rw [hu.2]
+    exact haec_le_of_box u H (hH u hu.1)
+
+/-- And `Gu` is necessary for each `X`, `u` (n. 42, (i) and (iii)). -/
+theorem box_lub_haec_of {σ : Type} [Ty σ] (X G : σ → Prop)
+    (hG : ∀ z : σ → Prop, (∀ w : σ → Prop,
+      (∀ Y, (∃ u, X u ∧ Y = fun x => u = x) → Rel.le Y w) → Rel.le z w) ↔ Rel.le z G)
+    (u : σ) (hu : X u) : □ (G u) :=
+  modal_K _ _ (nec% (imp_of_rfl_imp u (G u)))
+    ((le_iff_prop _ _).1 (le_apply_of_le _ G u (glb_ub_upper _ G hG _ ⟨u, hu, rfl⟩)))
+
+/-- `Gu → Xu`, given the actual world `w` (n. 42, (ii)): `λy. w → Xy` is necessary of
+each `X`, so above `G`. -/
+theorem lub_haec_imp {σ : Type} [Ty σ] (act : Actuality) (X G : σ → Prop)
+    (hG : ∀ z : σ → Prop, (∀ w : σ → Prop,
+      (∀ Y, (∃ u, X u ∧ Y = fun x => u = x) → Rel.le Y w) → Rel.le z w) ↔ Rel.le z G)
+    (u : σ) (hu : G u) : X u :=
+  act.elim fun w hw =>
+    imp_of_le_prop (G u) (w → X u)
+      (le_apply_of_le G (fun y => w → X y) u
+        (lub_haec_le X G hG _ fun v hv => (le_iff_prop _ _).1 (hw.2 (X v) hv))) hu hw.1
+
+/-- `Gu`, then `∀z. Gz → □Yz` makes `q ≤ Yu`. -/
+theorem le_of_inext_premise {σ : Type} [Ty σ] (G Y : σ → Prop) (q : Prop) (u : σ) :
+    G u → (∀ z, G z → □ (Y z)) → Rel.le q (Y u) :=
+  fun hg hA => (le_iff_prop _ _).2 (box_imp_of_box q (Y u) (hA u hg))
+
+/-- `r = ∃z. Gz ∧ ¬Yz` and `∀z. Gz → r → Yz` give `∀z. Gz → Yz`. -/
+theorem forall_of_restricted {σ : Type} [Ty σ] (G Y : σ → Prop) (r : Prop) :
+    r = (∃ z, G z ∧ ¬ Y z) → (∀ z, G z → r → Y z) → ∀ z, G z → Y z :=
+  fun e h z hg => (em (Y z)).elim id fun hn => h z hg (e ▸ ⟨z, hg, hn⟩)
+
+/-- Inside the box: where `p` holds, `r = q`, so `□∀z. Gz → r → Yz` gives `□∀z. Gz → Yz`. -/
+theorem box_forall_of_restricted {σ : Type} [Ty σ] (G Y : σ → Prop) (p r : Prop) :
+    (p → r = (∃ z, G z ∧ ¬ Y z)) → □ (∀ z, G z → r → Y z) → p → □ (∀ z, G z → Y z) :=
+  fun hrq hb hp => modal_K _ _ (modal_K _ _ (nec% (forall_of_restricted G Y r))
+    (necessity_of_identity r _ (hrq hp))) hb
+
+/-- **Proposition 2.11, reduced** (n. 42, with part (iv) repaired): Actuality, Boolean
+Completeness at `σ → t`, `BF` at the type of properties, and the restriction principle
+give Rigid Comprehension at `σ → t`. The witness is `X*`, the least upper bound of the
+haecceities of the `X`s. For inextensibility, fix `Y`; with `p := ∀z. X*z → □Yz` and
+`q := ∃z. X*z ∧ ¬Yz`, restriction gives `r`; each `X`-thing `u` has `□X*u`, so
+`p ≤ (q ≤ Yu)`, so `r ≤ Yu`, so `λx. r → Yx` is above `X*`; and where `p` holds `r = q`,
+so `X* ≤ Y` there. `BF` at `σ → t` boxes the quantifier over `Y`. -/
+theorem rigid_comprehension_r_of_restriction {σ : Type} [Ty σ] (act : Actuality)
+    (bc : BooleanCompleteness (σ → Prop)) (bf : Barcan (σ → Prop))
+    (res : ∀ p q : Prop, ∃ r : Prop, Rel.le p (r = q) ∧ ∀ s : Prop, Rel.le p (Rel.le q s) → Rel.le r s) :
+    RigidComprehension (σ → Prop) := fun X =>
+  (bc (fun Y => ∀ Z, (∃ u, X u ∧ Z = fun x => u = x) → Rel.le Z Y)).elim fun G hG =>
+    have hbox : ∀ u, X u → □ (G u) := box_lub_haec_of X G hG
+    have hpers : Persistent G :=
+      (le_iff G (fun x => □ (G x))).1 (lub_haec_le X G hG _ fun u hu => modal_four _ (hbox u hu))
+    have hinext : Inextensible G :=
+      bf (fun Y => (∀ z, G z → □ (Y z)) → □ (∀ z, G z → Y z)) fun Y =>
+        (res (∀ z, G z → □ (Y z)) (∃ z, G z ∧ ¬ Y z)).elim fun r hr =>
+          have hGr : Rel.le G (fun x => r → Y x) := lub_haec_le X G hG _ fun u hu =>
+            (le_iff_prop _ _).1 (hr.2 (Y u) ((le_iff_prop _ _).2
+              (modal_K _ _ (nec% (le_of_inext_premise G Y (∃ z, G z ∧ ¬ Y z) u)) (hbox u hu))))
+          modal_K _ _ (modal_K _ _ (nec% (box_forall_of_restricted G Y (∀ z, G z → □ (Y z)) r))
+            ((le_iff_prop _ _).1 hr.1)) (modal_four _ ((le_iff G _).1 hGr))
+    ⟨G, ⟨hpers, hinext⟩, fun u =>
+      ⟨fun hu => box_elim (hbox u hu), lub_haec_imp act X G hG u⟩⟩
+
+/-- `(∀p. p → □◇p) → p → (q ∧ ◇p) = q`. -/
+theorem and_dia_eq_of_b (p q : Prop) : (∀ p : Prop, p → □ ◇ p) → p → (q ∧ ◇ p) = q :=
+  fun b hp => by rw [b p hp]; exact and_true_eq q
+
+/-- `q ≤ s` gives `□(q → s)`, unfolded. -/
+theorem box_imp_of_le' (q s : Prop) : Rel.le q s → □ (q → s) := fun h => (le_iff_prop q s).1 h
+
+/-- With `B`: `□(p → q ≤ s)`, `q` and `◇p` give `s`. -/
+theorem le_of_and_dia_of_b (p q s : Prop) :
+    (∀ p : Prop, p → □ ◇ p) → □ (p → Rel.le q s) → q ∧ ◇ p → s := fun b h hq =>
+  b_dia_box_imp b (q → s) (dia_mono _ _ (nec% (box_imp_of_le' q s)) (dia_mono _ _ h hq.2)) hq.1
+
+/-- The restriction principle holds in `C5`, with `r := q ∧ ◇p`. -/
+theorem restriction_of_box_b (hb : □ (∀ p : Prop, p → □ ◇ p)) :
+    ∀ p q : Prop, ∃ r : Prop, Rel.le p (r = q) ∧ ∀ s : Prop, Rel.le p (Rel.le q s) → Rel.le r s :=
+  fun p q => ⟨q ∧ ◇ p,
+    (le_iff_prop _ _).2 (modal_K _ _ (nec% (and_dia_eq_of_b p q)) hb),
+    fun s h => (le_iff_prop _ _).2 (modal_K _ _ (modal_K _ _ (nec% (le_of_and_dia_of_b p q s)) hb)
+      (modal_four _ ((le_iff_prop _ _).1 h)))⟩
+
 end Classicism.Proofs

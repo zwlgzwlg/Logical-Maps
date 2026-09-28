@@ -859,6 +859,58 @@ the appendix about two-object variants, which `Models/README.md` analyses withou
 formalizing, and where it corrects the paper on two points (`ND` and Atomlessness fail
 at the base of every such variant).
 
+## Proposition 2.11, 28 September
+
+Cian asked (28 September) for Proposition 2.11 with `BF` strengthened to `□BF`, after the
+first gap in n. 42 (part (iv) boxes a pointwise claim with `BF` where `□BF` is needed).
+Checking the rest of part (iv) turned up a second gap that `□BF` does not close, so the
+proposition is not formalized. What is formalized, in `Results/Records.lean` after
+Proposition 2.16:
+
+- `lub_haec_le`, `box_lub_haec_of`, `lub_haec_imp`: n. 42 parts (i) to (iii) for `X*`, the
+  least upper bound of the haecceities of the `X`s (Boolean Completeness at `σ → t`):
+  it is below every property necessary of each `X`; each `X` is necessarily `X*`; with
+  Actuality, every `X*` is an `X`.
+- `rigid_comprehension_r_of_restriction`: Actuality, Boolean Completeness at `σ → t`,
+  `BF` at `σ → t` and the restriction principle give Rigid Comprehension at `σ → t`.
+- `restriction_of_box_b`: the restriction principle holds in `C5`.
+
+The restriction principle: for all `p`, `q` there is `r` with `p ≤ (r = q)` and, for all
+`s`, `p ≤ (q ≤ s)` implies `r ≤ s`. It is what part (iv)'s `w″` is for, with `p` the
+supposition `∀x. X*x → □Yx` and `q` the counterinstance `∃z. X*z ∧ ¬Yz`; stated for
+arbitrary `p`, `q` it needs no atoms, and the quantifier over `Y` is boxed with `BF` at
+the actual world, so the first gap does not arise.
+
+*The second gap.* Part (iv) takes an atom `w` entailing the supposition and a `w′` that
+`w` entails to be an atom below `X*z ∧ ¬Yz`, then says that without loss of generality
+`w′` is the GLB of the `p` with `w ≤ (p = w′)`, "if it isn't, let `w″` be that GLB; then
+`w″` will also be the GLB of the `p` such that `w ≤ (p = w″)`". The proof then needs `w″`
+to be what `w` entails is an atom below `X*z ∧ ¬Yz`, which requires `w ≤ (w″ = w′)`.
+Nothing in the premises gives that. A propositional structure where it fails:
+
+- Points `@`, `x`, `y*`, and `n` for each natural number. Propositions: all subsets `J`
+  of `{@̂, x̂} ∪ ℕ`, true at `@` iff `@̂ ∈ J`, at `x` iff `x̂ ∈ J`, at `n` iff `n ∈ J`, and at
+  `y*` iff `J ∩ ℕ ∈ U`, for a fixed non-principal ultrafilter `U` on `ℕ`.
+- `@` sees every point, `x` sees `x` and `y*`, every other point sees only itself; `□J`
+  is true at a point iff `J` is true at every point it sees, and is again a proposition
+  (take `J ∩ ℕ` on `ℕ`, and `x̂`, `@̂` as the conditions at `x` and `@` require).
+- Every point's propositions are atomic modulo necessary equivalence there (at `x` there
+  are four classes, fixed by the truth values at `x` and at `y*`); at `@` the propositions
+  are all of `𝒫({@̂, x̂} ∪ ℕ)`, so complete; the propositional quantifiers range over the
+  same propositions at every point, so `BF` at `t` holds everywhere.
+- `w := {x̂}` is an atom at `@`; `w′ := ℕ` is, at `x`, the atom "true at `y*`". The `p`
+  with `w ≤ (p = w′)` are the `J` with `x̂ ∉ J` and `J ∩ ℕ ∈ U`; their GLB is `∅`, which is
+  not identical to `w′` at `x`. The restriction principle fails for `p := {x̂}`, `q := ℕ` by
+  the same computation.
+
+This is only the propositional part: it has not been checked to extend to a model of
+Classicism with individuals and all higher types satisfying the premises, so it shows
+that the step needs an argument, not that Proposition 2.11 is false.
+
+*Checked.* The module builds; the full project builds, with both audits (the new
+theorems are helpers, not records, since the restriction principle is not one of the
+map's principles, and are derived in the object language like the rest of the file).
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen
