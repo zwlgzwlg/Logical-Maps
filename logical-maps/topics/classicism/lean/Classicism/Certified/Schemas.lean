@@ -16,7 +16,8 @@ parameters; `P.reflect`, that reading it back gives the strict twin, by `rfl`; a
   Classicism.P.Intensionality Classicism.P.Extensionality Classicism.P.Functionality
   Classicism.P.ModalizedFunctionality Classicism.P.NecessityOfIdentity
   Classicism.P.NecessityOfDistinctness Classicism.P.NecessityOfDistinctnessT
-  Classicism.P.NecNecessityOfDistinctnessT Classicism.P.Barcan Classicism.P.BarcanT
+  Classicism.P.NecNecessityOfDistinctnessT Classicism.P.NecNecessityOfDistinctness
+  Classicism.P.Barcan Classicism.P.BarcanT Classicism.P.NecBarcan
   Classicism.P.NecBarcanT Classicism.P.ConverseBarcan Classicism.P.Tractarianism
   Classicism.P.RigidComprehension Classicism.P.WeakRigidComprehension
   Classicism.P.VeryWeakRigidComprehension Classicism.P.PersistentComprehension

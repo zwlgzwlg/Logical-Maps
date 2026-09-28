@@ -75,6 +75,10 @@ def Barcan (σ : Type) [Ty σ] : Prop := ∀ X : σ → Prop, (∀ x, □ (X x))
 def BarcanT : Prop := Barcan Prop
 /-- `necessary-barcan-t`: □BF at type `t`. -/
 def NecBarcanT : Prop := □ BarcanT
+/-- `necessary-distinctness-necessary-r`: □ND at `σ`. -/
+def NecNecessityOfDistinctness (σ : Type) [Ty σ] : Prop := □ (NecessityOfDistinctness σ)
+/-- `necessary-barcan-r`: □BF at `σ`. -/
+def NecBarcan (σ : Type) [Ty σ] : Prop := □ (Barcan σ)
 /-- `converse-barcan-r` (CBF) at `σ`: `∀X. □(∀x. Xx) → ∀x. □Xx`. -/
 def ConverseBarcan (σ : Type) [Ty σ] : Prop := ∀ X : σ → Prop, □ (∀ x, X x) → ∀ x, □ (X x)
 /-- `existence-r` at `σ`: `∃x^σ. x = x`. The type system has two shapes of type, `e` and
