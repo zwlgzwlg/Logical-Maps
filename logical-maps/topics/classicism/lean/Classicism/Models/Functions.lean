@@ -83,4 +83,14 @@ theorem bf_of_approx (W₀ : F.Ob) (ne : ∀ i : F.Ob, Nonempty (F.X i))
 
 end FunCat
 
+/-- Two objects, for the two-object models of Appendix D: `ℕ` and a point. -/
+inductive Two
+  | nat
+  | pt
+
+/-- Their sets: `ℕ` and a point. -/
+abbrev Two.X : Two → Type
+  | .nat => ℕ
+  | .pt => Unit
+
 end Classicism.Meta.Intensional

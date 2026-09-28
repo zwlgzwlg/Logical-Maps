@@ -138,6 +138,12 @@ theorem holds_fregean_iff {W : C} (h : A.W₀ ⟶ W) :
     exact congrArg (A.Incl _ W) (H p q e)
 
 omit M in
+/-- Holding along `𝟙 ≫ k` is holding along `k`. -/
+theorem holds_id_comp {Γ : Ctx} {V : C} (k : A.W₀ ⟶ V) (p : Formula Sig Γ) (g : IEnv (A.Dom V) Γ) :
+    A.Holds (𝟙 A.W₀ ≫ k) p g ↔ A.Holds k p g := by
+  rw [Category.id_comp]
+
+omit M in
 /-- A variable property applied to a variable, after moving along `l`: `Xc` holds at
 `h ≫ l` iff `⟨c, l⟩` is in the value of `X`. The step every `BF` argument takes. -/
 theorem holds_app_push {Γ : Ctx} {W V : C} (h : A.W₀ ⟶ W) (l : W ⟶ V) {σ : Ty}

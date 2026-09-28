@@ -9,6 +9,10 @@ M-set models on the two-element monoids are in `Semantics/IntensionalExamples.le
 | `Permutations.lean` | Part 1: the ideally full model over the permutations of `ℕ`. |
 | `MonoidModel.lean` | The model over any monoid acting on `ℕ`, and the verdict lemmas, each parametrized by the one fact about the monoid that decides it. |
 | `Monoids.lean` | Parts 2 to 8: the seven submonoids of the functions on `ℕ`, and the verdicts as instances. |
+| `Functions.lean` | A category of sets and some functions between them (`FunCat`), the ideally full model on it, and `BF` from approximation by surjections. |
+| `ContingentBarcan.lean` | The two-object model after Part 8 with `BF` but not `□BF`: `ℕ` and a point, all functions as arrows. |
+| `Pointed.lean` | Any monoid model with a point adjoined (one arrow in, none back): the verdicts at the point and at `ℕ`, each from the same fact about the monoid as in `MonoidModel`, and `□P`, `◇P` from the two. |
+| `PointedParts.lean` | Parts 1 to 8 with a point adjoined. |
 
 The verdicts, each a theorem about the quoted principle (`P.Actuality.quoted`,
 `P.AtomicityT.quoted`, `Sentence.bf σ`, …):
@@ -37,9 +41,35 @@ is direct by the same lemma, the permutation model being definitionally the mono
 on the permutation group; the maximalist incompatibility with `□`Boolean Completeness
 follows (`Results/Schemas/Incompatibilities.lean`).
 
+## The eight parts with a point adjoined (formalized)
+
+The paper's construction after Part 8, `Pointed.lean` and `PointedParts.lean` (28
+September): each part's monoid with a point adjoined, one arrow into it, none back. The
+statuses at `ℕ`, each from a verdict at `ℕ` and one at the point (where everything
+holds):
+
+| part | `ND` | `BF` | Actuality | Atomicity (`t`) | BC (`e → t`) | Atomlessness |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1⁺, 2⁺ | c. false | `□BF_σ` | c. false | c. false | c. false | false |
+| 3⁺ | c. false | c. false (`e`) | c. false | c. false | c. false | false |
+| 4⁺ | c. false | c. false | necessary | c. false | c. false | false |
+| 5⁺ | c. false | `□BF_σ` | necessary | c. false | c. false | false |
+| 6⁺ | c. false | c. false | c. false | necessary | c. false | false |
+| 7⁺ | c. false | c. false | necessary | necessary | c. false | false |
+| 8⁺ | c. false | `□BF_σ` | necessary | necessary | c. false | false |
+
+and in every part the paper's `◇(□ND ∧ Atomicity)`. The packages are consistent
+(`Results/Schemas/ConsistencyPointed.lean`, `part1_consistent` to `part8_consistent`).
+This confirms the survey below on the paper's construction, including its two
+corrections to "all the same principles hold as in the original model": `ND` fails at
+`ℕ` in every part, and Atomlessness fails there (`{c}` is an atom). Part 1⁺ is on the
+bijections as a submonoid of the functions on `ℕ`. The "impossible" of the survey's
+Atomlessness column is proved only at `ℕ` (false there), not at the point.
+
 ## Survey: two-object variants, and what they would add to the map
 
-Written 26 September 2026 at Cian's request, and not formalized. The question: the
+Written 26 September 2026 at Cian's request. The paper's own construction, the first
+subsection below, is now formalized (above); the other choices of arrows are not. The question: the
 paper remarks that any of these models can be modified, by adjoining a second object
 with no arrows back, so that principles hold only contingently; how many new
 consistency facts would such variants add to the Logical Map, if the map's model list
@@ -87,8 +117,8 @@ hold as in the original model":
   proposition of the variant is `({1}, no c)`, pinned iff `{1}` was; an atom below
   `(P, b)` with `P ≠ ∅` is an old atom below `P` with `c` left out, `(∅, c)` is an
   atom itself, and conversely an atom below `(P, no c)` is an old atom.
-- **Boolean Completeness** is expected to fail at `W₀` as in the base model, since the
-  paper's ascending chains live in the `M`-part; not checked.
+- **Boolean Completeness** fails at `W₀` as in the base model, on the same witnesses
+  (`Pointed.not_bc_of`, checked 28 September).
 - **No Pure Contingency fails** at `W₀` (`¬ND_e` is true and not necessary) and holds
   at `W₁`.
 

@@ -146,12 +146,10 @@ theorem step_surj (n : ℕ) : Function.Surjective (step n) := by
   · exact ⟨y + 1, by simp only [step]; split_ifs <;> omega⟩
   · exact ⟨y + 2, by simp only [step]; split_ifs <;> omega⟩
 
-/-- **Boolean Completeness at `e → t` fails in a monoid of monotone functions containing
-`pred` and every `step n`**, on the haecceities of the even numbers. -/
-theorem not_bc_of_mono (S : Submonoid F) (hmono : ∀ f ∈ S, Monotone f) (hpred : pred ∈ S)
-    (hstep : ∀ n, step n ∈ S) :
-    ¬ (model S).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) := by
-  apply not_bc_of S {m | Even m}
+/-- The Boolean Completeness witness in a monoid of monotone functions containing `pred`
+and every `step n`, on the even numbers. -/
+theorem bcWitness_mono (S : Submonoid F) (hmono : ∀ f ∈ S, Monotone f) (hpred : pred ∈ S)
+    (hstep : ∀ n, step n ∈ S) : BCWitness S {m | Even m} := by
   intro N hN
   obtain ⟨b, hb⟩ := exists_bound hN
   refine ⟨{x | x ≤ 2 * b + 4}, Set.finite_le_nat _, ⟨pred, hpred⟩, ⟨step (2 * b + 2), hstep _⟩,
@@ -169,6 +167,13 @@ theorem not_bc_of_mono (S : Submonoid F) (hmono : ∀ f ∈ S, Monotone f) (hpre
     · have e : (g' : F) (2 * b + 4) = 2 * b + 3 := (hg' (2 * b + 4) (Nat.le_refl _)).trans (by show 2 * b + 4 - 1 = 2 * b + 3; omega)
       have := hmono _ g'.2 (show 2 * b + 4 ≤ m' by omega)
       rw [e] at this; omega
+
+/-- **Boolean Completeness at `e → t` fails in a monoid of monotone functions containing
+`pred` and every `step n`**, on the haecceities of the even numbers. -/
+theorem not_bc_of_mono (S : Submonoid F) (hmono : ∀ f ∈ S, Monotone f) (hpred : pred ∈ S)
+    (hstep : ∀ n, step n ∈ S) :
+    ¬ (model S).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_bc_of S _ (bcWitness_mono S hmono hpred hstep)
 
 /-! ### Part 2: the monotone surjections -/
 
@@ -256,13 +261,15 @@ theorem not_nd_e : ¬ (model mono).HoldsSentence (Sentence.nd .e) :=
 /-- `BF` at `e` fails, on the property "positive" at `0`: a monotone function sending `0`
 somewhere positive sends everything there, but the successor does so and `0` is not
 positive. -/
-theorem not_bf_e : ¬ (model mono).HoldsSentence (Sentence.bf .e) :=
-  MonoidModel.not_bf_e mono (· ≠ 0) (· ≠ 0) 0
-    (fun k y h => by
+theorem bfWitness : BFWitness mono (· ≠ 0) (· ≠ 0) 0 :=
+  ⟨fun k y h => by
       have := k.2 (Nat.zero_le y)
       simp only [smul_eq] at h ⊢
-      omega)
-    ⟨⟨fun n => n + 1, fun _ _ h => Nat.succ_le_succ h⟩, by simp [smul_eq], 0, by simp⟩
+      omega,
+    ⟨⟨fun n => n + 1, fun _ _ h => Nat.succ_le_succ h⟩, by simp [smul_eq], 0, by simp⟩⟩
+
+theorem not_bf_e : ¬ (model mono).HoldsSentence (Sentence.bf .e) :=
+  MonoidModel.not_bf_e mono (· ≠ 0) (· ≠ 0) 0 bfWitness.1 bfWitness.2
 
 theorem not_actuality : ¬ (model mono).HoldsSentence P.Actuality.quoted :=
   not_actuality_of_free mono (free 1)
@@ -326,15 +333,20 @@ theorem not_nd_e : ¬ (model mono01).HoldsSentence (Sentence.nd .e) :=
   not_nd_e_of_not_injective mono01 zero zero_not_injective
 
 /-- `BF` at `e` fails, on "positive" at `0`, with `λn. max n 1` as the arrow. -/
-theorem not_bf_e : ¬ (model mono01).HoldsSentence (Sentence.bf .e) :=
-  MonoidModel.not_bf_e mono01 (· ≠ 0) (· ≠ 0) 0
-    (fun k y h => by
+theorem bfWitness : BFWitness mono01 (· ≠ 0) (· ≠ 0) 0 :=
+  ⟨fun k y h => by
       have := k.2.1 (Nat.zero_le y)
       simp only [smul_eq] at h ⊢
-      omega)
-    ⟨⟨fun n => max n 1, fun _ _ h => max_le_max_right 1 h, Or.inl rfl⟩, by simp [smul_eq], 0, by simp⟩
+      omega,
+    ⟨⟨fun n => max n 1, fun _ _ h => max_le_max_right 1 h, Or.inl rfl⟩, by simp [smul_eq], 0, by simp⟩⟩
+
+theorem not_bf_e : ¬ (model mono01).HoldsSentence (Sentence.bf .e) :=
+  MonoidModel.not_bf_e mono01 (· ≠ 0) (· ≠ 0) 0 bfWitness.1 bfWitness.2
 
 /-- **Actuality holds**: `{1}` is pinned down by `{0, 1}`. -/
+theorem onePinned : OnePinned mono01 :=
+  ⟨{0, 1}, Set.toFinite _, fun g hg => eq_one_of_fix g (hg 0 (by simp)) (hg 1 (by simp))⟩
+
 theorem actuality : (model mono01).HoldsSentence P.Actuality.quoted :=
   actuality_of_pinned_one mono01 ⟨{0, 1}, Set.toFinite _, singleton_pinned_of ({0, 1} : Set ℕ) 1 fun g hg =>
     eq_one_of_fix g (hg 0 (by simp)) (hg 1 (by simp))⟩
@@ -409,6 +421,9 @@ theorem not_nd_e : ¬ (model monoSurj01).HoldsSentence (Sentence.nd .e) :=
 theorem bf (σ : Ty) : (model monoSurj01).HoldsSentence (Sentence.bf σ) :=
   bf_of_surjective monoSurj01 (fun k => k.2.2.1) σ
 
+theorem onePinned : OnePinned monoSurj01 :=
+  ⟨{0, 1}, Set.toFinite _, fun g hg => eq_one_of_fix g (hg 0 (by simp)) (hg 1 (by simp))⟩
+
 theorem actuality : (model monoSurj01).HoldsSentence P.Actuality.quoted :=
   actuality_of_pinned_one monoSurj01 ⟨{0, 1}, Set.toFinite _, singleton_pinned_of ({0, 1} : Set ℕ) 1 fun g hg =>
     eq_one_of_fix g (hg 0 (by simp)) (hg 1 (by simp))⟩
@@ -472,9 +487,7 @@ theorem free_one : Free (1 : truncs) := by
     omega
 
 /-- `{gₙ}` is pinned down by `{n, n + 1}`. -/
-theorem g_pinned (n : ℕ) : (model truncs).PinnedO (.rel .t) ({n, n + 1} : Set ℕ) ({tup (g n)} : Prop' truncs) := by
-  apply singleton_pinned_of
-  intro h hh
+theorem eq_g_of_agree (n : ℕ) (h : truncs) (hh : ∀ x ∈ ({n, n + 1} : Set ℕ), h • x = g n • x) : h = g n := by
   have h1 : (h : F) n = n := (hh n (by simp)).trans (by show min n n = n; omega)
   have h2 : (h : F) (n + 1) = n := (hh (n + 1) (by simp)).trans (by show min (n + 1) n = n; omega)
   rcases h.2 with e | ⟨j, e⟩
@@ -489,18 +502,23 @@ theorem g_pinned (n : ℕ) : (model truncs).PinnedO (.rel .t) ({n, n + 1} : Set 
       omega
     rw [hj]; rfl
 
+theorem g_pinned (n : ℕ) : (model truncs).PinnedO (.rel .t) ({n, n + 1} : Set ℕ) ({tup (g n)} : Prop' truncs) :=
+  singleton_pinned_of _ _ (eq_g_of_agree n)
+
 theorem not_nd_e : ¬ (model truncs).HoldsSentence (Sentence.nd .e) :=
   not_nd_e_of_not_injective truncs (g 0) g_zero_not_injective
 
 /-- `BF` at `e` fails: an arrow sending `1` to `0` sends everything to `0`, but `g₀` does
 so and `1` is not `0`. -/
-theorem not_bf_e : ¬ (model truncs).HoldsSentence (Sentence.bf .e) :=
-  MonoidModel.not_bf_e truncs (· = 0) (· = 0) 1
-    (fun k y h => by
+theorem bfWitness : BFWitness truncs (· = 0) (· = 0) 1 :=
+  ⟨fun k y h => by
       rcases k.2 with e | ⟨j, e⟩
       · exfalso; simp only [smul_eq] at h; rw [e] at h; exact absurd h (by decide)
-      · simp only [smul_eq] at h ⊢; rw [e] at h ⊢; change min 1 j = 0 at h; show min y j = 0; omega)
-    ⟨g 0, rfl, 1, by decide⟩
+      · simp only [smul_eq] at h ⊢; rw [e] at h ⊢; change min 1 j = 0 at h; show min y j = 0; omega,
+    ⟨g 0, rfl, 1, by decide⟩⟩
+
+theorem not_bf_e : ¬ (model truncs).HoldsSentence (Sentence.bf .e) :=
+  MonoidModel.not_bf_e truncs (· = 0) (· = 0) 1 bfWitness.1 bfWitness.2
 
 theorem not_actuality : ¬ (model truncs).HoldsSentence P.Actuality.quoted :=
   not_actuality_of_free truncs free_one
@@ -529,8 +547,7 @@ theorem atomicityT : (model truncs).HoldsSentence P.AtomicityT.quoted := by
 identity agrees with `gₙ` up to a bound `n` of the pinning set and sends `n + 1` to
 itself, but the only arrow agreeing with `gₙ` at `n + 1` is `gₙ`, which sends nothing
 beyond `n`. -/
-theorem not_bc : ¬ (model truncs).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) := by
-  apply not_bc_of truncs Set.univ
+theorem bcWitness : BCWitness truncs Set.univ := by
   intro N hN
   obtain ⟨n, hn⟩ := exists_bound hN
   refine ⟨{n + 1}, Set.finite_singleton _, g n, 1, fun x hx => ?_, n + 1, Set.mem_univ _,
@@ -545,6 +562,21 @@ theorem not_bc : ¬ (model truncs).HoldsSentence (P.BooleanCompleteness.quoted (
       change min (n + 1) j = n at h1
       show min m' j ≠ n + 1
       omega
+
+theorem not_bc : ¬ (model truncs).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_bc_of truncs _ bcWitness
+
+/-- The monoid's side of Atomicity: a set of members pinned down by a finite set contains,
+with the identity, the `gₘ` beyond that set; and every `{gₙ}` is pinned. -/
+theorem singletons : Singletons truncs := by
+  rintro P ⟨N, hN, hP⟩ k hk
+  rcases k.2 with e | ⟨n, e⟩
+  · obtain ⟨m, hm⟩ := exists_bound hN
+    have hk1 : k = 1 := Subtype.ext e
+    refine ⟨g m, (hP _ _ fun y hy => ?_).2 hk, {m, m + 1}, Set.toFinite _, eq_g_of_agree m⟩
+    rw [hk1]; show min y m = y; exact min_eq_left (hm y hy)
+  · have : k = g n := Subtype.ext e
+    exact ⟨k, hk, {n, n + 1}, Set.toFinite _, this ▸ eq_g_of_agree n⟩
 
 end Truncs
 
@@ -639,10 +671,23 @@ theorem not_nd_e : ¬ (model pow2).HoldsSentence (Sentence.nd .e) :=
 
 /-- `BF` at `e` fails: every arrow sending `1` to `0` sends everything to an even number,
 but `f₂` does so and `1` is odd. -/
+theorem bfWitness : BFWitness pow2 Even (· = 0) 1 :=
+  ⟨fun k y h => even_of_one_eq_zero k h y, ⟨f 1, rfl, 1, Nat.not_even_one⟩⟩
+
 theorem not_bf_e : ¬ (model pow2).HoldsSentence (Sentence.bf .e) :=
-  MonoidModel.not_bf_e pow2 Even (· = 0) 1
-    (fun k y h => even_of_one_eq_zero k h y)
-    ⟨f 1, rfl, 1, Nat.not_even_one⟩
+  MonoidModel.not_bf_e pow2 Even (· = 0) 1 bfWitness.1 bfWitness.2
+
+theorem one_eq_f : (1 : pow2) = f 0 := Subtype.ext round_zero.symm
+
+theorem onePinned : OnePinned pow2 :=
+  ⟨({2 ^ 0 - 1, 2 ^ 0} : Set ℕ), Set.toFinite _, fun g hg => by
+    rw [one_eq_f]; exact eq_f_of_agree 0 g fun x hx => by rw [← one_eq_f]; exact hg x hx⟩
+
+theorem singletons : Singletons pow2 := by
+  rintro P - k hk
+  obtain ⟨j, e⟩ := k.2
+  have : k = f j := Subtype.ext e
+  exact ⟨k, hk, {2 ^ j - 1, 2 ^ j}, Set.toFinite _, this ▸ eq_f_of_agree j⟩
 
 theorem actuality : (model pow2).HoldsSentence P.Actuality.quoted :=
   actuality_of_pinned_one pow2 ⟨({2 ^ 0 - 1, 2 ^ 0} : Set ℕ), Set.toFinite _, by
@@ -666,8 +711,7 @@ theorem atomicityT : (model pow2).HoldsSentence P.AtomicityT.quoted := by
 there), and `f_{2^j}` sends `2 ^ j` to itself; but the only arrow agreeing with
 `f_{2^{j+1}}` on `{2^{j+1} - 1, 2^{j+1}}` is `f_{2^{j+1}}`, whose values are multiples of
 `2^{j+1}`. -/
-theorem not_bc : ¬ (model pow2).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) := by
-  apply not_bc_of pow2 Set.univ
+theorem bcWitness : BCWitness pow2 Set.univ := by
   intro N hN
   obtain ⟨b, hb⟩ := exists_bound hN
   have hbj : b < 2 ^ b := Nat.lt_two_pow_self
@@ -688,6 +732,9 @@ theorem not_bc : ¬ (model pow2).HoldsSentence (P.BooleanCompleteness.quoted (.a
     · have := Nat.le_mul_of_pos_right (2 * 2 ^ b) hpos
       have := Nat.two_pow_pos b
       omega
+
+theorem not_bc : ¬ (model pow2).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_bc_of pow2 _ bcWitness
 
 end Pow2
 
@@ -740,6 +787,18 @@ theorem not_nd_e : ¬ (model shifts).HoldsSentence (Sentence.nd .e) :=
 theorem bf (σ : Ty) : (model shifts).HoldsSentence (Sentence.bf σ) :=
   bf_of_surjective shifts surj σ
 
+theorem one_eq_k : (1 : shifts) = k 0 := Subtype.ext (funext fun m => by show m = m - 0; omega)
+
+theorem onePinned : OnePinned shifts :=
+  ⟨{1}, Set.finite_singleton _, fun g hg => by
+    rw [one_eq_k]; exact eq_k_of_agree 0 g fun x hx => by rw [← one_eq_k]; exact hg x hx⟩
+
+theorem singletons : Singletons shifts := by
+  rintro P - h hh
+  obtain ⟨n, e⟩ := h.2
+  have : h = k n := Subtype.ext e
+  exact ⟨h, hh, {n + 1}, Set.finite_singleton _, this ▸ eq_k_of_agree n⟩
+
 theorem actuality : (model shifts).HoldsSentence P.Actuality.quoted :=
   actuality_of_pinned_one shifts ⟨{1}, Set.finite_singleton _, by
     have : (1 : shifts) = k 0 := Subtype.ext (funext fun m => by show m = m - 0; omega)
@@ -761,8 +820,7 @@ theorem atomicityT : (model shifts).HoldsSentence P.AtomicityT.quoted := by
 an even `n` bounding the pinning set, `k_{n+1}` and `k_{n+2}` agree on it (both are `0`
 there), and `k_{n+2}` sends `n + 4` to `2`; but the only arrow agreeing with `k_{n+1}` at
 `n + 2` is `k_{n+1}`, which sends an even number to `0` or to an odd number. -/
-theorem not_bc : ¬ (model shifts).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) := by
-  apply not_bc_of shifts {m | Even m}
+theorem bcWitness : BCWitness shifts {m | Even m} := by
   intro N hN
   obtain ⟨b, hb⟩ := exists_bound hN
   refine ⟨{2 * b + 2}, Set.finite_singleton _, k (2 * b + 1), k (2 * b + 2), fun x hx => ?_,
@@ -774,6 +832,9 @@ theorem not_bc : ¬ (model shifts).HoldsSentence (P.BooleanCompleteness.quoted (
     obtain ⟨r, hr⟩ := hm'
     show m' - (2 * b + 1) ≠ 2 * b + 4 - (2 * b + 2)
     omega
+
+theorem not_bc : ¬ (model shifts).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_bc_of shifts _ bcWitness
 
 end Shifts
 

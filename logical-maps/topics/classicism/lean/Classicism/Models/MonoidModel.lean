@@ -524,15 +524,36 @@ theorem mem_iff_of_pinnedR {ρ : RTy} {N : Set ℕ} {p : Intension (model M).inn
     (⟨star M, a, 𝟙 (star M)⟩ : Tuple (model M).inner ρ (star M)) ∈ S) e
   simpa [Intension.mem_map, Category.comp_id] using this
 
+/-- The monoid's side of the Boolean Completeness failure: for every finite `N` there are a
+finite `N'`, members `h` and `g` agreeing on `N`, and `m ∈ S`, such that no member agreeing
+with `h` on `N'` sends a member of `S` to `g • m`. -/
+def BCWitness (S : Set ℕ) : Prop :=
+  ∀ N : Set ℕ, N.Finite → ∃ N' : Set ℕ, N'.Finite ∧ ∃ h g : M, (∀ x ∈ N, g • x = h • x) ∧
+    ∃ m ∈ S, ∀ g' : M, (∀ x ∈ N', g' • x = h • x) → ∀ m' ∈ S, g' • m' ≠ g • m
+
+/-- The monoid's side of a `BF_e` failure: every member sending `z` into `ψ` sends
+everything into `φ`, but some member sends `z` into `ψ` and `φ` fails somewhere. -/
+def BFWitness (φ ψ : ℕ → Prop) (z : ℕ) : Prop :=
+  (∀ (k : M) (y : ℕ), ψ (k • z) → φ (k • y)) ∧ ∃ k : M, ψ (k • z) ∧ ∃ y, ¬ φ y
+
+/-- The monoid's side of Actuality: the identity is the only member with its values on
+some finite set. -/
+def OnePinned : Prop := ∃ N : Set ℕ, N.Finite ∧ ∀ g : M, (∀ x ∈ N, g • x = x) → g = 1
+
+/-- The monoid's side of Atomicity at `t`: every nonempty set of members, membership in
+which depends only on the values on a finite set, has a member that is the only member
+with its values on some finite set. -/
+def Singletons : Prop :=
+  ∀ P : M → Prop, (∃ N : Set ℕ, N.Finite ∧ ∀ g g' : M, (∀ x ∈ N, g • x = g' • x) → (P g ↔ P g')) →
+    ∀ g, P g → ∃ k, P k ∧ ∃ N : Set ℕ, N.Finite ∧ ∀ g' : M, (∀ x ∈ N, g' • x = k • x) → g' = k
+
 /-- **Boolean Completeness at `e → t` fails** when finitely pinned properties including the
 haecceities of `S` can always be strengthened: for every finite `N` there are a finite
 `N'`, arrows `h` and `g` agreeing on `N`, and `m ∈ S`, such that no arrow agreeing with `h`
 on `N'` sends a member of `S` to `g • m`. Then the upper bounds of those haecceities have
 no greatest lower bound: one, `y`, would be pinned down by some finite `N`, would contain
 `⟨g • m, h⟩`, and would be included in `leastAbove S N'`, which does not. -/
-theorem not_bc_of (S : Set ℕ)
-    (H : ∀ N : Set ℕ, N.Finite → ∃ N' : Set ℕ, N'.Finite ∧ ∃ h g : M, (∀ x ∈ N, g • x = h • x) ∧
-      ∃ m ∈ S, ∀ g' : M, (∀ x ∈ N', g' • x = h • x) → ∀ m' ∈ S, g' • m' ≠ g • m) :
+theorem not_bc_of (S : Set ℕ) (H : BCWitness M S) :
     ¬ (A).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) := by
   intro Hbc
   rw [bc_quoted_eq, Premodel.HoldsSentence, (A).holds_bc_iff Mo] at Hbc

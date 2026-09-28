@@ -46,9 +46,12 @@ import Classicism.Models.ContingentBarcan
 import Classicism.Models.MonoidModel
 import Classicism.Models.Monoids
 import Classicism.Models.Permutations
+import Classicism.Models.Pointed
+import Classicism.Models.PointedParts
 -- Metalogical results, each with the object-level reasoning it rests on
 import Classicism.Results.Atomicity
 import Classicism.Results.Schemas.Consistency
+import Classicism.Results.Schemas.ConsistencyPointed
 import Classicism.Results.Schemas.PossibilityDistinctness
 import Classicism.Results.Schemas.Contingency
 import Classicism.Results.Schemas.Incompatibilities

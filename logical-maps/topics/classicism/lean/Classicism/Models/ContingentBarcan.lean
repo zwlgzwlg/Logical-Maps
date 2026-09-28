@@ -24,16 +24,6 @@ namespace Classicism.Meta.Intensional.ContingentBarcan
 
 open CategoryTheory Premodel FunCat
 
-/-- The two objects. -/
-inductive Two
-  | nat
-  | pt
-
-/-- Their sets: `ℕ` and a point. -/
-abbrev Two.X : Two → Type
-  | .nat => ℕ
-  | .pt => Unit
-
 /-- The category: all functions between the two sets. -/
 abbrev cat : FunCat where
   Obj := Two

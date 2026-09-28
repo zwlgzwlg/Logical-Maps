@@ -17,10 +17,11 @@ lemma of the shallow layer is carried into a signature by `Term.ofPure`
 
 | file | contents |
 | --- | --- |
-| `Consistency.lean` | The facts the side conditions need, from three models: `Prop` (the full Henkin model on `e`) makes the Fregean Axiom, `□FA` and No Contingency for any signature consistent; the M-set models make `¬ND_t`, `¬BF_t`, `¬FA`, `¬□FA` and `¬`Tractarianism at `t` consistent (the last through the certified record that Tractarianism implies BF), and `□ND`, `□BF` at every type consistent with `¬FA`; the permutation model of Appendix D makes `¬`Actuality and `¬`Atomicity (`t`) consistent with `□ND`, `□BF` and Atomlessness. |
+| `Consistency.lean` | The facts the side conditions need, from three models: `Prop` (the full Henkin model on `e`) makes the Fregean Axiom, `□FA` and No Contingency for any signature consistent; the M-set models make `¬ND_t`, `¬BF_t`, `¬FA`, `¬□FA` and `¬`Tractarianism at `t` consistent (the last through the certified record that Tractarianism implies BF), and `□ND`, `□BF` at every type consistent with `¬FA`; the permutation model of Appendix D makes `¬`Actuality, `¬`Atomicity (`t`) and `¬`Boolean Completeness (`e → t`) consistent with `□ND`, `□BF` and Atomlessness; Parts 2 to 8 give Proposition D.5 row by row, Boolean Completeness column included; the two-object model after Part 8 makes `¬□BF_e` consistent with `BF` at every type, so `BF` does not entail `□BF`. |
 | `PossibilityDistinctness.lean` | Distinctness and Possibility are equivalent, relative to any theory over any signature; `Max T` entails both. The one object-level step, `◇(x ≠ y) → x ≠ y`, is a shallow lemma certified once. |
 | `Contingency.lean` | No Pure Contingency necessitates every schema of pure sentences, `NPC ∪ Ax ⟹ Ax.box` — the map's twenty `no-pure-contingency-and-X-imply-necessary-X` records as one theorem; the arrows among No Contingency, No Pure Contingency, B for the signature and B for pure sentences; B and the Fregean Axiom as sources. |
-| `Incompatibilities.lean` | Possibility, Distinctness and `Max T` refute the necessitation of anything refutable in a model (`possibility_box_inconsistent`); Maximalist Classicism against `ND`; Possibility against No Pure Contingency and against B for pure sentences. |
+| `Incompatibilities.lean` | Possibility, Distinctness and `Max T` refute the necessitation of anything refutable in a model (`possibility_box_inconsistent`); Maximalist Classicism against `ND`, `□`Actuality, `□`Atomicity, `□`Boolean Completeness; Possibility against No Pure Contingency and against B for pure sentences. |
+| `ConsistencyPointed.lean` | The packages of the eight monoid models with a point adjoined (Appendix D, after Part 8): in each, `ND_e` and Boolean Completeness contingently false, Atomlessness false, `◇(□ND_e ∧ Atomicity)`, and `BF`, Actuality, Atomicity at `t` each necessary or contingently false as the part has them. |
 
 ## The map's records covered
 
@@ -46,6 +47,8 @@ lemma of the shallow layer is carried into a signature by `Term.ofPure`
 | `maximalist-distinctness-incompatible-with-necessary-tractarianism-r` | `maximalist_necTractarianism_inconsistent` (through `t`) |
 | `maximalist-distinctness-incompatible-with-necessary-actuality` | `maximalist_necActuality_inconsistent` (the permutation model) |
 | `maximalist-distinctness-incompatible-with-necessary-atomicity-r` | `maximalist_necAtomicity_inconsistent` (through `t`, the permutation model) |
+| `maximalist-distinctness-incompatible-with-necessary-boolean-completeness-r` | `maximalist_necBooleanCompleteness_inconsistent` (through `e → t`, the permutation model; the `P.NecBooleanCompleteness` form with a prime) |
+| `BF` does not entail `□BF` (Appendix D, after Part 8) | `ContingentBarcan.bf_not_entails_box_bf` |
 | consistency of `no-contingency-signature-r` (its notes) | `noContingency_consistent` |
 
 The necessitation of a principle is `AxiomSet.box P.schema`; the two boxed principles the
@@ -68,17 +71,13 @@ record is about them.
 - **Models not yet built**: the incompatibilities of Possibility with `□`Strong Leibniz
   (`t`) and `□`Relational Choice need the coalesced sums and a Henkin model without
   choice; with Countable Boolean Completeness, Gödel. The maximalist incompatibilities with
-  `□`Actuality, `□`Atomicity, `□`Boolean Completeness, `□`Functionality and Rigid
-  Comprehension need models refuting those principles, which the two M-set models do not
-  (every proposition of a finite full M-set model has an atom below it); the ideally full
-  models of Appendix D are where they come from, and the first of them
-  (`Models/Permutations.lean`) supplies `□`Actuality and `□`Atomicity; `□`Boolean
-  Completeness waits on Proposition 2.5 or a direct argument, `□`Functionality and Rigid
-  Comprehension on further models. Parts 2 to 8 (`Models/Monoids.lean`) add, in
-  `Consistency.lean`, one section per part: the paper's Proposition D.5 rows without the
-  Boolean Completeness column, and the non-theoremhood of each failing principle from
-  the holding ones (`BF_e` from Actuality and Atomicity, Actuality from Atomicity,
-  Atomicity from `BF` and Actuality, `ND_e` from all three).
+  `□`Functionality and Rigid Comprehension need models refuting those principles; those
+  with `□`Actuality, `□`Atomicity and `□`Boolean Completeness come from the permutation
+  model of Appendix D (`Models/Permutations.lean`). Parts 2 to 8 (`Models/Monoids.lean`)
+  add, in `Consistency.lean`, one section per part: the paper's Proposition D.5 rows, and
+  the non-theoremhood of each failing principle from the holding ones (`BF_e` from
+  Actuality and Atomicity, Actuality from Atomicity, Atomicity from `BF` and Actuality,
+  `ND_e` and Boolean Completeness from all three).
 - **`c5-and-atomicity(-t)-imply-no-pure-contingency`**: the automorphism exchanging two
   atoms, extended by conjugation to every type, is a substantial metalogical proof by
   induction on terms; a candidate for the next experiment of the Atomicity kind.
