@@ -1,8 +1,11 @@
 import Classicism.Semantics.IdeallyFull
 import Classicism.Semantics.IntensionalExamples
 import Classicism.Certified.Schemas
+import Classicism.Models.MonoidModel
 import Mathlib.Logic.Equiv.Basic
 import Mathlib.Algebra.Group.End
+import Mathlib.Algebra.Group.Action.End
+import Mathlib.Algebra.Group.Nat.Even
 
 /-!
 # Appendix D, Part 1: the permutation group of `ℕ`
@@ -30,8 +33,14 @@ The verdicts, each a theorem about the quoted principle the map's records use:
 
 One lemma does the work (`exists_ssubset_of_mem`): a finitely pinned proposition containing
 an arrow `k` has a finitely pinned proposition strictly below it still containing `k`.
-The model's Boolean Completeness failure, which the paper gets from Proposition 2.5, waits
-on that proposition's certification (agenda item 2).
+
+- **Boolean Completeness at `e → t` fails** (`not_bc`). The paper gets this from
+  Proposition 2.5 (with `□ND`, Boolean Completeness implies Actuality); here it is direct,
+  by the argument the paper gives for Part 2: the haecceities of the even numbers have no
+  least upper bound. The model is, definitionally, `MonoidModel.model` on the permutation
+  group, so `MonoidModel.not_bc_of` applies: for `n` bounding the pinning set, the
+  transposition of `n + 1` and `n + 2` agrees with the identity there and sends the even
+  `n + 2` to the odd `n + 1`, while a permutation fixing `n + 1` sends nothing else there.
 -/
 
 namespace Classicism.Meta.Intensional.Perms
@@ -260,5 +269,23 @@ theorem not_atomicityT : ¬ model.HoldsSentence P.AtomicityT.quoted := by
 /-- The same for the `t`-instance of the type-indexed Atomicity, whose `¬_t` and `∨_t` read
 as `¬` and `∨` do: the two sentences have the same value by `rfl`. -/
 theorem not_atomicity_t : ¬ model.HoldsSentence (P.Atomicity.quoted RTy.t) := not_atomicityT
+
+/-- **Boolean Completeness at `e → t` fails**, on the haecceities of the even numbers. -/
+theorem not_bc : ¬ model.HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) := by
+  apply MonoidModel.not_bc_of G {m | Even m}
+  intro N hN
+  obtain ⟨b, hb⟩ := hN.bddAbove
+  refine ⟨{x | x ≤ 2 * b + 3}, Set.finite_le_nat _, 1, Equiv.swap (2 * b + 3) (2 * b + 4),
+    fun x hx => ?_, 2 * b + 4, ⟨b + 2, by omega⟩, fun g' hg' m' hm' => ?_⟩
+  · have := hb hx
+    show Equiv.swap (2 * b + 3) (2 * b + 4) x = x
+    exact Equiv.swap_apply_of_ne_of_ne (by omega) (by omega)
+  · show g' m' ≠ Equiv.swap (2 * b + 3) (2 * b + 4) (2 * b + 4)
+    rw [Equiv.swap_apply_right]
+    intro e
+    have hfix : g' (2 * b + 3) = 2 * b + 3 := hg' (2 * b + 3) (Nat.le_refl _)
+    have := g'.injective (e.trans hfix.symm)
+    obtain ⟨r, hr⟩ := hm'
+    omega
 
 end Classicism.Meta.Intensional.Perms

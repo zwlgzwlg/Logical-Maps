@@ -31,22 +31,22 @@ sentences the results are stated in. Two models do all the work:
 
 - **The permutation model of Appendix D, Part 1** (`Models/Permutations.lean`): ideally
   full over the permutations of `ℕ`. `□ND_σ` and `□BF_σ` hold at every type and
-  Atomlessness holds, while Actuality and Atomicity at `t` fail; so `¬`Actuality and
-  `¬`Atomicity (`t`) are consistent with `□ND`, `□BF` and Atomlessness, and neither is a
-  theorem of `C` with them.
+  Atomlessness holds, while Actuality, Atomicity at `t` and Boolean Completeness at
+  `e → t` fail; so the negation of each is consistent with `□ND`, `□BF` and Atomlessness,
+  and none is a theorem of `C` with them.
 
 - **The monoid models of Appendix D, Parts 2 to 8** (`Models/Monoids.lean`, each an
   ideally full model over a submonoid of the functions on `ℕ`, built by
   `Models/MonoidModel.lean`): one section per part. Each has `holdsAx_pos`, the principles
   that hold there (No Pure Contingency, which holds in every model on a monoid, and
   `BF`, Actuality, Atomlessness, Atomicity at `t` as the part has them), `holdsAx_neg`,
-  the negations of those that fail (`ND_e` in every part, `BF_e`, Actuality, Atomicity at
-  `t`), `consistent`, their union consistent — the row of the paper's Proposition D.5 for
-  that part, without its Boolean Completeness column — and, for each principle that
-  fails, that it is not a theorem of `C` with the ones that hold: `BF_e` is not a
-  theorem of `C` with Actuality and Atomicity (Part 7), Actuality not of `C` with
-  Atomicity (Part 6), Atomicity not of `C` with `BF` and Actuality (Part 5), `ND_e` not of
-  `C` with all three (Part 8). The necessitations follow from No Pure Contingency
+  the negations of those that fail (`ND_e` and Boolean Completeness at `e → t` in every
+  part, `BF_e`, Actuality, Atomicity at `t`), `consistent`, their union consistent — the
+  row of the paper's Proposition D.5 for that part — and, for each principle that fails,
+  that it is not a theorem of `C` with the ones that hold: `BF_e` is not a theorem of `C`
+  with Actuality and Atomicity (Part 7), Actuality not of `C` with Atomicity (Part 6),
+  Atomicity not of `C` with `BF` and Actuality (Part 5), `ND_e` and Boolean Completeness
+  not of `C` with all three (Part 8). The necessitations follow from No Pure Contingency
   (`Contingency.lean`, `npc_union_entails_box`) and are not restated.
 
 The model verdicts themselves stay in `Semantics/IntensionalExamples.lean`,
@@ -259,6 +259,22 @@ theorem atomicityT_not_theorem :
       P.Atomlessness.schema)) P.AtomicityT.quoted :=
   not_theorem_of_model A M holdsAx_nd_bf_atomless not_atomicityT
 
+/-- `¬`Boolean Completeness at `e → t` likewise: the paper's Proposition D.5, part 1. -/
+theorem not_bc_consistent : Consistent (single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t)))) :=
+  Consistent.of_model A M (holdsAx_single A ((holdsSentence_neg A M _).2 not_bc))
+
+theorem not_bc_nd_bf_atomless_consistent :
+    Consistent (single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t))) ∪
+      (AxiomSet.box P.NecessityOfDistinctness.schema ∪ AxiomSet.box P.Barcan.schema ∪
+        P.Atomlessness.schema)) :=
+  Consistent.of_model A M
+    (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_bc)) holdsAx_nd_bf_atomless)
+
+theorem bc_not_theorem :
+    ¬ Theorem (C.axioms ∪ (AxiomSet.box P.NecessityOfDistinctness.schema ∪ AxiomSet.box P.Barcan.schema ∪
+      P.Atomlessness.schema)) (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_theorem_of_model A M holdsAx_nd_bf_atomless not_bc
+
 end Perms
 
 /-! ### Appendix D, Part 2: the monotone surjections -/
@@ -276,16 +292,17 @@ theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Barcan.schema ∪ P.
       (by rintro _ ⟨σ, rfl⟩; exact bf σ))
       (by rintro _ rfl; exact atomlessness)
 
-/-- What fails: `ND_e`, Actuality, Atomicity at `t`. -/
-theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg P.Actuality.quoted) ∪ single (Term.neg P.AtomicityT.quoted)) :=
-  holdsAx_union A (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
+/-- What fails: `ND_e`, Actuality, Atomicity at `t`, Boolean Completeness at `e → t`. -/
+theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg P.Actuality.quoted) ∪ single (Term.neg P.AtomicityT.quoted) ∪ single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t)))) :=
+  holdsAx_union A (holdsAx_union A (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
       (holdsAx_single A ((holdsSentence_neg A M _).2 not_actuality)))
-      (holdsAx_single A ((holdsSentence_neg A M _).2 not_atomicityT))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_atomicityT)))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_bc))
 
 /-- The verdicts of Part 2, jointly consistent. -/
 theorem consistent :
     Consistent (npc Signature.pure ∪ P.Barcan.schema ∪ P.Atomlessness.schema ∪
-      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg P.Actuality.quoted) ∪ single (Term.neg P.AtomicityT.quoted))) :=
+      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg P.Actuality.quoted) ∪ single (Term.neg P.AtomicityT.quoted) ∪ single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t))))) :=
   Consistent.of_model A M (holdsAx_union A holdsAx_pos holdsAx_neg)
 
 theorem nd_e_not_theorem :
@@ -299,6 +316,10 @@ theorem actuality_not_theorem :
 theorem atomicityT_not_theorem :
     ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Barcan.schema ∪ P.Atomlessness.schema)) (P.AtomicityT.quoted) :=
   not_theorem_of_model A M holdsAx_pos not_atomicityT
+
+theorem bc_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Barcan.schema ∪ P.Atomlessness.schema)) (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_theorem_of_model A M holdsAx_pos not_bc
 
 end MonoSurj
 
@@ -316,17 +337,18 @@ theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Atomlessness.schema)
   holdsAx_union A (holdsAx_npc A M)
       (by rintro _ rfl; exact atomlessness)
 
-/-- What fails: `ND_e`, `BF_e`, Actuality, Atomicity at `t`. -/
-theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.Actuality.quoted) ∪ single (Term.neg P.AtomicityT.quoted)) :=
-  holdsAx_union A (holdsAx_union A (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
+/-- What fails: `ND_e`, `BF_e`, Actuality, Atomicity at `t`, Boolean Completeness at `e → t`. -/
+theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.Actuality.quoted) ∪ single (Term.neg P.AtomicityT.quoted) ∪ single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t)))) :=
+  holdsAx_union A (holdsAx_union A (holdsAx_union A (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
       (holdsAx_single A ((holdsSentence_neg A M _).2 not_bf_e)))
       (holdsAx_single A ((holdsSentence_neg A M _).2 not_actuality)))
-      (holdsAx_single A ((holdsSentence_neg A M _).2 not_atomicityT))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_atomicityT)))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_bc))
 
 /-- The verdicts of Part 3, jointly consistent. -/
 theorem consistent :
     Consistent (npc Signature.pure ∪ P.Atomlessness.schema ∪
-      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.Actuality.quoted) ∪ single (Term.neg P.AtomicityT.quoted))) :=
+      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.Actuality.quoted) ∪ single (Term.neg P.AtomicityT.quoted) ∪ single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t))))) :=
   Consistent.of_model A M (holdsAx_union A holdsAx_pos holdsAx_neg)
 
 theorem nd_e_not_theorem :
@@ -345,6 +367,10 @@ theorem atomicityT_not_theorem :
     ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Atomlessness.schema)) (P.AtomicityT.quoted) :=
   not_theorem_of_model A M holdsAx_pos not_atomicityT
 
+theorem bc_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Atomlessness.schema)) (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_theorem_of_model A M holdsAx_pos not_bc
+
 end Mono
 
 /-! ### Appendix D, Part 4: the monotone functions collapsing `0` and `1`, and the identity -/
@@ -361,16 +387,17 @@ theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Actuality.schema) :=
   holdsAx_union A (holdsAx_npc A M)
       (by rintro _ rfl; exact actuality)
 
-/-- What fails: `ND_e`, `BF_e`, Atomicity at `t`. -/
-theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.AtomicityT.quoted)) :=
-  holdsAx_union A (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
+/-- What fails: `ND_e`, `BF_e`, Atomicity at `t`, Boolean Completeness at `e → t`. -/
+theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.AtomicityT.quoted) ∪ single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t)))) :=
+  holdsAx_union A (holdsAx_union A (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
       (holdsAx_single A ((holdsSentence_neg A M _).2 not_bf_e)))
-      (holdsAx_single A ((holdsSentence_neg A M _).2 not_atomicityT))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_atomicityT)))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_bc))
 
 /-- The verdicts of Part 4, jointly consistent. -/
 theorem consistent :
     Consistent (npc Signature.pure ∪ P.Actuality.schema ∪
-      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.AtomicityT.quoted))) :=
+      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.AtomicityT.quoted) ∪ single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t))))) :=
   Consistent.of_model A M (holdsAx_union A holdsAx_pos holdsAx_neg)
 
 theorem nd_e_not_theorem :
@@ -384,6 +411,10 @@ theorem bf_e_not_theorem :
 theorem atomicityT_not_theorem :
     ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Actuality.schema)) (P.AtomicityT.quoted) :=
   not_theorem_of_model A M holdsAx_pos not_atomicityT
+
+theorem bc_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Actuality.schema)) (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_theorem_of_model A M holdsAx_pos not_bc
 
 end Mono01
 
@@ -402,15 +433,16 @@ theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Barcan.schema ∪ P.
       (by rintro _ ⟨σ, rfl⟩; exact bf σ))
       (by rintro _ rfl; exact actuality)
 
-/-- What fails: `ND_e`, Atomicity at `t`. -/
-theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg P.AtomicityT.quoted)) :=
-  holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
-      (holdsAx_single A ((holdsSentence_neg A M _).2 not_atomicityT))
+/-- What fails: `ND_e`, Atomicity at `t`, Boolean Completeness at `e → t`. -/
+theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg P.AtomicityT.quoted) ∪ single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t)))) :=
+  holdsAx_union A (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_atomicityT)))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_bc))
 
 /-- The verdicts of Part 5, jointly consistent. -/
 theorem consistent :
     Consistent (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema ∪
-      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg P.AtomicityT.quoted))) :=
+      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg P.AtomicityT.quoted) ∪ single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t))))) :=
   Consistent.of_model A M (holdsAx_union A holdsAx_pos holdsAx_neg)
 
 theorem nd_e_not_theorem :
@@ -420,6 +452,10 @@ theorem nd_e_not_theorem :
 theorem atomicityT_not_theorem :
     ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema)) (P.AtomicityT.quoted) :=
   not_theorem_of_model A M holdsAx_pos not_atomicityT
+
+theorem bc_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema)) (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_theorem_of_model A M holdsAx_pos not_bc
 
 end MonoSurj01
 
@@ -437,16 +473,17 @@ theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.AtomicityT.schema) :
   holdsAx_union A (holdsAx_npc A M)
       (by rintro _ rfl; exact atomicityT)
 
-/-- What fails: `ND_e`, `BF_e`, Actuality. -/
-theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.Actuality.quoted)) :=
-  holdsAx_union A (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
+/-- What fails: `ND_e`, `BF_e`, Actuality, Boolean Completeness at `e → t`. -/
+theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.Actuality.quoted) ∪ single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t)))) :=
+  holdsAx_union A (holdsAx_union A (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
       (holdsAx_single A ((holdsSentence_neg A M _).2 not_bf_e)))
-      (holdsAx_single A ((holdsSentence_neg A M _).2 not_actuality))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_actuality)))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_bc))
 
 /-- The verdicts of Part 6, jointly consistent. -/
 theorem consistent :
     Consistent (npc Signature.pure ∪ P.AtomicityT.schema ∪
-      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.Actuality.quoted))) :=
+      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg P.Actuality.quoted) ∪ single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t))))) :=
   Consistent.of_model A M (holdsAx_union A holdsAx_pos holdsAx_neg)
 
 theorem nd_e_not_theorem :
@@ -460,6 +497,10 @@ theorem bf_e_not_theorem :
 theorem actuality_not_theorem :
     ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.AtomicityT.schema)) (P.Actuality.quoted) :=
   not_theorem_of_model A M holdsAx_pos not_actuality
+
+theorem bc_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.AtomicityT.schema)) (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_theorem_of_model A M holdsAx_pos not_bc
 
 end Truncs
 
@@ -478,15 +519,16 @@ theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Actuality.schema ∪
       (by rintro _ rfl; exact actuality))
       (by rintro _ rfl; exact atomicityT)
 
-/-- What fails: `ND_e`, `BF_e`. -/
-theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e))) :=
-  holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
-      (holdsAx_single A ((holdsSentence_neg A M _).2 not_bf_e))
+/-- What fails: `ND_e`, `BF_e`, Boolean Completeness at `e → t`. -/
+theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t)))) :=
+  holdsAx_union A (holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_bf_e)))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_bc))
 
 /-- The verdicts of Part 7, jointly consistent. -/
 theorem consistent :
     Consistent (npc Signature.pure ∪ P.Actuality.schema ∪ P.AtomicityT.schema ∪
-      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)))) :=
+      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (Sentence.bf .e)) ∪ single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t))))) :=
   Consistent.of_model A M (holdsAx_union A holdsAx_pos holdsAx_neg)
 
 theorem nd_e_not_theorem :
@@ -496,6 +538,10 @@ theorem nd_e_not_theorem :
 theorem bf_e_not_theorem :
     ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Actuality.schema ∪ P.AtomicityT.schema)) (Sentence.bf .e) :=
   not_theorem_of_model A M holdsAx_pos not_bf_e
+
+theorem bc_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Actuality.schema ∪ P.AtomicityT.schema)) (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_theorem_of_model A M holdsAx_pos not_bc
 
 end Pow2
 
@@ -515,19 +561,24 @@ theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Barcan.schema ∪ P.
       (by rintro _ rfl; exact actuality))
       (by rintro _ rfl; exact atomicityT)
 
-/-- What fails: `ND_e`. -/
-theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e))) :=
-  holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e)
+/-- What fails: `ND_e`, Boolean Completeness at `e → t`. -/
+theorem holdsAx_neg : (A).HoldsAx (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t)))) :=
+  holdsAx_union A (holdsAx_single A ((holdsSentence_neg A M _).2 not_nd_e))
+      (holdsAx_single A ((holdsSentence_neg A M _).2 not_bc))
 
 /-- The verdicts of Part 8, jointly consistent. -/
 theorem consistent :
     Consistent (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema ∪ P.AtomicityT.schema ∪
-      (single (Term.neg (Sentence.nd .e)))) :=
+      (single (Term.neg (Sentence.nd .e)) ∪ single (Term.neg (P.BooleanCompleteness.quoted (.arr .e .t))))) :=
   Consistent.of_model A M (holdsAx_union A holdsAx_pos holdsAx_neg)
 
 theorem nd_e_not_theorem :
     ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema ∪ P.AtomicityT.schema)) (Sentence.nd .e) :=
   not_theorem_of_model A M holdsAx_pos not_nd_e
+
+theorem bc_not_theorem :
+    ¬ Theorem (C.axioms ∪ (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema ∪ P.AtomicityT.schema)) (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_theorem_of_model A M holdsAx_pos not_bc
 
 end Shifts
 

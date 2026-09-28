@@ -33,8 +33,9 @@ certified once:
 Not here, for want of the models: the incompatibilities with `□`Strong Leibniz (`t`),
 `□`Relational Choice, Countable Boolean Completeness and the Necessity of Arithmetic
 (coalesced sums, a Henkin model without choice, Gödel), and the maximalist ones with
-`□`Actuality, `□`Atomicity, `□`Boolean Completeness, `□`Functionality and Rigid
-Comprehension.
+`□`Functionality and Rigid Comprehension. The maximalist ones with `□`Actuality,
+`□`Atomicity and `□`Boolean Completeness are here, from the permutation model of
+Appendix D, Part 1.
 -/
 
 namespace Classicism
@@ -143,6 +144,23 @@ theorem maximalist_necAtomicity_inconsistent :
     (Consistent.empty_union Perms.not_atomicity_t_consistent)
     (Consistent.mono (fun a ha => ha.elim Or.inl (fun h => Or.inr (by
       subst (h : a = Term.box (P.Atomicity.quoted RTy.t)); exact AxiomSet.mem_box ⟨RTy.t, rfl⟩))) hc)
+
+/-- `maximalist-distinctness-incompatible-with-necessary-boolean-completeness-r`, through
+the `e → t` instance, which fails in the permutation model (Appendix D, Part 1). -/
+theorem maximalist_necBooleanCompleteness_inconsistent :
+    ¬ Consistent (maximalist (Sig := Signature.pure) ∪ AxiomSet.box P.BooleanCompleteness.schema) := fun hc =>
+  max_box_inconsistent (Y := P.BooleanCompleteness.quoted (.arr .e .t))
+    (Consistent.empty_union Perms.not_bc_consistent)
+    (Consistent.mono (fun a ha => ha.elim Or.inl (fun h => Or.inr (by
+      subst (h : a = Term.box (P.BooleanCompleteness.quoted (.arr .e .t)))
+      exact AxiomSet.mem_box ⟨.arr .e .t, rfl⟩))) hc)
+
+/-- The same with the map's boxed principle, `P.NecBooleanCompleteness`. -/
+theorem maximalist_necBooleanCompleteness_inconsistent' :
+    ¬ Consistent (maximalist (Sig := Signature.pure) ∪ P.NecBooleanCompleteness.schema) := fun hc =>
+  max_box_inconsistent (Y := P.BooleanCompleteness.quoted (.arr .e .t))
+    (Consistent.empty_union Perms.not_bc_consistent)
+    (Consistent.mono (fun a ha => ha.elim Or.inl (fun h => Or.inr ⟨.arr .e .t, h⟩)) hc)
 
 /-- `maximalist-distinctness-incompatible-with-necessary-tractarianism-r`, through the
 `t` instance, which fails in the idempotent-monoid model because it implies `BF_t`. -/

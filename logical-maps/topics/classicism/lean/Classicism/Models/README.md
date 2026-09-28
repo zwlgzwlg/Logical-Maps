@@ -13,24 +13,29 @@ M-set models on the two-element monoids are in `Semantics/IntensionalExamples.le
 The verdicts, each a theorem about the quoted principle (`P.Actuality.quoted`,
 `P.AtomicityT.quoted`, `Sentence.bf σ`, …):
 
-| part | monoid | `ND` | `BF` | Actuality | Atomlessness | Atomicity (`t`) | namespace |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | permutations | `□ND_σ` | `□BF_σ` | fails | holds | fails | `Perms` |
-| 2 | monotone surjections | fails (`e`) | `BF_σ` | fails | holds | fails | `Monoids.MonoSurj` |
-| 3 | monotone functions | fails | fails (`e`) | fails | holds | fails | `Monoids.Mono` |
-| 4 | monotone, collapsing `0, 1` unless the identity | fails | fails | holds | (fails) | fails | `Monoids.Mono01` |
-| 5 | as 4, surjective | fails | `BF_σ` | holds | (fails) | fails | `Monoids.MonoSurj01` |
-| 6 | the identity and the truncations `gₙ m = min m n` | fails | fails | fails | (fails) | holds | `Monoids.Truncs` |
-| 7 | the roundings `f_{2^j} m = 2^j ⌊m / 2^j⌋` | fails | fails | holds | (fails) | holds | `Monoids.Pow2` |
-| 8 | the shifts `kₙ m = m ∸ n` | fails | `BF_σ` | holds | (fails) | holds | `Monoids.Shifts` |
+| part | monoid | `ND` | `BF` | Actuality | Atomlessness | Atomicity (`t`) | BC (`e → t`) | namespace |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | permutations | `□ND_σ` | `□BF_σ` | fails | holds | fails | fails | `Perms` |
+| 2 | monotone surjections | fails (`e`) | `BF_σ` | fails | holds | fails | fails | `Monoids.MonoSurj` |
+| 3 | monotone functions | fails | fails (`e`) | fails | holds | fails | fails | `Monoids.Mono` |
+| 4 | monotone, collapsing `0, 1` unless the identity | fails | fails | holds | (fails) | fails | fails | `Monoids.Mono01` |
+| 5 | as 4, surjective | fails | `BF_σ` | holds | (fails) | fails | fails | `Monoids.MonoSurj01` |
+| 6 | the identity and the truncations `gₙ m = min m n` | fails | fails | fails | (fails) | holds | fails | `Monoids.Truncs` |
+| 7 | the roundings `f_{2^j} m = 2^j ⌊m / 2^j⌋` | fails | fails | holds | (fails) | holds | fails | `Monoids.Pow2` |
+| 8 | the shifts `kₙ m = m ∸ n` | fails | `BF_σ` | holds | (fails) | holds | fails | `Monoids.Shifts` |
 
 Parenthesized entries are not theorems here: Atomlessness fails wherever Actuality or
 Atomicity holds, which is the map's business. No Pure Contingency holds in every model
 on a monoid (`Premodel.holdsAx_npc`), so each verdict is also a verdict on the
 principle's necessitation; `Results/Schemas/Consistency.lean` states the packages, one
-section per part. The Boolean Completeness column of the paper's Proposition D.5 (it
-fails in all eight) is not formalized: the paper's arguments are direct LUB
-constructions at higher types, and Part 1's goes through Proposition 2.5.
+section per part. The Boolean Completeness column of the paper's Proposition D.5 is
+one lemma, `MonoidModel.not_bc_of` (the haecceities of a set `S` of numbers have no least
+upper bound, when properties including them can always be strengthened by pinning them
+down by more), with the paper's witnesses: the even numbers in Parts 2 to 5 and 8, all
+numbers in Parts 6 and 7. Part 1's failure, which the paper gets through Proposition 2.5,
+is direct by the same lemma, the permutation model being definitionally the monoid model
+on the permutation group; the maximalist incompatibility with `□`Boolean Completeness
+follows (`Results/Schemas/Incompatibilities.lean`).
 
 ## Survey: two-object variants, and what they would add to the map
 

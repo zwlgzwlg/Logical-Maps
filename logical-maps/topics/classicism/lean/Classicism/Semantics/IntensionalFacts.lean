@@ -15,6 +15,8 @@ arrows out of that object.
 - **BF_σ holds if `h^σ` is surjective for every such arrow** ((ii)).
 - **The Fregean Axiom holds iff any two propositions that agree on the identity arrow are
   equal.**
+- **Boolean Completeness at `ρ` holds iff every property of type `ρ → t` has a greatest
+  lower bound under inclusion of intensions** (`holds_bc_iff`), `≤_ρ` being inclusion.
 
 Then **truncation**: the same premodel with a new base, in which `◇P` holds iff `P` holds
 in some truncation and `□P` iff in every one. Where the action models of
@@ -134,6 +136,43 @@ theorem holds_fregean_iff {W : C} (h : A.W₀ ⟶ W) :
     exact A.Incl_injective _ W (H p q e)
   · intro H p q e
     exact congrArg (A.Incl _ W) (H p q e)
+
+/-! ### Boolean Completeness and inclusion -/
+
+/-- `∨_ρ` applied is union. -/
+theorem sem_orR {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (g : IEnv (A.Dom W) Γ) (ρ : RTy)
+    (a b : Term Sig Γ ρ) :
+    A.sem h (.app (.app (.orR ρ) a) b) g = A.sem h a g ∪ A.sem h b g := by
+  obtain ⟨a', ha⟩ := Set.mem_range.mp (M h a g)
+  obtain ⟨b', hb⟩ := Set.mem_range.mp (M h b g)
+  show A.apply (A.apply (A.orRead ρ W) (A.sem h a g)) (A.sem h b g) = A.sem h a g ∪ A.sem h b g
+  rw [← ha, ← hb, A.apply_Incl, A.apply_Incl]
+  exact A.app_orRead a' b'
+
+/-- `X ≤_ρ Y`, read as `Y = X ∨_ρ Y`, holds iff the value of `X` is included in that of
+`Y`: entailment is inclusion of intensions. -/
+theorem holds_leR {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (g : IEnv (A.Dom W) Γ) (ρ : RTy)
+    (a b : Term Sig Γ ρ) :
+    A.Holds h (leR ρ a b) g ↔ A.sem h a g ⊆ A.sem h b g := by
+  rw [leR, A.holds_eq M, A.sem_orR M]
+  exact eq_comm.trans Set.union_eq_right
+
+/-- **Boolean Completeness at `ρ` holds iff every property has a greatest lower bound
+under inclusion**, among the inner elements at the object, a property `X` holding of `u`
+when `X`'s value contains `u` under the identity. -/
+theorem holds_bc_iff (ρ : RTy) {W : C} (h : A.W₀ ⟶ W) :
+    A.Holds h (Sentence.bc ρ) .nil ↔
+      ∀ X : A.Dom W (.rel (ρ ⇒ RTy.t)), ∃ y : A.Dom W (.rel ρ), ∀ z : A.Dom W (.rel ρ),
+        ((∀ u : A.Dom W (.rel ρ),
+            (⟨W, (u, PUnit.unit), 𝟙 W⟩ : Tuple A.inner (ρ ⇒ RTy.t) W) ∈ A.incl _ W X →
+              A.incl ρ W z ⊆ A.incl ρ W u) ↔
+          A.incl ρ W z ⊆ A.incl ρ W y) := by
+  simp only [Sentence.bc, A.holds_forall M, A.holds_exists M, A.holds_iff M, A.holds_imp M,
+    A.holds_leR M]
+  refine forall_congr' fun X => exists_congr fun y => forall_congr' fun z =>
+    iff_congr (forall_congr' fun u => imp_congr ?_ Iff.rfl) Iff.rfl
+  rw [A.holds_app (a' := u) _ _ _ _ rfl]
+  rfl
 
 end Premodel
 

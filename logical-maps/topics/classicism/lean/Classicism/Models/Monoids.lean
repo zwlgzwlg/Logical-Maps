@@ -13,15 +13,15 @@ The paper's remaining one-object models (Classicism, Appendix D, Parts 2 to 8), 
 ideally full model over a monoid of functions on `ℕ`, built by `MonoidModel` from the
 submonoid of `Function.End ℕ`:
 
-| part | monoid | ND | BF | Actuality | Atomicity |
-| --- | --- | --- | --- | --- | --- |
-| 2 | monotone surjections | fails | holds | fails | fails |
-| 3 | monotone functions | fails | fails | fails | fails |
-| 4 | monotone, collapsing `0, 1` unless the identity | fails | fails | holds | fails |
-| 5 | as 4, surjective | fails | holds | holds | fails |
-| 6 | the identity and the truncations `gₙ m = min m n` | fails | fails | fails | holds |
-| 7 | the roundings `f_{2^j} m = 2^j ⌊m / 2^j⌋` | fails | fails | holds | holds |
-| 8 | the shifts `kₙ m = m ∸ n` | fails | holds | holds | holds |
+| part | monoid | ND | BF | Actuality | Atomicity | BC (`e → t`) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 2 | monotone surjections | fails | holds | fails | fails | fails |
+| 3 | monotone functions | fails | fails | fails | fails | fails |
+| 4 | monotone, collapsing `0, 1` unless the identity | fails | fails | holds | fails | fails |
+| 5 | as 4, surjective | fails | holds | holds | fails | fails |
+| 6 | the identity and the truncations `gₙ m = min m n` | fails | fails | fails | holds | fails |
+| 7 | the roundings `f_{2^j} m = 2^j ⌊m / 2^j⌋` | fails | fails | holds | holds | fails |
+| 8 | the shifts `kₙ m = m ∸ n` | fails | holds | holds | holds | fails |
 
 Each verdict is an instance of a lemma of `MonoidModel` at the one fact about the monoid
 that decides it: an arrow that is not injective (`ND`), surjectivity of every arrow
@@ -30,7 +30,15 @@ can be perturbed off any finite set (`Free`), and whether singletons are finitel
 Atomlessness holds where every arrow is free (Parts 2 and 3). No Pure Contingency holds
 in every model on a monoid (`Premodel.holdsAx_npc`), so each verdict is a verdict on the
 principle's necessitation too; `Results/Schemas/Consistency.lean` states the packages.
-The Boolean Completeness failures of Proposition D.5 are not here yet.
+
+Boolean Completeness fails at `e → t` in every part (Proposition D.5), by
+`MonoidModel.not_bc_of`: the haecceities of a set `S` of numbers have no least upper
+bound. The witnesses are the paper's. In Parts 2 to 5, `S` is the even numbers and one
+pair of arrows serves all four monoids (`not_bc_of_mono`): `pred` and `step n`, which
+agree up to `n + 1` and differ at `n + 2`, where `step n` sends the even `n + 2` to the
+even `n`, which no monotone arrow agreeing with `pred` up to `n + 2` sends an even number
+to. In Part 6, `S` is everything, with `gₙ` and the identity; in Part 7 everything, with
+`f_{2^{j+1}}` and `f_{2^j}`; in Part 8 the evens, with `k_{n+1}` and `k_{n+2}`.
 
 Part 7 is indexed by the exponent: `round j` is the paper's `f_{2^j}`, and `{f_{2^j}}` is
 pinned down by `{2^j - 1, 2^j}` (two points rather than the paper's three, since an arrow
@@ -109,6 +117,59 @@ theorem raise_mono {k : F} (hk : Monotone k) (m : ℕ) : Monotone (raise k m) :=
 theorem raise_apply_of_le {k : F} {m x : ℕ} (h : x ≤ m) : raise k m x = k x := by
   simp [raise, show ¬ m < x by omega]
 
+/-! ### Boolean Completeness in the monotone parts
+
+Parts 2 to 5 share a witness. Take `h = pred` and `g = step n`, which is `pred` up to
+`n + 1` and then one further behind, so that `g (n + 2) = n`. For a bound `n` of the
+pinning set with `n` even and at least `2`, the two agree there; but a monotone arrow
+agreeing with `pred` up to `n + 2` sends an even number `≤ n + 2` to `0` or to an odd
+number, and one beyond `n + 2` to at least `n + 1`, so never an even to `n`. -/
+
+/-- The predecessor, truncated at `0`. -/
+def pred : F := fun x => x - 1
+
+/-- `pred` up to `n + 1`, then one further behind. -/
+def step (n : ℕ) : F := fun x => if x ≤ n + 1 then x - 1 else x - 2
+
+theorem pred_mono : Monotone pred := fun _ _ h => Nat.sub_le_sub_right h 1
+
+theorem pred_surj : Function.Surjective pred := fun y => ⟨y + 1, by show y + 1 - 1 = y; omega⟩
+
+theorem step_mono (n : ℕ) : Monotone (step n) := by
+  intro x y hxy
+  simp only [step]
+  split_ifs <;> omega
+
+theorem step_surj (n : ℕ) : Function.Surjective (step n) := by
+  intro y
+  by_cases hy : y ≤ n
+  · exact ⟨y + 1, by simp only [step]; split_ifs <;> omega⟩
+  · exact ⟨y + 2, by simp only [step]; split_ifs <;> omega⟩
+
+/-- **Boolean Completeness at `e → t` fails in a monoid of monotone functions containing
+`pred` and every `step n`**, on the haecceities of the even numbers. -/
+theorem not_bc_of_mono (S : Submonoid F) (hmono : ∀ f ∈ S, Monotone f) (hpred : pred ∈ S)
+    (hstep : ∀ n, step n ∈ S) :
+    ¬ (model S).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) := by
+  apply not_bc_of S {m | Even m}
+  intro N hN
+  obtain ⟨b, hb⟩ := exists_bound hN
+  refine ⟨{x | x ≤ 2 * b + 4}, Set.finite_le_nat _, ⟨pred, hpred⟩, ⟨step (2 * b + 2), hstep _⟩,
+    fun x hx => ?_, 2 * b + 4, ⟨b + 2, by omega⟩, fun g' hg' m' hm' => ?_⟩
+  · have := hb x hx
+    show step (2 * b + 2) x = pred x
+    simp only [step, pred]; split_ifs <;> omega
+  · show (g' : F) m' ≠ step (2 * b + 2) (2 * b + 4)
+    have hval : step (2 * b + 2) (2 * b + 4) = 2 * b + 2 := by simp only [step]; split_ifs <;> omega
+    rw [hval]
+    obtain ⟨r, hr⟩ := hm'
+    by_cases hle : m' ≤ 2 * b + 4
+    · have e : (g' : F) m' = m' - 1 := hg' m' hle
+      rw [e]; omega
+    · have e : (g' : F) (2 * b + 4) = 2 * b + 3 := (hg' (2 * b + 4) (Nat.le_refl _)).trans (by show 2 * b + 4 - 1 = 2 * b + 3; omega)
+      have := hmono _ g'.2 (show 2 * b + 4 ≤ m' by omega)
+      rw [e] at this; omega
+
 /-! ### Part 2: the monotone surjections -/
 
 /-- The monoid of monotone surjections of `ℕ`. -/
@@ -155,6 +216,9 @@ theorem atomlessness : (model monoSurj).HoldsSentence P.Atomlessness.quoted :=
 theorem not_atomicityT : ¬ (model monoSurj).HoldsSentence P.AtomicityT.quoted :=
   not_atomicityT_of_free monoSurj (p := Set.univ) ⟨∅, Set.finite_empty, PinnedO.univ _ ∅⟩
     (fun h => Set.notMem_empty (tup (1 : monoSurj)) (h ▸ Set.mem_univ _)) (fun k _ => free k)
+
+theorem not_bc : ¬ (model monoSurj).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_bc_of_mono monoSurj (fun _ h => h.1) ⟨pred_mono, pred_surj⟩ fun n => ⟨step_mono n, step_surj n⟩
 
 end MonoSurj
 
@@ -209,6 +273,9 @@ theorem atomlessness : (model mono).HoldsSentence P.Atomlessness.quoted :=
 theorem not_atomicityT : ¬ (model mono).HoldsSentence P.AtomicityT.quoted :=
   not_atomicityT_of_free mono (p := Set.univ) ⟨∅, Set.finite_empty, PinnedO.univ _ ∅⟩
     (fun h => Set.notMem_empty (tup (1 : mono)) (h ▸ Set.mem_univ _)) (fun k _ => free k)
+
+theorem not_bc : ¬ (model mono).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_bc_of_mono mono (fun _ h => h) pred_mono step_mono
 
 end Mono
 
@@ -287,6 +354,9 @@ theorem not_atomicityT : ¬ (model mono01).HoldsSentence P.AtomicityT.quoted :=
   not_atomicityT_of_free mono01 (p := collapse) ⟨{0, 1}, Set.toFinite _, collapse_pinned⟩
     (fun h => Set.notMem_empty (tup zero) (h ▸ (mem_ofPred.2 rfl))) (fun k hk => free_of_collapse k (mem_ofPred.1 hk))
 
+theorem not_bc : ¬ (model mono01).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_bc_of_mono mono01 (fun _ h => h.1) ⟨pred_mono, Or.inl rfl⟩ fun n => ⟨step_mono n, Or.inl rfl⟩
+
 end Mono01
 
 /-! ### Part 5: the surjective ones among them -/
@@ -354,6 +424,10 @@ theorem collapse_pinned : (model monoSurj01).PinnedO (.rel .t) ({0, 1} : Set ℕ
 theorem not_atomicityT : ¬ (model monoSurj01).HoldsSentence P.AtomicityT.quoted :=
   not_atomicityT_of_free monoSurj01 (p := collapse) ⟨{0, 1}, Set.toFinite _, collapse_pinned⟩
     (fun h => Set.notMem_empty (tup half) (h ▸ (mem_ofPred.2 rfl))) (fun k hk => free_of_collapse k (mem_ofPred.1 hk))
+
+theorem not_bc : ¬ (model monoSurj01).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) :=
+  not_bc_of_mono monoSurj01 (fun _ h => h.1) ⟨pred_mono, pred_surj, Or.inl rfl⟩
+    fun n => ⟨step_mono n, step_surj n, Or.inl rfl⟩
 
 end MonoSurj01
 
@@ -451,6 +525,27 @@ theorem atomicityT : (model truncs).HoldsSentence P.AtomicityT.quoted := by
     rw [this] at ht
     exact ht
 
+/-- **Boolean Completeness at `e → t` fails**, on the haecceities of all numbers: the
+identity agrees with `gₙ` up to a bound `n` of the pinning set and sends `n + 1` to
+itself, but the only arrow agreeing with `gₙ` at `n + 1` is `gₙ`, which sends nothing
+beyond `n`. -/
+theorem not_bc : ¬ (model truncs).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) := by
+  apply not_bc_of truncs Set.univ
+  intro N hN
+  obtain ⟨n, hn⟩ := exists_bound hN
+  refine ⟨{n + 1}, Set.finite_singleton _, g n, 1, fun x hx => ?_, n + 1, Set.mem_univ _,
+    fun g' hg' m' _ => ?_⟩
+  · show x = min x n
+    have := hn x hx; omega
+  · have h1 : (g' : F) (n + 1) = n := (hg' (n + 1) rfl).trans (by show min (n + 1) n = n; omega)
+    show (g' : F) m' ≠ n + 1
+    rcases g'.2 with e | ⟨j, e⟩
+    · rw [e] at h1; exact absurd h1 (by show ¬ n + 1 = n; omega)
+    · rw [e] at h1 ⊢
+      change min (n + 1) j = n at h1
+      show min m' j ≠ n + 1
+      omega
+
 end Truncs
 
 /-! ### Part 7: the roundings `fₙ` to multiples of powers of `2` -/
@@ -510,10 +605,8 @@ theorem even_of_one_eq_zero (k : pow2) (hk : (k : F) 1 = 0) (y : ℕ) : Even ((k
     rw [round_apply, pow_succ, Nat.mul_assoc, Nat.two_mul, Nat.mul_add]⟩
 
 /-- `{f_{2^j}}` is pinned down by `{2 ^ j - 1, 2 ^ j}`. -/
-theorem f_pinned (j : ℕ) :
-    (model pow2).PinnedO (.rel .t) ({2 ^ j - 1, 2 ^ j} : Set ℕ) ({tup (f j)} : Prop' pow2) := by
-  apply singleton_pinned_of
-  intro h hh
+theorem eq_f_of_agree (j : ℕ) (h : pow2) (hh : ∀ x ∈ ({2 ^ j - 1, 2 ^ j} : Set ℕ), h • x = f j • x) :
+    h = f j := by
   have h1 : (h : F) (2 ^ j) = 2 ^ j := (hh (2 ^ j) (by simp)).trans (by
     show 2 ^ j * (2 ^ j / 2 ^ j) = 2 ^ j
     rw [Nat.div_self (Nat.two_pow_pos j), mul_one])
@@ -536,6 +629,10 @@ theorem f_pinned (j : ℕ) :
       exact (Nat.pow_le_pow_iff_right (by decide : 1 < 2)).1 (by omega)
   apply Subtype.ext
   rw [e, le_antisymm hij hji]; rfl
+
+theorem f_pinned (j : ℕ) :
+    (model pow2).PinnedO (.rel .t) ({2 ^ j - 1, 2 ^ j} : Set ℕ) ({tup (f j)} : Prop' pow2) :=
+  singleton_pinned_of _ _ (eq_f_of_agree j)
 
 theorem not_nd_e : ¬ (model pow2).HoldsSentence (Sentence.nd .e) :=
   not_nd_e_of_not_injective pow2 (f 1) f_one_not_injective
@@ -563,6 +660,34 @@ theorem atomicityT : (model pow2).HoldsSentence P.AtomicityT.quoted := by
   have : arrow t.2.2 = f j := Subtype.ext e
   rw [this] at ht
   exact ht
+
+/-- **Boolean Completeness at `e → t` fails**, on the haecceities of all numbers: for
+`2 ^ j` beyond the pinning set, `f_{2^j}` and `f_{2^{j+1}}` agree on it (both are `0`
+there), and `f_{2^j}` sends `2 ^ j` to itself; but the only arrow agreeing with
+`f_{2^{j+1}}` on `{2^{j+1} - 1, 2^{j+1}}` is `f_{2^{j+1}}`, whose values are multiples of
+`2^{j+1}`. -/
+theorem not_bc : ¬ (model pow2).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) := by
+  apply not_bc_of pow2 Set.univ
+  intro N hN
+  obtain ⟨b, hb⟩ := exists_bound hN
+  have hbj : b < 2 ^ b := Nat.lt_two_pow_self
+  refine ⟨{2 ^ (b + 1) - 1, 2 ^ (b + 1)}, Set.toFinite _, f (b + 1), f b, fun x hx => ?_, 2 ^ b,
+    Set.mem_univ _, fun g' hg' m' _ => ?_⟩
+  · have hx := hb x hx
+    have h2 : 2 ^ (b + 1) = 2 * 2 ^ b := by rw [pow_succ, Nat.mul_comm]
+    show 2 ^ b * (x / 2 ^ b) = 2 ^ (b + 1) * (x / 2 ^ (b + 1))
+    rw [Nat.div_eq_of_lt (by omega), Nat.div_eq_of_lt (by omega), Nat.mul_zero, Nat.mul_zero]
+  · rw [eq_f_of_agree (b + 1) g' hg']
+    show 2 ^ (b + 1) * (m' / 2 ^ (b + 1)) ≠ 2 ^ b * (2 ^ b / 2 ^ b)
+    rw [Nat.div_self (Nat.two_pow_pos b), mul_one]
+    have h2 : 2 ^ (b + 1) = 2 * 2 ^ b := by rw [pow_succ, Nat.mul_comm]
+    rw [h2]
+    intro e
+    rcases Nat.eq_zero_or_pos (m' / (2 * 2 ^ b)) with h0 | hpos
+    · rw [h0, Nat.mul_zero] at e; exact (Nat.two_pow_pos b).ne' e.symm
+    · have := Nat.le_mul_of_pos_right (2 * 2 ^ b) hpos
+      have := Nat.two_pow_pos b
+      omega
 
 end Pow2
 
@@ -597,9 +722,7 @@ theorem surj (h : shifts) : Function.Surjective fun n : ℕ => h • n := by
   rw [e]; show y + a - a = y; omega
 
 /-- `{kₙ}` is pinned down by `{n + 1}`. -/
-theorem k_pinned (n : ℕ) : (model shifts).PinnedO (.rel .t) ({n + 1} : Set ℕ) ({tup (k n)} : Prop' shifts) := by
-  apply singleton_pinned_of
-  intro h hh
+theorem eq_k_of_agree (n : ℕ) (h : shifts) (hh : ∀ x ∈ ({n + 1} : Set ℕ), h • x = k n • x) : h = k n := by
   have h1 : (h : F) (n + 1) = 1 := (hh (n + 1) rfl).trans (by show n + 1 - n = 1; omega)
   obtain ⟨j, e⟩ := h.2
   apply Subtype.ext
@@ -607,6 +730,9 @@ theorem k_pinned (n : ℕ) : (model shifts).PinnedO (.rel .t) ({n + 1} : Set ℕ
   have hj : j = n := by
     rw [e] at h1; change n + 1 - j = 1 at h1; omega
   rw [hj]; rfl
+
+theorem k_pinned (n : ℕ) : (model shifts).PinnedO (.rel .t) ({n + 1} : Set ℕ) ({tup (k n)} : Prop' shifts) :=
+  singleton_pinned_of _ _ (eq_k_of_agree n)
 
 theorem not_nd_e : ¬ (model shifts).HoldsSentence (Sentence.nd .e) :=
   not_nd_e_of_not_injective shifts (k 1) k_one_not_injective
@@ -630,6 +756,24 @@ theorem atomicityT : (model shifts).HoldsSentence P.AtomicityT.quoted := by
   have : arrow t.2.2 = k n := Subtype.ext e
   rw [this] at ht
   exact ht
+
+/-- **Boolean Completeness at `e → t` fails**, on the haecceities of the even numbers: for
+an even `n` bounding the pinning set, `k_{n+1}` and `k_{n+2}` agree on it (both are `0`
+there), and `k_{n+2}` sends `n + 4` to `2`; but the only arrow agreeing with `k_{n+1}` at
+`n + 2` is `k_{n+1}`, which sends an even number to `0` or to an odd number. -/
+theorem not_bc : ¬ (model shifts).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) := by
+  apply not_bc_of shifts {m | Even m}
+  intro N hN
+  obtain ⟨b, hb⟩ := exists_bound hN
+  refine ⟨{2 * b + 2}, Set.finite_singleton _, k (2 * b + 1), k (2 * b + 2), fun x hx => ?_,
+    2 * b + 4, ⟨b + 2, by omega⟩, fun g' hg' m' hm' => ?_⟩
+  · have := hb x hx
+    show x - (2 * b + 2) = x - (2 * b + 1)
+    omega
+  · rw [eq_k_of_agree (2 * b + 1) g' hg']
+    obtain ⟨r, hr⟩ := hm'
+    show m' - (2 * b + 1) ≠ 2 * b + 4 - (2 * b + 2)
+    omega
 
 end Shifts
 

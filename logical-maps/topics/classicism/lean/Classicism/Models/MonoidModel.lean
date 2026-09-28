@@ -22,6 +22,11 @@ verdicts the parts share, each from the one feature of the monoid that decides i
 - **`BF`** holds at every type when every arrow is surjective (Proposition D.6), and
   fails at `e` on a property `λy. (ψ z → φ y)` when `ψ (k z) → φ (k y)` for all arrows
   and arguments but some arrow has `ψ (k z)` while `φ` fails somewhere.
+- **Boolean Completeness at `e → t`** fails when properties including the haecceities of
+  a set `S` can always be strengthened by pinning them down by more (`not_bc_of`): the
+  upper bounds of those haecceities have no greatest lower bound. The criterion for any
+  model, that Boolean Completeness is the existence of greatest lower bounds under
+  inclusion of intensions, is `Premodel.holds_bc_iff`.
 
 The paper's `Free` is its "there is a function that agrees with `h` on the finite set
 and differs from it"; a proposition pinned down by `X` contains, with any arrow, every
@@ -445,5 +450,133 @@ theorem not_bf_e (φ ψ : ℕ → Prop) (z : ℕ) (h1 : ∀ (k : M) (y : ℕ), �
   rw [(A).incl_map, Intension.mem_map, Category.comp_id] at H
   rw [hX] at H
   exact hy (H hk)
+
+/-! ### Boolean Completeness at `e → t`
+
+The paper's argument (Appendix D, Part 2, and footnote 95): a property of properties with
+no least upper bound. Fix a set `S` of individuals; the upper bounds of the haecceities of
+the members of `S` are the properties whose extension along every arrow `k` contains
+`k[S]`. That condition does not look at the arrow, so it is an element of the model
+pinned down by `∅`, and a greatest lower bound of it would be a least such property.
+There is none when finitely pinned properties can always be made stronger: a property
+pinned down by `N` that contains the haecceities of `S` contains, along `h`, every `g • m`
+with `m ∈ S` and `g` agreeing with `h` on `N`; the least one pinned down by a larger `N'`
+contains only the `g' • m'` with `g'` agreeing with `h` on `N'`, and the monoid decides
+whether that is fewer. -/
+
+/-- The quoted Boolean Completeness is the sentence the semantic criterion is stated for. -/
+theorem bc_quoted_eq (ρ : RTy) : P.BooleanCompleteness.quoted ρ = Sentence.bc ρ := rfl
+
+/-- The haecceity of `m`, `λx. x = m`, as an intension of type `e → t` at an object: along
+an arrow `k`, the individual `k • m`. -/
+abbrev haec (V : SingleObj M) (m : ℕ) : Intension (model M).inner (.arr .e .t) V :=
+  {t | t.2.1.1 = arrow t.2.2 • m}
+
+theorem haec_pinned (m : ℕ) : (A).PinnedO (.rel (.arr .e .t)) {m} (haec M (star M) m) := by
+  intro V h i ha
+  obtain rfl : V = star M := Subsingleton.elim _ _
+  have hm : arrow h • m = arrow i • m := ha m rfl
+  simp only [Outer.map_rel]
+  ext ⟨U, ⟨y, ⟨⟩⟩, g⟩
+  simp only [Intension.mem_map, haec, Set.mem_ofPred_eq, SingleObj.comp_as_mul]
+  show y = (arrow g * arrow h) • m ↔ y = (arrow g * arrow i) • m
+  rw [mul_smul, mul_smul, hm]
+
+/-- The properties including the haecceities of the members of `S`, as a property of
+properties. It does not look at the arrow. -/
+abbrev upperBounds (S : Set ℕ) : Intension (model M).inner (.arr (.rel (.arr .e .t)) .t) (star M) :=
+  {t | ∀ m ∈ S, haec M t.1 m ⊆ (A).incl _ t.1 t.2.1.1}
+
+theorem upperBounds_pinned (S : Set ℕ) :
+    (A).PinnedO (.rel (.arr (.rel (.arr .e .t)) .t)) ∅ (upperBounds M S) :=
+  fun _ _ _ _ => rfl
+
+/-- The least property pinned down by `N'` including the haecceities of `S`: along `h`, the
+`g' • m'` with `m' ∈ S` and `g'` agreeing with `h` on `N'`. -/
+abbrev leastAbove (S N' : Set ℕ) : Intension (model M).inner (.arr .e .t) (star M) :=
+  {t | ∃ g' : M, (∀ x ∈ N', g' • x = arrow t.2.2 • x) ∧ ∃ m' ∈ S, t.2.1.1 = g' • m'}
+
+theorem leastAbove_pinned (S N' : Set ℕ) : (A).PinnedO (.rel (.arr .e .t)) N' (leastAbove M S N') := by
+  intro V h i ha
+  obtain rfl : V = star M := Subsingleton.elim _ _
+  simp only [Outer.map_rel]
+  ext ⟨U, ⟨y, ⟨⟩⟩, g⟩
+  simp only [Intension.mem_map, leastAbove, Set.mem_ofPred_eq, SingleObj.comp_as_mul]
+  have e : ∀ x ∈ N', (arrow g * arrow h) • x = (arrow g * arrow i) • x := fun x hx => by
+    have hx' : arrow h • x = arrow i • x := ha x hx
+    rw [mul_smul, mul_smul, hx']
+  constructor
+  · rintro ⟨g', hg', rest⟩
+    exact ⟨g', fun x hx => (hg' x hx).trans (e x hx), rest⟩
+  · rintro ⟨g', hg', rest⟩
+    exact ⟨g', fun x hx => (hg' x hx).trans (e x hx).symm, rest⟩
+
+/-- Pinning, for an intension of any relational type: two arrows agreeing on `N` hold of
+the same arguments. -/
+theorem mem_iff_of_pinnedR {ρ : RTy} {N : Set ℕ} {p : Intension (model M).inner ρ (star M)}
+    (hp : (A).PinnedO (.rel ρ) N p) {g g' : M} (ha : ∀ x ∈ N, g • x = g' • x)
+    (a : Args (model M).inner ρ (star M)) :
+    (⟨star M, a, (g : star M ⟶ star M)⟩ : Tuple (model M).inner ρ (star M)) ∈ p ↔
+      (⟨star M, a, (g' : star M ⟶ star M)⟩ : Tuple (model M).inner ρ (star M)) ∈ p := by
+  have e := hp (star M) (g : star M ⟶ star M) (g' : star M ⟶ star M) (fun x hx => ha x hx)
+  simp only [Outer.map_rel] at e
+  have := congrArg (fun S : Intension (model M).inner ρ (star M) =>
+    (⟨star M, a, 𝟙 (star M)⟩ : Tuple (model M).inner ρ (star M)) ∈ S) e
+  simpa [Intension.mem_map, Category.comp_id] using this
+
+/-- **Boolean Completeness at `e → t` fails** when finitely pinned properties including the
+haecceities of `S` can always be strengthened: for every finite `N` there are a finite
+`N'`, arrows `h` and `g` agreeing on `N`, and `m ∈ S`, such that no arrow agreeing with `h`
+on `N'` sends a member of `S` to `g • m`. Then the upper bounds of those haecceities have
+no greatest lower bound: one, `y`, would be pinned down by some finite `N`, would contain
+`⟨g • m, h⟩`, and would be included in `leastAbove S N'`, which does not. -/
+theorem not_bc_of (S : Set ℕ)
+    (H : ∀ N : Set ℕ, N.Finite → ∃ N' : Set ℕ, N'.Finite ∧ ∃ h g : M, (∀ x ∈ N, g • x = h • x) ∧
+      ∃ m ∈ S, ∀ g' : M, (∀ x ∈ N', g' • x = h • x) → ∀ m' ∈ S, g' • m' ≠ g • m) :
+    ¬ (A).HoldsSentence (P.BooleanCompleteness.quoted (.arr .e .t)) := by
+  intro Hbc
+  rw [bc_quoted_eq, Premodel.HoldsSentence, (A).holds_bc_iff Mo] at Hbc
+  obtain ⟨X, hX⟩ := Premodel.ideal_pinned_inner (natAction M) (.arr (.rel (.arr .e .t)) .t) (star M)
+    (upperBounds M S) ⟨∅, Set.finite_empty, upperBounds_pinned M S⟩
+  obtain ⟨y, hy⟩ := Hbc X
+  -- every haecceity of a member of `S` is a lower bound, so is included in `y`
+  have hH : ∀ m ∈ S, haec M (star M) m ⊆ (A).incl _ (star M) y := by
+    intro m hm
+    obtain ⟨z, hz⟩ := Premodel.ideal_pinned_inner (natAction M) (.arr .e .t) (star M) (haec M (star M) m)
+      ⟨{m}, Set.finite_singleton m, haec_pinned M m⟩
+    have hz' : (A).incl _ (star M) z = haec M (star M) m := hz
+    rw [← hz']
+    refine (hy z).1 fun u hu => ?_
+    show (A).incl _ (star M) z ⊆ (A).incl _ (star M) u
+    have hu' : (⟨star M, (u, PUnit.unit), 𝟙 (star M)⟩ :
+        Tuple (model M).inner (.arr (.rel (.arr .e .t)) .t) (star M)) ∈ upperBounds M S := by
+      rw [← hX]; exact hu
+    rw [hz']
+    exact hu' m hm
+  -- `y` is included in every upper bound
+  have hyle := (hy y).2 subset_rfl
+  obtain ⟨N, hN, hpin⟩ := Premodel.ideal_inner_finPinned (natAction M) (.rel (.arr .e .t)) (star M) y
+  obtain ⟨N', hN', h, g, hag, m, hmS, hsep⟩ := H N hN
+  obtain ⟨u, hu⟩ := Premodel.ideal_pinned_inner (natAction M) (.arr .e .t) (star M) (leastAbove M S N')
+    ⟨N', hN', leastAbove_pinned M S N'⟩
+  have hu' : (A).incl _ (star M) u = leastAbove M S N' := hu
+  have hsub := hyle u (by
+    show _ ∈ (A).incl _ (star M) X
+    rw [hX]
+    intro m' hm' t ht
+    show t ∈ (A).incl _ (star M) u
+    rw [hu']
+    exact ⟨arrow t.2.2, fun _ _ => rfl, m', hm', ht⟩)
+  -- `⟨g • m, h⟩` is in `y`, by pinning, but not in `leastAbove S N'`
+  have hτ : (⟨star M, (g • m, PUnit.unit), (h : star M ⟶ star M)⟩ : Tuple (model M).inner (.arr .e .t) (star M))
+      ∈ (A).incl _ (star M) y :=
+    (mem_iff_of_pinnedR M hpin (fun x hx => (hag x hx).symm) _).2
+      (hH m hmS (show (⟨star M, (g • m, PUnit.unit), (g : star M ⟶ star M)⟩ :
+        Tuple (model M).inner (.arr .e .t) (star M)) ∈ haec M (star M) m from rfl))
+  have := hsub hτ
+  change _ ∈ (A).incl _ (star M) u at this
+  rw [hu'] at this
+  obtain ⟨g', hg', m', hm', e⟩ := this
+  exact hsep g' hg' m' hm' e.symm
 
 end Classicism.Meta.Intensional.MonoidModel
