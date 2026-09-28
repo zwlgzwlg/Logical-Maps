@@ -509,24 +509,67 @@ theorem map_pullback {ρ : RTy} {V : C} (k : W₀ ⟶ V) {X : Set ((A).Dom W₀ 
   · intro hb'
     exact ⟨l, AgreeOn.refl _ _ _, hb'⟩
 
-/-- Every arrow out of the base surjective on individuals is surjective on every domain. -/
-theorem ideal_map_surjective (hs : ∀ {V : C} (k : W₀ ⟶ V), Function.Surjective (De.map k)) :
-    ∀ (σ : Ty) {V : C} (k : W₀ ⟶ V), Function.Surjective (((A).inner σ).map k)
-  | .e, _, k => hs k
-  | .rel ρ, V, k => by
+/-- An arrow out of the base surjective on individuals is surjective on every domain. -/
+theorem ideal_map_surjective_of {V : C} (k : W₀ ⟶ V) (hk : Function.Surjective (De.map k)) :
+    ∀ σ : Ty, Function.Surjective (((A).inner σ).map k)
+  | .e => hk
+  | .rel ρ => by
     intro b
     obtain ⟨Y, hY, hb⟩ := ideal_inner_finPinned De (.rel ρ) V b
-    obtain ⟨X, hX, hXY⟩ := exists_finite_image_eq (f := ((A).inner .e).map k) (hs k) hY
+    obtain ⟨X, hX, hXY⟩ := exists_finite_image_eq (f := ((A).inner .e).map k) hk hY
     obtain ⟨a, ha⟩ := ideal_pinned_inner De ρ W₀ (pullback De k X ((A).Incl _ V b))
       ⟨X, hX, pullback_pinned De k X _⟩
     refine ⟨a, (A).Incl_injective _ V ?_⟩
     rw [(A).Incl_map, Outer.map_rel, (A).Incl_rel ρ W₀ a, ha, map_pullback De k hXY hb]
+
+/-- Every arrow out of the base surjective on individuals is surjective on every domain. -/
+theorem ideal_map_surjective (hs : ∀ {V : C} (k : W₀ ⟶ V), Function.Surjective (De.map k)) :
+    ∀ (σ : Ty) {V : C} (k : W₀ ⟶ V), Function.Surjective (((A).inner σ).map k) :=
+  fun σ _ k => ideal_map_surjective_of De k (hs k) σ
 
 /-- **Proposition D.6.** If every arrow out of the base is surjective on individuals,
 `BF_σ` holds at the base for every `σ`. -/
 theorem ideal_bf_of_surjective (hs : ∀ {V : C} (k : W₀ ⟶ V), Function.Surjective (De.map k)) (σ : Ty) :
     (A).HoldsSentence (Sentence.bf σ) :=
   (A).holds_bf_of_surjective (ideal_isModel De) σ (𝟙 W₀) fun k => ideal_map_surjective De hs σ k
+
+/-! ### Surjective off any finite set gives `BF`
+
+The paper's argument for the monoid of all functions on `ℕ` (Appendix D, Part 3, and the
+two-object model after Part 8): `BF` needs less than every arrow being surjective. It is
+enough that every arrow out of the base agrees, on any finite set, with an arrow that is
+surjective on individuals. For if `∀y □Xy` at the base while `⟨a, k⟩` is not in the
+value of `X`, with `X` pinned down by a finite `N`, take `j` agreeing with `k` on `N` and
+surjective, so that `a = j^σ b` for some `b`; then `□Xb` puts `⟨a, j⟩` in `X`, and so, by
+pinning, `⟨a, k⟩`. -/
+
+/-- **`BF` from approximation by surjections.** If every arrow out of the base agrees on
+any finite set of individuals with an arrow surjective on individuals, `BF_σ` holds at the
+base for every `σ`. -/
+theorem ideal_bf_of_approx
+    (happrox : ∀ {V : C} (k : W₀ ⟶ V) (N : Set (De.obj W₀)), N.Finite →
+      ∃ j : W₀ ⟶ V, AgreeOn De N k j ∧ Function.Surjective (De.map j)) (σ : Ty) :
+    (A).HoldsSentence (Sentence.bf σ) := by
+  have Mo : (A).IsModel := ideal_isModel De
+  have key : ∀ (X : (A).Dom W₀ (.rel (σ ⇒ RTy.t))) {V : C} (l : W₀ ⟶ V) (c : (A).Dom V σ),
+      (A).Holds (𝟙 W₀ ≫ l) (Term.app Term.v1 Term.v0) (.cons c ((A).push l (.cons X .nil))) ↔
+        (⟨V, (c, PUnit.unit), l⟩ : Tuple (A).inner (σ ⇒ RTy.t) W₀) ∈ (A).incl _ W₀ X :=
+    fun X _ l c => (A).holds_app_push (𝟙 W₀) l X c .nil
+  simp only [HoldsSentence, Sentence.bf, (A).holds_forall Mo, (A).holds_imp Mo, (A).holds_box Mo]
+  intro X H V k a
+  obtain ⟨N, hN, hX⟩ := ideal_inner_finPinned De (.rel (σ ⇒ RTy.t)) W₀ X
+  obtain ⟨j, hj, hsj⟩ := happrox k N hN
+  obtain ⟨b, rfl⟩ := ideal_map_surjective_of De j hsj σ a
+  have hb := (key X j _).1 (H b j)
+  -- pinning moves `⟨j^σ b, j⟩` to `⟨j^σ b, k⟩`
+  have e : Intension.map (A).inner k ((A).incl _ W₀ X) = Intension.map (A).inner j ((A).incl _ W₀ X) :=
+    hX V k j hj
+  have := congrArg (fun S : Intension (A).inner (σ ⇒ RTy.t) V =>
+    (⟨V, (((A).inner σ).map j b, PUnit.unit), 𝟙 V⟩ : Tuple (A).inner (σ ⇒ RTy.t) V) ∈ S) e
+  simp only [Intension.mem_map, Category.comp_id] at this
+  have h1 := (Intension.mem_map (A).inner k _ _).1 (Eq.mpr this hb)
+  simp only [Category.comp_id] at h1
+  exact (key X k _).2 h1
 
 end Premodel
 

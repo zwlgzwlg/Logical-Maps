@@ -137,6 +137,32 @@ theorem holds_fregean_iff {W : C} (h : A.W₀ ⟶ W) :
   · intro H p q e
     exact congrArg (A.Incl _ W) (H p q e)
 
+omit M in
+/-- A variable property applied to a variable, after moving along `l`: `Xc` holds at
+`h ≫ l` iff `⟨c, l⟩` is in the value of `X`. The step every `BF` argument takes. -/
+theorem holds_app_push {Γ : Ctx} {W V : C} (h : A.W₀ ⟶ W) (l : W ⟶ V) {σ : Ty}
+    (X : A.Dom W (.rel (σ ⇒ RTy.t))) (c : A.Dom V σ) (g : IEnv (A.Dom W) Γ) :
+    A.Holds (h ≫ l) (app v1 v0) (.cons c (A.push l (.cons X g))) ↔
+      (⟨V, (c, PUnit.unit), l⟩ : Tuple A.inner (σ ⇒ RTy.t) W) ∈ A.incl _ W X := by
+  rw [A.holds_app (a' := c) _ _ _ _ rfl]
+  show _ ∈ A.Incl _ V ((A.inner _).map l X) ↔ _
+  rw [A.Incl_map, Outer.map_rel, Intension.mem_map, Category.comp_id]
+  rfl
+
+/-- **`BF_σ` fails at an object** where some property `X` holds, along every arrow, of the
+image of every individual there, but fails of some `a` along some arrow `l`: then
+`∀y □Xy` holds and `□∀y Xy` does not. -/
+theorem not_holds_bf_of {W : C} (h : A.W₀ ⟶ W) {σ : Ty} (X : A.Dom W (.rel (σ ⇒ RTy.t)))
+    (hall : ∀ (y : A.Dom W σ) {V : C} (l : W ⟶ V),
+      (⟨V, ((A.inner σ).map l y, PUnit.unit), l⟩ : Tuple A.inner (σ ⇒ RTy.t) W) ∈ A.incl _ W X)
+    {V : C} (l : W ⟶ V) (a : A.Dom V σ)
+    (ha : (⟨V, (a, PUnit.unit), l⟩ : Tuple A.inner (σ ⇒ RTy.t) W) ∉ A.incl _ W X) :
+    ¬ A.Holds h (Sentence.bf σ) .nil := by
+  simp only [Sentence.bf, A.holds_forall M, A.holds_imp M, A.holds_box M]
+  intro H
+  exact ha ((A.holds_app_push h l X a .nil).1
+    (H X (fun y _ l' => (A.holds_app_push h l' X _ .nil).2 (hall y l')) l a))
+
 /-! ### Boolean Completeness and inclusion -/
 
 /-- `∨_ρ` applied is union. -/

@@ -4,6 +4,7 @@ import Classicism.Semantics.IntensionalExamples
 import Classicism.Semantics.IntensionalProperties
 import Classicism.Models.Permutations
 import Classicism.Models.Monoids
+import Classicism.Models.ContingentBarcan
 import Classicism.Syntax.SentenceSchemas
 
 /-!
@@ -48,6 +49,11 @@ sentences the results are stated in. Two models do all the work:
   Atomicity not of `C` with `BF` and Actuality (Part 5), `ND_e` and Boolean Completeness
   not of `C` with all three (Part 8). The necessitations follow from No Pure Contingency
   (`Contingency.lean`, `npc_union_entails_box`) and are not restated.
+
+- **The two-object model with `BF` but not `□BF`** (`Models/ContingentBarcan.lean`, the
+  paper's model after Part 8): `ℕ` and a point, all functions as arrows. `BF_σ` holds at
+  every type at the base, `BF_e` fails at the point; so `¬□BF_e` is consistent with `BF`,
+  and `BF` does not entail `□BF`.
 
 The model verdicts themselves stay in `Semantics/IntensionalExamples.lean`,
 `Models/Permutations.lean` and `Models/Monoids.lean`; this file turns
@@ -581,5 +587,34 @@ theorem bc_not_theorem :
   not_theorem_of_model A M holdsAx_pos not_bc
 
 end Shifts
+
+/-! ### `BF` without `□BF`: the two-object model after Part 8 -/
+
+namespace ContingentBarcan
+
+open Intensional.Premodel Intensional.ContingentBarcan
+
+local notation "A" => Intensional.ContingentBarcan.model
+local notation "M" => Intensional.ContingentBarcan.model_isModel
+
+theorem holdsAx_bf : (A).HoldsAx P.Barcan.schema := by
+  rintro _ ⟨σ, rfl⟩; exact bf σ
+
+/-- `BF` at every type is consistent with `¬□BF_e`. -/
+theorem bf_not_box_bf_consistent :
+    Consistent (P.Barcan.schema ∪ single (Term.neg (Term.box (P.Barcan.quoted .e)))) :=
+  Consistent.of_model A M (holdsAx_union A holdsAx_bf
+    (holdsAx_single A ((holdsSentence_neg A M _).2 not_box_bf_e)))
+
+/-- `□BF_e` is not a theorem of `C` with `BF` at every type. -/
+theorem box_bf_not_theorem :
+    ¬ Theorem (C.axioms ∪ P.Barcan.schema) (Term.box (P.Barcan.quoted .e)) :=
+  not_theorem_of_model A M holdsAx_bf not_box_bf_e
+
+/-- **`BF` does not entail `□BF`.** -/
+theorem bf_not_entails_box_bf : ¬ (P.Barcan.schema ⟹ AxiomSet.box P.Barcan.schema) :=
+  not_entails_of_model A M holdsAx_bf (AxiomSet.mem_box ⟨.e, rfl⟩) not_box_bf_e
+
+end ContingentBarcan
 
 end Classicism.Meta

@@ -41,6 +41,8 @@ import Classicism.Semantics.IntensionalProperties
 import Classicism.Semantics.IntensionalExamples
 import Classicism.Semantics.IdeallyFull
 -- The map's models, from Appendix D
+import Classicism.Models.Functions
+import Classicism.Models.ContingentBarcan
 import Classicism.Models.MonoidModel
 import Classicism.Models.Monoids
 import Classicism.Models.Permutations
