@@ -64,3 +64,11 @@ papers:
     locators give the book''s own page numbers. The book works in the full simple type hierarchy with Modalized
     Functionality at all types; its results are taken in the map''s relational type system, of which its
     models are models.'
+- id: bacon-mathematical-contingency
+  title: Could the truths of mathematics have been different?
+  citation: Bacon, Andrew (2025). Could the truths of mathematics have been different? Draft
+    dated 9 October 2025, with online appendix. The full Boolean-valued construction is in
+    appendix §B.2, pp. 7–9 of the separately paginated appendix (PDF pp. 41–43).
+  url: https://andrew-bacon.github.io/papers/Could%20mathematics%20have%20been%20different.pdf
+  note: Only the Boolean-valued construction and its extensional fullness are used here;
+    the paper’s mathematical-contingency results are not imported. No PDF is redistributed.

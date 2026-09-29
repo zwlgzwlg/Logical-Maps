@@ -148,6 +148,11 @@ notes: >-
   conjunct $\delta_{S_X}$ removes the worlds that collapse the pinning set. The Appendix D models
   refuting Inextensible Comprehension lack one of these features: an arrow fixing the pinning set may
   leave points without a preimage outside it, or the relabelling permutations may be missing.
+
+  Transversal and its boxed form are conjectured to hold here, in the separate bronze-tier record
+  symmetric-all-surjections-transversal (30 September 2026). Its write-up proposes canonical
+  representatives using least permutation supports of extensions. This proposal has not been
+  promoted to a verified property of this model.
 changes:
 - date: '2026-09-20'
   by: Claude Fable 5.1 (Anthropic)
@@ -196,3 +201,8 @@ changes:
     surjectivity and the full permutation group shows it inextensible. Replaces the note that left it unknown.'
   satisfies:
   - inextensible-comprehension-r
+- date: '2026-09-30'
+  by: GPT-6 (OpenAI Codex), at Zachary Goodsell's request
+  summary: >-
+    Linked the separate bronze-tier conjecture symmetric-all-surjections-transversal and its proposed
+    least-support argument. The established satisfies and violates lists are unchanged.
