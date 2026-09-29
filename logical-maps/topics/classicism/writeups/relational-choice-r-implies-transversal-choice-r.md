@@ -50,13 +50,28 @@ the stages are not linearly ordered by inclusion.
   those canonical properties gives the transversal
   (`relational-choice-and-very-weak-rigid-comprehension-imply-transversal-choice`).
 - Through recorded arrows, therefore also Gallin comprehension with BF, C5
-  with Actuality, boxed Atomicity with Boolean Completeness and BF, and boxed
+  with Actuality, and boxed
   Functional Choice.
 
 Conversely Transversal Choice implies Relational Choice over C, by rigid
 pairs $\lambda uv\, .\,u=x\land v=y$
 (`transversal-choice-r-implies-relational-choice-r`). So the question is
 whether Transversal Choice is strictly stronger.
+
+## Transversal (added 28 September 2026)
+
+Christopher Sun isolated the missing ingredient on 26 September 2026 as the
+principle Transversal: some $F^{(\sigma t)t}$ picks out exactly one property
+from each coextension class. It is Transversal Choice for coextensiveness, and
+with Relational Choice it gives Transversal Choice by running the quotient
+argument on the $F$-representative of each cell
+(`transversal-and-relational-choice-imply-transversal-choice`). The question
+above is therefore equivalent to whether Relational Choice implies
+Transversal. Actuality implies Transversal (Sun, `actuality-implies-transversal`),
+and hence so does everything on the map that implies Actuality, including Very
+Weak Rigid Comprehension; there very weak rigidity itself also serves as $F$,
+by the first paragraph of the proof of
+`relational-choice-and-very-weak-rigid-comprehension-imply-transversal-choice`.
 
 ## Models
 

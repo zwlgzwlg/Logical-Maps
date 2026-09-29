@@ -17,7 +17,7 @@ First, two very weakly rigid properties $C$ and $C'$ of type $\sigma t$ that are
 
 ## Notes
 
-Very weak rigidity is the weakest rigidity condition on the map, so the same proof runs from Weak or full Rigid Comprehension, and through the recorded arrows from Extensionality, Gallin comprehension with BF, C5 with Actuality, boxed Atomicity with Boolean Completeness and BF, and boxed Functional Choice, which gives boxed Plenitude and so C5 and Actuality. Only the type-$\sigma t$ instance of the comprehension principle is used.
+Very weak rigidity is the weakest rigidity condition on the map, so the same proof runs from Weak or full Rigid Comprehension, and through the recorded arrows from Extensionality, Gallin comprehension with BF, C5 with Actuality, and boxed Functional Choice, which gives boxed Plenitude and so C5 and Actuality. Only the type-$\sigma t$ instance of the comprehension principle is used.
 
 ## Sources
 
