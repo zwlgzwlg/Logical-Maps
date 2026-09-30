@@ -859,6 +859,17 @@ class Engine {
       for (const p of negative) for (const id of this.failWhy.get(first.id).get(p).slice(1)) via.add(id);
       return answer(status, [...via], models.map(m => m.id));
     };
+    if (item.model_check) {
+      const check = item.model_check, model = this.models.find(m => m.id === check.model && !this.modelConflicts.has(m.id));
+      if (!model) return answer('open');
+      const holds = this.holds.get(model.id), fails = this.fails.get(model.id);
+      const wrongPositive = check.violates.filter(p => holds.has(p)), wrongNegative = check.satisfies.filter(p => fails.has(p));
+      if (wrongPositive.length || wrongNegative.length) return witnessAnswer('refuted', [model], wrongPositive.sort(), wrongNegative.sort());
+      const conflict = this.conflict([...model.satisfies, ...check.satisfies], [...model.violates, ...check.violates]);
+      if (conflict) return answer('refuted', conflict.via, [model.id]);
+      return check.satisfies.every(p => holds.has(p)) && check.violates.every(p => fails.has(p))
+        ? witnessAnswer('proved', [model], check.satisfies, check.violates) : answer('open');
+    }
     if (Array.isArray(item.satisfies)) {
       const conflict = this.conflict(item.satisfies, item.violates);
       if (conflict) return answer('refuted', conflict.via);
@@ -2551,7 +2562,7 @@ function rankedTable(rep, rows, mode = 'questions') {
     ? `<span class="equivalent-conclusions" title="Equivalent under these premises and the background">${r.conclusions.map(pb).join(' or ')}</span>`
     : pb(r.conclusion);
   const stmt = r => r.kind === 'check'
-    ? `<button class="lnk" data-model="${esc(r.model)}">${esc(byMid.get(r.model)?.name || r.model)}</button>: ${pb(r.principle)}`
+    ? `<button class="lnk" data-model="${esc(r.model)}">${esc(byMid.get(r.model)?.name || r.model)}</button>: ${denies(r) ? '¬' : ''}${pb(r.principle)}`
     : `${premises(r)} ${denies(r) ? '⊬' : '⊢'} ${conclusions(r)}`;
   const key = r => r.kind === 'check' ? `check|${r.model}|${r.principle}` : `q|${r.premises.join('+')}|${r.conclusion}`;
   // A recorded conjecture that asks the row's question travels with it: a star says

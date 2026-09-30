@@ -120,6 +120,31 @@ def main():
     assert core["proved-model"]["via"] == ["ab", "bc", "cd-false"]
     assert core["refuted-model-forbidden"]["via"] == ["ab", "bc"]
 
+    # A conjectured verdict in a named model is not an existence conjecture.
+    named_questions = [
+        model("named-open", ["a"], ["f"], status="conjectured",
+              model_check={"model": "ma", "satisfies": [], "violates": ["f"]}),
+        model("named-true", ["a", "c"], ["d"], status="conjectured",
+              model_check={"model": "ma", "satisfies": ["c"], "violates": ["d"]}),
+        model("named-false-positive", ["d"], [], status="conjectured",
+              model_check={"model": "ma", "satisfies": ["d"], "violates": []}),
+        model("named-false-negative", [], ["c"], status="conjectured",
+              model_check={"model": "ma", "satisfies": [], "violates": ["c"]}),
+        model("named-joint-conflict", ["a", "e", "f"], [], status="conjectured",
+              model_check={"model": "ma", "satisfies": ["e", "f"], "violates": []}),
+    ]
+    named = engine_fixture("named-model-verdicts", [*rules, result("ef-false", ["e", "f"], pmap.FALSE)], models, named_questions)
+    fixtures.append(named)
+    named_answers = expect_answers(named, {"named-open": "open", "named-true": "proved",
+        "named-false-positive": "refuted", "named-false-negative": "refuted", "named-joint-conflict": "refuted"})
+    assert named_answers["named-open"]["models"] == [], "maf's failure of f cannot resolve the check of ma"
+    assert named_answers["named-true"]["models"] == ["ma"]
+    assert named_answers["named-false-positive"]["via"] == ["ab", "bc", "cd-false"]
+    assert named_answers["named-false-negative"]["via"] == ["ab", "bc"]
+    named_missing = engine_fixture("named-model-unavailable", rules, models[1:], named_questions[:2])
+    fixtures.append(named_missing)
+    expect_answers(named_missing, {"named-open": "open", "named-true": "open"})
+
     # A negative implication is not a counterexample without a model.
     no_witness_questions = [
         result("excluded-without-witness", ["c"], "d", status="conjectured"),
@@ -287,7 +312,7 @@ process.stdout.write(JSON.stringify(output));
         assert actual == wanted, (fixture["name"], actual, wanted)
     print(
         "PASS: conjecture proofs/refutations, False and incompatible backgrounds, "
-        "all model flags, source-filtered history, schemas/export/bundle, and "
+        "all model flags, named-model checks, source-filtered history, schemas/export/bundle, and "
         f"Python/browser parity across {len(fixtures)} fixtures."
     )
 

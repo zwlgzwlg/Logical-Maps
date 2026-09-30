@@ -26,6 +26,12 @@ violates:
 - relational-choice-r
 status: conjectured
 tier: bronze
+model_check:
+  model: symmetric-all-surjections
+  satisfies:
+  - transversal-r
+  - necessary-transversal-r
+  violates: []
 certificate:
   source_id: misc
   produced_by: Cian Dorr (Base 1); GPT-6 (OpenAI Codex), proposed Transversal verification, 30 September 2026
@@ -68,5 +74,12 @@ notes: >-
   not refute Transversal, which would require ruling out all admissible classifiers at some
   type. If correct, Base 1 would witness that Transversal implies neither Actuality nor
   Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts;
-  this conjectured record supplies no proved evidence. Any derived resolution of the displayed
-  consistency package by a different model would not by itself verify the Base 1 construction.
+  this conjectured record supplies no proved evidence. The named model checks concern Base 1
+  itself: a different model with the displayed consistency package cannot resolve them.
+changes:
+- date: '2026-09-30'
+  by: GPT-6 (OpenAI Codex), at Zachary Goodsell's request
+  summary: >-
+    Linked the proposed Transversal and necessary Transversal verdicts directly to the Base 1
+    model checks, so both appear as bronze-star conjectures on the central-question rows.
+    The conjectured status and mathematical content are unchanged.

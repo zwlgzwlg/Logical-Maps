@@ -49,6 +49,17 @@
    ],
    "default": "conjectured"
   },
+  "model_check": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["model", "satisfies", "violates"],
+   "description": "For a conjectured extension of an existing proved model, identify that model and the particular new verdicts being proposed. These assertions must occur in this record's full satisfies/violates package. The conjecture is attached to those model checks and can only be resolved by evidence about the named model.",
+   "properties": {
+    "model": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
+    "satisfies": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "violates": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+   }
+  },
   "was_conjectured": {
    "type": "boolean",
    "description": "Historical marker for a record that began as a conjecture. It does not change proof status or supply inference evidence."

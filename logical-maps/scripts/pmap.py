@@ -326,6 +326,24 @@ class Engine:
                 via.extend(self.fail_why[first["id"]][p][1:])
             return answer(status, dict.fromkeys(via), witnesses)
 
+        if item.get("model_check"):
+            check = item["model_check"]
+            model = next((m for m in valid_models if m["id"] == check["model"]), None)
+            if model is None:
+                return answer("open")
+            mid = model["id"]
+            positive, negative = check["satisfies"], check["violates"]
+            wrong_positive = set(negative) & self.holds[mid]
+            wrong_negative = set(positive) & self.fails[mid]
+            if wrong_positive or wrong_negative:
+                return witness_answer("refuted", [mid], sorted(wrong_positive), sorted(wrong_negative))
+            conflict = self.conflict([*model["satisfies"], *positive], [*model["violates"], *negative])
+            if conflict is not None:
+                return answer("refuted", conflict["via"], [mid])
+            if set(positive) <= self.holds[mid] and set(negative) <= self.fails[mid]:
+                return witness_answer("proved", [mid], positive, negative)
+            return answer("open")
+
         if "satisfies" in item:
             positive, negative = item["satisfies"], item["violates"]
             conflict = self.conflict(positive, negative)
@@ -834,8 +852,31 @@ class Lynchpins:
         ("outside": more than two premises). The record and its notes travel with the row, and a
         question unresolved despite work is bronze unless a record ranks it silver or gold."""
         by_question = {(tuple(r["premises"]), r["conclusion"]): r for r in rows if r["kind"] == "question"}
+        by_check = {(r["model"], r["principle"]): r for r in rows if r["kind"] == "check"}
+        rep_of = {p: cls[0] for cls in self.classes for p in cls}
+        fitting = {m["id"] for m in self.witnesses}
         extra, seen = [], {}
         for rec in self.conjectures:
+            if rec.get("model_check"):
+                check = rec["model_check"]
+                mid = check["model"]
+                if mid not in fitting:
+                    continue
+                entry = {"id": rec["id"], "kind": "model", "notes": (rec.get("notes") or "").strip(), "tier": rec.get("tier")}
+                for field, claim in (("satisfies", "entails"), ("violates", "not")):
+                    for c in dict.fromkeys(rep_of[p] for p in check[field]):
+                        key = (mid, c)
+                        row = by_check.get(key)
+                        if row is None:
+                            status = "proved" if c in self.E.holds[mid] else "refuted" if c in self.E.fails[mid] else "open"
+                            row = {"kind": "check", "model": mid, "principle": c, "status": status,
+                                   "rank": None, "yes": None, "no": None}
+                            by_check[key] = row
+                            extra.append(row)
+                        if not any(item["id"] == rec["id"] for item in row.get("conjectures", [])):
+                            row.setdefault("conjectures", []).append(entry)
+                        row.setdefault("claim", claim)
+                continue
             if "premises" in rec:
                 asked, kind = [(rec["premises"], rec["conclusion"])], "result"
             else:
@@ -865,7 +906,8 @@ class Lynchpins:
             if row.get("status", "open") in LYNCHPIN_VERDICTS:
                 row["verdict"] = LYNCHPIN_VERDICTS[row["status"]][row["claim"]]
         ranked.sort(key=lambda r: r.get("rank") or 0)
-        extra.sort(key=lambda r: (-LYNCHPIN_TIERS.index(r.get("tier", "bronze")), r["status"], r["premises"], r["conclusion"]))
+        extra.sort(key=lambda r: (-LYNCHPIN_TIERS.index(r.get("tier", "bronze")), r["status"],
+                                 r.get("premises", []), r.get("model", ""), r.get("conclusion", r.get("principle", ""))))
         return ranked + extra
 
     # -- ranking ------------------------------------------------------------
@@ -980,7 +1022,7 @@ def _engines(data: dict) -> list:
     key = json.dumps([data["topic"].get("id"), data["topic"].get("background", []), data["topic"].get("background_presets", []),
                       [p["id"] for p in data["principles"]],
                       [(r["id"], sorted(r["premises"]), r["conclusion"], r["status"]) for r in data["results"]],
-                      [(m["id"], sorted(m["satisfies"]), sorted(m["violates"]), m["status"]) for m in data["models"]]],
+                      [(m["id"], sorted(m["satisfies"]), sorted(m["violates"]), m["status"], m.get("model_check")) for m in data["models"]]],
                      sort_keys=True, default=str)
     if key not in _PROGRESS_CACHE:
         if data["topic"].get("draft"):
@@ -1049,10 +1091,10 @@ def lynchpin_row_text(r: dict, nm, conjecture: bool = False, auto: bool = False)
     """S ⊢ c for a question, model: principle for a model check; a starred tier marks a recorded
     conjecture. As a recorded conjecture, ⊬ when the record denies the entailment; as an automatically
     generated one, ⊬ when a proof would be the bigger surprise."""
-    if r["kind"] == "check":
-        return f"{r['model']}: {nm(r['principle'])}"
     star = f" ★ {r['tier']}" if r.get("tier") else ""
     claim = r.get("auto_claim") if auto else r.get("claim") if conjecture else None
+    if r["kind"] == "check":
+        return f"{r['model']}: {'¬' if claim == 'not' else ''}{nm(r['principle'])}{star}"
     turnstile = "⊬" if claim == "not" else "⊢"
     premise_sets = r.get("premise_sets", [r["premises"]])
     antecedents = []
@@ -1285,6 +1327,7 @@ def validate_topic(topic_id: str, *, quiet=False) -> bool:
             errors.append(f"topic.yaml: background principle '{b}' does not exist")
 
     mschema = _schema("model")
+    models_by_id = {m.get("id"): m for m in data["models"]}
     rids = set()
     for r in data["results"] + data["models"]:
         is_model = "satisfies" in r
@@ -1303,6 +1346,17 @@ def validate_topic(topic_id: str, *, quiet=False) -> bool:
                 errors.append(f"{r['_file']}: unknown principle '{pid}'")
         if is_model and set(r.get("satisfies", [])) & set(r.get("violates", [])):
             errors.append(f"{r['_file']}: a principle is both satisfied and violated")
+        if is_model and isinstance(r.get("model_check"), dict):
+            mc = r["model_check"]
+            base = models_by_id.get(mc.get("model"))
+            if base is None or base.get("status") != "proved" or base is r:
+                errors.append(f"{r['_file']}: model_check must name a different proved model")
+            if not mc.get("satisfies") and not mc.get("violates"):
+                errors.append(f"{r['_file']}: model_check must propose at least one verdict")
+            for field in ("satisfies", "violates"):
+                for pid in mc.get(field, []):
+                    if pid not in r.get(field, []):
+                        errors.append(f"{r['_file']}: model_check {field} assertion '{pid}' is absent from the record")
         for i, ch in enumerate(r.get("changes") or []):
             for key in ("satisfies", "violates"):
                 for pid in ch.get(key, []):
@@ -2311,11 +2365,14 @@ def bundle_open_md(topic_id: str, data: dict, an: dict, lynch=None) -> str:
             else:
                 head = c.get("name", c["id"])
             answer_name = answer_names[resolved["status"]]
-            if "satisfies" in c:
+            if "satisfies" in c and not c.get("model_check"):
                 answer_name = {"proved": "Existence witnessed", "refuted": "Existence refuted"}.get(resolved["status"], answer_name)
             o += [f"#### {head} — `{c['id']}`", "",
                   f"**Answer: {answer_name}.**", ""]
-            if "satisfies" in c and resolved["status"] == "proved":
+            if c.get("model_check"):
+                o += [f"The proposed verdicts concern the existing model `{c['model_check']['model']}`; "
+                      "a different model with the same properties does not resolve these checks.", ""]
+            elif "satisfies" in c and resolved["status"] == "proved":
                 o += ["A proved model meets the recorded satisfies/violates requirements. "
                       "This witnesses their consistency, not necessarily the proposed construction.", ""]
             if resolved["status"] == "incompatible":
@@ -2995,6 +3052,32 @@ def selftest():
     assert complete["auto"] == Ln.rank(top=100)["auto"], "unlimited export keeps every automatically generated conjecture"
     assert [r["rank"] for r in complete["rows"]] == list(range(1, 29))
     assert sorted(r["rank"] for r in short["recorded"]) == sorted(rows[q]["rank"] for q in [(("r",), "p"), (("p",), "r"), (("r", "s"), "p"), (("r", "s"), FALSE)]), "recorded conjectures are the questions the records ask, at their rank"
+    # A named-model conjecture attaches to the existing check, not a large
+    # implication package. Its established flags must not hide it from filters.
+    named = dict(M("m1-r", ["p", "q", "r"], ["s"]), status="conjectured", notes="Proposed witness.", tier="bronze",
+                 model_check={"model": "m1", "satisfies": ["r"], "violates": []})
+    named_data = {**ly, "models": [*ly["models"], named]}
+    named_L = Lynchpins(named_data)
+    named_ranked = named_L.rank(top=None)
+    named_row = next(r for r in named_ranked["rows"] if r.get("model") == "m1" and r.get("principle") == "r")
+    assert named_L.progress() == L.progress(), "a conjectured model check supplies no evidence"
+    assert named_ranked["recorded"] == [named_row] and named_row["tier"] == "bronze"
+    assert named_row["claim"] == "entails" and named_row["conjectures"][0]["id"] == named["id"]
+    assert "★ bronze" in lynchpin_row_text(named_row, str, True)
+    assert named_L.rank(top=None)["recorded"] == [named_row], "repeat ranking must not duplicate the attached record"
+    negative_named = {**named, "satisfies": ["p", "q"], "violates": ["s", "r"],
+                      "model_check": {"model": "m1", "satisfies": [], "violates": ["r"]}}
+    negative_row = Lynchpins({**ly, "models": [*ly["models"], negative_named]}).rank(top=None)["recorded"][0]
+    assert negative_row["claim"] == "not" and lynchpin_scores(negative_row) == (negative_row["no"], negative_row["yes"])
+    assert ": ¬r ★ bronze" in lynchpin_row_text(negative_row, str, True)
+    for holds, expected in ((True, "proved"), (False, "refuted")):
+        base = M("m1", ["p", "r"] if holds else ["p"], ["s"] if holds else ["s", "r"])
+        resolved = Lynchpins({**ly, "models": [base, named]}).rank(top=None)["recorded"][0]
+        assert resolved["status"] == resolved["verdict"] == expected
+        assert resolved["rank"] is None and resolved["yes"] is None and resolved["tier"] == "bronze"
+    assert not Lynchpins(named_data, background=["r"]).rank(top=None)["recorded"], "a model not known to fit a preset is not assumed to fit"
+    named_sparse = Lynchpins(named_data).rank(top=None, score_all=False)
+    assert named_sparse["recorded"][0]["rank"] is None and named_sparse["recorded"][0]["yes"] is not None
     # Conditional equivalence: c and d are interchangeable only with BOTH p and q.
     conditional = {"topic": {"background": []}, "principles": [P(x) for x in "pqcde"],
                    "results": [R("pcd", ["p", "c"], "d"), R("qdc", ["q", "d"], "c"),

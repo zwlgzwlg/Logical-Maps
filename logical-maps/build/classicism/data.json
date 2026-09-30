@@ -17715,6 +17715,14 @@
    ],
    "status": "conjectured",
    "tier": "bronze",
+   "model_check": {
+    "model": "symmetric-all-surjections",
+    "satisfies": [
+     "transversal-r",
+     "necessary-transversal-r"
+    ],
+    "violates": []
+   },
    "certificate": {
     "source_id": "misc",
     "produced_by": "Cian Dorr (Base 1); GPT-6 (OpenAI Codex), proposed Transversal verification, 30 September 2026",
@@ -17740,7 +17748,14 @@
     }
    ],
    "description": "Conjectured strengthening of the verdicts for the existing model symmetric-all-surjections, not a different underlying model. There is one object N, every surjection N to N is an arrow, and the symmetry group consists of all permutations. Domains contain the symmetric finitely pinned intensions, and evaluation is at the identity. Retain the base record's interpretation of signature constants. The proposed additions are Transversal at every admitted type and its boxed form; all other displayed properties are inherited from the established base record. For an actual extension E with least finite permutation support S_E, propose a representative whose extension at h is gE when h is injective on S_E and g agrees with h there, and empty when h collapses S_E. The proposed classifier has, at every arrow, the collection of these representatives as its extension. The accompanying write-up gives the argument to be checked.",
-   "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
+   "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. The named model checks concern Base 1 itself: a different model with the displayed consistency package cannot resolve them.",
+   "changes": [
+    {
+     "date": "2026-09-30",
+     "by": "GPT-6 (OpenAI Codex), at Zachary Goodsell's request",
+     "summary": "Linked the proposed Transversal and necessary Transversal verdicts directly to the Base 1 model checks, so both appear as bronze-star conjectures on the central-question rows. The conjectured status and mathematical content are unchanged."
+    }
+   ],
    "file": "topics/classicism/models/symmetric-all-surjections-transversal.yaml",
    "files": {
     "md": "writeups/symmetric-all-surjections-transversal.md",
@@ -18645,7 +18660,7 @@
    }
   }
  ],
- "generated": "2026-09-29T22:34:39+00:00",
+ "generated": "2026-09-30T00:10:15+00:00",
  "progress": [
   {
    "background": null,
@@ -40813,7 +40828,17 @@
       "score": 111.5,
       "auto_rank": 949,
       "auto_claim": "entails",
-      "rank": 6
+      "rank": 6,
+      "conjectures": [
+       {
+        "id": "symmetric-all-surjections-transversal",
+        "kind": "model",
+        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. The named model checks concern Base 1 itself: a different model with the displayed consistency package cannot resolve them.",
+        "tier": "bronze"
+       }
+      ],
+      "claim": "entails",
+      "tier": "bronze"
      },
      {
       "kind": "check",
@@ -40824,7 +40849,17 @@
       "score": 111.5,
       "auto_rank": 950,
       "auto_claim": "entails",
-      "rank": 7
+      "rank": 7,
+      "conjectures": [
+       {
+        "id": "symmetric-all-surjections-transversal",
+        "kind": "model",
+        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. The named model checks concern Base 1 itself: a different model with the displayed consistency package cannot resolve them.",
+        "tier": "bronze"
+       }
+      ],
+      "claim": "entails",
+      "tier": "bronze"
      },
      {
       "kind": "question",
@@ -239317,7 +239352,17 @@
       "score": 111.5,
       "auto_rank": 949,
       "auto_claim": "entails",
-      "rank": 6
+      "rank": 6,
+      "conjectures": [
+       {
+        "id": "symmetric-all-surjections-transversal",
+        "kind": "model",
+        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. The named model checks concern Base 1 itself: a different model with the displayed consistency package cannot resolve them.",
+        "tier": "bronze"
+       }
+      ],
+      "claim": "entails",
+      "tier": "bronze"
      },
      {
       "kind": "check",
@@ -239328,7 +239373,17 @@
       "score": 111.5,
       "auto_rank": 950,
       "auto_claim": "entails",
-      "rank": 7
+      "rank": 7,
+      "conjectures": [
+       {
+        "id": "symmetric-all-surjections-transversal",
+        "kind": "model",
+        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. The named model checks concern Base 1 itself: a different model with the displayed consistency package cannot resolve them.",
+        "tier": "bronze"
+       }
+      ],
+      "claim": "entails",
+      "tier": "bronze"
      },
      {
       "kind": "question",
@@ -408575,6 +408630,48 @@
     ],
     "recorded": [
      {
+      "kind": "check",
+      "model": "symmetric-all-surjections",
+      "principle": "necessary-transversal-r",
+      "yes": 75,
+      "no": 217,
+      "score": 111.5,
+      "auto_rank": 949,
+      "auto_claim": "entails",
+      "rank": 6,
+      "conjectures": [
+       {
+        "id": "symmetric-all-surjections-transversal",
+        "kind": "model",
+        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. The named model checks concern Base 1 itself: a different model with the displayed consistency package cannot resolve them.",
+        "tier": "bronze"
+       }
+      ],
+      "claim": "entails",
+      "tier": "bronze"
+     },
+     {
+      "kind": "check",
+      "model": "symmetric-all-surjections",
+      "principle": "transversal-r",
+      "yes": 75,
+      "no": 217,
+      "score": 111.5,
+      "auto_rank": 950,
+      "auto_claim": "entails",
+      "rank": 7,
+      "conjectures": [
+       {
+        "id": "symmetric-all-surjections-transversal",
+        "kind": "model",
+        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. The named model checks concern Base 1 itself: a different model with the displayed consistency package cannot resolve them.",
+        "tier": "bronze"
+       }
+      ],
+      "claim": "entails",
+      "tier": "bronze"
+     },
+     {
       "kind": "question",
       "premises": [
        "strong-possibility-signature-r"
@@ -408665,276 +408762,6 @@
        }
       ],
       "claim": "entails",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "actual-profile-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "atomicity-t",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "distinctness-necessary-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "distinctness-signature-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "false",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "general-separated-structure-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "independence-signature-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "relational-choice-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "rigid-comprehension-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "witnessed-possibility-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
       "tier": "bronze"
      },
      {
@@ -439608,180 +439435,6 @@
      {
       "kind": "question",
       "premises": [
-       "atomicity-r",
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "no-contingency-signature-r"
-      ],
-      "conclusion": "actual-profile-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       },
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-r",
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "no-contingency-signature-r"
-      ],
-      "conclusion": "distinctness-signature-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-r",
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "no-contingency-signature-r"
-      ],
-      "conclusion": "false",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-r",
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "no-contingency-signature-r"
-      ],
-      "conclusion": "independence-signature-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-r",
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "no-contingency-signature-r"
-      ],
-      "conclusion": "relational-choice-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-r",
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "no-contingency-signature-r"
-      ],
-      "conclusion": "separated-structure-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomicity-r",
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "no-contingency-signature-r"
-      ],
-      "conclusion": "witnessed-possibility-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
        "actual-profile-r",
        "relational-choice-r"
       ],
@@ -443342,144 +442995,6 @@
       "claim": "entails",
       "tier": "bronze",
       "verdict": "refuted"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "no-contingency-signature-r"
-      ],
-      "conclusion": "distinctness-signature-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "no-contingency-signature-r"
-      ],
-      "conclusion": "false",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "no-contingency-signature-r"
-      ],
-      "conclusion": "functional-choice-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "no-contingency-signature-r"
-      ],
-      "conclusion": "independence-signature-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "no-contingency-signature-r"
-      ],
-      "conclusion": "separated-structure-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e",
-       "no-contingency-signature-r"
-      ],
-      "conclusion": "witnessed-possibility-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
      }
     ]
    },
@@ -444140,138 +443655,6 @@
       "claim": "entails",
       "tier": "bronze",
       "verdict": "refuted"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e"
-      ],
-      "conclusion": "distinctness-signature-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e"
-      ],
-      "conclusion": "false",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e"
-      ],
-      "conclusion": "functional-choice-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e"
-      ],
-      "conclusion": "independence-signature-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e"
-      ],
-      "conclusion": "separated-structure-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "axiom-of-infinity-e"
-      ],
-      "conclusion": "witnessed-possibility-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
      },
      {
       "kind": "question",
@@ -593073,246 +592456,6 @@
        }
       ],
       "claim": "entails",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "actual-profile-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "atomicity-t",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "distinctness-necessary-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "distinctness-signature-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       },
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "false",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "independence-signature-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "relational-choice-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "rigid-comprehension-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
-      "tier": "bronze"
-     },
-     {
-      "kind": "question",
-      "premises": [
-       "atomlessness",
-       "inextensible-comprehension-r",
-       "necessary-barcan-r",
-       "necessary-boolean-completeness-r",
-       "no-contingency-signature-r",
-       "transversal-r"
-      ],
-      "conclusion": "witnessed-possibility-r",
-      "rank": null,
-      "yes": null,
-      "no": null,
-      "status": "outside",
-      "conjectures": [
-       {
-        "id": "symmetric-all-surjections-transversal",
-        "kind": "model",
-        "notes": "Conjectured, not proved, at Zachary Goodsell's request on 30 September 2026; bronze tier explicitly requested in the same instruction. The proposal is that Base 1 satisfies Transversal and therefore, using its No Pure Contingency, necessary Transversal. The proposed argument uses the least permutation support of an extension, rather than the pinning set of an arbitrarily chosen intension. Verify at every type that these least supports exist, that the representative construction is well-defined, symmetric and finitely pinned under the full surjection action, and that its equivariant range is the extension of an admissible classifier with exactly one representative per coextension class. A verification would establish the proposed strengthening; a failure of the particular construction alone would not refute Transversal, which would require ruling out all admissible classifiers at some type. If correct, Base 1 would witness that Transversal implies neither Actuality nor Relational Choice. The existing proved Base 1 record remains unchanged in its verdicts; this conjectured record supplies no proved evidence. Any derived resolution of the displayed consistency package by a different model would not by itself verify the Base 1 construction.",
-        "tier": "bronze"
-       }
-      ],
-      "claim": "not",
       "tier": "bronze"
      },
      {

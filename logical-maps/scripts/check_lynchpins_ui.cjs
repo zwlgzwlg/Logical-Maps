@@ -437,6 +437,34 @@ try {
   atoggle('c');atoggle('d');
   assert.deepEqual(keys(antecedents,'open-recorded'),['q|p+q|c','q|u|d']);
 
+  // Regression: a conjecture about a specific model must appear under the
+  // default principle filters and star that model's actual central checks.
+  const classicism=JSON.parse(fs.readFileSync(path.join(root,'build/classicism/data.json'),'utf8'));
+  const real=page(classicism),rd=real.window.document;
+  show(real,'open');open(real,true,'lynchpins');open(real,true,'open-recorded');
+  const namedId='symmetric-all-surjections-transversal';
+  for(const principle of ['transversal-r','necessary-transversal-r']) {
+    const key=`check|symmetric-all-surjections|${principle}`;
+    for(const section of ['lynchpins','open-recorded']) {
+      const tr=rd.querySelector(`#${section} [data-lynchpin="${key}"]`);
+      assert.ok(tr,`${section}: Base 1 ${principle} is visible with default filters`);
+      assert.equal(tr.dataset.starred,'bronze');
+      assert.ok(tr.querySelector('.star.iridescent.bronze'));
+      assert.ok(tr.querySelector(`[data-open-model="${namedId}"]`));
+    }
+    assert.deepEqual(scores(real,key,'open-recorded'),scores(real,key,'lynchpins'));
+  }
+  assert.equal(rd.querySelectorAll(`#open-recorded [data-open-model="${namedId}"]`).length,2,'only the two proposed model checks, no hidden implication package');
+  assert.equal(real.window.eval(`allEvidenceE.resolveConjecture(byMid.get('${namedId}')).status`),'open');
+
+  // Negative model-check conjectures state the failed property explicitly.
+  const negativeCheck={...chk('m1','r',{yes:6,no:3}),rank:1,claim:'not',tier:'bronze',conjectures:[mrec('negative-check','A proposed failure.')]};
+  const negativeData={...fixture,models:[...fixture.models,model('negative-check',['p'],['s','r'],'conjectured','A proposed failure.')],
+    lynchpins:{reports:[report([],principles.map(p=>[p.id]),[],share([],33,6),[negativeCheck],[negativeCheck],[negativeCheck])]}};
+  const negativeModelPage=page(negativeData);show(negativeModelPage,'open');open(negativeModelPage,true,'open-recorded');
+  assert.equal(stmt(negativeModelPage,'check|m1|r','open-recorded'),'★M1: ¬R details');
+  assert.deepEqual(scores(negativeModelPage,'check|m1|r','open-recorded'),[3,6]);
+
   assert.deepEqual(errors,[]);
   console.log('PASS: settled share, Central Questions by the harmonic mean, Automatically Generated Conjectures stated as the answer to expect, and Conjectures in their records\' direction at their central rank, all in one format with tiered stars and a details link, collapsed and lazy, True class under a stored background, none for an ad-hoc background, sparse maps, and inconsistent backgrounds.');
 } finally {

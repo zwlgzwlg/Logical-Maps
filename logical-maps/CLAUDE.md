@@ -178,6 +178,13 @@ When you (an AI) add or edit a result or model:
   For a model, list every principle you have actually verified in `satisfies`
   and `violates` — the engine derives the rest and lists what is unknown. Add a
   numerical sanity check under the topic's `checks/` when the model is concrete.
+- For conjectured extra properties of an existing proved model, add
+  `model_check: {model: <existing-id>, satisfies: [...], violates: [...]}` to
+  the conjectured model record. List only the proposed new verdicts in this
+  block and retain the full package in the usual `satisfies`/`violates` lists.
+  These assertions appear as model checks in Conjectures and carry the same
+  star in Central Questions. Evidence from a different model cannot resolve
+  a check of the named model.
 
 ## Editing data
 
