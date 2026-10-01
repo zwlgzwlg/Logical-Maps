@@ -2,8 +2,8 @@
 
 *Written 1 October 2026, from the design agreed with Cian on 30 September – 1 October,
 and a survey of the code that day. To be carried out phase by phase (§6); each phase ends
-with a green build and its audit counts recorded in `HANDOFF.md`. Decisions still open
-are collected in §9.*
+with a green build and its audit counts recorded in `HANDOFF.md`. An adversarial review
+of the same day is folded in (D1–D5, D8, §4–§6); the decisions taken are in §9.*
 
 ## 1. What we are building
 
@@ -64,21 +64,27 @@ sometimes "schema" for a *principle*; Phase 1 brings it into line.
 `var : Nat → Ty`. A type variable is never relational, so it can be the type of a variable
 or the argument type of an arrow but never a codomain: the object-language image of a
 Ty-parameter. Application and λ always produce relational types, so the only terms of a
-variable type are variables, which is what lets a variable be split into a block.
+variable type are variables and signature constants. Signature constants are required to
+have closed types (the theorem is stated for signatures that meet the condition, as the
+pure signature trivially does), so every term of a variable type is a variable, which is
+what lets a variable be split into a block.
 
-**D2. Schemas range over closed types.** `Ty.closed`/`RTy.closed` say a type has no
-variable, and `#classicism_schema` generates `P.X.schema = {P.X.quoted σ … | σ … closed}`.
-The map's schemas are about the paper's types, and closedness is what keeps a list form's
-other parameters out of the translation's way (D5): the list form is the translation at
-`var 0`, which must not touch a closed τ. Rules and derivations (`foo.derivable`,
-`foo.rule`) keep quantifying over all types: they are uniform, so they hold at type
-variables too, and that is what Phase 4 uses. Cost: the generator's membership proofs
-(`schemaMemBuild`, now `⟨args, rfl⟩`) supply closedness, and the 55 hand-written proofs
-that unpack membership take the extra hypothesis, mostly to ignore it. The alternative,
-schemas over all types, is harmless (by the vectorization theorem an instance at a type
-variable proves nothing an instance at a closed type does not, and every model reads a
-variable as it reads `e`) and saves those edits, but every list form then needs a
-variable chosen fresh for its other parameters. See §9.
+**D2. Schemas range over closed types.** `Ty.Closed`/`RTy.Closed` (in `Prop`, with
+`Closed (σ ⇒ ρ)` reducing to `Closed σ ∧ Closed ρ`, and lemmas for `⇒*` and for the
+arguments of a relational type) say a type has no variable, and `#classicism_schema`
+generates `P.X.schema = {P.X.quoted σ … | σ … closed}`. The map's schemas are about the
+paper's types, and closedness keeps a list form's other parameters out of the
+translation's way (D5). Rules and derivations (`foo.derivable`, `foo.rule`) keep
+quantifying over all types: they are uniform, so they hold at type variables too, and that
+is what Phase 4 uses. Cost: about 70 hand-written proofs unpack schema membership and take
+the extra hypothesis, mostly to ignore it; and the generator's membership proofs
+(`schemaMemBuild`, now `⟨args, rfl⟩`) must prove closedness of compound types built from
+the parameters (`σ ⇒ ρ`, `σs ⇒* τ`, the arguments of a relational type). Nothing needs
+closed schemas before the list forms, so this is its own phase, after the theorem
+(Phase 5). The alternative, schemas over all types, is rejected: in a general premodel the
+domain at a variable is a free field (`inner (var i)`), so consistency proofs from models
+would gain genuine cases, and every list form would need a variable chosen fresh for its
+other parameters.
 
 **D3. What a type variable denotes.** Only closed sentences matter to the models, but
 Lean's denotation functions are total, so a type variable needs a reading, and every
@@ -88,25 +94,39 @@ built from the premodel's `inner : Ty → C ⥤ Type`, which already assigns an 
 domain to every type, so `RawT` at a variable is `(inner (.var i)).obj W`, exactly as at
 `e`; a variable is valued by `inner`. The full and ideally full models build `inner` by
 `Ty.rec`, and there a variable's case is `De`, the domain of `e`. In every proof by cases
-the variable's case is the `e` case.
+the variable's case is the `e` case, with one exception: `Premodel.dflt`
+(`Semantics/Action.lean`), the default element used where the paper's interpretation is
+undefined, is built at `e` from the nonemptiness of `e`'s domain, and at a variable there
+is nothing to build it from; it is only ever used at relational types, so it is restricted
+to `RTy`. About 29 sites in all.
 
 **D4. Vectorization acts along an assignment.** Every type goes to a list of types (a
 one-element list except at an assigned variable), every term to a tuple of terms (a single
 term except at an assigned variable, where it is the block). So several Ty-parameters can
 be vectorized at once (no principle of the map needs it today, Relational Choice being
-vectorized in its inputs only, but it costs nothing), the one-element case is type
-substitution, and vectorizations compose. Recommended refinement: define the block
-operations so that a one-element block *is* the unvectorized operation (`∀` over `[σ]` is
-`all σ`, not `λX. ∀x. X x`), so that type substitution and the restricted instances come
-out on the nose rather than up to η.
+vectorized in its input only, but it costs nothing), the one-element case is type
+substitution, and vectorizations compose.
+
+**The block forms come out on the nose** (decided 1 October). The quoter writes `∀x:σ. φ`
+as `all σ` applied to `λx. φ`; translated piece by piece, that would be the block
+quantifier applied to a block abstraction, a β-redex, so readable list forms, the
+uniformity equation and the steps of D8 would hold only up to conversion, needing a proved
+conversion lemma per principle (the verified normalizer cannot supply them: it is stuck on
+a list of unknown length). Instead the translation treats the binding forms as units:
+`∀x:σ. φ`, `∃x:σ. φ` and `a = b` go directly to `∀x₁ … ∀xₙ. φ'`, `∃x₁ … ∃xₙ. φ'` and the
+conjunction of identities; a bare `all σ`, `ex σ` or `eq σ` elsewhere goes to the block
+constant. And a one-element block *is* the unvectorized form (identity over `[σ]` is
+`x = y`, not `x = y ∧ ⊤`), so the one-element assignment is type substitution on the
+nose. The cost is in the translation's definition: its application case looks at the raw
+function for `all σ`, `ex σ`, `eq σ`.
 
 **D5. A list form is defined, not written.** `P.X.listQuoted σs … := (P.X.quoted (var 0) …)`
 vectorized along `0 ↦ σs`; it cannot be mis-stated. Every Ty-parameter is vectorized by
 default, and a principle can name the ones to vectorize: Relational Choice names its input
 σ only, its output τ staying a single type (Cian, 1 October). A
 readable form in the block vocabulary is proved equal to it and printed by the audit, and
-`P.X.quoted σ … = P.X.listQuoted [σ] …` holds by computation (the *uniformity* of the
-quoted principle).
+`P.X.quoted σ … = P.X.listQuoted [σ] …` (the *uniformity* of the quoted principle) holds
+by computation, given that the other parameters are closed (`τ.vec θ = τ` for closed τ).
 
 **D6. Generated, not hand-written.** `#classicism_schema` declares the list form of every
 principle with a Ty-parameter, with `P.X.listSchema ⟹ P.X.schema`. `#classicism_certify`
@@ -123,10 +143,15 @@ already at every arity.
 **D8. From the restricted form to the list form.** Per principle:
 - a theorem of `C` with a proof generic in the type (Modalized Functionality, Converse
   Barcan, Necessity of Identity, Broad Necessitism): vectorize its proof;
-- otherwise an induction on the list: the empty list directly, and the step from `σs` to
-  `σ₁ :: σs` is the vectorization (in `σ₂`) of a shallow proof of the two-element case
-  from restricted instances,
-  `X σ₂ τ → X σ₁ (σ₂ → τ) → [X over σ₁, σ₂; τ]`;
+- otherwise an induction on the list, with two bases, the empty list (directly) and the
+  one-element lists (where the list instance is the restricted instance, on the nose), and
+  a step from a nonempty `σs` to `σ₁ :: σs`: the vectorization in `σ₂` of a shallow proof
+  of the two-element case from restricted instances. Its shape follows the principle's
+  parameters. Without a codomain (BF, ND, Existence, Tractarianism):
+  `X σ₂ → X σ₁ → [X over σ₁, σ₂]`. With a relational codomain τ (Functionality, Functional
+  Choice): `X σ₂ τ → X σ₁ (σ₂ → τ) → [X over σ₁, σ₂; τ]`. Relational Choice, whose output
+  τ is any type: `X σ₂ τ → X σ₁ (σ₂ → τ → Prop) → [X over σ₁, σ₂; τ]`, the relation chosen
+  for each `x₁` being the output of the second choice. Boxed principles by `K`;
 - by coding a tuple as an object (Cian, 1 October): the tuple `x₁ … xₙ` is coded by
   `λR. R x₁ … xₙ`, of type `(σs ⇒* t) ⇒ t`, and the code is injective (apply two codes
   to `λy₁ … yₙ. y₁ = x₁ ∧ … ∧ yₙ = xₙ`). Then a unary shallow theorem relating the
@@ -149,11 +174,10 @@ principle records, the Lean side is the same.
 
 | module | after the plan |
 | --- | --- |
-| `Syntax/Types.lean` | `Ty.var`; `Ty.closed`, `RTy.closed`; `RTy.arrs σs ρ`, written `σs ⇒* ρ` (`RTy.ofArgs σs` is `σs ⇒* t`); the module doc on type variables |
-| `Syntax/Blocks.lean` (new) | tuples of terms `Terms Sig Γ σs`; `appBlock`, `lamBlock`, `allBlock`, `exBlock`, `eqBlock`, `forallBlock`; their β, η and δ conversions |
-| `Syntax/Vectorize.lean` (new) | assignments; the translation of types, contexts, variables, terms and holes; its laws with renaming and substitution; conversion preserved; one-element case and composition |
-| `Syntax/Derivation.lean` | the block rules, derived: `allIBlock`, `allEBlock`, `exIBlock`, `exEBlock`, `reflBlock`, `llBlock` |
-| `Syntax/Vectorization.lean` (new) | the theorem `Derivable.vec`, `Theorem.vec`; lifting a rule; the induction principle for list schemas (D8) |
+| `Syntax/Types.lean` | `Ty.var`; `Ty.Closed`, `RTy.Closed`; `RTy.arrs σs ρ`, written `σs ⇒* ρ`, with `RTy.ofArgs σs` defined as `σs ⇒* t` so that `ofArgs_args` plugs into list forms; the module doc on type variables |
+| `Syntax/Blocks.lean` (new) | block contexts (a block is prepended by `List.reverseAux`, so that extending a context by a block needs no cast); tuples of terms `Terms Sig Γ σs`; `appBlock`, `lamBlock`, the block quantifiers and the conjunction of identities, with D4's one-element convention; their conversions; the block rules, derived (`allIBlock`, `allEBlock`, `exIBlock`, `exEBlock`, `reflBlock`, `llBlock`), here rather than in `Derivation.lean`, which does not import this file |
+| `Syntax/Vectorize.lean` (new) | assignments; the translation of types, contexts, variables, terms and holes, with D4's binding forms; its laws with renaming and substitution; conversion preserved; one-element case and composition |
+| `Syntax/VectorizeDerivable.lean` (new) | the theorem `Derivable.vec`, `Theorem.vec`; lifting a rule; the induction principle for list schemas (D8) |
 | `Semantics/*` | a case for type variables (D3) |
 | `Principles.lean` | docstring in the vocabulary of §2; `BarcanArgs`, `NecBarcanArgs` and the "Auxiliary schemas" section gone; `ActualProfile`'s docstring says the map's principle is its list form |
 | `Pointwise.lean` | modal laws used only by the old shallow cores removed (§7) |
@@ -175,19 +199,21 @@ For an assignment θ (default: each variable to itself):
 | type `e`, `t`, unassigned variable | itself (a one-element list) |
 | assigned variable `var i` | the list `θ i` |
 | `σ ⇒ ρ` | `(σ's list) ⇒* ρ'` |
-| context Γ | each entry replaced by its list, innermost last within a block |
+| context Γ | each entry replaced by its list, prepended by `List.reverseAux` (innermost last within a block) |
 | variable of an assigned type | its block of variables |
-| `app F a` | `appBlock F' a'` (F applied to the whole tuple) |
+| `∀x:σ. φ`, `∃x:σ. φ` | `∀x₁ … ∀xₙ. φ'`, `∃x₁ … ∃xₙ. φ'` (D4) |
+| `a = b` at σ | `a₁ = b₁ ∧ … ∧ aₙ = bₙ`, `⊤` if empty, the identity itself if one (D4) |
+| `app F a` otherwise | `appBlock F' a'` (F applied to the whole tuple) |
 | `lam b` | `lamBlock b'` |
-| `all σ`, `ex σ` | `allBlock`, `exBlock` over σ's list |
-| `eq σ` | `eqBlock` over σ's list: the conjunction of identities, `⊤` if empty |
+| bare `all σ`, `ex σ`, `eq σ` | the block constants over σ's list |
 | a pointwise constant at ρ | the same constant at ρ' |
-| a signature constant | itself (its type is closed) |
+| a signature constant | itself (its type is closed, D1) |
 
 What has to be proved, in order: the translation commutes with renaming and with
 substitution (the de Bruijn bookkeeping for blocks of variable length, done once here and
-nowhere else); it preserves conversion (a β-, η- or δ-step at an assigned type becomes as
-many steps as the block is long); and each rule of `Derivable` goes to its block version.
+nowhere else); it preserves conversion (a β-, η- or δ-step at an assigned type becomes a
+short chain of steps, as many as the block is long, or an η-step when it is empty); and
+each rule of `Derivable` goes to its block version.
 Subst goes to Subst, its side derivations being in the logical part, whose one axiom
 (Existence at `e`) mentions no variable. The theorem:
 
@@ -212,57 +238,69 @@ certified, 147 of 230 map results proved).
 **Phase 0. Setup.** Lean toolchain and the Mathlib part the project uses (`HANDOFF.md`
 §2); a full build to fix the baseline counts.
 
-**Phase 1. Type variables and closed types (D1–D3), and the vocabulary.**
-- `Ty.var`; `beq` and decidable equality; `Ty.closed`, `RTy.closed` with simp lemmas;
-  `Ty.cases` (used nowhere) becomes three-way.
+**Phase 1. The root change, in one commit** (D1, D3; `Closed` and `⇒*` from D2 and D4).
+Every change to `Syntax/Types.lean` or `Syntax/Term.lean` makes the whole pipeline
+rebuild, all 199 derivations included, so everything that touches them lands together.
+- `Ty.var`; `beq` and decidable equality; `Ty.Closed`, `RTy.Closed` with their lemmas;
+  `RTy.arrs`, and `RTy.ofArgs` redefined through it; `Ty.cases` (used nowhere) becomes
+  three-way.
 - Every explicit application of the mutual recursor gains an argument for the new
   constructor: `RTy.induction` in `Syntax/Types.lean`; the translator's generated
   induction for class laws (`ensureFieldInduction`, `Tools/Translate.lean`, where
   `RTy.rec` is applied to one argument per constructor), a trivial case since its motive
   on `Ty` is `True`; and `RawR`, `ActionFull`, `IntensionalFull`, `IdeallyFull` below.
   This is the translator's only change.
-- Semantics, the variable case (D3), about 25 sites in 8 files:
+- Semantics, the variable case (D3), about 29 sites in 8 files:
   `Semantics/Denotation.lean` (`Ty.denote`, `Ty.denote_nonempty`);
   `Semantics/Action.lean` and `Semantics/Intensional.lean` (`RawR`, `RawT` and its `map`,
-  the functoriality lemmas, the default element); `Semantics/ActionFull.lean`,
-  `Semantics/IntensionalFull.lean`, `Semantics/IdeallyFull.lean` (`inner` by `Ty.rec`,
-  pinning); `Semantics/ActionFacts.lean`, `Semantics/IntensionalFacts.lean` (`cases σ`).
-  `Models/` and `Strict/` have none.
-- Schemas over closed types: `schemaOfQuoted` and the entailment generator in
-  `Tools/Schema.lean`; the hand-written proofs that unpack schema membership (55 sites,
-  mostly `Results/Schemas/Consistency.lean`, `Results/Arity.lean`) take the closedness
-  hypothesis along.
-- The terminology sweep of §2, in comments and docs: "type variable" where a type
-  parameter is meant; "schema" where a principle is meant; "kernel" where a shallow core
-  is meant (`Results/Arity.lean`, `README.md`, `Classicism/README.md`, `MAP-SURVEY.md`,
-  `HANDOFF.md`, `VERIFICATION.md`), "kernel" staying for Lean's kernel. The README section
-  of §8 for the objects that exist today.
+  the functoriality lemmas; `dflt` restricted to relational types);
+  `Semantics/ActionFull.lean` (including `Ty.sizeOf_pos`), `Semantics/IntensionalFull.lean`,
+  `Semantics/IdeallyFull.lean` (`inner` by `Ty.rec`, pinning); `Semantics/ActionFacts.lean`,
+  `Semantics/IntensionalFacts.lean` (`cases σ`). `Models/` and `Strict/` have none.
 - *Done when* the build is green and every audit count is unchanged.
 
-**Phase 2. Blocks.** `RTy.arrs`; `Terms`; the block operations with D4's one-element
-convention; their conversions; the derived block rules. Tests: each block rule at a
-concrete list of length 0, 1 and 2.
+**Phase 1b. The vocabulary, its own commit.** The terminology sweep of §2, in comments
+and docs: "type variable" where a type parameter is meant (including `Syntax/Term.lean`'s
+"stuck at a type variable", said of a type parameter); "schema" where a principle is meant;
+"kernel" where a shallow core is meant (`Results/Arity.lean`, `README.md`,
+`Classicism/README.md`, `MAP-SURVEY.md`, `HANDOFF.md`, `VERIFICATION.md`), "kernel" staying
+for Lean's kernel. `Classicism/README.md` on `RawR` mentions the new recursor argument. The
+README section of §8 for the objects that exist today.
 
-**Phase 3. The translation.** Assignments; translation of types, contexts, variables,
-terms, holes; renaming and substitution laws; conversion preserved; one-element case is
-type substitution; composition. Definitions Lean's kernel will evaluate are written through
-`Term.rec`, as `rename` and `subst` are. Tests: Functionality, BF, Relational Choice at
-`[]`, `[e]`, `[e, t]`, checked by `rfl`.
+**Phase 2. Blocks** (`Syntax/Blocks.lean`). Block contexts by `List.reverseAux`; `Terms`;
+the block operations with D4's one-element convention; their conversions; the derived
+block rules. Tests: each block rule at concrete lists of length 0, 1 and 2.
 
-**Phase 4. The theorem.** `Derivable.vec`, `Theorem.vec`, lifting a rule; `#print axioms`
-shows nothing beyond Lean's three. A first use by hand: the list form of
-`barcan_r_implies_functionality_r`.
+**Phase 3. The translation** (`Syntax/Vectorize.lean`). Assignments; translation of types,
+contexts, variables, terms and holes, with D4's binding forms; renaming and substitution
+laws; conversion preserved; one-element case is type substitution; composition. The
+recursion has a shape new to this project (a tuple of terms as output, a look at the
+function at each application), so its cost to Lean's kernel is measured on the certified
+sentences before anything relies on evaluating it. Tests: Functionality, BF, Relational
+Choice at `[]`, `[e]`, `[e, t]`, checked by `rfl`.
 
-**Phase 5. The pipeline.** `#classicism_schema` declares `listQuoted`, `listSchema`, the
-uniformity equation, the readable form and `listSchema ⟹ schema`; `#classicism_certify`
-declares `listRule`, `listEntails`; `Certified/` regenerated; the audits count list forms.
-The README table (§8) gets its list rows.
+**Phase 4. The theorem** (`Syntax/VectorizeDerivable.lean`). `Derivable.vec`, `Theorem.vec`,
+lifting a rule, for signatures with closed constant types; `#print axioms` shows nothing
+beyond Lean's three. Tests: `Theorem.vec` applied to certified derivations at `[]`, `[e]`,
+`[e, t]`, and the empty-list instances (BF at `[]` is `∀X:t. □X → □X`). A first use by
+hand: the list form of `barcan_r_implies_functionality_r`.
 
-**Phase 6. Restricted ⇔ list.** `Results/Lists.lean`, per D8: the theorems of `C`; for the
-others the empty case and the two-element step (BF, ND, Tractarianism, Functionality,
-both Choices, their boxed forms, and Existence, whose restricted instances are theorems of
-`C` proved by cases on the type, so that its list form needs the step too); the generic
-induction. Plenitude and Actual Profile by coding a tuple as an object (D8).
+**Phase 5. Closed schemas, then the pipeline.** First D2: `Closed` in the generated
+schemas and the generator's membership proofs (closedness of compound types from the
+parameters'); the hand-written proofs that unpack membership (about 70: `Contingency` 12,
+`Incompatibilities` 9, `Arity` 8, `Consistency` 7, `Monoids` 7, `PossibilityDistinctness`
+4, `Records` 4, `Pointed` 3, `Atomicity` 2). Then the list forms: `#classicism_schema`
+declares `listQuoted`, `listSchema`, the uniformity equation, the readable form and
+`listSchema ⟹ schema`; `#classicism_certify` declares `listRule`, `listEntails`;
+`Certified/` regenerated; the audits count list forms. The README table (§8) gets its list
+rows.
+
+**Phase 6. Restricted ⇔ list.** `Results/Lists.lean`, per D8: the theorems of `C`; the
+two-element steps, shaped by each principle's parameters, with the bases at `[]` and at
+one-element lists (BF, ND, Tractarianism, Functionality, both Choices, their boxed forms,
+and Existence, whose restricted instances are theorems of `C` proved by cases on the type,
+so that its list form needs the step too); the generic induction. Plenitude and Actual
+Profile by coding a tuple as an object (D8).
 
 **Phase 7. Folding in** (§7): `BarcanArgs` and its inductions removed; the shallow cores that
 used it restated at `σ → Prop` and vectorized; Atomicity by vectorizing its step; the
@@ -408,14 +446,20 @@ The README table, in its final form:
 | `foo.entails` | metalogic | `P.Barcan.schema ⟹ P.Functionality.schema` | the arrow between restricted forms |
 | `foo.listRule`, `foo.listEntails` | metalogic | the same with `listQuoted`, `listSchema` | the arrow between list forms |
 
-## 9. Decisions for Cian
+## 9. Decisions
 
-1. **D2**, schemas over closed types (recommended), or over all types (fewer edits, a
-   fresh-variable condition wherever a list form is defined).
+Taken on 1 October:
+
+1. **D2**: schemas over closed types.
 2. **D3** as described: in `Prop` a variable reads as `e`; in the action models it is
-   valued by the premodel's `inner`, which already covers every type.
-3. **Names**: `listQuoted`, `listSchema`, `listRule`, `listEntails`, "list form",
-   "restricted form"; `Ty.var`; `Syntax/Vectorize.lean` and `Syntax/Vectorization.lean`.
-4. **Record names**: the shallow record theorem keeps the map id and states the unary
+   valued by the premodel's `inner`; `dflt` restricted to relational types.
+3. **D4**: the block forms on the nose, the translation treating `∀`, `∃` and `=` as units.
+4. **Relational Choice**: its input only.
+
+Still open, with the current choice:
+
+5. **Names**: `listQuoted`, `listSchema`, `listRule`, `listEntails`, "list form",
+   "restricted form"; `Ty.var`; `Syntax/Blocks.lean`, `Syntax/Vectorize.lean`,
+   `Syntax/VectorizeDerivable.lean`.
+6. **Record names**: the shallow record theorem keeps the map id and states the unary
    case; its `.listEntails` is the map's arrow. (Today such a theorem carries `_unary`.)
-5. ~~Relational Choice: inputs and outputs, or inputs only~~ Decided 1 October: inputs only.
