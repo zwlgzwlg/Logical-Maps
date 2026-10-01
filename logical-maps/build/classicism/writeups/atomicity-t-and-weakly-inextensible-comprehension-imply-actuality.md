@@ -1,0 +1,33 @@
+# Atomicity (type t) ∧ Weakly Inextensible Comprehension ⇒ Actuality
+
+<p class='cert'>Result — Source: Misc.; produced by Claude Opus 5.5 (Anthropic), the argument from Atomicity (type t) and Boolean Completeness, 1 October 2026; Cian Dorr, the observation that it needs only Weak Inextensible Comprehension, and the streamlined proof, 1 October 2026; recorded by Claude Opus 5.5 (Anthropic), 1 October 2026.</p>
+
+## Premises
+
+- **Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
+- **Weakly Inextensible Comprehension.** Every relation, including a proposition, is coextensive with a weakly inextensible one.
+
+## Conclusion
+
+- **Actuality.** There is a true proposition that entails every true proposition.
+
+## Proof
+
+By Weakly Inextensible Comprehension at type $t\to t$, let $X^*$ be weakly inextensible and coextensive with $\lambda p\, .\,\top$. That is: (i) $\forall q\, .\,X^*q$; and (ii) for every $Y$, if $\forall p\, .\,X^*p\to\Box Yp$, then $X^*\le Y$, i.e. $\Box\forall q\, .\,X^*q\to Yq$. It suffices to prove (C) $\exists p\, .\,p\land\forall q\, .\,X^*q\to(p\le q\lor p\le\neg q)$, since Actuality follows from (C) together with (i): by (i), a witness $p$ for (C) is true and satisfies $p\le q\lor p\le\neg q$ for every $q$, and when $q$ is true $p\le\neg q$ is impossible, so $p\le q$.
+
+Proof of (C). Atomicity (type $t$) implies that a proposition entailed by every atom is necessary: if $\neg$(C) were not $\bot$, it would have an atom below it, and that atom would entail both (C) and $\neg$(C). So it suffices to show that every atom $w$ entails (C). Since $w$ is an atom, $w\le q\lor w\le\neg q$ for every $q$. Entailments are necessary if true, so $\forall q\, .\,\Box(w\le q\lor w\le\neg q)$, and a fortiori $\forall q\, .\,X^*q\to\Box(w\le q\lor w\le\neg q)$. By (ii) with $Y:=\lambda q\, .\,w\le q\lor w\le\neg q$, $\Box\forall q\, .\,X^*q\to(w\le q\lor w\le\neg q)$. So $\Box(w\to w\land\forall q\, .\,X^*q\to(w\le q\lor w\le\neg q))$, and by existential generalization $w\le$(C).
+
+## Notes
+
+Only one instance of Weakly Inextensible Comprehension is used: at type $t\to t$, for $X=\lambda p\, .\,\top$. The weakly inextensible $X^*$ does the work that BF does in the derivation of Actuality from Atomicity and BF: it lets the pointwise necessities $\forall q\, .\,\Box(w\le q\lor w\le\neg q)$ be combined into a necessitated universal, restricted to $X^*$, while (i) restores every proposition at the actual world. Since Boolean Completeness implies Weakly Inextensible Comprehension, Atomicity (type $t$) and Boolean Completeness also imply Actuality. This settles the step of Classicism, Proposition 2.11, n. 42, part (ii), which derives Actuality from the proposition's premises by appeal to a result stated only for C5. It also explains why finite-support-truncations, which has Atomicity without Actuality, fails Weak Inextensible Comprehension. Compare vicinity-and-weakly-inextensible-comprehension-imply-actuality, which uses the instance for $X=\lambda p\, .\,p$. The argument came out of an attempt, on 1 October 2026, to build a model of Atomicity and Boolean Completeness without Actuality.
+
+## Sources
+
+- **Dorr and Claude 1 Oct** — Cian Dorr and Claude Opus 5.5 (Anthropic), conversation of 1 October 2026.
+- **BC does not imply RC** — Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, p. 12 (weak inextensibility).
+
+<p class='cert'>Record: <code>topics/classicism/results/atomicity-t-and-weakly-inextensible-comprehension-imply-actuality.yaml</code></p>
+
+## Paper references
+
+- **Background: Boolean Completeness does not imply Rigid Comprehension.** Dorr, Cian. Boolean Completeness does not imply Rigid Comprehension. Unpublished draft in progress, 30 July 2026, 27 pages. All page, proposition and lemma locators for this source refer to that draft. Parts of the draft were drafted with AI assistance; its mathematical claims are attributed to the author. — p. 12. Source of weak inextensibility.
