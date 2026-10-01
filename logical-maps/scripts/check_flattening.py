@@ -1,6 +1,6 @@
 """Check that model records in the argument format flatten exactly to what they replaced.
 
-    python3 scripts/check_flattening.py [--ref REF] [--topic TOPIC] [--no-lynchpins]
+    python3 scripts/check_flattening.py [--ref REF] [--topic TOPIC] [--closure] [--no-lynchpins]
 
 REF (default origin/main) is a Git revision with the records before migration. For every
 model in the argument format, and every conjectured companion generated from one, the
@@ -14,6 +14,11 @@ failure's explanation in every model, problems and settled shares, and the lynch
 `build` stores them in data.json.
 
 Any difference is a bug in the migration, not a correction to the map.
+
+With --closure, a record may list fewer verdicts than it did, provided the engine derives the
+same holds and fails from them: each model's derived holds and fails are compared instead of its
+lists, and the derived outputs by their statuses and witnesses, since shorter lists change which
+proof the engine shows.
 """
 import argparse
 import io
@@ -48,7 +53,11 @@ def derived(data: dict, lynchpins: bool) -> dict:
     # The engine explains a derived failure by the first recorded failure it reaches, so the
     # order of a violates list shows here even when its set is unchanged.
     explanations = {m["id"]: {c: E.fail_why[m["id"]][c] for c in sorted(E.fails[m["id"]])} for m in E.models}
-    out = {"conjectures": an["conjectures"], "classes": an["classes"], "open_pairs": an["open_pairs"],
+    # What the proved records give from each model's lists, conjectured models included.
+    closures = {m["id"]: {"holds": sorted(E.cl(m["satisfies"])[0] - {pmap.FALSE}),
+                          "fails": sorted(c for c in E.ids if E._reaches(m["satisfies"], c, m["violates"]))}
+                for m in data["models"]}
+    out = {"closures": closures, "conjectures": an["conjectures"], "classes": an["classes"], "open_pairs": an["open_pairs"],
            "unknown": an["unknown"], "problems": an["problems"], "infos": an["infos"],
            "pairs": {f"{a} ⇒ {b}": v for (a, b), v in an["pair"].items()},
            "failure explanations": explanations, "progress": pmap.progress_report(data)}
@@ -78,9 +87,12 @@ def main(argv=None) -> int:
     ap.add_argument("--ref", default="origin/main", help="revision before the migration (default origin/main)")
     ap.add_argument("--topic", default="classicism")
     ap.add_argument("--no-lynchpins", action="store_true", help="skip the lynchpin rows (the slow part)")
+    ap.add_argument("--closure", action="store_true", help="records may list fewer verdicts if the engine derives the same ones")
     a = ap.parse_args(argv)
 
     old, new = load_at(a.ref, a.topic), pmap.load_topic(a.topic)
+    lynch = not a.no_lynchpins
+    was, now = derived(old, lynch), derived(new, lynch)
     old_models, new_models = {m["id"]: m for m in old["models"]}, {m["id"]: m for m in new["models"]}
     failures = []
     flattened = [m for m in new["models"] if m.get("_source") is not None or m.get("_companion_of")]
@@ -92,17 +104,30 @@ def main(argv=None) -> int:
             print(f"  {mid} ({kind}): new, nothing to compare")
             continue
         bad = []
+        # With --closure, a model is compared by what the proved records give from its lists.
+        derives = a.closure
         for key in ("satisfies", "violates"):
-            if set(before[key]) != set(m[key]) or len(before[key]) != len(m[key]):
+            if not derives and (set(before[key]) != set(m[key]) or len(before[key]) != len(m[key])):
                 bad.append(f"{key}: lost {sorted(set(before[key]) - set(m[key]))}, gained {sorted(set(m[key]) - set(before[key]))}")
+        for key in ("holds", "fails") if derives else ():
+            lost = set(was["closures"][mid][key]) - set(now["closures"][mid][key])
+            gained = set(now["closures"][mid][key]) - set(was["closures"][mid][key])
+            if lost or gained:
+                bad.append(f"derived {key}: lost {sorted(lost)}, gained {sorted(gained)}")
         for key in FIELDS:
             if before.get(key) != m.get(key):
                 bad.append(f"{key}: {before.get(key)!r} ≠ {m.get(key)!r}")
         order = [k for k in ("satisfies", "violates") if before[k] != m[k] and set(before[k]) == set(m[k])]
         counts = f"{len(m['satisfies'])} holds, {len(m['violates'])} fails, {m['status']}" \
             + (f", tier {m['tier']}" if m.get("tier") else "") + (", model_check" if m.get("model_check") else "")
-        print(f"  {mid} ({kind}): " + ("EXACT" if not bad else "DIFFERENT") + f" ({counts})"
-              + (f"; order differs in {' and '.join(order)}" if order else ""))
+        if derives:
+            closure = now["closures"][mid]
+            print(f"  {mid} ({kind}): " + ("SAME CLOSURE" if not bad else "DIFFERENT")
+                  + f" (recorded {len(before['satisfies'])} + {len(before['violates'])} before, now {counts};"
+                  + f" derives {len(closure['holds'])} holds and {len(closure['fails'])} fails)")
+        else:
+            print(f"  {mid} ({kind}): " + ("EXACT" if not bad else "DIFFERENT") + f" ({counts})"
+                  + (f"; order differs in {' and '.join(order)}" if order else ""))
         failures += [f"{mid}: {b}" for b in bad]
     for mid in old_models:
         if mid not in new_models:
@@ -111,26 +136,31 @@ def main(argv=None) -> int:
         if mid not in old_models and not new_models[mid].get("_source"):
             print(f"  {mid}: new list-format record")
 
-    lynch = not a.no_lynchpins
-    print("derived outputs: comparing conjectures, classes, pairs, unknowns, failure explanations, problems, progress"
-          + (" and lynchpin rows (slow)" if lynch else ""))
-    before, after = derived(old, lynch), derived(new, lynch)
-    for key in before:
-        same = before[key] == after[key]
+    print("derived outputs: comparing conjectures, classes, pairs, unknowns, problems, progress"
+          + ("" if a.closure else ", failure explanations") + (" and lynchpin rows (slow)" if lynch else "")
+          + ("; proofs by status and witness only" if a.closure else ""))
+    if a.closure:  # proofs may differ; what they prove may not
+        for d in (was, now):
+            del d["failure explanations"]
+            for key in ("pairs", "conjectures"):
+                d[key] = {k: {x: y for x, y in v.items() if x != "via"} for k, v in d[key].items()}
+    for key in was:
+        same = was[key] == now[key]
         reordered = []
         if not same and key == "conjectures":
             # A resolved conjecture lists its supporting results in the order of the record's own
             # satisfies and violates. Those are sets, which the arguments need not list in the old order.
             unordered = lambda d: {k: {**v, "via": sorted(v["via"])} for k, v in d.items()}
-            if unordered(before[key]) == unordered(after[key]):
-                same, reordered = True, [k for k in before[key] if before[key][k] != after[key][k]]
+            if unordered(was[key]) == unordered(now[key]):
+                same, reordered = True, [k for k in was[key] if was[key][k] != now[key][k]]
         print(f"  {key}: {'unchanged' if same else 'CHANGED'}"
               + (f" up to the order of the supporting results of {', '.join(reordered)}" if reordered else ""))
         if not same:
-            failures.append(f"{key} changed at {first_difference(before[key], after[key], key)}")
+            failures.append(f"{key} changed at {first_difference(was[key], now[key], key)}")
     for f in failures:
         print(f"FAIL {f}")
-    print("PASS: every flattened record and every derived output is unchanged." if not failures
+    print(("PASS: every flattened record derives what it did, and every derived output is unchanged." if a.closure
+           else "PASS: every flattened record and every derived output is unchanged.") if not failures
           else f"{len(failures)} failure(s).")
     return 1 if failures else 0
 
