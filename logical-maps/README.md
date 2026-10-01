@@ -46,7 +46,8 @@ topics/<topic>/background.md          Background tab (markdown)
 topics/<topic>/contribute.md          optional Contribute tab message (markdown)
 topics/<topic>/principles/<id>.yaml   one principle per file
 topics/<topic>/results/<id>.yaml      implication: premises ⇒ conclusion
-topics/<topic>/models/<id>.yaml       model: satisfies [...], violates [...]
+topics/<topic>/models/<id>.yaml       model: satisfies [...], violates [...]; or a definition and arguments
+topics/<topic>/provenance/<id>.yaml   provenance moved verbatim out of a model record, named by its arguments
 topics/<topic>/papers.yaml           source-paper catalogue and external links
 topics/<topic>/sources/              documents authorised for redistribution
 schema/                               JSON schemas
@@ -258,6 +259,54 @@ Each category is collapsible in the three lists that show them: the graph sideba
 `require_sources: true` makes validation reject empty result/model sources. It is enabled for the unbounded-utility topic and new topics; the legacy example retains its existing records until its sources are audited.
 
 Add `source_names` alongside `sources`, with one short label per reference in the same order (for example, `Symmetries of Value`). Pop-ups show these labels; write-ups retain the full references. Original AI work should use its actual author/model and date, never an invented attribution.
+
+## Model records written as arguments
+
+A model record may give a definition and arguments in place of `description`,
+`satisfies`, `violates` and `status`:
+
+```yaml
+definition: >-                      # what the model is: construction, evaluation point,
+  …                                 # interpretation of Σ; no verdicts
+arguments:
+- holds: [atomicity-r]              # and/or fails: [...]
+  text: …                           # and/or source: {paper, locator}, writeup: <id>,
+                                    # like: <record>#<argument id> with adapt: …
+- id: sigma-top                     # optional; addresses the argument as <record>#<id>
+  fails: [witnessed-possibility-r]
+  text: …
+  by: …                             # by and date default to the certificate
+  date: '2026-09-22'
+  revisions: [{date: '…', by: …, note: …}]   # corrections that leave the verdicts alone
+- holds: [transversal-r]
+  text: …
+  standing: conjectured             # optional tier; withdrawn: {date, by, reason}
+notes: …                            # text that supports no verdict
+history: [...]                      # the old changes log, frozen when the record was migrated
+construction: {standing: conjectured, text: …}   # optional doubt about the model itself
+```
+
+`load_topic` flattens such a record into what the engine reads. The holds and fails
+of the established, unwithdrawn arguments, in the order of the arguments, are its
+`satisfies` and `violates`. Conjectured arguments add a conjectured companion,
+`<id>-conjectured` unless an argument keeps an older id with `companion_id`. The
+companion holds every verdict, and its `model_check` names the model and lists only
+the conjectured ones. A conjectured construction gives a single conjectured model
+instead. Certificates, sources and references pass through. The engine explains a
+derived failure by the first recorded failure it reaches, so the order of the
+arguments can change which explanation is shown, though never a verdict.
+
+`validate` rejects an argument without holds or fails, or without a reason; an
+unknown principle, paper, write-up, `like` target or provenance sidecar; a missing
+definition; and a principle both held and failed, directly or after closure (named
+with its arguments). Its notices never fail: verdicts supported by a citation alone,
+recorded verdicts already derivable from the others, conjectured-only verdicts, a
+conjectured construction, a definition that leans on another record, and a `like`
+target revised or withdrawn since. `status` prints each such model's coverage report
+(every verdict with its routes, the derived verdicts, conjectures, unknowns and
+notices), and `status --model ID` prints one. After migrating a record, run
+`python3 scripts/check_flattening.py`: it compares the flattened records, and every
+derived output including the lynchpin rows, with `origin/main` (or `--ref`).
 
 ## Viewer
 

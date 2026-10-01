@@ -2885,7 +2885,8 @@ def bundle_readme_md(topic_id: str, data: dict, an: dict) -> str:
          f"  extraction.md               source inventory, transcription decisions, deferred items",
          f"  principles/<id>.yaml        one principle per file",
          f"  results/<id>.yaml           premises ⇒ conclusion, with its proof",
-         f"  models/<id>.yaml            satisfies [...] / violates [...]",
+         f"  models/<id>.yaml            satisfies [...] / violates [...], or a definition and arguments",
+         f"  provenance/<id>.yaml        provenance moved out of a model record, named by its arguments",
          f"  writeups/<id>.md            hand-written write-up, overrides the generated one",
          f"  checks/                     executable sanity checks for the models",
          f"  sources/                    original papers",
@@ -3060,6 +3061,9 @@ def bundle_agents_md(topic_id: str, data: dict) -> str:
         "derives the rest and reports what stays unknown.",
         "- Log every later addition to an existing record in its `changes` list (date, by, summary, "
         "and for models the newly verified `satisfies`/`violates` ids). Never move `certificate.date`.",
+        "- A model written as a `definition` and `arguments` takes a new verdict as a new argument "
+        "with its own `by` and `date`, and a correction in that argument's `revisions`. Its `history` "
+        "is frozen, and its `satisfies`/`violates` are computed: never write them.",
         "- Write the real proof in `proof`, at referee detail. Put anything longer than a paragraph "
         f"in `topics/{topic_id}/writeups/<id>.md` instead.",
         "- Prefer `status: conjectured` with an empty proof and a note saying what would settle it, "

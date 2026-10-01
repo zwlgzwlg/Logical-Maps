@@ -169,6 +169,12 @@ When you (an AI) add or edit a result or model:
   questions unless **Show resolved** is checked.
 - Do not edit an existing paper/submission proof or a legacy human-authored
   proof to change its mathematical content — add a note or a new result instead.
+- A model written as a `definition` and `arguments` (README, "Model records
+  written as arguments") takes a newly verified property as a new argument with
+  its own `by` and `date`, and a correction as an entry in the `revisions` of
+  the argument it corrects. Its `history` is frozen; never add `changes`,
+  `satisfies`, `violates` or `status` to it. A conjectured verdict is an
+  argument with `standing: conjectured`, not a separate record.
 - When you add content to an existing record after its certificate date (a
   newly verified property of a model, an added proof, a corrected statement),
   append an entry to its `changes` list: `date`, `by`, `summary`, and for models
