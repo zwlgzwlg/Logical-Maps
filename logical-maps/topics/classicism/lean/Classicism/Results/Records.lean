@@ -306,14 +306,13 @@ theorem rigid_comprehension_r_implies_actuality : RigidComprehension (Prop → P
 theorem le_apply_box {σ : Type} [Ty σ] (w : Prop) (X : σ → Prop) :
     ∀ y, w ≤ X y → □ (w ≤ X y) := fun y h => necessity_of_identity _ _ h
 
-/-- `actuality-implies-persistent-comprehension-r` at `σ → t` (Classicism, n. 38): with
-`w` the actual world, `λy. w ≤ Xy` is persistent, since entailments are necessary when
-true, and coextensive with `X`, since `w` entails exactly the truths. -/
-theorem actuality_implies_persistent_comprehension_r_unary {σ : Type} [Ty σ] :
-    Actuality → PersistentComprehension (σ → Prop) := fun act X =>
-  act.elim fun w (hw : ActualWorld w) =>
-    ⟨λ y ↦ w ≤ X y, nec% (le_apply_box w X),
-      fun y => ⟨fun hX => hw.2 (X y) hX, fun h => imp_of_le_prop w (X y) h hw.1⟩⟩
+/-- With `w` the actual world, `λy. w ≤ Xy` is a persistent coextension of `X`
+(Classicism, n. 38): persistent, since entailments are necessary when true, and
+coextensive with `X`, since `w` entails exactly the truths. -/
+theorem persistent_coext_of_actual_world {σ : Type} [Ty σ] (w : Prop) (hw : ActualWorld w)
+    (X : σ → Prop) : Persistent (λ y ↦ w ≤ X y) ∧ X ≡ (λ y ↦ w ≤ X y) :=
+  ⟨nec% (le_apply_box w X),
+    fun y => ⟨fun hX => hw.2 (X y) hX, fun h => imp_of_le_prop w (X y) h hw.1⟩⟩
 
 /-- `w → ∀y. w ∧ Xy → Zy` gives `∀y. w ∧ Xy → Zy`. -/
 theorem imp_of_w_imp {σ : Type} [Ty σ] (w : Prop) (X Z : σ → Prop) :
@@ -337,9 +336,10 @@ theorem actuality_implies_weakly_inextensible_comprehension {σ : Type} [Ty σ] 
 theorem profile_of_w_imp {σ : Type} [Ty σ] (w : Prop) (Z : σ → Prop) (x : σ) :
     (w → Z x) → ∀ y, w ∧ y = x → Z y := fun h y hy => hy.2 ▸ h hy.1
 
-/-- `actuality-implies-actual-profile-r` at `σ` (Classicism, n. 36): `λy. w ∧ y = x` is
-the true profile of `x`, and it entails every `Z` with `Zx`, since `w` entails `Zx`. -/
-theorem actuality_implies_actual_profile_r_unary {σ : Type} [Ty σ] : Actuality → ActualProfile σ :=
+/-- `actuality-implies-actual-profile-r` (Classicism, n. 36), at `σ`, its list form being
+the map's record: `λy. w ∧ y = x` is the true profile of `x`, and it entails every `Z`
+with `Zx`, since `w` entails `Zx`. -/
+theorem actuality_implies_actual_profile_r {σ : Type} [Ty σ] : Actuality → ActualProfile σ :=
   fun act x => act.elim fun w (hw : ActualWorld w) =>
     ⟨λ y ↦ w ∧ y = x, ⟨hw.1, rfl⟩, fun Z hZ =>
       (le_iff _ _).2 (modal_K _ _ (nec% (profile_of_w_imp w Z x))
@@ -706,21 +706,23 @@ theorem inextensible_of_persistent_c5 {σ : Type} [Ty σ]
     (box_b_of_box_nd_t hnd)) (necessary_distinctness_necessary_r_implies_necessary_barcan_r hnd))
     (modal_four _ hP)
 
-/-- `c5-and-actuality-imply-rigid-comprehension` (for relations of type `σ → t` only)
-(Proposition 2.10), at `σ → t`: Actuality gives a persistent coextension,
-`λy. w ≤ Xy` (n. 38), and in `C5` it is inextensible. -/
-theorem c5_and_actuality_imply_rigid_comprehension_unary
+/-- `c5-and-actuality-imply-rigid-comprehension` (Proposition 2.10), at `σ → t`, its list
+form being the map's record: Actuality gives a persistent coextension, `λy. w ≤ Xy`
+(n. 38), and in `C5` it is inextensible. -/
+theorem c5_and_actuality_imply_rigid_comprehension
     {σ : Type} [Ty σ] :
     Actuality → NecNecessityOfDistinctness Prop → RigidComprehension (σ → Prop) := fun act hnd X =>
-  (actuality_implies_persistent_comprehension_r_unary act X).elim fun Y hY =>
-    ⟨Y, ⟨hY.1, inextensible_of_persistent_c5 hnd Y hY.1⟩, hY.2⟩
+  act.elim fun w (hw : ActualWorld w) =>
+    ⟨_, ⟨(persistent_coext_of_actual_world w hw X).1,
+      inextensible_of_persistent_c5 hnd _ (persistent_coext_of_actual_world w hw X).1⟩,
+     (persistent_coext_of_actual_world w hw X).2⟩
 
 /-- `c5-and-actuality-imply-completeness` (at type `t` only)
 (Proposition 2.5, right to left), at `t`: Propositions 2.10 and 2.8. -/
 theorem c5_and_actuality_imply_completeness_at_t :
     Actuality → NecNecessityOfDistinctness Prop → BooleanCompleteness Prop := fun act hnd =>
   rigid_comprehension_r_implies_boolean_completeness_r_at_t
-    (c5_and_actuality_imply_rigid_comprehension_unary act hnd)
+    (c5_and_actuality_imply_rigid_comprehension act hnd)
 
 /-! Boolean Completeness gives Plenitude in `C5` (Proposition 2.14, n. 48). For `R`
 functional, let `F_R X := ∀y p. Ryp → Xy ≤ p`, and `G` the greatest lower bound of the
@@ -963,13 +965,14 @@ theorem c5_and_necessary_completeness_imply_atomicity_at_t :
 /-- Actuality and `□ND_t` give Rigid Comprehension at `σ → t`, unfolded, for necessitation. -/
 theorem rc_of_actuality_box_nd_t {σ : Type} [Ty σ] :
     Actuality → □ (∀ x y : Prop, x ≠ y → □ (x ≠ y)) → RigidComprehension (σ → Prop) :=
-  c5_and_actuality_imply_rigid_comprehension_unary
+  c5_and_actuality_imply_rigid_comprehension
 
-/-- `c5-and-atomicity-imply-necessary-rigid-comprehension` (for relations of type `σ → t` only)
-(Classicism, §2.3: `C5` + Atomicity = `C5` + `□`Rigid Comprehension), at `σ → t`:
-`□`Actuality, and Proposition 2.10 necessitated. The converse is
-`necessary_rigid_comprehension_r_implies_necessary_actuality` with the last record. -/
-theorem c5_and_atomicity_imply_necessary_rigid_comprehension_unary
+/-- `c5-and-atomicity-imply-necessary-rigid-comprehension` (Classicism, §2.3: `C5` +
+Atomicity = `C5` + `□`Rigid Comprehension), at `σ → t`, its list form being the map's
+record, from Atomicity at `t`: `□`Actuality, and Proposition 2.10 necessitated. The
+converse is `necessary_rigid_comprehension_r_implies_necessary_actuality` with the last
+record. -/
+theorem c5_and_atomicity_imply_necessary_rigid_comprehension
     {σ : Type} [Ty σ] :
     Atomicity Prop → NecNecessityOfDistinctness Prop → NecRigidComprehension (σ → Prop) := fun at_ hnd =>
   modal_K _ _ (modal_K _ _ (nec% (rc_of_actuality_box_nd_t (σ := σ)))

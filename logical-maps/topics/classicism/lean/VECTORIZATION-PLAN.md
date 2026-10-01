@@ -60,7 +60,29 @@ of the same day is folded in (D1–D5, D8, §4–§6); the decisions taken are i
   (D8's sketches went through as written, Actual Profile by the lattice order, not the
   box); the four theorems of `C` from their list entailments. Counts unchanged but for
   the two new list forms of records and the new file's own line.
-  Next: Phase 7, folding in.
+- **Phase 7 done** (1 October), as §7 has it, with these particulars:
+  - `P.BarcanArgs`, `P.NecBarcanArgs`, their steps and inductions gone, and the three
+    `Pointwise` laws only they used.
+  - The cores that used BF over the tuple are unary, at `σ → t`. In `C5` they take `□ND`
+    at `t` and get `□`BF at `σ` inside the proof (`gallin_c5_rigid_comprehension`, its
+    boxed form, and the records `c5_and_actuality_imply_rigid_comprehension`,
+    `c5_and_atomicity_imply_necessary_rigid_comprehension`, which lost `_unary`), so their
+    vectorizations have no list premise; outside `C5`, BF at `σ`
+    (`gallin_bf_weak_rigid_comprehension`), and BF over the list from BF.
+  - A vectorized unary result reaches every relational type as `σs ⇒* t`
+    (`schema_subset_args`, `Results/Lists.lean`).
+  - Atomicity and its boxed form by the vectorized step, at `t`
+    (`Results/Atomicity.lean`, `necAtomicity_of_at_t_necBarcan`).
+  - `actuality_implies_actual_profile_r` lost `_unary`, its list form being the map's record
+    (Phase 9's pilot, done here); `actuality_implies_persistent_comprehension_r_unary` gone,
+    the shallow core at `τ` being the record at every arity.
+  - `#classicism_entails` declares the list entailment of a record with a Ty-parameter,
+    as the audit does.
+  - The `_at_t` records stay for Phase 9.
+  - Counts: 110 of 110 records certified (one fewer, its helper now counted as one), 42
+    of 42 with a Ty-parameter in list form; the `Pointwise` audit twelve theorems fewer
+    (the three laws as fields, at `Prop` and at arrows, and three helpers).
+  Next: Phase 8, the documentation.
 - **What the implementation changed in the design**, all within the plan's intent:
   - Tuples are taken apart by their projections (`Terms.head`, `Terms.tail`) and every
     block operation recurses on the list of types, not on the tuple; so an operation on a

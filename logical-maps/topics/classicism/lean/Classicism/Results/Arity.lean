@@ -14,21 +14,26 @@ set_option pp.unicode.fun true
 
 The map states comprehension, Boolean Completeness, Atomicity and their kin for relations
 of every arity, `∀^Ty σ̄`, and several of the paper's proofs reason about an argument tuple
-`x̄`: "BF, one argument at a time", "the persistent coextension `λȳ. w ≤ X[ȳ]`". The
-shallow layer has no tuples; a relational type is a type parameter `τ` with `Rel τ`, and
-pointwise reasoning at `τ` goes through the laws of `Pointwise`, which the translator
-derives for every object type by induction on the type. This file does the arity results
-that need nothing more than that, in three parts, as `Results/Atomicity.lean` does:
+`x̄`: "BF, one argument at a time", "the persistent coextension `λȳ. w ≤ X[ȳ]`". Two kinds
+of shallow proof reach every arity:
 
-1. **The shallow layer.** BF over a whole argument tuple, `P.BarcanArgs τ`, is an auxiliary
-   principle (not one of the map's): at `t` a theorem, and at `σ → τ` a consequence of
-   BF at `σ` and itself at `τ`; likewise its necessitation. Then the shallow cores of the
-   results, each a theorem at a Rel-parameter `τ`, from the map's premises
-   and `P.BarcanArgs τ` or its box.
-2. **Certification.** `#classicism_certify` makes each a rule between schema instances,
-   `#classicism_entails` an entailment between schemas.
-3. **The metalogic.** The inductions on the type giving BF over tuples from BF, and the
-   compositions of certified entailments, among them the ones already in
+- **pointwise reasoning at a relational type**: a theorem at a Rel-parameter `τ`, its
+  pointwise steps through the laws of `Pointwise`, which the translator derives for every
+  object type by induction on the type. It is at every arity already;
+- **a unary proof**, at `σ → t`, for a result that uses BF over the tuple: vectorized in
+  `σ` (its list rule), it holds at `σs ⇒* t` for every list, which is every relational
+  type (`schema_subset_args`). BF at `σ` in such a proof becomes BF over the list, which
+  BF gives (`P.Barcan.schema_entails_listSchema`); in `C5`, `□`BF at `σ` comes from `□ND`
+  at `t` inside the proof, and the vectorized result has no list premise at all.
+
+The file has three parts, as `Results/Atomicity.lean` does:
+
+1. **The shallow layer**: the shallow cores at `τ`, the unary ones at `σ → t`, and the
+   boxed step of Atomicity.
+2. **Certification.** The certification command makes each a rule between schema
+   instances, and, with a Ty-parameter, a list rule; the entailment command an entailment
+   between schemas, and a list entailment.
+3. **The metalogic**: the compositions of certified entailments, among them the ones in
    `Certified/Entailed.lean`, into the map's arrows. Each theorem here named by a map id
    is that record, for every arity.
 -/
@@ -38,52 +43,8 @@ open Paper
 
 /-! ## 1. The shallow layer -/
 
-section barcanArgs
-variable {σ τ : Type} [Ty σ] [Rel τ]
-
-/-- BF over the empty tuple: `(⊤ → □X) → □(⊤ → X)`. -/
-theorem barcanArgs_t : P.BarcanArgs Prop := fun X h =>
-  modal_K _ _ (nec% (fun (hx : X) (_ : True) => hx)) (h trivial)
-
-/-- **The step**: BF at `σ` and BF over the tuple of `τ` give BF over the tuple of `σ → τ`.
-For `∀z ȳ. □X z ȳ`, BF over `τ` gives `∀z. □∀ȳ. X z ȳ`, and BF at `σ` boxes the `∀z`. -/
-theorem barcanArgs_step : P.Barcan σ → P.BarcanArgs τ → P.BarcanArgs (σ → τ) :=
-  fun bf ba X h => bf (λ z ↦ Rel.top τ ⊆ X z) fun z => ba (X z) (h z)
-
-/-- `□`BF over the empty tuple: the necessitation of the theorem at `t`. -/
-theorem necBarcanArgs_t : P.NecBarcanArgs Prop := nec% barcanArgs_t
-
-/-- The boxed step, by `K`. -/
-theorem necBarcanArgs_step : P.NecBarcan σ → P.NecBarcanArgs τ → P.NecBarcanArgs (σ → τ) :=
-  fun h₁ h₂ => modal_K _ _ (modal_K _ _ (nec% (barcanArgs_step (σ := σ) (τ := τ))) h₁) h₂
-
-end barcanArgs
-
 section shallowCores
 variable {τ : Type} [Rel τ] [Pointwise τ]
-
-/-- With `B` and BF over the tuple, a persistent relation is weakly inextensible (the
-argument of Classicism, n. 41, at every arity): if `Y ⊆ □Z`, then pointwise
-`□(¬Y ∨ Z)`, by `B` where `Y` fails, and BF over the tuple boxes the tuple quantifier. -/
-theorem weaklyInextensible_of_b_barcanArgs (Y : τ) :
-    (∀ p : Prop, p → □ ◇ p) → P.BarcanArgs τ → Persistent Y → WeaklyInextensible Y :=
-  fun b ba hP Z hZ =>
-    modal_K _ _ (nec% (boxImp_of_top_or Y Z))
-      (ba _ (top_boxAt_of_b Y Z b hZ (top_boxAt_of_box Y (boxAt Y) hP)))
-
-/-- In `C5`, with `□`BF over the tuple, a persistent relation is inextensible. -/
-theorem inextensible_of_persistent_c5 (Y : τ) :
-    □ (∀ p : Prop, p → □ ◇ p) → P.NecBarcanArgs τ → Persistent Y → Inextensible Y :=
-  fun hb hba hP =>
-    modal_K _ _ (modal_K _ _ (modal_K _ _ (nec% (weaklyInextensible_of_b_barcanArgs Y)) hb) hba)
-      (modal_four _ hP)
-
-/-- A relation whose negation is weakly persistent is weakly inextensible, given BF over
-the tuple: where `Y` fails it fails necessarily. -/
-theorem weaklyInextensible_of_neg (Y : τ) :
-    P.BarcanArgs τ → WeaklyPersistent (¬ Y) → WeaklyInextensible Y :=
-  fun ba hn Z hZ =>
-    modal_K _ _ (nec% (boxImp_of_top_or Y Z)) (ba _ (top_boxAt_of_neg Y Z hZ hn))
 
 /-- `w` an actual world gives `q ↔ □(¬w ∨ q)` for every `q`. -/
 theorem actual_iff (w : Prop) (hw : ActualWorld w) : ∀ q : Prop, q ↔ □ (¬ w ∨ q) := fun q =>
@@ -101,48 +62,6 @@ theorem persistent_coext_of_actual (X : τ) (w : Prop) (hw : ActualWorld w) :
 theorem actuality_implies_persistent_comprehension_r :
     P.Actuality → P.PersistentComprehension τ := fun act X =>
   act.elim fun w (hw : ActualWorld w) => ⟨_, persistent_coext_of_actual X w hw⟩
-
-/-- The shallow core of Proposition 2.10 at every arity: Actuality, `□ND` and `□`BF over the
-tuple give Rigid Comprehension at `τ`. The persistent coextension is inextensible in
-`C5`. -/
-theorem c5_actuality_rigid_comprehension :
-    P.Actuality → P.NecNecessityOfDistinctness Prop → P.NecBarcanArgs τ →
-      P.RigidComprehension τ := fun act hnd hba X =>
-  act.elim fun w (hw : ActualWorld w) =>
-    ⟨_, ⟨(persistent_coext_of_actual X w hw).1,
-      inextensible_of_persistent_c5 _ (Proofs.box_b_of_box_nd_t hnd) hba
-        (persistent_coext_of_actual X w hw).1⟩,
-     (persistent_coext_of_actual X w hw).2⟩
-
-/-- The same, boxed: `□`Actuality, `□ND` and `□`BF over the tuple give `□`Rigid
-Comprehension at `τ`. -/
-theorem c5_necessary_actuality_necessary_rigid_comprehension :
-    P.NecActuality → P.NecNecessityOfDistinctness Prop → P.NecBarcanArgs τ →
-      P.NecRigidComprehension τ := fun hna hnd hba =>
-  modal_K _ _ (modal_K _ _ (modal_K _ _ (nec% (c5_actuality_rigid_comprehension (τ := τ))) hna)
-    (modal_four _ hnd)) (modal_four _ hba)
-
-/-- Gallin Extensional Comprehension and BF over the tuple give Weak Rigid Comprehension:
-the Gallin-rigid coextension is persistent and, its negation being persistent, weakly
-inextensible. -/
-theorem gallin_barcanArgs_weak_rigid_comprehension :
-    P.GallinExtensionalComprehension τ → P.BarcanArgs τ → P.WeakRigidComprehension τ :=
-  fun g ba X => (g X).elim fun Y hY =>
-    ⟨Y, ⟨hY.1, weaklyInextensible_of_neg Y ba (box_elim hY.2.1)⟩, hY.2.2⟩
-
-/-- And with `□`BF over the tuple, Rigid Comprehension: the argument above under the box,
-the persistence of the negation being boxed already. -/
-theorem gallin_necBarcanArgs_rigid_comprehension :
-    P.GallinExtensionalComprehension τ → P.NecBarcanArgs τ → P.RigidComprehension τ :=
-  fun g hba X => (g X).elim fun Y hY =>
-    ⟨Y, ⟨hY.1, modal_K _ _ (modal_K _ _ (nec% (weaklyInextensible_of_neg Y)) hba) hY.2.1⟩, hY.2.2⟩
-
-/-- Boxed Gallin Extensional Comprehension and `□`BF over the tuple give `□`Rigid
-Comprehension. -/
-theorem nec_gallin_necBarcanArgs_nec_rigid_comprehension :
-    P.NecGallinExtensionalComprehension τ → P.NecBarcanArgs τ → P.NecRigidComprehension τ :=
-  fun hg hba => modal_K _ _ (modal_K _ _ (nec% (gallin_necBarcanArgs_rigid_comprehension (τ := τ))) hg)
-    (modal_four _ hba)
 
 /-- `very-weak-rigid-comprehension-r-implies-weak-rigid-comprehension-r`, at every
 arity: for `Y` very weakly rigid, `λz̄. □Y[z̄]` is a weakly rigid coextension. -/
@@ -199,6 +118,48 @@ theorem c5_and_necessary_rigid_comprehension_imply_necessary_gallin_comprehensio
 
 end shallowCores
 
+section unary
+variable {σ : Type} [Ty σ]
+
+/-- With BF at `σ`, a property whose negation is weakly persistent is weakly inextensible:
+where `Y` fails it fails necessarily, so `Y ⊆ □Z` gives `□(Y z → Z z)` at each `z`, and BF
+boxes the quantifier. -/
+theorem weaklyInextensible_of_neg_bf (Y : σ → Prop) :
+    P.Barcan σ → WeaklyPersistent (¬ Y) → WeaklyInextensible Y := fun bf hn Z hZ =>
+  bf (λ z ↦ Y z → Z z) fun z =>
+    (em (Y z)).elim (fun hy => Proofs.box_imp_of_box (Y z) (Z z) (hZ z hy))
+      (fun hny => Proofs.box_imp_of_box_not (Y z) (Z z) (hn z hny))
+
+/-- Gallin Extensional Comprehension and BF give Weak Rigid Comprehension, at `σ → t`:
+the Gallin-rigid coextension is persistent and, its negation being persistent, weakly
+inextensible. -/
+theorem gallin_bf_weak_rigid_comprehension :
+    P.GallinExtensionalComprehension (σ → Prop) → P.Barcan σ →
+      P.WeakRigidComprehension (σ → Prop) :=
+  fun g bf X => (g X).elim fun Y hY =>
+    ⟨Y, ⟨hY.1, weaklyInextensible_of_neg_bf Y bf (box_elim hY.2.1)⟩, hY.2.2⟩
+
+/-- And in `C5`, Rigid Comprehension: the argument above under the box, with `□`BF at `σ`
+from `□ND` at `t` (Proposition 2.3), the persistence of the negation being boxed
+already. -/
+theorem gallin_c5_rigid_comprehension :
+    P.GallinExtensionalComprehension (σ → Prop) → P.NecNecessityOfDistinctness Prop →
+      P.RigidComprehension (σ → Prop) :=
+  fun g hnd X => (g X).elim fun Y hY =>
+    ⟨Y, ⟨hY.1, modal_K _ _ (modal_K _ _ (nec% (weaklyInextensible_of_neg_bf Y))
+      (Proofs.necessary_distinctness_necessary_r_implies_necessary_barcan_r hnd)) hY.2.1⟩,
+     hY.2.2⟩
+
+/-- Boxed Gallin Extensional Comprehension gives `□`Rigid Comprehension in `C5`, at
+`σ → t`: the last lemma necessitated, `□ND` boxed by `4`. -/
+theorem nec_gallin_c5_nec_rigid_comprehension :
+    P.NecGallinExtensionalComprehension (σ → Prop) → P.NecNecessityOfDistinctness Prop →
+      P.NecRigidComprehension (σ → Prop) := fun hg hnd =>
+  modal_K _ _ (modal_K _ _ (nec% (gallin_c5_rigid_comprehension (σ := σ))) hg)
+    (modal_four _ hnd)
+
+end unary
+
 section atomicity
 variable {σ τ : Type} [Ty σ] [Rel τ] [Order τ] [Pointwise τ]
 
@@ -221,14 +182,9 @@ theorem fregean_actuality_necessary_actuality : P.FregeanAxiom → P.Actuality �
 
 /-! ## 2. Certification -/
 
-#classicism_certify Classicism.barcanArgs_t Classicism.barcanArgs_step
-  Classicism.necBarcanArgs_t Classicism.necBarcanArgs_step
-  Classicism.actuality_implies_persistent_comprehension_r
-  Classicism.c5_actuality_rigid_comprehension
-  Classicism.c5_necessary_actuality_necessary_rigid_comprehension
-  Classicism.gallin_barcanArgs_weak_rigid_comprehension
-  Classicism.gallin_necBarcanArgs_rigid_comprehension
-  Classicism.nec_gallin_necBarcanArgs_nec_rigid_comprehension
+#classicism_certify Classicism.actuality_implies_persistent_comprehension_r
+  Classicism.gallin_bf_weak_rigid_comprehension Classicism.gallin_c5_rigid_comprehension
+  Classicism.nec_gallin_c5_nec_rigid_comprehension
   Classicism.necAtomicity_step Classicism.c5_necessary_atomicity_t
   Classicism.fregean_actuality_necessary_actuality
   Classicism.very_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r
@@ -237,11 +193,8 @@ theorem fregean_actuality_necessary_actuality : P.FregeanAxiom → P.Actuality �
   Classicism.c5_and_necessary_rigid_comprehension_imply_necessary_gallin_comprehension
 
 #classicism_entails Classicism.actuality_implies_persistent_comprehension_r
-  Classicism.c5_actuality_rigid_comprehension
-  Classicism.c5_necessary_actuality_necessary_rigid_comprehension
-  Classicism.gallin_barcanArgs_weak_rigid_comprehension
-  Classicism.gallin_necBarcanArgs_rigid_comprehension
-  Classicism.nec_gallin_necBarcanArgs_nec_rigid_comprehension
+  Classicism.gallin_bf_weak_rigid_comprehension Classicism.gallin_c5_rigid_comprehension
+  Classicism.nec_gallin_c5_nec_rigid_comprehension
   Classicism.c5_necessary_atomicity_t Classicism.fregean_actuality_necessary_actuality
   Classicism.very_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r
   Classicism.extensionality_r_implies_rigid_comprehension_r
@@ -253,62 +206,32 @@ theorem fregean_actuality_necessary_actuality : P.FregeanAxiom → P.Actuality �
 namespace Meta
 open AxiomSet
 
-/-- **BF entails BF over every argument tuple**, by induction on the type. -/
-theorem barcanArgs_of_barcan : P.Barcan.schema ⟹ P.BarcanArgs.schema := by
-  rintro a ⟨ρ, hρ, rfl⟩
-  induction ρ using RTy.induction with
-  | t => exact Theorem.ofC barcanArgs_t.rule
-  | arr σ ρ ih =>
-    exact (Theorem.ofC (barcanArgs_step.rule σ ρ)).mp₂ (Theorem.ax ⟨σ, hρ.1, rfl⟩) (ih hρ.2)
-
-/-- **`□`BF entails `□`BF over every argument tuple.** -/
-theorem necBarcanArgs_of_necBarcan : P.NecBarcan.schema ⟹ P.NecBarcanArgs.schema := by
-  rintro a ⟨ρ, hρ, rfl⟩
-  induction ρ using RTy.induction with
-  | t => exact Theorem.ofC necBarcanArgs_t.rule
-  | arr σ ρ ih =>
-    exact (Theorem.ofC (necBarcanArgs_step.rule σ ρ)).mp₂ (Theorem.ax ⟨σ, hρ.1, rfl⟩) (ih hρ.2)
-
-/-- **Atomicity at `t` and BF entail Atomicity**, with Atomicity at `t` read as the
-`t`-instance of Atomicity (the form the `C5` records conclude with): the induction of
-`Results/Atomicity.lean`, from the instance. -/
-theorem atomicity_of_atomicity_at_t_barcan :
-    single (P.Atomicity.quoted RTy.t) ∪ P.Barcan.schema ⟹ P.Atomicity.schema := by
-  rintro a ⟨ρ, hρ, rfl⟩
-  induction ρ using RTy.induction with
-  | t => exact Theorem.ax (Or.inl rfl)
-  | arr σ ρ ih =>
-    exact (Theorem.ofC (atomicity_step.rule σ ρ)).mp₂ (ih hρ.2) (Theorem.ax (Or.inr ⟨σ, hρ.1, rfl⟩))
-
-/-- `□ND` entails `□`BF over every tuple. -/
-theorem necBarcanArgs_of_c5 : P.NecNecessityOfDistinctness.schema ⟹ P.NecBarcanArgs.schema :=
-  Entails.trans Proofs.necessary_distinctness_necessary_r_implies_necessary_barcan_r.entails
-    necBarcanArgs_of_necBarcan
-
 /-- `actuality-implies-persistent-comprehension-r`, the map's record, at every arity. -/
 theorem actuality_implies_persistent_comprehension_r :
     P.Actuality.schema ⟹ P.PersistentComprehension.schema :=
   Classicism.actuality_implies_persistent_comprehension_r.entails
 
-/-- `c5-and-actuality-imply-rigid-comprehension` (Proposition 2.10), at every arity. -/
+/-- `c5-and-actuality-imply-rigid-comprehension` (Proposition 2.10), at every arity: the
+record at `σ → t`, vectorized. -/
 theorem c5_and_actuality_imply_rigid_comprehension :
     P.NecNecessityOfDistinctness.schema ∪ P.Actuality.schema ⟹ P.RigidComprehension.schema :=
-  Entails.trans
-    (Entails.union (Entails.union (Entails.union_right _ _) (Entails.union_left _ _))
-      (Entails.trans (Entails.union_left _ _) necBarcanArgs_of_c5))
-    c5_actuality_rigid_comprehension.entails
+  Entails.mono_right (schema_subset_args _)
+    (Entails.trans (Entails.union (Entails.union_right _ _) (Entails.union_left _ _))
+      Proofs.c5_and_actuality_imply_rigid_comprehension.listEntails)
 
-/-- `gallin-comprehension-and-bf-imply-weak-rigid-comprehension`, at every arity. -/
+/-- `gallin-comprehension-and-bf-imply-weak-rigid-comprehension`, at every arity: the core
+at `σ → t`, vectorized, with BF over every list from BF. -/
 theorem gallin_comprehension_and_bf_imply_weak_rigid_comprehension :
     P.GallinExtensionalComprehension.schema ∪ P.Barcan.schema ⟹
       P.WeakRigidComprehension.schema :=
-  Entails.trans
-    (Entails.union (Entails.union_left _ _)
-      (Entails.trans (Entails.union_right _ _) barcanArgs_of_barcan))
-    gallin_barcanArgs_weak_rigid_comprehension.entails
+  Entails.mono_right (schema_subset_args _)
+    (Entails.trans
+      (Entails.union (Entails.union_left _ _)
+        (Entails.trans (Entails.union_right _ _) P.Barcan.schema_entails_listSchema))
+      gallin_bf_weak_rigid_comprehension.listEntails)
 
 /-- `gallin-comprehension-and-bf-imply-rigid-comprehension`, at every arity: Gallin gives
-ND, ND and BF give `□ND`, which gives `□`BF over every tuple. -/
+ND, ND and BF give `□ND`, and the core at `σ → t`, vectorized. -/
 theorem gallin_comprehension_and_bf_imply_rigid_comprehension :
     P.GallinExtensionalComprehension.schema ∪ P.Barcan.schema ⟹ P.RigidComprehension.schema :=
   have nd : P.GallinExtensionalComprehension.schema ∪ P.Barcan.schema ⟹
@@ -318,25 +241,18 @@ theorem gallin_comprehension_and_bf_imply_rigid_comprehension :
       P.NecNecessityOfDistinctness.schema :=
     Entails.trans (Entails.union nd (Entails.union_right _ _))
       Proofs.nd_and_bf_imply_necessary_nd.entails
-  Entails.trans
-    (Entails.union (Entails.union_left _ _) (Entails.trans nnd necBarcanArgs_of_c5))
-    gallin_necBarcanArgs_rigid_comprehension.entails
+  Entails.mono_right (schema_subset_args _)
+    (Entails.trans (Entails.union (Entails.union_left _ _) nnd)
+      gallin_c5_rigid_comprehension.listEntails)
 
-/-- `c5-and-atomicity-imply-necessary-rigid-comprehension`, at every arity: Atomicity and
-BF (from `□ND`) give `□`Actuality (Proposition 2.7), and the boxed shallow core. -/
+/-- `c5-and-atomicity-imply-necessary-rigid-comprehension`, at every arity: the record at
+`σ → t`, from Atomicity at `t`, vectorized. -/
 theorem c5_and_atomicity_imply_necessary_rigid_comprehension :
     P.NecNecessityOfDistinctness.schema ∪ P.Atomicity.schema ⟹
       P.NecRigidComprehension.schema :=
-  have bf : P.NecNecessityOfDistinctness.schema ∪ P.Atomicity.schema ⟹ P.Barcan.schema :=
-    Entails.trans (Entails.union_left _ _) Proofs.necessary_nd_implies_bf.entails
-  have na : P.NecNecessityOfDistinctness.schema ∪ P.Atomicity.schema ⟹
-      single P.NecActuality.quoted :=
-    Entails.trans (Entails.union (Entails.union_right _ _) bf)
-      Proofs.atomicity_and_bf_imply_necessary_actuality.entails
-  Entails.trans
-    (Entails.union (Entails.union na (Entails.union_left _ _))
-      (Entails.trans (Entails.union_left _ _) necBarcanArgs_of_c5))
-    c5_necessary_actuality_necessary_rigid_comprehension.entails
+  Entails.mono_right (schema_subset_args _)
+    (Entails.trans (Entails.union (Entails.union_right _ _) (Entails.union_left _ _))
+      Proofs.c5_and_atomicity_imply_necessary_rigid_comprehension.listEntails)
 
 /-- `c5-and-necessary-actuality-imply-atomicity` (Proposition 2.6, right to left), at every
 arity: Atomicity at `t` from the `t` record, BF from `□ND`, and the induction. -/
@@ -360,14 +276,14 @@ theorem c5_and_necessary_completeness_imply_atomicity :
       (Entails.trans (Entails.union_left _ _) Proofs.necessary_nd_implies_bf.entails))
     atomicity_of_atomicity_at_t_barcan
 
-/-- **`□`Atomicity at `t` and `□`BF entail `□`Atomicity**, by induction on the type. -/
+/-- **`□`Atomicity at `t` and `□`BF entail `□`Atomicity**: the boxed step, vectorized, as
+for `atomicity_of_atomicity_at_t_barcan`. -/
 theorem necAtomicity_of_at_t_necBarcan :
     single (P.NecAtomicity.quoted RTy.t) ∪ P.NecBarcan.schema ⟹ P.NecAtomicity.schema := by
-  rintro a ⟨ρ, hρ, rfl⟩
-  induction ρ using RTy.induction with
-  | t => exact Theorem.ax (Or.inl rfl)
-  | arr σ ρ ih =>
-    exact (Theorem.ofC (necAtomicity_step.rule σ ρ)).mp₂ (ih hρ.2) (Theorem.ax (Or.inr ⟨σ, hρ.1, rfl⟩))
+  refine Entails.mono_right (schema_subset_args _) ?_
+  rintro a ⟨σs, hσs, rfl⟩
+  exact (Theorem.ofC (necAtomicity_step.listRule σs .t trivial)).mp₂ (Theorem.ax (Or.inl rfl))
+    (Entails.mono_left (fun _ => Or.inr) P.NecBarcan.schema_entails_listSchema _ ⟨σs, hσs, rfl⟩)
 
 /-- `c5-and-atomicity-imply-necessary-atomicity` (Proposition 2.6 with 2.7), at every
 arity: Atomicity and BF give `□`Actuality, which with `□ND` gives `□`Atomicity at `t`,
@@ -402,14 +318,14 @@ theorem extensionality_r_implies_atomicity_r :
     c5_and_necessary_actuality_imply_atomicity
 
 /-- `necessary-gallin-comprehension-implies-necessary-rigid-comprehension`, at every arity:
-`□`Gallin gives `□ND`, hence `□`BF over every tuple, and the boxed shallow core. -/
+`□`Gallin gives `□ND`, and the boxed core at `σ → t`, vectorized. -/
 theorem necessary_gallin_comprehension_implies_necessary_rigid_comprehension :
     P.NecGallinExtensionalComprehension.schema ⟹ P.NecRigidComprehension.schema :=
-  Entails.trans
-    (Entails.union (Entails.refl _)
-      (Entails.trans Proofs.necessary_gallin_comprehension_implies_necessary_nd.entails
-        necBarcanArgs_of_c5))
-    nec_gallin_necBarcanArgs_nec_rigid_comprehension.entails
+  Entails.mono_right (schema_subset_args _)
+    (Entails.trans
+      (Entails.union (Entails.refl _)
+        Proofs.necessary_gallin_comprehension_implies_necessary_nd.entails)
+      nec_gallin_c5_nec_rigid_comprehension.listEntails)
 
 /-- `necessary-plenitude-r-implies-atomicity-r` (Propositions 2.13, 2.15 and 2.6 boxed),
 at every arity: `□`Plenitude gives `□ND` and `□`Actuality, and in `C5` `□`Actuality gives

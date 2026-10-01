@@ -1001,6 +1001,26 @@ def declareListRule (foo : Name) : TermElabM (Option ListRuleInfo) := do
   return some { kinds, i₀, premises := (ps.zip forms.toList).toArray.map fun (p, f) => (p, f.2),
                 conclusion := q, conclusionIsList := qform.2 }
 
+/-- What `foo.listRule` records for its list entailment, read off its statement, for a
+list rule declared earlier. -/
+def listRuleInfo (foo : Name) : TermElabM ListRuleInfo := do
+  let (ps, q) ← recordShape (← getConstInfo foo).type
+  let dty ← inferType (Lean.mkConst (foo ++ `derivable))
+  let kinds ← forallTelescope dty fun tvs _ => tvs.mapM fun tv => do
+    pure ((← whnf (← inferType tv)).isConstOf ``Classicism.Meta.Ty)
+  let some i₀ := kinds.findIdx? (fun b => b) | throwError "list rule: {foo} has no Ty-parameter"
+  forallTelescope (← inferType (Lean.mkConst (foo ++ `listRule))) fun _ body => do
+    let some (_, S) := derivableParts? (← whnf body) | throwError "list rule: internal"
+    let mut Y := S
+    let mut premises : Array (Name × Bool) := #[]
+    for p in ps do
+      let some X ← impPremise? Y | throwError "list rule: not an implication"
+      premises := premises.push (p, (← instantiateMVars X).isAppOf (p ++ `listQuoted))
+      let some rest := impRest? (← whnfR Y) | throwError "list rule: not an implication"
+      Y := rest
+    return { kinds, i₀, premises, conclusion := q,
+             conclusionIsList := (← instantiateMVars Y).isAppOf (q ++ `listQuoted) }
+
 /-- Declare `foo.listEntails`, from `foo.listRule`: the premises' list schemas (a restricted
 instance's schema where the instance is restricted) entail the conclusion's list schema,
 or the family of the conclusion's instances where it is not `Q`'s list form at the
@@ -1114,7 +1134,8 @@ syntax (name := classicismCertify) "#classicism_certify " ident+ : command
       logError m!"{n}: not certified — {ex.toMessageData}"
 
 /-- `#classicism_entails foo …`: each record theorem `foo : P₁ … → … → Q …` with a derivation
-`foo.strict.derivable` becomes `foo.entails : P₁.schema ∪ … ⟹ Q.schema`. -/
+becomes `foo.entails : P₁.schema ∪ … ⟹ Q.schema`, and, when `foo` has a Ty-parameter,
+`foo.listEntails`, from its list rule (declared here if `#classicism_certify` has not). -/
 syntax (name := classicismEntails) "#classicism_entails " ident+ : command
 
 @[command_elab classicismEntails] def elabEntails : CommandElab := fun stx => do
@@ -1125,6 +1146,15 @@ syntax (name := classicismEntails) "#classicism_entails " ident+ : command
       logInfo m!"{n} ⟶ {n ++ `entails} : {(← getConstInfo (n ++ `entails)).type}"
     catch ex =>
       logError m!"{n}: no entailment — {ex.toMessageData}"
+    try
+      let info? ← liftTermElabM do
+        if (← getEnv).contains (n ++ `listRule) then pure (some (← listRuleInfo n))
+        else declareListRule n
+      if let some info := info? then
+        liftTermElabM (declareListEntails n info)
+        logInfo m!"{n} ⟶ {n ++ `listEntails} : {(← getConstInfo (n ++ `listEntails)).type}"
+    catch ex =>
+      logInfo m!"{n}: no list entailment — {ex.toMessageData}"
 
 /-- `#classicism_entails_audit Mod …`: for every theorem `foo` of the module with a strict twin
 `foo.strict`, derive it if `foo.strict.derivable` does not exist, then declare

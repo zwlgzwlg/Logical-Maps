@@ -1,5 +1,6 @@
 import Classicism.Tools.Schema
 import Classicism.Certified.Schemas
+import Classicism.Results.Lists
 import Classicism.Principles
 import Classicism.Pointwise
 import Classicism.Paper
@@ -17,8 +18,8 @@ relational type has an atom below it.
 The informal proof runs, for `X` of type `σ₁ → ⋯ → σₙ → t`: `X ≠ ⊥` gives `◇∃ȳ. Xȳ`; BF at
 `σ₁, …, σₙ` gives `x̄` with `Xx̄ ≠ ⊥`; Atomicity at `t` gives an atom `w ≤ Xx̄`; and
 `λȳ. w ∧ ȳ = x̄` is an atom below `X`. It is a metatheorem, "for every `n`", with a chunk
-of object-level reasoning inside. Here it is an induction on the relational type, one
-argument type at a time:
+of object-level reasoning inside. Here the object-level reasoning is done once, for one
+argument, and the vectorization theorem carries it to a whole tuple of arguments:
 
 1. **The step**, in the shallow layer: `Atomicity τ → BF σ → Atomicity (σ → τ)`, a
    theorem of Classicism at the type parameters `σ`, `τ`, proved with Lean's own tactics,
@@ -30,10 +31,13 @@ argument type at a time:
    through with `K`, as the paper does.
 2. **Its certification**: `#classicism_certify` runs Appendix A on the proof, derives the
    result in the object language, and states it as a rule between the instances of the
-   schemas, `atomicity_step.rule σ' τ' : C ⊢ Atomicity_τ' → BF_σ' → Atomicity_{σ'→τ'}`.
-3. **The theorem**, in the metalogical layer: induction on the type, the base case an
-   axiom and the step the rule, giving the entailment between axiom sets that is the
-   map's arrow.
+   schemas, `atomicity_step.rule σ' τ' : C ⊢ Atomicity_τ' → BF_σ' → Atomicity_{σ'→τ'}`;
+   and, vectorizing the derivation in `σ`, as the same rule over a list of argument
+   types, `atomicity_step.listRule σs τ' : C ⊢ Atomicity_τ' → BF_σs → Atomicity_{σs⇒*τ'}`,
+   with BF over the list (BF over a tuple) for its premise.
+3. **The theorem**, in the metalogical layer: the list rule at `τ' = t` and the list of a
+   relational type's arguments, with BF over every list from BF, giving the entailment
+   between axiom sets that is the map's arrow.
 
 Only the type-`t` instance of Atomicity is used, and BF only at the argument types of
 the conclusion's type, exactly as the write-up says.
@@ -200,22 +204,44 @@ So the command below makes available
     atomicity_step.rule  : ∀ (σ' : Ty) (τ' : RTy), C.Theorem (Term.imp (P.Atomicity.quoted τ')
        (Term.imp (P.Barcan.quoted σ') (P.Atomicity.quoted (σ' ⇒ τ'))))
 
-which part 3 applies at the types of the induction. The report prints each rule's type and
-the Lean axioms it rests on. -/
+and, for the step, its list rule, which part 3 applies. The report prints each rule's type
+and the Lean axioms it rests on. -/
 
 #classicism_certify Classicism.atomicityT_step Classicism.atomicity_step
 
-/-! ## 3. The theorem -/
+/-! ## 3. The theorem
+
+The step has a Ty-parameter, so `#classicism_certify` also vectorizes it in `σ`:
+
+    atomicity_step.listRule : ∀ (σs : List Ty) (τ' : RTy), τ' closed →
+      C.Theorem (Term.imp (P.Atomicity.quoted τ')
+        (Term.imp (P.Barcan.listQuoted σs) (P.Atomicity.quoted (σs ⇒* τ'))))
+
+Atomicity at `τ'` and BF over the list `σs` give Atomicity at `σs ⇒* τ'`. At `τ' = t` and
+the list of a relational type's arguments, that is Atomicity at the type
+(`schema_subset_args`); and BF gives BF over every list (`P.Barcan.schema_entails_listSchema`,
+by an induction on the list in `Results/Lists.lean`). So the induction on the type that
+the paper's "for every `n`" calls for is the vectorization of the one step. -/
 
 open Meta Meta.AxiomSet in
-/-- **Atomicity at `t` and BF entail Atomicity**, at every relational type: the map's
-arrow. By induction on the type: at `t` the premise, at `σ → τ` the rule. -/
+/-- **Atomicity at `t` and BF entail Atomicity**, at every relational type, with Atomicity
+at `t` read as the instance of Atomicity (the form the `C5` records conclude with). -/
+theorem atomicity_of_atomicity_at_t_barcan :
+    single (P.Atomicity.quoted RTy.t) ∪ P.Barcan.schema ⟹ P.Atomicity.schema := by
+  refine Entails.mono_right (schema_subset_args _) ?_
+  rintro a ⟨σs, hσs, rfl⟩
+  exact (Theorem.ofC (atomicity_step.listRule σs .t trivial)).mp₂ (Theorem.ax (Or.inl rfl))
+    (Entails.mono_left (fun _ => Or.inr) P.Barcan.schema_entails_listSchema _ ⟨σs, hσs, rfl⟩)
+
+open Meta Meta.AxiomSet in
+/-- **Atomicity at `t` and BF entail Atomicity**: the map's arrow, from Atomicity at `t`
+in its own spelling. -/
 theorem atomicity_of_atomicityT_barcan :
-    P.AtomicityT.schema ∪ P.Barcan.schema ⟹ P.Atomicity.schema := by
-  rintro a ⟨ρ, hρ, rfl⟩
-  induction ρ using RTy.induction with
-  | t => exact (Theorem.ofC atomicityT_step.rule).mp (Theorem.ax (Or.inl rfl))
-  | arr σ ρ ih =>
-    exact (Theorem.ofC (atomicity_step.rule σ ρ)).mp₂ (ih hρ.2) (Theorem.ax (Or.inr ⟨σ, hρ.1, rfl⟩))
+    P.AtomicityT.schema ∪ P.Barcan.schema ⟹ P.Atomicity.schema :=
+  Entails.trans
+    (Entails.union
+      (by rintro a rfl; exact (Theorem.ofC atomicityT_step.rule).mp (Theorem.ax (Or.inl rfl)))
+      (Entails.union_right _ _))
+    atomicity_of_atomicity_at_t_barcan
 
 end Classicism

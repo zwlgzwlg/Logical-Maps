@@ -232,17 +232,4 @@ def DistinctnessPreservingCollapse : Prop := ∀ p : Prop, p → BoxNe p
 /-- `broad-necessitism-r` at `σ`: `∀x. □∃y. y = x`. -/
 def BroadNecessitism (σ : Type) [Ty σ] : Prop := ∀ x : σ, □ (∃ y : σ, y = x)
 
-/-! ### Auxiliary schemas
-
-Not principles of the map. The results at every arity (`Results/Arity.lean`) use them as
-premises, and derive them once, by induction on the type, from the map's principles. -/
-
-/-- BF over the whole argument tuple of `τ`: `∀X. (∀x̄. □X[x̄]) → □∀x̄. X[x̄]`, the tuple
-quantifier written as inclusion from `⊤_τ`. At `t` a theorem; at `σ → τ` it follows from
-BF at `σ` and itself at `τ` (`Results/Arity.lean`, `barcanArgs_of_barcan`). -/
-def BarcanArgs (τ : Type) [Rel τ] : Prop :=
-  ∀ X : τ, boxImp (Rel.top τ) (boxAt X) → □ (boxImp (Rel.top τ) X)
-/-- `□`BF over the argument tuple of `τ`. -/
-def NecBarcanArgs (τ : Type) [Rel τ] : Prop := □ (BarcanArgs τ)
-
 end Classicism.P

@@ -33,6 +33,10 @@ type itself (`P.listSchema_entails_schema`, generated). This file proves the con
   Identity, Broad Necessitism), by their list entailments from the empty set, which the
   audit generates.
 
+And a principle over relational types holds at every one once it holds at `σs ⇒* t` for
+every list `σs` (`schema_subset_args`): the form in which a unary result at `σ → t`,
+vectorized, is a result at every arity.
+
 The shallow parts are in the paper's vocabulary and certified like every record; the
 two-element forms are stepping stones, not principles of the map.
 -/
@@ -543,6 +547,20 @@ theorem _root_.Classicism.P.BroadNecessitism.schema_entails_listSchema :
     P.BroadNecessitism.schema ⟹ P.BroadNecessitism.listSchema :=
   Entails.mono_left (fun _ h => h.elim)
     Classicism.Proofs.classicism_implies_broad_necessitism_r.listEntails
+
+/-! ## 4. Relational types as lists
+
+Every relational type is its argument types' `⇒* t` (`RTy.ofArgs_args`). So a principle
+over relational types holds at every one once it holds at `σs ⇒* t` for every list: a
+unary theorem at `σ → t`, vectorized in `σ`, is the principle at every arity. -/
+
+/-- The instances of a schema over relational types are among its instances at
+`σs ⇒* t`. -/
+theorem schema_subset_args (q : RTy → Sentence Signature.pure) :
+    (fun a => ∃ ρ : RTy, ρ.Closed ∧ a = q ρ) ⊆
+      (fun a => ∃ σs : List Ty, Ty.AllClosed σs ∧ a = q (σs ⇒* .t)) :=
+  fun _ ⟨ρ, hρ, h⟩ =>
+    ⟨ρ.args, RTy.closed_args hρ, h.trans (congrArg q (RTy.ofArgs_args ρ).symm)⟩
 
 end Meta
 

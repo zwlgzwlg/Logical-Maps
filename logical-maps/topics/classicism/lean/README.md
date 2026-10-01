@@ -325,7 +325,7 @@ Classicism/Tools/Audit.lean             the audits over the shallow layer, run a
 Classicism/Tools/Tests.lean             negative and positive controls for the checkers
 
 Classicism/Results/Lists.lean           each principle's restricted form entails its list form: lists, codes
-Classicism/Results/Arity.lean           the map's arity results: BF over tuples by induction, shallow cores at a type parameter, composition
+Classicism/Results/Arity.lean           the map's arity results: shallow cores at a type parameter, unary cores vectorized, composition
 scripts/FunKinds.lean                   which `fun`s in a file are terms (written λ … ↦) and which are proofs
 
 Classicism/Certified/Quoted.lean        the record theorems quoted; home of foo.quoted

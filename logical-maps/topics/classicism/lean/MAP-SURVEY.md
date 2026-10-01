@@ -12,22 +12,22 @@ Made 28 September 2026 from `ciandorr/Logical-Maps` at commit 7c928c4 ("first tr
 
 The record `atomicity-t-and-bf-imply-atomicity`, the model for the sweet spot, is not in this commit of the map.
 
-## Lean coverage (28 September, after renaming)
+## Lean coverage (1 October)
 
-A record theorem in `Results/Records.lean` named exactly by a map id proves the map's claim, and its certificate is the entailment between the map's schemas. One named by a map id plus `_at_t` or `_unary` proves only the instances at type `t` (or with output `t`) or for relations `σ → t`; its certificate is from the map's premise schemas to those instances. `classicism_implies_existence_r_at_e` and `_relational` together cover their record. Results proved by the metalogical theorems of `Results/Schemas/` are counted as proved too: those whose docstrings name the record, and the twenty "No Pure Contingency and X imply □X" results, all instances of `npc_union_entails_box`.
+A record theorem in `Results/Records.lean` named exactly by a map id proves the map's claim, and its certificate is the entailment between the map's schemas. One named by a map id plus `_at_t` proves only the instances at type `t` (or with output `t`); its certificate is from the map's premise schemas to those instances. A record with a Ty-parameter is proved at every list of types too, by its list form (`foo.listEntails`, the vectorized derivation); where the map's principle is over argument tuples, as Actual Profile is, or the record is proved at `σ → t` for a principle over relational types, that list form is the map's claim (`Results/Lists.lean`, `Results/Arity.lean`). `classicism_implies_existence_r_at_e` and `_relational` together cover their record. Results proved by the metalogical theorems of `Results/Schemas/` are counted as proved too: those whose docstrings name the record, and the twenty "No Pure Contingency and X imply □X" results, all instances of `npc_union_entails_box`.
 
 | class | results | proved in Lean | in part only | not yet |
 | --- | --- | --- | --- | --- |
 | Per-type routine | 112 | 96 | 1 | 15 |
 | Per-instance routine over sentences | 48 | 27 | 0 | 21 |
-| Sweet spot | 40 | 15 | 8 | 17 |
+| Sweet spot | 40 | 16 | 7 | 17 |
 | Metalogic-dominated | 26 | 9 | 0 | 17 |
 | Conjectured | 4 | 0 | 0 | 4 |
-| total | 230 | 147 | 9 | 74 |
+| total | 230 | 148 | 8 | 74 |
 
 ## Sweet spot (40)
 
-- `actuality-implies-actual-profile-r` — Lean: in part
+- `actuality-implies-actual-profile-r` — **Lean: full, its list form**
 - `atomlessness-implies-infinity-t`
 - `axiom-of-infinity-e-implies-infinity-e`
 - `axiom-of-infinity-t-implies-infinity-t`
