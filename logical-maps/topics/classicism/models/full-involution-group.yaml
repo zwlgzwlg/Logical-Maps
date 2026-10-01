@@ -1,25 +1,5 @@
 id: full-involution-group
 name: 'Full action model: two-element group'
-satisfies:
-- necessary-rigid-comprehension-r
-- necessary-atomicity-r
-- necessary-actuality
-- necessary-distinctness-necessary-r
-- no-pure-contingency-r
-- relational-choice-r
-- necessary-strong-leibniz-t
-- necessary-relational-choice-r
-- transversal-choice-r
-violates:
-- fregean-axiom
-- axiom-of-infinity-t
-- infinity-t
-- witnessed-possibility-r
-- separated-structure-r
-- independence-signature-r
-- distinctness-signature-r
-- no-contingency-signature-r
-status: proved
 certificate:
   source_id: bacon-dorr-classicism
   produced_by: Andrew Bacon and Cian Dorr
@@ -35,33 +15,139 @@ references:
 - paper: bacon-dorr-classicism
   role: proof
   locator: §3.5, p. 59, second paragraph; p. 61
-description: Change the two-arrow multiplication to k²=1; evaluate at the sole object. The source establishes
-  boxed ND and exhibits four propositions.
-notes: 'The cited construction is a model of the map’s relational-type framework. The description identifies
-  its evaluation point; construction and verification are given at the PDF locations in References. Interpretation
-  of Σ, fixed for this record: one designated relational constant $c$ of type $\tau=\bar\sigma t$ denotes
-  $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of the model, the actual-world proposition
-  described above; every other relational constant denotes the top element of its type and every individual
-  constant one fixed individual. Under it: No Contingency (signature Σ) fails, since the Σ-sentence $\forall\bar
-  x\, .\,c\bar x$ denotes $a$, true and contingent; Witnessed Possibility fails for the pure formula $x=\top_\tau$,
-  witnessed by $\top_\tau$, since $\Diamond(c=\top_\tau)$ is $\Diamond\Box a$ and $a$ is necessary at
-  no arrow; Separated Structure fails with it, being equivalent to Possibly Witnessed Possibility; Independence
-  (signature Σ) and Distinctness Maximalism (signature Σ) fail through the other relational constants,
-  Σ being assumed to contain at least one: such a constant $c''$ of type $\tau''$ denotes what the closed
-  pure term $\top_{\tau''}$ denotes, and $c''=\top_{\tau''}$ is a true identity that C(Σ) does not prove.
-  The designated constant refutes neither: closed pure terms denote entities fixed by every arrow (Classicism,
-  §3.5, p. 58), whereas $a$ is fixed by no arrow but the identity, so no closed pure term denotes $\lambda\bar
-  x\, .\,a$. Everything that implies these fails with them. In a one-object model whose propositions are
-  all the sets of arrows, a singleton $\{h\}$ is a strong world exactly when its transport $\{j : j\circ
-  i=h\}$ along every arrow $i$ has at most one member, since the propositions at that world are again
-  all sets of arrows and a two-element set is split by a singleton. Here the arrows form a group, so $j\circ
-  i=j^{\prime}\circ i$ forces $j=j^{\prime}$. So every singleton is a strong world, every possible proposition
-  contains an arrow, and the type-t Strong Leibniz Biconditionals hold at every world. □Relational Choice
-  holds: the truncation of a full action model at any arrow is again a full action model, its domains
-  at the reachable objects being unchanged, and Relational Choice holds in every full model given choice
-  in the metatheory (Classicism, p. 61).'
+
+# migration: the first two sentences restate the old description, "Change the two-arrow
+# multiplication to k²=1; evaluate at the sole object.", as the proposal's Appendix B does;
+# the third is copied from the 20 September change. In the Σ paragraph, moved from the notes,
+# "$\{1\}$" replaces "described above", since nothing above described the actual-world
+# proposition.
+definition: >-
+  The full action model on the two-element group $\{1,k\}$ with $k^2=1$: the construction of
+  Classicism p. 59 (record full-idempotent-monoid) with the two-arrow multiplication changed
+  to $k^2=1$. Evaluate at the sole object. The propositions at the evaluation object are the
+  subsets of the two arrows out of it, four in all, and every intension of a full model is
+  present.
+
+
+  Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type
+  $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of the
+  model, the actual-world proposition $\{1\}$; every other relational constant denotes the top
+  element of its type and every individual constant one fixed individual.
+
+arguments:
+
+- holds: [necessary-rigid-comprehension-r, necessary-atomicity-r, necessary-actuality,
+          necessary-distinctness-necessary-r, no-pure-contingency-r]
+  fails: [fregean-axiom]
+  source: {paper: bacon-dorr-classicism, locator: '§3.5, p. 59, second paragraph; p. 61'}
+  text: The source establishes boxed ND and exhibits four propositions.
+  # Recorded 17 Sep by OpenAI Codex (GPT-6); provenance as in the certificate, so nothing to add.
+
+- holds: [relational-choice-r]
+  # migration: `by` adds "at Cian Dorr's direction" from the change's summary; `source` is the
+  # page the text cites.
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-09-20'
+  source: {paper: bacon-dorr-classicism, locator: p. 61}
+  text: >-
+    With choice in the metatheory a serial relation has a functional subrelation, and a full
+    model contains every intension, so that subrelation is in the domain; see Classicism, p. 61,
+    on the principles common to full models.
+
+- fails: [axiom-of-infinity-t, infinity-t]
+  # migration: `by` adds "at Cian Dorr's direction" from the change's summary.
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-09-20'
+  text: >-
+    The propositions at the evaluation object are the subsets of the two arrows out of it, four
+    in all, and every intension of a full model is present, so the numerals are the finite
+    cardinalities and the fourth holds of the universal property of propositions: the Axiom of
+    Infinity at type t fails, as does the fifth instance of the schema.
+
+- holds: [necessary-relational-choice-r]
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  # migration: the notes' lead-in "□Relational Choice holds:" is dropped and "the" capitalised;
+  # `source` is the page the text cites.
+  source: {paper: bacon-dorr-classicism, locator: p. 61}
+  text: >-
+    The truncation of a full action model at any arrow is again a full action model, its domains
+    at the reachable objects being unchanged, and Relational Choice holds in every full model
+    given choice in the metatheory (Classicism, p. 61).
+
+- id: sigma-true-atom
+  fails: [no-contingency-signature-r, witnessed-possibility-r, separated-structure-r,
+          independence-signature-r, distinctness-signature-r]
+  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The notes'
+  # lead-in "Under it:" is dropped; the sentence that followed this argument there is in `notes`.
+  # The text is the 23 September version; the revision notes paraphrase the two 23 September
+  # changes, which are verbatim in `history`.
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
+  date: '2026-09-22'
+  text: >-
+    No Contingency (signature Σ) fails, since the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes
+    $a$, true and contingent; Witnessed Possibility fails for the pure formula $x=\top_\tau$,
+    witnessed by $\top_\tau$, since $\Diamond(c=\top_\tau)$ is $\Diamond\Box a$ and $a$ is
+    necessary at no arrow; Separated Structure fails with it, being equivalent to Possibly
+    Witnessed Possibility; Independence (signature Σ) and Distinctness Maximalism (signature Σ)
+    fail through the other relational constants, Σ being assumed to contain at least one: such a
+    constant $c'$ of type $\tau'$ denotes what the closed pure term $\top_{\tau'}$ denotes, and
+    $c'=\top_{\tau'}$ is a true identity that C(Σ) does not prove. The designated constant
+    refutes neither: closed pure terms denote entities fixed by every arrow (Classicism, §3.5,
+    p. 58), whereas $a$ is fixed by no arrow but the identity, so no closed pure term denotes
+    $\lambda\bar x\, .\,a$.
+  revisions:
+  - date: '2026-09-23'
+    by: Claude Fable 5.1 (Anthropic)
+    note: >-
+      Interpretation of Σ re-fixed (designated constant denotes the true atom) so as to settle
+      No Contingency (signature Σ), at Cian Dorr’s request; No Contingency added.
+  - date: '2026-09-23'
+    by: Claude Fable 5.1 (Anthropic)
+    note: >-
+      Corrected the reason for the Independence and Distinctness failures: they come from the
+      other relational constants, not the designated one. No verdict changed.
+
+- holds: [necessary-strong-leibniz-t]
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  # migration: the revision note paraphrases the 23 September change, verbatim in `history`.
+  text: >-
+    In a one-object model whose propositions are all the sets of arrows, a singleton $\{h\}$ is a
+    strong world exactly when its transport $\{j : j\circ i=h\}$ along every arrow $i$ has at
+    most one member, since the propositions at that world are again all sets of arrows and a
+    two-element set is split by a singleton. Here the arrows form a group, so
+    $j\circ i=j^{\prime}\circ i$ forces $j=j^{\prime}$. So every singleton is a strong world,
+    every possible proposition contains an arrow, and the type-t Strong Leibniz Biconditionals
+    hold at every world.
+  revisions:
+  - date: '2026-09-23'
+    by: Claude Fable 5.1 (Anthropic)
+    note: >-
+      The first version tacitly used that the monoid is right-cancellative, which holds here;
+      no verdict changed.
+
+- holds: [transversal-choice-r]
+  # migration: `by` adds the summary's last sentence; the lead-in "Added Transversal Choice, by"
+  # becomes "By".
+  by: Claude Fable 5.1 (Anthropic), on a question of Zachary Goodsell, after an observation of Christopher Sun
+  date: '2026-09-25'
+  text: >-
+    By the argument recorded for Relational Choice: a full model contains every intension, in
+    particular one whose extension at the evaluation point is a transversal, chosen in the
+    metatheory, of the extension there of an equivalence relation; the equivalence and
+    transversal conditions are unboxed.
+
+# migration: sentences of the old notes that no argument holds, verbatim. The last one followed
+# the Σ argument (sigma-true-atom) and refers to its failures.
+notes: >-
+  The cited construction is a model of the map’s relational-type framework. The description
+  identifies its evaluation point; construction and verification are given at the PDF locations
+  in References. Everything that implies these fails with them.
+
 was_conjectured: true
-changes:
+# The old `changes` log, verbatim and frozen.
+history:
 - date: '2026-09-17'
   by: OpenAI Codex (GPT-6)
   summary: Adopted the source’s relational type system at the user’s request. The cited construction now
