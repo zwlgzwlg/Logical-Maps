@@ -415,6 +415,15 @@
   .page details.argument .prose, .page details.argument .note { margin: 4px 0 4px 14px; white-space: normal; }
   .page details.argument .prose { font-size: 14px; }
   .page details.argument.withdrawn > summary { text-decoration: line-through; }
+  .page details.argument .chain { font-size: 12.5px; }
+  .page details.argument details.review { margin: 2px 0 6px 14px; font-size: 12.5px; color: var(--ink-2); }
+  .page details.argument details.review > summary { cursor: pointer; }
+  .page .argument-verdicts { color: var(--ink); }
+  .page .argument-links { margin: 2px 0 6px; display: flex; flex-direction: column; align-items: flex-start; gap: 1px; }
+  .page button.argref { font-size: 12.5px; text-align: left; }
+  .page h3.argument-group { font: 600 14px/1.4 var(--sans); margin: 18px 0 4px; display: flex; align-items: baseline; gap: 8px; }
+  .page h3.argument-group .n { font: 400 12px var(--mono); color: var(--ink-3); }
+  .badge.trawl { background: transparent; color: var(--ink-2); border: 1px solid var(--line-strong); }
   .page .formal { font: 12.5px var(--mono); background: var(--panel-2); padding: 6px 8px; border-radius: 4px; margin-top: 8px; overflow-x: auto; }
   .page .id { font: 12px var(--mono); color: var(--ink-3); margin-bottom: 8px; }
   .page table.results tr { cursor: default; } .page table.results tr[data-result], .page table.results tr[data-model] { cursor: pointer; }
@@ -922,6 +931,7 @@ class Engine {
 }
 
 // ---------------------------------------------------------------- state
+const PROVENANCE = new Map((DATA.provenance || []).map(x => [x.id, x]));
 const P = DATA.principles, R = DATA.results.map(r => ({...r, conclusion: r.conclusion === false ? FALSE : r.conclusion})), MODELS = DATA.models, T = DATA.topic;
 const byPid = new Map(P.map(p => [p.id, p])), byRid = new Map(R.map(r => [r.id, r])), byMid = new Map(MODELS.map(m => [m.id, m]));
 const ids = P.map(p => p.id);
@@ -2262,7 +2272,15 @@ function modelEvidence(m, c) {
 // A verdict is Lean-checked only when everything it rests on is: the model
 // and, for a derived verdict, every result in the chain.
 const leanChecked = items => items.length && items.every(x => x.certificate?.lean === 'verified');
-function evidenceBadges(e) {
+// A verdict a model written as arguments records directly is credited to its arguments:
+// an argument by the record's own authors to the record's source, a trawl argument to the
+// trawl, and an argument with an author of its own to that author.
+function evidenceBadges(e, m, c) {
+  const args = m && c && e.direct ? argumentsFor(m, c).filter(a => !a.withdrawn) : [];
+  if (args.length) return [...new Set(args.map(a => argumentSource(m, a) ? sourceBadge(argumentSource(m, a))
+      : trawlChain(m, a) ? '<span class="badge trawl">trawl</span>' : `<span class="badge kind">${esc(shortAuthor(a.by))}</span>`))].join('')
+    + (leanChecked(e.items) ? '<span class="badge lean verified">Lean ✓</span>' : '')
+    + (e.items.some(x => x.status === 'conjectured') ? '<span class="badge conj">conjecture</span>' : '');
   return [...new Set(e.items.map(sourceOf))].map(sourceBadge).join('')
     + (leanChecked(e.items) ? '<span class="badge lean verified">Lean ✓</span>' : '')
     + (e.items.some(x => x.status === 'conjectured') ? '<span class="badge conj">conjecture</span>' : '');
@@ -2273,7 +2291,7 @@ function verdictButton(m, c, e, compact = false, showValue = true) {
   // A list already sorted by verdict says it once in its heading, so there the
   // mark is dropped and only the derivation and the sources are left to report.
   const flag = [showValue ? (e.value ? '✓' : '✗') : '', e.direct ? '' : 'derived'].filter(Boolean).join(' ');
-  return `<button class="verdict" data-verdict="${c}" data-verdict-model="${m.id}" title="View evidence for ${esc(name(c))}" aria-label="${esc(name(c))}: ${e.value ? 'satisfied' : 'violated'}${e.direct ? '' : ', derived'}; view evidence"><span class="model-flag">${flag}</span> ${compact ? '<span class="evidence-link">evidence ↗</span>' : evidenceBadges(e)}</button>`;
+  return `<button class="verdict" data-verdict="${c}" data-verdict-model="${m.id}" title="View evidence for ${esc(name(c))}" aria-label="${esc(name(c))}: ${e.value ? 'satisfied' : 'violated'}${e.direct ? '' : ', derived'}; view evidence"><span class="model-flag">${flag}</span> ${compact ? '<span class="evidence-link">evidence ↗</span>' : evidenceBadges(e, m, c)}</button>`;
 }
 function principleGroups() {
   const sorted = [...P].sort((a, b) => a.name.localeCompare(b.name));
@@ -2750,31 +2768,73 @@ function loadWriteup(el, x) {
   }).catch(() => {});
 }
 function pstmt(id) { if (id === FALSE) return "<li><b>⊥.</b> These premises cannot all hold together.</li>"; const p = byPid.get(id); return `<li><button class="lnk" data-principle="${id}"><b>${esc(p.name)}</b></button> ${esc(p.statement)}</li>`; }
-// A model written as arguments: each recorded verdict lists the arguments for it,
-// collapsed, with their reasons and provenance. Derived verdicts have none.
+// A model written as arguments: each argument once, in the record's order, under its
+// verdicts; a recorded verdict links to its arguments. Derived verdicts have none.
 function argumentsFor(m, c) { return (m.arguments || []).filter(a => (a.holds || []).includes(c) || (a.fails || []).includes(c)); }
-function argumentHtml(m, a) {
+function argumentSource(m, a) { return a.by ? null : sourceOf(m); }
+// "Claude Fable 5.1 (Anthropic), at Cian Dorr's direction" → "Claude Fable 5.1".
+function shortAuthor(by) { return String(by || '').split(/ \(|[,;]/)[0].trim(); }
+function trawlChain(m, a) { return a.provenance ? (PROVENANCE.get(a.provenance)?.records || {})[m.companion_of || m.id] || null : null; }
+const isoDay = t => String(t || '').slice(0, 10);
+// Who supplied an argument, and when: for a trawl argument, who found, reviewed and admitted it.
+function argumentCredit(m, a) {
+  const chain = trawlChain(m, a);
+  if (chain) return [`found by ${chain.found_by}`, ...chain.reviews.map(r => `reviewed by ${r.by}`), `admitted by ${chain.admitted_by || ''}, ${isoDay(chain.admitted_at)}`].join(' · ');
   const by = a.by || m.certificate.produced_by || '', date = a.date || m.certificate.date || '';
-  const paper = a.source ? byPaperId.get(a.source.paper) : null;
-  const reasons = [a.text ? 'argument' : '', a.source ? 'source' : '', a.writeup ? 'write-up' : '', a.like ? 'like' : ''].filter(Boolean);
-  const tags = (a.standing === 'conjectured' ? `<span class="badge conj">conjecture${a.tier ? ' · ' + esc(a.tier) : ''}</span>` : '')
+  return by + (date ? ', ' + date : '');
+}
+function argumentReasons(a) { return [a.text ? 'argument' : '', a.source ? 'source' : '', a.writeup ? 'write-up' : '', a.like ? 'like' : ''].filter(Boolean).join(', '); }
+function argumentTags(m, a) {
+  return (a.standing === 'conjectured' ? `<span class="badge conj">conjecture${a.tier ? ' · ' + esc(a.tier) : ''}</span>` : '')
     + (a.withdrawn ? '<span class="badge withdrawn">withdrawn</span>' : '');
+}
+function chainHtml(chain) {
+  const steps = [`Found by <b>${esc(chain.found_by)}</b>, ${esc(isoDay(chain.found_at))}`,
+    ...chain.reviews.map(r => `reviewed by <b>${esc(r.by)}</b>, ${esc(isoDay(r.at))} (${esc(r.verdict || '')})`),
+    `admitted by <b>${esc(chain.admitted_by || '')}</b>, ${esc(isoDay(chain.admitted_at))}`];
+  return `<p class="note chain">${steps.join(' → ')}.</p>`
+    + chain.reviews.map(r => `<details class="review"><summary>The review by ${esc(r.by)}</summary>`
+      + [['', r.summary], ['Argument check: ', r.argument_check], ['Source check: ', r.source_check]].filter(([, t]) => t).map(([k, t]) => `<p>${esc(k)}${esc(t)}</p>`).join('')
+      + ((r.issues || []).length ? `<p>Issues: ${r.issues.map(esc).join('; ')}</p>` : '') + '</details>').join('');
+}
+function argumentHtml(m, a, i, verdicts = true) {
+  const paper = a.source ? byPaperId.get(a.source.paper) : null, chain = trawlChain(m, a), side = PROVENANCE.get(a.provenance);
+  const marks = verdicts ? [(a.holds || []).length ? '✓ ' + a.holds.map(name).map(esc).join(', ') : '', (a.fails || []).length ? '✗ ' + a.fails.map(name).map(esc).join(', ') : ''].filter(Boolean).join(' ') : '';
   const meta = [
     a.source ? `Source: ${paper ? `<button class="lnk" data-paper="${esc(paper.id)}">${esc(paper.title)}</button>` : esc(a.source.paper)}${a.source.locator ? ', ' + esc(a.source.locator) : ''}.` : '',
     a.writeup ? `Write-up: <a href="writeups/${esc(a.writeup)}.html" target="_blank">${esc(a.writeup)}</a>.` : '',
     a.like ? `Like <button class="lnk" data-open-model="${esc(a.like.split('#')[0])}">${esc(a.like)}</button>${(a.adapt || '').trim() ? ':' : ', word for word.'}` : '',
+    side?.folded ? `Folded in from the record <span class="mono">${esc(side.id)}</span>.` : '',
     a.provenance ? `Provenance: <span class="mono">provenance/${esc(a.provenance)}.yaml</span>.` : '',
     a.id ? `<span class="mono">${esc(m.companion_of || m.id)}#${esc(a.id)}</span>` : '',
   ].filter(Boolean).join(' ');
-  return `<details class="argument${a.withdrawn ? ' withdrawn' : ''}"><summary>${esc(reasons.join(', '))} · ${esc(by)}${date ? ', ' + esc(date) : ''} ${tags}</summary>`
+  return `<details class="argument${a.withdrawn ? ' withdrawn' : ''}"${i === undefined ? '' : ` id="argument-${i}"`}><summary>${marks ? `<span class="argument-verdicts">${marks}</span> · ` : ''}${esc(argumentReasons(a))} · ${esc(argumentCredit(m, a))} ${argumentTags(m, a)}</summary>`
     + (a.text ? `<div class="prose">${fmt(a.text)}</div>` : '')
+    + (chain ? chainHtml(chain) : '')
     + (meta ? `<p class="note">${meta}</p>` : '')
     + ((a.adapt || '').trim() ? `<div class="prose">${fmt(a.adapt)}</div>` : '')
     + (a.revisions || []).map(r => `<p class="note">Revised ${esc(r.date)}${r.by ? ' by ' + esc(r.by) : ''}: ${esc(r.note)}</p>`).join('')
     + (a.withdrawn ? `<p class="note">Withdrawn ${esc(a.withdrawn.date)}${a.withdrawn.by ? ' by ' + esc(a.withdrawn.by) : ''}: ${esc(a.withdrawn.reason)}</p>` : '')
     + '</details>';
 }
-function argumentRoutes(m, c) { const list = argumentsFor(m, c); return list.length ? `<div class="arguments">${list.map(a => argumentHtml(m, a)).join('')}</div>` : ''; }
+// The full arguments for one verdict (its own page).
+function argumentRoutes(m, c) { const list = argumentsFor(m, c); return list.length ? `<div class="arguments">${list.map(a => argumentHtml(m, a, undefined, false)).join('')}</div>` : ''; }
+// On the model's page a verdict links to its arguments, which the Arguments section shows once each.
+function argumentLinks(m, c) {
+  const list = argumentsFor(m, c);
+  return list.length ? `<div class="argument-links">${list.map(a => `<span><button class="lnk argref" data-argument="${m.arguments.indexOf(a)}">${esc(argumentReasons(a))} · ${esc(argumentCredit(m, a))}</button> ${argumentTags(m, a)}</span>`).join('')}</div>` : '';
+}
+// Grouped as the record grew: what its certificate's date records, what was added
+// later, and what is conjectured.
+function argumentsSection(m) {
+  const list = (m.arguments || []).map((a, i) => ({ a, i }));
+  if (!list.length) return '';
+  const d0 = String(m.certificate.date || '');
+  const group = a => a.standing === 'conjectured' ? 2 : String(a.date || d0) > d0 ? 1 : 0;
+  const groups = [`As first recorded, ${d0}`, 'Added later', 'Conjectured'].map((title, k) => [title, list.filter(x => group(x.a) === k)]).filter(([, xs]) => xs.length);
+  return '<h2>Arguments</h2>' + groups.map(([title, xs]) => (groups.length > 1 ? `<h3 class="argument-group">${esc(title)} <span class="n">${xs.length}</span></h3>` : '')
+    + `<div class="arguments">${xs.map(({ a, i }) => argumentHtml(m, a, i)).join('')}</div>`).join('');
+}
 function historyHtml(x) {
   const rows = [...(x.history || [])].sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
   return rows.length ? `<h2>History</h2><p class="note">The record's revision log before it was written as arguments.</p><ul class="src">${rows.map(ch => `<li><span class="mono">${esc(ch.date)}</span>${ch.by ? ` (${esc(ch.by)})` : ''} — ${esc(ch.summary || '')}${(ch.satisfies || []).length ? ` Now satisfies: ${ch.satisfies.map(name).map(esc).join(', ')}.` : ''}${(ch.violates || []).length ? ` Now violates: ${ch.violates.map(name).map(esc).join(', ')}.` : ''}</li>`).join('')}</ul>` : '';
@@ -2812,7 +2872,7 @@ function renderPage(sel) {
     // over and wait behind a disclosure rather than burying them.
     const verdicts = principleOrder().map(c => ({c, e: modelEvidence(m, c)}));
     const verdictTable = list => `<table class="results verdict-table"><tbody>${list.map(({c, e}) =>
-      `<tr><td><button class="lnk" data-principle="${c}">${esc(name(c))}</button></td><td class="verdict-cell">${e ? verdictButton(m, c, e, false, false) : ''}${!e || e.direct ? argumentRoutes(m, c) : ''}</td></tr>`).join('')}</tbody></table>`;
+      `<tr><td><button class="lnk" data-principle="${c}">${esc(name(c))}</button></td><td class="verdict-cell">${e ? verdictButton(m, c, e, false, false) : ''}${!e || e.direct ? argumentLinks(m, c) : ''}</td></tr>`).join('')}</tbody></table>`;
     const verdictGroup = (title, list) => {
       const recorded = list.filter(v => !v.e || v.e.direct), derived = list.filter(v => v.e && !v.e.direct);
       return `<h3 class="verdict-group">${title} <span class="n">${list.length}</span></h3>`
@@ -2823,6 +2883,7 @@ function renderPage(sel) {
       + verdictGroup('Satisfied', verdicts.filter(v => v.e?.value === true))
       + verdictGroup('Violated', verdicts.filter(v => v.e?.value === false))
       + verdictGroup('Unknown', verdicts.filter(v => !v.e));
+    h += argumentsSection(m);
     if (m.notes && !m.companion_of) h += `<h2>Notes</h2><div class="prose">${fmt(m.notes)}</div>`;  // a companion's notes are its arguments
     h += historyHtml(m);
     if ((m.checks || []).length) h += `<h2>Checks</h2><ul class="src">${m.checks.map(x => `<li class="mono">${esc(x)}</li>`).join('')}</ul>`;
@@ -2833,7 +2894,7 @@ function renderPage(sel) {
     h += `<h1>${esc(m.name)}: ${esc(name(sel.principle))}</h1>`;
     if (!e) h += '<p>No evidence is available under the current filters.</p>';
     else {
-      h += `<div class="badges">${e.value ? '✓ satisfied' : '✗ violated'} ${evidenceBadges(e)}</div>`;
+      h += `<div class="badges">${e.value ? '✓ satisfied' : '✗ violated'} ${evidenceBadges(e, m, sel.principle)}</div>`;
       h += `<p>${e.direct ? 'This assertion is recorded directly for the model' + (argumentsFor(m, sel.principle).length ? ', by the arguments below.' : '.') : e.value ? 'This follows from the model’s recorded properties using the results below.' : `Assuming ${esc(name(sel.principle))} in this model would imply ${esc(name(e.contradiction))}, ${e.contradiction === FALSE ? 'a contradiction' : 'which the model violates'}.`}</p>`;
       if (e.direct && argumentsFor(m, sel.principle).length) h += `<h2>Arguments</h2>${argumentRoutes(m, sel.principle)}`;
       h += `<h2>Model evidence</h2><p><button class="lnk" data-open-model="${m.id}">${esc(m.name)} — details</button> ${certBadges(m)}</p>`;
@@ -2855,6 +2916,11 @@ function renderPage(sel) {
   el.querySelectorAll('tr[data-result]').forEach(tr => tr.addEventListener('click', () => select({ type: 'result', id: tr.dataset.result })));
   el.querySelectorAll('tr[data-model]').forEach(tr => tr.addEventListener('click', () => select({ type: 'model', id: tr.dataset.model })));
   el.querySelector('#page-back').addEventListener('click', () => showTab(state.tab));
+  el.querySelectorAll('button[data-argument]').forEach(b => b.addEventListener('click', () => {
+    const target = el.querySelector('#argument-' + b.dataset.argument);
+    if (!target) return;
+    target.open = true; target.scrollIntoView?.({ block: 'start' }); target.querySelector('summary').focus({ preventScroll: true });
+  }));
   wire(el);
   if (sel.type === 'result' || sel.type === 'model') loadWriteup(el, sel.type === 'result' ? byRid.get(sel.id) : byMid.get(sel.id));
 }

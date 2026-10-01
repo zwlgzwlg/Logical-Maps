@@ -114,12 +114,18 @@ try{
 const argCert={...cert,date:'2026-01-01',produced_by:'Author'};
 const args=[{holds:['a'],text:'Why A holds.'},{fails:['b'],text:'First reason B fails.',id:'first'},
   {fails:['b'],writeup:'b-writeup',by:'Later author',date:'2026-02-01',revisions:[{date:'2026-02-02',note:'Tidied.'}]},
-  {holds:['e'],standing:'conjectured',tier:'bronze',text:'Why E might hold.',companion_id:'n-conj',date:'2026-01-20'}];
+  {holds:['e'],standing:'conjectured',tier:'bronze',text:'Why E might hold.',companion_id:'n-conj',date:'2026-01-20'},
+  {holds:['a'],fails:['b'],text:'One argument for both.',by:'Both author (Lab), later',date:'2026-02-04'},
+  {fails:['b'],text:'Found in a trawl.',by:'Trawl agent, trawl',date:'2026-02-05',provenance:'admission-x'}];
 const flat={id:'n',name:'Argument model',status:'proved',satisfies:['a'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
   definition:'What the model is.',arguments:args,notes:'Miscellany.',history:[{date:'2026-01-15',by:'Old',summary:'An old change.',satisfies:['a']}]};
 const companion={id:'n-conj',name:'Argument model',status:'conjectured',tier:'bronze',satisfies:['a','e'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
   definition:'What the model is.',arguments:[args[3]],notes:'Why E might hold.',companion_of:'n',model_check:{model:'n',satisfies:['e'],violates:[]}};
-const data2={...data,models:[flat,companion]};
+// The chain of a theorem-trawl admission, as the build exports it for each record it added to.
+const provenance=[{id:'admission-x',file:'topics/t/provenance/admission-x.yaml',records:{n:{found_by:'deepseek/deepseek-flash',found_at:'2026-02-05T10:00:00+00:00',
+  reviews:[{by:'openai/gpt-6',at:'2026-02-06T10:00:00+00:00',verdict:'accept',summary:'Checked.',argument_check:'Every step.',source_check:'The source.',issues:[]}],
+  admitted_by:'Curator',admitted_at:'2026-02-07T10:00:00+00:00'}}}];
+const data2={...data,models:[flat,companion],provenance};
 const errors2=[],vc2=new VirtualConsole();vc2.on('jsdomError',e=>errors2.push(e));
 const dom2=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data2)),
   {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc2});
@@ -131,25 +137,46 @@ try{
   assert.ok(h2s.includes('Definition')&&page.textContent.includes('What the model is.'),'The definition comes first');
   assert.ok(h2s.indexOf('Definition')<h2s.indexOf('Principles'));
   const row=id=>page.querySelector(`.verdict-table [data-principle="${id}"]`).closest('tr');
-  const routes=id=>[...row(id).querySelectorAll('details.argument')];
-  assert.equal(routes('a').length,1,'A recorded verdict lists its argument');
-  assert.equal(routes('b').length,2,'Two routes to one verdict are both shown');
-  assert.match(routes('b')[1].querySelector('summary').textContent,/write-up · Later author, 2026-02-01/,'Each route says what kind of reason it is, and whose');
-  assert.match(routes('b')[0].textContent,/n#first/,'An argument with an id shows its address');
-  assert.equal(routes('b')[1].querySelector('a').getAttribute('href'),'writeups/b-writeup.html');
-  assert.match(routes('b')[1].textContent,/Revised 2026-02-02: Tidied\./);
-  assert.equal(routes('c').length,0,'A derived verdict has no arguments of its own');
+  // A verdict's row links to its arguments; the Arguments section shows each once.
+  const links=id=>[...row(id).querySelectorAll('button.argref')];
+  assert.equal(page.querySelectorAll('.verdict-table details.argument').length,0,'Rows link to arguments rather than repeat them');
+  assert.equal(links('a').length,2,'A recorded verdict links to each of its arguments');
+  assert.equal(links('b').length,4,'Two or more routes to one verdict are all linked');
+  assert.match(links('b')[1].textContent,/write-up · Later author, 2026-02-01/,'Each link says what kind of reason it is, and whose');
+  assert.match(links('b')[3].textContent,/found by deepseek\/deepseek-flash · reviewed by openai\/gpt-6 · admitted by Curator, 2026-02-07/,
+    'A trawl argument is credited to who found, reviewed and admitted it');
+  const badges=id=>[...row(id).querySelectorAll('.verdict .badge')].map(b=>b.textContent);
+  assert.deepEqual(badges('a'),['Paper','Both author'],"A verdict is credited to its arguments: the record's source, or an author of its own");
+  assert.deepEqual(badges('b'),['Paper','Later author','Both author','trawl']);
+  assert.equal(links('c').length,0,'A derived verdict has no arguments of its own');
   assert.ok(row('c').closest('details.derived-verdicts'),'And stays behind the disclosure');
-  assert.equal(routes('e').length,1,'A conjectured verdict is unknown, with its conjectured argument');
-  assert.ok(routes('e')[0].querySelector('.badge.conj'));
-  assert.equal(routes('d').length,0);
+  assert.equal(links('e').length,1,'A conjectured verdict is unknown, with its conjectured argument');
+  assert.ok(row('e').querySelector('.badge.conj'));
+  assert.equal(links('d').length,0);
   assert.equal([...page.querySelectorAll('.verdict-table tr')].length,data.principles.length,'Still one row per principle');
+  assert.ok(h2s.indexOf('Principles')<h2s.indexOf('Arguments')&&h2s.indexOf('Arguments')<h2s.indexOf('Notes'));
+  const listed=[...page.querySelectorAll('details.argument[id]')];
+  assert.deepEqual(listed.map(x=>x.id),['argument-0','argument-1','argument-2','argument-4','argument-5','argument-3'],
+    'Each argument once, in the order of the record within each group');
+  assert.deepEqual([...page.querySelectorAll('h3.argument-group')].map(h=>h.firstChild.textContent.trim()+' '+h.querySelector('.n').textContent),
+    ['As first recorded, 2026-01-01 2','Added later 3','Conjectured 1'],'Grouped as the record grew');
+  assert.match(page.querySelector('#argument-4 summary').textContent,/✓ A ✗ B · argument · Both author \(Lab\), later, 2026-02-04/,'An argument names all its verdicts once');
+  assert.match(page.querySelector('#argument-1').textContent,/n#first/,'An argument with an id shows its address');
+  assert.equal(page.querySelector('#argument-2 a').getAttribute('href'),'writeups/b-writeup.html');
+  assert.match(page.querySelector('#argument-2').textContent,/Revised 2026-02-02: Tidied\./);
+  links('b')[3].click();
+  const trawled=page.querySelector('#argument-5');
+  assert.ok(trawled.open,'A link opens its argument');
+  assert.match(trawled.textContent,/Found by deepseek\/deepseek-flash, 2026-02-05 → reviewed by openai\/gpt-6, 2026-02-06 \(accept\) → admitted by Curator, 2026-02-07\./);
+  assert.match(trawled.querySelector('details.review').textContent,/Checked\..*Argument check: Every step\..*Source check: The source\./s,'And the review report is at hand');
+  assert.match(trawled.textContent,/provenance\/admission-x\.yaml/);
   assert.ok(h2s.includes('Notes')&&h2s.includes('History'));
   assert.match(page.textContent,/An old change\./);
 
   w2.eval('openPage({type:"model-verdict", id:"n", principle:"b"})');
   assert.match(page.textContent,/recorded directly for the model, by the arguments below/);
-  assert.equal(page.querySelectorAll('details.argument').length,2);
+  assert.equal(page.querySelectorAll('details.argument').length,4,'Its own page shows every argument for the verdict in full');
+  assert.deepEqual([...page.querySelectorAll('.badges .badge')].map(b=>b.textContent),['Paper','Later author','Both author','trawl']);
 
   w2.eval('openPage({type:"model", id:"n-conj"})');
   assert.ok(page.querySelector('.record-summary [data-open-model="n"]'),'A companion names the model it conjectures about');
@@ -172,5 +199,5 @@ try{
   assert.ok(rows.some(tr=>tr.dataset.id==='n-conj'&&tr.textContent.includes('Conjecture restated.')),'A companion\'s changes are its arguments\' revisions');
   assert.ok(rows.some(tr=>tr.dataset.id==='n-conj'&&tr.textContent.includes('2026-01-20')&&!tr.classList.contains('revision')),'And it is dated by its latest argument, not by the model');
   assert.deepEqual(errors2.map(String),[]);
-  console.log('PASS: a model page sorts every principle into satisfied, violated and unsettled, counts each group, leads each row with the principle, keeps the route to the evidence, holds the derived verdicts in a closed disclosure, keeps each row to a single line while the ungrouped explorer list keeps its marks; a model written as arguments shows its definition, then each recorded or conjectured verdict with its arguments, derived verdicts without, its history, and its companion.');
+  console.log('PASS: a model page sorts every principle into satisfied, violated and unsettled, counts each group, leads each row with the principle, keeps the route to the evidence, holds the derived verdicts in a closed disclosure, keeps each row to a single line while the ungrouped explorer list keeps its marks; a model written as arguments shows its definition, then each recorded or conjectured verdict linked to its arguments and credited to them, derived verdicts without, each argument once in record order with the found-reviewed-admitted chain of a trawl argument, its history, and its companion.');
 }finally{w2.close();}

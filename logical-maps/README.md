@@ -528,6 +528,13 @@ Model info pop-ups show the model name, sources, and write-up links. Model
 properties are displayed in Theory explorer; the pop-up and model page omit
 the redundant conjunction of satisfied and violated principles.
 
+On the page of a model written as arguments, each verdict it records links to its
+arguments and is credited to them: the record's source for its own authors'
+arguments, an argument's author when it names one, and "trawl" for a theorem-trawl
+admission. An Arguments section lists each argument once, grouped as first recorded,
+added later, or conjectured; a trawl argument shows who found, reviewed and admitted
+it, with the review's report. Source filters still act on whole records.
+
 Isolated principles are packed into compact rows just below the connected
 graph. Showing or hiding them leaves the connected layout intact. If no
 arrows are visible, the principles form a compact grid instead of one long row.

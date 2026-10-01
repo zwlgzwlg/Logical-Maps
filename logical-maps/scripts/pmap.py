@@ -1403,6 +1403,48 @@ def trawl_block(side: dict, record_id: str):
     return {**side["trawl"], "discovery": entry.get("discovery"), "evidence": entry.get("evidence")}
 
 
+def _actor_label(actor) -> str:
+    """A trawl actor as the trawl runner labels it: provider/model, or a person's name."""
+    if not isinstance(actor, dict):
+        return str(actor or "")
+    if actor.get("kind") == "human":
+        return str(actor.get("name", ""))
+    return f"{actor.get('provider', '')}/{actor.get('reported_model', actor.get('model', ''))}"
+
+
+def provenance_chain(side: dict, record_id: str):
+    """Who found, reviewed and admitted what a theorem-trawl admission added to a record."""
+    block = trawl_block(side, record_id)
+    if block is None:
+        return None
+    found, admitted = block.get("discovery") or {}, block.get("admission") or {}
+    reviews = []
+    for r in block.get("reviews") or []:
+        report = r.get("report") or {}
+        reviews.append({"by": _actor_label(r.get("actor")), "at": r.get("at"), "verdict": report.get("verdict"),
+                        **{k: report.get(k) for k in ("summary", "argument_check", "source_check", "issues")}})
+    return {"found_by": _actor_label(found.get("actor")), "found_at": found.get("at"), "reviews": reviews,
+            "admitted_by": admitted.get("by"), "admitted_at": admitted.get("at"),
+            "checkpoint": block.get("candidate_id"), "source_commit": (block.get("source") or {}).get("commit")}
+
+
+def provenance_export(side: dict) -> dict:
+    """A provenance sidecar as the viewer reads it: each record's chain, or the record folded in."""
+    if "records" in side:
+        return {"id": side.get("id"), "file": side.get("_file"),
+                "records": {r: provenance_chain(side, r) for r in provenance_records(side)}}
+    return {"id": side.get("id"), "file": side.get("_file"), "folded": True, "record": side.get("record")}
+
+
+def chain_md(chain: dict) -> str:
+    """One line: found by, reviewed by (verdict), admitted by, with dates."""
+    day = lambda t: str(t or "")[:10]
+    parts = [f"Found by {chain['found_by']}, {day(chain['found_at'])}"]
+    parts += [f"reviewed by {r['by']}, {day(r['at'])} ({r['verdict']})" for r in chain["reviews"]]
+    parts.append(f"admitted by {chain['admitted_by']}, {day(chain['admitted_at'])}")
+    return "; ".join(parts) + "."
+
+
 def argument_errors(data: dict, ids) -> list[str]:
     """The errors of argument-format model records that need no engine."""
     errors = []
@@ -1742,6 +1784,7 @@ def export_json(topic_id: str) -> dict:
         "principles": [clean(p) | {"file": p["_file"]} for p in data["principles"]],
         "results": [clean(r) | {"file": r["_file"]} for r in data["results"]],
         "models": [clean(m) | {"file": m["_file"]} for m in data["models"]],
+        "provenance": [provenance_export(x) for x in data.get("provenance", [])],
         "generated": _dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds"),
         "progress": progress_report(data),
         # The viewer takes its top 30 after applying the shown-principle filter.
@@ -1982,6 +2025,10 @@ def argument_md(item: dict, data: dict, level: int = 3, link=lambda wid: f"[{wid
             reasons.append(f"Like `{a['like']}`" + (f": {' '.join(a['adapt'].split())}" if (a.get("adapt") or "").strip()
                                                      else ", word for word.") )
         if a.get("provenance"):
+            side = next((x for x in data.get("provenance", []) if x.get("id") == a["provenance"]), {})
+            chain = provenance_chain(side, item.get("companion_of") or item["id"])
+            if chain:  # the review's report covers the whole admission: it stays in the file
+                reasons.append(chain_md(chain))
             reasons.append(f"Provenance: `provenance/{a['provenance']}.yaml`.")
         if a.get("id"):
             reasons.append(f"Address: `{item.get('companion_of') or item['id']}#{a['id']}`.")
