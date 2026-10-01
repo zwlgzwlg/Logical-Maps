@@ -74,14 +74,16 @@ papers:
     the paper’s mathematical-contingency results are not imported. No PDF is redistributed.
 - id: dorr-prop-2-11-counterexample
   title: A counterexample to Proposition 2.11 of 'Classicism'
-  citation: Cian Dorr, with Claude Opus 5.5 (Anthropic). A counterexample to Proposition 2.11 of 'Classicism':
+  citation: >-
+    Cian Dorr, with Claude Opus 5.5 (Anthropic). A counterexample to Proposition 2.11 of 'Classicism':
     Fitelson's model, as an intensional action model. Draft of 1 October 2026, reworking a construction by
     Branden Fitelson, with Claude (Anthropic) and GPT-6 Astra (OpenAI).
   url: https://github.com/zwlgzwlg/Logical-Maps/blob/main/logical-maps/topics/classicism/sources/prop-2-11-counterexample.pdf
   note: The PDF is also published with this map, in its sources folder.
 - id: fitelson-prop-2-11-isabelle
   title: Proposition 2.11 refuted (Isabelle/HOL)
-  citation: Branden Fitelson, with Claude (Anthropic) and GPT-6 Astra (OpenAI). Isabelle/HOL verification
+  citation: >-
+    Branden Fitelson, with Claude (Anthropic) and GPT-6 Astra (OpenAI). Isabelle/HOL verification
     that Rigid Comprehension for properties of propositions is not derivable from Classicism with □Atomicity,
     Boolean Completeness and BF; theorem proposition_2_11_refuted. Commit 4042cc0, 1 October 2026.
   url: https://github.com/fitelson/hom-isabelle/tree/4042cc0/Applications/2.11
