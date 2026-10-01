@@ -66,26 +66,50 @@ inductive Terms (Sig : Signature) (Γ : Ctx) : List Ty → Type
 
 namespace Terms
 
+/-! The operations on tuples recurse on the list of types and take the tuple apart by its
+projections, never by matching it: so a tuple whose length is known computes componentwise
+even when the tuple itself is not written out, and a one-element tuple is, for every
+operation, just its term. -/
+
+/-- The first term of a tuple. -/
+def head {Γ : Ctx} {σ : Ty} {σs : List Ty} : Terms Sig Γ (σ :: σs) → Term Sig Γ σ
+  | .cons a _ => a
+
+/-- The rest of a tuple. -/
+def tail {Γ : Ctx} {σ : Ty} {σs : List Ty} : Terms Sig Γ (σ :: σs) → Terms Sig Γ σs
+  | .cons _ as => as
+
+@[simp] theorem head_cons {Γ : Ctx} {σ : Ty} {σs : List Ty} (a : Term Sig Γ σ) (as : Terms Sig Γ σs) :
+    (Terms.cons a as).head = a := rfl
+@[simp] theorem tail_cons {Γ : Ctx} {σ : Ty} {σs : List Ty} (a : Term Sig Γ σ) (as : Terms Sig Γ σs) :
+    (Terms.cons a as).tail = as := rfl
+
+theorem cons_head_tail {Γ : Ctx} {σ : Ty} {σs : List Ty} :
+    ∀ as : Terms Sig Γ (σ :: σs), Terms.cons as.head as.tail = as
+  | .cons _ _ => rfl
+
+theorem eq_nil {Γ : Ctx} : ∀ as : Terms Sig Γ [], as = .nil
+  | .nil => rfl
+
 /-- A tuple of one term. -/
 abbrev single {Γ : Ctx} {σ : Ty} (a : Term Sig Γ σ) : Terms Sig Γ [σ] := .cons a .nil
 
 /-- The term of a one-element tuple. -/
-def head1 {Γ : Ctx} {σ : Ty} : Terms Sig Γ [σ] → Term Sig Γ σ
-  | .cons a .nil => a
+abbrev head1 {Γ : Ctx} {σ : Ty} (as : Terms Sig Γ [σ]) : Term Sig Γ σ := as.head
 
-@[simp] theorem head1_single {Γ : Ctx} {σ : Ty} (a : Term Sig Γ σ) : (single a).head1 = a := rfl
+theorem head1_single {Γ : Ctx} {σ : Ty} (a : Term Sig Γ σ) : (single a).head1 = a := rfl
 @[simp] theorem single_head1 {Γ : Ctx} {σ : Ty} : ∀ as : Terms Sig Γ [σ], single as.head1 = as
   | .cons _ .nil => rfl
 
 /-- Rename each term of a tuple. -/
 def rename {Γ Δ : Ctx} (r : Ren Γ Δ) : ∀ {σs : List Ty}, Terms Sig Γ σs → Terms Sig Δ σs
-  | [], .nil => .nil
-  | _ :: _, .cons a as => .cons (a.rename r) (rename r as)
+  | [], _ => .nil
+  | _ :: _, as => .cons (as.head.rename r) (rename r as.tail)
 
 /-- Substitute into each term of a tuple. -/
 def subst {Γ Δ : Ctx} (s : Sub Sig Γ Δ) : ∀ {σs : List Ty}, Terms Sig Γ σs → Terms Sig Δ σs
-  | [], .nil => .nil
-  | _ :: _, .cons a as => .cons (a.subst s) (subst s as)
+  | [], _ => .nil
+  | _ :: _, as => .cons (as.head.subst s) (subst s as.tail)
 
 @[simp] theorem rename_nil {Γ Δ : Ctx} (r : Ren Γ Δ) : rename r (.nil : Terms Sig Γ []) = .nil := rfl
 @[simp] theorem rename_cons {Γ Δ : Ctx} (r : Ren Γ Δ) {σ : Ty} {σs : List Ty} (a : Term Sig Γ σ)
@@ -93,6 +117,11 @@ def subst {Γ Δ : Ctx} (s : Sub Sig Γ Δ) : ∀ {σs : List Ty}, Terms Sig Γ 
 @[simp] theorem subst_nil {Γ Δ : Ctx} (s : Sub Sig Γ Δ) : subst s (.nil : Terms Sig Γ []) = .nil := rfl
 @[simp] theorem subst_cons {Γ Δ : Ctx} (s : Sub Sig Γ Δ) {σ : Ty} {σs : List Ty} (a : Term Sig Γ σ)
     (as : Terms Sig Γ σs) : subst s (.cons a as) = .cons (a.subst s) (subst s as) := rfl
+
+theorem head1_rename {Γ Δ : Ctx} (r : Ren Γ Δ) {σ : Ty} (as : Terms Sig Γ [σ]) :
+    (as.rename r).head1 = as.head1.rename r := rfl
+theorem head1_subst {Γ Δ : Ctx} (s : Sub Sig Γ Δ) {σ : Ty} (as : Terms Sig Γ [σ]) :
+    (as.subst s).head1 = as.head1.subst s := rfl
 
 theorem rename_rename {Γ Δ Θ : Ctx} (r : Ren Δ Θ) (r' : Ren Γ Δ) :
     ∀ {σs : List Ty} (as : Terms Sig Γ σs), (as.rename r').rename r = as.rename (Ren.comp r r')
@@ -135,8 +164,9 @@ end Terms
 that sends the block's variables to the tuple. -/
 def Sub.consBlock : ∀ {σs : List Ty} {Γ Δ : Ctx}, Terms Sig Δ σs → Sub Sig Γ Δ →
     Sub Sig (Ctx.block σs Γ) Δ
-  | [], _, _, .nil, s => s
-  | _ :: σs, Γ, Δ, .cons a as, s => Sub.consBlock (σs := σs) (Γ := _ :: Γ) (Δ := Δ) as (Sub.cons a s)
+  | [], _, _, _, s => s
+  | _ :: σs, Γ, Δ, as, s =>
+    Sub.consBlock (σs := σs) (Γ := _ :: Γ) (Δ := Δ) as.tail (Sub.cons as.head s)
 
 /-! ### Application and abstraction over a block -/
 
@@ -145,8 +175,8 @@ namespace Term
 /-- `F a₁ … aₙ`: a function of the block's types applied to a tuple. -/
 def appBlock : ∀ {Γ : Ctx} {σs : List Ty} {ρ : RTy}, Term Sig Γ (σs ⇒* ρ) → Terms Sig Γ σs →
     Term Sig Γ ρ
-  | _, [], _, f, .nil => f
-  | _, _ :: _, _, f, .cons a as => appBlock (.app f a) as
+  | _, [], _, f, _ => f
+  | _, _ :: _, _, f, as => appBlock (.app f as.head) as.tail
 
 /-- `λx₁ … xₙ. B`. -/
 def lamBlock : ∀ (σs : List Ty) {Γ : Ctx} {ρ : RTy}, Term Sig (Ctx.block σs Γ) ρ →
@@ -167,9 +197,9 @@ def existsBlock : ∀ (σs : List Ty) {Γ : Ctx}, Formula Sig (Ctx.block σs Γ)
 /-- `a₁ = b₁ ∧ … ∧ aₙ = bₙ`: `⊤` for the empty block, and the identity itself for a
 one-element block. -/
 def eqBlock : ∀ {Γ : Ctx} {σs : List Ty}, Terms Sig Γ σs → Terms Sig Γ σs → Formula Sig Γ
-  | _, [], .nil, .nil => top
-  | _, [_], .cons a .nil, .cons b .nil => eq' a b
-  | _, _ :: _ :: _, .cons a as, .cons b bs => conj (eq' a b) (eqBlock as bs)
+  | _, [], _, _ => top
+  | _, [_], as, bs => eq' as.head bs.head
+  | _, _ :: _ :: _, as, bs => conj (eq' as.head bs.head) (eqBlock as.tail bs.tail)
 
 /-- `λX. ∀x₁ … ∀xₙ. X x₁ … xₙ`, the block quantifier as a constant; at a one-element
 block, the quantifier itself. -/
@@ -253,20 +283,20 @@ theorem subst_existsBlock : ∀ (σs : List Ty) {Γ Δ : Ctx} (s : Sub Sig Γ Δ
 theorem rename_eqBlock {Γ Δ : Ctx} (r : Ren Γ Δ) :
     ∀ {σs : List Ty} (as bs : Terms Sig Γ σs),
       (eqBlock as bs).rename r = eqBlock (as.rename r) (bs.rename r)
-  | [], .nil, .nil => rfl
-  | [_], .cons _ .nil, .cons _ .nil => rfl
-  | _ :: _ :: _, .cons a as, .cons b bs => by
-    simp only [eqBlock, Terms.rename_cons, rename_app]
-    rw [rename_eqBlock r as bs]; rfl
+  | [], _, _ => rfl
+  | [_], _, _ => rfl
+  | _ :: _ :: _, as, bs => by
+    show Term.conj ((eq' as.head bs.head).rename r) ((eqBlock as.tail bs.tail).rename r) = _
+    rw [rename_eqBlock r as.tail bs.tail]; rfl
 
 theorem subst_eqBlock {Γ Δ : Ctx} (s : Sub Sig Γ Δ) :
     ∀ {σs : List Ty} (as bs : Terms Sig Γ σs),
       (eqBlock as bs).subst s = eqBlock (as.subst s) (bs.subst s)
-  | [], .nil, .nil => rfl
-  | [_], .cons _ .nil, .cons _ .nil => rfl
-  | _ :: _ :: _, .cons a as, .cons b bs => by
-    simp only [eqBlock, Terms.subst_cons, subst_app]
-    rw [subst_eqBlock s as bs]; rfl
+  | [], _, _ => rfl
+  | [_], _, _ => rfl
+  | _ :: _ :: _, as, bs => by
+    show Term.conj ((eq' as.head bs.head).subst s) ((eqBlock as.tail bs.tail).subst s) = _
+    rw [subst_eqBlock s as.tail bs.tail]; rfl
 
 end Term
 
@@ -346,6 +376,25 @@ theorem Terms.Conv.refl {Γ : Ctx} : ∀ {σs : List Ty} (as : Terms Sig Γ σs)
   | [], .nil => .nil
   | _ :: _, .cons a as => .cons (Classicism.Meta.Conv.refl a) (Terms.Conv.refl as)
 
+theorem Terms.Conv.symm {Γ : Ctx} : ∀ {σs : List Ty} {as bs : Terms Sig Γ σs},
+    Terms.Conv as bs → Terms.Conv bs as
+  | _, _, _, .nil => .nil
+  | _, _, _, .cons h hs => .cons (Classicism.Meta.Conv.symm h) (Terms.Conv.symm hs)
+
+theorem Terms.Conv.trans {Γ : Ctx} : ∀ {σs : List Ty} {as bs cs : Terms Sig Γ σs},
+    Terms.Conv as bs → Terms.Conv bs cs → Terms.Conv as cs
+  | _, _, _, _, .nil, .nil => .nil
+  | _, _, _, _, .cons h hs, .cons h' hs' =>
+    .cons (Classicism.Meta.Conv.trans h h') (Terms.Conv.trans hs hs')
+
+theorem Terms.Conv.head1 {Γ : Ctx} {σ : Ty} : ∀ {as bs : Terms Sig Γ [σ]},
+    Terms.Conv as bs → as.head1 ≡ bs.head1
+  | .cons _ .nil, .cons _ .nil, .cons h .nil => h
+
+theorem Terms.Conv.of_head1 {Γ : Ctx} {σ : Ty} : ∀ {as bs : Terms Sig Γ [σ]},
+    as.head1 ≡ bs.head1 → Terms.Conv as bs
+  | .cons _ .nil, .cons _ .nil, h => .cons h .nil
+
 /-- Equal terms are convertible. -/
 theorem Conv.of_eq {Γ : Ctx} {σ : Ty} {a b : Term Sig Γ σ} (h : a = b) : a ≡ b := h ▸ Conv.refl a
 
@@ -372,6 +421,15 @@ theorem existsBlock_congr : ∀ (σs : List Ty) {Γ : Ctx} {p q : Formula Sig (C
     p ≡ q → Term.existsBlock σs p ≡ Term.existsBlock σs q
   | [], _, _, _, h => h
   | _ :: σs, _, _, _, h => Conv.app_congr (Conv.refl _) (Conv.lam_congr (existsBlock_congr σs h))
+
+theorem eqBlock_congr {Γ : Ctx} : ∀ {σs : List Ty} {as as' bs bs' : Terms Sig Γ σs},
+    Terms.Conv as as' → Terms.Conv bs bs' → Term.eqBlock as bs ≡ Term.eqBlock as' bs'
+  | [], .nil, .nil, .nil, .nil, _, _ => Conv.refl _
+  | [_], .cons _ .nil, .cons _ .nil, .cons _ .nil, .cons _ .nil, .cons ha .nil, .cons hb .nil =>
+    Conv.app_congr (Conv.app_congr (Conv.refl _) ha) hb
+  | _ :: _ :: _, .cons _ _, .cons _ _, .cons _ _, .cons _ _, .cons ha has, .cons hb hbs =>
+    Conv.app_congr (Conv.app_congr (Conv.refl _) (Conv.app_congr (Conv.app_congr (Conv.refl _) ha) hb))
+      (eqBlock_congr has hbs)
 
 /-- **Block β**: `(λx̄. B) ā ≡ B[ā/x̄]`. -/
 theorem appBlock_lamBlock : ∀ (σs : List Ty) {Γ : Ctx} {ρ : RTy} (b : Term Sig (Ctx.block σs Γ) ρ)
@@ -445,6 +503,38 @@ theorem compRen_consBlock_liftBlock : ∀ {σs : List Ty} {Γ Θ Δ : Ctx} (as :
     funext τ v
     cases v <;> rfl
 
+/-- A renaming after a block substitution: `r ∘ (as, t) = (r as, r ∘ t)`. -/
+theorem _root_.Classicism.Meta.Ren.compSub_consBlock : ∀ {σs : List Ty} {Γ Θ Δ : Ctx}
+    (r : Ren Θ Δ) (as : Terms Sig Θ σs) (t : Sub Sig Γ Θ),
+    Ren.compSub r (Sub.consBlock as t) = Sub.consBlock (as.rename r) (Ren.compSub r t)
+  | [], _, _, _, _, .nil, _ => rfl
+  | _ :: σs, Γ, _, _, r, .cons a as, t => by
+    have := Ren.compSub_consBlock (σs := σs) (Γ := _ :: Γ) r as (Sub.cons a t)
+    show Ren.compSub r (Sub.consBlock as (Sub.cons a t))
+      = Sub.consBlock (as.rename r) (Sub.cons (a.rename r) (Ren.compSub r t))
+    rw [this]
+    congr 1
+    funext τ v
+    cases v <;> rfl
+
+/-- Lifting over a block is the block's variables, then the substitution weakened past
+the block. -/
+theorem consBlock_vars_compSub : ∀ (σs : List Ty) {Γ Δ : Ctx} (t : Sub Sig Γ Δ),
+    Sub.consBlock (Terms.vars σs Δ) (Ren.compSub (Ren.wkBlock σs) t) = Sub.liftBlock σs t
+  | [], _, _, t => by funext τ v; exact Term.rename_id _
+  | σ :: σs, Γ, Δ, t => by
+    have ih := consBlock_vars_compSub σs (Γ := σ :: Γ) (Δ := σ :: Δ) (Sub.lift t)
+    show Sub.consBlock (Terms.vars σs (σ :: Δ)) (Sub.cons ((Term.var .zero).rename (Ren.wkBlock σs))
+      (Ren.compSub (Ren.comp (Ren.wkBlock σs) Ren.shift) t)) = Sub.liftBlock σs (Sub.lift t)
+    rw [← ih]
+    congr 1
+    funext τ v
+    cases v with
+    | zero => rfl
+    | succ v =>
+      show (t τ v).rename (Ren.comp (Ren.wkBlock σs) Ren.shift) = ((t τ v).weaken).rename (Ren.wkBlock σs)
+      rw [Term.weaken, Term.rename_rename]
+
 /-- The block's variables, then the weakening past the block: the identity. -/
 theorem consBlock_vars_wkBlock : ∀ (σs : List Ty) (Γ : Ctx),
     Sub.consBlock (Terms.vars σs Γ) (Sub.ofRen (Ren.wkBlock σs)) = (Sub.id : Sub Sig (Ctx.block σs Γ) _)
@@ -472,6 +562,83 @@ theorem Terms.vars_subst_liftBlock : ∀ (σs : List Ty) {Γ Δ : Ctx} (s : Sub 
         ((Terms.vars σs (σ :: Γ)).subst (Sub.liftBlock σs (Sub.lift s))) = _
     rw [Term.subst_rename, Sub.compRen_liftBlock_wkBlock, ih]
     rfl
+
+/-- A function weakened past a block and applied to the block's variables, with the
+block then instantiated at a tuple: the function applied to the tuple. -/
+theorem Term.appBlock_vars_subst_consBlock {Γ : Ctx} {σs : List Ty} {ρ : RTy}
+    (f : Term Sig Γ (σs ⇒* ρ)) (as : Terms Sig Γ σs) :
+    (Term.appBlock (f.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)).subst (Sub.consBlock as Sub.id)
+      = Term.appBlock f as := by
+  rw [Term.subst_appBlock, Term.subst_rename, Sub.compRen_consBlock_wkBlock, Term.subst_id,
+    Terms.vars_subst_consBlock]
+
+/-- A function weakened past a block `σ :: σs` and applied to the block's variables is the
+function weakened past `σ` and applied to its variable, then weakened past `σs` and applied
+to theirs. -/
+theorem Term.appBlock_vars_cons (σ : Ty) (σs : List Ty) {Γ : Ctx} {ρ : RTy}
+    (f : Term Sig Γ ((σ :: σs) ⇒* ρ)) :
+    Term.appBlock (f.rename (Ren.wkBlock (σ :: σs))) (Terms.vars (σ :: σs) Γ)
+      = Term.appBlock ((Term.app f.weaken (Term.var .zero)).rename (Ren.wkBlock σs))
+          (Terms.vars σs (σ :: Γ)) := by
+  rw [Term.rename_app, Term.weaken, Term.rename_rename]; rfl
+
+/-! ### The block constants are closed -/
+
+namespace Term
+
+private theorem subst_allC_body (σs : List Ty) {Γ Δ : Ctx} (s : Sub Sig Γ Δ) :
+    (forallBlock σs (appBlock
+      ((Term.var .zero : Term Sig (Ty.rel (σs ⇒* .t) :: Γ) (σs ⇒* .t)).rename (Ren.wkBlock σs))
+      (Terms.vars σs _))).subst (Sub.lift s)
+    = forallBlock σs (appBlock
+      ((Term.var .zero : Term Sig (Ty.rel (σs ⇒* .t) :: Δ) (σs ⇒* .t)).rename (Ren.wkBlock σs))
+      (Terms.vars σs _)) := by
+  rw [subst_forallBlock, subst_appBlock, subst_rename, Sub.compRen_liftBlock_wkBlock,
+    Terms.vars_subst_liftBlock]
+  rfl
+
+private theorem subst_exC_body (σs : List Ty) {Γ Δ : Ctx} (s : Sub Sig Γ Δ) :
+    (existsBlock σs (appBlock
+      ((Term.var .zero : Term Sig (Ty.rel (σs ⇒* .t) :: Γ) (σs ⇒* .t)).rename (Ren.wkBlock σs))
+      (Terms.vars σs _))).subst (Sub.lift s)
+    = existsBlock σs (appBlock
+      ((Term.var .zero : Term Sig (Ty.rel (σs ⇒* .t) :: Δ) (σs ⇒* .t)).rename (Ren.wkBlock σs))
+      (Terms.vars σs _)) := by
+  rw [subst_existsBlock, subst_appBlock, subst_rename, Sub.compRen_liftBlock_wkBlock,
+    Terms.vars_subst_liftBlock]
+  rfl
+
+private theorem subst_eqC_body (σs : List Ty) {Γ Δ : Ctx} (s : Sub Sig Γ Δ) :
+    (lamBlock σs (lamBlock σs (eqBlock ((Terms.vars σs Γ).rename (Ren.wkBlock σs))
+      (Terms.vars σs (Ctx.block σs Γ))))).subst s
+    = lamBlock σs (lamBlock σs (eqBlock ((Terms.vars σs Δ).rename (Ren.wkBlock σs))
+      (Terms.vars σs (Ctx.block σs Δ)))) := by
+  rw [subst_lamBlock, subst_lamBlock, subst_eqBlock, Terms.subst_rename,
+    Sub.compRen_liftBlock_wkBlock, ← Terms.rename_subst, Terms.vars_subst_liftBlock,
+    Terms.vars_subst_liftBlock]
+
+@[simp] theorem subst_allC (σs : List Ty) {Γ Δ : Ctx} (s : Sub Sig Γ Δ) :
+    (allC σs).subst s = allC σs := by
+  match σs with
+  | [_] => rfl
+  | [] => exact congrArg Term.lam (subst_allC_body [] s)
+  | σ :: σ' :: σs => exact congrArg Term.lam (subst_allC_body (σ :: σ' :: σs) s)
+
+@[simp] theorem subst_exC (σs : List Ty) {Γ Δ : Ctx} (s : Sub Sig Γ Δ) :
+    (exC σs).subst s = exC σs := by
+  match σs with
+  | [_] => rfl
+  | [] => exact congrArg Term.lam (subst_exC_body [] s)
+  | σ :: σ' :: σs => exact congrArg Term.lam (subst_exC_body (σ :: σ' :: σs) s)
+
+@[simp] theorem subst_eqC (σs : List Ty) {Γ Δ : Ctx} (s : Sub Sig Γ Δ) :
+    (eqC σs).subst s = eqC σs := by
+  match σs with
+  | [_] => rfl
+  | [] => exact subst_eqC_body [] s
+  | σ :: σ' :: σs => exact subst_eqC_body (σ :: σ' :: σs) s
+
+end Term
 
 /-- The body of a block abstraction, weakened past the block and applied to its
 variables, converts back to the body. -/
@@ -522,6 +689,21 @@ theorem exC_lamBlock (σs : List Ty) {Γ : Ctx} (p : Formula Sig (Ctx.block σs 
       Sub.compRen_liftBlock_wkBlock, Terms.vars_subst_liftBlock]
     exact Conv.existsBlock_congr _ (Conv.appBlock_lamBlock_vars _ p)
 
+/-- The block quantifier as a constant, applied to any predicate: the block of
+quantifiers over the predicate applied to the block's variables. -/
+theorem allC_eta (σs : List Ty) {Γ : Ctx} (F : Term Sig Γ (σs ⇒* .t)) :
+    Term.app (Term.allC σs) F
+      ≡ Term.forallBlock σs (Term.appBlock (F.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)) :=
+  Conv.trans (Conv.app_congr (Conv.refl _) (Conv.symm (Conv.lamBlock_appBlock σs F)))
+    (Conv.allC_lamBlock σs _)
+
+/-- The same for `∃`. -/
+theorem exC_eta (σs : List Ty) {Γ : Ctx} (F : Term Sig Γ (σs ⇒* .t)) :
+    Term.app (Term.exC σs) F
+      ≡ Term.existsBlock σs (Term.appBlock (F.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)) :=
+  Conv.trans (Conv.app_congr (Conv.refl _) (Conv.symm (Conv.lamBlock_appBlock σs F)))
+    (Conv.exC_lamBlock σs _)
+
 /-- The block identity, as a constant applied to two tuples, is the conjunction of
 identities. -/
 theorem eqC_appBlock (σs : List Ty) {Γ : Ctx} (as bs : Terms Sig Γ σs) :
@@ -541,6 +723,256 @@ theorem eqC_appBlock (σs : List Ty) {Γ : Ctx} (as bs : Terms Sig Γ σs) :
       Terms.vars_subst_consBlock]
 
 end Conv
+
+/-! ### The pointwise operations at a block
+
+At `σs ⇒* ρ` each type-subscripted operation is the operation at `ρ` applied pointwise over
+the whole block: the paper's recursive definition, `n` of its steps at once. Each is proved
+applied, by induction on the list (a δ-step, then β), and then bare, by η. -/
+
+/-- Two weakenings, then an instantiation lifted under one binder, are one weakening. -/
+theorem Term.weaken_weaken_subst_lift {Γ : Ctx} {σ τ υ : Ty} (X : Term Sig Γ σ) (Y : Term Sig Γ τ) :
+    ((X.weaken (τ := τ)).weaken (τ := υ)).subst (Sub.lift (Sub.cons Y Sub.id)) = X.weaken := by
+  rw [Term.weaken, Term.weaken, Term.subst_rename, Term.subst_rename, Term.weaken,
+    Term.rename_eq_subst]
+  rfl
+
+namespace Conv
+
+/-- `const_{σs ⇒* ρ} p` is `λx̄. const_ρ p`. -/
+theorem app_constR_block : ∀ (σs : List Ty) {Γ : Ctx} (ρ : RTy) (p : Formula Sig Γ),
+    Term.app (Term.constR (σs ⇒* ρ)) p
+      ≡ Term.lamBlock σs (Term.app (Term.constR ρ) (p.rename (Ren.wkBlock σs)))
+  | [], _, ρ, p => by
+    show _ ≡ Term.app (Term.constR ρ) (p.rename Ren.id)
+    rw [Term.rename_id]; exact Conv.refl _
+  | σ :: σs, Γ, ρ, p => by
+    refine Conv.trans (Conv.app_congr (Conv.delta rfl) (Conv.refl p)) ?_
+    refine Conv.trans (Conv.beta _ p) ?_
+    show Term.lam (Term.app (Term.constR (σs ⇒* ρ)) p.weaken) ≡ _
+    refine Conv.trans (Conv.lam_congr (app_constR_block σs ρ p.weaken)) (Conv.of_eq ?_)
+    show Term.lam _ = Term.lam _
+    rw [Term.weaken, Term.rename_rename]; rfl
+
+/-- `¬_{σs ⇒* ρ} X` is `λx̄. ¬_ρ (X x̄)`. -/
+theorem app_negR_block : ∀ (σs : List Ty) {Γ : Ctx} (ρ : RTy) (X : Term Sig Γ (σs ⇒* ρ)),
+    Term.app (Term.negR (σs ⇒* ρ)) X
+      ≡ Term.lamBlock σs (Term.app (Term.negR ρ)
+          (Term.appBlock (X.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)))
+  | [], _, ρ, X => by
+    show _ ≡ Term.app (Term.negR ρ) (X.rename Ren.id)
+    rw [Term.rename_id]; exact Conv.refl _
+  | σ :: σs, Γ, ρ, X => by
+    refine Conv.trans (Conv.app_congr (Conv.delta rfl) (Conv.refl X)) ?_
+    refine Conv.trans (Conv.beta _ X) ?_
+    show Term.lam (Term.app (Term.negR (σs ⇒* ρ)) (Term.app X.weaken (Term.var .zero))) ≡ _
+    refine Conv.trans (Conv.lam_congr (app_negR_block σs ρ _)) (Conv.of_eq ?_)
+    show Term.lam _ = Term.lam _
+    rw [Term.appBlock_vars_cons]
+
+/-- `□_{σs ⇒* ρ} X` is `λx̄. □_ρ (X x̄)`. -/
+theorem app_boxR_block : ∀ (σs : List Ty) {Γ : Ctx} (ρ : RTy) (X : Term Sig Γ (σs ⇒* ρ)),
+    Term.app (Term.boxR (σs ⇒* ρ)) X
+      ≡ Term.lamBlock σs (Term.app (Term.boxR ρ)
+          (Term.appBlock (X.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)))
+  | [], _, ρ, X => by
+    show _ ≡ Term.app (Term.boxR ρ) (X.rename Ren.id)
+    rw [Term.rename_id]; exact Conv.refl _
+  | σ :: σs, Γ, ρ, X => by
+    refine Conv.trans (Conv.app_congr (Conv.delta rfl) (Conv.refl X)) ?_
+    refine Conv.trans (Conv.beta _ X) ?_
+    show Term.lam (Term.app (Term.boxR (σs ⇒* ρ)) (Term.app X.weaken (Term.var .zero))) ≡ _
+    refine Conv.trans (Conv.lam_congr (app_boxR_block σs ρ _)) (Conv.of_eq ?_)
+    show Term.lam _ = Term.lam _
+    rw [Term.appBlock_vars_cons]
+
+/-- `X ∧_{σs ⇒* ρ} Y` is `λx̄. X x̄ ∧_ρ Y x̄`. -/
+theorem app_andR_block : ∀ (σs : List Ty) {Γ : Ctx} (ρ : RTy) (X Y : Term Sig Γ (σs ⇒* ρ)),
+    Term.app (Term.app (Term.andR (σs ⇒* ρ)) X) Y
+      ≡ Term.lamBlock σs (Term.app (Term.app (Term.andR ρ)
+          (Term.appBlock (X.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)))
+          (Term.appBlock (Y.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)))
+  | [], _, ρ, X, Y => by
+    show _ ≡ Term.app (Term.app (Term.andR ρ) (X.rename Ren.id)) (Y.rename Ren.id)
+    rw [Term.rename_id, Term.rename_id]; exact Conv.refl _
+  | σ :: σs, Γ, ρ, X, Y => by
+    refine Conv.trans (Conv.app_congr (Conv.app_congr (Conv.delta rfl) (Conv.refl X)) (Conv.refl Y)) ?_
+    refine Conv.trans (Conv.app_congr (Conv.beta _ X) (Conv.refl Y)) ?_
+    refine Conv.trans (Conv.beta _ Y) ?_
+    show Term.lam (Term.app (Term.app (Term.andR (σs ⇒* ρ))
+      (Term.app (((X.weaken).weaken).subst (Sub.lift (Sub.cons Y Sub.id))) (Term.var .zero)))
+      (Term.app Y.weaken (Term.var .zero))) ≡ _
+    rw [Term.weaken_weaken_subst_lift]
+    refine Conv.trans (Conv.lam_congr (app_andR_block σs ρ _ _)) (Conv.of_eq ?_)
+    show Term.lam _ = Term.lam _
+    rw [Term.appBlock_vars_cons, Term.appBlock_vars_cons]
+
+/-- `X ∨_{σs ⇒* ρ} Y` is `λx̄. X x̄ ∨_ρ Y x̄`. -/
+theorem app_orR_block : ∀ (σs : List Ty) {Γ : Ctx} (ρ : RTy) (X Y : Term Sig Γ (σs ⇒* ρ)),
+    Term.app (Term.app (Term.orR (σs ⇒* ρ)) X) Y
+      ≡ Term.lamBlock σs (Term.app (Term.app (Term.orR ρ)
+          (Term.appBlock (X.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)))
+          (Term.appBlock (Y.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)))
+  | [], _, ρ, X, Y => by
+    show _ ≡ Term.app (Term.app (Term.orR ρ) (X.rename Ren.id)) (Y.rename Ren.id)
+    rw [Term.rename_id, Term.rename_id]; exact Conv.refl _
+  | σ :: σs, Γ, ρ, X, Y => by
+    refine Conv.trans (Conv.app_congr (Conv.app_congr (Conv.delta rfl) (Conv.refl X)) (Conv.refl Y)) ?_
+    refine Conv.trans (Conv.app_congr (Conv.beta _ X) (Conv.refl Y)) ?_
+    refine Conv.trans (Conv.beta _ Y) ?_
+    show Term.lam (Term.app (Term.app (Term.orR (σs ⇒* ρ))
+      (Term.app (((X.weaken).weaken).subst (Sub.lift (Sub.cons Y Sub.id))) (Term.var .zero)))
+      (Term.app Y.weaken (Term.var .zero))) ≡ _
+    rw [Term.weaken_weaken_subst_lift]
+    refine Conv.trans (Conv.lam_congr (app_orR_block σs ρ _ _)) (Conv.of_eq ?_)
+    show Term.lam _ = Term.lam _
+    rw [Term.appBlock_vars_cons, Term.appBlock_vars_cons]
+
+/-- Coextensiveness at `σs ⇒* ρ` is `∀x̄. X x̄ ≡_ρ Y x̄`. -/
+theorem app_coextR_block : ∀ (σs : List Ty) {Γ : Ctx} (ρ : RTy) (X Y : Term Sig Γ (σs ⇒* ρ)),
+    Term.app (Term.app (Term.coextR (σs ⇒* ρ)) X) Y
+      ≡ Term.forallBlock σs (Term.app (Term.app (Term.coextR ρ)
+          (Term.appBlock (X.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)))
+          (Term.appBlock (Y.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)))
+  | [], _, ρ, X, Y => by
+    show _ ≡ Term.app (Term.app (Term.coextR ρ) (X.rename Ren.id)) (Y.rename Ren.id)
+    rw [Term.rename_id, Term.rename_id]; exact Conv.refl _
+  | σ :: σs, Γ, ρ, X, Y => by
+    refine Conv.trans (Conv.app_congr (Conv.app_congr (Conv.delta rfl) (Conv.refl X)) (Conv.refl Y)) ?_
+    refine Conv.trans (Conv.app_congr (Conv.beta _ X) (Conv.refl Y)) ?_
+    refine Conv.trans (Conv.beta _ Y) ?_
+    show Term.forall' (Term.app (Term.app (Term.coextR (σs ⇒* ρ))
+      (Term.app (((X.weaken).weaken).subst (Sub.lift (Sub.cons Y Sub.id))) (Term.var .zero)))
+      (Term.app Y.weaken (Term.var .zero))) ≡ _
+    rw [Term.weaken_weaken_subst_lift]
+    refine Conv.trans (Conv.app_congr (Conv.refl _) (Conv.lam_congr (app_coextR_block σs ρ _ _)))
+      (Conv.of_eq ?_)
+    show Term.forall' _ = Term.forall' _
+    rw [Term.appBlock_vars_cons, Term.appBlock_vars_cons]
+
+/-- Pointwise implication at `σs ⇒* ρ` is `∀x̄. X x̄ ⊑_ρ Y x̄`. -/
+theorem app_boxImpR_block : ∀ (σs : List Ty) {Γ : Ctx} (ρ : RTy) (X Y : Term Sig Γ (σs ⇒* ρ)),
+    Term.app (Term.app (Term.boxImpR (σs ⇒* ρ)) X) Y
+      ≡ Term.forallBlock σs (Term.app (Term.app (Term.boxImpR ρ)
+          (Term.appBlock (X.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)))
+          (Term.appBlock (Y.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)))
+  | [], _, ρ, X, Y => by
+    show _ ≡ Term.app (Term.app (Term.boxImpR ρ) (X.rename Ren.id)) (Y.rename Ren.id)
+    rw [Term.rename_id, Term.rename_id]; exact Conv.refl _
+  | σ :: σs, Γ, ρ, X, Y => by
+    refine Conv.trans (Conv.app_congr (Conv.app_congr (Conv.delta rfl) (Conv.refl X)) (Conv.refl Y)) ?_
+    refine Conv.trans (Conv.app_congr (Conv.beta _ X) (Conv.refl Y)) ?_
+    refine Conv.trans (Conv.beta _ Y) ?_
+    show Term.forall' (Term.app (Term.app (Term.boxImpR (σs ⇒* ρ))
+      (Term.app (((X.weaken).weaken).subst (Sub.lift (Sub.cons Y Sub.id))) (Term.var .zero)))
+      (Term.app Y.weaken (Term.var .zero))) ≡ _
+    rw [Term.weaken_weaken_subst_lift]
+    refine Conv.trans (Conv.app_congr (Conv.refl _) (Conv.lam_congr (app_boxImpR_block σs ρ _ _)))
+      (Conv.of_eq ?_)
+    show Term.forall' _ = Term.forall' _
+    rw [Term.appBlock_vars_cons, Term.appBlock_vars_cons]
+
+/-! The bare constants, at a block. -/
+
+theorem constR_block (σs : List Ty) {Γ : Ctx} (ρ : RTy) :
+    (Term.constR (σs ⇒* ρ) : Term Sig Γ _)
+      ≡ Term.lam (Term.lamBlock σs (Term.app (Term.constR ρ)
+          ((Term.var .zero : Term Sig (Ty.t :: Γ) Ty.t).rename (Ren.wkBlock σs)))) :=
+  Conv.trans (Conv.symm (Conv.eta _)) (Conv.lam_congr (app_constR_block σs ρ (Term.var .zero)))
+
+theorem negR_block (σs : List Ty) {Γ : Ctx} (ρ : RTy) :
+    (Term.negR (σs ⇒* ρ) : Term Sig Γ _)
+      ≡ Term.lam (Term.lamBlock σs (Term.app (Term.negR ρ)
+          (Term.appBlock ((Term.var .zero : Term Sig (Ty.rel (σs ⇒* ρ) :: Γ) _).rename
+            (Ren.wkBlock σs)) (Terms.vars σs _)))) :=
+  Conv.trans (Conv.symm (Conv.eta _)) (Conv.lam_congr (app_negR_block σs ρ (Term.var .zero)))
+
+theorem boxR_block (σs : List Ty) {Γ : Ctx} (ρ : RTy) :
+    (Term.boxR (σs ⇒* ρ) : Term Sig Γ _)
+      ≡ Term.lam (Term.lamBlock σs (Term.app (Term.boxR ρ)
+          (Term.appBlock ((Term.var .zero : Term Sig (Ty.rel (σs ⇒* ρ) :: Γ) _).rename
+            (Ren.wkBlock σs)) (Terms.vars σs _)))) :=
+  Conv.trans (Conv.symm (Conv.eta _)) (Conv.lam_congr (app_boxR_block σs ρ (Term.var .zero)))
+
+theorem andR_block (σs : List Ty) {Γ : Ctx} (ρ : RTy) :
+    (Term.andR (σs ⇒* ρ) : Term Sig Γ _)
+      ≡ Term.lam (Term.lam (Term.lamBlock σs (Term.app (Term.app (Term.andR ρ)
+          (Term.appBlock ((Term.var (.succ .zero) :
+            Term Sig (Ty.rel (σs ⇒* ρ) :: Ty.rel (σs ⇒* ρ) :: Γ) _).rename (Ren.wkBlock σs))
+            (Terms.vars σs _)))
+          (Term.appBlock ((Term.var .zero :
+            Term Sig (Ty.rel (σs ⇒* ρ) :: Ty.rel (σs ⇒* ρ) :: Γ) _).rename (Ren.wkBlock σs))
+            (Terms.vars σs _))))) :=
+  Conv.trans (Conv.symm (Conv.eta _)) (Conv.lam_congr (Conv.trans (Conv.symm (Conv.eta _))
+    (Conv.lam_congr (app_andR_block σs ρ (Term.var (.succ .zero)) (Term.var .zero)))))
+
+theorem orR_block (σs : List Ty) {Γ : Ctx} (ρ : RTy) :
+    (Term.orR (σs ⇒* ρ) : Term Sig Γ _)
+      ≡ Term.lam (Term.lam (Term.lamBlock σs (Term.app (Term.app (Term.orR ρ)
+          (Term.appBlock ((Term.var (.succ .zero) :
+            Term Sig (Ty.rel (σs ⇒* ρ) :: Ty.rel (σs ⇒* ρ) :: Γ) _).rename (Ren.wkBlock σs))
+            (Terms.vars σs _)))
+          (Term.appBlock ((Term.var .zero :
+            Term Sig (Ty.rel (σs ⇒* ρ) :: Ty.rel (σs ⇒* ρ) :: Γ) _).rename (Ren.wkBlock σs))
+            (Terms.vars σs _))))) :=
+  Conv.trans (Conv.symm (Conv.eta _)) (Conv.lam_congr (Conv.trans (Conv.symm (Conv.eta _))
+    (Conv.lam_congr (app_orR_block σs ρ (Term.var (.succ .zero)) (Term.var .zero)))))
+
+theorem coextR_block (σs : List Ty) {Γ : Ctx} (ρ : RTy) :
+    (Term.coextR (σs ⇒* ρ) : Term Sig Γ _)
+      ≡ Term.lam (Term.lam (Term.forallBlock σs (Term.app (Term.app (Term.coextR ρ)
+          (Term.appBlock ((Term.var (.succ .zero) :
+            Term Sig (Ty.rel (σs ⇒* ρ) :: Ty.rel (σs ⇒* ρ) :: Γ) _).rename (Ren.wkBlock σs))
+            (Terms.vars σs _)))
+          (Term.appBlock ((Term.var .zero :
+            Term Sig (Ty.rel (σs ⇒* ρ) :: Ty.rel (σs ⇒* ρ) :: Γ) _).rename (Ren.wkBlock σs))
+            (Terms.vars σs _))))) :=
+  Conv.trans (Conv.symm (Conv.eta _)) (Conv.lam_congr (Conv.trans (Conv.symm (Conv.eta _))
+    (Conv.lam_congr (app_coextR_block σs ρ (Term.var (.succ .zero)) (Term.var .zero)))))
+
+theorem boxImpR_block (σs : List Ty) {Γ : Ctx} (ρ : RTy) :
+    (Term.boxImpR (σs ⇒* ρ) : Term Sig Γ _)
+      ≡ Term.lam (Term.lam (Term.forallBlock σs (Term.app (Term.app (Term.boxImpR ρ)
+          (Term.appBlock ((Term.var (.succ .zero) :
+            Term Sig (Ty.rel (σs ⇒* ρ) :: Ty.rel (σs ⇒* ρ) :: Γ) _).rename (Ren.wkBlock σs))
+            (Terms.vars σs _)))
+          (Term.appBlock ((Term.var .zero :
+            Term Sig (Ty.rel (σs ⇒* ρ) :: Ty.rel (σs ⇒* ρ) :: Γ) _).rename (Ren.wkBlock σs))
+            (Terms.vars σs _))))) :=
+  Conv.trans (Conv.symm (Conv.eta _)) (Conv.lam_congr (Conv.trans (Conv.symm (Conv.eta _))
+    (Conv.lam_congr (app_boxImpR_block σs ρ (Term.var (.succ .zero)) (Term.var .zero)))))
+
+end Conv
+
+/-! ### Holes over a block -/
+
+namespace Hole
+
+/-- The hole in the function position of a block application. -/
+def appLBlock : ∀ {Γ Γ' : Ctx} {σs : List Ty} {ρ : RTy} {τ : Ty},
+    Hole Sig Γ (σs ⇒* ρ) Γ' τ → Terms Sig Γ σs → Hole Sig Γ ρ Γ' τ
+  | _, _, [], _, _, C, _ => C
+  | _, _, _ :: _, _, _, C, as => appLBlock (.appL C as.head) as.tail
+
+/-- The hole under a block abstraction. -/
+def lamBlock : ∀ (σs : List Ty) {Γ Γ' : Ctx} {ρ : RTy} {τ : Ty},
+    Hole Sig (Ctx.block σs Γ) ρ Γ' τ → Hole Sig Γ (σs ⇒* ρ) Γ' τ
+  | [], _, _, _, _, C => C
+  | _ :: σs, _, _, _, _, C => .lam (lamBlock σs C)
+
+theorem plug_appLBlock : ∀ {Γ Γ' : Ctx} {σs : List Ty} {ρ : RTy} {τ : Ty}
+    (C : Hole Sig Γ (σs ⇒* ρ) Γ' τ) (as : Terms Sig Γ σs) (a : Term Sig Γ' τ),
+    (appLBlock C as).plug a = Term.appBlock (C.plug a) as
+  | _, _, [], _, _, _, .nil, _ => rfl
+  | _, _, _ :: _, _, _, C, .cons b bs, a => plug_appLBlock (.appL C b) bs a
+
+theorem plug_lamBlock : ∀ (σs : List Ty) {Γ Γ' : Ctx} {ρ : RTy} {τ : Ty}
+    (C : Hole Sig (Ctx.block σs Γ) ρ Γ' τ) (a : Term Sig Γ' τ),
+    (lamBlock σs C).plug a = Term.lamBlock σs (C.plug a)
+  | [], _, _, _, _, _, _ => rfl
+  | _ :: σs, _, _, _, _, C, a => congrArg Term.lam (plug_lamBlock σs C a)
+
+end Hole
 
 /-! ### The block rules, derived -/
 
@@ -684,6 +1116,56 @@ theorem llBlock : ∀ (σs : List Ty) {Γ : Ctx} {Δ : List (Formula Sig Γ)}
     rw [hQ] at h₄
     exact h₄
 
+/-! ### The rules for the block constants
+
+The quantifier and identity rules once more, for `allC`, `exC` and `eqC` applied to an
+arbitrary predicate or tuple: the form in which the generic vectorization of a rule's
+premises and conclusion comes out. -/
+
+/-- `UI` for the block quantifier as a constant. -/
+theorem allEC (σs : List Ty) {Γ : Ctx} {Δ : List (Formula Sig Γ)} {F : Term Sig Γ (σs ⇒* .t)}
+    (h : Derivable Ax Δ (Term.app (Term.allC σs) F)) (as : Terms Sig Γ σs) :
+    Derivable Ax Δ (Term.appBlock F as) := by
+  have := allEBlock σs (conv h (Conv.allC_eta σs F)) as
+  rw [Term.appBlock_vars_subst_consBlock] at this
+  exact this
+
+/-- `Gen` for the block quantifier as a constant. -/
+theorem allIC (σs : List Ty) {Γ : Ctx} {Δ : List (Formula Sig Γ)} {p : Formula Sig (Ctx.block σs Γ)}
+    (h : Derivable Ax (Hyps.wkBlock σs Δ) p) :
+    Derivable Ax Δ (Term.app (Term.allC σs) (Term.lamBlock σs p)) :=
+  conv (allIBlock σs h) (Conv.symm (Conv.allC_lamBlock σs p))
+
+/-- `EG` for the block quantifier as a constant. -/
+theorem exIC (σs : List Ty) {Γ : Ctx} {Δ : List (Formula Sig Γ)} {F : Term Sig Γ (σs ⇒* .t)}
+    (as : Terms Sig Γ σs) (h : Derivable Ax Δ (Term.appBlock F as)) :
+    Derivable Ax Δ (Term.app (Term.exC σs) F) := by
+  refine conv (exIBlock σs as ?_) (Conv.symm (Conv.exC_eta σs F))
+  rw [Term.appBlock_vars_subst_consBlock]; exact h
+
+/-- `Inst` for the block quantifier as a constant. -/
+theorem exEC (σs : List Ty) {Γ : Ctx} {Δ : List (Formula Sig Γ)} {F : Term Sig Γ (σs ⇒* .t)}
+    {r : Formula Sig Γ} (h : Derivable Ax Δ (Term.app (Term.exC σs) F))
+    (h' : Derivable Ax (Term.appBlock (F.rename (Ren.wkBlock σs)) (Terms.vars σs Γ) ::
+      Hyps.wkBlock σs Δ) (r.rename (Ren.wkBlock σs))) :
+    Derivable Ax Δ r :=
+  exEBlock σs (conv h (Conv.exC_eta σs F)) h'
+
+/-- `Ref` for the block identity as a constant. -/
+theorem reflC {Γ : Ctx} {Δ : List (Formula Sig Γ)} {σs : List Ty} (as : Terms Sig Γ σs) :
+    Derivable Ax Δ (Term.appBlock (Term.appBlock (Term.eqC σs) as) as) :=
+  conv (reflBlock as) (Conv.symm (Conv.eqC_appBlock σs as as))
+
+/-- `LL` for the block identity as a constant. -/
+theorem llC (σs : List Ty) {Γ : Ctx} {Δ : List (Formula Sig Γ)} (F : Term Sig Γ (σs ⇒* .t))
+    {as bs : Terms Sig Γ σs}
+    (he : Derivable Ax Δ (Term.appBlock (Term.appBlock (Term.eqC σs) as) bs))
+    (h : Derivable Ax Δ (Term.appBlock F as)) : Derivable Ax Δ (Term.appBlock F bs) := by
+  have := llBlock σs (Term.appBlock (F.rename (Ren.wkBlock σs)) (Terms.vars σs Γ))
+    (conv he (Conv.eqC_appBlock σs as bs)) (by rw [Term.appBlock_vars_subst_consBlock]; exact h)
+  rw [Term.appBlock_vars_subst_consBlock] at this
+  exact this
+
 end Derivable
 
 /-! ### Checks: one-element blocks are the unblocked forms, on the nose -/
@@ -698,6 +1180,12 @@ example (σ : Ty) {ρ : RTy} (b : Term Sig (σ :: Γ) ρ) : Term.lamBlock [σ] b
 example (σ : Ty) {ρ : RTy} (f : Term Sig Γ (σ ⇒ ρ)) (a : Term Sig Γ σ) :
     Term.appBlock f (.single a) = Term.app f a := rfl
 example (σ : Ty) (a b : Term Sig Γ σ) : Term.eqBlock (.single a) (.single b) = Term.eq' a b := rfl
+-- for any one-element tuple, not only a literal one
+example (σ : Ty) {ρ : RTy} (f : Term Sig Γ (σ ⇒ ρ)) (as : Terms Sig Γ [σ]) :
+    Term.appBlock f as = Term.app f as.head1 := rfl
+example (σ : Ty) (as bs : Terms Sig Γ [σ]) : Term.eqBlock as bs = Term.eq' as.head1 bs.head1 := rfl
+example (σ : Ty) {Δ : Ctx} (r : Ren Γ Δ) (as : Terms Sig Γ [σ]) :
+    (as.rename r).head1 = as.head1.rename r := rfl
 example (σ : Ty) : (Term.allC [σ] : Term Sig Γ _) = Term.all σ := rfl
 example (σ : Ty) : (Term.eqC [σ] : Term Sig Γ _) = Term.eq σ := rfl
 -- the empty block: no quantifier, and `⊤` for identity

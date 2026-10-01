@@ -5,6 +5,37 @@ and a survey of the code that day. To be carried out phase by phase (§6); each 
 with a green build and its audit counts recorded in `HANDOFF.md`. An adversarial review
 of the same day is folded in (D1–D5, D8, §4–§6); the decisions taken are in §9.*
 
+## Status
+
+- **Phases 0–4 done** (1 October). Type variables (Phase 1, commit `12e5100`); blocks
+  (`Syntax/Blocks.lean`, Phase 2); the translation (`Syntax/Vectorize.lean`, Phase 3); the
+  theorem (`Syntax/VectorizeDerivable.lean`, Phase 4), with its checks in
+  `Certified/Vectorized.lean`: Barcan, Functionality and Relational Choice at `[]`, `[σ]`
+  and `[e, t]` by `rfl`, and `barcan_r_implies_functionality_r` at every list. Audit counts
+  unchanged throughout. Next: Phase 1b (vocabulary), then Phase 5.
+- **What the implementation changed in the design**, all within the plan's intent:
+  - Tuples are taken apart by their projections (`Terms.head`, `Terms.tail`) and every
+    block operation recurses on the list of types, not on the tuple; so an operation on a
+    tuple of known length computes even when the tuple is not written out, and a
+    one-element tuple *is* its term for every operation. Without this the translation of
+    `p ∧ q` was not `p' ∧ q'` on the nose.
+  - The readable translation of D4 is not a pattern match on nested applications (Lean
+    cannot compute such a match when the types are Lean variables, and cannot generate
+    its equations): it is one `Term.rec` that returns, beside each subterm's translation,
+    a *view* of it (the body of an abstraction; how to translate it applied, for `∀σ`,
+    `∃σ`, `=σ`, `=σ a`). It inspects no type, and so computes on the quoter's output with
+    type parameters in it. That it converts to the generic translation is a logical
+    relation on views (`Ty.VecSound`).
+  - The δ-rule at a block: each pointwise operation at `σs ⇒* ρ` converts to the operation
+    at `ρ` applied pointwise over the block (`Conv.negR_block` and its six kin, in
+    `Blocks.lean`), proved by induction on the list.
+  - Holes are translated only when relational, which every hole for a formula is.
+  - `Derivable.vecG` asks that the axioms vectorize to axioms and the logical part to the
+    logical part; `C.Theorem.vec` and `C.TheoremMinus.vec` are the cases used.
+  - Not done, and not needed so far: the general statements that a one-element assignment
+    is type substitution and that vectorizations compose. The first holds by `rfl` on every
+    principle checked; the second has no use yet.
+
 ## 1. What we are building
 
 A principle of the map with a type parameter σ declared `[Ty σ]` has two forms:

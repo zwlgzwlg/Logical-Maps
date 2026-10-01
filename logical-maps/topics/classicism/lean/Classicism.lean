@@ -24,6 +24,8 @@ import Classicism.Syntax.Examples
 import Classicism.Syntax.Sentences
 import Classicism.Syntax.Constants
 import Classicism.Syntax.Blocks
+import Classicism.Syntax.Vectorize
+import Classicism.Syntax.VectorizeDerivable
 -- Its models
 import Classicism.Semantics.Denotation
 import Classicism.Semantics.Relational
@@ -71,6 +73,7 @@ import Classicism.Certified.Derived
 import Classicism.Certified.Schemas
 import Classicism.Certified.Derivations
 import Classicism.Certified.Entailed
+import Classicism.Certified.Vectorized
 -- The strict layer: Appendix A on Lean proof terms, a sideline
 import Classicism.Strict.Axiomatization
 import Classicism.Strict.Algebra
