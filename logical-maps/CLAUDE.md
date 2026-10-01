@@ -174,7 +174,9 @@ When you (an AI) add or edit a result or model:
   its own `by` and `date`, and a correction as an entry in the `revisions` of
   the argument it corrects. Its `history` is frozen; never add `changes`,
   `satisfies`, `violates` or `status` to it. A conjectured verdict is an
-  argument with `standing: conjectured`, not a separate record.
+  argument with `standing: conjectured`, not a separate record. Such a record
+  lists only the verdicts from which the engine derives the rest, its source's
+  first (README); add an argument only for a verdict the engine cannot derive.
 - When you add content to an existing record after its certificate date (a
   newly verified property of a model, an added proof, a corrected statement),
   append an entry to its `changes` list: `date`, `by`, `summary`, and for models

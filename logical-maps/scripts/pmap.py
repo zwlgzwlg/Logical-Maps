@@ -3062,7 +3062,8 @@ def bundle_agents_md(topic_id: str, data: dict) -> str:
         "and for models the newly verified `satisfies`/`violates` ids). Never move `certificate.date`.",
         "- A model written as a `definition` and `arguments` takes a new verdict as a new argument "
         "with its own `by` and `date`, and a correction in that argument's `revisions`. Its `history` "
-        "is frozen, and its `satisfies`/`violates` are computed: never write them.",
+        "is frozen, and its `satisfies`/`violates` are computed: never write them. It records only "
+        "the verdicts the engine cannot derive from the others, its source's first.",
         "- Write the real proof in `proof`, at referee detail. Put anything longer than a paragraph "
         f"in `topics/{topic_id}/writeups/<id>.md` instead.",
         "- Prefer `status: conjectured` with an empty proof and a note saying what would settle it, "

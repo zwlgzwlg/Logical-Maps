@@ -308,6 +308,15 @@ notices), and `status --model ID` prints one. After migrating a record, run
 `python3 scripts/check_flattening.py`: it compares the flattened records, and every
 derived output including the lynchpin rows, with `origin/main` (or `--ref`).
 
+Such a record lists only the verdicts from which the engine derives the rest. Its
+source's own verdicts are minimized first, among themselves, so that they never rest on
+later additions; a later verdict is recorded only where it adds something. Among
+equally few, the simpler is recorded, so an unboxed principle with No Pure Contingency
+rather than its boxed form. An argument whose verdicts are all derived is dropped,
+unless another argument builds on it. The notice "each derivable from the other recorded
+verdicts" lists what remains redundant, and `check_flattening.py --closure` checks that
+a shortened record derives the same holds and fails as before.
+
 ## Viewer
 
 An optional `topics/<topic>/theme.css` overrides the shared palette for that
