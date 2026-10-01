@@ -7,9 +7,11 @@ model in the argument format, and every conjectured companion generated from one
 record of the same id at REF must have the same satisfies and violates (as sets; a changed
 order is reported), status, tier and model_check. A record at REF that is now neither
 present nor generated is a failure. Then the topic's derived outputs must be unchanged:
-the conjecture resolutions, classes, open pairs, unknowns, problems and settled shares,
-and the lynchpin rows (central questions, automatic and recorded conjectures) under every
-background preset, as `build` stores them in data.json.
+the conjecture resolutions (their supporting results compared as sets, a changed order
+reported), classes, every pair's status and proof, unknowns, every derived
+failure's explanation in every model, problems and settled shares, and the lynchpin rows
+(central questions, automatic and recorded conjectures) under every background preset, as
+`build` stores them in data.json.
 
 Any difference is a bug in the migration, not a correction to the map.
 """
@@ -42,9 +44,14 @@ def load_at(ref: str, topic: str) -> dict:
 def derived(data: dict, lynchpins: bool) -> dict:
     pmap._PROGRESS_CACHE.clear()  # keyed on the verdicts alone, so it would serve the other tree
     an = pmap.analyse(data)
+    E = an["engine"]
+    # The engine explains a derived failure by the first recorded failure it reaches, so the
+    # order of a violates list shows here even when its set is unchanged.
+    explanations = {m["id"]: {c: E.fail_why[m["id"]][c] for c in sorted(E.fails[m["id"]])} for m in E.models}
     out = {"conjectures": an["conjectures"], "classes": an["classes"], "open_pairs": an["open_pairs"],
            "unknown": an["unknown"], "problems": an["problems"], "infos": an["infos"],
-           "progress": pmap.progress_report(data)}
+           "pairs": {f"{a} ⇒ {b}": v for (a, b), v in an["pair"].items()},
+           "failure explanations": explanations, "progress": pmap.progress_report(data)}
     if lynchpins:
         out["lynchpins"] = pmap.lynchpin_report(data, sparse_ok=False, top=None)
     return json.loads(json.dumps(out, sort_keys=True, default=str))
@@ -105,12 +112,20 @@ def main(argv=None) -> int:
             print(f"  {mid}: new list-format record")
 
     lynch = not a.no_lynchpins
-    print("derived outputs: comparing conjectures, classes, open pairs, unknowns, problems, progress"
+    print("derived outputs: comparing conjectures, classes, pairs, unknowns, failure explanations, problems, progress"
           + (" and lynchpin rows (slow)" if lynch else ""))
     before, after = derived(old, lynch), derived(new, lynch)
     for key in before:
         same = before[key] == after[key]
-        print(f"  {key}: {'unchanged' if same else 'CHANGED'}")
+        reordered = []
+        if not same and key == "conjectures":
+            # A resolved conjecture lists its supporting results in the order of the record's own
+            # satisfies and violates. Those are sets, which the arguments need not list in the old order.
+            unordered = lambda d: {k: {**v, "via": sorted(v["via"])} for k, v in d.items()}
+            if unordered(before[key]) == unordered(after[key]):
+                same, reordered = True, [k for k in before[key] if before[key][k] != after[key][k]]
+        print(f"  {key}: {'unchanged' if same else 'CHANGED'}"
+              + (f" up to the order of the supporting results of {', '.join(reordered)}" if reordered else ""))
         if not same:
             failures.append(f"{key} changed at {first_difference(before[key], after[key], key)}")
     for f in failures:
