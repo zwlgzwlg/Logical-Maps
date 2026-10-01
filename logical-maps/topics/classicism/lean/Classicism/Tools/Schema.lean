@@ -1,5 +1,6 @@
 import Classicism.Tools.Translate
 import Classicism.Syntax.Entailment
+import Classicism.Syntax.VectorizeDerivable
 
 /-!
 # Principles as schemas, and the map's arrows as entailments
@@ -17,6 +18,10 @@ reads each record theorem `P … → Q …` together with its kernel-checked der
   `Syntax/Types.lean`).
 - `#classicism_entails_audit Mod …` does that for every record theorem of a module, deriving
   first where no derivation exists, and reports.
+- For a principle with a Ty-parameter, `#classicism_schema` declares its **list form**
+  too (`P.listQuoted`, `P.listSchema`, and `P.listSchema ⟹ P.schema`); for a record with
+  one, the audit declares `foo.listRule` and `foo.listEntails`, and `#classicism_certify`
+  declares `foo.listRule` (the sections *List forms* below).
 - `#classicism_entails foo …` reads the statement of `foo`, of the form
   `P₁ … → … → Pₙ … → Q …`, and its derivation `foo.derivable` (from
   `#classicism_derive`), and declares `foo.entails : P₁.schema ∪ … ∪ Pₙ.schema ⟹ Q.schema`.
@@ -47,10 +52,14 @@ def principleStatement (n : Name) : MetaM Expr := do
     unless body.isProp do throwError "{n} is not a principle: its type is not `Prop`"
     mkForallFVars xs (mkAppN (Lean.mkConst n (info.levelParams.map mkLevelParam)) xs)
 
-/-- `Ty.Closed x` or `RTy.Closed x`, as `x` is a type or a relational type. -/
+/-- `Ty.Closed x`, `RTy.Closed x` or `Ty.AllClosed x`, as `x` is a type, a relational type
+or a list of types. -/
 def closedProp (x : Expr) : MetaM Expr := do
-  if (← whnf (← inferType x)).isConstOf ``Classicism.Meta.Ty then
+  let ty ← whnf (← inferType x)
+  if ty.isConstOf ``Classicism.Meta.Ty then
     mkAppM ``Classicism.Meta.Ty.Closed #[x]
+  else if ty.isAppOf ``List then
+    mkAppM ``Classicism.Meta.Ty.AllClosed #[x]
   else
     mkAppM ``Classicism.Meta.RTy.Closed #[x]
 
@@ -84,10 +93,238 @@ def declareSchema (n : Name) : TermElabM Unit := do
   withOptions (Elab.async.set · false) do addDecl (.defnDecl dv)
   setReducibilityStatus (n ++ `schema) .reducible
 
+/-- A proof that the type `e` is closed, from proofs `hyps` that some free variables are:
+by its constructors down to those variables, and by evaluation for anything else. -/
+partial def closedProof (hyps : Array (Expr × Expr)) (e : Expr) : MetaM Expr := do
+  if let some (_, h) := hyps.find? (·.1 == e) then return h
+  let e' ← whnfR e
+  match e'.getAppFnArgs with
+  | (``Classicism.Meta.Ty.e, #[]) => pure (Lean.mkConst ``Classicism.Meta.Ty.closed_e)
+  | (``Classicism.Meta.Ty.rel, #[ρ]) =>
+    mkAppM ``Iff.mpr #[← mkAppM ``Classicism.Meta.Ty.closed_rel #[ρ], ← closedProof hyps ρ]
+  | (``Classicism.Meta.RTy.t, #[]) => pure (Lean.mkConst ``Classicism.Meta.RTy.closed_t)
+  | (``Classicism.Meta.RTy.arr, #[σ, ρ]) =>
+    mkAppM ``Iff.mpr #[← mkAppM ``Classicism.Meta.RTy.closed_arr #[σ, ρ],
+      ← mkAppM ``And.intro #[← closedProof hyps σ, ← closedProof hyps ρ]]
+  | (``Classicism.Meta.RTy.arrs, #[σs, ρ]) =>
+    mkAppM ``Iff.mpr #[← mkAppM ``Classicism.Meta.RTy.closed_arrs #[σs, ρ],
+      ← mkAppM ``And.intro #[← closedProof hyps σs, ← closedProof hyps ρ]]
+  | (``List.cons, #[_, σ, tl]) =>
+    if tl.isAppOf ``List.nil then
+      mkAppM ``Classicism.Meta.Ty.allClosed_singleton #[← closedProof hyps σ]
+    else mkDecideProof (← closedProp e)
+  | _ => mkDecideProof (← closedProp e)
+
+/-- A proof of `x ∈ q.schema`, that is of the body `∃ rest, rest closed ∧ x = q rest`, at
+the arguments `args`: `⟨args, closedness, rfl⟩`, the closedness from `hyps`, and the
+equation `eq?` in place of `rfl` when it is given. -/
+partial def schemaMemBuild (hyps : Array (Expr × Expr)) (x : Expr) (args : Array Expr) (q : Expr)
+    (eq? : Option Expr := none) : MetaM Expr := do
+  let body ← instantiateMVars (← schemaBody q x)
+  go body args.toList args.toList
+where
+  go (prop : Expr) (args cargs : List Expr) : MetaM Expr := do
+    if prop.isAppOfArity ``Exists 2 then
+      let pred := prop.appArg!
+      match args with
+      | a :: rest =>
+        let inner ← go (pred.beta #[a]).headBeta rest cargs
+        mkAppOptM ``Exists.intro #[none, pred, a, inner]
+      | [] => throwError "schema membership: too few arguments"
+    else if prop.isAppOfArity ``And 2 then
+      match cargs with
+      | c :: rest =>
+        mkAppM ``And.intro #[← closedProof hyps c, ← go prop.appArg! [] rest]
+      | [] => throwError "schema membership: too few arguments"
+    else
+      match eq? with
+      | some h => pure h
+      | none => mkEqRefl x
+
+/-- A proof that `x` is in `P.schema`: `⟨args, closedness, rfl⟩`, the arguments found by
+unification and their closedness from `hyps`. -/
+def schemaMem (P : Name) (x : Expr) (hyps : Array (Expr × Expr) := #[]) : MetaM Expr := do
+  let quoted := Lean.mkConst (P ++ `quoted)
+  let qty ← inferType quoted
+  -- metavariables for the schema's parameters
+  let (mvars, _, _) ← forallMetaTelescope qty
+  let inst := mkAppN quoted mvars
+  unless ← isDefEq inst x do
+    throwError "entails: the premise{indentExpr x}\nis not an instance of {P}"
+  let args ← mvars.mapM instantiateMVars
+  schemaMemBuild hyps x args quoted
+
+/-! ### List forms
+
+A principle with a Ty-parameter has a **list form** beside its schema: one instance for
+each finite list of types, the empty list included (`VECTORIZATION-PLAN.md`). It is
+*defined*, never written: `P.listQuoted σs …` is `P.quoted` at the type variable `var 0`,
+vectorized along `0 ↦ σs` (`Syntax/Vectorize.lean`), so it cannot be mis-stated. The
+first Ty-parameter is the one vectorized, which in every principle of the map is its
+input; a second (Relational Choice's output) stays a single type, passed through the type
+variable `var 1` assigned the one-element list of it, and a Rel-parameter is passed as
+itself. The assignment so mentions only the Ty-parameters, and a record over the same
+ones vectorizes along the same assignment, which is what lets its instances come out as
+list forms on the nose.
+Declared with it:
+
+- `P.listSchema`, its instances over closed types;
+- `P.listQuoted_single`, that at a one-element list it is the principle: by computation,
+  up to the Rel-parameters, which the translation leaves alone when they are closed;
+- `P.schema_subset_listSchema` and `P.listSchema_entails_schema`, the list form entails
+  the restricted form. -/
+
+/-- The kinds of a principle's parameters, from `P.quoted`'s type: `true` for a type, `false`
+for a relational type. -/
+def paramKinds (n : Name) : MetaM (Array Bool) := do
+  forallTelescope (← inferType (Lean.mkConst (n ++ `quoted))) fun xs _ => xs.mapM fun x => do
+    pure ((← whnf (← inferType x)).isConstOf ``Classicism.Meta.Ty)
+
+/-- The type variable standing for the Ty-parameter at position `j`: `var 0` for the
+vectorized one (the first), `var 1`, `var 2`, … for the others, in order. -/
+def tyVarIndex (kinds : Array Bool) (j : Nat) : Nat :=
+  ((List.range j).filter fun i => kinds[i]!).length
+
+/-- The entries of the assignment of a list form: the list, then the one-element list of
+each other Ty-parameter's type, in order. -/
+def listEntries (kinds : Array Bool) (i₀ : Nat) (xs : Array Expr) : MetaM (Array Expr) := do
+  let tyE := Lean.mkConst ``Classicism.Meta.Ty
+  let entries ← (List.range kinds.size).filterMapM fun j => do
+    if j == i₀ then pure (some xs[j]!)
+    else if kinds[j]! then pure (some (← mkListLit tyE [xs[j]!]))
+    else pure none
+  return entries.toArray
+
+/-- The assignment of a list form, given its arguments `xs` (the list at position `i₀`):
+`Assign.ofList` of the list and of the one-element list of each other Ty-parameter's type,
+in order. It mentions no Rel-parameter, so that a principle and a record over the same
+Ty-parameters vectorize along the same assignment. -/
+def listAssign (kinds : Array Bool) (i₀ : Nat) (xs : Array Expr) : MetaM Expr := do
+  let tyE := Lean.mkConst ``Classicism.Meta.Ty
+  let entries ← (List.range kinds.size).filterMapM fun j => do
+    if j == i₀ then pure (some xs[j]!)
+    else if kinds[j]! then pure (some (← mkListLit tyE [xs[j]!]))
+    else pure none
+  mkAppM ``Classicism.Meta.Assign.ofList #[← mkListLit (← mkAppM ``List #[tyE]) entries]
+
+/-- The binders of a list form: the list at `i₀`, the others with their kinds. -/
+def listBinders (kinds : Array Bool) (i₀ : Nat) : MetaM (Array (Name × Expr)) := do
+  let tyE := Lean.mkConst ``Classicism.Meta.Ty
+  let listTy ← mkAppM ``List #[tyE]
+  return kinds.mapIdx fun j k =>
+    if j == i₀ then (`σs, listTy)
+    else if k then (Name.mkSimple s!"τ{j}", tyE)
+    else (Name.mkSimple s!"ρ{j}", Lean.mkConst ``Classicism.Meta.RTy)
+
+/-- Eliminate `hyp`, a membership `∃ x₁ …, x₁ closed ∧ … ∧ a = q x₁ …`, into a proof of
+`goal`, handing the continuation the types, their closedness, and the equation. -/
+partial def elimSchemaMem (hyp goal : Expr)
+    (k : Array Expr → Array (Expr × Expr) → Expr → MetaM Expr)
+    (xs : Array Expr := #[]) (hyps : Array (Expr × Expr) := #[]) : MetaM Expr := do
+  let hty ← whnf (← inferType hyp)
+  if hty.isAppOfArity ``And 2 then
+    let c := hty.appFn!.appArg!
+    elimSchemaMem (← mkAppM ``And.right #[hyp]) goal k xs (hyps.push (c.appArg!, ← mkAppM ``And.left #[hyp]))
+  else if hty.isAppOfArity ``Exists 2 then
+    let dom := hty.getAppArgs[0]!
+    let pred := hty.getAppArgs[1]!
+    let kk ← withLocalDeclD `x dom fun x => do
+      withLocalDeclD `hx (← instantiateMVars (mkApp pred x).headBeta) fun hx => do
+        mkLambdaFVars #[x, hx] (← elimSchemaMem hx goal k (xs.push x) hyps)
+    mkAppOptM ``Exists.elim #[dom, pred, goal, hyp, kk]
+  else
+    k xs hyps hyp
+
+/-- Declare the list form of the principle `n`, if it has a Ty-parameter. -/
+def declareListForm (n : Name) : TermElabM Bool := do
+  let kinds ← paramKinds n
+  let some i₀ := kinds.findIdx? (fun b => b) | return false
+  let quoted := Lean.mkConst (n ++ `quoted)
+  let pureSig := Lean.mkConst ``Classicism.Meta.Signature.pure
+  let sentenceTy := mkApp (Lean.mkConst ``Classicism.Meta.Sentence) pureSig
+  let tyVar (j : Nat) := mkApp (Lean.mkConst ``Classicism.Meta.Ty.var) (mkNatLit j)
+  -- `listQuoted`
+  let binders ← listBinders kinds i₀
+  let (lqTy, lqVal) ← withLocalDeclsDND binders fun xs => do
+    let θ ← listAssign kinds i₀ xs
+    let args := (List.range kinds.size).toArray.map fun j =>
+      if kinds[j]! then tyVar (tyVarIndex kinds j) else xs[j]!
+    let hc := mkApp (Lean.mkConst ``Classicism.Meta.Signature.pure_vecFixed) θ
+    let body ← mkAppM ``Classicism.Meta.Term.vec1 #[θ, hc, mkAppN quoted args]
+    pure (← mkForallFVars xs sentenceTy, ← mkLambdaFVars xs body)
+  let lq := n ++ `listQuoted
+  let dv : DefinitionVal :=
+    { name := lq, levelParams := [], type := lqTy, value := lqVal, hints := .abbrev, safety := .safe }
+  withOptions (Elab.async.set · false) do addDecl (.defnDecl dv)
+  modifyEnv fun env => addNoncomputable env lq
+  setReducibilityStatus lq .reducible
+  -- `listSchema`
+  let ls := n ++ `listSchema
+  let schema ← schemaOfQuoted (Lean.mkConst lq)
+  let lsTy ← inferType schema
+  let dv : DefinitionVal :=
+    { name := ls, levelParams := [], type := lsTy, value := schema, hints := .abbrev, safety := .safe }
+  withOptions (Elab.async.set · false) do addDecl (.defnDecl dv)
+  modifyEnv fun env => addNoncomputable env ls
+  setReducibilityStatus ls .reducible
+  -- `listQuoted_single`: at `[σ]`, the principle at `σ`, given the Rel-parameters closed
+  let tyE := Lean.mkConst ``Classicism.Meta.Ty
+  let sbinders := binders.set! i₀ (`σ, tyE)
+  let (lsTy, lsVal) ← withLocalDeclsDND sbinders fun xs => do
+    let rels := (List.range kinds.size).filter (fun j => !kinds[j]!)
+    let hbinders ← rels.toArray.mapM fun j => do
+      pure (Name.mkSimple s!"h{j}", ← mkAppM ``Classicism.Meta.RTy.Closed #[xs[j]!])
+    withLocalDeclsDND hbinders fun hs => do
+      let single ← mkListLit tyE [xs[i₀]!]
+      let lxs := xs.set! i₀ single
+      let lhs := mkAppN (Lean.mkConst lq) lxs
+      let θ ← listAssign kinds i₀ lxs
+      let rem := (List.range kinds.size).toArray.map fun j =>
+        if kinds[j]! then xs[j]! else mkApp2 (Lean.mkConst ``Classicism.Meta.RTy.vec) θ xs[j]!
+      let remE := mkAppN quoted rem
+      unless ← isDefEq lhs remE do
+        throwError "list form of {n}: at a one-element list it does not compute to the principle"
+      let mut pf ← mkEqRefl quoted
+      let mut r := 0
+      for j in List.range kinds.size do
+        if kinds[j]! then
+          pf ← mkCongrFun pf xs[j]!
+        else
+          pf ← mkCongr pf (← mkAppM ``Classicism.Meta.RTy.vec_closed #[θ, hs[r]!])
+          r := r + 1
+      let stmt ← mkEq lhs (mkAppN quoted xs)
+      pure (← mkForallFVars (xs ++ hs) stmt, ← mkLambdaFVars (xs ++ hs) pf)
+  let tv : TheoremVal := { name := n ++ `listQuoted_single, levelParams := [], type := lsTy, value := lsVal }
+  withOptions (Elab.async.set · false) do addDecl (.thmDecl tv)
+  -- `schema_subset_listSchema`, and the entailment
+  let subTy ← mkAppM ``HasSubset.Subset #[Lean.mkConst (n ++ `schema), Lean.mkConst ls]
+  let subVal ← withLocalDeclD `a sentenceTy fun a => do
+    withLocalDeclD `ha (mkApp (Lean.mkConst (n ++ `schema)) a) fun ha => do
+      let goal := mkApp (Lean.mkConst ls) a
+      let body ← elimSchemaMem ha goal fun ys hyps heq => do
+        let single ← mkListLit tyE [ys[i₀]!]
+        let lys := ys.set! i₀ single
+        let rels := (List.range kinds.size).filter (fun j => !kinds[j]!)
+        let hrel ← rels.toArray.mapM fun j => closedProof hyps ys[j]!
+        let eqS ← mkAppM ``Eq.symm #[mkAppN (Lean.mkConst (n ++ `listQuoted_single)) (ys ++ hrel)]
+        let eqA ← mkAppM ``Eq.trans #[heq, eqS]
+        schemaMemBuild hyps a lys (Lean.mkConst lq) (some eqA)
+      mkLambdaFVars #[a, ha] body
+  let subVal ← instantiateMVars subVal
+  let tv : TheoremVal := { name := n ++ `schema_subset_listSchema, levelParams := [], type := subTy, value := subVal }
+  withOptions (Elab.async.set · false) do addDecl (.thmDecl tv)
+  let entTy ← mkAppM ``Classicism.Meta.AxiomSet.Entails #[Lean.mkConst ls, Lean.mkConst (n ++ `schema)]
+  let entVal ← mkAppM ``Classicism.Meta.AxiomSet.Entails.of_subset #[Lean.mkConst (n ++ `schema_subset_listSchema)]
+  let tv : TheoremVal := { name := n ++ `listSchema_entails_schema, levelParams := [], type := entTy, value := entVal }
+  withOptions (Elab.async.set · false) do addDecl (.thmDecl tv)
+  return true
+
 /-- `#classicism_schema P …`: each principle `P` becomes a schema, `P.schema`. -/
 syntax (name := classicismSchema) "#classicism_schema " ident+ : command
 
 @[command_elab classicismSchema] def elabSchema : CommandElab := fun stx => do
+  let mut lists : Nat := 0
+  let mut withTy : Nat := 0
   for id in stx[1].getArgs do
     let n ← liftCoreM (realizeGlobalConstNoOverloadWithInfo id)
     try
@@ -95,6 +332,14 @@ syntax (name := classicismSchema) "#classicism_schema " ident+ : command
       logInfo m!"{n} ⟶ {n ++ `schema}:{indentExpr (← getConstInfo (n ++ `quoted)).value!}"
     catch ex =>
       logError m!"{n}: no schema — {ex.toMessageData}"
+    if (← liftTermElabM (paramKinds n)).any (fun b => b) then
+      withTy := withTy + 1
+      try
+        if ← liftTermElabM (declareListForm n) then lists := lists + 1
+      catch ex =>
+        logError m!"{n}: no list form — {ex.toMessageData}"
+  if withTy > 0 then
+    logInfo m!"#classicism_schema: {lists} of {withTy} principles with a Ty-parameter have list forms"
 
 /-! ### Entailments -/
 
@@ -175,57 +420,6 @@ partial def unionMem (ss : List Expr) (i : Nat) (x h : Expr) : MetaM Expr := do
   let right := mkApp last x
   if i == ss.length - 1 then mkAppOptM ``Or.inr #[left, right, h]
   else mkAppOptM ``Or.inl #[left, right, ← unionMem prefix_ i x h]
-
-/-- A proof that the type `e` is closed, from proofs `hyps` that some free variables are:
-by its constructors down to those variables, and by evaluation for anything else. -/
-partial def closedProof (hyps : Array (Expr × Expr)) (e : Expr) : MetaM Expr := do
-  if let some (_, h) := hyps.find? (·.1 == e) then return h
-  let e' ← whnfR e
-  match e'.getAppFnArgs with
-  | (``Classicism.Meta.Ty.e, #[]) => pure (Lean.mkConst ``Classicism.Meta.Ty.closed_e)
-  | (``Classicism.Meta.Ty.rel, #[ρ]) =>
-    mkAppM ``Iff.mpr #[← mkAppM ``Classicism.Meta.Ty.closed_rel #[ρ], ← closedProof hyps ρ]
-  | (``Classicism.Meta.RTy.t, #[]) => pure (Lean.mkConst ``Classicism.Meta.RTy.closed_t)
-  | (``Classicism.Meta.RTy.arr, #[σ, ρ]) =>
-    mkAppM ``Iff.mpr #[← mkAppM ``Classicism.Meta.RTy.closed_arr #[σ, ρ],
-      ← mkAppM ``And.intro #[← closedProof hyps σ, ← closedProof hyps ρ]]
-  | _ => mkDecideProof (← closedProp e)
-
-/-- A proof of `x ∈ q.schema`, that is of the body `∃ rest, rest closed ∧ x = q rest`, at
-the arguments `args`: `⟨args, closedness, rfl⟩`, the closedness from `hyps`. -/
-partial def schemaMemBuild (hyps : Array (Expr × Expr)) (x : Expr) (args : Array Expr) (q : Expr) :
-    MetaM Expr := do
-  let body ← instantiateMVars (← schemaBody q x)
-  go body args.toList args.toList
-where
-  go (prop : Expr) (args cargs : List Expr) : MetaM Expr := do
-    if prop.isAppOfArity ``Exists 2 then
-      let pred := prop.appArg!
-      match args with
-      | a :: rest =>
-        let inner ← go (pred.beta #[a]).headBeta rest cargs
-        mkAppOptM ``Exists.intro #[none, pred, a, inner]
-      | [] => throwError "schema membership: too few arguments"
-    else if prop.isAppOfArity ``And 2 then
-      match cargs with
-      | c :: rest =>
-        mkAppM ``And.intro #[← closedProof hyps c, ← go prop.appArg! [] rest]
-      | [] => throwError "schema membership: too few arguments"
-    else
-      mkEqRefl x
-
-/-- A proof that `x` is in `P.schema`: `⟨args, closedness, rfl⟩`, the arguments found by
-unification and their closedness from `hyps`. -/
-def schemaMem (P : Name) (x : Expr) (hyps : Array (Expr × Expr) := #[]) : MetaM Expr := do
-  let quoted := Lean.mkConst (P ++ `quoted)
-  let qty ← inferType quoted
-  -- metavariables for the schema's parameters
-  let (mvars, _, _) ← forallMetaTelescope qty
-  let inst := mkAppN quoted mvars
-  unless ← isDefEq inst x do
-    throwError "entails: the premise{indentExpr x}\nis not an instance of {P}"
-  let args ← mvars.mapM instantiateMVars
-  schemaMemBuild hyps x args quoted
 
 /-- The antecedent of `imp X Y`, i.e. of `app (app or (neg X)) Y`, reducing each layer. -/
 def impPremise? (s : Expr) : MetaM (Option Expr) := do
@@ -497,8 +691,11 @@ record theorem read that way, as a theorem of `C` for every choice of object typ
 each instance written through its schema's `quoted`, so that the rule composes with
 `Theorem.mp` and the schemas' membership. -/
 
-/-- Declare `foo.rule`. -/
-def declareRule (foo : Name) : TermElabM Unit := do
+/-- The rule of the record `foo` at the object types `tvs`, any expressions of the kinds of
+the derivation's parameters: the statement `imp (P₁.quoted …) (… (Q.quoted …))`, its
+derivation in `C`, and the instances' arguments, the premises' and the conclusion's. -/
+def ruleAt (foo : Name) (tvs : Array Expr) :
+    TermElabM (Expr × Expr × Array (Array Expr) × Array Expr) := do
   let info ← getConstInfo foo
   let (ps, q) ← recordShape info.type
   let dname := foo ++ `derivable
@@ -507,29 +704,260 @@ def declareRule (foo : Name) : TermElabM Unit := do
   for p in q :: ps do
     unless (← getEnv).contains (p ++ `schema) do
       throwError "rule: no schema {p ++ `schema}; run `#classicism_schema {p}` first"
-  let dty ← inferType (Lean.mkConst dname)
   let pureSig := Lean.mkConst ``Classicism.Meta.Signature.pure
   let axiomsC := mkApp (Lean.mkConst ``Classicism.Meta.C.axioms) pureSig
-  let (stmt, proof) ← forallTelescope dty fun tvs body => do
-    let (pargs, cargs) ← instanceArgsOf info.type tvs
-    let nil := mkApp (Lean.mkConst ``List.nil [Level.zero]) Translate.tyE
-    let mut exp := mkAppN (Lean.mkConst (q ++ `quoted)) cargs
-    for (p, args) in (ps.zip pargs.toList).reverse do
-      exp := Translate.impE nil (mkAppN (Lean.mkConst (p ++ `quoted)) args) exp
-    let d := mkAppN (Lean.mkConst dname) tvs
-    let some (Ax, got) := derivableParts? (← whnf body)
-      | throwError "rule: {dname} does not have a `Theorem` type"
-    -- a derivation in `C⁻` is one in `C`
-    let d ← if Ax.isAppOf ``Classicism.Meta.C.axioms then pure d else do
-      let lift ← withLocalDeclD `a (mkApp (Lean.mkConst ``Classicism.Meta.Sentence) pureSig) fun a =>
-        withLocalDeclD `h (mkApp Ax a) fun h => do
-          mkLambdaFVars #[a, h] (← mkAppOptM ``False.elim #[mkApp axiomsC a, h])
-      mkAppM ``Classicism.Meta.Derivable.mono #[lift, d]
-    let D ← convertDeriv axiomsC d got exp
+  let (pargs, cargs) ← instanceArgsOf info.type tvs
+  let nil := mkApp (Lean.mkConst ``List.nil [Level.zero]) Translate.tyE
+  let mut exp := mkAppN (Lean.mkConst (q ++ `quoted)) cargs
+  for (p, args) in (ps.zip pargs.toList).reverse do
+    exp := Translate.impE nil (mkAppN (Lean.mkConst (p ++ `quoted)) args) exp
+  let d := mkAppN (Lean.mkConst dname) tvs
+  let some (Ax, got) := derivableParts? (← whnf (← inferType d))
+    | throwError "rule: {dname} does not have a `Theorem` type"
+  -- a derivation in `C⁻` is one in `C`
+  let d ← if Ax.isAppOf ``Classicism.Meta.C.axioms then pure d else do
+    let lift ← withLocalDeclD `a (mkApp (Lean.mkConst ``Classicism.Meta.Sentence) pureSig) fun a =>
+      withLocalDeclD `h (mkApp Ax a) fun h => do
+        mkLambdaFVars #[a, h] (← mkAppOptM ``False.elim #[mkApp axiomsC a, h])
+    mkAppM ``Classicism.Meta.Derivable.mono #[lift, d]
+  let D ← convertDeriv axiomsC d got exp
+  return (exp, D, pargs, cargs)
+
+/-- Declare `foo.rule`. -/
+def declareRule (foo : Name) : TermElabM Unit := do
+  let dty ← inferType (Lean.mkConst (foo ++ `derivable))
+  let axiomsC := mkApp (Lean.mkConst ``Classicism.Meta.C.axioms) (Lean.mkConst ``Classicism.Meta.Signature.pure)
+  let (stmt, proof) ← forallTelescope dty fun tvs _ => do
+    let (exp, D, _, _) ← ruleAt foo tvs
     let thm ← mkAppM ``Classicism.Meta.Theorem #[axiomsC, exp]
     return (← mkForallFVars tvs thm, ← mkLambdaFVars tvs D)
   let proof ← instantiateMVars proof
   let tv : TheoremVal := { name := foo ++ `rule, levelParams := [], type := stmt, value := proof }
+  withOptions (Elab.async.set · false) do addDecl (.thmDecl tv)
+
+/-! ### List forms of records
+
+A record whose statement has a Ty-parameter has a list form too: its derivation, uniform
+in the parameter, holds at the type variable `var 0`, and the vectorization theorem
+(`C.Theorem.vec`) carries it to every list. Each instance comes out either as a list form,
+`P.listQuoted σs …`, when its first Ty-argument is the record's vectorized parameter, or
+as a restricted instance at the translated types (`Atomicity` at `σs ⇒* τ`), the closed
+Rel-parameters' translations rewritten away. So
+
+    foo.listRule : ∀ σs … ρ …, ρ closed → … → C.Theorem (imp (P₁.listQuoted σs …) (… Q…))
+    foo.listEntails : P₁.listSchema ∪ … ⟹ Q.listSchema
+
+with a restricted instance's schema in place of a list schema where the instance is
+restricted, and the family of the conclusion's instances in place of `Q.listSchema` where
+the conclusion is not `Q`'s list form at the record's own parameters. The forms are
+checked against the vectorized derivation by unification, and a record whose instances
+do not take one of these forms gets none. -/
+
+mutual
+  /-- The translation along `θ` of a type expression, as a list expression: computed
+  through the constructors and the assignment's entries `ls` (`θ` is `Assign.ofList ls`),
+  and left as `Ty.vec θ x` at anything else, so that a remnant keeps `θ` folded. -/
+  partial def vecTyExpr (θ : Expr) (ls : Array Expr) (a : Expr) : MetaM Expr := do
+    let tyE := Lean.mkConst ``Classicism.Meta.Ty
+    let a' ← whnfR a
+    match a'.getAppFnArgs with
+    | (``Classicism.Meta.Ty.e, #[]) => mkListLit tyE [a']
+    | (``Classicism.Meta.Ty.rel, #[ρ]) =>
+      mkListLit tyE [mkApp (Lean.mkConst ``Classicism.Meta.Ty.rel) (← vecRTyExpr θ ls ρ)]
+    | (``Classicism.Meta.Ty.var, #[n]) =>
+      match n.nat? <|> n.rawNatLit? with
+      | some i => pure (ls[i]?.getD (← mkListLit tyE [a']))
+      | none => pure (mkApp2 (Lean.mkConst ``Classicism.Meta.Ty.vec) θ a)
+    | _ => pure (mkApp2 (Lean.mkConst ``Classicism.Meta.Ty.vec) θ a)
+  /-- The translation along `θ` of a relational type expression, likewise. -/
+  partial def vecRTyExpr (θ : Expr) (ls : Array Expr) (a : Expr) : MetaM Expr := do
+    let a' ← whnfR a
+    match a'.getAppFnArgs with
+    | (``Classicism.Meta.RTy.t, #[]) => pure a'
+    | (``Classicism.Meta.RTy.arr, #[σ, ρ]) =>
+      let l ← vecTyExpr θ ls σ
+      let r ← vecRTyExpr θ ls ρ
+      match l.getAppFnArgs with
+      | (``List.cons, #[_, x, tl]) =>
+        if tl.isAppOf ``List.nil then return mkApp2 (Lean.mkConst ``Classicism.Meta.RTy.arr) x r
+        else return mkApp2 (Lean.mkConst ``Classicism.Meta.RTy.arrs) l r
+      | _ => return mkApp2 (Lean.mkConst ``Classicism.Meta.RTy.arrs) l r
+    | _ => pure (mkApp2 (Lean.mkConst ``Classicism.Meta.RTy.vec) θ a)
+end
+
+/-- The element of the one-element list a type expression translates to, if it is one. -/
+def singleOf (θ : Expr) (ls : Array Expr) (a : Expr) : MetaM (Option Expr) := do
+  let r ← vecTyExpr θ ls a
+  match r.getAppFnArgs with
+  | (``List.cons, #[_, x, tl]) => pure (if tl.isAppOf ``List.nil then some x else none)
+  | _ => pure none
+
+/-- Is `a` the type variable `var 0`? -/
+def isTyVar0 (a : Expr) : Bool :=
+  a.isAppOfArity ``Classicism.Meta.Ty.var 1 &&
+    (a.appArg!.nat? == some 0 || a.appArg!.rawNatLit? == some 0)
+
+/-- Does `a` mention a type variable? -/
+def hasTyVar (a : Expr) : Bool := (a.find? (·.isConstOf ``Classicism.Meta.Ty.var)).isSome
+
+/-- The form the instance `P.quoted as` takes under vectorization along `θ`, and whether
+it is a list form. -/
+def instanceForm (θ : Expr) (ls : Array Expr) (P : Name) (as : Array Expr) : MetaM (Expr × Bool) := do
+  let σs := ls[0]!
+  let kinds ← paramKinds P
+  let i₀? := kinds.findIdx? (fun b => b)
+  let hasList := (← getEnv).contains (P ++ `listQuoted)
+  let isList := match i₀? with
+    | some i₀ => isTyVar0 as[i₀]! && hasList
+    | none => false
+  let mut args : Array Expr := #[]
+  for j in List.range kinds.size do
+    let a := as[j]!
+    if isList && some j == i₀? then
+      args := args.push σs
+    else if kinds[j]! then
+      let some a' ← singleOf θ ls a
+        | throwError "list rule: the argument{indentExpr a}\nof {P} does not translate to one type"
+      args := args.push a'
+    else if isList then
+      if hasTyVar a then
+        throwError "list rule: the relational argument{indentExpr a}\nof {P}'s list form mentions a type variable"
+      args := args.push a
+    else
+      args := args.push (← vecRTyExpr θ ls a)
+  let f := Lean.mkConst (P ++ if isList then `listQuoted else `quoted)
+  return (mkAppN f args, isList)
+
+/-- What the list rule of a record records for its list entailment. -/
+structure ListRuleInfo where
+  kinds : Array Bool
+  i₀ : Nat
+  /-- The premises' principles and whether each is a list form. -/
+  premises : Array (Name × Bool)
+  conclusion : Name
+  conclusionIsList : Bool
+
+/-- Declare `foo.listRule`, if the record has a Ty-parameter. -/
+def declareListRule (foo : Name) : TermElabM (Option ListRuleInfo) := do
+  let info ← getConstInfo foo
+  let (ps, q) ← recordShape info.type
+  let dty ← inferType (Lean.mkConst (foo ++ `derivable))
+  let kinds ← forallTelescope dty fun tvs _ => tvs.mapM fun tv => do
+    pure ((← whnf (← inferType tv)).isConstOf ``Classicism.Meta.Ty)
+  let some i₀ := kinds.findIdx? (fun b => b) | return none
+  let binders ← listBinders kinds i₀
+  let rels := (List.range kinds.size).filter (fun j => !kinds[j]!)
+  let axiomsC := mkApp (Lean.mkConst ``Classicism.Meta.C.axioms) (Lean.mkConst ``Classicism.Meta.Signature.pure)
+  let nil := mkApp (Lean.mkConst ``List.nil [Level.zero]) Translate.tyE
+  let (stmt, proof, forms, qform) ← withLocalDeclsDND binders fun xs => do
+    let hbinders ← rels.toArray.mapM fun j => do
+      pure (Name.mkSimple s!"h{j}", ← mkAppM ``Classicism.Meta.RTy.Closed #[xs[j]!])
+    withLocalDeclsDND hbinders fun hs => do
+      let θ ← listAssign kinds i₀ xs
+      let hc := mkApp (Lean.mkConst ``Classicism.Meta.Signature.pure_vecFixed) θ
+      let tvs := (List.range kinds.size).toArray.map fun j =>
+        if kinds[j]! then mkApp (Lean.mkConst ``Classicism.Meta.Ty.var) (mkNatLit (tyVarIndex kinds j))
+        else xs[j]!
+      let (exp, D, pargs, cargs) ← ruleAt foo tvs
+      let d' ← mkAppM ``Classicism.Meta.C.Theorem.vec #[θ, hc, D]
+      let ls ← listEntries kinds i₀ xs
+      let mut forms : Array (Expr × Bool) := #[]
+      for (p, as) in ps.zip pargs.toList do
+        forms := forms.push (← instanceForm θ ls p as)
+      let qform ← instanceForm θ ls q cargs
+      let mut S := qform.1
+      for f in forms.reverse do
+        S := Translate.impE nil f.1 S
+      let V ← mkAppM ``Classicism.Meta.Term.vec1 #[θ, hc, exp]
+      unless ← isDefEq V S do
+        throwError "list rule: the vectorized derivation's statement{indentExpr V}\nis not{indentExpr S}"
+      -- the closed Rel-parameters' translations, rewritten away
+      let rems := rels.toArray.map fun j => mkApp2 (Lean.mkConst ``Classicism.Meta.RTy.vec) θ xs[j]!
+      let rtyE := Lean.mkConst ``Classicism.Meta.RTy
+      let (f, eqpf) ← withLocalDeclsDND (rems.map fun _ => (`y, rtyE)) fun ys => do
+        let mut body := S
+        for (r, y) in rems.zip ys do
+          body := (← kabstract body r).instantiate1 y
+        let f ← mkLambdaFVars ys body
+        let mut pf ← mkEqRefl f
+        for h in hs do
+          pf ← mkCongr pf (← mkAppM ``Classicism.Meta.RTy.vec_closed #[θ, h])
+        pure (f, pf)
+      let final := (mkAppN f (rels.toArray.map fun j => xs[j]!)).headBeta
+      let thmOf (x : Expr) : MetaM Expr := mkAppM ``Classicism.Meta.Theorem #[axiomsC, x]
+      let pf ← mkEqMP (← mkCongrArg (← mkAppM ``Classicism.Meta.Theorem #[axiomsC]) eqpf) d'
+      let stmt ← mkForallFVars (xs ++ hs) (← thmOf final)
+      pure (stmt, ← mkLambdaFVars (xs ++ hs) pf, forms, qform)
+  let proof ← instantiateMVars proof
+  let tv : TheoremVal := { name := foo ++ `listRule, levelParams := [], type := stmt, value := proof }
+  withOptions (Elab.async.set · false) do addDecl (.thmDecl tv)
+  return some { kinds, i₀, premises := (ps.zip forms.toList).toArray.map fun (p, f) => (p, f.2),
+                conclusion := q, conclusionIsList := qform.2 }
+
+/-- Declare `foo.listEntails`, from `foo.listRule`: the premises' list schemas (a restricted
+instance's schema where the instance is restricted) entail the conclusion's list schema,
+or the family of the conclusion's instances where it is not `Q`'s list form at the
+record's own parameters. -/
+def declareListEntails (foo : Name) (info : ListRuleInfo) : TermElabM Unit := do
+  let pureSig := Lean.mkConst ``Classicism.Meta.Signature.pure
+  let sentenceTy := mkApp (Lean.mkConst ``Classicism.Meta.Sentence) pureSig
+  let axiomsC := mkApp (Lean.mkConst ``Classicism.Meta.C.axioms) pureSig
+  let sets := info.premises.toList.map fun (p, isList) =>
+    Lean.mkConst (p ++ if isList then `listSchema else `schema)
+  let Ps ← if sets.isEmpty then pure (mkApp (Lean.mkConst ``Classicism.Meta.AxiomSet.empty) pureSig)
+    else unionOf sets
+  let ruleName := foo ++ `listRule
+  let ruleTy ← inferType (Lean.mkConst ruleName)
+  let nParams := info.kinds.size
+  -- the conclusion set
+  let Qs ← forallTelescope ruleTy fun ys body => do
+    let xs := ys[:nParams].toArray
+    let some (_, S) := derivableParts? (← whnf body) | throwError "list entails: internal"
+    let mut Y := S
+    for _ in info.premises do
+      let some rest := impRest? (← whnfR Y) | throwError "list entails: not an implication"
+      Y := rest
+    let qls := info.conclusion ++ `listQuoted
+    if info.conclusionIsList && Y.isAppOf qls && Y.getAppArgs == xs then
+      pure (Lean.mkConst (info.conclusion ++ `listSchema))
+    else
+      withLocalDeclD `a sentenceTy fun a => do
+        let mut body ← mkEq a Y
+        for x in xs.reverse do
+          body ← mkAppM ``And #[← closedProp x, body]
+        for x in xs.reverse do
+          body ← mkAppM ``Exists #[← mkLambdaFVars #[x] body]
+        mkLambdaFVars #[a] body
+  let stmt ← mkAppM ``Classicism.Meta.AxiomSet.Entails #[Ps, Qs]
+  let target ← withC Ps
+  let proof ← withLocalDeclD `a sentenceTy fun a => do
+    withLocalDeclD `ha (← whnfR (mkApp Qs a)) fun ha => do
+      let goal ← mkAppM ``Classicism.Meta.Theorem #[target, a]
+      let body ← elimSchemaMem ha goal fun ys hyps heq => do
+        let rels := (List.range nParams).filter (fun j => !info.kinds[j]!)
+        let hrel ← rels.toArray.mapM fun j => closedProof hyps ys[j]!
+        let rule := mkAppN (Lean.mkConst ruleName) (ys ++ hrel)
+        let lift ← withLocalDeclD `b sentenceTy fun b =>
+          withLocalDeclD `h (mkApp axiomsC b) fun h => do
+            mkLambdaFVars #[b, h] (← mkAppOptM ``Or.inl #[mkApp axiomsC b, mkApp Ps b, h])
+        let mut cur ← mkAppM ``Classicism.Meta.Derivable.mono #[lift, rule]
+        for (i, (p, isList)) in info.premises.toList.zipIdx.map (fun (x, i) => (i, x)) do
+          let cty ← whnf (← inferType cur)
+          let some (_, st) := derivableParts? cty | throwError "list entails: internal (premise)"
+          let some X ← impPremise? st | throwError "list entails: not an implication"
+          let X ← instantiateMVars X
+          let q := Lean.mkConst (p ++ if isList then `listQuoted else `quoted)
+          let mem ← schemaMemBuild hyps X X.getAppArgs q
+          let memU ← unionMem sets i X mem
+          let ax ← mkAppOptM ``Classicism.Meta.Derivable.axiom
+            #[pureSig, target, X, ← mkAppOptM ``Or.inr #[mkApp axiomsC X, mkApp Ps X, memU]]
+          cur ← mkAppM ``Classicism.Meta.Derivable.impE #[cur, ax]
+        let motive ← withLocalDeclD `s sentenceTy fun s => do
+          mkLambdaFVars #[s] (← mkAppM ``Classicism.Meta.Theorem #[target, s])
+        mkAppM ``Eq.mpr #[← mkAppM ``congrArg #[motive, heq], cur]
+      mkLambdaFVars #[a, ha] body
+  let proof ← instantiateMVars proof
+  let tv : TheoremVal := { name := foo ++ `listEntails, levelParams := [], type := stmt, value := proof }
   withOptions (Elab.async.set · false) do addDecl (.thmDecl tv)
 
 /-- `#classicism_rule foo …`: each record theorem `foo` with a derivation becomes the rule
@@ -545,11 +973,20 @@ syntax (name := classicismRule) "#classicism_rule " ident+ : command
     catch ex =>
       logError m!"{n}: no rule — {ex.toMessageData}"
 
+/-- Declare `foo.listRule` when `foo` has a Ty-parameter, and report it, or why not. -/
+def certifyListRule (n : Name) : CommandElabM Unit := do
+  try
+    if (← liftTermElabM (declareListRule n)).isSome then
+      logInfo m!"{n} ⟶ {n ++ `listRule} : {(← getConstInfo (n ++ `listRule)).type}"
+  catch ex =>
+    logInfo m!"{n}: no list rule — {ex.toMessageData}"
+
 /-- `#classicism_certify foo …`: the whole chain for a theorem `foo : P₁ … → … → Q …` of
 the shallow layer, at the point where it is stated. It makes schemas of the principles it
 mentions that have none yet, derives `foo` in the object language (`foo.derivable`), and
-declares the rule `foo.rule`; each step is skipped when its declaration already exists. The
-report gives the rule and the axioms it rests on. -/
+declares the rule `foo.rule`, and, when `foo` has a Ty-parameter, its list form
+`foo.listRule`; each step is skipped when its declaration already exists. The report gives
+the rule and the axioms it rests on. -/
 syntax (name := classicismCertify) "#classicism_certify " ident+ : command
 
 @[command_elab classicismCertify] def elabCertify : CommandElab := fun stx => do
@@ -565,6 +1002,7 @@ syntax (name := classicismCertify) "#classicism_certify " ident+ : command
       liftTermElabM (declareRule n)
       let ax ← liftTermElabM (collectAxioms (n ++ `rule))
       logInfo m!"{n} ⟶ {n ++ `rule} : {(← getConstInfo (n ++ `rule)).type}\ncertified ✓ (axioms: {ax.toList})"
+      certifyListRule n
     catch ex =>
       logError m!"{n}: not certified — {ex.toMessageData}"
 
@@ -583,7 +1021,8 @@ syntax (name := classicismEntails) "#classicism_entails " ident+ : command
 
 /-- `#classicism_entails_audit Mod …`: for every theorem `foo` of the module with a strict twin
 `foo.strict`, derive it if `foo.strict.derivable` does not exist, then declare
-`foo.entails`; report what was certified and what was not, and why. -/
+`foo.entails`, and, for a record with a Ty-parameter, `foo.listRule` and `foo.listEntails`;
+report what was certified and what was not, and why. -/
 syntax (name := classicismEntailsAudit) "#classicism_entails_audit " ident+ : command
 
 @[command_elab classicismEntailsAudit] def elabEntailsAudit : CommandElab := fun stx => do
@@ -608,6 +1047,9 @@ syntax (name := classicismEntailsAudit) "#classicism_entails_audit " ident+ : co
     let mut ok : Nat := 0
     let mut lines : Array String := #[]
     let mut failures : Array MessageData := #[]
+    let mut withTy : Nat := 0
+    let mut listOk : Nat := 0
+    let mut listFailures : Array MessageData := #[]
     for n in names do
       let t₀ ← IO.monoMsNow
       try
@@ -621,8 +1063,23 @@ syntax (name := classicismEntailsAudit) "#classicism_entails_audit " ident+ : co
       catch ex =>
         failures := failures.push m!"{n}: {ex.toMessageData}"
         lines := lines.push s!"{n} ✗ {(← IO.monoMsNow) - t₀} ms"
+      -- the list form, for a record with a Ty-parameter
+      if (← getEnv).contains (n ++ `derivable) then
+        try
+          if let some info ← liftTermElabM (declareListRule n) then
+            withTy := withTy + 1
+            liftTermElabM (declareListEntails n info)
+            listOk := listOk + 1
+            lines := lines.push s!"{n} ✓ list form : {← liftTermElabM do
+              pure (toString (← Meta.ppExpr (← getConstInfo (n ++ `listEntails)).type))}"
+        catch ex =>
+          withTy := withTy + 1
+          listFailures := listFailures.push m!"{n}: no list form — {ex.toMessageData}"
     logInfo m!"{modId.getId}: {ok} of {names.size} record theorems certified as entailments; \
 {skipped.size} helper lemmas skipped\n{MessageData.joinSep failures.toList "\n"}\n\
 {"\n".intercalate lines.toList}"
+    if withTy > 0 then
+      logInfo m!"{modId.getId}: {listOk} of {withTy} record theorems with a Ty-parameter \
+certified in list form\n{MessageData.joinSep listFailures.toList "\n"}"
 
 end Classicism.Meta

@@ -51,6 +51,9 @@ def id : Assign := fun i => [.var i]
 /-- The variable `i` to `σs`, every other variable to itself. -/
 def single (i : Nat) (σs : List Ty) : Assign := fun j => if j = i then σs else [.var j]
 
+/-- The variable `j` to the `j`-th list of `ls`, every variable beyond them to itself. -/
+def ofList (ls : List (List Ty)) : Assign := fun j => ls.getD j [.var j]
+
 end Assign
 
 mutual
@@ -82,6 +85,12 @@ mutual
     | .t, _ => rfl
     | .arr σ ρ, h => by rw [RTy.vec_arr, Ty.vec_closed θ h.1, RTy.vec_closed θ h.2]
 end
+
+/-- Every type of a list is closed. -/
+abbrev Ty.AllClosed (σs : List Ty) : Prop := ∀ σ ∈ σs, σ.Closed
+
+theorem Ty.allClosed_singleton {σ : Ty} (h : σ.Closed) : Ty.AllClosed [σ] := by
+  simpa [Ty.AllClosed] using h
 
 /-- The context a context becomes: each variable's type replaced by its list, as a block. -/
 @[reducible] def Ctx.vec (θ : Assign) : Ctx → Ctx

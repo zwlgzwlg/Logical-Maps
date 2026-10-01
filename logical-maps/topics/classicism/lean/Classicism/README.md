@@ -573,6 +573,20 @@ over the derivation's parameters when it builds them (`Existence (σ → t)`).
 certify**, in seconds, at build time. These `foo.entails` are what the map's arrows can
 cite as certificates, once the map's generator is taught the statement shape.
 
+**List forms** (1 October; `VECTORIZATION-PLAN.md`). A principle with a Ty-parameter has
+a list form beside its schema: `P.listQuoted σs …` is `P.quoted` at the type variable
+`var 0` vectorized along `0 ↦ σs`, defined and so never mis-stated; `P.listSchema` its
+instances at closed types; `P.listQuoted_single`, that at `[σ]` it is the principle, by
+computation up to the closed Rel-parameters; `P.listSchema ⟹ P.schema`. All 20 such
+principles have one. A record with a Ty-parameter has `foo.listRule`, its derivation at
+`var 0` vectorized by `C.Theorem.vec`, each instance coming out as a list form or as a
+restricted instance at the translated types, and `foo.listEntails`, the arrow between the
+list forms: 41 of the 43 such records. The two that do not are Functional Choice into
+`τ → t` implies Relational Choice into `τ`, and its necessitation: there the relational
+argument `τ → t` mentions the record's second Ty-parameter, which the list form of
+Functional Choice receives as a Lean variable and the list form of Relational Choice as a
+type variable, so the two do not meet on the nose. Their list forms are for Phase 6.
+
 **Records as rules** (`#classicism_rule`, `#classicism_certify`). An entailment forgets
 which instance of the premise yields which instance of the conclusion; a metalogical
 proof that descends into the object language needs to keep that. `foo.rule` is the

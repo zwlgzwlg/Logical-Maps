@@ -22,7 +22,35 @@ of the same day is folded in (D1–D5, D8, §4–§6); the decisions taken are i
   builds `∃ σ' …, σ' closed ∧ … ∧ a = P.quoted σ' …`, proves closedness of compound types
   from the parameters' (`closedProof`), and threads the conclusion's closedness through
   `foo.entails`. The hand-written proofs that unpack membership were fewer than estimated:
-  ten sites in five files. Counts unchanged. Next: the list forms in the pipeline.
+  ten sites in five files. Counts unchanged.
+- **Phase 5 done** (1 October). `#classicism_schema` declares the list form of every
+  principle with a Ty-parameter, 20 of 20: `listQuoted`, `listSchema`, `listQuoted_single`
+  (the uniformity equation), `listSchema ⟹ schema`. The entailment audit declares
+  `foo.listRule` and `foo.listEntails` for 41 of the 43 records with a Ty-parameter, and
+  `#classicism_certify` declares `foo.listRule` (the Atomicity and BF-over-tuples steps
+  have theirs). The audits report the counts. What the implementation settled:
+  - The vectorized Ty-parameter is a principle's *first*; a second (Relational Choice's
+    output, the only case) is passed through the type variable `var 1` assigned the
+    one-element list of its type, so that the assignment mentions Ty-parameters only and
+    a principle and a record over the same Ty-parameters vectorize along the same
+    assignment. Rel-parameters are passed as themselves, and their translations, which
+    stand where they cannot reduce (`RTy.vec θ ρ`), are rewritten away by closedness at
+    the level of the statement. This replaces D5's "a principle can name the ones to
+    vectorize": no principle of the map needs more.
+  - A record's instance becomes a list form when its first Ty-argument is the record's
+    vectorized parameter, else a restricted instance at the translated types (the
+    conclusion of `extensionality_r_implies_functionality_r` is Functionality's list form,
+    its premise Extensionality at `σs ⇒* τ`). Each form is checked against the vectorized
+    derivation by unification.
+  - The two records without a list form: Functional Choice into `τ → t` implies Relational
+    Choice into `τ`, and its necessitation, where a relational argument mentions the
+    record's second Ty-parameter, which the two list forms receive differently. For
+    Phase 6, by hand.
+  - Not done: a "readable form" of each list instance printed by the audit. The list
+    instances are readable by construction (the readable translation), and
+    `Certified/Vectorized.lean` checks three of them by `rfl` against the sentences
+    written out.
+  Next: Phase 6, restricted ⇔ list.
 - **What the implementation changed in the design**, all within the plan's intent:
   - Tuples are taken apart by their projections (`Terms.head`, `Terms.tail`) and every
     block operation recurses on the list of types, not on the tuple; so an operation on a

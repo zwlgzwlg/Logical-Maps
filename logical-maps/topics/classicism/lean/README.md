@@ -190,6 +190,12 @@ project uses:
 | `foo.derivable` | metalogic | `∀ σ' τ', Theorem C.axioms (imp (P.Barcan.quoted σ') (P.Functionality.quoted σ' τ'))` (in `C⁻` where the proof is) | the translated derivation |
 | `foo.rule` | metalogic | the same, as `C.Theorem` | for a shallow core certified by `#classicism_certify`, the derivation as a rule between instances |
 | `foo.entails` | metalogic | `P.Barcan.schema ⟹ P.Functionality.schema` | the map's arrow, between schemas |
+| `P.Functionality.listQuoted` | metalogic | `List Ty → RTy → Sentence Signature.pure` | the list instance: `quoted` at the type variable `var 0`, vectorized along `0 ↦ σs` |
+| `P.Functionality.listSchema` | metalogic | `AxiomSet Signature.pure` | the list form: all list instances at closed types, the empty list included |
+| `P.Functionality.listQuoted_single` | metalogic | `listQuoted [σ] τ = quoted σ τ`, for closed `τ` | at a one-element list, the principle |
+| `P.Functionality.listSchema_entails_schema` | metalogic | `P.Functionality.listSchema ⟹ P.Functionality.schema` | the list form entails the restricted form |
+| `foo.listRule` | metalogic | `∀ σs τ, τ.Closed → C.Theorem (imp (P.Barcan.listQuoted σs) (P.Functionality.listQuoted σs τ))` | the record's derivation at `var 0`, vectorized |
+| `foo.listEntails` | metalogic | `P.Barcan.listSchema ⟹ P.Functionality.listSchema` | the arrow between list forms |
 
 A **shallow core** is a gated shallow theorem that carries a result's argument, certified
 as a rule; the metalogic turns it into the map's arrow, by composing it with other
@@ -198,9 +204,13 @@ entailments or by an induction on the type. ("Kernel" is kept for Lean's kernel.
 A principle with a Ty-parameter has a **restricted form**, its schema, with one instance
 for each type, and a **list form**, with one instance for each finite list of types, the
 empty list included: a variable of the type becomes a block of variables, a quantifier a
-block of quantifiers, identity the conjunction of identities. The list forms are produced
-by the vectorization theorem (`VECTORIZATION-PLAN.md`); `P.X.listSchema` and
-`foo.listEntails` join the table when they are generated.
+block of quantifiers, identity the conjunction of identities. The list forms are defined
+by vectorization, and a record's list form comes from its derivation by the vectorization
+theorem (`VECTORIZATION-PLAN.md`): the last six rows of the table. A principle's first
+Ty-parameter is the one vectorized; a second (Relational Choice's output) stays one type.
+A record's instance whose first Ty-argument is not that parameter comes out restricted,
+at the translated types: Extensionality at `σs ⇒* τ` in the list form of
+`extensionality_r_implies_functionality_r`.
 
 **Type parameters and type variables.** The two are different things.
 
