@@ -451,6 +451,65 @@ theorem actual_profile_r_implies_actuality :
   rintro a rfl
   exact Theorem.ax ⟨[], by simp [Ty.AllClosed], rfl⟩
 
+/-! ### Weakly Inextensible and Inextensible Comprehension, Modalized Plenitude
+
+The records of 25–28 September proved at `σ → t` (output `σ' → t` for Modalized
+Plenitude) in `Results/Records.lean`, vectorized. -/
+
+/-- `actuality-implies-weakly-inextensible-comprehension-r`, at every arity. -/
+theorem actuality_implies_weakly_inextensible_comprehension_r :
+    P.Actuality.schema ⟹ P.WeaklyInextensibleComprehension.schema :=
+  Entails.mono_right (schema_subset_args _)
+    Proofs.actuality_implies_weakly_inextensible_comprehension_r.listEntails
+
+/-- `necessary-actuality-implies-necessary-weakly-inextensible-comprehension-r`, at every
+arity. -/
+theorem necessary_actuality_implies_necessary_weakly_inextensible_comprehension_r :
+    P.NecActuality.schema ⟹ P.NecWeaklyInextensibleComprehension.schema :=
+  Entails.mono_right (schema_subset_args _)
+    Proofs.necessary_actuality_implies_necessary_weakly_inextensible_comprehension_r.listEntails
+
+/-- `boolean-completeness-r-implies-weakly-inextensible-comprehension-r`, at every arity: the
+least upper bound of the haecceities. -/
+theorem boolean_completeness_r_implies_weakly_inextensible_comprehension_r :
+    P.BooleanCompleteness.schema ⟹ P.WeaklyInextensibleComprehension.schema :=
+  Entails.mono_right (schema_subset_args _)
+    Proofs.boolean_completeness_r_implies_weakly_inextensible_comprehension_r.listEntails
+
+/-- `actuality-and-bf-imply-inextensible-comprehension`, at every arity: BF at the type of
+relations, and over the list of argument types. -/
+theorem actuality_and_bf_imply_inextensible_comprehension :
+    P.Actuality.schema ∪ P.Barcan.schema ⟹ P.InextensibleComprehension.schema :=
+  Entails.mono_right (schema_subset_args _)
+    (Entails.trans
+      (Entails.union (Entails.refl _)
+        (Entails.trans (Entails.union_right _ _) P.Barcan.schema_entails_listSchema))
+      Proofs.actuality_and_bf_imply_inextensible_comprehension.listEntails)
+
+/-- `necessary-bf-and-actuality-imply-inextensible-comprehension`, at every arity. -/
+theorem necessary_bf_and_actuality_imply_inextensible_comprehension :
+    P.NecBarcan.schema ∪ P.Actuality.schema ⟹ P.InextensibleComprehension.schema :=
+  Entails.mono_right (schema_subset_args _)
+    (Entails.trans
+      (Entails.union
+        (Entails.trans (Entails.union_left _ _) P.NecBarcan.schema_entails_listSchema)
+        (Entails.union_right _ _))
+      Proofs.necessary_bf_and_actuality_imply_inextensible_comprehension.listEntails)
+
+/-- `actuality-and-distinctness-preserving-collapse-imply-inextensible-comprehension`, at
+every arity. -/
+theorem actuality_and_distinctness_preserving_collapse_imply_inextensible_comprehension :
+    P.Actuality.schema ∪ P.DistinctnessPreservingCollapse.schema ⟹
+      P.InextensibleComprehension.schema :=
+  Entails.mono_right (schema_subset_args _)
+    Proofs.actuality_and_distinctness_preserving_collapse_imply_inextensible_comprehension.listEntails
+
+/-- `classicism-implies-modalized-plenitude-r`, at every output type. -/
+theorem classicism_implies_modalized_plenitude_r :
+    AxiomSet.empty ⟹ P.ModalizedPlenitude.schema :=
+  Entails.mono_right (schema_subset_args₂ _)
+    Proofs.classicism_implies_modalized_plenitude_r.listEntails
+
 end Meta
 
 end Classicism

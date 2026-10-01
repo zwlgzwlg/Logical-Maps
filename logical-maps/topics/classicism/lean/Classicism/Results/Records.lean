@@ -318,18 +318,22 @@ theorem persistent_coext_of_actual_world {σ : Type} [Ty σ] (w : Prop) (hw : Ac
 theorem imp_of_w_imp {σ : Type} [Ty σ] (w : Prop) (X Z : σ → Prop) :
     (w → ∀ y, w ∧ X y → Z y) → ∀ y, w ∧ X y → Z y := fun h y hy => h hy.1 y hy
 
-/-- With `w` the actual world, `λy. w ∧ Xy` is coextensive with `X` and *weakly*
-inextensible: if `∀y. w ∧ Xy → □Zy`, then `∀y. w ∧ Xy → Zy` is a truth, so `w` entails
-it, which is `□∀y. w ∧ Xy → Zy`. This is the argument of Classicism, n. 38, for
-`actuality-implies-inextensible-comprehension-r`; it gives the unboxed inextensibility,
-and the box the map's `Inextensible` carries would need `w` to entail the truths at every
-world, which Actuality does not say. So the record is not stated here. -/
-theorem actuality_implies_weakly_inextensible_comprehension {σ : Type} [Ty σ] :
-    Actuality → ∀ X : σ → Prop, ∃ Y : σ → Prop, WeaklyInextensible Y ∧ X ≡ Y := fun act X =>
+/-- With `w` the actual world, `λy. w ∧ Xy` is *weakly* inextensible: if
+`∀y. w ∧ Xy → □Zy`, then `∀y. w ∧ Xy → Zy` is a truth, so `w` entails it, which is
+`□∀y. w ∧ Xy → Zy` (Classicism, n. 38). The box that `Inextensible` adds would need `w`
+to entail the truths at every world, which Actuality does not say. -/
+theorem weaklyInextensible_of_actualWorld {σ : Type} [Ty σ] (w : Prop) (hw : ActualWorld w)
+    (X : σ → Prop) : WeaklyInextensible (λ y ↦ w ∧ X y) := fun Z hZ =>
+  modal_K _ _ (nec% (imp_of_w_imp w X Z))
+    ((le_iff_prop _ _).1 (hw.2 _ (fun y hy => box_elim (hZ y hy))))
+
+/-- `actuality-implies-weakly-inextensible-comprehension-r`, at `σ → t`, its list form
+being the map's record: with `w` the actual world, `λy. w ∧ Xy` is a weakly inextensible
+coextension of `X`. -/
+theorem actuality_implies_weakly_inextensible_comprehension_r {σ : Type} [Ty σ] :
+    Actuality → WeaklyInextensibleComprehension (σ → Prop) := fun act X =>
   act.elim fun w (hw : ActualWorld w) =>
-    ⟨λ y ↦ w ∧ X y,
-      fun Z hZ => modal_K _ _ (nec% (imp_of_w_imp w X Z))
-        ((le_iff_prop _ _).1 (hw.2 _ (fun y hy => box_elim (hZ y hy)))),
+    ⟨λ y ↦ w ∧ X y, weaklyInextensible_of_actualWorld w hw X,
       fun y => ⟨fun hX => ⟨hw.1, hX⟩, fun h => h.2⟩⟩
 
 /-- `w → Zx` gives `∀y. w ∧ y = x → Zy`. -/
@@ -1501,5 +1505,490 @@ theorem atomicity_t_and_bf_t_imply_strong_leibniz_t : AtomicityT → BarcanT →
 theorem necessary_atomicity_and_necessary_bf_t_imply_necessary_strong_leibniz_t :
     NecAtomicity Prop → NecBarcanT → NecStrongLeibnizT := fun h₁ h₂ =>
   modal_K _ _ (modal_K _ _ (nec% atomicity_t_and_bf_t_imply_strong_leibniz_t) h₁) h₂
+
+/-! ### Weakly Inextensible Comprehension (25–27 September) -/
+
+/-- `inextensible-comprehension-r-implies-weakly-inextensible-comprehension-r`: `T` strips
+the box of inextensibility; the same witness. -/
+theorem inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r
+    {τ : Type} [Rel τ] : InextensibleComprehension τ → WeaklyInextensibleComprehension τ :=
+  fun ic X => (ic X).elim fun Y hY => ⟨Y, weaklyInextensible_of_inextensible hY.1, hY.2⟩
+
+/-- `weak-rigid-comprehension-r-implies-weakly-inextensible-comprehension-r`: weak
+inextensibility is a conjunct of weak rigidity. -/
+theorem weak_rigid_comprehension_r_implies_weakly_inextensible_comprehension_r
+    {τ : Type} [Rel τ] : WeakRigidComprehension τ → WeaklyInextensibleComprehension τ :=
+  fun wrc X => (wrc X).elim fun Y hY => ⟨Y, hY.1.2, hY.2⟩
+
+/-- `necessary-weakly-inextensible-comprehension-r-implies-weakly-inextensible-comprehension-r`:
+`T`. -/
+theorem necessary_weakly_inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r
+    {τ : Type} [Rel τ] :
+    NecWeaklyInextensibleComprehension τ → WeaklyInextensibleComprehension τ :=
+  fun h => box_elim h
+
+/-- `necessary-actuality-implies-necessary-weakly-inextensible-comprehension-r`, at `σ → t`:
+the unboxed record necessitated, and `K`. -/
+theorem necessary_actuality_implies_necessary_weakly_inextensible_comprehension_r
+    {σ : Type} [Ty σ] : NecActuality → NecWeaklyInextensibleComprehension (σ → Prop) :=
+  modal_K _ _ (nec% (actuality_implies_weakly_inextensible_comprehension_r (σ := σ)))
+
+/-- `(∀z. Sz → Zz) → ∀z. Sz ∧ Xz → Zz`. -/
+theorem and_imp_of_imp {σ : Type} [Ty σ] (S X Z : σ → Prop) :
+    (∀ z, S z → Z z) → ∀ z, S z ∧ X z → Z z := fun h z hz => h z hz.1
+
+/-- `boolean-completeness-r-implies-weakly-inextensible-comprehension-r`, at `σ → t`, its
+list form being the map's record: with `S` the least upper bound of the haecceities of the
+`X`s, `λz. Sz ∧ Xz` is coextensive with `X`, and below any `Z` with `Y ⊆ □Z`, since such
+a `Z` holds necessarily of each `X`-thing and so is above `S`. -/
+theorem boolean_completeness_r_implies_weakly_inextensible_comprehension_r {σ : Type} [Ty σ] :
+    BooleanCompleteness (σ → Prop) → WeaklyInextensibleComprehension (σ → Prop) := fun bc X =>
+  (bc (λ W ↦ UB W (λ Y ↦ ∃ u, X u ∧ Y = λ x ↦ u = x))).elim fun S hS =>
+    ⟨λ z ↦ S z ∧ X z,
+      fun Z hZ => modal_K _ _ (nec% (and_imp_of_imp S X Z))
+        ((le_iff _ _).1 (lub_haec_le X S hS Z fun u hu =>
+          hZ u ⟨box_elim (box_lub_haec_of X S hS u hu), hu⟩)),
+      fun u => ⟨fun hu => ⟨box_elim (box_lub_haec_of X S hS u hu), hu⟩, fun h => h.2⟩⟩
+
+/-! ### Vicinity (27 September) -/
+
+/-- `(w → q) → w → ◇q`. -/
+theorem imp_dia_of_imp (w q : Prop) : (w → q) → w → ◇ q := fun h hw => dia_intro q (h hw)
+
+/-- `actuality-implies-vicinity`: an actual world entails each truth, hence its
+possibility. -/
+theorem actuality_implies_vicinity : Actuality → Vicinity := fun act =>
+  act.elim fun w hw => ⟨w, hw.1, fun q hq => (le_iff_prop _ _).2
+    (modal_K _ _ (nec% (imp_dia_of_imp w q)) ((le_iff_prop _ _).1 (hw.2 q hq)))⟩
+
+/-- `◇q → ⊤ → ◇q`. -/
+theorem dia_imp_true_imp (q : Prop) : ◇ q → True → ◇ q := fun h _ => h
+
+/-- `distinctness-necessary-t-implies-vicinity`: a truth is distinct from `⊥`, necessarily
+so by `ND` at `t`; so `⊤` entails its possibility. -/
+theorem distinctness_necessary_t_implies_vicinity : NecessityOfDistinctnessT → Vicinity :=
+  fun nd => ⟨True, trivial, fun q hq => (le_iff_prop _ _).2
+    (modal_K _ _ (nec% (dia_imp_true_imp q)) (nd q False (fun e => (e ▸ hq : False))))⟩
+
+/-- `necessary-distinctness-necessary-t-implies-necessary-vicinity`: necessitated, and `K`. -/
+theorem necessary_distinctness_necessary_t_implies_necessary_vicinity :
+    NecNecessityOfDistinctnessT → NecVicinity :=
+  modal_K _ _ (nec% distinctness_necessary_t_implies_vicinity)
+
+/-- `necessary-actuality-implies-necessary-vicinity`: necessitated, and `K`. -/
+theorem necessary_actuality_implies_necessary_vicinity : NecActuality → NecVicinity :=
+  modal_K _ _ (nec% actuality_implies_vicinity)
+
+/-- `necessary-vicinity-implies-vicinity`: `T`. -/
+theorem necessary_vicinity_implies_vicinity : NecVicinity → Vicinity := fun h => box_elim h
+
+/-- `vicinity-and-distinctness-preserving-collapse-imply-actuality`: the witness of
+Vicinity entails `◇q` for the true `q` the collapse gives with `◇q ≤ p`, so it entails
+each truth `p`. -/
+theorem vicinity_and_distinctness_preserving_collapse_imply_actuality :
+    Vicinity → DistinctnessPreservingCollapse → Actuality := fun vic col =>
+  vic.elim fun w hw => ⟨w, hw.1, fun p hp => (col p hp).elim fun q hq =>
+    le_trans_prop w (◇ q) p (hw.2 q hq.1) ((le_iff_prop _ _).2 hq.2)⟩
+
+/-- `q ∧ ¬q` is impossible. -/
+theorem not_dia_and_not (q : Prop) : ¬ ◇ (q ∧ ¬ q) :=
+  fun h => h (propext ⟨fun hq => hq.2 hq.1, False.elim⟩)
+
+/-- `(∀p. Fp → w → ◇(q ∧ p))` and `w ∧ ∀p. p ↔ Fp` give `q`: else `F¬q`, and `◇(q ∧ ¬q)`. -/
+theorem actual_of_vicinity_inext (F : Prop → Prop) (w q : Prop) :
+    (∀ p, F p → w → ◇ (q ∧ p)) → (w ∧ ∀ p, p ↔ F p) → q := fun h ha =>
+  (em q).elim id fun hnq => (not_dia_and_not q (h (¬ q) ((ha.2 (¬ q)).1 hnq) ha.1)).elim
+
+/-- `vicinity-and-weakly-inextensible-comprehension-imply-actuality`: with `w` the witness
+of Vicinity and `F` a weakly inextensible coextension of `λp. p`, `w ∧ ∀p. p ↔ Fp` is an
+actual world. For a truth `q`, each `Fp` makes `q ∧ p` true, so `w ≤ ◇(q ∧ p)`; weak
+inextensibility boxes that, and at `p := ¬q` it refutes `w ∧ F¬q`. -/
+theorem vicinity_and_weakly_inextensible_comprehension_imply_actuality :
+    Vicinity → WeaklyInextensibleComprehension (Prop → Prop) → Actuality := fun vic wic =>
+  vic.elim fun w hw => (wic (λ p ↦ p)).elim fun F hF =>
+    ⟨w ∧ ∀ p, p ↔ F p, ⟨hw.1, hF.2⟩, fun q hq => (le_iff_prop _ _).2
+      (modal_K _ _ (nec% (actual_of_vicinity_inext F w q))
+        (hF.1 (λ p ↦ w → ◇ (q ∧ p)) fun p hFp =>
+          (le_iff_prop _ _).1 (hw.2 (q ∧ p) ⟨hq, (hF.2 p).2 hFp⟩)))⟩
+
+/-- `necessary-vicinity-and-necessary-weakly-inextensible-comprehension-imply-necessary-actuality`:
+the unboxed record necessitated, and `K`. -/
+theorem necessary_vicinity_and_necessary_weakly_inextensible_comprehension_imply_necessary_actuality :
+    NecVicinity → NecWeaklyInextensibleComprehension (Prop → Prop) → NecActuality :=
+  fun h₁ h₂ => modal_K _ _ (modal_K _ _
+    (nec% vicinity_and_weakly_inextensible_comprehension_imply_actuality) h₁) h₂
+
+/-! ### Transversals (25–28 September) -/
+
+/-- `(w → ∀z. Y'z ↔ Xz ∧ w) → (∀z. Y'z → w) → ∀z. Y'z ↔ Xz ∧ w`. -/
+theorem coext_of_actual_imp {σ : Type} [Ty σ] (X Y' : σ → Prop) (w : Prop) :
+    (w → ∀ z, Y' z ↔ (X z ∧ w)) → (∀ z, Y' z → w) → ∀ z, Y' z ↔ (X z ∧ w) :=
+  fun h hY z => ⟨fun hy => (h (hY z hy) z).1 hy, fun hx => (h hx.2 z).2 hx⟩
+
+/-- `actuality-implies-transversal`: with `w` the actual world, the properties that can be
+instantiated only if `w` obtains form a transversal; `λz. Xz ∧ w` is the one coextensive
+with `X`, and two such that are coextensive are necessarily so, so identical. -/
+theorem actuality_implies_transversal {σ : Type} [Ty σ] : Actuality → Transversal σ := fun act =>
+  act.elim fun w hw =>
+    ⟨λ Y ↦ □ (∀ z, Y z → w), fun X =>
+      ⟨λ z ↦ X z ∧ w, nec% (fun (z : σ) (h : X z ∧ w) => h.2),
+        fun z => ⟨fun hx => ⟨hx, hw.1⟩, fun h => h.1⟩,
+        fun Y' hY' => intensionality Y' _ (modal_K _ _ (modal_K _ _
+          (nec% (coext_of_actual_imp X Y' w))
+          ((le_iff_prop _ _).1 (hw.2 _ fun z =>
+            ⟨fun hy => ⟨(hY'.2 z).2 hy, hw.1⟩, fun hx => (hY'.2 z).1 hx.1⟩))) hY'.1)⟩⟩
+
+/-- `necessary-actuality-implies-necessary-transversal`: necessitated, and `K`. -/
+theorem necessary_actuality_implies_necessary_transversal {σ : Type} [Ty σ] :
+    NecActuality → NecTransversal σ :=
+  modal_K _ _ (nec% (actuality_implies_transversal (σ := σ)))
+
+/-- `necessary-transversal-r-implies-transversal-r`: `T`. -/
+theorem necessary_transversal_r_implies_transversal_r {σ : Type} [Ty σ] :
+    NecTransversal σ → Transversal σ := fun h => box_elim h
+
+/-- `transversal-choice-r-implies-transversal-r`: coextensiveness is an equivalence
+relation on properties, and a transversal of it is a transversal. -/
+theorem transversal_choice_r_implies_transversal_r {σ : Type} [Ty σ] :
+    TransversalChoice (σ → Prop) → Transversal σ := fun tc =>
+  (tc (λ X Y ↦ ∀ z, X z ↔ Y z)
+      ⟨fun _ _ => Iff.rfl, fun _ _ h z => (h z).symm,
+        fun _ _ _ h₁ h₂ z => ⟨fun h => (h₂ z).1 ((h₁ z).1 h), fun h => (h₁ z).2 ((h₂ z).2 h)⟩⟩).elim
+    fun F hF => ⟨F, fun X => (hF X).elim fun Y hY =>
+      ⟨Y, hY.2.1, hY.1, fun Y' hY' => (hY.2.2 Y' ⟨hY'.2, hY'.1⟩).symm⟩⟩
+
+/-- `necessary-transversal-choice-r-implies-necessary-transversal-r`: necessitated, and `K`. -/
+theorem necessary_transversal_choice_r_implies_necessary_transversal_r {σ : Type} [Ty σ] :
+    NecTransversalChoice (σ → Prop) → NecTransversal σ :=
+  modal_K _ _ (nec% (transversal_choice_r_implies_transversal_r (σ := σ)))
+
+/-- `necessary-transversal-choice-r-implies-transversal-choice-r`: `T`. -/
+theorem necessary_transversal_choice_r_implies_transversal_choice_r {σ : Type} [Ty σ] :
+    NecTransversalChoice σ → TransversalChoice σ := fun h => box_elim h
+
+/-- With an element `x₀`, `(UC)y := Cy ∨ ¬∃z. Cz` is serial. -/
+theorem serial_cell {σ : Type} [Ty σ] (x₀ : σ) :
+    ∀ C : σ → Prop, ∃ y, C y ∨ ¬ ∃ z, C z := fun C =>
+  (em (∃ z, C z)).elim (fun h => h.elim fun z hz => ⟨z, Or.inl hz⟩) (fun h => ⟨x₀, Or.inr h⟩)
+
+/-- `transversal-and-relational-choice-imply-transversal-choice`: Relational Choice picks
+an element `y` from each nonempty property `C`, functionally in `C`; the transversal of
+`R` holds of the element picked from the Transversal's representative of a cell. Where
+`σ` is empty there is nothing to pick. -/
+theorem transversal_and_relational_choice_imply_transversal_choice {σ : Type} [Ty σ] :
+    Transversal σ → RelationalChoice (σ → Prop) σ → TransversalChoice σ := by
+  intro tr rc R hR
+  refine (em (∃ x₀ : σ, x₀ = x₀)).elim (fun hx₀ => ?_)
+    (fun hn => ⟨λ _ ↦ True, fun x => (hn ⟨x, rfl⟩).elim⟩)
+  obtain ⟨x₀, -⟩ := hx₀
+  obtain ⟨F, hF⟩ := tr
+  obtain ⟨S, hSf, hSU⟩ := rc (λ C y ↦ C y ∨ ¬ ∃ z, C z) (serial_cell x₀)
+  refine ⟨λ y ↦ ∃ Y : σ → Prop, F Y ∧ (∀ z, Y z ↔ R y z) ∧ S Y y, fun x => ?_⟩
+  obtain ⟨Yx, hFYx, hcoYx, huYx⟩ := hF (R x)
+  obtain ⟨y, hSy, hSu⟩ := hSf Yx
+  have hYy : Yx y := (hSU Yx y hSy).elim id (fun h => (h ⟨x, (hcoYx x).1 (hR.1 x)⟩).elim)
+  have hRxy : R x y := (hcoYx y).2 hYy
+  refine ⟨y, hRxy, ⟨Yx, hFYx, fun z => ⟨fun hz => hR.2.2 y x z (hR.2.1 x y hRxy) ((hcoYx z).2 hz),
+    fun hz => (hcoYx z).1 (hR.2.2 x y z hRxy hz)⟩, hSy⟩, ?_⟩
+  rintro z ⟨hRxz, Y', hFY', hcoY', hSY'⟩
+  have e : Y' = Yx := huYx Y' ⟨hFY', fun u =>
+    ⟨fun hu => (hcoY' u).2 (hR.2.2 z x u (hR.2.1 x z hRxz) hu),
+     fun hu => hR.2.2 x z u hRxz ((hcoY' u).1 hu)⟩⟩
+  rw [e] at hSY'
+  exact hSu z hSY'
+
+/-- `relational-choice-and-extensionality-imply-transversal-choice`: as above, the element
+picked from a cell; Extensionality makes coextensive cells identical. -/
+theorem relational_choice_and_extensionality_imply_transversal_choice {σ : Type} [Ty σ] :
+    RelationalChoice (σ → Prop) σ → Extensionality (σ → Prop) → TransversalChoice σ := by
+  intro rc ext R hR
+  refine (em (∃ x₀ : σ, x₀ = x₀)).elim (fun hx₀ => ?_)
+    (fun hn => ⟨λ _ ↦ True, fun x => (hn ⟨x, rfl⟩).elim⟩)
+  obtain ⟨x₀, -⟩ := hx₀
+  obtain ⟨S, hSf, hSU⟩ := rc (λ C y ↦ C y ∨ ¬ ∃ z, C z) (serial_cell x₀)
+  have hcell : ∀ x y, S (R x) y → R x y := fun x y h =>
+    (hSU (R x) y h).elim id (fun hn => (hn ⟨x, hR.1 x⟩).elim)
+  refine ⟨λ y ↦ ∃ x, S (R x) y, fun x => ?_⟩
+  obtain ⟨y, hSy, hSu⟩ := hSf (R x)
+  refine ⟨y, hcell x y hSy, ⟨x, hSy⟩, ?_⟩
+  rintro z ⟨hRxz, x₂, hS₂⟩
+  have hR₂ : R x₂ z := hcell x₂ z hS₂
+  have e : R x₂ = R x := ext (R x₂) (R x) fun u =>
+    ⟨fun hu => hR.2.2 x z u hRxz (hR.2.2 z x₂ u (hR.2.1 x₂ z hR₂) hu),
+     fun hu => hR.2.2 x₂ z u hR₂ (hR.2.2 z x u (hR.2.1 x z hRxz) hu)⟩
+  rw [e] at hS₂
+  exact hSu z hS₂
+
+/-- Two coextensive very weakly rigid properties are identical: each is below the other by
+weak persistence and weak inextensibility, and Intensionality. -/
+theorem eq_of_veryWeaklyRigid {σ : Type} [Ty σ] (C C' : σ → Prop) (hC : VeryWeaklyRigid C)
+    (hC' : VeryWeaklyRigid C') (hco : ∀ z, C z ↔ C' z) : C = C' :=
+  le_antisymm_arrow C C'
+    ((le_iff _ _).2 (hC.2 C' fun z hz => weaklyPersistent_apply hC'.1 z ((hco z).1 hz)))
+    ((le_iff _ _).2 (hC'.2 C fun z hz => weaklyPersistent_apply hC.1 z ((hco z).2 hz)))
+
+/-- `relational-choice-and-very-weak-rigid-comprehension-imply-transversal-choice`: as above,
+with each cell represented by a very weakly rigid coextension, which is unique. -/
+theorem relational_choice_and_very_weak_rigid_comprehension_imply_transversal_choice
+    {σ : Type} [Ty σ] :
+    RelationalChoice (σ → Prop) σ → VeryWeakRigidComprehension (σ → Prop) →
+      TransversalChoice σ := by
+  intro rc vw R hR
+  refine (em (∃ x₀ : σ, x₀ = x₀)).elim (fun hx₀ => ?_)
+    (fun hn => ⟨λ _ ↦ True, fun x => (hn ⟨x, rfl⟩).elim⟩)
+  obtain ⟨x₀, -⟩ := hx₀
+  obtain ⟨S, hSf, hSU⟩ := rc (λ C y ↦ C y ∨ ¬ ∃ z, C z) (serial_cell x₀)
+  refine ⟨λ y ↦ ∃ C : σ → Prop, VeryWeaklyRigid C ∧ (∀ z, C z ↔ R y z) ∧ S C y, fun x => ?_⟩
+  obtain ⟨C, hC, hco⟩ := vw (R x)
+  obtain ⟨y, hSy, hSu⟩ := hSf C
+  have hCy : C y := (hSU C y hSy).elim id (fun hn => (hn ⟨x, (hco x).1 (hR.1 x)⟩).elim)
+  have hRxy : R x y := (hco y).2 hCy
+  refine ⟨y, hRxy, ⟨C, hC, fun z => ⟨fun hz => hR.2.2 y x z (hR.2.1 x y hRxy) ((hco z).2 hz),
+    fun hz => (hco z).1 (hR.2.2 x y z hRxy hz)⟩, hSy⟩, ?_⟩
+  rintro z ⟨hRxz, C', hC', hco', hSC'⟩
+  have e : C' = C := eq_of_veryWeaklyRigid C' C hC' hC fun u =>
+    ⟨fun hu => (hco u).1 (hR.2.2 x z u hRxz ((hco' u).1 hu)),
+     fun hu => (hco' u).2 (hR.2.2 z x u (hR.2.1 x z hRxz) ((hco u).2 hu))⟩
+  rw [e] at hSC'
+  exact hSu z hSC'
+
+/-- `necessary-transversal-and-necessary-relational-choice-imply-necessary-transversal-choice`:
+the unboxed record necessitated, and `K`. -/
+theorem necessary_transversal_and_necessary_relational_choice_imply_necessary_transversal_choice
+    {σ : Type} [Ty σ] :
+    NecTransversal σ → NecRelationalChoice (σ → Prop) σ → NecTransversalChoice σ :=
+  fun h₁ h₂ => modal_K _ _ (modal_K _ _
+    (nec% (transversal_and_relational_choice_imply_transversal_choice (σ := σ))) h₁) h₂
+
+/-- Rigid pairs are injective: `λuv. u = x ∧ v = y` determines `x` and `y`. -/
+theorem pair_injective {σ τ : Type} [Ty σ] [Ty τ] (x x' : σ) (y y' : τ)
+    (h : (λ (u : σ) (v : τ) ↦ u = x ∧ v = y) = (λ u v ↦ u = x' ∧ v = y')) :
+    x = x' ∧ y = y' :=
+  (congrFun (congrFun h x) y).mp ⟨rfl, rfl⟩
+
+/-- `transversal-choice-r-implies-relational-choice-r`: code `x`, `y` as the rigid pair
+`λuv. u = x ∧ v = y`. Relating two `U`-pairs with the same first coordinate, and any two
+non-`U`-pairs, is an equivalence relation, by injectivity; a transversal of it picks one
+`U`-pair for each `x`, and `(Sx)y := (Ux)y ∧ F⟨x, y⟩` is a functional subrelation of `U`. -/
+theorem transversal_choice_r_implies_relational_choice_r {σ τ : Type} [Ty σ] [Ty τ] :
+    TransversalChoice (σ → τ → Prop) → RelationalChoice σ τ := by
+  intro tc U hU
+  have hE : EquivRel (λ (P Q : σ → τ → Prop) ↦
+      (∃ x, (∃ y, U x y ∧ P = (λ u v ↦ u = x ∧ v = y)) ∧
+        (∃ y, U x y ∧ Q = (λ u v ↦ u = x ∧ v = y))) ∨
+      ((¬ ∃ x y, U x y ∧ P = (λ u v ↦ u = x ∧ v = y)) ∧
+        (¬ ∃ x y, U x y ∧ Q = (λ u v ↦ u = x ∧ v = y)))) :=
+    ⟨fun P => (em (∃ x y, U x y ∧ P = (λ u v ↦ u = x ∧ v = y))).elim
+        (fun h => h.elim fun x hx => hx.elim fun y hy => Or.inl ⟨x, ⟨y, hy⟩, ⟨y, hy⟩⟩)
+        (fun h => Or.inr ⟨h, h⟩),
+     fun _ _ h => h.elim (fun h => h.elim fun x hx => Or.inl ⟨x, hx.2, hx.1⟩)
+        (fun h => Or.inr ⟨h.2, h.1⟩),
+     fun _ _ _ h₁ h₂ => h₁.elim
+      (fun h₁ => h₁.elim fun x hx => h₂.elim
+        (fun h₂ => h₂.elim fun x' hx' =>
+          hx.2.elim fun y hy => hx'.1.elim fun y' hy' =>
+            have e : x = x' := (pair_injective x x' y y' (hy.2.symm.trans hy'.2)).1
+            Or.inl ⟨x, hx.1, e ▸ hx'.2⟩)
+        (fun h₂ => (h₂.1 (hx.2.elim fun y hy => ⟨x, y, hy⟩)).elim))
+      (fun h₁ => h₂.elim
+        (fun h₂ => (h₁.2 (h₂.elim fun x' hx' => hx'.1.elim fun y' hy' => ⟨x', y', hy'⟩)).elim)
+        (fun h₂ => Or.inr ⟨h₁.1, h₂.2⟩))⟩
+  obtain ⟨F, hF⟩ := tc _ hE
+  refine ⟨λ x y ↦ U x y ∧ F (λ u v ↦ u = x ∧ v = y), fun x => ?_, fun _ _ h => h.1⟩
+  obtain ⟨y₀, hy₀⟩ := hU x
+  obtain ⟨P', hEP', hFP', hu⟩ := hF (λ u v ↦ u = x ∧ v = y₀)
+  rcases hEP' with ⟨x₁, ⟨y₁, -, e₁⟩, ⟨y₂, hU₂, e₂⟩⟩ | ⟨hn, -⟩
+  · have ex : x = x₁ := (pair_injective x x₁ y₀ y₁ e₁).1
+    subst ex
+    refine ⟨y₂, ⟨hU₂, e₂ ▸ hFP'⟩, fun z hz => ?_⟩
+    have e₃ := hu (λ u v ↦ u = x ∧ v = z) ⟨Or.inl ⟨x, ⟨y₀, hy₀, rfl⟩, ⟨z, hz.1, rfl⟩⟩, hz.2⟩
+    exact (pair_injective x x y₂ z (e₂.symm.trans e₃)).2
+  · exact (hn ⟨x, y₀, hy₀, rfl⟩).elim
+
+/-- `necessary-transversal-choice-r-implies-necessary-relational-choice-r`: the unboxed
+record necessitated, and `K`. -/
+theorem necessary_transversal_choice_r_implies_necessary_relational_choice_r
+    {σ τ : Type} [Ty σ] [Ty τ] :
+    NecTransversalChoice (σ → τ → Prop) → NecRelationalChoice σ τ :=
+  modal_K _ _ (nec% (transversal_choice_r_implies_relational_choice_r (σ := σ) (τ := τ)))
+
+/-! ### Modalized Plenitude (28 September)
+
+At output `σ' → t`, its list form in `σ'` being the record at every output type: the
+operation `Fx := λu. ∀y. Uxy → yu` represents `U` wherever its values are necessarily
+unique, by Intensionality. -/
+
+/-- `φ(x, y₀) → ∀u. y₀u ↔ Fxu`. -/
+theorem mp_value_coext {σ σ' : Type} [Ty σ] [Ty σ'] (U : σ → (σ' → Prop) → Prop) (x : σ)
+    (y₀ : σ' → Prop) :
+    (U x y₀ ∧ ∀ z, U x z → y₀ = z) → ∀ u, y₀ u ↔ ∀ y : σ' → Prop, U x y → y u :=
+  fun h u => ⟨fun hu y hy => (h.2 y hy) ▸ hu, fun hF => hF y₀ h.1⟩
+
+/-- `□φ(x, y₀)` makes `y₀` the value `Fx`. -/
+theorem mp_value {σ σ' : Type} [Ty σ] [Ty σ'] (U : σ → (σ' → Prop) → Prop) (x : σ)
+    (y₀ : σ' → Prop) (h : □ (U x y₀ ∧ ∀ z, U x z → y₀ = z)) :
+    y₀ = λ u ↦ ∀ y : σ' → Prop, U x y → y u :=
+  intensionality _ _ (modal_K _ _ (nec% (mp_value_coext U x y₀)) h)
+
+/-- `(∀x. ∃y. □φ(x, y)) → ∀x y. Uxy ↔ y = Fx`. -/
+theorem mp_represents {σ σ' : Type} [Ty σ] [Ty σ'] (U : σ → (σ' → Prop) → Prop) :
+    (∀ x, ∃ y, □ (U x y ∧ ∀ z, U x z → y = z)) →
+      ∀ x (y : σ' → Prop), U x y ↔ y = λ u ↦ ∀ y' : σ' → Prop, U x y' → y' u :=
+  fun H x y => (H x).elim fun y₀ hy₀ =>
+    have e := mp_value U x y₀ hy₀
+    have hφ := box_elim hy₀
+    ⟨fun hU => (hφ.2 y hU).symm.trans e, fun hy => (hy.trans e.symm) ▸ hφ.1⟩
+
+/-- `classicism-implies-modalized-plenitude-r`, at output `σ' → t`, its list form in `σ'`
+being the map's record: `λxu. ∀y. Uxy → yu` necessarily represents `U`. -/
+theorem classicism_implies_modalized_plenitude_r {σ' σ : Type} [Ty σ'] [Ty σ] :
+    ModalizedPlenitude σ (σ' → Prop) := fun U hH =>
+  ⟨λ x u ↦ ∀ y : σ' → Prop, U x y → y u, modal_K _ _ (nec% (mp_represents U)) hH⟩
+
+/-! ### Inextensible Comprehension from Actuality (25–27 September)
+
+At `σ → t`, the list forms being the records at every arity. -/
+
+/-- `□¬p → ¬◇p`. -/
+theorem not_dia_of_box_not (p : Prop) : □ (¬ p) → ¬ ◇ p := fun h => (box_not_eq_not_dia p).mp h
+
+/-- `¬◇p → □¬p`. -/
+theorem box_not_of_not_dia (p : Prop) : ¬ ◇ p → □ (¬ p) := fun h => (box_not_eq_not_dia p).mpr h
+
+/-- `(◇a → ActualWorld a)` makes `λy. a ∧ Xy` weakly inextensible: where `◇a`, by the
+actual world; where not, `□¬a` makes it entail anything. -/
+theorem weaklyInextensible_of_dia_actual {σ : Type} [Ty σ] (a : Prop) (X : σ → Prop) :
+    (◇ a → ActualWorld a) → WeaklyInextensible (λ y ↦ a ∧ X y) := fun h =>
+  (em (◇ a)).elim (fun hd => weaklyInextensible_of_actualWorld a (h hd) X)
+    (fun hnd => fun Z _ => modal_K _ _
+      (nec% (fun (hna : ¬ a) (y : σ) (hy : a ∧ X y) => (hna hy.1).elim : ¬ a → ∀ y, a ∧ X y → Z y))
+      (box_not_of_not_dia a hnd))
+
+/-- `actuality-and-distinctness-preserving-collapse-imply-inextensible-comprehension`, at
+`σ → t`: with `a` the actual world, the collapse makes `◇a → ActualWorld a` necessary, so
+`λy. a ∧ Xy`, weakly inextensible wherever that holds, is inextensible. -/
+theorem actuality_and_distinctness_preserving_collapse_imply_inextensible_comprehension
+    {σ : Type} [Ty σ] :
+    Actuality → DistinctnessPreservingCollapse → InextensibleComprehension (σ → Prop) :=
+  fun act col X => act.elim fun a (ha : ActualWorld a) => (col (ActualWorld a) ha).elim
+    fun q hq =>
+      have h₁ : □ (◇ a → ◇ q) := modal_K _ _ (nec% (dia_mono a q))
+        (modal_four _ ((le_iff_prop _ _).1 (ha.2 q hq.1)))
+      have h₂ : □ (◇ a → ActualWorld a) := modal_K _ _ (modal_K _ _
+        (nec% (fun (f : ◇ a → ◇ q) (g : ◇ q → ActualWorld a) (h : ◇ a) => g (f h))) h₁) hq.2
+      ⟨λ y ↦ a ∧ X y, modal_K _ _ (nec% (weaklyInextensible_of_dia_actual a X)) h₂,
+        fun y => ⟨fun hx => ⟨ha.1, hx⟩, fun h => h.2⟩⟩
+
+/-- `(w → ¬p) → ¬(w ∧ p)`. -/
+theorem not_and_of_imp_not (w p : Prop) : (w → ¬ p) → ¬ (w ∧ p) := fun h hwp => h hwp.1 hwp.2
+
+/-- With `BF` at `σ`, `λz. ◇(w ∧ Fz)` is weakly inextensible: its negation is persistent,
+by `4`, so `Cz → □Xz` gives `□(Cz → Xz)` at each `z`, and BF boxes the quantifier. -/
+theorem weaklyInextensible_dia_of_bf {σ : Type} [Ty σ] (w : Prop) (F : σ → Prop) :
+    P.Barcan σ → WeaklyInextensible (λ z ↦ ◇ (w ∧ F z)) := fun bf X hX =>
+  bf (λ z ↦ ◇ (w ∧ F z) → X z) fun z =>
+    (em (◇ (w ∧ F z))).elim (fun hc => box_imp_of_box _ _ (hX z hc))
+      (fun hn => box_imp_of_box_not _ _ (modal_K _ _ (nec% (not_dia_of_box_not (w ∧ F z)))
+        (modal_four _ (box_not_of_not_dia _ hn))))
+
+/-- With `w` the actual world, `λz. ◇(w ∧ Fz)` is coextensive with `F`. -/
+theorem coext_dia_actual {σ : Type} [Ty σ] (w : Prop) (hw : ActualWorld w) (F : σ → Prop) :
+    ∀ z, F z ↔ ◇ (w ∧ F z) := fun z =>
+  ⟨fun h => dia_intro _ ⟨hw.1, h⟩, fun h => (em (F z)).elim id fun hn =>
+    (not_dia_of_box_not _ (modal_K _ _ (nec% (not_and_of_imp_not w (F z)))
+      ((le_iff_prop _ _).1 (hw.2 _ hn))) h).elim⟩
+
+/-- `necessary-bf-and-actuality-imply-inextensible-comprehension`, at `σ → t`: with `w`
+the actual world, `λz. ◇(w ∧ Fz)` is coextensive with `F`, and weakly inextensible
+wherever BF at `σ` holds, so inextensible given `□BF`. -/
+theorem necessary_bf_and_actuality_imply_inextensible_comprehension {σ : Type} [Ty σ] :
+    NecBarcan σ → Actuality → InextensibleComprehension (σ → Prop) := fun hbf act X =>
+  act.elim fun w (hw : ActualWorld w) =>
+    ⟨λ z ↦ ◇ (w ∧ X z), modal_K _ _ (nec% (weaklyInextensible_dia_of_bf w X)) hbf,
+      coext_dia_actual w hw X⟩
+
+/-- `◇◇p → ◇p`, by `4`. -/
+theorem dia_dia (p : Prop) : ◇ ◇ p → ◇ p := fun h =>
+  (em (◇ p)).elim id fun hn => (not_dia_of_box_not _ (modal_K _ _ (nec% (not_dia_of_box_not p))
+    (modal_four _ (box_not_of_not_dia p hn))) h).elim
+
+/-- `(∀x. ¬Yx) → ¬∃x. Yx`. -/
+theorem not_exists_of_forall_not' {τ : Type} [Ty τ] (Y : τ → Prop) :
+    (∀ x, ¬ Y x) → ¬ ∃ x, Y x := fun h hx => hx.elim fun x hy => h x hy
+
+/-- The dual of BF: `◇∃x. Yx → ∃x. ◇Yx`. -/
+theorem exists_dia_of_dia_exists {τ : Type} [Ty τ] (bf : P.Barcan τ) (Y : τ → Prop) :
+    ◇ (∃ x, Y x) → ∃ x, ◇ (Y x) := fun h =>
+  (em (∃ x, ◇ (Y x))).elim id fun hn =>
+    (not_dia_of_box_not _ (modal_K _ _ (nec% (not_exists_of_forall_not' Y))
+      (bf (λ x ↦ ¬ Y x) fun x => box_not_of_not_dia _ fun hx => hn ⟨x, hx⟩)) h).elim
+
+/-- `¬□q → ◇¬q`. -/
+theorem dia_not_of_not_box (q : Prop) : ¬ □ q → ◇ (¬ q) := fun h e =>
+  h ((not_not_eq q).symm.trans ((congrArg Not e).trans not_false_eq))
+
+/-- `□p → (¬p) = ⊥`. -/
+theorem not_eq_false_of_box (p : Prop) (h : □ p) : (¬ p) = False :=
+  (congrArg Not h).trans not_true_eq
+
+/-- `¬(∀z. Cz → Xz) → ∃z. Cz ∧ ¬Xz`. -/
+theorem exists_not_of_not_forall' {σ : Type} [Ty σ] (C X : σ → Prop) :
+    ¬ (∀ z, C z → X z) → ∃ z, C z ∧ ¬ X z := fun h =>
+  (em (∃ z, C z ∧ ¬ X z)).elim id fun hn =>
+    (h fun z hc => (em (X z)).elim id fun hx => (hn ⟨z, hc, hx⟩).elim).elim
+
+/-- A property that is not weakly inextensible has an `X` boxed on it that it possibly
+exceeds. -/
+theorem not_weaklyInextensible {σ : Type} [Ty σ] (C : σ → Prop) :
+    ¬ WeaklyInextensible C →
+      ∃ X : σ → Prop, (∀ z, C z → □ (X z)) ∧ ◇ (∃ z, C z ∧ ¬ X z) := fun h =>
+  (em (∃ X : σ → Prop, (∀ z, C z → □ (X z)) ∧ ◇ (∃ z, C z ∧ ¬ X z))).elim id fun hn =>
+    (h fun X hX => (em (□ (∀ z, C z → X z))).elim id fun hb =>
+      (hn ⟨X, hX, dia_mono _ _ (nec% (exists_not_of_not_forall' C X))
+        (dia_not_of_not_box _ hb)⟩).elim).elim
+
+/-- `(∃z'. ◇(w ∧ Fz') ∧ ¬Xz') → ◇w`. -/
+theorem dia_of_exists_dia_and {σ : Type} [Ty σ] (w : Prop) (F X : σ → Prop) :
+    (∃ z', ◇ (w ∧ F z') ∧ ¬ X z') → ◇ ◇ w := fun h =>
+  h.elim fun z' hz => dia_intro _ (dia_mono _ _ (nec% (fun (h : w ∧ F z') => h.1)) hz.1)
+
+/-- Where `X` is boxed on `C := λz. ◇(w ∧ Fz)` and possibly exceeded by it, `◇w` holds;
+so `◇w → Cz` and `◇w → ◇¬Xz` cannot both hold there. -/
+theorem inext_dia_contra {σ : Type} [Ty σ] (w : Prop) (F X : σ → Prop) (z : σ) :
+    (◇ w → ◇ (w ∧ F z)) → (◇ w → ◇ (¬ X z)) →
+      ¬ ((∀ z', ◇ (w ∧ F z') → □ (X z')) ∧ ◇ (∃ z', ◇ (w ∧ F z') ∧ ¬ X z')) :=
+  fun h₂ h₃ hΦ =>
+    have hdw : ◇ w := dia_dia w (dia_dia _ (dia_mono _ _ (nec% (dia_of_exists_dia_and w F X)) hΦ.2))
+    h₃ hdw (not_eq_false_of_box _ (hΦ.1 z (h₂ hdw)))
+
+/-- `actuality-and-bf-imply-inextensible-comprehension`, at `σ → t`, its list form being
+the map's record: with `w` the actual world, `C := λz. ◇(w ∧ Fz)` is coextensive with
+`F`, and inextensible. Were it possibly not weakly inextensible, BF at the type of
+properties and at `σ` would give an actual `X` and `z` with `Fz`, `◇¬Xz`, and possibly `X`
+boxed on `C` and exceeded by it; but `w` entails `Fz` and `◇¬Xz`, so by `4` wherever `◇w`
+both `Cz` and `◇¬Xz` hold, which refutes that possibility. -/
+theorem actuality_and_bf_imply_inextensible_comprehension {σ : Type} [Ty σ] :
+    Actuality → P.Barcan (σ → Prop) → P.Barcan σ → InextensibleComprehension (σ → Prop) :=
+  fun act bf₁ bf X => act.elim fun w (hw : ActualWorld w) =>
+    ⟨λ z ↦ ◇ (w ∧ X z), (em (□ (WeaklyInextensible (λ z ↦ ◇ (w ∧ X z))))).elim id fun hn =>
+      ((exists_dia_of_dia_exists bf₁ _ (dia_mono _ _
+          (nec% (not_weaklyInextensible (λ z ↦ ◇ (w ∧ X z)))) (dia_not_of_not_box _ hn))).elim
+        fun Y hY =>
+          (exists_dia_of_dia_exists bf _ (dia_dia _ (dia_mono _ _
+              (nec% (fun (h : (∀ z, ◇ (w ∧ X z) → □ (Y z)) ∧ ◇ (∃ z, ◇ (w ∧ X z) ∧ ¬ Y z)) =>
+                h.2)) hY))).elim fun z hz =>
+            have hC : ◇ (w ∧ X z) := dia_dia _
+              (dia_mono _ _ (nec% (fun (h : ◇ (w ∧ X z) ∧ ¬ Y z) => h.1)) hz)
+            have hnY : ◇ (¬ Y z) := dia_mono _ _ (nec% (fun (h : ◇ (w ∧ X z) ∧ ¬ Y z) => h.2)) hz
+            have f₂ : □ (◇ w → ◇ (w ∧ X z)) := modal_K _ _ (nec% (dia_mono w (w ∧ X z)))
+              (modal_four _ (modal_K _ _ (nec% (fun (h : w → X z) (h' : w) => (⟨h', h h'⟩ : w ∧ X z)))
+                ((le_iff_prop _ _).1 (hw.2 _ ((coext_dia_actual w hw X z).2 hC)))))
+            have f₃ : □ (◇ w → ◇ (¬ Y z)) := modal_K _ _
+              (nec% (fun (f : ◇ w → ◇ ◇ (¬ Y z)) (h : ◇ w) => dia_dia _ (f h)))
+              (modal_K _ _ (nec% (dia_mono w (◇ (¬ Y z))))
+                (modal_four _ ((le_iff_prop _ _).1 (hw.2 _ hnY))))
+            hY ((box_not_eq _).mp (modal_K _ _ (modal_K _ _
+              (nec% (inext_dia_contra w X Y z)) f₂) f₃))).elim,
+      coext_dia_actual w hw X⟩
 
 end Classicism.Proofs

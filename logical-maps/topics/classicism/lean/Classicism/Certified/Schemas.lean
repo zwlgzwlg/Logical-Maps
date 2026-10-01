@@ -33,4 +33,7 @@ parameters; `P.reflect`, that reading it back gives the strict twin, by `rfl`; a
   Classicism.P.NecFunctionalChoice Classicism.P.NecRelationalChoice
   Classicism.P.StrongLeibniz Classicism.P.StrongLeibnizT Classicism.P.NecStrongLeibniz
   Classicism.P.NecStrongLeibnizT Classicism.P.DistinctnessPreservingCollapse
-  Classicism.P.BroadNecessitism
+  Classicism.P.BroadNecessitism Classicism.P.Transversal Classicism.P.NecTransversal
+  Classicism.P.TransversalChoice Classicism.P.NecTransversalChoice
+  Classicism.P.WeaklyInextensibleComprehension Classicism.P.NecWeaklyInextensibleComprehension
+  Classicism.P.Vicinity Classicism.P.NecVicinity Classicism.P.ModalizedPlenitude

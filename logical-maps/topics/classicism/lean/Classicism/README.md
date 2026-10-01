@@ -111,7 +111,7 @@ The first five were settled with Cian on 22 September 2026, the rest on the days
 | `Tools/Schema.lean` (rules) | `#classicism_rule foo` reads the same derivation as a **rule between the schemas' instances**, `foo.rule : ∀ σ' …, C.Theorem (imp (P₁.quoted …) (… (Q.quoted …)))`, keeping the object types, for use inside a metalogical proof; `#classicism_certify foo` is the whole chain at the point where `foo` is stated: transform, schemas, derive, rule. |
 | `Certified/Schemas.lean` | The map's principles (44) as schemas: the home of every `P.quoted`, `P.reflect`, `P.schema`. |
 | `Certified/Derivations.lean` | Every record theorem of `Results/Records.lean` derived in the object language: the home of every `foo.derivable`, kept apart because it is the expensive part of the build. |
-| `Certified/Entailed.lean` | The record theorems of `Results/Records.lean` certified as entailments: the home of every `foo.entails`, and, for a record with a Ty-parameter, `foo.listRule` and `foo.listEntails`. All 110 certify, the 42 with a Ty-parameter in list form too. |
+| `Certified/Entailed.lean` | The record theorems of `Results/Records.lean` certified as entailments: the home of every `foo.entails`, and, for a record with a Ty-parameter, `foo.listRule` and `foo.listEntails`. All 143 certify; 63 of the 67 with a Ty-parameter in list form too, the other four citing Relational Choice with its output at the list's type. |
 | `Semantics/Action.lean` | **Action premodels and action models**, the paper's models of Classicism, directly: a rooted category, an inner action per type, the outer actions by recursion on the type, the subaction conditions, the total interpretation function `sem`, `Holds`, and `IsModel`. |
 | `Semantics/ActionSoundness.lean` | **Soundness of action models**: transport, renaming, substitution, β, η, δ, conversion; every rule of `Derivable`; the eleven identities and Existence hold at every arrow of every action model; `theorem_holds`, `theoremWith_holds`. |
 | `Semantics/ActionFull.lean` | **Full action models**: the powerset and exponential actions as functors; the full inner domains by recursion on the type; `Premodel.full` on any rooted category from an action for `e` and an interpretation; **`full_isModel`**, that a full premodel is a model, by the combined induction (inner-ness and transport together, the type-subscripted constants by a second induction on the size of the type); `full_bf_surjective`, the paper's (iii). |
@@ -552,7 +552,7 @@ Classicism, apply an implication — are `Theorem.ax`, `Theorem.ofC` and `Theore
 `P.quoted : Ty → … → Sentence`, `P.reflect`, and
 `P.schema = {P.quoted σ' … | σ' … closed}`, the instances at the paper's types, those with
 no type variable (1 October; `VECTORIZATION-PLAN.md`, D2). A parameter-free principle gives
-a singleton. All 59 principles are quoted; the map's
+a singleton. All 68 principles are quoted; the map's
 schemas over sentences rather than types — No Pure Contingency, Distinctness,
 Possibility, `max` — are written by hand in `Syntax/SentenceSchemas.lean`.
 
@@ -570,7 +570,7 @@ The proof is `Exists.elim`, `Derivable.impE`, `Derivable.axiom`, `Derivable.conv
 conclusion set is `Q.schema` when the statement's conclusion is `Q` at its own
 parameters; the singleton `{Q.quoted τ}` when it fixes them (`Existence e`); the family
 over the derivation's parameters when it builds them (`Existence (σ → t)`).
-`#classicism_entails_audit` certifies every record theorem of a module: **all 110
+`#classicism_entails_audit` certifies every record theorem of a module: **all 143
 certify**, at build time. These `foo.entails` are what the map's arrows can
 cite as certificates, once the map's generator is taught the statement shape.
 

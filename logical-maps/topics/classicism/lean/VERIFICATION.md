@@ -1000,6 +1000,33 @@ Proposition 2.11 is not proved: Cian reports a countermodel.
   `λR. R x₁ … xₙ`, which needs no induction. Plenitude's two-element step would need
   Functionality.
 
+## The map's additions of 25–28 September, 1 October
+
+Nine principles from `zwlgzwlg/Logical-Maps` at 8edffb3 (Transversal, Transversal Choice,
+Weakly Inextensible Comprehension, Vicinity, their boxed forms, Modalized Plenitude),
+quoted and reflected, and 34 of their results:
+- in `Results/Records.lean`, unary where the principle is over relational types, with
+  their every-arity forms in `Results/Arity.lean`;
+- the four No Pure Contingency results in `Results/Schemas/Contingency.lean`.
+
+*Checked.* The full build passes. The record audits report:
+- 273 of 273 theorems passing the gate and type checks, and derived;
+- 143 of 143 records certified as entailments;
+- 272 of 273 transformed by the strict transformer, the same one exception as before.
+
+The theorems checked rest on `propext` and `Quot.sound` only.
+
+63 of the 67 records with a Ty-parameter have list forms. The four without cite Relational
+Choice with its output at the list's own type, which no single type fills. The map states
+Transversal Choice at single types, so nothing needs those list forms.
+
+*Choices.*
+- `Equiv(R)` is the map's: reflexive, symmetric and transitive at the evaluation point
+  (`P.EquivRel`).
+- Where Transversal Choice is derived from Relational Choice, seriality of
+  `(UC)y := Cy ∨ ¬∃z. Cz` needs an element of the type. The proofs split on whether the
+  type has one: if not, Transversal Choice holds vacuously.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

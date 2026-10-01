@@ -9,7 +9,7 @@ The arrows among the map's contingency schemas and out of them:
 
 - **No Pure Contingency carries any pure principle to its boxed form** — the uniform
   family `no-pure-contingency-and-X-imply-necessary-X` (BF, ND, Atomicity, Fregean,
-  five, B, …, twenty records). A boxed principle says that each closed instance of the
+  five, B, Vicinity, Transversal, …, twenty-four records). A boxed principle says that each closed instance of the
   base is necessary, and No Pure Contingency says exactly that of a true pure sentence.
   Here it is one theorem, `npc_union_entails_box`: for any schema `Ax` of pure sentences,
   `NPC ∪ Ax ⟹ Ax.box`; in the pure signature every schema is pure, so every record of
@@ -85,6 +85,32 @@ theorem npc_barcan_entails_box : npc Signature.pure ∪ P.Barcan.schema ⟹ Axio
 theorem npc_nd_entails_box :
     npc Signature.pure ∪ P.NecessityOfDistinctness.schema ⟹ AxiomSet.box P.NecessityOfDistinctness.schema :=
   npc_union_entails_box_pure _
+
+/-- `no-pure-contingency-and-vicinity-imply-necessary-vicinity`. -/
+theorem npc_vicinity_entails_necVicinity :
+    npc Signature.pure ∪ P.Vicinity.schema ⟹ P.NecVicinity.schema := by
+  rintro a rfl
+  exact npc_union_entails_box_pure P.Vicinity.schema _ (AxiomSet.mem_box rfl)
+
+/-- `no-pure-contingency-and-transversal-imply-necessary-transversal`. -/
+theorem npc_transversal_entails_necTransversal :
+    npc Signature.pure ∪ P.Transversal.schema ⟹ P.NecTransversal.schema := by
+  rintro a ⟨σ, hσ, rfl⟩
+  exact npc_union_entails_box_pure P.Transversal.schema _ (AxiomSet.mem_box ⟨σ, hσ, rfl⟩)
+
+/-- `no-pure-contingency-and-transversal-choice-imply-necessary-transversal-choice`. -/
+theorem npc_transversalChoice_entails_necTransversalChoice :
+    npc Signature.pure ∪ P.TransversalChoice.schema ⟹ P.NecTransversalChoice.schema := by
+  rintro a ⟨σ, hσ, rfl⟩
+  exact npc_union_entails_box_pure P.TransversalChoice.schema _ (AxiomSet.mem_box ⟨σ, hσ, rfl⟩)
+
+/-- `no-pure-contingency-and-weakly-inextensible-comprehension-imply-necessary-weakly-inextensible-comprehension`. -/
+theorem npc_weaklyInextensibleComprehension_entails_box :
+    npc Signature.pure ∪ P.WeaklyInextensibleComprehension.schema ⟹
+      P.NecWeaklyInextensibleComprehension.schema := by
+  rintro a ⟨ρ, hρ, rfl⟩
+  exact npc_union_entails_box_pure P.WeaklyInextensibleComprehension.schema _
+    (AxiomSet.mem_box ⟨ρ, hρ, rfl⟩)
 
 /-- `no-pure-contingency-and-actuality-imply-necessary-actuality`. -/
 theorem npc_actuality_entails_necActuality :

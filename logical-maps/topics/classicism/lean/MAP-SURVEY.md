@@ -1,45 +1,49 @@
 # Survey of the Logical Map results by kind of proof
 
-Made 28 September 2026 from `ciandorr/Logical-Maps` at commit 7c928c4 ("first trawl"), which has 230 Classicism results (226 proved, 4 conjectured). Each result was read (premises, conclusion, recorded proof) and put in one of four classes. The judgement is about what formalizing the recorded proof would need, not about how hard the mathematics is.
+Made 28 September 2026 from `ciandorr/Logical-Maps` at commit 7c928c4 ("first trawl"), which had 230 Classicism results; refreshed 1 October against `zwlgzwlg/Logical-Maps` at commit 8edffb3 (30 September), which has 270 (264 proved, 6 conjectured). Each result was read (premises, conclusion, recorded proof) and put in one of four classes. The judgement is about what formalizing the recorded proof would need, not about how hard the mathematics is.
 
 | class | count | what it means |
 | --- | --- | --- |
-| Per-type routine | 112 | The object-level proof is uniform in the type parameters (pointwise reasoning at a relational type goes through the `Rel`/`Pointwise` classes), so each conclusion instance follows from finitely many premise instances. Includes specializations to `t`, stripping a box with T, and boxing a proved implication with necessitation, K and 4. Lifting is routine: a shallow theorem certified as an entailment. |
-| Per-instance routine over sentences | 48 | The principles are schemas over closed (pure or Σ-) sentences with only syntactic side conditions (purity, closedness, fresh constants). Each instance has a short object-level proof; lifting is checking that the side conditions carry over. `npc_union_entails_box` in `Results/Schemas/Contingency.lean` does the twenty "No Pure Contingency and X imply □X" results at once. |
-| Sweet spot | 40 | A real shallow core plus a real metalogical step: an induction on the arity of a relational type (tuple haecceities, BF one argument at a time, a pointwise meet or join over a property), an induction on n for a schema indexed by numbers, an induction over arithmetical formulas, or reasoning about theoremhood, consistency or substitution of constants in the side conditions. |
+| Per-type routine | 139 | The object-level proof is uniform in the type parameters (pointwise reasoning at a relational type goes through the `Rel`/`Pointwise` classes), so each conclusion instance follows from finitely many premise instances. Includes specializations to `t`, stripping a box with T, and boxing a proved implication with necessitation, K and 4. Lifting is routine: a shallow theorem certified as an entailment. |
+| Per-instance routine over sentences | 52 | The principles are schemas over closed (pure or Σ-) sentences with only syntactic side conditions (purity, closedness, fresh constants). Each instance has a short object-level proof; lifting is checking that the side conditions carry over. `npc_union_entails_box` in `Results/Schemas/Contingency.lean` does the "No Pure Contingency and X imply □X" results at once (twenty-four). |
+| Sweet spot | 47 | A real shallow core plus a real metalogical step: an induction on the arity of a relational type (tuple haecceities, BF one argument at a time, a pointwise meet or join over a property), an induction on n for a schema indexed by numbers, an induction over arithmetical formulas, or reasoning about theoremhood, consistency or substitution of constants in the side conditions. |
 | Metalogic-dominated | 26 | The work is a model, soundness or completeness, conservativity of C(Σ) over C, or Gödel incompleteness; the object-level part is a line or two. |
-| Conjectured | 4 | No proof recorded. |
-
-The record `atomicity-t-and-bf-imply-atomicity`, the model for the sweet spot, is not in this commit of the map.
+| Conjectured | 6 | No proof recorded. |
 
 ## Lean coverage (1 October)
 
-A record theorem in `Results/Records.lean` named exactly by a map id proves the map's claim, and its certificate is the entailment between the map's schemas. One named by a map id plus `_at_t` proves only the instances at type `t` (or with output `t`); its certificate is from the map's premise schemas to those instances. Where a full version exists too, the `_at_t` one is the instance at `t` that other proofs at `t` cite. A record with a Ty-parameter is proved at every list of types too, by its list form (`foo.listEntails`, the vectorized derivation); where the map's principle is over argument tuples, as Actual Profile is, or the record is proved at `σ → t` for a principle over relational types, that list form is the map's claim (`Results/Lists.lean`, `Results/Arity.lean`). `classicism_implies_existence_r_at_e` and `_relational` together cover their record. Results proved by the metalogical theorems of `Results/Schemas/` are counted as proved too: those whose docstrings name the record, and the twenty "No Pure Contingency and X imply □X" results, all instances of `npc_union_entails_box`.
+A record theorem in `Results/Records.lean` named exactly by a map id proves the map's claim, and its certificate is the entailment between the map's schemas. One named by a map id plus `_at_t` proves only the instances at type `t` (or with output `t`); its certificate is from the map's premise schemas to those instances. Where a full version exists too, the `_at_t` one is the instance at `t` that other proofs at `t` cite. A record with a Ty-parameter is proved at every list of types too, by its list form (`foo.listEntails`, the vectorized derivation); where the map's principle is over argument tuples, as Actual Profile is, or the record is proved at `σ → t` for a principle over relational types, that list form is the map's claim (`Results/Lists.lean`, `Results/Arity.lean`). `classicism_implies_existence_r_at_e` and `_relational` together cover their record. Results proved by the metalogical theorems of `Results/Schemas/` are counted as proved too: those whose docstrings name the record, and the twenty-four "No Pure Contingency and X imply □X" results, all instances of `npc_union_entails_box`.
 
 | class | results | proved in Lean | in part only | not yet |
 | --- | --- | --- | --- | --- |
-| Per-type routine | 112 | 98 | 0 | 14 |
-| Per-instance routine over sentences | 48 | 27 | 0 | 21 |
-| Sweet spot | 40 | 26 | 0 | 14 |
+| Per-type routine | 139 | 124 | 0 | 15 |
+| Per-instance routine over sentences | 52 | 31 | 0 | 21 |
+| Sweet spot | 47 | 31 | 0 | 16 |
 | Metalogic-dominated | 26 | 9 | 0 | 17 |
-| Conjectured | 4 | 0 | 0 | 4 |
-| total | 230 | 160 | 0 | 70 |
+| Conjectured | 6 | 0 | 0 | 6 |
+| total | 270 | 195 | 0 | 75 |
 
-## Sweet spot (40)
+## Sweet spot (47)
 
+- `actuality-and-bf-imply-inextensible-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `actuality-implies-actual-profile-r` — **Lean: full, its list form**
+- `atomicity-t-and-bf-imply-atomicity` — **Lean: at every arity, `Results/Atomicity.lean`**
 - `atomlessness-implies-infinity-t`
 - `axiom-of-infinity-e-implies-infinity-e`
 - `axiom-of-infinity-t-implies-infinity-t`
+- `boolean-completeness-r-implies-weakly-inextensible-comprehension-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `c5-and-actuality-imply-completeness` — **Lean: at every arity, `Results/Arity.lean`**
 - `c5-and-actuality-imply-rigid-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `c5-and-atomicity-imply-necessary-atomicity` — **Lean: at every arity, `Results/Arity.lean`**
 - `c5-and-atomicity-imply-necessary-completeness` — **Lean: at every arity, `Results/Arity.lean`**
 - `c5-and-atomicity-imply-necessary-plenitude` — **Lean: at every arity, `Results/Arity.lean`**
 - `c5-and-atomicity-imply-necessary-rigid-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
+- `c5-and-atomicity-imply-no-pure-contingency`
+- `c5-and-atomicity-t-imply-no-pure-contingency`
 - `c5-and-completeness-imply-plenitude` — **Lean: at every arity, `Results/Arity.lean`**
 - `c5-and-necessary-actuality-imply-atomicity` — **Lean: at every arity, `Results/Arity.lean`**
 - `c5-and-necessary-completeness-imply-atomicity` — **Lean: at every arity, `Results/Arity.lean`**
+- `classicism-implies-modalized-plenitude-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `completeness-and-actuality-imply-weak-rigid-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `countable-boolean-completeness-implies-necessity-of-arithmetic`
 - `distinctness-schema-r-implies-possibility-schema-r` — **Lean: metalogical theorem in `Results/Schemas/`**
@@ -51,10 +55,11 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `gallin-comprehension-and-bf-imply-rigid-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `gallin-comprehension-and-bf-imply-weak-rigid-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `logical-necessity-r-implies-separated-structure-r`
-- `necessary-atomicity-completeness-bf-imply-rigid-comprehension` — refuted by a countermodel (Cian, 1 October); the proof in n. 42 has two gaps (`HANDOFF.md`, §4)
+- `necessary-bf-and-actuality-imply-inextensible-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `necessary-gallin-comprehension-implies-necessary-rigid-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `necessary-plenitude-r-implies-atomicity-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `necessary-plenitude-r-implies-necessary-atomicity-r` — **Lean: at every arity, `Results/Arity.lean`**
+- `necessary-strong-leibniz-t-and-necessary-bf-imply-necessary-strong-leibniz`
 - `possibility-schema-r-implies-distinctness-schema-r` — **Lean: metalogical theorem in `Results/Schemas/`**
 - `possibility-signature-r-implies-distinctness-signature-r` — **Lean: metalogical theorem in `Results/Schemas/`**
 - `possibly-witnessed-possibility-r-implies-separated-structure-r`
@@ -97,7 +102,7 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `strong-possibility-and-distinctness-preserving-collapse-incompatible`
 - `strong-possibility-signature-and-distinctness-preserving-collapse-incompatible`
 
-## Per-instance routine over sentences (48)
+## Per-instance routine over sentences (52)
 
 - `converse-witnessed-possibility-r-implies-no-pure-contingency-r`
 - `fregean-axiom-implies-no-contingency-signature-r` — **Lean: metalogical theorem in `Results/Schemas/`**
@@ -133,6 +138,10 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `no-pure-contingency-and-strong-leibniz-imply-necessary-strong-leibniz` — **Lean: metalogical theorem in `Results/Schemas/`**
 - `no-pure-contingency-and-strong-leibniz-t-imply-necessary-strong-leibniz-t` — **Lean: metalogical theorem in `Results/Schemas/`**
 - `no-pure-contingency-and-tractarianism-imply-necessary-tractarianism` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `no-pure-contingency-and-transversal-choice-imply-necessary-transversal-choice` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `no-pure-contingency-and-transversal-imply-necessary-transversal` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `no-pure-contingency-and-vicinity-imply-necessary-vicinity` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `no-pure-contingency-and-weakly-inextensible-comprehension-imply-necessary-weakly-inextensible-comprehension` — **Lean: metalogical theorem in `Results/Schemas/`**
 - `no-pure-contingency-implies-necessity-of-arithmetic`
 - `no-pure-contingency-r-implies-converse-witnessed-possibility-r`
 - `no-pure-contingency-r-implies-pure-b-r` — **Lean: metalogical theorem in `Results/Schemas/`**
@@ -148,11 +157,14 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `witnessed-possibility-and-npc-imply-possibly-witnessed-possibility`
 - `witnessed-possibility-incompatible-with-nd`
 
-## Per-type routine (112)
+## Per-type routine (139)
 
 - `actual-profile-r-implies-actuality` — **Lean: full, `Results/Arity.lean`**
-- `actuality-implies-inextensible-comprehension-r`
+- `actuality-and-distinctness-preserving-collapse-imply-inextensible-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `actuality-implies-persistent-comprehension-r` — **Lean: at every arity, `Results/Arity.lean`**
+- `actuality-implies-transversal` — **Lean: full**
+- `actuality-implies-vicinity` — **Lean: full**
+- `actuality-implies-weakly-inextensible-comprehension-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `actuality-incompatible-with-atomlessness` — **Lean: full**
 - `atomicity-and-bf-imply-necessary-actuality` — **Lean: full**
 - `atomicity-and-bf-imply-strong-leibniz`
@@ -183,6 +195,7 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `classicism-implies-ordinary-comprehension-r`
 - `distinctness-necessary-r-implies-distinctness-necessary-t` — **Lean: full**
 - `distinctness-necessary-t-implies-modal-five` — **Lean: full**
+- `distinctness-necessary-t-implies-vicinity` — **Lean: full**
 - `distinctness-preserving-collapse-and-nd-imply-fregean-axiom` — **Lean: full**
 - `extensionality-r-implies-actuality` — **Lean: full**
 - `extensionality-r-implies-fregean-axiom` — **Lean: full**
@@ -198,10 +211,14 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `functional-choice-r-implies-relational-choice-r` — **Lean: full**
 - `functionality-r-implies-tractarianism-r` — **Lean: full**
 - `gallin-comprehension-implies-nd` — **Lean: full**
+- `inextensible-comprehension-r-implies-weakly-inextensible-comprehension-r` — **Lean: full**
 - `modal-b-implies-distinctness-necessary-r` — **Lean: full**
 - `modal-five-implies-modal-b` — **Lean: full**
 - `nd-and-bf-imply-necessary-nd` — **Lean: full**
 - `necessary-actuality-implies-actuality` — **Lean: full**
+- `necessary-actuality-implies-necessary-transversal` — **Lean: full**
+- `necessary-actuality-implies-necessary-vicinity` — **Lean: full**
+- `necessary-actuality-implies-necessary-weakly-inextensible-comprehension-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `necessary-atomicity-and-necessary-bf-imply-necessary-strong-leibniz`
 - `necessary-atomicity-and-necessary-bf-t-imply-necessary-strong-leibniz-t` — **Lean: full**
 - `necessary-atomicity-r-implies-atomicity-r` — **Lean: full**
@@ -216,6 +233,7 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `necessary-distinctness-necessary-r-implies-necessary-modal-five` — **Lean: full**
 - `necessary-distinctness-necessary-t-implies-distinctness-necessary-t` — **Lean: full**
 - `necessary-distinctness-necessary-t-implies-necessary-distinctness-necessary-r` — **Lean: full**
+- `necessary-distinctness-necessary-t-implies-necessary-vicinity` — **Lean: full**
 - `necessary-extensionality-r-implies-extensionality-r` — **Lean: full**
 - `necessary-fregean-axiom-implies-fregean-axiom` — **Lean: full**
 - `necessary-functional-choice-r-implies-functional-choice-r` — **Lean: full**
@@ -241,15 +259,26 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `necessary-strong-leibniz-and-rigid-comprehension-imply-necessary-bf-t`
 - `necessary-strong-leibniz-implies-necessary-atomicity`
 - `necessary-strong-leibniz-r-implies-necessary-strong-leibniz-t` — **Lean: full**
+- `necessary-strong-leibniz-r-implies-strong-leibniz-r`
 - `necessary-strong-leibniz-t-implies-strong-leibniz-t` — **Lean: full**
 - `necessary-tractarianism-r-implies-necessary-barcan-r` — **Lean: full**
 - `necessary-tractarianism-r-implies-tractarianism-r` — **Lean: full**
+- `necessary-transversal-and-necessary-relational-choice-imply-necessary-transversal-choice` — **Lean: full**
+- `necessary-transversal-choice-r-implies-necessary-relational-choice-r` — **Lean: full**
+- `necessary-transversal-choice-r-implies-necessary-transversal-r` — **Lean: full**
+- `necessary-transversal-choice-r-implies-transversal-choice-r` — **Lean: full**
+- `necessary-transversal-r-implies-transversal-r` — **Lean: full**
+- `necessary-vicinity-and-necessary-weakly-inextensible-comprehension-imply-necessary-actuality` — **Lean: full**
+- `necessary-vicinity-implies-vicinity` — **Lean: full**
+- `necessary-weakly-inextensible-comprehension-r-implies-weakly-inextensible-comprehension-r` — **Lean: full**
 - `persistent-comprehension-r-implies-actuality` — **Lean: full**
 - `plenitude-r-implies-actuality` — **Lean: full**
 - `plenitude-r-implies-distinctness-necessary-r` — **Lean: full**
 - `possible-infinity-e-and-bf-imply-axiom-of-infinity-e`
 - `possible-infinity-t-and-bf-t-imply-axiom-of-infinity-t`
+- `relational-choice-and-extensionality-imply-transversal-choice` — **Lean: full**
 - `relational-choice-and-plenitude-imply-functional-choice-r` — **Lean: full**
+- `relational-choice-and-very-weak-rigid-comprehension-imply-transversal-choice` — **Lean: full**
 - `rigid-comprehension-and-bf-imply-necessary-bf` — **Lean: full**
 - `rigid-comprehension-r-implies-actuality` — **Lean: full**
 - `rigid-comprehension-r-implies-inextensible-comprehension-r` — **Lean: full**
@@ -258,23 +287,31 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `strong-leibniz-r-implies-atomicity-r`
 - `strong-leibniz-r-implies-strong-leibniz-t` — **Lean: full**
 - `strong-leibniz-t-implies-atomicity-t` — **Lean: full**
+- `strong-leibniz-t-implies-necessary-actuality`
 - `tractarianism-r-implies-barcan-r` — **Lean: full**
+- `transversal-and-relational-choice-imply-transversal-choice` — **Lean: full**
+- `transversal-choice-r-implies-relational-choice-r` — **Lean: full**
+- `transversal-choice-r-implies-transversal-r` — **Lean: full**
 - `very-weak-rigid-comprehension-r-implies-weak-rigid-comprehension-r` — **Lean: at every arity, `Results/Arity.lean`**
+- `vicinity-and-distinctness-preserving-collapse-imply-actuality` — **Lean: full**
+- `vicinity-and-weakly-inextensible-comprehension-imply-actuality` — **Lean: full**
 - `weak-rigid-comprehension-r-implies-persistent-comprehension-r` — **Lean: full**
 - `weak-rigid-comprehension-r-implies-very-weak-rigid-comprehension-r` — **Lean: full**
+- `weak-rigid-comprehension-r-implies-weakly-inextensible-comprehension-r` — **Lean: full**
 
-## Conjectured (4)
+## Conjectured (6)
 
-- `c5-and-atomicity-imply-no-pure-contingency`
+- `necessary-atomicity-completeness-bf-imply-rigid-comprehension` — refuted by a countermodel (Cian, 1 October); the proof in n. 42 has two gaps (`HANDOFF.md`, §4)
 - `possible-infinity-e-implies-axiom-of-infinity-e`
 - `possible-infinity-t-implies-axiom-of-infinity-t`
+- `relational-choice-and-boolean-completeness-imply-transversal-choice`
+- `relational-choice-r-implies-transversal-choice-r`
 - `strong-possibility-signature-r-implies-strong-possibility-r`
 
 ## Lean records that are not map results
 
 Record-shaped theorems in `Results/Records.lean` with no map counterpart: consequences at type `t`, or with the premise `□ND` at `t` alone where the map uses `□ND` at all types, which the map could add as records.
 
-- `actuality_implies_weakly_inextensible_comprehension`
 - `very_weak_rigid_comprehension_implies_boolean_completeness_t`
 - `necessary_distinctness_necessary_t_implies_distinctness_necessary_r`
 - `distinctness_necessary_t_and_barcan_t_imply_necessary_distinctness_necessary_t`

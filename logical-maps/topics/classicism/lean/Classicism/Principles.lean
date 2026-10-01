@@ -232,4 +232,47 @@ def DistinctnessPreservingCollapse : Prop := ∀ p : Prop, p → BoxNe p
 /-- `broad-necessitism-r` at `σ`: `∀x. □∃y. y = x`. -/
 def BroadNecessitism (σ : Type) [Ty σ] : Prop := ∀ x : σ, □ (∃ y : σ, y = x)
 
+/-! ### Transversals, Vicinity, Weak Inextensibility, Modalized Plenitude (25–28 September) -/
+
+/-- `Equiv(R)`: `R` is reflexive, symmetric and transitive, at the evaluation point. -/
+def EquivRel {σ : Type} [Ty σ] (R : σ → σ → Prop) : Prop :=
+  (∀ x, R x x) ∧ (∀ x y, R x y → R y x) ∧ (∀ x y z, R x y → R y z → R x z)
+
+/-- `transversal-r` at `σ`: a property of properties picks out exactly one property from
+each coextension class. -/
+def Transversal (σ : Type) [Ty σ] : Prop :=
+  ∃ F : (σ → Prop) → Prop, ∀ X : σ → Prop, ∃ Y : σ → Prop,
+    F Y ∧ (∀ z, X z ↔ Y z) ∧ ∀ Y' : σ → Prop, (F Y' ∧ ∀ z, X z ↔ Y' z) → Y' = Y
+/-- `necessary-transversal-r` at `σ`: the instance boxed. -/
+def NecTransversal (σ : Type) [Ty σ] : Prop := □ (Transversal σ)
+
+/-- `transversal-choice-r` at `σ`: every equivalence relation has a transversal, a
+property with exactly one instance in each cell. -/
+def TransversalChoice (σ : Type) [Ty σ] : Prop :=
+  ∀ R : σ → σ → Prop, EquivRel R →
+    ∃ F : σ → Prop, ∀ x, ∃ y, R x y ∧ F y ∧ ∀ z, (R x z ∧ F z) → y = z
+/-- `necessary-transversal-choice-r` at `σ`: the instance boxed. -/
+def NecTransversalChoice (σ : Type) [Ty σ] : Prop := □ (TransversalChoice σ)
+
+/-- `weakly-inextensible-comprehension-r` at `τ`: every relation, including a proposition,
+is coextensive with a weakly inextensible one. -/
+def WeaklyInextensibleComprehension (τ : Type) [Rel τ] : Prop :=
+  ∀ X : τ, ∃ Y : τ, WeaklyInextensible Y ∧ coext X Y
+/-- `necessary-weakly-inextensible-comprehension-r` at `τ`: the instance boxed. -/
+def NecWeaklyInextensibleComprehension (τ : Type) [Rel τ] : Prop :=
+  □ (WeaklyInextensibleComprehension τ)
+
+/-- `vicinity`: `∃p. p ∧ ∀q. q → p ≤ ◇q`, a true proposition entails the possibility of
+each truth. -/
+def Vicinity : Prop := ∃ p : Prop, p ∧ ∀ q : Prop, q → Rel.le p (◇ q)
+/-- `necessary-vicinity`: Vicinity boxed. -/
+def NecVicinity : Prop := □ Vicinity
+
+/-- `modalized-plenitude-r` at `σ`, `τ`: if necessarily each argument has a value that is
+necessarily the relation's unique value for it, some operation necessarily represents the
+relation; the output type `τ` is relational. -/
+def ModalizedPlenitude (σ τ : Type) [Ty σ] [Rel τ] : Prop :=
+  ∀ U : σ → τ → Prop, □ (∀ x, ∃ y, □ (U x y ∧ ∀ z, U x z → y = z)) →
+    ∃ X : σ → τ, □ (∀ x y, U x y ↔ y = X x)
+
 end Classicism.P
