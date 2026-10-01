@@ -1,32 +1,5 @@
 id: finite-support-truncated-shifts
 name: 'Finite-support action model: truncated shifts of N'
-satisfies:
-- atomicity-r
-- actuality
-- barcan-r
-- no-pure-contingency-r
-- necessary-atomicity-r
-- necessary-actuality
-- necessary-barcan-r
-- axiom-of-infinity-e
-- axiom-of-infinity-t
-- distinctness-preserving-collapse
-- relational-choice-r
-- necessary-relational-choice-r
-- transversal-choice-r
-violates:
-- distinctness-necessary-r
-- boolean-completeness-r
-- rigid-comprehension-r
-- witnessed-possibility-r
-- separated-structure-r
-- independence-signature-r
-- distinctness-signature-r
-- countable-boolean-completeness-r
-- no-contingency-signature-r
-- signature-b-r
-- boolean-completeness-t
-status: proved
 certificate:
   source_id: bacon-dorr-classicism
   produced_by: Andrew Bacon and Cian Dorr
@@ -34,103 +7,8 @@ certificate:
   checked_by: []
   date: '2026-09-17'
   lean: none
-  trawl:
-    quarantine_id: quarantine-0113be29928e4d2fbf33c5d150b87c73
-    candidate_id: checkpoint-0cd1f2d674504d27a1758698cd564383
-    candidate_sha256: 9606da02aacb03dd1288524d8db1acc60c184a60afede465c2759d333382e52a
-    source:
-      repository: https://github.com/zwlgzwlg/Logical-Maps.git
-      ref: main
-      commit: a7bbaecf6f282ac27ea1ee52e3e75721bead6318
-    discovery:
-      trawl_id: trawl-764428bfd00a49bb85d7fcbff3472c7e
-      at: '2026-09-25T17:43:16.475674+00:00'
-      actor:
-        kind: model
-        provider: deepseek
-        model: deepseek-flash
-        protocol: chat-completions
-        endpoint: https://api.deepseek.com/chat/completions
-        reported_model: deepseek-flash
-      prompt_sha256: 4adc8e853c5fc25e7326c236c89e07dbc4cdbc9813ea1ad07c32b9f73cf1110f
-      response_sha256: c88db49fd05ad7c6f1444a1664638fb5b10d56c62a072a4b3d9d6fd72999879d
-      response_id: 6cb706f3-1152-4455-bc66-3e69adf2fda9
-      usage:
-        prompt_tokens: 256068
-        completion_tokens: 315
-        total_tokens: 256383
-        prompt_tokens_details:
-          cached_tokens: 255872
-        completion_tokens_details:
-          reasoning_tokens: 192
-        prompt_cache_hit_tokens: 255872
-        prompt_cache_miss_tokens: 196
-      offline: false
-    evidence:
-    - kind: original-argument
-      citation: DeepSeek (deepseek-flash), saved 2026-09-25T17:43:16.503076+00:00; checkpoint-d596a7c456ef49429616e29886456956
-        (SHA-256 1bdc2f43b51baa7a6d55e616f28a83b4f3b84e467de222983d56a746f7f286f8). Frozen in quarantine
-        commit 8b0b53a1d081d9a416f1593a19724e027a747651. Corrected proof and accepted scope are in the curated
-        checkpoint.
-      locator: 'logical-maps/topics/classicism/models/finite-support-truncated-shifts.yaml: violates boolean-completeness-t;
-        workspaces/workspace-e8b5f36e66834eea9e82aa4463a380ff/turns/trawl-764428bfd00a49bb85d7fcbff3472c7e/000000-edit.json'
-      role: origin
-      verification: argument-in-writeup
-    - kind: literature
-      citation: Bacon and Dorr, Classicism, 16 May 2023 draft, https://philpapers.org/archive/BACC-8.pdf;
-        exact relevant sections inspected during review.
-      locator: Sections and proof dependencies are identified in the accompanying handwritten write-ups
-        and review report.
-      role: background
-      verification: argument-in-writeup
-    reviews:
-    - version: 1
-      id: review-b1d4be27f1d9472d8b87f930303b0a51
-      candidate_id: checkpoint-0cd1f2d674504d27a1758698cd564383
-      candidate_sha256: 9606da02aacb03dd1288524d8db1acc60c184a60afede465c2759d333382e52a
-      at: '2026-09-25T19:01:48.374392+00:00'
-      recorded_at: '2026-09-25T19:01:48.375706+00:00'
-      actor:
-        kind: model
-        provider: openai
-        model: gpt-6
-      source:
-        repository: https://github.com/zwlgzwlg/Logical-Maps.git
-        ref: HEAD
-        commit: a7bbaecf6f282ac27ea1ee52e3e75721bead6318
-      report:
-        verdict: accept
-        summary: 'Accept only the corrected curated changes: five BC-t failures, two source-reported Atomicity-t
-          localizations, three SL-t failures (including correction of the full idempotent model), three
-          boxed all-type coalesced-model flags, and the instancewise T bridge. Correct the supplementary
-          SL-t principle note; preserve original model authorship and historical dates. Repeated or already-derived
-          proposals add no duplicate verdicts.'
-        argument_check: Independently checked the finite/cofinite missing-bound argument, repaired three
-          descending-family errors using alternating agreement shells, checked arbitrary-family predicate
-          admissibility from extensional fullness, and repaired the two atomicity refinements. Checked all
-          target-domain quantifiers in the idempotent singleton obstruction and a properly pinned BF-t witness
-          for truncations. Checked product powerset atoms/meets, component behavior, and the projected-extension
-          rigid witness at every world of the coalesced finite-domain model. Checked T instance by instance.
-          Exact two-arrow checks exhaust four propositions and 256 property intensions; 237 finite prefixes
-          check shell indexing. Topic schema/reference/consistency validation passed before recording this
-          review. Finite calculations supplement, and do not replace, the infinite proofs.
-        source_check: 'Inspected the exact 16 May 2023, 87-page Classicism draft: §1.5 p.16; Definitions
-          3.19 and satisfaction clauses pp.55–57; Proposition 3.24 p.58; idempotent construction p.59; Definitions
-          D.1–D.3 and footnote92 pp.73–74; D.5 pp.75–79; E.2 pp.80–83. Checked current main definitions
-          and before-file hashes, all eight frozen checkpoints, 256 hashed edit events and 248 editing response
-          hashes. Actual requested/reported actor is DeepSeek deepseek-flash; draft Claude self-attributions
-          are discarded. No source PDF or private reading extract is admitted. Original construction authorship
-          and certificate dates remain; new deductions and proof repairs are separately attributed. No Lean
-          verification is claimed.'
-        issues: []
-      method: informal-mathematical-review
-    admission:
-      id: admission-c0a37bbe6b6c45cc985428b174812564
-      at: '2026-09-25T19:01:48.376481+00:00'
-      by: OpenAI Codex (GPT-6)
-      base_commit: a7bbaecf6f282ac27ea1ee52e3e75721bead6318
-      candidate_sha256: 9606da02aacb03dd1288524d8db1acc60c184a60afede465c2759d333382e52a
-      review_id: review-b1d4be27f1d9472d8b87f930303b0a51
+  # migration: the `trawl` block moves verbatim to
+  # provenance/trawl-764428bfd00a49bb85d7fcbff3472c7e.yaml.
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, Proposition D.5, part 8, pp.
   74, 78–79; p. 79 (No Pure Contingency).
@@ -145,74 +23,187 @@ references:
 - paper: bacon-dorr-classicism
   role: proof
   locator: Appendix D, Proposition D.5(8), pp. 74–75; construction pp. 78–79, Part 8; p. 79 (No Pure Contingency)
-description: 'Proposition D.5, part 8 (pp. 78–79): the arrows are the maps $k_n$ with $k_nm=0$ for $m\le
-  n$ and $k_nm=m-n$ otherwise, which compose as $k_n\circ k_m=k_{n+m}$; $k_0$ is the identity. All arrows
-  are surjective, so BF holds; $\{k_0\}$ and each $\{k_n\}$ are pinned down by finite sets, so Actuality
-  and Atomicity hold; ND fails; Boolean Completeness fails because the strongest persistent property pinned
-  down by $\{0,\ldots,n\}$ whose extension contains the even numbers has, at $k_m$, the evens, the odds
-  with $0$, or all of $\mathbb N$ according as $m<n$ is even, $m<n$ is odd, or $m\ge n$, and so becomes
-  ever stronger. In every part, $W_0^\ddagger$ is the set of finite subsets of $\mathbb N$ and the model
-  is ideally full: a proposition is a set of arrows whose membership depends only on the arrows’ values
-  on some finite set of individuals (it is pinned down by that set), an entity of a higher type is an
-  applicative behaviour profile pinned down by a finite set in the same sense, and the individuals are
-  the natural numbers acted on by the arrows themselves. Propositions and properties are thus about finitely
-  many individuals and indifferent to how the arrows treat the rest. Evaluation point: the sole object,
-  at the identity arrow.'
-notes: 'The cited construction is a model of the map’s relational-type framework. The description identifies
-  its evaluation point; construction and verification are given at the PDF locations in References. Boxed
-  positive flags use the source’s explicit one-object No Pure Contingency observation, applied separately
-  to each closed instance. Interpretation of Σ, fixed for this record: one designated relational constant
-  $c$ of type $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of
-  the model, the actual-world proposition described above; every other relational constant denotes the
-  top element of its type and every individual constant one fixed individual. Under it: No Contingency
-  (signature Σ) fails, since the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes $a$, true and contingent;
-  B for sentences of Σ fails, since under any arrow that no arrow composes back into $a$, $\Diamond a$
-  is false, so $\Box\Diamond a$ fails; Witnessed Possibility fails for the pure formula $x=\top_\tau$,
-  witnessed by $\top_\tau$, since $\Diamond(c=\top_\tau)$ is $\Diamond\Box a$ and $a$ is necessary at
-  no arrow; Separated Structure fails with it, being equivalent to Possibly Witnessed Possibility; Independence
-  (signature Σ) and Distinctness Maximalism (signature Σ) fail through the other relational constants,
-  Σ being assumed to contain at least one: such a constant $c''$ of type $\tau''$ denotes what the closed
-  pure term $\top_{\tau''}$ denotes, and $c''=\top_{\tau''}$ is a true identity that C(Σ) does not prove.
-  The designated constant refutes neither: closed pure terms denote entities fixed by every arrow (Classicism,
-  §3.5, p. 58), whereas $a$ is fixed by no arrow but the identity, so no closed pure term denotes $\lambda\bar
-  x\, .\,a$. Everything that implies these fails with them. Countable Boolean Completeness fails as well,
-  at type $e\to t$: the property $E$ that the source shows to lack a least upper bound has as its extension
-  a countable family of haecceities, and the extensional fullness the source invokes to put $E$ in the
-  domain also puts in the relation pairing the haecceity of the $k$-th member of that family with the
-  numeral $k$, which injects $E$ into the numerals. Observation of 23 September 2026. Distinctness-preserving
-  collapse holds: for a true proposition $p$ pinned down by a finite set take as the witness $q$ the actual-world
-  proposition $\{k_0\}$: under $k_n$ with $n>0$, $\Diamond q$ would need $k\circ k_n$ to be the identity,
-  impossible since $k_n$ is not injective. Relational Choice holds, necessarily. The model is ideally
-  full, hence extensionally full at every object (Appendix D, the remark after Definition D.3): for any
-  set $R$ of tuples from the domains at an object $V$, the intension that assigns to every arrow out of
-  $V$ into an object $U$ a fixed set $R_U$ of tuples from $U$’s domains, with $R_V=R$, is pinned down
-  by $\emptyset$, so it is the intension of an element of $V^{\bar\sigma\to t}$ with extension $R$ at
-  $1_V$. Given a relation $U$ serial at $V$, choose for each $x$ a $y$ with $(Ux)y$, by choice in the
-  metatheory; the graph is such an $R$, and its element $S$ is functional and a subrelation of $U$ at
-  $1_V$, both conditions being unboxed. The closed Relational Choice instance is true at an arrow $h\colon
-  W_0\to V$ iff it is true at $1_V$ in the truncation by $h$, whose domains at $V$ are those of the model,
-  so it holds at every arrow and $\Box$Relational Choice follows. Cian Dorr’s observation of 23 September
-  2026. Boolean Completeness fails at type $t$ as well, which the source (n. 92) conjectures but does
-  not show. Any set $F$ of propositions is the extension at the identity of an element of the domain at
-  type $t\to t$, namely the profile $\langle h,p\rangle\mapsto\{i : i\cdot p\in F\}$: it is natural, independent
-  of $h$ and so pinned down by the empty set, and each of its values is pinned down by the pinning set
-  of $p$, since $i\cdot p$ depends only on the values of $i$ there. A least upper bound of $F$ under entailment
-  is a least finitely pinned superset of $\bigcup F$, and it exists only if the least $S$-pinned superset
-  of $\bigcup F$ stops shrinking as the finite set $S$ grows. Here an arrow $k_n$ is determined by its
-  value at any $m\ge n$ and all $k_n$ with $n\ge N$ agree on $\{0,\ldots,N\}$, so the finitely pinned
-  propositions are exactly the finite and cofinite sets of arrows. Let $F$ be the family of singletons
-  $\{k_{2j}\}$: an upper bound is a cofinite set containing them, and removing an odd-indexed member of
-  it gives a strictly smaller upper bound. So $F$ has no least upper bound, and, taking pointwise negations,
-  the family of complements has no greatest lower bound. Observation of Claude Fable 5.1 (Anthropic),
-  25 September 2026; not in the source.
+
+# migration: the definition is the old description without its verdict clauses, then the notes'
+# interpretation of Σ, in which "$\{k_0\}$" replaces "described above", since nothing above
+# described the actual-world proposition.
+definition: >-
+  Proposition D.5, part 8 (pp. 78–79): the arrows are the maps $k_n$ with $k_nm=0$ for $m\le n$
+  and $k_nm=m-n$ otherwise, which compose as $k_n\circ k_m=k_{n+m}$; $k_0$ is the identity. In
+  every part, $W_0^\ddagger$ is the set of finite subsets of $\mathbb N$ and the model is ideally
+  full: a proposition is a set of arrows whose membership depends only on the arrows’ values on
+  some finite set of individuals (it is pinned down by that set), an entity of a higher type is an
+  applicative behaviour profile pinned down by a finite set in the same sense, and the individuals
+  are the natural numbers acted on by the arrows themselves. Propositions and properties are thus
+  about finitely many individuals and indifferent to how the arrows treat the rest. Evaluation
+  point: the sole object, at the identity arrow.
 
 
-  Review of 25 September 2026. Boolean Completeness already fails at type t: the finite/cofinite algebra
-  of arrow indices has no least upper bound for the even-index singleton family. The family is represented
-  by a domain property because this ideally full model is extensionally full (Definition D.3, p. 74).
-  See the dated handwritten write-up.'
+  Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type
+  $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of the
+  model, the actual-world proposition $\{k_0\}$; every other relational constant denotes the top
+  element of its type and every individual constant one fixed individual.
+
+arguments:
+
+# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
+# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
+# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
+# full stop.
+
+# --- from the source (17 Sep record) ---
+
+- holds: [barcan-r]
+  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(8), pp. 78–79'}
+  text: >-
+    All arrows are surjective, so BF holds.
+
+- holds: [atomicity-r]
+  # migration: the bare clause "ND fails" that followed is dropped; the failure is derived.
+  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(8), pp. 78–79'}
+  text: >-
+    $\{k_0\}$ and each $\{k_n\}$ are pinned down by finite sets, so Actuality and Atomicity hold.
+
+- fails: [boolean-completeness-r]
+  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(8), pp. 78–79'}
+  text: >-
+    The strongest persistent property pinned down by $\{0,\ldots,n\}$ whose extension contains the
+    even numbers has, at $k_m$, the evens, the odds with $0$, or all of $\mathbb N$ according as
+    $m<n$ is even, $m<n$ is odd, or $m\ge n$, and so becomes ever stronger.
+
+- holds: [no-pure-contingency-r]
+  source: {paper: bacon-dorr-classicism, locator: 'p. 79'}
+  text: >-
+    Boxed positive flags use the source’s explicit one-object No Pure Contingency observation,
+    applied separately to each closed instance.
+
+# --- later additions ---
+
+- holds: [axiom-of-infinity-e, axiom-of-infinity-t]
+  # migration: `by` adds "at Cian Dorr's direction" from the change's summary, which is the text.
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-09-20'
+  text: >-
+    The individuals are the natural numbers and identity at the evaluation arrow is literal, so no
+    numeral counts them. The propositions that a given individual is fixed by the arrow, one for
+    each individual, are pairwise distinct and each has that individual as finite support, so
+    there are infinitely many propositions. The set of numerals at each type is invariant under
+    every arrow, hence has empty support and lies in the domain, so finite cardinality is standard
+    and no finite cardinality holds of the universal property at either type.
+
+- id: sigma-true-atom
+  fails: [independence-signature-r, signature-b-r]
+  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The text is the 23
+  # September version; the revision notes are the two 23 September changes, the first without its
+  # closing "; see the notes". The sentence that followed the text in the old notes is in `notes`.
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
+  date: '2026-09-22'
+  text: >-
+    No Contingency (signature Σ) fails, since the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes
+    $a$, true and contingent; B for sentences of Σ fails, since under any arrow that no arrow
+    composes back into $a$, $\Diamond a$ is false, so $\Box\Diamond a$ fails; Witnessed
+    Possibility fails for the pure formula $x=\top_\tau$, witnessed by $\top_\tau$, since
+    $\Diamond(c=\top_\tau)$ is $\Diamond\Box a$ and $a$ is necessary at no arrow; Separated
+    Structure fails with it, being equivalent to Possibly Witnessed Possibility; Independence
+    (signature Σ) and Distinctness Maximalism (signature Σ) fail through the other relational
+    constants, Σ being assumed to contain at least one: such a constant $c'$ of type $\tau'$
+    denotes what the closed pure term $\top_{\tau'}$ denotes, and $c'=\top_{\tau'}$ is a true
+    identity that C(Σ) does not prove. The designated constant refutes neither: closed pure terms
+    denote entities fixed by every arrow (Classicism, §3.5, p. 58), whereas $a$ is fixed by no
+    arrow but the identity, so no closed pure term denotes $\lambda\bar x\, .\,a$.
+  revisions:
+  - date: '2026-09-23'
+    by: Claude Fable 5.1 (Anthropic)
+    note: >-
+      Re-fixed the interpretation of Σ so as to settle No Contingency (signature Σ) and B for
+      sentences of Σ, at Cian Dorr’s request.
+  - date: '2026-09-23'
+    by: Claude Fable 5.1 (Anthropic)
+    note: >-
+      Corrected the reason given for the failures of Independence (signature Σ) and Distinctness
+      (signature Σ): the true atom is denoted by no closed pure term, since such terms denote
+      entities fixed by every arrow; the failures come from the other relational constants, which
+      denote top. No verdict changes.
+
+- fails: [countable-boolean-completeness-r]
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    At type $e\to t$: the property $E$ that the source shows to lack a least upper bound has as
+    its extension a countable family of haecceities, and the extensional fullness the source
+    invokes to put $E$ in the domain also puts in the relation pairing the haecceity of the $k$-th
+    member of that family with the numeral $k$, which injects $E$ into the numerals.
+
+- holds: [distinctness-preserving-collapse]
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    For a true proposition $p$ pinned down by a finite set take as the witness $q$ the
+    actual-world proposition $\{k_0\}$: under $k_n$ with $n>0$, $\Diamond q$ would need $k\circ
+    k_n$ to be the identity, impossible since $k_n$ is not injective.
+
+- holds: [relational-choice-r]
+  # migration: `by` renders the closing "Cian Dorr’s observation of 23 September 2026." and the
+  # change's author.
+  by: Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    The model is ideally full, hence extensionally full at every object (Appendix D, the remark
+    after Definition D.3): for any set $R$ of tuples from the domains at an object $V$, the
+    intension that assigns to every arrow out of $V$ into an object $U$ a fixed set $R_U$ of
+    tuples from $U$’s domains, with $R_V=R$, is pinned down by $\emptyset$, so it is the intension
+    of an element of $V^{\bar\sigma\to t}$ with extension $R$ at $1_V$. Given a relation $U$
+    serial at $V$, choose for each $x$ a $y$ with $(Ux)y$, by choice in the metatheory; the graph
+    is such an $R$, and its element $S$ is functional and a subrelation of $U$ at $1_V$, both
+    conditions being unboxed. The closed Relational Choice instance is true at an arrow $h\colon
+    W_0\to V$ iff it is true at $1_V$ in the truncation by $h$, whose domains at $V$ are those of
+    the model, so it holds at every arrow and $\Box$Relational Choice follows.
+
+- fails: [boolean-completeness-t]
+  # migration: the first sentence rewrites "Boolean Completeness fails at type $t$ as well, which
+  # the source (n. 92) conjectures but does not show."; the closing "Observation of Claude Fable 5.1
+  # (Anthropic), 25 September 2026; not in the source." becomes `by` and `date`.
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-25'
+  text: >-
+    The source (n. 92) conjectures this but does not show it. Any set $F$ of propositions is the
+    extension at the identity of an element of the domain at type $t\to t$, namely the profile
+    $\langle h,p\rangle\mapsto\{i : i\cdot p\in F\}$: it is natural, independent of $h$ and so
+    pinned down by the empty set, and each of its values is pinned down by the pinning set of $p$,
+    since $i\cdot p$ depends only on the values of $i$ there. A least upper bound of $F$ under
+    entailment is a least finitely pinned superset of $\bigcup F$, and it exists only if the least
+    $S$-pinned superset of $\bigcup F$ stops shrinking as the finite set $S$ grows. Here an arrow
+    $k_n$ is determined by its value at any $m\ge n$ and all $k_n$ with $n\ge N$ agree on
+    $\{0,\ldots,N\}$, so the finitely pinned propositions are exactly the finite and cofinite sets
+    of arrows. Let $F$ be the family of singletons $\{k_{2j}\}$: an upper bound is a cofinite set
+    containing them, and removing an odd-indexed member of it gives a strictly smaller upper
+    bound. So $F$ has no least upper bound, and, taking pointwise negations, the family of
+    complements has no greatest lower bound.
+
+- fails: [boolean-completeness-t]
+  # migration: "Review of 25 September 2026. Boolean Completeness already fails at type t:" becomes
+  # `date` and `fails`; `by` condenses the record's second source. A second, independent argument
+  # for the same verdict.
+  by: DeepSeek (deepseek-flash), trawl; reviewed and corrected by OpenAI Codex (GPT-6)
+  date: '2026-09-25'
+  writeup: finite-support-truncated-shifts
+  provenance: trawl-764428bfd00a49bb85d7fcbff3472c7e
+  text: >-
+    The finite/cofinite algebra of arrow indices has no least upper bound for the even-index
+    singleton family. The family is represented by a domain property because this ideally full
+    model is extensionally full (Definition D.3, p. 74). See the dated handwritten write-up.
+
+# migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
+# the sentence that followed the Σ argument, referring to its failures.
+notes: >-
+  The cited construction is a model of the map’s relational-type framework. The description
+  identifies its evaluation point; construction and verification are given at the PDF locations in
+  References. Everything that implies these fails with them.
+
 was_conjectured: true
-changes:
+
+# The old `changes` log, verbatim and frozen.
+history:
 - date: '2026-09-17'
   by: OpenAI Codex (GPT-6)
   summary: Adopted the source’s relational type system at the user’s request. The cited construction now
