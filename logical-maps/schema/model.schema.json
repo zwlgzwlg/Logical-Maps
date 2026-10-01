@@ -2,14 +2,12 @@
  "$schema": "https://json-schema.org/draft/2020-12/schema",
  "$id": "model.schema.json",
  "title": "Model",
- "description": "A structure in the topic's framework, with the principles known to hold and to fail in it. Witnesses the consistency of the package satisfies ∪ {¬v : v ∈ violates}; every independence is derived from models.",
+ "description": "A structure in the topic's framework, with the principles known to hold and to fail in it. Witnesses the consistency of the package satisfies ∪ {¬v : v ∈ violates}; every independence is derived from models. A record either lists satisfies and violates directly, or gives a definition and arguments, from which the build computes satisfies, violates and status.",
  "type": "object",
  "additionalProperties": false,
  "required": [
   "id",
   "name",
-  "satisfies",
-  "violates",
   "certificate",
   "sources"
  ],
@@ -25,6 +23,34 @@
   "description": {
    "type": "string",
    "description": "The construction, and the verification of each listed principle. Required for proved models."
+  },
+  "definition": {
+   "type": "string",
+   "minLength": 1,
+   "description": "Argument format: what the model is (construction, evaluation point, interpretation of Σ), and no verdicts. Replaces description."
+  },
+  "arguments": {
+   "type": "array",
+   "items": {"$ref": "#/$defs/argument"},
+   "description": "Argument format: the direct verdicts and their reasons. The build computes satisfies, violates and status from these."
+  },
+  "construction": {
+   "type": "object",
+   "additionalProperties": false,
+   "description": "Argument format: whether the definition really describes a model. Omitted means established. Replaces status.",
+   "properties": {
+    "standing": {"enum": ["established", "conjectured"], "default": "established"},
+    "tier": {"enum": ["bronze", "silver", "gold"]},
+    "text": {"type": "string"},
+    "by": {"type": "string"},
+    "date": {"type": "string"},
+    "withdrawn": {"$ref": "#/$defs/withdrawal", "description": "Retires the whole record from the engine; the text is kept."}
+   }
+  },
+  "history": {
+   "type": "array",
+   "items": {"$ref": "#/properties/changes/items"},
+   "description": "Argument format: the old changes log, frozen verbatim on migration. New work does not append to it."
   },
   "satisfies": {
    "type": "array",
@@ -90,7 +116,8 @@
    "description": "Short display names corresponding to sources, in the same order."
   },
   "notes": {
-   "type": "string"
+   "type": "string",
+   "description": "In the argument format, miscellaneous text that supports no verdict."
   },
   "references": {
    "type": "array",
@@ -180,16 +207,76 @@
    "description": "Human ranking of an unresolved question by importance and difficulty, shown on its lynchpin star. A conjecture with notes is bronze on its own; silver and gold are given by hand."
   }
  },
- "if": {
-  "properties": {
-   "status": {
-    "const": "conjectured"
-   }
-  }
+ "if": {"anyOf": [{"required": ["arguments"]}, {"required": ["definition"]}]},
+ "then": {
+  "required": ["definition", "arguments"],
+  "properties": {"satisfies": false, "violates": false, "status": false, "description": false, "model_check": false, "tier": false, "changes": false}
  },
  "else": {
-  "required": [
-   "description"
-  ]
+  "required": ["satisfies", "violates"],
+  "properties": {"construction": false, "history": false},
+  "if": {
+   "properties": {
+    "status": {
+     "const": "conjectured"
+    }
+   }
+  },
+  "else": {
+   "required": [
+    "description"
+   ]
+  }
+ },
+ "$defs": {
+  "argument": {
+   "type": "object",
+   "additionalProperties": false,
+   "description": "One route to some direct verdicts. It needs at least one of holds and fails, and at least one of text, source, writeup and like; the validator checks both.",
+   "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Optional. Addresses the argument as <record>#<id>."},
+    "holds": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "fails": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "text": {"type": "string", "description": "The argument in prose."},
+    "source": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": ["paper"],
+     "description": "A citation of papers.yaml that gives the argument.",
+     "properties": {
+      "paper": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
+      "locator": {"type": "string", "minLength": 1},
+      "note": {"type": "string", "minLength": 1}
+     }
+    },
+    "writeup": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "A write-up writeups/<id>.md that gives the argument."},
+    "like": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*#[a-z0-9]+(-[a-z0-9]+)*$", "description": "An analogous argument in another record, as <record>#<argument id>. Nothing is inherited from it."},
+    "adapt": {"type": "string", "description": "What changes from the argument named by like; used only with like. Empty claims that it applies word for word."},
+    "by": {"type": "string", "description": "Who supplied the argument. Defaults to the certificate."},
+    "date": {"type": "string", "description": "When the argument was supplied. Defaults to the certificate date."},
+    "standing": {"enum": ["established", "conjectured"], "default": "established"},
+    "tier": {"enum": ["bronze", "silver", "gold"], "description": "Conjectured arguments only, as for conjectured records."},
+    "revisions": {
+     "type": "array",
+     "description": "Corrections that leave the verdicts alone.",
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "note"],
+      "properties": {"date": {"type": "string"}, "by": {"type": "string"}, "note": {"type": "string", "minLength": 1}}
+     }
+    },
+    "withdrawn": {"$ref": "#/$defs/withdrawal"},
+    "provenance": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "A sidecar provenance/<id>.yaml holding provenance moved out of the record verbatim."},
+    "companion_id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Conjectured arguments only: the id of the generated conjectured companion, kept from a folded record. Default <model>-conjectured."}
+   }
+  },
+  "withdrawal": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["date", "reason"],
+   "description": "The text is kept; what is withdrawn stops contributing verdicts.",
+   "properties": {"date": {"type": "string"}, "by": {"type": "string"}, "reason": {"type": "string", "minLength": 1}}
+  }
  }
 }

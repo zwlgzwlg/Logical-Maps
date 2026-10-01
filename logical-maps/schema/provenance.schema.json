@@ -1,0 +1,20 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "provenance.schema.json",
+ "title": "Provenance sidecar",
+ "description": "Provenance moved verbatim out of model records, under the keys it had there: a certificate.trawl block, or the fields of a record folded into another. Kept in topics/<topic>/provenance/<id>.yaml and named by the provenance field of the arguments it concerns. It changes no verdict.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": ["id", "record"],
+ "properties": {
+  "id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Equals the file stem."},
+  "record": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "The model record whose arguments name this sidecar."},
+  "trawl": {"$ref": "#/properties/certificate/$defs/trawl", "description": "A certificate.trawl block."},
+  "name": {"type": "string"},
+  "description": {"type": "string"},
+  "certificate": {"$ref": "result.schema.json#/properties/certificate"},
+  "sources": {"type": "array", "items": {"type": "string", "pattern": "\\S"}},
+  "source_names": {"type": "array", "items": {"type": "string", "pattern": "\\S"}},
+  "references": {"$ref": "model.schema.json#/properties/references"}
+ }
+}
