@@ -65,13 +65,13 @@ its arguments. Through the recursor of the mutual inductive, so that it reduces 
 at a constructor. -/
 noncomputable abbrev FullT (σ : Ty) : C ⥤ Type :=
   @Ty.rec (fun _ => C ⥤ Type) (fun _ => C ⥤ Type) De (fun _ ih => intensionAction ih)
-    pointAction (fun _ _ ihσ ihρ => prodAction ihσ ihρ) σ
+    (fun _ => De) pointAction (fun _ _ ihσ ihρ => prodAction ihσ ihρ) σ
 
 /-- The action of the arguments of a relational type: the point at `t`, and at `σ → ρ`
 the product of the full action at `σ` with the arguments of `ρ`. -/
 noncomputable abbrev FullArgs (ρ : RTy) : C ⥤ Type :=
   @RTy.rec (fun _ => C ⥤ Type) (fun _ => C ⥤ Type) De (fun _ ih => intensionAction ih)
-    pointAction (fun _ _ ihσ ihρ => prodAction ihσ ihρ) ρ
+    (fun _ => De) pointAction (fun _ _ ihσ ihρ => prodAction ihσ ihρ) ρ
 
 /-- The full inner action at a relational type. -/
 noncomputable abbrev FullR (ρ : RTy) : C ⥤ Type := intensionAction (FullArgs De ρ)
@@ -172,6 +172,7 @@ theorem full_isModel : (A).IsModel := fun {_ σ W} h t g => by
   cases σ with
   | e => exact ⟨_, rfl⟩
   | rel ρ => exact fullIncl_surjective De ρ W _
+  | var _ => exact ⟨_, rfl⟩
 
 /-! ### `BF_σ` forces surjectivity
 

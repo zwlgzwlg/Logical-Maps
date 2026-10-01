@@ -1760,11 +1760,13 @@ partial def ensureFieldInduction (cls : Name) (i : Nat) : TrM Name := do
     let eCase : Expr := Lean.mkConst ``True.intro
     let relCase ← withLocalDeclD `a rtyE fun a => withLocalDeclD `h (motive.beta #[a]) fun h =>
       mkLambdaFVars #[a, h] (mkConst ``True.intro)
+    let varCase ← withLocalDeclD `i (mkConst ``Nat) fun i =>
+      mkLambdaFVars #[i] (mkConst ``True.intro)
     let arrCase ← withLocalDeclD `a tyE fun a => withLocalDeclD `b rtyE fun b =>
       withLocalDeclD `h (mkConst ``True) fun h => withLocalDeclD `ih (motive.beta #[b]) fun ih =>
         mkLambdaFVars #[a, b, h, ih] (mkAppN step #[a, b, ih])
     let recE := mkAppN (mkConst ``Classicism.Meta.RTy.rec [Level.zero])
-      #[motive₁, motive, eCase, relCase, base, arrCase, tv]
+      #[motive₁, motive, eCase, relCase, varCase, base, arrCase, tv]
     return (← mkForallFVars #[tv] (motive.beta #[tv]), ← mkLambdaFVars #[tv] recE)
   let t₀ ← IO.monoMsNow
   timed "addDecl" (withOptions (Elab.async.set · false) do

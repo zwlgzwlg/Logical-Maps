@@ -29,6 +29,7 @@ mutual
   def Ty.denote (D : Type) : Ty → Type
     | .e => D
     | .rel ρ => ρ.denote D
+    | .var _ => D
   /-- `t` is `Prop`, and an arrow is a function type. -/
   def RTy.denote (D : Type) : RTy → Type
     | .t => Prop
@@ -508,6 +509,7 @@ theorem not_theorem_of_interp (I : Interp Sig) [Nonempty I.D] {Ax : AxiomSet Sig
 /-- Every object type is inhabited once `e` is: a default element, by recursion. -/
 theorem Ty.denote_nonempty (D : Type) [Nonempty D] : ∀ σ : Ty, Nonempty (Ty.denote D σ)
   | .e => inferInstance
+  | .var _ => inferInstance
   | .rel ρ => RTy.induction (motive := fun ρ => Nonempty (RTy.denote D ρ)) ⟨True⟩
       (fun _ _ ⟨x⟩ => ⟨fun _ => x⟩) ρ
 

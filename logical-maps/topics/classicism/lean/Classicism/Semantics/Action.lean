@@ -53,7 +53,7 @@ definition, so that `RawR inner .t W` *is* a `Set` to instance search: the `∈`
 `ᶜ` and `ext` of sets then apply to it directly. -/
 abbrev RawR (ρ : RTy) (W : C) : Type :=
   @RTy.rec (fun _ => PUnit.{2}) (fun _ => C → Type)
-    PUnit.unit (fun _ _ => PUnit.unit)
+    PUnit.unit (fun _ _ => PUnit.unit) (fun _ => PUnit.unit)
     (fun W => Set (Σ V : C, W ⟶ V))
     (fun σ _ _ ih => fun W => ∀ V : C, (W ⟶ V) → (inner σ).obj V → ih V)
     ρ W
@@ -63,6 +63,7 @@ abbrev RawT (σ : Ty) (W : C) : Type :=
   match σ with
   | .e => (inner .e).obj W
   | .rel ρ => RawR inner ρ W
+  | .var i => (inner (.var i)).obj W
 
 example (W : C) : RawR inner .t W = Set (Σ V : C, W ⟶ V) := rfl
 example (σ : Ty) (ρ : RTy) (W : C) :
@@ -78,6 +79,7 @@ def RawR.map : ∀ (ρ : RTy) {W V : C}, (W ⟶ V) → RawR inner ρ W → RawR 
 def RawT.map : ∀ (σ : Ty) {W V : C}, (W ⟶ V) → RawT inner σ W → RawT inner σ V
   | .e, _, _, h, x => (inner .e).map h x
   | .rel ρ, _, _, h, x => RawR.map inner ρ h x
+  | .var i, _, _, h, x => (inner (.var i)).map h x
 
 theorem RawR.map_id : ∀ (ρ : RTy) (W : C) (x : RawR inner ρ W), RawR.map inner ρ (𝟙 W) x = x
   | .t, _, X => by
@@ -106,6 +108,9 @@ theorem RawT.map_id : ∀ (σ : Ty) (W : C) (x : RawT inner σ W), RawT.map inne
     show (inner .e).map (𝟙 _) x = x
     rw [Functor.map_id]; rfl
   | .rel ρ, W, x => RawR.map_id inner ρ W x
+  | .var i, _, x => by
+    show (inner (.var i)).map (𝟙 _) x = x
+    rw [Functor.map_id]; rfl
 
 theorem RawT.map_comp : ∀ (σ : Ty) {W V U : C} (h : W ⟶ V) (i : V ⟶ U) (x : RawT inner σ W),
     RawT.map inner σ (h ≫ i) x = RawT.map inner σ i (RawT.map inner σ h x)
@@ -113,6 +118,9 @@ theorem RawT.map_comp : ∀ (σ : Ty) {W V U : C} (h : W ⟶ V) (i : V ⟶ U) (x
     show (inner .e).map (h ≫ i) x = (inner .e).map i ((inner .e).map h x)
     rw [Functor.map_comp]; rfl
   | .rel ρ, _, _, _, h, i, x => RawR.map_comp inner ρ h i x
+  | .var j, _, _, _, h, i, x => by
+    show (inner (.var j)).map (h ≫ i) x = (inner (.var j)).map i ((inner (.var j)).map h x)
+    rw [Functor.map_comp]; rfl
 
 end Outer
 
@@ -168,22 +176,24 @@ abbrev Dom (W : C) (σ : Ty) : Type := (A.inner σ).obj W
 def Incl : ∀ (σ : Ty) (W : C), A.Dom W σ → RawT A.inner σ W
   | .e, _, x => x
   | .rel ρ, W, x => A.incl ρ W x
+  | .var _, _, x => x
 
 theorem Incl_map : ∀ (σ : Ty) {W V : C} (h : W ⟶ V) (x : A.Dom W σ),
     A.Incl σ V ((A.inner σ).map h x) = RawT.map A.inner σ h (A.Incl σ W x)
   | .e, _, _, _, _ => rfl
   | .rel ρ, _, _, h, x => A.incl_map ρ h x
+  | .var _, _, _, _, _ => rfl
 
 theorem Incl_injective : ∀ (σ : Ty) (W : C), Function.Injective (A.Incl σ W)
   | .e, _ => fun _ _ h => h
   | .rel ρ, W => A.incl_injective ρ W
+  | .var _, _ => fun _ _ h => h
 
-/-- A default outer element, for the one clause where the paper's interpretation is
-undefined. -/
-noncomputable def dflt : ∀ (σ : Ty) (W : C), RawT A.inner σ W
-  | .e, W => Classical.choice (A.nonempty_e W)
-  | .rel .t, _ => (∅ : Set _)
-  | .rel (.arr _ ρ), _ => fun _ _ _ => dflt (.rel ρ) _
+/-- A default outer element at a relational type, for the one clause where the paper's
+interpretation is undefined (the value of an application, which is relational). -/
+noncomputable def dflt : ∀ (ρ : RTy) (W : C), RawR A.inner ρ W
+  | .t, _ => (∅ : Set _)
+  | .arr _ ρ, _ => fun _ _ _ => dflt ρ _
 
 open Classical in
 /-- The application of an outer function to an outer argument: the paper's
@@ -191,7 +201,7 @@ open Classical in
 noncomputable def apply {σ : Ty} {ρ : RTy} {W : C}
     (F : RawR A.inner (.arr σ ρ) W) (x : RawT A.inner σ W) : RawR A.inner ρ W :=
   if hx : x ∈ Set.range (A.Incl σ W) then F W (𝟙 W) (Set.mem_range.mp hx).choose
-  else A.dflt (.rel ρ) W
+  else A.dflt ρ W
 
 /-- Move an assignment along an arrow: `i ∘ g`. -/
 abbrev push {W V : C} (i : W ⟶ V) {Γ : Ctx} (g : IEnv (A.Dom W) Γ) : IEnv (A.Dom V) Γ :=

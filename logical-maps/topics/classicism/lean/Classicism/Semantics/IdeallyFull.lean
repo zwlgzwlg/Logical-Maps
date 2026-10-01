@@ -297,6 +297,7 @@ theorem isModel_of_pinned
   cases σ with
   | e => exact ⟨_, rfl⟩
   | rel ρ => exact hinner ρ W _ ⟨N ∪ M, hN.union hM, hp⟩
+  | var _ => exact ⟨_, rfl⟩
 
 end Premodel
 
@@ -306,13 +307,13 @@ end Premodel
 finitely pinned intensions over its arguments. -/
 noncomputable abbrev IdealT (σ : Ty) : C ⥤ Type :=
   @Ty.rec (fun _ => C ⥤ Type) (fun _ => C ⥤ Type) De
-    (fun _ ih => pinnedAction De (intensionAction ih))
+    (fun _ ih => pinnedAction De (intensionAction ih)) (fun _ => De)
     pointAction (fun _ _ ihσ ihρ => prodAction ihσ ihρ) σ
 
 /-- The arguments of a relational type, as an action. -/
 noncomputable abbrev IdealArgs (ρ : RTy) : C ⥤ Type :=
   @RTy.rec (fun _ => C ⥤ Type) (fun _ => C ⥤ Type) De
-    (fun _ ih => pinnedAction De (intensionAction ih))
+    (fun _ ih => pinnedAction De (intensionAction ih)) (fun _ => De)
     pointAction (fun _ _ ihσ ihρ => prodAction ihσ ihρ) ρ
 
 /-- The ideally full inner action at a relational type. -/
@@ -443,6 +444,7 @@ theorem ideal_inner_finPinned : ∀ (σ : Ty) (W : C) (x : (A).Dom W σ),
     ∃ N : Set ((A).Dom W .e), N.Finite ∧ (A).PinnedO σ N ((A).Incl σ W x)
   | .e, W, x => ⟨{x}, Set.finite_singleton x, fun _ _ _ ha => ha x rfl⟩
   | .rel ρ, W, x => (mem_range_idealIncl De ρ W _).1 ⟨x, rfl⟩
+  | .var _, W, x => ⟨{x}, Set.finite_singleton x, fun _ _ _ ha => ha x rfl⟩
 
 /-- Every finitely pinned intension is inner. -/
 theorem ideal_pinned_inner (ρ : RTy) (W : C) (F : Intension (A).inner ρ W)
@@ -513,6 +515,7 @@ theorem map_pullback {ρ : RTy} {V : C} (k : W₀ ⟶ V) {X : Set ((A).Dom W₀ 
 theorem ideal_map_surjective_of {V : C} (k : W₀ ⟶ V) (hk : Function.Surjective (De.map k)) :
     ∀ σ : Ty, Function.Surjective (((A).inner σ).map k)
   | .e => hk
+  | .var _ => hk
   | .rel ρ => by
     intro b
     obtain ⟨Y, hY, hb⟩ := ideal_inner_finPinned De (.rel ρ) V b

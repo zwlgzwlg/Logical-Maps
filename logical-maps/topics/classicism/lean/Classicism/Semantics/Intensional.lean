@@ -47,7 +47,7 @@ element of `V^σ` and the arguments of `ρ`. Written through the recursor of the
 inductive, as a reducible definition, so that it reduces by iota at a constructor. -/
 abbrev Args (ρ : RTy) (V : C) : Type :=
   @RTy.rec (fun _ => PUnit.{2}) (fun _ => C → Type)
-    PUnit.unit (fun _ _ => PUnit.unit)
+    PUnit.unit (fun _ _ => PUnit.unit) (fun _ => PUnit.unit)
     (fun _ => PUnit)
     (fun σ _ _ ih => fun V => (inner σ).obj V × ih V)
     ρ V
@@ -67,6 +67,7 @@ abbrev Outer (σ : Ty) (W : C) : Type :=
   match σ with
   | .e => (inner .e).obj W
   | .rel ρ => Intension inner ρ W
+  | .var i => (inner (.var i)).obj W
 
 /-- The action of an arrow on arguments, componentwise. -/
 def Args.map : ∀ (ρ : RTy) {V V' : C}, (V ⟶ V') → Args inner ρ V → Args inner ρ V'
@@ -123,6 +124,7 @@ theorem Intension.map_empty {ρ : RTy} {W V : C} (h : W ⟶ V) :
 def Outer.map : ∀ (σ : Ty) {W V : C}, (W ⟶ V) → Outer inner σ W → Outer inner σ V
   | .e, _, _, h, x => (inner .e).map h x
   | .rel _, _, _, h, A => Intension.map inner h A
+  | .var i, _, _, h, x => (inner (.var i)).map h x
 
 @[simp] theorem Outer.map_rel {ρ : RTy} {W V : C} (h : W ⟶ V) (A : Intension inner ρ W) :
     Outer.map inner (.rel ρ) h A = Intension.map inner h A := rfl
@@ -132,6 +134,9 @@ theorem Outer.map_id : ∀ (σ : Ty) (W : C) (x : Outer inner σ W), Outer.map i
     show (inner .e).map (𝟙 _) x = x
     rw [Functor.map_id]; rfl
   | .rel ρ, W, A => Intension.map_id inner A
+  | .var i, _, x => by
+    show (inner (.var i)).map (𝟙 _) x = x
+    rw [Functor.map_id]; rfl
 
 theorem Outer.map_comp : ∀ (σ : Ty) {W V U : C} (h : W ⟶ V) (i : V ⟶ U) (x : Outer inner σ W),
     Outer.map inner σ (h ≫ i) x = Outer.map inner σ i (Outer.map inner σ h x)
@@ -139,6 +144,9 @@ theorem Outer.map_comp : ∀ (σ : Ty) {W V U : C} (h : W ⟶ V) (i : V ⟶ U) (
     show (inner .e).map (h ≫ i) x = (inner .e).map i ((inner .e).map h x)
     rw [Functor.map_comp]; rfl
   | .rel ρ, _, _, _, h, i, A => Intension.map_comp inner h i A
+  | .var j, _, _, _, h, i, x => by
+    show (inner (.var j)).map (h ≫ i) x = (inner (.var j)).map i ((inner (.var j)).map h x)
+    rw [Functor.map_comp]; rfl
 
 /-- The application of an intension of type `σ → ρ` to an inner element of `W^σ`:
 `A @ x = {⟨ȳ, h⟩ | ⟨h^σ x, ȳ, h⟩ ∈ A}`. -/
@@ -206,15 +214,18 @@ abbrev Dom (W : C) (σ : Ty) : Type := (A.inner σ).obj W
 def Incl : ∀ (σ : Ty) (W : C), A.Dom W σ → Outer A.inner σ W
   | .e, _, x => x
   | .rel ρ, W, x => A.incl ρ W x
+  | .var _, _, x => x
 
 theorem Incl_map : ∀ (σ : Ty) {W V : C} (h : W ⟶ V) (x : A.Dom W σ),
     A.Incl σ V ((A.inner σ).map h x) = Outer.map A.inner σ h (A.Incl σ W x)
   | .e, _, _, _, _ => rfl
   | .rel ρ, _, _, h, x => A.incl_map ρ h x
+  | .var _, _, _, _, _ => rfl
 
 theorem Incl_injective : ∀ (σ : Ty) (W : C), Function.Injective (A.Incl σ W)
   | .e, _ => fun _ _ h => h
   | .rel ρ, W => A.incl_injective ρ W
+  | .var _, _ => fun _ _ h => h
 
 theorem Incl_rel (ρ : RTy) (W : C) (x : A.Dom W (.rel ρ)) : A.Incl (.rel ρ) W x = A.incl ρ W x := rfl
 

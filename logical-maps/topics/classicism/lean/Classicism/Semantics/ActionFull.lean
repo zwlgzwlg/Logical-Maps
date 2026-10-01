@@ -66,12 +66,12 @@ variable (De : C ⥤ Type)
 the exponential of the full actions. Through the recursor of the mutual inductive, so
 that it reduces by iota at a constructor. -/
 noncomputable abbrev FullT (σ : Ty) : C ⥤ Type :=
-  @Ty.rec (fun _ => C ⥤ Type) (fun _ => C ⥤ Type) De (fun _ ih => ih) (powerAction C)
+  @Ty.rec (fun _ => C ⥤ Type) (fun _ => C ⥤ Type) De (fun _ ih => ih) (fun _ => De) (powerAction C)
     (fun _ _ ihσ ihρ => expAction ihσ ihρ) σ
 
 /-- The same at a relational type. -/
 noncomputable abbrev FullR (ρ : RTy) : C ⥤ Type :=
-  @RTy.rec (fun _ => C ⥤ Type) (fun _ => C ⥤ Type) De (fun _ ih => ih) (powerAction C)
+  @RTy.rec (fun _ => C ⥤ Type) (fun _ => C ⥤ Type) De (fun _ ih => ih) (fun _ => De) (powerAction C)
     (fun _ _ ihσ ihρ => expAction ihσ ihρ) ρ
 
 example : FullT De .e = De := rfl
@@ -263,6 +263,7 @@ def FullP {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ) : Prop :=
 theorem Ty.sizeOf_pos : ∀ σ : Ty, 0 < sizeOf σ
   | .e => by simp
   | .rel ρ => by simp only [Ty.rel.sizeOf_spec]; omega
+  | .var _ => by simp only [Ty.var.sizeOf_spec]; omega
 
 theorem fullP_of_unfold {Γ : Ctx} {σ : Ty} (t u : Term Sig Γ σ)
     (e : ∀ {W : C} (h : W₀ ⟶ W) (g : IEnv ((A).Dom W) Γ), (A).sem h t g = (A).sem h u g)

@@ -170,13 +170,12 @@ see that, so each is transferred by hand. -/
 theorem truncate_Incl (σ : Ty) (W : C) : (A.truncate h).Incl σ W = A.Incl σ W := by
   cases σ <;> rfl
 
-theorem truncate_dflt : ∀ (σ : Ty) (W : C), (A.truncate h).dflt σ W = A.dflt σ W
-  | .e, _ => by simp only [dflt]
-  | .rel .t, _ => by simp only [dflt]
-  | .rel (.arr _ ρ), _ => by
+theorem truncate_dflt : ∀ (ρ : RTy) (W : C), (A.truncate h).dflt ρ W = A.dflt ρ W
+  | .t, _ => by simp only [dflt]
+  | .arr _ ρ, _ => by
     simp only [dflt]
     funext U _ _
-    exact truncate_dflt (.rel ρ) U
+    exact truncate_dflt ρ U
 
 theorem truncate_apply {σ : Ty} {ρ : RTy} {W : C} (F : RawR A.inner (.arr σ ρ) W)
     (x : RawT A.inner σ W) : (A.truncate h).apply F x = A.apply F x := by
