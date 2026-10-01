@@ -23,6 +23,7 @@ import Classicism.Syntax.Normalize
 import Classicism.Syntax.Examples
 import Classicism.Syntax.Sentences
 import Classicism.Syntax.Constants
+import Classicism.Syntax.Blocks
 -- Its models
 import Classicism.Semantics.Denotation
 import Classicism.Semantics.Relational
