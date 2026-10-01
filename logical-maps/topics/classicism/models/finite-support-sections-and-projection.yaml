@@ -35,7 +35,9 @@ definition: >-
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded.
+# Only the verdicts the engine needs to derive the rest are recorded. Lead-ins naming the verdict,
+# and attribution sentences, are dropped from the texts, their content being in holds, fails, by and
+# date; a text cut from a longer sentence begins with a capital and ends with a full stop.
 
 # migration: the old description's second paragraph, "Actuality and □Actuality hold, but Inextensible
 # Comprehension fails at type …. See the write-up.", gives a reason only for the failure; it is split
@@ -46,11 +48,10 @@ arguments:
 
 - fails: [inextensible-comprehension-r]
   writeup: finite-support-sections-and-projection
-  # migration: "Actuality and □Actuality hold, but" dropped.
   text: >-
-    Inextensible Comprehension fails at type $e\to t$ for the universal property: an
-    inextensible property coextensive with it would have to hold, at the world $f_T$, of exactly
-    the range of $f_T$, and no finite set of individuals pins that down. See the write-up.
+    At type $e\to t$ for the universal property: an inextensible property coextensive with it
+    would have to hold, at the world $f_T$, of exactly the range of $f_T$, and no finite set of
+    individuals pins that down. See the write-up.
 
 # migration: the old notes without their sentence on BF, now derived.
 notes: >-
