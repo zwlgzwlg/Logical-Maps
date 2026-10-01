@@ -1,47 +1,5 @@
 id: full-henkin-singleton-base
 name: 'Full Henkin model: singleton individual domain'
-satisfies:
-- fregean-axiom
-- necessary-fregean-axiom
-- modalized-fregean
-- extensionality-r
-- necessary-extensionality-r
-- intensionality-r
-- functionality-r
-- modalized-functionality-r
-- necessary-functionality-r
-- plenitude-r
-- necessary-plenitude-r
-- functional-choice-r
-- relational-choice-r
-- tractarianism-r
-- necessary-tractarianism-r
-- necessary-distinctness-necessary-r
-- necessary-actuality
-- necessary-atomicity-r
-- necessary-boolean-completeness-r
-- necessary-rigid-comprehension-r
-- necessary-gallin-extensional-comprehension-r
-- no-pure-contingency-r
-- distinctness-preserving-collapse
-- strong-leibniz-r
-- necessary-strong-leibniz-r
-- no-contingency-signature-r
-- signature-b-r
-- necessary-relational-choice-r
-- necessary-functional-choice-r
-violates:
-- infinity-e
-- infinity-t
-- atomlessness
-- possibility-schema-r
-- possible-infinity-e
-- possible-infinity-t
-- witnessed-possibility-r
-- separated-structure-r
-- independence-signature-r
-- distinctness-signature-r
-status: proved
 certificate:
   source_id: misc
   produced_by: OpenAI Codex (GPT-6), 17 September 2026
@@ -58,29 +16,64 @@ references:
 - paper: bacon-dorr-classicism
   role: proof
   locator: §3.2, Definition 3.6 and Proposition 3.7, pp. 47–48; §1.4, n. 18, p. 16
-description: 'Use the ordinary full Henkin interpretation: D_e is a singleton, D_t={0,1}, and every admitted
-  function type contains all functions between its domains. Domains are finite by induction on types,
-  so every serial relation has a functional subrelation and, when the output type is relational, a selecting
-  operation. Equality is genuine equality and Box is the identity on truth values. These facts verify
-  the listed positive assertions. The two finite base domains refute the infinity assertions, top is an
-  atom, and the possible existence of two individuals is false although its pure sentence is C-consistent.'
-notes: 'Explicit specialization of the source’s standard Henkin construction to a singleton individual
-  domain. No independent checking or formal verification is claimed. The model is a standard model of
-  extensional classical type theory in which the defined necessity is truth: a boxed principle holds exactly
-  when its unboxed form does, coextensive relations are identical, every relation is rigid in every recorded
-  sense, the Boolean algebra at each relational type is the complete atomic algebra of subsets of the
-  domain, and every closed sentence is non-contingent. The pure schemata fail because C-consistent sentences
-  about how many individuals there are can be false. No Contingency (signature Σ) and B for sentences
-  of Σ hold in a one-world model however the constants are interpreted. Interpretation of Σ, fixed for
-  this record: each relational constant denotes the top element of its type and each individual constant
-  denotes one fixed individual. Under it the signature schemata fail. Let $c\in\Sigma$ have relational
-  type $\tau$, so $c=\top_\tau$ necessarily. Witnessed Possibility fails for the pure formula $x\ne\top_\tau$,
-  witnessed by $\bot_\tau$ but impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and
-  $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes
-  what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$
-  is a true identity that C(Σ) does not prove. Everything that implies these fails with them. Box is truth
-  in this one-world model, so □Relational Choice and □Functional Choice hold with their unboxed forms.'
-changes:
+
+# migration: the definition is the old description's first sentence, then the notes' interpretation
+# of Σ.
+definition: >-
+  Use the ordinary full Henkin interpretation: D_e is a singleton, D_t={0,1}, and every admitted
+  function type contains all functions between its domains.
+
+
+  Interpretation of Σ, fixed for this record: each relational constant denotes the top element of
+  its type and each individual constant denotes one fixed individual.
+
+arguments:
+
+# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
+# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
+# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
+# full stop.
+
+# --- as first recorded (17 Sep) ---
+
+- holds: [fregean-axiom, functional-choice-r]
+  text: >-
+    Domains are finite by induction on types, so every serial relation has a functional
+    subrelation and, when the output type is relational, a selecting operation. Equality is
+    genuine equality and Box is the identity on truth values. These facts verify the listed
+    positive assertions.
+
+- fails: [infinity-e]
+  text: >-
+    The two finite base domains refute the infinity assertions, top is an atom, and the possible
+    existence of two individuals is false although its pure sentence is C-consistent.
+
+# --- later additions ---
+
+- id: sigma-top
+  fails: [independence-signature-r]
+  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The sentence that
+  # followed the text in the old notes is in `notes`.
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
+  date: '2026-09-22'
+  text: >-
+    Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed
+    Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but
+    impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\,
+    .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what
+    the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since
+    $c=\top_\tau$ is a true identity that C(Σ) does not prove.
+
+# migration: text of the old notes that no argument holds, verbatim. Their arguments of 20 and 22
+# September for verdicts now derived (the one-world principles, the pure schemata, No Contingency
+# (signature Σ), the boxed choice principles) are dropped.
+notes: >-
+  Explicit specialization of the source’s standard Henkin construction to a singleton individual
+  domain. No independent checking or formal verification is claimed. Everything that implies these
+  fails with them.
+
+# The old `changes` log, verbatim and frozen.
+history:
 - date: '2026-09-17'
   by: OpenAI Codex (GPT-6)
   summary: Restricted the example and its recorded choice properties to the map’s relational type system
