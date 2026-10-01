@@ -92,14 +92,15 @@ Run `python3 scripts/check_math.py` and the UI checks after changing rendering o
 mathematical notation; the check requires Node and the Python requirements.
 
 Catalogue papers in `topics/<topic>/papers.yaml`. The Background tab’s Literature section
-shows citations, external links, and the principles/results/models referencing
-each paper. Record `references` distinguish origins, formulations, proofs,
+shows citations, external links, links to any copy in `sources/`, and the
+principles/results/models referencing each paper. Record `references` distinguish origins, formulations, proofs,
 background, and related work. They do not change arrow-source filters or proof
 status. See [the data-format guide](starter/DATA_FORMAT.md#source-paper-catalogue).
 
 Only place documents intended and authorised for redistribution in
 `topics/<topic>/sources/`: the builder copies that entire folder into the
 public site and downloads. External paper links are not downloaded or bundled.
+A paper whose `file:` names such a copy is linked to it wherever it is cited.
 
 ## The working bundle
 

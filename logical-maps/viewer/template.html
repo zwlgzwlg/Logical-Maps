@@ -2680,8 +2680,14 @@ function paperReferences(items) {
   const priority = {origin: 0, proof: 0, formulation: 1, related: 2, background: 3};
   return [...refs.values()].sort((a, b) => priority[a.role] - priority[b.role]);
 }
+// A paper's copy in the topic's sources/ folder, published alongside the viewer.
+function paperFileLink(p) {
+  if (!p || !p.file) return '';
+  return ` <a href="${esc(encodeURI(p.file))}" target="_blank" rel="noopener">${/\.pdf$/i.test(p.file) ? 'PDF' : 'File'} ↗</a>`;
+}
 function paperButton(ref) {
-  return `<button class="lnk" data-paper="${esc(ref.paper)}" title="${esc(byPaperId.get(ref.paper).citation)}">${esc(byPaperId.get(ref.paper).title)}</button>`;
+  const p = byPaperId.get(ref.paper);
+  return `<button class="lnk" data-paper="${esc(ref.paper)}" title="${esc(p.citation)}">${esc(p.title)}</button>${paperFileLink(p)}`;
 }
 function sourceSummary(items) {
   const refs = paperReferences(items);
@@ -2723,7 +2729,7 @@ function renderPapers() {
     const referenceNote = x => refsFor(x).map(ref => `<span class="dim">${esc(ref.role)}${ref.locator ? ' · ' + esc(ref.locator) : ''}</span>${ref.note ? `<p>${esc(ref.note)}</p>` : ''}`).join('');
     const principleList = principles.length ? `<h5>Principles</h5><ul class="src">${principles.map(x => `<li><button class="lnk" data-open-principle="${esc(x.id)}">${esc(x.name)}</button> — ${referenceNote(x)}</li>`).join('')}</ul>` : '';
     const evidenceList = (xs, kind, label) => xs.length ? `<details><summary>${label} (${xs.length})</summary><ul class="src">${xs.map(x => `<li><button class="lnk" data-open-${kind}="${esc(x.id)}">${kind === 'result' ? resultStmt(x) : esc(x.name)}</button> — ${referenceNote(x)}</li>`).join('')}</ul></details>` : '';
-    const link = /^https?:\/\//.test(p.url || '') ? ` <a href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">Paper ↗</a>` : '';
+    const link = (/^https?:\/\//.test(p.url || '') ? ` <a href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">Paper ↗</a>` : '') + paperFileLink(p);
     return `<article class="paper-entry" id="paper-${esc(p.id)}" tabindex="-1"><h4>${esc(p.title)}</h4><p>${esc(p.citation)}${link}</p>${p.note ? `<p class="dim">${esc(p.note)}</p>` : ''}${principleList}${evidenceList(results, 'result', 'Results')}${evidenceList(models, 'model', 'Models')}</article>`;
   };
   el.innerHTML = [
@@ -2805,7 +2811,7 @@ function argumentHtml(m, a, i) {
   const paper = a.source ? byPaperId.get(a.source.paper) : null, side = PROVENANCE.get(a.provenance);
   const marks = [(a.holds || []).length ? '✓ ' + a.holds.map(name).map(esc).join(', ') : '', (a.fails || []).length ? '✗ ' + a.fails.map(name).map(esc).join(', ') : ''].filter(Boolean).join(' ');
   const meta = [
-    a.source ? `Source: ${paper ? `<button class="lnk" data-paper="${esc(paper.id)}">${esc(paper.title)}</button>` : esc(a.source.paper)}${a.source.locator ? ', ' + esc(a.source.locator) : ''}.` : '',
+    a.source ? `Source: ${paper ? `<button class="lnk" data-paper="${esc(paper.id)}">${esc(paper.title)}</button>` : esc(a.source.paper)}${a.source.locator ? ', ' + esc(a.source.locator) : ''}.${paperFileLink(paper)}` : '',
     a.writeup ? `Write-up: <a href="writeups/${esc(a.writeup)}.html" target="_blank">${esc(a.writeup)}</a>.` : '',
     a.like ? `Like <button class="lnk" data-open-model="${esc(a.like.split('#')[0])}">${esc(a.like)}</button>${(a.adapt || '').trim() ? ':' : ', word for word.'}` : '',
     side?.folded ? `Folded in from the record <span class="mono">${esc(side.id)}</span>.` : '',

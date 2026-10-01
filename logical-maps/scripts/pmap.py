@@ -26,6 +26,7 @@ import argparse
 import datetime as _dt
 import json
 import sys
+import urllib.parse
 from pathlib import Path
 
 try:
@@ -1639,6 +1640,14 @@ def validate_topic(topic_id: str, *, quiet=False) -> bool:
     paper_ids = [p["id"] for p in papers if isinstance(p, dict) and isinstance(p.get("id"), str)]
     if len(paper_ids) != len(set(paper_ids)):
         errors.append("papers.yaml: duplicate paper id")
+    sources_root = (TOPICS / topic_id / "sources").resolve()
+    for p in papers:
+        if isinstance(p, dict) and isinstance(p.get("file"), str):
+            target = (TOPICS / topic_id / p["file"]).resolve()
+            if sources_root not in target.parents:
+                errors.append(f"papers.yaml: {p.get('id')}: file '{p['file']}' must lie inside sources/")
+            elif not target.is_file():
+                errors.append(f"papers.yaml: {p.get('id')}: file '{p['file']}' does not exist")
     for item in data["principles"] + data["results"] + data["models"] + data.get("retired_models", []):
         if item.get("_companion_of"):
             continue  # a generated companion repeats its model's references
@@ -1803,7 +1812,17 @@ def export_json(topic_id: str) -> dict:
 PAPER_CATALOGUE_SLOT = '<div id="paper-catalogue"></div>'
 
 
-def literature_md(data: dict) -> str:
+def paper_links_md(p: dict, prefix: str = "") -> str:
+    """Markdown links to a paper: its external url and its copy in sources/. `prefix` leads from the
+    page being written to the topic folder ("" for the viewer, "../" for a write-up)."""
+    links = [f"[Paper]({p['url']})"] if p.get("url") else []
+    if p.get("file"):
+        target = urllib.parse.quote(prefix + p["file"], safe="/")   # file names may contain spaces or parentheses
+        links.append(f"[{'PDF' if p['file'].lower().endswith('.pdf') else 'File'}]({target})")
+    return " ".join(links)
+
+
+def literature_md(data: dict, prefix: str = "") -> str:
     cited = {ref["paper"] for kind in ("principles", "results", "models")
              for item in data[kind] for ref in item.get("references", [])}
     lines = []
@@ -1812,7 +1831,7 @@ def literature_md(data: dict) -> str:
         for p in data.get("papers", []):
             if (p["id"] in cited) != used:
                 continue
-            link = f" [Paper]({p['url']})" if p.get("url") else ""
+            link = (" " + paper_links_md(p, prefix)) if p.get("url") or p.get("file") else ""
             lines += [f"- {p['citation']}{link}" + (f" {p['note']}" if p.get("note") else "")]
         lines += [""]
     return "\n".join(lines)
@@ -1975,19 +1994,21 @@ def _stmt_line(pid: str, names: dict, stmts: dict) -> str:
     return f"- **{names[pid]}.** {stmts[pid].strip()}"
 
 
-def paper_references_md(item: dict, data: dict) -> str:
+def paper_references_md(item: dict, data: dict, prefix: str = "") -> str:
     papers = {p["id"]: p for p in data.get("papers", [])}
     lines = []
     for ref in item.get("references", []):
         p = papers[ref["paper"]]
         title = f"[{p['title']}]({p['url']})" if p.get("url") else p["title"]
-        lines.append(f"- **{ref['role'].capitalize()}: {title}.** {p['citation']}"
+        copy = f" ({paper_links_md({'file': p['file']}, prefix)})" if p.get("file") else ""
+        lines.append(f"- **{ref['role'].capitalize()}: {title}.**{copy} {p['citation']}"
                      + (f" — {ref['locator']}" if ref.get("locator") else "")
                      + (f". {ref['note']}" if ref.get("note") else ""))
     return "\n".join(lines)
 
 
-def argument_md(item: dict, data: dict, level: int = 3, link=lambda wid: f"[{wid}]({wid}.html)") -> list[str]:
+def argument_md(item: dict, data: dict, level: int = 3, link=lambda wid: f"[{wid}]({wid}.html)",
+                prefix: str = "../") -> list[str]:
     """Markdown for a model in the argument format: its construction's standing, then each argument
     with the verdicts it settles and its reasons. A companion shows its conjectured arguments."""
     names = {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
@@ -2017,8 +2038,10 @@ def argument_md(item: dict, data: dict, level: int = 3, link=lambda wid: f"[{wid
         reasons = []
         if isinstance(a.get("source"), dict):
             paper = papers.get(a["source"].get("paper"), {})
+            links = paper_links_md(paper, prefix) if paper else ""
             reasons.append("Source: " + paper.get("title", a["source"].get("paper", ""))
-                           + (f", {a['source']['locator']}" if a["source"].get("locator") else "") + ".")
+                           + (f", {a['source']['locator']}" if a["source"].get("locator") else "") + "."
+                           + (f" {links}" if links else ""))
         if a.get("writeup"):
             reasons.append(f"Write-up: {link(a['writeup'])}.")
         if a.get("like"):
@@ -2146,7 +2169,7 @@ def render_writeups(topic_id: str, data: dict, outdir: Path) -> dict:
         iid = item["id"]
         hand = src / f"{iid}.md"
         md = hand.read_text(encoding="utf-8") if hand.exists() else generate_writeup(item, data)
-        refs = paper_references_md(item, data)
+        refs = paper_references_md(item, data, "../")
         if refs:
             md = md.rstrip() + "\n\n## Paper references\n\n" + refs + "\n"
         title = md.splitlines()[0].lstrip("# ").strip() if md.startswith("#") else iid
@@ -2645,7 +2668,7 @@ def bundle_map_md(topic_id: str, data: dict, an: dict) -> str:
             if (p.get("notes") or "").strip():
                 o += [f"Notes. {p['notes'].strip()}", ""]
             o += ["Sources:", ""] + _source_lines(p) + [""]
-            o += [paper_references_md(p, data), ""]
+            o += [paper_references_md(p, data, f"topics/{topic_id}/"), ""]
     leftover = [p for p in data["principles"] if p["id"] not in placed]
     if leftover:
         o += ["### Uncategorised", ""]
@@ -2666,7 +2689,7 @@ def bundle_map_md(topic_id: str, data: dict, an: dict) -> str:
         if r.get("changes"):
             out += ["Revisions:", ""] + _change_lines(r, names) + [""]
         out += ["Sources:", ""] + _source_lines(r) + [""]
-        out += [paper_references_md(r, data), ""]
+        out += [paper_references_md(r, data, f"topics/{topic_id}/"), ""]
         out += [f"Record: `{r['_file']}`.", ""]
         if r["id"] in hand:
             out += ["<details><summary>Hand-written write-up</summary>", "",
@@ -2705,7 +2728,7 @@ def bundle_map_md(topic_id: str, data: dict, an: dict) -> str:
         if (m.get("definition") or "").strip():
             o += ["Definition.", "", m["definition"].strip(), ""]
         if "arguments" in m:
-            o += ["Arguments:", ""] + argument_md(m, data, 4, link=lambda wid: f"`writeups/{wid}.md`")
+            o += ["Arguments:", ""] + argument_md(m, data, 4, link=lambda wid: f"`writeups/{wid}.md`", prefix=f"topics/{topic_id}/")
         if m.get("checks"):
             o += ["Executable checks: " + ", ".join(f"`{c}`" for c in m["checks"]) + ".", ""]
         if (m.get("notes") or "").strip() and not m.get("companion_of"):
@@ -2715,7 +2738,7 @@ def bundle_map_md(topic_id: str, data: dict, an: dict) -> str:
         if m.get("history"):
             o += ["History, before the record was written as arguments:", ""] + _change_lines(m, names, key="history") + [""]
         o += ["Sources:", ""] + _source_lines(m) + [""]
-        o += [paper_references_md(m, data), ""]
+        o += [paper_references_md(m, data, f"topics/{topic_id}/"), ""]
         o += [f"Record: `{m['_file']}`.", ""]
         if m["id"] in hand:
             o += ["Write-up.", "", _demote(_relink(hand[m["id"]].strip(), topic_id), 3), ""]
@@ -2778,7 +2801,7 @@ def bundle_map_md(topic_id: str, data: dict, an: dict) -> str:
             o += [f"### `{k}`", "", _demote(_relink(v.strip(), topic_id), 3), ""]
 
     if data.get("papers") and (not bgmd.exists() or PAPER_CATALOGUE_SLOT not in bgmd.read_text(encoding="utf-8")):
-        o += ["## Literature", "", literature_md(data), ""]
+        o += ["## Literature", "", literature_md(data, f"topics/{topic_id}/"), ""]
 
     o += ["## 8. Where this came from", "",
           f"The paper catalogue is `topics/{topic_id}/papers.yaml`; any included source documents are in `topics/{topic_id}/sources/`. "

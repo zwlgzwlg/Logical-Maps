@@ -196,8 +196,9 @@ When you (an AI) add or edit a result or model:
 
 ## Editing data
 
-- Catalogue source papers in `topics/<topic>/papers.yaml`, with citations and
-  external URLs. Connect records with `references` entries (`paper`, `role`,
+- Catalogue source papers in `topics/<topic>/papers.yaml`, with citations,
+  external URLs, and optionally `file: sources/<name>` for a copy published with
+  the site (only documents authorised for redistribution). Connect records with `references` entries (`paper`, `role`,
   optional `locator` and `note`). Roles are `origin`, `formulation`, `proof`,
   `background`, or `related`; explain adapted formulations. A reference does
   not change `certificate.source_id` or verify a result.

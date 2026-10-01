@@ -3,6 +3,8 @@ const fs = require('node:fs'), path = require('node:path'), assert = require('no
 const {JSDOM, VirtualConsole} = require('jsdom');
 const root = path.resolve(__dirname, '..');
 const data = JSON.parse(fs.readFileSync(path.join(root, 'build/unbounded-utility/data.json')));
+// A paper with a copy in sources/ is linked to it; the name has a space and parentheses to test encoding.
+data.papers.find(p => p.id === 'bartha-2016').file = 'sources/Bartha (2016).pdf';
 const template = fs.readFileSync(path.join(root, 'viewer/template.html'), 'utf8');
 const errors = [], vc = new VirtualConsole(); vc.on('jsdomError', e => errors.push(e));
 const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {
@@ -15,6 +17,9 @@ try {
   assert.ok(d.querySelector('#background #paper-catalogue'));
   assert.ok(d.querySelector('#source-literature #paper-wilkinson-2025'));
   assert.ok(d.querySelector('#other-literature #paper-bartha-2016'));
+  const pdf = d.querySelector('#paper-bartha-2016 a[href^="sources/"]');
+  assert.equal(pdf.getAttribute('href'), 'sources/Bartha%20(2016).pdf');
+  assert.match(pdf.textContent, /^PDF/);
   assert.equal(d.querySelectorAll('#background #literature').length, 1);
   assert.equal(d.querySelectorAll('.paper-entry').length, data.papers.length);
   assert.equal(d.querySelectorAll('[data-source-filter]').length, data.topic.source_catalog.length);
@@ -50,5 +55,5 @@ try {
     assert.ok(d.querySelector('#pop .badge.source').textContent.includes(author), id + ' has the corrected visible source badge');
   }
   assert.deepEqual(errors.map(String), []);
-  console.log('PASS: catalogue search, paper/record navigation, adaptation notes, and unchanged graph filters.');
+  console.log('PASS: catalogue search, links to copies in sources/, paper/record navigation, adaptation notes, and unchanged graph filters.');
 } finally { w.close(); }
