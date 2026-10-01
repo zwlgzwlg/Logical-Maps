@@ -185,7 +185,7 @@ project uses:
 | `P.Functionality` | shallow | `(σ τ : Type) → [Ty σ] → [Rel τ] → Prop` | the principle: for Lean types standing for object types, the instance as Lean states it |
 | `P.Functionality.quoted` | metalogic | `Ty → RTy → Sentence Signature.pure` | the instance at object types, as a sentence |
 | `P.Functionality.reflect` | both | the quoted sentence, read in `Prop` with domain `e`, is `P.Functionality` at the types it denotes | the check on the quoter |
-| `P.Functionality.schema` | metalogic | `AxiomSet Signature.pure` | all the instances: the axiom set |
+| `P.Functionality.schema` | metalogic | `AxiomSet Signature.pure` | all the instances at closed types: the axiom set |
 | `foo`, e.g. `Proofs.barcan_r_implies_functionality_r` | shallow | `∀ {σ τ} [Ty σ] [Rel τ], P.Barcan σ → P.Functionality σ τ` | a record's proof, under the gate |
 | `foo.derivable` | metalogic | `∀ σ' τ', Theorem C.axioms (imp (P.Barcan.quoted σ') (P.Functionality.quoted σ' τ'))` (in `C⁻` where the proof is) | the translated derivation |
 | `foo.rule` | metalogic | the same, as `C.Theorem` | for a shallow core certified by `#classicism_certify`, the derivation as a rule between instances |

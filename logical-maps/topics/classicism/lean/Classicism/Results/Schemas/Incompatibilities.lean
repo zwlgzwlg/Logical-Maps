@@ -123,7 +123,7 @@ theorem maximalist_necBarcan_inconsistent :
     ¬ Consistent (maximalist (Sig := Signature.pure) ∪ AxiomSet.box P.Barcan.schema) := fun hc =>
   maximalist_necBarcanT_inconsistent (Consistent.mono
     (fun a ha => ha.elim Or.inl (fun h => Or.inr (by
-      subst (h : a = P.NecBarcanT.quoted); exact AxiomSet.mem_box ⟨Ty.t, rfl⟩))) hc)
+      subst (h : a = P.NecBarcanT.quoted); exact AxiomSet.mem_box ⟨Ty.t, trivial, rfl⟩))) hc)
 
 /-- `maximalist-distinctness-incompatible-with-necessary-actuality`: Actuality fails in
 the permutation model of Appendix D, Part 1. -/
@@ -143,7 +143,7 @@ theorem maximalist_necAtomicity_inconsistent :
   max_box_inconsistent (Y := P.Atomicity.quoted RTy.t)
     (Consistent.empty_union Perms.not_atomicity_t_consistent)
     (Consistent.mono (fun a ha => ha.elim Or.inl (fun h => Or.inr (by
-      subst (h : a = Term.box (P.Atomicity.quoted RTy.t)); exact AxiomSet.mem_box ⟨RTy.t, rfl⟩))) hc)
+      subst (h : a = Term.box (P.Atomicity.quoted RTy.t)); exact AxiomSet.mem_box ⟨RTy.t, trivial, rfl⟩))) hc)
 
 /-- `maximalist-distinctness-incompatible-with-necessary-boolean-completeness-r`, through
 the `e → t` instance, which fails in the permutation model (Appendix D, Part 1). -/
@@ -153,14 +153,14 @@ theorem maximalist_necBooleanCompleteness_inconsistent :
     (Consistent.empty_union Perms.not_bc_consistent)
     (Consistent.mono (fun a ha => ha.elim Or.inl (fun h => Or.inr (by
       subst (h : a = Term.box (P.BooleanCompleteness.quoted (.arr .e .t)))
-      exact AxiomSet.mem_box ⟨.arr .e .t, rfl⟩))) hc)
+      exact AxiomSet.mem_box ⟨.arr .e .t, ⟨trivial, trivial⟩, rfl⟩))) hc)
 
 /-- The same with the map's boxed principle, `P.NecBooleanCompleteness`. -/
 theorem maximalist_necBooleanCompleteness_inconsistent' :
     ¬ Consistent (maximalist (Sig := Signature.pure) ∪ P.NecBooleanCompleteness.schema) := fun hc =>
   max_box_inconsistent (Y := P.BooleanCompleteness.quoted (.arr .e .t))
     (Consistent.empty_union Perms.not_bc_consistent)
-    (Consistent.mono (fun a ha => ha.elim Or.inl (fun h => Or.inr ⟨.arr .e .t, h⟩)) hc)
+    (Consistent.mono (fun a ha => ha.elim Or.inl (fun h => Or.inr ⟨.arr .e .t, ⟨trivial, trivial⟩, h⟩)) hc)
 
 /-- `maximalist-distinctness-incompatible-with-necessary-tractarianism-r`, through the
 `t` instance, which fails in the idempotent-monoid model because it implies `BF_t`. -/
@@ -169,7 +169,7 @@ theorem maximalist_necTractarianism_inconsistent :
   max_box_inconsistent (Y := P.Tractarianism.quoted Ty.t)
     (Consistent.empty_union Idem.not_tractarianism_t_consistent)
     (Consistent.mono (fun a ha => ha.elim Or.inl (fun h => Or.inr (by
-      subst (h : a = Term.box (P.Tractarianism.quoted Ty.t)); exact AxiomSet.mem_box ⟨Ty.t, rfl⟩))) hc)
+      subst (h : a = Term.box (P.Tractarianism.quoted Ty.t)); exact AxiomSet.mem_box ⟨Ty.t, trivial, rfl⟩))) hc)
 
 /-- Possibility (pure) is inconsistent with `□ND_t` (the map has this through
 `maximalist-distinctness-incompatible-with-nd`). -/
@@ -204,7 +204,7 @@ theorem maximalist_ndT_inconsistent :
 theorem maximalist_nd_inconsistent :
     ¬ Consistent (maximalist (Sig := Signature.pure) ∪ P.NecessityOfDistinctness.schema) := fun hc =>
   maximalist_ndT_inconsistent
-    (Consistent.mono (fun _ ha => ha.elim Or.inl (fun h => Or.inr (h ▸ ⟨Ty.t, rfl⟩))) hc)
+    (Consistent.mono (fun _ ha => ha.elim Or.inl (fun h => Or.inr (h ▸ ⟨Ty.t, trivial, rfl⟩))) hc)
 
 /-! ### Possibility and No Pure Contingency -/
 

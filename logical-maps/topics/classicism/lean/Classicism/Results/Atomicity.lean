@@ -212,10 +212,10 @@ open Meta Meta.AxiomSet in
 arrow. By induction on the type: at `t` the premise, at `σ → τ` the rule. -/
 theorem atomicity_of_atomicityT_barcan :
     P.AtomicityT.schema ∪ P.Barcan.schema ⟹ P.Atomicity.schema := by
-  rintro a ⟨ρ, rfl⟩
+  rintro a ⟨ρ, hρ, rfl⟩
   induction ρ using RTy.induction with
   | t => exact (Theorem.ofC atomicityT_step.rule).mp (Theorem.ax (Or.inl rfl))
   | arr σ ρ ih =>
-    exact (Theorem.ofC (atomicity_step.rule σ ρ)).mp₂ ih (Theorem.ax (Or.inr ⟨σ, rfl⟩))
+    exact (Theorem.ofC (atomicity_step.rule σ ρ)).mp₂ (ih hρ.2) (Theorem.ax (Or.inr ⟨σ, hρ.1, rfl⟩))
 
 end Classicism

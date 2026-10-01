@@ -13,7 +13,8 @@ reads each record theorem `P … → Q …` together with its kernel-checked der
 - `#classicism_schema P …` quotes the principle `P` (its statement being `∀ params, P params`,
   by the quoter of `Quote.lean`), declaring `P.quoted`, the reflection theorem `P.reflect`,
   and `P.schema : AxiomSet Signature.pure`, the sentences `P.quoted σ' …` for all
-  object types `σ' …`.
+  *closed* object types `σ' …`, the types of the paper's language (no type variable:
+  `Syntax/Types.lean`).
 - `#classicism_entails_audit Mod …` does that for every record theorem of a module, deriving
   first where no derivation exists, and reports.
 - `#classicism_entails foo …` reads the statement of `foo`, of the form
@@ -23,7 +24,7 @@ reads each record theorem `P … → Q …` together with its kernel-checked der
   its consequent that instance (any type for a parameter the consequent does not mention),
   and cites the premises as axioms of their schemas — the instances read off the
   statement, converted by the translator where an operation at a constructor type has
-  been unfolded. When the statement fixes the conclusion's types (`Existence e`) the
+  been unfolded, their types closed because the conclusion's are. When the statement fixes the conclusion's types (`Existence e`) the
   conclusion is the singleton; when they are expressions in its parameters
   (`Existence (σ → t)`), the family of those instances.
 
@@ -46,17 +47,26 @@ def principleStatement (n : Name) : MetaM Expr := do
     unless body.isProp do throwError "{n} is not a principle: its type is not `Prop`"
     mkForallFVars xs (mkAppN (Lean.mkConst n (info.levelParams.map mkLevelParam)) xs)
 
-/-- `∃ rest, a = q rest`, for `q` a quoted schema applied to some of its parameters. -/
-partial def schemaBody (q a : Expr) : MetaM Expr := do
-  let qty ← whnf (← inferType q)
-  if qty.isForall then
-    withLocalDeclD qty.bindingName! qty.bindingDomain! fun x => do
-      let inner ← schemaBody (mkApp q x) a
-      mkAppM ``Exists #[← mkLambdaFVars #[x] inner]
+/-- `Ty.Closed x` or `RTy.Closed x`, as `x` is a type or a relational type. -/
+def closedProp (x : Expr) : MetaM Expr := do
+  if (← whnf (← inferType x)).isConstOf ``Classicism.Meta.Ty then
+    mkAppM ``Classicism.Meta.Ty.Closed #[x]
   else
-    mkEq a q
+    mkAppM ``Classicism.Meta.RTy.Closed #[x]
 
-/-- From `quoted : ∀ (x₁ : Ty) …, Sentence`, the axiom set `fun a => ∃ x₁ …, a = quoted x₁ …`. -/
+/-- `∃ x₁ … xₙ, x₁ closed ∧ … ∧ xₙ closed ∧ a = q x₁ … xₙ`, for `q` a quoted schema
+applied to some of its parameters: the instances at closed types. -/
+def schemaBody (q a : Expr) : MetaM Expr := do
+  forallTelescope (← inferType q) fun xs _ => do
+    let mut body ← mkEq a (mkAppN q xs)
+    for x in xs.reverse do
+      body ← mkAppM ``And #[← closedProp x, body]
+    for x in xs.reverse do
+      body ← mkAppM ``Exists #[← mkLambdaFVars #[x] body]
+    return body
+
+/-- From `quoted : ∀ (x₁ : Ty) …, Sentence`, the axiom set of its instances at closed
+types, `fun a => ∃ x₁ …, x₁ closed ∧ … ∧ a = quoted x₁ …`. -/
 def schemaOfQuoted (quoted : Expr) : MetaM Expr := do
   let sentenceTy := mkApp (Lean.mkConst ``Classicism.Meta.Sentence) (Lean.mkConst ``Classicism.Meta.Signature.pure)
   withLocalDeclD `a sentenceTy fun a => do
@@ -166,19 +176,47 @@ partial def unionMem (ss : List Expr) (i : Nat) (x h : Expr) : MetaM Expr := do
   if i == ss.length - 1 then mkAppOptM ``Or.inr #[left, right, h]
   else mkAppOptM ``Or.inl #[left, right, ← unionMem prefix_ i x h]
 
-/-- `⟨args[i], ⟨args[i+1], … rfl⟩⟩ : ∃ rest, x = q rest`, the equation by `rfl`. -/
-partial def schemaMemBuild (x : Expr) (args : Array Expr) (i : Nat) (q : Expr) : MetaM Expr := do
-  if h : i < args.size then
-    let inner ← schemaMemBuild x args (i + 1) (mkApp q args[i])
-    let qty ← whnf (← inferType q)
-    let motive ← withLocalDeclD `y qty.bindingDomain! fun y => do
-      mkLambdaFVars #[y] (← schemaBody (mkApp q y) x)
-    mkAppOptM ``Exists.intro #[none, motive, args[i], inner]
-  else
-    mkEqRefl x
+/-- A proof that the type `e` is closed, from proofs `hyps` that some free variables are:
+by its constructors down to those variables, and by evaluation for anything else. -/
+partial def closedProof (hyps : Array (Expr × Expr)) (e : Expr) : MetaM Expr := do
+  if let some (_, h) := hyps.find? (·.1 == e) then return h
+  let e' ← whnfR e
+  match e'.getAppFnArgs with
+  | (``Classicism.Meta.Ty.e, #[]) => pure (Lean.mkConst ``Classicism.Meta.Ty.closed_e)
+  | (``Classicism.Meta.Ty.rel, #[ρ]) =>
+    mkAppM ``Iff.mpr #[← mkAppM ``Classicism.Meta.Ty.closed_rel #[ρ], ← closedProof hyps ρ]
+  | (``Classicism.Meta.RTy.t, #[]) => pure (Lean.mkConst ``Classicism.Meta.RTy.closed_t)
+  | (``Classicism.Meta.RTy.arr, #[σ, ρ]) =>
+    mkAppM ``Iff.mpr #[← mkAppM ``Classicism.Meta.RTy.closed_arr #[σ, ρ],
+      ← mkAppM ``And.intro #[← closedProof hyps σ, ← closedProof hyps ρ]]
+  | _ => mkDecideProof (← closedProp e)
 
-/-- A proof that `x` is in `P.schema`: `⟨args, rfl⟩`, the arguments found by unification. -/
-def schemaMem (P : Name) (x : Expr) : MetaM Expr := do
+/-- A proof of `x ∈ q.schema`, that is of the body `∃ rest, rest closed ∧ x = q rest`, at
+the arguments `args`: `⟨args, closedness, rfl⟩`, the closedness from `hyps`. -/
+partial def schemaMemBuild (hyps : Array (Expr × Expr)) (x : Expr) (args : Array Expr) (q : Expr) :
+    MetaM Expr := do
+  let body ← instantiateMVars (← schemaBody q x)
+  go body args.toList args.toList
+where
+  go (prop : Expr) (args cargs : List Expr) : MetaM Expr := do
+    if prop.isAppOfArity ``Exists 2 then
+      let pred := prop.appArg!
+      match args with
+      | a :: rest =>
+        let inner ← go (pred.beta #[a]).headBeta rest cargs
+        mkAppOptM ``Exists.intro #[none, pred, a, inner]
+      | [] => throwError "schema membership: too few arguments"
+    else if prop.isAppOfArity ``And 2 then
+      match cargs with
+      | c :: rest =>
+        mkAppM ``And.intro #[← closedProof hyps c, ← go prop.appArg! [] rest]
+      | [] => throwError "schema membership: too few arguments"
+    else
+      mkEqRefl x
+
+/-- A proof that `x` is in `P.schema`: `⟨args, closedness, rfl⟩`, the arguments found by
+unification and their closedness from `hyps`. -/
+def schemaMem (P : Name) (x : Expr) (hyps : Array (Expr × Expr) := #[]) : MetaM Expr := do
   let quoted := Lean.mkConst (P ++ `quoted)
   let qty ← inferType quoted
   -- metavariables for the schema's parameters
@@ -187,7 +225,7 @@ def schemaMem (P : Name) (x : Expr) : MetaM Expr := do
   unless ← isDefEq inst x do
     throwError "entails: the premise{indentExpr x}\nis not an instance of {P}"
   let args ← mvars.mapM instantiateMVars
-  schemaMemBuild x args 0 quoted
+  schemaMemBuild hyps x args quoted
 
 /-- The antecedent of `imp X Y`, i.e. of `app (app or (neg X)) Y`, reducing each layer. -/
 def impPremise? (s : Expr) : MetaM (Option Expr) := do
@@ -284,8 +322,8 @@ def derivableParts? (e : Expr) : Option (Expr × Expr) :=
 
 /-- Given `d : Theorem Ax S` with `S = imp X₁ (… (imp Xₙ Y))`, the derivation of `Y` from
 `C.axioms ∪ Ps`, citing each `Xᵢ` as an axiom in `Pᵢ.schema`. -/
-def dischargePremises (ps : List Name) (Ps : Expr) (pargs : Array (Array Expr)) (d : Expr) :
-    TermElabM Expr := do
+def dischargePremises (ps : List Name) (Ps : Expr) (pargs : Array (Array Expr)) (d : Expr)
+    (hyps : Array (Expr × Expr)) : TermElabM Expr := do
   let axioms := Lean.mkConst ``Classicism.Meta.C.axioms
   let pureSig := Lean.mkConst ``Classicism.Meta.Signature.pure
   let _target ← mkAppM ``Union.union #[mkApp axioms pureSig, Ps]
@@ -316,7 +354,7 @@ def dischargePremises (ps : List Name) (Ps : Expr) (pargs : Array (Array Expr)) 
     -- unfolded there)
     let some args := pargs[i]? | throwError "entails: no premise {i} in the strict statement"
     let inst := mkAppN quoted args
-    let mem ← schemaMemBuild inst args 0 quoted
+    let mem ← schemaMemBuild hyps inst args quoted
     let memU ← unionMem schemas i inst mem
     let axInst ← mkAppOptM ``Classicism.Meta.Derivable.axiom
       #[pureSig, target, inst, ← mkAppOptM ``Or.inr #[mkApp (mkApp axioms pureSig) inst, mkApp Ps inst, memU]]
@@ -338,19 +376,25 @@ def impRest? (s : Expr) : Option Expr :=
 def withC (Ps : Expr) : MetaM Expr :=
   mkAppM ``Union.union #[mkApp (Lean.mkConst ``Classicism.Meta.C.axioms) (Lean.mkConst ``Classicism.Meta.Signature.pure), Ps]
 
-/-- Eliminate `hyp : ∃ x₁ …, a = quoted x₁ …` down to the equation, then specialize the
-derivation `dname` so that its consequent is that instance, discharge its premises, and
-rewrite along the equation. -/
+/-- Eliminate `hyp : ∃ x₁ …, x₁ closed ∧ … ∧ a = quoted x₁ …` down to the equation,
+collecting the closedness of the types in `hyps`, then specialize the derivation `dname`
+so that its consequent is that instance, discharge its premises, and rewrite along the
+equation. -/
 partial def entailsElim (ps : List Name) (Ps : Expr) (dname : Name) (strictTy : Expr)
-    (a hyp qcur : Expr) : TermElabM Expr := do
+    (a hyp qcur : Expr) (hyps : Array (Expr × Expr) := #[]) : TermElabM Expr := do
   let hty ← whnf (← inferType hyp)
-  if hty.isAppOfArity ``Exists 2 then
+  if hty.isAppOfArity ``And 2 then
+    let c := hty.appFn!.appArg!
+    let h₁ ← mkAppM ``And.left #[hyp]
+    let h₂ ← mkAppM ``And.right #[hyp]
+    entailsElim ps Ps dname strictTy a h₂ qcur (hyps.push (c.appArg!, h₁))
+  else if hty.isAppOfArity ``Exists 2 then
     let dom := hty.getAppArgs[0]!
     let pred := hty.getAppArgs[1]!
     let goal ← mkAppM ``Classicism.Meta.Theorem #[← withC Ps, a]
     let k ← withLocalDeclD `x dom fun x => do
       withLocalDeclD `hx (← instantiateMVars (← whnf (mkApp pred x))) fun hx => do
-        mkLambdaFVars #[x, hx] (← entailsElim ps Ps dname strictTy a hx (mkApp qcur x))
+        mkLambdaFVars #[x, hx] (← entailsElim ps Ps dname strictTy a hx (mkApp qcur x) hyps)
     mkAppOptM ``Exists.elim #[dom, pred, goal, hyp, k]
   else
     -- hyp : a = qcur (for a singleton conclusion, qcur is the equation's right side)
@@ -383,7 +427,7 @@ partial def entailsElim (ps : List Name) (Ps : Expr) (dname : Name) (strictTy : 
       let y' ← whnfR y
       let some rest := impRest? y' | throwError "entails: not an implication:{indentExpr y'}"
       y := rest
-    let D₀ ← dischargePremises ps Ps pargs d
+    let D₀ ← dischargePremises ps Ps pargs d hyps
     let target ← withC Ps
     let D ← convertDeriv target D₀ y qcur
     let sentenceTy := mkApp (Lean.mkConst ``Classicism.Meta.Sentence) (Lean.mkConst ``Classicism.Meta.Signature.pure)
@@ -420,10 +464,12 @@ def declareEntails (foo : Name) : TermElabM Unit := do
       -- the conclusion's types are parameters: the whole schema
       pure (Lean.mkConst (q ++ `schema))
     else
-      -- expressions in the parameters, as `Existence (σ → t)`: the instances over them,
-      -- `fun a => ∃ σ' …, a = Q.quoted (…)`
+      -- expressions in the parameters, as `Existence (σ → t)`: the instances over them at
+      -- closed types, `fun a => ∃ σ' …, σ' closed ∧ … ∧ a = Q.quoted (…)`
       withLocalDeclD `a sentenceTy fun a => do
         let mut body ← mkEq a inst
+        for tv in tvs.reverse do
+          body ← mkAppM ``And #[← closedProp tv, body]
         for tv in tvs.reverse do
           body ← mkAppM ``Exists #[← mkLambdaFVars #[tv] body]
         mkLambdaFVars #[a] body

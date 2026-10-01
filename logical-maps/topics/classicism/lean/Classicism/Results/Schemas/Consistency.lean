@@ -175,7 +175,7 @@ local notation "M" => MSet.model_isModel Invol
 theorem holdsAx_nd_bf :
     (A).HoldsAx (AxiomSet.box P.NecessityOfDistinctness.schema ∪ AxiomSet.box P.Barcan.schema ∪
       (P.NecessityOfDistinctness.schema ∪ P.Barcan.schema)) := by
-  rintro a ((⟨_, ⟨σ, rfl⟩, rfl⟩ | ⟨_, ⟨σ, rfl⟩, rfl⟩) | (⟨σ, rfl⟩ | ⟨σ, rfl⟩))
+  rintro a ((⟨_, ⟨σ, -, rfl⟩, rfl⟩ | ⟨_, ⟨σ, -, rfl⟩, rfl⟩) | (⟨σ, -, rfl⟩ | ⟨σ, -, rfl⟩))
   · exact box_nd σ
   · exact box_bf σ
   · exact holdsSentence_of_box A M (box_nd σ)
@@ -225,7 +225,7 @@ theorem necActuality_quoted_eq : P.NecActuality.quoted = Term.box P.Actuality.qu
 theorem holdsAx_nd_bf_atomless :
     (A).HoldsAx (AxiomSet.box P.NecessityOfDistinctness.schema ∪ AxiomSet.box P.Barcan.schema ∪
       P.Atomlessness.schema) := by
-  rintro a ((⟨_, ⟨σ, rfl⟩, rfl⟩ | ⟨_, ⟨σ, rfl⟩, rfl⟩) | rfl)
+  rintro a ((⟨_, ⟨σ, -, rfl⟩, rfl⟩ | ⟨_, ⟨σ, -, rfl⟩, rfl⟩) | rfl)
   · exact box_nd σ
   · exact box_bf σ
   · exact atomlessness
@@ -295,7 +295,7 @@ local notation "M" => Intensional.MonoidModel.model_isModel Intensional.Monoids.
 /-- What holds: No Pure Contingency, `BF`, Atomlessness. -/
 theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Barcan.schema ∪ P.Atomlessness.schema) :=
   holdsAx_union A (holdsAx_union A (holdsAx_npc A M)
-      (by rintro _ ⟨σ, rfl⟩; exact bf σ))
+      (by rintro _ ⟨σ, -, rfl⟩; exact bf σ))
       (by rintro _ rfl; exact atomlessness)
 
 /-- What fails: `ND_e`, Actuality, Atomicity at `t`, Boolean Completeness at `e → t`. -/
@@ -436,7 +436,7 @@ local notation "M" => Intensional.MonoidModel.model_isModel Intensional.Monoids.
 /-- What holds: No Pure Contingency, `BF`, Actuality. -/
 theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema) :=
   holdsAx_union A (holdsAx_union A (holdsAx_npc A M)
-      (by rintro _ ⟨σ, rfl⟩; exact bf σ))
+      (by rintro _ ⟨σ, -, rfl⟩; exact bf σ))
       (by rintro _ rfl; exact actuality)
 
 /-- What fails: `ND_e`, Atomicity at `t`, Boolean Completeness at `e → t`. -/
@@ -563,7 +563,7 @@ local notation "M" => Intensional.MonoidModel.model_isModel Intensional.Monoids.
 /-- What holds: No Pure Contingency, `BF`, Actuality, Atomicity at `t`. -/
 theorem holdsAx_pos : (A).HoldsAx (npc Signature.pure ∪ P.Barcan.schema ∪ P.Actuality.schema ∪ P.AtomicityT.schema) :=
   holdsAx_union A (holdsAx_union A (holdsAx_union A (holdsAx_npc A M)
-      (by rintro _ ⟨σ, rfl⟩; exact bf σ))
+      (by rintro _ ⟨σ, -, rfl⟩; exact bf σ))
       (by rintro _ rfl; exact actuality))
       (by rintro _ rfl; exact atomicityT)
 
@@ -598,7 +598,7 @@ local notation "A" => Intensional.ContingentBarcan.model
 local notation "M" => Intensional.ContingentBarcan.model_isModel
 
 theorem holdsAx_bf : (A).HoldsAx P.Barcan.schema := by
-  rintro _ ⟨σ, rfl⟩; exact bf σ
+  rintro _ ⟨σ, -, rfl⟩; exact bf σ
 
 /-- `BF` at every type is consistent with `¬□BF_e`. -/
 theorem bf_not_box_bf_consistent :
@@ -613,7 +613,7 @@ theorem box_bf_not_theorem :
 
 /-- **`BF` does not entail `□BF`.** -/
 theorem bf_not_entails_box_bf : ¬ (P.Barcan.schema ⟹ AxiomSet.box P.Barcan.schema) :=
-  not_entails_of_model A M holdsAx_bf (AxiomSet.mem_box ⟨.e, rfl⟩) not_box_bf_e
+  not_entails_of_model A M holdsAx_bf (AxiomSet.mem_box ⟨.e, trivial, rfl⟩) not_box_bf_e
 
 end ContingentBarcan
 

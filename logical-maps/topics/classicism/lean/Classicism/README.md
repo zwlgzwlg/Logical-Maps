@@ -548,8 +548,10 @@ Classicism, apply an implication — are `Theorem.ax`, `Theorem.ofC` and `Theore
 
 **Principles as schemas** (`Tools/Schema.lean`, `Certified/Schemas.lean`). A principle
 `P` of the shallow layer with parameters `σ …` is quoted as `∀ σ …, P σ …`:
-`P.quoted : Ty → … → Sentence`, `P.reflect`, and `P.schema = {P.quoted σ' … | σ' …}`. A
-parameter-free principle gives a singleton. All 46 principles are quoted; the map's
+`P.quoted : Ty → … → Sentence`, `P.reflect`, and
+`P.schema = {P.quoted σ' … | σ' … closed}`, the instances at the paper's types, those with
+no type variable (1 October; `VECTORIZATION-PLAN.md`, D2). A parameter-free principle gives
+a singleton. All 46 principles are quoted; the map's
 schemas over sentences rather than types — No Pure Contingency, Distinctness,
 Possibility, `max` — are written by hand in `Syntax/SentenceSchemas.lean`.
 

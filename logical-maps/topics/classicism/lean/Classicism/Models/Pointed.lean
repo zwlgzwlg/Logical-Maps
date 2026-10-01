@@ -863,7 +863,7 @@ theorem holdsAx_nec {p : Sentence Signature.pure} (hp : p.pure = true) (h0 : (A)
 /-- `□BF_σ` at every type, when `BF` holds at `ℕ` at every type. -/
 theorem holdsAx_box_bf (hbf : ∀ σ, (A).HoldsSentence (Sentence.bf σ)) :
     (A).HoldsAx (AxiomSet.box P.Barcan.schema) := by
-  rintro _ ⟨_, ⟨σ, rfl⟩, rfl⟩
+  rintro _ ⟨_, ⟨σ, -, rfl⟩, rfl⟩
   exact box_of_pt S (bf_pure σ) (hbf σ) fun k => bf_pt S k σ
 
 /-- What holds at `ℕ` in every model with a point adjoined whose base refutes Boolean

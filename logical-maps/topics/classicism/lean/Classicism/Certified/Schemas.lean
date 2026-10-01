@@ -7,7 +7,7 @@ import Classicism.Certified.Quoted
 Every principle of the shallow layer (from its strict twin where it has one), read into the object language
 as a schema: `P.quoted`, the sentence as a function of the principle's object-type
 parameters; `P.reflect`, that reading it back gives the strict twin, by `rfl`; and
-`P.schema`, the axiom set of its instances. This is the one home of those declarations.
+`P.schema`, the axiom set of its instances at closed types. This is the one home of those declarations.
 -/
 
 #classicism_schema

@@ -255,28 +255,30 @@ open AxiomSet
 
 /-- **BF entails BF over every argument tuple**, by induction on the type. -/
 theorem barcanArgs_of_barcan : P.Barcan.schema ⟹ P.BarcanArgs.schema := by
-  rintro a ⟨ρ, rfl⟩
+  rintro a ⟨ρ, hρ, rfl⟩
   induction ρ using RTy.induction with
   | t => exact Theorem.ofC barcanArgs_t.rule
-  | arr σ ρ ih => exact (Theorem.ofC (barcanArgs_step.rule σ ρ)).mp₂ (Theorem.ax ⟨σ, rfl⟩) ih
+  | arr σ ρ ih =>
+    exact (Theorem.ofC (barcanArgs_step.rule σ ρ)).mp₂ (Theorem.ax ⟨σ, hρ.1, rfl⟩) (ih hρ.2)
 
 /-- **`□`BF entails `□`BF over every argument tuple.** -/
 theorem necBarcanArgs_of_necBarcan : P.NecBarcan.schema ⟹ P.NecBarcanArgs.schema := by
-  rintro a ⟨ρ, rfl⟩
+  rintro a ⟨ρ, hρ, rfl⟩
   induction ρ using RTy.induction with
   | t => exact Theorem.ofC necBarcanArgs_t.rule
-  | arr σ ρ ih => exact (Theorem.ofC (necBarcanArgs_step.rule σ ρ)).mp₂ (Theorem.ax ⟨σ, rfl⟩) ih
+  | arr σ ρ ih =>
+    exact (Theorem.ofC (necBarcanArgs_step.rule σ ρ)).mp₂ (Theorem.ax ⟨σ, hρ.1, rfl⟩) (ih hρ.2)
 
 /-- **Atomicity at `t` and BF entail Atomicity**, with Atomicity at `t` read as the
 `t`-instance of Atomicity (the form the `C5` records conclude with): the induction of
 `Results/Atomicity.lean`, from the instance. -/
 theorem atomicity_of_atomicity_at_t_barcan :
     single (P.Atomicity.quoted RTy.t) ∪ P.Barcan.schema ⟹ P.Atomicity.schema := by
-  rintro a ⟨ρ, rfl⟩
+  rintro a ⟨ρ, hρ, rfl⟩
   induction ρ using RTy.induction with
   | t => exact Theorem.ax (Or.inl rfl)
   | arr σ ρ ih =>
-    exact (Theorem.ofC (atomicity_step.rule σ ρ)).mp₂ ih (Theorem.ax (Or.inr ⟨σ, rfl⟩))
+    exact (Theorem.ofC (atomicity_step.rule σ ρ)).mp₂ (ih hρ.2) (Theorem.ax (Or.inr ⟨σ, hρ.1, rfl⟩))
 
 /-- `□ND` entails `□`BF over every tuple. -/
 theorem necBarcanArgs_of_c5 : P.NecNecessityOfDistinctness.schema ⟹ P.NecBarcanArgs.schema :=
@@ -361,11 +363,11 @@ theorem c5_and_necessary_completeness_imply_atomicity :
 /-- **`□`Atomicity at `t` and `□`BF entail `□`Atomicity**, by induction on the type. -/
 theorem necAtomicity_of_at_t_necBarcan :
     single (P.NecAtomicity.quoted RTy.t) ∪ P.NecBarcan.schema ⟹ P.NecAtomicity.schema := by
-  rintro a ⟨ρ, rfl⟩
+  rintro a ⟨ρ, hρ, rfl⟩
   induction ρ using RTy.induction with
   | t => exact Theorem.ax (Or.inl rfl)
   | arr σ ρ ih =>
-    exact (Theorem.ofC (necAtomicity_step.rule σ ρ)).mp₂ ih (Theorem.ax (Or.inr ⟨σ, rfl⟩))
+    exact (Theorem.ofC (necAtomicity_step.rule σ ρ)).mp₂ (ih hρ.2) (Theorem.ax (Or.inr ⟨σ, hρ.1, rfl⟩))
 
 /-- `c5-and-atomicity-imply-necessary-atomicity` (Proposition 2.6 with 2.7), at every
 arity: Atomicity and BF give `□`Actuality, which with `□ND` gives `□`Atomicity at `t`,
