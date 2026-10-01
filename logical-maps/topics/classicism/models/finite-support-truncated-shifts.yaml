@@ -7,8 +7,10 @@ certificate:
   checked_by: []
   date: '2026-09-17'
   lean: none
-  # migration: the `trawl` block moves verbatim to
-  # provenance/trawl-764428bfd00a49bb85d7fcbff3472c7e.yaml.
+  # migration: the `trawl` block moves to
+  # provenance/admission-c0a37bbe6b6c45cc985428b174812564.yaml, which holds the blocks of the eight
+  # records admitted together: this record's discovery and evidence in its entry, and the
+  # checkpoint, review and admission they share once.
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, Proposition D.5, part 8, pp.
   74, 78–79; p. 79 (No Pure Contingency).
@@ -187,7 +189,7 @@ arguments:
   by: DeepSeek (deepseek-flash), trawl; reviewed and corrected by OpenAI Codex (GPT-6)
   date: '2026-09-25'
   writeup: finite-support-truncated-shifts
-  provenance: trawl-764428bfd00a49bb85d7fcbff3472c7e
+  provenance: admission-c0a37bbe6b6c45cc985428b174812564
   text: >-
     The finite/cofinite algebra of arrow indices has no least upper bound for the even-index
     singleton family. The family is represented by a domain property because this ideally full

@@ -1387,6 +1387,22 @@ def _argument_target(data: dict, address: str):
     return next((a for _, a in _arguments(rec) if isinstance(a, dict) and a.get("id") == aid), None) if rec else None
 
 
+def provenance_records(side: dict) -> list:
+    """The model records a provenance sidecar belongs to: one folded record, or each record an
+    admission added to."""
+    if "records" in side:
+        return [e.get("record") for e in side.get("records") or [] if isinstance(e, dict)]
+    return [side.get("record")]
+
+
+def trawl_block(side: dict, record_id: str):
+    """The certificate.trawl block a record had, rebuilt from its admission's sidecar."""
+    entry = next((e for e in side.get("records") or [] if isinstance(e, dict) and e.get("record") == record_id), None)
+    if entry is None or not isinstance(side.get("trawl"), dict):
+        return None
+    return {**side["trawl"], "discovery": entry.get("discovery"), "evidence": entry.get("evidence")}
+
+
 def argument_errors(data: dict, ids) -> list[str]:
     """The errors of argument-format model records that need no engine."""
     errors = []
@@ -1431,8 +1447,8 @@ def argument_errors(data: dict, ids) -> list[str]:
                 side = sidecars.get(a["provenance"])
                 if side is None:
                     errors.append(f"{where}: no provenance sidecar provenance/{a['provenance']}.yaml")
-                elif side.get("record") != rec.get("id"):
-                    errors.append(f"{where}: provenance/{a['provenance']}.yaml belongs to '{side.get('record')}'")
+                elif rec.get("id") not in provenance_records(side):
+                    errors.append(f"{where}: provenance/{a['provenance']}.yaml has nothing for '{rec.get('id')}'")
             if not a.get("withdrawn"):
                 for key, pids in (("holds", holds), ("fails", fails)):
                     for pid in pids:
@@ -1446,8 +1462,12 @@ def argument_errors(data: dict, ids) -> list[str]:
         stem = Path(side["_file"]).stem
         if side.get("id") != stem:
             errors.append(f"{side['_file']}: id '{side.get('id')}' must equal file stem '{stem}'")
-        if side.get("record") not in {s.get("id") for s in data.get("model_sources", [])}:
-            errors.append(f"{side['_file']}: record '{side.get('record')}' is not a model in the argument format")
+        owners = provenance_records(side)
+        for owner in owners:
+            if owner not in {s.get("id") for s in data.get("model_sources", [])}:
+                errors.append(f"{side['_file']}: record '{owner}' is not a model in the argument format")
+        if len(owners) != len(set(owners)):
+            errors.append(f"{side['_file']}: a record has two entries")
     return errors
 
 
@@ -3392,6 +3412,19 @@ def _selftest_arguments():
     assert len(errors) == 8, errors
     rec["arguments"][-1]["id"] = "nowhere"
     assert not any("like names no argument" in e for e in argument_errors(data, set("abcdefgh")))
+    # An admission sidecar is shared by the records it added to; each argument naming it needs an entry.
+    side = {"id": "admission-x", "_file": "topics/t/provenance/admission-x.yaml", "trawl": {"reviews": [], "admission": {"id": "admission-x"}},
+            "records": [{"record": "m", "discovery": {"trawl_id": "trawl-1"}, "evidence": []}]}
+    data = {**data, "provenance": [side]}
+    del rec["arguments"][7:]
+    rec["arguments"][0]["provenance"] = "admission-x"
+    assert argument_errors(data, set("abcdefgh")) == [], argument_errors(data, set("abcdefgh"))
+    assert trawl_block(side, "m") == {"reviews": [], "admission": {"id": "admission-x"}, "discovery": {"trawl_id": "trawl-1"}, "evidence": []}
+    assert trawl_block(side, "n") is None and provenance_records(side) == ["m"]
+    side["records"] = [{**side["records"][0], "record": "n"}, {**side["records"][0], "record": "n"}]
+    errors = argument_errors(data, set("abcdefgh"))
+    assert any("has nothing for 'm'" in e for e in errors) and any("record 'n' is not a model" in e for e in errors) \
+        and any("a record has two entries" in e for e in errors), errors
 
 
 def selftest():

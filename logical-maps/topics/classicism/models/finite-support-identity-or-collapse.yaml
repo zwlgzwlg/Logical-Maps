@@ -7,8 +7,10 @@ certificate:
   checked_by: []
   date: '2026-09-17'
   lean: none
-  # migration: the `trawl` block moves verbatim to
-  # provenance/trawl-bd4847c8b57e415a858fa2334871108c.yaml.
+  # migration: the `trawl` block moves to
+  # provenance/admission-c0a37bbe6b6c45cc985428b174812564.yaml, which holds the blocks of the eight
+  # records admitted together: this record's discovery and evidence in its entry, and the
+  # checkpoint, review and admission they share once.
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, Proposition D.5, part 4, pp.
   74, 78 and n. 97; p. 79 (No Pure Contingency).
@@ -214,7 +216,7 @@ arguments:
   by: DeepSeek (deepseek-flash), trawl; reviewed and corrected by OpenAI Codex (GPT-6)
   date: '2026-09-25'
   writeup: finite-support-identity-or-collapse
-  provenance: trawl-bd4847c8b57e415a858fa2334871108c
+  provenance: admission-c0a37bbe6b6c45cc985428b174812564
   text: >-
     The dated write-up supplies the accepted BC-t witness using alternating differences of
     agreement classes and Definition D.3's extensional-fullness lemma. It replaces the trawl's

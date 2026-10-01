@@ -7,9 +7,12 @@ certificate:
   checked_by: []
   date: '2026-09-17'
   lean: none
-  # migration: the 6 KB `trawl` block moves verbatim to provenance/trawl-0329824a975f4e67bb50fc3e7a3e20b9.yaml.
-  # It concerned the review argument for Strong Leibniz (type t) and BF (type t), dropped once both
-  # verdicts were derived; the sidecar keeps the trawl's provenance.
+  # migration: the `trawl` block moves to
+  # provenance/admission-c0a37bbe6b6c45cc985428b174812564.yaml, which holds the blocks of the eight
+  # records admitted together: this record's discovery and evidence in its entry, and the
+  # checkpoint, review and admission they share once. No argument here names it: the review argument
+  # it concerned, for Strong Leibniz (type t) and BF (type t), was dropped once both verdicts were
+  # derived.
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, Proposition D.5, part 6, pp.
   74, 78; p. 79 (No Pure Contingency).

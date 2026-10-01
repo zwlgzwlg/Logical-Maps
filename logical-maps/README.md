@@ -47,7 +47,7 @@ topics/<topic>/contribute.md          optional Contribute tab message (markdown)
 topics/<topic>/principles/<id>.yaml   one principle per file
 topics/<topic>/results/<id>.yaml      implication: premises ⇒ conclusion
 topics/<topic>/models/<id>.yaml       model: satisfies [...], violates [...]; or a definition and arguments
-topics/<topic>/provenance/<id>.yaml   provenance moved verbatim out of a model record, named by its arguments
+topics/<topic>/provenance/<id>.yaml   provenance moved verbatim out of model records, named by their arguments
 topics/<topic>/papers.yaml           source-paper catalogue and external links
 topics/<topic>/sources/              documents authorised for redistribution
 schema/                               JSON schemas
@@ -248,7 +248,11 @@ are displayed under Misc. until attributed. Lean fields remain optional.
 An optional `certificate.trawl` preserves structured discovery, evidence, reviewer,
 and admission history for accepted trawl contributions. It does not change the
 meaning of `source_id`, proof status, or Lean verification. See the
-[trawl provenance workflow](trawl/README.md#evidence-storage).
+[trawl provenance workflow](trawl/README.md#evidence-storage). A model written as
+arguments keeps it in `provenance/<admission id>.yaml` instead, one file per
+admission: what the admitted records share (checkpoint, source, reviews, admission)
+under `trawl`, and each record's own `discovery` and `evidence` under `records`.
+The arguments the admission supplied name the file in `provenance`.
 
 Optional principle categories are declared in topic order as `principle_categories: [{id, name}, ...]`. Set each principle's `category` to one of these ids. The graph sidebar groups its checkboxes with one show-or-hide control per category; these only control visibility. Topics without categories retain the flat list.
 

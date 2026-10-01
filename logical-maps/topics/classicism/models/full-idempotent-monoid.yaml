@@ -7,8 +7,10 @@ certificate:
   checked_by: []
   date: '2026-09-17'
   lean: none
-  # migration: the `trawl` block moves verbatim to
-  # provenance/trawl-22455d8a01ce49dbaddffeab06b806d6.yaml.
+  # migration: the `trawl` block moves to
+  # provenance/admission-c0a37bbe6b6c45cc985428b174812564.yaml, which holds the blocks of the eight
+  # records admitted together: this record's discovery and evidence in its entry, and the
+  # checkpoint, review and admission they share once.
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §3.5, p. 59, first paragraph; p. 61 (full-model
   principles).
@@ -134,7 +136,7 @@ arguments:
   by: DeepSeek (deepseek-flash), trawl; reviewed and corrected by OpenAI Codex (GPT-6)
   date: '2026-09-25'
   writeup: strong-worlds-one-object-action-models
-  provenance: trawl-22455d8a01ce49dbaddffeab06b806d6
+  provenance: admission-c0a37bbe6b6c45cc985428b174812564
   text: >-
     By the nonidentity-idempotent singleton witness in the write-up. The successor quantifier
     ranges over all propositions at the target object, including ones outside the transported

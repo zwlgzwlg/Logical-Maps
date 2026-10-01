@@ -7,8 +7,10 @@ certificate:
   checked_by: []
   date: '2026-09-20'
   lean: none
-  # migration: the `trawl` block moves verbatim to
-  # provenance/trawl-0d3832380ce44159b1120e739b2f3e9b.yaml.
+  # migration: the `trawl` block moves to
+  # provenance/admission-c0a37bbe6b6c45cc985428b174812564.yaml, which holds the blocks of the eight
+  # records admitted together: this record's discovery and evidence in its entry, and the
+  # checkpoint, review and admission they share once.
 sources:
 - Claude Fable 5.1 (Anthropic), construction and verification of 20 September 2026 (see the write-up).
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §3.2, Definition 3.6 and Proposition 3.7,
@@ -163,7 +165,7 @@ arguments:
   by: DeepSeek (deepseek-flash), trawl; reviewed and corrected by OpenAI Codex (GPT-6)
   date: '2026-09-25'
   writeup: coalesced-all-finite-individual-domains
-  provenance: trawl-0d3832380ce44159b1120e739b2f3e9b
+  provenance: admission-c0a37bbe6b6c45cc985428b174812564
   text: >-
     The appended handwritten verification establishes necessary Atomicity, necessary Boolean
     Completeness and necessary Rigid Comprehension at every relational type. The existing rules
