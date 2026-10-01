@@ -36,8 +36,10 @@ definition: >-
 
 arguments:
 
-- holds: [necessary-rigid-comprehension-r, necessary-atomicity-r, necessary-actuality,
-          necessary-distinctness-necessary-r, no-pure-contingency-r]
+# Only the verdicts the engine needs to derive the rest are recorded, the source's first;
+# Atomicity stands for the □Atomicity the source gives, whose boxed form is derived.
+
+- holds: [atomicity-r, necessary-distinctness-necessary-r]
   fails: [fregean-axiom]
   source: {paper: bacon-dorr-classicism, locator: '§3.5, p. 59, second paragraph; p. 61'}
   text: The source establishes boxed ND and exhibits four propositions.
@@ -54,7 +56,7 @@ arguments:
     model contains every intension, so that subrelation is in the domain; see Classicism, p. 61,
     on the principles common to full models.
 
-- fails: [axiom-of-infinity-t, infinity-t]
+- fails: [infinity-t]
   # migration: `by` adds "at Cian Dorr's direction" from the change's summary.
   by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
   date: '2026-09-20'
@@ -64,20 +66,8 @@ arguments:
     cardinalities and the fourth holds of the universal property of propositions: the Axiom of
     Infinity at type t fails, as does the fifth instance of the schema.
 
-- holds: [necessary-relational-choice-r]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  # migration: the notes' lead-in "□Relational Choice holds:" is dropped and "the" capitalised;
-  # `source` is the page the text cites.
-  source: {paper: bacon-dorr-classicism, locator: p. 61}
-  text: >-
-    The truncation of a full action model at any arrow is again a full action model, its domains
-    at the reachable objects being unchanged, and Relational Choice holds in every full model
-    given choice in the metatheory (Classicism, p. 61).
-
 - id: sigma-true-atom
-  fails: [no-contingency-signature-r, witnessed-possibility-r, separated-structure-r,
-          independence-signature-r, distinctness-signature-r]
+  fails: [no-contingency-signature-r, independence-signature-r]
   # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The notes'
   # lead-in "Under it:" is dropped; the sentence that followed this argument there is in `notes`.
   # The text is the 23 September version; the revision notes paraphrase the two 23 September
@@ -107,36 +97,6 @@ arguments:
     note: >-
       Corrected the reason for the Independence and Distinctness failures: they come from the
       other relational constants, not the designated one. No verdict changed.
-
-- holds: [necessary-strong-leibniz-t]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  # migration: the revision note paraphrases the 23 September change, verbatim in `history`.
-  text: >-
-    In a one-object model whose propositions are all the sets of arrows, a singleton $\{h\}$ is a
-    strong world exactly when its transport $\{j : j\circ i=h\}$ along every arrow $i$ has at
-    most one member, since the propositions at that world are again all sets of arrows and a
-    two-element set is split by a singleton. Here the arrows form a group, so
-    $j\circ i=j^{\prime}\circ i$ forces $j=j^{\prime}$. So every singleton is a strong world,
-    every possible proposition contains an arrow, and the type-t Strong Leibniz Biconditionals
-    hold at every world.
-  revisions:
-  - date: '2026-09-23'
-    by: Claude Fable 5.1 (Anthropic)
-    note: >-
-      The first version tacitly used that the monoid is right-cancellative, which holds here;
-      no verdict changed.
-
-- holds: [transversal-choice-r]
-  # migration: `by` adds the summary's last sentence; the lead-in "Added Transversal Choice, by"
-  # becomes "By".
-  by: Claude Fable 5.1 (Anthropic), on a question of Zachary Goodsell, after an observation of Christopher Sun
-  date: '2026-09-25'
-  text: >-
-    By the argument recorded for Relational Choice: a full model contains every intension, in
-    particular one whose extension at the evaluation point is a transversal, chosen in the
-    metatheory, of the extension there of an equivalence relation; the equivalence and
-    transversal conditions are unboxed.
 
 # migration: sentences of the old notes that no argument holds, verbatim. The last one followed
 # the Σ argument (sigma-true-atom) and refers to its failures.

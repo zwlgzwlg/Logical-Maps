@@ -7,8 +7,9 @@ certificate:
   checked_by: []
   date: '2026-09-17'
   lean: none
-  # migration: the 6 KB `trawl` block moves verbatim to provenance/trawl-0329824a975f4e67bb50fc3e7a3e20b9.yaml;
-  # it concerns one argument below (strong-worlds-review), which points to it.
+  # migration: the 6 KB `trawl` block moves verbatim to provenance/trawl-0329824a975f4e67bb50fc3e7a3e20b9.yaml.
+  # It concerned the review argument for Strong Leibniz (type t) and BF (type t), dropped once both
+  # verdicts were derived; the sidecar keeps the trawl's provenance.
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, Proposition D.5, part 6, pp.
   74, 78; p. 79 (No Pure Contingency).
@@ -41,39 +42,19 @@ definition: >-
 
 arguments:
 
-# migration: the Vicinity argument (Claude Opus 5.5, 27 Sep) comes first, as Vicinity came first in
-# the old violates list. The flattened lists follow the order of the arguments, and the engine
-# explains a derived failure by the first recorded failure it reaches, so this order keeps every
-# such explanation as it was (check_flattening).
-
-- fails: [vicinity]
-  # migration: the lead-in "Vicinity fails." is dropped; the closing "Observation of Claude Opus
-  # 5.5 (Anthropic), 27 September 2026." is `by` and `date`, which come from the change.
-  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request
-  date: '2026-09-27'
-  text: >-
-    A true $w$ pinned down by a finite set $S$ contains every arrow agreeing with the identity
-    on $S$, among them the truncation $g_n$ with $n$ above $S$, one that collapses two
-    individuals $a\ne b$ outside $S$. The proposition that $a$ and $b$ are distinct is true, and
-    it is possible at no arrow that collapses them, since a collapse persists under
-    composition, so $w\not\le\Diamond(a\ne b)$.
+# Only the verdicts the engine needs to derive the rest are recorded, the source's first.
 
 # --- from the source (17 Sep record) ---
 
-# migration: the next four texts are the verdict clauses of the old description, without their
-# lead-ins ("Atomicity holds because", "BF fails since", "Actuality fails because", "Boolean
-# Completeness fails because"), with the first word capitalised and a closing semicolon made a
-# full stop.
+# migration: the next three texts are verdict clauses of the old description, without their
+# lead-ins ("Atomicity holds because", "Actuality fails because", "Boolean Completeness fails
+# because"), with the first word capitalised and a closing semicolon made a full stop.
 
 - holds: [atomicity-r]
   source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(6), p. 78'}
   text: >-
     Every nonempty proposition contains some $g_n$ and each $\{g_n\}$ is pinned down by a finite
     set ($\{n-1,n,n+1\}$ for $n>0$, $\{0,1\}$ for $n=0$).
-
-- fails: [barcan-r]
-  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(6), p. 78'}
-  text: An arrow sending $1$ to $0$ sends everything to $0$.
 
 - id: actuality
   fails: [actuality]
@@ -88,12 +69,7 @@ arguments:
     The strongest persistent property with extension $\mathbb N$ pinned down by
     $\{0,\ldots,n\}$ becomes ever stronger.
 
-- fails: [distinctness-necessary-r, rigid-comprehension-r]
-  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(6), pp. 74–75, 78'}
-  # migration: the old record gives no argument for these beyond the citation. A citation alone is a
-  # valid argument; the coverage report lists it as "source only".
-
-- holds: [no-pure-contingency-r, necessary-atomicity-r]
+- holds: [no-pure-contingency-r]
   source: {paper: bacon-dorr-classicism, locator: p. 79}
   text: >-
     Boxed positive flags use the source’s explicit one-object No Pure Contingency observation,
@@ -114,7 +90,7 @@ arguments:
     standard and no finite cardinality holds of the universal property at either type.
 
 - id: sigma-top
-  fails: [witnessed-possibility-r, separated-structure-r, independence-signature-r, distinctness-signature-r]
+  fails: [independence-signature-r]
   # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The notes' lead-in
   # "Under it the signature schemata fail." is dropped; the sentence that followed this argument
   # there is in `notes`.
@@ -172,7 +148,8 @@ arguments:
     other propositions being computed likewise from the truncation order.
 
 - id: relational-choice
-  holds: [relational-choice-r, necessary-relational-choice-r]
+  holds: [relational-choice-r]
+  # Recorded although Transversal Choice gives it: the Transversal Choice argument builds on this one.
   # migration: the lead-in "Relational Choice holds, necessarily." is dropped; `by` renders the
   # closing "Cian Dorr’s observation of 23 September 2026." and the change's author.
   by: Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic)
@@ -201,7 +178,7 @@ arguments:
     extension there, chosen in the metatheory, is the extension of an element pinned down by the
     empty set; the equivalence and transversal conditions are unboxed.
 
-- fails: [inextensible-comprehension-r, weakly-inextensible-comprehension-r]
+- fails: [weakly-inextensible-comprehension-r]
   # migration: the lead-in "Inextensible Comprehension fails," becomes "At type $e\to t$," (the
   # comma after the type dropped); the sentence "Here even the universal property …", which
   # stood before "So $\langle b,i\rangle\in Y\setminus B_{N^{\prime}}$", moves to the end in
@@ -234,58 +211,12 @@ arguments:
     by: Claude Opus 5.5 (Anthropic)
     note: Merged with the 25 September version; the argument already refutes the weak form, which was added.
 
-- id: no-strong-worlds
-  fails: [strong-leibniz-t, barcan-t]
-  # migration: the closing attribution "Observations of 23 September 2026, answering …; the
-  # derivation of BF’s failure from them and the direct counterexample, 25 September 2026."
-  # becomes `by`, `date` and the revision, whose note paraphrases it.
-  by: Claude Fable 5.1 (Anthropic), answering Cian Dorr’s questions whether the failure of BF
-    sharpens to type $t$ and whether failures of Atomicity’s strengthening can be found where
-    Atomicity holds
-  date: '2026-09-23'
-  text: >-
-    The type-$t$ Strong Leibniz Biconditionals fail although Atomicity holds, so the two come
-    apart here. A strong world is an atom, and the atoms are the singletons $\{g_n\}$, since
-    $\{1_{\mathbb N}\}$ is not pinned down by a finite set. Transported along $g_n$, $\{g_n\}$
-    becomes $\{k : k\circ g_n=g_n\}=\{1_{\mathbb N}\}\cup\{g_m : m\ge n\}$, which $\{g_n\}$
-    itself splits; so there is no strong world at all. BF fails at type $t$ as a consequence,
-    by the recorded result that Atomicity (type $t$) and BF (type $t$) imply the type-$t$ Strong
-    Leibniz Biconditionals. Directly: with $1$ and $0$ as individuals,
-    $X:=\lambda p\, .\,(1\ne0\lor\Box p\lor\Box\neg p)$ is necessarily true of every proposition,
-    since $g_0$ is the only arrow sending $1$ to $0$ and it transports every proposition to
-    $\top$ or $\bot$; but at $g_0$ it fails of the contingent proposition $\{g_1\}$, which the
-    domain there still contains.
-  revisions:
-  - date: '2026-09-25'
-    by: Claude Fable 5.1 (Anthropic)
-    note: Derivation of the BF failure from Atomicity and the direct counterexample added.
-
-- id: strong-worlds-review
-  fails: [strong-leibniz-t, barcan-t]
-  # migration: "Review of 25 September 2026." becomes `date`; the write-up's path becomes "the
-  # write-up" and `writeup`; the closing clause "; BF-t and its boxed form now fail under the
-  # engine's closure as well" is in `notes`. `by` condenses the record's second source.
-  by: DeepSeek (deepseek-flash), trawl; reviewed and corrected by OpenAI Codex (GPT-6)
-  date: '2026-09-25'
-  writeup: strong-worlds-one-object-action-models
-  provenance: trawl-0329824a975f4e67bb50fc3e7a3e20b9
-  text: >-
-    Strong Leibniz-t fails by the nonidentity-idempotent singleton witness in the write-up. The
-    successor quantifier ranges over all propositions at the target object, including ones
-    outside the transported image. Its necessary form therefore also fails. The same write-up
-    gives an explicit finitely pinned BF-t counterexample, also covered by source footnote 92.
-  # migration: a second, independent route to the same two verdicts. Both are kept; the viewer shows both.
-
-# migration: text of the old notes that no argument holds, verbatim: their first two sentences;
-# the sentence that followed the Σ argument (sigma-top), referring to its failures; and the
-# clause that closed the review paragraph (strong-worlds-review).
+# migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
+# the sentence that followed the Σ argument (sigma-top), referring to its failures.
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
   identifies its evaluation point; construction and verification are given at the PDF locations
   in References. Everything that implies these fails with them.
-
-
-  BF-t and its boxed form now fail under the engine's closure as well.
 
 was_conjectured: true
 # The old `changes` log, verbatim and frozen.

@@ -1,7 +1,8 @@
 id: trawl-0329824a975f4e67bb50fc3e7a3e20b9
 record: finite-support-truncations
 # Moved verbatim from certificate.trawl of models/finite-support-truncations.yaml, 1 October 2026.
-# It concerns that record's argument strong-worlds-review, which names this file.
+# It concerned that record's review argument for Strong Leibniz (type t) and BF (type t), dropped on
+# 1 October 2026 once both verdicts were derived.
 trawl:
   quarantine_id: quarantine-0113be29928e4d2fbf33c5d150b87c73
   candidate_id: checkpoint-0cd1f2d674504d27a1758698cd564383
