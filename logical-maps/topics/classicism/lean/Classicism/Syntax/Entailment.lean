@@ -218,6 +218,11 @@ theorem mp₂ {p q r : Sentence Sig} (h : Theorem Ax (Term.imp p (Term.imp q r))
     (hp : Theorem Ax p) (hq : Theorem Ax q) : Theorem Ax r :=
   Derivable.impE (Derivable.impE h hp) hq
 
+/-- A theorem under an equal sentence: where a sentence and the form it is meant as are
+equal but not by computation, as a vectorized sentence and a list form are equal up to
+the translations of closed types (`classicism_vec_eq`). -/
+theorem cast {p q : Sentence Sig} (h : Theorem Ax p) (e : p = q) : Theorem Ax q := e ▸ h
+
 end Theorem
 
 /-! ### Entailment -/

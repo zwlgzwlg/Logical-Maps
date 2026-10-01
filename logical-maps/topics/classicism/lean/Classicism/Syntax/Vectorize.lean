@@ -92,6 +92,13 @@ abbrev Ty.AllClosed (σs : List Ty) : Prop := ∀ σ ∈ σs, σ.Closed
 theorem Ty.allClosed_singleton {σ : Ty} (h : σ.Closed) : Ty.AllClosed [σ] := by
   simpa [Ty.AllClosed] using h
 
+theorem Ty.AllClosed.head {σ : Ty} {σs : List Ty} (h : Ty.AllClosed (σ :: σs)) : σ.Closed :=
+  h σ List.mem_cons_self
+
+theorem Ty.AllClosed.tail {σ : Ty} {σs : List Ty} (h : Ty.AllClosed (σ :: σs)) :
+    Ty.AllClosed σs :=
+  fun x hx => h x (List.mem_cons_of_mem _ hx)
+
 /-- The context a context becomes: each variable's type replaced by its list, as a block. -/
 @[reducible] def Ctx.vec (θ : Assign) : Ctx → Ctx
   | [] => []
@@ -103,10 +110,32 @@ theorem Ty.allClosed_singleton {σ : Ty} (h : σ.Closed) : Ty.AllClosed [σ] := 
 
 /-! ### Variables, and the generic translation of terms -/
 
-/-- A variable becomes the block of variables of its type's list. -/
+/-- The block of variables of a variable's type's list, renamed by `r` after the
+weakenings past the blocks of the variables after it, composed into one renaming. -/
+def Var.vecRen (θ : Assign) :
+    ∀ {Γ Δ : Ctx} {σ : Ty}, Var Γ σ → Ren (Ctx.vec θ Γ) Δ → Terms Sig Δ (σ.vec θ)
+  | σ :: Γ, _, _, .zero, r => (Terms.vars (σ.vec θ) (Ctx.vec θ Γ)).rename r
+  | τ :: _, _, _, .succ v, r => Var.vecRen θ v (Ren.comp r (Ren.wkBlock (τ.vec θ)))
+
+/-- A variable becomes the block of variables of its type's list, weakened past the blocks
+of the variables after it. The weakenings are composed into one renaming before they act
+on the block: where the block's list is not known, renaming it twice does not compute to
+renaming it once by the composite, and two translations that reach the same variable
+across different binders would differ. -/
 def Var.vec (θ : Assign) : ∀ {Γ : Ctx} {σ : Ty}, Var Γ σ → Terms Sig (Ctx.vec θ Γ) (σ.vec θ)
   | σ :: Γ, _, .zero => Terms.vars (σ.vec θ) (Ctx.vec θ Γ)
-  | τ :: _, _, .succ v => (Var.vec θ v).rename (Ren.wkBlock (τ.vec θ))
+  | τ :: _, _, .succ v => Var.vecRen θ v (Ren.wkBlock (τ.vec θ))
+
+theorem Var.vecRen_eq (θ : Assign) : ∀ {Γ Δ : Ctx} {σ : Ty} (v : Var Γ σ)
+    (r : Ren (Ctx.vec θ Γ) Δ), Var.vecRen (Sig := Sig) θ v r = (Var.vec θ v).rename r
+  | _ :: _, _, _, .zero, _ => rfl
+  | τ :: _, _, _, .succ v, r => by
+    show Var.vecRen θ v _ = (Var.vecRen θ v (Ren.wkBlock (τ.vec θ))).rename r
+    rw [Var.vecRen_eq θ v, Var.vecRen_eq θ v, Terms.rename_rename]
+
+theorem Var.vec_succ (θ : Assign) {Γ : Ctx} {σ τ : Ty} (v : Var Γ σ) :
+    Var.vec (Sig := Sig) θ (Var.succ v : Var (τ :: Γ) σ) = (Var.vec θ v).rename (Ren.wkBlock (τ.vec θ)) :=
+  Var.vecRen_eq θ v _
 
 /-- The signature's constants have types the assignment leaves alone (true of every
 signature whose constants have closed types, `Ty.vec_closed`). -/
@@ -187,9 +216,7 @@ theorem Var.vec_subst : ∀ {Γ Δ : Ctx} {σ : Ty} (v : Var Γ σ) (s : Sub Sig
     (Var.vec θ v).subst (Sub.vec θ hc s) = (s σ v).vecG θ hc
   | _ :: _, _, _, .zero, s => Terms.vars_subst_consBlock _ _
   | τ :: _, _, _, .succ v, s => by
-    show ((Var.vec θ v).rename (Ren.wkBlock (τ.vec θ))).subst
-      (Sub.consBlock ((s τ .zero).vecG θ hc) (Sub.vec θ hc s.tail)) = _
-    rw [Terms.subst_rename, Sub.compRen_consBlock_wkBlock]
+    rw [Var.vec_succ, Sub.vec_cons, Terms.subst_rename, Sub.compRen_consBlock_wkBlock]
     exact Var.vec_subst v s.tail
 
 /-- If one substitution's images translate to another's, renamed, so do the vectorized
@@ -210,7 +237,7 @@ theorem Sub.vec_id : ∀ {Γ : Ctx}, Sub.vec θ hc (Sub.id : Sub Sig Γ Γ) = Su
     rw [Sub.vec_cons]
     have e : Sub.vec θ hc (Sub.tail (Sub.id : Sub Sig (σ :: Γ) _))
         = Ren.compSub (Ren.wkBlock (σ.vec θ)) (Sub.vec θ hc (Sub.id : Sub Sig Γ Γ)) :=
-      Sub.vec_of_rename θ hc Sub.id _ _ (fun _ _ => rfl)
+      Sub.vec_of_rename θ hc Sub.id _ _ (fun _ _ => Var.vec_succ θ _)
     rw [e, Sub.vec_id]
     exact Sub.consBlock_vars_wkBlock (σ.vec θ) (Ctx.vec θ Γ)
 
@@ -221,7 +248,7 @@ theorem Sub.vec_lift_ofRen {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ) :
   rw [Sub.vec_cons]
   have e : Sub.vec θ hc (Sub.tail (Sub.ofRen (Sig := Sig) (Ren.lift r (σ := σ))))
       = Ren.compSub (Ren.wkBlock (σ.vec θ)) (Sub.vec θ hc (Sub.ofRen r)) :=
-    Sub.vec_of_rename θ hc _ _ _ (fun _ _ => rfl)
+    Sub.vec_of_rename θ hc _ _ _ (fun _ _ => Var.vec_succ θ _)
   rw [e]
   exact Sub.consBlock_vars_compSub (σ.vec θ) _
 
@@ -280,7 +307,8 @@ theorem Term.vecG_rename {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ) (a : Term Sig �
 theorem Sub.vec_ofRen_shift {Γ : Ctx} {σ : Ty} :
     Sub.vec θ hc (Sub.ofRen (Sig := Sig) (Ren.shift (Γ := Γ) (σ := σ)))
       = Sub.ofRen (Ren.wkBlock (σ.vec θ)) := by
-  rw [Sub.vec_of_rename θ hc (Sub.id : Sub Sig Γ Γ) _ (Ren.wkBlock (σ.vec θ)) (fun _ _ => rfl),
+  rw [Sub.vec_of_rename θ hc (Sub.id : Sub Sig Γ Γ) (Sub.ofRen (Ren.shift (σ := σ)))
+    (Ren.wkBlock (σ.vec θ)) (fun _ v => Var.vec_succ θ v),
     Sub.vec_id]
   rfl
 

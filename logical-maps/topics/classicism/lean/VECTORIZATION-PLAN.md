@@ -26,31 +26,41 @@ of the same day is folded in (D1–D5, D8, §4–§6); the decisions taken are i
 - **Phase 5 done** (1 October). `#classicism_schema` declares the list form of every
   principle with a Ty-parameter, 20 of 20: `listQuoted`, `listSchema`, `listQuoted_single`
   (the uniformity equation), `listSchema ⟹ schema`. The entailment audit declares
-  `foo.listRule` and `foo.listEntails` for 41 of the 43 records with a Ty-parameter, and
+  `foo.listRule` and `foo.listEntails` for the 43 records with a Ty-parameter, and
   `#classicism_certify` declares `foo.listRule` (the Atomicity and BF-over-tuples steps
   have theirs). The audits report the counts. What the implementation settled:
   - The vectorized Ty-parameter is a principle's *first*; a second (Relational Choice's
     output, the only case) is passed through the type variable `var 1` assigned the
     one-element list of its type, so that the assignment mentions Ty-parameters only and
     a principle and a record over the same Ty-parameters vectorize along the same
-    assignment. Rel-parameters are passed as themselves, and their translations, which
-    stand where they cannot reduce (`RTy.vec θ ρ`), are rewritten away by closedness at
-    the level of the statement. This replaces D5's "a principle can name the ones to
-    vectorize": no principle of the map needs more.
+    assignment. Rel-parameters are passed as themselves. This replaces D5's "a principle
+    can name the ones to vectorize": no principle of the map needs more.
+  - Where a closed parameter passes through a vectorization, its translation stands
+    unreduced (`RTy.vec θ ρ`, `Ty.vec θ τ`), with the assignment of that vectorization.
+    A list rule takes every parameter but the list closed, and each instance of the
+    vectorized derivation is shown equal to its form by reducing both to normal form with
+    those translations kept folded and rewriting them away by closedness
+    (`RTy.vec_closed`, `Ty.vec_closed`); the tactic `classicism_vec_eq` does the same in a
+    proof.
   - A record's instance becomes a list form when its first Ty-argument is the record's
     vectorized parameter, else a restricted instance at the translated types (the
     conclusion of `extensionality_r_implies_functionality_r` is Functionality's list form,
-    its premise Extensionality at `σs ⇒* τ`). Each form is checked against the vectorized
-    derivation by unification.
-  - The two records without a list form: Functional Choice into `τ → t` implies Relational
-    Choice into `τ`, and its necessitation, where a relational argument mentions the
-    record's second Ty-parameter, which the two list forms receive differently. For
-    Phase 6, by hand.
+    its premise Extensionality at `σs ⇒* τ`). A list form's other arguments are
+    translated too, so Functional Choice into `τ → t` implies Relational Choice into `τ`
+    in list form, with Functional Choice's list form into `τ ⇒ t`.
   - Not done: a "readable form" of each list instance printed by the audit. The list
     instances are readable by construction (the readable translation), and
     `Certified/Vectorized.lean` checks three of them by `rfl` against the sentences
     written out.
-  Next: Phase 6, restricted ⇔ list.
+- **Phase 6 done** (1 October). `Results/Lists.lean` proves `P.schema ⟹ P.listSchema`
+  for all twenty principles with a list form, so with `P.listSchema ⟹ P.schema` each
+  principle's restricted and list forms are equivalent. Thirteen by induction on the
+  list, from fifteen two-element forms (`P.BarcanCons`, …) and their shallow steps,
+  certified; Plenitude, its boxed form and Actual Profile by coding a tuple as an object
+  (D8's sketches went through as written, Actual Profile by the lattice order, not the
+  box); the four theorems of `C` from their list entailments. Counts unchanged but for
+  the two new list forms of records and the new file's own line.
+  Next: Phase 7, folding in.
 - **What the implementation changed in the design**, all within the plan's intent:
   - Tuples are taken apart by their projections (`Terms.head`, `Terms.tail`) and every
     block operation recurses on the list of types, not on the tuple; so an operation on a
@@ -70,6 +80,12 @@ of the same day is folded in (D1–D5, D8, §4–§6); the decisions taken are i
   - Holes are translated only when relational, which every hole for a formula is.
   - `Derivable.vecG` asks that the axioms vectorize to axioms and the logical part to the
     logical part; `C.Theorem.vec` and `C.TheoremMinus.vec` are the cases used.
+  - A variable's translation is its block weakened past the blocks of the variables after
+    it by *one* renaming, the weakenings composed before they act (`Var.vecRen`). Renamed
+    twice, a block of unknown length does not compute to the block renamed once by the
+    composite, and the list form of ND at `σ :: τ :: τs` and its two-element form at
+    `τ :: τs`, which reach a variable across different binders, did not compute to the
+    same sentence.
   - Not done, and not needed so far: the general statements that a one-element assignment
     is type substitution and that vectorizations compose. The first holds by `rfl` on every
     principle checked; the second has no use yet.

@@ -741,10 +741,11 @@ A record whose statement has a Ty-parameter has a list form too: its derivation,
 in the parameter, holds at the type variable `var 0`, and the vectorization theorem
 (`C.Theorem.vec`) carries it to every list. Each instance comes out either as a list form,
 `P.listQuoted σs …`, when its first Ty-argument is the record's vectorized parameter, or
-as a restricted instance at the translated types (`Atomicity` at `σs ⇒* τ`), the closed
-Rel-parameters' translations rewritten away. So
+as a restricted instance at the translated types (`Atomicity` at `σs ⇒* τ`), the other
+parameters' translations rewritten away by their closedness. So
 
-    foo.listRule : ∀ σs … ρ …, ρ closed → … → C.Theorem (imp (P₁.listQuoted σs …) (… Q…))
+    foo.listRule : ∀ σs τ … ρ …, τ closed → … → ρ closed → … →
+      C.Theorem (imp (P₁.listQuoted σs …) (… Q…))
     foo.listEntails : P₁.listSchema ∪ … ⟹ Q.listSchema
 
 with a restricted instance's schema in place of a list schema where the instance is
@@ -792,13 +793,112 @@ def singleOf (θ : Expr) (ls : Array Expr) (a : Expr) : MetaM (Option Expr) := d
   | (``List.cons, #[_, x, tl]) => pure (if tl.isAppOf ``List.nil then some x else none)
   | _ => pure none
 
+/-! Where a closed parameter passes through a vectorization, its translation stands
+unreduced inside the sentence, `RTy.vec θ ρ` or `Ty.vec θ τ`, with whatever assignment
+`θ` the vectorization had. Two vectorizations of the same sentence along assignments
+that agree on its type variables differ only there. Reduced with those translations kept
+folded, the two sentences are the same function of them, so each translation can be
+rewritten away by the parameter's closedness (`RTy.vec_closed`, `Ty.vec_closed`), and the
+two shown equal. -/
+
+/-- Reduce a term to normal form, keeping folded a translation stuck at a free variable,
+an assignment, and proofs. -/
+partial def reduceToRemnants (e : Expr) : MetaM Expr := do
+  if ← isProof e then return e
+  if e.isAppOf ``Classicism.Meta.Assign.ofList then return e
+  let e' ← whnf e
+  if e'.isAppOfArity ``Classicism.Meta.RTy.vec 2 || e'.isAppOfArity ``Classicism.Meta.Ty.vec 2 then
+    return e'
+  match e' with
+  | .app f a => return mkApp (← reduceToRemnants f) (← reduceToRemnants a)
+  | .lam n t b bi =>
+    withLocalDecl n bi (← reduceToRemnants t) fun x => do
+      mkLambdaFVars #[x] (← reduceToRemnants (b.instantiate1 x))
+  | .forallE n t b bi =>
+    withLocalDecl n bi (← reduceToRemnants t) fun x => do
+      mkForallFVars #[x] (← reduceToRemnants (b.instantiate1 x))
+  | _ => return e'
+
+/-- The translations in `e` of the variables with a closedness proof in `hyps`, each once,
+with what each is and the proof that it is: `RTy.vec θ ρ = ρ`, `Ty.vec θ τ = [τ]`. -/
+def remnantsIn (hyps : Array (Expr × Expr)) (e : Expr) : MetaM (Array (Expr × Expr × Expr)) := do
+  let found ← IO.mkRef (#[] : Array Expr)
+  e.forEach fun sub => do
+    if sub.isAppOfArity ``Classicism.Meta.RTy.vec 2 || sub.isAppOfArity ``Classicism.Meta.Ty.vec 2 then
+      if hyps.any (·.1 == sub.appArg!) then
+        unless (← found.get).contains sub do found.modify (·.push sub)
+  (← found.get).mapM fun sub => do
+    let x := sub.appArg!
+    let θ := sub.appFn!.appArg!
+    let some (_, h) := hyps.find? (·.1 == x) | throwError "remnants: internal"
+    if sub.isAppOf ``Classicism.Meta.RTy.vec then
+      return (sub, x, ← mkAppM ``Classicism.Meta.RTy.vec_closed #[θ, h])
+    else
+      return (sub, ← mkListLit (Lean.mkConst ``Classicism.Meta.Ty) [x],
+        ← mkAppM ``Classicism.Meta.Ty.vec_closed #[θ, h])
+
+/-- `e` with each closed parameter's translation replaced by what it is, and the proof
+that the result is `e`. -/
+def removeRemnants (hyps : Array (Expr × Expr)) (e : Expr) : MetaM (Expr × Expr) := do
+  let r ← reduceToRemnants e
+  let rems ← remnantsIn hyps r
+  if rems.isEmpty then
+    return (r, ← mkExpectedTypeHint (← mkEqRefl e) (← mkEq e r))
+  let tys ← rems.mapM fun (rem, _, _) => inferType rem
+  withLocalDeclsDND (tys.map fun t => (`y, t)) fun ys => do
+    let mut body := r
+    for ((rem, _, _), y) in rems.zip ys do
+      body := (← kabstract body rem).instantiate1 y
+    let H ← mkLambdaFVars ys body
+    let mut pf ← mkEqRefl H
+    for (_, _, h) in rems do
+      pf ← mkCongr pf h
+    let e' := (mkAppN H (rems.map (·.2.1))).headBeta
+    return (e', ← mkExpectedTypeHint pf (← mkEq e e'))
+
+/-- A proof that `A = B`, two vectorized sentences the same up to the translations of
+closed parameters (`hyps`, their closedness). Both are compared in normal form: the
+unifier, comparing them as they stand, can lose itself unfolding the vectorization. -/
+def remnantEq (hyps : Array (Expr × Expr)) (A B : Expr) : MetaM Expr := do
+  let (A', pA) ← removeRemnants hyps A
+  let (B', pB) ← removeRemnants hyps B
+  unless ← isDefEq A' B' do
+    throwError "the sentences{indentExpr A}\nand{indentExpr B}\nare not the same up to closed types"
+  mkEqTrans pA (← mkEqSymm pB)
+
+/-- `classicism_vec_eq` closes a goal `A = B` between two vectorized sentences the same
+up to the translations of closed parameters, using the closedness hypotheses in the
+context. -/
+syntax (name := classicismVecEq) "classicism_vec_eq" : tactic
+
+open Lean.Elab.Tactic in
+@[tactic classicismVecEq] def evalVecEq : Tactic := fun _ => withMainContext do
+  let goal ← getMainGoal
+  let some (_, A, B) := (← instantiateMVars (← goal.getType)).eq?
+    | throwError "classicism_vec_eq: the goal is not an equation"
+  let mut hyps : Array (Expr × Expr) := #[]
+  for d in ← getLCtx do
+    unless d.isImplementationDetail do
+      let t ← whnfR (← instantiateMVars d.type)
+      if t.isAppOfArity ``Classicism.Meta.RTy.Closed 1 || t.isAppOfArity ``Classicism.Meta.Ty.Closed 1 then
+        hyps := hyps.push (t.appArg!, d.toExpr)
+  goal.assign (← remnantEq hyps A B)
+  replaceMainGoal []
+
 /-- Is `a` the type variable `var 0`? -/
 def isTyVar0 (a : Expr) : Bool :=
   a.isAppOfArity ``Classicism.Meta.Ty.var 1 &&
     (a.appArg!.nat? == some 0 || a.appArg!.rawNatLit? == some 0)
 
-/-- Does `a` mention a type variable? -/
-def hasTyVar (a : Expr) : Bool := (a.find? (·.isConstOf ``Classicism.Meta.Ty.var)).isSome
+/-- Does `a` mention the type variable `var 0`? -/
+def hasTyVar0 (a : Expr) : Bool := (a.find? isTyVar0).isSome
+
+/-- A type expression with each translation of a variable, `RTy.vec θ ρ`, replaced by the
+variable: what it is when the variable is closed. -/
+def cleanRemnants (e : Expr) : Expr :=
+  e.replace fun sub =>
+    if sub.isAppOfArity ``Classicism.Meta.RTy.vec 2 && sub.appArg!.isFVar then some sub.appArg!
+    else none
 
 /-- The form the instance `P.quoted as` takes under vectorization along `θ`, and whether
 it is a list form. -/
@@ -818,13 +918,15 @@ def instanceForm (θ : Expr) (ls : Array Expr) (P : Name) (as : Array Expr) : Me
     else if kinds[j]! then
       let some a' ← singleOf θ ls a
         | throwError "list rule: the argument{indentExpr a}\nof {P} does not translate to one type"
-      args := args.push a'
+      args := args.push (cleanRemnants a')
     else if isList then
-      if hasTyVar a then
-        throwError "list rule: the relational argument{indentExpr a}\nof {P}'s list form mentions a type variable"
-      args := args.push a
+      -- the list form's other arguments are not vectorized: the list's own variable has
+      -- no place in them
+      if hasTyVar0 a then
+        throwError "list rule: the relational argument{indentExpr a}\nof {P}'s list form mentions the list's type variable"
+      args := args.push (cleanRemnants (← vecRTyExpr θ ls a))
     else
-      args := args.push (← vecRTyExpr θ ls a)
+      args := args.push (cleanRemnants (← vecRTyExpr θ ls a))
   let f := Lean.mkConst (P ++ if isList then `listQuoted else `quoted)
   return (mkAppN f args, isList)
 
@@ -846,46 +948,51 @@ def declareListRule (foo : Name) : TermElabM (Option ListRuleInfo) := do
     pure ((← whnf (← inferType tv)).isConstOf ``Classicism.Meta.Ty)
   let some i₀ := kinds.findIdx? (fun b => b) | return none
   let binders ← listBinders kinds i₀
-  let rels := (List.range kinds.size).filter (fun j => !kinds[j]!)
+  let others := (List.range kinds.size).filter (· != i₀)
   let axiomsC := mkApp (Lean.mkConst ``Classicism.Meta.C.axioms) (Lean.mkConst ``Classicism.Meta.Signature.pure)
   let nil := mkApp (Lean.mkConst ``List.nil [Level.zero]) Translate.tyE
   let (stmt, proof, forms, qform) ← withLocalDeclsDND binders fun xs => do
-    let hbinders ← rels.toArray.mapM fun j => do
-      pure (Name.mkSimple s!"h{j}", ← mkAppM ``Classicism.Meta.RTy.Closed #[xs[j]!])
+    let hbinders ← others.toArray.mapM fun j => do
+      pure (Name.mkSimple s!"h{j}",
+        ← mkAppM (if kinds[j]! then ``Classicism.Meta.Ty.Closed else ``Classicism.Meta.RTy.Closed) #[xs[j]!])
     withLocalDeclsDND hbinders fun hs => do
       let θ ← listAssign kinds i₀ xs
       let hc := mkApp (Lean.mkConst ``Classicism.Meta.Signature.pure_vecFixed) θ
       let tvs := (List.range kinds.size).toArray.map fun j =>
         if kinds[j]! then mkApp (Lean.mkConst ``Classicism.Meta.Ty.var) (mkNatLit (tyVarIndex kinds j))
         else xs[j]!
-      let (exp, D, pargs, cargs) ← ruleAt foo tvs
+      let (_, D, pargs, cargs) ← ruleAt foo tvs
       let d' ← mkAppM ``Classicism.Meta.C.Theorem.vec #[θ, hc, D]
       let ls ← listEntries kinds i₀ xs
       let mut forms : Array (Expr × Bool) := #[]
       for (p, as) in ps.zip pargs.toList do
         forms := forms.push (← instanceForm θ ls p as)
       let qform ← instanceForm θ ls q cargs
-      let mut S := qform.1
-      for f in forms.reverse do
-        S := Translate.impE nil f.1 S
-      let V ← mkAppM ``Classicism.Meta.Term.vec1 #[θ, hc, exp]
-      unless ← isDefEq V S do
-        throwError "list rule: the vectorized derivation's statement{indentExpr V}\nis not{indentExpr S}"
-      -- the closed Rel-parameters' translations, rewritten away
-      let rems := rels.toArray.map fun j => mkApp2 (Lean.mkConst ``Classicism.Meta.RTy.vec) θ xs[j]!
-      let rtyE := Lean.mkConst ``Classicism.Meta.RTy
-      let (f, eqpf) ← withLocalDeclsDND (rems.map fun _ => (`y, rtyE)) fun ys => do
-        let mut body := S
-        for (r, y) in rems.zip ys do
-          body := (← kabstract body r).instantiate1 y
-        let f ← mkLambdaFVars ys body
-        let mut pf ← mkEqRefl f
-        for h in hs do
-          pf ← mkCongr pf (← mkAppM ``Classicism.Meta.RTy.vec_closed #[θ, h])
-        pure (f, pf)
-      let final := (mkAppN f (rels.toArray.map fun j => xs[j]!)).headBeta
+      -- each instance of the vectorized derivation's statement is its form, up to the
+      -- closed parameters' translations
+      let hyps := (others.toArray.zip hs).map fun (j, h) => (xs[j]!, h)
+      let insts := (ps.zip pargs.toList).map (fun (p, as) => mkAppN (Lean.mkConst (p ++ `quoted)) as)
+        ++ [mkAppN (Lean.mkConst (q ++ `quoted)) cargs]
+      let targets := forms.toList.map (·.1) ++ [qform.1]
+      let mut eqs : Array Expr := #[]
+      for (inst, tgt) in insts.zip targets do
+        let V ← mkAppM ``Classicism.Meta.Term.vec1 #[θ, hc, inst]
+        try
+          eqs := eqs.push (← remnantEq hyps V tgt)
+        catch _ =>
+          throwError "list rule: the vectorized instance{indentExpr inst}\nis not{indentExpr tgt}"
+      -- the statement, by congruence through the implications
+      let sentenceTy := mkApp (Lean.mkConst ``Classicism.Meta.Sentence) (Lean.mkConst ``Classicism.Meta.Signature.pure)
+      let impF ← withLocalDeclD `p sentenceTy fun p =>
+        withLocalDeclD `q sentenceTy fun q' => do mkLambdaFVars #[p, q'] (Translate.impE nil p q')
+      let mut S := targets.getLast!
+      let mut eqS := eqs.back!
+      for (tgt, e) in (targets.dropLast.zip eqs.toList.dropLast).reverse do
+        eqS ← mkCongr (← mkCongrArg impF e) eqS
+        S := Translate.impE nil tgt S
+      let final := S
       let thmOf (x : Expr) : MetaM Expr := mkAppM ``Classicism.Meta.Theorem #[axiomsC, x]
-      let pf ← mkEqMP (← mkCongrArg (← mkAppM ``Classicism.Meta.Theorem #[axiomsC]) eqpf) d'
+      let pf ← mkEqMP (← mkCongrArg (← mkAppM ``Classicism.Meta.Theorem #[axiomsC]) eqS) d'
       let stmt ← mkForallFVars (xs ++ hs) (← thmOf final)
       pure (stmt, ← mkLambdaFVars (xs ++ hs) pf, forms, qform)
   let proof ← instantiateMVars proof
@@ -934,8 +1041,8 @@ def declareListEntails (foo : Name) (info : ListRuleInfo) : TermElabM Unit := do
     withLocalDeclD `ha (← whnfR (mkApp Qs a)) fun ha => do
       let goal ← mkAppM ``Classicism.Meta.Theorem #[target, a]
       let body ← elimSchemaMem ha goal fun ys hyps heq => do
-        let rels := (List.range nParams).filter (fun j => !info.kinds[j]!)
-        let hrel ← rels.toArray.mapM fun j => closedProof hyps ys[j]!
+        let others := (List.range nParams).filter (· != info.i₀)
+        let hrel ← others.toArray.mapM fun j => closedProof hyps ys[j]!
         let rule := mkAppN (Lean.mkConst ruleName) (ys ++ hrel)
         let lift ← withLocalDeclD `b sentenceTy fun b =>
           withLocalDeclD `h (mkApp axiomsC b) fun h => do
