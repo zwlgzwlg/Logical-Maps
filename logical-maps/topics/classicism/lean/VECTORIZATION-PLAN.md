@@ -56,6 +56,7 @@ sometimes "schema" for a *principle*; Phase 1 brings it into line.
 | **assignment** | a map from type variables to lists of types |
 | **vectorization** | the translation of terms, formulas and derivations along an assignment |
 | **block** | the list of variables standing in for one variable whose type is vectorized |
+| **shallow core** | the gated shallow theorem that carries a result's argument, certified by the translator as a rule; the metalogic turns it into the map's arrow, by composing with other entailments or by vectorizing. ("Kernel" is kept for Lean's kernel, the type checker.) |
 
 ## 3. Design decisions
 
@@ -92,14 +93,17 @@ the variable's case is the `e` case.
 **D4. Vectorization acts along an assignment.** Every type goes to a list of types (a
 one-element list except at an assigned variable), every term to a tuple of terms (a single
 term except at an assigned variable, where it is the block). So several Ty-parameters can
-be vectorized at once (Relational Choice's inputs and outputs), the one-element case is
-type substitution, and vectorizations compose. Recommended refinement: define the block
+be vectorized at once (no principle of the map needs it today, Relational Choice being
+vectorized in its inputs only, but it costs nothing), the one-element case is type
+substitution, and vectorizations compose. Recommended refinement: define the block
 operations so that a one-element block *is* the unvectorized operation (`∀` over `[σ]` is
 `all σ`, not `λX. ∀x. X x`), so that type substitution and the restricted instances come
 out on the nose rather than up to η.
 
 **D5. A list form is defined, not written.** `P.X.listQuoted σs … := (P.X.quoted (var 0) …)`
-vectorized along `0 ↦ σs`, one variable per Ty-parameter; it cannot be mis-stated. A
+vectorized along `0 ↦ σs`; it cannot be mis-stated. Every Ty-parameter is vectorized by
+default, and a principle can name the ones to vectorize: Relational Choice names its input
+σ only, its output τ staying a single type (Cian, 1 October). A
 readable form in the block vocabulary is proved equal to it and printed by the audit, and
 `P.X.quoted σ … = P.X.listQuoted [σ] …` holds by computation (the *uniformity* of the
 quoted principle).
@@ -113,7 +117,7 @@ audits count them.
 every arity is proved in the shallow layer at `σ → Prop` (or at `σ → τ`), in the paper's
 own words, and vectorized. No shallow statement mentions a list, and no auxiliary
 principle stands in for a list form. A result whose proof is pointwise at a relational
-type and needs no list-form premise stays a kernel at a Rel-parameter τ, as now: it is
+type and needs no list-form premise keeps its shallow core at a Rel-parameter τ, as now: it is
 already at every arity.
 
 **D8. From the restricted form to the list form.** Per principle:
@@ -123,7 +127,20 @@ already at every arity.
   `σ₁ :: σs` is the vectorization (in `σ₂`) of a shallow proof of the two-element case
   from restricted instances,
   `X σ₂ τ → X σ₁ (σ₂ → τ) → [X over σ₁, σ₂; τ]`;
-- Plenitude: open (the two-element step needs Functionality); recorded, not attempted.
+- by coding a tuple as an object (Cian, 1 October): the tuple `x₁ … xₙ` is coded by
+  `λR. R x₁ … xₙ`, of type `(σs ⇒* t) ⇒ t`, and the code is injective (apply two codes
+  to `λy₁ … yₙ. y₁ = x₁ ∧ … ∧ yₙ = xₙ`). Then a unary shallow theorem relating the
+  principle at the code type to the principle at σ, vectorized in σ, has as premise a
+  restricted instance (at the closed type `(σs ⇒* t) ⇒ t`) and as conclusion the list
+  form, with no induction. For **Plenitude**, where the two-element step would need
+  Functionality: `Plenitude ((σ → Prop) → Prop) τ → Plenitude σ τ`. Given `S` functional
+  in its first argument, `S' c z` holds when `c` is the code of some `x` with `S x z`,
+  or `c` is no code and `z = ⊤_τ` (the default makes `S'` functional at non-codes too;
+  τ is relational, so `⊤_τ` exists); Plenitude at the code type gives an operation `F`,
+  and `λx. F (λR. R x)` represents `S`. For **Actual Profile**:
+  `ActualProfile ((σ → Prop) → Prop) → ActualProfile σ`, transporting `Z` to
+  `λc. ∃y. c = (λR. R y) ∧ Z y` and back under the box by the (necessary) injectivity
+  of the code. Both arguments are sketches, to be checked in Lean.
 
 **D9. The map.** Whether the map gets separate list-form nodes or annotations on the
 principle records, the Lean side is the same.
@@ -139,10 +156,10 @@ principle records, the Lean side is the same.
 | `Syntax/Vectorization.lean` (new) | the theorem `Derivable.vec`, `Theorem.vec`; lifting a rule; the induction principle for list schemas (D8) |
 | `Semantics/*` | a case for type variables (D3) |
 | `Principles.lean` | docstring in the vocabulary of §2; `BarcanArgs`, `NecBarcanArgs` and the "Auxiliary schemas" section gone; `ActualProfile`'s docstring says the map's principle is its list form |
-| `Pointwise.lean` | modal laws used only by the old kernels removed (§7) |
+| `Pointwise.lean` | modal laws used only by the old shallow cores removed (§7) |
 | `Results/Records.lean` | the shallow records, unary as now; `_unary` suffixes gone (their list forms are the map's records); `_at_t` records replaced where a unary proof is supplied |
 | `Results/Lists.lean` (new) | restricted ⇔ list for every principle: the two-element steps, certified; the theorems of `C`; the inductions |
-| `Results/Arity.lean` | the results at every arity: kernels needing a list-form premise restated at `σ → Prop` and vectorized; kernels at τ without one kept; the metalogic reduced to compositions |
+| `Results/Arity.lean` | the results at every arity: shallow cores needing a list-form premise restated at `σ → Prop` and vectorized; shallow cores at τ without one kept; the metalogic reduced to compositions |
 | `Results/Atomicity.lean` | the step `Atomicity τ → BF σ → Atomicity (σ → τ)` kept, vectorized in σ; the induction on the type gone |
 | `Tools/Schema.lean` | closed schemas; list forms in `#classicism_schema`; `listRule`, `listEntails` in `#classicism_certify`; audits report them |
 | `Certified/*.lean` | regenerated |
@@ -215,8 +232,11 @@ certified, 147 of 230 map results proved).
   `Tools/Schema.lean`; the hand-written proofs that unpack schema membership (55 sites,
   mostly `Results/Schemas/Consistency.lean`, `Results/Arity.lean`) take the closedness
   hypothesis along.
-- The terminology sweep of §2, in comments and docs; the README section of §8 for the
-  objects that exist today.
+- The terminology sweep of §2, in comments and docs: "type variable" where a type
+  parameter is meant; "schema" where a principle is meant; "kernel" where a shallow core
+  is meant (`Results/Arity.lean`, `README.md`, `Classicism/README.md`, `MAP-SURVEY.md`,
+  `HANDOFF.md`, `VERIFICATION.md`), "kernel" staying for Lean's kernel. The README section
+  of §8 for the objects that exist today.
 - *Done when* the build is green and every audit count is unchanged.
 
 **Phase 2. Blocks.** `RTy.arrs`; `Terms`; the block operations with D4's one-element
@@ -225,7 +245,7 @@ concrete list of length 0, 1 and 2.
 
 **Phase 3. The translation.** Assignments; translation of types, contexts, variables,
 terms, holes; renaming and substitution laws; conversion preserved; one-element case is
-type substitution; composition. Definitions the kernel will evaluate are written through
+type substitution; composition. Definitions Lean's kernel will evaluate are written through
 `Term.rec`, as `rename` and `subst` are. Tests: Functionality, BF, Relational Choice at
 `[]`, `[e]`, `[e, t]`, checked by `rfl`.
 
@@ -242,10 +262,9 @@ The README table (§8) gets its list rows.
 others the empty case and the two-element step (BF, ND, Tractarianism, Functionality,
 both Choices, their boxed forms, and Existence, whose restricted instances are theorems of
 `C` proved by cases on the type, so that its list form needs the step too); the generic
-induction. Plenitude and Actual Profile recorded as open in the restricted-to-list
-direction.
+induction. Plenitude and Actual Profile by coding a tuple as an object (D8).
 
-**Phase 7. Folding in** (§7): `BarcanArgs` and its inductions removed; the kernels that
+**Phase 7. Folding in** (§7): `BarcanArgs` and its inductions removed; the shallow cores that
 used it restated at `σ → Prop` and vectorized; Atomicity by vectorizing its step; the
 `_unary` and `_at_t` records; `Pointwise` trimmed; the counts in `MAP-SURVEY.md`.
 
@@ -267,7 +286,7 @@ the new shapes.
 From the survey of 1 October. The rule throughout: a result about relations of every
 arity whose proof needs a *list-form premise* (BF over a tuple) or a *tuple as an object*
 (a haecceity) is a unary proof, vectorized; a result whose proof is pointwise reasoning at
-a relational type and needs neither stays a kernel at a Rel-parameter τ, since it is
+a relational type and needs neither keeps its shallow core at a Rel-parameter τ, since it is
 already at every arity. A unary proof often needs no list-form premise at all: in `C5`,
 BF at σ comes from `□ND` at `t` inside the proof
 (`necessary_distinctness_necessary_r_implies_necessary_barcan_r : □ND_t → □BF σ`), and
@@ -290,8 +309,8 @@ them.
   has the unary statement (`c5_and_actuality_imply_rigid_comprehension_unary`,
   `c5_and_atomicity_imply_necessary_rigid_comprehension_unary`, and the unary lemmas
   `inextensible_of_persistent_c5`, `weaklyInextensible_of_persistent_b_bf` there), that is
-  the theorem vectorized and the kernel goes.
-- Kept as kernels at τ (no tuple premise): `actual_iff`, `persistent_coext_of_actual`,
+  the theorem vectorized and the old shallow core goes.
+- Kept as shallow cores at τ (no tuple premise): `actual_iff`, `persistent_coext_of_actual`,
   `actuality_implies_persistent_comprehension_r`,
   `very_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r`,
   `weaklyInextensible_of_all`, `extensionality_r_implies_rigid_comprehension_r`,
@@ -325,16 +344,16 @@ induction `atomicity_of_atomicityT_barcan` goes (it duplicates
 vectorizing a step: the step at one argument, vectorized, *is* the induction.
 
 **`Pointwise.lean`.** Of the nine modal laws added on 28 September, all used only in
-`Results/Arity.lean`, three serve only the kernels being restated (`boxImp_of_top_or`,
+`Results/Arity.lean`, three serve only the shallow cores being restated (`boxImp_of_top_or`,
 `top_boxAt_of_b`, `top_boxAt_of_neg`) and go if nothing else needs them; the other six
-serve kernels that stay.
+serve shallow cores that stay.
 
 **`Results/Records.lean`.**
 - `_unary` records: `c5_and_actuality_imply_rigid_comprehension_unary` and
   `c5_and_atomicity_imply_necessary_rigid_comprehension_unary` lose the suffix, their
   list forms being the map's records; `actuality_implies_actual_profile_r_unary` likewise
   (Phase 9's pilot: Actuality has no type parameter, so its list form is the map's record
-  outright); `actuality_implies_persistent_comprehension_r_unary` goes, the kernel at τ
+  outright); `actuality_implies_persistent_comprehension_r_unary` goes, the shallow core at τ
   being the record at every arity already.
 - `_at_t` records, proved only at `t` where the map's record is at every arity: the
   Boolean Completeness family (`weak_rigid_comprehension_r_implies_boolean_completeness_r_at_t`,
@@ -399,4 +418,4 @@ The README table, in its final form:
    "restricted form"; `Ty.var`; `Syntax/Vectorize.lean` and `Syntax/Vectorization.lean`.
 4. **Record names**: the shallow record theorem keeps the map id and states the unary
    case; its `.listEntails` is the map's arrow. (Today such a theorem carries `_unary`.)
-5. **Relational Choice**: vectorize inputs and outputs (two lists), or inputs only.
+5. ~~Relational Choice: inputs and outputs, or inputs only~~ Decided 1 October: inputs only.
