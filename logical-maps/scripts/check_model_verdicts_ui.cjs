@@ -107,5 +107,70 @@ try{
   assert.equal(explorer.querySelector('.model-flag').textContent,'✓','The explorer still shows the verdict itself');
 
   assert.deepEqual(errors.map(String),[]);
-  console.log('PASS: a model page sorts every principle into satisfied, violated and unsettled, counts each group, leads each row with the principle, keeps the route to the evidence, holds the derived verdicts in a closed disclosure, keeps each row to a single line while the ungrouped explorer list keeps its marks.');
 }finally{w.close();}
+
+// A model written as a definition and arguments, as the build exports it: the
+// flattened lists beside the arguments, and a generated conjectured companion.
+const argCert={...cert,date:'2026-01-01',produced_by:'Author'};
+const args=[{holds:['a'],text:'Why A holds.'},{fails:['b'],text:'First reason B fails.',id:'first'},
+  {fails:['b'],writeup:'b-writeup',by:'Later author',date:'2026-02-01',revisions:[{date:'2026-02-02',note:'Tidied.'}]},
+  {holds:['e'],standing:'conjectured',tier:'bronze',text:'Why E might hold.',companion_id:'n-conj',date:'2026-01-20'}];
+const flat={id:'n',name:'Argument model',status:'proved',satisfies:['a'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
+  definition:'What the model is.',arguments:args,notes:'Miscellany.',history:[{date:'2026-01-15',by:'Old',summary:'An old change.',satisfies:['a']}]};
+const companion={id:'n-conj',name:'Argument model',status:'conjectured',tier:'bronze',satisfies:['a','e'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
+  definition:'What the model is.',arguments:[args[3]],notes:'Why E might hold.',companion_of:'n',model_check:{model:'n',satisfies:['e'],violates:[]}};
+const data2={...data,models:[flat,companion]};
+const errors2=[],vc2=new VirtualConsole();vc2.on('jsdomError',e=>errors2.push(e));
+const dom2=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data2)),
+  {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc2});
+const w2=dom2.window,d2=w2.document;
+try{
+  w2.eval('openPage({type:"model", id:"n"})');
+  const page=d2.getElementById('page');
+  const h2s=[...page.querySelectorAll('h2')].map(h=>h.textContent);
+  assert.ok(h2s.includes('Definition')&&page.textContent.includes('What the model is.'),'The definition comes first');
+  assert.ok(h2s.indexOf('Definition')<h2s.indexOf('Principles'));
+  const row=id=>page.querySelector(`.verdict-table [data-principle="${id}"]`).closest('tr');
+  const routes=id=>[...row(id).querySelectorAll('details.argument')];
+  assert.equal(routes('a').length,1,'A recorded verdict lists its argument');
+  assert.equal(routes('b').length,2,'Two routes to one verdict are both shown');
+  assert.match(routes('b')[1].querySelector('summary').textContent,/write-up · Later author, 2026-02-01/,'Each route says what kind of reason it is, and whose');
+  assert.match(routes('b')[0].textContent,/n#first/,'An argument with an id shows its address');
+  assert.equal(routes('b')[1].querySelector('a').getAttribute('href'),'writeups/b-writeup.html');
+  assert.match(routes('b')[1].textContent,/Revised 2026-02-02: Tidied\./);
+  assert.equal(routes('c').length,0,'A derived verdict has no arguments of its own');
+  assert.ok(row('c').closest('details.derived-verdicts'),'And stays behind the disclosure');
+  assert.equal(routes('e').length,1,'A conjectured verdict is unknown, with its conjectured argument');
+  assert.ok(routes('e')[0].querySelector('.badge.conj'));
+  assert.equal(routes('d').length,0);
+  assert.equal([...page.querySelectorAll('.verdict-table tr')].length,data.principles.length,'Still one row per principle');
+  assert.ok(h2s.includes('Notes')&&h2s.includes('History'));
+  assert.match(page.textContent,/An old change\./);
+
+  w2.eval('openPage({type:"model-verdict", id:"n", principle:"b"})');
+  assert.match(page.textContent,/recorded directly for the model, by the arguments below/);
+  assert.equal(page.querySelectorAll('details.argument').length,2);
+
+  w2.eval('openPage({type:"model", id:"n-conj"})');
+  assert.ok(page.querySelector('.record-summary [data-open-model="n"]'),'A companion names the model it conjectures about');
+  assert.match(page.querySelector('dl').textContent,/conjectured by.*Author, 2026-01-20.*model.*Argument model/,'And who proposed its arguments, not the model\'s certificate');
+  assert.ok(![...page.querySelectorAll('h2')].some(h=>h.textContent==='Notes'),'Its notes are its arguments, shown once');
+  args[3].id='guess';w2.eval(`byMid.get('n-conj').arguments[0].id='guess';openPage({type:"model", id:"n-conj"})`);
+  assert.match(page.textContent,/n#guess/,'Its arguments keep the address they have in the model');
+
+  // The Changes tab keeps the logged history, and an argument added since it is a change of its own.
+  w2.eval('state.search="";renderResults()');
+  const changes=[...d2.querySelectorAll('#results tr')].map(tr=>tr.textContent);
+  assert.ok(changes.some(x=>x.includes('An old change.')),'History entries are changes');
+  assert.ok(changes.some(x=>x.includes('Argument added.')&&x.includes('2026-02-01')),'A later argument is one');
+  assert.ok(changes.some(x=>x.includes('Tidied.')),'And so is its revision');
+  assert.ok(!changes.some(x=>x.includes('Why A holds')),'An argument as old as the record is not');
+  assert.ok(changes.some(x=>x.includes('Conjectured argument added: Why E might hold.')),'A later conjectured argument is a change too');
+  companion.arguments[0].revisions=[{date:'2026-03-01',note:'Conjecture restated.'}];
+  w2.eval(`byMid.get('n-conj').arguments[0].revisions=[{date:'2026-03-01',note:'Conjecture restated.'}];renderResults()`);
+  const rows=[...d2.querySelectorAll('#results tr')];
+  assert.ok(rows.some(tr=>tr.dataset.id==='n-conj'&&tr.textContent.includes('Conjecture restated.')),'A companion\'s changes are its arguments\' revisions');
+  assert.ok(rows.some(tr=>tr.dataset.id==='n-conj'&&tr.textContent.includes('2026-01-20')&&!tr.classList.contains('revision')),'And it is dated by its latest argument, not by the model');
+  assert.deepEqual(errors2.map(String),[]);
+  console.log('PASS: a model page sorts every principle into satisfied, violated and unsettled, counts each group, leads each row with the principle, keeps the route to the evidence, holds the derived verdicts in a closed disclosure, keeps each row to a single line while the ungrouped explorer list keeps its marks; a model written as arguments shows its definition, then each recorded or conjectured verdict with its arguments, derived verdicts without, its history, and its companion.');
+}finally{w2.close();}
