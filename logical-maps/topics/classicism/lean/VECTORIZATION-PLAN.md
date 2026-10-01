@@ -1,8 +1,9 @@
 # Plan: lists of types, and the vectorization theorem
 
-*Drafted 1 October 2026, from the design agreed with Cian on 30 September – 1 October.
-To be carried out phase by phase (§6); each phase ends with a green build and its audit
-counts recorded in `HANDOFF.md`. Decisions still open are collected in §9.*
+*Written 1 October 2026, from the design agreed with Cian on 30 September – 1 October,
+and a survey of the code that day. To be carried out phase by phase (§6); each phase ends
+with a green build and its audit counts recorded in `HANDOFF.md`. Decisions still open
+are collected in §9.*
 
 ## 1. What we are building
 
@@ -22,7 +23,8 @@ Functionality, for instance: the restricted instance at `(σ; τ)` is
 The metalogic gets one general fact, the **vectorization theorem**: if a sentence that
 mentions a type variable α is derivable, so is its translation with α replaced by any list
 of types. The translator's derivations are generic in their type parameters, so every
-certified result with a Ty-parameter yields its list form with no further proof.
+certified result with a Ty-parameter yields its list form with no further proof. (The
+translator itself changes in one line: Phase 1.)
 
 When the plan is done:
 
@@ -66,15 +68,26 @@ variable type are variables, which is what lets a variable be split into a block
 **D2. Schemas range over closed types.** `Ty.closed`/`RTy.closed` say a type has no
 variable, and `#classicism_schema` generates `P.X.schema = {P.X.quoted σ … | σ … closed}`.
 The map's schemas are about the paper's types, and closedness is what keeps a list form's
-other parameters out of the translation's way (§3, D5). Rules and derivations
-(`foo.derivable`, `foo.rule`) keep quantifying over all types: they are uniform, so they
-hold at type variables too, and that is what Phase 4 uses.
+other parameters out of the translation's way (D5): the list form is the translation at
+`var 0`, which must not touch a closed τ. Rules and derivations (`foo.derivable`,
+`foo.rule`) keep quantifying over all types: they are uniform, so they hold at type
+variables too, and that is what Phase 4 uses. Cost: the generator's membership proofs
+(`schemaMemBuild`, now `⟨args, rfl⟩`) supply closedness, and the 55 hand-written proofs
+that unpack membership take the extra hypothesis, mostly to ignore it. The alternative,
+schemas over all types, is harmless (by the vectorization theorem an instance at a type
+variable proves nothing an instance at a closed type does not, and every model reads a
+variable as it reads `e`) and saves those edits, but every list form then needs a
+variable chosen fresh for its other parameters. See §9.
 
-**D3. What a type variable denotes.** Only closed sentences are ever interpreted, but
-Lean's denotation functions are total, so a type variable needs a reading. Recommended:
-the reading of `e`, so that every semantic proof by cases on a type handles a variable as
-it handles `e`. (Alternative: a valuation of type variables in each interpretation, with
-that reading as its default; more principled, more churn. See §9.)
+**D3. What a type variable denotes.** Only closed sentences matter to the models, but
+Lean's denotation functions are total, so a type variable needs a reading, and every
+proof by cases on a type gains a case. In the reading in `Prop`, a variable denotes what
+`e` denotes. In the action models nothing has to be chosen: the outer domain at a type is
+built from the premodel's `inner : Ty → C ⥤ Type`, which already assigns an inner
+domain to every type, so `RawT` at a variable is `(inner (.var i)).obj W`, exactly as at
+`e`; a variable is valued by `inner`. The full and ideally full models build `inner` by
+`Ty.rec`, and there a variable's case is `De`, the domain of `e`. In every proof by cases
+the variable's case is the `e` case.
 
 **D4. Vectorization acts along an assignment.** Every type goes to a list of types (a
 one-element list except at an assigned variable), every term to a tuple of terms (a single
@@ -184,9 +197,20 @@ certified, 147 of 230 map results proved).
 
 **Phase 1. Type variables and closed types (D1–D3), and the vocabulary.**
 - `Ty.var`; `beq` and decidable equality; `Ty.closed`, `RTy.closed` with simp lemmas;
-  `Ty.cases` becomes three-way or takes closedness.
-- Semantics: the variable case in every denotation and every proof by cases on a type
-  (§7 has the list).
+  `Ty.cases` (used nowhere) becomes three-way.
+- Every explicit application of the mutual recursor gains an argument for the new
+  constructor: `RTy.induction` in `Syntax/Types.lean`; the translator's generated
+  induction for class laws (`ensureFieldInduction`, `Tools/Translate.lean`, where
+  `RTy.rec` is applied to one argument per constructor), a trivial case since its motive
+  on `Ty` is `True`; and `RawR`, `ActionFull`, `IntensionalFull`, `IdeallyFull` below.
+  This is the translator's only change.
+- Semantics, the variable case (D3), about 25 sites in 8 files:
+  `Semantics/Denotation.lean` (`Ty.denote`, `Ty.denote_nonempty`);
+  `Semantics/Action.lean` and `Semantics/Intensional.lean` (`RawR`, `RawT` and its `map`,
+  the functoriality lemmas, the default element); `Semantics/ActionFull.lean`,
+  `Semantics/IntensionalFull.lean`, `Semantics/IdeallyFull.lean` (`inner` by `Ty.rec`,
+  pinning); `Semantics/ActionFacts.lean`, `Semantics/IntensionalFacts.lean` (`cases σ`).
+  `Models/` and `Strict/` have none.
 - Schemas over closed types: `schemaOfQuoted` and the entailment generator in
   `Tools/Schema.lean`; the hand-written proofs that unpack schema membership (55 sites,
   mostly `Results/Schemas/Consistency.lean`, `Results/Arity.lean`) take the closedness
@@ -240,7 +264,98 @@ the new shapes.
 
 ## 7. What gets folded in
 
-*(Filled in from the survey of 1 October; see below.)*
+From the survey of 1 October. The rule throughout: a result about relations of every
+arity whose proof needs a *list-form premise* (BF over a tuple) or a *tuple as an object*
+(a haecceity) is a unary proof, vectorized; a result whose proof is pointwise reasoning at
+a relational type and needs neither stays a kernel at a Rel-parameter τ, since it is
+already at every arity. A unary proof often needs no list-form premise at all: in `C5`,
+BF at σ comes from `□ND` at `t` inside the proof
+(`necessary_distinctness_necessary_r_implies_necessary_barcan_r : □ND_t → □BF σ`), and
+`□ND_t` has no type parameter, so vectorizing gives every arity from `□ND_t` directly.
+
+**`Principles.lean`.** `P.BarcanArgs` and `P.NecBarcanArgs` and their section go; their
+role is played by the list forms of BF and `□`BF. `Certified/Schemas.lean` stops quoting
+them.
+
+**`Results/Arity.lean`, shallow part.**
+- Removed, their content being the two-element steps of BF and `□`BF in
+  `Results/Lists.lean`: `barcanArgs_t`, `barcanArgs_step`, `necBarcanArgs_t`,
+  `necBarcanArgs_step`.
+- Restated at `σ → Prop` and vectorized, because they use BF over the tuple:
+  `weaklyInextensible_of_b_barcanArgs`, `inextensible_of_persistent_c5`,
+  `weaklyInextensible_of_neg`, `c5_actuality_rigid_comprehension`,
+  `c5_necessary_actuality_necessary_rigid_comprehension`,
+  `gallin_barcanArgs_weak_rigid_comprehension`, `gallin_necBarcanArgs_rigid_comprehension`,
+  `nec_gallin_necBarcanArgs_nec_rigid_comprehension`. Where `Results/Records.lean` already
+  has the unary statement (`c5_and_actuality_imply_rigid_comprehension_unary`,
+  `c5_and_atomicity_imply_necessary_rigid_comprehension_unary`, and the unary lemmas
+  `inextensible_of_persistent_c5`, `weaklyInextensible_of_persistent_b_bf` there), that is
+  the theorem vectorized and the kernel goes.
+- Kept as kernels at τ (no tuple premise): `actual_iff`, `persistent_coext_of_actual`,
+  `actuality_implies_persistent_comprehension_r`,
+  `very_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r`,
+  `weaklyInextensible_of_all`, `extensionality_r_implies_rigid_comprehension_r`,
+  `persistent_neg_of_c5`, `c5_and_persistent_comprehension_imply_gallin`, `c5_rigid_gallin`,
+  `c5_and_necessary_rigid_comprehension_imply_necessary_gallin_comprehension`,
+  `c5_necessary_atomicity_t`, `fregean_actuality_necessary_actuality`.
+- `necAtomicity_step` (`□`Atomicity at τ, `□`BF at σ, so `□`Atomicity at `σ → τ`): kept,
+  vectorized in σ.
+
+**`Results/Arity.lean`, metalogic part.**
+- Replaced by the general machinery: `barcanArgs_of_barcan` and `necBarcanArgs_of_necBarcan`
+  (by `P.Barcan.schema ⟹ P.Barcan.listSchema` and its boxed form, `Results/Lists.lean`);
+  `necBarcanArgs_of_c5` (by the vectorized `□ND_t → □BF σ`); `atomicity_of_atomicity_at_t_barcan`
+  and `necAtomicity_of_at_t_necBarcan`, inductions on the type (by the vectorized steps).
+- Kept, re-cited: the compositions that are the map's arrows,
+  `actuality_implies_persistent_comprehension_r`, `c5_and_actuality_imply_rigid_comprehension`,
+  `gallin_comprehension_and_bf_imply_weak_rigid_comprehension`,
+  `gallin_comprehension_and_bf_imply_rigid_comprehension`,
+  `c5_and_atomicity_imply_necessary_rigid_comprehension`,
+  `c5_and_necessary_actuality_imply_atomicity`, `c5_and_necessary_completeness_imply_atomicity`,
+  `c5_and_atomicity_imply_necessary_atomicity`, `extensionality_r_implies_atomicity_r`,
+  `necessary_gallin_comprehension_implies_necessary_rigid_comprehension`,
+  `necessary_plenitude_r_implies_atomicity_r`, `necessary_plenitude_r_implies_necessary_atomicity_r`.
+  A conclusion indexed by a relational type is reached from the vectorized one at
+  `σs ⇒* t` by `RTy.ofArgs_args`: every relational type is `(its arguments) ⇒* t`.
+
+**`Results/Atomicity.lean`.** `atomicity_step` (Atomicity at τ, BF at σ, so Atomicity at
+`σ → τ`) stays and is vectorized in σ; at τ = `t` that is the map's arrow, and the
+induction `atomicity_of_atomicityT_barcan` goes (it duplicates
+`atomicity_of_atomicity_at_t_barcan` above). The file stays the worked example, now of
+vectorizing a step: the step at one argument, vectorized, *is* the induction.
+
+**`Pointwise.lean`.** Of the nine modal laws added on 28 September, all used only in
+`Results/Arity.lean`, three serve only the kernels being restated (`boxImp_of_top_or`,
+`top_boxAt_of_b`, `top_boxAt_of_neg`) and go if nothing else needs them; the other six
+serve kernels that stay.
+
+**`Results/Records.lean`.**
+- `_unary` records: `c5_and_actuality_imply_rigid_comprehension_unary` and
+  `c5_and_atomicity_imply_necessary_rigid_comprehension_unary` lose the suffix, their
+  list forms being the map's records; `actuality_implies_actual_profile_r_unary` likewise
+  (Phase 9's pilot: Actuality has no type parameter, so its list form is the map's record
+  outright); `actuality_implies_persistent_comprehension_r_unary` goes, the kernel at τ
+  being the record at every arity already.
+- `_at_t` records, proved only at `t` where the map's record is at every arity: the
+  Boolean Completeness family (`weak_rigid_comprehension_r_implies_boolean_completeness_r_at_t`,
+  `rigid_comprehension_r_implies_boolean_completeness_r_at_t`,
+  `extensionality_r_implies_boolean_completeness_r_at_t`,
+  `necessary_rigid_comprehension_r_implies_necessary_boolean_completeness_r_at_t`,
+  `c5_and_actuality_imply_completeness_at_t`, `c5_and_atomicity_imply_necessary_completeness_at_t`),
+  the Plenitude pair (`c5_and_completeness_imply_plenitude_at_t`,
+  `rigid_comprehension_and_nd_imply_plenitude_at_t`), and the Atomicity pair
+  (`c5_and_necessary_actuality_imply_atomicity_at_t`,
+  `c5_and_necessary_completeness_imply_atomicity_at_t`). Each either gets a unary proof
+  at `σ → t`, whose vectorization at the empty list is the `t` case so that the `_at_t`
+  theorem goes (Phase 9; the Boolean Completeness family needs the pointwise meet at
+  `σ → t`), or stays as the `t`-instance a composition starts from (the Atomicity pair,
+  whose compositions carry them to every arity through the vectorized step).
+- `classicism_implies_existence_r_at_e` and `_relational` stay: the restricted form of
+  Existence is proved by cases on the type; its list form comes from the two-element step
+  (Phase 6).
+
+**Docs.** `VERIFICATION.md` (line 886 cites `barcanArgs_of_barcan`), `HANDOFF.md` §4a
+(closed), `MAP-SURVEY.md` (counts).
 
 ## 8. Documentation
 
@@ -276,9 +391,10 @@ The README table, in its final form:
 
 ## 9. Decisions for Cian
 
-1. **D2**, schemas over closed types. Recommended; the alternative (schemas over all
-   types) needs a fresh-variable condition wherever a list form is defined.
-2. **D3**, a type variable read as `e`, or a valuation with that default.
+1. **D2**, schemas over closed types (recommended), or over all types (fewer edits, a
+   fresh-variable condition wherever a list form is defined).
+2. **D3** as described: in `Prop` a variable reads as `e`; in the action models it is
+   valued by the premodel's `inner`, which already covers every type.
 3. **Names**: `listQuoted`, `listSchema`, `listRule`, `listEntails`, "list form",
    "restricted form"; `Ty.var`; `Syntax/Vectorize.lean` and `Syntax/Vectorization.lean`.
 4. **Record names**: the shallow record theorem keeps the map id and states the unary
