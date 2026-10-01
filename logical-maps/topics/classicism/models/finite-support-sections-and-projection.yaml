@@ -44,7 +44,7 @@ arguments:
 
 - fails: [inextensible-comprehension-r]
   writeup: finite-support-sections-and-projection
-  # migration: "Actuality and □Actuality hold, but" dropped and "inextensible" capitalised.
+  # migration: "Actuality and □Actuality hold, but" dropped.
   text: >-
     Inextensible Comprehension fails at type $e\to t$ for the universal property: an
     inextensible property coextensive with it would have to hold, at the world $f_T$, of exactly
