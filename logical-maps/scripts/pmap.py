@@ -1925,6 +1925,59 @@ def paper_references_md(item: dict, data: dict) -> str:
     return "\n".join(lines)
 
 
+def argument_md(item: dict, data: dict, level: int = 3, link=lambda wid: f"[{wid}]({wid}.html)") -> list[str]:
+    """Markdown for a model in the argument format: its construction's standing, then each argument
+    with the verdicts it settles and its reasons. A companion shows its conjectured arguments."""
+    names = {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
+    papers = {p["id"]: p for p in data.get("papers", [])}
+    out = []
+    construction = item.get("construction") or {}
+    if construction.get("standing") == "conjectured" or construction.get("withdrawn"):
+        state = "withdrawn" if construction.get("withdrawn") else "conjectured" + (f", {construction['tier']}" if construction.get("tier") else "")
+        out += [f"**Construction {state}.** Every verdict below holds only if this is a model.", ""]
+        if (construction.get("text") or "").strip():
+            out += [construction["text"].strip(), ""]
+    for i, a in _arguments(item):
+        by, date = _argument_by_date(a, item)
+        head = []
+        if a.get("holds"):
+            head.append("Holds " + ", ".join(names.get(x, x) for x in a["holds"]) + ".")
+        if a.get("fails"):
+            head.append("Fails " + ", ".join(names.get(x, x) for x in a["fails"]) + ".")
+        if a.get("standing") == "conjectured":
+            head.append("Conjectured" + (f", {a['tier']}" if a.get("tier") else "") + ".")
+        out += ["#" * level + " " + " ".join(head), ""]
+        if a.get("withdrawn"):
+            w = a["withdrawn"]
+            out += [f"*Withdrawn {w.get('date', '')}" + (f" by {w['by']}" if w.get("by") else "") + f": {w.get('reason', '')}*", ""]
+        if (a.get("text") or "").strip():
+            out += [a["text"].strip(), ""]
+        reasons = []
+        if isinstance(a.get("source"), dict):
+            paper = papers.get(a["source"].get("paper"), {})
+            reasons.append("Source: " + paper.get("title", a["source"].get("paper", ""))
+                           + (f", {a['source']['locator']}" if a["source"].get("locator") else "") + ".")
+        if a.get("writeup"):
+            reasons.append(f"Write-up: {link(a['writeup'])}.")
+        if a.get("like"):
+            reasons.append(f"Like `{a['like']}`" + (f": {' '.join(a['adapt'].split())}" if (a.get("adapt") or "").strip()
+                                                     else ", word for word.") )
+        if a.get("provenance"):
+            reasons.append(f"Provenance: `provenance/{a['provenance']}.yaml`.")
+        if a.get("id"):
+            reasons.append(f"Address: `{item.get('companion_of') or item['id']}#{a['id']}`.")
+        reasons.append(f"By {by}, {date}." if by else f"{date}.")
+        out += ["*" + " ".join(reasons) + "*", ""]
+        for r in a.get("revisions") or []:
+            out += [f"*Revised {r.get('date', '')}" + (f" by {r['by']}" if r.get("by") else "") + f":* {' '.join(str(r.get('note', '')).split())}", ""]
+    return out
+
+
+def _companion_by(item: dict) -> str:
+    """Who proposed a generated companion's conjectured arguments, and when."""
+    return "; ".join(dict.fromkeys(", ".join(_argument_by_date(a, item)) for _, a in _arguments(item)))
+
+
 def generate_writeup(item: dict, data: dict) -> str:
     """Markdown write-up generated from the YAML record."""
     names = {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
@@ -1936,6 +1989,8 @@ def generate_writeup(item: dict, data: dict) -> str:
         + (f"; recorded by {c['recorded_by']}" if c.get("recorded_by") else "") \
         + (f"; checked by {', '.join(c['checked_by'])}" if c.get("checked_by") else "")
     conj = item.get("status") == "conjectured"
+    if item.get("companion_of"):  # its certificate is its model's; what it adds is who proposed the conjectured arguments
+        cert = f"Source: {source}; conjectured by {_companion_by(item)}"
     out = []
     if "satisfies" in item:
         title = item["name"]
@@ -1945,6 +2000,14 @@ def generate_writeup(item: dict, data: dict) -> str:
         out += [f"- **¬ {names[x]}.** {stmts[x].strip()}" for x in item["violates"]]
         if item.get("description", "").strip():
             out += ["", "## Construction", "", item["description"].strip()]
+        if item.get("companion_of"):
+            base = next((m for m in data["models"] if m["id"] == item["companion_of"]), {})
+            out += ["", f"The conjectured verdicts of [{base.get('name', item['companion_of'])}]({item['companion_of']}.html): "
+                    "its established verdicts together with those its conjectured arguments propose."]
+        if (item.get("definition") or "").strip():
+            out += ["", "## Definition", "", item["definition"].strip()]
+        if "arguments" in item:
+            out += ["", "## Arguments", ""] + argument_md(item, data)
     else:
         prem = " ∧ ".join(names[x] for x in item["premises"]) or "⊤"
         title = f"{prem} ⇒ {names[item['conclusion']]}"
@@ -1953,10 +2016,12 @@ def generate_writeup(item: dict, data: dict) -> str:
         out += ["", "## Conclusion", "", _stmt_line(item["conclusion"], names, stmts)]
         if item.get("proof", "").strip():
             out += ["", "## Proof", "", item["proof"].strip()]
-    if item.get("notes", "").strip():
+    if item.get("notes", "").strip() and not item.get("companion_of"):  # a companion's notes are its arguments
         out += ["", "## Notes", "", item["notes"].strip()]
     if item.get("changes"):
         out += ["", "## Revisions", ""] + _change_lines(item, names)
+    if item.get("history"):
+        out += ["", "## History", "", "The record's revision log before it was written as arguments.", ""] + _change_lines(item, names, key="history")
     if item.get("sources"):
         labels = item.get("source_names", [])
         out += ["", "## Sources", ""] + [f"- **{labels[i]}** — {x}" if i < len(labels) else f"- {x}" for i, x in enumerate(item["sources"])]
@@ -2007,7 +2072,11 @@ def render_writeups(topic_id: str, data: dict, outdir: Path) -> dict:
     wdir.mkdir(parents=True, exist_ok=True)
     src = TOPICS / topic_id / "writeups"
     files = {}
-    for item in data["results"] + data["models"]:
+    # A write-up an argument names need not belong to a record of its own; it is published too.
+    named = {a["writeup"]: {"id": a["writeup"]} for s in data.get("model_sources", []) for _, a in _arguments(s)
+             if isinstance(a, dict) and a.get("writeup")}
+    records = {x["id"] for x in data["results"] + data["models"]}
+    for item in data["results"] + data["models"] + [x for i, x in named.items() if i not in records]:
         iid = item["id"]
         hand = src / f"{iid}.md"
         md = hand.read_text(encoding="utf-8") if hand.exists() else generate_writeup(item, data)
@@ -2384,10 +2453,10 @@ def _demote(md: str, levels: int) -> str:
     return "\n".join(out)
 
 
-def _change_lines(item: dict, names: dict, indent: str = "") -> list[str]:
+def _change_lines(item: dict, names: dict, indent: str = "", key: str = "changes") -> list[str]:
     """Markdown bullet per logged revision, newest first."""
     out = []
-    for ch in sorted(item.get("changes") or [], key=lambda c: str(c.get("date", "")), reverse=True):
+    for ch in sorted(item.get(key) or [], key=lambda c: str(c.get("date", "")), reverse=True):
         bits = [" ".join(str(ch.get("summary", "")).split())]
         if ch.get("satisfies"):
             bits.append("Now satisfies: " + ", ".join(names.get(x, x) for x in ch["satisfies"]) + ".")
@@ -2555,19 +2624,30 @@ def bundle_map_md(topic_id: str, data: dict, an: dict) -> str:
           "to what it violates. Independence is never recorded directly; the model is the record.", ""]
     for m in data["models"]:
         o += [f"### {m['name']} — `{m['id']}`", ""]
-        o += [("Conjectured model" if m["status"] != "proved" else "Model") + "; " + _cert_line(m, catalog), ""]
+        if m.get("companion_of"):
+            o += [f"Conjectured verdicts of `{m['companion_of']}`; conjectured by {_companion_by(m)}.", ""]
+        else:
+            o += [("Conjectured model" if m["status"] != "proved" else "Model") + "; " + _cert_line(m, catalog), ""]
         o += ["Satisfies:", ""] + [f"- {label(x)}" for x in m["satisfies"]] + [""]
         o += ["Violates:", ""] + [f"- {label(x)}" for x in m["violates"]] + [""]
         unk = an["unknown"].get(m["id"], [])
         o += ["Unknown in this model: " + (", ".join(label(x) for x in unk) if unk else "nothing; every principle is settled.") , ""]
         if (m.get("description") or "").strip():
             o += ["Construction.", "", m["description"].strip(), ""]
+        if m.get("companion_of"):
+            o += [f"Generated from the conjectured arguments of `{m['companion_of']}`: its established verdicts and the conjectured ones.", ""]
+        if (m.get("definition") or "").strip():
+            o += ["Definition.", "", m["definition"].strip(), ""]
+        if "arguments" in m:
+            o += ["Arguments:", ""] + argument_md(m, data, 4, link=lambda wid: f"`writeups/{wid}.md`")
         if m.get("checks"):
             o += ["Executable checks: " + ", ".join(f"`{c}`" for c in m["checks"]) + ".", ""]
-        if (m.get("notes") or "").strip():
+        if (m.get("notes") or "").strip() and not m.get("companion_of"):
             o += [f"Notes. {m['notes'].strip()}", ""]
         if m.get("changes"):
             o += ["Revisions:", ""] + _change_lines(m, names) + [""]
+        if m.get("history"):
+            o += ["History, before the record was written as arguments:", ""] + _change_lines(m, names, key="history") + [""]
         o += ["Sources:", ""] + _source_lines(m) + [""]
         o += [paper_references_md(m, data), ""]
         o += [f"Record: `{m['_file']}`.", ""]
