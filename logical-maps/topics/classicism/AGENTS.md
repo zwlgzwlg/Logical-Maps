@@ -30,8 +30,10 @@ Read a matching `writeups/<id>.md` when it exists.
   Full Henkin and full action constructions are in `models/full-*.yaml`;
   choice failure also has `models/henkin-without-relational-choice.yaml`.
 - Dorr's BC versus RC examples are in `models/symmetric-*.yaml`. Read the
-  individual record's construction, evaluation point, and `changes`; do not
-  transfer one variant's flags to another.
+  individual record's `definition` (construction and evaluation point), its
+  `arguments` and its `history`; do not transfer one variant's flags to another.
+- A model record lists only the verdicts the engine cannot derive; `status
+  --model <id>` or the viewer shows the rest.
 - Coalesced sums use `models/coalesced-*.yaml`. The glued free-monoid models
   use `models/full-free-monoid-glued-constants*.yaml` and matching write-ups.
   For signature claims, check the specified interpretation of constants and

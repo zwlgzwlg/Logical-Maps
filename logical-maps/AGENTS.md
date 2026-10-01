@@ -36,8 +36,9 @@ to formalize it; finish the mathematical question the user asked.
    `background_presets`; a viewer default is not an assumption in every question.
    Preserve restrictions on types, quantifiers, integrability, and signatures.
 3. **Read the local evidence.** Find results and models mentioning the relevant
-   IDs. Read `premises`/`conclusion`, `proof` or `description`, `notes`, `status`,
-   certificates, and relevant `changes`. Open `writeups/<id>.md` if present: it
+   IDs. Read `premises`/`conclusion`, `proof` or `description` (for a model
+   written as arguments, its `definition` and `arguments`), `notes`, `status`,
+   certificates, and relevant `changes` (a model's frozen `history`). Open `writeups/<id>.md` if present: it
    can contain the full argument even when the YAML is brief. Follow
    `references` and `sources` into `papers.yaml` for exact attribution/locators;
    consult `extraction.md` when coverage or a transcription choice matters.
