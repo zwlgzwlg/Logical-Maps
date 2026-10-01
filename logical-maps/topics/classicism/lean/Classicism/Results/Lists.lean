@@ -562,6 +562,15 @@ theorem schema_subset_args (q : RTy → Sentence Signature.pure) :
   fun _ ⟨ρ, hρ, h⟩ =>
     ⟨ρ.args, RTy.closed_args hρ, h.trans (congrArg q (RTy.ofArgs_args ρ).symm)⟩
 
+/-- The same for a schema over a type and a relational type, the relational type last, as
+Plenitude's output is: a unary result at output `σ' → t`, vectorized in `σ'`, is the
+result at every output type. -/
+theorem schema_subset_args₂ (q : Ty → RTy → Sentence Signature.pure) :
+    (fun a => ∃ σ : Ty, ∃ ρ : RTy, σ.Closed ∧ ρ.Closed ∧ a = q σ ρ) ⊆
+      (fun a => ∃ σs : List Ty, ∃ σ : Ty, Ty.AllClosed σs ∧ σ.Closed ∧ a = q σ (σs ⇒* .t)) :=
+  fun _ ⟨σ, ρ, hσ, hρ, h⟩ =>
+    ⟨ρ.args, σ, RTy.closed_args hρ, hσ, h.trans (congrArg (q σ) (RTy.ofArgs_args ρ).symm)⟩
+
 end Meta
 
 end Classicism

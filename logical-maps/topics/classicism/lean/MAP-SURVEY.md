@@ -14,16 +14,16 @@ The record `atomicity-t-and-bf-imply-atomicity`, the model for the sweet spot, i
 
 ## Lean coverage (1 October)
 
-A record theorem in `Results/Records.lean` named exactly by a map id proves the map's claim, and its certificate is the entailment between the map's schemas. One named by a map id plus `_at_t` proves only the instances at type `t` (or with output `t`); its certificate is from the map's premise schemas to those instances. A record with a Ty-parameter is proved at every list of types too, by its list form (`foo.listEntails`, the vectorized derivation); where the map's principle is over argument tuples, as Actual Profile is, or the record is proved at `σ → t` for a principle over relational types, that list form is the map's claim (`Results/Lists.lean`, `Results/Arity.lean`). `classicism_implies_existence_r_at_e` and `_relational` together cover their record. Results proved by the metalogical theorems of `Results/Schemas/` are counted as proved too: those whose docstrings name the record, and the twenty "No Pure Contingency and X imply □X" results, all instances of `npc_union_entails_box`.
+A record theorem in `Results/Records.lean` named exactly by a map id proves the map's claim, and its certificate is the entailment between the map's schemas. One named by a map id plus `_at_t` proves only the instances at type `t` (or with output `t`); its certificate is from the map's premise schemas to those instances. Where a full version exists too, the `_at_t` one is the instance at `t` that other proofs at `t` cite. A record with a Ty-parameter is proved at every list of types too, by its list form (`foo.listEntails`, the vectorized derivation); where the map's principle is over argument tuples, as Actual Profile is, or the record is proved at `σ → t` for a principle over relational types, that list form is the map's claim (`Results/Lists.lean`, `Results/Arity.lean`). `classicism_implies_existence_r_at_e` and `_relational` together cover their record. Results proved by the metalogical theorems of `Results/Schemas/` are counted as proved too: those whose docstrings name the record, and the twenty "No Pure Contingency and X imply □X" results, all instances of `npc_union_entails_box`.
 
 | class | results | proved in Lean | in part only | not yet |
 | --- | --- | --- | --- | --- |
-| Per-type routine | 112 | 96 | 1 | 15 |
+| Per-type routine | 112 | 98 | 0 | 14 |
 | Per-instance routine over sentences | 48 | 27 | 0 | 21 |
-| Sweet spot | 40 | 16 | 7 | 17 |
+| Sweet spot | 40 | 26 | 0 | 14 |
 | Metalogic-dominated | 26 | 9 | 0 | 17 |
 | Conjectured | 4 | 0 | 0 | 4 |
-| total | 230 | 148 | 8 | 74 |
+| total | 230 | 160 | 0 | 70 |
 
 ## Sweet spot (40)
 
@@ -31,27 +31,27 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `atomlessness-implies-infinity-t`
 - `axiom-of-infinity-e-implies-infinity-e`
 - `axiom-of-infinity-t-implies-infinity-t`
-- `c5-and-actuality-imply-completeness` — Lean: in part
+- `c5-and-actuality-imply-completeness` — **Lean: at every arity, `Results/Arity.lean`**
 - `c5-and-actuality-imply-rigid-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `c5-and-atomicity-imply-necessary-atomicity` — **Lean: at every arity, `Results/Arity.lean`**
-- `c5-and-atomicity-imply-necessary-completeness` — Lean: in part
-- `c5-and-atomicity-imply-necessary-plenitude`
+- `c5-and-atomicity-imply-necessary-completeness` — **Lean: at every arity, `Results/Arity.lean`**
+- `c5-and-atomicity-imply-necessary-plenitude` — **Lean: at every arity, `Results/Arity.lean`**
 - `c5-and-atomicity-imply-necessary-rigid-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
-- `c5-and-completeness-imply-plenitude` — Lean: in part
+- `c5-and-completeness-imply-plenitude` — **Lean: at every arity, `Results/Arity.lean`**
 - `c5-and-necessary-actuality-imply-atomicity` — **Lean: at every arity, `Results/Arity.lean`**
 - `c5-and-necessary-completeness-imply-atomicity` — **Lean: at every arity, `Results/Arity.lean`**
-- `completeness-and-actuality-imply-weak-rigid-comprehension`
+- `completeness-and-actuality-imply-weak-rigid-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `countable-boolean-completeness-implies-necessity-of-arithmetic`
 - `distinctness-schema-r-implies-possibility-schema-r` — **Lean: metalogical theorem in `Results/Schemas/`**
 - `distinctness-signature-r-implies-possibility-signature-r` — **Lean: metalogical theorem in `Results/Schemas/`**
 - `distinctness-signature-r-implies-separated-structure-r`
 - `extensionality-r-implies-atomicity-r` — **Lean: at every arity, `Results/Arity.lean`**
-- `extensionality-r-implies-boolean-completeness-r` — Lean: in part
-- `extensionality-r-implies-plenitude-r`
+- `extensionality-r-implies-boolean-completeness-r` — **Lean: at every arity, `Results/Arity.lean`**
+- `extensionality-r-implies-plenitude-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `gallin-comprehension-and-bf-imply-rigid-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `gallin-comprehension-and-bf-imply-weak-rigid-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `logical-necessity-r-implies-separated-structure-r`
-- `necessary-atomicity-completeness-bf-imply-rigid-comprehension`
+- `necessary-atomicity-completeness-bf-imply-rigid-comprehension` — refuted by a countermodel (Cian, 1 October); the proof in n. 42 has two gaps (`HANDOFF.md`, §4)
 - `necessary-gallin-comprehension-implies-necessary-rigid-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `necessary-plenitude-r-implies-atomicity-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `necessary-plenitude-r-implies-necessary-atomicity-r` — **Lean: at every arity, `Results/Arity.lean`**
@@ -59,14 +59,14 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `possibility-signature-r-implies-distinctness-signature-r` — **Lean: metalogical theorem in `Results/Schemas/`**
 - `possibly-witnessed-possibility-r-implies-separated-structure-r`
 - `pure-distinctness-and-separated-structure-imply-signature-distinctness`
-- `rigid-comprehension-and-nd-imply-plenitude` — Lean: in part
-- `rigid-comprehension-r-implies-boolean-completeness-r` — Lean: in part
+- `rigid-comprehension-and-nd-imply-plenitude` — **Lean: at every arity, `Results/Arity.lean`**
+- `rigid-comprehension-r-implies-boolean-completeness-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `separated-structure-r-implies-general-separated-structure-r`
 - `separated-structure-r-implies-independence-signature-r`
 - `separated-structure-r-implies-possibly-witnessed-possibility-r`
 - `strong-possibility-r-implies-possibility-schema-r`
 - `strong-possibility-signature-r-implies-possibility-signature-r`
-- `weak-rigid-comprehension-r-implies-boolean-completeness-r` — Lean: in part
+- `weak-rigid-comprehension-r-implies-boolean-completeness-r` — **Lean: at every arity, `Results/Arity.lean`**
 
 ## Metalogic-dominated (26)
 
@@ -150,7 +150,7 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 
 ## Per-type routine (112)
 
-- `actual-profile-r-implies-actuality`
+- `actual-profile-r-implies-actuality` — **Lean: full, `Results/Arity.lean`**
 - `actuality-implies-inextensible-comprehension-r`
 - `actuality-implies-persistent-comprehension-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `actuality-incompatible-with-atomlessness` — **Lean: full**
@@ -236,7 +236,7 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `necessary-relational-choice-and-necessary-plenitude-imply-necessary-functional-choice` — **Lean: full**
 - `necessary-relational-choice-r-implies-relational-choice-r` — **Lean: full**
 - `necessary-rigid-comprehension-r-implies-necessary-actuality` — **Lean: full**
-- `necessary-rigid-comprehension-r-implies-necessary-boolean-completeness-r` — Lean: in part
+- `necessary-rigid-comprehension-r-implies-necessary-boolean-completeness-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `necessary-rigid-comprehension-r-implies-rigid-comprehension-r` — **Lean: full**
 - `necessary-strong-leibniz-and-rigid-comprehension-imply-necessary-bf-t`
 - `necessary-strong-leibniz-implies-necessary-atomicity`

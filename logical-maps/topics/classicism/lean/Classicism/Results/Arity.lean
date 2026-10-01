@@ -160,6 +160,14 @@ theorem nec_gallin_c5_nec_rigid_comprehension :
 
 end unary
 
+/-- In `C5`, `□`Boolean Completeness gives `□`Plenitude, for relations `σ → (σ' → t) → t`:
+Proposition 2.14 necessitated, `□ND` boxed by `4`. -/
+theorem necessary_completeness_c5_necessary_plenitude {σ' σ : Type} [Ty σ'] [Ty σ] :
+    P.NecBooleanCompleteness (σ → σ' → Prop) → P.NecNecessityOfDistinctness Prop →
+      P.NecPlenitude σ (σ' → Prop) := fun hbc hnd =>
+  modal_K _ _ (modal_K _ _ (nec% (Proofs.c5_and_completeness_imply_plenitude (σ' := σ') (σ := σ)))
+    hbc) (modal_four _ hnd)
+
 section atomicity
 variable {σ τ : Type} [Ty σ] [Rel τ] [Order τ] [Pointwise τ]
 
@@ -191,6 +199,7 @@ theorem fregean_actuality_necessary_actuality : P.FregeanAxiom → P.Actuality �
   Classicism.extensionality_r_implies_rigid_comprehension_r
   Classicism.c5_and_persistent_comprehension_imply_gallin
   Classicism.c5_and_necessary_rigid_comprehension_imply_necessary_gallin_comprehension
+  Classicism.necessary_completeness_c5_necessary_plenitude
 
 #classicism_entails Classicism.actuality_implies_persistent_comprehension_r
   Classicism.gallin_bf_weak_rigid_comprehension Classicism.gallin_c5_rigid_comprehension
@@ -200,6 +209,7 @@ theorem fregean_actuality_necessary_actuality : P.FregeanAxiom → P.Actuality �
   Classicism.extensionality_r_implies_rigid_comprehension_r
   Classicism.c5_and_persistent_comprehension_imply_gallin
   Classicism.c5_and_necessary_rigid_comprehension_imply_necessary_gallin_comprehension
+  Classicism.necessary_completeness_c5_necessary_plenitude
 
 /-! ## 3. The metalogic -/
 
@@ -344,6 +354,102 @@ theorem necessary_plenitude_r_implies_necessary_atomicity_r :
     (Entails.union Proofs.necessary_plenitude_r_implies_necessary_distinctness_necessary_r.entails
       necessary_plenitude_r_implies_atomicity_r)
     c5_and_atomicity_imply_necessary_atomicity
+
+/-! ### Boolean Completeness, Plenitude and the haecceities
+
+The records at `σ → t` in `Results/Records.lean` whose greatest lower bounds are pointwise
+meets `λz. ∀Y. X*Y → Yz`, or whose witnesses are haecceities `λx. u = x`, vectorized; and
+the Plenitude records for output `σ' → t`, vectorized in `σ'`, every output type being
+`σs ⇒* t`. -/
+
+/-- `weak-rigid-comprehension-r-implies-boolean-completeness-r`, at every arity. -/
+theorem weak_rigid_comprehension_r_implies_boolean_completeness_r :
+    P.WeakRigidComprehension.schema ⟹ P.BooleanCompleteness.schema :=
+  Entails.mono_right (schema_subset_args _)
+    Proofs.weak_rigid_comprehension_r_implies_boolean_completeness_r.listEntails
+
+/-- `rigid-comprehension-r-implies-boolean-completeness-r` (Proposition 2.8), at every
+arity. -/
+theorem rigid_comprehension_r_implies_boolean_completeness_r :
+    P.RigidComprehension.schema ⟹ P.BooleanCompleteness.schema :=
+  Entails.mono_right (schema_subset_args _)
+    Proofs.rigid_comprehension_r_implies_boolean_completeness_r.listEntails
+
+/-- `extensionality-r-implies-boolean-completeness-r`, at every arity. -/
+theorem extensionality_r_implies_boolean_completeness_r :
+    P.Extensionality.schema ⟹ P.BooleanCompleteness.schema :=
+  Entails.mono_right (schema_subset_args _)
+    Proofs.extensionality_r_implies_boolean_completeness_r.listEntails
+
+/-- `necessary-rigid-comprehension-r-implies-necessary-boolean-completeness-r`, at every
+arity. -/
+theorem necessary_rigid_comprehension_r_implies_necessary_boolean_completeness_r :
+    P.NecRigidComprehension.schema ⟹ P.NecBooleanCompleteness.schema :=
+  Entails.mono_right (schema_subset_args _)
+    Proofs.necessary_rigid_comprehension_r_implies_necessary_boolean_completeness_r.listEntails
+
+/-- `c5-and-actuality-imply-completeness` (Proposition 2.5, right to left), at every arity:
+Rigid Comprehension (Proposition 2.10), then Proposition 2.8. -/
+theorem c5_and_actuality_imply_completeness :
+    P.NecNecessityOfDistinctness.schema ∪ P.Actuality.schema ⟹ P.BooleanCompleteness.schema :=
+  Entails.trans c5_and_actuality_imply_rigid_comprehension
+    rigid_comprehension_r_implies_boolean_completeness_r
+
+/-- `c5-and-atomicity-imply-necessary-completeness` (Proposition 2.6), at every arity:
+`□`Rigid Comprehension, then Proposition 2.8 boxed. -/
+theorem c5_and_atomicity_imply_necessary_completeness :
+    P.NecNecessityOfDistinctness.schema ∪ P.Atomicity.schema ⟹
+      P.NecBooleanCompleteness.schema :=
+  Entails.trans c5_and_atomicity_imply_necessary_rigid_comprehension
+    necessary_rigid_comprehension_r_implies_necessary_boolean_completeness_r
+
+/-- `completeness-and-actuality-imply-weak-rigid-comprehension`, at every arity: the least
+upper bound of the haecceities. -/
+theorem completeness_and_actuality_imply_weak_rigid_comprehension :
+    P.BooleanCompleteness.schema ∪ P.Actuality.schema ⟹ P.WeakRigidComprehension.schema :=
+  Entails.mono_right (schema_subset_args _)
+    Proofs.completeness_and_actuality_imply_weak_rigid_comprehension.listEntails
+
+/-- `c5-and-completeness-imply-plenitude` (Proposition 2.14), at every output type. -/
+theorem c5_and_completeness_imply_plenitude :
+    P.NecNecessityOfDistinctness.schema ∪ P.BooleanCompleteness.schema ⟹ P.Plenitude.schema :=
+  Entails.mono_right (schema_subset_args₂ _)
+    (Entails.trans (Entails.union (Entails.union_right _ _) (Entails.union_left _ _))
+      Proofs.c5_and_completeness_imply_plenitude.listEntails)
+
+/-- `rigid-comprehension-and-nd-imply-plenitude` (Proposition 2.16), at every output
+type. -/
+theorem rigid_comprehension_and_nd_imply_plenitude :
+    P.RigidComprehension.schema ∪ P.NecessityOfDistinctness.schema ⟹ P.Plenitude.schema :=
+  Entails.mono_right (schema_subset_args₂ _)
+    Proofs.rigid_comprehension_and_nd_imply_plenitude.listEntails
+
+/-- `extensionality-r-implies-plenitude-r`, at every output type: Extensionality gives the
+Fregean Axiom, hence `□ND`, and Boolean Completeness, and Proposition 2.14. -/
+theorem extensionality_r_implies_plenitude_r :
+    P.Extensionality.schema ⟹ P.Plenitude.schema :=
+  Entails.trans
+    (Entails.union
+      (Entails.trans Proofs.extensionality_r_implies_fregean_axiom.entails
+        Proofs.fregean_axiom_implies_necessary_distinctness_necessary_r.entails)
+      extensionality_r_implies_boolean_completeness_r)
+    c5_and_completeness_imply_plenitude
+
+/-- `c5-and-atomicity-imply-necessary-plenitude`, at every output type: `□`Boolean
+Completeness (Proposition 2.6) and Proposition 2.14 boxed. -/
+theorem c5_and_atomicity_imply_necessary_plenitude :
+    P.NecNecessityOfDistinctness.schema ∪ P.Atomicity.schema ⟹ P.NecPlenitude.schema :=
+  Entails.mono_right (schema_subset_args₂ _)
+    (Entails.trans
+      (Entails.union c5_and_atomicity_imply_necessary_completeness (Entails.union_left _ _))
+      necessary_completeness_c5_necessary_plenitude.listEntails)
+
+/-- `actual-profile-r-implies-actuality`: Actual Profile over the empty list of argument
+types is Actuality, on the nose. -/
+theorem actual_profile_r_implies_actuality :
+    P.ActualProfile.listSchema ⟹ P.Actuality.schema := by
+  rintro a rfl
+  exact Theorem.ax ⟨[], by simp [Ty.AllClosed], rfl⟩
 
 end Meta
 

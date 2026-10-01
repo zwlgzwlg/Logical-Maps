@@ -975,6 +975,19 @@ The full build passes. The record audits report 199 of 199 theorems derived, 110
 records certified as entailments, and 42 of 42 records with a Ty-parameter certified in
 list form.
 
+*Phase 9, the same day.* Twelve map results at every arity in `Results/Arity.lean`, each
+a composition of kernel-checked list entailments resting on `propext` and `Quot.sound`
+only. They come from unary records at `σ → t` (or output `σ' → t`) in
+`Results/Records.lean`, and cover Boolean Completeness, Plenitude, Boolean Completeness
+with Actuality to Weak Rigid Comprehension, and Actual Profile to Actuality. The record
+audits then report:
+- 216 of 216 theorems derived and passing the gate and type checks;
+- 113 of 113 records certified as entailments;
+- 48 of 48 records with a Ty-parameter certified in list form;
+- 215 of 216 transformed by the strict transformer, the same one exception as before.
+
+Proposition 2.11 is not proved: Cian reports a countermodel.
+
 *Choices.*
 - A type variable is never relational. So the class laws the translator derives by
   recursion on a Rel-parameter's type are never needed at a variable.

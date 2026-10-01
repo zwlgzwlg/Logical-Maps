@@ -91,6 +91,25 @@ of the same day is folded in (D1–D5, D8, §4–§6); the decisions taken are i
   - `MAP-SURVEY.md`: the counts after Phase 7.
 
   Next: Phase 9. Its pilot, Actual Profile, is done.
+- **Phase 9 done** (1 October), but for Proposition 2.11, which Cian reports refuted by a
+  countermodel. Twelve map results, each now a theorem at every arity in
+  `Results/Arity.lean`:
+  - **Boolean Completeness.** The records with Boolean Completeness as conclusion are
+    proved at `σ → t` (in `Results/Records.lean`), where the greatest lower bound is the
+    pointwise meet `λz. ∀Y. X*Y → Yz`, and vectorized:
+    - Weak Rigid, Rigid and `□`Rigid Comprehension, and Extensionality, imply Boolean
+      Completeness;
+    - through them, `C5` with Actuality, or with Atomicity, does.
+  - **Plenitude.** Propositions 2.14 and 2.16 are proved for output `σ' → t`, vectorized
+    in `σ'`, every output type being `σs ⇒* t` (`schema_subset_args₂`). Through them,
+    Extensionality and `C5` with Atomicity give Plenitude and `□`Plenitude.
+  - **The haecceities.** Boolean Completeness and Actuality imply Weak Rigid
+    Comprehension, by the least upper bound of the haecceities of the `X`s at `σ → t`.
+    Actual Profile over the empty list is Actuality, by `rfl`.
+  - **Records at `t`.** The `_at_t` records that the new ones supersede and nothing
+    cites are gone; those cited by proofs at `t` stay.
+
+  `MAP-SURVEY.md`: 160 of 230 map results proved in Lean, none in part.
 - **What the implementation changed in the design**, all within the plan's intent:
   - Tuples are taken apart by their projections (`Terms.head`, `Terms.tail`) and every
     block operation recurses on the list of types, not on the tuple; so an operation on a

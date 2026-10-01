@@ -386,20 +386,44 @@ theorem rigid_comprehension_r_implies_boolean_completeness_r_at_t :
   weak_rigid_comprehension_r_implies_boolean_completeness_r_at_t
     (rigid_comprehension_r_implies_weak_rigid_comprehension_r rc)
 
-/-- Under the Fregean Axiom, `V ≤ p` is `V → p`. -/
-theorem le_iff_imp_of_fregean (fa : FregeanAxiom) (V p : Prop) : V ≤ p ↔ (V → p) :=
-  ⟨imp_of_le_prop V p, fun h => fa p (V ∨ p) ⟨fun hp => Or.inr hp, fun hvp => hvp.elim h id⟩⟩
+/-! At `σ → t` the greatest lower bound of a property `X` of properties is the pointwise
+meet `λz. ∀Y. X*Y → Yz` of a very weakly rigid coextension `X*`, an ordinary term, and the
+argument is the one at `t`, pointwise. Vectorized in `σ` it is the record at every
+relational type `σs ⇒* t`, `t` itself the empty list (`Results/Arity.lean`). The records
+at `t` above stay for the proofs at `t` that cite them. -/
 
-/-- `extensionality-r-implies-boolean-completeness-r`, at `t` (Classicism, n. 33): under
-the Fregean Axiom the order is material implication, and `∀p. Xp → p` is a greatest
-lower bound of `X` outright. -/
-theorem extensionality_r_implies_boolean_completeness_r_at_t :
-    Extensionality Prop → BooleanCompleteness Prop := fun ext X =>
-  ⟨∀ p, X p → p, fun V =>
-    ⟨fun hlb => (le_iff_imp_of_fregean ext V _).2
-        (fun hV p hXp => (le_iff_imp_of_fregean ext V p).1 (hlb p hXp) hV),
-     fun hle p hXp => (le_iff_imp_of_fregean ext V p).2
-        (fun hV => (le_iff_imp_of_fregean ext V _).1 hle hV p hXp)⟩⟩
+/-- `∀Y. X*Y → V ⊆ Y` gives `V ⊆ λz. ∀Y. X*Y → Yz`. -/
+theorem meet_of_forall_imp_arrow {σ : Type} [Ty σ] (T : (σ → Prop) → Prop) (V : σ → Prop) :
+    (∀ Y : σ → Prop, T Y → ∀ z, V z → Y z) → ∀ z, V z → ∀ Y : σ → Prop, T Y → Y z :=
+  fun h z hV Y hT => h Y hT z hV
+
+/-- `V ⊆ λz. ∀Y. X*Y → Yz` and `X*Y` give `V ⊆ Y`. -/
+theorem meet_imp_arrow {σ : Type} [Ty σ] (T : (σ → Prop) → Prop) (V Y : σ → Prop) :
+    (∀ z, V z → ∀ Y' : σ → Prop, T Y' → Y' z) → T Y → ∀ z, V z → Y z :=
+  fun h hT z hV => h z hV Y hT
+
+/-- `λz. ∀Y. X*Y → Yz` is a greatest lower bound of `X`, for `X*` very weakly rigid and
+coextensive with `X`: `glb_of_veryWeaklyRigid` at `σ → t`. -/
+theorem glb_of_veryWeaklyRigid_arrow {σ : Type} [Ty σ] (X T : (σ → Prop) → Prop)
+    (hT : VeryWeaklyRigid T) (hco : X ≡ T) : GLB (λ z ↦ ∀ Y : σ → Prop, T Y → Y z) X := fun V =>
+  ⟨fun hlb => (le_iff _ _).2 (modal_K _ _ (nec% (meet_of_forall_imp_arrow T V))
+      (hT.2 (λ Y ↦ ∀ z, V z → Y z) (fun Y hTY => (le_iff _ _).1 (hlb Y ((hco Y).2 hTY))))),
+   fun hle Y hXY => (le_iff _ _).2 (modal_K _ _ (modal_K _ _ (nec% (meet_imp_arrow T V Y))
+      ((le_iff _ _).1 hle)) (weaklyPersistent_apply hT.1 Y ((hco Y).1 hXY)))⟩
+
+/-- `weak-rigid-comprehension-r-implies-boolean-completeness-r`, at `σ → t`, its list form
+being the map's record. -/
+theorem weak_rigid_comprehension_r_implies_boolean_completeness_r {σ : Type} [Ty σ] :
+    WeakRigidComprehension ((σ → Prop) → Prop) → BooleanCompleteness (σ → Prop) := fun wrc X =>
+  (weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r wrc X).elim fun T hT =>
+    ⟨λ z ↦ ∀ Y : σ → Prop, T Y → Y z, glb_of_veryWeaklyRigid_arrow X T hT.1 hT.2⟩
+
+/-- `rigid-comprehension-r-implies-boolean-completeness-r` (Proposition 2.8), at `σ → t`,
+its list form being the map's record. -/
+theorem rigid_comprehension_r_implies_boolean_completeness_r {σ : Type} [Ty σ] :
+    RigidComprehension ((σ → Prop) → Prop) → BooleanCompleteness (σ → Prop) := fun rc =>
+  weak_rigid_comprehension_r_implies_boolean_completeness_r
+    (rigid_comprehension_r_implies_weak_rigid_comprehension_r rc)
 
 /-- `necessary-rigid-comprehension-r-implies-necessary-actuality`: the unboxed record
 necessitated, and `K`. -/
@@ -407,10 +431,12 @@ theorem necessary_rigid_comprehension_r_implies_necessary_actuality :
     NecRigidComprehension (Prop → Prop) → NecActuality :=
   modal_K _ _ (nec% rigid_comprehension_r_implies_actuality)
 
-/-- `necessary-rigid-comprehension-r-implies-necessary-boolean-completeness-r`, at `t`. -/
-theorem necessary_rigid_comprehension_r_implies_necessary_boolean_completeness_r_at_t :
-    NecRigidComprehension (Prop → Prop) → NecBooleanCompleteness Prop :=
-  modal_K _ _ (nec% rigid_comprehension_r_implies_boolean_completeness_r_at_t)
+/-- `necessary-rigid-comprehension-r-implies-necessary-boolean-completeness-r`, at `σ → t`,
+its list form being the map's record: the unboxed record necessitated. -/
+theorem necessary_rigid_comprehension_r_implies_necessary_boolean_completeness_r
+    {σ : Type} [Ty σ] :
+    NecRigidComprehension ((σ → Prop) → Prop) → NecBooleanCompleteness (σ → Prop) :=
+  modal_K _ _ (nec% (rigid_comprehension_r_implies_boolean_completeness_r (σ := σ)))
 
 /-- `actuality-incompatible-with-atomlessness`: a strongest truth `a` is an atom. It is
 possible, so Atomlessness gives a possible `q` strictly below it; `q` is not true, else
@@ -741,7 +767,7 @@ theorem le_refl_arrow_prop {σ : Type} [Ty σ] (G : σ → Prop) : G ≤ G :=
   (le_iff G G).2 (nec% (fun (z : σ) (h : G z) => h))
 
 /-- A greatest lower bound of the upper bounds of `F` is an upper bound of `F`. -/
-theorem glb_ub_upper {σ : Type} [Ty σ] (F : (σ → Prop) → Prop) (G : σ → Prop)
+theorem glb_ub_upper {τ : Type} [Rel τ] (F : τ → Prop) (G : τ)
     (hG : GLB G (λ w ↦ UB w F)) : UB G F :=
   fun X hX => (hG X).1 (fun _ hY => hY X hX)
 
@@ -817,6 +843,100 @@ theorem c5_and_completeness_imply_plenitude_at_t
           (ga_le_of a pa G (glb_ub_least _ G hG _ (ne_or_ub nd bf R a pa hpa.1)))
         e ▸ hpa.1⟩
 
+/-! The same at every output type, for relations `σ → (σ' → t) → t`, pointwise in `σ'`:
+its list form in `σ'` is the record at `σs' ⇒* t`, every relational output type, `t`
+itself the empty list. The record at `t` above stays for `c5_and_completeness_imply_actuality`. -/
+
+/-- `(∀z. Pz → Qz) → (∀z. Qz → Pz) → P ≡ Q`. -/
+theorem coext_of_imp_imp {σ : Type} [Ty σ] (P Q : σ → Prop) :
+    (∀ z, P z → Q z) → (∀ z, Q z → P z) → ∀ z, P z ↔ Q z :=
+  fun h₁ h₂ z => ⟨h₁ z, h₂ z⟩
+
+/-- Two properties below each other are identical: Intensionality. -/
+theorem le_antisymm_arrow {σ : Type} [Ty σ] (P Q : σ → Prop) (h₁ : P ≤ Q) (h₂ : Q ≤ P) :
+    P = Q :=
+  intensionality P Q (modal_K _ _ (modal_K _ _ (nec% (coext_of_imp_imp P Q))
+    ((le_iff P Q).1 h₁)) ((le_iff Q P).1 h₂))
+
+/-- And below every upper bound, at `σ → σ' → t`. -/
+theorem glb_ub_least₂ {σ σ' : Type} [Ty σ] [Ty σ'] (F : (σ → σ' → Prop) → Prop)
+    (G : σ → σ' → Prop) (hG : GLB G (λ w ↦ UB w F)) : ∀ Y, UB Y F → G ≤ Y :=
+  fun Y hY => (hG G).2 ((le_iff G G).2 (nec% (fun (x : σ) (z : σ') (h : G x z) => h))) Y hY
+
+/-- `y ≠ a` refutes `y = a ∧ Pz`. -/
+theorem ne_imp_haec {σ σ' : Type} [Ty σ] [Ty σ'] (y a : σ) (Pa P : σ' → Prop) :
+    y ≠ a → ∀ z, (y = a ∧ Pa z) → P z :=
+  fun hne z h => (hne h.1).elim
+
+/-- `λxz. x = a ∧ Pₐz` satisfies `F_R`, given `ND`. -/
+theorem haec_and_le₂ {σ σ' : Type} [Ty σ] [Ty σ'] (nd : ∀ x y : σ, x ≠ y → □ (x ≠ y))
+    (R : σ → (σ' → Prop) → Prop) (a : σ) (Pa : σ' → Prop) (huniq : ∀ P, R a P → Pa = P) :
+    ∀ y P, R y P → (λ z ↦ y = a ∧ Pa z) ≤ P := fun y P hRy =>
+  (em (y = a)).elim
+    (fun h => by
+      rw [h] at hRy ⊢
+      rw [← huniq P hRy]
+      exact (le_iff _ _).2 (nec% (fun (z : σ') (hz : a = a ∧ Pa z) => hz.2)))
+    (fun h => (le_iff _ _).2 (modal_K _ _ (nec% (ne_imp_haec y a Pa P)) (nd y a h)))
+
+/-- `(∀xz. x = a ∧ Pₐz → Gxz) → ∀z. Pₐz → Gaz`. -/
+theorem pa_imp_of {σ σ' : Type} [Ty σ] [Ty σ'] (a : σ) (Pa : σ' → Prop) (G : σ → σ' → Prop) :
+    (∀ x z, (x = a ∧ Pa z) → G x z) → ∀ z, Pa z → G a z :=
+  fun h z hz => h a z ⟨rfl, hz⟩
+
+/-- So `Pₐ ≤ Ga`. -/
+theorem pa_le_of₂ {σ σ' : Type} [Ty σ] [Ty σ'] (a : σ) (Pa : σ' → Prop) (G : σ → σ' → Prop)
+    (h : (λ x z ↦ x = a ∧ Pa z) ≤ G) : Pa ≤ G a :=
+  (le_iff _ _).2 (modal_K _ _ (nec% (pa_imp_of a Pa G)) ((le_iff _ _).1 h))
+
+/-- `(∀z. Xaz → Pₐz) → ∀z. Xaz → a ≠ a ∨ Pₐz`. -/
+theorem imp_ne_or_right {σ σ' : Type} [Ty σ] [Ty σ'] (X : σ → σ' → Prop) (a : σ)
+    (Pa : σ' → Prop) : (∀ z, X a z → Pa z) → ∀ z, X a z → a ≠ a ∨ Pa z :=
+  fun h z hz => Or.inr (h z hz)
+
+/-- `x ≠ a → ∀z. Xxz → x ≠ a ∨ Pₐz`. -/
+theorem imp_ne_or_left {σ σ' : Type} [Ty σ] [Ty σ'] (X : σ → σ' → Prop) (x a : σ)
+    (Pa : σ' → Prop) : x ≠ a → ∀ z, X x z → x ≠ a ∨ Pa z :=
+  fun h _ _ => Or.inl h
+
+/-- `λxz. x ≠ a ∨ Pₐz` is an upper bound of `F_R`, given `ND` and `BF`. -/
+theorem ne_or_ub₂ {σ σ' : Type} [Ty σ] [Ty σ'] (nd : ∀ x y : σ, x ≠ y → □ (x ≠ y))
+    (bf : ∀ X : σ → Prop, (∀ x, □ (X x)) → □ (∀ x, X x))
+    (R : σ → (σ' → Prop) → Prop) (a : σ) (Pa : σ' → Prop) (hRa : R a Pa) :
+    ∀ X : σ → σ' → Prop, (∀ y P, R y P → X y ≤ P) → X ≤ (λ x z ↦ x ≠ a ∨ Pa z) :=
+  fun X hX => (le_iff X _).2 (bf (λ x ↦ ∀ z, X x z → x ≠ a ∨ Pa z) fun x =>
+    (em (x = a)).elim
+      (fun h => by
+        rw [h]
+        exact modal_K _ _ (nec% (imp_ne_or_right X a Pa)) ((le_iff _ _).1 (hX a Pa hRa)))
+      (fun h => modal_K _ _ (nec% (imp_ne_or_left X x a Pa)) (nd x a h)))
+
+/-- `(∀xz. Gxz → x ≠ a ∨ Pₐz) → ∀z. Gaz → Pₐz`. -/
+theorem ga_imp_of {σ σ' : Type} [Ty σ] [Ty σ'] (a : σ) (Pa : σ' → Prop) (G : σ → σ' → Prop) :
+    (∀ x z, G x z → x ≠ a ∨ Pa z) → ∀ z, G a z → Pa z :=
+  fun h z hz => (h a z hz).elim (fun hne => (hne rfl).elim) id
+
+/-- So `Ga ≤ Pₐ`. -/
+theorem ga_le_of₂ {σ σ' : Type} [Ty σ] [Ty σ'] (a : σ) (Pa : σ' → Prop) (G : σ → σ' → Prop)
+    (h : G ≤ (λ x z ↦ x ≠ a ∨ Pa z)) : G a ≤ Pa :=
+  (le_iff _ _).2 (modal_K _ _ (nec% (ga_imp_of a Pa G)) ((le_iff _ _).1 h))
+
+/-- `c5-and-completeness-imply-plenitude` (Proposition 2.14), for relations
+`σ → (σ' → t) → t`, its list form in `σ'` being the map's record: the argument at `t`,
+pointwise in `σ'`. -/
+theorem c5_and_completeness_imply_plenitude {σ' σ : Type} [Ty σ'] [Ty σ] :
+    BooleanCompleteness (σ → σ' → Prop) → NecNecessityOfDistinctness Prop →
+      Plenitude σ (σ' → Prop) :=
+  fun bc hnd R hR =>
+    have nd := nd_of_nd_t (σ := σ) (box_elim hnd)
+    have bf := bf_of_box_nd_t (σ := σ) hnd
+    (bc (λ Y ↦ UB Y (λ X ↦ ∀ y P, R y P → X y ≤ P))).elim fun G hG =>
+      ⟨G, fun a => (hR a).elim fun Pa hPa =>
+        have e : Pa = G a := le_antisymm_arrow Pa (G a)
+          (pa_le_of₂ a Pa G (glb_ub_upper _ G hG _ (haec_and_le₂ nd R a Pa hPa.2)))
+          (ga_le_of₂ a Pa G (glb_ub_least₂ _ G hG _ (ne_or_ub₂ nd bf R a Pa hPa.1)))
+        e ▸ hPa.1⟩
+
 /-- `c5-and-completeness-imply-actuality`
 (Proposition 2.5, left to right): Boolean Completeness at `t → t` gives Plenitude at
 `t → t` (Proposition 2.14), and Plenitude gives Actuality (Proposition 2.15). -/
@@ -844,13 +964,6 @@ at `t`: Proposition 2.5 necessitated, with `4`. -/
 theorem necessary_actuality_and_necessary_distinctness_necessary_t_imply_necessary_boolean_completeness_r :
     NecActuality → NecNecessityOfDistinctnessT → NecBooleanCompleteness Prop := fun hna hnd =>
   modal_K _ _ (modal_K _ _ (nec% bc_of_actuality_box_nd_t) hna) (modal_four _ hnd)
-
-/-- `c5-and-atomicity-imply-necessary-completeness` (at type `t` only)
-(Proposition 2.6), at `t`. -/
-theorem c5_and_atomicity_imply_necessary_completeness_at_t :
-    Atomicity Prop → NecNecessityOfDistinctness Prop → NecBooleanCompleteness Prop := fun at_ hnd =>
-  necessary_actuality_and_necessary_distinctness_necessary_t_imply_necessary_boolean_completeness_r
-    (atomicity_t_and_necessary_distinctness_necessary_t_imply_necessary_actuality at_ hnd) hnd
 
 /-- `◇p` and `□q` give `◇(p ∧ q)`. -/
 theorem dia_and_of_dia_box (p q : Prop) : ◇ p → □ q → ◇ (p ∧ q) := fun hp hq h =>
@@ -1006,65 +1119,54 @@ theorem rigid_comprehension_and_bf_imply_necessary_bf {σ : Type} [Ty σ] :
       bf F (fun x => weaklyPersistent_apply (weaklyPersistent_of_persistent hF.1.1) x ((hF.2 x).1 rfl))
     modal_K _ _ (modal_K _ _ (nec% (bf_of_weaklyInextensible F)) hF.1.2) (modal_four _ hall)
 
-/-- `Rs x q → Z x → q`, for `Z := λy. ∀p. Rs y p → p`. -/
-theorem z_imp_of_rs {σ : Type} [Ty σ] (Rs : σ → Prop → Prop) (x : σ) (q : Prop) :
-    Rs x q → (∀ p, Rs x p → p) → q := fun h hz => hz q h
-
-/-- `∀y p. Rs y p → y ≠ x ∨ p = q` and `q` give `Z x`. -/
-theorem z_of_functional {σ : Type} [Ty σ] (Rs : σ → Prop → Prop) (x : σ) (q : Prop) :
-    (∀ y p, Rs y p → y ≠ x ∨ p = q) → q → ∀ p, Rs x p → p := fun h hq p hp =>
-  (h x p hp).elim (fun hne => (hne rfl).elim) (fun e => e ▸ hq)
-
 /-- With `ND` and `NI`, `y ≠ x ∨ p = q` is necessary when true. -/
-theorem box_ne_or_eq {σ : Type} [Ty σ] (nd : ∀ x y : σ, x ≠ y → □ (x ≠ y)) (y x : σ) (p q : Prop) :
-    (y ≠ x ∨ p = q) → □ (y ≠ x ∨ p = q) := fun h => h.elim
+theorem box_ne_or_eq {σ τ : Type} [Ty σ] [Ty τ] (nd : ∀ x y : σ, x ≠ y → □ (x ≠ y)) (y x : σ)
+    (p q : τ) : (y ≠ x ∨ p = q) → □ (y ≠ x ∨ p = q) := fun h => h.elim
   (fun hne => modal_K _ _ (nec% (fun (h : y ≠ x) => (Or.inl h : y ≠ x ∨ p = q))) (nd y x hne))
   (fun he => modal_K _ _ (nec% (fun (h : p = q) => (Or.inr h : y ≠ x ∨ p = q))) (necessity_of_identity p q he))
 
-/-- `rigid-comprehension-and-nd-imply-plenitude` (for output type `t` only) (Proposition
-2.16), for relations of type `σ → t → t`: with `Rs` rigid and coextensive with the
-functional `R`, `Z := λy. ∀p. Rs y p → p` represents it. At `x` with `Rxq`: `Rs x q` is
-necessary, so `Zx ≤ q`; and every `Rs y p` has `y ≠ x ∨ p = q`, necessarily so by `ND`
-and `NI`, so by inextensibility necessarily, which gives `q ≤ Zx`. -/
-theorem rigid_comprehension_and_nd_imply_plenitude_at_t {σ : Type} [Ty σ] :
-    RigidComprehension (σ → Prop → Prop) → NecessityOfDistinctness σ → Plenitude σ Prop :=
+/-- `Rs x Q → ∀z. (∀P. Rs x P → Pz) → Qz`. -/
+theorem z_imp_of_rs₂ {σ σ' : Type} [Ty σ] [Ty σ'] (Rs : σ → (σ' → Prop) → Prop) (x : σ)
+    (Q : σ' → Prop) : Rs x Q → ∀ z, (∀ P : σ' → Prop, Rs x P → P z) → Q z :=
+  fun h z hz => hz Q h
+
+/-- `∀y P. Rs y P → y ≠ x ∨ P = Q` gives `∀z. Qz → ∀P. Rs x P → Pz`. -/
+theorem z_of_functional₂ {σ σ' : Type} [Ty σ] [Ty σ'] (Rs : σ → (σ' → Prop) → Prop) (x : σ)
+    (Q : σ' → Prop) :
+    (∀ y P, Rs y P → y ≠ x ∨ P = Q) → ∀ z, Q z → ∀ P : σ' → Prop, Rs x P → P z :=
+  fun h z hQz P hP => (h x P hP).elim (fun hne => (hne rfl).elim) (fun e => e ▸ hQz)
+
+/-- `rigid-comprehension-and-nd-imply-plenitude` (Proposition 2.16), for relations
+`σ → (σ' → t) → t`, its list form in `σ'` being the map's record: with `Rs` rigid and
+coextensive with the functional `R`, `Z := λyz. ∀P. Rs y P → Pz` represents it. At `x`
+with `RxQ`: `Rs x Q` is necessary, so `Zx ≤ Q`; and every `Rs y P` has `y ≠ x ∨ P = Q`,
+necessarily so by `ND` and `NI`, so by inextensibility necessarily, which gives
+`Q ≤ Zx`. -/
+theorem rigid_comprehension_and_nd_imply_plenitude {σ' σ : Type} [Ty σ'] [Ty σ] :
+    RigidComprehension (σ → (σ' → Prop) → Prop) → NecessityOfDistinctness σ →
+      Plenitude σ (σ' → Prop) :=
   fun rc nd R hR => (rc R).elim fun Rs hRs =>
-    ⟨λ y ↦ ∀ p, Rs y p → p, fun x => (hR x).elim fun q hq =>
-      have hRsq : Rs x q := (hRs.2 x q).1 hq.1
-      have hfun : ∀ y p, Rs y p → y ≠ x ∨ p = q := fun y p hp =>
+    ⟨λ y z ↦ ∀ P : σ' → Prop, Rs y P → P z, fun x => (hR x).elim fun Q hQ =>
+      have hRsQ : Rs x Q := (hRs.2 x Q).1 hQ.1
+      have hfun : ∀ y P, Rs y P → y ≠ x ∨ P = Q := fun y P hp =>
         (em (y = x)).elim (fun e => Or.inr (by
             rw [e] at hp
-            exact (hq.2 p ((hRs.2 x p).2 hp)).symm))
+            exact (hQ.2 P ((hRs.2 x P).2 hp)).symm))
           Or.inl
-      have hle1 : (∀ p, Rs x p → p) ≤ q := (le_iff_prop _ _).2
-        (modal_K _ _ (nec% (z_imp_of_rs Rs x q))
-          (weaklyPersistent_of_persistent hRs.1.1 x q hRsq))
-      have hle2 : q ≤ (∀ p, Rs x p → p) := (le_iff_prop _ _).2
-        (modal_K _ _ (nec% (z_of_functional Rs x q))
-          (weaklyInextensible_of_inextensible hRs.1.2 (λ y p ↦ y ≠ x ∨ p = q)
-            (fun y p hp => box_ne_or_eq nd y x p q (hfun y p hp))))
-      show R x (∀ p, Rs x p → p) by
-        rw [← le_antisymm_prop q _ hle2 hle1]; exact hq.1⟩
+      have hle1 : (λ z ↦ ∀ P : σ' → Prop, Rs x P → P z) ≤ Q := (le_iff _ _).2
+        (modal_K _ _ (nec% (z_imp_of_rs₂ Rs x Q))
+          (weaklyPersistent_of_persistent hRs.1.1 x Q hRsQ))
+      have hle2 : Q ≤ (λ z ↦ ∀ P : σ' → Prop, Rs x P → P z) := (le_iff _ _).2
+        (modal_K _ _ (nec% (z_of_functional₂ Rs x Q))
+          (weaklyInextensible_of_inextensible hRs.1.2 (λ y P ↦ y ≠ x ∨ P = Q)
+            (fun y P hp => box_ne_or_eq nd y x P Q (hfun y P hp))))
+      show R x (λ z ↦ ∀ P : σ' → Prop, Rs x P → P z) by
+        rw [← le_antisymm_arrow Q _ hle2 hle1]; exact hQ.1⟩
 
-/-! Proposition 2.11 (n. 42), reduced to a restriction principle.
-
-The paper derives Rigid Comprehension from `□`Atomicity, Boolean Completeness and `BF`
-with `X*`, the least upper bound of the haecceities of the `X`s. Parts (i) to (iii) of
-n. 42 (`X*` is coextensive with `X`, given Actuality, and persistent) go through as
-written. Part (iv), inextensibility, has two steps that do not: it boxes a pointwise
-claim with `BF` where `□BF` would be needed, and its "without loss of generality" step
-assumes that, for `w` an atom and `w′` possibly an atom below `X*z ∧ ¬Yz`, the greatest
-lower bound `w″` of the `p` with `w ≤ (p = w′)` is still identical to `w′` wherever `w`
-is true, which nothing in the premises gives (see `HANDOFF.md`, §4).
-
-What part (iv) needs from `w″` is only this: for a proposition `p` (here `∀x. X*x →
-□Yx`) and a proposition `q` (here `∃z. X*z ∧ ¬Yz`), a proposition `r` that is identical
-to `q` wherever `p` is true (`p ≤ (r = q)`) and that entails everything `p` makes `q`
-entail (`p ≤ (q ≤ s)` gives `r ≤ s`): `q` restricted to what is accessible from the
-`p`-worlds. Given that, for every `p` and `q`, inextensibility follows with `BF` at the
-type of properties only, and without atoms. The restriction principle holds in `C5`,
-with `r := q ∧ ◇p` (`restriction_of_box_b`); whether `□`Atomicity, Boolean Completeness
-and `BF` or `□BF` give it is open. -/
+/-! The least upper bound of the haecceities `λx. u = x` of the `X`s, at `σ → t`, from
+Boolean Completeness, as the greatest lower bound of their upper bounds (n. 42). It holds
+necessarily of each `u` with `Xu`, so it is below every property that does; with the
+actual world it is coextensive with `X`. -/
 
 /-- `Hu` gives `∀z. u = z → Hz`. -/
 theorem haec_imp {σ : Type} [Ty σ] (u : σ) (H : σ → Prop) : H u → ∀ z, u = z → H z :=
@@ -1103,6 +1205,42 @@ theorem lub_haec_imp {σ : Type} [Ty σ] (act : Actuality) (X G : σ → Prop)
     imp_of_le_prop (G u) (w → X u)
       (le_apply_of_le G (λ y ↦ w → X y) u
         (lub_haec_le X G hG _ fun v hv => (le_iff_prop _ _).1 (hw.2 (X v) hv))) hu hw.1
+
+/-- `completeness-and-actuality-imply-weak-rigid-comprehension`, at `σ → t`, its list form
+being the map's record: the least upper bound `G` of the haecceities of the `X`s is a
+weakly rigid coextension of `X`. It is persistent, being below `λx. □Gx`, which holds
+necessarily of each `X`-thing by `4`; and weakly inextensible, being below any `Z` with
+`G ⊆ □Z`, which holds necessarily of each `X`-thing. -/
+theorem completeness_and_actuality_imply_weak_rigid_comprehension {σ : Type} [Ty σ] :
+    BooleanCompleteness (σ → Prop) → Actuality → WeakRigidComprehension (σ → Prop) :=
+  fun bc act X =>
+    (bc (λ W ↦ UB W (λ Y ↦ ∃ u, X u ∧ Y = λ x ↦ u = x))).elim fun G hG =>
+      have hco : X ≡ G := fun u =>
+        ⟨fun hu => box_elim (box_lub_haec_of X G hG u hu), lub_haec_imp act X G hG u⟩
+      ⟨G, ⟨(le_iff _ _).1 (lub_haec_le X G hG (boxAt G)
+            fun u hu => modal_four _ (box_lub_haec_of X G hG u hu)),
+          fun Z hZ => (le_iff _ _).1 (lub_haec_le X G hG Z
+            fun u hu => hZ u ((hco u).1 hu))⟩, hco⟩
+
+/-! Proposition 2.11 (n. 42), reduced to a restriction principle.
+
+The paper derives Rigid Comprehension from `□`Atomicity, Boolean Completeness and `BF`
+with `X*`, the least upper bound of the haecceities of the `X`s. Parts (i) to (iii) of
+n. 42 (`X*` is coextensive with `X`, given Actuality, and persistent) go through as
+written. Part (iv), inextensibility, has two steps that do not: it boxes a pointwise
+claim with `BF` where `□BF` would be needed, and its "without loss of generality" step
+assumes that, for `w` an atom and `w′` possibly an atom below `X*z ∧ ¬Yz`, the greatest
+lower bound `w″` of the `p` with `w ≤ (p = w′)` is still identical to `w′` wherever `w`
+is true, which nothing in the premises gives (see `HANDOFF.md`, §4).
+
+What part (iv) needs from `w″` is only this: for a proposition `p` (here `∀x. X*x →
+□Yx`) and a proposition `q` (here `∃z. X*z ∧ ¬Yz`), a proposition `r` that is identical
+to `q` wherever `p` is true (`p ≤ (r = q)`) and that entails everything `p` makes `q`
+entail (`p ≤ (q ≤ s)` gives `r ≤ s`): `q` restricted to what is accessible from the
+`p`-worlds. Given that, for every `p` and `q`, inextensibility follows with `BF` at the
+type of properties only, and without atoms. The restriction principle holds in `C5`,
+with `r := q ∧ ◇p` (`restriction_of_box_b`). `□`Atomicity, Boolean Completeness and `BF`
+do not give it: Cian reports a countermodel to Proposition 2.11 (1 October). -/
 
 /-- `Gu`, then `∀z. Gz → □Yz` makes `q ≤ Yu`. -/
 theorem le_of_inext_premise {σ : Type} [Ty σ] (G Y : σ → Prop) (q : Prop) (u : σ) :
@@ -1280,6 +1418,18 @@ theorem extensionality_r_implies_functionality_r {σ τ : Type} [Ty σ] [Rel τ]
 /-- A truth is `⊤` under the Fregean Axiom, so necessary. -/
 theorem box_of_fregean (fa : FregeanAxiom) (p : Prop) (hp : p) : □ p :=
   fa p True ⟨fun _ => trivial, fun _ => hp⟩
+
+/-- `extensionality-r-implies-boolean-completeness-r` (Classicism, n. 33), at `σ → t`, its
+list form being the map's record: under the Fregean Axiom (the nullary instance) every
+truth is necessary, so the order is pointwise implication, and `λz. ∀Y. XY → Yz` is a
+greatest lower bound outright. -/
+theorem extensionality_r_implies_boolean_completeness_r {σ : Type} [Ty σ] :
+    Extensionality Prop → BooleanCompleteness (σ → Prop) := fun ext X =>
+  ⟨λ z ↦ ∀ Y : σ → Prop, X Y → Y z, fun V =>
+    ⟨fun hlb => (le_iff _ _).2 (box_of_fregean ext _
+        (fun z hV Y hXY => box_elim ((le_iff _ _).1 (hlb Y hXY)) z hV)),
+     fun hle Y hXY => (le_iff _ _).2 (box_of_fregean ext _
+        (fun z hV => box_elim ((le_iff _ _).1 hle) z hV Y hXY))⟩⟩
 
 /-- `fregean-axiom-implies-necessary-fregean-axiom`. -/
 theorem fregean_axiom_implies_necessary_fregean_axiom : FregeanAxiom → NecFregeanAxiom :=
