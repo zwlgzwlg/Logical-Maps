@@ -82,7 +82,15 @@ of the same day is folded in (D1–D5, D8, §4–§6); the decisions taken are i
   - Counts: 110 of 110 records certified (one fewer, its helper now counted as one), 42
     of 42 with a Ty-parameter in list form; the `Pointwise` audit twelve theorems fewer
     (the three laws as fields, at `Prop` and at arrows, and three helpers).
-  Next: Phase 8, the documentation.
+- **Phase 8 done** (1 October), as §8 has it:
+  - `README.md`: the Names table has the converse row, `P.schema_entails_listSchema`.
+  - `Classicism/README.md`: list forms, the equivalence and the results at every arity,
+    and the Atomicity section's two routes to "for every `n`".
+  - `HANDOFF.md` §3: the conventions for results at every arity and for list forms.
+  - `VERIFICATION.md`: a section on what a list-form certificate rests on.
+  - `MAP-SURVEY.md`: the counts after Phase 7.
+
+  Next: Phase 9. Its pilot, Actual Profile, is done.
 - **What the implementation changed in the design**, all within the plan's intent:
   - Tuples are taken apart by their projections (`Terms.head`, `Terms.tail`) and every
     block operation recurses on the list of types, not on the tuple; so an operation on a

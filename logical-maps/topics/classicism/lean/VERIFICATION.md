@@ -940,6 +940,53 @@ that the step needs an argument, not that Proposition 2.11 is false.
 theorems are helpers, not records, since the restriction principle is not one of the
 map's principles, and are derived in the object language like the rest of the file).
 
+## Vectorization, 1 October
+
+`VECTORIZATION-PLAN.md`, Phases 1 to 7: type variables in the object language, the
+vectorization theorem, the list form of every principle with a Ty-parameter and of every
+record with one, the equivalence of each principle's restricted and list forms, and the
+results at every arity as unary proofs vectorized. It supersedes the auxiliary schemas
+`BarcanArgs` and `NecBarcanArgs` of 28 September and the inductions on the type that used
+them, which are gone.
+
+*Checked.* What a list-form certificate rests on, each piece kernel-checked:
+
+- **The theorem**, `Derivable.vecG` and its case `C.Theorem.vec`
+  (`Syntax/VectorizeDerivable.lean`): an induction on derivations, each rule going to its
+  block version (`Syntax/Blocks.lean`). It rests on `propext` and `Quot.sound`.
+- **The statements.** `P.listQuoted` is *defined* as the vectorization of `P.quoted` at
+  `var 0`, so a list form cannot be mis-stated against its principle. It is stated with
+  the readable translation `Term.vec` (`∀x₁ … ∀xₙ`, `a₁ = b₁ ∧ …` on the nose), proved
+  convertible to the generic one the theorem is about. `P.listQuoted_single` shows that
+  at a one-element list it is the principle, and `Certified/Vectorized.lean` checks three
+  list instances by `rfl` against the sentences written out.
+- **The generators are untrusted.** `#classicism_schema` (list forms), `foo.listRule` and
+  `foo.listEntails` (`Tools/Schema.lean`), and the tactic `classicism_vec_eq` each build a
+  term the kernel checks. Where a closed parameter's translation stands unreduced in a
+  vectorized sentence, it is rewritten away by a proved lemma (`RTy.vec_closed`,
+  `Ty.vec_closed`), not by fiat.
+- **Restricted ⇔ list** (`Results/Lists.lean`): `P.schema ⟹ P.listSchema` for the twenty
+  principles. Its shallow steps (the two-element forms, the coding of tuples) are
+  certified like records, and the inductions on the list are kernel-checked theorems.
+  They rest on `propext` and `Quot.sound` only, as do the arity results built on them
+  (`Results/Arity.lean`, `Results/Atomicity.lean`).
+
+The full build passes. The record audits report 199 of 199 theorems derived, 110 of 110
+records certified as entailments, and 42 of 42 records with a Ty-parameter certified in
+list form.
+
+*Choices.*
+- A type variable is never relational. So the class laws the translator derives by
+  recursion on a Rel-parameter's type are never needed at a variable.
+- The first Ty-parameter of a principle is the one vectorized. A second (Relational
+  Choice's output) is passed as the type variable `var 1` assigned its one-element list,
+  so that a principle and a record over the same Ty-parameters vectorize alike.
+- A unary result in `C5` takes `□ND` at `t` and gets `□`BF at `σ` inside its proof, so
+  its list form needs no list premise.
+- Plenitude and Actual Profile reach lists by coding a tuple `x₁ … xₙ` as the object
+  `λR. R x₁ … xₙ`, which needs no induction. Plenitude's two-element step would need
+  Functionality.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

@@ -111,7 +111,7 @@ The first five were settled with Cian on 22 September 2026, the rest on the days
 | `Tools/Schema.lean` (rules) | `#classicism_rule foo` reads the same derivation as a **rule between the schemas' instances**, `foo.rule : ∀ σ' …, C.Theorem (imp (P₁.quoted …) (… (Q.quoted …)))`, keeping the object types, for use inside a metalogical proof; `#classicism_certify foo` is the whole chain at the point where `foo` is stated: transform, schemas, derive, rule. |
 | `Certified/Schemas.lean` | The map's principles (44) as schemas: the home of every `P.quoted`, `P.reflect`, `P.schema`. |
 | `Certified/Derivations.lean` | Every record theorem of `Results/Records.lean` derived in the object language: the home of every `foo.derivable`, kept apart because it is the expensive part of the build. |
-| `Certified/Entailed.lean` | The record theorems of `Results/Records.lean` certified as entailments: the home of every `foo.entails`. All 67 certify. |
+| `Certified/Entailed.lean` | The record theorems of `Results/Records.lean` certified as entailments: the home of every `foo.entails`, and, for a record with a Ty-parameter, `foo.listRule` and `foo.listEntails`. All 110 certify, the 42 with a Ty-parameter in list form too. |
 | `Semantics/Action.lean` | **Action premodels and action models**, the paper's models of Classicism, directly: a rooted category, an inner action per type, the outer actions by recursion on the type, the subaction conditions, the total interpretation function `sem`, `Holds`, and `IsModel`. |
 | `Semantics/ActionSoundness.lean` | **Soundness of action models**: transport, renaming, substitution, β, η, δ, conversion; every rule of `Derivable`; the eleven identities and Existence hold at every arrow of every action model; `theorem_holds`, `theoremWith_holds`. |
 | `Semantics/ActionFull.lean` | **Full action models**: the powerset and exponential actions as functors; the full inner domains by recursion on the type; `Premodel.full` on any rooted category from an action for `e` and an interpretation; **`full_isModel`**, that a full premodel is a model, by the combined induction (inner-ness and transport together, the type-subscripted constants by a second induction on the size of the type); `full_bf_surjective`, the paper's (iii). |
@@ -552,7 +552,7 @@ Classicism, apply an implication — are `Theorem.ax`, `Theorem.ofC` and `Theore
 `P.quoted : Ty → … → Sentence`, `P.reflect`, and
 `P.schema = {P.quoted σ' … | σ' … closed}`, the instances at the paper's types, those with
 no type variable (1 October; `VECTORIZATION-PLAN.md`, D2). A parameter-free principle gives
-a singleton. All 46 principles are quoted; the map's
+a singleton. All 59 principles are quoted; the map's
 schemas over sentences rather than types — No Pure Contingency, Distinctness,
 Possibility, `max` — are written by hand in `Syntax/SentenceSchemas.lean`.
 
@@ -570,23 +570,34 @@ The proof is `Exists.elim`, `Derivable.impE`, `Derivable.axiom`, `Derivable.conv
 conclusion set is `Q.schema` when the statement's conclusion is `Q` at its own
 parameters; the singleton `{Q.quoted τ}` when it fixes them (`Existence e`); the family
 over the derivation's parameters when it builds them (`Existence (σ → t)`).
-`#classicism_entails_audit` certifies every record theorem of a module: **all 28
-certify**, in seconds, at build time. These `foo.entails` are what the map's arrows can
+`#classicism_entails_audit` certifies every record theorem of a module: **all 110
+certify**, at build time. These `foo.entails` are what the map's arrows can
 cite as certificates, once the map's generator is taught the statement shape.
 
-**List forms** (1 October; `VECTORIZATION-PLAN.md`). A principle with a Ty-parameter has
-a list form beside its schema: `P.listQuoted σs …` is `P.quoted` at the type variable
-`var 0` vectorized along `0 ↦ σs`, defined and so never mis-stated; `P.listSchema` its
-instances at closed types; `P.listQuoted_single`, that at `[σ]` it is the principle, by
-computation up to the closed Rel-parameters; `P.listSchema ⟹ P.schema`. All 20 such
-principles have one. A record with a Ty-parameter has `foo.listRule`, its derivation at
-`var 0` vectorized by `C.Theorem.vec`, each instance coming out as a list form or as a
-restricted instance at the translated types, and `foo.listEntails`, the arrow between the
-list forms: 41 of the 43 such records. The two that do not are Functional Choice into
-`τ → t` implies Relational Choice into `τ`, and its necessitation: there the relational
-argument `τ → t` mentions the record's second Ty-parameter, which the list form of
-Functional Choice receives as a Lean variable and the list form of Relational Choice as a
-type variable, so the two do not meet on the nose. Their list forms are for Phase 6.
+**List forms** (`VECTORIZATION-PLAN.md`). A principle with a Ty-parameter has a list form
+beside its schema: `P.listQuoted σs …` is `P.quoted` at the type variable `var 0`,
+vectorized along `0 ↦ σs`, so it is defined and cannot be mis-stated. `P.listSchema` is
+its instances at closed types. `P.listQuoted_single` says that at `[σ]` it is the
+principle, by computation up to the closed Rel-parameters. `P.listSchema ⟹ P.schema`
+holds by inclusion, and the converse is proved in `Results/Lists.lean`. All 20 such
+principles have a list form.
+
+A record with a Ty-parameter has:
+- `foo.listRule`: its derivation at `var 0`, vectorized by `C.Theorem.vec`;
+- `foo.listEntails`: the arrow between the list forms.
+
+Each instance of the vectorized statement comes out in one of two forms:
+- a list form, when its first Ty-argument is the record's own vectorized parameter;
+- otherwise, a restricted instance at the translated types (`Atomicity` at `σs ⇒* τ`).
+
+A list rule takes every parameter other than the list to be closed. Each instance is
+shown equal to its form by reducing both to normal form, with the closed parameters'
+translations (`RTy.vec θ ρ`, `Ty.vec θ τ`) kept folded and then rewritten away by
+closedness. The tactic `classicism_vec_eq` does the same inside a proof.
+
+Every record with a Ty-parameter has a list form. They come from:
+- the entailment audit, for `Results/Records.lean`;
+- `#classicism_certify` and `#classicism_entails`, elsewhere.
 
 **Records as rules** (`#classicism_rule`, `#classicism_certify`). An entailment forgets
 which instance of the premise yields which instance of the conclusion; a metalogical
@@ -595,7 +606,8 @@ derivation read as a theorem of `C` for every choice of object types,
 `∀ σ' …, C.Theorem (imp (P₁.quoted …) (… (Q.quoted …)))`, each instance written through
 its schema's `quoted` so that it composes with `Theorem.mp`. `#classicism_certify foo` is
 the whole chain at the point where `foo` is stated: schemas for the principles it mentions
-that have none yet, the derivation, the rule.
+that have none yet, the derivation, the rule, and, when `foo` has a Ty-parameter, the list
+rule.
 
 ## Type variables and vectorization
 
@@ -630,6 +642,25 @@ translator's derivations are uniform in their type parameters, so they hold at
 does this for `barcan_r_implies_functionality_r`, giving BF over a list implies
 Functionality over it, for every list, from the one certified derivation.
 
+**Restricted and list forms are equivalent** (`Results/Lists.lean`). For each of the twenty
+principles with a list form, `P.schema ⟹ P.listSchema`, the converse of the generated
+`P.listSchema ⟹ P.schema`. Most go by induction on the list:
+- the empty list is a theorem of `C`;
+- a one-element list is the restricted instance;
+- the step is the principle's two-element form (`P.BarcanCons`, …), proved in the shallow
+  layer from restricted instances and vectorized.
+
+Plenitude, its boxed form and Actual Profile instead code a tuple `x₁ … xₙ` as the object
+`λR. R x₁ … xₙ`. The theorems of `C` among the twenty need nothing: their list forms are
+theorems of `C`.
+
+**Results at every arity** (`Results/Arity.lean`, `Results/Atomicity.lean`). Every
+relational type is its argument types' `⇒* t`. So a unary result at `σ → t`, vectorized
+in `σ`, is the result at every relational type (`schema_subset_args`). BF at `σ` in its
+proof becomes BF over the list, which BF gives by the equivalence above. A result whose
+proof is pointwise reasoning at a relational type keeps its shallow core at a
+Rel-parameter: it is at every arity already.
+
 ## A metalogical proof with object-level steps
 
 Cian's question of 24 September: a proof in logic typically alternates between the
@@ -650,12 +681,21 @@ runs Appendix A on the proof, quotes the principles it mentions into schemas, de
 strict proof in the object language, and declares `atomicity_step.rule : ∀ σ' τ',
 C.Theorem (imp (Atomicity.quoted τ') (imp (Barcan.quoted σ') (Atomicity.quoted (σ' ⇒ τ'))))`
 — the derivation read as a rule between instances, with the object types kept, which
-`foo.entails` forgets. (3) The theorem is an induction on the relational type
-(`RTy.induction`, `Syntax/Types.lean`): at `t` the premise is an axiom of the set
-(`Theorem.ax`), at `σ → τ` the rule applied to the induction hypothesis and the BF
-instance (`Theorem.ofC`, `Theorem.mp₂`, `Syntax/Entailment.lean`). The descent into the object
-language is the type `Theorem (C.axioms ∪ Ax) p` of the goal; the rule is where the
-shallow layer's tactics did the object-level work.
+`foo.entails` forgets — and, vectorizing the derivation in `σ`, `atomicity_step.listRule`,
+the same rule over a whole list of argument types, with BF over the list for its premise.
+(3) The theorem is that list rule at `t` and at the list of a relational type's arguments,
+every relational type being `σs ⇒* t`; its premise, BF over every list, comes from BF by
+an induction on the list (`Results/Lists.lean`). The descent into the object language is
+the type `Theorem (C.axioms ∪ Ax) p` of the goal (`Theorem.ax`, `Theorem.ofC`,
+`Theorem.mp₂`, `Syntax/Entailment.lean`); the rule is where the shallow layer's tactics
+did the object-level work.
+
+**Two routes to "for every `n`".** When the argument is the same at every argument type,
+as here, prove it for one argument and vectorize: the vectorization theorem is the
+induction on `n`, done once for every proof. When it is not, or when the list form is
+itself what is to be proved, an induction on the list or on the type (`RTy.induction`)
+applies a rule one argument at a time, choosing its instances as it goes; the inductions
+of `Results/Lists.lean` are of this kind.
 
 **Tools it needed**, each in its natural place. *`Pointwise τ`* (`Classicism/Pointwise.lean`):
 the shallow `Rel τ` supplies the pointwise operations and the pointwise implication
