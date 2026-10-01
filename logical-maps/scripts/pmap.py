@@ -1392,7 +1392,6 @@ def argument_errors(data: dict, ids) -> list[str]:
     errors = []
     papers = {p.get("id") for p in data["papers"] if isinstance(p, dict)}
     sidecars = {s.get("id"): s for s in data.get("provenance", [])}
-    record_ids = {r.get("id") for r in data["results"] + data["models"] + data.get("retired_models", [])}
     for rec in data.get("model_sources", []):
         f = rec["_file"]
         writeups = (ROOT / f).parent.parent / "writeups"
