@@ -164,7 +164,7 @@ abbrev truncate {V : C} (h : A.W₀ ⟶ V) : Premodel Sig C :=
 variable {V : C} (h : A.W₀ ⟶ V)
 
 /-! The readings depend on the actions and the inclusion only, not on the base or the
-constants; but as functions of the whole premodel, stuck at a type variable, Lean cannot
+constants; but as functions of the whole premodel, stuck at a type parameter, Lean cannot
 see that, so each is transferred by hand. -/
 
 theorem truncate_Incl (σ : Ty) (W : C) : (A.truncate h).Incl σ W = A.Incl σ W := by

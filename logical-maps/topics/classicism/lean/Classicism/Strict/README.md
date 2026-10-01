@@ -191,7 +191,7 @@ proof.
 `Pointwise τ` (`Classicism/Pointwise.lean`, 24 September) is a third class of the same
 kind: the pointwise laws of the implication `⊑` at a relational type — a preorder under
 which `∧_τ` is a meet, with `const_τ` and coextension — which `Rel` does not supply and
-without which nothing can be proved pointwise at a type variable. Its instances are
+without which nothing can be proved pointwise at a type parameter. Its instances are
 tautologies at `Prop` and the law at `τ` under a `∀` at `σ → τ`; its mirror `SPointwise`
 is set up exactly as `SOrder`, each law a necessitation that is the transformer's output
 on the shallow instance's proof.

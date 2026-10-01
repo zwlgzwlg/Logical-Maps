@@ -15,15 +15,15 @@ set_option pp.unicode.fun true
 The map states comprehension, Boolean Completeness, Atomicity and their kin for relations
 of every arity, `∀^Ty σ̄`, and several of the paper's proofs reason about an argument tuple
 `x̄`: "BF, one argument at a time", "the persistent coextension `λȳ. w ≤ X[ȳ]`". The
-shallow layer has no tuples; a relational type is a type variable `τ` with `Rel τ`, and
+shallow layer has no tuples; a relational type is a type parameter `τ` with `Rel τ`, and
 pointwise reasoning at `τ` goes through the laws of `Pointwise`, which the translator
 derives for every object type by induction on the type. This file does the arity results
 that need nothing more than that, in three parts, as `Results/Atomicity.lean` does:
 
 1. **The shallow layer.** BF over a whole argument tuple, `P.BarcanArgs τ`, is an auxiliary
-   schema (not a principle of the map): at `t` a theorem, and at `σ → τ` a consequence of
-   BF at `σ` and itself at `τ`; likewise its necessitation. Then the kernels of the
-   results, each a theorem at a relational type variable `τ`, from the map's premises
+   principle (not one of the map's): at `t` a theorem, and at `σ → τ` a consequence of
+   BF at `σ` and itself at `τ`; likewise its necessitation. Then the shallow cores of the
+   results, each a theorem at a Rel-parameter `τ`, from the map's premises
    and `P.BarcanArgs τ` or its box.
 2. **Certification.** `#classicism_certify` makes each a rule between schema instances,
    `#classicism_entails` an entailment between schemas.
@@ -59,7 +59,7 @@ theorem necBarcanArgs_step : P.NecBarcan σ → P.NecBarcanArgs τ → P.NecBarc
 
 end barcanArgs
 
-section kernels
+section shallowCores
 variable {τ : Type} [Rel τ] [Pointwise τ]
 
 /-- With `B` and BF over the tuple, a persistent relation is weakly inextensible (the
@@ -102,7 +102,7 @@ theorem actuality_implies_persistent_comprehension_r :
     P.Actuality → P.PersistentComprehension τ := fun act X =>
   act.elim fun w (hw : ActualWorld w) => ⟨_, persistent_coext_of_actual X w hw⟩
 
-/-- The kernel of Proposition 2.10 at every arity: Actuality, `□ND` and `□`BF over the
+/-- The shallow core of Proposition 2.10 at every arity: Actuality, `□ND` and `□`BF over the
 tuple give Rigid Comprehension at `τ`. The persistent coextension is inextensible in
 `C5`. -/
 theorem c5_actuality_rigid_comprehension :
@@ -197,7 +197,7 @@ theorem c5_and_necessary_rigid_comprehension_imply_necessary_gallin_comprehensio
       P.NecGallinExtensionalComprehension τ := fun hnd hrc =>
   modal_K _ _ (modal_K _ _ (nec% (c5_rigid_gallin (τ := τ))) (modal_four _ hnd)) hrc
 
-end kernels
+end shallowCores
 
 section atomicity
 variable {σ τ : Type} [Ty σ] [Rel τ] [Order τ] [Pointwise τ]
@@ -321,7 +321,7 @@ theorem gallin_comprehension_and_bf_imply_rigid_comprehension :
     gallin_necBarcanArgs_rigid_comprehension.entails
 
 /-- `c5-and-atomicity-imply-necessary-rigid-comprehension`, at every arity: Atomicity and
-BF (from `□ND`) give `□`Actuality (Proposition 2.7), and the boxed kernel. -/
+BF (from `□ND`) give `□`Actuality (Proposition 2.7), and the boxed shallow core. -/
 theorem c5_and_atomicity_imply_necessary_rigid_comprehension :
     P.NecNecessityOfDistinctness.schema ∪ P.Atomicity.schema ⟹
       P.NecRigidComprehension.schema :=
@@ -400,7 +400,7 @@ theorem extensionality_r_implies_atomicity_r :
     c5_and_necessary_actuality_imply_atomicity
 
 /-- `necessary-gallin-comprehension-implies-necessary-rigid-comprehension`, at every arity:
-`□`Gallin gives `□ND`, hence `□`BF over every tuple, and the boxed kernel. -/
+`□`Gallin gives `□ND`, hence `□`BF over every tuple, and the boxed shallow core. -/
 theorem necessary_gallin_comprehension_implies_necessary_rigid_comprehension :
     P.NecGallinExtensionalComprehension.schema ⟹ P.NecRigidComprehension.schema :=
   Entails.trans

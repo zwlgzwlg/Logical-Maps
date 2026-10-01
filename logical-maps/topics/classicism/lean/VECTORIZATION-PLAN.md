@@ -12,7 +12,12 @@ of the same day is folded in (D1–D5, D8, §4–§6); the decisions taken are i
   theorem (`Syntax/VectorizeDerivable.lean`, Phase 4), with its checks in
   `Certified/Vectorized.lean`: Barcan, Functionality and Relational Choice at `[]`, `[σ]`
   and `[e, t]` by `rfl`, and `barcan_r_implies_functionality_r` at every list. Audit counts
-  unchanged throughout. Next: Phase 1b (vocabulary), then Phase 5.
+  unchanged throughout.
+- **Phase 1b done** (1 October): "type parameter" for a Lean-bound type throughout the
+  comments, docs and the checkers' messages, "type variable" kept for `Ty.var`;
+  "principle", "instance", "schema" as in §2; "shallow core" for "kernel"; the README's
+  section *Names: principles, instances and schemas*; `Classicism/README.md`'s module
+  table, its `RawR` note and a section *Type variables and vectorization*. Next: Phase 5.
 - **What the implementation changed in the design**, all within the plan's intent:
   - Tuples are taken apart by their projections (`Terms.head`, `Terms.tail`) and every
     block operation recurses on the list of types, not on the tuple; so an operation on a

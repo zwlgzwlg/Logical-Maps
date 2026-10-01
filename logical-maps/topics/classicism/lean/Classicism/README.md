@@ -56,7 +56,7 @@ The first five were settled with Cian on 22 September 2026, the rest on the days
   the price of proof relevance in every lemma, and nothing planned needs it.
 - **The type-subscripted operations are constants of the syntax with an unfolding rule**
   (23 September). `∧_τ`, `¬_τ`, coextension and the rest were first functions on terms
-  by recursion on the type. A function stuck at a type *variable* is not a node of the
+  by recursion on the type. A function stuck at a type *parameter* is not a node of the
   syntax: renaming and substitution could not pass through it, and no derivation could
   mention `∧_τ` for `τ` a variable, which a derivation by induction on the type must. So
   `Term.andR ρ` is a constructor, and the recursion is the δ-rule of conversion,
@@ -102,7 +102,7 @@ The first five were settled with Cian on 22 September 2026, the rest on the days
 | `Semantics/Denotation.lean` | `Ty.denote`, `Env`, `Interp`, `Term.denote`: the standard reading of the syntax in Lean, with `t` as `Prop` and `e` as a chosen domain. Renaming and substitution commute with it; conversion preserves it; **soundness** of `Derivable`; the eleven identities hold in `Prop`, so `Prop` is a model of `C` and **`C` is consistent**; an axiom set true in `Prop` is consistent (`Consistent.of_interp`), and `Interp.trivial` interprets any signature over a nonempty domain. |
 | `Syntax/Examples.lean` | A β-step by `rfl`, an η-step, purity decided, small derivations (commutativity of `∧` by Subst among them), and the reflection checks: sentences read back are the propositions they abbreviate, by `rfl`. |
 | `Semantics/Relational.lean` | The bridge for the type-subscripted operations `∧_τ`, `¬_τ`, `∨_τ`, coextension, the pointwise box and implication (constants of `Syntax/Term.lean`, read in `Semantics/Denotation.lean` by recursion on the type): the standard reading's `SRel` and `SOrder` instances by the same recursion, and one lemma per operation, by induction on the type, that its reading is the strict layer's. Purpose four of this layer, at work. |
-| `Tools/Quote.lean` | **The quoter**, first half of the translator: `#classicism_quote foo` reads the statement of `foo` as a sentence, `foo.quoted`, with type parameters as object-type variables, and declares `foo.reflect`, that reading it back gives the statement, by `rfl` or by rewriting. `#classicism_quote_audit` runs it over a module. |
+| `Tools/Quote.lean` | **The quoter**, first half of the translator: `#classicism_quote foo` reads the statement of `foo` as a sentence, `foo.quoted`, with its type parameters read as metalogical ones, and declares `foo.reflect`, that reading it back gives the statement, by `rfl` or by rewriting. `#classicism_quote_audit` runs it over a module. |
 | `Certified/Quoted.lean` | The quoter run over the record theorems at build time; home of every `foo.quoted` and `foo.reflect`. |
 | `Syntax/Normalize.lean` | A **verified βη-normalizer** on the syntax, `Term.nf`, with `Conv.of_nf`: two terms with the same normal form convert, the hypothesis decided by evaluation. |
 | `Tools/Translate.lean` | **The translator**, second half: `#classicism_derive foo` reads the gated shallow proof of `foo` and declares `foo.derivable`, a kernel-checked derivation of its statement. `#classicism_derive_audit` runs it over a module. |
@@ -130,7 +130,7 @@ The first five were settled with Cian on 22 September 2026, the rest on the days
 | `Semantics/IntensionalExamples.lean` | The M-set models ported: `Intensional.MSet.model`, `Idem.not_nd_t`, `Idem.not_bf_t`, `Idem.not_fregean`, `Invol.box_nd`, `Invol.box_bf`, `Invol.not_fregean`; these are what `Results/Schemas/Consistency.lean` now cites. |
 | `Syntax/Constants.lean` | `Term.consts`, the constants a term mentions, finite. |
 | `Semantics/IdeallyFull.lean` | **Appendix D's technique** (26 September): agreement of arrows on a set of individuals, pinning, finite pinning, the subaction of finitely pinned elements; the ideally full domains by the mutual recursor and `Premodel.ideal`; pinning in any premodel (`PinnedO`), closed under the set operations and application; the induction `sem_pinned` and **Proposition D.4** in two forms, `isModel_of_pinned` for any premodel whose inner elements are exactly the finitely pinned ones, and `ideal_isModel` for the construction; **Proposition D.6**, `BF_σ` at every type when every arrow out of the base is surjective on individuals (`ideal_bf_of_surjective`, by pulling an intension back along the arrow); and the paper's Part 3 argument, `BF_σ` when every arrow out of the base agrees on any finite set with one surjective on individuals (`ideal_bf_of_approx`, 28 September). |
-| `Results/Arity.lean` | **Results at every arity** (28 September): BF over a whole argument tuple (`P.BarcanArgs`, an auxiliary schema) derived from BF by one certified induction, and its box likewise; kernels at a relational type variable, using the modal laws of `Pointwise`, certified; and their compositions with certified entailments into twelve of the map's records at every arity (`c5_and_actuality_imply_rigid_comprehension`, `extensionality_r_implies_atomicity_r`, …). |
+| `Results/Arity.lean` | **Results at every arity** (28 September): BF over a whole argument tuple (`P.BarcanArgs`, an auxiliary principle) derived from BF by one certified induction, and its box likewise; shallow cores at a Rel-parameter, using the modal laws of `Pointwise`, certified; and their compositions with certified entailments into twelve of the map's records at every arity (`c5_and_actuality_imply_rigid_comprehension`, `extensionality_r_implies_atomicity_r`, …). |
 | `Models/Permutations.lean` | **Appendix D, Part 1**: the ideally full model over the permutations of `ℕ`. `□ND_σ`, `□BF_σ`; Actuality fails, Atomlessness holds, Atomicity at `t` fails, each a theorem about the quoted principle, from one cut lemma. |
 | `Models/MonoidModel.lean` | **The ideally full model over any monoid acting on `ℕ`** (26 September, later): a proposition is a set of monoid elements, pinned down by `N` iff membership depends only on the values on `N` (`pinnedO_iff`); the cut lemma; the verdict lemmas parametrized by the fact about the monoid that decides each: `ND_e` fails at a non-injective arrow, `BF_σ` holds when every arrow is surjective (D.6), `BF_e` fails at a test property, Actuality iff `{1}` is finitely pinned (`Free 1` against), Atomlessness when every arrow is free, Atomicity at `t` when every nonzero proposition contains a finitely pinned singleton. |
 | `Models/Monoids.lean` | **Appendix D, Parts 2 to 8**: the monotone surjections, the monotone functions, those collapsing `0, 1` unless the identity, the surjective ones among them, the truncations `gₙ`, the roundings `f_{2^j}`, the shifts `kₙ`, each a `Submonoid (Function.End ℕ)`, each verdict an instance; the monoid-level facts (`BCWitness`, `BFWitness`, `OnePinned`, `Singletons`) named, for reuse by the pointed models. **Boolean Completeness at `e → t` fails in all eight parts** (28 September; `MonoidModel.not_bc_of`, the semantic criterion `Premodel.holds_bc_iff`). |
@@ -138,6 +138,10 @@ The first five were settled with Cian on 22 September 2026, the rest on the days
 | `Models/ContingentBarcan.lean` | **`BF` without `□BF`**, the paper's two-object model after Part 8: `ℕ` and a point, all functions as arrows. |
 | `Models/Pointed.lean`, `Models/PointedParts.lean` | **A monoid model with a point adjoined**, the paper's other two-object construction, for any monoid of functions on `ℕ`: the verdicts at the point (everything holds), at `ℕ` (as in the one-object model, except that `ND_e` and Atomlessness fail), `□P` and `◇P` from the two; the paper's `◇(□ND ∧ Atomicity)`; the eight parts with a point adjoined. |
 | `Models/README.md` | The verdict table of all eight parts, the eight pointed variants, and the **survey of two-object variants** — which further consistency facts the paper's "adjoin a second object with no arrows back" would add to the map, and how many. |
+| `Syntax/Blocks.lean` | **Blocks of variables** (1 October): a block of variables over a context (by `List.reverseAux`, so that no cast is needed), tuples of terms `Terms`, taken apart by projections so that every operation computes on a tuple of known length; block application, abstraction, quantifiers, and identity as a conjunction (`⊤` for the empty block, the identity itself for one); the block constants `allC`, `exC`, `eqC`; block β and η; the pointwise operations at `σs ⇒* ρ` (`Conv.negR_block` and kin); holes over a block; and the quantifier and identity rules over a block, derived. A one-element block is the unblocked form on the nose. |
+| `Syntax/Vectorize.lean` | **Vectorization**: an assignment of lists of types to type variables, and the translation along it of types, contexts, variables, terms and holes. The generic translation `Term.vecG` commutes with substitution and preserves conversion; the readable one `Term.vec` treats `∀x:σ. φ` and `a = b` as units, by one `Term.rec` carrying a view of each subterm, and converts to the generic one. |
+| `Syntax/VectorizeDerivable.lean` | **The vectorization theorem**, `Derivable.vec` and `C.Theorem.vec`: a derivation survives vectorization, rule by rule. |
+| `Certified/Vectorized.lean` | Checks: Barcan, Functionality and Relational Choice at `[]`, `[σ]` and `[e, t]` by `rfl`, and the list form of `barcan_r_implies_functionality_r` at every list. |
 
 ## Conventions worth knowing
 
@@ -180,15 +184,15 @@ to `simp`.
 ## The quoter
 
 `Tools/Quote.lean` is a meta-program reading a shallow statement as object syntax: `Prop`,
-`e`, arrows and guarded type variables as types; `∧`, `∨`, `¬`, `→`, `↔`, `∀`, `∃`, `=`,
-`True`, `False`, `□`, `◇`, the operations of `Rel` at a type variable as the constants
+`e`, arrows and guarded type parameters as types; `∧`, `∨`, `¬`, `→`, `↔`, `∀`, `∃`, `=`,
+`True`, `False`, `□`, `◇`, the operations of `Rel` at a type parameter as the constants
 `andR τ'` and the rest, and any other definition of the library through its body, so that
 a principle quotes through its definition and an operation at a concrete type through its
 instance. `#classicism_quote foo` declares `foo.quoted`, the sentence with the theorem's
-type parameters as object-type variables (`Ty` for a `Ty`-guarded parameter, `RTy` for one
+type parameters read as metalogical ones (`Ty` for a `Ty`-guarded parameter, `RTy` for one
 guarded by `Rel`, `Order` or `Pointwise`), and `foo.reflect`, the kernel-checked theorem
 that reading the sentence back in the standard interpretation with domain `e` gives the
-statement with each type variable read as `⟦σ'⟧` and each instance as the class's
+statement with each type parameter read as `⟦σ'⟧` and each instance as the class's
 instance on that reading (`Semantics/Relational.lean`). Reflection is by `rfl` where the
 reading is definitional, and otherwise by rewriting: the shallow `p → q` is read as
 `¬p ∨ q`, `↔`, `□` and the operations at `t` likewise, and the definitions the statement
@@ -223,7 +227,7 @@ premises, and `funext (fun x => h)` becomes `substEq` at the hole `f = λv. ⬚`
 (`withLogical`, one nesting per Subst inside a premise), and a theorem cited there is
 lifted into it by `mono`.
 
-**A law of a class at a type variable is derived by induction on the type.** The shallow
+**A law of a class at a type parameter is derived by induction on the type.** The shallow
 classes `Rel`, `Order` and `Pointwise` hold their laws as fields, each proved once at
 `Prop` and once at `σ → τ` from the law at `τ`. A proof that cites such a law at a type
 *variable* cites no axiom and no theorem, and there is no one derivation of the law:
@@ -278,6 +282,10 @@ conditions on inner elements of arrow type: they are well-behaved
 
 `RawR` is written through `RTy.rec` as a reducible definition, so that `RawR inner .t W`
 *is* a `Set` to instance search and the `∈`, `∩`, `ᶜ` and `ext` of sets apply to it.
+Since type variables joined the syntax (1 October) the recursor has a case for `Ty.var`:
+a variable's outer domain is its inner one, as at `e`, so a variable is valued by the
+premodel's `inner` and nothing has to be chosen. The default element `dflt`, built at `e`
+from its nonemptiness, is defined at relational types only, the only place it is used.
 
 **The interpretation** `sem h t g` is total: the value of a term relative to an arrow
 `h : W₀ → W` and an assignment `g` of inner elements at `W` is an outer element at `W`,
@@ -572,6 +580,39 @@ its schema's `quoted` so that it composes with `Theorem.mp`. `#classicism_certif
 the whole chain at the point where `foo` is stated: schemas for the principles it mentions
 that have none yet, the derivation, the rule.
 
+## Type variables and vectorization
+
+A principle with a Ty-parameter has a list form beside its restricted form: one instance
+for each finite list of types, a variable of the type becoming a block of variables, a
+function from it a function of the block, a quantifier over it a block of quantifiers,
+identity at it the conjunction of identities (`VECTORIZATION-PLAN.md`; the vocabulary is
+in the top-level README). The list forms come from one theorem about the proof system.
+
+**Type variables** (`Syntax/Types.lean`). `Ty.var i` is a type of the object language
+about which nothing is known; it is never relational, so the only terms of its type are
+variables (and constants of a signature that gives one that type, which the theorem rules
+out by asking that constants' types be left alone). It is unlike a *type parameter*
+`σ' : Ty`, a variable of Lean: a proof of `∀ σ', …` may split on `σ'`, so it says nothing
+about uniformity, whereas a derivation at `Ty.var 0` cannot look inside the type.
+
+**The translation** (`Syntax/Vectorize.lean`), along an assignment `θ` of lists of types to
+type variables: a type becomes a list (one-element except at an assigned variable), a
+context a context of blocks, a term a tuple. It comes in two versions, convertible to each
+other: the generic `Term.vecG`, compositional in every term former and commuting with
+substitution on the nose, which the proofs use; and the readable `Term.vec`, in which
+`∀x:σ. φ` is `∀x₁ … ∀xₙ. φ'` and `a = b` is `a₁ = b₁ ∧ … ∧ aₙ = bₙ` on the nose, which the
+list forms are stated with. A one-element list is the type itself: the translation at
+`[σ]` of a principle at `var 0` is, by `rfl`, the principle at `σ`.
+
+**The theorem** (`Syntax/VectorizeDerivable.lean`). If `Δ ⊢ p` in a theory whose axioms
+vectorize to axioms, then `Δ' ⊢ p'` for the vectorizations, at every assignment;
+`C.Theorem.vec` is the case of Classicism. The proof is an induction on the derivation,
+each rule going to its block version (`Syntax/Blocks.lean`) and Subst to Subst. The
+translator's derivations are uniform in their type parameters, so they hold at
+`Ty.var 0`, and the theorem carries them to every list: `Certified/Vectorized.lean`
+does this for `barcan_r_implies_functionality_r`, giving BF over a list implies
+Functionality over it, for every list, from the one certified derivation.
+
 ## A metalogical proof with object-level steps
 
 Cian's question of 24 September: a proof in logic typically alternates between the
@@ -584,7 +625,7 @@ argument inside: exactly what the shallow layer cannot state, since `Rel` is a c
 not a code, and this layer can.
 
 **The shape.** One file, in three parts. (1) The step, `Atomicity τ → BF σ → Atomicity
-(σ → τ)`, is a theorem of the *shallow* layer at the type variables `σ`, `τ`, proved with
+(σ → τ)`, is a theorem of the *shallow* layer at the type parameters `σ`, `τ`, proved with
 Lean's tactics in the paper's own vocabulary: `em`, `le_iff`, `converse_barcan`,
 `intensionality`, and each fact carried under the box a closed lemma necessitated with
 `nec%` and pushed through with `K`. (2) `#classicism_certify Classicism.atomicity_step`
@@ -601,7 +642,7 @@ shallow layer's tactics did the object-level work.
 
 **Tools it needed**, each in its natural place. *`Pointwise τ`* (`Classicism/Pointwise.lean`):
 the shallow `Rel τ` supplies the pointwise operations and the pointwise implication
-`boxImp` as data and only the three laws Intensionality needs, so at a type variable
+`boxImp` as data and only the three laws Intensionality needs, so at a type parameter
 nothing can be said about them, while the paper reasons freely about tuples ("by
 Leibniz's law", "under the box"). The class states the rules of natural deduction read
 pointwise — `⊑` a preorder, `∧_τ` a meet, `X ∧ ¬X` below everything, `const_τ p` above
@@ -651,7 +692,7 @@ binders (that is ξ). The premises of Subst carry no axioms, which is what keeps
 the two kinds of assumption — axioms, cited at any context and never discharged;
 hypotheses, in the current context and discharged — stay as they are. The eleven
 identities become the theorem they are in the paper (Appendix A), to be proved once
-about `Derivable`; the mirror classes disappear (a class law at a type variable is
+about `Derivable`; the mirror classes disappear (a class law at a type parameter is
 derived by induction from the two shallow instance proofs directly); the quoter, the
 normalizer, `coerce`, the memoized walk, `ensureFieldInduction`, and the commands keep
 their interface. `Results/Atomicity.lean` is the first file to be certified that way.

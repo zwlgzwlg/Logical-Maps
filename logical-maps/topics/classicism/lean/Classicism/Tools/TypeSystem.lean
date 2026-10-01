@@ -17,7 +17,7 @@ is `Classicism.e`, or `Prop`, or a *non-dependent* arrow whose domain is an `R`-
 whose codomain is a relational `R`-type. Dependency is what rules out the rest of Lean's
 type theory: `(x : σ) → τ x` is not an `R`-type however `σ` and `τ` behave.
 
-A schema over types is written `∀ {σ : Type} [Ty σ] …`, so a bound type variable is an
+A statement about types is written `∀ {σ : Type} [Ty σ] …`, so a type parameter is an
 `R`-type exactly when the telescope guards it with a `Ty`, `Rel` or `Order` instance.
 An unguarded `∀ {σ : Type}` is a genuine quantifier over Lean types and is rejected.
 
@@ -105,7 +105,7 @@ def allowedConstant (env : Environment) (n : Name) : Bool :=
         | some (.recInfo v) => v.all.any (objectInductives.contains ·)
         | _ => false)
 
-/-- State for the type-system walk: the type variables the telescope has guarded, and
+/-- State for the type-system walk: the type parameters the telescope has guarded, and
 the constants already seen. -/
 structure TState where
   guarded : Std.HashSet FVarId := {}
@@ -140,7 +140,7 @@ def guardTarget (e : Expr) : Option Expr :=
     some args[0]!
   else none
 
-/-- Is `e` an `R`-type? Guarded type variables count. -/
+/-- Is `e` an `R`-type? Guarded type parameters count. -/
 partial def isRType (e : Expr) : T Bool := do
   let e ← instantiateMVars e
   let e ← whnf e
@@ -240,8 +240,8 @@ where
     modify fun s => { s with leading := saved }
 
   /-- One binder of a telescope. A `Ty`/`Rel`/`Order` binder registers its subject as a
-  guarded type variable **before** anything is walked, since the binder's own type
-  mentions that variable.
+  guarded type parameter **before** anything is walked, since the binder's own type
+  mentions that parameter.
 
   A binder over a type, or over type-system evidence, is allowed only in the leading
   telescope: as a parameter of the declaration. Inside a formula it would be a quantifier
@@ -256,7 +256,7 @@ where
     if typeBinder then
       if !(st.leading && st.leadingIsLam == isLam) && !isAuxiliary decl then
         terror decl m!"{decl}: the binder `{nm} : {t}` quantifies over types inside a formula. \
-A type variable may only be a parameter of a declaration; a principle is a family of \
+A type may only be a parameter of a declaration; a principle is a family of \
 formulas indexed by types, not one formula quantifying over them"
     else
       modify fun s => { s with leading := false }
@@ -297,13 +297,13 @@ language, its logic, or the formalisation's own metalanguage"
     | _ => pure ()
     modify fun s => { s with leading := saved.leading, leadingIsLam := saved.leadingIsLam }
 
-/-- Every bound type variable in a declaration's *statement* must be guarded by a `Ty`,
+/-- Every type bound in a declaration's *statement* must be guarded by a `Ty`,
 `Rel` or `Order` instance. An unguarded one is a quantifier over Lean types. -/
 def checkTypeBindersGuarded (decl : Name) (stmt : Expr) : T Unit := do
   let rec go (e : Expr) (pending : List (Name × Nat)) (depth : Nat) : T Unit := do
     match e with
     | .forallE nm t b _ =>
-      -- record a new type variable, or discharge a pending one
+      -- record a new type parameter, or discharge a pending one
       let pending :=
         if t.isSort && !isPropSort t then (nm, depth) :: pending
         else match guardTarget t with
@@ -312,7 +312,7 @@ def checkTypeBindersGuarded (decl : Name) (stmt : Expr) : T Unit := do
       go b pending (depth + 1)
     | _ =>
       for (nm, _) in pending do
-        terror decl m!"{decl}: the type variable `{nm}` is not guarded by a `Ty`, `Rel` or \
+        terror decl m!"{decl}: the type parameter `{nm}` is not guarded by a `Ty`, `Rel` or \
 `Order` instance, so the statement quantifies over Lean types rather than over the types of R"
   go stmt [] 0
 

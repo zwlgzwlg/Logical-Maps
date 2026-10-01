@@ -70,7 +70,7 @@ inductive Term (Sig : Signature) : Ctx → Ty → Type
   -- constants with an unfolding rule each, `Term.unfoldR`: at `t` the propositional
   -- operation, at `σ → ρ` the operation at `ρ` applied pointwise, the paper's definition
   -- by recursion on the type read as a δ-rule of conversion. Constants rather than
-  -- functions defined by that recursion, so that at a type *variable* they are nodes of
+  -- functions defined by that recursion, so that at a type *parameter* they are nodes of
   -- the syntax, which renaming and substitution pass through and a derivation by
   -- induction on the type can mention.
   /-- `const_ρ : t → ρ`, the constant relation. -/
@@ -143,7 +143,7 @@ abbrev leR (ρ : RTy) (X Y : Term Sig Γ ρ) : Formula Sig Γ := eq' Y (.app (.a
 
 /-! ### The unfolding of the type-subscripted operations
 
-One step of the paper's recursive definition, at a constructor type. At a type variable
+One step of the paper's recursive definition, at a constructor type. At a type parameter
 there is nothing to unfold, and the constant stands. -/
 
 /-- `const_t` is `λp. p`; `const_{σ→ρ}` is `λp z. const_ρ p`. -/
@@ -176,7 +176,7 @@ def unfoldBoxImp : ∀ (ρ : RTy), Option (Term Sig Γ (ρ ⇒ ρ ⇒ RTy.t))
   | .arr _ ρ => some (.lam (.lam (forall' (.app (.app (.boxImpR ρ) (.app v2 v0)) (.app v1 v0)))))
 
 /-- The unfolding of a term that is a type-subscripted operation at a constructor type;
-`none` for every other term, and stuck at a type variable. -/
+`none` for every other term, and stuck at a type parameter. -/
 def unfoldR : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Option (Term Sig Γ σ)
   | _, _, .constR ρ => unfoldConst ρ
   | _, _, .negR ρ => unfoldNeg ρ

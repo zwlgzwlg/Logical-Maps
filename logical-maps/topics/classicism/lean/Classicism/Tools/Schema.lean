@@ -207,7 +207,7 @@ def impPremise? (s : Expr) : MetaM (Option Expr) := do
 
 /-- The object types of the instances in the strict statement `imp (P₁.strict T…) (… (Q.strict U…))`:
 for each premise and for the conclusion, the quotation of each type argument, with the
-theorem's type parameters read as the object-type variables `tvs` (the derivation's, in
+theorem's type parameters read as the metalogical ones `tvs` (the derivation's, in
 order). -/
 def instanceArgsOf (strictTy : Expr) (tvs : Array Expr) :
     TermElabM (Array (Array Expr) × Array Expr) := do
@@ -216,7 +216,7 @@ def instanceArgsOf (strictTy : Expr) (tvs : Array Expr) :
     let mut j := 0
     for x in xs do
       if (← whnf (← inferType x)).isSort then
-        let some tv := tvs[j]? | throwError "entails: more type parameters than object-type variables"
+        let some tv := tvs[j]? | throwError "entails: more type parameters than the derivation has"
         let kind := if (← whnf (← inferType tv)).isConstOf ``Classicism.Meta.Ty
           then Quote.Kind.ty else Quote.Kind.rty
         tyVars := (x.fvarId!, kind, tv) :: tyVars

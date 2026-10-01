@@ -10,7 +10,7 @@ The translator. `#classicism_derive foo` reads the proof term of a gated shallow
     foo.derivable : ∀ σ' …, Theorem C.axioms(Minus) (foo.quoted σ' …)
 
 a derivation, in the metalogical layer's system, of the sentence the quoter makes of
-`foo`'s statement, with the theorem's type parameters as object-type variables. The kernel
+`foo`'s statement, with the theorem's type parameters read as metalogical ones (`σ' : Ty`, `τ' : RTy`). The kernel
 checks it. So, for each theorem it reaches, the chain is two links: a proof in Lean under
 the gate of `Classicism/Check.lean`, and a derivation in `H` closed under Subst as an
 object of Lean, the translator untrusted.
@@ -30,7 +30,7 @@ gate pays off: `propext h`, whose `h` mentions no hypothesis, is **Subst** at th
 The premises of a Subst are derived at the *logical part* of the axiom set, since that is
 what the rule asks; a theorem cited there is lifted into it.
 
-A class law used at a type variable — `Rel.and_constP_true` at `τ`, `Order.le_iff`,
+A class law used at a type parameter — `Rel.and_constP_true` at `τ`, `Order.le_iff`,
 a law of `Pointwise` — is not an axiom: it is derived once for every object type by
 induction on the type, the `Prop` instance's proof the base case and the arrow instance's
 the step (`ensureFieldInduction`).
@@ -262,7 +262,7 @@ def tRel (ρ : Expr) : Expr := mkApp (mkConst ``Classicism.Meta.Ty.rel) ρ
 def tyT : Expr := tRel rtE
 def tArr (σ ρ : Expr) : Expr := mkApp2 (mkConst ``Classicism.Meta.RTy.arr) σ ρ
 
-/-- Is the relational type `t` or an arrow, rather than a type variable? -/
+/-- Is the relational type `t` or an arrow, rather than a type parameter? -/
 def isConstructorRTy (ρ : Expr) : Bool :=
   ρ.isConstOf ``Classicism.Meta.RTy.t || ρ.isAppOfArity ``Classicism.Meta.RTy.arr 2
 
@@ -415,7 +415,7 @@ where
   ty (e : Expr) : TrM Expr := timed "quote.ty" do (quoteTy e).run (← read).q
   rty (e : Expr) : TrM Expr := timed "quote.ty" do (quoteRTy e).run (← read).q
   /-- A relational operation at the strict type `τ`: as the object constant if `τ` is a
-  type variable, else through the instance, which unfolds at a constructor type. -/
+  type parameter, else through the instance, which unfolds at a constructor type. -/
   relOpAt (e τ : Expr) (k : Expr → TrM (Expr × Expr)) : TrM (Expr × Expr) := do
     let ρ ← rty τ
     if isConstructorRTy ρ then
@@ -493,7 +493,7 @@ where
         | _ =>
           let ex := mkAppN (mkConst ``Classicism.Meta.Term.ex) #[sigE, Γ, σ]
           return (mkTApp Γ (tRel (tArr σ rtE)) rtE ex (← q F).1, tyT)
-      -- a relational operation: at a type variable, the object constant `andR τ'` applied;
+      -- a relational operation: at a type parameter, the object constant `andR τ'` applied;
       -- at a constructor type, the instance unfolds and the operation is read through it
       | (``Classicism.Rel.constP, #[τ, _, p]) =>
         relOpAt e τ fun ρ => return (mkRel ``Classicism.Meta.Term.constR ρ Γ #[(← q p).1], tRel ρ)
@@ -623,7 +623,7 @@ partial def normTy (e : Expr) : MetaM Expr := do
   | _ => return e
 
 /-- Read an object-term expression as a shadow term. Anything that is not a constructor
-of the syntax after `whnf`, such as a relational operation at a type variable, is opaque. -/
+of the syntax after `whnf`, such as a relational operation at a type parameter, is opaque. -/
 partial def shadow (t : Expr) : TrM Tm := do
   let t ← instantiateMVars t
   if let some r := (← get).shadows[t]? then return r
@@ -982,7 +982,7 @@ def liftLogical (thm : Expr) : TrM Expr := do
   mkAppM ``Classicism.Meta.Derivable.mono #[hA, thm]
 
 /-- The mirror classes whose laws are held as fields, with their instances at `Prop` and
-at `σ → τ`. A law cited at a type *variable* is not an axiom: it is derived once for
+at `σ → τ`. A law cited at a type *parameter* is not an axiom: it is derived once for
 every object type, by induction on the type, the `Prop` instance's proof the base case
 and the arrow instance's the step, with the law at the smaller type as hypothesis. -/
 def inductionInstances : Name → Option (Name × Name)
@@ -1100,7 +1100,7 @@ partial def interpCore (t : Expr) : TrM (Expr × Expr) := do
         let t'' ← whnfR t
         if t'' != t then interp t''
         else if let .fvar fid := e then
-          -- a law of a mirror class at a type variable: the induction hypothesis if
+          -- a law of a mirror class at a type parameter: the induction hypothesis if
           -- this is the law being derived by induction, else the law derived for every
           -- object type, at this one
           if let some (_, _, ih) := (← read).ihs.find? (fun (f, j, _) => f == fid && j == i) then
@@ -1108,7 +1108,7 @@ partial def interpCore (t : Expr) : TrM (Expr × Expr) := do
           else if (inductionInstances S).isSome then
             let τ := ty.getAppArgs[0]!
             let some (_, _, tv) := (← read).q.tyVars.find? (·.1 == τ.fvarId!)
-              | throwError "derive: the type {τ} of the instance {e} is not an object type variable"
+              | throwError "derive: the type {τ} of the instance {e} is not a metalogical type parameter"
             let name ← ensureFieldInduction S i
             citeTheorem t (mkApp (mkConst name) tv)
           else throwError "derive: projection {i} of {S} is not handled, of{indentExpr e}\nof type{indentExpr ty}"
@@ -1562,7 +1562,7 @@ partial def paramKinds (ty : Expr) : MetaM (Array (Option Kind)) :=
       else break
     return kinds
 
-/-- Translate the theorem `c` once, at object-type variables for its type parameters,
+/-- Translate the theorem `c` once, at metalogical type parameters for its shallow ones,
 and declare the result as `name : ∀ σ' … ρ' …, Theorem Ax (S σ' … ρ' …)`. A class
 instance among its parameters becomes nothing: the class's operations at the variable
 are the object constants, and its laws are derived by induction on the type. -/
@@ -1645,7 +1645,7 @@ partial def ensureSpecialized (c : Name) (ls : List Level) (params : Array Expr)
   return mkAppN (mkConst name) tys
 
 /-- The specialization of `c` at parameters that involve an instance under induction,
-declared as `c.derivable_n`, abstracted over the object-type variables in scope and the
+declared as `c.derivable_n`, abstracted over the metalogical type parameters in scope and the
 induction hypotheses the parameters involve, and applied to them. -/
 partial def specializeUnderIH (c : Name) (ls : List Level) (params : Array Expr) (ihArgs : Array Expr) : TrM Expr := do
   let tyFvars := (← read).q.tyVars.reverse.toArray.map (fun (id, _, _) => mkFVar id)

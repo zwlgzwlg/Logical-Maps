@@ -140,11 +140,11 @@ needed.
 The paper's type system `R` admits `e`, `t`, and `σ → τ` only when `τ ≠ e`. The class
 `Ty σ` certifies that `σ` is an `R`-type and `Rel τ` that it is a relational one; the
 only instances are `e`, `Prop` and arrows into relational types. So the map's `∀ᵀʸ σ` is
-a parameter `(σ : Type) [Ty σ]` of a declaration, and a schema over relational types
-takes a parameter `(τ : Type) [Rel τ]`.
+a parameter `(σ : Type) [Ty σ]` of a declaration, a **Ty-parameter**, and a principle over
+relational types takes a **Rel-parameter** `(τ : Type) [Rel τ]`.
 
-**No formula quantifies over types.** A principle of the map is a schema, a family of
-formulas indexed by types, and it is stated as exactly that: `Functionality σ τ` is a
+**No formula quantifies over types.** A principle of the map is a family of formulas
+indexed by types, its instances, and it is stated as exactly that: `Functionality σ τ` is a
 formula once `σ` and `τ` are fixed, and there is no proposition `∀ {σ τ}, Functionality σ τ`.
 A record about principles is an implication between *instances*, with the types the
 argument needs as parameters, which the paper reads as a metatheorem. The type check
@@ -167,6 +167,51 @@ types are an inductive, is what lifts it.
 subscripts, and two closed identities that let Intensionality be proved uniformly at
 every relational type. `Ty` is declared in `Type` rather than `Prop` so that an instance
 argument is type-system evidence rather than a hypothesis, which matters to the gate.
+
+## Names: principles, instances and schemas
+
+One name, such as Functionality, labels objects in both layers. In the words this
+project uses:
+
+* a **principle** is the shallow definition, a family of formulas indexed by types:
+  `P.Functionality σ τ` for Lean types `σ`, `τ` that stand for object types;
+* an **instance** is one member of the family: in the shallow layer the Lean proposition
+  `P.Functionality σ τ`, in the metalogic the sentence `P.Functionality.quoted σ' τ'`;
+* a **schema** is the axiom set of all instances, `P.Functionality.schema`, the thing the
+  map's arrows relate.
+
+| name | layer | type | what it is |
+| --- | --- | --- | --- |
+| `P.Functionality` | shallow | `(σ τ : Type) → [Ty σ] → [Rel τ] → Prop` | the principle: for Lean types standing for object types, the instance as Lean states it |
+| `P.Functionality.quoted` | metalogic | `Ty → RTy → Sentence Signature.pure` | the instance at object types, as a sentence |
+| `P.Functionality.reflect` | both | the quoted sentence, read in `Prop` with domain `e`, is `P.Functionality` at the types it denotes | the check on the quoter |
+| `P.Functionality.schema` | metalogic | `AxiomSet Signature.pure` | all the instances: the axiom set |
+| `foo`, e.g. `Proofs.barcan_r_implies_functionality_r` | shallow | `∀ {σ τ} [Ty σ] [Rel τ], P.Barcan σ → P.Functionality σ τ` | a record's proof, under the gate |
+| `foo.derivable` | metalogic | `∀ σ' τ', Theorem C.axioms (imp (P.Barcan.quoted σ') (P.Functionality.quoted σ' τ'))` (in `C⁻` where the proof is) | the translated derivation |
+| `foo.rule` | metalogic | the same, as `C.Theorem` | for a shallow core certified by `#classicism_certify`, the derivation as a rule between instances |
+| `foo.entails` | metalogic | `P.Barcan.schema ⟹ P.Functionality.schema` | the map's arrow, between schemas |
+
+A **shallow core** is a gated shallow theorem that carries a result's argument, certified
+as a rule; the metalogic turns it into the map's arrow, by composing it with other
+entailments or by an induction on the type. ("Kernel" is kept for Lean's kernel.)
+
+A principle with a Ty-parameter has a **restricted form**, its schema, with one instance
+for each type, and a **list form**, with one instance for each finite list of types, the
+empty list included: a variable of the type becomes a block of variables, a quantifier a
+block of quantifiers, identity the conjunction of identities. The list forms are produced
+by the vectorization theorem (`VECTORIZATION-PLAN.md`); `P.X.listSchema` and
+`foo.listEntails` join the table when they are generated.
+
+**Type parameters and type variables.** The two are different things.
+
+| | type parameter | type variable |
+| --- | --- | --- |
+| what | a variable *of Lean* that stands for a type | a type *of the object language* about which nothing is known |
+| where | shallow: `σ : Type` with `[Ty σ]` (a Ty-parameter) or `[Rel τ]` (a Rel-parameter); metalogic: `σ' : Ty`, `τ' : RTy` | `Ty.var i`, part of the syntax, bound by nothing |
+| ranges over | all types; a proof of `∀ σ', …` may split on `σ'` | nothing: it is one type, never relational |
+| used for | stating principles and records, and their translations | the vectorization theorem: a derivation at a type variable uses nothing about it, so carries over to any list of types |
+
+A **closed** type is one with no type variable; the closed types are the paper's.
 
 ## The metalogical layer
 
@@ -200,7 +245,7 @@ outline:
   shallow proofs; the **quoter**, reading a shallow statement as a sentence with a
   reflection theorem; the **translator**, reading a gated shallow proof as a derivation
   (`propext` on a closed biconditional is Subst, `funext` its consequence at every type,
-  a class law at a type variable is derived by induction on the type); and the pipeline
+  a class law at a type parameter is derived by induction on the type); and the pipeline
   that reads principles as schemas and records as entailments and rules.
 * `Classicism/Certified/`: what the pipeline certifies at build time — every record
   theorem quoted, derived and read as an entailment, 28 of 28, in seconds.
@@ -219,7 +264,7 @@ Classicism/Pointwise.lean               the pointwise laws of ⊑ at a relationa
 Classicism/Lattice.lean                 Atom, the bounds LB/GLB/UB/LUB, ActualWorld, the order at t as identities
 Classicism/Principles.lean              one Prop per principle of the map
 
-Classicism/Syntax/Types.lean            the types of R as an inductive; induction on relational types
+Classicism/Syntax/Types.lean            the types of R as an inductive, with type variables; closed types; σs ⇒* ρ
 Classicism/Syntax/Term.lean             intrinsically typed de Bruijn terms; renaming, substitution
 Classicism/Syntax/Conversion.lean       β, η, δ, one-step and equivalence closures; ≡
 Classicism/Syntax/Derivation.lean       derivability in H closed under Subst; terms with a hole; substEq
@@ -230,6 +275,9 @@ Classicism/Syntax/Sentences.lean        ND, BF and the Fregean Axiom as sentence
 Classicism/Syntax/Constants.lean        the constants a term mentions
 Classicism/Syntax/Pure.lean             the pure language inside every signature: terms and derivations carried across
 Classicism/Syntax/Normalize.lean        a verified βη-normalizer; conversion by reflection
+Classicism/Syntax/Blocks.lean           blocks of variables: tuples, block abstraction, quantifiers and identity, their rules
+Classicism/Syntax/Vectorize.lean        a type variable replaced by a list of types: the translation of terms and holes
+Classicism/Syntax/VectorizeDerivable.lean  the vectorization theorem: a derivation survives vectorization
 Classicism/Syntax/Examples.lean         computed checks, hand derivations, reflection by rfl
 
 Classicism/Semantics/Denotation.lean    the standard model in Prop; soundness; C is consistent
@@ -266,7 +314,7 @@ Classicism/Tools/Schema.lean            principles as schemas; records as entail
 Classicism/Tools/Audit.lean             the audits over the shallow layer, run at build time
 Classicism/Tools/Tests.lean             negative and positive controls for the checkers
 
-Classicism/Results/Arity.lean           the map's arity results: BF over tuples by induction, kernels at a type variable, composition
+Classicism/Results/Arity.lean           the map's arity results: BF over tuples by induction, shallow cores at a type parameter, composition
 scripts/FunKinds.lean                   which `fun`s in a file are terms (written λ … ↦) and which are proofs
 
 Classicism/Certified/Quoted.lean        the record theorems quoted; home of foo.quoted
@@ -274,6 +322,7 @@ Classicism/Certified/Derived.lean       two derivations checked at build time
 Classicism/Certified/Schemas.lean       the principles as schemas; home of P.schema
 Classicism/Certified/Derivations.lean   the record theorems derived; home of foo.derivable
 Classicism/Certified/Entailed.lean      the records as entailments; home of foo.entails
+Classicism/Certified/Vectorized.lean    checks of the vectorization on three principles and one arrow
 
 Classicism/Strict/                      the strict layer; see its README
 ```
@@ -313,7 +362,7 @@ over a module. It enforces four things.
 * **Types are types of `R`.** An `R`-type as a Lean expression is `e`, `Prop`, or a
   *non-dependent* arrow whose domain is an `R`-type and whose codomain is a relational
   one. Dependency is what excludes the rest of Lean's type theory.
-* **Type variables are guarded parameters.** A type parameter `{σ : Type} [Ty σ]` counts
+* **Type parameters are guarded.** A type parameter `{σ : Type} [Ty σ]` counts
   as an `R`-type exactly when the telescope guards it with a `Ty`, `Rel` or `Order`
   instance; an unguarded one is a real quantifier over Lean types and is rejected. And a
   binder over a type may occur only in the leading telescope of a declaration, never inside

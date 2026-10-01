@@ -8,7 +8,7 @@ Every record theorem of `Classicism/Results/Records.lean`, quoted into the objec
 checked by reflection: for each `foo : p` that the quoter reaches, `foo.quoted` is the
 sentence and `foo.reflect` the kernel-checked proof that reading it back gives `p`, by
 `rfl` where the reading is definitional and by rewriting where a relational operation
-sits at a type variable or the shallow connectives are read (`Meta/Relational.lean`).
+sits at a type parameter or the shallow connectives are read (`Meta/Relational.lean`).
 This is the one home of those declarations.
 -/
 

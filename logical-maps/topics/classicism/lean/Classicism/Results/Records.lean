@@ -90,7 +90,7 @@ theorem necessary_barcan_t_implies_barcan_t : NecBarcanT → BarcanT := box_elim
 theorem necessary_distinctness_necessary_t_implies_distinctness_necessary_t :
     NecNecessityOfDistinctnessT → NecessityOfDistinctnessT := box_elim
 
-/-- `barcan-r-implies-barcan-t`: BF at type `t` is the instance of the schema at `t`. -/
+/-- `barcan-r-implies-barcan-t`: BF at type `t` is the principle's instance at `t`. -/
 theorem barcan_r_implies_barcan_t : Barcan Prop → BarcanT := fun bf => bf
 
 /-! ### Extensionality (Classicism, §1.4) -/
@@ -263,7 +263,7 @@ and Plenitude that a shallow proof reaches. The constructions of a greatest lowe
 and of a comprehension witness are written at type `t` (or `σ → t`), where they are
 propositions (or properties); the map's records range over every relational type, and
 the paper says "parallel arguments establish the proposition at other relational
-types". At a type variable the shallow layer cannot write `λz̄. ∀Y. X*Y → Y z̄`, so the
+types". At a type parameter the shallow layer cannot write `λz̄. ∀Y. X*Y → Y z̄`, so the
 uniform statement is one for the metalogical layer, by induction on the arity. -/
 
 /-- `necessary-actuality-implies-actuality`: `T`. -/

@@ -262,7 +262,7 @@ theorems, passes `#classicism_strict_audit` and `#classicism_types_audit` at bui
 `congrArg`; the third uses Absorption-∨∀ under the binders and a Boolean lemma, and contains
 no `funext`, where the shallow instance has two. `SOrder`'s law at each instance is the
 `.nec` the transformer produces from the shallow proof, so nothing about `Order` was proved
-by hand. The type check caught two helper lemmas of mine with unguarded type variables, now
+by hand. The type check caught two helper lemmas of mine with unguarded type parameters, now
 guarded. The transformer gained a registry (`#classicism_mirror`, `#classicism_nec`) and
 translation of a theorem's parameters, so that `[Rel τ]` becomes `[SRel τ]`.
 
@@ -273,7 +273,7 @@ import. The outputs now have one home, `Classicism/Transformed.lean`, which both
 **Principles as families, 22 September.** The outer mode was built and then removed.
 Cian's ruling: `□S` for a schema `S` is the family of boxed instances, and "schema A
 implies schema B" is a metalogical statement; what belongs in either layer is the
-instance-level statement, with type variables as parameters, and the shallow layer must
+instance-level statement, with the types as parameters, and the shallow layer must
 certify nothing the strict layer cannot reach. So every principle is now a family
 `P.Name σ τ … : Prop` with explicit type parameters, every record is an implication between
 instances naming the types the argument uses, and the type-system check rejects a binder
@@ -401,7 +401,7 @@ share from 109 s to 33 s, with 407 specializations of library lemmas.
 The library-wide run on the faster build found, in its first sixty theorems, twelve
 failures with one cause: a law of a mirror class — `SRel.and_constP_true`, `coext_refl`,
 `SOrder.le_iff`, held as fields and proved once at `Prop` and once at an arrow from the
-law at the smaller type — cited at a type *variable*, which is neither an axiom nor a
+law at the smaller type — cited at a type *parameter*, which is neither an axiom nor a
 theorem. There is no single derivation of such a law; there is one for every object
 type, by induction on the type, and the translator now builds it through `RTy.rec`,
 the `Prop` instance's proof translated as the base case and the arrow instance's as the
@@ -411,17 +411,17 @@ place instead and thrashed for forty minutes.
 
 The first derivation by induction then failed in the kernel, and the failure was a
 design fault: the relational operations were functions on terms by recursion on the
-type, and a function stuck at a type variable is not a node of the syntax, so `close`,
+type, and a function stuck at a type parameter is not a node of the syntax, so `close`,
 `weaken` and `instantiate` could not pass through it and the kernel could not see
 `close S ≡ S`. With Cian's agreement (23 September) `∧_τ` and the other six are now
 constructors of `Term`, their recursion the δ-rule of conversion (`Term.unfoldR`,
 `Conv.delta`), their reading a recursion on the Lean side, and the bridge to the strict
 layer's `SRel` a lemma per operation as before. Every proof over the syntax gained seven
 trivial cases. A first attempt put δ into the kernel-evaluated normalizer, where it is
-stuck at a type variable and so useless — a stuck term on one side of `nf n a = b`
+stuck at a type parameter and so useless — a stuck term on one side of `nf n a = b`
 matches nothing — so δ stays out of the normalizer: the translator unfolds an operation
 at a constructor type itself, by `Conv.delta rfl` under congruences, and the quoters
-emit an operation constant only at a type variable, reading it through the unfolded
+emit an operation constant only at a type parameter, reading it through the unfolded
 instance at a constructor type. After that `SRel.coext_refl_nec.derivable : ∀ τ',
 Theorem C⁻ (∀X. coext_τ' X X = ⊤)` checked in two seconds, the first theorem of this
 project proved by induction on the structure of a relational type. Reflection over the
@@ -431,8 +431,8 @@ The rest of that day went to the cost, and found the architecture. Each derivati
 specializing every cited lemma at the types it was used at, re-deriving the Boolean
 identities through the arrow instances' congruence proofs at each type; `ll_lam`, whose
 tautology sits three arrows deep, spent hours in the kernel. With the operations now
-constants at a type variable, every class-parametric lemma is translated **once, at
-object-type variables**, `BA` joins `SRel` and `SOrder` in the induction on the type, and a
+constants at a type parameter, every class-parametric lemma is translated **once, at
+metalogical type parameters**, `BA` joins `SRel` and `SOrder` in the induction on the type, and a
 citation applies the one derivation to the object types it needs. The proof term is
 walked as a DAG (memoized): `ll_lam`'s is 4,407 nodes shared and 1,516,016 as a tree.
 Then three measurements about the kernel: a two-sided `Conv.of_nf n a b` makes it
@@ -568,7 +568,7 @@ is Prior's, as the record says.
 ## Remaining barriers
 
 - **The term-level type-system check now exists** and all 124 theorems pass it. It
-  enforces that every type is a type of `R`, that every bound type variable is guarded by
+  enforces that every type is a type of `R`, that every type parameter is guarded by
   a `Ty`, `Rel` or `Order` instance, and that every constant comes from a three-part
   whitelist. Writing it found two real laxities, recorded under the 21 September revision.
   Its one weakening: inside an elaboration auxiliary only the constant whitelist runs,
@@ -867,7 +867,7 @@ at the base of every such variant).
 records added to `Results/Records.lean`. Twelve records of the map proved at every arity,
 listed in `HANDOFF.md` §4a.
 
-*Checked.* The full build passes; every shallow step and kernel is certified by
+*Checked.* The full build passes; every shallow step and shallow core is certified by
 `#classicism_certify` (a derivation checked by the kernel, read as a rule between schema
 instances) and `#classicism_entails`; the new `Pointwise` laws are derived for every type
 by the translator's induction; the metalogical theorems are kernel-checked compositions

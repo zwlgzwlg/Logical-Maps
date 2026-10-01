@@ -9,7 +9,7 @@ reading a strict **statement**, a Lean proposition, as a sentence of the object 
 `#classicism_quote foo` declares two things for a theorem `foo : p`:
 
 * `foo.quoted : Ty → … → Sentence Signature.pure`, the sentence, with each of `foo`'s type
-  parameters made an object-type variable; and
+  parameters made a metalogical one (`σ' : Ty`); and
 * `foo.reflect : ∀ σ …, Sentence.holds (Interp.ofDomain e) (foo.quoted σ …) = p[σ := ⟦σ⟧]`,
   proved by `rfl`, in the interpretation whose domain is the Lean type `e` itself, since
   the statement may mention it.
@@ -17,7 +17,7 @@ reading a strict **statement**, a Lean proposition, as a sentence of the object 
 The second is the check. The quoter is a meta-program and not trusted; if it produced the
 wrong sentence, or an ill-typed one, the reflection equation would fail to elaborate or
 the kernel would reject `rfl`. So a quoted sentence that passes reads back as exactly the
-strict statement, with the type variables read as any object types.
+strict statement, with the type parameters read as any object types.
 
 ## What is quoted
 
@@ -27,7 +27,7 @@ The vocabulary of strict statements: `Prop`, `e`, arrows, local variables, `∧`
 result quoted; so a definition such as `P.Functionality.strict` quotes through its body.
 A class operation of `SRel`, at any type, becomes the corresponding operation of
 `Meta/Relational.lean`, defined by recursion on the type; at a concrete type that computes
-to the pointwise formula, and at a type variable it stays as `andR τ'` and the like.
+to the pointwise formula, and at a type parameter it stays as `andR τ'` and the like.
 
 Type parameters guarded by `Ty` become variables of type `Ty`; those guarded by `RelTy`,
 `SRel`, `SOrder` or `SPointwise`, variables of type `RTy`, whose readings carry the strict layer's
@@ -45,7 +45,7 @@ inductive Kind
   | rty
   deriving BEq, Inhabited
 
-/-- The reading of the local context: Lean type parameters to object-type variables, and
+/-- The reading of the local context: shallow type parameters to metalogical ones, and
 Lean object variables, innermost first, to their object types. -/
 structure QCtx where
   tyVars : List (FVarId × Kind × Expr) := []
@@ -88,7 +88,7 @@ partial def quoteTy (e : Expr) : QM Expr := do
     match (← read).tyVars.find? (·.1 == id) with
     | some (_, .ty, x) => return x
     | some (_, .rty, x) => return relE x
-    | none => throwError "quote: the type variable {e} is not a parameter of the statement"
+    | none => throwError "quote: the type {e} is not a parameter of the statement"
   | .forallE _ d b _ =>
     if b.hasLooseBVars then throwError "quote: a dependent type {e} is not a type of R"
     return relE (mkApp2 (mkConst ``Classicism.Meta.RTy.arr) (← quoteTy d) (← quoteRTy b))
@@ -131,8 +131,8 @@ mutual
 
 /-- A relational operation of the strict layer's class `SRel`, at the type `τ`: the
 object-language constant `op τ'` of `Meta/Term.lean` applied to the arguments, when `τ`
-is a type variable; at a constructor type the strict instance unfolds and the operation
-is read through it, so the constants stand only at type variables. -/
+is a type parameter; at a constructor type the strict instance unfolds and the operation
+is read through it, so the constants stand only at type parameters. -/
 partial def relOp (e τ : Expr) (op : Name) (args : Array Expr) : QM (TSyntax `term) := do
   let ρ ← quoteRTy τ
   if ρ.isConstOf ``Classicism.Meta.RTy.t || ρ.isAppOfArity ``Classicism.Meta.RTy.arr 2 then
@@ -333,13 +333,13 @@ def quoteStatement (ty : Expr) : TermElabM (Expr × Expr × Expr) := do
         if cls == ``Classicism.Ty then pure ()
         else if cls == ``Classicism.RelTy || cls == ``Classicism.Rel || cls == ``Classicism.Order
             || cls == ``Classicism.Pointwise then
-          -- a relational guard on a parameter makes it a relational-type variable
+          -- a relational guard on a parameter makes it a Rel-parameter
           if let some idx := kinds.findIdx? (·.1 == σ) then kinds := kinds.set! idx (σ, .rty)
         else throwError "quote: a parameter of class {cls} has no object-language reading"
         insts := insts.push x; k := k + 1
       else break
     let stmt ← mkForallFVars (xs.extract k xs.size) body
-    -- object-type variables, one per type parameter
+    -- metalogical type parameters, one per shallow one
     let rec go (i : Nat) (ctx : QCtx) (tvs : Array Expr) : TermElabM (Expr × Expr × Expr) := do
       if h : i < kinds.size then
         let (σ, kind) := kinds[i]
@@ -355,14 +355,14 @@ def quoteStatement (ty : Expr) : TermElabM (Expr × Expr × Expr) := do
         if sentence.hasMVar then throwError "quote: the sentence has unresolved holes:{indentExpr sentence}"
         let quoted ← mkLambdaFVars tvs sentence
         -- the reflection statement: `e` reads as the Lean type `e`, since the statement
-        -- mentions it, and the type variables read as `⟦σ'⟧` over that domain
+        -- mentions it, and the type parameters read as `⟦σ'⟧` over that domain
         let D : Expr := Expr.const ``Classicism.e []
         do
           let I := mkApp (mkConst ``Classicism.Meta.Interp.ofDomain) D
           let lhs := mkApp3 (mkConst ``Classicism.Meta.Sentence.holds)
             (mkConst ``Classicism.Meta.Signature.pure) I (mkAppN quoted tvs)
           -- instantiate the original statement's parameters, one binder at a time: a type
-          -- parameter by the reading of its object-type variable, an instance by the marker
+          -- parameter by the reading of its metalogical parameter, an instance by the marker
           let mut rhs := ty
           let mut ti := 0
           for _ in [0:k] do
@@ -380,10 +380,10 @@ def quoteStatement (ty : Expr) : TermElabM (Expr × Expr × Expr) := do
                 if cls == ``Classicism.Ty then pure (tyMk subject)
                 else if cls == ``Classicism.RelTy then pure (relTyMk subject)
                 else
-                  -- `Rel`/`Order`/`Pointwise` on the reading of a relational-type variable: the
+                  -- `Rel`/`Order`/`Pointwise` on the reading of a Rel-parameter: the
                   -- recursive instances of `Meta/Relational.lean`
                   let some (_, ρ) := subject.app2? ``Classicism.Meta.RTy.denote
-                    | throwError "quote: an instance of {cls} on {subject}, which is not the reading of a type variable"
+                    | throwError "quote: an instance of {cls} on {subject}, which is not the reading of a type parameter"
                   if cls == ``Classicism.Rel then
                     pure (mkApp2 (mkConst ``Classicism.Meta.instRelDenote) D ρ)
                   else if cls == ``Classicism.Order then
@@ -393,7 +393,7 @@ def quoteStatement (ty : Expr) : TermElabM (Expr × Expr × Expr) := do
           let eq ← mkEq lhs rhs
           let reflectTy ← mkForallFVars tvs eq
           -- by `rfl` when the two sides are definitionally equal, which they are unless a
-          -- relational operation sits at a type variable; otherwise by rewriting with the
+          -- relational operation sits at a type parameter; otherwise by rewriting with the
           -- lemmas of `Meta/Relational.lean`, one per operation, proved by induction
           let reflectVal ←
             if ← withReducible (pure ()) *> isDefEq lhs rhs then

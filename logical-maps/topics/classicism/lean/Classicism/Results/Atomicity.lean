@@ -21,7 +21,7 @@ of object-level reasoning inside. Here it is an induction on the relational type
 argument type at a time:
 
 1. **The step**, in the shallow layer: `Atomicity τ → BF σ → Atomicity (σ → τ)`, a
-   theorem of Classicism at the type variables `σ`, `τ`, proved with Lean's own tactics,
+   theorem of Classicism at the type parameters `σ`, `τ`, proved with Lean's own tactics,
    `simp` among them: its proof terms cite `eq_self`, which is `eq_true rfl`, and the
    gate checks `eq_true` at the use site as it checks `propext` (see `Tools/Check.lean`).
    The pointwise reasoning at `τ` ("by Leibniz's law", "under the box") is the class

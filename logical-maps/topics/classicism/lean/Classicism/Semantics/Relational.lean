@@ -25,7 +25,7 @@ the shallow layer is `instRelDenote`, which equips the standard reading of each 
 type with its `Rel` instance by that recursion, and one lemma per operation, proved by
 induction on the type, saying that reading `∧_τ` back gives `Rel.and`. These are what
 let the quoter handle a shallow statement with a parameter `[Rel τ]`: the operations at
-the type variable `τ` become `andR τ'` and the rest, and reflection, no longer `rfl`, is
+the type parameter `τ` become `andR τ'` and the rest, and reflection, no longer `rfl`, is
 these lemmas.
 -/
 

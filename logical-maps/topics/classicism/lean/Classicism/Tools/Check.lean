@@ -48,7 +48,7 @@ as `e → e` that the relational system does not admit, or recurse over `Nat`, a
 satisfy both conditions: `Classicism/Tests.lean` contains three such proofs and asserts
 that they pass here. **`Classicism/TypeSystem.lean` is what rejects them**, with
 `#classicism_types` and `#classicism_types_audit`. It checks that every type is a type of
-`R`, that every bound type variable is guarded by a `Ty`, `Rel` or `Order` instance, and
+`R`, that every type parameter is guarded by a `Ty`, `Rel` or `Order` instance, and
 that every constant comes from a whitelist of the logical inductives, the `Eq` plumbing
 and the formalisation's own metalanguage.
 

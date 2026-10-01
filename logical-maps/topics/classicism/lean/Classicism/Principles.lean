@@ -10,12 +10,15 @@ One definition per principle of the map that this first step covers, named as th
 ## Principles are families of formulas, indexed by types
 
 The map's metalinguistic quantifier `∀ᵀʸ σ` ranges over *types*, and a principle is a
-**schema**: a family of formulas, one for each choice of types. No formula of the paper's
-language quantifies over types, so a schema is not itself a formula, and it is not
-rendered here as one Lean proposition quantifying over types. Each principle takes its
-types as **explicit parameters** and is a formula once they are fixed: `Functionality σ τ`
-is `(∀z. Xz = Yz) → X = Y` for `X Y : σ → τ`, and `Barcan Prop` is BF at type `t`. The
-guards `[Ty σ]`, `[Rel τ]` are the map's side conditions on the types.
+family of formulas, its **instances**, one for each choice of types. No formula of the
+paper's language quantifies over types, so a principle is not itself a formula, and it is
+not rendered here as one Lean proposition quantifying over types. Each principle takes its
+types as explicit **type parameters** and is a formula once they are fixed:
+`Functionality σ τ` is `(∀z. Xz = Yz) → X = Y` for `X Y : σ → τ`, and `Barcan Prop` is BF
+at type `t`. The guards `[Ty σ]` (a **Ty-parameter**) and `[Rel τ]` (a **Rel-parameter**)
+are the map's side conditions on the types. The set of a principle's instances, as
+sentences of the object language, is its **schema**, `P.X.schema`
+(`Certified/Schemas.lean`); the README sets out these names.
 
 This is what the type-system check enforces: a binder over a type may be a parameter of a
 declaration, never a quantifier inside a formula. A record about principles is then an
@@ -23,7 +26,7 @@ implication between *instances*, with the types the argument needs as parameters
 the paper reads as a metatheorem and which keeps every certified statement within the
 strict layer's reach.
 
-`□S` for a schema `S` is likewise the family of `□`-prefixed instances, so a boxed
+`□P` for a principle `P` is likewise the family of `□`-prefixed instances, so a boxed
 principle boxes the formula after its type parameters, as the Background says.
 
 Definitions are from `topics/classicism/background.md`; each statement is the record's
