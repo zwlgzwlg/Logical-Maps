@@ -343,6 +343,12 @@ Maximalism (signature Σ) stands to Possibility Maximalism (pure).</li>
 closed sentence of the language of the fixed signature Sigma.</li>
 <li><strong>Inextensible Comprehension.</strong> Every relation,
 including a proposition, is coextensive with a inextensible one.</li>
+<li><strong>Transversal.</strong> There is a property of properties that
+picks out exactly one property from each coextension class, that is,
+exactly one property coextensive with any given property.</li>
+<li><strong>□Transversal.</strong> Every closed instance of Transversal
+is necessary. Box the entire object-variable closure; retain the same
+type range and other schema side conditions.</li>
 <li><strong>¬ Actuality.</strong> There is a true proposition that
 entails every true proposition.</li>
 <li><strong>¬ Atomicity (type t).</strong> Atomicity (type t) in the
@@ -408,7 +414,67 @@ arbitrary nonzero proposition rather than for a true one, and the
 failure of ND at type e follows from the presence of a non-injective
 surjection, since the proposition that two fixed individuals are
 identical is then a nonzero proposition; neither is displayed separately
-in the draft. The source is a work in progress. Interpretation of Σ,
+in the draft. The source is a work in progress.</p>
+<p>Transversal holds at every type, and so does its necessitation. Write
+<span class="math inline">A_h</span> for the extension of a property
+<span class="math inline">A</span> at the arrow <span
+class="math inline">h</span>; transport gives <span
+class="math inline">(k\cdot A)_h=A_{h\circ k}</span>, symmetry gives
+<span class="math inline">A_{g\circ h}=g\cdot A_h</span> for
+permutations <span class="math inline">g</span>, and pinning by <span
+class="math inline">S</span> makes <span class="math inline">A_h</span>
+depend only on <span class="math inline">h{\restriction}S</span>. If
+<span class="math inline">A</span> is pinned by <span
+class="math inline">S</span>, every permutation fixing <span
+class="math inline">S</span> pointwise fixes <span
+class="math inline">E:=A_{\mathbf 1}</span>; finite supports for the
+full permutation group are closed under intersection, so <span
+class="math inline">E</span> has a least support <span
+class="math inline">S_E</span>, and <span class="math inline">S_{g\cdot
+E}=g[S_E]</span>. Let <span class="math inline">\hat E</span> have
+extension <span class="math inline">g\cdot E</span> at <span
+class="math inline">h</span> when <span class="math inline">h</span> is
+injective on <span class="math inline">S_E</span>, for any permutation
+<span class="math inline">g</span> agreeing with <span
+class="math inline">h</span> on <span class="math inline">S_E</span>
+(well defined, since two such <span class="math inline">g</span> differ
+by a permutation fixing <span class="math inline">S_E</span>), and <span
+class="math inline">\varnothing</span> when it is not. Then <span
+class="math inline">\hat E</span> is pinned by <span
+class="math inline">S_E</span>, symmetric, and coextensive with <span
+class="math inline">A</span> at <span class="math inline">\mathbf
+1</span>, and <span class="math inline">g\cdot\hat E=\widehat{g\cdot
+E}</span>. So the property <span class="math inline">F</span> whose
+extension at every arrow is the set of all such <span
+class="math inline">\hat E</span> is pinned by <span
+class="math inline">\varnothing</span> and symmetric, hence in the
+domain; at <span class="math inline">\mathbf 1</span> it holds of
+exactly one property coextensive with any given property, since <span
+class="math inline">\hat E</span> is determined by <span
+class="math inline">E</span>. Qualitatively, <span
+class="math inline">F</span> holds of <span class="math inline">X</span>
+iff the least pinning set of <span class="math inline">X</span> is the
+least support of its actual extension and, necessarily, if <span
+class="math inline">X</span> is instantiated then the members of that
+set are pairwise distinct; the minimality clause is needed, since a
+property pinned by <span class="math inline">S_E</span> together with
+one further point, and empty wherever that point collides with <span
+class="math inline">S_E</span>, is coextensive with <span
+class="math inline">\hat E</span> but distinct from it. Since a
+one-object model has No Pure Contingency and <span
+class="math inline">F</span> is pinned by <span
+class="math inline">\varnothing</span>, every instance of Transversal
+holds at every world. The witness was proposed by GPT-6 on 30 September
+2026 and checked on 1 October 2026.</p>
+<p>Open question: is there a closed term of the language, at each type,
+that denotes this classifier <span class="math inline">F</span>?
+Pairwise distinctness over a variable number of individuals is
+expressible with a plural variable <span class="math inline">Y^{e\to
+t}</span>, as <span class="math inline">\forall y\,y&#39;\,((Yy\land
+Yy&#39;\land y\ne y&#39;)\to\Box(\exists z\, .\,Xz\to y\ne
+y&#39;))</span>. What is not obvious is how to say in the object
+language that <span class="math inline">X</span> is minimally pinned
+down by the <span class="math inline">Y</span>s. Interpretation of Σ,
 fixed for this record: each relational constant denotes the top element
 of its type and each individual constant denotes one fixed individual
 <span class="math inline">d</span>. Under it the signature schemata that
@@ -583,6 +649,13 @@ extensions. This proposal has not been promoted to a verified property
 of this model.</p>
 <h2 id="revisions">Revisions</h2>
 <ul>
+<li><strong>2026-10-01</strong> (Claude Opus 5.5 (Anthropic), checked by
+Cian Dorr) — Recorded Transversal and its necessitation at every type,
+verifying GPT-6’s proposed least-support witness of 30 September; see
+the notes. The separate conjectured record
+symmetric-all-surjections-transversal is retired. Added the open
+question whether the classifier is denoted by a closed term. Now
+satisfies: Transversal, □Transversal.</li>
 <li><strong>2026-09-30</strong> (GPT-6 (OpenAI Codex), at Zachary
 Goodsell’s request) — Linked the separate bronze-tier conjecture
 symmetric-all-surjections-transversal and its proposed least-support
@@ -636,6 +709,10 @@ Axiom of Infinity (type t).</li>
 Completeness does not imply Rigid Comprehension, draft of 30 July 2026,
 §3.1, p. 9 (base); Proposition 22, p. 11; Proposition 23, p. 12; Theorem
 36, p. 18; Corollary 37 and Remark 38, p. 19.</li>
+<li><strong>GPT-6 proposal 30 Sep; checked 1 Oct</strong> — GPT-6
+(OpenAI Codex), proposed least-support witness for Transversal, 30
+September 2026, at Zachary Goodsell’s request; checked by Claude Opus
+5.5 (Anthropic) and Cian Dorr, 1 October 2026.</li>
 </ul>
 <p class="cert">
 Record:
