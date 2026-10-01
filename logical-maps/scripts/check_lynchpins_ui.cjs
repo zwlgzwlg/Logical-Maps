@@ -439,23 +439,28 @@ try {
 
   // Regression: a conjecture about a specific model must appear under the
   // default principle filters and star that model's actual central checks.
+  // It runs on whichever such conjecture the classicism data currently records (the first, Base 1's
+  // Transversal, was settled on 1 October 2026), and is skipped while there is none.
   const classicism=JSON.parse(fs.readFileSync(path.join(root,'build/classicism/data.json'),'utf8'));
+  const named=classicism.models.find(m=>m.status==='conjectured'&&m.model_check&&m.tier);
+  if(named) {
   const real=page(classicism),rd=real.window.document;
   show(real,'open');open(real,true,'lynchpins');open(real,true,'open-recorded');
-  const namedId='symmetric-all-surjections-transversal';
-  for(const principle of ['transversal-r','necessary-transversal-r']) {
-    const key=`check|symmetric-all-surjections|${principle}`;
+  const namedId=named.id, checks=[...named.model_check.satisfies,...named.model_check.violates];
+  for(const principle of checks) {
+    const key=`check|${named.model_check.model}|${principle}`;
     for(const section of ['lynchpins','open-recorded']) {
       const tr=rd.querySelector(`#${section} [data-lynchpin="${key}"]`);
       assert.ok(tr,`${section}: Base 1 ${principle} is visible with default filters`);
-      assert.equal(tr.dataset.starred,'bronze');
-      assert.ok(tr.querySelector('.star.iridescent.bronze'));
+      assert.equal(tr.dataset.starred,named.tier);
+      assert.ok(tr.querySelector(`.star.iridescent.${named.tier}`));
       assert.ok(tr.querySelector(`[data-open-model="${namedId}"]`));
     }
     assert.deepEqual(scores(real,key,'open-recorded'),scores(real,key,'lynchpins'));
   }
-  assert.equal(rd.querySelectorAll(`#open-recorded [data-open-model="${namedId}"]`).length,2,'only the two proposed model checks, no hidden implication package');
+  assert.equal(rd.querySelectorAll(`#open-recorded [data-open-model="${namedId}"]`).length,checks.length,'only the proposed model checks, no hidden implication package');
   assert.equal(real.window.eval(`allEvidenceE.resolveConjecture(byMid.get('${namedId}')).status`),'open');
+  }
 
   // Negative model-check conjectures state the failed property explicitly.
   const negativeCheck={...chk('m1','r',{yes:6,no:3}),rank:1,claim:'not',tier:'bronze',conjectures:[mrec('negative-check','A proposed failure.')]};

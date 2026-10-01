@@ -12,6 +12,8 @@ satisfies:
 - no-contingency-signature-r
 - signature-b-r
 - inextensible-comprehension-r
+- transversal-r
+- necessary-transversal-r
 violates:
 - actuality
 - atomicity-t
@@ -34,8 +36,12 @@ sources:
 - Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, §3.1, p.
   9 (base); Proposition 22, p. 11; Proposition 23, p. 12; Theorem 36, p. 18; Corollary 37 and Remark 38,
   p. 19.
+- >-
+  GPT-6 (OpenAI Codex), proposed least-support witness for Transversal, 30 September 2026, at Zachary
+  Goodsell's request; checked by Claude Opus 5.5 (Anthropic) and Cian Dorr, 1 October 2026.
 source_names:
 - BC does not imply RC
+- GPT-6 proposal 30 Sep; checked 1 Oct
 references:
 - paper: dorr-bc-not-rc
   role: proof
@@ -78,6 +84,32 @@ notes: >-
   rather than for a true one, and the failure of ND at type e follows from the presence of a
   non-injective surjection, since the proposition that two fixed individuals are identical is then a
   nonzero proposition; neither is displayed separately in the draft. The source is a work in progress.
+
+
+  Transversal holds at every type, and so does its necessitation. Write $A_h$ for the extension of a
+  property $A$ at the arrow $h$; transport gives $(k\cdot A)_h=A_{h\circ k}$, symmetry gives $A_{g\circ
+  h}=g\cdot A_h$ for permutations $g$, and pinning by $S$ makes $A_h$ depend only on $h{\restriction}S$.
+  If $A$ is pinned by $S$, every permutation fixing $S$ pointwise fixes $E:=A_{\mathbf 1}$; finite
+  supports for the full permutation group are closed under intersection, so $E$ has a least support
+  $S_E$, and $S_{g\cdot E}=g[S_E]$. Let $\hat E$ have extension $g\cdot E$ at $h$ when $h$ is injective
+  on $S_E$, for any permutation $g$ agreeing with $h$ on $S_E$ (well defined, since two such $g$ differ by
+  a permutation fixing $S_E$), and $\varnothing$ when it is not. Then $\hat E$ is pinned by $S_E$,
+  symmetric, and coextensive with $A$ at $\mathbf 1$, and $g\cdot\hat E=\widehat{g\cdot E}$. So the
+  property $F$ whose extension at every arrow is the set of all such $\hat E$ is pinned by $\varnothing$
+  and symmetric, hence in the domain; at $\mathbf 1$ it holds of exactly one property coextensive with
+  any given property, since $\hat E$ is determined by $E$. Qualitatively, $F$ holds of $X$ iff the
+  least pinning set of $X$ is the least support of its actual extension and, necessarily, if $X$ is
+  instantiated then the members of that set are pairwise distinct; the minimality clause is needed, since
+  a property pinned by $S_E$ together with one further point, and empty wherever that point collides with
+  $S_E$, is coextensive with $\hat E$ but distinct from it. Since a one-object model has No Pure
+  Contingency and $F$ is pinned by $\varnothing$, every instance of Transversal holds at every world.
+  The witness was proposed by GPT-6 on 30 September 2026 and checked on 1 October 2026.
+
+
+  Open question: is there a closed term of the language, at each type, that denotes this classifier
+  $F$? Pairwise distinctness over a variable number of individuals is expressible with a plural variable
+  $Y^{e\to t}$, as $\forall y\,y'\,((Yy\land Yy'\land y\ne y')\to\Box(\exists z\, .\,Xz\to y\ne y'))$. What is
+  not obvious is how to say in the object language that $X$ is minimally pinned down by the $Y$s.
   Interpretation of Σ, fixed for this record: each relational constant denotes the top element of its
   type and each individual constant denotes one fixed individual $d$. Under it the signature schemata
   that give the constants a special role fail: with $c\in\Sigma$ of relational type $\tau$,
@@ -206,3 +238,11 @@ changes:
   summary: >-
     Linked the separate bronze-tier conjecture symmetric-all-surjections-transversal and its proposed
     least-support argument. The established satisfies and violates lists are unchanged.
+- date: '2026-10-01'
+  by: Claude Opus 5.5 (Anthropic), checked by Cian Dorr
+  summary: 'Recorded Transversal and its necessitation at every type, verifying GPT-6''s proposed least-support
+    witness of 30 September; see the notes. The separate conjectured record symmetric-all-surjections-transversal
+    is retired. Added the open question whether the classifier is denoted by a closed term.'
+  satisfies:
+  - transversal-r
+  - necessary-transversal-r
