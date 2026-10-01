@@ -510,6 +510,43 @@ theorem classicism_implies_modalized_plenitude_r :
   Entails.mono_right (schema_subset_args₂ _)
     Proofs.classicism_implies_modalized_plenitude_r.listEntails
 
+/-! ### Strong Leibniz
+
+The records at `σ → t` in `Results/Records.lean`, vectorized. -/
+
+/-- `strong-leibniz-r-implies-atomicity-r`, at every arity. -/
+theorem strong_leibniz_r_implies_atomicity_r :
+    P.StrongLeibniz.schema ⟹ P.Atomicity.schema :=
+  Entails.mono_right (schema_subset_args _) Proofs.strong_leibniz_r_implies_atomicity_r.listEntails
+
+/-- `atomicity-and-bf-imply-strong-leibniz`, at every arity. -/
+theorem atomicity_and_bf_imply_strong_leibniz :
+    P.Atomicity.schema ∪ P.Barcan.schema ⟹ P.StrongLeibniz.schema :=
+  Entails.mono_right (schema_subset_args _)
+    Proofs.atomicity_and_bf_imply_strong_leibniz.listEntails
+
+/-- `necessary-strong-leibniz-implies-necessary-atomicity`, at every arity. -/
+theorem necessary_strong_leibniz_implies_necessary_atomicity :
+    P.NecStrongLeibniz.schema ⟹ P.NecAtomicity.schema :=
+  Entails.mono_right (schema_subset_args _)
+    Proofs.necessary_strong_leibniz_implies_necessary_atomicity.listEntails
+
+/-- `necessary-atomicity-and-necessary-bf-imply-necessary-strong-leibniz`, at every arity. -/
+theorem necessary_atomicity_and_necessary_bf_imply_necessary_strong_leibniz :
+    P.NecAtomicity.schema ∪ P.NecBarcan.schema ⟹ P.NecStrongLeibniz.schema :=
+  Entails.mono_right (schema_subset_args _)
+    Proofs.necessary_atomicity_and_necessary_bf_imply_necessary_strong_leibniz.listEntails
+
+/-- `necessary-strong-leibniz-t-and-necessary-bf-imply-necessary-strong-leibniz`, at every
+arity: `□`BF over the list of argument types, from `□`BF. -/
+theorem necessary_strong_leibniz_t_and_necessary_bf_imply_necessary_strong_leibniz :
+    P.NecStrongLeibnizT.schema ∪ P.NecBarcan.schema ⟹ P.NecStrongLeibniz.schema :=
+  Entails.mono_right (schema_subset_args _)
+    (Entails.trans
+      (Entails.union (Entails.union_left _ _)
+        (Entails.trans (Entails.union_right _ _) P.NecBarcan.schema_entails_listSchema))
+      Proofs.necessary_strong_leibniz_t_and_necessary_bf_imply_necessary_strong_leibniz.listEntails)
+
 end Meta
 
 end Classicism

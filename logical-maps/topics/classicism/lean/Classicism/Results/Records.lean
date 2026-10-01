@@ -1991,4 +1991,157 @@ theorem actuality_and_bf_imply_inextensible_comprehension {σ : Type} [Ty σ] :
               (nec% (inext_dia_contra w X Y z)) f₂) f₃))).elim,
       coext_dia_actual w hw X⟩
 
+/-! ### Strong Leibniz (22–26 September)
+
+At `σ → t` where the principle is over relational types, the list forms being the records
+at every arity (`Results/Arity.lean`). -/
+
+/-- `necessary-strong-leibniz-r-implies-strong-leibniz-r`: `T`. -/
+theorem necessary_strong_leibniz_r_implies_strong_leibniz_r {τ : Type} [Rel τ] :
+    NecStrongLeibniz τ → StrongLeibniz τ := fun h => box_elim h
+
+/-- At `σ → t`, `⊥` is below everything. -/
+theorem bot_le_arrow {σ : Type} [Ty σ] (Y : σ → Prop) : Rel.bot (σ → Prop) ≤ Y :=
+  (le_iff _ _).2 (nec% (fun (z : σ) (h : False) => (h.elim : Y z)))
+
+/-- `≤` is transitive at `σ → t`. -/
+theorem le_trans_arrow {σ : Type} [Ty σ] (X Y Z : σ → Prop) (h₁ : X ≤ Y) (h₂ : Y ≤ Z) :
+    X ≤ Z :=
+  (le_iff _ _).2 (modal_K _ _ (modal_K _ _
+    (nec% (fun (a : ∀ z, X z → Y z) (b : ∀ z, Y z → Z z) (z : σ) (h : X z) => b z (a z h)))
+    ((le_iff _ _).1 h₁)) ((le_iff _ _).1 h₂))
+
+/-- What is below its own negation is below everything, at `σ → t`. -/
+theorem le_of_le_neg_arrow {σ : Type} [Ty σ] (X Y : σ → Prop) (h : X ≤ ¬ X) : X ≤ Y :=
+  (le_iff _ _).2 (modal_K _ _
+    (nec% (fun (a : ∀ z, X z → ¬ X z) (z : σ) (hx : X z) => ((a z hx hx).elim : Y z)))
+    ((le_iff _ _).1 h))
+
+/-- And is `⊥`. -/
+theorem eq_bot_of_le_neg_arrow {σ : Type} [Ty σ] (X : σ → Prop) (h : X ≤ ¬ X) :
+    X = Rel.bot (σ → Prop) :=
+  le_antisymm_arrow X _ (le_of_le_neg_arrow X _ h) (bot_le_arrow X)
+
+/-- A non-bottom property deciding every property is an atom, at `σ → t`. -/
+theorem atom_of_decides_arrow {σ : Type} [Ty σ] (W : σ → Prop) (hne : W ≠ Rel.bot (σ → Prop))
+    (hdec : ∀ Y : σ → Prop, W ≤ Y ∨ W ≤ ¬ Y) : Atom W := fun z =>
+  ⟨fun hz => (hdec z).elim (fun h => absurd (le_antisymm_arrow z W hz.1 h) hz.2)
+      (fun h => le_trans_arrow z W _ hz.1 h),
+   fun hz => ⟨le_of_le_neg_arrow z W hz, fun e => hne (eq_bot_of_le_neg_arrow W (e ▸ hz))⟩⟩
+
+/-- `strong-leibniz-r-implies-atomicity-r`, at `σ → t`, its list form being the map's
+record: a strong world decides every property, by `T`, so it is an atom. -/
+theorem strong_leibniz_r_implies_atomicity_r {σ : Type} [Ty σ] :
+    StrongLeibniz (σ → Prop) → Atomicity (σ → Prop) := fun sl X =>
+  (em (X ≤ ¬ X)).elim Or.inl fun hX => Or.inr
+    ((sl X fun e => hX (by rw [e]; exact bot_le_arrow _)).elim fun W hW =>
+      ⟨W, atom_of_decides_arrow W hW.1.1 (box_elim hW.1.2), hW.2⟩)
+
+/-- `(∀z. Wz ∧ Yz → ¬(Wz ∧ Yz)) → ∀z. Wz → ¬Yz`. -/
+theorem imp_not_of_and_bot {σ : Type} [Ty σ] (W Y : σ → Prop) :
+    (∀ z, W z ∧ Y z → ¬ (W z ∧ Y z)) → ∀ z, W z → ¬ Y z :=
+  fun a z hw hy => a z ⟨hw, hy⟩ ⟨hw, hy⟩
+
+/-- An atom at `σ → t` decides every property: `λz. Wz ∧ Yz` is `W` or `⊥`. -/
+theorem atom_decides_arrow {σ : Type} [Ty σ] (W Y : σ → Prop) (hW : Atom W) :
+    W ≤ Y ∨ W ≤ ¬ Y :=
+  (em ((λ z ↦ W z ∧ Y z) = W)).elim
+    (fun e => Or.inl (e ▸ (le_iff _ _).2 (nec% (fun (z : σ) (h : W z ∧ Y z) => h.2))))
+    (fun hne => Or.inr ((le_iff _ _).2 (modal_K _ _ (nec% (imp_not_of_and_bot W Y))
+      ((le_iff _ _).1 ((hW _).1
+        ⟨(le_iff _ _).2 (nec% (fun (z : σ) (h : W z ∧ Y z) => h.1)), hne⟩)))))
+
+/-- `W ≤ Y ∨ W ≤ ¬Y` is necessary once true: each disjunct is an identity. -/
+theorem box_le_or_le_arrow {σ : Type} [Ty σ] (W Y : σ → Prop) (h : W ≤ Y ∨ W ≤ ¬ Y) :
+    □ (W ≤ Y ∨ W ≤ ¬ Y) :=
+  h.elim
+    (fun h => modal_K _ _ (nec% (fun (h' : W ≤ Y) => (Or.inl h' : W ≤ Y ∨ W ≤ ¬ Y)))
+      (necessity_of_identity _ _ h))
+    (fun h => modal_K _ _ (nec% (fun (h' : W ≤ ¬ Y) => (Or.inr h' : W ≤ Y ∨ W ≤ ¬ Y)))
+      (necessity_of_identity _ _ h))
+
+/-- `atomicity-and-bf-imply-strong-leibniz`, at `σ → t`, its list form being the map's
+record: an atom below a non-bottom property decides every property, each decision is
+necessary, and BF at the type of properties boxes the quantifier. -/
+theorem atomicity_and_bf_imply_strong_leibniz {σ : Type} [Ty σ] :
+    Atomicity (σ → Prop) → Barcan (σ → Prop) → StrongLeibniz (σ → Prop) := fun at_ bf X hX =>
+  (at_ X).elim (fun h => (hX (eq_bot_of_le_neg_arrow X h)).elim) fun h => h.elim fun W hW =>
+    ⟨W, ⟨fun e => not_le_neg_of_atom hW.1 (by rw [e]; exact bot_le_arrow _),
+      bf (λ Y ↦ W ≤ Y ∨ W ≤ ¬ Y) fun Y => box_le_or_le_arrow W Y (atom_decides_arrow W Y hW.1)⟩,
+     hW.2⟩
+
+/-- `necessary-strong-leibniz-implies-necessary-atomicity`, at `σ → t`. -/
+theorem necessary_strong_leibniz_implies_necessary_atomicity {σ : Type} [Ty σ] :
+    NecStrongLeibniz (σ → Prop) → NecAtomicity (σ → Prop) :=
+  modal_K _ _ (nec% (strong_leibniz_r_implies_atomicity_r (σ := σ)))
+
+/-- `necessary-atomicity-and-necessary-bf-imply-necessary-strong-leibniz`, at `σ → t`. -/
+theorem necessary_atomicity_and_necessary_bf_imply_necessary_strong_leibniz {σ : Type} [Ty σ] :
+    NecAtomicity (σ → Prop) → NecBarcan (σ → Prop) → NecStrongLeibniz (σ → Prop) :=
+  fun h₁ h₂ => modal_K _ _ (modal_K _ _
+    (nec% (atomicity_and_bf_imply_strong_leibniz (σ := σ))) h₁) h₂
+
+/-- A true proposition deciding every proposition is an actual world. -/
+theorem actuality_of_decides (w : Prop) : (∀ q, w ≤ q ∨ w ≤ ¬ q) → w → Actuality :=
+  fun h hw => ⟨w, hw, fun q hq => (h q).elim id fun hn => (imp_of_le_prop w (¬ q) hn hw hq).elim⟩
+
+/-- `(w → A) → (w → ¬A) → ¬w`. -/
+theorem not_of_imp_both (w A : Prop) : (w → A) → (w → ¬ A) → ¬ w := fun h₁ h₂ hw => h₂ hw (h₁ hw)
+
+/-- `strong-leibniz-t-implies-necessary-actuality`: a strong world entails Actuality, since
+where it holds it decides every truth; so were Actuality possibly false, a strong world
+below its negation would entail both, and be `⊥`. -/
+theorem strong_leibniz_t_implies_necessary_actuality : StrongLeibnizT → NecActuality := fun sl =>
+  (em (□ Actuality)).elim id fun hn =>
+    (sl (¬ Actuality) (dia_not_of_not_box _ hn)).elim fun w hw =>
+      (hw.1.1 ((box_not_eq w).mp (modal_K _ _ (modal_K _ _ (nec% (not_of_imp_both w Actuality))
+        (modal_K _ _ (nec% (actuality_of_decides w)) hw.1.2))
+        ((le_iff_prop _ _).1 hw.2)))).elim
+
+/-- `(¬∃y. Xy) → ∀y. Xy ↔ ⊥`. -/
+theorem coext_bot_of_not_exists {σ : Type} [Ty σ] (X : σ → Prop) :
+    (¬ ∃ y, X y) → ∀ y, X y ↔ Rel.bot (σ → Prop) y :=
+  fun h y => ⟨fun hx => h ⟨y, hx⟩, fun hb => hb.elim⟩
+
+/-- `(w ∧ x = x) = w`. -/
+theorem and_rfl_eq {σ : Type} [Ty σ] (w : Prop) (x : σ) : (w ∧ x = x) = w :=
+  propext ⟨fun h => h.1, fun h => ⟨h, rfl⟩⟩
+
+/-- `w ≤ Yx` gives `(λy. w ∧ y = x) ≤ Y`, by Leibniz's law. -/
+theorem pin_le_of_le {σ : Type} [Ty σ] (w : Prop) (x : σ) (Y : σ → Prop) (h : w ≤ Y x) :
+    (λ y ↦ w ∧ y = x) ≤ Y :=
+  (le_iff _ _).2 (modal_K _ _
+    (nec% (fun (f : w → Y x) (y : σ) (hy : w ∧ y = x) => (hy.2 ▸ f hy.1 : Y y)))
+    ((le_iff_prop _ _).1 h))
+
+/-- A proposition deciding every proposition, pinned at `x`, decides every property. -/
+theorem pin_decides {σ : Type} [Ty σ] (w : Prop) (x : σ) :
+    (∀ q : Prop, w ≤ q ∨ w ≤ ¬ q) →
+      ∀ Y : σ → Prop, (λ y ↦ w ∧ y = x) ≤ Y ∨ (λ y ↦ w ∧ y = x) ≤ ¬ Y := fun h Y =>
+  (h (Y x)).elim (fun h₁ => Or.inl (pin_le_of_le w x Y h₁))
+    (fun h₂ => Or.inr (pin_le_of_le w x (¬ Y) h₂))
+
+/-- Strong Leibniz at `t` and BF at `σ` give Strong Leibniz at `σ → t`: a non-bottom `X`
+is possibly instantiated, BF gives `x` with `◇Xx`, a strong world `w` at `t` lies below
+`Xx`, and `λy. w ∧ y = x` is a strong world below `X`. Not a record of the map, which has
+its necessitation. -/
+theorem strong_leibniz_t_and_bf_imply_strong_leibniz {σ : Type} [Ty σ] :
+    StrongLeibnizT → Barcan σ → StrongLeibniz (σ → Prop) := fun sl bf X hX =>
+  have hd : ◇ (∃ y, X y) := (em (◇ (∃ y, X y))).elim id fun hn =>
+    (hX (intensionality X _ (modal_K _ _ (nec% (coext_bot_of_not_exists X))
+      (box_not_of_not_dia _ hn)))).elim
+  (exists_dia_of_dia_exists bf X hd).elim fun x hx =>
+    (sl (X x) hx).elim fun w hw =>
+      ⟨λ y ↦ w ∧ y = x,
+        ⟨fun e => hw.1.1 ((and_rfl_eq w x).symm.trans (congrFun e x)),
+          modal_K _ _ (nec% (pin_decides w x)) hw.1.2⟩,
+        pin_le_of_le w x X hw.2⟩
+
+/-- `necessary-strong-leibniz-t-and-necessary-bf-imply-necessary-strong-leibniz`, at `σ → t`,
+its list form being the map's record: the last theorem necessitated, and `K`. -/
+theorem necessary_strong_leibniz_t_and_necessary_bf_imply_necessary_strong_leibniz
+    {σ : Type} [Ty σ] :
+    NecStrongLeibnizT → NecBarcan σ → NecStrongLeibniz (σ → Prop) := fun h₁ h₂ =>
+  modal_K _ _ (modal_K _ _ (nec% (strong_leibniz_t_and_bf_imply_strong_leibniz (σ := σ))) h₁) h₂
+
 end Classicism.Proofs

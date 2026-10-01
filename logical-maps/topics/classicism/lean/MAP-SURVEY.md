@@ -16,12 +16,12 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 
 | class | results | proved in Lean | in part only | not yet |
 | --- | --- | --- | --- | --- |
-| Per-type routine | 139 | 124 | 0 | 15 |
+| Per-type routine | 139 | 130 | 0 | 9 |
 | Per-instance routine over sentences | 52 | 31 | 0 | 21 |
-| Sweet spot | 47 | 31 | 0 | 16 |
+| Sweet spot | 47 | 32 | 0 | 15 |
 | Metalogic-dominated | 26 | 9 | 0 | 17 |
 | Conjectured | 6 | 0 | 0 | 6 |
-| total | 270 | 195 | 0 | 75 |
+| total | 270 | 202 | 0 | 68 |
 
 ## Sweet spot (47)
 
@@ -59,7 +59,7 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `necessary-gallin-comprehension-implies-necessary-rigid-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `necessary-plenitude-r-implies-atomicity-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `necessary-plenitude-r-implies-necessary-atomicity-r` — **Lean: at every arity, `Results/Arity.lean`**
-- `necessary-strong-leibniz-t-and-necessary-bf-imply-necessary-strong-leibniz`
+- `necessary-strong-leibniz-t-and-necessary-bf-imply-necessary-strong-leibniz` — **Lean: at every arity, `Results/Arity.lean`**
 - `possibility-schema-r-implies-distinctness-schema-r` — **Lean: metalogical theorem in `Results/Schemas/`**
 - `possibility-signature-r-implies-distinctness-signature-r` — **Lean: metalogical theorem in `Results/Schemas/`**
 - `possibly-witnessed-possibility-r-implies-separated-structure-r`
@@ -167,7 +167,7 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `actuality-implies-weakly-inextensible-comprehension-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `actuality-incompatible-with-atomlessness` — **Lean: full**
 - `atomicity-and-bf-imply-necessary-actuality` — **Lean: full**
-- `atomicity-and-bf-imply-strong-leibniz`
+- `atomicity-and-bf-imply-strong-leibniz` — **Lean: at every arity, `Results/Arity.lean`**
 - `atomicity-r-implies-atomicity-t` — **Lean: full**
 - `atomicity-t-and-bf-imply-necessary-actuality` — **Lean: full**
 - `atomicity-t-and-bf-t-imply-strong-leibniz-t` — **Lean: full**
@@ -219,7 +219,7 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `necessary-actuality-implies-necessary-transversal` — **Lean: full**
 - `necessary-actuality-implies-necessary-vicinity` — **Lean: full**
 - `necessary-actuality-implies-necessary-weakly-inextensible-comprehension-r` — **Lean: at every arity, `Results/Arity.lean`**
-- `necessary-atomicity-and-necessary-bf-imply-necessary-strong-leibniz`
+- `necessary-atomicity-and-necessary-bf-imply-necessary-strong-leibniz` — **Lean: at every arity, `Results/Arity.lean`**
 - `necessary-atomicity-and-necessary-bf-t-imply-necessary-strong-leibniz-t` — **Lean: full**
 - `necessary-atomicity-r-implies-atomicity-r` — **Lean: full**
 - `necessary-barcan-r-implies-barcan-r` — **Lean: full**
@@ -257,9 +257,9 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `necessary-rigid-comprehension-r-implies-necessary-boolean-completeness-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `necessary-rigid-comprehension-r-implies-rigid-comprehension-r` — **Lean: full**
 - `necessary-strong-leibniz-and-rigid-comprehension-imply-necessary-bf-t`
-- `necessary-strong-leibniz-implies-necessary-atomicity`
+- `necessary-strong-leibniz-implies-necessary-atomicity` — **Lean: at every arity, `Results/Arity.lean`**
 - `necessary-strong-leibniz-r-implies-necessary-strong-leibniz-t` — **Lean: full**
-- `necessary-strong-leibniz-r-implies-strong-leibniz-r`
+- `necessary-strong-leibniz-r-implies-strong-leibniz-r` — **Lean: full**
 - `necessary-strong-leibniz-t-implies-strong-leibniz-t` — **Lean: full**
 - `necessary-tractarianism-r-implies-necessary-barcan-r` — **Lean: full**
 - `necessary-tractarianism-r-implies-tractarianism-r` — **Lean: full**
@@ -284,10 +284,10 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `rigid-comprehension-r-implies-inextensible-comprehension-r` — **Lean: full**
 - `rigid-comprehension-r-implies-persistent-comprehension-r` — **Lean: full**
 - `rigid-comprehension-r-implies-weak-rigid-comprehension-r` — **Lean: full**
-- `strong-leibniz-r-implies-atomicity-r`
+- `strong-leibniz-r-implies-atomicity-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `strong-leibniz-r-implies-strong-leibniz-t` — **Lean: full**
 - `strong-leibniz-t-implies-atomicity-t` — **Lean: full**
-- `strong-leibniz-t-implies-necessary-actuality`
+- `strong-leibniz-t-implies-necessary-actuality` — **Lean: full**
 - `tractarianism-r-implies-barcan-r` — **Lean: full**
 - `transversal-and-relational-choice-imply-transversal-choice` — **Lean: full**
 - `transversal-choice-r-implies-relational-choice-r` — **Lean: full**
@@ -319,3 +319,4 @@ Record-shaped theorems in `Results/Records.lean` with no map counterpart: conseq
 - `necessary_actuality_and_necessary_distinctness_necessary_t_imply_necessary_boolean_completeness_r`
 - `necessary_boolean_completeness_r_and_necessary_distinctness_necessary_t_imply_necessary_actuality`
 - `necessary_rigid_comprehension_r_and_necessary_distinctness_necessary_t_imply_atomicity_t`
+- `strong_leibniz_t_and_bf_imply_strong_leibniz`

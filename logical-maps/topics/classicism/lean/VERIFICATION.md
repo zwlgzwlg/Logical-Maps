@@ -1027,6 +1027,26 @@ Transversal Choice at single types, so nothing needs those list forms.
   `(UC)y := Cy ∨ ¬∃z. Cz` needs an element of the type. The proofs split on whether the
   type has one: if not, Transversal Choice holds vacuously.
 
+## Strong Leibniz, 1 October
+
+Seven of the map's eight Strong Leibniz results, in `Results/Records.lean`, section
+"Strong Leibniz". Five are over relational types: they are proved unary at `σ → t` and
+reach every arity in `Results/Arity.lean`. The other two are proved as stated. Not proved: `necessary-strong-leibniz-and-rigid-comprehension-imply-
+necessary-bf-t` (Bacon's Theorem 8.2).
+
+*Checked.* The full build passes. The record audits report:
+- 295 of 295 theorems passing the gate and type checks, and derived;
+- 151 of 151 records certified as entailments, 69 of the 73 with a Ty-parameter in list
+  form too (the same four exceptions as before);
+- 294 of 295 transformed by the strict transformer, the same one exception as before.
+
+The theorems checked rest on `propext` and `Quot.sound` only.
+
+*Choices.*
+- `necessary-strong-leibniz-t-and-necessary-bf-imply-necessary-strong-leibniz` goes
+  through a record that is not a map result, `strong_leibniz_t_and_bf_imply_strong_leibniz`
+  (Strong Leibniz at `t` and BF at `σ` give Strong Leibniz at `σ → t`), proved under `□`.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen
