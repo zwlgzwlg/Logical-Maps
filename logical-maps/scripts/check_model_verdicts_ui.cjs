@@ -52,8 +52,12 @@ try{
   assert.deepEqual(['a','b','c','d','e'].map(id=>control(id).length),[1,1,1,1,0],'One control each, none for an open question');
   assert.equal(control('a')[0].dataset.verdictModel,'m','A recorded verdict of a list-format model goes to its evidence');
   assert.equal(control('a')[0].textContent,'↗');
-  assert.equal(control('c')[0].dataset.verdict,'c','A derived one to how it follows');
+  assert.equal(control('c')[0].dataset.verdictPage,'c','A derived one to how it follows');
   assert.equal(control('c')[0].textContent,'⇐');
+  control('c')[0].click();
+  assert.match(d.getElementById('page').querySelector('h1').textContent,/: /,'⇐ opens the derivation page, not a pop-up');
+  assert.ok(d.getElementById('pop').hidden);
+  w.eval('openPage({type:"model", id:"m"})');
   assert.equal(page.querySelectorAll('.verdict-columns .badge').length,0,'No source information in the columns');
   assert.equal(w.getComputedStyle(page.querySelector('.verdict-columns')).display,'grid');
 
@@ -94,14 +98,14 @@ const args=[{holds:['a'],text:'Why A holds.'},{fails:['b'],text:'First reason B 
   {holds:['a'],fails:['b'],text:'One argument for both.',by:'Both author (Lab), later',date:'2026-02-04'},
   {fails:['b'],text:'Found in a trawl.',by:'Trawl agent, trawl',date:'2026-02-05',provenance:'admission-x'}];
 const flat={id:'n',name:'Argument model',status:'proved',satisfies:['a'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
-  definition:'What the model is.',arguments:args,notes:'Miscellany.',history:[{date:'2026-01-15',by:'Old',summary:'An old change.',satisfies:['a']}]};
+  definition:'What the model is.',arguments:args,notes:'Miscellany.',references:[{paper:'fixture-paper',role:'related',locator:'§1',note:'How the construction relates.'}],history:[{date:'2026-01-15',by:'Old',summary:'An old change.',satisfies:['a']}]};
 const companion={id:'n-conj',name:'Argument model',status:'conjectured',tier:'bronze',satisfies:['a','e'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
   definition:'What the model is.',arguments:[args[3]],notes:'Why E might hold.',companion_of:'n',model_check:{model:'n',satisfies:['e'],violates:[]}};
 // The chain of a theorem-trawl admission, as the build exports it for each record it added to.
 const provenance=[{id:'admission-x',file:'topics/t/provenance/admission-x.yaml',records:{n:{found_by:'deepseek/deepseek-flash',found_at:'2026-02-05T10:00:00+00:00',
   reviews:[{by:'openai/gpt-6',at:'2026-02-06T10:00:00+00:00',verdict:'accept',summary:'Checked.',argument_check:'Every step.',source_check:'The source.',issues:[]}],
   admitted_by:'Curator',admitted_at:'2026-02-07T10:00:00+00:00'}}}];
-const data2={...data,models:[flat,companion],provenance};
+const data2={...data,models:[flat,companion],provenance,papers:[{id:'fixture-paper',title:'Fixture paper',citation:'A. Author, Fixture paper.'}]};
 const errors2=[],vc2=new VirtualConsole();vc2.on('jsdomError',e=>errors2.push(e));
 const dom2=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data2)),
   {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc2});
@@ -117,11 +121,36 @@ try{
   const control=id=>item(id).querySelector('button.vc');
   assert.equal(control('a').dataset.jump,'0 4','A recorded verdict goes to each argument for it');
   assert.equal(control('b').dataset.jump,'1 2 4 5','However many there are');
-  assert.equal(control('c').dataset.verdict,'c','A derived verdict goes to how it follows');
+  assert.equal(control('c').dataset.verdictPage,'c','A derived verdict goes to how it follows');
+  // The derivation starts from the verdicts it uses, each linking back to its argument,
+  // and ← back retraces the pages, then returns to the tab.
+  const pane=d2.getElementById('pane-page');
+  control('c').click();
+  const lines=()=>[...page.querySelectorAll('ol li')].map(li=>li.textContent.replace(/\s+/g,' ').trim());
+  assert.match(lines()[0],/^✓ A by its argument in the model/,'The starting point first');
+  assert.match(lines()[1],/^A ⇒ C/,'Then the result');
+  assert.ok(![...page.querySelectorAll('h2')].some(h=>/Paper references|Record provenance|Model evidence/.test(h.textContent)),'No credits on a derivation: its records credit themselves');
+  assert.equal(page.querySelectorAll('.badge.source').length,0);
+  assert.equal(page.querySelector('h1 button[data-open-model]').textContent,'Argument model','The heading links back to the model');
+  page.querySelector('ol li button[data-open-arg]').click();
+  assert.ok(page.querySelector('#argument-0').open&&page.querySelector('#argument-4').open,'The link opens the model at its arguments');
+  assert.ok(!page.querySelector('#argument-1').open);
+  page.querySelector('#page-back').click();
+  assert.match(page.querySelector('h1').textContent,/: C$/,'Back to the derivation');
+  page.querySelector('#page-back').click();
+  assert.equal(page.querySelector('h1').textContent,'Argument model','Back to the model page');
+  page.querySelector('#page-back').click();
+  assert.notEqual(pane.dataset.active,'true','Then back to the tab');
+  w2.eval('openPage({type:"model-verdict", id:"n", principle:"d"})');
+  assert.deepEqual(lines().map(l=>l.split(' ').slice(0,3).join(' ')),['D supposed, to','✗ B by','D ⇒ B'],'A failure starts from the supposition and the verdict it clashes with');
+  w2.eval('openPage({type:"model", id:"n"})');
   assert.equal(control('e').dataset.jump,'3','An open question with a conjectured argument goes to it');
   assert.ok(control('e').classList.contains('conj'));
   assert.equal(page.querySelectorAll('.verdict-columns .badge').length,0,'No source information in the columns');
   assert.ok(h2s.indexOf('Principles')<h2s.indexOf('Arguments')&&h2s.indexOf('Arguments')<h2s.indexOf('Notes'));
+  assert.ok(!h2s.some(h=>/Paper references|Record provenance/.test(h)),'An argument model credits inside its arguments, not in record-level lists');
+  const notesList=[...page.querySelectorAll('h2')].find(h=>h.textContent==='Notes').nextElementSibling.nextElementSibling;
+  assert.match(notesList.textContent,/Related: Fixture paper — §1How the construction relates\./,'Its paper references sit with its notes');
   const listed=[...page.querySelectorAll('details.argument[id]')];
   assert.deepEqual(listed.map(x=>x.id),args.map((_,i)=>'argument-'+i),"Each argument once, in the record's order");
   assert.equal(page.querySelectorAll('h3.argument-group').length,0,'Not grouped by date');
@@ -178,5 +207,5 @@ try{
   assert.ok(rows.some(tr=>tr.dataset.id==='n-conj'&&tr.textContent.includes('Conjecture restated.')),'A companion\'s changes are its arguments\' revisions');
   assert.ok(rows.some(tr=>tr.dataset.id==='n-conj'&&tr.textContent.includes('2026-01-20')&&!tr.classList.contains('revision')),'And it is dated by its latest argument, not by the model');
   assert.deepEqual(errors2.map(String),[]);
-  console.log('PASS: a model page sorts every principle into three columns, satisfied, violated and unsettled, counts each, gives each principle one control to its evidence or derivation, holds the derived verdicts behind a closed toggle, keeps Lean status on the pop-up of a verdict while the explorer list keeps its marks; a model written as arguments shows its definition, then three columns of principles with one control each and no sources, each argument once in record order headed by its verdicts with who supplied it inside (for a trawl argument, who found, reviewed and admitted it), its history behind a toggle, a write-up that does not replace the definition, and its companion.');
+  console.log('PASS: a model page sorts every principle into three columns, satisfied, violated and unsettled, counts each, gives each principle one control to its evidence or derivation, a derivation that starts from the verdicts it uses and links each to its argument, a back button that retraces the pages, holds the derived verdicts behind a closed toggle, keeps Lean status on the pop-up of a verdict while the explorer list keeps its marks; a model written as arguments shows its definition, then three columns of principles with one control each and no sources, each argument once in record order headed by its verdicts with who supplied it inside (for a trawl argument, who found, reviewed and admitted it), its history behind a toggle, a write-up that does not replace the definition, and its companion.');
 }finally{w2.close();}
