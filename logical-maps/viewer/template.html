@@ -550,6 +550,17 @@
   .model-heading { display: flex; align-items: baseline; gap: 12px; }
   .model-heading > .lnk { min-width: 0; flex: 1; font-size: 14px; line-height: 1.55; text-align: left; }
   .ex-m.sel { padding-inline: 12px; border-left: 2px solid var(--accent); }
+  .ex-p.model-split { background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--human) 12%, transparent) 0 6px, color-mix(in srgb, var(--indep) 12%, transparent) 6px 12px); }
+  .ex-p .family-verdict { font-size: 11.5px; margin-left: 6px; font-variant-numeric: tabular-nums; }
+  .ex-m .ex-fit { font-size: 12px; color: var(--ink-2); margin-top: 2px; }
+  .ex-m details.ex-members > summary { cursor: pointer; font-size: 12px; color: var(--ink-3); margin-top: 3px; }
+  .ex-m details.ex-members .ex-list { margin: 4px 0 6px 12px; }
+  .ex-m details.ex-members > button.lnk { font-size: 12px; }
+  .ex-m.ex-inner { padding: 3px 0; border-bottom: 0; }
+  .ex-m.ex-inner .lnk { font: 400 13px var(--sans); }
+  .ex-m.ex-variant { margin-left: 14px; }
+  .page table.group-grid tbody tr.nofit > * { opacity: .35; }
+  .page table.group-grid tbody tr.mayfit th .gname::after, .page table.group-grid tbody tr.mayfit:not(.first) th .gtags::after { content: ' ?'; color: var(--ink-3); }
   .inspection-note { font-size: 12px; color: var(--ink-2); margin-bottom: 8px; }
   .inspection-note > .lnk { display: inline-block; margin-left: 10px; font-size: 11px; }
   .node.negative rect { stroke-dasharray: 6 3; }
@@ -1009,7 +1020,7 @@ const sourceColor = s => {
   return `var(--source-${sourceHues[s.id] || sourcePalette[hash % sourcePalette.length]})`;
 };
 const sourceMarker = s => 'source-' + sourceCatalog.indexOf(s);
-const state = { allowed: new Set(sourceCatalog.map(s => s.id)), leanOnly: false, showConj: false, conjectureOnly: false, unpublishedOnly: false, reduced: true, trivial: false, focus: null, showResolved: backgroundParams.get('resolved') === '1', lynchpins: false, recorded: false, auto: false, showIso: true, selected: null, modelId: null, tab: 'graph', search: '', excluded: new Set(), negativeShown: new Set(), collapsed: new Set(), flipped: false };
+const state = { allowed: new Set(sourceCatalog.map(s => s.id)), leanOnly: false, showConj: false, conjectureOnly: false, unpublishedOnly: false, reduced: true, trivial: false, focus: null, showResolved: backgroundParams.get('resolved') === '1', lynchpins: false, recorded: false, auto: false, showIso: true, selected: null, modelId: null, groupId: null, openGroups: new Set(), tab: 'graph', search: '', excluded: new Set(), negativeShown: new Set(), collapsed: new Set(), flipped: false };
 // Initial visibility is shared by the graph and conjecture lists.
 for (const g of principleGroups()) if (g.hidden_by_default)
   for (const p of g.principles) state.excluded.add(p.id);
@@ -2413,13 +2424,65 @@ function wireAssumptions(el) {
     }));
   }
 }
+// Groups in model lists. A group's row stands for those of its models (members and generated
+// variants) that fit what is assumed; it never claims that the group as a whole does.
+function modelFit(m, IN = [...background], OUT = [...negativeBackground]) {
+  if (!passes(m) || (m.status !== 'proved' && !state.showConj)) return 'hidden';
+  const holds = m.status === 'proved' ? (baseE.holds.get(m.id) || new Set()) : new Set(m.satisfies);
+  const fails = m.status === 'proved' ? (baseE.fails.get(m.id) || new Set()) : new Set(m.violates);
+  if (IN.some(p => fails.has(p)) || OUT.some(p => holds.has(p))) return 'out';
+  return IN.some(p => !holds.has(p)) || OUT.some(p => !fails.has(p)) || m.status !== 'proved' ? 'potential' : 'known';
+}
+function groupFamily(gid) { return MODELS.filter(m => m.group === gid && !m.companion_of && passes(m) && (m.status === 'proved' || state.showConj)); }
+// Models in their first-listed order, a group's gathered into one entry at its first model.
+function familyEntries(models) {
+  const out = [], at = new Map();
+  for (const m of models) {
+    const gid = m.group && byGid.has(m.group) ? m.group : null;
+    if (!gid) { out.push({ m }); continue; }
+    if (!at.has(gid)) { at.set(gid, out.length); out.push({ g: byGid.get(gid), fits: [] }); }
+    out[at.get(gid)].fits.push(m);
+  }
+  return out;
+}
+// Which of a group's models these are, as coarsely as is exact: the members, then each generated
+// parameter whose values among them are not all of the values those members take.
+function fitDescription(g, fits) {
+  const all = groupFamily(g.id), memberOf = m => m.variant_of || m.id;
+  const members = [...new Set(fits.map(memberOf))], everyMember = members.length === new Set(all.map(memberOf)).size;
+  const pool = all.filter(m => members.includes(memberOf(m)));
+  const parts = [everyMember ? 'every member' : members.map(id => shortName(g, byMid.get(id))).join(', ')];
+  let box = pool;
+  for (const [k, p] of generatedParams(g)) {
+    const key = m => JSON.stringify((m.settings || {})[k]), vals = new Set(fits.map(key));
+    if (vals.size < new Set(pool.map(key)).size) {
+      parts.push([...vals].map(v => valueLabel(p, JSON.parse(v))).join(' or '));
+      box = box.filter(m => vals.has(key(m)));
+    }
+  }
+  return parts.join(' · ') + (box.length > fits.length ? ' (not every combination)' : '');
+}
+function groupCount(g, fits) {
+  const n = groupFamily(g.id).length;
+  return `${fits.length} of ${n} model${n === 1 ? '' : 's'}`;
+}
+// What a group's fitting models say about a principle: all hold, all fail, or a split.
+function familyVerdict(fits, c) {
+  let h = 0, f = 0;
+  for (const m of fits) { const st = cellOf(m, c)[0]; if (st === 'h') h++; else if (st === 'f') f++; }
+  return { h, f, u: fits.length - h - f };
+}
 function renderModels() {
   const candidate = byMid.get(state.modelId);
   const inspected = candidate && passes(candidate) && (candidate.status === 'proved' || state.showConj) ? candidate : null;
   const IN = [...background], OUT = [...negativeBackground];
+  const ig = !inspected && state.groupId ? byGid.get(state.groupId) : null;
+  // A group is inspected through the models of it that fit: those known to, else those that might.
+  const igFits = ig ? (() => { const fam = groupFamily(ig.id), known = fam.filter(m => modelFit(m, IN, OUT) === 'known'); return known.length ? known : fam.filter(m => modelFit(m, IN, OUT) === 'potential'); })() : [];
   const conflict = E.conflict([]), implied = conflict ? new Set() : E.cl([]).facts;
   let h = `<div class="ex"><div class="ex-col"><div class="ex-head">Principles <span class="n">${backgroundIds().length} assumed</span></div><div class="explorer-actions">${backgroundPresets.map(p => `<button class="btn small" data-background-preset="${esc(p.id)}">Background ${esc(p.name)}</button>`).join('')}<button class="btn small" id="ex-clear">clear background</button></div>`;
   if (inspected) h += `<div class="inspection-note">Inspecting <b>${esc(inspected.name)}</b> <button class="lnk" id="ex-deselect">clear selection</button></div>`;
+  else if (ig) h += `<div class="inspection-note">Inspecting <b>${esc(ig.name)}</b>, ${igFits.length ? `through the ${igFits.length} of its models that ${modelFit(igFits[0], IN, OUT) === 'known' ? 'fit' : 'might fit'}` : 'none of whose models fits these assumptions'} <button class="lnk" id="ex-deselect">clear selection</button></div>`;
   h += '<div id="model-principles">';
   for (const group of principleGroups()) {
     // A closed category must still report the assumptions it holds, or
@@ -2430,34 +2493,38 @@ function renderModels() {
       const id = p.id, positive = background.has(id), negative = negativeBackground.has(id);
       const follows = !conflict && implied.has(id), ruledOut = !conflict && backgroundExcluded.has(id);
       const evidence = inspected && modelEvidence(inspected, id);
-      const tint = inspected ? evidence ? evidence.value ? 'model-in' : 'model-out' : '' : positive ? 'in' : negative ? 'out' : follows ? 'fin' : ruledOut ? 'fout' : '';
-      h += `<li class="ex-p ${tint}" data-assumption-row="${id}">${assumptionButtons(id, follows, ruledOut)}<div class="principle-line"><button class="lnk" data-principle="${id}">${esc(name(id))}</button>${inspected ? ' ' + verdictButton(inspected, id, evidence, true) : ''}</div></li>`;
+      const fv = ig && igFits.length ? familyVerdict(igFits, id) : null;
+      const groupTint = fv ? (fv.h === igFits.length ? 'model-in' : fv.f === igFits.length ? 'model-out' : fv.h && fv.f ? 'model-split' : '') : '';
+      const tint = inspected ? evidence ? evidence.value ? 'model-in' : 'model-out' : '' : ig ? groupTint : positive ? 'in' : negative ? 'out' : follows ? 'fin' : ruledOut ? 'fout' : '';
+      const groupNote = fv ? `<span class="via family-verdict">${fv.h === igFits.length ? '✓ in all' : fv.f === igFits.length ? '✗ in all' : [fv.h ? fv.h + '✓' : '', fv.f ? fv.f + '✗' : '', fv.u ? fv.u + '?' : ''].filter(Boolean).join(' ')}</span>` : '';
+      h += `<li class="ex-p ${tint}" data-assumption-row="${id}">${assumptionButtons(id, follows, ruledOut)}<div class="principle-line"><button class="lnk" data-principle="${id}">${esc(name(id))}</button>${inspected ? ' ' + verdictButton(inspected, id, evidence, true) : groupNote ? ' ' + groupNote : ''}</div></li>`;
 
     }
     h += '</ul></details>';
   }
   h += '</div></div><div class="ex-col explorer-models">';
   const ms = MODELS.filter(m => passes(m) && (m.status === 'proved' || state.showConj));
-  const known = [], unknown = [];
-  for (const m of ms) {
-    const holds = m.status === 'proved' ? baseE.holds.get(m.id) : new Set(m.satisfies);
-    const fails = m.status === 'proved' ? baseE.fails.get(m.id) : new Set(m.violates);
-    if (IN.some(p => fails.has(p)) || OUT.some(p => holds.has(p))) continue;
-    const gaps = [...IN.filter(p => !holds.has(p)), ...OUT.filter(p => !fails.has(p)).map(p => '!' + p)];
-    (gaps.length || m.status !== 'proved' ? unknown : known).push([m, gaps]);
-  }
-  // A group's generated variant is listed only where its member is not: it shows what a member cannot.
-  for (const list of [known, unknown]) {
-    const listed = new Set(list.map(([m]) => m.id)), seen = new Set();
-    const kept = list.filter(([m]) => !m.variant_of || (!listed.has(m.variant_of) && !seen.has(m.variant_of) && seen.add(m.variant_of)));
-    list.splice(0, list.length, ...kept);
-  }
-  const row = ([m, gaps]) => `<li class="ex-m${state.modelId === m.id ? ' sel' : ''}"><div class="model-heading"><button class="lnk" data-model="${m.id}" aria-pressed="${state.modelId === m.id}">${esc(m.name)}</button><span class="via ex-sum">${m.satisfies.length}✓ ${m.violates.length}✗</span></div></li>`;
+  const known = ms.filter(m => modelFit(m, IN, OUT) === 'known'), unknown = ms.filter(m => modelFit(m, IN, OUT) === 'potential');
+  // A group is listed once: under Matching when some of its models are known to fit, else under
+  // Potential; its row counts the models that fit and says which they are.
+  const knownEntries = familyEntries(known), groupsKnown = new Set(knownEntries.filter(e => e.g).map(e => e.g.id));
+  const unknownEntries = familyEntries(unknown).filter(e => !e.g || !groupsKnown.has(e.g.id));
+  const potentialOf = gid => unknown.filter(m => m.group === gid);
+  const modelRow = (m, inner = false) => `<li class="ex-m${inner ? ' ex-inner' : ''}${m.variant_of ? ' ex-variant' : ''}${state.modelId === m.id ? ' sel' : ''}"><div class="model-heading"><button class="lnk" data-model="${m.id}" aria-pressed="${state.modelId === m.id}">${esc(inner && m.group ? shortName(byGid.get(m.group), m) : m.name)}</button><span class="via ex-sum">${m.satisfies.length}✓ ${m.violates.length}✗</span></div></li>`;
+  const groupRow = e => {
+    const extra = groupsKnown.has(e.g.id) ? potentialOf(e.g.id).length : 0, sel = state.groupId === e.g.id && !inspected;
+    const rank = m => MODELS.indexOf(byMid.get(m.variant_of || m.id));  // each member, then its variants
+    const ordered = [...e.fits].sort((a, b) => rank(a) - rank(b) || (a.variant_of ? 1 : 0) - (b.variant_of ? 1 : 0) || MODELS.indexOf(a) - MODELS.indexOf(b));
+    return `<li class="ex-m ex-group${sel ? ' sel' : ''}"><div class="model-heading"><button class="lnk" data-ex-group="${esc(e.g.id)}" aria-pressed="${sel}">${esc(e.g.name)}</button><span class="via ex-sum">${groupCount(e.g, e.fits)}${extra ? ` +${extra} potential` : ''}</span></div>`
+      + `<div class="ex-fit">${esc(fitDescription(e.g, e.fits))}</div>`
+      + `<details class="ex-members"${state.openGroups.has(e.g.id) ? ' open' : ''} data-ex-members="${esc(e.g.id)}"><summary>Its models</summary><ul class="ex-list">${ordered.map(m => modelRow(m, true)).join('')}</ul><button class="lnk" data-open-group="${esc(e.g.id)}">The group’s page →</button></details></li>`;
+  };
+  const row = e => e.g ? groupRow(e) : modelRow(e.m);
 
   if (conflict) h += `<h2 class="ex-head">Models</h2><div class="ex-bad" role="alert">These assumptions are inconsistent. Clear or change an assumption to compare models.${conflict.via.length ? `<ul>${conflict.via.map(id => `<li><button class="lnk" data-result="${id}">${resultStmt(byRid.get(id))}</button> ${certBadges(byRid.get(id))}</li>`).join('')}</ul>` : ''}</div>`;
   else {
-    h += `<h2 class="ex-head">Matching models <span class="n">${known.length}</span></h2><ul class="ex-list">${known.map(row).join('') || '<li class="empty">No known matching model.</li>'}</ul>`;
-    h += `<h2 class="ex-head">Potential models <span class="n">${unknown.length}</span></h2><ul class="ex-list">${unknown.map(row).join('') || '<li class="empty">—</li>'}</ul>`;
+    h += `<h2 class="ex-head">Matching models <span class="n">${knownEntries.length}</span></h2><ul class="ex-list">${knownEntries.map(row).join('') || '<li class="empty">No known matching model.</li>'}</ul>`;
+    h += `<h2 class="ex-head">Potential models <span class="n">${unknownEntries.length}</span></h2><ul class="ex-list">${unknownEntries.map(row).join('') || '<li class="empty">—</li>'}</ul>`;
   }
   h += '</div></div>';
   const el = document.getElementById('models');
@@ -2467,7 +2534,14 @@ function renderModels() {
   el.querySelectorAll('[data-background-preset]').forEach(button => { button.disabled = backgroundPresets.find(p => p.id === button.dataset.backgroundPreset).principles.every(id => background.has(id)); button.addEventListener('click', () => addBackgroundPreset(button.dataset.backgroundPreset)); });
   wireCategories(el.querySelector('#model-principles'));
   el.querySelector('#ex-clear').addEventListener('click', resetBackground);
-  el.querySelector('#ex-deselect')?.addEventListener('click', () => { state.modelId = null; select(null); renderModels(); });
+  el.querySelector('#ex-deselect')?.addEventListener('click', () => { state.modelId = null; state.groupId = null; select(null); renderModels(); });
+  el.querySelectorAll('button[data-ex-group]').forEach(b => b.addEventListener('click', () => {
+    const id = b.dataset.exGroup;
+    state.modelId = null; state.groupId = state.groupId === id ? null : id;
+    if (state.selected?.type === 'model') select(null);
+    renderModels();
+  }));
+  el.querySelectorAll('details[data-ex-members]').forEach(d => d.addEventListener('toggle', () => { d.open ? state.openGroups.add(d.dataset.exMembers) : state.openGroups.delete(d.dataset.exMembers); }));
   wire(el);
   if (focused) el.querySelector(`[${focused[0]}="${focused[1]}"]`)?.focus({preventScroll: true});
 }
@@ -2979,11 +3053,15 @@ function groupGrid(g, view) {
   const baseCols = order.filter(c => qualifies(members, c)), extra = order.filter(c => !baseCols.includes(c) && qualifies(rows, c));
   const cols = [...baseCols, ...extra];
   const hiddenDerived = order.filter(c => varies(rows, c) && !rows.some(r => cellOf(r.m, c)[1])).length;
+  const assumptionsActive = background.size > topicBackground.length || negativeBackground.size > 0;
+  const assumed = [...background].filter(p => !topicBackground.includes(p)).map(p => esc(name(p))).concat([...negativeBackground].map(p => '¬' + esc(name(p))));
   let h = `<div class="group-bar"><label><input type="checkbox" id="group-derived"${view.derived ? ' checked' : ''}> Principles derived in every row <span class="dim">(${hiddenDerived})</span></label>`
-    + `<span class="group-legend"><span class="gcell h r">✓</span> recorded <span class="gcell h d">✓</span> derived <span class="gcell u">?</span> unknown</span></div>`;
+    + `<span class="group-legend"><span class="gcell h r">✓</span> recorded <span class="gcell h d">✓</span> derived <span class="gcell u">?</span> unknown</span></div>`
+    + (assumptionsActive ? `<p class="note">Assumed in the theory explorer: ${assumed.join(', ')}. Rows that do not fit are dimmed; rows that might fit are marked ?.</p>` : '');
   h += `<div class="group-grid-wrap"><table class="group-grid"><thead><tr><th></th>${cols.map(c => `<th class="gcol${extra.includes(c) && c === extra[0] ? ' xfirst' : ''}${rows.some(r => cellOf(r.m, c)[1]) ? '' : ' derived'}"><button class="lnk" data-principle="${c}" title="${esc(name(c))}">${esc(name(c))}</button></th>`).join('')}</tr></thead><tbody>`;
   rows.forEach((r, ri) => {
-    h += `<tr class="${r.first ? 'first' : ''}"><th><button class="growlab" data-grow="${ri}">${r.first ? `<span class="gname">${esc(shortName(g, r.m))}</span>` : ''}${r.tags.length ? `<span class="gtags">${r.tags.map(esc).join(' · ')}</span>` : ''}</button></th>`;
+    const fit = assumptionsActive ? modelFit(r.m) : 'known';
+    h += `<tr class="${r.first ? 'first' : ''}${fit === 'out' ? ' nofit' : fit === 'potential' ? ' mayfit' : ''}"><th><button class="growlab" data-grow="${ri}">${r.first ? `<span class="gname">${esc(shortName(g, r.m))}</span>` : ''}${r.tags.length ? `<span class="gtags">${r.tags.map(esc).join(' · ')}</span>` : ''}</button></th>`;
     for (const c of cols) {
       const [st, rec] = cellOf(r.m, c), sel = view.sel && view.sel.ri === ri && view.sel.c === c;
       h += `<td${extra.includes(c) && c === extra[0] ? ' class="xfirst"' : ''}><button class="gcell ${st} ${st === 'u' ? '' : rec ? 'r' : 'd'}" data-gcell="${ri}" data-gc="${c}" aria-pressed="${sel}" aria-label="${esc(shortName(g, r.member))}${r.tags.length ? ' (' + esc(r.tags.join(', ')) + ')' : ''}: ${esc(name(c))} ${CELL_WORD[st]}">${CELL_SYM[st]}</button></td>`;
@@ -3263,8 +3341,11 @@ function statusLine(label, st, joint = false, head = '') {
   const text = {implies: '✓ proved', 'implies?': '✓ conjectured', excludes: '✗ excluded', 'excludes?': '✗ excluded by a conjecture', independent: '⇏ refuted by a model', 'independent?': '⇏ refuted given a conjecture', inconsistent: joint ? '✗ inconsistent' : 'premise inconsistent with the background', consistent: '✓ consistent', open: '? open'}[st.status] || st.status;
   const models = (st.models || []).map(id => byMid.get(id)).filter(Boolean);
   const via = (st.via || []).map(id => byRid.get(id)).filter(Boolean);
-  const shown = models.slice(0, 3), more = models.length - shown.length;
-  const evidence = models.length ? `<ul class="rel">${shown.map(m => `<li><button class="lnk" data-model="${esc(m.id)}">${esc(m.name)}</button> ${certBadges(m)}</li>`).join('')}${more ? `<li class="dim">and ${more} more in the theory explorer</li>` : ''}</ul>`
+  // A group's witnesses are one entry: how many of its models, and which.
+  const entries = familyEntries(models), shown = entries.slice(0, 3), more = entries.length - shown.length;
+  const entry = e => e.g ? `<li><button class="lnk" data-open-group="${esc(e.g.id)}">${esc(e.g.name)}</button> <span class="dim">${esc(groupCount(e.g, e.fits))}: ${esc(fitDescription(e.g, e.fits))}</span></li>`
+    : `<li><button class="lnk" data-model="${esc(e.m.id)}">${esc(e.m.name)}</button> ${certBadges(e.m)}</li>`;
+  const evidence = models.length ? `<ul class="rel">${shown.map(entry).join('')}${more ? `<li class="dim">and ${more} more in the theory explorer</li>` : ''}</ul>`
     : via.length ? `<details class="rel-evidence"><summary>${via.length} proof step${via.length > 1 ? 's' : ''}</summary><ol>${via.map(r => `<li><button class="lnk" data-result="${esc(r.id)}">${resultStmt(r)}</button> ${certBadges(r)}</li>`).join('')}</ol></details>` : '';
   return `<div class="rel-line">${head ? relHead(head) : ''}<span class="stmt">${label}</span> <span class="rel-status ${kind}">${text}</span>${st.limited ? ' <span class="dim">(model outside the selected sources)</span>' : ''}</div>${evidence}`;
 }
@@ -3427,7 +3508,7 @@ function select(sel, extend = false) {
   else if (sel.type === 'truth') state.focus = TRUE;
   else if (sel.type === 'junction') state.focus = [...layout.byId.get(sel.id).premises];
   else if (sel.type === 'selection') state.focus = [...sel.premises];
-  if (sel?.type === 'model') { state.modelId = sel.id; renderModels(); }
+  if (sel?.type === 'model') { state.modelId = sel.id; state.groupId = null; renderModels(); }
   state.selected = sel; renderDetail(); applySelection();
   if (state.tab === 'lattice' && typeof renderLattice === 'function') renderLattice();
 }
@@ -3457,7 +3538,7 @@ function setAssumption(id, sign) {
   background.delete(id); negativeBackground.delete(id);
   if (sign === 'positive') background.add(id);
   if (sign === 'negative') negativeBackground.add(id);
-  state.modelId = null; state.selected = null;
+  state.modelId = null; state.selected = null;  // a group stays inspected: its fitting models follow the assumptions
   saveBackground(); refreshPrincipleControls(); renderAll(true);
 }
 // The sidebar's own moves, offered on the selected principles from the
@@ -3594,7 +3675,7 @@ function applySelectionAction(kind) {
     }
     if (onLattice) { lattice.shown = lattice.shown.filter(l => !active.some(a => baseId(a) === baseId(l))); lattice.selected = null; }
     // What is now assumed is no longer something to shade relative to.
-    state.modelId = null; state.selected = null; state.focus = null;
+    state.modelId = null; state.selected = null; state.focus = null;  // a group stays inspected: its fitting models follow the assumptions
     saveBackground(); refreshPrincipleControls(); renderAll(true);
     return;
   }
@@ -3639,7 +3720,7 @@ function addBackgroundPreset(presetId) {
   const preset = backgroundPresets.find(p => p.id === presetId);
   if (!preset) return;
   for (const id of preset.principles) { background.add(id); negativeBackground.delete(id); }
-  state.modelId = null; state.selected = null;
+  state.modelId = null; state.selected = null;  // a group stays inspected: its fitting models follow the assumptions
   saveBackground(); refreshPrincipleControls(); renderAll(true);
 }
 function saveBackground() {
@@ -3705,7 +3786,7 @@ function renderAll(refit) {
 }
 function resetBackground() {
   for (const id of [...background]) if (!topicBackground.includes(id)) background.delete(id);
-  negativeBackground.clear(); state.modelId = null; state.selected = null;
+  negativeBackground.clear(); state.modelId = null; state.selected = null;  // a group stays inspected: its fitting models follow the assumptions
   saveBackground(); refreshPrincipleControls(); renderAll(true);
 }
 document.getElementById('background-reset').addEventListener('click', resetBackground);

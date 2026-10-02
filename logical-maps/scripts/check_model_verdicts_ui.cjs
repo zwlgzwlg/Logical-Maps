@@ -289,6 +289,23 @@ try{
   assert.deepEqual(rowNames(),['group member']);
   page.querySelector('#page-back').click();
   assert.equal(page.querySelector('h1').textContent,'Fixture: group member','Back to the member');
+  // The theory explorer lists the group once, counting the models that fit and saying which.
+  d3.querySelector('[data-tab="models"]').click();
+  const exRows=()=>[...d3.querySelectorAll('#models .explorer-models > ul.ex-list > li.ex-m')];
+  assert.equal(exRows().length,1,'One row for the group, none for its models');
+  assert.match(exRows()[0].textContent,/Fixture group\s*2 of 2 models\s*every member/);
+  w3.eval('setAssumption("e","positive")');
+  assert.match(exRows()[0].textContent,/1 of 2 models\s*every member · Σ top/,'Only the member assumes E; the description names its Σ');
+  exRows()[0].querySelector('button[data-ex-group]').click();
+  assert.match(d3.querySelector('#models .inspection-note').textContent,/Inspecting Fixture group, through the 1 of its models that fit/);
+  const exP=id=>d3.querySelector(`#model-principles li[data-assumption-row="${id}"]`);
+  assert.ok(exP('e').classList.contains('model-in')&&exP('b').classList.contains('model-out'),'Inspecting a group tints what holds or fails in all the models that fit');
+  w3.eval('setAssumption("e",null)');
+  assert.ok(exP('e').classList.contains('model-split')&&/1✓ 1✗/.test(exP('e').textContent),'And marks a split');
+  // A list of witnesses gathers a group's models into one entry.
+  const line=d3.createElement('div');line.innerHTML=w3.eval('statusLine("X", {status:"independent", models:["gm","gm-sigma-atom"]})');
+  assert.match(line.textContent,/Fixture group 2 of 2 models: every member/,'Witnesses from a group are one entry');
   assert.deepEqual(errors3.map(String),[]);
+  console.log('PASS: the theory explorer lists a group once, counting the models that fit the assumptions and saying which, inspects a group through them (all hold, all fail, or split), and a list of witnesses gathers a group\'s models into one entry;');
   console.log('PASS: a group\'s member lists its own arguments, then the shared arguments that apply under their group, each saying which condition it relies on and why the member meets it; a group\'s page shows a grid of its members, adds a generated parameter\'s variants and the columns they need on request, says what the parameter changes, shows a cell\'s arguments and a row\'s settings, and lists its definition, parameters, conditions and shared arguments with where each applies.');
 }finally{w3.close();}
