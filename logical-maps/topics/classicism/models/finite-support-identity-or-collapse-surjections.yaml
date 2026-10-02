@@ -48,8 +48,9 @@ meets:
   collapse-unpinned: >-
     The other arrows are those that collapse $0$ and $1$, pinned down by $\{0,1\}$, and a
     collapsing monotone surjection is not determined by its values on a finite set.
-  surjective: >-
-    Restricting part 4 to surjections, every arrow is one.
+  d6-surjective: >-
+    Restricting part 4 to surjections, every arrow is a surjection of $\mathbb N$.
+    So each arrow acts surjectively on the pinning sets, the finite subsets of $\mathbb N$, and on the individuals, whether these are the natural numbers or a single one that every arrow fixes.
   unbounded-haecceities: >-
     As in parts 2–4, with $A$ the even numbers.
   no-least-pinned-cover: >-

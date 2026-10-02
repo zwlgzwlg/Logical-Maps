@@ -1,0 +1,19 @@
+id: no-pure-contingency-one-object
+requires: [one-object-action-model]
+holds: [no-pure-contingency-r]
+source: {paper: bacon-dorr-classicism, locator: '§3.5, p. 58; p. 79'}
+by: Andrew Bacon and Cian Dorr
+date: '2026-09-17'
+text: >-
+  Closed pure terms denote entities fixed by every arrow (§3.5, p. 58). With a single object, a
+  proposition fixed by every arrow contains every arrow if it contains the identity and no arrow
+  otherwise, so a true closed pure sentence is necessary: the source's one-object No Pure
+  Contingency observation (p. 79), applied to each closed instance.
+revisions:
+- date: '2026-10-02'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: >-
+    Moved from the group finite-support-one-object to the topic, for every one-object action
+    model; the reason the source's observation holds is spelled out in place of "Boxed positive
+    flags use the source’s explicit one-object No Pure Contingency observation, applied separately
+    to each closed instance."

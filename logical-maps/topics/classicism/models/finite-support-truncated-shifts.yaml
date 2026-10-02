@@ -47,8 +47,9 @@ meets:
   pinned-atoms: >-
     $\{k_0\}$ and each $\{k_n\}$ are pinned down by finite sets: $k_n$ is the only arrow sending
     $n+1$ to $1$.
-  surjective: >-
-    $k_n$ sends $0$ to $0$ and $m+n$ to $m$ for $m\ge1$.
+  d6-surjective: >-
+    $k_n$ sends $0$ to $0$ and $m+n$ to $m$ for $m\ge1$, so it is a surjection of $\mathbb N$.
+    So each arrow acts surjectively on the pinning sets, the finite subsets of $\mathbb N$, and on the individuals, whether these are the natural numbers or a single one that every arrow fixes.
   unbounded-haecceities: >-
     With $A$ the even numbers: the strongest persistent property pinned down by $\{0,\ldots,n\}$
     whose extension contains them has, at $k_m$, the evens, the odds with $0$, or all of $\mathbb N$

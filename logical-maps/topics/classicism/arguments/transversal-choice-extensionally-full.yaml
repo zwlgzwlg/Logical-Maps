@@ -1,0 +1,22 @@
+id: transversal-choice-extensionally-full
+requires: [extensionally-full]
+holds: [transversal-choice-r]
+by: Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic), on a question of Zachary
+  Goodsell, after an observation of Christopher Sun
+date: '2026-09-25'
+text: >-
+  For an equivalence relation at the evaluation point, a transversal of its extension there, chosen
+  in the metatheory, is by extensional fullness the extension of an element of the domain; the
+  equivalence and transversal conditions are unboxed.
+revisions:
+- date: '2026-10-02'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: >-
+    The Relational Choice and Transversal Choice arguments merged into one, stated for every
+    extensionally full model.
+- date: '2026-10-02'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: >-
+    Moved from the group finite-support-one-object to the topic. Its first sentence, deriving
+    extensional fullness from ideal fullness, is now the group's reason for meeting
+    extensionally-full.

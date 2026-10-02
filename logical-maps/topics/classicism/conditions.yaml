@@ -1,0 +1,28 @@
+# Conditions a model may meet, stated once for the topic. A general argument (arguments/<id>.yaml)
+# requires some of them; a model record meets one by its own `meets`, by its group's `meets`, or by
+# the value of one of its group's parameters, each with the reason it holds there. Introduced by
+# Claude Opus 5.5 at Cian Dorr's direction, 2 October 2026.
+conditions:
+- id: one-object-action-model
+  text: >-
+    The model is an action model (Classicism, Appendix D) with a single object.
+- id: extensionally-full
+  text: >-
+    The model is extensionally full at every object: every set of tuples from the domains at an
+    object is the extension, at the identity arrow, of an element of the domain of the matching
+    relational type there.
+- id: d6-surjective
+  text: >-
+    The model is an ideally full action model in which every arrow out of the evaluation object
+    acts surjectively both on the individuals and on the pinning sets (Proposition D.6's
+    hypothesis).
+- id: sigma-top
+  text: >-
+    Σ is interpreted with every relational constant denoting the top element of its type (and
+    every individual constant, if any, one fixed individual).
+- id: sigma-single-top
+  text: >-
+    Σ is a single relational constant $c$ of type $t$, denoting $\top$.
+- id: one-individual
+  text: >-
+    There is exactly one individual, at every world.

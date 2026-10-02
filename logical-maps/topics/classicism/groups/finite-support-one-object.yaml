@@ -12,6 +12,10 @@ references:
 # members' copies were merged, second routes to the same verdict were dropped (the trawl's among
 # them), and the source's "as in part N" clauses became shared arguments. Texts are the members'
 # unless a revision says otherwise.
+# Arguments that hold far beyond this group (No Pure Contingency in one-object action models,
+# Transversal Choice in extensionally full models, Proposition D.6, the Σ-as-top arguments and those
+# for a single individual) moved to the topic's arguments/ the same day; the group meets their
+# conditions under `meets`, and its parameter values under theirs.
 
 # revision (2 October, Claude Opus 5.5, at Cian Dorr's direction): "individuals" became "numbers"
 # where the pinning sets are meant, and what the individuals are became the parameter
@@ -44,6 +48,8 @@ parameters:
           There is a single individual, which every arrow fixes; the arrows still act on
           $\mathbb N$, which supplies the pinning sets.
         label: one individual
+        meets:
+          one-individual: The only individual is fixed by every arrow, at the sole object.
   sigma:
     text: The interpretation of Σ. Each member fixes one; its variants with the others are
       generated.
@@ -57,12 +63,17 @@ parameters:
           Interpretation of Σ, fixed for this record: each relational constant denotes the top
           element of its type and each individual constant denotes one fixed individual.
         label: Σ top
+        meets:
+          sigma-top: This is the interpretation.
       single-top:
         # Cian Dorr, 2 October 2026.
         text: >-
           Interpretation of Σ, fixed for this record: Σ is a single relational constant $c$ of type
           $t$, which denotes $\top$.
         label: Σ one constant for ⊤
+        meets:
+          sigma-top: Its one relational constant denotes the top element of type $t$.
+          sigma-single-top: This is the interpretation.
       true-atom:
         text: >-
           Interpretation of Σ, fixed for this record: one designated relational constant $c$ of
@@ -72,6 +83,19 @@ parameters:
           constant one fixed individual.
         label: Σ true atom
         requires: [actual-world-pinned]
+
+# Conditions of the topic (conditions.yaml) that every member meets; members meet others under their
+# own `meets`, and parameter values under theirs.
+meets:
+  one-object-action-model: >-
+    Each part of Proposition D.5 is a one-object category acting on $\mathbb N$ (Appendix D,
+    Definitions D.1–D.3).
+  extensionally-full: >-
+    The model is ideally full, hence extensionally full at every object (Appendix D, the remark
+    after Definition D.3): for any set $R$ of tuples from the domains at an object $V$, the
+    intension that assigns to every arrow out of $V$ into an object $U$ a fixed set $R_U$ of tuples
+    from $U$’s domains, with $R_V=R$, is pinned down by $\emptyset$, so it is the intension of an
+    element of $V^{\bar\sigma\to t}$ with extension $R$ at $1_V$.
 
 conditions:
 
@@ -100,9 +124,6 @@ conditions:
     The arrows other than the identity form a nonempty proposition pinned down by a finite set,
     and none of them has a singleton pinned down by a finite set.
 
-- id: surjective
-  text: >-
-    Every arrow is a surjection of $\mathbb N$.
 
 - id: positive-preserving
   text: >-
@@ -125,14 +146,6 @@ conditions:
 
 arguments:
 
-- id: no-pure-contingency
-  holds: [no-pure-contingency-r]
-  source: {paper: bacon-dorr-classicism, locator: p. 79}
-  by: Andrew Bacon and Cian Dorr
-  date: '2026-09-17'
-  text: >-
-    Boxed positive flags use the source’s explicit one-object No Pure Contingency observation,
-    applied separately to each closed instance.
 
 - id: axiom-of-infinity
   # revision: split on 2 October; its type-t half is axiom-of-infinity-t.
@@ -165,66 +178,9 @@ arguments:
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: The type-$t$ half of the old argument, "individual" becoming "number", so that it covers the one-individual variants.
 
-- id: one-individual
-  when: {individuals: singleton}
-  fails: [axiom-of-infinity-e, infinity-e, possible-infinity-e]
-  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
-  date: '2026-10-02'
-  text: >-
-    There is one individual at the sole object, so no two individuals are distinct, and the numeral
-    $\operatorname{Suc}_e\mathbf{0}_e$ holds of the universal property at type $e$ at every arrow.
 
-- id: three-numbers
-  when: {individuals: singleton}
-  holds: [countable-boolean-completeness-r]
-  by: Claude Opus 5.5 (Anthropic), on Cian Dorr's question whether the failure of Boolean
-    Completeness at type $t$ refutes its countable form here
-  date: '2026-10-02'
-  text: >-
-    The natural numbers are the finite cardinalities at type $e$ (Background, after Goodsell), and
-    with a single individual there are three: $\mathbf{0}_e$, true of the empty property;
-    $\operatorname{Suc}_e\mathbf{0}_e$, true of the universal one; and the empty cardinality, which
-    is $\operatorname{Suc}_e$ of the second and of itself. By extensional fullness the property
-    of being one of these three is in the domain, so it bounds natural numberhood. A countable
-    property therefore has at most three members in its extension, and their join is its least
-    upper bound.
 
-- id: transversal-choice
-  # migration: one argument for all eight, at Cian Dorr's direction (2 October): extensional
-  # fullness, from the members' Relational Choice argument (its first sentence, verbatim), then
-  # the members' Transversal Choice argument, which had begun "By the argument recorded for
-  # Relational Choice". Relational Choice now follows from Transversal Choice, and both boxed
-  # forms through No Pure Contingency, so the members' Relational Choice arguments go.
-  holds: [transversal-choice-r]
-  by: Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic), on a question of Zachary
-    Goodsell, after an observation of Christopher Sun
-  date: '2026-09-25'
-  text: >-
-    The model is ideally full, hence extensionally full at every object (Appendix D, the remark
-    after Definition D.3): for any set $R$ of tuples from the domains at an object $V$, the
-    intension that assigns to every arrow out of $V$ into an object $U$ a fixed set $R_U$ of tuples
-    from $U$’s domains, with $R_V=R$, is pinned down by $\emptyset$, so it is the intension of an
-    element of $V^{\bar\sigma\to t}$ with extension $R$ at $1_V$. Transversal Choice holds in every
-    extensionally full model: for an equivalence relation at the evaluation point, a transversal of
-    its extension there, chosen in the metatheory, is such an $R$, and its element is pinned down by
-    the empty set; the equivalence and transversal conditions are unboxed.
-  revisions:
-  - date: '2026-10-02'
-    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
-    note: The Relational Choice and Transversal Choice arguments merged into one, stated for every extensionally full model.
 
-- id: sigma-top
-  when: {sigma: [top, single-top]}
-  fails: [witnessed-possibility-r, separated-structure-r, independence-signature-r, distinctness-signature-r]
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed
-    Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible
-    of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree
-    on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term
-    $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true
-    identity that C(Σ) does not prove.
 
 - id: sigma-true-atom
   when: {sigma: true-atom}
@@ -246,16 +202,6 @@ arguments:
     fixed by every arrow (Classicism, §3.5, p. 58), whereas $a$ is fixed by no arrow but the
     identity, so no closed pure term denotes $\lambda\bar x\, .\,a$.
 
-- id: sigma-single-top
-  when: {sigma: single-top}
-  holds: [no-contingency-signature-r, signature-b-r]
-  by: Cian Dorr (observation); recorded by Claude Opus 5.5 (Anthropic)
-  date: '2026-10-02'
-  text: >-
-    A closed sentence of the language of Σ denotes what the pure sentence with $\top_t$ in place of
-    $c$ denotes, since $c$ denotes $\top_t$; if true it is necessary by No Pure Contingency (the
-    shared argument no-pure-contingency). So No Contingency (signature Σ) holds, and B for sentences
-    of Σ with it: a true Σ-sentence is necessary, hence necessarily possible.
 
 - id: actual-world
   requires: [actual-world-pinned]
@@ -315,20 +261,6 @@ arguments:
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: The identity-or-collapse models' arguments (the source's for Atomicity, part 4 and "as in part 4"; Fable's for type $t$) stated once, with the step from atoms to singletons spelled out.
 
-- id: barcan-surjective
-  requires: [surjective]
-  holds: [barcan-r]
-  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.6; Proposition D.5, parts 2, 5 and 8, pp. 76–79'}
-  by: Andrew Bacon and Cian Dorr
-  date: '2026-09-17'
-  text: >-
-    By Proposition D.6, which asks that each arrow act surjectively both on the individuals and on
-    the pinning sets: a surjection of $\mathbb N$ induces a surjection of its finite subsets, and
-    the individuals are either the natural numbers or a single fixed one.
-  revisions:
-  - date: '2026-10-02'
-    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
-    note: The three members' citations of Proposition D.6 stated once, with D.6's two surjectivity conditions spelled out so that it covers the one-individual variants.
 
 - id: barcan-positive
   when: {individuals: naturals}

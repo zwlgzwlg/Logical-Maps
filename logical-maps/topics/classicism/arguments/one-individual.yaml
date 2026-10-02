@@ -1,0 +1,12 @@
+id: one-individual
+requires: [one-individual]
+fails: [axiom-of-infinity-e, infinity-e, possible-infinity-e]
+by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+date: '2026-10-02'
+text: >-
+  No two individuals are distinct, and the numeral $\operatorname{Suc}_e\mathbf{0}_e$ holds of the
+  universal property at type $e$ at every world.
+revisions:
+- date: '2026-10-02'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: Moved from the group finite-support-one-object to the topic.

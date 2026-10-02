@@ -46,8 +46,9 @@ meets:
     preimage under $i$ is the odd $b+1$; and $N^{\prime}:=[0,b+2]$: a monotone map agreeing with $i$
     there has the same preimages of $b$ within $[0,b+2]$ and takes values at least $i(b+2)=b+1$
     beyond it.
-  surjective: >-
-    The arrows are the monotone surjections.
+  d6-surjective: >-
+    The arrows are the monotone surjections of $\mathbb N$.
+    So each arrow acts surjectively on the pinning sets, the finite subsets of $\mathbb N$, and on the individuals, whether these are the natural numbers or a single one that every arrow fixes.
   unbounded-haecceities: >-
     With $A$ the even numbers: the strongest persistent property containing them and pinned down by
     $\{0,\ldots,n\}$ becomes strictly stronger as $n$ grows.

@@ -1,0 +1,15 @@
+id: sigma-single-top
+requires: [sigma-single-top]
+given: [no-pure-contingency-r]
+holds: [no-contingency-signature-r, signature-b-r]
+by: Cian Dorr (observation); recorded by Claude Opus 5.5 (Anthropic)
+date: '2026-10-02'
+text: >-
+  A closed sentence of the language of Σ denotes what the pure sentence with $\top_t$ in place of
+  $c$ denotes, since $c$ denotes $\top_t$; if true it is necessary by No Pure Contingency, which
+  holds here. So No Contingency (signature Σ) holds, and B for sentences of Σ with it: a true
+  Σ-sentence is necessary, hence necessarily possible.
+revisions:
+- date: '2026-10-02'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: Moved from the group finite-support-one-object to the topic, No Pure Contingency becoming its `given`.
