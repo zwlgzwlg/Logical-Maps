@@ -1753,8 +1753,11 @@ def model_coverage(data: dict, an: dict) -> list[dict]:
         derived_holds, derived_fails, unknown = [], [], []
         if m is not None and m["status"] == "proved" and mid in E.holds and mid not in E.model_conflicts:
             sat, vio = m["satisfies"], m["violates"]
-            redundant = [f"holds {p}" for p in sat if p in E.cl([x for x in sat if x != p])[0]]
-            redundant += [f"fails {v}" for v in vio if E._reaches(sat, v, [x for x in vio if x != v])]
+            # A group's criterion lists everything its argument shows; only a record's own arguments
+            # are held to minimal verdicts.
+            shared = {p for _, a in _live_arguments(rec) if a.get("group") for p in (a.get("holds") or []) + (a.get("fails") or [])}
+            redundant = [f"holds {p}" for p in sat if p not in shared and p in E.cl([x for x in sat if x != p])[0]]
+            redundant += [f"fails {v}" for v in vio if v not in shared and E._reaches(sat, v, [x for x in vio if x != v])]
             if redundant:
                 notices.append("each derivable from the other recorded verdicts: " + ", ".join(redundant))
             derived_holds = [p for p in E.ids if p in E.holds[mid] and p not in sat]
