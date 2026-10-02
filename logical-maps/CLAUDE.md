@@ -182,6 +182,9 @@ When you (an AI) add or edit a result or model:
   for every member that meets some condition belongs in the group as a
   shared argument, not copied into members; lift one only when another member would
   otherwise copy it, and check closures with `check_flattening.py --closure`.
+  When a group generates variants, every argument (own or shared) applies to
+  every variant unless its `when` limits it: give `when` to any argument that
+  relies on a particular setting, and check the variants' verdicts.
 - When you add content to an existing record after its certificate date (a
   newly verified property of a model, an added proof, a corrected statement),
   append an entry to its `changes` list: `date`, `by`, `summary`, and for models

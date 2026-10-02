@@ -339,9 +339,19 @@ definition: >-                      # the shared construction; {{name}} marks a 
   {{sigma}}
 parameters:
   monoid: {text: The monoid of arrows.}           # a prose slot
+  individuals:
+    text: What the individuals are.
+    generate: true                                # each member also gives a variant per other value
+    default: naturals                             # for a member that sets none
+    values:
+      naturals: {text: The individuals are the natural numbers …, label: individuals ℕ}
+      singleton: {text: There is a single individual …, label: one individual}
   sigma:
     text: The interpretation of Σ.
-    values: {top: …, true-atom: …}                # named values: their prose fills the slot
+    generate: true
+    values:                                       # named values: their prose fills the slot
+      top: …                                      # a string is the text
+      true-atom: {text: …, label: Σ true atom, requires: [actual-world-pinned]}
 conditions:
 - {id: evens-avoidable, text: …}    # stated in prose
 arguments:                          # shared arguments, each with its own id, by and date
@@ -362,7 +372,10 @@ settings:
 meets:
   evens-avoidable: …                # why it meets the condition: here, the witness
 definition: …                       # optional: text of its own, after the group's
-arguments: [...]                    # what is specific to it
+arguments:                          # what is specific to it
+- fails: [barcan-r]
+  when: {individuals: naturals}     # only at these settings; `own` matches its own prose
+  text: …
 ```
 
 `load_topic` expands a member before flattening. Its definition becomes the group's
@@ -378,6 +391,21 @@ verdicts. Moving arguments into a group must leave every closure unchanged:
 `check_flattening.py --closure`, against the revision before the move. `like` may name a
 shared argument as `<group>#<id>`. The viewer lists a member's own arguments, then the
 shared arguments that apply to it, and gives each group a page with its shared arguments and members.
+
+A parameter marked `generate` also makes variants. The member's own setting (or the
+parameter's `default`) gives the member itself; every other value whose `requires` the
+member meets gives a variant, and so does every combination across generated parameters.
+A variant is a model of its own for the engine: its id is the member's followed by its
+differing settings (`finite-support-truncations-individuals-singleton-sigma-single-top`),
+its name the member's followed by the values' labels, and its `variant_of` names the
+member. Its definition is the group's at its settings, and its arguments are the member's
+own that apply there and the shared arguments that do. A member's own argument applies at
+every setting unless its `when` says otherwise, so an argument that needs, say, infinitely
+many individuals must say `when: {individuals: naturals}`. Validation checks the member's
+file once; the engine reports any variant whose verdicts clash. The group page shows a
+grid of its members, with a generated parameter's variants added as sub-rows on request,
+and says what each parameter changes. Model lists show a variant only where its member is
+not listed.
 
 ## Viewer
 
