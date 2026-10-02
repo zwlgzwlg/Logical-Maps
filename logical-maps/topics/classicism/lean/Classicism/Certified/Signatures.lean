@@ -3,6 +3,10 @@ import Classicism.Syntax.SentenceSchemas
 import Classicism.Syntax.Pure
 import Classicism.Syntax.Conservativity
 import Classicism.Syntax.WitnessedPossibility
+import Classicism.Syntax.PossibilityPlus
+import Classicism.Syntax.Infinity
+import Classicism.Syntax.StrongPossibility
+import Classicism.Syntax.OrdinaryComprehension
 
 /-!
 # Every principle at every signature

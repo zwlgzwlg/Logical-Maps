@@ -300,7 +300,11 @@ Classicism/Syntax/Derivation.lean       derivability in H closed under Subst; te
 Classicism/Syntax/Axioms.lean           C and C⁻ as theories; the eleven identities as sentences
 Classicism/Syntax/Entailment.lean       entailment between axiom sets, ⟹, with cut and its algebra
 Classicism/Syntax/SentenceSchemas.lean  No Pure Contingency, Distinctness, Possibility, maximalization
-Classicism/Syntax/WitnessedPossibility.lean  schemas with constants put for variables: Witnessed Possibility and its kin, Logical Necessity, Modal Freedom
+Classicism/Syntax/WitnessedPossibility.lean  schemas with constants put for variables: Witnessed Possibility and its kin, Logical Necessity, Modal Freedom; Separated Structure, Independence
+Classicism/Syntax/PossibilityPlus.lean  Possibility+, pure and for a signature; pairwise distinctness of a tuple
+Classicism/Syntax/Infinity.lean         the Infinity schemas at e and t
+Classicism/Syntax/StrongPossibility.lean  ◇_≠ and Strong Possibility, pure and for a signature
+Classicism/Syntax/OrdinaryComprehension.lean  Ordinary Comprehension, and that C proves every instance
 Classicism/Syntax/Sentences.lean        ND, BF and the Fregean Axiom as sentences, for both semantic layers
 Classicism/Syntax/Constants.lean        the constants a term mentions
 Classicism/Syntax/Pure.lean             the pure language inside every signature: terms and derivations carried across

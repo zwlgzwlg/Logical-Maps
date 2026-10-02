@@ -14,19 +14,19 @@ Made 28 September 2026 from `ciandorr/Logical-Maps` at commit 7c928c4 ("first tr
 
 Since 2 October each result counted as proved has a certificate in `Classicism/Map.lean`: a
 theorem named by its id whose type is the statement the map's own generator writes for it
-(`map/README.md`). The 223 certificates agree with the table below; `map/index.json` gives,
+(`map/README.md`). The 228 certificates agree with the table below; `map/index.json` gives,
 for each, the file and lines of its proof.
 
 A record theorem in `Results/Records.lean` named exactly by a map id proves the map's claim, and its certificate is the entailment between the map's schemas. One named by a map id plus `_at_t` proves only the instances at type `t` (or with output `t`); its certificate is from the map's premise schemas to those instances. Where a full version exists too, the `_at_t` one is the instance at `t` that other proofs at `t` cite. A record with a Ty-parameter is proved at every list of types too, by its list form (`foo.listEntails`, the vectorized derivation); where the map's principle is over argument tuples, as Actual Profile is, or the record is proved at `σ → t` for a principle over relational types, that list form is the map's claim (`Results/Lists.lean`, `Results/Arity.lean`). `classicism_implies_existence_r_at_e` and `_relational` together cover their record, composed in `Results/Arity.lean`. Results proved by the metalogical theorems of `Results/SentenceSchemas/` are counted as proved too: those whose docstrings name the record, and the twenty-four "No Pure Contingency and X imply □X" results, all instances of `npc_union_entails_box`.
 
 | class | results | proved in Lean | in part only | not yet |
 | --- | --- | --- | --- | --- |
-| Per-type routine | 139 | 134 | 0 | 5 |
-| Per-instance routine over sentences | 52 | 43 | 0 | 9 |
+| Per-type routine | 139 | 136 | 0 | 3 |
+| Per-instance routine over sentences | 52 | 45 | 0 | 7 |
 | Sweet spot | 47 | 32 | 0 | 15 |
-| Metalogic-dominated | 26 | 14 | 0 | 12 |
+| Metalogic-dominated | 26 | 15 | 0 | 11 |
 | Conjectured | 6 | 0 | 0 | 6 |
-| total | 270 | 223 | 0 | 47 |
+| total | 270 | 228 | 0 | 42 |
 
 ## Sweet spot (47)
 
@@ -96,7 +96,7 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `possibility-and-necessary-strong-leibniz-t-incompatible`
 - `possibility-and-necessity-of-arithmetic-incompatible`
 - `possibility-and-no-pure-contingency-incompatible` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
-- `possibility-plus-signature-r-implies-possibility-plus-r`
+- `possibility-plus-signature-r-implies-possibility-plus-r` — **Lean: by conservativity, `Results/SentenceSchemas/PossibilityPlus.lean`**
 - `possibility-schema-r-implies-possible-infinity-e` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `possibility-schema-r-implies-possible-infinity-t`
 - `possibility-signature-r-implies-possibility-schema-r` — **Lean: by conservativity, `Syntax/Conservativity.lean`**
@@ -150,8 +150,8 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `no-pure-contingency-implies-necessity-of-arithmetic`
 - `no-pure-contingency-r-implies-converse-witnessed-possibility-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `no-pure-contingency-r-implies-pure-b-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
-- `possibility-plus-r-implies-possibility-schema-r`
-- `possibility-plus-signature-r-implies-possibility-signature-r`
+- `possibility-plus-r-implies-possibility-schema-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `possibility-plus-signature-r-implies-possibility-signature-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `possible-infinity-e-and-no-pure-contingency-imply-axiom-of-infinity-e` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `possible-infinity-t-and-no-pure-contingency-imply-axiom-of-infinity-t` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `possibly-witnessed-possibility-r-implies-witnessed-possibility-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
@@ -197,7 +197,7 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `classicism-implies-modal-t` — **Lean: full**
 - `classicism-implies-modalized-fregean` — **Lean: full**
 - `classicism-implies-modalized-functionality-r` — **Lean: full**
-- `classicism-implies-ordinary-comprehension-r`
+- `classicism-implies-ordinary-comprehension-r` — **Lean: metalogical theorem, `Syntax/OrdinaryComprehension.lean`**
 - `distinctness-necessary-r-implies-distinctness-necessary-t` — **Lean: full**
 - `distinctness-necessary-t-implies-modal-five` — **Lean: full**
 - `distinctness-necessary-t-implies-vicinity` — **Lean: full**
@@ -211,7 +211,7 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `fregean-axiom-implies-extensionality-r` — **Lean: full**
 - `fregean-axiom-implies-necessary-distinctness-necessary-r` — **Lean: full**
 - `fregean-axiom-implies-necessary-fregean-axiom` — **Lean: full**
-- `fregean-incompatible-with-infinity-t`
+- `fregean-incompatible-with-infinity-t` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `functional-choice-r-implies-plenitude-r` — **Lean: full**
 - `functional-choice-r-implies-relational-choice-r` — **Lean: full**
 - `functionality-r-implies-tractarianism-r` — **Lean: full**

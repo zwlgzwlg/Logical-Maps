@@ -1,6 +1,7 @@
 import Classicism.Syntax.SentenceSchemas
 import Classicism.Syntax.Blocks
 import Classicism.Syntax.Pure
+import Classicism.Syntax.Constants
 
 /-!
 # Sentence schemas with constants put for variables
@@ -21,6 +22,12 @@ that block, read in `Σ`.
 
 The empty tuple is included, so each schema has an instance at every closed pure sentence.
 What follows from them is in `Results/SentenceSchemas/WitnessedPossibility.lean`.
+
+Also here, **Separated Structure** (Classicism, §2.5, pp. 38–39): `Fc = Gc → F = G`, for a
+constant `c` of `Σ` and closed terms `F`, `G` of `Σ`'s language not containing `c`; and
+**Independence**: `c ≠ A d₁ … dₙ`, for a closed pure term `A` and distinct constants
+`c, d₁, …, dₙ`, `n ≥ 0`. The constant `c` has the relational type `ρ` of `A d₁ … dₙ`, and
+`c` is read at that type through the equation of the types.
 -/
 
 namespace Classicism.Meta
@@ -95,6 +102,21 @@ def modalFreedom : AxiomSet Sig := fun a =>
     (cs ++ ds).Nodup ∧
       a = Term.imp (Term.conj (Term.dia (Term.atConsts cs P)) (Term.dia (Term.atConsts ds Q)))
         (Term.dia (Term.conj (Term.atConsts cs P) (Term.atConsts ds Q)))
+
+/-- **Separated Structure**: `Fc = Gc → F = G`, for a constant `c` and closed terms `F`, `G`
+not containing it. -/
+def separatedStructure : AxiomSet Sig := fun a =>
+  ∃ (c : Sig.Const) (ρ : RTy) (F G : Term Sig [] (Sig.typeOf c ⇒ ρ)),
+    c ∉ F.consts ∧ c ∉ G.consts ∧
+      a = Term.imp (Term.eq' (Term.app F (Term.const c)) (Term.app G (Term.const c))) (Term.eq' F G)
+
+/-- **Independence**: `c ≠ A d₁ … dₙ`, for a closed pure term `A` and distinct constants
+`c, d₁, …, dₙ`. -/
+def independence : AxiomSet Sig := fun a =>
+  ∃ (c : Sig.Const) (ds : List Sig.Const) (ρ : RTy) (h : Sig.typeOf c = Ty.rel ρ)
+    (A : Term Signature.pure [] (ds.map Sig.typeOf ⇒* ρ)),
+    (c :: ds).Nodup ∧
+      a = Term.neg (Term.eq' (h ▸ Term.const c) (Term.appBlock (Term.ofPure A) (Terms.consts ds)))
 
 end AxiomSet
 

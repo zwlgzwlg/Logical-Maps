@@ -24,7 +24,7 @@ against a statement the map writes itself.
 
 | file | what it is |
 | --- | --- |
-| `lean.yaml` | The fields the map would carry: `lean_lib` and `lean` (for `topic.yaml`), a `lean_def` for each of the 86 principles formalized here, each principle's `forms`, and a `lean_ref` for each of the 223 results certified. |
+| `lean.yaml` | The fields the map would carry: `lean_lib` and `lean` (for `topic.yaml`), a `lean_def` for each of the 95 principles formalized here, each principle's `forms`, and a `lean_ref` for each of the 228 results certified. |
 | `pmap.patch` | The proposed change to the map's build script and JSON schemas (below). |
 | `generate.py` | Runs the map's own generator, with `pmap.patch` applied in memory, on a checkout of the map with these fields added, writing `Classicism/Statements.lean`; `--refs` fills `lean_ref` from `Classicism/Map.lean`, `--patch` rewrites `pmap.patch`. |
 | `index.json` | For each certified result and form: its certificate (file, lines, axioms) and the declarations a reader wants, the proofs (file, lines), and for a form the definitions of both forms. Written by `scripts/MapIndex.lean`. |
@@ -34,7 +34,7 @@ and, in the library:
 | file | what it is |
 | --- | --- |
 | `Classicism/Certified/Signatures.lean` | Each principle as a schema at every signature: `P.X.schemaIn`, `pureVersion`, `distinctnessC`, `possibilityC`. |
-| `Classicism/Statements.lean` | The generated statements: 244 of the 270 results (those whose principles all have a `lean_def`), 4 models, 22 forms. Not edited by hand. |
+| `Classicism/Statements.lean` | The generated statements: 265 of the 270 results (those whose principles all have a `lean_def`), 35 models, 22 forms. Not edited by hand. |
 | `Classicism/Map.lean` | One certificate per result proved, named by its id, and per form, named `<principle>.<form>`, each of the generated type: the `lean_ref`s. Each is one line citing the proof. |
 | `Classicism/Results/Forms.lean` | The shallow proofs of the equivalences between a principle's forms, a section per principle (the list forms' are in `Results/Lists.lean`). |
 | `Classicism/Tools/MapIndex.lean` | `#classicism_map_index`, which writes `index.json`. |
@@ -130,17 +130,19 @@ small change to `pmap` and `viewer/template.html` in the map repository.
   `possibility-and-no-pure-contingency-incompatible` and
   `pure-b-and-pure-possibility-incompatible`. `lean-check` would refuse those three until
   the map's list allows the two, or the model is built on a type known to be inhabited.
-- **Coverage.** 11 of the map's 97 principles have no `lean_def` yet (Separated
-  Structure and its kin, Possibility+, Strong Possibility, the Infinity schemas, Ordinary
-  Comprehension, the Necessity of Arithmetic), so 26 results have no statement. Of the 244 stated, 21 are not
-  yet proved here.
+- **Coverage.** 2 of the map's 97 principles have no `lean_def` yet, General Separated
+  Structure and the Necessity of Arithmetic, so 5 results have no statement. Of the 265
+  stated, 37 are not yet proved here: Appendix E's incompatibilities, the Gödel results, the
+  conjectured ones, most of those about Separated Structure and Independence, Strong
+  Possibility, the Infinity schemas, and the incompatibilities of Witnessed Possibility,
+  which need a signature with a constant.
 - **Forms.** 22: Boolean Completeness's LUB form, and the list forms of the 21 principles
   with a type parameter whose two directions are proved (`P.X.listSchema_entails_schema`, by
   inclusion; `P.X.schema_entails_listSchema`, `Results/Lists.lean`). For Actual Profile,
   whose official form on the map is the list form, the form is the single-argument one.
   Four principles with a list form lack the second direction: Transversal, Transversal
   Choice and their boxed forms.
-- **Models.** Four of the map's models get statements (`∃` a consistent `Ax` entailing what
+- **Models.** 35 of the map's models get statements (`∃` a consistent `Ax` entailing what
   the model satisfies and not what it violates); none is certified yet.
 - **No Pure Contingency defined twice.** `npc Σ` (P → □P for each pure sentence of `Σ`'s
   language) and `pureVersion noContingency` are the same set (`npc_eq_pureVersion`), and so

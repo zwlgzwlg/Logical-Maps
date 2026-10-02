@@ -3,6 +3,8 @@ import Classicism.Results.Arity
 import Classicism.Results.Forms
 import Classicism.Results.SentenceSchemas.Incompatibilities
 import Classicism.Results.SentenceSchemas.WitnessedPossibility
+import Classicism.Results.SentenceSchemas.PossibilityPlus
+import Classicism.Results.SentenceSchemas.Infinity
 
 /-!
 # The map's results, certified
@@ -56,13 +58,6 @@ theorem Entails.to_empty {Ax : AxiomSet Sig} : Ax ⟹ empty := fun _ h => h.elim
 /-- What is inconsistent stays so when enlarged. -/
 theorem not_consistent_mono {A B : AxiomSet Sig} (hs : A ⊆ B) (h : ¬ Consistent A) :
     ¬ Consistent B := fun hc => h (Consistent.mono hs hc)
-
-/-- `C⁻ ⊢ A → ¬B` makes `A` and `B` together inconsistent: the form in which the
-translator derives a record concluding `False`. -/
-theorem not_consistent_of_imp_neg {A B : Sentence Sig}
-    (h : C.TheoremMinus (Term.imp A (Term.neg B))) : ¬ Consistent (single A ∪ single B) :=
-  fun hc => hc (Derivable.notE (Theorem.ax (Or.inr rfl))
-    (Theorem.mp (Theorem.ofCMinus h) (Theorem.ax (Or.inl rfl))))
 
 /-- `A ∪ B ⊆ A ∪ B'` from `B ⊆ B'`. -/
 theorem union_subset_union_right {A B B' : AxiomSet Sig} (h : B ⊆ B') : A ∪ B ⊆ A ∪ B' :=
@@ -340,6 +335,10 @@ theorem classicism_implies_modalized_functionality_r : Statements.classicism_imp
 theorem classicism_implies_modalized_plenitude_r : Statements.classicism_implies_modalized_plenitude_r := by
   map_cert Meta.classicism_implies_modalized_plenitude_r
 
+/-- `classicism-implies-ordinary-comprehension-r` -/
+theorem classicism_implies_ordinary_comprehension_r : Statements.classicism_implies_ordinary_comprehension_r := by
+  map_cert ordinaryComprehension_entails
+
 /-- `completeness-and-actuality-imply-weak-rigid-comprehension` -/
 theorem completeness_and_actuality_imply_weak_rigid_comprehension : Statements.completeness_and_actuality_imply_weak_rigid_comprehension := by
   map_cert Meta.completeness_and_actuality_imply_weak_rigid_comprehension
@@ -431,6 +430,10 @@ theorem fregean_axiom_implies_no_contingency_signature_r : Statements.fregean_ax
 /-- `fregean-axiom-implies-no-pure-contingency-r` -/
 theorem fregean_axiom_implies_no_pure_contingency_r : Statements.fregean_axiom_implies_no_pure_contingency_r := by
   map_cert_sig (Entails.to_pureVersion_noContingency (Entails.ofPure fregean_entails_npc_pure))
+
+/-- `fregean-incompatible-with-infinity-t` -/
+theorem fregean_incompatible_with_infinity_t : Statements.fregean_incompatible_with_infinity_t := by
+  map_cert_incompatible fregean_infinityT_inconsistent
 
 /-- `functional-choice-r-implies-plenitude-r` -/
 theorem functional_choice_r_implies_plenitude_r : Statements.functional_choice_r_implies_plenitude_r := by
@@ -910,6 +913,18 @@ theorem possibility_and_necessary_barcan_t_incompatible : Statements.possibility
 /-- `possibility-and-no-pure-contingency-incompatible` -/
 theorem possibility_and_no_pure_contingency_incompatible : Statements.possibility_and_no_pure_contingency_incompatible := by
   map_cert_incompatible possibility_schema_npc_inconsistent
+
+/-- `possibility-plus-r-implies-possibility-schema-r` -/
+theorem possibility_plus_r_implies_possibility_schema_r : Statements.possibility_plus_r_implies_possibility_schema_r := by
+  map_cert possibilityPlus_entails_possibility
+
+/-- `possibility-plus-signature-r-implies-possibility-plus-r` -/
+theorem possibility_plus_signature_r_implies_possibility_plus_r : Statements.possibility_plus_signature_r_implies_possibility_plus_r :=
+  fun hS _ h => Entails.trans h (Entails.of_subset (ofPure_possibilityPlus_subset hS))
+
+/-- `possibility-plus-signature-r-implies-possibility-signature-r` -/
+theorem possibility_plus_signature_r_implies_possibility_signature_r : Statements.possibility_plus_signature_r_implies_possibility_signature_r := by
+  map_cert_sig possibilityPlusSig_entails_possibility
 
 /-- `possibility-schema-r-implies-distinctness-schema-r` -/
 theorem possibility_schema_r_implies_distinctness_schema_r : Statements.possibility_schema_r_implies_distinctness_schema_r := by

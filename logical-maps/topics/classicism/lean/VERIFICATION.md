@@ -1259,6 +1259,31 @@ conservativity that turns given constants into distinct variables.
 *Checked.* The full build passes. 223 result certificates and 22 form certificates prove
 their generated statements; 3 rest on `Classicism.e` and `e_exists`, as before.
 
+## Possibility+, Ordinary Comprehension, the Infinity schemas, Strong Possibility, Separated Structure and Independence, 2 October (night)
+
+Definitions, each a schema at every signature (`Syntax/`): **Possibility+** pure and for a
+signature (`PossibilityPlus.lean`; an open formula is consistent when its existential
+closure is; for a signature the individual constants of `P` are given as a list that
+includes them, which gives an equivalent schema); **Ordinary Comprehension**
+(`OrdinaryComprehension.lean`, `∀z̄. ∃X. ∀ȳ. X ȳ ↔ P`); the **Infinity schemas** at `e`
+and `t` (`Infinity.lean`); **Strong Possibility**, pure and for a signature, with
+`◇_≠p := ¬∃q. q ∧ □(◇q → ¬p)` (`StrongPossibility.lean`); and **Separated Structure** and
+**Independence** (`WitnessedPossibility.lean`). 95 of the map's 97 principles have a
+`lean_def`; General Separated Structure and the Necessity of Arithmetic do not.
+
+Certified: `classicism-implies-ordinary-comprehension-r` (the witness `λȳ. P`, with
+`Conv.appBlock_lamBlock_vars`; two new lemmas about lifts over a block);
+`possibility-plus-r-implies-possibility-schema-r` and
+`possibility-plus-signature-r-implies-possibility-signature-r` (the instances with no
+variables); `possibility-plus-signature-r-implies-possibility-plus-r` (a pure instance read
+in a closed signature is an instance for it; its consistency by conservativity); and
+`fregean-incompatible-with-infinity-t` (the instance at `n = 3`, refuted by the certified
+shallow lemma `fregean_not_three`). `not_consistent_of_imp_neg` moved from `Map.lean` to
+`Syntax/Entailment.lean`.
+
+*Checked.* The full build passes. 228 result certificates and 22 form certificates prove
+their generated statements; 3 rest on `Classicism.e` and `e_exists`, as before.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

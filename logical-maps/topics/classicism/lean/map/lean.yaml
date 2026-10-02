@@ -58,7 +58,10 @@ lean_def:
   functionality-r: "Classicism.P.Functionality.schemaIn"
   gallin-extensional-comprehension-r: "Classicism.P.GallinExtensionalComprehension.schemaIn"
   identity-necessary-r: "Classicism.P.NecessityOfIdentity.schemaIn"
+  independence-signature-r: "(Classicism.Meta.AxiomSet.independence _)"
   inextensible-comprehension-r: "Classicism.P.InextensibleComprehension.schemaIn"
+  infinity-e: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE)"
+  infinity-t: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT)"
   intensionality-r: "Classicism.P.Intensionality.schemaIn"
   logical-necessity-r: "(Classicism.Meta.AxiomSet.logicalNecessity _)"
   modal-b: "Classicism.P.ModalB.schemaIn"
@@ -96,8 +99,11 @@ lean_def:
   necessary-weakly-inextensible-comprehension-r: "Classicism.P.NecWeaklyInextensibleComprehension.schemaIn"
   no-contingency-signature-r: "(Classicism.Meta.AxiomSet.noContingency _)"
   no-pure-contingency-r: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)"
+  ordinary-comprehension-r: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.ordinaryComprehension)"
   persistent-comprehension-r: "Classicism.P.PersistentComprehension.schemaIn"
   plenitude-r: "Classicism.P.Plenitude.schemaIn"
+  possibility-plus-r: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityPlus)"
+  possibility-plus-signature-r: "(Classicism.Meta.AxiomSet.possibilityPlusSig _)"
   possibility-schema-r: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC)"
   possibility-signature-r: "(Classicism.Meta.AxiomSet.possibilityC _)"
   possible-infinity-e: "Classicism.P.PossibleInfinityE.schemaIn"
@@ -106,9 +112,12 @@ lean_def:
   pure-b-r: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.signatureB)"
   relational-choice-r: "Classicism.P.RelationalChoice.schemaIn"
   rigid-comprehension-r: "Classicism.P.RigidComprehension.schemaIn"
+  separated-structure-r: "(Classicism.Meta.AxiomSet.separatedStructure _)"
   signature-b-r: "(Classicism.Meta.AxiomSet.signatureB _)"
   strong-leibniz-r: "Classicism.P.StrongLeibniz.schemaIn"
   strong-leibniz-t: "Classicism.P.StrongLeibnizT.schemaIn"
+  strong-possibility-r: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.strongPossibility)"
+  strong-possibility-signature-r: "(Classicism.Meta.AxiomSet.strongPossibility _)"
   tractarianism-r: "Classicism.P.Tractarianism.schemaIn"
   transversal-choice-r: "Classicism.P.TransversalChoice.schemaIn"
   transversal-r: "Classicism.P.Transversal.schemaIn"
@@ -303,6 +312,7 @@ lean_ref:
   classicism-implies-modalized-fregean: Classicism.Map.classicism_implies_modalized_fregean
   classicism-implies-modalized-functionality-r: Classicism.Map.classicism_implies_modalized_functionality_r
   classicism-implies-modalized-plenitude-r: Classicism.Map.classicism_implies_modalized_plenitude_r
+  classicism-implies-ordinary-comprehension-r: Classicism.Map.classicism_implies_ordinary_comprehension_r
   completeness-and-actuality-imply-weak-rigid-comprehension: Classicism.Map.completeness_and_actuality_imply_weak_rigid_comprehension
   converse-witnessed-possibility-r-implies-no-pure-contingency-r: Classicism.Map.converse_witnessed_possibility_r_implies_no_pure_contingency_r
   distinctness-necessary-r-implies-distinctness-necessary-t: Classicism.Map.distinctness_necessary_r_implies_distinctness_necessary_t
@@ -326,6 +336,7 @@ lean_ref:
   fregean-axiom-implies-necessary-fregean-axiom: Classicism.Map.fregean_axiom_implies_necessary_fregean_axiom
   fregean-axiom-implies-no-contingency-signature-r: Classicism.Map.fregean_axiom_implies_no_contingency_signature_r
   fregean-axiom-implies-no-pure-contingency-r: Classicism.Map.fregean_axiom_implies_no_pure_contingency_r
+  fregean-incompatible-with-infinity-t: Classicism.Map.fregean_incompatible_with_infinity_t
   functional-choice-r-implies-plenitude-r: Classicism.Map.functional_choice_r_implies_plenitude_r
   functional-choice-r-implies-relational-choice-r: Classicism.Map.functional_choice_r_implies_relational_choice_r
   functionality-r-implies-tractarianism-r: Classicism.Map.functionality_r_implies_tractarianism_r
@@ -443,6 +454,9 @@ lean_ref:
   plenitude-r-implies-distinctness-necessary-r: Classicism.Map.plenitude_r_implies_distinctness_necessary_r
   possibility-and-necessary-barcan-t-incompatible: Classicism.Map.possibility_and_necessary_barcan_t_incompatible
   possibility-and-no-pure-contingency-incompatible: Classicism.Map.possibility_and_no_pure_contingency_incompatible
+  possibility-plus-r-implies-possibility-schema-r: Classicism.Map.possibility_plus_r_implies_possibility_schema_r
+  possibility-plus-signature-r-implies-possibility-plus-r: Classicism.Map.possibility_plus_signature_r_implies_possibility_plus_r
+  possibility-plus-signature-r-implies-possibility-signature-r: Classicism.Map.possibility_plus_signature_r_implies_possibility_signature_r
   possibility-schema-r-implies-distinctness-schema-r: Classicism.Map.possibility_schema_r_implies_distinctness_schema_r
   possibility-schema-r-implies-possible-infinity-e: Classicism.Map.possibility_schema_r_implies_possible_infinity_e
   possibility-signature-r-implies-distinctness-signature-r: Classicism.Map.possibility_signature_r_implies_distinctness_signature_r

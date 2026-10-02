@@ -335,6 +335,13 @@ theorem consistent_neg_of_not_theorem (h : ¬ Theorem (C.axioms ∪ Ax) p) :
   fun hb => h (Derivable.orE (Derivable.em p) Derivable.hyp₀
     (Derivable.botE (Derivable.impE (Derivable.weaken₁ (Theorem.deductionC hb)) Derivable.hyp₀)))
 
+/-- `C⁻ ⊢ A → ¬B` makes `A` and `B` together inconsistent: the form in which the
+translator derives a record concluding `False`. -/
+theorem not_consistent_of_imp_neg {A B : Sentence Sig}
+    (h : C.TheoremMinus (Term.imp A (Term.neg B))) : ¬ Consistent (single A ∪ single B) :=
+  fun hc => hc (Derivable.notE (Theorem.ax (Or.inr rfl))
+    (Theorem.mp (Theorem.ofCMinus h) (Theorem.ax (Or.inl rfl))))
+
 /-- What implies a refutable sentence is refutable: if `C ⊢ A → B` and `¬B` is consistent,
 so is `¬A`. -/
 theorem consistent_neg_of_imp {A B : Sentence Sig} (h : C.Theorem (Term.imp A B))
