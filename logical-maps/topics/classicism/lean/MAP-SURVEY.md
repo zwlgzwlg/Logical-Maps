@@ -14,7 +14,7 @@ Made 28 September 2026 from `ciandorr/Logical-Maps` at commit 7c928c4 ("first tr
 
 Since 2 October each result counted as proved has a certificate in `Classicism/Map.lean`: a
 theorem named by its id whose type is the statement the map's own generator writes for it
-(`map/README.md`). The 214 certificates agree with the table below; `map/index.json` gives,
+(`map/README.md`). The 223 certificates agree with the table below; `map/index.json` gives,
 for each, the file and lines of its proof.
 
 A record theorem in `Results/Records.lean` named exactly by a map id proves the map's claim, and its certificate is the entailment between the map's schemas. One named by a map id plus `_at_t` proves only the instances at type `t` (or with output `t`); its certificate is from the map's premise schemas to those instances. Where a full version exists too, the `_at_t` one is the instance at `t` that other proofs at `t` cite. A record with a Ty-parameter is proved at every list of types too, by its list form (`foo.listEntails`, the vectorized derivation); where the map's principle is over argument tuples, as Actual Profile is, or the record is proved at `σ → t` for a principle over relational types, that list form is the map's claim (`Results/Lists.lean`, `Results/Arity.lean`). `classicism_implies_existence_r_at_e` and `_relational` together cover their record, composed in `Results/Arity.lean`. Results proved by the metalogical theorems of `Results/SentenceSchemas/` are counted as proved too: those whose docstrings name the record, and the twenty-four "No Pure Contingency and X imply □X" results, all instances of `npc_union_entails_box`.
@@ -22,11 +22,11 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 | class | results | proved in Lean | in part only | not yet |
 | --- | --- | --- | --- | --- |
 | Per-type routine | 139 | 134 | 0 | 5 |
-| Per-instance routine over sentences | 52 | 34 | 0 | 18 |
+| Per-instance routine over sentences | 52 | 43 | 0 | 9 |
 | Sweet spot | 47 | 32 | 0 | 15 |
 | Metalogic-dominated | 26 | 14 | 0 | 12 |
 | Conjectured | 6 | 0 | 0 | 6 |
-| total | 270 | 214 | 0 | 56 |
+| total | 270 | 223 | 0 | 47 |
 
 ## Sweet spot (47)
 
@@ -109,18 +109,18 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 
 ## Per-instance routine over sentences (52)
 
-- `converse-witnessed-possibility-r-implies-no-pure-contingency-r`
+- `converse-witnessed-possibility-r-implies-no-pure-contingency-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `fregean-axiom-implies-no-contingency-signature-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `fregean-axiom-implies-no-pure-contingency-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `general-separated-structure-r-implies-separated-structure-r`
 - `logical-necessity-r-implies-modal-freedom-signature-r`
-- `logical-necessity-r-implies-no-pure-contingency-r`
-- `logical-necessity-r-implies-witnessed-possibility-r`
+- `logical-necessity-r-implies-no-pure-contingency-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `logical-necessity-r-implies-witnessed-possibility-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `modal-b-implies-pure-b-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `modal-b-implies-signature-b-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
-- `modal-freedom-signature-r-implies-no-pure-contingency-r`
+- `modal-freedom-signature-r-implies-no-pure-contingency-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `no-contingency-signature-incompatible-with-witnessed-possibility`
-- `no-contingency-signature-r-implies-modal-freedom-signature-r`
+- `no-contingency-signature-r-implies-modal-freedom-signature-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `no-contingency-signature-r-implies-no-pure-contingency-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `no-contingency-signature-r-implies-signature-b-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `no-pure-contingency-and-actuality-imply-necessary-actuality` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
@@ -148,18 +148,18 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `no-pure-contingency-and-vicinity-imply-necessary-vicinity` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `no-pure-contingency-and-weakly-inextensible-comprehension-imply-necessary-weakly-inextensible-comprehension` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `no-pure-contingency-implies-necessity-of-arithmetic`
-- `no-pure-contingency-r-implies-converse-witnessed-possibility-r`
+- `no-pure-contingency-r-implies-converse-witnessed-possibility-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `no-pure-contingency-r-implies-pure-b-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `possibility-plus-r-implies-possibility-schema-r`
 - `possibility-plus-signature-r-implies-possibility-signature-r`
 - `possible-infinity-e-and-no-pure-contingency-imply-axiom-of-infinity-e` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `possible-infinity-t-and-no-pure-contingency-imply-axiom-of-infinity-t` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
-- `possibly-witnessed-possibility-r-implies-witnessed-possibility-r`
+- `possibly-witnessed-possibility-r-implies-witnessed-possibility-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `separated-structure-incompatible-with-nd`
 - `signature-b-and-witnessed-possibility-incompatible`
 - `signature-b-r-implies-pure-b-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
-- `witnessed-possibility-and-no-pure-contingency-imply-logical-necessity`
-- `witnessed-possibility-and-npc-imply-possibly-witnessed-possibility`
+- `witnessed-possibility-and-no-pure-contingency-imply-logical-necessity` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `witnessed-possibility-and-npc-imply-possibly-witnessed-possibility` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `witnessed-possibility-incompatible-with-nd`
 
 ## Per-type routine (139)

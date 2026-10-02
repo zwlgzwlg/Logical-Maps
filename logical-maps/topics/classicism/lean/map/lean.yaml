@@ -44,6 +44,7 @@ lean_def:
   boolean-completeness-t: "Classicism.P.BooleanCompletenessT.schemaIn"
   broad-necessitism-r: "Classicism.P.BroadNecessitism.schemaIn"
   converse-barcan-r: "Classicism.P.ConverseBarcan.schemaIn"
+  converse-witnessed-possibility-r: "(Classicism.Meta.AxiomSet.converseWitnessedPossibility _)"
   countable-boolean-completeness-r: "Classicism.P.CountableBooleanCompleteness.schemaIn"
   distinctness-necessary-r: "Classicism.P.NecessityOfDistinctness.schemaIn"
   distinctness-necessary-t: "Classicism.P.NecessityOfDistinctnessT.schemaIn"
@@ -59,9 +60,11 @@ lean_def:
   identity-necessary-r: "Classicism.P.NecessityOfIdentity.schemaIn"
   inextensible-comprehension-r: "Classicism.P.InextensibleComprehension.schemaIn"
   intensionality-r: "Classicism.P.Intensionality.schemaIn"
+  logical-necessity-r: "(Classicism.Meta.AxiomSet.logicalNecessity _)"
   modal-b: "Classicism.P.ModalB.schemaIn"
   modal-five: "Classicism.P.ModalFive.schemaIn"
   modal-four: "Classicism.P.ModalFour.schemaIn"
+  modal-freedom-signature-r: "(Classicism.Meta.AxiomSet.modalFreedom _)"
   modal-k: "Classicism.P.ModalK.schemaIn"
   modal-t: "Classicism.P.ModalT.schemaIn"
   modalized-fregean: "Classicism.P.ModalizedFregean.schemaIn"
@@ -99,6 +102,7 @@ lean_def:
   possibility-signature-r: "(Classicism.Meta.AxiomSet.possibilityC _)"
   possible-infinity-e: "Classicism.P.PossibleInfinityE.schemaIn"
   possible-infinity-t: "Classicism.P.PossibleInfinityT.schemaIn"
+  possibly-witnessed-possibility-r: "(Classicism.Meta.AxiomSet.possiblyWitnessedPossibility _)"
   pure-b-r: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.signatureB)"
   relational-choice-r: "Classicism.P.RelationalChoice.schemaIn"
   rigid-comprehension-r: "Classicism.P.RigidComprehension.schemaIn"
@@ -112,6 +116,7 @@ lean_def:
   vicinity: "Classicism.P.Vicinity.schemaIn"
   weak-rigid-comprehension-r: "Classicism.P.WeakRigidComprehension.schemaIn"
   weakly-inextensible-comprehension-r: "Classicism.P.WeaklyInextensibleComprehension.schemaIn"
+  witnessed-possibility-r: "(Classicism.Meta.AxiomSet.witnessedPossibility _)"
 
 # principle id -> its equivalent forms: each with a Lean definition (a schema at every
 # signature) and a certificate of its equivalence with the official form
@@ -299,6 +304,7 @@ lean_ref:
   classicism-implies-modalized-functionality-r: Classicism.Map.classicism_implies_modalized_functionality_r
   classicism-implies-modalized-plenitude-r: Classicism.Map.classicism_implies_modalized_plenitude_r
   completeness-and-actuality-imply-weak-rigid-comprehension: Classicism.Map.completeness_and_actuality_imply_weak_rigid_comprehension
+  converse-witnessed-possibility-r-implies-no-pure-contingency-r: Classicism.Map.converse_witnessed_possibility_r_implies_no_pure_contingency_r
   distinctness-necessary-r-implies-distinctness-necessary-t: Classicism.Map.distinctness_necessary_r_implies_distinctness_necessary_t
   distinctness-necessary-t-implies-modal-five: Classicism.Map.distinctness_necessary_t_implies_modal_five
   distinctness-necessary-t-implies-vicinity: Classicism.Map.distinctness_necessary_t_implies_vicinity
@@ -327,6 +333,8 @@ lean_ref:
   gallin-comprehension-and-bf-imply-weak-rigid-comprehension: Classicism.Map.gallin_comprehension_and_bf_imply_weak_rigid_comprehension
   gallin-comprehension-implies-nd: Classicism.Map.gallin_comprehension_implies_nd
   inextensible-comprehension-r-implies-weakly-inextensible-comprehension-r: Classicism.Map.inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r
+  logical-necessity-r-implies-no-pure-contingency-r: Classicism.Map.logical_necessity_r_implies_no_pure_contingency_r
+  logical-necessity-r-implies-witnessed-possibility-r: Classicism.Map.logical_necessity_r_implies_witnessed_possibility_r
   maximalist-distinctness-incompatible-with-nd: Classicism.Map.maximalist_distinctness_incompatible_with_nd
   maximalist-distinctness-incompatible-with-necessary-actuality: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_actuality
   maximalist-distinctness-incompatible-with-necessary-atomicity-r: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_atomicity_r
@@ -339,6 +347,7 @@ lean_ref:
   modal-b-implies-pure-b-r: Classicism.Map.modal_b_implies_pure_b_r
   modal-b-implies-signature-b-r: Classicism.Map.modal_b_implies_signature_b_r
   modal-five-implies-modal-b: Classicism.Map.modal_five_implies_modal_b
+  modal-freedom-signature-r-implies-no-pure-contingency-r: Classicism.Map.modal_freedom_signature_r_implies_no_pure_contingency_r
   nd-and-bf-imply-necessary-nd: Classicism.Map.nd_and_bf_imply_necessary_nd
   necessary-actuality-implies-actuality: Classicism.Map.necessary_actuality_implies_actuality
   necessary-actuality-implies-necessary-transversal: Classicism.Map.necessary_actuality_implies_necessary_transversal
@@ -400,6 +409,7 @@ lean_ref:
   necessary-vicinity-and-necessary-weakly-inextensible-comprehension-imply-necessary-actuality: Classicism.Map.necessary_vicinity_and_necessary_weakly_inextensible_comprehension_imply_necessary_actuality
   necessary-vicinity-implies-vicinity: Classicism.Map.necessary_vicinity_implies_vicinity
   necessary-weakly-inextensible-comprehension-r-implies-weakly-inextensible-comprehension-r: Classicism.Map.necessary_weakly_inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r
+  no-contingency-signature-r-implies-modal-freedom-signature-r: Classicism.Map.no_contingency_signature_r_implies_modal_freedom_signature_r
   no-contingency-signature-r-implies-no-pure-contingency-r: Classicism.Map.no_contingency_signature_r_implies_no_pure_contingency_r
   no-contingency-signature-r-implies-signature-b-r: Classicism.Map.no_contingency_signature_r_implies_signature_b_r
   no-pure-contingency-and-actuality-imply-necessary-actuality: Classicism.Map.no_pure_contingency_and_actuality_imply_necessary_actuality
@@ -426,6 +436,7 @@ lean_ref:
   no-pure-contingency-and-transversal-imply-necessary-transversal: Classicism.Map.no_pure_contingency_and_transversal_imply_necessary_transversal
   no-pure-contingency-and-vicinity-imply-necessary-vicinity: Classicism.Map.no_pure_contingency_and_vicinity_imply_necessary_vicinity
   no-pure-contingency-and-weakly-inextensible-comprehension-imply-necessary-weakly-inextensible-comprehension: Classicism.Map.no_pure_contingency_and_weakly_inextensible_comprehension_imply_necessary_weakly_inextensible_comprehension
+  no-pure-contingency-r-implies-converse-witnessed-possibility-r: Classicism.Map.no_pure_contingency_r_implies_converse_witnessed_possibility_r
   no-pure-contingency-r-implies-pure-b-r: Classicism.Map.no_pure_contingency_r_implies_pure_b_r
   persistent-comprehension-r-implies-actuality: Classicism.Map.persistent_comprehension_r_implies_actuality
   plenitude-r-implies-actuality: Classicism.Map.plenitude_r_implies_actuality
@@ -438,6 +449,7 @@ lean_ref:
   possibility-signature-r-implies-possibility-schema-r: Classicism.Map.possibility_signature_r_implies_possibility_schema_r
   possible-infinity-e-and-no-pure-contingency-imply-axiom-of-infinity-e: Classicism.Map.possible_infinity_e_and_no_pure_contingency_imply_axiom_of_infinity_e
   possible-infinity-t-and-no-pure-contingency-imply-axiom-of-infinity-t: Classicism.Map.possible_infinity_t_and_no_pure_contingency_imply_axiom_of_infinity_t
+  possibly-witnessed-possibility-r-implies-witnessed-possibility-r: Classicism.Map.possibly_witnessed_possibility_r_implies_witnessed_possibility_r
   pure-b-and-pure-possibility-incompatible: Classicism.Map.pure_b_and_pure_possibility_incompatible
   relational-choice-and-extensionality-imply-transversal-choice: Classicism.Map.relational_choice_and_extensionality_imply_transversal_choice
   relational-choice-and-plenitude-imply-functional-choice-r: Classicism.Map.relational_choice_and_plenitude_imply_functional_choice_r
@@ -465,3 +477,5 @@ lean_ref:
   weak-rigid-comprehension-r-implies-persistent-comprehension-r: Classicism.Map.weak_rigid_comprehension_r_implies_persistent_comprehension_r
   weak-rigid-comprehension-r-implies-very-weak-rigid-comprehension-r: Classicism.Map.weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r
   weak-rigid-comprehension-r-implies-weakly-inextensible-comprehension-r: Classicism.Map.weak_rigid_comprehension_r_implies_weakly_inextensible_comprehension_r
+  witnessed-possibility-and-no-pure-contingency-imply-logical-necessity: Classicism.Map.witnessed_possibility_and_no_pure_contingency_imply_logical_necessity
+  witnessed-possibility-and-npc-imply-possibly-witnessed-possibility: Classicism.Map.witnessed_possibility_and_npc_imply_possibly_witnessed_possibility

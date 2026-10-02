@@ -2,6 +2,7 @@ import Classicism.Statements
 import Classicism.Results.Arity
 import Classicism.Results.Forms
 import Classicism.Results.SentenceSchemas.Incompatibilities
+import Classicism.Results.SentenceSchemas.WitnessedPossibility
 
 /-!
 # The map's results, certified
@@ -343,6 +344,10 @@ theorem classicism_implies_modalized_plenitude_r : Statements.classicism_implies
 theorem completeness_and_actuality_imply_weak_rigid_comprehension : Statements.completeness_and_actuality_imply_weak_rigid_comprehension := by
   map_cert Meta.completeness_and_actuality_imply_weak_rigid_comprehension
 
+/-- `converse-witnessed-possibility-r-implies-no-pure-contingency-r` -/
+theorem converse_witnessed_possibility_r_implies_no_pure_contingency_r : Statements.converse_witnessed_possibility_r_implies_no_pure_contingency_r := by
+  map_cert_sig (Entails.to_pureVersion_noContingency converseWitnessedPossibility_entails_npc)
+
 /-- `distinctness-necessary-r-implies-distinctness-necessary-t` -/
 theorem distinctness_necessary_r_implies_distinctness_necessary_t : Statements.distinctness_necessary_r_implies_distinctness_necessary_t := by
   map_cert Proofs.distinctness_necessary_r_implies_distinctness_necessary_t.entails
@@ -455,6 +460,14 @@ theorem gallin_comprehension_implies_nd : Statements.gallin_comprehension_implie
 theorem inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r : Statements.inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r := by
   map_cert Proofs.inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r.entails
 
+/-- `logical-necessity-r-implies-no-pure-contingency-r` -/
+theorem logical_necessity_r_implies_no_pure_contingency_r : Statements.logical_necessity_r_implies_no_pure_contingency_r := by
+  map_cert_sig (Entails.to_pureVersion_noContingency logicalNecessity_entails_npc)
+
+/-- `logical-necessity-r-implies-witnessed-possibility-r` -/
+theorem logical_necessity_r_implies_witnessed_possibility_r : Statements.logical_necessity_r_implies_witnessed_possibility_r := by
+  map_cert_sig logicalNecessity_entails_witnessedPossibility
+
 /-- `maximalist-distinctness-incompatible-with-nd` -/
 theorem maximalist_distinctness_incompatible_with_nd : Statements.maximalist_distinctness_incompatible_with_nd := by
   map_cert_incompatible maximalist_nd_inconsistent
@@ -511,6 +524,10 @@ theorem modal_b_implies_signature_b_r : Statements.modal_b_implies_signature_b_r
 /-- `modal-five-implies-modal-b` -/
 theorem modal_five_implies_modal_b : Statements.modal_five_implies_modal_b := by
   map_cert Proofs.modal_five_implies_modal_b.entails
+
+/-- `modal-freedom-signature-r-implies-no-pure-contingency-r` -/
+theorem modal_freedom_signature_r_implies_no_pure_contingency_r : Statements.modal_freedom_signature_r_implies_no_pure_contingency_r := by
+  map_cert_sig (Entails.to_pureVersion_noContingency modalFreedom_entails_npc)
 
 /-- `nd-and-bf-imply-necessary-nd` -/
 theorem nd_and_bf_imply_necessary_nd : Statements.nd_and_bf_imply_necessary_nd := by
@@ -756,6 +773,10 @@ theorem necessary_vicinity_implies_vicinity : Statements.necessary_vicinity_impl
 theorem necessary_weakly_inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r : Statements.necessary_weakly_inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r := by
   map_cert Proofs.necessary_weakly_inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r.entails
 
+/-- `no-contingency-signature-r-implies-modal-freedom-signature-r` -/
+theorem no_contingency_signature_r_implies_modal_freedom_signature_r : Statements.no_contingency_signature_r_implies_modal_freedom_signature_r := by
+  map_cert_sig noContingency_entails_modalFreedom
+
 /-- `no-contingency-signature-r-implies-no-pure-contingency-r` -/
 theorem no_contingency_signature_r_implies_no_pure_contingency_r : Statements.no_contingency_signature_r_implies_no_pure_contingency_r := by
   map_cert_sig (Entails.to_pureVersion_noContingency
@@ -861,6 +882,10 @@ theorem no_pure_contingency_and_vicinity_imply_necessary_vicinity : Statements.n
 theorem no_pure_contingency_and_weakly_inextensible_comprehension_imply_necessary_weakly_inextensible_comprehension : Statements.no_pure_contingency_and_weakly_inextensible_comprehension_imply_necessary_weakly_inextensible_comprehension := by
   map_cert npc_weaklyInextensibleComprehension_entails_box
 
+/-- `no-pure-contingency-r-implies-converse-witnessed-possibility-r` -/
+theorem no_pure_contingency_r_implies_converse_witnessed_possibility_r : Statements.no_pure_contingency_r_implies_converse_witnessed_possibility_r := by
+  map_cert_sig npc_entails_converseWitnessedPossibility
+
 /-- `no-pure-contingency-r-implies-pure-b-r` -/
 theorem no_pure_contingency_r_implies_pure_b_r : Statements.no_pure_contingency_r_implies_pure_b_r := by
   map_cert_sig (Entails.to_pureVersion_signatureB
@@ -909,6 +934,10 @@ theorem possible_infinity_e_and_no_pure_contingency_imply_axiom_of_infinity_e : 
 /-- `possible-infinity-t-and-no-pure-contingency-imply-axiom-of-infinity-t` -/
 theorem possible_infinity_t_and_no_pure_contingency_imply_axiom_of_infinity_t : Statements.possible_infinity_t_and_no_pure_contingency_imply_axiom_of_infinity_t := by
   map_cert npc_possibleInfinityT_entails_axiomOfInfinityT
+
+/-- `possibly-witnessed-possibility-r-implies-witnessed-possibility-r` -/
+theorem possibly_witnessed_possibility_r_implies_witnessed_possibility_r : Statements.possibly_witnessed_possibility_r_implies_witnessed_possibility_r := by
+  map_cert_sig possiblyWitnessedPossibility_entails_witnessedPossibility
 
 /-- `pure-b-and-pure-possibility-incompatible` -/
 theorem pure_b_and_pure_possibility_incompatible : Statements.pure_b_and_pure_possibility_incompatible := by
@@ -1020,6 +1049,14 @@ theorem weak_rigid_comprehension_r_implies_weakly_inextensible_comprehension_r :
   map_cert Proofs.weak_rigid_comprehension_r_implies_weakly_inextensible_comprehension_r.entails
 
 /-! ## Equivalent forms -/
+
+/-- `witnessed-possibility-and-no-pure-contingency-imply-logical-necessity` -/
+theorem witnessed_possibility_and_no_pure_contingency_imply_logical_necessity : Statements.witnessed_possibility_and_no_pure_contingency_imply_logical_necessity := by
+  map_cert_sig npc_witnessedPossibility_entails_logicalNecessity
+
+/-- `witnessed-possibility-and-npc-imply-possibly-witnessed-possibility` -/
+theorem witnessed_possibility_and_npc_imply_possibly_witnessed_possibility : Statements.witnessed_possibility_and_npc_imply_possibly_witnessed_possibility := by
+  map_cert_sig npc_witnessedPossibility_entails_possiblyWitnessedPossibility
 
 /-- `boolean-completeness-r`, form `lub`: Boolean Completeness and its LUB form. -/
 theorem boolean_completeness_r.lub : Statements.boolean_completeness_r.lub := by

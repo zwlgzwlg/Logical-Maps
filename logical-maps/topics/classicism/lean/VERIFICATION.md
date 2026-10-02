@@ -1232,6 +1232,33 @@ the records `functionality-r-implies-tractarianism-r` and
 entailments. 214 result certificates and 22 form certificates prove their generated
 statements; 3 rest on `Classicism.e` and `e_exists`, as before.
 
+## Witnessed Possibility and its kin, 2 October (night)
+
+`Syntax/WitnessedPossibility.lean` defines the schemas of a signature with distinct
+constants put for the variables of a pure formula, `P[c̄/x̄]` (`Term.atConsts`: the pure
+formula, in a block context, read in the signature and substituted by the tuple of
+constants): Witnessed Possibility, its converse, Possibly Witnessed Possibility, Logical
+Necessity and Modal Freedom, each with the empty tuple included. Nine results are proved in
+`Results/SentenceSchemas/WitnessedPossibility.lean`, each instance by one certified
+shallow lemma about propositions instantiated at the sentences involved: the three
+"implies No Pure Contingency" (the instances with no constants), No Pure Contingency ⇒ the
+converse, No Contingency ⇒ Modal Freedom, Witnessed Possibility and No Pure Contingency ⇒
+Possibly Witnessed Possibility and ⇒ Logical Necessity, Possibly Witnessed Possibility ⇒
+Witnessed Possibility, and Logical Necessity ⇒ Witnessed Possibility. New in the library:
+`Derivable.allE₃β` (three quantifiers instantiated by one simultaneous substitution, which
+the kernel evaluates; one at a time would weaken the instantiated sentences, which does not
+compute) and, in `Syntax/Blocks.lean`, a block at its own variables (`allEBlock_vars`,
+`exIBlock_vars`) and the block De Morgan laws.
+
+Not proved: the three incompatibilities of Witnessed Possibility (with No Contingency for
+the signature, Signature B, ND), which need a constant: at a signature with none, Witnessed
+Possibility says only `P → ◇P`, so as statements over every signature they are false; and
+`possibility-signature-r-implies-witnessed-possibility-r`, which needs a variant of
+conservativity that turns given constants into distinct variables.
+
+*Checked.* The full build passes. 223 result certificates and 22 form certificates prove
+their generated statements; 3 rest on `Classicism.e` and `e_exists`, as before.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

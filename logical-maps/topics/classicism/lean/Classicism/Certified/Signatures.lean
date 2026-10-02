@@ -2,6 +2,7 @@ import Classicism.Certified.Schemas
 import Classicism.Syntax.SentenceSchemas
 import Classicism.Syntax.Pure
 import Classicism.Syntax.Conservativity
+import Classicism.Syntax.WitnessedPossibility
 
 /-!
 # Every principle at every signature

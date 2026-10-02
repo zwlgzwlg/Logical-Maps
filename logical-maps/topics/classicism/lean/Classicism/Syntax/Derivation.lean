@@ -556,6 +556,17 @@ theorem allE₂β {σ τ : Ty} {b : Formula Sig (τ :: σ :: Γ)}
   rw [Term.subst_subst, Sub.comp_cons_lift] at h₂
   exact h₂
 
+/-- Three quantifiers instantiated at once, likewise. -/
+theorem allE₃β {σ τ υ : Ty} {b : Formula Sig (υ :: τ :: σ :: Γ)}
+    (h : Derivable Ax Δ (Term.forall' (Term.forall' (Term.forall' b))))
+    (a₁ : Term Sig Γ σ) (a₂ : Term Sig Γ τ) (a₃ : Term Sig Γ υ) :
+    Derivable Ax Δ (b.subst (Sub.cons a₃ (Sub.cons a₂ (Sub.cons a₁ Sub.id)))) := by
+  have h₂ : Derivable Ax Δ ((b.subst (Sub.lift (Sub.cons a₂ (Sub.cons a₁ Sub.id)))).subst
+      (Sub.cons a₃ Sub.id)) :=
+    allEβ (allE₂β h a₁ a₂) a₃
+  rw [Term.subst_subst, Sub.comp_cons_lift] at h₂
+  exact h₂
+
 end Derivable
 
 end Classicism.Meta

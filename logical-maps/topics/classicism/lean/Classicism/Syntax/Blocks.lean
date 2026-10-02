@@ -640,6 +640,15 @@ private theorem subst_eqC_body (σs : List Ty) {Γ Δ : Ctx} (s : Sub Sig Γ Δ)
 
 end Term
 
+/-- A term of a block context, renamed past a second copy of the block and put back at
+the first copy's variables, is itself. -/
+theorem Term.subst_vars_rename_liftBlock_wkBlock (σs : List Ty) {Γ : Ctx} {τ : Ty}
+    (b : Term Sig (Ctx.block σs Γ) τ) :
+    (b.rename (Ren.liftBlock σs (Ren.wkBlock σs))).subst (Sub.consBlock (Terms.vars σs Γ) Sub.id) = b := by
+  rw [Term.subst_rename, Sub.compRen_consBlock_liftBlock]
+  show b.subst (Sub.consBlock (Terms.vars σs Γ) (Sub.ofRen (Ren.wkBlock σs))) = b
+  rw [Sub.consBlock_vars_wkBlock, Term.subst_id]
+
 /-- The body of a block abstraction, weakened past the block and applied to its
 variables, converts back to the body. -/
 theorem Conv.appBlock_lamBlock_vars (σs : List Ty) {Γ : Ctx} {ρ : RTy}
@@ -1165,6 +1174,44 @@ theorem llC (σs : List Ty) {Γ : Ctx} {Δ : List (Formula Sig Γ)} (F : Term Si
     (conv he (Conv.eqC_appBlock σs as bs)) (by rw [Term.appBlock_vars_subst_consBlock]; exact h)
   rw [Term.appBlock_vars_subst_consBlock] at this
   exact this
+
+/-! ### A block at its own variables, and the block De Morgan laws -/
+
+/-- A block universal, weakened past its own block, gives its body at the block's
+variables. -/
+theorem allEBlock_vars (σs : List Ty) {Γ : Ctx} {Δ : List (Formula Sig (Ctx.block σs Γ))}
+    {q : Formula Sig (Ctx.block σs Γ)}
+    (h : Derivable Ax Δ ((Term.forallBlock σs q).rename (Ren.wkBlock σs))) : Derivable Ax Δ q := by
+  rw [Term.rename_forallBlock] at h
+  have := allEBlock σs h (Terms.vars σs Γ)
+  rwa [Term.subst_vars_rename_liftBlock_wkBlock] at this
+
+/-- The body at the block's variables gives the block existential, weakened past the
+block. -/
+theorem exIBlock_vars (σs : List Ty) {Γ : Ctx} {Δ : List (Formula Sig (Ctx.block σs Γ))}
+    {q : Formula Sig (Ctx.block σs Γ)} (h : Derivable Ax Δ q) :
+    Derivable Ax Δ ((Term.existsBlock σs q).rename (Ren.wkBlock σs)) := by
+  rw [Term.rename_existsBlock]
+  apply exIBlock σs (Terms.vars σs Γ)
+  rwa [Term.subst_vars_rename_liftBlock_wkBlock]
+
+/-- `∃x̄. P` and `∀x̄. ¬P` are contradictory. -/
+theorem existsBlock_forallBlock_neg (σs : List Ty) {Γ : Ctx} {Δ : List (Formula Sig Γ)}
+    {P : Formula Sig (Ctx.block σs Γ)} {r : Formula Sig Γ}
+    (h₁ : Derivable Ax Δ (Term.existsBlock σs P))
+    (h₂ : Derivable Ax Δ (Term.forallBlock σs (Term.neg P))) : Derivable Ax Δ r :=
+  exEBlock σs h₁ (notE hyp₀ (allEBlock_vars σs
+    (weaken (rename (Ren.wkBlock σs) h₂) (List.subset_cons_self _ _))))
+
+/-- `¬∀x̄. P` gives `∃x̄. ¬P`. -/
+theorem existsBlock_neg_of_not_forallBlock (σs : List Ty) {Γ : Ctx} {Δ : List (Formula Sig Γ)}
+    {P : Formula Sig (Ctx.block σs Γ)}
+    (h : Derivable Ax Δ (Term.neg (Term.forallBlock σs P))) :
+    Derivable Ax Δ (Term.existsBlock σs (Term.neg P)) :=
+  orE (em (Term.existsBlock σs (Term.neg P))) hyp₀
+    (notE (allIBlock σs (orE (em P) hyp₀
+        (notE (exIBlock_vars σs hyp₀) (weaken₁ (List.mem_map.2 ⟨_, List.mem_cons_self .., rfl⟩ |> hyp)))))
+      (weaken₁ h))
 
 end Derivable
 

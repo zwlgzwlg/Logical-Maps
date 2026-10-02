@@ -66,6 +66,10 @@ example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.ConverseBarcan.schemaIn
 
+/-- Principle definition check: `converse-witnessed-possibility-r`. -/
+example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
+  (Classicism.Meta.AxiomSet.converseWitnessedPossibility _)
+
 /-- Principle definition check: `countable-boolean-completeness-r`. -/
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.CountableBooleanCompleteness.schemaIn
@@ -126,6 +130,10 @@ example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.Intensionality.schemaIn
 
+/-- Principle definition check: `logical-necessity-r`. -/
+example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
+  (Classicism.Meta.AxiomSet.logicalNecessity _)
+
 /-- Principle definition check: `modal-b`. -/
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.ModalB.schemaIn
@@ -137,6 +145,10 @@ example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
 /-- Principle definition check: `modal-four`. -/
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.ModalFour.schemaIn
+
+/-- Principle definition check: `modal-freedom-signature-r`. -/
+example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
+  (Classicism.Meta.AxiomSet.modalFreedom _)
 
 /-- Principle definition check: `modal-k`. -/
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
@@ -286,6 +298,10 @@ example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.PossibleInfinityT.schemaIn
 
+/-- Principle definition check: `possibly-witnessed-possibility-r`. -/
+example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
+  (Classicism.Meta.AxiomSet.possiblyWitnessedPossibility _)
+
 /-- Principle definition check: `pure-b-r`. -/
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.signatureB)
@@ -337,6 +353,10 @@ example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
 /-- Principle definition check: `weakly-inextensible-comprehension-r`. -/
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.WeaklyInextensibleComprehension.schemaIn
+
+/-- Principle definition check: `witnessed-possibility-r`. -/
+example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
+  (Classicism.Meta.AxiomSet.witnessedPossibility _)
 
 /-- `actual-profile-r-implies-actuality`
 
@@ -751,6 +771,14 @@ def completeness_and_actuality_imply_weak_rigid_comprehension : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Actuality.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeakRigidComprehension.schemaIn
 
+/-- `converse-witnessed-possibility-r-implies-no-pure-contingency-r`
+
+Converse Witnessed Possibility ⇒ No Pure Contingency -/
+def converse_witnessed_possibility_r_implies_no_pure_contingency_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.converseWitnessedPossibility _) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
 /-- `distinctness-necessary-r-implies-distinctness-necessary-t`
 
 ND ⇒ ND (type t) -/
@@ -978,6 +1006,30 @@ def inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r : P
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.InextensibleComprehension.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeaklyInextensibleComprehension.schemaIn
 
+/-- `logical-necessity-r-implies-modal-freedom-signature-r`
+
+Logical Necessity ⇒ Modal Freedom (signature Σ) -/
+def logical_necessity_r_implies_modal_freedom_signature_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.logicalNecessity _) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.modalFreedom _)
+
+/-- `logical-necessity-r-implies-no-pure-contingency-r`
+
+Logical Necessity ⇒ No Pure Contingency -/
+def logical_necessity_r_implies_no_pure_contingency_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.logicalNecessity _) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `logical-necessity-r-implies-witnessed-possibility-r`
+
+Logical Necessity ⇒ Witnessed Possibility -/
+def logical_necessity_r_implies_witnessed_possibility_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.logicalNecessity _) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.witnessedPossibility _)
+
 /-- `maximalist-distinctness-incompatible-with-nd`
 
 Distinctness Maximalism (pure) ∧ ND ⇒ ⊥ -/
@@ -1090,6 +1142,14 @@ def modal_five_implies_modal_b : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.ModalFive.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.ModalB.schemaIn
+
+/-- `modal-freedom-signature-r-implies-no-pure-contingency-r`
+
+Modal Freedom (signature Σ) ⇒ No Pure Contingency -/
+def modal_freedom_signature_r_implies_no_pure_contingency_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.modalFreedom _) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
 
 /-- `nd-and-bf-imply-necessary-nd`
 
@@ -1606,6 +1666,23 @@ def necessary_weakly_inextensible_comprehension_r_implies_weakly_inextensible_co
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecWeaklyInextensibleComprehension.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeaklyInextensibleComprehension.schemaIn
 
+/-- `no-contingency-signature-incompatible-with-witnessed-possibility`
+
+No Contingency (signature Σ) ∧ Witnessed Possibility ⇒ ⊥ -/
+def no_contingency_signature_incompatible_with_witnessed_possibility : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.witnessedPossibility _) →
+    ¬ Classicism.Meta.AxiomSet.Consistent Ax
+
+/-- `no-contingency-signature-r-implies-modal-freedom-signature-r`
+
+No Contingency (signature Σ) ⇒ Modal Freedom (signature Σ) -/
+def no_contingency_signature_r_implies_modal_freedom_signature_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.modalFreedom _)
+
 /-- `no-contingency-signature-r-implies-no-pure-contingency-r`
 
 No Contingency (signature Σ) ⇒ No Pure Contingency -/
@@ -1838,6 +1915,14 @@ def no_pure_contingency_and_weakly_inextensible_comprehension_imply_necessary_we
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeaklyInextensibleComprehension.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecWeaklyInextensibleComprehension.schemaIn
 
+/-- `no-pure-contingency-r-implies-converse-witnessed-possibility-r`
+
+No Pure Contingency ⇒ Converse Witnessed Possibility -/
+def no_pure_contingency_r_implies_converse_witnessed_possibility_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.converseWitnessedPossibility _)
+
 /-- `no-pure-contingency-r-implies-pure-b-r`
 
 No Pure Contingency ⇒ B for pure sentences -/
@@ -1955,6 +2040,14 @@ def possibility_signature_r_implies_possibility_schema_r : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possibilityC _) →
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC)
 
+/-- `possibility-signature-r-implies-witnessed-possibility-r`
+
+Possibility Maximalism (signature Σ) ⇒ Witnessed Possibility -/
+def possibility_signature_r_implies_witnessed_possibility_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possibilityC _) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.witnessedPossibility _)
+
 /-- `possible-infinity-e-and-bf-imply-axiom-of-infinity-e`
 
 Possible Infinity (type e) ∧ BF ⇒ Axiom of Infinity (type e) -/
@@ -2006,6 +2099,14 @@ def possible_infinity_t_implies_axiom_of_infinity_t : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PossibleInfinityT.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn
+
+/-- `possibly-witnessed-possibility-r-implies-witnessed-possibility-r`
+
+Possibly Witnessed Possibility ⇒ Witnessed Possibility -/
+def possibly_witnessed_possibility_r_implies_witnessed_possibility_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possiblyWitnessedPossibility _) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.witnessedPossibility _)
 
 /-- `pure-b-and-pure-possibility-incompatible`
 
@@ -2125,6 +2226,15 @@ def rigid_comprehension_r_implies_weak_rigid_comprehension_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidComprehension.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeakRigidComprehension.schemaIn
+
+/-- `signature-b-and-witnessed-possibility-incompatible`
+
+B for sentences of Σ ∧ Witnessed Possibility ⇒ ⊥ -/
+def signature_b_and_witnessed_possibility_incompatible : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.witnessedPossibility _) →
+    ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
 /-- `signature-b-r-implies-pure-b-r`
 
@@ -2257,6 +2367,33 @@ def weak_rigid_comprehension_r_implies_weakly_inextensible_comprehension_r : Pro
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeakRigidComprehension.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeaklyInextensibleComprehension.schemaIn
 
+/-- `witnessed-possibility-and-no-pure-contingency-imply-logical-necessity`
+
+Witnessed Possibility ∧ No Pure Contingency ⇒ Logical Necessity -/
+def witnessed_possibility_and_no_pure_contingency_imply_logical_necessity : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.witnessedPossibility _) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.logicalNecessity _)
+
+/-- `witnessed-possibility-and-npc-imply-possibly-witnessed-possibility`
+
+Witnessed Possibility ∧ No Pure Contingency ⇒ Possibly Witnessed Possibility -/
+def witnessed_possibility_and_npc_imply_possibly_witnessed_possibility : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.witnessedPossibility _) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possiblyWitnessedPossibility _)
+
+/-- `witnessed-possibility-incompatible-with-nd`
+
+Witnessed Possibility ∧ ND ⇒ ⊥ -/
+def witnessed_possibility_incompatible_with_nd : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.witnessedPossibility _) →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.schemaIn →
+    ¬ Classicism.Meta.AxiomSet.Consistent Ax
+
 /-- `finite-support-sections-and-projection`
 
 Finite-support action model: N and N×2, sections and projection: a witness satisfying 2 principles
@@ -2287,6 +2424,31 @@ def full_boolean_valued_atom_and_atomless : Prop :=
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecFunctionalChoice.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecPlenitude.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecActuality.schemaIn
+
+/-- `full-free-monoid-glued-constants`
+
+Full action model: free monoid on countably many generators, glued constants, thread individuals: a witness satisfying 14 principles
+and violating 4. -/
+def full_free_monoid_glued_constants : Prop :=
+  ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.logicalNecessity _) ∧
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecActuality.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RelationalChoice.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.StrongLeibniz.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecStrongLeibniz.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRelationalChoice.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TransversalChoice.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctnessT.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.ModalB.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC)
 
 /-- `symmetric-infinite-classes`
 
