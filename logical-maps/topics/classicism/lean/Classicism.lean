@@ -54,11 +54,11 @@ import Classicism.Models.PointedParts
 -- Metalogical results, each with the object-level reasoning it rests on
 import Classicism.Results.Arity
 import Classicism.Results.Lists
-import Classicism.Results.Schemas.Consistency
-import Classicism.Results.Schemas.ConsistencyPointed
-import Classicism.Results.Schemas.PossibilityDistinctness
-import Classicism.Results.Schemas.Contingency
-import Classicism.Results.Schemas.Incompatibilities
+import Classicism.Results.Consistency.Consistency
+import Classicism.Results.Consistency.ConsistencyPointed
+import Classicism.Results.SentenceSchemas.PossibilityDistinctness
+import Classicism.Results.SentenceSchemas.Contingency
+import Classicism.Results.SentenceSchemas.Incompatibilities
 -- The tools: checkers, the quoter, the translator, the pipeline, and their audits
 import Classicism.Tools.Check
 import Classicism.Tools.TypeSystem

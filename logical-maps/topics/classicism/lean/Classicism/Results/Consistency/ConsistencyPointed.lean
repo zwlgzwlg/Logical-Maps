@@ -1,5 +1,5 @@
 import Classicism.Models.PointedParts
-import Classicism.Results.Schemas.Consistency
+import Classicism.Results.Consistency.Consistency
 
 /-!
 # Consistency facts from the models with a point adjoined

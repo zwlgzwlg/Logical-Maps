@@ -1,6 +1,6 @@
-import Classicism.Results.Schemas.Consistency
-import Classicism.Results.Schemas.PossibilityDistinctness
-import Classicism.Results.Schemas.Contingency
+import Classicism.Results.Consistency.Consistency
+import Classicism.Results.SentenceSchemas.PossibilityDistinctness
+import Classicism.Results.SentenceSchemas.Contingency
 
 /-!
 # What Possibility and Distinctness exclude

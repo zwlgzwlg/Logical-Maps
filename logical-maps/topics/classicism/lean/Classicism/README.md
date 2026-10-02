@@ -17,7 +17,7 @@ language. Earlier notes called this the "deep" layer; **metalogical** is the nam
 ## What it is for
 
 1. **Metalogical statements.** "Schema A entails schema B" as a theorem about instances;
-   No Pure Contingency, a schema over closed *pure* sentences; the Maximalist principles,
+   No Pure Contingency, a sentence schema over closed *pure* sentences; the Maximalist principles,
    which quantify over syntax; an induction on the structure of a relational type, which
    the shallow layer's classes cannot perform.
 2. **Certificates.** A record of the map — an arrow between principles — is a shallow
@@ -98,7 +98,7 @@ The first five were settled with Cian on 22 September 2026, the rest on the days
 | `Syntax/Axioms.lean` | The eleven identities as sentences; `C.axiomsMinus` and `C.axioms`, the latter adding Existence at `e`; `C.Derivable`, `C.Theorem`. |
 | `Syntax/Entailment.lean` | **Entailment between axiom sets**, `Ax₁ ⟹ Ax₂`: every sentence of `Ax₂` a theorem of `C ∪ Ax₁` — the form of the map's arrows. Unions and inclusions of axiom sets; cut (`Derivable.replaceAx`, axioms replaced by their derivations); `refl`, `trans`, monotonicity, unions; `of_imp_family`; the **deduction theorem** for axiom sets (`Derivable.ofAxiom`, `Theorem.deductionC`); `Consistent`, and the two ways it turns into non-theoremhood and back, which the side conditions of Distinctness and Possibility need. |
 | `Syntax/Pure.lean` | **The pure language inside every signature**: `Term.ofPure` reads a term with no constants in any signature, `Derivable.ofPure` carries derivations across, so a theorem of `C` in the pure language is a theorem of `C(Σ)` for every `Σ`. This is how a lemma certified at `Signature.pure` is applied in a metalogical proof about a signature. The converse, conservativity, is not here. |
-| `Syntax/SentenceSchemas.lean` | The map's schemas over *sentences*, which no shallow definition can express: No Pure Contingency, No Contingency, B for a signature and for pure sentences, Distinctness and Possibility relative to a theory, and `max`, the maximalization, with Maximalist Classicism `max empty`; the necessitation of a schema, `Ax.box`, which is how the map's boxed principles are formed; in the pure signature every sentence is pure. What follows from these is in `Results/Schemas/`. |
+| `Syntax/SentenceSchemas.lean` | **The sentence schemas**, the map's principles schematic in a sentence rather than a type, which no shallow definition can express: No Pure Contingency, No Contingency, B for a signature and for pure sentences, Distinctness and Possibility relative to a theory, and `max`, the maximalization, with Maximalist Classicism `max empty`; the necessitation of a schema, `Ax.box`, which is how the map's boxed principles are formed; in the pure signature every sentence is pure. What follows from these is in `Results/SentenceSchemas/`. |
 | `Semantics/Denotation.lean` | `Ty.denote`, `Env`, `Interp`, `Term.denote`: the standard reading of the syntax in Lean, with `t` as `Prop` and `e` as a chosen domain. Renaming and substitution commute with it; conversion preserves it; **soundness** of `Derivable`; the eleven identities hold in `Prop`, so `Prop` is a model of `C` and **`C` is consistent**; an axiom set true in `Prop` is consistent (`Consistent.of_interp`), and `Interp.trivial` interprets any signature over a nonempty domain. |
 | `Syntax/Examples.lean` | A β-step by `rfl`, an η-step, purity decided, small derivations (commutativity of `∧` by Subst among them), and the reflection checks: sentences read back are the propositions they abbreviate, by `rfl`. |
 | `Semantics/Relational.lean` | The bridge for the type-subscripted operations `∧_τ`, `¬_τ`, `∨_τ`, coextension, the pointwise box and implication (constants of `Syntax/Term.lean`, read in `Semantics/Denotation.lean` by recursion on the type): the standard reading's `SRel` and `SOrder` instances by the same recursion, and one lemma per operation, by induction on the type, that its reading is the strict layer's. Purpose four of this layer, at work. |
@@ -109,7 +109,7 @@ The first five were settled with Cian on 22 September 2026, the rest on the days
 | `Certified/Derived.lean` | Two quick derivations run at build time, as a check that the whole chain works. |
 | `Tools/Schema.lean` | **Principles as schemas and records as entailments.** `#classicism_schema P` quotes the principle `P` into `P.quoted`, `P.reflect` and `P.schema`, the axiom set of its instances over its object types. `#classicism_entails foo` reads the statement `P₁ … → … → Q …` of a record theorem and its derivation `foo.derivable` into `foo.entails : P₁.schema ∪ … ⟹ Q.schema`, specializing the derivation to each instance of `Q` and citing the premises as axioms; `#classicism_entails_audit Mod` does it for a module, deriving first. |
 | `Tools/Schema.lean` (rules) | `#classicism_rule foo` reads the same derivation as a **rule between the schemas' instances**, `foo.rule : ∀ σ' …, C.Theorem (imp (P₁.quoted …) (… (Q.quoted …)))`, keeping the object types, for use inside a metalogical proof; `#classicism_certify foo` is the whole chain at the point where `foo` is stated: transform, schemas, derive, rule. |
-| `Certified/Schemas.lean` | The map's principles (44) as schemas: the home of every `P.quoted`, `P.reflect`, `P.schema`. |
+| `Certified/Schemas.lean` | The principles (68) quoted: the home of every `P.quoted` (its instances), `P.reflect`, `P.schema` (its schema) and, for a principle with a Ty-parameter, `P.listQuoted` and `P.listSchema` (its list form). |
 | `Certified/Derivations.lean` | Every record theorem of `Results/Records.lean` derived in the object language: the home of every `foo.derivable`, kept apart because it is the expensive part of the build. |
 | `Certified/Entailed.lean` | The record theorems of `Results/Records.lean` certified as entailments: the home of every `foo.entails`, and, for a record with a Ty-parameter, `foo.listRule` and `foo.listEntails`. All 152 certify; 70 of the 74 with a Ty-parameter in list form too, the other four citing Relational Choice with its output at the list's type. |
 | `Semantics/Action.lean` | **Action premodels and action models**, the paper's models of Classicism, directly: a rooted category, an inner action per type, the outer actions by recursion on the type, the subaction conditions, the total interpretation function `sem`, `Holds`, and `IsModel`. |
@@ -117,7 +117,8 @@ The first five were settled with Cian on 22 September 2026, the rest on the days
 | `Semantics/ActionFull.lean` | **Full action models**: the powerset and exponential actions as functors; the full inner domains by recursion on the type; `Premodel.full` on any rooted category from an action for `e` and an interpretation; **`full_isModel`**, that a full premodel is a model, by the combined induction (inner-ness and transport together, the type-subscripted constants by a second induction on the size of the type); `full_bf_surjective`, the paper's (iii). |
 | `Semantics/ActionFacts.lean` | `ND_σ`, `BF_σ` and the Fregean Axiom as sentences; the clauses for `□` and `◇`; **truncation** (`Premodel.truncate`, `sem_truncate`, `isModel_truncate`, `dia_iff_truncate`, `box_iff_truncate`); the paper's generalizations: `ND_σ` holds iff every `h^σ` out of the object is injective, `BF_σ` holds if every `h^σ` is surjective, the Fregean Axiom holds iff propositions agreeing at the identity are equal; and what a model verdict needs to become a fact about the theory: `⊥` fails, `¬P` holds iff `P` fails, `□P` gives `P`, **an axiom set true in an action model is consistent** (`Consistent.of_action_model`) and a sentence failing in it is not a theorem (`not_theorem_of_model`). |
 | `Semantics/ActionProperties.lean` | Properties of action models — propositionally full, quasi-functionally full, full — and what holds in all models with a property: the value of a pure term does not see the arrow (`sem_pure`), so **No Pure Contingency holds in every one-object model** (`holdsAx_npc`); the Fregean Axiom fails in every propositionally full model with a second arrow out of the base. |
-| `Results/Schemas/` | **The results about the schemas over sentences**, the first use of the semantics to prove arrows: `Consistency.lean` (the side conditions' facts, from `Prop` and the M-set models), `PossibilityDistinctness.lean` (Distinctness and Possibility equivalent, relative to any theory over any signature), `Contingency.lean` (No Pure Contingency necessitates every pure schema — twenty records as one theorem — and the arrows among the contingency schemas), `Incompatibilities.lean` (Possibility, Distinctness and `Max T` against the necessitation of anything refutable; Maximalist Classicism against `ND`; Possibility against No Pure Contingency and pure B). Its README lists the records covered and the ones that wait on models or definitions. |
+| `Results/Consistency/` | **Consistency facts from the models**: `Consistency.lean` (the side conditions' facts, from `Prop`, the M-set models, the permutation model and the monoid models of Appendix D, and `BF` not entailing `□BF`), `ConsistencyPointed.lean` (the pointed monoid models). The incompatibilities and the side conditions of Distinctness and Possibility rest on them. |
+| `Results/SentenceSchemas/` | **The results about the sentence schemas**, the first use of the semantics to prove arrows: `PossibilityDistinctness.lean` (Distinctness and Possibility equivalent, relative to any theory over any signature), `Contingency.lean` (No Pure Contingency necessitates every pure schema — twenty records as one theorem — and the arrows among the contingency schemas), `Incompatibilities.lean` (Possibility, Distinctness and `Max T` against the necessitation of anything refutable; Maximalist Classicism against `ND`; Possibility against No Pure Contingency and pure B). Its README lists the records covered and the ones that wait on models or definitions. |
 | `Semantics/ActionExamples.lean` | Full M-set models (`MSet.model`): the idempotent monoid `{1, k}` (`ND_t`, `BF_t` and the Fregean Axiom fail — the map's `full-idempotent-monoid`) and the two-element group (the Fregean Axiom fails, `□ND_σ` and `□BF_σ` hold at every type — `full-involution-group`); at an object whose out-arrows are isomorphisms, `ND_σ` and `BF_σ`; in a groupoid, their necessitations. |
 | `Semantics/Env.lean` | `IEnv`, the assignment of inner elements to the variables of a context, shared by the action models and the intensional action models, with the facts renaming and substitution need. |
 | `Syntax/Sentences.lean` | `ND_σ`, `BF_σ` and the Fregean Axiom as sentences, written once for both semantic layers. |
@@ -126,7 +127,7 @@ The first five were settled with Cian on 22 September 2026, the rest on the days
 | `Semantics/IntensionalFacts.lean` | The clauses for `□` and `◇`; `⊥` fails, `¬P` holds iff `P` fails, `□P` gives `P`; **an axiom set true in an intensional action model is consistent** (`Consistent.of_model`, the name the results use) and a sentence failing in it is not a theorem; `ND_σ` iff injective, `BF_σ` if surjective, the Fregean Axiom iff propositions agreeing at the identity are equal; **truncation**, the readings transferring by `rfl`. |
 | `Semantics/IntensionalFull.lean` | **Full intensional models**: the actions of intensions, of products and of the point; the full domains by the mutual recursor (`FullT`, `FullArgs`, `FullR`), the bijection `fullArgs` between the two spellings of the arguments, the inclusion as its preimage; `Premodel.full`; **`full_isModel` in two lines**, every intension being inner; `full_bf_surjective`. |
 | `Semantics/IntensionalProperties.lean` | Propositionally full and full; `sem_pure`; **No Pure Contingency in every one-object model**; the Fregean Axiom fails in every propositionally full model with a second arrow out of the base. |
-| `Semantics/IntensionalExamples.lean` | The M-set models ported: `Intensional.MSet.model`, `Idem.not_nd_t`, `Idem.not_bf_t`, `Idem.not_fregean`, `Invol.box_nd`, `Invol.box_bf`, `Invol.not_fregean`; these are what `Results/Schemas/Consistency.lean` now cites. |
+| `Semantics/IntensionalExamples.lean` | The M-set models ported: `Intensional.MSet.model`, `Idem.not_nd_t`, `Idem.not_bf_t`, `Idem.not_fregean`, `Invol.box_nd`, `Invol.box_bf`, `Invol.not_fregean`; these are what `Results/Consistency/Consistency.lean` now cites. |
 | `Syntax/Constants.lean` | `Term.consts`, the constants a term mentions, finite. |
 | `Semantics/IdeallyFull.lean` | **Appendix D's technique** (26 September): agreement of arrows on a set of individuals, pinning, finite pinning, the subaction of finitely pinned elements; the ideally full domains by the mutual recursor and `Premodel.ideal`; pinning in any premodel (`PinnedO`), closed under the set operations and application; the induction `sem_pinned` and **Proposition D.4** in two forms, `isModel_of_pinned` for any premodel whose inner elements are exactly the finitely pinned ones, and `ideal_isModel` for the construction; **Proposition D.6**, `BF_σ` at every type when every arrow out of the base is surjective on individuals (`ideal_bf_of_surjective`, by pulling an intension back along the arrow); and the paper's Part 3 argument, `BF_σ` when every arrow out of the base agrees on any finite set with one surjective on individuals (`ideal_bf_of_approx`, 28 September). |
 | `Results/Lists.lean` | **Restricted ⇔ list** (1 October): for each of the twenty principles with a list form, `P.schema ⟹ P.listSchema`, the converse of the generated `P.listSchema ⟹ P.schema`. Thirteen by induction on the list, from two-element forms (`P.BarcanCons`, …) whose shallow steps are certified and vectorized; Plenitude, its boxed form and Actual Profile by coding a tuple `x₁ … xₙ` as the object `λR. R x₁ … xₙ`; the four theorems of `C` from their list entailments. |
@@ -377,7 +378,7 @@ Appendix E uses under the names `Int` and `App`. The decision (26 September, Cia
 models of Appendix D and the draft's symmetric ideally-full models are built in this
 form; the applicative modules `Action*.lean` stay as they are, a piece of formalized
 mathematics and a resource, with nothing on the route to a certificate depending on them;
-`Results/Schemas/Consistency.lean` takes its model facts from the intensional M-set
+`Results/Consistency/Consistency.lean` takes its model facts from the intensional M-set
 models. The two layers share `Semantics/Env.lean` (assignments) and
 `Syntax/Sentences.lean` (`ND_σ`, `BF_σ`, the Fregean Axiom).
 
@@ -473,7 +474,7 @@ fails** (`not_atomicityT`, `⊤` has no atom below it, since the cut refutes ato
 any nonzero proposition). `not_atomicity_t` restates the last for the `t`-instance of the
 type-indexed schema, whose `¬_t` and `∨_t` read as `¬` and `∨` do, by `rfl`.
 
-`Results/Schemas/Consistency.lean` turns these into the facts the map's records need
+`Results/Consistency/Consistency.lean` turns these into the facts the map's records need
 (`Perms.not_actuality_consistent`, `Perms.nd_bf_atomless_consistent`, …), and
 `Incompatibilities.lean` gets `maximalist_necActuality_inconsistent` and
 `maximalist_necAtomicity_inconsistent`, two of the maximalist incompatibilities that were
@@ -511,7 +512,7 @@ up beyond any bound; `raise k m` for a monotone function; `gₘ` itself for the
 truncations), and the singletons `{gₙ}`, `{f_{2^j}}`, `{kₙ}` pinned by two points or
 one. The table is in `Models/README.md`. No Pure Contingency holds in every model on a
 monoid (`holdsAx_npc`), so the necessitations come with the verdicts, and
-`Results/Schemas/Consistency.lean` has one section per part: what holds, what fails,
+`Results/Consistency/Consistency.lean` has one section per part: what holds, what fails,
 their union consistent (the paper's Proposition D.5 without its Boolean Completeness
 column), and the non-theoremhood of each failing principle from the holding ones —
 `BF_e` from Actuality and Atomicity, Actuality from Atomicity, Atomicity from `BF` and
@@ -552,8 +553,8 @@ Classicism, apply an implication — are `Theorem.ax`, `Theorem.ofC` and `Theore
 `P.schema = {P.quoted σ' … | σ' … closed}`, the instances at the paper's types, those with
 no type variable (1 October; `VECTORIZATION-PLAN.md`, D2). A parameter-free principle gives
 a singleton. All 68 principles are quoted; the map's
-schemas over sentences rather than types — No Pure Contingency, Distinctness,
-Possibility, `max` — are written by hand in `Syntax/SentenceSchemas.lean`.
+sentence schemas — No Pure Contingency, Distinctness, Possibility, `max` — are written by
+hand in `Syntax/SentenceSchemas.lean`.
 
 **Records as entailments** (`Certified/Entailed.lean`). A record theorem
 `foo : P₁ … → … → Q …` has `foo.derivable : ∀ σ' …, Theorem C (imp X₁ (… Y))` with the
@@ -713,7 +714,7 @@ direct translation from shallow proofs to `Derivable`, is in `VERIFICATION.md`.
 sit in one file, as the experiment's did until 1 October. They are kept apart: the
 records in `Results/Records.lean`, which imports only the shallow layer and elaborates
 quickly in an editor; their certification, one audit command in `Certified/Entailed.lean`;
-the compositions in `Results/Arity.lean` and `Results/Schemas/`.
+the compositions in `Results/Arity.lean` and `Results/SentenceSchemas/`.
 
 ## Next
 

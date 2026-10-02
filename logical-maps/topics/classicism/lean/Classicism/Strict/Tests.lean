@@ -199,18 +199,18 @@ A principle is a family of formulas indexed by types, and the type-system check 
 proposition that quantifies over types, guarded or not, anywhere but in the leading
 telescope of a declaration. These would otherwise pass every other check. -/
 
-/-- A schema written as one proposition. -/
-def schemaAsProposition : Prop := ∀ {σ : Type} [Ty σ] (x : σ), x = x
-#classicism_types_expect_rejection schemaAsProposition
+/-- A family of formulas indexed by types, written as one proposition. -/
+def familyAsProposition : Prop := ∀ {σ : Type} [Ty σ] (x : σ), x = x
+#classicism_types_expect_rejection familyAsProposition
 
-/-- A hypothesis that is a schema. -/
-theorem schemaAsHypothesis (h : ∀ {σ : Type} [Ty σ] (x : σ), x = x) : ∀ p : Prop, p = p :=
+/-- A hypothesis that is such a family. -/
+theorem familyAsHypothesis (h : ∀ {σ : Type} [Ty σ] (x : σ), x = x) : ∀ p : Prop, p = p :=
   fun p => h p
-#classicism_types_expect_rejection schemaAsHypothesis
+#classicism_types_expect_rejection familyAsHypothesis
 
-/-- Even a schema as the conclusion, with parameters in front. -/
-theorem schemaAsConclusion (p : Prop) : p → ∀ {σ : Type} [Ty σ] (x : σ), x = x :=
+/-- Even such a family as the conclusion, with parameters in front. -/
+theorem familyAsConclusion (p : Prop) : p → ∀ {σ : Type} [Ty σ] (x : σ), x = x :=
   fun _ {_} [Ty _] x => rfl
-#classicism_types_expect_rejection schemaAsConclusion
+#classicism_types_expect_rejection familyAsConclusion
 
 end Classicism.Tests

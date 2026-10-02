@@ -9,7 +9,7 @@ reads the one into the other, and `Derivable.ofPure` carries derivations across.
 theorem of `C` in the pure language is a theorem of `C(Σ)` for every `Σ`. This is what
 lets a lemma proved in the shallow layer and certified at `Signature.pure`, where the
 map's principles live, be applied inside a metalogical proof about a signature `Σ`: the
-schemas over the syntax (`SentenceSchemas.lean`) are stated for any `Sig`, and the
+sentence schemas (`SentenceSchemas.lean`) are stated for any `Sig`, and the
 object-level steps they need are certified once and carried over by `ofPure`.
 
 The other direction — a pure sentence that is a theorem of `C(Σ)` is a theorem of `C` —

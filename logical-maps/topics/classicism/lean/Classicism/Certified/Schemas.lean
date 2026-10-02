@@ -2,12 +2,14 @@ import Classicism.Tools.Schema
 import Classicism.Certified.Quoted
 
 /-!
-# The map's principles as schemas
+# The principles quoted, and their schemas
 
-Every principle of the shallow layer (from its strict twin where it has one), read into the object language
-as a schema: `P.quoted`, the sentence as a function of the principle's object-type
-parameters; `P.reflect`, that reading it back gives the strict twin, by `rfl`; and
-`P.schema`, the axiom set of its instances at closed types. This is the one home of those declarations.
+Every principle of the shallow layer (from its strict twin where it has one), quoted into
+the object language: `P.quoted`, its instance at given object types, a sentence;
+`P.reflect`, that reading it back gives the strict twin, by `rfl`; and `P.schema`, its
+schema, the axiom set of its instances at closed types. For a principle with a
+Ty-parameter, also its list form: `P.listQuoted`, the instance at a list of types, and
+`P.listSchema`. This is the one home of those declarations.
 -/
 
 #classicism_schema

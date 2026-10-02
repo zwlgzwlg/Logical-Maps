@@ -650,7 +650,7 @@ At Cian's direction the layer now states the map's arrows: `AxiomSet.Entails`
 principles quoted into schemas from their strict twins (`Schema.lean`, `Schemas.lean`,
 28 of them, each with a `rfl` reflection); and a command that reads a record theorem's
 kernel-checked derivation into `P.schema ⟹ Q.schema` (`#classicism_entails`,
-`Entailed.lean`). The schemas over sentences (No Pure Contingency, Distinctness,
+`Entailed.lean`). The sentence schemas (No Pure Contingency, Distinctness,
 Possibility, maximalization in the paper's official form) are in `SyntaxSchemas.lean`;
 `ActionProperties.lean` has the first "holds in every model with this property" fact,
 No Pure Contingency in one-object models, from the arrow-independence of pure terms.
@@ -770,7 +770,7 @@ shared by both forms; the applicative modules are otherwise untouched and keep b
 
 *Checked.* Every new module builds with no `sorry` and no axiom beyond the classical
 three, in a few seconds each; the full project builds (815 jobs).
-`Results/Schemas/Consistency.lean` now imports the intensional examples and every
+`Results/Consistency/Consistency.lean` now imports the intensional examples and every
 consistency fact and non-theoremhood fact it states, and everything downstream
 (`Incompatibilities.lean`, the records' entailments), builds unchanged: the model
 facts have the same statements in both forms. The applicative `Consistent.of_model` is
@@ -797,7 +797,7 @@ pinned ones, and `ideal_isModel` for the construction), `Syntax/Constants.lean`
 (`Term.consts`, finite, so that the model condition is checked over any signature), and
 `Models/Permutations.lean`, Part 1: the permutation model, with `box_nd`, `box_bf`,
 `not_actuality`, `atomlessness`, `not_atomicityT`, `not_atomicity_t`, each about the
-quoted principle. `Results/Schemas/Consistency.lean` gains the facts they give and
+quoted principle. `Results/Consistency/Consistency.lean` gains the facts they give and
 `Incompatibilities.lean` the maximalist incompatibilities with `□`Actuality and
 `□`Atomicity, two of those the previous audit listed as waiting on models.
 
@@ -829,7 +829,7 @@ parametrized by the deciding fact (`not_nd_e_of_not_injective`, `bf_of_surjectiv
 `not_bf_e`, `actuality_of_pinned_one`, `not_actuality_of_free`, `atomlessness_of_free`,
 `atomicityT_of_singletons`, `not_atomicityT_of_free`); `Models/Monoids.lean`, Parts 2 to
 8 as instances, every entry of the paper's table but the Boolean Completeness column;
-`Results/Schemas/Consistency.lean`, a section per part with `holdsAx_pos`, `holdsAx_neg`,
+`Results/Consistency/Consistency.lean`, a section per part with `holdsAx_pos`, `holdsAx_neg`,
 `consistent`, and `*_not_theorem` for each failing principle.
 
 *Checked.* Every module builds with no `sorry`; the full project builds (899 jobs). The
@@ -1007,7 +1007,7 @@ Weakly Inextensible Comprehension, Vicinity, their boxed forms, Modalized Plenit
 quoted and reflected, and 34 of their results:
 - in `Results/Records.lean`, unary where the principle is over relational types, with
   their every-arity forms in `Results/Arity.lean`;
-- the four No Pure Contingency results in `Results/Schemas/Contingency.lean`.
+- the four No Pure Contingency results in `Results/SentenceSchemas/Contingency.lean`.
 
 *Checked.* The full build passes. The record audits report:
 - 273 of 273 theorems passing the gate and type checks, and derived;

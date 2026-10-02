@@ -31,7 +31,7 @@ The verdicts, each a theorem about the quoted principle (`P.Actuality.quoted`,
 Parenthesized entries are not theorems here: Atomlessness fails wherever Actuality or
 Atomicity holds, which is the map's business. No Pure Contingency holds in every model
 on a monoid (`Premodel.holdsAx_npc`), so each verdict is also a verdict on the
-principle's necessitation; `Results/Schemas/Consistency.lean` states the packages, one
+principle's necessitation; `Results/Consistency/Consistency.lean` states the packages, one
 section per part. The Boolean Completeness column of the paper's Proposition D.5 is
 one lemma, `MonoidModel.not_bc_of` (the haecceities of a set `S` of numbers have no least
 upper bound, when properties including them can always be strengthened by pinning them
@@ -39,7 +39,7 @@ down by more), with the paper's witnesses: the even numbers in Parts 2 to 5 and 
 numbers in Parts 6 and 7. Part 1's failure, which the paper gets through Proposition 2.5,
 is direct by the same lemma, the permutation model being definitionally the monoid model
 on the permutation group; the maximalist incompatibility with `□`Boolean Completeness
-follows (`Results/Schemas/Incompatibilities.lean`).
+follows (`Results/SentenceSchemas/Incompatibilities.lean`).
 
 ## The eight parts with a point adjoined (formalized)
 
@@ -59,7 +59,7 @@ holds):
 | 8⁺ | c. false | `□BF_σ` | necessary | necessary | c. false | false |
 
 and in every part the paper's `◇(□ND ∧ Atomicity)`. The packages are consistent
-(`Results/Schemas/ConsistencyPointed.lean`, `part1_consistent` to `part8_consistent`).
+(`Results/Consistency/ConsistencyPointed.lean`, `part1_consistent` to `part8_consistent`).
 This confirms the survey below on the paper's construction, including its two
 corrections to "all the same principles hold as in the original model": `ND` fails at
 `ℕ` in every part, and Atomlessness fails there (`{c}` is an atom). Part 1⁺ is on the

@@ -9,8 +9,8 @@ Classicism. This module defines it and proves its algebra: reflexivity, transiti
 cut lemma, replacing axioms by their derivations), monotonicity, unions, and how a family
 of implications `∀ σ. P σ → Q σ` proved in `C` gives `{P σ} ⟹ {Q σ}`; the deduction
 theorem for axiom sets (an axiom becomes a hypothesis); and consistency of an axiom set
-with `C`, with the two ways it turns into non-theoremhood and back. The schemas over the
-syntax that use these — Distinctness, Possibility, maximalization — are in
+with `C`, with the two ways it turns into non-theoremhood and back. The sentence schemas
+that use these — Distinctness, Possibility, maximalization — are in
 `SentenceSchemas.lean`.
 
 Semantics — that entailment transfers holding, in `Prop` and in an action model — is in

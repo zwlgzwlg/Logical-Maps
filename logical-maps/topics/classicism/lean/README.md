@@ -35,7 +35,7 @@ mathematics keep the metalogic next to the object level it is about:
 Classicism/            the theory in Lean: its vocabulary, the discipline, a library of its theorems, the map's principles
 Classicism/Syntax/     the object language as an object of Lean: terms, conversion, derivability
 Classicism/Semantics/  its models: the reading in Prop, action models, the map's models
-Classicism/Results/    the map's arrows, proved: the shallow records, the metalogical proofs with their object-level steps, and Schemas/, the results about the schemas over sentences
+Classicism/Results/    the map's arrows, proved: the shallow records, their every-arity forms, SentenceSchemas/ (the results about the sentence schemas) and Consistency/ (consistency facts from the models)
 Classicism/Tools/      the checkers, the quoter, the translator, the pipeline, and their audits
 Classicism/Certified/  the pipeline run at build time: the map's records as certificates
 Classicism/Strict/     the strict layer: Appendix A on Lean proof terms, reading the proofs above
@@ -177,8 +177,15 @@ project uses:
   `P.Functionality σ τ` for Lean types `σ`, `τ` that stand for object types;
 * an **instance** is one member of the family: in the shallow layer the Lean proposition
   `P.Functionality σ τ`, in the metalogic the sentence `P.Functionality.quoted σ' τ'`;
-* a **schema** is the axiom set of all instances, `P.Functionality.schema`, the thing the
-  map's arrows relate.
+* a **schema** is an axiom set, a set of sentences (`AxiomSet`): the two words are
+  synonyms (Cian, 2 October), as in the paper. The schema of a principle is the axiom set
+  of all its instances, `P.Functionality.schema`. Schemas are what the map's arrows
+  relate, and not every schema comes from a principle: the map's principles that are
+  schematic in a *sentence* rather than a type — No Pure Contingency, Distinctness,
+  Possibility and their kin — are formalized directly as **sentence schemas**, defined by
+  a condition on sentences (`Syntax/SentenceSchemas.lean`). So a node of the map always
+  has a schema, and has a principle in this project's sense only when it is indexed by
+  types.
 
 | name | layer | type | what it is |
 | --- | --- | --- | --- |
@@ -242,8 +249,8 @@ outline:
   **derivability**, `Derivable Ax Δ p`: `H` closed under *Elimination*'s rule Subst, the
   axiom set an index, the hole of Subst a term with a hole so that it may lie under
   binders; Classicism is `Derivable Logical`, and the eleven identities are its theorems.
-  Entailment between axiom sets, `⟹`, is the form of the map's arrows; the schemas over
-  sentences (No Pure Contingency, Distinctness, Possibility, maximalization) are here too.
+  Entailment between schemas, `⟹`, is the form of the map's arrows; the sentence schemas
+  (No Pure Contingency, Distinctness, Possibility, maximalization) are here too.
 * `Classicism/Semantics/`: the standard reading in `Prop` with soundness (so `C` is
   consistent), and the paper's **action models** with their soundness theorem, full
   models, truncation, and the first models of the map with their verdicts, in two forms:
@@ -316,7 +323,8 @@ Classicism/Models/Monoids.lean          Appendix D, Parts 2 to 8: the seven mono
 Classicism/Models/README.md             the verdict table; the survey of two-object variants and what they would add to the map
 
 Classicism/Results/Records.lean         the map's records proved in the shallow layer, one theorem per record
-Classicism/Results/Schemas/             results about Distinctness, Possibility, No Pure Contingency and their kin, from the models
+Classicism/Results/SentenceSchemas/     results about the sentence schemas: Distinctness, Possibility, No Pure Contingency and their kin
+Classicism/Results/Consistency/         consistency and non-entailment facts from the models, which the incompatibilities rest on
 
 Classicism/Tools/Check.lean             #classicism_check and #classicism_audit: the gate
 Classicism/Tools/TypeSystem.lean        #classicism_types: the relational type system
@@ -332,7 +340,7 @@ scripts/FunKinds.lean                   which `fun`s in a file are terms (writte
 
 Classicism/Certified/Quoted.lean        the record theorems quoted; home of foo.quoted
 Classicism/Certified/Derived.lean       two derivations checked at build time
-Classicism/Certified/Schemas.lean       the principles as schemas; home of P.schema
+Classicism/Certified/Schemas.lean       the principles quoted, and their schemas; home of P.quoted and P.schema
 Classicism/Certified/Derivations.lean   the record theorems derived; home of foo.derivable
 Classicism/Certified/Entailed.lean      the records as entailments; home of foo.entails
 Classicism/Certified/Vectorized.lean    checks of the vectorization on three principles and one arrow

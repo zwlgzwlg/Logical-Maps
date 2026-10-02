@@ -1,17 +1,18 @@
 import Classicism.Syntax.Entailment
 
 /-!
-# Schemas over the syntax
+# Sentence schemas
 
-The map's principles that are schemas over *sentences* rather than over types: No Pure
+The map's principles that are schematic in a *sentence* rather than a type: No Pure
 Contingency, No Contingency and B for a signature, Distinctness, Possibility, and the
-maximalization of a theory. None is the reading of a shallow definition — the shallow
-layer cannot quantify over syntax, which was purpose one of this layer — so none can come
-from `#classicism_schema`, and this module is their home, as `Schemas.lean` is the home
-of the type-indexed ones. Each is an `AxiomSet`, so that the entailments of
-`Entailment.lean` and the model facts of `Action*.lean` apply to them as to the others.
+maximalization of a theory. Each is a schema (an `AxiomSet`), defined by a condition on
+sentences. None is the schema of a principle — the shallow layer cannot quantify over
+syntax, which was purpose one of this layer — so none can come from `#classicism_schema`,
+and this module is their home, as `Certified/Schemas.lean` is the home of the principles'
+schemas. The entailments of `Entailment.lean` and the model facts of `Action*.lean` apply
+to them as to the others.
 
-Two conventions. A schema "for a signature `Σ`" is the schema at `Sig := Σ`; at
+Two conventions. A sentence schema "for a signature `Σ`" is the schema at `Sig := Σ`; at
 `Signature.pure`, where every term is pure, it is the map's "(pure)" version, so one
 definition serves both. And a schema relative to a theory `T` is relative to
 `C.axioms ∪ Ax`, as entailment is.
@@ -23,7 +24,7 @@ Map ids: `no-pure-contingency-r` (`npc`), `no-contingency-signature-r` (`noConti
 how the map's boxed principles are formed from the unboxed ones (`□BF` is
 `P.Barcan.schema.box`). Not yet here: the schemas with substitution of constants for
 variables (Witnessed Possibility and its kin), Possibility+, and Strong Possibility, which
-needs `◇_≠`. What follows from these schemas is in `Results/Schemas/`.
+needs `◇_≠`. What follows from these schemas is in `Results/SentenceSchemas/`.
 -/
 
 namespace Classicism.Meta

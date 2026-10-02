@@ -5,14 +5,14 @@ Made 28 September 2026 from `ciandorr/Logical-Maps` at commit 7c928c4 ("first tr
 | class | count | what it means |
 | --- | --- | --- |
 | Per-type routine | 139 | The object-level proof is uniform in the type parameters (pointwise reasoning at a relational type goes through the `Rel`/`Pointwise` classes), so each conclusion instance follows from finitely many premise instances. Includes specializations to `t`, stripping a box with T, and boxing a proved implication with necessitation, K and 4. Lifting is routine: a shallow theorem certified as an entailment. |
-| Per-instance routine over sentences | 52 | The principles are schemas over closed (pure or Σ-) sentences with only syntactic side conditions (purity, closedness, fresh constants). Each instance has a short object-level proof; lifting is checking that the side conditions carry over. `npc_union_entails_box` in `Results/Schemas/Contingency.lean` does the "No Pure Contingency and X imply □X" results at once (twenty-four). |
+| Per-instance routine over sentences | 52 | The principles are sentence schemas, over closed (pure or Σ-) sentences with only syntactic side conditions (purity, closedness, fresh constants). Each instance has a short object-level proof; lifting is checking that the side conditions carry over. `npc_union_entails_box` in `Results/SentenceSchemas/Contingency.lean` does the "No Pure Contingency and X imply □X" results at once (twenty-four). |
 | Sweet spot | 47 | A real shallow core plus a real metalogical step: an induction on the arity of a relational type (tuple haecceities, BF one argument at a time, a pointwise meet or join over a property), an induction on n for a schema indexed by numbers, an induction over arithmetical formulas, or reasoning about theoremhood, consistency or substitution of constants in the side conditions. |
 | Metalogic-dominated | 26 | The work is a model, soundness or completeness, conservativity of C(Σ) over C, or Gödel incompleteness; the object-level part is a line or two. |
 | Conjectured | 6 | No proof recorded. |
 
 ## Lean coverage (1 October)
 
-A record theorem in `Results/Records.lean` named exactly by a map id proves the map's claim, and its certificate is the entailment between the map's schemas. One named by a map id plus `_at_t` proves only the instances at type `t` (or with output `t`); its certificate is from the map's premise schemas to those instances. Where a full version exists too, the `_at_t` one is the instance at `t` that other proofs at `t` cite. A record with a Ty-parameter is proved at every list of types too, by its list form (`foo.listEntails`, the vectorized derivation); where the map's principle is over argument tuples, as Actual Profile is, or the record is proved at `σ → t` for a principle over relational types, that list form is the map's claim (`Results/Lists.lean`, `Results/Arity.lean`). `classicism_implies_existence_r_at_e` and `_relational` together cover their record. Results proved by the metalogical theorems of `Results/Schemas/` are counted as proved too: those whose docstrings name the record, and the twenty-four "No Pure Contingency and X imply □X" results, all instances of `npc_union_entails_box`.
+A record theorem in `Results/Records.lean` named exactly by a map id proves the map's claim, and its certificate is the entailment between the map's schemas. One named by a map id plus `_at_t` proves only the instances at type `t` (or with output `t`); its certificate is from the map's premise schemas to those instances. Where a full version exists too, the `_at_t` one is the instance at `t` that other proofs at `t` cite. A record with a Ty-parameter is proved at every list of types too, by its list form (`foo.listEntails`, the vectorized derivation); where the map's principle is over argument tuples, as Actual Profile is, or the record is proved at `σ → t` for a principle over relational types, that list form is the map's claim (`Results/Lists.lean`, `Results/Arity.lean`). `classicism_implies_existence_r_at_e` and `_relational` together cover their record. Results proved by the metalogical theorems of `Results/SentenceSchemas/` are counted as proved too: those whose docstrings name the record, and the twenty-four "No Pure Contingency and X imply □X" results, all instances of `npc_union_entails_box`.
 
 | class | results | proved in Lean | in part only | not yet |
 | --- | --- | --- | --- | --- |
@@ -46,8 +46,8 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `classicism-implies-modalized-plenitude-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `completeness-and-actuality-imply-weak-rigid-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `countable-boolean-completeness-implies-necessity-of-arithmetic`
-- `distinctness-schema-r-implies-possibility-schema-r` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `distinctness-signature-r-implies-possibility-signature-r` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `distinctness-schema-r-implies-possibility-schema-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `distinctness-signature-r-implies-possibility-signature-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `distinctness-signature-r-implies-separated-structure-r`
 - `extensionality-r-implies-atomicity-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `extensionality-r-implies-boolean-completeness-r` — **Lean: at every arity, `Results/Arity.lean`**
@@ -60,8 +60,8 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `necessary-plenitude-r-implies-atomicity-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `necessary-plenitude-r-implies-necessary-atomicity-r` — **Lean: at every arity, `Results/Arity.lean`**
 - `necessary-strong-leibniz-t-and-necessary-bf-imply-necessary-strong-leibniz` — **Lean: at every arity, `Results/Arity.lean`**
-- `possibility-schema-r-implies-distinctness-schema-r` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `possibility-signature-r-implies-distinctness-signature-r` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `possibility-schema-r-implies-distinctness-schema-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `possibility-signature-r-implies-distinctness-signature-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `possibly-witnessed-possibility-r-implies-separated-structure-r`
 - `pure-distinctness-and-separated-structure-imply-signature-distinctness`
 - `rigid-comprehension-and-nd-imply-plenitude` — **Lean: at every arity, `Results/Arity.lean`**
@@ -76,27 +76,27 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 ## Metalogic-dominated (26)
 
 - `distinctness-signature-r-implies-distinctness-schema-r`
-- `maximalist-distinctness-incompatible-with-nd` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `maximalist-distinctness-incompatible-with-necessary-actuality` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `maximalist-distinctness-incompatible-with-necessary-atomicity-r` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `maximalist-distinctness-incompatible-with-necessary-barcan-r` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `maximalist-distinctness-incompatible-with-necessary-boolean-completeness-r` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `maximalist-distinctness-incompatible-with-nd` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `maximalist-distinctness-incompatible-with-necessary-actuality` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `maximalist-distinctness-incompatible-with-necessary-atomicity-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `maximalist-distinctness-incompatible-with-necessary-barcan-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `maximalist-distinctness-incompatible-with-necessary-boolean-completeness-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `maximalist-distinctness-incompatible-with-necessary-functionality-r`
 - `maximalist-distinctness-incompatible-with-necessary-rigid-comprehension-r`
-- `maximalist-distinctness-incompatible-with-necessary-tractarianism-r` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `maximalist-distinctness-incompatible-with-necessary-tractarianism-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `maximalist-distinctness-incompatible-with-rigid-comprehension`
 - `possibility-and-countable-boolean-completeness-incompatible`
-- `possibility-and-necessary-barcan-t-incompatible` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `possibility-and-necessary-barcan-t-incompatible` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `possibility-and-necessary-relational-choice-incompatible`
 - `possibility-and-necessary-strong-leibniz-t-incompatible`
 - `possibility-and-necessity-of-arithmetic-incompatible`
-- `possibility-and-no-pure-contingency-incompatible` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `possibility-and-no-pure-contingency-incompatible` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `possibility-plus-signature-r-implies-possibility-plus-r`
 - `possibility-schema-r-implies-possible-infinity-e`
 - `possibility-schema-r-implies-possible-infinity-t`
 - `possibility-signature-r-implies-possibility-schema-r`
 - `possibility-signature-r-implies-witnessed-possibility-r`
-- `pure-b-and-pure-possibility-incompatible` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `pure-b-and-pure-possibility-incompatible` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `pure-distinctness-implies-infinity-t`
 - `pure-possibility-implies-axiom-of-infinity-t`
 - `strong-possibility-and-distinctness-preserving-collapse-incompatible`
@@ -105,46 +105,46 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 ## Per-instance routine over sentences (52)
 
 - `converse-witnessed-possibility-r-implies-no-pure-contingency-r`
-- `fregean-axiom-implies-no-contingency-signature-r` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `fregean-axiom-implies-no-pure-contingency-r` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `fregean-axiom-implies-no-contingency-signature-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `fregean-axiom-implies-no-pure-contingency-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `general-separated-structure-r-implies-separated-structure-r`
 - `logical-necessity-r-implies-modal-freedom-signature-r`
 - `logical-necessity-r-implies-no-pure-contingency-r`
 - `logical-necessity-r-implies-witnessed-possibility-r`
 - `modal-b-implies-pure-b-r`
-- `modal-b-implies-signature-b-r` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `modal-b-implies-signature-b-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `modal-freedom-signature-r-implies-no-pure-contingency-r`
 - `no-contingency-signature-incompatible-with-witnessed-possibility`
 - `no-contingency-signature-r-implies-modal-freedom-signature-r`
-- `no-contingency-signature-r-implies-no-pure-contingency-r` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-contingency-signature-r-implies-signature-b-r` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-actuality-imply-necessary-actuality` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-atomicity-imply-necessary-atomicity` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-b-imply-necessary-b` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-bf-imply-necessary-bf` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-bf-t-imply-necessary-bf-t` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-completeness-imply-necessary-completeness` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-extensionality-imply-necessary-extensionality` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-five-imply-necessary-five` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-fregean-imply-necessary-fregean` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-functional-choice-imply-necessary-functional-choice` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-functionality-imply-necessary-functionality` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-gallin-comprehension-imply-necessary-gallin-comprehension` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-nd-imply-necessary-nd` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-nd-t-imply-necessary-nd-t` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-plenitude-imply-necessary-plenitude` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-relational-choice-imply-necessaryelational-choice` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-rigid-comprehension-imply-necessary-rigid-comprehension` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-strong-leibniz-imply-necessary-strong-leibniz` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-strong-leibniz-t-imply-necessary-strong-leibniz-t` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-tractarianism-imply-necessary-tractarianism` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-transversal-choice-imply-necessary-transversal-choice` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-transversal-imply-necessary-transversal` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-vicinity-imply-necessary-vicinity` — **Lean: metalogical theorem in `Results/Schemas/`**
-- `no-pure-contingency-and-weakly-inextensible-comprehension-imply-necessary-weakly-inextensible-comprehension` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `no-contingency-signature-r-implies-no-pure-contingency-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-contingency-signature-r-implies-signature-b-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-actuality-imply-necessary-actuality` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-atomicity-imply-necessary-atomicity` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-b-imply-necessary-b` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-bf-imply-necessary-bf` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-bf-t-imply-necessary-bf-t` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-completeness-imply-necessary-completeness` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-extensionality-imply-necessary-extensionality` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-five-imply-necessary-five` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-fregean-imply-necessary-fregean` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-functional-choice-imply-necessary-functional-choice` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-functionality-imply-necessary-functionality` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-gallin-comprehension-imply-necessary-gallin-comprehension` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-nd-imply-necessary-nd` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-nd-t-imply-necessary-nd-t` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-plenitude-imply-necessary-plenitude` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-relational-choice-imply-necessaryelational-choice` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-rigid-comprehension-imply-necessary-rigid-comprehension` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-strong-leibniz-imply-necessary-strong-leibniz` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-strong-leibniz-t-imply-necessary-strong-leibniz-t` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-tractarianism-imply-necessary-tractarianism` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-transversal-choice-imply-necessary-transversal-choice` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-transversal-imply-necessary-transversal` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-vicinity-imply-necessary-vicinity` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
+- `no-pure-contingency-and-weakly-inextensible-comprehension-imply-necessary-weakly-inextensible-comprehension` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `no-pure-contingency-implies-necessity-of-arithmetic`
 - `no-pure-contingency-r-implies-converse-witnessed-possibility-r`
-- `no-pure-contingency-r-implies-pure-b-r` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `no-pure-contingency-r-implies-pure-b-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `possibility-plus-r-implies-possibility-schema-r`
 - `possibility-plus-signature-r-implies-possibility-signature-r`
 - `possible-infinity-e-and-no-pure-contingency-imply-axiom-of-infinity-e`
@@ -152,7 +152,7 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `possibly-witnessed-possibility-r-implies-witnessed-possibility-r`
 - `separated-structure-incompatible-with-nd`
 - `signature-b-and-witnessed-possibility-incompatible`
-- `signature-b-r-implies-pure-b-r` — **Lean: metalogical theorem in `Results/Schemas/`**
+- `signature-b-r-implies-pure-b-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `witnessed-possibility-and-no-pure-contingency-imply-logical-necessity`
 - `witnessed-possibility-and-npc-imply-possibly-witnessed-possibility`
 - `witnessed-possibility-incompatible-with-nd`

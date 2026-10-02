@@ -29,7 +29,7 @@ that decides it: an arrow that is not injective (`ND`), surjectivity of every ar
 can be perturbed off any finite set (`Free`), and whether singletons are finitely pinned.
 Atomlessness holds where every arrow is free (Parts 2 and 3). No Pure Contingency holds
 in every model on a monoid (`Premodel.holdsAx_npc`), so each verdict is a verdict on the
-principle's necessitation too; `Results/Schemas/Consistency.lean` states the packages.
+principle's necessitation too; `Results/Consistency/Consistency.lean` states the packages.
 
 Boolean Completeness fails at `e → t` in every part (Proposition D.5), by
 `MonoidModel.not_bc_of`: the haecceities of a set `S` of numbers have no least upper

@@ -186,7 +186,7 @@ sometimes "schema" for a *principle*; Phase 1 brings it into line.
 | --- | --- |
 | **principle** | the shallow definition, e.g. `P.Functionality : (σ τ : Type) → [Ty σ] → [Rel τ] → Prop` |
 | **instance** | one sentence of the object language, `P.Functionality.quoted σ τ` (in the shallow layer, the Lean proposition `P.Functionality σ τ`) |
-| **schema** | the axiom set of all instances, `P.Functionality.schema` |
+| **schema** | an axiom set, `AxiomSet`: the two words are synonyms (Cian, 2 October), as in the paper. The schema of a principle is the axiom set of all its instances, `P.Functionality.schema`; a **sentence schema**, such as No Pure Contingency, is schematic in a sentence rather than a type, defined by a condition on sentences with no principle behind it (`Syntax/SentenceSchemas.lean`) |
 | **restricted form, list form** | of a principle with a Ty-parameter: the two schemas of §1, `P.X.schema` and `P.X.listSchema` |
 | **type parameter** | a variable bound by Lean that stands for a type: in the shallow layer `σ : Type` with a marker (`[Ty σ]` a **Ty-parameter**, `[Rel τ]` a **Rel-parameter**); in the metalogic `σ : Meta.Ty` or `τ : Meta.RTy` |
 | **type variable** | `Ty.var i`, a type *of the object language* about which nothing is known; part of the syntax, bound by nothing |

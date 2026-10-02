@@ -283,7 +283,7 @@ partial def interp (t : Expr) : TrM (Expr × Expr) := do
     else
       if ← isParam' d then
         throwError "transform: a proof abstracts over a type or an instance inside a \
-formula; such a schema has no single identity form"
+formula; such a family of formulas has no single identity form"
       -- `fun u : σ => b`: Appendix A, inductive step (ii)
       let inst ← tyInst d
       let Γ ← gamma
@@ -346,7 +346,7 @@ tautology tactic, between λ-terms. Otherwise by congruence on a shared outer co
 quantifier, which is Leibniz's Law. -/
 partial def bridge (got exp : Expr) : TrM Expr := do
   if ← isDefEq got exp then return ← mkEqRefl (← lamV got)
-  -- instantiating a schema such as Leibniz's Law leaves β-redexes, which hide the shape
+  -- instantiating a family such as Leibniz's Law leaves β-redexes, which hide the shape
   let got ← Core.betaReduce got
   let exp ← Core.betaReduce exp
   try
@@ -681,7 +681,7 @@ partial def ensureNec (c : Name) : TrM Unit := do
   if (← get).inProgress.contains c then throwError "transform: {c} depends on itself"
   let .thmInfo info ← getConstInfo c | throwError "transform: {c} is not a theorem"
   modify fun s => { s with inProgress := s.inProgress.insert c }
-  -- type and instance parameters stay parameters: the theorem is a schema over them
+  -- type and instance parameters stay parameters: the theorem is a family indexed by them
   let k ← leadingParams info.type
   let (necTy, necVal, strictTy, strictVal) ←
     forallBoundedTelescope info.type (some k) fun xs stmt => do
