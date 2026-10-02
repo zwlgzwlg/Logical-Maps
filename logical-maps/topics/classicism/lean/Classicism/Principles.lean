@@ -1,5 +1,6 @@
 import Classicism.Comprehension
 import Classicism.Lattice
+import Classicism.Cardinality
 
 /-!
 # Principle statements
@@ -278,5 +279,27 @@ relation; the output type `τ` is relational. -/
 def ModalizedPlenitude (σ τ : Type) [Ty σ] [Rel τ] : Prop :=
   ∀ U : σ → τ → Prop, □ (∀ x, ∃ y, □ (U x y ∧ ∀ z, U x z → y = z)) →
     ∃ X : σ → τ, □ (∀ x y, U x y ↔ y = X x)
+
+/-! ### Infinity, and Countable Boolean Completeness (2 October)
+
+With the finite cardinalities and countability of the Background (`Cardinality.lean`). -/
+
+/-- The Axiom of Infinity at `σ`: `¬∃Z. FiniteCardinality_σ(Z) ∧ Z(λu. ⊤)`, no finite
+cardinality holds of the universal property. -/
+def AxiomOfInfinity (σ : Type) [Ty σ] : Prop :=
+  ¬ ∃ Z : (σ → Prop) → Prop, FiniteCardinality Z ∧ Z (λ _ ↦ True)
+/-- `axiom-of-infinity-e`: there are not finitely many individuals. -/
+def AxiomOfInfinityE : Prop := AxiomOfInfinity e
+/-- `axiom-of-infinity-t`: there are not finitely many propositions. -/
+def AxiomOfInfinityT : Prop := AxiomOfInfinity Prop
+/-- `possible-infinity-e`: the Axiom of Infinity at `e`, under a diamond. -/
+def PossibleInfinityE : Prop := ◇ AxiomOfInfinityE
+/-- `possible-infinity-t`: the Axiom of Infinity at `t`, under a diamond. -/
+def PossibleInfinityT : Prop := ◇ AxiomOfInfinityT
+
+/-- `countable-boolean-completeness-r` at `τ`: every countable property of entities of the
+type has a least upper bound. -/
+def CountableBooleanCompleteness (τ : Type) [Rel τ] : Prop :=
+  ∀ X : τ → Prop, Ctbl X → ∃ y : τ, LUB y X
 
 end Classicism.P

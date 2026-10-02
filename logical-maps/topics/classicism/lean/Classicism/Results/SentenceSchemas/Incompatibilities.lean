@@ -30,12 +30,19 @@ certified once:
   pure sentence `¬FA` in place of No Pure Contingency; the object-level reasoning is the
   shallow lemma `pureB_fregean_contra`.
 
+The maximalist ones with `□`Actuality, `□`Atomicity and `□`Boolean Completeness are here,
+from the permutation model of Appendix D, Part 1; with `□`Functionality and `□`Rigid
+Comprehension, from the idempotent-monoid and permutation models through certified
+records (`¬`Tractarianism at `t` and `¬`Boolean Completeness at `e → t` are consistent,
+and Functionality at `t → t` implies the one, Rigid Comprehension at `(e → t) → t` the
+other: `consistent_neg_of_imp`). And one consequence of Possibility rather than an
+exclusion: `possibility-schema-r-implies-possible-infinity-e`, since the Axiom of Infinity
+at `e` holds in the full Henkin model on `ℕ`.
+
 Not here, for want of the models: the incompatibilities with `□`Strong Leibniz (`t`),
 `□`Relational Choice, Countable Boolean Completeness and the Necessity of Arithmetic
-(coalesced sums, a Henkin model without choice, Gödel), and the maximalist ones with
-`□`Functionality and Rigid Comprehension. The maximalist ones with `□`Actuality,
-`□`Atomicity and `□`Boolean Completeness are here, from the permutation model of
-Appendix D, Part 1.
+(coalesced sums, a Henkin model without choice, Gödel), and the maximalist one with
+Rigid Comprehension unboxed (Gödel, through the Necessity of Arithmetic).
 -/
 
 namespace Classicism
@@ -170,6 +177,38 @@ theorem maximalist_necTractarianism_inconsistent :
     (Consistent.empty_union Idem.not_tractarianism_t_consistent)
     (Consistent.mono (fun a ha => ha.elim Or.inl (fun h => Or.inr (by
       subst (h : a = Term.box (P.Tractarianism.quoted Ty.t)); exact AxiomSet.mem_box ⟨Ty.t, trivial, rfl⟩))) hc)
+
+-- The records `rigid-comprehension-r-implies-boolean-completeness-r` and
+-- `functionality-r-implies-tractarianism-r` as rules of `C`, for the models to use.
+#classicism_rule Classicism.Proofs.rigid_comprehension_r_implies_boolean_completeness_r
+  Classicism.Proofs.functionality_r_implies_tractarianism_r
+
+/-- `maximalist-distinctness-incompatible-with-necessary-rigid-comprehension-r`, through the
+instance at `(e → t) → t`: it implies Boolean Completeness at `e → t` (Proposition 2.8),
+which fails in the permutation model, so its negation is consistent. -/
+theorem maximalist_necRigidComprehension_inconsistent :
+    ¬ Consistent (maximalist (Sig := Signature.pure) ∪ P.NecRigidComprehension.schema) := fun hc =>
+  max_box_inconsistent (Y := P.RigidComprehension.quoted (Ty.rel (Ty.e ⇒ RTy.t) ⇒ RTy.t))
+    (Consistent.empty_union (consistent_neg_of_imp
+      (Proofs.rigid_comprehension_r_implies_boolean_completeness_r.rule Ty.e) Perms.not_bc_consistent))
+    (Consistent.mono (fun a ha => ha.elim Or.inl (fun h => Or.inr ⟨_, by simp, h⟩)) hc)
+
+/-- `maximalist-distinctness-incompatible-with-necessary-functionality-r`, through the
+instance at `t → t`: it implies Tractarianism at `t`, which fails in the idempotent-monoid
+model, so its negation is consistent. -/
+theorem maximalist_necFunctionality_inconsistent :
+    ¬ Consistent (maximalist (Sig := Signature.pure) ∪ P.NecFunctionality.schema) := fun hc =>
+  max_box_inconsistent (Y := P.Functionality.quoted Ty.t RTy.t)
+    (Consistent.empty_union (consistent_neg_of_imp
+      (Proofs.functionality_r_implies_tractarianism_r.rule Ty.t) Idem.not_tractarianism_t_consistent))
+    (Consistent.mono (fun a ha => ha.elim Or.inl (fun h => Or.inr ⟨_, _, by simp, by simp, h⟩)) hc)
+
+/-- `possibility-schema-r-implies-possible-infinity-e`: the Axiom of Infinity at `e` is
+consistent (`axiomOfInfinityE_consistent`), so Possibility makes it possible. -/
+theorem possibility_entails_possibleInfinityE :
+    possibility (empty : AxiomSet Signature.pure) ⟹ P.PossibleInfinityE.schema := by
+  rintro a rfl
+  exact Theorem.ax ⟨P.AxiomOfInfinityE.quoted, Consistent.empty_union axiomOfInfinityE_consistent, rfl⟩
 
 /-- Possibility (pure) is inconsistent with `□ND_t` (the map has this through
 `maximalist-distinctness-incompatible-with-nd`). -/

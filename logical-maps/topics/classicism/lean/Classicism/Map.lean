@@ -151,7 +151,6 @@ macro_rules
 
 /-! ## The certificates -/
 
-
 /-- `actual-profile-r-implies-actuality` -/
 theorem actual_profile_r_implies_actuality : Statements.actual_profile_r_implies_actuality := by
   map_cert Meta.actual_profile_r_implies_actuality
@@ -216,6 +215,18 @@ theorem atomicity_t_and_bf_t_imply_strong_leibniz_t : Statements.atomicity_t_and
 theorem atomicity_t_incompatible_with_atomlessness : Statements.atomicity_t_incompatible_with_atomlessness := by
   map_cert_incompatible (not_consistent_of_imp_neg Proofs.atomicity_t_incompatible_with_atomlessness.derivable)
 
+/-- `atomlessness-implies-axiom-of-infinity-t` -/
+theorem atomlessness_implies_axiom_of_infinity_t : Statements.atomlessness_implies_axiom_of_infinity_t := by
+  map_cert Proofs.atomlessness_implies_axiom_of_infinity_t.entails
+
+/-- `axiom-of-infinity-e-implies-possible-infinity-e` -/
+theorem axiom_of_infinity_e_implies_possible_infinity_e : Statements.axiom_of_infinity_e_implies_possible_infinity_e := by
+  map_cert Proofs.axiom_of_infinity_e_implies_possible_infinity_e.entails
+
+/-- `axiom-of-infinity-t-implies-possible-infinity-t` -/
+theorem axiom_of_infinity_t_implies_possible_infinity_t : Statements.axiom_of_infinity_t_implies_possible_infinity_t := by
+  map_cert Proofs.axiom_of_infinity_t_implies_possible_infinity_t.entails
+
 /-- `barcan-r-implies-barcan-t` -/
 theorem barcan_r_implies_barcan_t : Statements.barcan_r_implies_barcan_t := by
   map_cert Proofs.barcan_r_implies_barcan_t.entails
@@ -227,6 +238,10 @@ theorem barcan_r_implies_functionality_r : Statements.barcan_r_implies_functiona
 /-- `boolean-completeness-r-implies-boolean-completeness-t` -/
 theorem boolean_completeness_r_implies_boolean_completeness_t : Statements.boolean_completeness_r_implies_boolean_completeness_t := by
   map_cert Proofs.boolean_completeness_r_implies_boolean_completeness_t.entails
+
+/-- `boolean-completeness-r-implies-countable-boolean-completeness-r` -/
+theorem boolean_completeness_r_implies_countable_boolean_completeness_r : Statements.boolean_completeness_r_implies_countable_boolean_completeness_r := by
+  map_cert Proofs.boolean_completeness_r_implies_countable_boolean_completeness_r.entails
 
 /-- `boolean-completeness-r-implies-weakly-inextensible-comprehension-r` -/
 theorem boolean_completeness_r_implies_weakly_inextensible_comprehension_r : Statements.boolean_completeness_r_implies_weakly_inextensible_comprehension_r := by
@@ -465,6 +480,14 @@ theorem maximalist_distinctness_incompatible_with_necessary_barcan_r : Statement
 /-- `maximalist-distinctness-incompatible-with-necessary-boolean-completeness-r` -/
 theorem maximalist_distinctness_incompatible_with_necessary_boolean_completeness_r : Statements.maximalist_distinctness_incompatible_with_necessary_boolean_completeness_r := by
   map_cert_incompatible maximalist_necBooleanCompleteness_inconsistent'
+
+/-- `maximalist-distinctness-incompatible-with-necessary-functionality-r` -/
+theorem maximalist_distinctness_incompatible_with_necessary_functionality_r : Statements.maximalist_distinctness_incompatible_with_necessary_functionality_r := by
+  map_cert_incompatible maximalist_necFunctionality_inconsistent
+
+/-- `maximalist-distinctness-incompatible-with-necessary-rigid-comprehension-r` -/
+theorem maximalist_distinctness_incompatible_with_necessary_rigid_comprehension_r : Statements.maximalist_distinctness_incompatible_with_necessary_rigid_comprehension_r := by
+  map_cert_incompatible maximalist_necRigidComprehension_inconsistent
 
 /-- `maximalist-distinctness-incompatible-with-necessary-tractarianism-r` -/
 theorem maximalist_distinctness_incompatible_with_necessary_tractarianism_r : Statements.maximalist_distinctness_incompatible_with_necessary_tractarianism_r := by
@@ -867,6 +890,10 @@ theorem possibility_and_no_pure_contingency_incompatible : Statements.possibilit
 theorem possibility_schema_r_implies_distinctness_schema_r : Statements.possibility_schema_r_implies_distinctness_schema_r := by
   map_cert Meta.possibility_schema_r_implies_distinctness_schema_r
 
+/-- `possibility-schema-r-implies-possible-infinity-e` -/
+theorem possibility_schema_r_implies_possible_infinity_e : Statements.possibility_schema_r_implies_possible_infinity_e := by
+  map_cert possibility_entails_possibleInfinityE
+
 /-- `possibility-signature-r-implies-distinctness-signature-r` -/
 theorem possibility_signature_r_implies_distinctness_signature_r : Statements.possibility_signature_r_implies_distinctness_signature_r := by
   map_cert_sig Meta.possibility_signature_r_implies_distinctness_signature_r
@@ -874,6 +901,14 @@ theorem possibility_signature_r_implies_distinctness_signature_r : Statements.po
 /-- `possibility-signature-r-implies-possibility-schema-r` -/
 theorem possibility_signature_r_implies_possibility_schema_r : Statements.possibility_signature_r_implies_possibility_schema_r :=
   fun hS _ h => Entails.trans h (Entails.of_subset (pureVersion_possibilityC_subset hS))
+
+/-- `possible-infinity-e-and-no-pure-contingency-imply-axiom-of-infinity-e` -/
+theorem possible_infinity_e_and_no_pure_contingency_imply_axiom_of_infinity_e : Statements.possible_infinity_e_and_no_pure_contingency_imply_axiom_of_infinity_e := by
+  map_cert npc_possibleInfinityE_entails_axiomOfInfinityE
+
+/-- `possible-infinity-t-and-no-pure-contingency-imply-axiom-of-infinity-t` -/
+theorem possible_infinity_t_and_no_pure_contingency_imply_axiom_of_infinity_t : Statements.possible_infinity_t_and_no_pure_contingency_imply_axiom_of_infinity_t := by
+  map_cert npc_possibleInfinityT_entails_axiomOfInfinityT
 
 /-- `pure-b-and-pure-possibility-incompatible` -/
 theorem pure_b_and_pure_possibility_incompatible : Statements.pure_b_and_pure_possibility_incompatible := by
@@ -991,7 +1026,6 @@ theorem boolean_completeness_r.lub : Statements.boolean_completeness_r.lub := by
   map_form Proofs.boolean_completeness_implies_lub_form.entails
     Proofs.lub_form_implies_boolean_completeness.entails
 
-
 /-- `barcan-r`, form `list`: the principle for every list of argument types. -/
 theorem barcan_r.list : Statements.barcan_r.list := by
   map_form P.Barcan.schema_entails_listSchema P.Barcan.listSchema_entails_schema
@@ -1072,7 +1106,6 @@ theorem identity_necessary_r.list : Statements.identity_necessary_r.list := by
 /-- `broad-necessitism-r`, form `list`: the principle for every list of argument types. -/
 theorem broad_necessitism_r.list : Statements.broad_necessitism_r.list := by
   map_form P.BroadNecessitism.schema_entails_listSchema P.BroadNecessitism.listSchema_entails_schema
-
 
 /-- `modalized-plenitude-r`, form `list`: the principle for every list of argument types. -/
 theorem modalized_plenitude_r.list : Statements.modalized_plenitude_r.list := by

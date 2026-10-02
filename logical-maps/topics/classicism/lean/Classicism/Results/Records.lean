@@ -1917,4 +1917,46 @@ theorem necessary_strong_leibniz_t_and_necessary_bf_imply_necessary_strong_leibn
     NecStrongLeibnizT → NecBarcan σ → NecStrongLeibniz (σ → Prop) := fun h₁ h₂ =>
   modal_K _ _ (modal_K _ _ (nec% (strong_leibniz_t_and_bf_imply_strong_leibniz (σ := σ))) h₁) h₂
 
+/-! ## Infinity, and Countable Boolean Completeness (2 October) -/
+
+/-- `axiom-of-infinity-e-implies-possible-infinity-e`: `T`'s dual, `p → ◇p`. -/
+theorem axiom_of_infinity_e_implies_possible_infinity_e : AxiomOfInfinityE → PossibleInfinityE :=
+  dia_intro _
+
+/-- `axiom-of-infinity-t-implies-possible-infinity-t`: `p → ◇p`. -/
+theorem axiom_of_infinity_t_implies_possible_infinity_t : AxiomOfInfinityT → PossibleInfinityT :=
+  dia_intro _
+
+/-- `atomlessness-implies-axiom-of-infinity-t`: a finite cardinality `Z` of propositions
+holds only of properties `X` that leave out, below each possible proposition, a possible
+one: by the induction `FiniteCardinality` provides. The empty property leaves out the
+proposition itself. If `X` is `Y` with `y` added and the property `Y` holds of leaves out
+`r` below `q`, then either `X` leaves out `r` too, or `r` is `y`; then Atomlessness gives a
+possible `r'` strictly below `r`, below which `Y` leaves out some `r''`, and `r''` is not
+`y`, else `r ≤ r'`. The universal property leaves out nothing, though `⊤` is possible. -/
+theorem atomlessness_implies_axiom_of_infinity_t : Atomlessness → AxiomOfInfinityT :=
+  fun atl h => h.elim fun Z hZ =>
+  ((hZ.1 (λ Z ↦ ∀ X, Z X → ∀ q : Prop, ◇ q → ∃ r : Prop, ◇ r ∧ Rel.le r q ∧ ¬ X r)
+    ⟨fun _ hX q hq => ⟨q, hq, le_refl_prop q, hX q⟩,
+     fun _ hY X hX q hq => hX.elim fun y hy => (hY _ hy.2 q hq).elim fun r hr =>
+       (em (X r)).elim
+         (fun hXr =>
+           have ery : r = y := (em (r = y)).elim id (fun nry => absurd ⟨hXr, nry⟩ hr.2.2)
+           (atl r hr.1).elim fun r' hr' => (hY _ hy.2 r' hr'.1).elim fun r'' hr'' =>
+             ⟨r'', hr''.1, le_trans_prop r'' r q (le_trans_prop r'' r' r hr''.2.1 hr'.2.1) hr.2.1,
+              fun hXr'' =>
+                have e : r'' = r := (em (r'' = y)).elim (fun h => h.trans ery.symm)
+                  (fun h => absurd ⟨hXr'', h⟩ hr''.2.2)
+                hr'.2.2 (le_antisymm_prop r' r hr'.2.1 (e ▸ hr''.2.1))⟩)
+         (fun hXr => ⟨r, hr.1, hr.2.1, hXr⟩)⟩)
+    (λ _ ↦ True) hZ.2 True (dia_intro True trivial)).elim fun _ hr => hr.2.2 trivial
+
+/-- `boolean-completeness-r-implies-countable-boolean-completeness-r`: every property has a
+least upper bound, the greatest lower bound of its upper bounds (`lub_of_glb_ubs`), the
+countable ones included. -/
+theorem boolean_completeness_r_implies_countable_boolean_completeness_r
+    {τ : Type} [Rel τ] [Order τ] [Pointwise τ] :
+    BooleanCompleteness τ → CountableBooleanCompleteness τ := fun bc X _ =>
+  (bc (λ z ↦ UB z X)).elim fun y hy => ⟨y, lub_of_glb_ubs X y hy⟩
+
 end Classicism.Proofs

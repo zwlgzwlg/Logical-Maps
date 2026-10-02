@@ -24,6 +24,9 @@ The arrows among the map's contingency schemas and out of them:
   expresses — `allEβ` at the sentence.
 - `fregean-axiom-implies-no-contingency-signature-r` and `-no-pure-contingency-r`: under
   the Fregean Axiom a true sentence is identical to `⊤`; the shallow lemma `fregean_box`.
+- `possible-infinity-e-and-no-pure-contingency-imply-axiom-of-infinity-e`, and at `t`: the
+  Axiom of Infinity is a pure sentence, so No Pure Contingency at its negation and its
+  possibility make it true; the shallow lemma `npc_dia_imp`.
 
 Each is stated for any signature `Sig`; the map's type-indexed principles at a signature
 are their pure schemas read there, `P.schema.ofPure`.
@@ -39,7 +42,12 @@ theorem fregean_box (p : Prop) : P.FregeanAxiom → p → □ p :=
 theorem imp_box_imp_box_dia (p : Prop) : (p → □ p) → p → □ ◇ p :=
   fun h hp => modal_K _ _ (nec% (dia_intro p)) (h hp)
 
-#classicism_derive Classicism.fregean_box Classicism.imp_box_imp_box_dia
+/-- A possible proposition that is not contingently false is true: from `¬p → □¬p` and
+`◇p`, `p`. -/
+theorem npc_dia_imp (p : Prop) : (¬ p → □ ¬ p) → ◇ p → p :=
+  fun h hd => (em p).elim id fun hn => absurd hd (not_dia_of_box_not p (h hn))
+
+#classicism_derive Classicism.fregean_box Classicism.imp_box_imp_box_dia Classicism.npc_dia_imp
 
 namespace Meta
 
@@ -183,6 +191,22 @@ theorem fregean_entails_npc_pure : P.FregeanAxiom.schema ⟹ npc Signature.pure 
   rintro a ⟨p, hp, rfl⟩
   exact Theorem.mp (Derivable.allEβ (Theorem.ofCMinus fregean_box.derivable) p)
     (Theorem.ax (Ax := P.FregeanAxiom.schema) (a := P.FregeanAxiom.quoted) rfl)
+
+/-- `possible-infinity-e-and-no-pure-contingency-imply-axiom-of-infinity-e`: the Axiom of
+Infinity at `e` is pure, so No Pure Contingency makes its negation necessary if true,
+against its possibility. -/
+theorem npc_possibleInfinityE_entails_axiomOfInfinityE :
+    npc Signature.pure ∪ P.PossibleInfinityE.schema ⟹ P.AxiomOfInfinityE.schema := by
+  rintro a rfl
+  exact Theorem.mp₂ (Derivable.allEβ (Theorem.ofCMinus npc_dia_imp.derivable) P.AxiomOfInfinityE.quoted)
+    (Theorem.ax (Or.inl ⟨_, Term.pure_of_pureSig _, rfl⟩)) (Theorem.ax (Or.inr rfl))
+
+/-- `possible-infinity-t-and-no-pure-contingency-imply-axiom-of-infinity-t`, likewise. -/
+theorem npc_possibleInfinityT_entails_axiomOfInfinityT :
+    npc Signature.pure ∪ P.PossibleInfinityT.schema ⟹ P.AxiomOfInfinityT.schema := by
+  rintro a rfl
+  exact Theorem.mp₂ (Derivable.allEβ (Theorem.ofCMinus npc_dia_imp.derivable) P.AxiomOfInfinityT.quoted)
+    (Theorem.ax (Or.inl ⟨_, Term.pure_of_pureSig _, rfl⟩)) (Theorem.ax (Or.inr rfl))
 
 /-- `modal-b-implies-pure-b-r`: B gives B for every pure sentence, in the pure language. -/
 theorem modalB_entails_pureB : P.ModalB.schema ⟹ pureB Signature.pure := by

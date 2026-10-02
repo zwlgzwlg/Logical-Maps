@@ -36,12 +36,15 @@ lean_def:
   atomicity-r: "Classicism.P.Atomicity.schemaIn"
   atomicity-t: "Classicism.P.AtomicityT.schemaIn"
   atomlessness: "Classicism.P.Atomlessness.schemaIn"
+  axiom-of-infinity-e: "Classicism.P.AxiomOfInfinityE.schemaIn"
+  axiom-of-infinity-t: "Classicism.P.AxiomOfInfinityT.schemaIn"
   barcan-r: "Classicism.P.Barcan.schemaIn"
   barcan-t: "Classicism.P.BarcanT.schemaIn"
   boolean-completeness-r: "Classicism.P.BooleanCompleteness.schemaIn"
   boolean-completeness-t: "Classicism.P.BooleanCompletenessT.schemaIn"
   broad-necessitism-r: "Classicism.P.BroadNecessitism.schemaIn"
   converse-barcan-r: "Classicism.P.ConverseBarcan.schemaIn"
+  countable-boolean-completeness-r: "Classicism.P.CountableBooleanCompleteness.schemaIn"
   distinctness-necessary-r: "Classicism.P.NecessityOfDistinctness.schemaIn"
   distinctness-necessary-t: "Classicism.P.NecessityOfDistinctnessT.schemaIn"
   distinctness-preserving-collapse: "Classicism.P.DistinctnessPreservingCollapse.schemaIn"
@@ -94,6 +97,8 @@ lean_def:
   plenitude-r: "Classicism.P.Plenitude.schemaIn"
   possibility-schema-r: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC)"
   possibility-signature-r: "(Classicism.Meta.AxiomSet.possibilityC _)"
+  possible-infinity-e: "Classicism.P.PossibleInfinityE.schemaIn"
+  possible-infinity-t: "Classicism.P.PossibleInfinityT.schemaIn"
   pure-b-r: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.signatureB)"
   relational-choice-r: "Classicism.P.RelationalChoice.schemaIn"
   rigid-comprehension-r: "Classicism.P.RigidComprehension.schemaIn"
@@ -262,9 +267,13 @@ lean_ref:
   atomicity-t-and-bf-imply-necessary-actuality: Classicism.Map.atomicity_t_and_bf_imply_necessary_actuality
   atomicity-t-and-bf-t-imply-strong-leibniz-t: Classicism.Map.atomicity_t_and_bf_t_imply_strong_leibniz_t
   atomicity-t-incompatible-with-atomlessness: Classicism.Map.atomicity_t_incompatible_with_atomlessness
+  atomlessness-implies-axiom-of-infinity-t: Classicism.Map.atomlessness_implies_axiom_of_infinity_t
+  axiom-of-infinity-e-implies-possible-infinity-e: Classicism.Map.axiom_of_infinity_e_implies_possible_infinity_e
+  axiom-of-infinity-t-implies-possible-infinity-t: Classicism.Map.axiom_of_infinity_t_implies_possible_infinity_t
   barcan-r-implies-barcan-t: Classicism.Map.barcan_r_implies_barcan_t
   barcan-r-implies-functionality-r: Classicism.Map.barcan_r_implies_functionality_r
   boolean-completeness-r-implies-boolean-completeness-t: Classicism.Map.boolean_completeness_r_implies_boolean_completeness_t
+  boolean-completeness-r-implies-countable-boolean-completeness-r: Classicism.Map.boolean_completeness_r_implies_countable_boolean_completeness_r
   boolean-completeness-r-implies-weakly-inextensible-comprehension-r: Classicism.Map.boolean_completeness_r_implies_weakly_inextensible_comprehension_r
   c5-and-actuality-imply-completeness: Classicism.Map.c5_and_actuality_imply_completeness
   c5-and-actuality-imply-rigid-comprehension: Classicism.Map.c5_and_actuality_imply_rigid_comprehension
@@ -323,6 +332,8 @@ lean_ref:
   maximalist-distinctness-incompatible-with-necessary-atomicity-r: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_atomicity_r
   maximalist-distinctness-incompatible-with-necessary-barcan-r: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_barcan_r
   maximalist-distinctness-incompatible-with-necessary-boolean-completeness-r: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_boolean_completeness_r
+  maximalist-distinctness-incompatible-with-necessary-functionality-r: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_functionality_r
+  maximalist-distinctness-incompatible-with-necessary-rigid-comprehension-r: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_rigid_comprehension_r
   maximalist-distinctness-incompatible-with-necessary-tractarianism-r: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_tractarianism_r
   modal-b-implies-distinctness-necessary-r: Classicism.Map.modal_b_implies_distinctness_necessary_r
   modal-b-implies-pure-b-r: Classicism.Map.modal_b_implies_pure_b_r
@@ -422,8 +433,11 @@ lean_ref:
   possibility-and-necessary-barcan-t-incompatible: Classicism.Map.possibility_and_necessary_barcan_t_incompatible
   possibility-and-no-pure-contingency-incompatible: Classicism.Map.possibility_and_no_pure_contingency_incompatible
   possibility-schema-r-implies-distinctness-schema-r: Classicism.Map.possibility_schema_r_implies_distinctness_schema_r
+  possibility-schema-r-implies-possible-infinity-e: Classicism.Map.possibility_schema_r_implies_possible_infinity_e
   possibility-signature-r-implies-distinctness-signature-r: Classicism.Map.possibility_signature_r_implies_distinctness_signature_r
   possibility-signature-r-implies-possibility-schema-r: Classicism.Map.possibility_signature_r_implies_possibility_schema_r
+  possible-infinity-e-and-no-pure-contingency-imply-axiom-of-infinity-e: Classicism.Map.possible_infinity_e_and_no_pure_contingency_imply_axiom_of_infinity_e
+  possible-infinity-t-and-no-pure-contingency-imply-axiom-of-infinity-t: Classicism.Map.possible_infinity_t_and_no_pure_contingency_imply_axiom_of_infinity_t
   pure-b-and-pure-possibility-incompatible: Classicism.Map.pure_b_and_pure_possibility_incompatible
   relational-choice-and-extensionality-imply-transversal-choice: Classicism.Map.relational_choice_and_extensionality_imply_transversal_choice
   relational-choice-and-plenitude-imply-functional-choice-r: Classicism.Map.relational_choice_and_plenitude_imply_functional_choice_r

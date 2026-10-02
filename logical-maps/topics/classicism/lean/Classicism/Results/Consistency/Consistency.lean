@@ -114,6 +114,31 @@ theorem npc_fregean_consistent : Consistent (npc Signature.pure ∪ P.FregeanAxi
   Consistent.of_interp henkin fun a ha =>
     ha.elim (npc_holds_interp henkin a) (fun h => h ▸ fregean_holds_henkin)
 
+/-! ### `Prop` on `ℕ`: the Axiom of Infinity at `e` holds -/
+
+/-- **The Axiom of Infinity at `e` holds in the full Henkin model on `ℕ`**: by the induction
+that `FiniteCardinality` provides, a finite cardinality holds only of finite sets, and the
+universal property of `ℕ` is not finite. -/
+theorem axiomOfInfinityE_holds_nat : Sentence.holds (Interp.ofDomain ℕ) P.AxiomOfInfinityE.quoted := by
+  simp only [Sentence.holds, Term.denote, Var.denote, top_eq, imp_eq]
+  change ¬ ∃ Z : (ℕ → Prop) → Prop, (∀ W : ((ℕ → Prop) → Prop) → Prop,
+      (W (fun X => ∀ u, ¬ X u) ∧ ∀ Y, W Y → W (fun X => ∃ y, X y ∧ Y (fun u => X u ∧ ¬ u = y))) → W Z) ∧
+      Z (fun _ => True)
+  rintro ⟨Z, hZ, hZt⟩
+  have key := hZ (fun Z => ∀ X : ℕ → Prop, Z X → {u | X u}.Finite)
+    ⟨fun X hX => Set.finite_empty.subset fun u hu => hX u hu,
+     fun Y hY X ⟨y, _, hYX⟩ => ((hY _ hYX).insert y).subset fun u hu => by
+       by_cases h : u = y
+       · exact Or.inl h
+       · exact Or.inr ⟨hu, h⟩⟩
+  exact Set.infinite_univ (key _ hZt)
+
+instance : Nonempty (Interp.ofDomain ℕ).D := inferInstanceAs (Nonempty ℕ)
+
+/-- The Axiom of Infinity at `e` is consistent with Classicism. -/
+theorem axiomOfInfinityE_consistent : Consistent (single P.AxiomOfInfinityE.quoted) :=
+  Consistent.of_interp (Interp.ofDomain ℕ) fun _ h => h ▸ axiomOfInfinityE_holds_nat
+
 /-! ### The model on the idempotent monoid: `ND_t`, `BF_t`, `FA`, Tractarianism at `t` fail -/
 
 /-- The quoted principles are the sentences the model facts are stated for. -/

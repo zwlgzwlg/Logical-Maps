@@ -290,6 +290,7 @@ Classicism/Order.lean                   the algebraic order and its pointwise ch
 Classicism/Comprehension.lean           persistence, inextensibility and the rigidity variants
 Classicism/Pointwise.lean               the pointwise laws of ⊑ at a relational type, as a class
 Classicism/Lattice.lean                 Atom, the bounds LB/GLB/UB/LUB, ActualWorld; the order, atoms and bounds at t, at σ → t and at a relational type
+Classicism/Cardinality.lean             the finite cardinalities 𝟎, Suc, FiniteCardinality, and countability Ctbl, of the Background
 Classicism/Principles.lean              one Prop per principle of the map
 
 Classicism/Syntax/Types.lean            the types of R as an inductive, with type variables; closed types; σs ⇒* ρ
@@ -302,6 +303,7 @@ Classicism/Syntax/SentenceSchemas.lean  No Pure Contingency, Distinctness, Possi
 Classicism/Syntax/Sentences.lean        ND, BF and the Fregean Axiom as sentences, for both semantic layers
 Classicism/Syntax/Constants.lean        the constants a term mentions
 Classicism/Syntax/Pure.lean             the pure language inside every signature: terms and derivations carried across
+Classicism/Syntax/Conservativity.lean   C(Σ) conservative over C for a closed signature; constants eliminated from a derivation
 Classicism/Syntax/Normalize.lean        a verified βη-normalizer; conversion by reflection
 Classicism/Syntax/Blocks.lean           blocks of variables: tuples, block abstraction, quantifiers and identity, their rules
 Classicism/Syntax/Vectorize.lean        a type variable replaced by a list of types: the translation of terms and holes

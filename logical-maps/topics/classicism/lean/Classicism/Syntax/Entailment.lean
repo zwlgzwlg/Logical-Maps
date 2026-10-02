@@ -335,6 +335,13 @@ theorem consistent_neg_of_not_theorem (h : ¬ Theorem (C.axioms ∪ Ax) p) :
   fun hb => h (Derivable.orE (Derivable.em p) Derivable.hyp₀
     (Derivable.botE (Derivable.impE (Derivable.weaken₁ (Theorem.deductionC hb)) Derivable.hyp₀)))
 
+/-- What implies a refutable sentence is refutable: if `C ⊢ A → B` and `¬B` is consistent,
+so is `¬A`. -/
+theorem consistent_neg_of_imp {A B : Sentence Sig} (h : C.Theorem (Term.imp A B))
+    (hB : Consistent (single (Term.neg B))) : Consistent (single (Term.neg A)) :=
+  Consistent.mono (subset_union_right _ _) (consistent_neg_of_not_theorem (Ax := empty) fun hA =>
+    not_theorem_of_consistent_neg (Consistent.empty_union hB) (Theorem.mp (Theorem.ofC h) hA))
+
 /-- A sentence consistent with the theory is not provably `⊥`: the non-theoremhood that
 Distinctness needs for `¬(P = ⊥)`, which is `◇P`. -/
 theorem not_theorem_eq_bot_of_consistent (h : Consistent (Ax ∪ single p)) :

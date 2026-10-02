@@ -1200,6 +1200,38 @@ comes from the pure language), likewise Pure B, which settles the "defined twice
 *Checked.* The full build passes. 205 result certificates and 22 form certificates prove
 their generated statements; 3 rest on `Classicism.e` and `e_exists`, as before.
 
+## The Infinity principles, Countable Boolean Completeness, and two maximalist incompatibilities, 2 October (night)
+
+**Principles.** `Cardinality.lean` holds the Background's finite cardinalities (`ZeroCard`,
+`SucCard`, `FiniteCardinality`, impredicatively) and countability (`Ctbl`, into the finite
+cardinalities of individuals). `Principles.lean` adds the Axiom of Infinity at `e` and at
+`t` in the map's form (no finite cardinality holds of the universal property), Possible
+Infinity at each, and Countable Boolean Completeness; their schemas are in
+`Certified/Schemas.lean` and their `lean_def`s in `map/lean.yaml` (81 of 97 principles).
+
+**Records** (`Results/Records.lean`, certified by the audits): `axiom-of-infinity-{e,t}-implies-possible-infinity-{e,t}`
+(`p → ◇p`); `atomlessness-implies-axiom-of-infinity-t` (a finite cardinality holds only of
+properties that leave out, below each possible proposition, a possible one: by the
+induction `FiniteCardinality` gives, with Atomlessness in the successor step); and
+`boolean-completeness-r-implies-countable-boolean-completeness-r` (`lub_of_glb_ubs`). The
+strict transformer cannot bridge the `¬∃` of the Atomlessness one, as with one record
+before (254 of 256 transformed).
+
+**Metalogical results.** `possible-infinity-{e,t}-and-no-pure-contingency-imply-axiom-of-infinity-{e,t}`
+(No Pure Contingency at the negation of the pure Axiom, and the shallow lemma
+`npc_dia_imp`); `possibility-schema-r-implies-possible-infinity-e` (the Axiom of Infinity at
+`e` holds in the full Henkin model on `ℕ`, `axiomOfInfinityE_holds_nat`: a finite
+cardinality holds only of finite sets); and, item 4 of the night's list,
+`maximalist-distinctness-incompatible-with-necessary-functionality-r` and
+`-necessary-rigid-comprehension-r`, through instances whose negations are consistent
+because they imply refuted ones (`consistent_neg_of_imp`, in `Syntax/Entailment.lean`, with
+the records `functionality-r-implies-tractarianism-r` and
+`rigid-comprehension-r-implies-boolean-completeness-r` as rules).
+
+*Checked.* The full build passes. Records: 256 of 256 derived, 156 certified as
+entailments. 214 result certificates and 22 form certificates prove their generated
+statements; 3 rest on `Classicism.e` and `e_exists`, as before.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

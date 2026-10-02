@@ -34,6 +34,14 @@ example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.Atomlessness.schemaIn
 
+/-- Principle definition check: `axiom-of-infinity-e`. -/
+example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
+  Classicism.P.AxiomOfInfinityE.schemaIn
+
+/-- Principle definition check: `axiom-of-infinity-t`. -/
+example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
+  Classicism.P.AxiomOfInfinityT.schemaIn
+
 /-- Principle definition check: `barcan-r`. -/
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.Barcan.schemaIn
@@ -57,6 +65,10 @@ example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
 /-- Principle definition check: `converse-barcan-r`. -/
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.ConverseBarcan.schemaIn
+
+/-- Principle definition check: `countable-boolean-completeness-r`. -/
+example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
+  Classicism.P.CountableBooleanCompleteness.schemaIn
 
 /-- Principle definition check: `distinctness-necessary-r`. -/
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
@@ -266,6 +278,14 @@ example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   (Classicism.Meta.AxiomSet.possibilityC _)
 
+/-- Principle definition check: `possible-infinity-e`. -/
+example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
+  Classicism.P.PossibleInfinityE.schemaIn
+
+/-- Principle definition check: `possible-infinity-t`. -/
+example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
+  Classicism.P.PossibleInfinityT.schemaIn
+
 /-- Principle definition check: `pure-b-r`. -/
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.signatureB)
@@ -455,6 +475,30 @@ def atomicity_t_incompatible_with_atomlessness : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
+/-- `atomlessness-implies-axiom-of-infinity-t`
+
+Atomlessness ⇒ Axiom of Infinity (type t) -/
+def atomlessness_implies_axiom_of_infinity_t : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn
+
+/-- `axiom-of-infinity-e-implies-possible-infinity-e`
+
+Axiom of Infinity (type e) ⇒ Possible Infinity (type e) -/
+def axiom_of_infinity_e_implies_possible_infinity_e : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PossibleInfinityE.schemaIn
+
+/-- `axiom-of-infinity-t-implies-possible-infinity-t`
+
+Axiom of Infinity (type t) ⇒ Possible Infinity (type t) -/
+def axiom_of_infinity_t_implies_possible_infinity_t : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PossibleInfinityT.schemaIn
+
 /-- `barcan-r-implies-barcan-t`
 
 BF ⇒ BF (type t) -/
@@ -478,6 +522,14 @@ def boolean_completeness_r_implies_boolean_completeness_t : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompletenessT.schemaIn
+
+/-- `boolean-completeness-r-implies-countable-boolean-completeness-r`
+
+Boolean Completeness ⇒ Countable Boolean Completeness -/
+def boolean_completeness_r_implies_countable_boolean_completeness_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.CountableBooleanCompleteness.schemaIn
 
 /-- `boolean-completeness-r-implies-weakly-inextensible-comprehension-r`
 
@@ -1818,6 +1870,15 @@ def plenitude_r_implies_distinctness_necessary_r : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Plenitude.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.schemaIn
 
+/-- `possibility-and-countable-boolean-completeness-incompatible`
+
+Possibility Maximalism (pure) ∧ Countable Boolean Completeness ⇒ ⊥ -/
+def possibility_and_countable_boolean_completeness_incompatible : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.CountableBooleanCompleteness.schemaIn →
+    ¬ Classicism.Meta.AxiomSet.Consistent Ax
+
 /-- `possibility-and-necessary-barcan-t-incompatible`
 
 Possibility Maximalism (pure) ∧ □BF (type t) ⇒ ⊥ -/
@@ -1862,6 +1923,22 @@ def possibility_schema_r_implies_distinctness_schema_r : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC)
 
+/-- `possibility-schema-r-implies-possible-infinity-e`
+
+Possibility Maximalism (pure) ⇒ Possible Infinity (type e) -/
+def possibility_schema_r_implies_possible_infinity_e : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PossibleInfinityE.schemaIn
+
+/-- `possibility-schema-r-implies-possible-infinity-t`
+
+Possibility Maximalism (pure) ⇒ Possible Infinity (type t) -/
+def possibility_schema_r_implies_possible_infinity_t : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PossibleInfinityT.schemaIn
+
 /-- `possibility-signature-r-implies-distinctness-signature-r`
 
 Possibility Maximalism (signature Σ) ⇒ Distinctness Maximalism (signature Σ) -/
@@ -1878,6 +1955,58 @@ def possibility_signature_r_implies_possibility_schema_r : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possibilityC _) →
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC)
 
+/-- `possible-infinity-e-and-bf-imply-axiom-of-infinity-e`
+
+Possible Infinity (type e) ∧ BF ⇒ Axiom of Infinity (type e) -/
+def possible_infinity_e_and_bf_imply_axiom_of_infinity_e : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PossibleInfinityE.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Barcan.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn
+
+/-- `possible-infinity-e-and-no-pure-contingency-imply-axiom-of-infinity-e`
+
+Possible Infinity (type e) ∧ No Pure Contingency ⇒ Axiom of Infinity (type e) -/
+def possible_infinity_e_and_no_pure_contingency_imply_axiom_of_infinity_e : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PossibleInfinityE.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn
+
+/-- `possible-infinity-e-implies-axiom-of-infinity-e`  (conjectured)
+
+Possible Infinity (type e) ⇒ Axiom of Infinity (type e) -/
+def possible_infinity_e_implies_axiom_of_infinity_e : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PossibleInfinityE.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn
+
+/-- `possible-infinity-t-and-bf-t-imply-axiom-of-infinity-t`
+
+Possible Infinity (type t) ∧ BF (type t) ⇒ Axiom of Infinity (type t) -/
+def possible_infinity_t_and_bf_t_imply_axiom_of_infinity_t : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PossibleInfinityT.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BarcanT.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn
+
+/-- `possible-infinity-t-and-no-pure-contingency-imply-axiom-of-infinity-t`
+
+Possible Infinity (type t) ∧ No Pure Contingency ⇒ Axiom of Infinity (type t) -/
+def possible_infinity_t_and_no_pure_contingency_imply_axiom_of_infinity_t : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PossibleInfinityT.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn
+
+/-- `possible-infinity-t-implies-axiom-of-infinity-t`  (conjectured)
+
+Possible Infinity (type t) ⇒ Axiom of Infinity (type t) -/
+def possible_infinity_t_implies_axiom_of_infinity_t : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PossibleInfinityT.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn
+
 /-- `pure-b-and-pure-possibility-incompatible`
 
 B for pure sentences ∧ Possibility Maximalism (pure) ⇒ ⊥ -/
@@ -1886,6 +2015,14 @@ def pure_b_and_pure_possibility_incompatible : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.signatureB) →
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
+
+/-- `pure-possibility-implies-axiom-of-infinity-t`
+
+Possibility Maximalism (pure) ⇒ Axiom of Infinity (type t) -/
+def pure_possibility_implies_axiom_of_infinity_t : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn
 
 /-- `relational-choice-and-boolean-completeness-imply-transversal-choice`  (conjectured)
 
