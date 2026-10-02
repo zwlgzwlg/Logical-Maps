@@ -48,6 +48,7 @@ topics/<topic>/principles/<id>.yaml   one principle per file
 topics/<topic>/results/<id>.yaml      implication: premises ⇒ conclusion
 topics/<topic>/models/<id>.yaml       model: satisfies [...], violates [...]; or a definition and arguments
 topics/<topic>/provenance/<id>.yaml   provenance moved verbatim out of model records, named by their arguments
+topics/<topic>/groups/<id>.yaml       a model group: shared definition and criteria for models written as arguments
 topics/<topic>/papers.yaml           source-paper catalogue and external links
 topics/<topic>/sources/              documents authorised for redistribution
 schema/                               JSON schemas
@@ -321,6 +322,62 @@ rather than its boxed form. An argument whose verdicts are all derived is droppe
 unless another argument builds on it. The notice "each derivable from the other recorded
 verdicts" lists what remains redundant, and `check_flattening.py --closure` checks that
 a shortened record derives the same holds and fails as before.
+
+### Model groups
+
+A group holds what a family of models written as arguments would otherwise copy.
+Each member keeps its own file, id and arguments, and names the group:
+
+```yaml
+# groups/finite-support-one-object.yaml
+id: finite-support-one-object
+name: Finite-support action models on one object
+definition: >-                      # the shared construction; {{name}} marks a parameter's slot
+  {{monoid}} In every part, … Evaluation point: the sole object, at the identity arrow.
+
+
+  {{sigma}}
+parameters:
+  monoid: {text: The monoid of arrows.}           # a prose slot
+  sigma:
+    text: The interpretation of Σ.
+    values: {top: …, true-atom: …}                # named values: their prose fills the slot
+conditions:
+- {id: evens-avoidable, text: …}    # stated in prose
+criteria:                           # arguments, each with its own id, by and date
+- id: sigma-top
+  when: {sigma: top}                # a conjunction over parameters; a list of values means any
+  fails: [witnessed-possibility-r, …]
+  text: …
+- id: weakly-inextensible-comprehension
+  requires: [evens-avoidable]       # every member it applies to meets these
+  fails: [weakly-inextensible-comprehension-r]
+  text: …
+
+# models/finite-support-truncations.yaml
+group: finite-support-one-object
+settings:
+  monoid: 'Proposition D.5, part 6 (p. 78): …'
+  sigma: top                        # or {text: …}: prose of its own, which no `when` matches
+meets:
+  evens-avoidable: …                # why it meets the condition: here, the witness
+definition: …                       # optional: text of its own, after the group's
+arguments: [...]                    # what is specific to it
+```
+
+`load_topic` expands a member before flattening. Its definition becomes the group's
+with the slots filled, followed by its own if it has one. The criteria whose `when`
+its settings match, and whose `requires` it meets, follow its own arguments, marked
+with the group and carrying the member's reasons. Nothing is inherited by default: a
+member that does not meet a condition does not get the criterion. The engine never
+sees a group. `validate` checks groups once (slots, `when` values, unknown
+conditions, duplicate criteria) and each member's settings, `meets` and argument ids,
+and counts a criterion's verdicts towards a member's clashes. A criterion lists
+everything its argument shows; only a member's own arguments are held to minimal
+verdicts. Moving arguments into a group must leave every closure unchanged:
+`check_flattening.py --closure`, against the revision before the move. `like` may name a
+criterion as `<group>#<id>`. The viewer lists a member's own arguments, then the
+criteria that apply to it, and gives each group a page with its criteria and members.
 
 ## Viewer
 
