@@ -31,7 +31,8 @@
        {"type": "object", "additionalProperties": false, "required": ["text"], "properties": {
         "text": {"type": "string", "minLength": 1, "description": "The prose this value puts in the definition."},
         "label": {"type": "string", "minLength": 1, "description": "A few words naming the value in a variant's name."},
-        "requires": {"type": "array", "items": {"type": "string"}, "uniqueItems": true, "description": "Conditions a member must meet to take this value."}
+        "requires": {"type": "array", "items": {"type": "string"}, "uniqueItems": true, "description": "Conditions a member must meet to take this value."},
+        "meets": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}, "description": "Conditions (the group's or the topic's) every model at this value meets, with the reason."}
        }}
       ]}
      }
@@ -51,6 +52,7 @@
     }
    }
   },
+  "meets": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}, "description": "Conditions of the topic (conditions.yaml) every member meets, with the reason."},
   "arguments": {"type": "array", "items": {"$ref": "#/$defs/shared_argument"}},
   "notes": {"type": "string", "description": "Text that supports no verdict."},
   "references": {}

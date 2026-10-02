@@ -47,7 +47,7 @@
   "meets": {
    "type": "object",
    "additionalProperties": {"type": "string", "minLength": 1},
-   "description": "A group's member: each condition of the group it meets, with the reason."
+   "description": "Each condition it meets, with the reason: a condition of its group's, or of the topic's (conditions.yaml), which brings the topic's general arguments that require it."
   },
   "construction": {
    "type": "object",
@@ -226,7 +226,7 @@
  "then": {
   "required": ["arguments"],
   "anyOf": [{"required": ["definition"]}, {"required": ["group"]}],
-  "dependentRequired": {"group": ["settings"], "settings": ["group"], "meets": ["group"]},
+  "dependentRequired": {"group": ["settings"], "settings": ["group"]},
   "properties": {"satisfies": false, "violates": false, "status": false, "description": false, "model_check": false, "tier": false, "changes": false}
  },
  "else": {
