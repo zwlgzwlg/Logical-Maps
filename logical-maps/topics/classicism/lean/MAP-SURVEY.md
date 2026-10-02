@@ -27,7 +27,7 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 
 - `actuality-and-bf-imply-inextensible-comprehension` — **Lean: at every arity, `Results/Arity.lean`**
 - `actuality-implies-actual-profile-r` — **Lean: full, its list form**
-- `atomicity-t-and-bf-imply-atomicity` — **Lean: at every arity, `Results/Atomicity.lean`**
+- `atomicity-t-and-bf-imply-atomicity` — **Lean: at every arity, `Results/Arity.lean`**
 - `atomlessness-implies-infinity-t`
 - `axiom-of-infinity-e-implies-infinity-e`
 - `axiom-of-infinity-t-implies-infinity-t`

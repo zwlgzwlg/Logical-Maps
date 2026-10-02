@@ -2121,21 +2121,43 @@ theorem pin_decides {σ : Type} [Ty σ] (w : Prop) (x : σ) :
   (h (Y x)).elim (fun h₁ => Or.inl (pin_le_of_le w x Y h₁))
     (fun h₂ => Or.inr (pin_le_of_le w x (¬ Y) h₂))
 
+/-- A non-bottom property is possibly instantiated: were it necessarily empty, it would be
+coextensive with `⊥` and so, by Intensionality, `⊥`. -/
+theorem dia_exists_of_ne_bot {σ : Type} [Ty σ] (X : σ → Prop) (hX : X ≠ Rel.bot (σ → Prop)) :
+    ◇ (∃ y, X y) :=
+  (em (◇ (∃ y, X y))).elim id fun hn =>
+    (hX (intensionality X _ (modal_K _ _ (nec% (coext_bot_of_not_exists X))
+      (box_not_of_not_dia _ hn)))).elim
+
 /-- Strong Leibniz at `t` and BF at `σ` give Strong Leibniz at `σ → t`: a non-bottom `X`
 is possibly instantiated, BF gives `x` with `◇Xx`, a strong world `w` at `t` lies below
 `Xx`, and `λy. w ∧ y = x` is a strong world below `X`. Not a record of the map, which has
 its necessitation. -/
 theorem strong_leibniz_t_and_bf_imply_strong_leibniz {σ : Type} [Ty σ] :
     StrongLeibnizT → Barcan σ → StrongLeibniz (σ → Prop) := fun sl bf X hX =>
-  have hd : ◇ (∃ y, X y) := (em (◇ (∃ y, X y))).elim id fun hn =>
-    (hX (intensionality X _ (modal_K _ _ (nec% (coext_bot_of_not_exists X))
-      (box_not_of_not_dia _ hn)))).elim
-  (exists_dia_of_dia_exists bf X hd).elim fun x hx =>
+  (exists_dia_of_dia_exists bf X (dia_exists_of_ne_bot X hX)).elim fun x hx =>
     (sl (X x) hx).elim fun w hw =>
       ⟨λ y ↦ w ∧ y = x,
         ⟨fun e => hw.1.1 ((and_rfl_eq w x).symm.trans (congrFun e x)),
           modal_K _ _ (nec% (pin_decides w x)) hw.1.2⟩,
         pin_le_of_le w x X hw.2⟩
+
+/-- `atomicity-t-and-bf-imply-atomicity`, at `σ → t`, its list form being the map's record
+(Cian Dorr, 23 September): a non-bottom `X` is possibly instantiated, BF gives `x` with
+`◇Xx`, Atomicity at `t` an atom `w ≤ Xx`, which decides every proposition; so
+`λy. w ∧ y = x` decides every property, and is an atom below `X`. -/
+theorem atomicity_t_and_bf_imply_atomicity {σ : Type} [Ty σ] :
+    AtomicityT → Barcan σ → Atomicity (σ → Prop) := fun at_ bf X =>
+  (em (X ≤ ¬ X)).elim Or.inl fun hX => Or.inr <|
+    (exists_dia_of_dia_exists bf X
+        (dia_exists_of_ne_bot X fun e => hX (by rw [e]; exact bot_le_arrow _))).elim fun x hx =>
+      ((at_ (X x)).elim (fun h => (hx (eq_false_of_le_neg _ h)).elim) id).elim fun w hw =>
+        ⟨λ y ↦ w ∧ y = x,
+          atom_of_decides_arrow _
+            (fun e => not_le_neg_of_atom hw.1
+              (le_neg_of_eq_false w ((and_rfl_eq w x).symm.trans (congrFun e x))))
+            (pin_decides w x fun q => atom_le_or_le_neg w q hw.1),
+          pin_le_of_le w x X hw.2⟩
 
 /-- `necessary-strong-leibniz-t-and-necessary-bf-imply-necessary-strong-leibniz`, at `σ → t`,
 its list form being the map's record: the last theorem necessitated, and `K`. -/

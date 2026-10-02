@@ -80,7 +80,7 @@ record is about them.
   `ND_e` and Boolean Completeness from all three).
 - **`c5-and-atomicity(-t)-imply-no-pure-contingency`**: the automorphism exchanging two
   atoms, extended by conjugation to every type, is a substantial metalogical proof by
-  induction on terms; a candidate for the next experiment of the Atomicity kind.
+  induction on terms.
 
 ## What the results depend on
 

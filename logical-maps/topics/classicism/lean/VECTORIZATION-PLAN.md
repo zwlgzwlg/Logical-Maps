@@ -110,6 +110,10 @@ of the same day is folded in (D1–D5, D8, §4–§6); the decisions taken are i
     cites are gone; those cited by proofs at `t` stay.
 
   `MAP-SURVEY.md`: 160 of 230 map results proved in Lean, none in part.
+- **Afterwards (2 October).** `Results/Atomicity.lean`, the step at a Rel-parameter
+  certified in its own file, is folded into the pattern of the other results: the record
+  `atomicity-t-and-bf-imply-atomicity` at `σ → t` in `Results/Records.lean`, at every
+  arity in `Results/Arity.lean`.
 - **What the implementation changed in the design**, all within the plan's intent:
   - Tuples are taken apart by their projections (`Terms.head`, `Terms.tail`) and every
     block operation recurses on the list of types, not on the tuple; so an operation on a

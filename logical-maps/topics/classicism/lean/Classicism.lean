@@ -52,7 +52,6 @@ import Classicism.Models.Permutations
 import Classicism.Models.Pointed
 import Classicism.Models.PointedParts
 -- Metalogical results, each with the object-level reasoning it rests on
-import Classicism.Results.Atomicity
 import Classicism.Results.Arity
 import Classicism.Results.Lists
 import Classicism.Results.Schemas.Consistency

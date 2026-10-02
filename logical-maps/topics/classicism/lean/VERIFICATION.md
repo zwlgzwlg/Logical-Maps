@@ -1047,6 +1047,23 @@ The theorems checked rest on `propext` and `Quot.sound` only.
   through a record that is not a map result, `strong_leibniz_t_and_bf_imply_strong_leibniz`
   (Strong Leibniz at `t` and BF at `σ` give Strong Leibniz at `σ → t`), proved under `□`.
 
+## Atomicity folded in, 2 October
+
+`Results/Atomicity.lean` is gone. `atomicity-t-and-bf-imply-atomicity` is now proved like
+the other results at every arity: the record at `σ → t` in `Results/Records.lean`, from
+the lemmas of the Strong Leibniz section (an atom at `t`, pinned at `x` as
+`λy. w ∧ y = x`, decides every property and is an atom), certified by the entailment audit,
+and at every arity in `Results/Arity.lean`. The boxed step there, `necAtomicity_step`, is
+the record necessitated, at `σ → t` rather than at a Rel-parameter, which no use needed.
+The conversion from Atomicity at `t` as the instance of Atomicity to the map's
+Atomicity at `t` is certified there as a rule (`atomicityT_of_atomicity_at_t`): the two
+sentences are not equal by `rfl`.
+
+*Checked.* The full build passes: 297 of 297 theorems of `Results/Records.lean` pass the
+gate and type checks and are derived, 152 of 152 records are certified as entailments
+(70 of the 74 with a Ty-parameter in list form too, the same four exceptions), and 296 of
+297 are transformed by the strict transformer, the same one exception.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

@@ -316,7 +316,6 @@ Classicism/Models/Monoids.lean          Appendix D, Parts 2 to 8: the seven mono
 Classicism/Models/README.md             the verdict table; the survey of two-object variants and what they would add to the map
 
 Classicism/Results/Records.lean         the map's records proved in the shallow layer, one theorem per record
-Classicism/Results/Atomicity.lean       Atomicity (t) and BF imply Atomicity: a metalogical proof with object-level steps
 Classicism/Results/Schemas/             results about Distinctness, Possibility, No Pure Contingency and their kin, from the models
 
 Classicism/Tools/Check.lean             #classicism_check and #classicism_audit: the gate

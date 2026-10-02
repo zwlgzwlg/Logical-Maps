@@ -111,13 +111,12 @@ The first five were settled with Cian on 22 September 2026, the rest on the days
 | `Tools/Schema.lean` (rules) | `#classicism_rule foo` reads the same derivation as a **rule between the schemas' instances**, `foo.rule : ∀ σ' …, C.Theorem (imp (P₁.quoted …) (… (Q.quoted …)))`, keeping the object types, for use inside a metalogical proof; `#classicism_certify foo` is the whole chain at the point where `foo` is stated: transform, schemas, derive, rule. |
 | `Certified/Schemas.lean` | The map's principles (44) as schemas: the home of every `P.quoted`, `P.reflect`, `P.schema`. |
 | `Certified/Derivations.lean` | Every record theorem of `Results/Records.lean` derived in the object language: the home of every `foo.derivable`, kept apart because it is the expensive part of the build. |
-| `Certified/Entailed.lean` | The record theorems of `Results/Records.lean` certified as entailments: the home of every `foo.entails`, and, for a record with a Ty-parameter, `foo.listRule` and `foo.listEntails`. All 151 certify; 69 of the 73 with a Ty-parameter in list form too, the other four citing Relational Choice with its output at the list's type. |
+| `Certified/Entailed.lean` | The record theorems of `Results/Records.lean` certified as entailments: the home of every `foo.entails`, and, for a record with a Ty-parameter, `foo.listRule` and `foo.listEntails`. All 152 certify; 70 of the 74 with a Ty-parameter in list form too, the other four citing Relational Choice with its output at the list's type. |
 | `Semantics/Action.lean` | **Action premodels and action models**, the paper's models of Classicism, directly: a rooted category, an inner action per type, the outer actions by recursion on the type, the subaction conditions, the total interpretation function `sem`, `Holds`, and `IsModel`. |
 | `Semantics/ActionSoundness.lean` | **Soundness of action models**: transport, renaming, substitution, β, η, δ, conversion; every rule of `Derivable`; the eleven identities and Existence hold at every arrow of every action model; `theorem_holds`, `theoremWith_holds`. |
 | `Semantics/ActionFull.lean` | **Full action models**: the powerset and exponential actions as functors; the full inner domains by recursion on the type; `Premodel.full` on any rooted category from an action for `e` and an interpretation; **`full_isModel`**, that a full premodel is a model, by the combined induction (inner-ness and transport together, the type-subscripted constants by a second induction on the size of the type); `full_bf_surjective`, the paper's (iii). |
 | `Semantics/ActionFacts.lean` | `ND_σ`, `BF_σ` and the Fregean Axiom as sentences; the clauses for `□` and `◇`; **truncation** (`Premodel.truncate`, `sem_truncate`, `isModel_truncate`, `dia_iff_truncate`, `box_iff_truncate`); the paper's generalizations: `ND_σ` holds iff every `h^σ` out of the object is injective, `BF_σ` holds if every `h^σ` is surjective, the Fregean Axiom holds iff propositions agreeing at the identity are equal; and what a model verdict needs to become a fact about the theory: `⊥` fails, `¬P` holds iff `P` fails, `□P` gives `P`, **an axiom set true in an action model is consistent** (`Consistent.of_action_model`) and a sentence failing in it is not a theorem (`not_theorem_of_model`). |
 | `Semantics/ActionProperties.lean` | Properties of action models — propositionally full, quasi-functionally full, full — and what holds in all models with a property: the value of a pure term does not see the arrow (`sem_pure`), so **No Pure Contingency holds in every one-object model** (`holdsAx_npc`); the Fregean Axiom fails in every propositionally full model with a second arrow out of the base. |
-| `Results/Atomicity.lean` | **A metalogical proof with object-level steps**, the map's arrow "Atomicity (`t`) and BF imply Atomicity": the step `Atomicity τ → BF σ → Atomicity (σ → τ)` as shallow lemmas proved with ordinary tactics, certified in place by `#classicism_certify` into the rule `atomicity_step.rule` and, vectorized in `σ`, the list rule `atomicity_step.listRule` (Atomicity at `σs ⇒* τ` from BF over the list `σs`); at `τ = t` and the list of a relational type's arguments that is the theorem, `P.AtomicityT.schema ∪ P.Barcan.schema ⟹ P.Atomicity.schema`, with BF over every list from `Results/Lists.lean`. |
 | `Results/Schemas/` | **The results about the schemas over sentences**, the first use of the semantics to prove arrows: `Consistency.lean` (the side conditions' facts, from `Prop` and the M-set models), `PossibilityDistinctness.lean` (Distinctness and Possibility equivalent, relative to any theory over any signature), `Contingency.lean` (No Pure Contingency necessitates every pure schema — twenty records as one theorem — and the arrows among the contingency schemas), `Incompatibilities.lean` (Possibility, Distinctness and `Max T` against the necessitation of anything refutable; Maximalist Classicism against `ND`; Possibility against No Pure Contingency and pure B). Its README lists the records covered and the ones that wait on models or definitions. |
 | `Semantics/ActionExamples.lean` | Full M-set models (`MSet.model`): the idempotent monoid `{1, k}` (`ND_t`, `BF_t` and the Fregean Axiom fail — the map's `full-idempotent-monoid`) and the two-element group (the Fregean Axiom fails, `□ND_σ` and `□BF_σ` hold at every type — `full-involution-group`); at an object whose out-arrows are isomorphisms, `ND_σ` and `BF_σ`; in a groupoid, their necessitations. |
 | `Semantics/Env.lean` | `IEnv`, the assignment of inner elements to the variables of a context, shared by the action models and the intensional action models, with the facts renaming and substitution need. |
@@ -570,7 +569,7 @@ The proof is `Exists.elim`, `Derivable.impE`, `Derivable.axiom`, `Derivable.conv
 conclusion set is `Q.schema` when the statement's conclusion is `Q` at its own
 parameters; the singleton `{Q.quoted τ}` when it fixes them (`Existence e`); the family
 over the derivation's parameters when it builds them (`Existence (σ → t)`).
-`#classicism_entails_audit` certifies every record theorem of a module: **all 151
+`#classicism_entails_audit` certifies every record theorem of a module: **all 152
 certify**, at build time. These `foo.entails` are what the map's arrows can
 cite as certificates, once the map's generator is taught the statement shape.
 
@@ -654,7 +653,7 @@ Plenitude, its boxed form and Actual Profile instead code a tuple `x₁ … xₙ
 `λR. R x₁ … xₙ`. The theorems of `C` among the twenty need nothing: their list forms are
 theorems of `C`.
 
-**Results at every arity** (`Results/Arity.lean`, `Results/Atomicity.lean`). Every
+**Results at every arity** (`Results/Arity.lean`). Every
 relational type is its argument types' `⇒* t`. So a unary result at `σ → t`, vectorized
 in `σ`, is the result at every relational type (`schema_subset_args`). BF at `σ` in its
 proof becomes BF over the list, which BF gives by the equivalence above. A result whose
@@ -663,32 +662,28 @@ Rel-parameter: it is at every arity already.
 
 ## A metalogical proof with object-level steps
 
-Cian's question of 24 September: a proof in logic typically alternates between the
-metalanguage and abbreviated descriptions of derivations in the object language; how
-integral to this layer are the separate directory and the slow build, and what is the
-workflow for formalizing one such proof? The experiment is `Results/Atomicity.lean`, the map's
-arrow `atomicity-t-and-bf-imply-atomicity`, chosen because its informal proof is a
-metatheorem "for every `n`" (apply BF `n` times, at each argument type) with an object-level
-argument inside: exactly what the shallow layer cannot state, since `Rel` is a class and
-not a code, and this layer can.
+A proof in logic alternates between the metalanguage and abbreviated derivations in the
+object language (Cian's question of 24 September). Here the object-level reasoning is a
+gated shallow theorem, certified as a rule or an entailment, and the metalogic composes
+what is certified. The map's arrow `atomicity-t-and-bf-imply-atomicity` shows the shape:
+its informal proof is a metatheorem "for every `n`" (BF at each argument type) with an
+object-level argument inside, which the shallow layer cannot state, since `Rel` is a class
+and not a code.
 
-**The shape.** One file, in three parts. (1) The step, `Atomicity τ → BF σ → Atomicity
-(σ → τ)`, is a theorem of the *shallow* layer at the type parameters `σ`, `τ`, proved with
-Lean's tactics in the paper's own vocabulary: `em`, `le_iff`, `converse_barcan`,
-`intensionality`, and each fact carried under the box a closed lemma necessitated with
-`nec%` and pushed through with `K`. (2) `#classicism_certify Classicism.atomicity_step`
-runs Appendix A on the proof, quotes the principles it mentions into schemas, derives the
-strict proof in the object language, and declares `atomicity_step.rule : ∀ σ' τ',
-C.Theorem (imp (Atomicity.quoted τ') (imp (Barcan.quoted σ') (Atomicity.quoted (σ' ⇒ τ'))))`
-— the derivation read as a rule between instances, with the object types kept, which
-`foo.entails` forgets — and, vectorizing the derivation in `σ`, `atomicity_step.listRule`,
-the same rule over a whole list of argument types, with BF over the list for its premise.
-(3) The theorem is that list rule at `t` and at the list of a relational type's arguments,
-every relational type being `σs ⇒* t`; its premise, BF over every list, comes from BF by
-an induction on the list (`Results/Lists.lean`). The descent into the object language is
-the type `Theorem (C.axioms ∪ Ax) p` of the goal (`Theorem.ax`, `Theorem.ofC`,
-`Theorem.mp₂`, `Syntax/Entailment.lean`); the rule is where the shallow layer's tactics
-did the object-level work.
+**The shape.** (1) The record at one argument type, `Proofs.atomicity_t_and_bf_imply_atomicity
+: AtomicityT → Barcan σ → Atomicity (σ → t)` (`Results/Records.lean`), proved with Lean's
+tactics in the paper's vocabulary (`em`, `le_iff`, `intensionality`, each fact carried
+under the box a closed lemma necessitated with `nec%` and pushed through with `K`): for a
+non-bottom `X`, BF gives `x` with `◇Xx`, Atomicity at `t` an atom `w ≤ Xx`, and
+`λy. w ∧ y = x` is an atom below `X`. (2) The entailment audit (`Certified/Entailed.lean`)
+translates the proof into a derivation, reads it as an entailment between schemas, and,
+vectorizing it in `σ`, as `listEntails`: Atomicity at `t` and BF over a list `σs` entail
+Atomicity at `σs ⇒* t`. (3) The theorem at every arity, `Meta.atomicity_t_and_bf_imply_atomicity`
+(`Results/Arity.lean`), composes that with `schema_subset_args`, every relational type
+being `σs ⇒* t`, and with BF over every list from BF (`Results/Lists.lean`). A shallow
+core that is not a record, such as `necAtomicity_step` there, is certified in place by
+`#classicism_certify` into `foo.rule` and `foo.listRule`, and applied with `Theorem.ax`,
+`Theorem.ofC` and `Theorem.mp₂` (`Syntax/Entailment.lean`).
 
 **Two routes to "for every `n`".** When the argument is the same at every argument type,
 as here, prove it for one argument and vectorize: the vectorization theorem is the
@@ -697,7 +692,7 @@ itself what is to be proved, an induction on the list or on the type (`RTy.induc
 applies a rule one argument at a time, choosing its instances as it goes; the inductions
 of `Results/Lists.lean` are of this kind.
 
-**Tools it needed**, each in its natural place. *`Pointwise τ`* (`Classicism/Pointwise.lean`):
+**`Pointwise τ`** (`Classicism/Pointwise.lean`), for a shallow core at a Rel-parameter:
 the shallow `Rel τ` supplies the pointwise operations and the pointwise implication
 `boxImp` as data and only the three laws Intensionality needs, so at a type parameter
 nothing can be said about them, while the paper reasons freely about tuples ("by
@@ -706,63 +701,22 @@ pointwise — `⊑` a preorder, `∧_τ` a meet, `X ∧ ¬X` below everything, `
 everything when `p` holds and below everything when not, coextension implication both
 ways — proved at `Prop` as tautologies and at `σ → τ` from `τ`; its mirror `SPointwise`
 (`Strict/Mirror.lean`) is set up as `SOrder` is, and the translator derives each law for every
-object type by induction on the type (`inductionInstances`), in milliseconds. *`Atom`*
-and *Atomicity* (`Lattice.lean`, `Principles.lean`). *`RTy.induction`*, and the
-three moves `Theorem.ax`, `Theorem.ofC`, `Theorem.mp`. *`#classicism_rule`* and
-*`#classicism_certify`* (`Tools/Schema.lean`).
+object type by induction on the type (`inductionInstances`), in milliseconds.
 
-**What it taught.** The step was first one tactic proof of forty lines, and its
-derivation ran for an hour, its process growing to 27 GB and swapping (that is what took
-the machine down on the afternoon of the 24th). Cut into nine closed lemmas
-— a possible instance from BF, `A ≤ X`, `Zz ≤ w`, `Z = A`, `Z = ⊥`, and so on, each
-three to eight lines — the same argument derives in five to seven minutes at a peak of
-664 MB, each lemma's kernel check four to fifteen seconds, provided two things: the
-file imports `Schemas` (hence `Transformed`), else `#classicism_certify` re-transforms
-the whole shallow library it depends on, in memory; and the translator restores its memo
-tables at the end of each nested declaration (`restoreMemo`, `Tools/Translate.lean`). The lesson
-about style stands on its own: write object-level steps as short closed lemmas and cite
-them, as the paper does.
+**The lesson about style**: write object-level steps as short closed lemmas and cite
+them, as the paper does. The first version of the Atomicity step, one tactic proof of
+forty lines, made the translator's process grow to 27 GB; cut into closed lemmas it
+derived in minutes. The history of that experiment (24 September), which led to the
+direct translation from shallow proofs to `Derivable`, is in `VERIFICATION.md`.
 
-What could not be fixed is the *serialization*: the module elaborates completely, every
-command succeeding, but writing its `.olean` does not finish in half an hour and grows
-past 19 GB, in Lean's export of the axioms of every declaration, which walks each body.
-A module with one of the nine lemmas writes in seconds (9 MB); the whole does not, and
-neither does the nine-command version, so it is the volume of derivations in one module
-and not the way they were made. The file is therefore kept out of the build, with its
-status in its header. The other cost, the first-in-file specialization of the
-Boolean-algebra lemmas, a minute or two, is paid once per file that derives.
-
-**The decision (24 September, Cian).** The experiment answered the question and changed
-the plan. The expense is not in the metalogical proof but in the route to the
-derivation: the strict proof of a lemma is a per-lemma instance of the Appendix-A
-induction, every propositional step an identity `S = ⊤`, Leibniz's law a 4,407-node DAG,
-and the translator re-expresses all of that as natural deduction with conversion
-certificates. A gated shallow proof is already natural-deduction shaped, and its
-derivation would be the size of the shallow term. So the certification is to move to a
-**direct translation from shallow proofs to `Derivable`**, with `Derivable` defined as the
-paper defines the theory rather than through the eleven identities: `H` closed under
-*Elimination*'s rule Subst (substitution of logical equivalents, `P ⊢ Q` and `Q ⊢ P`
-on their own, `Δ ⊢ R[P/x]` gives `Δ ⊢ R[Q/x]`), which gives no logical constant a special
-role, in de Bruijn form through a one-hole context so that the hole may sit under
-binders (that is ξ). The premises of Subst carry no axioms, which is what keeps
-`C ∪ {BF}` from proving `□BF`; so the axiom set becomes an index of the inductive, and
-the two kinds of assumption — axioms, cited at any context and never discharged;
-hypotheses, in the current context and discharged — stay as they are. The eleven
-identities become the theorem they are in the paper (Appendix A), to be proved once
-about `Derivable`; the mirror classes disappear (a class law at a type parameter is
-derived by induction from the two shallow instance proofs directly); the quoter, the
-normalizer, `coerce`, the memoized walk, `ensureFieldInduction`, and the commands keep
-their interface. `Results/Atomicity.lean` is the first file to be certified that way.
-
-**How integral the separation is**: not at all, on this evidence. The shallow lemma, its
-certification and the metalogical theorem sit in one file that reads in the order of the
-informal proof; the only thing that moves to the metalogical directories is the file itself, because it
-imports the object syntax. The build cost is the derivation, seven minutes here,
-incurred by the file that does the deriving and cached in its `.olean`.
+**Where the parts live.** A shallow lemma, its certification and a metalogical theorem can
+sit in one file, as the experiment's did until 1 October. They are kept apart: the
+records in `Results/Records.lean`, which imports only the shallow layer and elaborates
+quickly in an editor; their certification, one audit command in `Certified/Entailed.lean`;
+the compositions in `Results/Arity.lean` and `Results/Schemas/`.
 
 ## Next
 
-The direct translator (above), then this file's certification through it. After that the
-remaining verdicts of the two M-set records; then the map's other models as
+The remaining verdicts of the two M-set records; then the map's other models as
 instances, the symmetric and coalesced ones included. Appendix A as a theorem, and the
 coincidence with the Equivalence-rule system, is deferred: nothing depends on it.

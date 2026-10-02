@@ -1,7 +1,7 @@
 import Classicism.Tools.Schema
 import Classicism.Certified.Schemas
 import Classicism.Certified.Entailed
-import Classicism.Results.Atomicity
+import Classicism.Results.Lists
 import Classicism.Principles
 import Classicism.Pointwise
 import Classicism.Paper
@@ -26,7 +26,7 @@ of shallow proof reach every arity:
   BF gives (`P.Barcan.schema_entails_listSchema`); in `C5`, `□`BF at `σ` comes from `□ND`
   at `t` inside the proof, and the vectorized result has no list premise at all.
 
-The file has three parts, as `Results/Atomicity.lean` does:
+The file has three parts:
 
 1. **The shallow layer**: the shallow cores at `τ`, the unary ones at `σ → t`, and the
    boxed step of Atomicity.
@@ -168,15 +168,15 @@ theorem necessary_completeness_c5_necessary_plenitude {σ' σ : Type} [Ty σ'] [
   modal_K _ _ (modal_K _ _ (nec% (Proofs.c5_and_completeness_imply_plenitude (σ' := σ') (σ := σ)))
     hbc) (modal_four _ hnd)
 
-section atomicity
-variable {σ τ : Type} [Ty σ] [Rel τ] [Order τ] [Pointwise τ]
+/-- The boxed step of Atomicity: `□`Atomicity at `t` and `□`BF at `σ` give `□`Atomicity at
+`σ → t`, the record `atomicity-t-and-bf-imply-atomicity` at `σ → t` necessitated. -/
+theorem necAtomicity_step {σ : Type} [Ty σ] :
+    P.NecAtomicity Prop → P.NecBarcan σ → P.NecAtomicity (σ → Prop) := fun h₁ h₂ =>
+  modal_K _ _ (modal_K _ _ (nec% (Proofs.atomicity_t_and_bf_imply_atomicity (σ := σ))) h₁) h₂
 
-/-- The boxed step of Atomicity: `□`Atomicity at `τ` and `□`BF at `σ` give `□`Atomicity at
-`σ → τ`, the step of `Results/Atomicity.lean` necessitated. -/
-theorem necAtomicity_step : P.NecAtomicity τ → P.NecBarcan σ → P.NecAtomicity (σ → τ) :=
-  fun h₁ h₂ => modal_K _ _ (modal_K _ _ (nec% (atomicity_step (σ := σ) (τ := τ))) h₁) h₂
-
-end atomicity
+/-- Atomicity at `t` read as the instance of Atomicity is Atomicity at `t` in the map's own
+spelling, as a rule (the `C5` records conclude with the instance). -/
+theorem atomicityT_of_atomicity_at_t : P.Atomicity Prop → P.AtomicityT := fun h => h
 
 /-- In `C5`, `□`Actuality gives `□`Atomicity at `t`: Proposition 2.6 at `t`, necessitated. -/
 theorem c5_necessary_atomicity_t :
@@ -193,8 +193,8 @@ theorem fregean_actuality_necessary_actuality : P.FregeanAxiom → P.Actuality �
 #classicism_certify Classicism.actuality_implies_persistent_comprehension_r
   Classicism.gallin_bf_weak_rigid_comprehension Classicism.gallin_c5_rigid_comprehension
   Classicism.nec_gallin_c5_nec_rigid_comprehension
-  Classicism.necAtomicity_step Classicism.c5_necessary_atomicity_t
-  Classicism.fregean_actuality_necessary_actuality
+  Classicism.necAtomicity_step Classicism.atomicityT_of_atomicity_at_t
+  Classicism.c5_necessary_atomicity_t Classicism.fregean_actuality_necessary_actuality
   Classicism.very_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r
   Classicism.extensionality_r_implies_rigid_comprehension_r
   Classicism.c5_and_persistent_comprehension_imply_gallin
@@ -264,6 +264,26 @@ theorem c5_and_atomicity_imply_necessary_rigid_comprehension :
     (Entails.trans (Entails.union (Entails.union_right _ _) (Entails.union_left _ _))
       Proofs.c5_and_atomicity_imply_necessary_rigid_comprehension.listEntails)
 
+/-- `atomicity-t-and-bf-imply-atomicity`, at every arity: the record at `σ → t`, vectorized,
+with BF over every list from BF. -/
+theorem atomicity_t_and_bf_imply_atomicity :
+    P.AtomicityT.schema ∪ P.Barcan.schema ⟹ P.Atomicity.schema :=
+  Entails.mono_right (schema_subset_args _)
+    (Entails.trans (Entails.union (Entails.union_left _ _)
+        (Entails.trans (Entails.union_right _ _) P.Barcan.schema_entails_listSchema))
+      Proofs.atomicity_t_and_bf_imply_atomicity.listEntails)
+
+/-- The same, with Atomicity at `t` read as the instance of Atomicity, the form the `C5`
+records conclude with. -/
+theorem atomicity_of_atomicity_at_t_barcan :
+    single (P.Atomicity.quoted RTy.t) ∪ P.Barcan.schema ⟹ P.Atomicity.schema :=
+  Entails.trans
+    (Entails.union
+      (by rintro a rfl
+          exact (Theorem.ofC atomicityT_of_atomicity_at_t.rule).mp (Theorem.ax (Or.inl rfl)))
+      (Entails.union_right _ _))
+    atomicity_t_and_bf_imply_atomicity
+
 /-- `c5-and-necessary-actuality-imply-atomicity` (Proposition 2.6, right to left), at every
 arity: Atomicity at `t` from the `t` record, BF from `□ND`, and the induction. -/
 theorem c5_and_necessary_actuality_imply_atomicity :
@@ -286,13 +306,13 @@ theorem c5_and_necessary_completeness_imply_atomicity :
       (Entails.trans (Entails.union_left _ _) Proofs.necessary_nd_implies_bf.entails))
     atomicity_of_atomicity_at_t_barcan
 
-/-- **`□`Atomicity at `t` and `□`BF entail `□`Atomicity**: the boxed step, vectorized, as
-for `atomicity_of_atomicity_at_t_barcan`. -/
+/-- **`□`Atomicity at `t` and `□`BF entail `□`Atomicity**: the boxed step, vectorized, with
+`□`BF over every list from `□`BF. -/
 theorem necAtomicity_of_at_t_necBarcan :
     single (P.NecAtomicity.quoted RTy.t) ∪ P.NecBarcan.schema ⟹ P.NecAtomicity.schema := by
   refine Entails.mono_right (schema_subset_args _) ?_
   rintro a ⟨σs, hσs, rfl⟩
-  exact (Theorem.ofC (necAtomicity_step.listRule σs .t trivial)).mp₂ (Theorem.ax (Or.inl rfl))
+  exact (Theorem.ofC (necAtomicity_step.listRule σs)).mp₂ (Theorem.ax (Or.inl rfl))
     (Entails.mono_left (fun _ => Or.inr) P.NecBarcan.schema_entails_listSchema _ ⟨σs, hσs, rfl⟩)
 
 /-- `c5-and-atomicity-imply-necessary-atomicity` (Proposition 2.6 with 2.7), at every
