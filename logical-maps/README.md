@@ -49,6 +49,8 @@ topics/<topic>/results/<id>.yaml      implication: premises ⇒ conclusion
 topics/<topic>/models/<id>.yaml       model: satisfies [...], violates [...]; or a definition and arguments
 topics/<topic>/provenance/<id>.yaml   provenance moved verbatim out of model records, named by their arguments
 topics/<topic>/groups/<id>.yaml       a model group: shared definition and shared arguments for models written as arguments
+topics/<topic>/conditions.yaml        conditions a model may meet, which general arguments require
+topics/<topic>/arguments/<id>.yaml    a general argument: any model record meeting its conditions gets it
 topics/<topic>/papers.yaml           source-paper catalogue and external links
 topics/<topic>/sources/              documents authorised for redistribution
 schema/                               JSON schemas
@@ -406,6 +408,42 @@ file once; the engine reports any variant whose verdicts clash. The group page s
 grid of its members, with a generated parameter's variants added as sub-rows on request,
 and says what each parameter changes. Model lists show a variant only where its member is
 not listed.
+
+### General arguments
+
+Some arguments hold far beyond one group: No Pure Contingency in every one-object action
+model, Transversal Choice in every extensionally full one. They live once in the topic:
+
+```yaml
+# conditions.yaml
+conditions:
+- {id: one-object-action-model, text: The model is an action model with a single object.}
+- {id: sigma-single-top, text: Σ is a single relational constant of type t, denoting ⊤.}
+
+# arguments/sigma-single-top.yaml
+id: sigma-single-top
+requires: [sigma-single-top]         # conditions of the topic, all of them met
+given: [no-pure-contingency-r]       # optional: verdicts the record's other arguments must hold
+holds: [no-contingency-signature-r, signature-b-r]
+text: …
+by: …
+date: …
+```
+
+A record meets a condition, with its reason, in one of three places: its own `meets`
+(any argument-format record, in a group or not), its group's `meets` (every member), or
+the `meets` of one of its group's parameter values (every model at that value, variants
+included). `expand_member` gives a record its own arguments, then its group's shared
+arguments, then every general argument whose `requires` it meets, each carrying the
+reasons as its conditions; one with `given` is added only once the arguments already
+applied record those verdicts as holding, so a general argument can build on another
+without the engine. Validation checks each general argument once, in its own file, and
+every `meets` against the group's and the topic's conditions. The viewer gives each
+general argument a page (its conditions, its text, the models it applies to), lists a
+model's general arguments after its group's, and lists on a group's page the general
+arguments its models use and the conditions every member meets. A general argument, and
+a reason for meeting a condition, are where Lean references will attach: a theorem for
+the argument, a theorem that the model has the property for the reason.
 
 ## Viewer
 

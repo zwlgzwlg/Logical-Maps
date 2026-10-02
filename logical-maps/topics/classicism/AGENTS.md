@@ -26,7 +26,10 @@ Read a matching `writeups/<id>.md` when it exists.
 
 ## Constructions and sources
 
-- For finite-support action models, search `models/finite-support-*.yaml`.
+- For finite-support action models, search `models/finite-support-*.yaml`; the
+  one-object ones belong to `groups/finite-support-one-object.yaml`, and
+  arguments that hold beyond one group are in `arguments/`, with the conditions
+  they require in `conditions.yaml`.
   Full Henkin and full action constructions are in `models/full-*.yaml`;
   choice failure also has `models/henkin-without-relational-choice.yaml`.
 - Dorr's BC versus RC examples are in `models/symmetric-*.yaml`. Read the

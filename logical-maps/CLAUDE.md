@@ -182,6 +182,10 @@ When you (an AI) add or edit a result or model:
   for every member that meets some condition belongs in the group as a
   shared argument, not copied into members; lift one only when another member would
   otherwise copy it, and check closures with `check_flattening.py --closure`.
+  An argument that holds for every model with some property, in or beyond one
+  group, belongs in the topic's `arguments/` with the property in
+  `conditions.yaml`; records, groups and parameter values say why they meet it
+  under `meets` (README, "General arguments").
   When a group generates variants, every argument (own or shared) applies to
   every variant unless its `when` limits it: give `when` to any argument that
   relies on a particular setting, and check the variants' verdicts.
