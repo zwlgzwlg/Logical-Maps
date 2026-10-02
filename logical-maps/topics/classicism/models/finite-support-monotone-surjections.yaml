@@ -68,6 +68,7 @@ arguments:
 # holds, fails, by and date.
 
 - fails: [distinctness-necessary-r]
+  when: {individuals: naturals}
   source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(2), pp. 76–77'}
   text: >-
     At the non-injective arrows.

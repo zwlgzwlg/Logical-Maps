@@ -69,6 +69,7 @@ arguments:
     As in part 2.
 
 - id: sigma-contingent
+  when: {sigma: own}
   fails: [witnessed-possibility-r, no-contingency-signature-r]
   # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The text is the 23
   # September version; the revision note is the 23 September change.
@@ -109,9 +110,16 @@ arguments:
   text: >-
     A true $w$ pinned down by a finite set $S$ contains every arrow agreeing with the identity on
     $S$, among them the monotone map equal to the identity up to $M$ and constant at $M+1$ beyond
-    it, for $S\subseteq[0,M]$, one that collapses two individuals $a\ne b$ outside $S$. The
-    proposition that $a$ and $b$ are distinct is true, and it is possible at no arrow that
-    collapses them, since a collapse persists under composition, so $w\not\le\Diamond(a\ne b)$.
+    it, for $S\subseteq[0,M]$, one that collapses two numbers $a\ne b$ outside $S$. The
+    proposition $\{k : ka\ne kb\}$ (with the natural numbers as individuals, that $a$ and $b$ are
+    distinct) is true, and it is possible at no arrow that collapses them, since a collapse
+    persists under composition, so $w$ does not entail its possibility.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      The proposition that $a$ and $b$ are distinct is named as the set of arrows that keep them
+      apart, so that the argument covers the variant with a single individual.
 
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description

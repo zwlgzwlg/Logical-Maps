@@ -13,14 +13,16 @@ references:
 # them), and the source's "as in part N" clauses became shared arguments. Texts are the members'
 # unless a revision says otherwise.
 
+# revision (2 October, Claude Opus 5.5, at Cian Dorr's direction): "individuals" became "numbers"
+# where the pinning sets are meant, and what the individuals are became the parameter
+# `individuals`, its value `naturals` restoring the old wording.
 definition: >-
   {{monoid}} In every part, $W_0^\ddagger$ is the set of finite subsets of $\mathbb N$ and the model
   is ideally full: a proposition is a set of arrows whose membership depends only on the arrows’
-  values on some finite set of individuals (it is pinned down by that set), an entity of a higher
-  type is an applicative behaviour profile pinned down by a finite set in the same sense, and the
-  individuals are the natural numbers acted on by the arrows themselves. Propositions and properties
-  are thus about finitely many individuals and indifferent to how the arrows treat the rest.
-  Evaluation point: the sole object, at the identity arrow.
+  values on some finite set of numbers (it is pinned down by that set), and an entity of a higher
+  type is an applicative behaviour profile pinned down by a finite set in the same sense.
+  {{individuals}} Propositions and properties are thus about finitely many numbers and indifferent
+  to how the arrows treat the rest. Evaluation point: the sole object, at the identity arrow.
 
 
   {{sigma}}
@@ -28,21 +30,48 @@ definition: >-
 parameters:
   monoid:
     text: The monoid of arrows, as the member's part of Proposition D.5 gives it.
+  individuals:
+    text: What the individuals are. Each member is a model with the natural numbers; its variant
+      with a single individual is generated.
+    generate: true
+    default: naturals
+    values:
+      naturals:
+        text: The individuals are the natural numbers, acted on by the arrows themselves.
+        label: individuals ℕ
+      singleton:
+        text: >-
+          There is a single individual, which every arrow fixes; the arrows still act on
+          $\mathbb N$, which supplies the pinning sets.
+        label: one individual
   sigma:
-    text: The interpretation of Σ, fixed for each record.
+    text: The interpretation of Σ. Each member fixes one; its variants with the others are
+      generated.
+    generate: true
     values:
       # migration: the two texts the members shared. In `true-atom` the members named the
       # actual-world proposition by their identity arrow ($\{1_{\mathbb N}\}$, $\{f_1\}$,
       # $\{k_0\}$); here it is described instead.
-      top: >-
-        Interpretation of Σ, fixed for this record: each relational constant denotes the top element
-        of its type and each individual constant denotes one fixed individual.
-      true-atom: >-
-        Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type
-        $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of the
-        model, the actual-world proposition, whose only member is the identity arrow; every other
-        relational constant denotes the top element of its type and every individual constant one
-        fixed individual.
+      top:
+        text: >-
+          Interpretation of Σ, fixed for this record: each relational constant denotes the top
+          element of its type and each individual constant denotes one fixed individual.
+        label: Σ top
+      single-top:
+        # Cian Dorr, 2 October 2026.
+        text: >-
+          Interpretation of Σ, fixed for this record: Σ is a single relational constant $c$ of type
+          $t$, which denotes $\top$.
+        label: Σ one constant for ⊤
+      true-atom:
+        text: >-
+          Interpretation of Σ, fixed for this record: one designated relational constant $c$ of
+          type $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom
+          of the model, the actual-world proposition, whose only member is the identity arrow;
+          every other relational constant denotes the top element of its type and every individual
+          constant one fixed individual.
+        label: Σ true atom
+        requires: [actual-world-pinned]
 
 conditions:
 
@@ -73,7 +102,7 @@ conditions:
 
 - id: surjective
   text: >-
-    Every arrow is a surjection.
+    Every arrow is a surjection of $\mathbb N$.
 
 - id: positive-preserving
   text: >-
@@ -106,17 +135,59 @@ arguments:
     applied separately to each closed instance.
 
 - id: axiom-of-infinity
-  # Five members listed both verdicts; three listed only type e, Atomlessness giving type t.
-  holds: [axiom-of-infinity-e, axiom-of-infinity-t]
+  # revision: split on 2 October; its type-t half is axiom-of-infinity-t.
+  when: {individuals: naturals}
+  holds: [axiom-of-infinity-e]
   by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
   date: '2026-09-20'
   text: >-
     The individuals are the natural numbers and identity at the evaluation arrow is literal, so no
-    numeral counts them. The propositions that a given individual is fixed by the arrow, one for
-    each individual, are pairwise distinct and each has that individual as finite support, so there
-    are infinitely many propositions. The set of numerals at each type is invariant under every
-    arrow, hence has empty support and lies in the domain, so finite cardinality is standard and no
-    finite cardinality holds of the universal property at either type.
+    numeral counts them. The set of numerals at type $e$ is invariant under every arrow, hence has
+    empty support and lies in the domain, so finite cardinality is standard and no finite
+    cardinality holds of the universal property.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: Split from the argument for both types; the type-$t$ half, which does not need infinitely many individuals, is axiom-of-infinity-t.
+
+- id: axiom-of-infinity-t
+  holds: [axiom-of-infinity-t]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-09-20'
+  text: >-
+    The propositions that a given number is fixed by the arrow, one for each number, are pairwise
+    distinct and each has that number as finite support, so there are infinitely many
+    propositions. The set of numerals at type $t$ is invariant under every arrow, hence has empty
+    support and lies in the domain, so finite cardinality is standard and no finite cardinality
+    holds of the universal property.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: The type-$t$ half of the old argument, "individual" becoming "number", so that it covers the one-individual variants.
+
+- id: one-individual
+  when: {individuals: singleton}
+  fails: [axiom-of-infinity-e, infinity-e, possible-infinity-e]
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-02'
+  text: >-
+    There is one individual at the sole object, so no two individuals are distinct, and the numeral
+    $\operatorname{Suc}_e\mathbf{0}_e$ holds of the universal property at type $e$ at every arrow.
+
+- id: three-numbers
+  when: {individuals: singleton}
+  holds: [countable-boolean-completeness-r]
+  by: Claude Opus 5.5 (Anthropic), on Cian Dorr's question whether the failure of Boolean
+    Completeness at type $t$ refutes its countable form here
+  date: '2026-10-02'
+  text: >-
+    The natural numbers are the finite cardinalities at type $e$ (Background, after Goodsell), and
+    with a single individual there are three: $\mathbf{0}_e$, true of the empty property;
+    $\operatorname{Suc}_e\mathbf{0}_e$, true of the universal one; and the empty cardinality, which
+    is $\operatorname{Suc}_e$ of the second and of itself. By extensional fullness the property
+    of being one of these three is in the domain, so it bounds natural numberhood. A countable
+    property therefore has at most three members in its extension, and their join is its least
+    upper bound.
 
 - id: transversal-choice
   # migration: one argument for all eight, at Cian Dorr's direction (2 October): extensional
@@ -143,7 +214,7 @@ arguments:
     note: The Relational Choice and Transversal Choice arguments merged into one, stated for every extensionally full model.
 
 - id: sigma-top
-  when: {sigma: top}
+  when: {sigma: [top, single-top]}
   fails: [witnessed-possibility-r, separated-structure-r, independence-signature-r, distinctness-signature-r]
   by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
   date: '2026-09-22'
@@ -174,6 +245,17 @@ arguments:
     C(Σ) does not prove. The designated constant refutes neither: closed pure terms denote entities
     fixed by every arrow (Classicism, §3.5, p. 58), whereas $a$ is fixed by no arrow but the
     identity, so no closed pure term denotes $\lambda\bar x\, .\,a$.
+
+- id: sigma-single-top
+  when: {sigma: single-top}
+  holds: [no-contingency-signature-r, signature-b-r]
+  by: Cian Dorr (observation); recorded by Claude Opus 5.5 (Anthropic)
+  date: '2026-10-02'
+  text: >-
+    A closed sentence of the language of Σ denotes what the pure sentence with $\top_t$ in place of
+    $c$ denotes, since $c$ denotes $\top_t$; if true it is necessary by No Pure Contingency (the
+    shared argument no-pure-contingency). So No Contingency (signature Σ) holds, and B for sentences
+    of Σ with it: a true Σ-sentence is necessary, hence necessarily possible.
 
 - id: actual-world
   requires: [actual-world-pinned]
@@ -240,13 +322,16 @@ arguments:
   by: Andrew Bacon and Cian Dorr
   date: '2026-09-17'
   text: >-
-    By Proposition D.6.
+    By Proposition D.6, which asks that each arrow act surjectively both on the individuals and on
+    the pinning sets: a surjection of $\mathbb N$ induces a surjection of its finite subsets, and
+    the individuals are either the natural numbers or a single fixed one.
   revisions:
   - date: '2026-10-02'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
-    note: The three members' citations of Proposition D.6 stated once.
+    note: The three members' citations of Proposition D.6 stated once, with D.6's two surjectivity conditions spelled out so that it covers the one-individual variants.
 
 - id: barcan-positive
+  when: {individuals: naturals}
   requires: [positive-preserving]
   fails: [barcan-r]
   source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5, parts 3 and 4, pp. 77–78'}
@@ -284,6 +369,7 @@ arguments:
     note: The two members' copies stated once; each member's $N$, $i$ and $q$ moved to the condition transport-gap.
 
 - id: boolean-completeness
+  when: {individuals: naturals}
   requires: [unbounded-haecceities]
   fails: [boolean-completeness-r]
   source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5, parts 1–8, pp. 75–79'}
@@ -301,6 +387,7 @@ arguments:
     note: Stated once for the group, with the step from "ever stronger" to the missing least upper bound spelled out; each member's strongest persistent properties moved to the condition unbounded-haecceities.
 
 - id: countable-boolean-completeness
+  when: {individuals: naturals}
   requires: [unbounded-haecceities]
   fails: [countable-boolean-completeness-r]
   by: Claude Fable 5.1 (Anthropic)
@@ -337,6 +424,7 @@ arguments:
     note: The seven members' copies stated once, each member's family moved to the condition no-least-pinned-cover; the truncations' separate argument of 23 September, by Claude Fable 5.1 prompted by Cian Dorr, is now its witness, its own proof that the family is in the domain giving way to the profile above. The trawl's second arguments for the same verdict (25 September, DeepSeek, reviewed by OpenAI Codex) were dropped.
 
 - id: weakly-inextensible-comprehension
+  when: {individuals: naturals}
   # migration: the members' common argument, from the truncations' text with its witness moved
   # to the condition (2 October, at Cian Dorr's direction); each member's witness is its reason
   # under `meets`. The 25 September revision is the members' own.

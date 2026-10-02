@@ -73,6 +73,7 @@ arguments:
 # holds, fails, by and date.
 
 - fails: [barcan-r]
+  when: {individuals: naturals}
   source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(7), p. 78'}
   text: >-
     An arrow sending $1$ to $0$ sends everything to even numbers.
