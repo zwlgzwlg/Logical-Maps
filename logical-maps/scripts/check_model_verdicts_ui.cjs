@@ -223,11 +223,15 @@ const member={id:'gm',name:'Fixture: group member',status:'proved',satisfies:['e
   group:'g',settings:{monoid:'the truncations',sigma:'top'},meets:{perturbable:'g_n does.'},definition:'Arrows: the truncations. Σ is top.',
   arguments:[{holds:['e'],text:'Own.',when:{sigma:'top'}},{...group.arguments[0],group:'g'},
              {...group.arguments[1],group:'g',conditions:[{id:'perturbable',text:'Some arrow perturbs.',reason:'g_n does.'}]}].map(a=>a.group?strip(a):a)};
+// A general argument of the topic, which the member gets by meeting its condition.
+const generalArg={id:'gen-c',requires:['one-object'],holds:['c'],text:'In general.',by:'Topic author',date:'2026-03-04',file:'topics/t/arguments/gen-c.yaml'};
+member.arguments.push({...strip(generalArg),file:undefined,general:'gen-c',conditions:[{id:'one-object',text:'One object.',reason:'It has one.'}]});
+member.satisfies.push('c');
 // Its variant with the other value of the generated parameter, as the build exports it.
 const variant={...member,id:'gm-sigma-atom',name:'Fixture: group member [Σ atom]',variant_of:'gm',satisfies:['a'],violates:['b','e'],
   settings:{monoid:'the truncations',sigma:'atom'},definition:'Arrows: the truncations. Σ is an atom.',
   arguments:[member.arguments[1],member.arguments[2],{...strip(group.arguments[2]),group:'g'}]};
-const data3={...data,models:[member,variant],groups:[group]};
+const data3={...data,models:[member,variant],groups:[group],general_arguments:[generalArg],conditions:[{id:'one-object',text:'One object.'}]};
 const errors3=[],vc3=new VirtualConsole();vc3.on('jsdomError',e=>errors3.push(e));
 const dom3=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data3)),
   {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc3});
@@ -245,8 +249,17 @@ try{
   assert.match(shared[1].textContent,/Requires: Some arrow perturbs\. Here: g_n does\./,'A shared argument says which condition the member meets, and why');
   assert.match(shared[1].textContent,/Group author, 2026-03-02\./,'And who supplied it');
   assert.match(shared[1].textContent,/g#perturbed/);
+  const heads=[...page.querySelectorAll('h3.argument-source')].map(x=>x.textContent);
+  assert.deepEqual(heads,['From the group Fixture group','General arguments of the topic'],'Then the topic\'s general arguments');
+  const gen=page.querySelector('#argument-3');
+  assert.match(gen.textContent,/In general\..*Requires: One object\. Here: It has one\./,'A general argument says how the model meets its condition');
   const item=id=>page.querySelector(`.verdict-columns [data-principle="${id}"]`).closest('li');
   assert.equal(item('b').querySelector('button.vc').dataset.jump,'2','A verdict from a shared argument jumps to it');
+  // The general argument's page: its condition and the models it applies to.
+  gen.querySelector('button[data-open-argument="gen-c"]').click();
+  assert.equal(page.querySelector('h1').textContent,'gen-c');
+  assert.match(page.textContent,/Requiresone-object: One object\..*In general\..*Applies toFixture: group member/,'A general argument\'s page');
+  page.querySelector('#page-back').click();
   // The group's page.
   page.querySelector('button[data-open-group="g"]').click();
   assert.equal(page.querySelector('h1').textContent,'Fixture group');
@@ -260,6 +273,7 @@ try{
   const colNames=()=>[...page.querySelectorAll('table.group-grid th.gcol')].map(x=>x.textContent);
   assert.deepEqual(rowNames(),['group member'],'One row per member, named without the shared prefix');
   assert.deepEqual(colNames(),[],'Nothing varies across one member');
+  assert.match(page.textContent,/General arguments used.*gen-c ✓ C\. Every member\./,'The general arguments its models use');
   assert.match(page.textContent,/For every member, Σ atom: E: holds → fails\./,'What the parameter changes');
   page.querySelector('button[data-group-toggle="sigma"]').click();
   assert.deepEqual(rowNames(),['group member','Σ atom'],'The variant as a sub-row');

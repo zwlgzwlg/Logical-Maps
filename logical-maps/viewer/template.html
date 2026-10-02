@@ -979,6 +979,10 @@ const PROVENANCE = new Map((DATA.provenance || []).map(x => [x.id, x]));
 // member's shared arguments into its arguments, marked with the group.
 const GROUPS = DATA.groups || [];
 const byGid = new Map(GROUPS.map(g => [g.id, g]));
+// The topic's general arguments and the conditions they require; the build has already applied each
+// to every record meeting its conditions, marked with its id.
+const GENERAL = DATA.general_arguments || [], TOPIC_CONDITIONS = DATA.conditions || [];
+const byAid = new Map(GENERAL.map(a => [a.id, a])), byCid = new Map(TOPIC_CONDITIONS.map(c => [c.id, c]));
 const P = DATA.principles, R = DATA.results.map(r => ({...r, conclusion: r.conclusion === false ? FALSE : r.conclusion})), MODELS = DATA.models, T = DATA.topic;
 const byPid = new Map(P.map(p => [p.id, p])), byRid = new Map(R.map(r => [r.id, r])), byMid = new Map(MODELS.map(m => [m.id, m]));
 const ids = P.map(p => p.id);
@@ -2870,7 +2874,9 @@ function argumentHtml(m, a, i) {
     side?.folded ? `Folded in from the record <span class="mono">${esc(side.id)}</span>.` : '',
     a.provenance ? `Provenance: <span class="mono">provenance/${esc(a.provenance)}.yaml</span>.` : '',
     a.group && !m.shared ? `From the group <button class="lnk" data-open-group="${esc(a.group)}">${esc(byGid.get(a.group)?.name || a.group)}</button>.` : '',
-    a.id ? `<span class="mono">${esc(a.group || m.companion_of || m.id)}#${esc(a.id)}</span>` : '',
+    a.general && !m.shared ? `The topic’s general argument <button class="lnk" data-open-argument="${esc(a.general)}">${esc(a.general)}</button>.` : '',
+    a.given?.length && !m.shared ? `Given ${a.given.map(c => esc(name(c))).join(', ')}, which ${a.given.length > 1 ? 'hold' : 'holds'} by the model’s other arguments.` : '',
+    a.id && !a.general ? `<span class="mono">${esc(a.group || m.companion_of || m.id)}#${esc(a.id)}</span>` : '',
   ].filter(Boolean).join(' ');
   // A shared argument applies to a member through the conditions it requires; say why the member meets each.
   const conditions = (a.conditions || []).map(c => `<div class="note condition"><b>Requires:</b> ${fmt(c.text || '')}${c.reason ? ` <b>Here:</b> ${fmt(c.reason)}` : ''}</div>`).join('');
@@ -2904,11 +2910,12 @@ function argumentRoutes(m, c) { const list = argumentsFor(m, c); return list.len
 function argumentsSection(m) {
   const list = (m.arguments || []).map((a, i) => [a, i]);
   if (!list.length) return '';
-  const own = list.filter(([a]) => !a.group), shared = list.filter(([a]) => a.group);
+  const own = list.filter(([a]) => !a.group && !a.general), shared = list.filter(([a]) => a.group), general = list.filter(([a]) => a.general);
   const group = byGid.get(m.group);
   return `<h2>Arguments</h2><div class="arguments">${own.map(([a, i]) => argumentHtml(m, a, i)).join('')}</div>`
     + (shared.length ? `<h3 class="argument-source">From the group <button class="lnk" data-open-group="${esc(m.group)}">${esc(group?.name || m.group)}</button></h3>`
-      + `<div class="arguments">${shared.map(([a, i]) => argumentHtml(m, a, i)).join('')}</div>` : '');
+      + `<div class="arguments">${shared.map(([a, i]) => argumentHtml(m, a, i)).join('')}</div>` : '')
+    + (general.length ? `<h3 class="argument-source">General arguments of the topic</h3><div class="arguments">${general.map(([a, i]) => argumentHtml(m, a, i)).join('')}</div>` : '');
 }
 // A group's page. Its grid has a row for each member and, for a generated parameter whose variants
 // are shown, a sub-row for each variant; a column for each principle that some row records and the
@@ -3033,12 +3040,30 @@ function groupPage(g) {
       + `<p class="note shared-scope">${[when.length ? `At ${when.join(' and ')}.` : '', req.length ? `Requires ${req.join(' and ')}.` : '',
         `Applies to ${to.length === members.length ? 'every member' : to.length ? to.map(m => esc(shortName(g, m))).join('; ') : 'no member at its own settings, only to variants'}.`].filter(Boolean).join(' ')}</p></div>`;
   }).join('')}</div>`;
+  const used = GENERAL.filter(a => MODELS.some(m => (m.group === g.id) && (m.arguments || []).some(x => x.general === a.id)));
+  if (used.length) h += `<h2>General arguments used</h2><p class="note">Arguments of the topic that apply to some of these models, through conditions the group, a parameter’s value or a member meets.</p><ul class="src">${used.map(a => {
+    const ms = members.filter(m => (m.arguments || []).some(x => x.general === a.id));
+    return `<li><button class="lnk" data-open-argument="${esc(a.id)}">${esc(a.id)}</button> <span class="dim">${[...(a.holds || []).map(c => '✓ ' + esc(name(c))), ...(a.fails || []).map(c => '✗ ' + esc(name(c)))].join(', ')}. ${ms.length === members.length ? 'Every member' : ms.length ? ms.map(m => esc(shortName(g, m))).join('; ') : 'Variants only'}.</span></li>`;
+  }).join('')}</ul>`;
   h += `<h2>Definition</h2><div class="prose reading">${fmt(String(g.definition || '').replace(/\{\{\s*([a-z0-9-]+)\s*\}\}/g, '⟨$1⟩'))}</div>`;
   h += `<h2>Parameters</h2><dl class="group-params">${Object.entries(g.parameters || {}).map(([k, p]) => `<dt>⟨${esc(k)}⟩</dt><dd>${fmt(p.text)}`
     + (p.values ? `<ul class="src">${Object.entries(p.values).map(([v, t]) => `<li><b>${esc(valueLabel(p, v))}:</b> ${fmt(typeof t === 'string' ? t : t.text)}${(t && t.requires || []).length ? ` <span class="dim">Requires ${t.requires.map(esc).join(', ')}.</span>` : ''}</li>`).join('')}</ul>` : '') + '</dd>').join('')}</dl>`;
+  if (Object.keys(g.meets || {}).length) h += `<h2>Conditions every member meets</h2><ul class="src">${Object.entries(g.meets).map(([c, why]) => `<li><b>${esc(c)}:</b> ${fmt(byCid.get(c)?.text || '')} <span class="dim">Here: ${fmt(why)}</span></li>`).join('')}</ul>`;
   if ((g.conditions || []).length) h += `<h2>Conditions</h2><ul class="src">${g.conditions.map(c => `<li><b>${esc(c.id)}:</b> ${fmt(c.text)} <span class="dim">Met by ${members.filter(m => (m.meets || {})[c.id]).map(m => esc(shortName(g, m))).join('; ') || 'no member'}.</span></li>`).join('')}</ul>`;
   if (g.notes) h += `<h2>Notes</h2><div class="prose">${fmt(g.notes)}</div>`;
   return h + `<div class="file">${esc(g.file)}</div>`;
+}
+// A general argument's page: the argument, the conditions it requires, and the models it applies to.
+function generalArgumentPage(a) {
+  const users = MODELS.filter(m => !m.companion_of && (m.arguments || []).some(x => x.general === a.id));
+  const members = users.filter(m => !m.variant_of), variants = users.filter(m => m.variant_of);
+  let h = `<h1>${esc(a.id)}</h1><div class="badges"><span class="badge kind">general argument</span></div>`;
+  h += `<h2>Requires</h2><ul class="src">${(a.requires || []).map(c => `<li><b>${esc(c)}:</b> ${fmt(byCid.get(c)?.text || '')}</li>`).join('')}</ul>`;
+  if ((a.given || []).length) h += `<p class="note">Given ${a.given.map(c => `<button class="lnk" data-principle="${c}">${esc(name(c))}</button>`).join(', ')}: it applies only where the model’s other arguments record ${a.given.length > 1 ? 'these' : 'this'}.</p>`;
+  h += `<h2>Argument</h2><div class="arguments">${argumentHtml({ id: 'arguments', certificate: {}, shared: true }, { ...a, general: a.id }).replace('<details class="argument', '<details open class="argument')}</div>`;
+  h += `<h2>Applies to</h2><ul class="src">${members.map(m => `<li><button class="lnk" data-open-model="${esc(m.id)}">${esc(m.name)}</button></li>`).join('') || '<li class="dim">No recorded model.</li>'}</ul>`
+    + (variants.length ? `<p class="note">And ${variants.length} generated variant${variants.length > 1 ? 's' : ''} of grouped models.</p>` : '');
+  return h + `<div class="file">${esc(a.file)}</div>`;
 }
 function wireGroup(el, g) {
   const view = groupView(g.id), rerender = () => { const pane = document.getElementById('pane-page'), top = pane.scrollTop; renderPage(state.page); pane.scrollTop = top; };
@@ -3120,6 +3145,8 @@ function renderPage(sel) {
     h += `<div class="file">${esc(m.file)}</div>`;
   } else if (sel.type === 'group') {
     h += groupPage(byGid.get(sel.id));
+  } else if (sel.type === 'argument') {
+    h += generalArgumentPage(byAid.get(sel.id));
   } else if (sel.type === 'model-verdict') {
     const m = byMid.get(sel.id), e = modelEvidence(m, sel.principle);
     h += `<h1><button class="lnk" data-open-model="${m.id}" title="The model's page">${esc(m.name)}</button>: ${esc(name(sel.principle))}</h1>`;
@@ -3223,6 +3250,7 @@ function wire(el) {
   el.querySelectorAll('button[data-open-arg]').forEach(b => b.addEventListener('click', () => openPage({ type: 'model', id: b.dataset.openArg, jump: b.dataset.argPrinciple })));
   el.querySelectorAll('button[data-open-model]').forEach(b => b.addEventListener('click', () => openPage({ type: 'model', id: b.dataset.openModel })));
   el.querySelectorAll('button[data-open-group]').forEach(b => b.addEventListener('click', () => openPage({ type: 'group', id: b.dataset.openGroup })));
+  el.querySelectorAll('button[data-open-argument]').forEach(b => b.addEventListener('click', () => openPage({ type: 'argument', id: b.dataset.openArgument })));
   el.querySelectorAll('button[data-open-result]').forEach(b => b.addEventListener('click', () => openPage({ type: 'result', id: b.dataset.openResult })));
 }
 function relList(items) { return items.length ? `<ul class="rel">${items.map(([id, via]) => `<li><button data-principle="${id}">${esc(name(id))}</button>${via ? `<span class="via">${via}</span>` : ''}</li>`).join('')}</ul>` : `<div class="empty">—</div>`; }
