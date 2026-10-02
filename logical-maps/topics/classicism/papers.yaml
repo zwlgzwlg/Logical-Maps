@@ -80,6 +80,7 @@ papers:
     Branden Fitelson, with Claude (Anthropic) and GPT-6 Astra (OpenAI).
   url: https://github.com/zwlgzwlg/Logical-Maps/blob/main/logical-maps/topics/classicism/sources/prop-2-11-counterexample.pdf
   note: The PDF is also published with this map, in its sources folder.
+  file: sources/prop-2-11-counterexample.pdf
 - id: fitelson-prop-2-11-isabelle
   title: Proposition 2.11 refuted (Isabelle/HOL)
   citation: >-
