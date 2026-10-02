@@ -202,7 +202,7 @@ theorem sem_congr_const :
   | _, _, _, .all _, _, _, _, _ | _, _, _, .ex _, _, _, _, _ | _, _, _, .eq _, _, _, _, _
   | _, _, _, .constR _, _, _, _, _ | _, _, _, .negR _, _, _, _, _ | _, _, _, .andR _, _, _, _, _
   | _, _, _, .orR _, _, _, _, _ | _, _, _, .coextR _, _, _, _, _ | _, _, _, .boxR _, _, _, _, _
-  | _, _, _, .boxImpR _, _, _, _, _ => rfl
+  | _, _, _, .inclR _, _, _, _, _ => rfl
 
 /-- Closure (iii), for the application of an intension to an outer element: pinned by
 what pins the two. -/
@@ -253,7 +253,7 @@ theorem sem_pinned : ∀ {Γ : Ctx} {σ : Ty} {W : C} (h : B.W₀ ⟶ W) (t : Te
   | _, _, _, _, .constR _, _, _, _, _ | _, _, _, _, .negR _, _, _, _, _
   | _, _, _, _, .andR _, _, _, _, _ | _, _, _, _, .orR _, _, _, _, _
   | _, _, _, _, .coextR _, _, _, _, _ | _, _, _, _, .boxR _, _, _, _, _
-  | _, _, _, _, .boxImpR _, _, _, _, _ => fun _ _ _ _ => rfl
+  | _, _, _, _, .inclR _, _, _, _, _ => fun _ _ _ _ => rfl
 
 /-- The values of an assignment are pinned by one finite set, when every inner element is
 finitely pinned. -/

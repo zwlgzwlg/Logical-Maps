@@ -33,7 +33,7 @@ namespace Classicism.Meta
 theorem Term.pure_of_pureSig : ∀ {Γ : Ctx} {σ : Ty} (t : Term Signature.pure Γ σ), t.pure = true
   | _, _, .var _ | _, _, .and | _, _, .or | _, _, .not | _, _, .all _ | _, _, .ex _ | _, _, .eq _
   | _, _, .constR _ | _, _, .negR _ | _, _, .andR _ | _, _, .orR _ | _, _, .coextR _
-  | _, _, .boxR _ | _, _, .boxImpR _ => rfl
+  | _, _, .boxR _ | _, _, .inclR _ => rfl
   | _, _, .const c => nomatch c
   | _, _, .app f a => by simp [Term.pure, pure_of_pureSig f, pure_of_pureSig a]
   | _, _, .lam b => pure_of_pureSig b

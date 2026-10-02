@@ -258,7 +258,7 @@ theorem sem_truncate :
   | _, _, _, _, .and, _ | _, _, _, _, .or, _ | _, _, _, _, .not, _ | _, _, _, _, .all _, _
   | _, _, _, _, .ex _, _ | _, _, _, _, .eq _, _ | _, _, _, _, .constR _, _ | _, _, _, _, .negR _, _
   | _, _, _, _, .andR _, _ | _, _, _, _, .orR _, _ | _, _, _, _, .coextR _, _ | _, _, _, _, .boxR _, _
-  | _, _, _, _, .boxImpR _, _ => rfl
+  | _, _, _, _, .inclR _, _ => rfl
 
 theorem isModel_truncate (M : A.IsModel) : (A.truncate h).IsModel :=
   fun i t g => by rw [A.sem_truncate h, A.truncate_Incl h]; exact M (h ≫ i) t g

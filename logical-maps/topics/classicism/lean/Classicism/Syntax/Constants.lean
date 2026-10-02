@@ -24,7 +24,7 @@ def consts : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Set Sig.Const
   | _, _, .lam b => b.consts
   | _, _, .and | _, _, .or | _, _, .not | _, _, .all _ | _, _, .ex _ | _, _, .eq _ => ∅
   | _, _, .constR _ | _, _, .negR _ | _, _, .andR _ | _, _, .orR _ | _, _, .coextR _
-  | _, _, .boxR _ | _, _, .boxImpR _ => ∅
+  | _, _, .boxR _ | _, _, .inclR _ => ∅
 
 theorem consts_finite : ∀ {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ), t.consts.Finite
   | _, _, .var _ => Set.finite_empty
@@ -33,7 +33,7 @@ theorem consts_finite : ∀ {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ), t.consts.
   | _, _, .lam b => consts_finite b
   | _, _, .and | _, _, .or | _, _, .not | _, _, .all _ | _, _, .ex _ | _, _, .eq _ => Set.finite_empty
   | _, _, .constR _ | _, _, .negR _ | _, _, .andR _ | _, _, .orR _ | _, _, .coextR _
-  | _, _, .boxR _ | _, _, .boxImpR _ => Set.finite_empty
+  | _, _, .boxR _ | _, _, .inclR _ => Set.finite_empty
 
 theorem consts_app_left {Γ : Ctx} {σ : Ty} {ρ : RTy} (f : Term Sig Γ (σ ⇒ ρ)) (a : Term Sig Γ σ) :
     f.consts ⊆ (Term.app f a).consts := Set.subset_union_left
@@ -55,7 +55,7 @@ theorem consts_eq_empty_of_pure : ∀ {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ),
   | _, _, .lam b, h => consts_eq_empty_of_pure b h
   | _, _, .and, _ | _, _, .or, _ | _, _, .not, _ | _, _, .all _, _ | _, _, .ex _, _
   | _, _, .eq _, _ | _, _, .constR _, _ | _, _, .negR _, _ | _, _, .andR _, _ | _, _, .orR _, _
-  | _, _, .coextR _, _ | _, _, .boxR _, _ | _, _, .boxImpR _, _ => rfl
+  | _, _, .coextR _, _ | _, _, .boxR _, _ | _, _, .inclR _, _ => rfl
 
 end Term
 

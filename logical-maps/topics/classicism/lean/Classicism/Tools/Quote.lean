@@ -213,7 +213,7 @@ partial def quoteTerm (e : Expr) : QM (TSyntax `term) := do
     | (``Classicism.Rel.or, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.orR #[X, Y]
     | (``Classicism.Rel.coext, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.coextR #[X, Y]
     | (``Classicism.Rel.boxAt, #[τ, _, X]) => relOp e τ ``Classicism.Meta.Term.boxR #[X]
-    | (``Classicism.Rel.boxImp, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.boxImpR #[X, Y]
+    | (``Classicism.Rel.incl, #[τ, _, X, Y]) => relOp e τ ``Classicism.Meta.Term.inclR #[X, Y]
     | (``Eq, args) =>
       -- identity unapplied or partially applied, as η-reduction of `fun z => a = z` leaves it
       let σs ← exprToSyntax (← quoteTy args[0]!)
@@ -281,7 +281,7 @@ def reflectSimpSet : Array Name :=
     ``Classicism.Meta.RTy.constD_eq_rel, ``Classicism.Meta.RTy.negD_eq_rel,
     ``Classicism.Meta.RTy.andD_eq_rel, ``Classicism.Meta.RTy.orD_eq_rel,
     ``Classicism.Meta.RTy.coextD_eq_rel, ``Classicism.Meta.RTy.boxD_eq_rel,
-    ``Classicism.Meta.RTy.boxImpD_eq_rel, ``Classicism.Meta.Term.denote_weaken,
+    ``Classicism.Meta.RTy.inclD_eq_rel, ``Classicism.Meta.Term.denote_weaken,
     ``Classicism.imp, ``Classicism.iff, ``Classicism.Box, ``Classicism.Dia,
     ``Classicism.Rel.top, ``Classicism.Rel.bot, ``Classicism.Rel.le,
     ``Classicism.Meta.top_eq, ``Classicism.Meta.bot_eq, ``Classicism.Meta.imp_eq,

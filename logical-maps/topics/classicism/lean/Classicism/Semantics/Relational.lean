@@ -53,7 +53,7 @@ instance instPointwiseDenote (D : Type) : ∀ τ : RTy,
 
 /-! ### Reading each operation back gives the shallow layer's
 
-The shallow `Rel` at `Prop` reads `coext` as `↔`, `boxImp` as `→` and `boxAt` as
+The shallow `Rel` at `Prop` reads `coext` as `↔`, `incl` as `→` and `boxAt` as
 `□p := (p = True)`, where the recursions of `Denotation.lean`, following the object
 syntax, read them as `(¬p ∨ q) ∧ (¬q ∨ p)`, `¬p ∨ q` and `p = ⊤` with `⊤` the sentence
 `∀p.p ∨ ¬∀p.p`. The two agree by `propext`, which is what reflection of a shallow statement
@@ -93,11 +93,11 @@ theorem RTy.coextD_eq_rel (D : Type) : ∀ τ : RTy, RTy.coextD D τ = @Classici
 theorem RTy.boxD_eq_rel (D : Type) : ∀ τ : RTy, RTy.boxD D τ = @Classicism.Rel.boxAt _ (instRelDenote D τ)
   | .t => by funext p; exact box_eq p
   | .arr _ ρ => by funext X z; exact congrFun (RTy.boxD_eq_rel D ρ) (X z)
-theorem RTy.boxImpD_eq_rel (D : Type) : ∀ τ : RTy, RTy.boxImpD D τ = @Classicism.Rel.boxImp _ (instRelDenote D τ)
+theorem RTy.inclD_eq_rel (D : Type) : ∀ τ : RTy, RTy.inclD D τ = @Classicism.Rel.incl _ (instRelDenote D τ)
   | .t => by funext p q; exact imp_eq p q
   | .arr _ ρ => by
     funext X Y
-    exact congrArg (fun r => ∀ z, r z) (funext fun z => congrFun (congrFun (RTy.boxImpD_eq_rel D ρ) (X z)) (Y z))
+    exact congrArg (fun r => ∀ z, r z) (funext fun z => congrFun (congrFun (RTy.inclD_eq_rel D ρ) (X z)) (Y z))
 
 namespace Term
 
@@ -115,8 +115,8 @@ theorem denote_coextR : (Term.coextR (Sig := Sig) τ).denote I env = @Classicism
   RTy.coextD_eq_rel I.D τ
 theorem denote_boxR : (Term.boxR (Sig := Sig) τ).denote I env = @Classicism.Rel.boxAt _ (instRelDenote I.D τ) :=
   RTy.boxD_eq_rel I.D τ
-theorem denote_boxImpR : (Term.boxImpR (Sig := Sig) τ).denote I env = @Classicism.Rel.boxImp _ (instRelDenote I.D τ) :=
-  RTy.boxImpD_eq_rel I.D τ
+theorem denote_inclR : (Term.inclR (Sig := Sig) τ).denote I env = @Classicism.Rel.incl _ (instRelDenote I.D τ) :=
+  RTy.inclD_eq_rel I.D τ
 
 end Term
 

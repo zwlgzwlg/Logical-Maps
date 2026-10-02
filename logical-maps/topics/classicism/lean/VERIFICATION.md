@@ -32,12 +32,12 @@ all three checks, at the top level and under `∀` and `∃` (`Tests.simpCloses`
 BF under a binder (`viaSimp`, now naming `forall_congr`) and as the Fregean Axiom at the
 top level (`fregeanViaSimp`, new). Two library proofs were rewritten with `simp` as the
 demonstration and re-certified: `dia_ne_imp_ne` (derived in `C⁻`) and the Atomicity step
-lemma `pin_boxImp` (the step certifies in four seconds). The strict transformer needed the
+lemma `pin_incl` (the step certifies in four seconds). The strict transformer needed the
 same unfolding (`Strict.Transform.coreUnfolded`); with it, the `simp` controls transform
 into proofs from the eleven identities. `by_cases`, `decide` and `tauto` remain unusable,
 since they reach `Classical.choice`.
 
-**The paper's symbols** (same day): `⊆` for `boxImp` in `Core.lean`, always on; and in
+**The paper's symbols** (same day): `⊆` for `incl` in `Core.lean`, always on; and in
 `Classicism/Paper.lean`, scope `Classicism.Paper`, the paper's own `∧`, `∨`, `¬`, `⊤`, `⊥` at
 every relational type, plus `≡` for coextension. The connectives are elaborators that decide
 by type, `And`/`Or`/`Not` at `Prop` and the `Rel` operation elsewhere, so a file opening the
@@ -499,14 +499,14 @@ Functionality, which is the principle C lacks.
 
 **There is no induction on the structure of a relational type.** `Rel` is a class, not an
 inductive code, so any law whose proof recurses on type structure must be a class field
-discharged once per shape. That is how `boxAt`, `boxImp` and `Order.le_iff` are supplied.
+discharged once per shape. That is how `boxAt`, `incl` and `Order.le_iff` are supplied.
 `Order` also had to become a class separate from `Rel`: its arrow instance needs
 Modalized Functionality at `σ → τ`, which is proved from the `Rel (σ → τ)` fields, so as
 a field of `Rel` it would be circular. This is the main structural cost of the shallow
 approach and is what the metalogical layer's inductive types remove.
 
 **Defining the comprehension predicates in unpacked form was the right call.** They are
-written with `boxImp` and `boxAt`, so they need only `Rel τ`, and `persistent_iff_le`,
+written with `incl` and `boxAt`, so they need only `Rel τ`, and `persistent_iff_le`,
 `weaklyInextensible_iff_le` and `inextensible_iff_le` then *prove* that they agree with
 the Background's algebraic wording. Had they been defined algebraically, every
 comprehension principle would have had to carry an `[Order τ]` binder, which would be

@@ -157,7 +157,7 @@ relational type are two instances of one family, with different proofs.
 
 Because `Rel` is a class and not an inductive code, **there is no induction on the
 structure of a relational type.** Anything whose proof recurses on that structure has to
-be a class field, discharged once per shape. That is how `boxAt`, `boxImp` and the order
+be a class field, discharged once per shape. That is how `boxAt`, `incl` and the order
 law `Order.le_iff` are supplied. `Order` has to be a class of its own rather than another
 `Rel` field, because its arrow instance needs Modalized Functionality at `σ → τ`, which
 is proved *from* the `Rel (σ → τ)` fields; as a field it would be circular. This is the

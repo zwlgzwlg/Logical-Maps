@@ -70,7 +70,7 @@ def prenameImpl : ∀ {Γ Δ : Ctx}, PRen Γ Δ → ∀ {σ : Ty}, Term Sig Γ �
   | _, _, _, _, .orR ρ => some (.orR ρ)
   | _, _, _, _, .coextR ρ => some (.coextR ρ)
   | _, _, _, _, .boxR ρ => some (.boxR ρ)
-  | _, _, _, _, .boxImpR ρ => some (.boxImpR ρ)
+  | _, _, _, _, .inclR ρ => some (.inclR ρ)
 
 /-- Rename along a partial renaming, failing if a variable has no image. Through
 `Term.rec`, as `Term.rename` is: the kernel evaluates it in the translator's
@@ -89,7 +89,7 @@ def prename : ∀ {Γ Δ : Ctx}, PRen Γ Δ → ∀ {σ : Ty}, Term Sig Γ σ �
       (constR := fun ρ _ _ => some (Term.constR ρ)) (negR := fun ρ _ _ => some (Term.negR ρ))
       (andR := fun ρ _ _ => some (Term.andR ρ)) (orR := fun ρ _ _ => some (Term.orR ρ))
       (coextR := fun ρ _ _ => some (Term.coextR ρ)) (boxR := fun ρ _ _ => some (Term.boxR ρ))
-      (boxImpR := fun ρ _ _ => some (Term.boxImpR ρ))
+      (inclR := fun ρ _ _ => some (Term.inclR ρ))
       t Δ r
 
 section
@@ -113,7 +113,7 @@ variable {Γ Δ : Ctx} (r : PRen Γ Δ)
 @[simp] theorem prename_orR (ρ : RTy) : prename (Sig := Sig) r (.orR ρ) = some (.orR ρ) := rfl
 @[simp] theorem prename_coextR (ρ : RTy) : prename (Sig := Sig) r (.coextR ρ) = some (.coextR ρ) := rfl
 @[simp] theorem prename_boxR (ρ : RTy) : prename (Sig := Sig) r (.boxR ρ) = some (.boxR ρ) := rfl
-@[simp] theorem prename_boxImpR (ρ : RTy) : prename (Sig := Sig) r (.boxImpR ρ) = some (.boxImpR ρ) := rfl
+@[simp] theorem prename_inclR (ρ : RTy) : prename (Sig := Sig) r (.inclR ρ) = some (.inclR ρ) := rfl
 end
 
 /-- A partial renaming is a section of a renaming: what it sends `u` to, `w` sends back. -/
@@ -156,7 +156,7 @@ theorem prename_sound : ∀ {Γ Δ : Ctx} {r : PRen Γ Δ} {w : Ren Δ Γ} (_ : 
   | _, _, _, _, _, _, .all _, _, e | _, _, _, _, _, _, .ex _, _, e | _, _, _, _, _, _, .eq _, _, e
   | _, _, _, _, _, _, .constR _, _, e | _, _, _, _, _, _, .negR _, _, e | _, _, _, _, _, _, .andR _, _, e
   | _, _, _, _, _, _, .orR _, _, e | _, _, _, _, _, _, .coextR _, _, e | _, _, _, _, _, _, .boxR _, _, e
-  | _, _, _, _, _, _, .boxImpR _, _, e => by
+  | _, _, _, _, _, _, .inclR _, _, e => by
     cases e; rfl
 
 /-- The partial renaming that drops the innermost variable. -/
@@ -262,7 +262,7 @@ def step : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Term Sig Γ σ :=
       (constR := fun ρ => Term.constR ρ) (negR := fun ρ => Term.negR ρ)
       (andR := fun ρ => Term.andR ρ) (orR := fun ρ => Term.orR ρ)
       (coextR := fun ρ => Term.coextR ρ) (boxR := fun ρ => Term.boxR ρ)
-      (boxImpR := fun ρ => Term.boxImpR ρ) t
+      (inclR := fun ρ => Term.inclR ρ) t
 
 section
 variable {Γ : Ctx}
@@ -284,7 +284,7 @@ variable {Γ : Ctx}
 @[simp] theorem step_orR (ρ : RTy) : step (Sig := Sig) (Γ := Γ) (.orR ρ) = .orR ρ := rfl
 @[simp] theorem step_coextR (ρ : RTy) : step (Sig := Sig) (Γ := Γ) (.coextR ρ) = .coextR ρ := rfl
 @[simp] theorem step_boxR (ρ : RTy) : step (Sig := Sig) (Γ := Γ) (.boxR ρ) = .boxR ρ := rfl
-@[simp] theorem step_boxImpR (ρ : RTy) : step (Sig := Sig) (Γ := Γ) (.boxImpR ρ) = .boxImpR ρ := rfl
+@[simp] theorem step_inclR (ρ : RTy) : step (Sig := Sig) (Γ := Γ) (.inclR ρ) = .inclR ρ := rfl
 end
 
 theorem conv_step : ∀ {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ), t ≡ step t
@@ -294,7 +294,7 @@ theorem conv_step : ∀ {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ), t ≡ step t
   | _, _, .var _ | _, _, .const _ | _, _, .and | _, _, .or | _, _, .not
   | _, _, .all _ | _, _, .ex _ | _, _, .eq _ => Conv.refl _
   | _, _, .constR _ | _, _, .negR _ | _, _, .andR _ | _, _, .orR _ | _, _, .coextR _
-  | _, _, .boxR _ | _, _, .boxImpR _ => Conv.refl _
+  | _, _, .boxR _ | _, _, .inclR _ => Conv.refl _
 
 /-- `n` passes of parallel β-reduction. Through `Nat.rec`, for the kernel. -/
 def nf {Γ : Ctx} {σ : Ty} (n : Nat) (t : Term Sig Γ σ) : Term Sig Γ σ :=

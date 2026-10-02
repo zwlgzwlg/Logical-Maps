@@ -408,7 +408,7 @@ as before.
 **What it bought.** Transport (`sem_push`) and η hold in every premodel, the model
 condition entering only where an inner witness is chosen: substitution, β, δ, and the
 clauses for the connectives. The **Boolean operations are set operations** at every
-relational type (`app_negRead`, `app_andRead`, `app_boxImpRead`, …), the draft's lemma of
+relational type (`app_negRead`, `app_andRead`, `app_inclRead`, …), the draft's lemma of
 that name, so the δ-rule is a lemma per operation (`sem_delta`), where the applicative
 form read each constant by recursion on the type. The readings depend on the actions and
 the inclusion alone, so they transfer to a truncation by `rfl`, and the per-reading
@@ -700,7 +700,7 @@ of `Results/Lists.lean` are of this kind.
 
 **`Pointwise τ`** (`Classicism/Pointwise.lean`), for a shallow core at a Rel-parameter:
 the shallow `Rel τ` supplies the pointwise operations and the pointwise implication
-`boxImp` as data and only the three laws Intensionality needs, so at a type parameter
+`incl` as data and only the three laws Intensionality needs, so at a type parameter
 nothing can be said about them, while the paper reasons freely about tuples ("by
 Leibniz's law", "under the box"). The class states the rules of natural deduction read
 pointwise — `⊑` a preorder, `∧_τ` a meet, `X ∧ ¬X` below everything, `const_τ p` above

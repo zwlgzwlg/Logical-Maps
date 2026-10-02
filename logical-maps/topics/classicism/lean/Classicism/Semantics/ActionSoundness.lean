@@ -98,7 +98,7 @@ theorem sem_push (M : A.IsModel) : ∀ {Γ : Ctx} {σ : Ty} {W : C} (h : A.W₀ 
   | _, _, _, _, .orR ρ, _, _, _ => by cases ρ <;> rfl
   | _, _, _, _, .coextR ρ, _, _, _ => by cases ρ <;> rfl
   | _, _, _, _, .boxR ρ, _, _, _ => by cases ρ <;> rfl
-  | _, _, _, _, .boxImpR ρ, _, _, _ => by cases ρ <;> rfl
+  | _, _, _, _, .inclR ρ, _, _, _ => by cases ρ <;> rfl
 
 /-! ### Renaming and substitution pull an assignment back -/
 
@@ -111,7 +111,7 @@ theorem sem_rename : ∀ {Γ Δ : Ctx} (r : Ren Γ Δ) {σ : Ty} {W : C} (h : A.
   | _, _, _, _, _, _, .not, _ | _, _, _, _, _, _, .all _, _ | _, _, _, _, _, _, .ex _, _
   | _, _, _, _, _, _, .eq _, _ | _, _, _, _, _, _, .constR _, _ | _, _, _, _, _, _, .negR _, _
   | _, _, _, _, _, _, .andR _, _ | _, _, _, _, _, _, .orR _, _ | _, _, _, _, _, _, .coextR _, _
-  | _, _, _, _, _, _, .boxR _, _ | _, _, _, _, _, _, .boxImpR _, _ => rfl
+  | _, _, _, _, _, _, .boxR _, _ | _, _, _, _, _, _, .inclR _, _ => rfl
   | _, _, r, _, _, h, .app f a, g => by
     show A.apply (A.sem h (f.rename r) g) (A.sem h (a.rename r) g) = _
     rw [sem_rename r h f g, sem_rename r h a g]; rfl
@@ -164,7 +164,7 @@ theorem sem_subst (M : A.IsModel) : ∀ {Γ Δ : Ctx} (s : Sub Sig Γ Δ) {σ : 
   | _, _, _, _, _, _, .not, _ | _, _, _, _, _, _, .all _, _ | _, _, _, _, _, _, .ex _, _
   | _, _, _, _, _, _, .eq _, _ | _, _, _, _, _, _, .constR _, _ | _, _, _, _, _, _, .negR _, _
   | _, _, _, _, _, _, .andR _, _ | _, _, _, _, _, _, .orR _, _ | _, _, _, _, _, _, .coextR _, _
-  | _, _, _, _, _, _, .boxR _, _ | _, _, _, _, _, _, .boxImpR _, _ => rfl
+  | _, _, _, _, _, _, .boxR _, _ | _, _, _, _, _, _, .inclR _, _ => rfl
   | _, _, s, _, _, h, .app f a, g => by
     show A.apply (A.sem h (f.subst s) g) (A.sem h (a.subst s) g) = _
     rw [sem_subst M s h f g, sem_subst M s h a g]; rfl
@@ -216,7 +216,7 @@ theorem sem_delta : ∀ {Γ : Ctx} {σ : Ty} {a b : Term Sig Γ σ}, Delta a b �
   | _, _, .orR ρ, _, h, _, _, _ => by cases ρ <;> cases h <;> rfl
   | _, _, .coextR ρ, _, h, _, _, _ => by cases ρ <;> cases h <;> rfl
   | _, _, .boxR ρ, _, h, _, _, _ => by cases ρ <;> cases h <;> rfl
-  | _, _, .boxImpR ρ, _, h, _, _, _ => by cases ρ <;> cases h <;> rfl
+  | _, _, .inclR ρ, _, h, _, _, _ => by cases ρ <;> cases h <;> rfl
   | _, _, .var _, _, h, _, _, _ | _, _, .const _, _, h, _, _, _ | _, _, .app _ _, _, h, _, _, _
   | _, _, .lam _, _, h, _, _, _ | _, _, .and, _, h, _, _, _ | _, _, .or, _, h, _, _, _
   | _, _, .not, _, h, _, _, _ | _, _, .all _, _, h, _, _, _ | _, _, .ex _, _, h, _, _, _

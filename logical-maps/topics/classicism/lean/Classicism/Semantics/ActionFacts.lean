@@ -236,13 +236,13 @@ theorem truncate_boxRead : ∀ (ρ : RTy) (W : C), (A.truncate h).boxRead ρ W =
     funext _ _ _ U _ _
     simp only [boxRead, truncate_apply, truncate_boxRead ρ U, truncate_Incl]
 
-theorem truncate_boxImpRead : ∀ (ρ : RTy) (W : C), (A.truncate h).boxImpRead ρ W = A.boxImpRead ρ W
+theorem truncate_inclRead : ∀ (ρ : RTy) (W : C), (A.truncate h).inclRead ρ W = A.inclRead ρ W
   | .t, _ => by
     funext _ _ _ U _ _
-    simp only [boxImpRead, truncate_apply, truncate_orRead, truncate_notRead]
+    simp only [inclRead, truncate_apply, truncate_orRead, truncate_notRead]
   | .arr _ ρ, _ => by
     funext _ _ _ U _ _
-    simp only [boxImpRead, truncate_apply, truncate_allRead, truncate_boxImpRead ρ, truncate_Incl]
+    simp only [inclRead, truncate_apply, truncate_allRead, truncate_inclRead ρ, truncate_Incl]
 
 /-- The paper's transfer lemma: `⟦A⟧_{A_h, i} = ⟦A⟧_{A, i∘h}`. -/
 theorem sem_truncate :
@@ -277,7 +277,7 @@ theorem sem_truncate :
   | _, _, _, _, .orR ρ, _ => truncate_orRRead A h ρ _
   | _, _, _, _, .coextR ρ, _ => truncate_coextRead A h ρ _
   | _, _, _, _, .boxR ρ, _ => truncate_boxRead A h ρ _
-  | _, _, _, _, .boxImpR ρ, _ => truncate_boxImpRead A h ρ _
+  | _, _, _, _, .inclR ρ, _ => truncate_inclRead A h ρ _
 
 theorem isModel_truncate (M : A.IsModel) : (A.truncate h).IsModel :=
   fun i t g => by rw [A.sem_truncate h, A.truncate_Incl h]; exact M (h ≫ i) t g

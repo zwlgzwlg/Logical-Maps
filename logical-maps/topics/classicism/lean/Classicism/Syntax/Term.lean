@@ -86,7 +86,7 @@ inductive Term (Sig : Signature) : Ctx → Ty → Type
   /-- The pointwise box `□_ρ : ρ → ρ`. -/
   | boxR {Γ} (ρ : RTy) : Term Sig Γ (ρ ⇒ ρ)
   /-- Pointwise implication at `ρ`, `ρ → ρ → t`. -/
-  | boxImpR {Γ} (ρ : RTy) : Term Sig Γ (ρ ⇒ ρ ⇒ RTy.t)
+  | inclR {Γ} (ρ : RTy) : Term Sig Γ (ρ ⇒ ρ ⇒ RTy.t)
 
 /-- A formula: a term of type `t`. -/
 abbrev Formula (Sig : Signature) (Γ : Ctx) : Type := Term Sig Γ RTy.t
@@ -171,9 +171,9 @@ def unfoldBox : ∀ (ρ : RTy), Option (Term Sig Γ (ρ ⇒ ρ))
   | .t => some (.lam (box v0))
   | .arr _ ρ => some (.lam (.lam (.app (.boxR ρ) (.app v1 v0))))
 /-- Pointwise implication at `t` is `λp q. p → q`; at `σ → ρ`, `λX Y. ∀z. X z ⊑_ρ Y z`. -/
-def unfoldBoxImp : ∀ (ρ : RTy), Option (Term Sig Γ (ρ ⇒ ρ ⇒ RTy.t))
+def unfoldIncl : ∀ (ρ : RTy), Option (Term Sig Γ (ρ ⇒ ρ ⇒ RTy.t))
   | .t => some (.lam (.lam (imp v1 v0)))
-  | .arr _ ρ => some (.lam (.lam (forall' (.app (.app (.boxImpR ρ) (.app v2 v0)) (.app v1 v0)))))
+  | .arr _ ρ => some (.lam (.lam (forall' (.app (.app (.inclR ρ) (.app v2 v0)) (.app v1 v0)))))
 
 /-- The unfolding of a term that is a type-subscripted operation at a constructor type;
 `none` for every other term, and stuck at a type parameter. -/
@@ -184,7 +184,7 @@ def unfoldR : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Option (Term Sig Γ �
   | _, _, .orR ρ => unfoldOr ρ
   | _, _, .coextR ρ => unfoldCoext ρ
   | _, _, .boxR ρ => unfoldBox ρ
-  | _, _, .boxImpR ρ => unfoldBoxImp ρ
+  | _, _, .inclR ρ => unfoldIncl ρ
   | _, _, _ => none
 
 /-! ### Purity
@@ -201,7 +201,7 @@ def pure : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Bool
   | _, _, .lam b => b.pure
   | _, _, .and | _, _, .or | _, _, .not | _, _, .all _ | _, _, .ex _ | _, _, .eq _ => true
   | _, _, .constR _ | _, _, .negR _ | _, _, .andR _ | _, _, .orR _ | _, _, .coextR _
-  | _, _, .boxR _ | _, _, .boxImpR _ => true
+  | _, _, .boxR _ | _, _, .inclR _ => true
 
 /-! ### Renaming -/
 
@@ -263,7 +263,7 @@ def renameImpl : ∀ {Γ Δ : Ctx}, Ren Γ Δ → ∀ {σ : Ty}, Term Sig Γ σ 
   | _, _, _, _, .orR ρ => .orR ρ
   | _, _, _, _, .coextR ρ => .coextR ρ
   | _, _, _, _, .boxR ρ => .boxR ρ
-  | _, _, _, _, .boxImpR ρ => .boxImpR ρ
+  | _, _, _, _, .inclR ρ => .inclR ρ
 
 /-- Apply a renaming to a term.
 
@@ -285,7 +285,7 @@ def rename : ∀ {Γ Δ : Ctx}, Ren Γ Δ → ∀ {σ : Ty}, Term Sig Γ σ → 
       (constR := fun ρ _ _ => Term.constR ρ) (negR := fun ρ _ _ => Term.negR ρ)
       (andR := fun ρ _ _ => Term.andR ρ) (orR := fun ρ _ _ => Term.orR ρ)
       (coextR := fun ρ _ _ => Term.coextR ρ) (boxR := fun ρ _ _ => Term.boxR ρ)
-      (boxImpR := fun ρ _ _ => Term.boxImpR ρ)
+      (inclR := fun ρ _ _ => Term.inclR ρ)
       t Δ r
 
 section
@@ -308,7 +308,7 @@ variable {Γ Δ : Ctx} (r : Ren Γ Δ)
 @[simp] theorem rename_orR (ρ : RTy) : rename (Sig := Sig) r (.orR ρ) = .orR ρ := rfl
 @[simp] theorem rename_coextR (ρ : RTy) : rename (Sig := Sig) r (.coextR ρ) = .coextR ρ := rfl
 @[simp] theorem rename_boxR (ρ : RTy) : rename (Sig := Sig) r (.boxR ρ) = .boxR ρ := rfl
-@[simp] theorem rename_boxImpR (ρ : RTy) : rename (Sig := Sig) r (.boxImpR ρ) = .boxImpR ρ := rfl
+@[simp] theorem rename_inclR (ρ : RTy) : rename (Sig := Sig) r (.inclR ρ) = .inclR ρ := rfl
 end
 
 /-- Weakening: the same term, with a new innermost variable it does not mention. -/
@@ -317,7 +317,7 @@ abbrev weaken {Γ : Ctx} {τ σ : Ty} (a : Term Sig Γ σ) : Term Sig (τ :: Γ)
 theorem rename_id : ∀ {Γ : Ctx} {σ : Ty} (a : Term Sig Γ σ), a.rename Ren.id = a
   | _, _, .var _ | _, _, .const _ | _, _, .and | _, _, .or | _, _, .not
   | _, _, .all _ | _, _, .ex _ | _, _, .eq _ | _, _, .constR _ | _, _, .negR _ | _, _, .andR _
-  | _, _, .orR _ | _, _, .coextR _ | _, _, .boxR _ | _, _, .boxImpR _ => rfl
+  | _, _, .orR _ | _, _, .coextR _ | _, _, .boxR _ | _, _, .inclR _ => rfl
   | _, _, .app f a => by simp [rename_id f, rename_id a]
   | _, _, .lam b => by simp [Ren.lift_id, rename_id b]
 
@@ -327,7 +327,7 @@ theorem rename_rename : ∀ {Γ Δ Θ : Ctx} (r : Ren Δ Θ) (r' : Ren Γ Δ) {�
   | _, _, _, _, _, _, .or | _, _, _, _, _, _, .not | _, _, _, _, _, _, .all _
   | _, _, _, _, _, _, .ex _ | _, _, _, _, _, _, .eq _ | _, _, _, _, _, _, .constR _
   | _, _, _, _, _, _, .negR _ | _, _, _, _, _, _, .andR _ | _, _, _, _, _, _, .orR _
-  | _, _, _, _, _, _, .coextR _ | _, _, _, _, _, _, .boxR _ | _, _, _, _, _, _, .boxImpR _ => rfl
+  | _, _, _, _, _, _, .coextR _ | _, _, _, _, _, _, .boxR _ | _, _, _, _, _, _, .inclR _ => rfl
   | _, _, _, r, r', _, .app f a => by simp [rename_rename r r' f, rename_rename r r' a]
   | _, _, _, r, r', _, .lam b => by
     simp [rename_rename (Ren.lift r) (Ren.lift r') b, Ren.lift_comp]
@@ -398,7 +398,7 @@ def substImpl : ∀ {Γ Δ : Ctx}, Sub Sig Γ Δ → ∀ {σ : Ty}, Term Sig Γ 
   | _, _, _, _, .orR ρ => .orR ρ
   | _, _, _, _, .coextR ρ => .coextR ρ
   | _, _, _, _, .boxR ρ => .boxR ρ
-  | _, _, _, _, .boxImpR ρ => .boxImpR ρ
+  | _, _, _, _, .inclR ρ => .inclR ρ
 
 /-- Apply a substitution to a term. Through `Term.rec`, as `rename` is, and for the same
 reason. -/
@@ -415,7 +415,7 @@ def subst : ∀ {Γ Δ : Ctx}, Sub Sig Γ Δ → ∀ {σ : Ty}, Term Sig Γ σ �
       (constR := fun ρ _ _ => Term.constR ρ) (negR := fun ρ _ _ => Term.negR ρ)
       (andR := fun ρ _ _ => Term.andR ρ) (orR := fun ρ _ _ => Term.orR ρ)
       (coextR := fun ρ _ _ => Term.coextR ρ) (boxR := fun ρ _ _ => Term.boxR ρ)
-      (boxImpR := fun ρ _ _ => Term.boxImpR ρ)
+      (inclR := fun ρ _ _ => Term.inclR ρ)
       t Δ s
 
 section
@@ -438,7 +438,7 @@ variable {Γ Δ : Ctx} (s : Sub Sig Γ Δ)
 @[simp] theorem subst_orR (ρ : RTy) : subst (Sig := Sig) s (.orR ρ) = .orR ρ := rfl
 @[simp] theorem subst_coextR (ρ : RTy) : subst (Sig := Sig) s (.coextR ρ) = .coextR ρ := rfl
 @[simp] theorem subst_boxR (ρ : RTy) : subst (Sig := Sig) s (.boxR ρ) = .boxR ρ := rfl
-@[simp] theorem subst_boxImpR (ρ : RTy) : subst (Sig := Sig) s (.boxImpR ρ) = .boxImpR ρ := rfl
+@[simp] theorem subst_inclR (ρ : RTy) : subst (Sig := Sig) s (.inclR ρ) = .inclR ρ := rfl
 end
 
 /-- `b[a]`: substitute `a` for the innermost variable of `b`. This is what a β-step
@@ -450,7 +450,7 @@ abbrev instantiate {Γ : Ctx} {σ τ : Ty} (b : Term Sig (σ :: Γ) τ) (a : Ter
 theorem subst_id : ∀ {Γ : Ctx} {σ : Ty} (a : Term Sig Γ σ), a.subst Sub.id = a
   | _, _, .var _ | _, _, .const _ | _, _, .and | _, _, .or | _, _, .not
   | _, _, .all _ | _, _, .ex _ | _, _, .eq _ | _, _, .constR _ | _, _, .negR _ | _, _, .andR _
-  | _, _, .orR _ | _, _, .coextR _ | _, _, .boxR _ | _, _, .boxImpR _ => rfl
+  | _, _, .orR _ | _, _, .coextR _ | _, _, .boxR _ | _, _, .inclR _ => rfl
   | _, _, .app f a => by simp [subst_id f, subst_id a]
   | _, _, .lam b => by simp [Sub.lift_id, subst_id b]
 
@@ -460,7 +460,7 @@ theorem rename_eq_subst : ∀ {Γ Δ : Ctx} (r : Ren Γ Δ) {σ : Ty} (a : Term 
   | _, _, _, _, .var _ | _, _, _, _, .const _ | _, _, _, _, .and | _, _, _, _, .or
   | _, _, _, _, .not | _, _, _, _, .all _ | _, _, _, _, .ex _ | _, _, _, _, .eq _
   | _, _, _, _, .constR _ | _, _, _, _, .negR _ | _, _, _, _, .andR _ | _, _, _, _, .orR _
-  | _, _, _, _, .coextR _ | _, _, _, _, .boxR _ | _, _, _, _, .boxImpR _ => rfl
+  | _, _, _, _, .coextR _ | _, _, _, _, .boxR _ | _, _, _, _, .inclR _ => rfl
   | _, _, r, _, .app f a => by simp [rename_eq_subst r f, rename_eq_subst r a]
   | _, _, r, _, .lam b => by
     simp [rename_eq_subst (Ren.lift r) b, Sub.lift_ofRen]
@@ -488,7 +488,7 @@ theorem subst_rename : ∀ {Γ Δ Θ : Ctx} (s : Sub Sig Δ Θ) (r : Ren Γ Δ) 
   | _, _, _, _, _, _, .or | _, _, _, _, _, _, .not | _, _, _, _, _, _, .all _
   | _, _, _, _, _, _, .ex _ | _, _, _, _, _, _, .eq _ | _, _, _, _, _, _, .constR _
   | _, _, _, _, _, _, .negR _ | _, _, _, _, _, _, .andR _ | _, _, _, _, _, _, .orR _
-  | _, _, _, _, _, _, .coextR _ | _, _, _, _, _, _, .boxR _ | _, _, _, _, _, _, .boxImpR _ => rfl
+  | _, _, _, _, _, _, .coextR _ | _, _, _, _, _, _, .boxR _ | _, _, _, _, _, _, .inclR _ => rfl
   | _, _, _, s, r, _, .app f a => by simp [subst_rename s r f, subst_rename s r a]
   | _, _, _, s, r, _, .lam b => by
     simp [subst_rename (Sub.lift s) (Ren.lift r) b, Sub.lift_compRen]
@@ -509,7 +509,7 @@ theorem rename_subst : ∀ {Γ Δ Θ : Ctx} (r : Ren Δ Θ) (s : Sub Sig Γ Δ) 
   | _, _, _, _, _, _, .or | _, _, _, _, _, _, .not | _, _, _, _, _, _, .all _
   | _, _, _, _, _, _, .ex _ | _, _, _, _, _, _, .eq _ | _, _, _, _, _, _, .constR _
   | _, _, _, _, _, _, .negR _ | _, _, _, _, _, _, .andR _ | _, _, _, _, _, _, .orR _
-  | _, _, _, _, _, _, .coextR _ | _, _, _, _, _, _, .boxR _ | _, _, _, _, _, _, .boxImpR _ => rfl
+  | _, _, _, _, _, _, .coextR _ | _, _, _, _, _, _, .boxR _ | _, _, _, _, _, _, .inclR _ => rfl
   | _, _, _, r, s, _, .app f a => by simp [rename_subst r s f, rename_subst r s a]
   | _, _, _, r, s, _, .lam b => by
     simp [rename_subst (Ren.lift r) (Sub.lift s) b, Ren.lift_compSub]
@@ -530,7 +530,7 @@ theorem subst_subst : ∀ {Γ Δ Θ : Ctx} (s : Sub Sig Δ Θ) (s' : Sub Sig Γ 
   | _, _, _, _, _, _, .or | _, _, _, _, _, _, .not | _, _, _, _, _, _, .all _
   | _, _, _, _, _, _, .ex _ | _, _, _, _, _, _, .eq _ | _, _, _, _, _, _, .constR _
   | _, _, _, _, _, _, .negR _ | _, _, _, _, _, _, .andR _ | _, _, _, _, _, _, .orR _
-  | _, _, _, _, _, _, .coextR _ | _, _, _, _, _, _, .boxR _ | _, _, _, _, _, _, .boxImpR _ => rfl
+  | _, _, _, _, _, _, .coextR _ | _, _, _, _, _, _, .boxR _ | _, _, _, _, _, _, .inclR _ => rfl
   | _, _, _, s, s', _, .app f a => by simp [subst_subst s s' f, subst_subst s s' a]
   | _, _, _, s, s', _, .lam b => by
     simp [subst_subst (Sub.lift s) (Sub.lift s') b, Sub.lift_comp]

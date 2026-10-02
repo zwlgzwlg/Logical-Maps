@@ -84,7 +84,7 @@ theorem _root_.Classicism.Meta.Term.pure_ofPure :
     ∀ {Γ : Ctx} {σ : Ty} (t : Term Signature.pure Γ σ), (Term.ofPure (Sig := Sig) t).pure = true
   | _, _, .var _ | _, _, .and | _, _, .or | _, _, .not | _, _, .all _ | _, _, .ex _ | _, _, .eq _
   | _, _, .constR _ | _, _, .negR _ | _, _, .andR _ | _, _, .orR _ | _, _, .coextR _
-  | _, _, .boxR _ | _, _, .boxImpR _ => rfl
+  | _, _, .boxR _ | _, _, .inclR _ => rfl
   | _, _, .const c => nomatch c
   | _, _, .app f a => by simp [Term.ofPure_app, Term.pure, Term.pure_ofPure f, Term.pure_ofPure a]
   | _, _, .lam b => by simpa [Term.ofPure_lam, Term.pure] using Term.pure_ofPure b

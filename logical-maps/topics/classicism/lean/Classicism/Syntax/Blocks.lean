@@ -851,23 +851,23 @@ theorem app_coextR_block : ∀ (σs : List Ty) {Γ : Ctx} (ρ : RTy) (X Y : Term
     rw [Term.appBlock_vars_cons, Term.appBlock_vars_cons]
 
 /-- Pointwise implication at `σs ⇒* ρ` is `∀x̄. X x̄ ⊑_ρ Y x̄`. -/
-theorem app_boxImpR_block : ∀ (σs : List Ty) {Γ : Ctx} (ρ : RTy) (X Y : Term Sig Γ (σs ⇒* ρ)),
-    Term.app (Term.app (Term.boxImpR (σs ⇒* ρ)) X) Y
-      ≡ Term.forallBlock σs (Term.app (Term.app (Term.boxImpR ρ)
+theorem app_inclR_block : ∀ (σs : List Ty) {Γ : Ctx} (ρ : RTy) (X Y : Term Sig Γ (σs ⇒* ρ)),
+    Term.app (Term.app (Term.inclR (σs ⇒* ρ)) X) Y
+      ≡ Term.forallBlock σs (Term.app (Term.app (Term.inclR ρ)
           (Term.appBlock (X.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)))
           (Term.appBlock (Y.rename (Ren.wkBlock σs)) (Terms.vars σs Γ)))
   | [], _, ρ, X, Y => by
-    show _ ≡ Term.app (Term.app (Term.boxImpR ρ) (X.rename Ren.id)) (Y.rename Ren.id)
+    show _ ≡ Term.app (Term.app (Term.inclR ρ) (X.rename Ren.id)) (Y.rename Ren.id)
     rw [Term.rename_id, Term.rename_id]; exact Conv.refl _
   | σ :: σs, Γ, ρ, X, Y => by
     refine Conv.trans (Conv.app_congr (Conv.app_congr (Conv.delta rfl) (Conv.refl X)) (Conv.refl Y)) ?_
     refine Conv.trans (Conv.app_congr (Conv.beta _ X) (Conv.refl Y)) ?_
     refine Conv.trans (Conv.beta _ Y) ?_
-    show Term.forall' (Term.app (Term.app (Term.boxImpR (σs ⇒* ρ))
+    show Term.forall' (Term.app (Term.app (Term.inclR (σs ⇒* ρ))
       (Term.app (((X.weaken).weaken).subst (Sub.lift (Sub.cons Y Sub.id))) (Term.var .zero)))
       (Term.app Y.weaken (Term.var .zero))) ≡ _
     rw [Term.weaken_weaken_subst_lift]
-    refine Conv.trans (Conv.app_congr (Conv.refl _) (Conv.lam_congr (app_boxImpR_block σs ρ _ _)))
+    refine Conv.trans (Conv.app_congr (Conv.refl _) (Conv.lam_congr (app_inclR_block σs ρ _ _)))
       (Conv.of_eq ?_)
     show Term.forall' _ = Term.forall' _
     rw [Term.appBlock_vars_cons, Term.appBlock_vars_cons]
@@ -930,9 +930,9 @@ theorem coextR_block (σs : List Ty) {Γ : Ctx} (ρ : RTy) :
   Conv.trans (Conv.symm (Conv.eta _)) (Conv.lam_congr (Conv.trans (Conv.symm (Conv.eta _))
     (Conv.lam_congr (app_coextR_block σs ρ (Term.var (.succ .zero)) (Term.var .zero)))))
 
-theorem boxImpR_block (σs : List Ty) {Γ : Ctx} (ρ : RTy) :
-    (Term.boxImpR (σs ⇒* ρ) : Term Sig Γ _)
-      ≡ Term.lam (Term.lam (Term.forallBlock σs (Term.app (Term.app (Term.boxImpR ρ)
+theorem inclR_block (σs : List Ty) {Γ : Ctx} (ρ : RTy) :
+    (Term.inclR (σs ⇒* ρ) : Term Sig Γ _)
+      ≡ Term.lam (Term.lam (Term.forallBlock σs (Term.app (Term.app (Term.inclR ρ)
           (Term.appBlock ((Term.var (.succ .zero) :
             Term Sig (Ty.rel (σs ⇒* ρ) :: Ty.rel (σs ⇒* ρ) :: Γ) _).rename (Ren.wkBlock σs))
             (Terms.vars σs _)))
@@ -940,7 +940,7 @@ theorem boxImpR_block (σs : List Ty) {Γ : Ctx} (ρ : RTy) :
             Term Sig (Ty.rel (σs ⇒* ρ) :: Ty.rel (σs ⇒* ρ) :: Γ) _).rename (Ren.wkBlock σs))
             (Terms.vars σs _))))) :=
   Conv.trans (Conv.symm (Conv.eta _)) (Conv.lam_congr (Conv.trans (Conv.symm (Conv.eta _))
-    (Conv.lam_congr (app_boxImpR_block σs ρ (Term.var (.succ .zero)) (Term.var .zero)))))
+    (Conv.lam_congr (app_inclR_block σs ρ (Term.var (.succ .zero)) (Term.var .zero)))))
 
 end Conv
 

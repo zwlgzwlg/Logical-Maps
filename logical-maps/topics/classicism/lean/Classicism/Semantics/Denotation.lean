@@ -99,9 +99,9 @@ def RTy.boxD : ∀ ρ : RTy, ρ.denote D → ρ.denote D
   | .t, p => p = ((∀ q : Prop, q) ∨ ¬ ∀ q : Prop, q)
   | .arr _ ρ, X => fun z => boxD ρ (X z)
 /-- Pointwise implication at `ρ`; at `t`, `¬p ∨ q`. -/
-def RTy.boxImpD : ∀ ρ : RTy, ρ.denote D → ρ.denote D → Prop
+def RTy.inclD : ∀ ρ : RTy, ρ.denote D → ρ.denote D → Prop
   | .t, p, q => ¬ p ∨ q
-  | .arr _ ρ, X, Y => ∀ z, boxImpD ρ (X z) (Y z)
+  | .arr _ ρ, X, Y => ∀ z, inclD ρ (X z) (Y z)
 end
 
 /-! ### Terms -/
@@ -127,7 +127,7 @@ def Term.denote (I : Interp Sig) :
   | _, _, .orR ρ, _ => RTy.orD I.D ρ
   | _, _, .coextR ρ, _ => RTy.coextD I.D ρ
   | _, _, .boxR ρ, _ => RTy.boxD I.D ρ
-  | _, _, .boxImpR ρ, _ => RTy.boxImpD I.D ρ
+  | _, _, .inclR ρ, _ => RTy.inclD I.D ρ
 
 /-- A sentence holds in an interpretation. -/
 abbrev Sentence.holds (I : Interp Sig) (p : Sentence Sig) : Prop := p.denote I .nil
@@ -181,7 +181,7 @@ theorem Term.denote_rename (I : Interp Sig) :
   | _, _, _, _, .const _, _ | _, _, _, _, .and, _ | _, _, _, _, .or, _ | _, _, _, _, .not, _
   | _, _, _, _, .all _, _ | _, _, _, _, .ex _, _ | _, _, _, _, .eq _, _
   | _, _, _, _, .constR _, _ | _, _, _, _, .negR _, _ | _, _, _, _, .andR _, _ | _, _, _, _, .orR _, _
-  | _, _, _, _, .coextR _, _ | _, _, _, _, .boxR _, _ | _, _, _, _, .boxImpR _, _ => rfl
+  | _, _, _, _, .coextR _, _ | _, _, _, _, .boxR _, _ | _, _, _, _, .inclR _, _ => rfl
   | _, _, r, _, .app f a, env => by
     simp only [Term.rename_app, Term.denote, Term.denote_rename I r f, Term.denote_rename I r a]
   | _, _, r, _, .lam b, env => by
@@ -242,7 +242,7 @@ theorem Term.denote_subst (I : Interp Sig) :
   | _, _, _, _, .const _, _ | _, _, _, _, .and, _ | _, _, _, _, .or, _ | _, _, _, _, .not, _
   | _, _, _, _, .all _, _ | _, _, _, _, .ex _, _ | _, _, _, _, .eq _, _
   | _, _, _, _, .constR _, _ | _, _, _, _, .negR _, _ | _, _, _, _, .andR _, _ | _, _, _, _, .orR _, _
-  | _, _, _, _, .coextR _, _ | _, _, _, _, .boxR _, _ | _, _, _, _, .boxImpR _, _ => rfl
+  | _, _, _, _, .coextR _, _ | _, _, _, _, .boxR _, _ | _, _, _, _, .inclR _, _ => rfl
   | _, _, s, _, .app f a, env => by
     simp only [Term.subst_app, Term.denote, Term.denote_subst I s f, Term.denote_subst I s a]
   | _, _, s, _, .lam b, env => by
@@ -287,7 +287,7 @@ theorem Delta.denote (I : Interp Sig) : ∀ {Γ : Ctx} {σ : Ty} {a b : Term Sig
   | _, _, .orR ρ, _, h, _ => by cases ρ <;> cases h <;> rfl
   | _, _, .coextR ρ, _, h, _ => by cases ρ <;> cases h <;> rfl
   | _, _, .boxR ρ, _, h, _ => by cases ρ <;> cases h <;> rfl
-  | _, _, .boxImpR ρ, _, h, _ => by cases ρ <;> cases h <;> rfl
+  | _, _, .inclR ρ, _, h, _ => by cases ρ <;> cases h <;> rfl
   | _, _, .var _, _, h, _ | _, _, .const _, _, h, _ | _, _, .app _ _, _, h, _ | _, _, .lam _, _, h, _
   | _, _, .and, _, h, _ | _, _, .or, _, h, _ | _, _, .not, _, h, _ | _, _, .all _, _, h, _
   | _, _, .ex _, _, h, _ | _, _, .eq _, _, h, _ => nomatch h

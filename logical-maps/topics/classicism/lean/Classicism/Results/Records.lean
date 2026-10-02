@@ -281,7 +281,7 @@ theorem persistent_comprehension_r_implies_actuality :
     PersistentComprehension (Prop → Prop) → Actuality := fun pc =>
   (pc (λ p ↦ p)).elim fun T hT =>
     ⟨∀ p, T p → p, fun p hTp => (hT.2 p).2 hTp, fun q hq =>
-      le_of_box_boxImp (modal_K _ _ (nec% (all_of_T_imp T q))
+      le_of_box_incl (modal_K _ _ (nec% (all_of_T_imp T q))
         (weaklyPersistent_apply (weaklyPersistent_of_persistent hT.1) q ((hT.2 q).1 hq)))⟩
 
 /-- `rigid-comprehension-r-implies-actuality` (Proposition 2.9): through Persistent
@@ -459,7 +459,7 @@ theorem plenitude_r_implies_actuality : Plenitude Prop Prop → Actuality := fun
     ⟨∀ p, Z p,
      fun p => (hZ p).elim (fun h => h.2 ▸ h.1) (fun h => h.2 ▸ trivial),
      fun q hq => (hZ q).elim
-       (fun h => h.2 ▸ le_of_box_boxImp (nec% (all_imp Z q)))
+       (fun h => h.2 ▸ le_of_box_incl (nec% (all_imp Z q)))
        (fun h => absurd hq h.1)⟩
 
 /-- The relation mapping `x` to `⊤` and everything else to `⊥` is functional. -/

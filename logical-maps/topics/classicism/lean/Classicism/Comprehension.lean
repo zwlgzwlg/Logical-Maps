@@ -15,7 +15,7 @@ and the weak variants obtained by dropping a leading box. It also records that, 
 `Y ≤ Z` *is* the necessitated universally closed pointwise implication, `Persistent(Y)`
 unpacks as `□∀x̄. Y[x̄] → □Y[x̄]`.
 
-The definitions below are written in that unpacked form, using `boxImp` and `boxAt`, and
+The definitions below are written in that unpacked form, using `incl` and `boxAt`, and
 `persistent_iff_le` and `inextensible_iff_le` then prove that they agree with the
 algebraic definitions above. That way the predicates need only `Rel τ`, while the
 equivalence with the map's own wording is a theorem rather than something assumed;
@@ -88,7 +88,7 @@ theorem persistent_iff_le (Y : τ) : Persistent Y ↔ Y ≤ boxAt Y :=
 /-- `WeaklyInextensible(Y)` is the map's `∀X. (∀x̄. Y[x̄] → □X[x̄]) → Y ≤ X`. -/
 theorem weaklyInextensible_iff_le (Y : τ) :
     WeaklyInextensible Y ↔ ∀ X : τ, Y ⊆ boxAt X → Y ≤ X :=
-  ⟨fun h X hX => le_of_box_boxImp (h X hX), fun h X hX => (le_iff Y X).1 (h X hX)⟩
+  ⟨fun h X hX => le_of_box_incl (h X hX), fun h X hX => (le_iff Y X).1 (h X hX)⟩
 
 /-- `Inextensible(Y)` is the necessitation of the same. -/
 theorem inextensible_iff_le (Y : τ) :

@@ -106,12 +106,12 @@ theorem app_coextRead {ρ : RTy} (X Y : A.Dom W (.rel ρ)) :
   simp only [Intension.mem_app, coextRead, Set.mem_ofPred_eq, A.incl_map, Intension.mem_map,
     Category.comp_id]
 
-theorem app_boxImpRead {ρ : RTy} (X Y : A.Dom W (.rel ρ)) :
-    ((A.boxImpRead ρ W).app A.inner X).app A.inner Y
+theorem app_inclRead {ρ : RTy} (X Y : A.Dom W (.rel ρ)) :
+    ((A.inclRead ρ W).app A.inner X).app A.inner Y
       = {p | ∀ a : Args A.inner ρ p.1, (⟨p.1, a, p.2.2⟩ : Tuple A.inner ρ W) ∈ A.incl ρ W X →
           (⟨p.1, a, p.2.2⟩ : Tuple A.inner ρ W) ∈ A.incl ρ W Y} := by
   ext ⟨U, a, j⟩
-  simp only [Intension.mem_app, boxImpRead, Set.mem_ofPred_eq, A.incl_map, Intension.mem_map,
+  simp only [Intension.mem_app, inclRead, Set.mem_ofPred_eq, A.incl_map, Intension.mem_map,
     Category.comp_id]
 
 theorem app_eqRead {σ : Ty} (x y : A.Dom W σ) :
@@ -160,7 +160,7 @@ theorem sem_push : ∀ {Γ : Ctx} {σ : Ty} {W : C} (h : A.W₀ ⟶ W) (t : Term
   | _, _, _, _, .all _, _, _, _ | _, _, _, _, .ex _, _, _, _ | _, _, _, _, .eq _, _, _, _
   | _, _, _, _, .constR _, _, _, _ | _, _, _, _, .negR _, _, _, _ | _, _, _, _, .andR _, _, _, _
   | _, _, _, _, .orR _, _, _, _ | _, _, _, _, .coextR _, _, _, _ | _, _, _, _, .boxR _, _, _, _
-  | _, _, _, _, .boxImpR _, _, _, _ => rfl
+  | _, _, _, _, .inclR _, _, _, _ => rfl
 
 /-! ### Renaming and substitution pull an assignment back -/
 
@@ -173,7 +173,7 @@ theorem sem_rename : ∀ {Γ Δ : Ctx} (r : Ren Γ Δ) {σ : Ty} {W : C} (h : A.
   | _, _, _, _, _, _, .not, _ | _, _, _, _, _, _, .all _, _ | _, _, _, _, _, _, .ex _, _
   | _, _, _, _, _, _, .eq _, _ | _, _, _, _, _, _, .constR _, _ | _, _, _, _, _, _, .negR _, _
   | _, _, _, _, _, _, .andR _, _ | _, _, _, _, _, _, .orR _, _ | _, _, _, _, _, _, .coextR _, _
-  | _, _, _, _, _, _, .boxR _, _ | _, _, _, _, _, _, .boxImpR _, _ => rfl
+  | _, _, _, _, _, _, .boxR _, _ | _, _, _, _, _, _, .inclR _, _ => rfl
   | _, _, r, _, _, h, .app f a, g => by
     show A.apply (A.sem h (f.rename r) g) (A.sem h (a.rename r) g) = _
     rw [sem_rename r h f g, sem_rename r h a g]; rfl
@@ -225,7 +225,7 @@ theorem sem_subst (M : A.IsModel) : ∀ {Γ Δ : Ctx} (s : Sub Sig Γ Δ) {σ : 
   | _, _, _, _, _, _, .not, _ | _, _, _, _, _, _, .all _, _ | _, _, _, _, _, _, .ex _, _
   | _, _, _, _, _, _, .eq _, _ | _, _, _, _, _, _, .constR _, _ | _, _, _, _, _, _, .negR _, _
   | _, _, _, _, _, _, .andR _, _ | _, _, _, _, _, _, .orR _, _ | _, _, _, _, _, _, .coextR _, _
-  | _, _, _, _, _, _, .boxR _, _ | _, _, _, _, _, _, .boxImpR _, _ => rfl
+  | _, _, _, _, _, _, .boxR _, _ | _, _, _, _, _, _, .inclR _, _ => rfl
   | _, _, s, _, _, h, .app f a, g => by
     show A.apply (A.sem h (f.subst s) g) (A.sem h (a.subst s) g) = _
     rw [sem_subst M s h f g, sem_subst M s h a g]; rfl
@@ -532,7 +532,7 @@ theorem sem_delta (M : A.IsModel) : ∀ {Γ : Ctx} {σ : Ty} {a b : Term Sig Γ 
     rw [A.apply_Incl, Intension.mem_app]
     simp only [Category.id_comp]
     exact Iff.rfl
-  | _, _, .boxImpR .t, _, hd, W, h, g => by
+  | _, _, .inclR .t, _, hd, W, h, g => by
     cases hd
     ext ⟨U, ⟨p, q, ⟨⟩⟩, i⟩
     rw [mem_sem_lam, mem_sem_lam]
@@ -541,7 +541,7 @@ theorem sem_delta (M : A.IsModel) : ∀ {Γ : Ctx} {σ : Ty} {a b : Term Sig Γ 
     rw [A.holds_imp M]
     show (∀ a : PUnit, _ → _) ↔ _
     exact ⟨fun e => e PUnit.unit, fun e _ => e⟩
-  | _, _, .boxImpR (.arr σ ρ), _, hd, W, h, g => by
+  | _, _, .inclR (.arr σ ρ), _, hd, W, h, g => by
     cases hd
     ext ⟨U, ⟨X, Y, ⟨⟩⟩, i⟩
     rw [mem_sem_lam, mem_sem_lam]
@@ -553,9 +553,9 @@ theorem sem_delta (M : A.IsModel) : ∀ {Γ : Ctx} {σ : Ty} {a b : Term Sig Γ 
     apply forall_congr'; intro z
     obtain ⟨B₁, hB₁⟩ := Set.mem_range.mp (M (h ≫ i) (Term.app Term.v2 Term.v0) (.cons z (.cons Y (.cons X (A.push i g)))))
     obtain ⟨B₂, hB₂⟩ := Set.mem_range.mp (M (h ≫ i) (Term.app Term.v1 Term.v0) (.cons z (.cons Y (.cons X (A.push i g)))))
-    show _ ↔ _ ∈ A.apply (A.apply (A.boxImpRead ρ U) (A.sem (h ≫ i) (Term.app Term.v2 Term.v0) _))
+    show _ ↔ _ ∈ A.apply (A.apply (A.inclRead ρ U) (A.sem (h ≫ i) (Term.app Term.v2 Term.v0) _))
       (A.sem (h ≫ i) (Term.app Term.v1 Term.v0) (.cons z (.cons Y (.cons X (A.push i g)))))
-    rw [← hB₁, ← hB₂, A.apply_Incl, A.apply_Incl, A.app_boxImpRead, Set.mem_ofPred_eq]
+    rw [← hB₁, ← hB₂, A.apply_Incl, A.apply_Incl, A.app_inclRead, Set.mem_ofPred_eq]
     apply forall_congr'; intro a
     rw [← A.Incl_rel ρ U B₁, ← A.Incl_rel ρ U B₂, hB₁, hB₂]
     show _ ↔ (_ ∈ A.apply (A.Incl _ U X) (A.Incl σ U z) → _ ∈ A.apply (A.Incl _ U Y) (A.Incl σ U z))

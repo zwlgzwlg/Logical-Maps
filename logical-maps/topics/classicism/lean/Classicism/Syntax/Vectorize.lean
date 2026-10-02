@@ -169,7 +169,7 @@ def Term.vecG (θ : Assign) (hc : Sig.VecFixed θ) :
   | _, _, .orR ρ => .single (.orR (ρ.vec θ))
   | _, _, .coextR ρ => .single (.coextR (ρ.vec θ))
   | _, _, .boxR ρ => .single (.boxR (ρ.vec θ))
-  | _, _, .boxImpR ρ => .single (.boxImpR (ρ.vec θ))
+  | _, _, .inclR ρ => .single (.inclR (ρ.vec θ))
 
 /-- The generic translation of a term of a relational type, a single term. -/
 abbrev Term.vecG1 (θ : Assign) (hc : Sig.VecFixed θ) {Γ : Ctx} {ρ : RTy} (a : Term Sig Γ ρ) :
@@ -292,7 +292,7 @@ private theorem vecG_subst_of (P : ∀ {Γ Δ : Ctx}, Sub Sig Γ Δ → Prop)
     show Terms.single _ = Terms.single ((Term.eqC _).subst _); rw [Term.subst_eqC]
   | _, _, _, .constR _, _, _ | _, _, _, .negR _, _, _ | _, _, _, .andR _, _, _
   | _, _, _, .orR _, _, _ | _, _, _, .coextR _, _, _ | _, _, _, .boxR _, _, _
-  | _, _, _, .boxImpR _, _, _ => rfl
+  | _, _, _, .inclR _, _, _ => rfl
 
 /-- The translation commutes with renaming. -/
 theorem Term.vecG_rename {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ) (a : Term Sig Γ σ) :
@@ -373,10 +373,10 @@ theorem Term.vecG_delta : ∀ {Γ : Ctx} {σ : Ty} {a b : Term Sig Γ σ},
   | _, _, .boxR .t, _, h => by cases h; exact .cons (Conv.delta rfl) .nil
   | _, _, .boxR (.arr σ ρ), _, h => by
     cases h; exact .cons (Conv.boxR_block (σ.vec θ) (ρ.vec θ)) .nil
-  | _, _, .boxImpR .t, _, h => by cases h; exact .cons (Conv.delta rfl) .nil
-  | _, _, .boxImpR (.arr σ ρ), _, h => by
+  | _, _, .inclR .t, _, h => by cases h; exact .cons (Conv.delta rfl) .nil
+  | _, _, .inclR (.arr σ ρ), _, h => by
     cases h
-    exact .cons (Conv.trans (Conv.boxImpR_block (σ.vec θ) (ρ.vec θ))
+    exact .cons (Conv.trans (Conv.inclR_block (σ.vec θ) (ρ.vec θ))
       (Conv.lam_congr (Conv.lam_congr (Conv.symm (Conv.allC_lamBlock _ _))))) .nil
   | _, _, .var _, _, h | _, _, .const _, _, h | _, _, .app _ _, _, h | _, _, .lam _, _, h
   | _, _, .and, _, h | _, _, .or, _, h | _, _, .not, _, h | _, _, .all _, _, h
@@ -531,7 +531,7 @@ noncomputable def Term.vecData (θ : Assign) (hc : Sig.VecFixed θ) {Γ : Ctx} {
     (orR := fun ρ => (.single (.orR (ρ.vec θ)), Ty.VecView.none _))
     (coextR := fun ρ => (.single (.coextR (ρ.vec θ)), Ty.VecView.none _))
     (boxR := fun ρ => (.single (.boxR (ρ.vec θ)), Ty.VecView.none _))
-    (boxImpR := fun ρ => (.single (.boxImpR (ρ.vec θ)), Ty.VecView.none _))
+    (inclR := fun ρ => (.single (.inclR (ρ.vec θ)), Ty.VecView.none _))
     t
 
 /-- **The readable translation** of a term. -/
@@ -663,7 +663,7 @@ theorem Term.vecData_sound : ∀ {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ),
   | _, _, .orR _ => ⟨Terms.Conv.refl _, Ty.vecSound_none θ hc _ _⟩
   | _, _, .coextR _ => ⟨Terms.Conv.refl _, Ty.vecSound_none θ hc _ _⟩
   | _, _, .boxR _ => ⟨Terms.Conv.refl _, Ty.vecSound_none θ hc _ _⟩
-  | _, _, .boxImpR _ => ⟨Terms.Conv.refl _, Ty.vecSound_none θ hc _ _⟩
+  | _, _, .inclR _ => ⟨Terms.Conv.refl _, Ty.vecSound_none θ hc _ _⟩
 
 /-- **The readable translation converts to the generic one.** -/
 theorem Term.vec_conv_vecG {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ) :

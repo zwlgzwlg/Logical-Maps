@@ -522,7 +522,7 @@ induction `atomicity_of_atomicityT_barcan` goes (it duplicates
 vectorizing a step: the step at one argument, vectorized, *is* the induction.
 
 **`Pointwise.lean`.** Of the nine modal laws added on 28 September, all used only in
-`Results/Arity.lean`, three serve only the shallow cores being restated (`boxImp_of_top_or`,
+`Results/Arity.lean`, three serve only the shallow cores being restated (`incl_of_top_or`,
 `top_boxAt_of_b`, `top_boxAt_of_neg`) and go if nothing else needs them; the other six
 serve shallow cores that stay.
 

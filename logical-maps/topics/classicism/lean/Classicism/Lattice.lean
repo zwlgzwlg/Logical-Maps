@@ -317,11 +317,11 @@ variable [Order τ] [Pointwise τ]
 
 /-- `≤` is reflexive at a relational type: `X ⊆ X` under the box. -/
 theorem le_refl_rel (x : τ) : x ≤ x :=
-  (le_iff _ _).2 (nec% (boxImp_refl x))
+  (le_iff _ _).2 (nec% (incl_refl x))
 
 /-- `≤` is transitive at a relational type: `⊆` is, under the box. -/
 theorem le_trans_rel (x y z : τ) (h₁ : x ≤ y) (h₂ : y ≤ z) : x ≤ z :=
-  (le_iff _ _).2 (modal_K _ _ (modal_K _ _ (nec% (boxImp_trans x y z))
+  (le_iff _ _).2 (modal_K _ _ (modal_K _ _ (nec% (incl_trans x y z))
     ((le_iff _ _).1 h₁)) ((le_iff _ _).1 h₂))
 
 /-- The greatest lower bound of the upper bounds of `X` is a least upper bound of `X`. -/

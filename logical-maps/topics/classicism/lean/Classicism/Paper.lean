@@ -8,7 +8,7 @@ Notation for the pointwise operations at every relational type, so that statemen
 the paper writes them: `X ∧ Y`, `X ∨ Y`, `¬X`, `⊤`, `⊥` for `Rel.and`, `Rel.or`, `Rel.neg`,
 `Rel.top`, `Rel.bot`, `X ≤ Y` for the algebraic order `Rel.le`, and `X ≡ Y` for
 coextension `∀x̄. X[x̄] ↔ Y[x̄]`. (`X ⊆ Y` for the
-inclusion `boxImp` is in `Core.lean`, always on.) Everything here is elaboration only: the
+inclusion `incl` is in `Core.lean`, always on.) Everything here is elaboration only: the
 terms are the same `Rel` operations as before, so the checker, the quoter and the
 translator see exactly what they see without it.
 

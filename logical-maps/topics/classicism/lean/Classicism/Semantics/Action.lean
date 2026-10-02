@@ -290,12 +290,12 @@ noncomputable def boxRead : ∀ (ρ : RTy) (W : C), RawR A.inner (.arr (.rel ρ)
     A.apply (boxRead ρ U) (A.apply (A.incl (.arr σ ρ) U ((A.inner (.rel (.arr σ ρ))).map j X)) (A.Incl σ U z))
 
 /-- Pointwise implication at `ρ`: at `t`, `λp q. p → q`; at `σ → ρ`, `λX Y. ∀z. X z ⊑_ρ Y z`. -/
-noncomputable def boxImpRead : ∀ (ρ : RTy) (W : C), RawR A.inner (.arr (.rel ρ) (.arr (.rel ρ) .t)) W
+noncomputable def inclRead : ∀ (ρ : RTy) (W : C), RawR A.inner (.arr (.rel ρ) (.arr (.rel ρ) .t)) W
   | .t, _ => fun _ _ p U j q =>
     A.apply (A.apply (A.orRead U) (A.apply (A.notRead U) (A.incl .t U ((A.inner (.rel .t)).map j p)))) (A.incl .t U q)
   | .arr σ ρ, _ => fun _ _ X U j Y =>
     A.apply (A.allRead σ U) fun T k z =>
-      A.apply (A.apply (boxImpRead ρ T)
+      A.apply (A.apply (inclRead ρ T)
           (A.apply (A.incl (.arr σ ρ) T ((A.inner (.rel (.arr σ ρ))).map k ((A.inner (.rel (.arr σ ρ))).map j X))) (A.Incl σ T z)))
         (A.apply (A.incl (.arr σ ρ) T ((A.inner (.rel (.arr σ ρ))).map k Y)) (A.Incl σ T z))
 
@@ -323,7 +323,7 @@ noncomputable def sem : ∀ {Γ : Ctx} {σ : Ty} {W : C},
   | _, _, W, _, .orR ρ, _ => A.orRRead ρ W
   | _, _, W, _, .coextR ρ, _ => A.coextRead ρ W
   | _, _, W, _, .boxR ρ, _ => A.boxRead ρ W
-  | _, _, W, _, .boxImpR ρ, _ => A.boxImpRead ρ W
+  | _, _, W, _, .inclR ρ, _ => A.inclRead ρ W
 
 /-- `A, h, g ⊩ P`: the identity arrow of `W` is in the value of `P`. -/
 def Holds {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (p : Formula Sig Γ) (g : IEnv (A.Dom W) Γ) : Prop :=

@@ -70,15 +70,15 @@ theorem very_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r :
   (vw X).elim fun Y hY =>
     ⟨boxAt Y,
       ⟨nec% (boxAt_four Y), fun Z hZ =>
-        modal_K _ _ (nec% (boxImp_trans (boxAt Y) Y Z (boxAt_T Y)))
-          (hY.1.2 Z (boxImp_trans Y (boxAt Y) (boxAt Z) hY.1.1 hZ))⟩,
-      coext_of_boxImp X (boxAt Y)
-        (boxImp_trans X Y (boxAt Y) (boxImp_of_coext X Y hY.2) hY.1.1)
-        (boxImp_trans (boxAt Y) Y X (boxAt_T Y) (boxImp_of_coext' X Y hY.2))⟩
+        modal_K _ _ (nec% (incl_trans (boxAt Y) Y Z (boxAt_T Y)))
+          (hY.1.2 Z (incl_trans Y (boxAt Y) (boxAt Z) hY.1.1 hZ))⟩,
+      coext_of_incl X (boxAt Y)
+        (incl_trans X Y (boxAt Y) (incl_of_coext X Y hY.2) hY.1.1)
+        (incl_trans (boxAt Y) Y X (boxAt_T Y) (incl_of_coext' X Y hY.2))⟩
 
 /-- If every truth is necessary, every relation is weakly inextensible. -/
 theorem weaklyInextensible_of_all (X : τ) : (∀ p : Prop, p → □ p) → WeaklyInextensible X :=
-  fun h Z hZ => h _ (boxImp_trans X (boxAt Z) Z hZ (boxAt_T Z))
+  fun h Z hZ => h _ (incl_trans X (boxAt Z) Z hZ (boxAt_T Z))
 
 /-- `extensionality-r-implies-rigid-comprehension-r`, at every arity: under the Fregean
 Axiom (the nullary instance) every truth is necessary, and necessarily so; so every
@@ -87,14 +87,14 @@ theorem extensionality_r_implies_rigid_comprehension_r :
     P.Extensionality Prop → P.RigidComprehension τ := fun extP X =>
   have fa := Proofs.extensionality_r_implies_fregean_axiom extP
   have hall : □ (∀ p : Prop, p → □ p) := Proofs.box_of_fregean fa _ (Proofs.box_of_fregean fa)
-  ⟨X, ⟨modal_K _ _ (nec% (boxImp_boxAt_of_all X)) hall,
+  ⟨X, ⟨modal_K _ _ (nec% (incl_boxAt_of_all X)) hall,
       modal_K _ _ (nec% (weaklyInextensible_of_all X)) hall⟩, Rel.coext_refl X⟩
 
 /-- In `C5` the negation of a persistent relation is persistent: where `Y` fails, `B` and
 the persistence of `Y` make it fail necessarily, at every world. -/
 theorem persistent_neg_of_c5 (Y : τ) :
     P.NecNecessityOfDistinctness Prop → Persistent Y → Persistent (Rel.neg Y) := fun hnd hP =>
-  modal_K _ _ (modal_K _ _ (nec% (neg_boxImp_boxAt_of_b Y)) (Proofs.box_b_of_box_nd_t hnd))
+  modal_K _ _ (modal_K _ _ (nec% (neg_incl_boxAt_of_b Y)) (Proofs.box_b_of_box_nd_t hnd))
     (modal_K _ _ (nec% (top_boxAt_of_box Y (boxAt Y))) (modal_four _ hP))
 
 /-- `c5-and-persistent-comprehension-imply-gallin`, at every arity. -/

@@ -50,7 +50,7 @@ def ofPureImpl : ∀ {Γ : Ctx} {σ : Ty}, Term Signature.pure Γ σ → Term Si
   | _, _, .orR ρ => .orR ρ
   | _, _, .coextR ρ => .coextR ρ
   | _, _, .boxR ρ => .boxR ρ
-  | _, _, .boxImpR ρ => .boxImpR ρ
+  | _, _, .inclR ρ => .inclR ρ
 
 /-- A term of the pure language, read in the signature `Sig`: the same tree, which has
 no constant to read. Through `Term.rec`, as `rename` is, for the kernel's sake. -/
@@ -67,7 +67,7 @@ def ofPure : ∀ {Γ : Ctx} {σ : Ty}, Term Signature.pure Γ σ → Term Sig Γ
       (constR := fun ρ => Term.constR ρ) (negR := fun ρ => Term.negR ρ)
       (andR := fun ρ => Term.andR ρ) (orR := fun ρ => Term.orR ρ)
       (coextR := fun ρ => Term.coextR ρ) (boxR := fun ρ => Term.boxR ρ)
-      (boxImpR := fun ρ => Term.boxImpR ρ)
+      (inclR := fun ρ => Term.inclR ρ)
       t
 
 section
@@ -89,7 +89,7 @@ variable {Γ : Ctx}
 @[simp] theorem ofPure_orR (ρ : RTy) : ofPure (Sig := Sig) (Γ := Γ) (.orR ρ) = .orR ρ := rfl
 @[simp] theorem ofPure_coextR (ρ : RTy) : ofPure (Sig := Sig) (Γ := Γ) (.coextR ρ) = .coextR ρ := rfl
 @[simp] theorem ofPure_boxR (ρ : RTy) : ofPure (Sig := Sig) (Γ := Γ) (.boxR ρ) = .boxR ρ := rfl
-@[simp] theorem ofPure_boxImpR (ρ : RTy) : ofPure (Sig := Sig) (Γ := Γ) (.boxImpR ρ) = .boxImpR ρ := rfl
+@[simp] theorem ofPure_inclR (ρ : RTy) : ofPure (Sig := Sig) (Γ := Γ) (.inclR ρ) = .inclR ρ := rfl
 end
 
 /-- Reading into a signature commutes with renaming. -/
@@ -98,7 +98,7 @@ theorem ofPure_rename : ∀ {Γ Δ : Ctx} (r : Ren Γ Δ) {σ : Ty} (a : Term Si
   | _, _, _, _, .var _ | _, _, _, _, .and | _, _, _, _, .or
   | _, _, _, _, .not | _, _, _, _, .all _ | _, _, _, _, .ex _ | _, _, _, _, .eq _
   | _, _, _, _, .constR _ | _, _, _, _, .negR _ | _, _, _, _, .andR _ | _, _, _, _, .orR _
-  | _, _, _, _, .coextR _ | _, _, _, _, .boxR _ | _, _, _, _, .boxImpR _ => rfl
+  | _, _, _, _, .coextR _ | _, _, _, _, .boxR _ | _, _, _, _, .inclR _ => rfl
   | _, _, _, _, .const c => nomatch c
   | _, _, r, _, .app f a => by simp [ofPure_rename r f, ofPure_rename r a]
   | _, _, r, _, .lam b => by simp [ofPure_rename (Ren.lift r) b]
@@ -130,7 +130,7 @@ theorem ofPure_subst : ∀ {Γ Δ : Ctx} (s : Sub Signature.pure Γ Δ) {σ : Ty
   | _, _, _, _, .var _ | _, _, _, _, .and | _, _, _, _, .or
   | _, _, _, _, .not | _, _, _, _, .all _ | _, _, _, _, .ex _ | _, _, _, _, .eq _
   | _, _, _, _, .constR _ | _, _, _, _, .negR _ | _, _, _, _, .andR _ | _, _, _, _, .orR _
-  | _, _, _, _, .coextR _ | _, _, _, _, .boxR _ | _, _, _, _, .boxImpR _ => rfl
+  | _, _, _, _, .coextR _ | _, _, _, _, .boxR _ | _, _, _, _, .inclR _ => rfl
   | _, _, _, _, .const c => nomatch c
   | _, _, s, _, .app f a => by simp [ofPure_subst s f, ofPure_subst s a]
   | _, _, s, _, .lam b => by simp [ofPure_subst (Sub.lift s) b, Sub.ofPure_lift]
@@ -148,7 +148,7 @@ theorem unfoldR_ofPure : ∀ {Γ : Ctx} {σ : Ty} (a : Term Signature.pure Γ σ
   | _, _, .app _ _ | _, _, .lam _ => rfl
   | _, _, .const c => nomatch c
   | _, _, .constR ρ | _, _, .negR ρ | _, _, .andR ρ | _, _, .orR ρ
-  | _, _, .coextR ρ | _, _, .boxR ρ | _, _, .boxImpR ρ => by cases ρ <;> rfl
+  | _, _, .coextR ρ | _, _, .boxR ρ | _, _, .inclR ρ => by cases ρ <;> rfl
 
 end Term
 

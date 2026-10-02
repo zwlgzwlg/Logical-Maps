@@ -317,7 +317,7 @@ def boxRead (ρ : RTy) (W : C) : Intension A.inner (.arr (.rel ρ) ρ) W :=
 
 /-- Pointwise implication `⊑_ρ`, `λX Y. ∀z̄. X z̄ → Y z̄`: `⟨X, Y, i⟩` when the extension of
 `X` is included in that of `Y`. -/
-def boxImpRead (ρ : RTy) (W : C) : Intension A.inner (.arr (.rel ρ) (.arr (.rel ρ) .t)) W :=
+def inclRead (ρ : RTy) (W : C) : Intension A.inner (.arr (.rel ρ) (.arr (.rel ρ) .t)) W :=
   {p | ∀ a : Args A.inner ρ p.1, (⟨p.1, a, 𝟙 p.1⟩ : Tuple A.inner ρ p.1) ∈ A.incl ρ p.1 p.2.1.1 →
     (⟨p.1, a, 𝟙 p.1⟩ : Tuple A.inner ρ p.1) ∈ A.incl ρ p.1 p.2.1.2.1}
 
@@ -347,7 +347,7 @@ def sem : ∀ {Γ : Ctx} {σ : Ty} {W : C},
   | _, _, W, _, .orR ρ, _ => A.orRead ρ W
   | _, _, W, _, .coextR ρ, _ => A.coextRead ρ W
   | _, _, W, _, .boxR ρ, _ => A.boxRead ρ W
-  | _, _, W, _, .boxImpR ρ, _ => A.boxImpRead ρ W
+  | _, _, W, _, .inclR ρ, _ => A.inclRead ρ W
 
 /-- `A, h, g ⊩ P`: the value of `P` is true, containing the identity arrow of `W`. -/
 def Holds {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (p : Formula Sig Γ) (g : IEnv (A.Dom W) Γ) : Prop :=

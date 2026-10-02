@@ -69,7 +69,7 @@ theorem sem_pure : ∀ {Γ : Ctx} {σ : Ty} {W : C} (t : Term Sig Γ σ), t.pure
   | _, _, _, .all _, _, _, _, _ | _, _, _, .ex _, _, _, _, _ | _, _, _, .eq _, _, _, _, _
   | _, _, _, .constR _, _, _, _, _ | _, _, _, .negR _, _, _, _, _ | _, _, _, .andR _, _, _, _, _
   | _, _, _, .orR _, _, _, _, _ | _, _, _, .coextR _, _, _, _, _ | _, _, _, .boxR _, _, _, _, _
-  | _, _, _, .boxImpR _, _, _, _, _ => rfl
+  | _, _, _, .inclR _, _, _, _, _ => rfl
 
 /-- **No Pure Contingency holds in every one-object model** (Classicism, §"Exploring
 action models"). -/

@@ -181,7 +181,7 @@ theorem Term.unfoldR_rename : ∀ {Γ Δ : Ctx} (r : Ren Γ Δ) {σ : Ty} (a : T
   | _, _, _, _, .not | _, _, _, _, .all _ | _, _, _, _, .ex _ | _, _, _, _, .eq _
   | _, _, _, _, .app _ _ | _, _, _, _, .lam _ => rfl
   | _, _, _, _, .constR ρ | _, _, _, _, .negR ρ | _, _, _, _, .andR ρ | _, _, _, _, .orR ρ
-  | _, _, _, _, .coextR ρ | _, _, _, _, .boxR ρ | _, _, _, _, .boxImpR ρ => by cases ρ <;> rfl
+  | _, _, _, _, .coextR ρ | _, _, _, _, .boxR ρ | _, _, _, _, .inclR ρ => by cases ρ <;> rfl
 
 theorem Delta.rename {Γ Δ : Ctx} {σ : Ty} (r : Ren Γ Δ) {a b : Term Sig Γ σ} (h : Delta a b) :
     Delta (a.rename r) (b.rename r) := by

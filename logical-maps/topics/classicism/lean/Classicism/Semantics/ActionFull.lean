@@ -252,7 +252,7 @@ noncomputable def _root_.Classicism.Meta.Term.rsize : ∀ {Γ : Ctx} {σ : Ty}, 
   | _, _, .orR ρ => sizeOf ρ
   | _, _, .coextR ρ => sizeOf ρ
   | _, _, .boxR ρ => sizeOf ρ
-  | _, _, .boxImpR ρ => sizeOf ρ
+  | _, _, .inclR ρ => sizeOf ρ
 
 /-- What the combined induction proves of a term: its value is inner, and transport. -/
 def FullP {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ) : Prop :=
@@ -376,16 +376,16 @@ theorem full_step (n : Nat)
           have hn' : sizeOf (σ ⇒ ρ) < n := hn
           simp only [RTy.arr.sizeOf_spec] at hn'; have := Ty.sizeOf_pos σ; omega) _
           (by simp [Term.unfoldBox, Term.rsize])) (by intros; rfl))
-  | _, _, .boxImpR ρ, hn => by
+  | _, _, .inclR ρ, hn => by
     cases ρ with
-    | t => exact (fullP_of_unfold De (.boxImpR .t) ((Term.unfoldBoxImp .t).get rfl) (fun _ _ => rfl)
+    | t => exact (fullP_of_unfold De (.inclR .t) ((Term.unfoldIncl .t).get rfl) (fun _ _ => rfl)
         (ih 1 (by have hn' : sizeOf RTy.t < n := hn; simp only [RTy.t.sizeOf_spec] at hn'; omega) _
-          (by simp [Term.unfoldBoxImp, Term.rsize])) (by intros; rfl))
-    | arr σ ρ => exact (fullP_of_unfold De (.boxImpR (σ ⇒ ρ)) ((Term.unfoldBoxImp (σ ⇒ ρ)).get rfl) (fun _ _ => rfl)
+          (by simp [Term.unfoldIncl, Term.rsize])) (by intros; rfl))
+    | arr σ ρ => exact (fullP_of_unfold De (.inclR (σ ⇒ ρ)) ((Term.unfoldIncl (σ ⇒ ρ)).get rfl) (fun _ _ => rfl)
         (ih (sizeOf ρ + 1) (by
           have hn' : sizeOf (σ ⇒ ρ) < n := hn
           simp only [RTy.arr.sizeOf_spec] at hn'; have := Ty.sizeOf_pos σ; omega) _
-          (by simp [Term.unfoldBoxImp, Term.rsize])) (by intros; rfl))
+          (by simp [Term.unfoldIncl, Term.rsize])) (by intros; rfl))
 
 theorem fullP_all (n : Nat) : ∀ {Γ : Ctx} {σ : Ty} (t : Term Sig Γ σ), t.rsize < n →
     FullP De (I := I) (nonempty_e := nonempty_e) t :=

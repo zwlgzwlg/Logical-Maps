@@ -50,7 +50,7 @@ partial application of one. -/
 def relOpArity? : Name → Option Nat
   | ``Classicism.Rel.constP | ``Classicism.Rel.neg | ``Classicism.Rel.boxAt => some 3
   | ``Classicism.Rel.and | ``Classicism.Rel.or | ``Classicism.Rel.coext
-  | ``Classicism.Rel.boxImp => some 4
+  | ``Classicism.Rel.incl => some 4
   | _ => none
 
 namespace Classicism.Meta.Translate
@@ -150,7 +150,7 @@ def isRelOp (n : Name) : Bool :=
   n == ``Classicism.Meta.Term.constR || n == ``Classicism.Meta.Term.negR
     || n == ``Classicism.Meta.Term.andR || n == ``Classicism.Meta.Term.orR
     || n == ``Classicism.Meta.Term.coextR || n == ``Classicism.Meta.Term.boxR
-    || n == ``Classicism.Meta.Term.boxImpR
+    || n == ``Classicism.Meta.Term.inclR
 
 end Tm
 
@@ -507,8 +507,8 @@ where
         relOpAt e τ fun ρ => return (mkRel ``Classicism.Meta.Term.coextR ρ Γ #[(← q X).1, (← q Y).1], tyT)
       | (``Classicism.Rel.boxAt, #[τ, _, X]) =>
         relOpAt e τ fun ρ => return (mkRel ``Classicism.Meta.Term.boxR ρ Γ #[(← q X).1], tRel ρ)
-      | (``Classicism.Rel.boxImp, #[τ, _, X, Y]) =>
-        relOpAt e τ fun ρ => return (mkRel ``Classicism.Meta.Term.boxImpR ρ Γ #[(← q X).1, (← q Y).1], tyT)
+      | (``Classicism.Rel.incl, #[τ, _, X, Y]) =>
+        relOpAt e τ fun ρ => return (mkRel ``Classicism.Meta.Term.inclR ρ Γ #[(← q X).1, (← q Y).1], tyT)
       | (``Eq, args) =>
         -- `Eq α`, `Eq α a`: identity unapplied or partially applied, as η-reduction of
         -- `fun z => a = z` leaves it
