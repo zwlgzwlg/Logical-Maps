@@ -1305,6 +1305,25 @@ Background's standing assumption, with at least one constant of a type other tha
 ("each of these schemata holds trivially when Σ is empty"). The three certificates that use
 the hypothesis take its first half (`hS.1`). The full build passes.
 
+## What a constant of the signature excludes, 2 October (night)
+
+With the Background's standing assumption in the statements (a constant `c` of a type
+`ρ ≠ e`, closed, so relational), four incompatibilities are proved
+(`Results/SentenceSchemas/Constants.lean`): Witnessed Possibility with ND, with No
+Contingency for the signature, and with Signature B; and Separated Structure with ND. Each
+object-level argument is a shallow lemma at a relational type, certified once and
+instantiated at `c`, read at `ρ` through the equation `typeOf c = ρ`; the pure formulas
+(`x = ⊤_ρ`, `x ≠ ⊤_ρ`) and closed terms (`λx. x`, `λx. ⊤_ρ`, `λx. x ≠ ⊤_ρ`, `λx. ⊤`) are put
+at the constant's type through the same equation, and the casts carried out by lemmas
+proved by `subst`. New in the library (`Syntax/Inhabited.lean`): a universal over a closed
+type with a body not mentioning its variable gives the body (an inhabitant: `⊤_ρ`, or
+Existence at `e`), and hence `⊤_ρ ≠ ⊥_ρ` at every closed relational type, by induction on
+the type. One nested necessitation (`nec%` inside `nec%`) did not translate; it was split
+into a lemma (`eq_top_not_dia_ne`).
+
+*Checked.* The full build passes. 234 result certificates and 22 form certificates prove
+their generated statements; 3 rest on `Classicism.e` and `e_exists`, as before.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

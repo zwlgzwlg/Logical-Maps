@@ -5,6 +5,7 @@ import Classicism.Results.SentenceSchemas.Incompatibilities
 import Classicism.Results.SentenceSchemas.WitnessedPossibility
 import Classicism.Results.SentenceSchemas.PossibilityPlus
 import Classicism.Results.SentenceSchemas.Infinity
+import Classicism.Results.SentenceSchemas.Constants
 
 /-!
 # The map's results, certified
@@ -776,6 +777,10 @@ theorem necessary_vicinity_implies_vicinity : Statements.necessary_vicinity_impl
 theorem necessary_weakly_inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r : Statements.necessary_weakly_inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r := by
   map_cert Proofs.necessary_weakly_inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r.entails
 
+/-- `no-contingency-signature-incompatible-with-witnessed-possibility` -/
+theorem no_contingency_signature_incompatible_with_witnessed_possibility : Statements.no_contingency_signature_incompatible_with_witnessed_possibility :=
+  fun hS _ h₁ h₂ hc => noContingency_witnessedPossibility_inconsistent hS (Consistent.of_entails (Entails.union h₁ h₂) hc)
+
 /-- `no-contingency-signature-r-implies-modal-freedom-signature-r` -/
 theorem no_contingency_signature_r_implies_modal_freedom_signature_r : Statements.no_contingency_signature_r_implies_modal_freedom_signature_r := by
   map_cert_sig noContingency_entails_modalFreedom
@@ -1006,6 +1011,14 @@ theorem rigid_comprehension_r_implies_persistent_comprehension_r : Statements.ri
 theorem rigid_comprehension_r_implies_weak_rigid_comprehension_r : Statements.rigid_comprehension_r_implies_weak_rigid_comprehension_r := by
   map_cert Proofs.rigid_comprehension_r_implies_weak_rigid_comprehension_r.entails
 
+/-- `separated-structure-incompatible-with-nd` -/
+theorem separated_structure_incompatible_with_nd : Statements.separated_structure_incompatible_with_nd :=
+  fun hS _ h₁ h₂ hc => separatedStructure_nd_inconsistent hS (Consistent.of_entails (Entails.union h₁ h₂) hc)
+
+/-- `signature-b-and-witnessed-possibility-incompatible` -/
+theorem signature_b_and_witnessed_possibility_incompatible : Statements.signature_b_and_witnessed_possibility_incompatible :=
+  fun hS _ h₁ h₂ hc => signatureB_witnessedPossibility_inconsistent hS (Consistent.of_entails (Entails.union h₁ h₂) hc)
+
 /-- `signature-b-r-implies-pure-b-r` -/
 theorem signature_b_r_implies_pure_b_r : Statements.signature_b_r_implies_pure_b_r := by
   map_cert_sig (Entails.to_pureVersion_signatureB
@@ -1080,6 +1093,10 @@ theorem witnessed_possibility_and_no_pure_contingency_imply_logical_necessity : 
 /-- `witnessed-possibility-and-npc-imply-possibly-witnessed-possibility` -/
 theorem witnessed_possibility_and_npc_imply_possibly_witnessed_possibility : Statements.witnessed_possibility_and_npc_imply_possibly_witnessed_possibility := by
   map_cert_sig npc_witnessedPossibility_entails_possiblyWitnessedPossibility
+
+/-- `witnessed-possibility-incompatible-with-nd` -/
+theorem witnessed_possibility_incompatible_with_nd : Statements.witnessed_possibility_incompatible_with_nd :=
+  fun hS _ h₁ h₂ hc => witnessedPossibility_nd_inconsistent hS (Consistent.of_entails (Entails.union h₁ h₂) hc)
 
 /-- `boolean-completeness-r`, form `lub`: Boolean Completeness and its LUB form. -/
 theorem boolean_completeness_r.lub : Statements.boolean_completeness_r.lub := by

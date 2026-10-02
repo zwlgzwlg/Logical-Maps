@@ -305,6 +305,7 @@ Classicism/Syntax/PossibilityPlus.lean  Possibility+, pure and for a signature; 
 Classicism/Syntax/Infinity.lean         the Infinity schemas at e and t
 Classicism/Syntax/StrongPossibility.lean  ◇_≠ and Strong Possibility, pure and for a signature
 Classicism/Syntax/OrdinaryComprehension.lean  Ordinary Comprehension, and that C proves every instance
+Classicism/Syntax/Inhabited.lean        closed types are inhabited; ⊤_ρ ≠ ⊥_ρ at every closed relational type
 Classicism/Syntax/Sentences.lean        ND, BF and the Fregean Axiom as sentences, for both semantic layers
 Classicism/Syntax/Constants.lean        the constants a term mentions
 Classicism/Syntax/Pure.lean             the pure language inside every signature: terms and derivations carried across
