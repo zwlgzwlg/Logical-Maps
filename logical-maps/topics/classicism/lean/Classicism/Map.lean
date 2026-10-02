@@ -369,7 +369,7 @@ theorem distinctness_schema_r_implies_possibility_schema_r : Statements.distinct
 
 /-- `distinctness-signature-r-implies-distinctness-schema-r` -/
 theorem distinctness_signature_r_implies_distinctness_schema_r : Statements.distinctness_signature_r_implies_distinctness_schema_r :=
-  fun hS _ h => Entails.trans h (Entails.of_subset (pureVersion_distinctnessC_subset hS))
+  fun hS _ h => Entails.trans h (Entails.of_subset (pureVersion_distinctnessC_subset hS.1))
 
 /-- `distinctness-signature-r-implies-possibility-signature-r` -/
 theorem distinctness_signature_r_implies_possibility_signature_r : Statements.distinctness_signature_r_implies_possibility_signature_r := by
@@ -920,7 +920,7 @@ theorem possibility_plus_r_implies_possibility_schema_r : Statements.possibility
 
 /-- `possibility-plus-signature-r-implies-possibility-plus-r` -/
 theorem possibility_plus_signature_r_implies_possibility_plus_r : Statements.possibility_plus_signature_r_implies_possibility_plus_r :=
-  fun hS _ h => Entails.trans h (Entails.of_subset (ofPure_possibilityPlus_subset hS))
+  fun hS _ h => Entails.trans h (Entails.of_subset (ofPure_possibilityPlus_subset hS.1))
 
 /-- `possibility-plus-signature-r-implies-possibility-signature-r` -/
 theorem possibility_plus_signature_r_implies_possibility_signature_r : Statements.possibility_plus_signature_r_implies_possibility_signature_r := by
@@ -940,7 +940,7 @@ theorem possibility_signature_r_implies_distinctness_signature_r : Statements.po
 
 /-- `possibility-signature-r-implies-possibility-schema-r` -/
 theorem possibility_signature_r_implies_possibility_schema_r : Statements.possibility_signature_r_implies_possibility_schema_r :=
-  fun hS _ h => Entails.trans h (Entails.of_subset (pureVersion_possibilityC_subset hS))
+  fun hS _ h => Entails.trans h (Entails.of_subset (pureVersion_possibilityC_subset hS.1))
 
 /-- `possible-infinity-e-and-bf-imply-axiom-of-infinity-e` -/
 theorem possible_infinity_e_and_bf_imply_axiom_of_infinity_e : Statements.possible_infinity_e_and_bf_imply_axiom_of_infinity_e := by

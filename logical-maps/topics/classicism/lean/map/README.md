@@ -65,7 +65,7 @@ map states it for tuples.
 
 A result, `A₁, …, Aₙ ⇒ C`:
 
-    ∀ {Sig} (_ : Sig.Closed) (Ax : AxiomSet Sig),
+    ∀ {Sig} (_ : Sig.Admitted) (Ax : AxiomSet Sig),
       Entails Ax A₁ → … → Entails Ax Aₙ → Entails Ax C
 
 every schema over any signature that entails the premises entails the conclusion: the
@@ -73,15 +73,18 @@ entailment `A₁ ∪ … ∪ Aₙ ⟹ C`, at every signature. An incompatibility
 `¬ Consistent Ax`: every schema entailing the premises is inconsistent. A form `F` of a
 principle `P`:
 
-    ∀ {Sig} (_ : Sig.Closed) (Ax : AxiomSet Sig), Entails Ax P ↔ Entails Ax F
+    ∀ {Sig} (_ : Sig.Admitted) (Ax : AxiomSet Sig), Entails Ax P ↔ Entails Ax F
 
 `Ax` appears because the map's generator builds a statement as a chain with one proposition
 per principle, and `Entails Ax A` is that proposition. `Sig` is bound because a statement is
-one closed proposition about functions of the signature. It ranges over the signatures of
-the paper's language, whose constants have closed types (`Signature.Closed`): a Lean
-`Signature` may also give a constant a type variable, and then `∃v. v = v` at that type is
-a pure theorem of `C(Σ)` that `C` does not prove, so the results relating a schema for a
-signature to its pure version fail there. Only those use the hypothesis.
+one closed proposition about functions of the signature. It ranges over the signatures the
+map's Background admits (`Signature.Admitted`): their constants have closed types, the
+paper's (a Lean `Signature` may also give a constant a type variable, and then `∃v. v = v`
+at that type is a pure theorem of `C(Σ)` that `C` does not prove, so the results relating
+a schema for a signature to its pure version fail there); and, the Background's standing
+assumption, at least one constant has a type other than `e` (without one, the
+incompatibilities of Witnessed Possibility and Separated Structure fail, the schemas being
+trivial).
 
 The certificate is the object-language entailment, not the shallow proof. The claim is
 about `C`, and the map's axiom list is harmless elsewhere but not here: `propext` is the

@@ -34,6 +34,12 @@ namespace Classicism.Meta
 /-- A signature of the paper's language: every constant has a closed type, a type of `R`. -/
 def Signature.Closed (Sig : Signature) : Prop := ∀ c, (Sig.typeOf c).Closed
 
+/-- A signature as the map's Background admits it: its constants have closed types, and at
+least one has a type other than `e` ("each of these schemata holds trivially when `Σ` is
+empty, so `Σ` is assumed to contain at least one constant of some type `τ ≠ e`"). The map's
+statements range over these. -/
+def Signature.Admitted (Sig : Signature) : Prop := Sig.Closed ∧ ∃ c, Sig.typeOf c ≠ Ty.e
+
 variable {Sig : Signature}
 
 namespace Term

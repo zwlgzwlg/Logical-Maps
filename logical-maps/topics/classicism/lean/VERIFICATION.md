@@ -1298,6 +1298,13 @@ the theorem at a type and the two records. `Cardinality.lean` joins the library 
 entailments. 230 result certificates and 22 form certificates prove their generated
 statements; 3 rest on `Classicism.e` and `e_exists`, as before.
 
+## The map's signatures, 2 October (night)
+
+The statements now range over `Signature.Admitted` signatures: closed, and, the
+Background's standing assumption, with at least one constant of a type other than `e`
+("each of these schemata holds trivially when Σ is empty"). The three certificates that use
+the hypothesis take its first half (`hS.1`). The full build passes.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

@@ -22,11 +22,11 @@ lean:
     example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
       {def}
   result:
-    binder: "∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),"
+    binder: "∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),"
     principle: "Classicism.Meta.AxiomSet.Entails Ax {def}"
     falsum: "¬ Classicism.Meta.AxiomSet.Consistent Ax"
   model:
-    binder: "∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧"
+    binder: "∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧"
     principle: "Classicism.Meta.AxiomSet.Entails Ax {def}"
 
 # principle id -> its schema, read in the signature
