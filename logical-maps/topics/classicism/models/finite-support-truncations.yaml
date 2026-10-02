@@ -28,22 +28,26 @@ references:
   role: proof
   locator: Appendix D, Proposition D.5(6), pp. 74–75; construction p. 78, Part 6; p. 79 (No Pure Contingency)
 
-definition: >-
-  Proposition D.5, part 6 (p. 78): the arrows are the identity and the truncations $g_n$,
-  $g_nm=\min\{m,n\}$, which compose as $g_n\circ g_m=g_{\min\{n,m\}}$.
-  In every part, $W_0^\ddagger$ is the set of finite subsets of $\mathbb N$ and the model is
-  ideally full: a proposition is a set of arrows whose membership depends only on the arrows’
-  values on some finite set of individuals (it is pinned down by that set), an entity of a
-  higher type is an applicative behaviour profile pinned down by a finite set in the same sense,
-  and the individuals are the natural numbers acted on by the arrows themselves. Propositions
-  and properties are thus about finitely many individuals and indifferent to how the arrows
-  treat the rest. Evaluation point: the sole object, at the identity arrow.
-
-
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element
-  of its type and each individual constant denotes one fixed individual.
+group: finite-support-one-object
+# migration: the definition is the group's, completed by these settings: `monoid` is the
+# sentence before "In every part", verbatim; Σ is one of the group's two interpretations.
+settings:
+  monoid: >-
+    Proposition D.5, part 6 (p. 78): the arrows are the identity and the truncations $g_n$,
+    $g_nm=\min\{m,n\}$, which compose as $g_n\circ g_m=g_{\min\{n,m\}}$.
+  sigma: top
+meets:
+  evens-avoidable: >-
+    With $N_0\subseteq[0,M_0]$: $i:=g_n$ with $n\ge M_0$, an even $b>n$, and $N^{\prime}:=[0,n+1]$:
+    the only arrow agreeing with $g_n$ on $[0,n+1]$ is $g_n$ itself, whose range $[0,n]$ omits $b$.
 
 arguments:
+
+# migration (2 October): these arguments moved to the group finite-support-one-object, whose
+# criteria no-pure-contingency, axiom-of-infinity, sigma-top, countable-boolean-completeness,
+# transversal-choice, weakly-inextensible-comprehension apply here; the Relational Choice argument
+# went, Relational Choice now following from Transversal Choice; its Weakly Inextensible
+# Comprehension argument is the group's, with the witness under `meets`.
 
 # Only the verdicts the engine needs to derive the rest are recorded, the source's first.
 
@@ -72,51 +76,7 @@ arguments:
     The strongest persistent property with extension $\mathbb N$ pinned down by
     $\{0,\ldots,n\}$ becomes ever stronger.
 
-- holds: [no-pure-contingency-r]
-  source: {paper: bacon-dorr-classicism, locator: p. 79}
-  text: >-
-    Boxed positive flags use the source’s explicit one-object No Pure Contingency observation,
-    applied separately to each closed instance.
-
 # --- later additions ---
-
-- holds: [axiom-of-infinity-e, axiom-of-infinity-t]
-  # migration: `by` adds "at Cian Dorr's direction" from the change's summary.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
-  date: '2026-09-20'
-  text: >-
-    The individuals are the natural numbers and identity at the evaluation arrow is literal, so
-    no numeral counts them. The propositions that a given individual is fixed by the arrow, one
-    for each individual, are pairwise distinct and each has that individual as finite support,
-    so there are infinitely many propositions. The set of numerals at each type is invariant
-    under every arrow, hence has empty support and lies in the domain, so finite cardinality is
-    standard and no finite cardinality holds of the universal property at either type.
-
-- id: sigma-top
-  fails: [independence-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The notes' lead-in
-  # "Under it the signature schemata fail." is dropped; the sentence that followed this argument
-  # there is in `notes`.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed
-    Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but
-    impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and
-    $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since
-    $c$ denotes what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism
-    (signature Σ) fails since $c=\top_\tau$ is a true identity that C(Σ) does not prove.
-
-- fails: [countable-boolean-completeness-r]
-  # migration: the lead-in "Countable Boolean Completeness fails as well, at type $e\to t$:"
-  # becomes "At type $e\to t$:"; the closing "Observation of 23 September 2026." becomes `date`.
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    At type $e\to t$: the property $E$ that the source shows to lack a least upper bound has as
-    its extension a countable family of haecceities, and the extensional fullness the source
-    invokes to put $E$ in the domain also puts in the relation pairing the haecceity of the
-    $k$-th member of that family with the numeral $k$, which injects $E$ into the numerals.
 
 - holds: [distinctness-preserving-collapse]
   # migration: the lead-in "Distinctness-preserving collapse holds:" is dropped and "for"
@@ -150,76 +110,15 @@ arguments:
     $\{1_{\mathbb N}\}\cup\{g_m : m>n\}$, pinned down by $\{0,\ldots,n+1\}$, and the value at
     other propositions being computed likewise from the truncation order.
 
-- id: relational-choice
-  holds: [relational-choice-r]
-  # Recorded although Transversal Choice gives it: the Transversal Choice argument builds on this one.
-  # migration: the lead-in "Relational Choice holds, necessarily." is dropped; `by` renders the
-  # closing "Cian Dorr’s observation of 23 September 2026." and the change's author.
-  by: Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    The model is ideally full, hence extensionally full at every object (Appendix D, the remark
-    after Definition D.3): for any set $R$ of tuples from the domains at an object $V$, the
-    intension that assigns to every arrow out of $V$ into an object $U$ a fixed set $R_U$ of
-    tuples from $U$’s domains, with $R_V=R$, is pinned down by $\emptyset$, so it is the
-    intension of an element of $V^{\bar\sigma\to t}$ with extension $R$ at $1_V$. Given a
-    relation $U$ serial at $V$, choose for each $x$ a $y$ with $(Ux)y$, by choice in the
-    metatheory; the graph is such an $R$, and its element $S$ is functional and a subrelation of
-    $U$ at $1_V$, both conditions being unboxed. The closed Relational Choice instance is true
-    at an arrow $h\colon W_0\to V$ iff it is true at $1_V$ in the truncation by $h$, whose
-    domains at $V$ are those of the model, so it holds at every arrow and $\Box$Relational
-    Choice follows.
-
-- holds: [transversal-choice-r]
-  # migration: `by` adds the summary's last sentence; the lead-in "Added Transversal Choice, by"
-  # becomes "By".
-  by: Claude Fable 5.1 (Anthropic), on a question of Zachary Goodsell, after an observation of Christopher Sun
-  date: '2026-09-25'
-  text: >-
-    By the argument recorded for Relational Choice: the model is extensionally full at every
-    object, so for an equivalence relation at the evaluation point a transversal of its
-    extension there, chosen in the metatheory, is the extension of an element pinned down by the
-    empty set; the equivalence and transversal conditions are unboxed.
-
-- fails: [weakly-inextensible-comprehension-r]
-  # migration: the lead-in "Inextensible Comprehension fails," becomes "At type $e\to t$," (the
-  # comma after the type dropped); the sentence "Here even the universal property …", which
-  # stood before "So $\langle b,i\rangle\in Y\setminus B_{N^{\prime}}$", moves to the end in
-  # parentheses; the closing clause ", so Weakly Inextensible Comprehension fails too" and the
-  # attribution "Observation of 23 September 2026, answering …" become `fails` and `by`/`date`.
-  # The revision note paraphrases the 25 September change, verbatim in `history`.
-  by: Claude Fable 5.1 (Anthropic), answering Cian Dorr’s question whether the failure of
-    Actuality can be sharpened to a failure of Inextensible Comprehension
-  date: '2026-09-23'
-  text: >-
-    At type $e\to t$, for the property of being even, which is in the domain as the constant
-    intension $\{\langle b,h\rangle : b\text{ even}\}$, pinned down by $\emptyset$. Unpacking
-    $\operatorname{Inextensible}$ as in the left-to-right half of Dorr’s rigidity criterion
-    (draft, Lemma 14, p. 7, with Lemma 13): even the unboxed matrix, evaluated at the identity,
-    says that $Y$ is contained in every persistent (transport-closed) $B$ in the domain whose
-    extension includes $Y$’s. For a finite $N^{\prime}$, the smallest such $B$ pinned down by
-    $N^{\prime}$ is $B_{N^{\prime}}:=\{\langle b^{\prime\prime},i^{\prime}\rangle :
-    i^{\prime\prime}(b)=b^{\prime\prime}\text{ for some even }b\text{ and some arrow
-    }i^{\prime\prime}\text{ agreeing with }i^{\prime}\text{ on }N^{\prime}\}$, which is
-    transport-closed and pinned down by $N^{\prime}$. Now let $Y$ be coextensive with evenness
-    and pinned down by a finite $N_0\subseteq[0,M_0]$; then $\langle b,i\rangle\in Y$ for every
-    even $b$ and every arrow $i$ fixing $N_0$ pointwise. Take $i:=g_n$ with $n\ge M_0$, an even
-    $b>n$, and $N^{\prime}:=[0,n+1]$: the only arrow agreeing with $g_n$ on $[0,n+1]$ is $g_n$
-    itself, whose range $[0,n]$ omits $b$. So $\langle b,i\rangle\in Y\setminus B_{N^{\prime}}$,
-    and $Y$ is not even weakly inextensible. (Here even the universal property has no
-    inextensible coextension, since $\operatorname{Inextensible}(\top_{et})$ unfolds to
-    $\Box$BF at type $e$.)
-  revisions:
-  - date: '2026-09-25'
-    by: Claude Opus 5.5 (Anthropic)
-    note: Merged with the 25 September version; the argument already refutes the weak form, which was added.
-
 # migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
-# the sentence that followed the Σ argument (sigma-top), referring to its failures.
+# the sentence that followed the Σ argument (sigma-top), referring to its failures; and the
+# parenthesis that closed its Weakly Inextensible Comprehension argument, now the group's (2 October).
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
   identifies its evaluation point; construction and verification are given at the PDF locations
-  in References. Everything that implies these fails with them.
+  in References. Everything that implies these fails with them. Even the universal property has no
+  inextensible coextension, since $\operatorname{Inextensible}(\top_{et})$ unfolds to $\Box$BF at
+  type $e$.
 
 was_conjectured: true
 # The old `changes` log, verbatim and frozen.

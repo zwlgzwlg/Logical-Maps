@@ -19,23 +19,30 @@ references:
 
 # migration: the definition is the old description without its verdict clauses, then the notes'
 # interpretation of Σ.
-definition: >-
-  Proposition D.5, part 1 (pp. 75–76): the one-object category whose arrows are all the
-  permutations of $\mathbb N$, so that each arrow $h$ represents the possibility in which each
-  individual $n$ plays the role actually played by $hn$, and the roles can be redistributed in any
-  way. In every part, $W_0^\ddagger$ is the set of finite subsets of $\mathbb N$ and the model is
-  ideally full: a proposition is a set of arrows whose membership depends only on the arrows’
-  values on some finite set of individuals (it is pinned down by that set), an entity of a higher
-  type is an applicative behaviour profile pinned down by a finite set in the same sense, and the
-  individuals are the natural numbers acted on by the arrows themselves. Propositions and
-  properties are thus about finitely many individuals and indifferent to how the arrows treat the
-  rest. Evaluation point: the sole object, at the identity arrow.
-
-
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element of
-  its type and each individual constant denotes one fixed individual $d$.
+group: finite-support-one-object
+# migration: the definition is the group's, completed by these settings: `monoid` is the
+# sentence before "In every part", verbatim; Σ is one of the group's two interpretations.
+# Its text named the fixed individual "$d$", used nowhere else in the record.
+settings:
+  monoid: >-
+    Proposition D.5, part 1 (pp. 75–76): the one-object category whose arrows are all the
+    permutations of $\mathbb N$, so that each arrow $h$ represents the possibility in which each
+    individual $n$ plays the role actually played by $hn$, and the roles can be redistributed in any
+    way.
+  sigma: top
+meets:
+  evens-avoidable: >-
+    Let $i$ swap an even $b$ and an odd $o$, both outside $N_0$, and let $N^{\prime}:=\{o\}$: an
+    arrow agreeing with $i$ on $\{o\}$ sends $o$ to $b$, so, being injective, it sends no even
+    number to $b$.
 
 arguments:
+
+# migration (2 October): these arguments moved to the group finite-support-one-object, whose
+# criteria no-pure-contingency, axiom-of-infinity, sigma-top, countable-boolean-completeness,
+# transversal-choice apply here; the Relational Choice argument went, Relational Choice now
+# following from Transversal Choice; its own Weakly Inextensible Comprehension argument stays, a
+# second route that also covers type $t\to t$; its Σ argument was the group's sigma-top, reworded.
 
 # Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
 # naming the verdict, and attribution sentences, are dropped from the texts, their content being in
@@ -47,37 +54,7 @@ arguments:
 - holds: [distinctness-necessary-r, atomlessness]
   source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(1), pp. 75–76'}
 
-- holds: [no-pure-contingency-r]
-  source: {paper: bacon-dorr-classicism, locator: 'p. 79'}
-  text: >-
-    Boxed positive flags use the source’s explicit one-object No Pure Contingency observation,
-    applied separately to each closed instance.
-
 # --- later additions ---
-
-- holds: [axiom-of-infinity-e]
-  # migration: `by` adds "at Cian Dorr's direction" from the change's summary, which is the text.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
-  date: '2026-09-20'
-  text: >-
-    The individuals are the natural numbers and identity at the evaluation arrow is literal, so no
-    numeral counts them. The propositions that a given individual is fixed by the arrow, one for
-    each individual, are pairwise distinct and each has that individual as finite support, so
-    there are infinitely many propositions. The set of numerals at each type is invariant under
-    every arrow, hence has empty support and lies in the domain, so finite cardinality is standard
-    and no finite cardinality holds of the universal property at either type.
-
-- id: sigma-top
-  fails: [independence-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    With $c\in\Sigma$ of relational type $\tau$, $c=\top_\tau$ necessarily, so Witnessed
-    Possibility fails for the pure formula $x\ne\top_\tau$, Separated Structure fails since
-    $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$, Independence (signature Σ)
-    fails since $c$ denotes what a closed pure term denotes, and Distinctness Maximalism
-    (signature Σ) fails since $c=\top_\tau$ is true and unprovable.
 
 - holds: [no-contingency-signature-r]
   # migration: `by` adds "at Cian Dorr’s request" from the change's summary.
@@ -104,35 +81,6 @@ arguments:
     pinned down by a finite $X$ whose extension contains the even numbers has, at an arrow $h$,
     the extension $h(X\cap\text{evens})\cup(\mathbb N\setminus hX)$, which strictly shrinks as $X$
     grows, so the haecceities of the even numbers have no least upper bound.
-
-- fails: [countable-boolean-completeness-r]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    At type $e\to t$: the property $E$ that the source shows to lack a least upper bound has as
-    its extension a countable family of haecceities, and the extensional fullness the source
-    invokes to put $E$ in the domain also puts in the relation pairing the haecceity of the $k$-th
-    member of that family with the numeral $k$, which injects $E$ into the numerals.
-
-- id: relational-choice
-  holds: [relational-choice-r]
-  # migration: `by` renders the closing "Cian Dorr’s observation of 23 September 2026." and the
-  # change's author.
-  # Recorded although Transversal Choice gives it: the Transversal Choice argument builds on this
-  # one.
-  by: Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    The model is ideally full, hence extensionally full at every object (Appendix D, the remark
-    after Definition D.3): for any set $R$ of tuples from the domains at an object $V$, the
-    intension that assigns to every arrow out of $V$ into an object $U$ a fixed set $R_U$ of
-    tuples from $U$’s domains, with $R_V=R$, is pinned down by $\emptyset$, so it is the intension
-    of an element of $V^{\bar\sigma\to t}$ with extension $R$ at $1_V$. Given a relation $U$
-    serial at $V$, choose for each $x$ a $y$ with $(Ux)y$, by choice in the metatheory; the graph
-    is such an $R$, and its element $S$ is functional and a subrelation of $U$ at $1_V$, both
-    conditions being unboxed. The closed Relational Choice instance is true at an arrow $h\colon
-    W_0\to V$ iff it is true at $1_V$ in the truncation by $h$, whose domains at $V$ are those of
-    the model, so it holds at every arrow and $\Box$Relational Choice follows.
 
 - fails: [weakly-inextensible-comprehension-r]
   # migration: the closing "Observations of 23 September 2026, answering …, in the simpler form and
@@ -165,18 +113,6 @@ arguments:
       Merged the two sets of arguments recorded on 23 and 25 September into one: the simpler 25
       September argument for Inextensible Comprehension, which also refutes the weak form,
       replaces the 23 September one.
-
-- holds: [transversal-choice-r]
-  # migration: `by` adds the summary's last sentence; the lead-in "Added Transversal Choice, by"
-  # becomes "By".
-  by: Claude Fable 5.1 (Anthropic), on a question of Zachary Goodsell, after an observation of
-    Christopher Sun
-  date: '2026-09-25'
-  text: >-
-    By the argument recorded for Relational Choice: the model is extensionally full at every
-    object, so for an equivalence relation at the evaluation point a transversal of its extension
-    there, chosen in the metatheory, is the extension of an element pinned down by the empty set;
-    the equivalence and transversal conditions are unboxed.
 
 - fails: [boolean-completeness-t]
   # migration: the first sentence rewrites "Boolean Completeness fails at type $t$ as well, which

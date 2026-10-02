@@ -1,0 +1,174 @@
+id: finite-support-one-object
+name: 'Finite-support action models on one object'
+references:
+- paper: bacon-dorr-classicism
+  role: proof
+  locator: Appendix D, Definitions D.1–D.3 and Proposition D.5, pp. 73–79
+
+# The eight one-object models of Proposition D.5: what their records shared word for word is
+# here, and each member keeps its own file, id and arguments. Every text below is verbatim from
+# the members' records unless a `# migration:` comment says otherwise.
+
+definition: >-
+  {{monoid}} In every part, $W_0^\ddagger$ is the set of finite subsets of $\mathbb N$ and the model
+  is ideally full: a proposition is a set of arrows whose membership depends only on the arrows’
+  values on some finite set of individuals (it is pinned down by that set), an entity of a higher
+  type is an applicative behaviour profile pinned down by a finite set in the same sense, and the
+  individuals are the natural numbers acted on by the arrows themselves. Propositions and properties
+  are thus about finitely many individuals and indifferent to how the arrows treat the rest.
+  Evaluation point: the sole object, at the identity arrow.
+
+
+  {{sigma}}
+
+parameters:
+  monoid:
+    text: The monoid of arrows, as the member's part of Proposition D.5 gives it.
+  sigma:
+    text: The interpretation of Σ, fixed for each record.
+    values:
+      # migration: the two texts the members shared. In `true-atom` the members named the
+      # actual-world proposition by their identity arrow ($\{1_{\mathbb N}\}$, $\{f_1\}$,
+      # $\{k_0\}$); here it is described instead.
+      top: >-
+        Interpretation of Σ, fixed for this record: each relational constant denotes the top element
+        of its type and each individual constant denotes one fixed individual.
+      true-atom: >-
+        Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type
+        $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of the
+        model, the actual-world proposition, whose only member is the identity arrow; every other
+        relational constant denotes the top element of its type and every individual constant one
+        fixed individual.
+
+conditions:
+- id: evens-avoidable
+  # Cian Dorr and Claude Opus 5.5, 2 October 2026: the condition the members' failures of Weakly
+  # Inextensible Comprehension used, each with its own witness.
+  text: >-
+    For every finite $N_0\subseteq\mathbb N$ there are an arrow $i$ fixing $N_0$ pointwise, an even
+    $b$, and a finite $N^{\prime}$ such that no arrow agreeing with $i$ on $N^{\prime}$ sends an
+    even number to $b$.
+
+criteria:
+
+- id: no-pure-contingency
+  holds: [no-pure-contingency-r]
+  source: {paper: bacon-dorr-classicism, locator: p. 79}
+  by: Andrew Bacon and Cian Dorr
+  date: '2026-09-17'
+  text: >-
+    Boxed positive flags use the source’s explicit one-object No Pure Contingency observation,
+    applied separately to each closed instance.
+
+- id: axiom-of-infinity
+  # Five members listed both verdicts; three listed only type e, Atomlessness giving type t.
+  holds: [axiom-of-infinity-e, axiom-of-infinity-t]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-09-20'
+  text: >-
+    The individuals are the natural numbers and identity at the evaluation arrow is literal, so no
+    numeral counts them. The propositions that a given individual is fixed by the arrow, one for
+    each individual, are pairwise distinct and each has that individual as finite support, so there
+    are infinitely many propositions. The set of numerals at each type is invariant under every
+    arrow, hence has empty support and lies in the domain, so finite cardinality is standard and no
+    finite cardinality holds of the universal property at either type.
+
+- id: countable-boolean-completeness
+  fails: [countable-boolean-completeness-r]
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    At type $e\to t$: the property $E$ that the source shows to lack a least upper bound has as its
+    extension a countable family of haecceities, and the extensional fullness the source invokes to
+    put $E$ in the domain also puts in the relation pairing the haecceity of the $k$-th member of
+    that family with the numeral $k$, which injects $E$ into the numerals.
+
+- id: transversal-choice
+  # migration: one argument for all eight, at Cian Dorr's direction (2 October): extensional
+  # fullness, from the members' Relational Choice argument (its first sentence, verbatim), then
+  # the members' Transversal Choice argument, which had begun "By the argument recorded for
+  # Relational Choice". Relational Choice now follows from Transversal Choice, and both boxed
+  # forms through No Pure Contingency, so the members' Relational Choice arguments go.
+  holds: [transversal-choice-r]
+  by: Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic), on a question of Zachary
+    Goodsell, after an observation of Christopher Sun
+  date: '2026-09-25'
+  text: >-
+    The model is ideally full, hence extensionally full at every object (Appendix D, the remark
+    after Definition D.3): for any set $R$ of tuples from the domains at an object $V$, the
+    intension that assigns to every arrow out of $V$ into an object $U$ a fixed set $R_U$ of tuples
+    from $U$’s domains, with $R_V=R$, is pinned down by $\emptyset$, so it is the intension of an
+    element of $V^{\bar\sigma\to t}$ with extension $R$ at $1_V$. Transversal Choice holds in every
+    extensionally full model: for an equivalence relation at the evaluation point, a transversal of
+    its extension there, chosen in the metatheory, is such an $R$, and its element is pinned down by
+    the empty set; the equivalence and transversal conditions are unboxed.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: The Relational Choice and Transversal Choice arguments merged into one, stated for every extensionally full model.
+
+- id: sigma-top
+  when: {sigma: top}
+  fails: [witnessed-possibility-r, separated-structure-r, independence-signature-r, distinctness-signature-r]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
+  date: '2026-09-22'
+  text: >-
+    Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed
+    Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible
+    of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree
+    on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term
+    $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true
+    identity that C(Σ) does not prove.
+
+- id: sigma-true-atom
+  when: {sigma: true-atom}
+  fails: [no-contingency-signature-r, signature-b-r, witnessed-possibility-r, separated-structure-r, independence-signature-r,
+    distinctness-signature-r]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
+  date: '2026-09-22'
+  text: >-
+    No Contingency (signature Σ) fails, since the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes
+    $a$, true and contingent; B for sentences of Σ fails, since under any arrow that no arrow
+    composes back into $a$, $\Diamond a$ is false, so $\Box\Diamond a$ fails; Witnessed Possibility
+    fails for the pure formula $x=\top_\tau$, witnessed by $\top_\tau$, since
+    $\Diamond(c=\top_\tau)$ is $\Diamond\Box a$ and $a$ is necessary at no arrow; Separated
+    Structure fails with it, being equivalent to Possibly Witnessed Possibility; Independence
+    (signature Σ) and Distinctness Maximalism (signature Σ) fail through the other relational
+    constants, Σ being assumed to contain at least one: such a constant $c'$ of type $\tau'$ denotes
+    what the closed pure term $\top_{\tau'}$ denotes, and $c'=\top_{\tau'}$ is a true identity that
+    C(Σ) does not prove. The designated constant refutes neither: closed pure terms denote entities
+    fixed by every arrow (Classicism, §3.5, p. 58), whereas $a$ is fixed by no arrow but the
+    identity, so no closed pure term denotes $\lambda\bar x\, .\,a$.
+
+- id: weakly-inextensible-comprehension
+  # migration: the members' common argument, from the truncations' text with its witness moved
+  # to the condition (2 October, at Cian Dorr's direction); each member's witness is its reason
+  # under `meets`. The 25 September revision is the members' own.
+  requires: [evens-avoidable]
+  fails: [weakly-inextensible-comprehension-r]
+  by: Claude Fable 5.1 (Anthropic), answering Cian Dorr’s question whether the failure of
+    Actuality can be sharpened to a failure of Inextensible Comprehension
+  date: '2026-09-23'
+  text: >-
+    At type $e\to t$, for the property of being even, which is in the domain as the constant
+    intension $\{\langle b,h\rangle : b\text{ even}\}$, pinned down by $\emptyset$. Unpacking
+    $\operatorname{Inextensible}$ as in the left-to-right half of Dorr’s rigidity criterion (draft,
+    Lemma 14, p. 7, with Lemma 13): even the unboxed matrix, evaluated at the identity, says that
+    $Y$ is contained in every persistent (transport-closed) $B$ in the domain whose extension
+    includes $Y$’s. For a finite $N^{\prime}$, the smallest such $B$ pinned down by $N^{\prime}$ is
+    $B_{N^{\prime}}:=\{\langle b^{\prime\prime},i^{\prime}\rangle :
+    i^{\prime\prime}(b)=b^{\prime\prime}\text{ for some even }b\text{ and some arrow
+    }i^{\prime\prime}\text{ agreeing with }i^{\prime}\text{ on }N^{\prime}\}$, which is
+    transport-closed and pinned down by $N^{\prime}$. Now let $Y$ be coextensive with evenness and
+    pinned down by a finite $N_0$; then $\langle b,i\rangle\in Y$ for every even $b$ and every arrow
+    $i$ fixing $N_0$ pointwise. Take the arrow $i$, the even $b$ and the finite $N^{\prime}$ that
+    the condition provides for $N_0$: no arrow agreeing with $i$ on $N^{\prime}$ sends an even
+    number to $b$. So $\langle b,i\rangle\in Y\setminus B_{N^{\prime}}$, and $Y$ is not even weakly
+    inextensible.
+  revisions:
+  - date: '2026-09-25'
+    by: Claude Opus 5.5 (Anthropic)
+    note: Merged with the 25 September version; the argument already refutes the weak form, which was added.
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: Stated once for the group, the witness moving to the condition evens-avoidable.
