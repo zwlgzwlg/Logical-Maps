@@ -1172,6 +1172,34 @@ counted.
 *Checked.* The full build passes. 203 result certificates and 22 form certificates prove
 their generated statements; 3 rest on `Classicism.e` and `e_exists`, as before.
 
+## `boxImp` renamed `incl`; conservativity of `C(Σ)` over `C`, 2 October (night)
+
+`boxImp`, the pointwise implication `λXY. ∀z̄. Xz̄ → Yz̄`, is now `incl` throughout (the
+`Rel` field, its laws, `Term.inclR`, `Term.unfoldIncl`, `RTy.inclD`, `inclRead`); nothing
+else changed.
+
+**Conservativity** (`Syntax/Conservativity.lean`): a pure sentence derivable in `C(Σ)` from
+pure axioms is derivable in `C` from them, for `Σ` whose constants have closed types
+(`Signature.Closed`). The proof is syntactic, by induction on the derivation, as
+`Derivable.ofPure` is: the derivation is renamed into the context `[e]`, and `Term.elim`
+replaces each constant of type `e` by that variable and each constant of a relational type
+by a term built from it (`x = x` at `t`, constant functions above); it commutes with
+renaming, substitution (when the substitution sends the variable to a variable), the
+unfoldings, conversion and holes, and leaves a pure term as it is; then `exE` on Existence
+at `e` discharges the variable. A constant of a type variable would have no term to become,
+and there the theorem fails (`∃v. v = v` at that type), so the map's statements now range
+over closed signatures: `∀ {Sig} (_ : Sig.Closed) (Ax : AxiomSet Sig), …`.
+
+Consequences: `consistent_ofPure_iff`; Possibility and Distinctness (pure) are parts of the
+versions for a closed signature, which certifies
+`possibility-signature-r-implies-possibility-schema-r` and
+`distinctness-signature-r-implies-distinctness-schema-r`; and `npc Σ = pureVersion
+noContingency` (`npc_eq_pureVersion`; by `Term.exists_ofPure`, a pure term of any signature
+comes from the pure language), likewise Pure B, which settles the "defined twice" point.
+
+*Checked.* The full build passes. 205 result certificates and 22 form certificates prove
+their generated statements; 3 rest on `Classicism.e` and `e_exists`, as before.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

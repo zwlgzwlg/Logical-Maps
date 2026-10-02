@@ -55,11 +55,6 @@ and the theorems are stated for them where the record is about them.
 
 ## Not yet here, and why
 
-- **Cross-signature arrows**: `possibility-signature-r-implies-possibility-schema-r` and
-  `distinctness-signature-r-implies-distinctness-schema-r` need the conservativity of
-  `C(Σ)` over `C` for pure sentences, which the map proves through completeness. The
-  direction this folder has, `ofPure`, is the other one. A syntactic proof would replace
-  the constants of a derivation by fresh variables and discharge them by Existence.
 - **Principles not in the shallow layer**: Witnessed Possibility and its kin (substitution
   of constants for variables), Possibility+, Strong Possibility (`◇_≠`), Separated
   Structure, Independence, Modal Freedom, Logical Necessity, the Infinity principles, the

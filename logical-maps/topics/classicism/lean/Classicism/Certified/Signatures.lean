@@ -1,6 +1,7 @@
 import Classicism.Certified.Schemas
 import Classicism.Syntax.SentenceSchemas
 import Classicism.Syntax.Pure
+import Classicism.Syntax.Conservativity
 
 /-!
 # Every principle at every signature
@@ -27,7 +28,10 @@ The principles' own declarations stay at the pure signature (`P.X.quoted`, `P.X.
 and so do the proofs about them: a pure derivation is one in every signature
 (`Derivable.ofPure`), so a pure entailment holds at every `Σ` (`Map.lean`). The converse
 direction, that what is consistent in the pure language stays so with constants added, is
-the conservativity of `C(Σ)` over `C`, which is not proved here.
+the conservativity of `C(Σ)` over `C` (`Syntax/Conservativity.lean`), for a signature of the
+paper's language, whose constants have closed types (`Signature.Closed`); the map's
+statements range over those. It gives the inclusions below between a schema relative to a
+signature and its pure version.
 -/
 
 open Lean Elab Command in
@@ -86,5 +90,26 @@ theorem pureVersion_noContingency {Sig : Signature} :
 theorem pureVersion_signatureB {Sig : Signature} :
     pureVersion (Sig := Sig) signatureB = AxiomSet.ofPure (pureB Signature.pure) := by
   rw [pureB_pure_eq]
+
+/-- No Pure Contingency, either way: `npc Σ` (`P → □P` for each pure sentence of `Σ`'s
+language) is the pure version of No Contingency. -/
+theorem npc_eq_pureVersion {Sig : Signature} : npc Sig = pureVersion noContingency := by
+  rw [pureVersion_noContingency, npc_eq_ofPure]
+
+/-- Pure B, either way. -/
+theorem pureB_eq_pureVersion {Sig : Signature} : pureB Sig = pureVersion signatureB := by
+  rw [pureVersion_signatureB, pureB_eq_ofPure]
+
+/-- Possibility (pure) is part of Possibility for a closed signature: what is consistent
+with `C` is consistent with `C(Σ)`. -/
+theorem pureVersion_possibilityC_subset {Sig : Signature} (hS : Sig.Closed) :
+    pureVersion (Sig := Sig) possibilityC ⊆ possibilityC Sig :=
+  ofPure_possibility_subset hS
+
+/-- Distinctness (pure) is part of Distinctness for a closed signature: what `C` does not
+prove, `C(Σ)` does not prove. -/
+theorem pureVersion_distinctnessC_subset {Sig : Signature} (hS : Sig.Closed) :
+    pureVersion (Sig := Sig) distinctnessC ⊆ distinctnessC Sig :=
+  ofPure_distinctness_subset hS
 
 end Classicism.Meta.AxiomSet

@@ -33,13 +33,6 @@ variable {Sig : Signature}
 
 /-! ## Glue: from the entailments as proved to the statements as generated -/
 
-/-- The logical axioms with a pure schema, read in a signature, are among the logical
-axioms with the schema read there. -/
-theorem ofPure_union_subset (A : AxiomSet Signature.pure) :
-    ∀ a, AxiomSet.ofPure (Sig := Sig) (C.axioms ∪ A) a → (C.axioms ∪ AxiomSet.ofPure A) a
-  | _, ⟨p, Or.inl h, e⟩ => Or.inl (logical_ofPure_subset _ ⟨p, h, e⟩)
-  | _, ⟨p, Or.inr h, e⟩ => Or.inr ⟨p, h, e⟩
-
 /-- **A pure entailment holds in every signature**, its schemas read there. -/
 theorem Entails.ofPure {A B : AxiomSet Signature.pure} (h : A ⟹ B) :
     AxiomSet.ofPure (Sig := Sig) A ⟹ AxiomSet.ofPure B := by
@@ -59,11 +52,6 @@ theorem Entails.ofPure_empty {Ax : AxiomSet Sig} : Ax ⟹ AxiomSet.ofPure empty 
 
 theorem Entails.to_empty {Ax : AxiomSet Sig} : Ax ⟹ empty := fun _ h => h.elim
 
-/-- An inconsistency of the pure language is one in every signature. -/
-theorem not_consistent_ofPure {A : AxiomSet Signature.pure} (h : ¬ Consistent A) :
-    ¬ Consistent (AxiomSet.ofPure (Sig := Sig) A) := fun hc =>
-  h fun hb => hc (Derivable.mono (ofPure_union_subset A) (Theorem.ofPure hb))
-
 /-- What is inconsistent stays so when enlarged. -/
 theorem not_consistent_mono {A B : AxiomSet Sig} (hs : A ⊆ B) (h : ¬ Consistent A) :
     ¬ Consistent B := fun hc => h (Consistent.mono hs hc)
@@ -79,26 +67,14 @@ theorem not_consistent_of_imp_neg {A B : Sentence Sig}
 theorem union_subset_union_right {A B B' : AxiomSet Sig} (h : B ⊆ B') : A ∪ B ⊆ A ∪ B' :=
   fun a => Or.imp_right (h a)
 
-/-- A term of the pure language, read in a signature, is pure there. -/
-theorem _root_.Classicism.Meta.Term.pure_ofPure :
-    ∀ {Γ : Ctx} {σ : Ty} (t : Term Signature.pure Γ σ), (Term.ofPure (Sig := Sig) t).pure = true
-  | _, _, .var _ | _, _, .and | _, _, .or | _, _, .not | _, _, .all _ | _, _, .ex _ | _, _, .eq _
-  | _, _, .constR _ | _, _, .negR _ | _, _, .andR _ | _, _, .orR _ | _, _, .coextR _
-  | _, _, .boxR _ | _, _, .inclR _ => rfl
-  | _, _, .const c => nomatch c
-  | _, _, .app f a => by simp [Term.ofPure_app, Term.pure, Term.pure_ofPure f, Term.pure_ofPure a]
-  | _, _, .lam b => by simpa [Term.ofPure_lam, Term.pure] using Term.pure_ofPure b
-
 /-- No Pure Contingency of the pure language, read in a signature, is part of No Pure
 Contingency there. -/
 theorem npc_ofPure_subset : AxiomSet.ofPure (npc Signature.pure) ⊆ npc Sig := by
-  rintro a ⟨_, ⟨p, -, rfl⟩, rfl⟩
-  exact ⟨Term.ofPure p, Term.pure_ofPure p, rfl⟩
+  rw [npc_eq_ofPure (Sig := Sig)]; exact fun _ => id
 
 /-- B for the pure sentences, likewise. -/
 theorem pureB_ofPure_subset : AxiomSet.ofPure (pureB Signature.pure) ⊆ pureB Sig := by
-  rintro a ⟨_, ⟨p, -, rfl⟩, rfl⟩
-  exact ⟨Term.ofPure p, Term.pure_ofPure p, rfl⟩
+  rw [pureB_eq_ofPure (Sig := Sig)]; exact fun _ => id
 
 /-- An entailment of No Pure Contingency in the form `Results/SentenceSchemas/` proves it, as
 the pure version of No Contingency. -/
@@ -134,19 +110,19 @@ macro_rules
 
 /-- A certificate from a pure entailment `h : S ⟹ C`, `S` a union of the premises. -/
 macro "map_cert " h:term : tactic => `(tactic| (
-  intro _ _
+  intro _ _ _
   intros
   exact AxiomSet.Entails.trans (by map_premises) (AxiomSet.Entails.ofPure $h)))
 
 /-- A certificate from an entailment at every signature. -/
 macro "map_cert_sig " h:term : tactic => `(tactic| (
-  intro _ _
+  intro _ _ _
   intros
   exact AxiomSet.Entails.trans (by map_premises) $h))
 
 /-- A certificate for an incompatibility, from a pure inconsistency `h : ¬ Consistent S`. -/
 macro "map_cert_incompatible " h:term : tactic => `(tactic| (
-  intro _ _
+  intro _ _ _
   intros
   intro hc
   exact AxiomSet.not_consistent_ofPure $h (AxiomSet.Consistent.of_entails (by map_premises) hc)))
@@ -154,7 +130,7 @@ macro "map_cert_incompatible " h:term : tactic => `(tactic| (
 /-- A certificate for an equivalent form, from the two pure entailments between the
 official form and it. -/
 macro "map_form " h₁:term:max h₂:term:max : tactic => `(tactic| (
-  intro _ _
+  intro _ _ _
   exact ⟨fun h => AxiomSet.Entails.trans h (AxiomSet.Entails.ofPure $h₁),
     fun h => AxiomSet.Entails.trans h (AxiomSet.Entails.ofPure $h₂)⟩))
 
@@ -371,6 +347,10 @@ theorem distinctness_preserving_collapse_and_nd_imply_fregean_axiom : Statements
 /-- `distinctness-schema-r-implies-possibility-schema-r` -/
 theorem distinctness_schema_r_implies_possibility_schema_r : Statements.distinctness_schema_r_implies_possibility_schema_r := by
   map_cert Meta.distinctness_schema_r_implies_possibility_schema_r
+
+/-- `distinctness-signature-r-implies-distinctness-schema-r` -/
+theorem distinctness_signature_r_implies_distinctness_schema_r : Statements.distinctness_signature_r_implies_distinctness_schema_r :=
+  fun hS _ h => Entails.trans h (Entails.of_subset (pureVersion_distinctnessC_subset hS))
 
 /-- `distinctness-signature-r-implies-possibility-signature-r` -/
 theorem distinctness_signature_r_implies_possibility_signature_r : Statements.distinctness_signature_r_implies_possibility_signature_r := by
@@ -890,6 +870,10 @@ theorem possibility_schema_r_implies_distinctness_schema_r : Statements.possibil
 /-- `possibility-signature-r-implies-distinctness-signature-r` -/
 theorem possibility_signature_r_implies_distinctness_signature_r : Statements.possibility_signature_r_implies_distinctness_signature_r := by
   map_cert_sig Meta.possibility_signature_r_implies_distinctness_signature_r
+
+/-- `possibility-signature-r-implies-possibility-schema-r` -/
+theorem possibility_signature_r_implies_possibility_schema_r : Statements.possibility_signature_r_implies_possibility_schema_r :=
+  fun hS _ h => Entails.trans h (Entails.of_subset (pureVersion_possibilityC_subset hS))
 
 /-- `pure-b-and-pure-possibility-incompatible` -/
 theorem pure_b_and_pure_possibility_incompatible : Statements.pure_b_and_pure_possibility_incompatible := by

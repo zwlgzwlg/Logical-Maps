@@ -14,9 +14,9 @@ object-level steps they need are certified once and carried over by `ofPure`.
 
 The other direction — a pure sentence that is a theorem of `C(Σ)` is a theorem of `C` —
 is the conservativity of the signature extension, which the map proves through
-completeness (`possibility-signature-r-implies-possibility-schema-r`); syntactically it
-would replace each constant by a fresh variable and discharge the variables by Existence.
-It is not here.
+completeness (`possibility-signature-r-implies-possibility-schema-r`). It is proved
+syntactically in `Conservativity.lean`: each constant is replaced by a variable, and the
+variable discharged by Existence.
 
 Everything is by structural recursion on terms, holes, conversions and derivations, as
 `rename` is (`Term.lean`, `Conversion.lean`, `Derivation.lean`); the reading of terms is

@@ -8,8 +8,9 @@
 # those statements.
 #
 # Each principle is a schema at every signature (Certified/Signatures.lean). A result's
-# statement reads: for every signature and every schema Ax over it, if Ax entails each
-# premise then it entails the conclusion; for an incompatibility, Ax is inconsistent.
+# statement reads: for every signature of the paper's language (its constants of closed
+# types) and every schema Ax over it, if Ax entails each premise then it entails the
+# conclusion; for an incompatibility, Ax is inconsistent.
 # That is the entailment between the schemas, or their inconsistency. A form's statement:
 # Ax entails the principle iff it entails the form.
 
@@ -21,11 +22,11 @@ lean:
     example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
       {def}
   result:
-    binder: "∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),"
+    binder: "∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig),"
     principle: "Classicism.Meta.AxiomSet.Entails Ax {def}"
     falsum: "¬ Classicism.Meta.AxiomSet.Consistent Ax"
   model:
-    binder: "∃ (Sig : Classicism.Meta.Signature) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧"
+    binder: "∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Closed) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧"
     principle: "Classicism.Meta.AxiomSet.Entails Ax {def}"
 
 # principle id -> its schema, read in the signature
@@ -294,6 +295,7 @@ lean_ref:
   distinctness-necessary-t-implies-vicinity: Classicism.Map.distinctness_necessary_t_implies_vicinity
   distinctness-preserving-collapse-and-nd-imply-fregean-axiom: Classicism.Map.distinctness_preserving_collapse_and_nd_imply_fregean_axiom
   distinctness-schema-r-implies-possibility-schema-r: Classicism.Map.distinctness_schema_r_implies_possibility_schema_r
+  distinctness-signature-r-implies-distinctness-schema-r: Classicism.Map.distinctness_signature_r_implies_distinctness_schema_r
   distinctness-signature-r-implies-possibility-signature-r: Classicism.Map.distinctness_signature_r_implies_possibility_signature_r
   extensionality-r-implies-actuality: Classicism.Map.extensionality_r_implies_actuality
   extensionality-r-implies-atomicity-r: Classicism.Map.extensionality_r_implies_atomicity_r
@@ -421,6 +423,7 @@ lean_ref:
   possibility-and-no-pure-contingency-incompatible: Classicism.Map.possibility_and_no_pure_contingency_incompatible
   possibility-schema-r-implies-distinctness-schema-r: Classicism.Map.possibility_schema_r_implies_distinctness_schema_r
   possibility-signature-r-implies-distinctness-signature-r: Classicism.Map.possibility_signature_r_implies_distinctness_signature_r
+  possibility-signature-r-implies-possibility-schema-r: Classicism.Map.possibility_signature_r_implies_possibility_schema_r
   pure-b-and-pure-possibility-incompatible: Classicism.Map.pure_b_and_pure_possibility_incompatible
   relational-choice-and-extensionality-imply-transversal-choice: Classicism.Map.relational_choice_and_extensionality_imply_transversal_choice
   relational-choice-and-plenitude-imply-functional-choice-r: Classicism.Map.relational_choice_and_plenitude_imply_functional_choice_r

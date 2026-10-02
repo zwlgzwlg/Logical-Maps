@@ -24,7 +24,7 @@ against a statement the map writes itself.
 
 | file | what it is |
 | --- | --- |
-| `lean.yaml` | The fields the map would carry: `lean_lib` and `lean` (for `topic.yaml`), a `lean_def` for each of the 76 principles formalized here, each principle's `forms`, and a `lean_ref` for each of the 203 results certified. |
+| `lean.yaml` | The fields the map would carry: `lean_lib` and `lean` (for `topic.yaml`), a `lean_def` for each of the 76 principles formalized here, each principle's `forms`, and a `lean_ref` for each of the 205 results certified. |
 | `pmap.patch` | The proposed change to the map's build script and JSON schemas (below). |
 | `generate.py` | Runs the map's own generator, with `pmap.patch` applied in memory, on a checkout of the map with these fields added, writing `Classicism/Statements.lean`; `--refs` fills `lean_ref` from `Classicism/Map.lean`, `--patch` rewrites `pmap.patch`. |
 | `index.json` | For each certified result and form: its certificate (file, lines, axioms) and the declarations a reader wants, the proofs (file, lines), and for a form the definitions of both forms. Written by `scripts/MapIndex.lean`. |
@@ -65,7 +65,7 @@ map states it for tuples.
 
 A result, `A₁, …, Aₙ ⇒ C`:
 
-    ∀ {Sig} (Ax : AxiomSet Sig),
+    ∀ {Sig} (_ : Sig.Closed) (Ax : AxiomSet Sig),
       Entails Ax A₁ → … → Entails Ax Aₙ → Entails Ax C
 
 every schema over any signature that entails the premises entails the conclusion: the
@@ -73,11 +73,15 @@ entailment `A₁ ∪ … ∪ Aₙ ⟹ C`, at every signature. An incompatibility
 `¬ Consistent Ax`: every schema entailing the premises is inconsistent. A form `F` of a
 principle `P`:
 
-    ∀ {Sig} (Ax : AxiomSet Sig), Entails Ax P ↔ Entails Ax F
+    ∀ {Sig} (_ : Sig.Closed) (Ax : AxiomSet Sig), Entails Ax P ↔ Entails Ax F
 
 `Ax` appears because the map's generator builds a statement as a chain with one proposition
 per principle, and `Entails Ax A` is that proposition. `Sig` is bound because a statement is
-one closed proposition about functions of the signature.
+one closed proposition about functions of the signature. It ranges over the signatures of
+the paper's language, whose constants have closed types (`Signature.Closed`): a Lean
+`Signature` may also give a constant a type variable, and then `∃v. v = v` at that type is
+a pure theorem of `C(Σ)` that `C` does not prove, so the results relating a schema for a
+signature to its pure version fail there. Only those use the hypothesis.
 
 The certificate is the object-language entailment, not the shallow proof. The claim is
 about `C`, and the map's axiom list is harmless elsewhere but not here: `propext` is the
@@ -128,7 +132,7 @@ small change to `pmap` and `viewer/template.html` in the map repository.
   the map's list allows the two, or the model is built on a type known to be inhabited.
 - **Coverage.** 21 of the map's 97 principles have no `lean_def` (the Infinity
   principles, Witnessed Possibility and its kin, Separated Structure, the Necessity of
-  Arithmetic and others), so 54 results have no statement. Of the 216 stated, 13 are not
+  Arithmetic and others), so 54 results have no statement. Of the 216 stated, 11 are not
   yet proved here.
 - **Forms.** 22: Boolean Completeness's LUB form, and the list forms of the 21 principles
   with a type parameter whose two directions are proved (`P.X.listSchema_entails_schema`, by
@@ -139,9 +143,10 @@ small change to `pmap` and `viewer/template.html` in the map repository.
 - **Models.** Three of the map's models get statements (`∃` a consistent `Ax` entailing what
   the model satisfies and not what it violates); none is certified yet.
 - **No Pure Contingency defined twice.** `npc Σ` (P → □P for each pure sentence of `Σ`'s
-  language) and `pureVersion noContingency` are the same set, but only one inclusion is
-  proved; the other needs every pure sentence of `Σ`'s language to come from the pure
-  signature, the ingredient conservativity of `C(Σ)` over `C` would also need. The
-  certificates use only the proved direction. Likewise Pure B.
+  language) and `pureVersion noContingency` are the same set (`npc_eq_pureVersion`), and so
+  are the two Pure B's.
+- **Conservativity.** `C(Σ)` is conservative over `C` for a closed signature
+  (`Syntax/Conservativity.lean`), so the consistency facts proved in the pure language hold
+  at every such signature (`consistent_ofPure_iff`).
 - **Mathlib.** `lean-check` runs `lake build` on the topic's Lean directory; this project
   needs Mathlib (for the model theory only).
