@@ -1,5 +1,6 @@
 import Classicism.Tools.Quote
 import Classicism.Results.Records
+import Classicism.Results.Forms
 
 /-!
 # The record theorems, quoted
@@ -13,3 +14,4 @@ This is the one home of those declarations.
 -/
 
 #classicism_quote_audit Classicism.Results.Records
+#classicism_quote_audit Classicism.Results.Forms

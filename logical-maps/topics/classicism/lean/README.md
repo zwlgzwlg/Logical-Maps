@@ -186,6 +186,14 @@ project uses:
   a condition on sentences (`Syntax/SentenceSchemas.lean`). So a node of the map always
   has a schema, and has a principle in this project's sense only when it is indexed by
   types.
+* **at every signature** (Cian, 2 October): each of the map's principles is a schema at
+  every signature `Σ`, a function from signatures to schemas
+  (`Certified/Signatures.lean`). A principle indexed by types gives its instances read in
+  `Σ`'s language (`P.X.schemaIn`); a signature-relative sentence schema is taken at `Σ`
+  (`noContingency Σ`); the pure version of one is its schema at the pure signature read in
+  `Σ`'s language (`pureVersion noContingency` is No Pure Contingency). The principles' own
+  declarations and the proofs about them stay at the pure signature: a pure derivation is
+  one in every signature, so a pure entailment holds at every `Σ`.
 
 | name | layer | type | what it is |
 | --- | --- | --- | --- |
@@ -323,6 +331,7 @@ Classicism/Models/Monoids.lean          Appendix D, Parts 2 to 8: the seven mono
 Classicism/Models/README.md             the verdict table; the survey of two-object variants and what they would add to the map
 
 Classicism/Results/Records.lean         the map's records proved in the shallow layer, one theorem per record
+Classicism/Results/Forms.lean           the equivalences between a principle's forms, a section per principle
 Classicism/Results/SentenceSchemas/     results about the sentence schemas: Distinctness, Possibility, No Pure Contingency and their kin
 Classicism/Results/Consistency/         consistency and non-entailment facts from the models, which the incompatibilities rest on
 
@@ -344,8 +353,9 @@ Classicism/Certified/Schemas.lean       the principles quoted, and their schemas
 Classicism/Certified/Derivations.lean   the record theorems derived; home of foo.derivable
 Classicism/Certified/Entailed.lean      the records as entailments; home of foo.entails
 Classicism/Certified/Vectorized.lean    checks of the vectorization on three principles and one arrow
+Classicism/Certified/Signatures.lean    each principle as a schema at every signature: P.X.schemaIn, pureVersion
 Classicism/Statements.lean              the map's statements, written by the map's own generator (map/generate.py)
-Classicism/Map.lean                     one certificate per map result proved, of its generated statement: the map's lean_refs
+Classicism/Map.lean                     one certificate per map result proved and per form, of its generated statement: the map's lean_refs
 Classicism/Tools/MapIndex.lean          #classicism_map_index: where each certificate and its proofs are (map/index.json)
 
 Classicism/Strict/                      the strict layer; see its README

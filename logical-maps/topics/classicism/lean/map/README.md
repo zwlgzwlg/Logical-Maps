@@ -2,7 +2,8 @@
 
 A draft of how this project plugs into the Logical Map (`zwlgzwlg/Logical-Maps`,
 `topics/classicism`), in the map's own terms. Nothing here changes the map; it is what
-the map's YAML and build would carry once the project moves there.
+the map's YAML and build would carry once the project moves there, and the change to the
+map's build script that it needs (`pmap.patch`).
 
 ## How the map certifies a result
 
@@ -23,16 +24,19 @@ against a statement the map writes itself.
 
 | file | what it is |
 | --- | --- |
-| `lean.yaml` | The fields the map would carry: `lean_lib` and `lean` (for `topic.yaml`), a `lean_def` for each of the 76 principles formalized here, and a `lean_ref` for each of the 202 results certified. |
-| `generate.py` | Runs the map's own generator on a checkout of the map with these fields added, writing `Classicism/Statements.lean`; with `--refs`, fills `lean_ref` from `Classicism/Map.lean`. |
-| `index.json` | For each certified result: its certificate (file, lines, axioms) and the declarations a reader wants, the proofs (file, lines). Written by `scripts/MapIndex.lean`. |
+| `lean.yaml` | The fields the map would carry: `lean_lib` and `lean` (for `topic.yaml`), a `lean_def` for each of the 76 principles formalized here, each principle's `forms`, and a `lean_ref` for each of the 202 results certified. |
+| `pmap.patch` | The proposed change to the map's build script and JSON schemas (below). |
+| `generate.py` | Runs the map's own generator, with `pmap.patch` applied in memory, on a checkout of the map with these fields added, writing `Classicism/Statements.lean`; `--refs` fills `lean_ref` from `Classicism/Map.lean`, `--patch` rewrites `pmap.patch`. |
+| `index.json` | For each certified result and form: its certificate (file, lines, axioms) and the declarations a reader wants, the proofs (file, lines), and for a form the definitions of both forms. Written by `scripts/MapIndex.lean`. |
 
 and, in the library:
 
 | file | what it is |
 | --- | --- |
-| `Classicism/Statements.lean` | The generated statements (216 of the 270 results, those whose principles all have a `lean_def`, and 3 models). Not edited by hand. |
-| `Classicism/Map.lean` | One certificate per result proved, named by its id, of the generated type: the `lean_ref`s. Each is one line citing the proof. |
+| `Classicism/Certified/Signatures.lean` | Each principle as a schema at every signature: `P.X.schemaIn`, `pureVersion`, `distinctnessC`, `possibilityC`. |
+| `Classicism/Statements.lean` | The generated statements: 216 of the 270 results (those whose principles all have a `lean_def`), 3 models, 1 form. Not edited by hand. |
+| `Classicism/Map.lean` | One certificate per result proved, named by its id, and per form, named `<principle>.<form>`, each of the generated type: the `lean_ref`s. Each is one line citing the proof. |
+| `Classicism/Results/Forms.lean` | The shallow proofs of the equivalences between a principle's forms, a section per principle. |
 | `Classicism/Tools/MapIndex.lean` | `#classicism_map_index`, which writes `index.json`. |
 
 To regenerate, from `Cian/`:
@@ -41,25 +45,58 @@ To regenerate, from `Cian/`:
     lake build
     lake env lean scripts/MapIndex.lean
 
+## Principles at every signature
+
+Each of the map's principles is a schema at every signature `Σ`, a function from
+signatures to schemas (`Classicism/Certified/Signatures.lean`):
+
+| kind of principle | its schema at `Σ` | example |
+| --- | --- | --- |
+| indexed by types | its instances, read in `Σ`'s language | `P.Barcan.schemaIn` |
+| relative to a signature | the schema at `Σ` | `noContingency _`, `distinctnessC _` |
+| the pure version of one | that schema at the pure signature, read in `Σ`'s language | `pureVersion noContingency` (No Pure Contingency) |
+
+A pure principle throws `Σ` away, but its sentences are still read in `Σ`'s language: in
+Lean a sentence's type records its signature, and `ofPure` is the inclusion. These are the
+`lean_def`s; Actual Profile's is its list form (`P.ActualProfile.listSchemaIn`), since the
+map states it for tuples.
+
 ## The shape of a statement
 
-    ∀ {Sig} (Ax : AxiomSet Sig), Consistent Ax →
-      Entails Ax A₁ → … → Entails Ax Aₙ → Entails Ax C        (or → False)
+A result, `A₁, …, Aₙ ⇒ C`:
 
-For every signature and every consistent schema `Ax` over it, if `Ax` entails each premise,
-it entails the conclusion. This is equivalent to the entailment `A₁ ∪ … ∪ Aₙ ⟹ C`, and for
-an incompatibility to the inconsistency of the premises, so the generator's `False`
-conclusion needs no special case. Each `lean_def` is a schema: a principle's schema read in
-the signature (`AxiomSet.ofPure P.Barcan.schema`), Actual Profile's list form (the map
-states it for tuples), or a sentence schema, at the signature for the signature-relative
-principles (`AxiomSet.noContingency _`). Quantifying over signatures is what lets the seven
-signature results be stated at all; for a pure result it costs nothing, since a pure
-derivation is one in every signature.
+    ∀ {Sig} (Ax : AxiomSet Sig),
+      Entails Ax A₁ → … → Entails Ax Aₙ → Entails Ax C
+
+every schema over any signature that entails the premises entails the conclusion: the
+entailment `A₁ ∪ … ∪ Aₙ ⟹ C`, at every signature. An incompatibility ends instead in
+`¬ Consistent Ax`: every schema entailing the premises is inconsistent. A form `F` of a
+principle `P`:
+
+    ∀ {Sig} (Ax : AxiomSet Sig), Entails Ax P ↔ Entails Ax F
+
+`Ax` appears because the map's generator builds a statement as a chain with one proposition
+per principle, and `Entails Ax A` is that proposition. `Sig` is bound because a statement is
+one closed proposition about functions of the signature.
 
 The certificate is the object-language entailment, not the shallow proof. The claim is
 about `C`, and the map's axiom list is harmless elsewhere but not here: `propext` is the
 Fregean Axiom, so a shallow proof passing that check would show nothing about `C`. The
 entailments use `propext` and `Quot.sound` only as reasoning about syntax.
+
+## The change to the map's build script (`pmap.patch`)
+
+Two additions to `generate_lean_statements`, and the matching entries in the JSON schemas:
+
+- **`lean.result.falsum`**: how a result concluding `False` is written (default `False`).
+  Classicism sets it to `¬ Consistent Ax`. (The key cannot be `false`: YAML reads that as
+  the boolean.)
+- **`forms`** on a principle: equivalent forms, each with an `id`, a `name`, a
+  `statement`, a `lean_def` and a `lean_ref`; each gets the statement above, named
+  `<principle>.<form>`.
+
+Still to do in the map: `lean-check` to check the forms' `lean_ref`s as it does the
+results', and the viewer to show the forms on a principle's page.
 
 ## What a map viewer should see
 
@@ -72,17 +109,20 @@ With `index.json` it can link each result to its proof:
 - **At every arity**, when there is a second entry: the theorem in `Results/Arity.lean`;
 - **Certificate**: the line in `Classicism/Map.lean`, with its axioms.
 
+and, on a principle's page, each form with its **definition** (beside the official one in
+`Principles.lean`), its **proofs** (the two directions, in `Results/Forms.lean`) and its
+**certificate**.
+
 A link is a file and a line range, made into a URL by the map's build (a GitHub blob at a
 pinned commit, `#L2145-L2160`, or a rendered source page with line anchors). This needs a
 small change to `pmap` and `viewer/template.html` in the map repository.
 
 ## Open points
 
-- **Axioms.** 193 certificates rest on `propext` and `Quot.sound` only, and six more also
-  on `Classical.choice` (the models), all within the map's list. Three rest also on
-  `Classicism.e` and `e_exists`,
-  through the consistency facts from the model in `Prop`, which needs an individual:
-  `maximalist-distinctness-incompatible-with-nd`,
+- **Axioms.** 193 result certificates rest on `propext` and `Quot.sound` only, and six more
+  also on `Classical.choice` (the models), all within the map's list. Three rest also on
+  `Classicism.e` and `e_exists`, through the consistency facts from the model in `Prop`,
+  which needs an individual: `maximalist-distinctness-incompatible-with-nd`,
   `possibility-and-no-pure-contingency-incompatible` and
   `pure-b-and-pure-possibility-incompatible`. `lean-check` would refuse those three until
   the map's list allows the two, or the model is built on a type known to be inhabited.
@@ -90,7 +130,15 @@ small change to `pmap` and `viewer/template.html` in the map repository.
   principles, Witnessed Possibility and its kin, Separated Structure, the Necessity of
   Arithmetic and others), so 54 results have no statement. Of the 216 stated, 14 are not
   yet proved here.
+- **Forms.** One so far, the pilot: Boolean Completeness's LUB form. The list forms of the
+  25 principles with a type parameter are the natural next ones: 20 have both directions
+  proved (`P.X.listSchema_entails_schema`, `P.X.schema_entails_listSchema`).
 - **Models.** Three of the map's models get statements (`∃` a consistent `Ax` entailing what
   the model satisfies and not what it violates); none is certified yet.
+- **No Pure Contingency defined twice.** `npc Σ` (P → □P for each pure sentence of `Σ`'s
+  language) and `pureVersion noContingency` are the same set, but only one inclusion is
+  proved; the other needs every pure sentence of `Σ`'s language to come from the pure
+  signature, the ingredient conservativity of `C(Σ)` over `C` would also need. The
+  certificates use only the proved direction. Likewise Pure B.
 - **Mathlib.** `lean-check` runs `lake build` on the topic's Lean directory; this project
   needs Mathlib (for the model theory only).

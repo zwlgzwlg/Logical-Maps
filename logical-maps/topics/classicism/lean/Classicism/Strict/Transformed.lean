@@ -1,5 +1,6 @@
 import Classicism.Strict.Mirror
 import Classicism.Results.Records
+import Classicism.Results.Forms
 import Classicism.Identities
 
 /-!
@@ -21,3 +22,4 @@ The report lists any theorem not reached, with the reason. Today every theorem i
 
 #classicism_transform_audit Classicism.Booleanism Classicism.Identities Classicism.Modal
 #classicism_transform_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records
+#classicism_transform_audit Classicism.Results.Forms

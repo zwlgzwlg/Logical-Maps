@@ -110,6 +110,10 @@ def Atomlessness : Prop := ∀ p : Prop, ◇ p → ∃ q : Prop, ◇ q ∧ Rel.l
 /-- `boolean-completeness-r` at `τ`: `∀X. ∃y. GLB_τ(y, X)`, every property of entities
 of the type has a greatest lower bound. -/
 def BooleanCompleteness (τ : Type) [Rel τ] : Prop := ∀ X : τ → Prop, ∃ y : τ, GLB y X
+/-- Boolean Completeness, its LUB form: `∀X. ∃y. LUB_τ(y, X)`, every property of entities
+of the type has a least upper bound. Equivalent to the official form, at each type
+(`Results/Forms.lean`). -/
+def BooleanCompletenessLUB (τ : Type) [Rel τ] : Prop := ∀ X : τ → Prop, ∃ y : τ, LUB y X
 /-- `boolean-completeness-t`: Boolean Completeness at type `t`. -/
 def BooleanCompletenessT : Prop := BooleanCompleteness Prop
 /-- `necessary-boolean-completeness-r` at `τ`: the instance boxed. -/

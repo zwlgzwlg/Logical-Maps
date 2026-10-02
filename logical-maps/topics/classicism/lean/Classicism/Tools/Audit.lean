@@ -5,6 +5,7 @@ import Classicism.Identities
 import Classicism.Pointwise
 import Classicism.Lattice
 import Classicism.Results.Records
+import Classicism.Results.Forms
 
 /-!
 # Audit
@@ -17,7 +18,7 @@ audit, `Classicism/Strict/Audit.lean`.
 -- Every theorem of the shallow layer: the prelude, the identities, the classes, the records.
 #classicism_audit Classicism.Booleanism Classicism.Identities Classicism.Modal
 #classicism_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records
-#classicism_audit Classicism.Pointwise Classicism.Lattice
+#classicism_audit Classicism.Pointwise Classicism.Lattice Classicism.Results.Forms
 
 -- The type-class instances carry the Logical-Equivalence instances that Intensionality
 -- uses. They are definitions, not theorems, so the audit names them.
@@ -36,4 +37,4 @@ plumbing and the formalisation's own metalanguage. -/
 
 #classicism_types_audit Classicism.Booleanism Classicism.Identities Classicism.Modal
 #classicism_types_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records
-#classicism_types_audit Classicism.Pointwise Classicism.Lattice
+#classicism_types_audit Classicism.Pointwise Classicism.Lattice Classicism.Results.Forms

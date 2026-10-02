@@ -1,112 +1,121 @@
 # The Lean side of the map, as the map's own fields would record it.
 #
 # A proposal for topics/classicism in zwlgzwlg/Logical-Maps: `lean_lib` and `lean` go in
-# topic.yaml, each `lean_def` in its principle's YAML, each `lean_ref` in its result's
-# certificate. `generate.py` runs the map's own generator (pmap's
-# generate_lean_statements) on the map with these fields added, writing
-# Classicism/Statements.lean; `Classicism/Map.lean` proves those statements.
+# topic.yaml, each `lean_def` and each principle's `forms` in its principle's YAML, each
+# `lean_ref` in its result's certificate. `generate.py` runs the map's own generator
+# (pmap's generate_lean_statements, with the change in map/pmap.patch) on the map with
+# these fields added, writing Classicism/Statements.lean; `Classicism/Map.lean` proves
+# those statements.
 #
-# A statement reads: for every signature and every consistent schema Ax over it, if Ax
-# entails each premise then it entails the conclusion (or, for an incompatibility, False).
-# That is equivalent to the entailment between the schemas, and makes an incompatibility
-# the inconsistency of the premises. A principle of the pure language is read in the
-# signature by `ofPure`; a signature-relative principle is at the signature itself.
+# Each principle is a schema at every signature (Certified/Signatures.lean). A result's
+# statement reads: for every signature and every schema Ax over it, if Ax entails each
+# premise then it entails the conclusion; for an incompatibility, Ax is inconsistent.
+# That is the entailment between the schemas, or their inconsistency. A form's statement:
+# Ax entails the principle iff it entails the form.
 
 lean_lib: Classicism
 lean:
-  imports: [Classicism.Certified.Schemas, Classicism.Syntax.SentenceSchemas, Classicism.Syntax.Pure]
+  imports: [Classicism.Certified.Signatures]
   namespace: Classicism
   definition_check: |-
     example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
       {def}
   result:
-    binder: "∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax →"
+    binder: "∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),"
     principle: "Classicism.Meta.AxiomSet.Entails Ax {def}"
+    falsum: "¬ Classicism.Meta.AxiomSet.Consistent Ax"
   model:
     binder: "∃ (Sig : Classicism.Meta.Signature) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧"
     principle: "Classicism.Meta.AxiomSet.Entails Ax {def}"
 
 # principle id -> its schema, read in the signature
 lean_def:
-  actual-profile-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ActualProfile.listSchema)"
-  actuality: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Actuality.schema)"
-  atomicity-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Atomicity.schema)"
-  atomicity-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.AtomicityT.schema)"
-  atomlessness: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Atomlessness.schema)"
-  barcan-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Barcan.schema)"
-  barcan-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.BarcanT.schema)"
-  boolean-completeness-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.BooleanCompleteness.schema)"
-  boolean-completeness-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.BooleanCompletenessT.schema)"
-  broad-necessitism-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.BroadNecessitism.schema)"
-  converse-barcan-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ConverseBarcan.schema)"
-  distinctness-necessary-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecessityOfDistinctness.schema)"
-  distinctness-necessary-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecessityOfDistinctnessT.schema)"
-  distinctness-preserving-collapse: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.DistinctnessPreservingCollapse.schema)"
-  distinctness-schema-r: "(Classicism.Meta.AxiomSet.ofPure (Classicism.Meta.AxiomSet.distinctness (Classicism.Meta.AxiomSet.empty : Classicism.Meta.AxiomSet Classicism.Meta.Signature.pure)))"
-  distinctness-signature-r: "(Classicism.Meta.AxiomSet.distinctness Classicism.Meta.AxiomSet.empty)"
-  existence-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Existence.schema)"
-  extensionality-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Extensionality.schema)"
-  fregean-axiom: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.FregeanAxiom.schema)"
-  functional-choice-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.FunctionalChoice.schema)"
-  functionality-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Functionality.schema)"
-  gallin-extensional-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.GallinExtensionalComprehension.schema)"
-  identity-necessary-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecessityOfIdentity.schema)"
-  inextensible-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.InextensibleComprehension.schema)"
-  intensionality-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Intensionality.schema)"
-  modal-b: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalB.schema)"
-  modal-five: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalFive.schema)"
-  modal-four: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalFour.schema)"
-  modal-k: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalK.schema)"
-  modal-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalT.schema)"
-  modalized-fregean: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalizedFregean.schema)"
-  modalized-functionality-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalizedFunctionality.schema)"
-  modalized-plenitude-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalizedPlenitude.schema)"
-  necessary-actuality: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecActuality.schema)"
-  necessary-atomicity-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecAtomicity.schema)"
-  necessary-barcan-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecBarcan.schema)"
-  necessary-barcan-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecBarcanT.schema)"
-  necessary-boolean-completeness-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecBooleanCompleteness.schema)"
-  necessary-distinctness-necessary-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecNecessityOfDistinctness.schema)"
-  necessary-distinctness-necessary-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecNecessityOfDistinctnessT.schema)"
-  necessary-extensionality-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecExtensionality.schema)"
-  necessary-fregean-axiom: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecFregeanAxiom.schema)"
-  necessary-functional-choice-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecFunctionalChoice.schema)"
-  necessary-functionality-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecFunctionality.schema)"
-  necessary-gallin-extensional-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecGallinExtensionalComprehension.schema)"
-  necessary-modal-b: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecModalB.schema)"
-  necessary-modal-five: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecModalFive.schema)"
-  necessary-plenitude-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecPlenitude.schema)"
-  necessary-relational-choice-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecRelationalChoice.schema)"
-  necessary-rigid-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecRigidComprehension.schema)"
-  necessary-strong-leibniz-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecStrongLeibniz.schema)"
-  necessary-strong-leibniz-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecStrongLeibnizT.schema)"
-  necessary-tractarianism-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecTractarianism.schema)"
-  necessary-transversal-choice-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecTransversalChoice.schema)"
-  necessary-transversal-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecTransversal.schema)"
-  necessary-vicinity: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecVicinity.schema)"
-  necessary-weakly-inextensible-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecWeaklyInextensibleComprehension.schema)"
+  actual-profile-r: "Classicism.P.ActualProfile.listSchemaIn"
+  actuality: "Classicism.P.Actuality.schemaIn"
+  atomicity-r: "Classicism.P.Atomicity.schemaIn"
+  atomicity-t: "Classicism.P.AtomicityT.schemaIn"
+  atomlessness: "Classicism.P.Atomlessness.schemaIn"
+  barcan-r: "Classicism.P.Barcan.schemaIn"
+  barcan-t: "Classicism.P.BarcanT.schemaIn"
+  boolean-completeness-r: "Classicism.P.BooleanCompleteness.schemaIn"
+  boolean-completeness-t: "Classicism.P.BooleanCompletenessT.schemaIn"
+  broad-necessitism-r: "Classicism.P.BroadNecessitism.schemaIn"
+  converse-barcan-r: "Classicism.P.ConverseBarcan.schemaIn"
+  distinctness-necessary-r: "Classicism.P.NecessityOfDistinctness.schemaIn"
+  distinctness-necessary-t: "Classicism.P.NecessityOfDistinctnessT.schemaIn"
+  distinctness-preserving-collapse: "Classicism.P.DistinctnessPreservingCollapse.schemaIn"
+  distinctness-schema-r: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC)"
+  distinctness-signature-r: "(Classicism.Meta.AxiomSet.distinctnessC _)"
+  existence-r: "Classicism.P.Existence.schemaIn"
+  extensionality-r: "Classicism.P.Extensionality.schemaIn"
+  fregean-axiom: "Classicism.P.FregeanAxiom.schemaIn"
+  functional-choice-r: "Classicism.P.FunctionalChoice.schemaIn"
+  functionality-r: "Classicism.P.Functionality.schemaIn"
+  gallin-extensional-comprehension-r: "Classicism.P.GallinExtensionalComprehension.schemaIn"
+  identity-necessary-r: "Classicism.P.NecessityOfIdentity.schemaIn"
+  inextensible-comprehension-r: "Classicism.P.InextensibleComprehension.schemaIn"
+  intensionality-r: "Classicism.P.Intensionality.schemaIn"
+  modal-b: "Classicism.P.ModalB.schemaIn"
+  modal-five: "Classicism.P.ModalFive.schemaIn"
+  modal-four: "Classicism.P.ModalFour.schemaIn"
+  modal-k: "Classicism.P.ModalK.schemaIn"
+  modal-t: "Classicism.P.ModalT.schemaIn"
+  modalized-fregean: "Classicism.P.ModalizedFregean.schemaIn"
+  modalized-functionality-r: "Classicism.P.ModalizedFunctionality.schemaIn"
+  modalized-plenitude-r: "Classicism.P.ModalizedPlenitude.schemaIn"
+  necessary-actuality: "Classicism.P.NecActuality.schemaIn"
+  necessary-atomicity-r: "Classicism.P.NecAtomicity.schemaIn"
+  necessary-barcan-r: "Classicism.P.NecBarcan.schemaIn"
+  necessary-barcan-t: "Classicism.P.NecBarcanT.schemaIn"
+  necessary-boolean-completeness-r: "Classicism.P.NecBooleanCompleteness.schemaIn"
+  necessary-distinctness-necessary-r: "Classicism.P.NecNecessityOfDistinctness.schemaIn"
+  necessary-distinctness-necessary-t: "Classicism.P.NecNecessityOfDistinctnessT.schemaIn"
+  necessary-extensionality-r: "Classicism.P.NecExtensionality.schemaIn"
+  necessary-fregean-axiom: "Classicism.P.NecFregeanAxiom.schemaIn"
+  necessary-functional-choice-r: "Classicism.P.NecFunctionalChoice.schemaIn"
+  necessary-functionality-r: "Classicism.P.NecFunctionality.schemaIn"
+  necessary-gallin-extensional-comprehension-r: "Classicism.P.NecGallinExtensionalComprehension.schemaIn"
+  necessary-modal-b: "Classicism.P.NecModalB.schemaIn"
+  necessary-modal-five: "Classicism.P.NecModalFive.schemaIn"
+  necessary-plenitude-r: "Classicism.P.NecPlenitude.schemaIn"
+  necessary-relational-choice-r: "Classicism.P.NecRelationalChoice.schemaIn"
+  necessary-rigid-comprehension-r: "Classicism.P.NecRigidComprehension.schemaIn"
+  necessary-strong-leibniz-r: "Classicism.P.NecStrongLeibniz.schemaIn"
+  necessary-strong-leibniz-t: "Classicism.P.NecStrongLeibnizT.schemaIn"
+  necessary-tractarianism-r: "Classicism.P.NecTractarianism.schemaIn"
+  necessary-transversal-choice-r: "Classicism.P.NecTransversalChoice.schemaIn"
+  necessary-transversal-r: "Classicism.P.NecTransversal.schemaIn"
+  necessary-vicinity: "Classicism.P.NecVicinity.schemaIn"
+  necessary-weakly-inextensible-comprehension-r: "Classicism.P.NecWeaklyInextensibleComprehension.schemaIn"
   no-contingency-signature-r: "(Classicism.Meta.AxiomSet.noContingency _)"
-  no-pure-contingency-r: "(Classicism.Meta.AxiomSet.ofPure (Classicism.Meta.AxiomSet.npc Classicism.Meta.Signature.pure))"
-  persistent-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.PersistentComprehension.schema)"
-  plenitude-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Plenitude.schema)"
-  possibility-schema-r: "(Classicism.Meta.AxiomSet.ofPure (Classicism.Meta.AxiomSet.possibility (Classicism.Meta.AxiomSet.empty : Classicism.Meta.AxiomSet Classicism.Meta.Signature.pure)))"
-  possibility-signature-r: "(Classicism.Meta.AxiomSet.possibility Classicism.Meta.AxiomSet.empty)"
-  pure-b-r: "(Classicism.Meta.AxiomSet.ofPure (Classicism.Meta.AxiomSet.pureB Classicism.Meta.Signature.pure))"
-  relational-choice-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.RelationalChoice.schema)"
-  rigid-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.RigidComprehension.schema)"
+  no-pure-contingency-r: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)"
+  persistent-comprehension-r: "Classicism.P.PersistentComprehension.schemaIn"
+  plenitude-r: "Classicism.P.Plenitude.schemaIn"
+  possibility-schema-r: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC)"
+  possibility-signature-r: "(Classicism.Meta.AxiomSet.possibilityC _)"
+  pure-b-r: "(Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.signatureB)"
+  relational-choice-r: "Classicism.P.RelationalChoice.schemaIn"
+  rigid-comprehension-r: "Classicism.P.RigidComprehension.schemaIn"
   signature-b-r: "(Classicism.Meta.AxiomSet.signatureB _)"
-  strong-leibniz-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.StrongLeibniz.schema)"
-  strong-leibniz-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.StrongLeibnizT.schema)"
-  tractarianism-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Tractarianism.schema)"
-  transversal-choice-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.TransversalChoice.schema)"
-  transversal-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Transversal.schema)"
-  very-weak-rigid-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.VeryWeakRigidComprehension.schema)"
-  vicinity: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Vicinity.schema)"
-  weak-rigid-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.WeakRigidComprehension.schema)"
-  weakly-inextensible-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.WeaklyInextensibleComprehension.schema)"
+  strong-leibniz-r: "Classicism.P.StrongLeibniz.schemaIn"
+  strong-leibniz-t: "Classicism.P.StrongLeibnizT.schemaIn"
+  tractarianism-r: "Classicism.P.Tractarianism.schemaIn"
+  transversal-choice-r: "Classicism.P.TransversalChoice.schemaIn"
+  transversal-r: "Classicism.P.Transversal.schemaIn"
+  very-weak-rigid-comprehension-r: "Classicism.P.VeryWeakRigidComprehension.schemaIn"
+  vicinity: "Classicism.P.Vicinity.schemaIn"
+  weak-rigid-comprehension-r: "Classicism.P.WeakRigidComprehension.schemaIn"
+  weakly-inextensible-comprehension-r: "Classicism.P.WeaklyInextensibleComprehension.schemaIn"
 
-# result id -> its certificate, a theorem of Classicism/Map.lean (written by generate.py)
-lean_ref:
+# principle id -> its equivalent forms: each with a Lean definition (a schema at every
+# signature) and a certificate of its equivalence with the official form
+forms:
+  boolean-completeness-r:
+  - id: lub
+    name: LUB form
+    statement: Every property of entities of a relational type has a least upper bound in that type.
+    lean_def: "Classicism.P.BooleanCompletenessLUB.schemaIn"
+    lean_ref:
   actual-profile-r-implies-actuality: Classicism.Map.actual_profile_r_implies_actuality
   actuality-and-bf-imply-inextensible-comprehension: Classicism.Map.actuality_and_bf_imply_inextensible_comprehension
   actuality-and-distinctness-preserving-collapse-imply-inextensible-comprehension: Classicism.Map.actuality_and_distinctness_preserving_collapse_imply_inextensible_comprehension

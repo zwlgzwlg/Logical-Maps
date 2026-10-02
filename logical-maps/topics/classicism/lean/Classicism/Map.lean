@@ -1,5 +1,6 @@
 import Classicism.Statements
 import Classicism.Results.Arity
+import Classicism.Results.Forms
 import Classicism.Results.SentenceSchemas.Incompatibilities
 
 /-!
@@ -7,21 +8,23 @@ import Classicism.Results.SentenceSchemas.Incompatibilities
 
 One theorem per map result proved in Lean, named by the result's id, whose type is the
 statement the map generates for it (`Classicism/Statements.lean`, written by the map's own
-generator from its YAML: `map/generate.py`). These are the map's `lean_ref`s: what
-`pmap lean-check` checks, against the generated statement and the map's list of allowed
-axioms.
+generator from its YAML: `map/generate.py`); and one per equivalent form of a principle,
+named `<principle id>.<form id>`. These are the map's `lean_ref`s: what `pmap lean-check`
+checks, against the generated statement and the map's list of allowed axioms.
 
-A statement reads: for every signature and every consistent schema `Ax` over it, if `Ax`
-entails each premise then it entails the conclusion (for an incompatibility, `False`).
-That is equivalent to the entailment between the schemas, and an incompatibility to their
-inconsistency. A principle of the pure language is read in the signature by `ofPure`.
+Each principle is a schema at every signature (`Certified/Signatures.lean`). A result's
+statement reads: for every signature and every schema `Ax` over it, if `Ax` entails each
+premise then it entails the conclusion; for an incompatibility, `Ax` is inconsistent. That
+is equivalent to the entailment between the schemas, or to their inconsistency. A form's
+statement reads: `Ax` entails the principle iff it entails the form.
 
 Each certificate is one line citing the result's proof. That proof is found, for a reader,
 by name: `Proofs.<id>` in `Results/Records.lean` (the shallow proof, at one argument type
 where the result is at every arity), `<id>` or `Meta.<id>` in `Results/Arity.lean` (a shallow
 core, the result at every arity); otherwise the theorem the certificate cites, in
-`Results/SentenceSchemas/`. `#classicism_map_index` (`Tools/MapIndex.lean`) writes these
-locations out for the map (`map/index.json`).
+`Results/SentenceSchemas/`; for a form, the two directions in `Results/Forms.lean`.
+`#classicism_map_index` (`Tools/MapIndex.lean`) writes these locations out for the map
+(`map/index.json`).
 -/
 
 namespace Classicism.Meta.AxiomSet
@@ -97,6 +100,19 @@ theorem pureB_ofPure_subset : AxiomSet.ofPure (pureB Signature.pure) ⊆ pureB S
   rintro a ⟨_, ⟨p, -, rfl⟩, rfl⟩
   exact ⟨Term.ofPure p, Term.pure_ofPure p, rfl⟩
 
+/-- An entailment of No Pure Contingency in the form `Results/SentenceSchemas/` proves it, as
+the pure version of No Contingency. -/
+theorem Entails.to_pureVersion_noContingency {X : AxiomSet Sig}
+    (h : X ⟹ AxiomSet.ofPure (npc Signature.pure)) : X ⟹ pureVersion noContingency := by
+  rw [pureVersion_noContingency]
+  exact h
+
+/-- Likewise for Pure B, as the pure version of Signature B. -/
+theorem Entails.to_pureVersion_signatureB {X : AxiomSet Sig}
+    (h : X ⟹ AxiomSet.ofPure (pureB Signature.pure)) : X ⟹ pureVersion signatureB := by
+  rw [pureVersion_signatureB]
+  exact h
+
 end Classicism.Meta.AxiomSet
 
 namespace Classicism.Map
@@ -109,6 +125,8 @@ syntax "map_premises" : tactic
 macro_rules
   | `(tactic| map_premises) => `(tactic| first
       | assumption
+      | (rw [← AxiomSet.pureVersion_noContingency]; assumption)
+      | (rw [← AxiomSet.pureVersion_signatureB]; assumption)
       | exact AxiomSet.Entails.ofPure_empty
       | exact AxiomSet.Entails.to_empty
       | (apply AxiomSet.Entails.ofPure_union <;> map_premises)
@@ -116,21 +134,29 @@ macro_rules
 
 /-- A certificate from a pure entailment `h : S ⟹ C`, `S` a union of the premises. -/
 macro "map_cert " h:term : tactic => `(tactic| (
-  intro _ _ _
+  intro _ _
   intros
   exact AxiomSet.Entails.trans (by map_premises) (AxiomSet.Entails.ofPure $h)))
 
 /-- A certificate from an entailment at every signature. -/
 macro "map_cert_sig " h:term : tactic => `(tactic| (
-  intro _ _ _
+  intro _ _
   intros
   exact AxiomSet.Entails.trans (by map_premises) $h))
 
 /-- A certificate for an incompatibility, from a pure inconsistency `h : ¬ Consistent S`. -/
 macro "map_cert_incompatible " h:term : tactic => `(tactic| (
-  intro _ _ hc
+  intro _ _
   intros
+  intro hc
   exact AxiomSet.not_consistent_ofPure $h (AxiomSet.Consistent.of_entails (by map_premises) hc)))
+
+/-- A certificate for an equivalent form, from the two pure entailments between the
+official form and it. -/
+macro "map_form " h₁:term:max h₂:term:max : tactic => `(tactic| (
+  intro _ _
+  exact ⟨fun h => AxiomSet.Entails.trans h (AxiomSet.Entails.ofPure $h₁),
+    fun h => AxiomSet.Entails.trans h (AxiomSet.Entails.ofPure $h₂)⟩))
 
 /-- `N ⊆ box A` or `box A ⊆ N`, for `N` the schema of the boxed principle of `A`: their
 instances are the same sentences. (`cases` rather than `rintro … rfl`: inside a macro the
@@ -404,7 +430,7 @@ theorem fregean_axiom_implies_no_contingency_signature_r : Statements.fregean_ax
 
 /-- `fregean-axiom-implies-no-pure-contingency-r` -/
 theorem fregean_axiom_implies_no_pure_contingency_r : Statements.fregean_axiom_implies_no_pure_contingency_r := by
-  map_cert fregean_entails_npc_pure
+  map_cert_sig (Entails.to_pureVersion_noContingency (Entails.ofPure fregean_entails_npc_pure))
 
 /-- `functional-choice-r-implies-plenitude-r` -/
 theorem functional_choice_r_implies_plenitude_r : Statements.functional_choice_r_implies_plenitude_r := by
@@ -725,7 +751,8 @@ theorem necessary_weakly_inextensible_comprehension_r_implies_weakly_inextensibl
 
 /-- `no-contingency-signature-r-implies-no-pure-contingency-r` -/
 theorem no_contingency_signature_r_implies_no_pure_contingency_r : Statements.no_contingency_signature_r_implies_no_pure_contingency_r := by
-  map_cert_sig (Entails.mono_right npc_ofPure_subset noContingency_entails_npc)
+  map_cert_sig (Entails.to_pureVersion_noContingency
+    (Entails.mono_right npc_ofPure_subset noContingency_entails_npc))
 
 /-- `no-contingency-signature-r-implies-signature-b-r` -/
 theorem no_contingency_signature_r_implies_signature_b_r : Statements.no_contingency_signature_r_implies_signature_b_r := by
@@ -829,7 +856,8 @@ theorem no_pure_contingency_and_weakly_inextensible_comprehension_imply_necessar
 
 /-- `no-pure-contingency-r-implies-pure-b-r` -/
 theorem no_pure_contingency_r_implies_pure_b_r : Statements.no_pure_contingency_r_implies_pure_b_r := by
-  map_cert (npc_entails_pureB (Sig := Signature.pure))
+  map_cert_sig (Entails.to_pureVersion_signatureB
+    (Entails.ofPure (npc_entails_pureB (Sig := Signature.pure))))
 
 /-- `persistent-comprehension-r-implies-actuality` -/
 theorem persistent_comprehension_r_implies_actuality : Statements.persistent_comprehension_r_implies_actuality := by
@@ -905,7 +933,8 @@ theorem rigid_comprehension_r_implies_weak_rigid_comprehension_r : Statements.ri
 
 /-- `signature-b-r-implies-pure-b-r` -/
 theorem signature_b_r_implies_pure_b_r : Statements.signature_b_r_implies_pure_b_r := by
-  map_cert_sig (Entails.mono_right pureB_ofPure_subset signatureB_entails_pureB)
+  map_cert_sig (Entails.to_pureVersion_signatureB
+    (Entails.mono_right pureB_ofPure_subset signatureB_entails_pureB))
 
 /-- `strong-leibniz-r-implies-atomicity-r` -/
 theorem strong_leibniz_r_implies_atomicity_r : Statements.strong_leibniz_r_implies_atomicity_r := by
@@ -966,5 +995,12 @@ theorem weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r : Sta
 /-- `weak-rigid-comprehension-r-implies-weakly-inextensible-comprehension-r` -/
 theorem weak_rigid_comprehension_r_implies_weakly_inextensible_comprehension_r : Statements.weak_rigid_comprehension_r_implies_weakly_inextensible_comprehension_r := by
   map_cert Proofs.weak_rigid_comprehension_r_implies_weakly_inextensible_comprehension_r.entails
+
+/-! ## Equivalent forms -/
+
+/-- `boolean-completeness-r`, form `lub`: Boolean Completeness and its LUB form. -/
+theorem boolean_completeness_r.lub : Statements.boolean_completeness_r.lub := by
+  map_form Proofs.boolean_completeness_implies_lub_form.entails
+    Proofs.lub_form_implies_boolean_completeness.entails
 
 end Classicism.Map

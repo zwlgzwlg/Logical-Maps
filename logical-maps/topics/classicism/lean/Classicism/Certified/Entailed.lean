@@ -11,3 +11,4 @@ cite are in `Derivations.lean`.
 -/
 
 #classicism_entails_audit Classicism.Results.Records
+#classicism_entails_audit Classicism.Results.Forms

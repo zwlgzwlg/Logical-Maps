@@ -54,50 +54,87 @@ def base (env : Environment) (n : Name) : Name :=
   | .str p s => if generated.contains s && env.contains p then p else n
   | _ => n
 
-/-- The proofs of the result a certificate proves, in the order a reader wants them. -/
-def proofsOf (cert : Name) : CommandElabM (Array Name) := do
+/-- The value of a definition or theorem. -/
+def valueOf (env : Environment) (n : Name) : Option Expr :=
+  match env.find? n with
+  | some (.thmInfo t) => some t.value
+  | some info => info.value?
+  | none => none
+
+/-- The proofs of the result (or the equivalence) a certificate proves, in the order a
+reader wants them; `byName` for a result, whose id names its proofs too. -/
+def proofsOf (cert : Name) (byName : Bool) : CommandElabM (Array Name) := do
   let env ← getEnv
   let id := cert.getString!
-  let byName := [`Classicism.Proofs ++ id.toName, `Classicism ++ id.toName,
-    `Classicism.Meta ++ id.toName].filter env.contains
-  let some info := env.find? cert | return byName.toArray
-  let value := match info with
-    | .thmInfo t => some t.value
-    | _ => info.value?
-  let cited := (value.map (·.getUsedConstants) |>.getD #[]).toList.map (base env)
+  let named := if byName then [`Classicism.Proofs ++ id.toName, `Classicism ++ id.toName,
+    `Classicism.Meta ++ id.toName].filter env.contains else []
+  let cited := ((valueOf env cert).map (·.getUsedConstants) |>.getD #[]).toList.map (base env)
   let inResults := cited.filter fun c =>
     (`Classicism.Results).isPrefixOf (moduleOf env c) && env.contains c
   let mut out : Array Name := #[]
-  for c in byName ++ inResults do
+  for c in named ++ inResults do
     unless out.contains c do out := out.push c
   return out
 
+/-- The principles a generated statement is about: `P.X` for each `P.X.schemaIn` (or
+`P.X.listSchemaIn`) it mentions. -/
+def definitionsOf (stmt : Name) : CommandElabM (Array Name) := do
+  let env ← getEnv
+  let used := ((valueOf env stmt).map (·.getUsedConstants) |>.getD #[]).toList
+  let mut out : Array Name := #[]
+  for c in used do
+    if let .str p s := c then
+      if (s == "schemaIn" || s == "listSchemaIn") && env.contains p && !out.contains p then
+        out := out.push p
+  return out
+
+/-- A certificate's entry: where it is and what it rests on, and where its proofs are. -/
+def entryOf (c : Name) (byName : Bool) : CommandElabM (Option (Json × Bool)) := do
+  let allowed := [`propext, `Classical.choice, `Quot.sound]
+  let axioms ← collectAxioms c
+  let some loc ← location c | return none
+  let loc := loc.setObjVal! "axioms" (toJson (axioms.map Name.toString))
+  let mut proofs : Array Json := #[]
+  for p in ← proofsOf c byName do
+    if let some l ← location p then proofs := proofs.push l
+  return some (Json.mkObj [("certificate", loc), ("proofs", Json.arr proofs)],
+    axioms.all allowed.contains)
+
 /-- `#classicism_map_index "file.json"`: write the index of the certificates in
-`Classicism.Map`. -/
+`Classicism.Map`: the results' (`Classicism.Map.<id>`) and the forms'
+(`Classicism.Map.<principle id>.<form id>`), a form's entry also giving the definitions of
+the two forms it relates. -/
 elab "#classicism_map_index " path:str : command => do
   let env ← getEnv
-  let certs := env.constants.fold (init := #[]) fun acc n info =>
+  let thms := env.constants.fold (init := #[]) fun acc n info =>
     match info with
-    | .thmInfo _ => if (`Classicism.Map).isPrefixOf n && n.getPrefix == `Classicism.Map
-        then acc.push n else acc
+    | .thmInfo _ => if (`Classicism.Map).isPrefixOf n then acc.push n else acc
     | _ => acc
-  let certs := certs.qsort (·.toString < ·.toString)
-  let allowed := [`propext, `Classical.choice, `Quot.sound]
-  let mut entries : Array (String × Json) := #[]
+  let thms := thms.qsort (·.toString < ·.toString)
+  let unhyphen (n : Name) := n.getString!.replace "_" "-"
+  let mut results : Array (String × Json) := #[]
+  let mut forms : Std.HashMap String (Array (String × Json)) := {}
   let mut outside : Nat := 0
-  for c in certs do
-    let id := c.getString!.replace "_" "-"
-    let axioms ← collectAxioms c
-    unless axioms.all allowed.contains do outside := outside + 1
-    let some loc ← location c | continue
-    let loc := loc.setObjVal! "axioms" (toJson (axioms.map Name.toString))
-    let mut proofs : Array Json := #[]
-    for p in ← proofsOf c do
-      if let some l ← location p then proofs := proofs.push l
-    entries := entries.push (id, Json.mkObj [("certificate", loc), ("proofs", Json.arr proofs)])
-  let json := Json.mkObj [("results", Json.mkObj entries.toList)]
+  for c in thms do
+    if c.getPrefix == `Classicism.Map then
+      let some (e, ok) ← entryOf c true | continue
+      unless ok do outside := outside + 1
+      results := results.push (unhyphen c, e)
+    else if c.getPrefix.getPrefix == `Classicism.Map then
+      let some (e, ok) ← entryOf c false | continue
+      unless ok do outside := outside + 1
+      let stmt := `Classicism.Statements ++ c.getPrefix.getString!.toName ++ c.getString!.toName
+      let mut defs : Array Json := #[]
+      for d in ← definitionsOf stmt do
+        if let some l ← location d then defs := defs.push l
+      let principle := unhyphen c.getPrefix
+      forms := forms.insert principle
+        ((forms.getD principle #[]).push (unhyphen c, e.setObjVal! "definitions" (Json.arr defs)))
+  let formsJson := Json.mkObj (forms.toList.map fun (p, fs) => (p, Json.mkObj fs.toList))
+  let json := Json.mkObj [("results", Json.mkObj results.toList), ("forms", formsJson)]
   IO.FS.writeFile path.getString (json.pretty ++ "\n")
-  logInfo m!"{certs.size} certificates indexed to {path.getString}; \
-    {outside} rest on an axiom outside propext, Classical.choice, Quot.sound"
+  logInfo m!"{results.size} result certificates and {forms.fold (fun n _ fs => n + fs.size) 0} \
+    form certificates indexed to {path.getString}; {outside} rest on an axiom outside \
+    propext, Classical.choice, Quot.sound"
 
 end Classicism.Tools.MapIndex

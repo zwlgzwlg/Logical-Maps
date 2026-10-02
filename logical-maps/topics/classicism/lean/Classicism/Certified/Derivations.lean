@@ -1,5 +1,6 @@
 import Classicism.Tools.Translate
 import Classicism.Results.Records
+import Classicism.Results.Forms
 
 /-!
 # The record theorems, derived
@@ -12,3 +13,4 @@ part of the build and change only when the proofs do.
 
 set_option maxHeartbeats 0 in
 #classicism_derive_audit Classicism.Results.Records
+#classicism_derive_audit Classicism.Results.Forms
