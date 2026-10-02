@@ -406,8 +406,12 @@ every setting unless its `when` says otherwise, so an argument that needs, say, 
 many individuals must say `when: {individuals: naturals}`. Validation checks the member's
 file once; the engine reports any variant whose verdicts clash. The group page shows a
 grid of its members, with a generated parameter's variants added as sub-rows on request,
-and says what each parameter changes. Model lists show a variant only where its member is
-not listed.
+and says what each parameter changes. In the theory explorer a group is one row, counting
+its models (members and variants) that fit the assumptions and describing which; it is
+listed under Matching when some are known to fit, else under Potential. Inspecting a group
+tints each principle by whether it holds in all of those models, fails in all, or splits
+them. Lists of witnesses gather a group's models into one entry the same way, and the
+group page dims the rows that do not fit the explorer's assumptions.
 
 ### General arguments
 
