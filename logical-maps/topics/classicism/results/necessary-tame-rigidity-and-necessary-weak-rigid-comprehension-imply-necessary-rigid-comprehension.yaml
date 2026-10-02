@@ -1,0 +1,29 @@
+id: necessary-tame-rigidity-and-necessary-weak-rigid-comprehension-imply-necessary-rigid-comprehension
+premises:
+- necessary-tame-rigidity-r
+- necessary-weak-rigid-comprehension-r
+conclusion: necessary-rigid-comprehension-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 2 October 2026, from a suggestion of Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 2 October 2026
+  checked_by: []
+  date: '2026-10-02'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 2 October 2026.
+source_names:
+- Dorr 2 Oct
+proof: >-
+  The argument of Tame Rigidity + Weak Rigid Comprehension ⇒ Rigid Comprehension uses the premises only
+  at the conclusion's type tuple and nothing beyond C. So for each closed instance, C proves the
+  conditional from the corresponding instances of Tame Rigidity and Weak Rigid Comprehension to the
+  instance of Rigid Comprehension. Necessitate that theorem and apply K with the boxed premise instances.
+  Generalization over the admitted types is metalinguistic; no type quantifier is placed inside the box.
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §1.5, pp. 16–17
+  note: Necessitation of theorems and K.
+notes: ''

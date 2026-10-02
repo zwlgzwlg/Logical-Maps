@@ -1,0 +1,18 @@
+id: necessary-weak-rigid-comprehension-r
+name: □Weak Rigid Comprehension
+category: comprehension
+statement: Every closed instance of Weak Rigid Comprehension is necessary. Box the entire object-variable
+  closure; retain the same type range and other schema side conditions.
+formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of Weak Rigid Comprehension}$
+date: '2026-10-02'
+sources:
+- Cian Dorr, suggestion of 2 October 2026.
+source_names:
+- Dorr 2 Oct
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Proposition 1, p. 2; p. 12
+  note: Formulation of the unboxed principle.
+notes: Box each fully closed instance of Weak Rigid Comprehension. Type quantifiers remain outside the
+  box.

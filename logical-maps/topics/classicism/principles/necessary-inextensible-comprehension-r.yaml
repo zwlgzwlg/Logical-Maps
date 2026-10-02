@@ -1,0 +1,14 @@
+id: necessary-inextensible-comprehension-r
+name: □Inextensible Comprehension
+category: comprehension
+statement: Every closed instance of Inextensible Comprehension is necessary. Box the entire object-variable closure;
+  retain the same type range and other schema side conditions.
+formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of Inextensible Comprehension}$
+date: '2026-10-02'
+sources:
+- Cian Dorr, suggestion of 2 October 2026.
+source_names:
+- Dorr 2 Oct
+references: []
+notes: Box each fully closed instance of Inextensible Comprehension. Type quantifiers and formula side conditions remain
+  outside the box.

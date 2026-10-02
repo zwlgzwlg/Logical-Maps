@@ -1,0 +1,15 @@
+id: necessary-tame-rigidity-r
+name: □Tame Rigidity
+category: comprehension
+statement: Every closed instance of Tame Rigidity is necessary. Box the entire object-variable closure;
+  retain the same type range and other schema side conditions.
+formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of Tame Rigidity}$
+date: '2026-10-02'
+sources:
+- Christopher Sun, Possible Worlds Without Atomicity, draft of September 2026.
+source_names:
+- Possible Worlds Without Atomicity
+references:
+- paper: sun-possible-worlds-without-atomicity
+  role: origin
+notes: Box each fully closed instance of Tame Rigidity. Type quantifiers remain outside the box.

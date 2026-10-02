@@ -1,0 +1,14 @@
+id: necessary-atomicity-t
+name: □Atomicity (type t)
+category: instances
+statement: Every closed instance of Atomicity (type t) is necessary. Box the entire object-variable closure;
+  retain the same type range and other schema side conditions.
+formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of Atomicity (type t)}$
+date: '2026-10-02'
+sources:
+- Cian Dorr, suggestion of 2 October 2026.
+source_names:
+- Dorr 2 Oct
+references: []
+notes: Box each fully closed instance of Atomicity (type t). Type quantifiers and formula side conditions remain
+  outside the box.

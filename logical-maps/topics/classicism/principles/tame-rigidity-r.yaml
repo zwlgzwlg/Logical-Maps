@@ -1,0 +1,22 @@
+id: tame-rigidity-r
+name: Tame Rigidity
+category: comprehension
+statement: Every weakly rigid relation, including a proposition, is rigid.
+formal: $\forall^{\mathrm{Ty}}\bar\sigma\, .\,\forall F\, .\,\operatorname{WeaklyRigid}(F)\to\operatorname{Rigid}(F)$
+date: '2026-10-02'
+sources:
+- Christopher Sun, Possible Worlds Without Atomicity, draft of September 2026.
+source_names:
+- Possible Worlds Without Atomicity
+references:
+- paper: sun-possible-worlds-without-atomicity
+  role: origin
+- paper: dorr-bc-not-rc
+  role: background
+  locator: pp. 2 and 12
+  note: Source of the weak rigidity conditions.
+notes: >-
+  Due to Christopher Sun. Persistence is a conjunct of both conditions, so the principle says that a
+  persistent, weakly inextensible relation is also inextensible, that is, necessarily weakly inextensible.
+  See Background for the definitions. Together with Weak Rigid Comprehension it is equivalent to Rigid
+  Comprehension.

@@ -1,0 +1,25 @@
+id: necessary-persistent-comprehension-r-implies-persistent-comprehension-r
+premises:
+- necessary-persistent-comprehension-r
+conclusion: persistent-comprehension-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 2 October 2026, from a suggestion of Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 2 October 2026
+  checked_by: []
+  date: '2026-10-02'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 2 October 2026.
+source_names:
+- Dorr 2 Oct
+proof: >-
+  At each admitted closed instance $\phi$, T gives $\Box\phi\to\phi$. Apply this to every instance
+  in the boxed premise, preserving its type and formula side conditions.
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §1.5, p. 16
+  note: T for the fixed background modality.
+notes: ''

@@ -1,0 +1,37 @@
+id: rigid-comprehension-implies-tame-rigidity
+premises:
+- rigid-comprehension-r
+conclusion: tame-rigidity-r
+status: proved
+certificate:
+  source_id: sun-possible-worlds-without-atomicity
+  produced_by: Christopher Sun
+  recorded_by: Claude Opus 5.5 (Anthropic), 2 October 2026
+  checked_by: []
+  date: '2026-10-02'
+  lean: none
+sources:
+- Christopher Sun, Possible Worlds Without Atomicity, draft of September 2026.
+source_names:
+- Possible Worlds Without Atomicity
+proof: >-
+  Lemma: coextensive weakly rigid relations are identical. Let $F$ and $G$ be weakly rigid with
+  $\forall\bar x\, .\,F[\bar x]\leftrightarrow G[\bar x]$. If $F[\bar x]$ then $G[\bar x]$, and T
+  applied to $\operatorname{Persistent}(G)$ gives $\Box G[\bar x]$. So
+  $\forall\bar x\, .\,F[\bar x]\to\Box G[\bar x]$, and the weak inextensibility of $F$, instantiated at
+  $G$, gives $F\le G$. Symmetrically $G\le F$. Together these say
+  $\Box\forall\bar x\, .\,F[\bar x]\leftrightarrow G[\bar x]$, and necessarily coextensive relations are
+  identical in C (Intensionality), so $F=G$. Now let $F$ be weakly rigid. Rigid Comprehension at the
+  same type supplies a rigid $G$ coextensive with $F$. A rigid relation is weakly rigid, since T strips
+  the leading box from $\operatorname{Inextensible}(G)$. By the lemma $F=G$, so $F$ is rigid.
+references:
+- paper: sun-possible-worlds-without-atomicity
+  role: origin
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §1.5, pp. 16–17
+  note: Intensionality and T.
+notes: >-
+  The lemma uses only the unboxed persistence of $F$ and $G$, so Rigid Comprehension makes every very
+  weakly rigid relation rigid as well. With Rigid Comprehension ⇒ Weak Rigid Comprehension, this gives
+  Sun's equivalence of Rigid Comprehension with Tame Rigidity plus Weak Rigid Comprehension.
