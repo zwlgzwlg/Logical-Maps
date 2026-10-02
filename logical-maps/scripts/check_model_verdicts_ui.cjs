@@ -213,16 +213,21 @@ try{
 // A group's member, as the build exports it: its own arguments, then the group's shared arguments
 // that apply, each marked with the group; and the group's own page.
 const group={id:'g',name:'Fixture group',file:'topics/t/groups/g.yaml',definition:'Arrows: {{monoid}}. {{sigma}}',
-  parameters:{monoid:{text:'The monoid.'},sigma:{text:'Σ.',values:{top:'Σ is top.',atom:'Σ is an atom.'}}},
+  parameters:{monoid:{text:'The monoid.'},sigma:{text:'Σ.',generate:true,values:{top:{text:'Σ is top.',label:'Σ top'},atom:{text:'Σ is an atom.',label:'Σ atom'}}}},
   conditions:[{id:'perturbable',text:'Some arrow perturbs.'}],
   arguments:[{id:'always',holds:['a'],text:'Always.',by:'Group author',date:'2026-03-01'},
             {id:'perturbed',fails:['b'],requires:['perturbable'],text:'Perturbed.',by:'Group author',date:'2026-03-02'},
-            {id:'atom',fails:['d'],when:{sigma:'atom'},text:'Atom.',by:'Group author',date:'2026-03-03'}]};
-const member={id:'gm',name:'Group member',status:'proved',satisfies:['e','a'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
+            {id:'atom',fails:['e'],when:{sigma:'atom'},text:'Atom.',by:'Group author',date:'2026-03-03'}]};
+const strip=a=>{const {when,requires,...rest}=a;return rest;};
+const member={id:'gm',name:'Fixture: group member',status:'proved',satisfies:['e','a'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
   group:'g',settings:{monoid:'the truncations',sigma:'top'},meets:{perturbable:'g_n does.'},definition:'Arrows: the truncations. Σ is top.',
-  arguments:[{holds:['e'],text:'Own.'},{...group.arguments[0],group:'g'},
-             {...group.arguments[1],group:'g',conditions:[{id:'perturbable',text:'Some arrow perturbs.',reason:'g_n does.'}]}].map(a=>{const {when,requires,...rest}=a;return rest;})};
-const data3={...data,models:[member],groups:[group]};
+  arguments:[{holds:['e'],text:'Own.',when:{sigma:'top'}},{...group.arguments[0],group:'g'},
+             {...group.arguments[1],group:'g',conditions:[{id:'perturbable',text:'Some arrow perturbs.',reason:'g_n does.'}]}].map(a=>a.group?strip(a):a)};
+// Its variant with the other value of the generated parameter, as the build exports it.
+const variant={...member,id:'gm-sigma-atom',name:'Fixture: group member [Σ atom]',variant_of:'gm',satisfies:['a'],violates:['b','e'],
+  settings:{monoid:'the truncations',sigma:'atom'},definition:'Arrows: the truncations. Σ is an atom.',
+  arguments:[member.arguments[1],member.arguments[2],{...strip(group.arguments[2]),group:'g'}]};
+const data3={...data,models:[member,variant],groups:[group]};
 const errors3=[],vc3=new VirtualConsole();vc3.on('jsdomError',e=>errors3.push(e));
 const dom3=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data3)),
   {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc3});
@@ -246,13 +251,30 @@ try{
   page.querySelector('button[data-open-group="g"]').click();
   assert.equal(page.querySelector('h1').textContent,'Fixture group');
   assert.match(page.textContent,/Arrows: ⟨monoid⟩\. ⟨sigma⟩/,'Its definition shows the slots');
-  assert.match(page.textContent,/perturbable: Some arrow perturbs\. Met by Group member\./);
+  assert.match(page.textContent,/perturbable: Some arrow perturbs\. Met by group member\./);
   const scopes=[...page.querySelectorAll('.shared-scope')].map(x=>x.textContent);
-  assert.deepEqual(scopes,['Applies to every member: Group member.','Applies when it meets perturbable: Group member.','Applies when sigma = atom: none yet.'],
-    'Each shared argument, with the members it applies to');
-  assert.match(page.querySelector('table.results').textContent,/Group member.*sigma: top/);
+  assert.deepEqual(scopes,['Applies to every member.','Requires perturbable. Applies to every member.','At sigma = Σ atom. Applies to no member at its own settings, only to variants.'],
+    'Each shared argument, with where it applies');
+  // The grid: a row per member; the variants of a generated parameter on request, with the column they need.
+  const rowNames=()=>[...page.querySelectorAll('table.group-grid tbody th')].map(x=>x.textContent);
+  const colNames=()=>[...page.querySelectorAll('table.group-grid th.gcol')].map(x=>x.textContent);
+  assert.deepEqual(rowNames(),['group member'],'One row per member, named without the shared prefix');
+  assert.deepEqual(colNames(),[],'Nothing varies across one member');
+  assert.match(page.textContent,/For every member, Σ atom: E: holds → fails\./,'What the parameter changes');
+  page.querySelector('button[data-group-toggle="sigma"]').click();
+  assert.deepEqual(rowNames(),['group member','Σ atom'],'The variant as a sub-row');
+  assert.deepEqual(colNames(),['E'],'And the column it needs');
+  const cell=ri=>page.querySelector(`button.gcell[data-gcell="${ri}"][data-gc="e"]`);
+  assert.ok(cell(0).classList.contains('r')&&cell(0).classList.contains('h')&&cell(1).classList.contains('f'),'Recorded cells');
+  cell(1).click();
+  assert.match(page.querySelector('#group-detail').textContent,/E fails in group member \(Σ atom\).*Atom\./,'A cell shows its argument');
+  page.querySelector('button[data-grow="0"]').click();
+  assert.match(page.querySelector('#group-detail').textContent,/the truncations.*Σ top/,'A row name shows the settings');
+  assert.ok(page.querySelector('#group-detail button[data-open-model="gm"]'),'And links to the model');
+  page.querySelector('button[data-group-toggle="sigma"]').click();
+  assert.deepEqual(rowNames(),['group member']);
   page.querySelector('#page-back').click();
-  assert.equal(page.querySelector('h1').textContent,'Group member','Back to the member');
+  assert.equal(page.querySelector('h1').textContent,'Fixture: group member','Back to the member');
   assert.deepEqual(errors3.map(String),[]);
-  console.log('PASS: a group\'s member lists its own arguments, then the shared arguments that apply under their group, each saying which condition it relies on and why the member meets it; a group\'s page shows its definition with the slots, its parameters and conditions, each shared argument with its members, and the members\' settings.');
+  console.log('PASS: a group\'s member lists its own arguments, then the shared arguments that apply under their group, each saying which condition it relies on and why the member meets it; a group\'s page shows a grid of its members, adds a generated parameter\'s variants and the columns they need on request, says what the parameter changes, shows a cell\'s arguments and a row\'s settings, and lists its definition, parameters, conditions and shared arguments with where each applies.');
 }finally{w3.close();}
