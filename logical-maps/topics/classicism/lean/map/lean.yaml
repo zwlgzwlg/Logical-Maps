@@ -461,7 +461,9 @@ lean_ref:
   possibility-schema-r-implies-possible-infinity-e: Classicism.Map.possibility_schema_r_implies_possible_infinity_e
   possibility-signature-r-implies-distinctness-signature-r: Classicism.Map.possibility_signature_r_implies_distinctness_signature_r
   possibility-signature-r-implies-possibility-schema-r: Classicism.Map.possibility_signature_r_implies_possibility_schema_r
+  possible-infinity-e-and-bf-imply-axiom-of-infinity-e: Classicism.Map.possible_infinity_e_and_bf_imply_axiom_of_infinity_e
   possible-infinity-e-and-no-pure-contingency-imply-axiom-of-infinity-e: Classicism.Map.possible_infinity_e_and_no_pure_contingency_imply_axiom_of_infinity_e
+  possible-infinity-t-and-bf-t-imply-axiom-of-infinity-t: Classicism.Map.possible_infinity_t_and_bf_t_imply_axiom_of_infinity_t
   possible-infinity-t-and-no-pure-contingency-imply-axiom-of-infinity-t: Classicism.Map.possible_infinity_t_and_no_pure_contingency_imply_axiom_of_infinity_t
   possibly-witnessed-possibility-r-implies-witnessed-possibility-r: Classicism.Map.possibly_witnessed_possibility_r_implies_witnessed_possibility_r
   pure-b-and-pure-possibility-incompatible: Classicism.Map.pure_b_and_pure_possibility_incompatible

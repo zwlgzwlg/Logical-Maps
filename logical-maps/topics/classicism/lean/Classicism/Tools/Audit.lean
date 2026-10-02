@@ -4,6 +4,7 @@ import Classicism.Booleanism
 import Classicism.Identities
 import Classicism.Pointwise
 import Classicism.Lattice
+import Classicism.Cardinality
 import Classicism.Results.Records
 import Classicism.Results.Forms
 
@@ -19,6 +20,7 @@ audit, `Classicism/Strict/Audit.lean`.
 #classicism_audit Classicism.Booleanism Classicism.Identities Classicism.Modal
 #classicism_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records
 #classicism_audit Classicism.Pointwise Classicism.Lattice Classicism.Results.Forms
+#classicism_audit Classicism.Cardinality
 
 -- The type-class instances carry the Logical-Equivalence instances that Intensionality
 -- uses. They are definitions, not theorems, so the audit names them.
@@ -38,3 +40,4 @@ plumbing and the formalisation's own metalanguage. -/
 #classicism_types_audit Classicism.Booleanism Classicism.Identities Classicism.Modal
 #classicism_types_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records
 #classicism_types_audit Classicism.Pointwise Classicism.Lattice Classicism.Results.Forms
+#classicism_types_audit Classicism.Cardinality

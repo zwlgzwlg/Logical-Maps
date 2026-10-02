@@ -14,19 +14,19 @@ Made 28 September 2026 from `ciandorr/Logical-Maps` at commit 7c928c4 ("first tr
 
 Since 2 October each result counted as proved has a certificate in `Classicism/Map.lean`: a
 theorem named by its id whose type is the statement the map's own generator writes for it
-(`map/README.md`). The 228 certificates agree with the table below; `map/index.json` gives,
+(`map/README.md`). The 230 certificates agree with the table below; `map/index.json` gives,
 for each, the file and lines of its proof.
 
 A record theorem in `Results/Records.lean` named exactly by a map id proves the map's claim, and its certificate is the entailment between the map's schemas. One named by a map id plus `_at_t` proves only the instances at type `t` (or with output `t`); its certificate is from the map's premise schemas to those instances. Where a full version exists too, the `_at_t` one is the instance at `t` that other proofs at `t` cite. A record with a Ty-parameter is proved at every list of types too, by its list form (`foo.listEntails`, the vectorized derivation); where the map's principle is over argument tuples, as Actual Profile is, or the record is proved at `σ → t` for a principle over relational types, that list form is the map's claim (`Results/Lists.lean`, `Results/Arity.lean`). `classicism_implies_existence_r_at_e` and `_relational` together cover their record, composed in `Results/Arity.lean`. Results proved by the metalogical theorems of `Results/SentenceSchemas/` are counted as proved too: those whose docstrings name the record, and the twenty-four "No Pure Contingency and X imply □X" results, all instances of `npc_union_entails_box`.
 
 | class | results | proved in Lean | in part only | not yet |
 | --- | --- | --- | --- | --- |
-| Per-type routine | 139 | 136 | 0 | 3 |
+| Per-type routine | 139 | 138 | 0 | 1 |
 | Per-instance routine over sentences | 52 | 45 | 0 | 7 |
 | Sweet spot | 47 | 32 | 0 | 15 |
 | Metalogic-dominated | 26 | 15 | 0 | 11 |
 | Conjectured | 6 | 0 | 0 | 6 |
-| total | 270 | 228 | 0 | 42 |
+| total | 270 | 230 | 0 | 40 |
 
 ## Sweet spot (47)
 
@@ -279,8 +279,8 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `persistent-comprehension-r-implies-actuality` — **Lean: full**
 - `plenitude-r-implies-actuality` — **Lean: full**
 - `plenitude-r-implies-distinctness-necessary-r` — **Lean: full**
-- `possible-infinity-e-and-bf-imply-axiom-of-infinity-e`
-- `possible-infinity-t-and-bf-t-imply-axiom-of-infinity-t`
+- `possible-infinity-e-and-bf-imply-axiom-of-infinity-e` — **Lean: shallow record, `Results/Records.lean`**
+- `possible-infinity-t-and-bf-t-imply-axiom-of-infinity-t` — **Lean: shallow record, `Results/Records.lean`**
 - `relational-choice-and-extensionality-imply-transversal-choice` — **Lean: full**
 - `relational-choice-and-plenitude-imply-functional-choice-r` — **Lean: full**
 - `relational-choice-and-very-weak-rigid-comprehension-imply-transversal-choice` — **Lean: full**

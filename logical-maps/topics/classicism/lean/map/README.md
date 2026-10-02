@@ -24,7 +24,7 @@ against a statement the map writes itself.
 
 | file | what it is |
 | --- | --- |
-| `lean.yaml` | The fields the map would carry: `lean_lib` and `lean` (for `topic.yaml`), a `lean_def` for each of the 95 principles formalized here, each principle's `forms`, and a `lean_ref` for each of the 228 results certified. |
+| `lean.yaml` | The fields the map would carry: `lean_lib` and `lean` (for `topic.yaml`), a `lean_def` for each of the 95 principles formalized here, each principle's `forms`, and a `lean_ref` for each of the 230 results certified. |
 | `pmap.patch` | The proposed change to the map's build script and JSON schemas (below). |
 | `generate.py` | Runs the map's own generator, with `pmap.patch` applied in memory, on a checkout of the map with these fields added, writing `Classicism/Statements.lean`; `--refs` fills `lean_ref` from `Classicism/Map.lean`, `--patch` rewrites `pmap.patch`. |
 | `index.json` | For each certified result and form: its certificate (file, lines, axioms) and the declarations a reader wants, the proofs (file, lines), and for a form the definitions of both forms. Written by `scripts/MapIndex.lean`. |
@@ -132,7 +132,7 @@ small change to `pmap` and `viewer/template.html` in the map repository.
   the map's list allows the two, or the model is built on a type known to be inhabited.
 - **Coverage.** 2 of the map's 97 principles have no `lean_def` yet, General Separated
   Structure and the Necessity of Arithmetic, so 5 results have no statement. Of the 265
-  stated, 37 are not yet proved here: Appendix E's incompatibilities, the Gödel results, the
+  stated, 35 are not yet proved here: Appendix E's incompatibilities, the Gödel results, the
   conjectured ones, most of those about Separated Structure and Independence, Strong
   Possibility, the Infinity schemas, and the incompatibilities of Witnessed Possibility,
   which need a signature with a constant.

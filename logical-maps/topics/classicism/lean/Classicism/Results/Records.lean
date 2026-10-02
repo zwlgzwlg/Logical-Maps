@@ -1951,6 +1951,30 @@ theorem atomlessness_implies_axiom_of_infinity_t : Atomlessness → AxiomOfInfin
          (fun hXr => ⟨r, hr.1, hr.2.1, hXr⟩)⟩)
     (λ _ ↦ True) hZ.2 True (dia_intro True trivial)).elim fun _ hr => hr.2.2 trivial
 
+/-- Possible Infinity and BF at a type give the Axiom of Infinity there (the write-up for
+`possible-infinity-t-and-bf-t-imply-axiom-of-infinity-t`): were a finite cardinality to
+hold of the universal property, which has no non-instances, then by Lemma B necessarily
+one would hold of a property including it, hence, by Lemma A, of the universal property;
+against the Axiom's possibility. -/
+theorem possible_infinity_and_bf_imply_axiom_of_infinity {σ : Type} [Ty σ] (bf : Barcan σ) :
+    ◇ (AxiomOfInfinity σ) → AxiomOfInfinity σ := fun hd h => h.elim fun Z hZ =>
+  not_dia_of_box_not _ (modal_K _ _ (nec% (fun
+      (h : ∃ Z', FiniteCardinality Z' ∧ ∃ X', Z' X' ∧ ∀ u : σ, True → X' u)
+      (hn : AxiomOfInfinity σ) => h.elim fun Z' hZ' => hZ'.2.elim fun X' hX' =>
+        hn ⟨Z', hZ'.1, finiteCardinality_coext Z' hZ'.1 X' _ hX'.1
+          fun u => ⟨fun _ => trivial, fun _ => hX'.2 u trivial⟩⟩))
+    (finite_count_necessary bf Z hZ.1 _ hZ.2 fun _ h => absurd trivial h)) hd
+
+/-- `possible-infinity-t-and-bf-t-imply-axiom-of-infinity-t`. -/
+theorem possible_infinity_t_and_bf_t_imply_axiom_of_infinity_t :
+    PossibleInfinityT → BarcanT → AxiomOfInfinityT :=
+  fun hd bf => possible_infinity_and_bf_imply_axiom_of_infinity bf hd
+
+/-- `possible-infinity-e-and-bf-imply-axiom-of-infinity-e`: the same at `e`. -/
+theorem possible_infinity_e_and_bf_imply_axiom_of_infinity_e :
+    PossibleInfinityE → Barcan e → AxiomOfInfinityE :=
+  fun hd bf => possible_infinity_and_bf_imply_axiom_of_infinity bf hd
+
 /-- `boolean-completeness-r-implies-countable-boolean-completeness-r`: every property has a
 least upper bound, the greatest lower bound of its upper bounds (`lub_of_glb_ubs`), the
 countable ones included. -/

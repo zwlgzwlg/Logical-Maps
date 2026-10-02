@@ -942,9 +942,17 @@ theorem possibility_signature_r_implies_distinctness_signature_r : Statements.po
 theorem possibility_signature_r_implies_possibility_schema_r : Statements.possibility_signature_r_implies_possibility_schema_r :=
   fun hS _ h => Entails.trans h (Entails.of_subset (pureVersion_possibilityC_subset hS))
 
+/-- `possible-infinity-e-and-bf-imply-axiom-of-infinity-e` -/
+theorem possible_infinity_e_and_bf_imply_axiom_of_infinity_e : Statements.possible_infinity_e_and_bf_imply_axiom_of_infinity_e := by
+  map_cert Proofs.possible_infinity_e_and_bf_imply_axiom_of_infinity_e.entails
+
 /-- `possible-infinity-e-and-no-pure-contingency-imply-axiom-of-infinity-e` -/
 theorem possible_infinity_e_and_no_pure_contingency_imply_axiom_of_infinity_e : Statements.possible_infinity_e_and_no_pure_contingency_imply_axiom_of_infinity_e := by
   map_cert npc_possibleInfinityE_entails_axiomOfInfinityE
+
+/-- `possible-infinity-t-and-bf-t-imply-axiom-of-infinity-t` -/
+theorem possible_infinity_t_and_bf_t_imply_axiom_of_infinity_t : Statements.possible_infinity_t_and_bf_t_imply_axiom_of_infinity_t := by
+  map_cert Proofs.possible_infinity_t_and_bf_t_imply_axiom_of_infinity_t.entails
 
 /-- `possible-infinity-t-and-no-pure-contingency-imply-axiom-of-infinity-t` -/
 theorem possible_infinity_t_and_no_pure_contingency_imply_axiom_of_infinity_t : Statements.possible_infinity_t_and_no_pure_contingency_imply_axiom_of_infinity_t := by

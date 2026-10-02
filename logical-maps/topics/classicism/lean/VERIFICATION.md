@@ -1284,6 +1284,20 @@ shallow lemma `fregean_not_three`). `not_consistent_of_imp_neg` moved from `Map.
 *Checked.* The full build passes. 228 result certificates and 22 form certificates prove
 their generated statements; 3 rest on `Classicism.e` and `e_exists`, as before.
 
+## Possible Infinity and BF, 2 October (night)
+
+`possible-infinity-t-and-bf-t-imply-axiom-of-infinity-t` and
+`possible-infinity-e-and-bf-imply-axiom-of-infinity-e`, from the map's write-up, schematic
+in the type: `Cardinality.lean` now has its two lemmas (finite cardinalities respect
+coextension; under BF a finite count is necessary, of a property including the one
+counted), each by the induction `FiniteCardinality` provides, and `Results/Records.lean`
+the theorem at a type and the two records. `Cardinality.lean` joins the library audits (5 of
+5 theorems in C⁻, inside R).
+
+*Checked.* The full build passes. Records: 259 of 259 derived, 158 certified as
+entailments. 230 result certificates and 22 form certificates prove their generated
+statements; 3 rest on `Classicism.e` and `e_exists`, as before.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen
