@@ -475,3 +475,41 @@ total comonotonic extension); fractional factors under DU + Comonotonic Sum
 Invariance, that is integer cancellation without Totality; and whether the
 integer-ratio uniqueness principle separates from the real-ratio one under
 DTU.
+
+
+### AI report communicated by Branden Fitelson — 2 October 2026
+
+Read the four-page report *Unbounded Utility: Five Top-Ranked Open Conjectures
+Resolved*, dated 30 September 2026. Fitelson communicated the results; the
+report says they were produced by Claude agents but gives no model versions.
+The separately mentioned detailed and referee reports were not supplied.
+GPT-6 (Codex) expanded and informally checked the arguments recorded below.
+The source PDF is retained privately, not redistributed with the map.
+
+| Report | Accepted evidence |
+| --- | --- |
+| §1: alternating St Petersburg = −1/2 does not imply Folded Expectation over DU | `calibrated-geometric-continuous-ultrafilter`, also total |
+| §2: Existential Copula Sum Invariance does not imply Independent Sum Invariance | `cdf-area-preorder` now fails Independent Sum Cancellation, by the full block-smoothing proof appended to its write-up |
+| §3: Integer Affine Preservation does not imply Negative Affine Anti-Invariance | `asymmetric-liminf-clipped-expectation`, satisfying full Positive Affine Invariance |
+| §4(b): alternating evaluation and Existential Copula Sum Invariance are jointly consistent | the calibrated total model, with the fixed shuffle copula |
+| §5(a,b): Existential Copula Sum Invariance and Integer Affine Preservation do not imply Independent Sum Invariance | the CDF-area cancellation example and the new `symmetric-liminf-clipped-expectation`, which fails Independent Sum Preservation |
+
+The fixed shuffle proof is included in the calibrated model's write-up and
+also adds Existential Copula Sum Invariance to the four existing tolerance-based
+continuous ultrafilter models. It does not apply automatically to exact
+ultrafilter or eventual zero-tolerance comparisons. Original model authors,
+sources and certificate dates are retained, with dated changes for the additions.
+
+The stronger steered-conclosure assertions in §4(a) are **not imported as
+proved**. The PDF gives no proof of its analytic Lemma 2, its Fourier bound,
+or the claimed obstruction for every convolution kernel. In particular no new
+verdict is added for alternating St Petersburg in the existing bare conclosure,
+and no total Independent Sum Invariance model with an arbitrarily prescribed
+alternating-game value is asserted. This limitation does not affect the fourth
+headline conclusion, which has the independently completed shuffle-copula proof.
+
+`checks/fitelson_report.py` contains exact atom/block arithmetic and numerical
+diagnostics for the analytic witnesses. These support the written proofs;
+neither the diagnostics nor the reported external referee verdicts are Lean
+verification. Question counts and rankings printed in the source are historical
+and are not copied as current map statistics.

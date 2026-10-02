@@ -1,0 +1,64 @@
+id: calibrated-geometric-continuous-ultrafilter
+name: 'Clipped expectation: continuous ultrafilter dominance [−7·4ⁿ/4, 2·4ⁿ]'
+satisfies:
+- rich-outcomes
+- archimedean-outcomes
+- stochastic-equivalence
+- stochastic-dominance
+- independence
+- expected-utility
+- cdf-area-extension
+- relative-expectation
+- l1-continuity
+- shift-invariance
+- existential-copula-sum-consistency
+- totality
+- alternating-st-petersburg-value
+violates:
+- integer-affine-preservation
+- folded-expectation
+- symmetric-neutrality
+- reflection-anti-invariance
+- negative-affine-anti-invariance
+status: proved
+certificate:
+  source_id: misc
+  lean: none
+  produced_by: Unspecified Claude agents (AI-generated specialization and witnesses, communicated by Branden
+    Fitelson); Zachary Goodsell (underlying clipping method)
+  recorded_by: GPT-6 (Codex), proof expansion and informal verification, 2026-10-02
+  checked_by: []
+  date: '2026-10-02'
+description: Use identity real utility and a free ultrafilter on positive integers. Clip at a_n=(7/4)4^n on
+  the negative side and b_n=2·4^n on the positive side, and compare clipped expectations up to every positive
+  tolerance on an ultrafilter-large set. The common clipping proof gives DTU, the area/expectation/continuity
+  properties and a fixed shuffle copula. Alternating St Petersburg and its double both have clipped expectation
+  -1/2 at every index; thus the recorded alternating evaluation holds but Integer Affine Preservation fails.
+  Symmetric Cauchy has value log(8/7)/π>0, refuting Folded Expectation, neutral symmetry and reflection. Complete
+  proofs, including the shared clipping and shuffle-copula argument, are in the model write-up.
+sources:
+- 'AI-generated report communicated by Branden Fitelson, Unbounded Utility: Five Top-Ranked Open Conjectures
+  Resolved, 30 September 2026, §§1 and 4(b), pp. 1 and 3. The report identifies Claude agents but no model
+  version.'
+- 'Zachary Goodsell, Decision theory unbound, Noûs 58 (2024), 669–695, DOI 10.1111/nous.12473, Appendix B,
+  Definition 3, Lemma 6 and Remark 3: underlying continuous clipped-expectation construction and asymmetric
+  cutoffs.'
+- 'GPT-6 (Codex), 2 October 2026: full proof expansion and informal check in writeups/calibrated-geometric-continuous-ultrafilter.md,
+  including its shared clipping and shuffle-copula proof.'
+source_names:
+- AI report via Branden Fitelson
+- Decision Theory Unbound (construction)
+- GPT-6 proof expansion 2 Oct
+notes: Branden Fitelson communicated the AI-generated results; he is not credited as the AI proof author or
+  as a checker. The supplied summary reports a separate Codex review, but its referee files were unavailable
+  and have not been inspected. Acceptance rests on the complete arguments recorded here. No machine verification
+  or literature-novelty claim is made.
+checks:
+- topics/unbounded-utility/checks/fitelson_report.py
+references:
+- paper: fitelson-ai-unbounded-report-2026
+  role: origin
+  locator: §§1 and 4(b), pp. 1 and 3
+- paper: decision-theory-unbound
+  role: background
+  locator: Appendix B, Definition 3, Lemma 6 and Remark 3

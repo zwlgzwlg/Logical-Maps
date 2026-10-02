@@ -12,6 +12,7 @@ satisfies:
 - folded-expectation
 - reflection-anti-invariance
 - shift-invariance
+- existential-copula-sum-consistency
 violates:
 - scale-invariance
 - rational-scale-invariance
@@ -23,7 +24,7 @@ violates:
 status: proved
 certificate:
   source_id: misc
-  lean: stated
+  lean: none
   produced_by: Zachary Goodsell (continuous clipping construction); GPT-6 (Codex) (geometric-cutoff specialization
     and additional verifications)
   recorded_by: GPT-6 (Codex), 2026-09-09
@@ -38,15 +39,20 @@ sources:
 - 'GPT-6 (Codex), 9 September 2026, writeups/geometric-continuous-ultrafilter.md: geometric-cutoff specialization,
   explicit alternating-St-Petersburg witness, and additional CDF-area/L¹/folded-expectation verifications.'
 - 'Claude (Fable 5.1), Logical Maps, 23 September 2026: failure of Comonotonic Sum Invariance (half-Cauchy common summand) in writeups/geometric-continuous-ultrafilter.md; diagnostic checks/comonotonic_witnesses.py.'
+- 'AI-generated report communicated by Branden Fitelson, Unbounded Utility: Five Top-Ranked Open Conjectures
+  Resolved, 30 September 2026, §4(b), p. 3. AI (Claude agents; model versions unspecified), communicated
+  by Branden Fitelson. Proof expanded and informally checked by GPT-6 (Codex), 2 October 2026.'
 source_names:
 - Decision Theory Unbound
 - GPT-6 model adaptation 9 Sep
 - Claude comonotonic failure 23 Sep
+- AI report via Branden Fitelson (2 Oct addition)
 notes: |-
   Original work: model adaptation and direct verification. Reuses Goodsell’s continuous ultrafilter ordering; the preference construction is not claimed as original. New work here chooses cutoffs $4^n$ to fix an exact alternating-game value, gives an explicit scaling reversal and nonunique self-similarity witness, and proves additional area/continuity/folded flags. This describes work performed in this project, not a claim of novelty in the literature. A free ultrafilter is nonconstructive; the numerical check verifies the finite formulas and estimates, not ultrafilter existence or all quantified axioms.
 checks:
 - topics/unbounded-utility/checks/geometric_clipping.py
 - topics/unbounded-utility/checks/comonotonic_witnesses.py
+- topics/unbounded-utility/checks/fitelson_report.py
 changes:
 - date: '2026-09-23'
   by: Claude (Fable 5.1)
@@ -67,8 +73,21 @@ changes:
     Uniqueness of Negative Self-Similarity (integer ratios) shown to fail: the recorded uniqueness witness uses p = 1/2, a = 2, b = 0 and Z = −2, with A ∼ −1/3 and −1/2 both fixed values.
   violates:
   - integer-negative-self-similarity
+- date: '2026-10-02'
+  by: AI (Claude agents; model versions unspecified), communicated by Branden Fitelson; GPT-6 (Codex),
+    proof expansion and informal verification, 2026-10-02
+  summary: 'A single copula exchanging adjacent quarters works for every marginal pair: on each quarter
+    one quantile is bounded, so dominated convergence makes clipped addition additive up to an error tending
+    to zero. The tolerance-based comparison ignores that error in both directions. Full proof in writeups/calibrated-geometric-continuous-ultrafilter.md (shared clipping proof);
+    original construction attribution and date are preserved. The previous record was Lean stated; the
+    expanded statement is not Lean-checked.'
+  satisfies:
+  - existential-copula-sum-consistency
 references:
 - paper: decision-theory-unbound
   role: background
   locator: 'Appendix B, Definition 3, Lemma 6 and proof of Theorem 3, pp. 691–692; Theorems 7–10, pp. 693–695:
     underlying continuous clipping construction and original scale-failure strategy'
+- paper: fitelson-ai-unbounded-report-2026
+  role: proof
+  locator: §4(b), p. 3

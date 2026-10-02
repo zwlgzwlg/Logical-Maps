@@ -98,3 +98,13 @@ papers:
   citation: Fred Espen Benth, Giulia Di Nunno and Dennis Schroers (2022). Copula measures and Sklar’s theorem
     in arbitrary dimensions. Scandinavian Journal of Statistics.
   url: https://doi.org/10.1111/sjos.12559
+- id: fitelson-ai-unbounded-report-2026
+  title: 'Unbounded Utility: Five Top-Ranked Open Conjectures Resolved'
+  citation: AI-generated report, 30 September 2026, 4 pages; communicated by Branden Fitelson. The report
+    attributes production to Claude agents without specifying model versions. Fitelson is the communicator,
+    not the credited producer of the proofs.
+  note: The source PDF is retained privately; only checked results are transcribed here.
+    The report claims separate Codex refereeing, but those referee reports were not supplied.
+    The public write-ups contain the arguments expanded and informally checked by GPT-6
+    (Codex), 2 October 2026; the stronger steered-conclosure claims in §4(a) are not
+    imported as proved.

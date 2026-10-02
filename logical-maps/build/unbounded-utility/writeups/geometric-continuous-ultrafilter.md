@@ -192,6 +192,24 @@ above has ratio $a=2$, so the model also fails Uniqueness of Negative
 Self-Similarity (integer ratios), the restriction of the principle to integer
 ratios.
 
+
+## A fixed shuffle copula
+
+**Added 2 October 2026.** The AI-generated report communicated by **Branden
+Fitelson**, *Unbounded Utility: Five Top-Ranked Open Conjectures Resolved*
+(30 September 2026), §4(b), supplies a new property of this construction.
+Its producers are identified as Claude agents, with model versions unspecified.
+GPT-6 (Codex) expanded and informally checked the argument.
+
+The [fixed shuffle-copula proof](calibrated-geometric-continuous-ultrafilter.html#shared-clipping-and-shuffle-copula-proof)
+applies to this model's cutoffs and tolerance-based ultrafilter comparison.
+It proves **Existential Copula Sum Invariance** using one copula for all
+triples, including atomic marginals. This does not change the model's
+existing failure of Comonotonic Sum Invariance. The original construction
+and earlier results retain their original attribution. The expanded model
+has no Lean verification; its earlier record was marked stated.
+
 ## Paper references
 
 - **Background: [Decision theory unbound](https://doi.org/10.1111/nous.12473).** Zachary Goodsell (2024). Decision theory unbound. Noûs, 58, 669–695. First published online in 2023. — Appendix B, Definition 3, Lemma 6 and proof of Theorem 3, pp. 691–692; Theorems 7–10, pp. 693–695: underlying continuous clipping construction and original scale-failure strategy
+- **Proof: Unbounded Utility: Five Top-Ranked Open Conjectures Resolved.** AI-generated report, 30 September 2026, 4 pages; communicated by Branden Fitelson. The report attributes production to Claude agents without specifying model versions. Fitelson is the communicator, not the credited producer of the proofs. — §4(b), p. 3

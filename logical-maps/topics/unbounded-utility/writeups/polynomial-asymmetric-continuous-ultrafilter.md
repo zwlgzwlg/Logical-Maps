@@ -272,3 +272,20 @@ is finite, so \(X+Z\succ Y+Z\) although \(X\sim Y\): Comonotonic Sum
 Invariance fails, while Shift Invariance and Transfer of a Shift hold.
 `checks/comonotonic_witnesses.py` verifies the closed forms, the neutral
 constant and the limit.
+
+
+## A fixed shuffle copula
+
+**Added 2 October 2026.** The AI-generated report communicated by **Branden
+Fitelson**, *Unbounded Utility: Five Top-Ranked Open Conjectures Resolved*
+(30 September 2026), §4(b), supplies a new property of this construction.
+Its producers are identified as Claude agents, with model versions unspecified.
+GPT-6 (Codex) expanded and informally checked the argument.
+
+The [fixed shuffle-copula proof](calibrated-geometric-continuous-ultrafilter.html#shared-clipping-and-shuffle-copula-proof)
+applies to this model's cutoffs and tolerance-based ultrafilter comparison.
+It proves **Existential Copula Sum Invariance** using one copula for all
+triples, including atomic marginals. This does not change the model's
+existing failure of Comonotonic Sum Invariance. The original construction
+and earlier results retain their original attribution. The expanded model
+has no Lean verification; its earlier record was marked stated.
