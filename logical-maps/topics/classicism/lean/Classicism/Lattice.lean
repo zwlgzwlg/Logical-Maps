@@ -1,5 +1,6 @@
 import Classicism.Paper
 import Classicism.Order
+import Classicism.Pointwise
 
 /-!
 # Lattice predicates
@@ -143,6 +144,196 @@ theorem atom_le_or_le_neg (w q : Prop) (hw : Atom w) : w ≤ q ∨ w ≤ ¬ q :=
         _ = (¬ q ∨ w) := and_true_eq _
         _ = (w ∨ ¬ q) := or_comm_eq _ _))
 
+/-- `True ≤ q` is `□q`: `q = (True ∨ q)` iff `q = True`. -/
+theorem true_entails_eq_box (q : Prop) : entails True q = □ q := by
+  show (q = (True ∨ q)) = (q = True)
+  rw [true_or_eq]
+
+/-- `(p → q) → (q → r) → p → r`. -/
+theorem imp_trans_aux (p q r : Prop) : (p → q) → (q → r) → p → r := fun h₁ h₂ hp => h₂ (h₁ hp)
+
+/-- `p ≤ q` and `□(q → r)` give `p ≤ r`. -/
+theorem le_of_le_of_box_imp (p q r : Prop) (h : p ≤ q) (hb : □ (q → r)) : p ≤ r :=
+  (le_iff_prop _ _).2 (modal_K _ _ (modal_K _ _ (nec% (imp_trans_aux p q r)) ((le_iff_prop _ _).1 h)) hb)
+
+/-- A non-bottom proposition is not below its negation. -/
+theorem not_le_neg_of_ne_false (p : Prop) (h : p ≠ False) : ¬ p ≤ ¬ p :=
+  fun hle => h (eq_false_of_le_neg p hle)
+
+/-- `w ≤ q ∨ w ≤ ¬q` is necessary once true: each disjunct is. -/
+theorem box_le_or_le (w q : Prop) (h : w ≤ q ∨ w ≤ ¬ q) : □ (w ≤ q ∨ w ≤ ¬ q) :=
+  h.elim (fun h => modal_K _ _ (nec% (fun (h' : w ≤ q) => (Or.inl h' : w ≤ q ∨ w ≤ ¬ q)))
+      (box_le_prop w q h))
+    (fun h => modal_K _ _ (nec% (fun (h' : w ≤ ¬ q) => (Or.inr h' : w ≤ q ∨ w ≤ ¬ q)))
+      (box_le_prop w (¬ q) h))
+
+/-- A non-bottom proposition deciding every proposition is an atom. -/
+theorem atom_of_decides (w : Prop) (h : ¬ (w = False) ∧ ∀ z, w ≤ z ∨ w ≤ ¬ z) : Atom w :=
+  fun z => ⟨fun hz => (h.2 z).elim
+      (fun hwz => absurd (le_antisymm_prop z w hz.1 hwz) hz.2)
+      (fun hwn => le_trans_prop z w (¬ z) hz.1 hwn),
+    fun hz => by
+      have hz0 : z = False := eq_false_of_le_neg z hz
+      exact ⟨hz0 ▸ bot_le_prop w, fun e => h.1 (e ▸ hz0)⟩⟩
+
+/-- An atom `w` entails `q → w ≤ q`, for every `q`: if `w ≤ q`, then `w ≤ q` is
+necessary, so `q → w ≤ q` is `⊤`; if `w ≤ ¬q`, then `w ≤ ¬q ∨ r` for any `r`. -/
+theorem atom_le_imp_le (w q : Prop) (hw : Atom w) : w ≤ (q → w ≤ q) :=
+  (atom_le_or_le_neg w q hw).elim
+    (fun h => by
+      rw [show (w ≤ q) = True from box_le_prop w q h, imp_true_eq]
+      exact le_top_prop w)
+    (fun h => by
+      rw [imp_eq_not_or q (w ≤ q)]
+      exact le_or_of_le_left_prop w (¬ q) _ h)
+
 end prop
+
+/-! ### The order at `σ → t`
+
+The same laws at the properties of a type, where `X ≤ Y` is `□∀z. Xz → Yz`: each is the
+law at `t` under the box, through a closed lemma necessitated. -/
+
+section arrow
+
+/-- `(∀z. Pz → Qz) → (∀z. Qz → Pz) → P ≡ Q`. -/
+theorem coext_of_imp_imp {σ : Type} [Ty σ] (P Q : σ → Prop) :
+    (∀ z, P z → Q z) → (∀ z, Q z → P z) → ∀ z, P z ↔ Q z :=
+  fun h₁ h₂ z => ⟨h₁ z, h₂ z⟩
+
+/-- `G ≤ G` at `σ → t`. -/
+theorem le_refl_arrow_prop {σ : Type} [Ty σ] (G : σ → Prop) : G ≤ G :=
+  (le_iff G G).2 (nec% (fun (z : σ) (h : G z) => h))
+
+/-- Two properties below each other are identical: Intensionality. -/
+theorem le_antisymm_arrow {σ : Type} [Ty σ] (P Q : σ → Prop) (h₁ : P ≤ Q) (h₂ : Q ≤ P) :
+    P = Q :=
+  intensionality P Q (modal_K _ _ (modal_K _ _ (nec% (coext_of_imp_imp P Q))
+    ((le_iff P Q).1 h₁)) ((le_iff Q P).1 h₂))
+
+/-- At `σ → t`, `⊥` is below everything. -/
+theorem bot_le_arrow {σ : Type} [Ty σ] (Y : σ → Prop) : Rel.bot (σ → Prop) ≤ Y :=
+  (le_iff _ _).2 (nec% (fun (z : σ) (h : False) => (h.elim : Y z)))
+
+/-- `≤` is transitive at `σ → t`. -/
+theorem le_trans_arrow {σ : Type} [Ty σ] (X Y Z : σ → Prop) (h₁ : X ≤ Y) (h₂ : Y ≤ Z) :
+    X ≤ Z :=
+  (le_iff _ _).2 (modal_K _ _ (modal_K _ _
+    (nec% (fun (a : ∀ z, X z → Y z) (b : ∀ z, Y z → Z z) (z : σ) (h : X z) => b z (a z h)))
+    ((le_iff _ _).1 h₁)) ((le_iff _ _).1 h₂))
+
+/-- What is below its own negation is below everything, at `σ → t`. -/
+theorem le_of_le_neg_arrow {σ : Type} [Ty σ] (X Y : σ → Prop) (h : X ≤ ¬ X) : X ≤ Y :=
+  (le_iff _ _).2 (modal_K _ _
+    (nec% (fun (a : ∀ z, X z → ¬ X z) (z : σ) (hx : X z) => ((a z hx hx).elim : Y z)))
+    ((le_iff _ _).1 h))
+
+/-- And is `⊥`. -/
+theorem eq_bot_of_le_neg_arrow {σ : Type} [Ty σ] (X : σ → Prop) (h : X ≤ ¬ X) :
+    X = Rel.bot (σ → Prop) :=
+  le_antisymm_arrow X _ (le_of_le_neg_arrow X _ h) (bot_le_arrow X)
+
+/-- `X ≤ Y` at `σ → t` gives `Xa ≤ Ya`. -/
+theorem le_apply_of_le {σ : Type} [Ty σ] (X Y : σ → Prop) (a : σ) (h : X ≤ Y) :
+    X a ≤ Y a :=
+  (le_iff_prop _ _).2 (converse_barcan (λ z ↦ X z → Y z) ((le_iff X Y).1 h) a)
+
+/-- `w ≤ Xy` is an identity, so it is necessary when true: `λy. w ≤ Xy` is persistent. -/
+theorem le_apply_box {σ : Type} [Ty σ] (w : Prop) (X : σ → Prop) :
+    ∀ y, w ≤ X y → □ (w ≤ X y) := fun y h => necessity_of_identity _ _ h
+
+/-- `W ≤ Y ∨ W ≤ ¬Y` is necessary once true: each disjunct is an identity. -/
+theorem box_le_or_le_arrow {σ : Type} [Ty σ] (W Y : σ → Prop) (h : W ≤ Y ∨ W ≤ ¬ Y) :
+    □ (W ≤ Y ∨ W ≤ ¬ Y) :=
+  h.elim
+    (fun h => modal_K _ _ (nec% (fun (h' : W ≤ Y) => (Or.inl h' : W ≤ Y ∨ W ≤ ¬ Y)))
+      (necessity_of_identity _ _ h))
+    (fun h => modal_K _ _ (nec% (fun (h' : W ≤ ¬ Y) => (Or.inr h' : W ≤ Y ∨ W ≤ ¬ Y)))
+      (necessity_of_identity _ _ h))
+
+/-- `(¬∃y. Xy) → ∀y. Xy ↔ ⊥`. -/
+theorem coext_bot_of_not_exists {σ : Type} [Ty σ] (X : σ → Prop) :
+    (¬ ∃ y, X y) → ∀ y, X y ↔ Rel.bot (σ → Prop) y :=
+  fun h y => ⟨fun hx => h ⟨y, hx⟩, fun hb => hb.elim⟩
+
+/-- A non-bottom property is possibly instantiated: were it necessarily empty, it would be
+coextensive with `⊥` and so, by Intensionality, `⊥`. -/
+theorem dia_exists_of_ne_bot {σ : Type} [Ty σ] (X : σ → Prop) (hX : X ≠ Rel.bot (σ → Prop)) :
+    ◇ (∃ y, X y) :=
+  (em (◇ (∃ y, X y))).elim id fun hn =>
+    (hX (intensionality X _ (modal_K _ _ (nec% (coext_bot_of_not_exists X))
+      (box_not_of_not_dia _ hn)))).elim
+
+/-! ### Atoms at `σ → t` -/
+
+/-- A non-bottom property deciding every property is an atom, at `σ → t`. -/
+theorem atom_of_decides_arrow {σ : Type} [Ty σ] (W : σ → Prop) (hne : W ≠ Rel.bot (σ → Prop))
+    (hdec : ∀ Y : σ → Prop, W ≤ Y ∨ W ≤ ¬ Y) : Atom W := fun z =>
+  ⟨fun hz => (hdec z).elim (fun h => absurd (le_antisymm_arrow z W hz.1 h) hz.2)
+      (fun h => le_trans_arrow z W _ hz.1 h),
+   fun hz => ⟨le_of_le_neg_arrow z W hz, fun e => hne (eq_bot_of_le_neg_arrow W (e ▸ hz))⟩⟩
+
+/-- `(∀z. Wz ∧ Yz → ¬(Wz ∧ Yz)) → ∀z. Wz → ¬Yz`. -/
+theorem imp_not_of_and_bot {σ : Type} [Ty σ] (W Y : σ → Prop) :
+    (∀ z, W z ∧ Y z → ¬ (W z ∧ Y z)) → ∀ z, W z → ¬ Y z :=
+  fun a z hw hy => a z ⟨hw, hy⟩ ⟨hw, hy⟩
+
+/-- An atom at `σ → t` decides every property: `λz. Wz ∧ Yz` is `W` or `⊥`. -/
+theorem atom_decides_arrow {σ : Type} [Ty σ] (W Y : σ → Prop) (hW : Atom W) :
+    W ≤ Y ∨ W ≤ ¬ Y :=
+  (em ((λ z ↦ W z ∧ Y z) = W)).elim
+    (fun e => Or.inl (e ▸ (le_iff _ _).2 (nec% (fun (z : σ) (h : W z ∧ Y z) => h.2))))
+    (fun hne => Or.inr ((le_iff _ _).2 (modal_K _ _ (nec% (imp_not_of_and_bot W Y))
+      ((le_iff _ _).1 ((hW _).1
+        ⟨(le_iff _ _).2 (nec% (fun (z : σ) (h : W z ∧ Y z) => h.1)), hne⟩)))))
+
+/-! ### Bounds of bounds -/
+
+/-- A greatest lower bound of the upper bounds of `F` is an upper bound of `F`. -/
+theorem glb_ub_upper {τ : Type} [Rel τ] (F : τ → Prop) (G : τ)
+    (hG : GLB G (λ w ↦ UB w F)) : UB G F :=
+  fun X hX => (hG X).1 (fun _ hY => hY X hX)
+
+/-- And below every upper bound. -/
+theorem glb_ub_least {σ : Type} [Ty σ] (F : (σ → Prop) → Prop) (G : σ → Prop)
+    (hG : GLB G (λ w ↦ UB w F)) : ∀ Y : σ → Prop, UB Y F → G ≤ Y :=
+  fun Y hY => (hG G).2 (le_refl_arrow_prop G) Y hY
+
+/-- And below every upper bound, at `σ → σ' → t`. -/
+theorem glb_ub_least₂ {σ σ' : Type} [Ty σ] [Ty σ'] (F : (σ → σ' → Prop) → Prop)
+    (G : σ → σ' → Prop) (hG : GLB G (λ w ↦ UB w F)) : ∀ Y, UB Y F → G ≤ Y :=
+  fun Y hY => (hG G).2 ((le_iff G G).2 (nec% (fun (x : σ) (z : σ') (h : G x z) => h))) Y hY
+
+end arrow
+
+/-! ### The order at a relational type
+
+At a type parameter `τ`, reflexivity and transitivity come from those of the pointwise
+implication (`Pointwise`), under the box; and with them the least upper bound of a property
+is the greatest lower bound of its upper bounds, and dually. -/
+
+section rel
+variable [Order τ] [Pointwise τ]
+
+/-- `≤` is reflexive at a relational type: `X ⊆ X` under the box. -/
+theorem le_refl_rel (x : τ) : x ≤ x :=
+  (le_iff _ _).2 (nec% (boxImp_refl x))
+
+/-- `≤` is transitive at a relational type: `⊆` is, under the box. -/
+theorem le_trans_rel (x y z : τ) (h₁ : x ≤ y) (h₂ : y ≤ z) : x ≤ z :=
+  (le_iff _ _).2 (modal_K _ _ (modal_K _ _ (nec% (boxImp_trans x y z))
+    ((le_iff _ _).1 h₁)) ((le_iff _ _).1 h₂))
+
+/-- The greatest lower bound of the upper bounds of `X` is a least upper bound of `X`. -/
+theorem lub_of_glb_ubs (X : τ → Prop) (y : τ) (hy : GLB y (λ z ↦ UB z X)) : LUB y X :=
+  fun z => ⟨fun hz => (hy y).2 (le_refl_rel y) z hz,
+    fun hyz x hx => le_trans_rel x y z ((hy x).1 fun w hw => hw x hx) hyz⟩
+
+/-- The least upper bound of the lower bounds of `X` is a greatest lower bound of `X`. -/
+theorem glb_of_lub_lbs (X : τ → Prop) (y : τ) (hy : LUB y (λ z ↦ LB z X)) : GLB y X :=
+  fun z => ⟨fun hz => (hy y).2 (le_refl_rel y) z hz,
+    fun hzy x hx => le_trans_rel z y x hzy ((hy x).1 fun w hw => hw x hx)⟩
+
+end rel
 
 end Classicism

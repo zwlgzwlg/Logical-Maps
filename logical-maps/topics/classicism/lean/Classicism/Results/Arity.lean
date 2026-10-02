@@ -127,8 +127,8 @@ boxes the quantifier. -/
 theorem weaklyInextensible_of_neg_bf (Y : σ → Prop) :
     P.Barcan σ → WeaklyPersistent (¬ Y) → WeaklyInextensible Y := fun bf hn Z hZ =>
   bf (λ z ↦ Y z → Z z) fun z =>
-    (em (Y z)).elim (fun hy => Proofs.box_imp_of_box (Y z) (Z z) (hZ z hy))
-      (fun hny => Proofs.box_imp_of_box_not (Y z) (Z z) (hn z hny))
+    (em (Y z)).elim (fun hy => box_imp_of_box (Y z) (Z z) (hZ z hy))
+      (fun hny => box_imp_of_box_not (Y z) (Z z) (hn z hny))
 
 /-- Gallin Extensional Comprehension and BF give Weak Rigid Comprehension, at `σ → t`:
 the Gallin-rigid coextension is persistent and, its negation being persistent, weakly

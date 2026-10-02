@@ -134,4 +134,113 @@ theorem modalized_functionality {σ τ : Type} [Ty σ] [Rel τ] (X Y : σ → τ
     □ (∀ z, X z = Y z) → X = Y := fun h =>
   intensionality X Y (modal_K _ _ (nec% (coext_of_forall_eq X Y)) h)
 
+/-! ### Further laws of `□` and `◇`
+
+Laws the results use, with the closed propositional lemmas they necessitate. A lemma
+stating a broadly applicable property lives in the library, not beside the result that
+first needs it (`HANDOFF.md` §3). -/
+
+/-- `□¬p → ¬◇p`. -/
+theorem not_dia_of_box_not (p : Prop) : □ (¬ p) → ¬ ◇ p := fun h => (box_not_eq_not_dia p).mp h
+
+/-- `¬◇p → □¬p`. -/
+theorem box_not_of_not_dia (p : Prop) : ¬ ◇ p → □ (¬ p) := fun h => (box_not_eq_not_dia p).mpr h
+
+/-- `◇¬p` is `¬□p`. -/
+theorem dia_not_eq (p : Prop) : (◇ (¬ p)) = ¬ □ p := by
+  rw [dia_eq_not_box_not, not_not_eq]
+
+/-- `¬□q → ◇¬q`. -/
+theorem dia_not_of_not_box (q : Prop) : ¬ □ q → ◇ (¬ q) := fun h e =>
+  h ((not_not_eq q).symm.trans ((congrArg Not e).trans not_false_eq))
+
+/-- `□p → (¬p) = ⊥`. -/
+theorem not_eq_false_of_box (p : Prop) (h : □ p) : (¬ p) = False :=
+  (congrArg Not h).trans not_true_eq
+
+/-- `q ∧ ¬q` is impossible. -/
+theorem not_dia_and_not (q : Prop) : ¬ ◇ (q ∧ ¬ q) :=
+  fun h => h (propext ⟨fun hq => hq.2 hq.1, False.elim⟩)
+
+/-- `(w → q) → w → ◇q`. -/
+theorem imp_dia_of_imp (w q : Prop) : (w → q) → w → ◇ q := fun h hw => dia_intro q (h hw)
+
+/-- Closed lemma for Prior's argument: `◇(x ≠ y) → x ≠ y`, since `x = y` gives
+`□(x = y)` by NI and then `(x ≠ y) = False`. -/
+theorem ne_of_dia_ne {σ : Type} [Ty σ] (x y : σ) : ◇ (x ≠ y) → x ≠ y := fun hd hxy =>
+  hd (calc (x ≠ y) = ¬ (x = y) := rfl
+        _ = ¬ True := by rw [necessity_of_identity x y hxy]
+        _ = False := not_true_eq)
+
+/-- `◇∀x. Xx → ∀x. ◇Xx`: were some `Xx` identical to `⊥`, so would `∀x. Xx` be. -/
+theorem dia_forall_imp {σ : Type} [Ty σ] (X : σ → Prop) : ◇ (∀ x, X x) → ∀ x, ◇ (X x) :=
+  fun hd x hx => hd (calc (∀ u, X u) = (X x ∧ ∀ u, X u) := (and_forall_absorb_eq X x).symm
+      _ = (False ∧ ∀ u, X u) := by rw [hx]
+      _ = False := false_and_eq _)
+
+/-- `q` gives `p → q`. -/
+theorem imp_intro' (p q : Prop) : q → p → q := fun hq _ => hq
+
+/-- `□r` gives `□(q → r)`. -/
+theorem box_imp_of_box (q r : Prop) : □ r → □ (q → r) :=
+  modal_K _ _ (nec% (imp_intro' q r))
+
+/-- `□¬q` gives `□(q → r)`. -/
+theorem box_imp_of_box_not (q r : Prop) : □ (¬ q) → □ (q → r) :=
+  modal_K _ _ (nec% (fun (hn : ¬ q) (hq : q) => (hn hq).elim : ¬ q → q → r))
+
+/-- `□(p → q)` and `◇p` give `◇q`. -/
+theorem contra_imp (p q : Prop) : (p → q) → ¬ q → ¬ p := fun h hq hp => hq (h hp)
+
+/-- `□(p → q)` and `◇p` give `◇q`. -/
+theorem dia_mono (p q : Prop) : □ (p → q) → ◇ p → ◇ q := fun h hp hq =>
+  hp ((box_not_eq p).mp
+    (modal_K _ _ (modal_K _ _ (nec% (contra_imp p q)) h) ((box_not_eq q).mpr hq)))
+
+/-- `◇(p ∨ q)` gives `◇p ∨ ◇q`. -/
+theorem dia_or (p q : Prop) : ◇ (p ∨ q) → ◇ p ∨ ◇ q := fun h =>
+  (em (◇ p)).elim Or.inl fun hp => (em (◇ q)).elim Or.inr fun hq =>
+    (h (by
+      have hp' : p = False := (not_not_eq _).mp hp
+      have hq' : q = False := (not_not_eq _).mp hq
+      rw [hp', hq', or_self_eq])).elim
+
+/-- `◇p` and `□q` give `◇(p ∧ q)`. -/
+theorem dia_and_of_dia_box (p q : Prop) : ◇ p → □ q → ◇ (p ∧ q) := fun hp hq h =>
+  hp (calc p = (p ∧ True) := (and_true_eq p).symm
+    _ = (p ∧ q) := by rw [hq]
+    _ = False := h)
+
+/-- `◇◇p → ◇p`, by `4`. -/
+theorem dia_dia (p : Prop) : ◇ ◇ p → ◇ p := fun h =>
+  (em (◇ p)).elim id fun hn => (not_dia_of_box_not _ (modal_K _ _ (nec% (not_dia_of_box_not p))
+    (modal_four _ (box_not_of_not_dia p hn))) h).elim
+
+/-- With `ND`, an identity that is possible is true. -/
+theorem eq_of_dia_eq {σ : Type} [Ty σ] (nd : ∀ x y : σ, x ≠ y → □ (x ≠ y)) (a b : σ) :
+    ◇ (a = b) → a = b := fun hd =>
+  (em (a = b)).elim id fun hne => by
+    have h : □ (a ≠ b) := nd a b hne
+    have h' : (a = b) = False := by
+      rw [← box_not_eq]; exact h
+    exact (hd h').elim
+
+/-- With `BF`, `◇∃x. φx` gives `∃x. ◇φx`: otherwise `∀x. □¬φx`, so `□∀x. ¬φx`, which is
+`□¬∃x. φx`. -/
+theorem dia_exists_of_bf {σ : Type} [Ty σ] (bf : ∀ X : σ → Prop, (∀ x, □ (X x)) → □ (∀ x, X x))
+    (φ : σ → Prop) : ◇ (∃ x, φ x) → ∃ x, ◇ (φ x) := fun hd =>
+  (em (∃ x, ◇ (φ x))).elim id fun hn => by
+    have h1 : ∀ x, □ (¬ φ x) := fun x => by
+      rw [box_not_eq_not_dia]; exact fun h => hn ⟨x, h⟩
+    have h2 : □ (¬ ∃ x, φ x) := by
+      rw [not_exists_eq]; exact bf _ h1
+    rw [box_not_eq_not_dia] at h2
+    exact (h2 hd).elim
+
+/-- With `ND` and `NI`, `y ≠ x ∨ p = q` is necessary when true. -/
+theorem box_ne_or_eq {σ τ : Type} [Ty σ] [Ty τ] (nd : ∀ x y : σ, x ≠ y → □ (x ≠ y)) (y x : σ)
+    (p q : τ) : (y ≠ x ∨ p = q) → □ (y ≠ x ∨ p = q) := fun h => h.elim
+  (fun hne => modal_K _ _ (nec% (fun (h : y ≠ x) => (Or.inl h : y ≠ x ∨ p = q))) (nd y x hne))
+  (fun he => modal_K _ _ (nec% (fun (h : p = q) => (Or.inr h : y ≠ x ∨ p = q))) (necessity_of_identity p q he))
+
 end Classicism

@@ -285,11 +285,11 @@ Classicism/Core.lean                    e, em, e_exists, □ and ◇, the classe
 Classicism/Equivalence.lean             the gate, the nec% macro, tactic conventions
 Classicism/Booleanism.lean              the propositional and quantifier identities, pointwise
 Classicism/Identities.lean              the eleven closed identities in the paper's λ-form
-Classicism/Modal.lean                   K, T, 4, NI, CBF, Intensionality and its corollaries
+Classicism/Modal.lean                   K, T, 4, NI, CBF, Intensionality and its corollaries; the further laws of □ and ◇ the results use
 Classicism/Order.lean                   the algebraic order and its pointwise characterisation
 Classicism/Comprehension.lean           persistence, inextensibility and the rigidity variants
 Classicism/Pointwise.lean               the pointwise laws of ⊑ at a relational type, as a class
-Classicism/Lattice.lean                 Atom, the bounds LB/GLB/UB/LUB, ActualWorld, the order at t as identities
+Classicism/Lattice.lean                 Atom, the bounds LB/GLB/UB/LUB, ActualWorld; the order, atoms and bounds at t, at σ → t and at a relational type
 Classicism/Principles.lean              one Prop per principle of the map
 
 Classicism/Syntax/Types.lean            the types of R as an inductive, with type variables; closed types; σs ⇒* ρ

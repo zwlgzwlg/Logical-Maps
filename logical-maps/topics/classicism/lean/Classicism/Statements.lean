@@ -2170,6 +2170,22 @@ def symmetric_infinite_classes : Prop :=
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AtomicityT.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.schemaIn
 
+/-- `actual-profile-r`, form `single`
+
+Actual Profile ⇔ Single-argument form -/
+def actual_profile_r.single : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.ActualProfile.listSchemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.ActualProfile.schemaIn
+
+/-- `barcan-r`, form `list`
+
+BF ⇔ List form -/
+def barcan_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Barcan.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Barcan.listSchemaIn
+
 /-- `boolean-completeness-r`, form `lub`
 
 Boolean Completeness ⇔ LUB form -/
@@ -2177,5 +2193,149 @@ def boolean_completeness_r.lub : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ↔
       Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompletenessLUB.schemaIn
+
+/-- `broad-necessitism-r`, form `list`
+
+Broad Necessitism ⇔ List form -/
+def broad_necessitism_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BroadNecessitism.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BroadNecessitism.listSchemaIn
+
+/-- `converse-barcan-r`, form `list`
+
+CBF ⇔ List form -/
+def converse_barcan_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.ConverseBarcan.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.ConverseBarcan.listSchemaIn
+
+/-- `distinctness-necessary-r`, form `list`
+
+ND ⇔ List form -/
+def distinctness_necessary_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.listSchemaIn
+
+/-- `existence-r`, form `list`
+
+Existence ⇔ List form -/
+def existence_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Existence.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Existence.listSchemaIn
+
+/-- `functional-choice-r`, form `list`
+
+Functional Choice ⇔ List form -/
+def functional_choice_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.FunctionalChoice.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.FunctionalChoice.listSchemaIn
+
+/-- `functionality-r`, form `list`
+
+Functionality ⇔ List form -/
+def functionality_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Functionality.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Functionality.listSchemaIn
+
+/-- `identity-necessary-r`, form `list`
+
+NI ⇔ List form -/
+def identity_necessary_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfIdentity.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfIdentity.listSchemaIn
+
+/-- `modalized-functionality-r`, form `list`
+
+Modalized Functionality ⇔ List form -/
+def modalized_functionality_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.ModalizedFunctionality.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.ModalizedFunctionality.listSchemaIn
+
+/-- `necessary-barcan-r`, form `list`
+
+□BF ⇔ List form -/
+def necessary_barcan_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.listSchemaIn
+
+/-- `necessary-distinctness-necessary-r`, form `list`
+
+□ND ⇔ List form -/
+def necessary_distinctness_necessary_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecNecessityOfDistinctness.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecNecessityOfDistinctness.listSchemaIn
+
+/-- `necessary-functional-choice-r`, form `list`
+
+□Functional Choice ⇔ List form -/
+def necessary_functional_choice_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecFunctionalChoice.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecFunctionalChoice.listSchemaIn
+
+/-- `necessary-functionality-r`, form `list`
+
+□Functionality ⇔ List form -/
+def necessary_functionality_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecFunctionality.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecFunctionality.listSchemaIn
+
+/-- `necessary-plenitude-r`, form `list`
+
+□Plenitude ⇔ List form -/
+def necessary_plenitude_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecPlenitude.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecPlenitude.listSchemaIn
+
+/-- `necessary-relational-choice-r`, form `list`
+
+□Relational Choice ⇔ List form -/
+def necessary_relational_choice_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRelationalChoice.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRelationalChoice.listSchemaIn
+
+/-- `necessary-tractarianism-r`, form `list`
+
+□Tractarianism ⇔ List form -/
+def necessary_tractarianism_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecTractarianism.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecTractarianism.listSchemaIn
+
+/-- `plenitude-r`, form `list`
+
+Plenitude ⇔ List form -/
+def plenitude_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Plenitude.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Plenitude.listSchemaIn
+
+/-- `relational-choice-r`, form `list`
+
+Relational Choice ⇔ List form -/
+def relational_choice_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RelationalChoice.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RelationalChoice.listSchemaIn
+
+/-- `tractarianism-r`, form `list`
+
+Tractarianism ⇔ List form -/
+def tractarianism_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Tractarianism.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Tractarianism.listSchemaIn
 
 end Classicism.Statements

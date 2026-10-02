@@ -76,16 +76,18 @@ def proofsOf (cert : Name) (byName : Bool) : CommandElabM (Array Name) := do
     unless out.contains c do out := out.push c
   return out
 
-/-- The principles a generated statement is about: `P.X` for each `P.X.schemaIn` (or
-`P.X.listSchemaIn`) it mentions. -/
+/-- The definitions of the forms a generated statement relates: `P.X` for each
+`P.X.schemaIn` it mentions, and for each `P.X.listSchemaIn` the list form's definition by
+vectorization, `P.X.listQuoted`. -/
 def definitionsOf (stmt : Name) : CommandElabM (Array Name) := do
   let env ← getEnv
   let used := ((valueOf env stmt).map (·.getUsedConstants) |>.getD #[]).toList
   let mut out : Array Name := #[]
   for c in used do
     if let .str p s := c then
-      if (s == "schemaIn" || s == "listSchemaIn") && env.contains p && !out.contains p then
-        out := out.push p
+      let d := if s == "listSchemaIn" then p ++ `listQuoted else p
+      if (s == "schemaIn" || s == "listSchemaIn") && env.contains d && !out.contains d then
+        out := out.push d
   return out
 
 /-- A certificate's entry: where it is and what it rests on, and where its proofs are. -/

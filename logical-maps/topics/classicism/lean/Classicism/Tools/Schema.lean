@@ -338,6 +338,11 @@ syntax (name := classicismSchema) "#classicism_schema " ident+ : command
         if ← liftTermElabM (declareListForm n) then lists := lists + 1
       catch ex =>
         logError m!"{n}: no list form — {ex.toMessageData}"
+    -- each declaration made for `n` is located at `n` in the command, for links to it
+    for s in [`quoted, `reflect, `schema, `listQuoted, `listSchema, `listQuoted_single,
+        `schema_subset_listSchema, `listSchema_entails_schema] do
+      if (← getEnv).contains (n ++ s) then
+        addDeclarationRangesFromSyntax (n ++ s) id
   if withTy > 0 then
     logInfo m!"#classicism_schema: {lists} of {withTy} principles with a Ty-parameter have list forms"
 

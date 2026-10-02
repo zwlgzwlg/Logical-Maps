@@ -1003,4 +1003,86 @@ theorem boolean_completeness_r.lub : Statements.boolean_completeness_r.lub := by
   map_form Proofs.boolean_completeness_implies_lub_form.entails
     Proofs.lub_form_implies_boolean_completeness.entails
 
+
+/-- `barcan-r`, form `list`: the principle for every list of argument types. -/
+theorem barcan_r.list : Statements.barcan_r.list := by
+  map_form P.Barcan.schema_entails_listSchema P.Barcan.listSchema_entails_schema
+
+/-- `necessary-barcan-r`, form `list`: the principle for every list of argument types. -/
+theorem necessary_barcan_r.list : Statements.necessary_barcan_r.list := by
+  map_form P.NecBarcan.schema_entails_listSchema P.NecBarcan.listSchema_entails_schema
+
+/-- `tractarianism-r`, form `list`: the principle for every list of argument types. -/
+theorem tractarianism_r.list : Statements.tractarianism_r.list := by
+  map_form P.Tractarianism.schema_entails_listSchema P.Tractarianism.listSchema_entails_schema
+
+/-- `necessary-tractarianism-r`, form `list`: the principle for every list of argument types. -/
+theorem necessary_tractarianism_r.list : Statements.necessary_tractarianism_r.list := by
+  map_form P.NecTractarianism.schema_entails_listSchema P.NecTractarianism.listSchema_entails_schema
+
+/-- `distinctness-necessary-r`, form `list`: the principle for every list of argument types. -/
+theorem distinctness_necessary_r.list : Statements.distinctness_necessary_r.list := by
+  map_form P.NecessityOfDistinctness.schema_entails_listSchema P.NecessityOfDistinctness.listSchema_entails_schema
+
+/-- `necessary-distinctness-necessary-r`, form `list`: the principle for every list of argument types. -/
+theorem necessary_distinctness_necessary_r.list : Statements.necessary_distinctness_necessary_r.list := by
+  map_form P.NecNecessityOfDistinctness.schema_entails_listSchema P.NecNecessityOfDistinctness.listSchema_entails_schema
+
+/-- `existence-r`, form `list`: the principle for every list of argument types. -/
+theorem existence_r.list : Statements.existence_r.list := by
+  map_form P.Existence.schema_entails_listSchema P.Existence.listSchema_entails_schema
+
+/-- `functionality-r`, form `list`: the principle for every list of argument types. -/
+theorem functionality_r.list : Statements.functionality_r.list := by
+  map_form P.Functionality.schema_entails_listSchema P.Functionality.listSchema_entails_schema
+
+/-- `necessary-functionality-r`, form `list`: the principle for every list of argument types. -/
+theorem necessary_functionality_r.list : Statements.necessary_functionality_r.list := by
+  map_form P.NecFunctionality.schema_entails_listSchema P.NecFunctionality.listSchema_entails_schema
+
+/-- `functional-choice-r`, form `list`: the principle for every list of argument types. -/
+theorem functional_choice_r.list : Statements.functional_choice_r.list := by
+  map_form P.FunctionalChoice.schema_entails_listSchema P.FunctionalChoice.listSchema_entails_schema
+
+/-- `necessary-functional-choice-r`, form `list`: the principle for every list of argument types. -/
+theorem necessary_functional_choice_r.list : Statements.necessary_functional_choice_r.list := by
+  map_form P.NecFunctionalChoice.schema_entails_listSchema P.NecFunctionalChoice.listSchema_entails_schema
+
+/-- `relational-choice-r`, form `list`: the principle for every list of argument types. -/
+theorem relational_choice_r.list : Statements.relational_choice_r.list := by
+  map_form P.RelationalChoice.schema_entails_listSchema P.RelationalChoice.listSchema_entails_schema
+
+/-- `necessary-relational-choice-r`, form `list`: the principle for every list of argument types. -/
+theorem necessary_relational_choice_r.list : Statements.necessary_relational_choice_r.list := by
+  map_form P.NecRelationalChoice.schema_entails_listSchema P.NecRelationalChoice.listSchema_entails_schema
+
+/-- `plenitude-r`, form `list`: the principle for every list of argument types. -/
+theorem plenitude_r.list : Statements.plenitude_r.list := by
+  map_form P.Plenitude.schema_entails_listSchema P.Plenitude.listSchema_entails_schema
+
+/-- `necessary-plenitude-r`, form `list`: the principle for every list of argument types. -/
+theorem necessary_plenitude_r.list : Statements.necessary_plenitude_r.list := by
+  map_form P.NecPlenitude.schema_entails_listSchema P.NecPlenitude.listSchema_entails_schema
+
+/-- `actual-profile-r`, form `single`: Actual Profile at one argument; the map's official form is
+for every tuple. -/
+theorem actual_profile_r.single : Statements.actual_profile_r.single := by
+  map_form P.ActualProfile.listSchema_entails_schema P.ActualProfile.schema_entails_listSchema
+
+/-- `modalized-functionality-r`, form `list`: the principle for every list of argument types. -/
+theorem modalized_functionality_r.list : Statements.modalized_functionality_r.list := by
+  map_form P.ModalizedFunctionality.schema_entails_listSchema P.ModalizedFunctionality.listSchema_entails_schema
+
+/-- `converse-barcan-r`, form `list`: the principle for every list of argument types. -/
+theorem converse_barcan_r.list : Statements.converse_barcan_r.list := by
+  map_form P.ConverseBarcan.schema_entails_listSchema P.ConverseBarcan.listSchema_entails_schema
+
+/-- `identity-necessary-r`, form `list`: the principle for every list of argument types. -/
+theorem identity_necessary_r.list : Statements.identity_necessary_r.list := by
+  map_form P.NecessityOfIdentity.schema_entails_listSchema P.NecessityOfIdentity.listSchema_entails_schema
+
+/-- `broad-necessitism-r`, form `list`: the principle for every list of argument types. -/
+theorem broad_necessitism_r.list : Statements.broad_necessitism_r.list := by
+  map_form P.BroadNecessitism.schema_entails_listSchema P.BroadNecessitism.listSchema_entails_schema
+
 end Classicism.Map

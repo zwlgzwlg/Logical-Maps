@@ -182,7 +182,7 @@ def main() -> None:
         by_name = {pmap._lean_name(r): r for r in results}
         refs = {by_name[n]: f"Classicism.Map.{n}" for n in names if n in by_name}
         text = (HERE / "lean.yaml").read_text(encoding="utf-8")
-        head = text[: text.index("lean_ref:")]
+        head = text[: re.search(r"^lean_ref:", text, re.M).start()]
         body = "lean_ref:\n" + "".join(f"  {k}: {refs[k]}\n" for k in sorted(refs))
         (HERE / "lean.yaml").write_text(head + body, encoding="utf-8")
         print(f"lean_ref: {len(refs)} certificates")

@@ -1,6 +1,5 @@
 import Classicism.Paper
 import Classicism.Principles
-import Classicism.Pointwise
 
 /-!
 # Equivalent forms of the principles
@@ -25,29 +24,10 @@ open Classicism.P Classicism.Paper
 At any relational type, every property having a greatest lower bound and every property
 having a least upper bound come to the same thing: the least upper bound of `X` is the
 greatest lower bound of its upper bounds, and the greatest lower bound of `X` the least
-upper bound of its lower bounds. Only the order is used, reflexive and transitive. -/
+upper bound of its lower bounds (`lub_of_glb_ubs`, `glb_of_lub_lbs`, in `Lattice.lean`). -/
 
 section booleanCompleteness
 variable {τ : Type} [Rel τ] [Order τ] [Pointwise τ]
-
-/-- `≤` is reflexive at a relational type: `X ⊆ X` under the box. -/
-theorem le_refl_rel (x : τ) : x ≤ x :=
-  (le_iff _ _).2 (nec% (boxImp_refl x))
-
-/-- `≤` is transitive at a relational type: `⊆` is, under the box. -/
-theorem le_trans_rel (x y z : τ) (h₁ : x ≤ y) (h₂ : y ≤ z) : x ≤ z :=
-  (le_iff _ _).2 (modal_K _ _ (modal_K _ _ (nec% (boxImp_trans x y z))
-    ((le_iff _ _).1 h₁)) ((le_iff _ _).1 h₂))
-
-/-- The greatest lower bound of the upper bounds of `X` is a least upper bound of `X`. -/
-theorem lub_of_glb_ubs (X : τ → Prop) (y : τ) (hy : GLB y (λ z ↦ UB z X)) : LUB y X :=
-  fun z => ⟨fun hz => (hy y).2 (le_refl_rel y) z hz,
-    fun hyz x hx => le_trans_rel x y z ((hy x).1 fun w hw => hw x hx) hyz⟩
-
-/-- The least upper bound of the lower bounds of `X` is a greatest lower bound of `X`. -/
-theorem glb_of_lub_lbs (X : τ → Prop) (y : τ) (hy : LUB y (λ z ↦ LB z X)) : GLB y X :=
-  fun z => ⟨fun hz => (hy y).2 (le_refl_rel y) z hz,
-    fun hzy x hx => le_trans_rel z y x hzy ((hy x).1 fun w hw => hw x hx)⟩
 
 /-- Boolean Completeness, from its official (GLB) form to its LUB form. -/
 theorem boolean_completeness_implies_lub_form :

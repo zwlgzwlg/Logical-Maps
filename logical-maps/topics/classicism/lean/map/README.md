@@ -34,9 +34,9 @@ and, in the library:
 | file | what it is |
 | --- | --- |
 | `Classicism/Certified/Signatures.lean` | Each principle as a schema at every signature: `P.X.schemaIn`, `pureVersion`, `distinctnessC`, `possibilityC`. |
-| `Classicism/Statements.lean` | The generated statements: 216 of the 270 results (those whose principles all have a `lean_def`), 3 models, 1 form. Not edited by hand. |
+| `Classicism/Statements.lean` | The generated statements: 216 of the 270 results (those whose principles all have a `lean_def`), 3 models, 21 forms. Not edited by hand. |
 | `Classicism/Map.lean` | One certificate per result proved, named by its id, and per form, named `<principle>.<form>`, each of the generated type: the `lean_ref`s. Each is one line citing the proof. |
-| `Classicism/Results/Forms.lean` | The shallow proofs of the equivalences between a principle's forms, a section per principle. |
+| `Classicism/Results/Forms.lean` | The shallow proofs of the equivalences between a principle's forms, a section per principle (the list forms' are in `Results/Lists.lean`). |
 | `Classicism/Tools/MapIndex.lean` | `#classicism_map_index`, which writes `index.json`. |
 
 To regenerate, from `Cian/`:
@@ -110,8 +110,8 @@ With `index.json` it can link each result to its proof:
 - **Certificate**: the line in `Classicism/Map.lean`, with its axioms.
 
 and, on a principle's page, each form with its **definition** (beside the official one in
-`Principles.lean`), its **proofs** (the two directions, in `Results/Forms.lean`) and its
-**certificate**.
+`Principles.lean`, or for a list form its definition by vectorization, `P.X.listQuoted`),
+its **proofs** (in `Results/Forms.lean` or `Results/Lists.lean`) and its **certificate**.
 
 A link is a file and a line range, made into a URL by the map's build (a GitHub blob at a
 pinned commit, `#L2145-L2160`, or a rendered source page with line anchors). This needs a
@@ -130,9 +130,12 @@ small change to `pmap` and `viewer/template.html` in the map repository.
   principles, Witnessed Possibility and its kin, Separated Structure, the Necessity of
   Arithmetic and others), so 54 results have no statement. Of the 216 stated, 14 are not
   yet proved here.
-- **Forms.** One so far, the pilot: Boolean Completeness's LUB form. The list forms of the
-  25 principles with a type parameter are the natural next ones: 20 have both directions
-  proved (`P.X.listSchema_entails_schema`, `P.X.schema_entails_listSchema`).
+- **Forms.** 21: Boolean Completeness's LUB form, and the list forms of the 20 principles
+  with a type parameter whose two directions are proved (`P.X.listSchema_entails_schema`, by
+  inclusion; `P.X.schema_entails_listSchema`, `Results/Lists.lean`). For Actual Profile,
+  whose official form on the map is the list form, the form is the single-argument one.
+  Five principles with a list form lack the second direction: Transversal, Transversal
+  Choice, their boxed forms, and Modalized Plenitude.
 - **Models.** Three of the map's models get statements (`∃` a consistent `Ax` entailing what
   the model satisfies and not what it violates); none is certified yet.
 - **No Pure Contingency defined twice.** `npc Σ` (P → □P for each pure sentence of `Σ`'s

@@ -1129,6 +1129,33 @@ regenerated statements; their axioms are as before (193 on `propext` and `Quot.s
   in one direction only, the other needing every pure sentence of `Σ`'s language to come
   from the pure signature.
 
+## The library, and the list forms as forms, 2 October (later still)
+
+- **General lemmas moved to the library** (policy: `HANDOFF.md` §3). 49 lemmas stating
+  broadly applicable properties left the results files: 20 laws of `□` and `◇` (with the
+  closed propositional lemmas they necessitate) to `Modal.lean`, and 29 facts about the
+  order, atoms and bounds, at `t`, at `σ → t` and at a relational type, to `Lattice.lean`,
+  which now imports `Pointwise.lean`. Among them reflexivity and transitivity of `≤` at a
+  relational type and the GLB/LUB lemmas, from `Results/Forms.lean`. Closed one-step lemmas
+  shaped for one proof, and constructions particular to one, stay with their results.
+- **The list forms are forms**: the 20 principles whose list form is proved equivalent
+  to the restricted one get the list form on the map (Actual Profile, whose official form
+  is the list form, gets the single-argument form), with a certificate each in `Map.lean`.
+- **Generated declarations have locations**: `#classicism_schema` records, for each
+  declaration it makes for a principle (`P.X.quoted`, `P.X.listQuoted`, …), the position
+  of the principle's name in the command, so that the index can link a list form to its
+  definition.
+- **A fix**: `map/generate.py --refs` cut `map/lean.yaml` at the first `lean_ref:`, which
+  since the forms is inside a form; the file committed in 903b606 was damaged that way (the
+  form's `lean_ref` lost, the results' list under it). It now matches `lean_ref:` at the
+  start of a line, and the file is rebuilt.
+
+*Checked.* The full build passes. `Results/Records.lean`: 252 of 252 theorems pass the
+gate and type checks and are derived, 152 of 152 records certified, 70 of 74 in list form
+too, 251 of 252 transformed. `Modal.lean` 38 of 38 and `Lattice.lean` 47 of 47 theorems
+pass. `Results/Forms.lean`: 2 of 2. The 202 result certificates and 21 form certificates
+prove their generated statements; `scripts/MapIndex.lean` indexes all 223.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen
