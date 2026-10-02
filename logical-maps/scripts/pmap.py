@@ -67,6 +67,16 @@ def _schema(name: str):
     sch = json.loads((SCHEMA / f"{name}.schema.json").read_text(encoding="utf-8"))
     if name == "model":  # inline the certificate definition shared with results
         sch["properties"]["certificate"] = _schema("result")["properties"]["certificate"]
+    if name == "group":  # a criterion is an argument with conditions of application, and an author and date of its own
+        model = _schema("model")
+        criterion = json.loads(json.dumps(model["$defs"]["argument"]))
+        for key in ("provenance", "companion_id"):
+            criterion["properties"].pop(key, None)
+        criterion["properties"].update(sch["$defs"]["applies"]["properties"])
+        criterion["required"] = ["id", "by", "date"]
+        sch["$defs"]["criterion"] = criterion
+        sch["$defs"]["withdrawal"] = model["$defs"]["withdrawal"]
+        sch["properties"]["references"] = model["properties"]["references"]
     if name == "provenance":  # and the certificate and references a folded record had
         sch["properties"]["certificate"] = _schema("result")["properties"]["certificate"]
         sch["properties"]["references"] = _schema("model")["properties"]["references"]
@@ -84,6 +94,12 @@ def load_topic(topic_id: str) -> dict:
         sys.exit(f"no such topic: {topic_id} (expected {tdir / 'topic.yaml'})")
     topic = _load_yaml(tdir / "topic.yaml")
     principles, results = [], []
+    groups = []
+    for p in sorted((tdir / "groups").glob("*.yaml")):
+        d = _load_yaml(p)
+        d["_file"] = str(p.relative_to(ROOT))
+        groups.append(d)
+    groups_by_id = {g.get("id"): g for g in groups}
     for p in sorted((tdir / "principles").glob("*.yaml")):
         d = _load_yaml(p)
         d["_file"] = str(p.relative_to(ROOT))
@@ -97,11 +113,12 @@ def load_topic(topic_id: str) -> dict:
                 d["conclusion"] = FALSE
             if sub == "models" and is_argument_record(d):
                 d.setdefault("certificate", {}).setdefault("lean", "none")
-                sources.append(d)
-                flat = flatten_model(d)
+                full = expand_member(d, groups_by_id)  # a group's member gets its definition and criteria
+                sources.append(full)
+                flat = flatten_model(full, raw=d)
                 lst += flat
                 if not flat:  # a withdrawn construction: kept, and validated, but out of the engine
-                    retired.append({**d, "_source": d})
+                    retired.append({**full, "_source": d})
                 continue
             d.setdefault("status", "conjectured")
             d.setdefault("certificate", {}).setdefault("lean", "none")
@@ -115,7 +132,7 @@ def load_topic(topic_id: str) -> dict:
         provenance.append(d)
     papers = _load_yaml(tdir / "papers.yaml") if (tdir / "papers.yaml").exists() else {"papers": []}
     return {"topic": topic, "principles": principles, "results": results, "models": models, "paper_catalogue": papers, "papers": papers.get("papers", []) if isinstance(papers, dict) else [],
-            "model_sources": sources, "retired_models": retired, "provenance": provenance}
+            "model_sources": sources, "retired_models": retired, "provenance": provenance, "groups": groups}
 
 
 # ----------------------------------------------------------------------------
@@ -140,12 +157,90 @@ ARGUMENT_REASONS = ("text", "source", "writeup", "like")
 TIERS = ("bronze", "silver", "gold")
 
 
+# ----------------------------------------------------------------------------
+# Model groups
+# ----------------------------------------------------------------------------
+#
+# A group (groups/<id>.yaml) holds what a family of argument-format models would otherwise
+# copy: a definition with {{parameter}} slots that each member fills, named conditions stated
+# in prose, and criteria: arguments that apply to every member whose settings match `when`
+# and that meets every condition in `requires`. A member names its group and gives its
+# settings: for a parameter with named values, one of them or {text: ...} for prose of its
+# own; for a prose slot, the prose. Under `meets` it gives a reason for each condition it
+# claims. Nothing is inherited by default: a member gets only the criteria it matches.
+#
+# load_topic expands a member before flattening: its definition becomes the group's with the
+# slots filled, followed by its own if it has one, and the criteria that apply follow its own
+# arguments, so its own keep their positions. Each carries `group` and, if it requires any,
+# `conditions` with the member's reasons. The engine never sees a group, so upgrading a record
+# into one cannot change a verdict that the flattened lists do not change.
+
+import re as _re
+SLOT = _re.compile(r"\{\{\s*([a-z0-9]+(?:-[a-z0-9]+)*)\s*\}\}")
+
+
+def setting_text(group: dict, name: str, setting):
+    """The prose a member's setting puts in a slot, or None if it gives none."""
+    param = (group.get("parameters") or {}).get(name)
+    if not isinstance(param, dict):
+        return None
+    if isinstance(setting, dict):
+        return setting.get("text") if isinstance(setting.get("text"), str) else None
+    if not isinstance(setting, str):
+        return None
+    values = param.get("values")
+    if isinstance(values, dict):
+        return values.get(setting) if isinstance(values.get(setting), str) else None
+    return setting
+
+
+def criterion_applies(c: dict, rec: dict) -> bool:
+    """`when`: each named parameter is set to one of the listed values (a member's own prose
+    matches none); `requires`: the member meets each condition."""
+    settings = rec.get("settings") if isinstance(rec.get("settings"), dict) else {}
+    meets = rec.get("meets") if isinstance(rec.get("meets"), dict) else {}
+    for name, want in (c.get("when") or {}).items():
+        want = want if isinstance(want, list) else [want]
+        if not (isinstance(settings.get(name), str) and settings[name] in want):
+            return False
+    return all(cond in meets for cond in c.get("requires") or [])
+
+
+def expand_member(rec: dict, groups: dict) -> dict:
+    """A group member as the build sees it: the group's definition completed, and the criteria
+    that apply after its own arguments. Anything else is returned as it is."""
+    import copy
+    group = groups.get(rec.get("group"))
+    if not isinstance(group, dict):
+        return rec
+    out = dict(rec)
+    settings = rec.get("settings") if isinstance(rec.get("settings"), dict) else {}
+    meets = rec.get("meets") if isinstance(rec.get("meets"), dict) else {}
+    filled = SLOT.sub(lambda mt: setting_text(group, mt[1], settings.get(mt[1])) or mt[0], str(group.get("definition") or ""))
+    out["definition"] = "\n\n".join(x.strip() for x in (filled, rec.get("definition")) if isinstance(x, str) and x.strip())
+    conditions = {c.get("id"): c for c in group.get("conditions") or [] if isinstance(c, dict)}
+    criteria = []
+    for c in group.get("criteria") or []:
+        if not isinstance(c, dict) or not criterion_applies(c, rec):
+            continue
+        a = {k: copy.deepcopy(v) for k, v in c.items() if k not in ("when", "requires")}
+        a["group"] = group.get("id")
+        if c.get("requires"):
+            a["conditions"] = [{"id": k, "text": str((conditions.get(k) or {}).get("text", "")), "reason": meets.get(k)}
+                               for k in c["requires"]]
+        criteria.append(a)
+    out["arguments"] = list(rec.get("arguments") or []) + criteria
+    return out
+
+
 def is_argument_record(rec) -> bool:
     return isinstance(rec, dict) and ("arguments" in rec or "definition" in rec)
 
 
 def argument_label(a: dict, i: int) -> str:
-    """How messages name an argument: its id, else its position."""
+    """How messages name an argument: its id (a group's criterion as <group>#<id>), else its position."""
+    if isinstance(a, dict) and a.get("group") and isinstance(a.get("id"), str):
+        return f"{a['group']}#{a['id']}"
     return a["id"] if isinstance(a, dict) and isinstance(a.get("id"), str) else f"arguments[{i}]"
 
 
@@ -174,15 +269,16 @@ def companion_id(rec: dict) -> str:
     return kept[0] if kept else f"{rec.get('id')}-conjectured"
 
 
-def flatten_model(rec: dict) -> list[dict]:
+def flatten_model(rec: dict, raw: dict | None = None) -> list[dict]:
     """The engine's model records for one argument-format record: none when its construction
-    is withdrawn, the model alone, or the model and its conjectured companion."""
+    is withdrawn, the model alone, or the model and its conjectured companion. For a group's
+    member, rec is expanded and raw is the file as written, which validation checks."""
     import copy
     construction = rec.get("construction") if isinstance(rec.get("construction"), dict) else {}
     if construction.get("withdrawn"):
         return []
     base = {k: v for k, v in rec.items()}
-    base["_source"] = copy.deepcopy(rec)
+    base["_source"] = copy.deepcopy(raw if raw is not None else rec)
     established, conjectured = _live_arguments(rec, "established"), _live_arguments(rec, "conjectured")
     if construction.get("standing") == "conjectured":
         live = _live_arguments(rec)
@@ -1382,10 +1478,13 @@ def _argument_by_date(a: dict, rec: dict) -> tuple[str, str]:
 
 
 def _argument_target(data: dict, address: str):
-    """The argument that <record>#<id> names, or None."""
+    """The argument that <record>#<id> names, or the criterion that <group>#<id> names, or None."""
     rid, _, aid = address.partition("#")
     rec = next((s for s in data.get("model_sources", []) if s.get("id") == rid), None)
-    return next((a for _, a in _arguments(rec) if isinstance(a, dict) and a.get("id") == aid), None) if rec else None
+    if rec is not None:
+        return next((a for _, a in _arguments(rec) if isinstance(a, dict) and a.get("id") == aid and not a.get("group")), None)
+    group = next((g for g in data.get("groups", []) if g.get("id") == rid), None)
+    return next((c for c in group.get("criteria") or [] if isinstance(c, dict) and c.get("id") == aid), None) if group else None
 
 
 def provenance_records(side: dict) -> list:
@@ -1446,9 +1545,107 @@ def chain_md(chain: dict) -> str:
     return "; ".join(parts) + "."
 
 
-def argument_errors(data: dict, ids) -> list[str]:
-    """The errors of argument-format model records that need no engine."""
+def _argument_checks(a: dict, where: str, ids, papers, writeups: Path, data: dict) -> list[str]:
+    """What is wrong with one argument or criterion on its own."""
     errors = []
+    holds = a.get("holds") if isinstance(a.get("holds"), list) else []
+    fails = a.get("fails") if isinstance(a.get("fails"), list) else []
+    if not holds and not fails:
+        errors.append(f"{where}: settles nothing; give holds or fails")
+    if not any(a.get(k) for k in ARGUMENT_REASONS):
+        errors.append(f"{where}: gives no reason; give text, source, writeup or like")
+    for pid in holds + fails:
+        if pid not in ids:
+            errors.append(f"{where}: unknown principle '{pid}'")
+    if isinstance(a.get("source"), dict) and a["source"].get("paper") not in papers:
+        errors.append(f"{where}: unknown paper '{a['source'].get('paper')}'")
+    if a.get("writeup") and not (writeups / f"{a['writeup']}.md").exists():
+        errors.append(f"{where}: no write-up writeups/{a['writeup']}.md")
+    if a.get("like") and _argument_target(data, a["like"]) is None:
+        errors.append(f"{where}: like names no argument: '{a['like']}'")
+    if "adapt" in a and not a.get("like"):
+        errors.append(f"{where}: adapt is used only with like")
+    if a.get("standing", "established") != "conjectured":
+        for key in ("tier", "companion_id"):
+            if key in a:
+                errors.append(f"{where}: {key} is for conjectured arguments only")
+    return errors
+
+
+def group_errors(data: dict, ids) -> list[str]:
+    """The errors of groups, and of their members' group, settings and meets."""
+    errors = []
+    papers = {p.get("id") for p in data["papers"] if isinstance(p, dict)}
+    groups = {}
+    for g in data.get("groups", []):
+        f = g["_file"]
+        stem = Path(f).stem
+        if g.get("id") != stem:
+            errors.append(f"{f}: id '{g.get('id')}' must equal file stem '{stem}'")
+        groups[g.get("id")] = g
+        params = g.get("parameters") if isinstance(g.get("parameters"), dict) else {}
+        conditions = [c.get("id") for c in g.get("conditions") or [] if isinstance(c, dict)]
+        if len(conditions) != len(set(conditions)):
+            errors.append(f"{f}: duplicate condition id")
+        for slot in SLOT.findall(str(g.get("definition") or "")):
+            if slot not in params:
+                errors.append(f"{f}: the definition's slot {{{{{slot}}}}} is no parameter")
+        seen = set()
+        for c in g.get("criteria") or []:
+            if not isinstance(c, dict):
+                continue
+            where = f"{f}: {c.get('id', '?')}"
+            if c.get("id") in seen:
+                errors.append(f"{where}: duplicate criterion id")
+            seen.add(c.get("id"))
+            errors += _argument_checks(c, where, ids, papers, (ROOT / f).parent.parent / "writeups", data)
+            for name, want in (c.get("when") or {}).items():
+                values = (params.get(name) or {}).get("values") if isinstance(params.get(name), dict) else None
+                if not isinstance(values, dict):
+                    errors.append(f"{where}: when names '{name}', which is not a parameter with named values")
+                    continue
+                for v in want if isinstance(want, list) else [want]:
+                    if v not in values:
+                        errors.append(f"{where}: '{v}' is not a value of {name}")
+            for cond in c.get("requires") or []:
+                if cond not in conditions:
+                    errors.append(f"{where}: requires unknown condition '{cond}'")
+    for rec in data.get("model_sources", []):
+        if "group" not in rec:
+            for key in ("settings", "meets"):
+                if key in rec:
+                    errors.append(f"{rec['_file']}: {key} is only for a group's member")
+            continue
+        f, g = rec["_file"], groups.get(rec.get("group"))
+        if g is None:
+            errors.append(f"{f}: no group groups/{rec.get('group')}.yaml")
+            continue
+        params = g.get("parameters") if isinstance(g.get("parameters"), dict) else {}
+        settings = rec.get("settings") if isinstance(rec.get("settings"), dict) else {}
+        for name in settings:
+            if name not in params:
+                errors.append(f"{f}: setting '{name}' is not a parameter of {g.get('id')}")
+        for name in params:
+            if name not in settings:
+                errors.append(f"{f}: no setting for the parameter '{name}' of {g.get('id')}")
+            elif setting_text(g, name, settings[name]) is None:
+                values = (params[name] or {}).get("values") if isinstance(params[name], dict) else None
+                errors.append(f"{f}: setting '{name}' must be " + (f"one of {sorted(values)} or {{text: ...}}" if isinstance(values, dict) else "prose"))
+        conditions = {c.get("id") for c in g.get("conditions") or [] if isinstance(c, dict)}
+        for cond in (rec.get("meets") or {}):
+            if cond not in conditions:
+                errors.append(f"{f}: meets '{cond}', which is not a condition of {g.get('id')}")
+        own = {a.get("id") for a in rec.get("arguments") or [] if isinstance(a, dict) and a.get("id") and not a.get("group")}
+        for a in rec.get("arguments") or []:
+            if isinstance(a, dict) and a.get("group") and a.get("id") in own:
+                errors.append(f"{f}: argument id '{a['id']}' is also a criterion of {g.get('id')} that applies to it")
+    return errors
+
+
+def argument_errors(data: dict, ids) -> list[str]:
+    """The errors of argument-format model records that need no engine. A group's criteria are
+    checked once, in group_errors; here they count only towards a member's clashes."""
+    errors = group_errors(data, ids)
     papers = {p.get("id") for p in data["papers"] if isinstance(p, dict)}
     sidecars = {s.get("id"): s for s in data.get("provenance", [])}
     for rec in data.get("model_sources", []):
@@ -1461,31 +1658,14 @@ def argument_errors(data: dict, ids) -> list[str]:
             where = f"{f}: {argument_label(a, i)}"
             holds = a.get("holds") if isinstance(a.get("holds"), list) else []
             fails = a.get("fails") if isinstance(a.get("fails"), list) else []
-            if not holds and not fails:
-                errors.append(f"{where}: settles nothing; give holds or fails")
-            if not any(a.get(k) for k in ARGUMENT_REASONS):
-                errors.append(f"{where}: gives no reason; give text, source, writeup or like")
-            for pid in holds + fails:
-                if pid not in ids:
-                    errors.append(f"{where}: unknown principle '{pid}'")
-            if a.get("id") is not None:
-                if a["id"] in seen:
-                    errors.append(f"{where}: duplicate argument id")
-                seen.add(a["id"])
-            if isinstance(a.get("source"), dict) and a["source"].get("paper") not in papers:
-                errors.append(f"{where}: unknown paper '{a['source'].get('paper')}'")
-            if a.get("writeup") and not (writeups / f"{a['writeup']}.md").exists():
-                errors.append(f"{where}: no write-up writeups/{a['writeup']}.md")
-            if a.get("like") and _argument_target(data, a["like"]) is None:
-                errors.append(f"{where}: like names no argument: '{a['like']}'")
-            if "adapt" in a and not a.get("like"):
-                errors.append(f"{where}: adapt is used only with like")
-            if a.get("standing", "established") != "conjectured":
-                for key in ("tier", "companion_id"):
-                    if key in a:
-                        errors.append(f"{where}: {key} is for conjectured arguments only")
-            elif a.get("companion_id"):
-                companions.add(a["companion_id"])
+            if not a.get("group"):
+                errors += _argument_checks(a, where, ids, papers, writeups, data)
+                if a.get("id") is not None:
+                    if a["id"] in seen:
+                        errors.append(f"{where}: duplicate argument id")
+                    seen.add(a["id"])
+                if a.get("standing", "established") == "conjectured" and a.get("companion_id"):
+                    companions.add(a["companion_id"])
             if a.get("provenance"):
                 side = sidecars.get(a["provenance"])
                 if side is None:
@@ -1757,6 +1937,8 @@ def validate_topic(topic_id: str, *, quiet=False) -> bool:
     errors += argument_errors(data, ids)
     for side in data.get("provenance", []):
         check(_schema("provenance"), side, side["_file"])
+    for g in data.get("groups", []):
+        check(_schema("group"), g, g["_file"])
 
     if not errors:
         an = analyse(data)
@@ -1794,6 +1976,7 @@ def export_json(topic_id: str) -> dict:
         "results": [clean(r) | {"file": r["_file"]} for r in data["results"]],
         "models": [clean(m) | {"file": m["_file"]} for m in data["models"]],
         "provenance": [provenance_export(x) for x in data.get("provenance", [])],
+        "groups": [clean(g) | {"file": g["_file"]} for g in data.get("groups", [])],
         "generated": _dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds"),
         "progress": progress_report(data),
         # The viewer takes its top 30 after applying the shown-principle filter.
@@ -2053,7 +2236,12 @@ def argument_md(item: dict, data: dict, level: int = 3, link=lambda wid: f"[{wid
             if chain:  # the review's report covers the whole admission: it stays in the file
                 reasons.append(chain_md(chain))
             reasons.append(f"Provenance: `provenance/{a['provenance']}.yaml`.")
-        if a.get("id"):
+        if a.get("group"):
+            group = next((g for g in data.get("groups", []) if g.get("id") == a["group"]), {})
+            reasons.append(f"From the group *{group.get('name', a['group'])}*, criterion `{a['group']}#{a.get('id')}`.")
+            reasons += [f"It requires that {' '.join(str(c.get('text', '')).split())} Here: {' '.join(str(c.get('reason') or '').split())}"
+                        for c in a.get("conditions") or []]
+        elif a.get("id"):
             reasons.append(f"Address: `{item.get('companion_of') or item['id']}#{a['id']}`.")
         reasons.append(f"By {by}, {date}." if by else f"{date}.")
         out += ["*" + " ".join(reasons) + "*", ""]
@@ -2095,6 +2283,10 @@ def generate_writeup(item: dict, data: dict) -> str:
                     "its established verdicts together with those its conjectured arguments propose."]
         if (item.get("definition") or "").strip():
             out += ["", "## Definition", "", item["definition"].strip()]
+            group = next((g for g in data.get("groups", []) if g.get("id") == item.get("group")), None)
+            if group:
+                out += ["", f"*A member of the group {group.get('name', group['id'])}, which supplies this definition "
+                        "with the record's settings, and the arguments marked as its criteria.*"]
         if "arguments" in item:
             out += ["", "## Arguments", ""] + argument_md(item, data)
     else:
@@ -3497,8 +3689,74 @@ def _selftest_arguments():
         and any("a record has two entries" in e for e in errors), errors
 
 
+def _selftest_groups():
+    """Expansion and validation of a group's members."""
+    import copy
+    group = {"id": "g", "name": "G", "_file": "topics/t/groups/g.yaml",
+             "definition": "Arrows: {{monoid}}. Shared text. {{sigma}}",
+             "parameters": {"monoid": {"text": "The monoid."},
+                            "sigma": {"text": "Σ.", "values": {"top": "Σ is top.", "atom": "Σ is an atom."}}},
+             "conditions": [{"id": "perturbable", "text": "Some arrow perturbs."}],
+             "criteria": [{"id": "always", "holds": ["a"], "text": "Always.", "by": "X", "date": "2026-02-01"},
+                          {"id": "top", "fails": ["c"], "when": {"sigma": "top"}, "text": "Top.", "by": "X", "date": "2026-02-01"},
+                          {"id": "either", "holds": ["e"], "when": {"sigma": ["top", "atom"]}, "text": "Either.", "by": "X", "date": "2026-02-01"},
+                          {"id": "perturbed", "fails": ["d"], "requires": ["perturbable"], "text": "Perturbed.", "by": "Y", "date": "2026-02-02"}]}
+    cert = {"source_id": "misc", "produced_by": "A", "date": "2026-01-01", "lean": "none"}
+    rec = {"id": "m", "name": "M", "certificate": cert, "sources": ["S"], "_file": "topics/t/models/m.yaml",
+           "group": "g", "settings": {"monoid": "the truncations", "sigma": "top"}, "meets": {"perturbable": "g_n does."},
+           "definition": "Own text.", "arguments": [{"holds": ["b"], "text": "Own."}]}
+    raw = copy.deepcopy(rec)
+    full = expand_member(rec, {"g": group})
+    assert rec == raw, "expansion leaves the record as written"
+    assert full["definition"] == "Arrows: the truncations. Shared text. Σ is top.\n\nOwn text.", full["definition"]
+    assert [a.get("id") for a in full["arguments"]] == [None, "always", "top", "either", "perturbed"], "own first, then criteria"
+    assert all(a["group"] == "g" for a in full["arguments"][1:]) and "when" not in full["arguments"][2]
+    assert full["arguments"][4]["conditions"] == [{"id": "perturbable", "text": "Some arrow perturbs.", "reason": "g_n does."}]
+    assert argument_label(full["arguments"][4], 4) == "g#perturbed"
+    [m] = flatten_model(full, raw=rec)
+    assert (m["satisfies"], m["violates"]) == (["b", "a", "e"], ["c", "d"]) and m["_source"] == raw
+    # A member's own prose for a parameter matches no `when`; not meeting a condition loses its criterion.
+    other = {**rec, "settings": {"monoid": "permutations", "sigma": {"text": "Σ is contingent."}}, "meets": {}}
+    full2 = expand_member(other, {"g": group})
+    assert [a.get("id") for a in full2["arguments"]] == [None, "always"] and full2["definition"].startswith("Arrows: permutations. Shared text. Σ is contingent.")
+    assert expand_member({**rec, "group": "nowhere"}, {"g": group}) == {**rec, "group": "nowhere"}
+    # Schemas: a member may leave its definition to the group; settings need a group.
+    V = jsonschema.Draft202012Validator(_schema("model"))
+    clean = lambda d: {k: v for k, v in d.items() if not k.startswith("_")}
+    member = {k: v for k, v in clean(rec).items() if k != "definition"}
+    assert V.is_valid(member), list(V.iter_errors(member))
+    assert not V.is_valid({k: v for k, v in member.items() if k != "group"})
+    G = jsonschema.Draft202012Validator(_schema("group"))
+    assert G.is_valid(clean(group)), list(G.iter_errors(clean(group)))
+    assert not G.is_valid({**clean(group), "criteria": [{"id": "x", "holds": ["a"], "text": "t"}]}), "a criterion needs by and date"
+    assert not G.is_valid({**clean(group), "criteria": [{**group["criteria"][0], "provenance": "p"}]})
+    # Validation: criteria once, in the group; members' settings and meets.
+    data = {"principles": [{"id": x} for x in "abcde"], "results": [], "papers": [], "provenance": [], "groups": [group],
+            "models": [m], "model_sources": [full]}
+    assert argument_errors(data, set("abcde")) == [], argument_errors(data, set("abcde"))
+    bad_group = {**group, "definition": "{{monoid}} {{colour}}",
+                 "criteria": group["criteria"] + [{"id": "always", "holds": ["zz"], "when": {"monoid": "x", "sigma": "bottom"},
+                                                   "requires": ["nowhere"], "text": "t", "by": "X", "date": "2026-02-01"}]}
+    bad = {**rec, "settings": {"monoid": "x", "sigma": "bottom", "colour": "red"}, "meets": {"elsewhere": "?"},
+           "arguments": [{"id": "always", "holds": ["b"], "text": "Clash."}]}
+    data = {**data, "groups": [bad_group], "model_sources": [expand_member(bad, {"g": bad_group}), {**rec, "id": "n", "group": "nowhere"},
+                                                            {"id": "o", "_file": "topics/t/models/o.yaml", "settings": {}, "arguments": []}]}
+    errors = argument_errors(data, set("abcde"))
+    for want in ("slot {{colour}} is no parameter", "always: duplicate criterion id", "unknown principle 'zz'",
+                 "when names 'monoid', which is not a parameter with named values", "'bottom' is not a value of sigma",
+                 "requires unknown condition 'nowhere'", "setting 'colour' is not a parameter", "setting 'sigma' must be one of",
+                 "meets 'elsewhere', which is not a condition", "no group groups/nowhere.yaml", "settings is only for a group's member"):
+        assert any(want in e for e in errors), (want, errors)
+    clash = {**rec, "arguments": [{"id": "always", "holds": ["b"], "text": "Clash."}, {"fails": ["a"], "text": "No."}]}
+    errors = argument_errors({**data, "groups": [group], "model_sources": [expand_member(clash, {"g": group})]}, set("abcde"))
+    assert any("argument id 'always' is also a criterion of g" in e for e in errors), errors
+    assert any("'a' both holds (arguments: g#always) and fails (arguments: arguments[1])" in e for e in errors), errors
+    assert _argument_target({"model_sources": [], "groups": [group]}, "g#top") is group["criteria"][1]
+
+
 def selftest():
     _selftest_arguments()
+    _selftest_groups()
     P = lambda i: {"id": i, "name": i}
     R = lambda i, prem, c: {"id": i, "premises": prem, "conclusion": c, "status": "proved", "certificate": {"provenance": "human", "lean": "none"}}
     M = lambda i, sat, viol: {"id": i, "satisfies": sat, "violates": viol, "status": "proved", "certificate": {"provenance": "human", "lean": "none"}}
