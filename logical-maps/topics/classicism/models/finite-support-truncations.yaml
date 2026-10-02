@@ -36,32 +36,32 @@ settings:
     Proposition D.5, part 6 (p. 78): the arrows are the identity and the truncations $g_n$,
     $g_nm=\min\{m,n\}$, which compose as $g_n\circ g_m=g_{\min\{n,m\}}$.
   sigma: top
+
 meets:
   evens-avoidable: >-
     With $N_0\subseteq[0,M_0]$: $i:=g_n$ with $n\ge M_0$, an even $b>n$, and $N^{\prime}:=[0,n+1]$:
     the only arrow agreeing with $g_n$ on $[0,n+1]$ is $g_n$ itself, whose range $[0,n]$ omits $b$.
+  pinned-atoms: >-
+    Every nonempty proposition contains some $g_n$, and each $\{g_n\}$ is pinned down by a finite
+    set ($\{n-1,n,n+1\}$ for $n>0$, $\{0,1\}$ for $n=0$).
+  unbounded-haecceities: >-
+    With $A:=\mathbb N$: the strongest persistent property with extension $\mathbb N$ pinned down
+    by $\{0,\ldots,n\}$ becomes ever stronger.
+  no-least-pinned-cover: >-
+    Let $F$ be the family of singletons $\{g_n\}$ for even $n$. A superset of $\bigcup F$ pinned
+    down by $\{0,\ldots,N\}$ contains, with any $g_m$ for $m\ge N$, every arrow agreeing with it on
+    $\{0,\ldots,N\}$, so the least one is $\bigcup F\cup\{1_{\mathbb N}\}\cup\{g_m : m\ge N\}$,
+    which strictly shrinks as $N$ grows.
 
 arguments:
 
-# migration (2 October): these arguments moved to the group finite-support-one-object, whose
-# shared arguments no-pure-contingency, axiom-of-infinity, sigma-top, countable-boolean-completeness,
-# transversal-choice, weakly-inextensible-comprehension apply here; the Relational Choice argument
-# went, Relational Choice now following from Transversal Choice; its Weakly Inextensible
-# Comprehension argument is the group's, with the witness under `meets`.
-
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first.
-
-# --- from the source (17 Sep record) ---
-
-# migration: the next three texts are verdict clauses of the old description, without their
-# lead-ins ("Atomicity holds because", "Actuality fails because", "Boolean Completeness fails
-# because"), with the first word capitalised and a closing semicolon made a full stop.
-
-- holds: [atomicity-r]
-  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(6), p. 78'}
-  text: >-
-    Every nonempty proposition contains some $g_n$ and each $\{g_n\}$ is pinned down by a finite
-    set ($\{n-1,n,n+1\}$ for $n>0$, $\{0,1\}$ for $n=0$).
+# Rewritten at Cian Dorr's direction on 2 October 2026 (Claude Opus 5.5): every argument this
+# record shared in substance with another member is now a shared argument of the group
+# finite-support-one-object, with this record's witness under `meets`; second arguments for a
+# verdict already argued (the trawl's, among them) were dropped. What follows is this record's own.
+# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
+# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
+# holds, fails, by and date.
 
 - id: actuality
   fails: [actuality]
@@ -70,17 +70,7 @@ arguments:
     The strongest true proposition pinned down by $\{0,\ldots,n\}$ is
     $\{1_{\mathbb N}\}\cup\{g_m:m\ge n\}$, ever stronger as $n$ grows.
 
-- fails: [boolean-completeness-r]
-  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(6), p. 78'}
-  text: >-
-    The strongest persistent property with extension $\mathbb N$ pinned down by
-    $\{0,\ldots,n\}$ becomes ever stronger.
-
-# --- later additions ---
-
 - holds: [distinctness-preserving-collapse]
-  # migration: the lead-in "Distinctness-preserving collapse holds:" is dropped and "for"
-  # capitalised.
   by: Claude Fable 5.1 (Anthropic)
   date: '2026-09-23'
   text: >-
@@ -90,33 +80,10 @@ arguments:
     $g_m$ with $m\le n$, so $\Diamond q$ holds at $g_n$ only if $n\ge N$, and then $g_n$ agrees
     with the identity on the pinning set of $p$ and is in $p$.
 
-- fails: [boolean-completeness-t]
-  # migration: the first sentence rewrites "Boolean Completeness fails at type $t$ as well, which
-  # the source (n. 92) conjectures but does not show."; the closing "Observation of Claude Fable
-  # 5.1 (Anthropic), 23 September 2026, prompted by Cian Dorr; not in the source." becomes
-  # `by` and `date`.
-  by: Claude Fable 5.1 (Anthropic), prompted by Cian Dorr
-  date: '2026-09-23'
-  text: >-
-    The source (n. 92) conjectures this but does not show it. Let $X$ be the family of
-    singletons $\{g_n\}$ for even $n$. An upper bound of $X$ pinned down by $\{0,\ldots,N\}$
-    contains, with any $g_m$ for $m\ge N$, every arrow agreeing with it on $\{0,\ldots,N\}$, so
-    the least upper bound pinned down by that set is
-    $X\cup\{1_{\mathbb N}\}\cup\{g_m : m\ge N\}$, which strictly shrinks as $N$ grows; hence $X$
-    has no least upper bound. $X$ is the extension of an element of the domain at type
-    $t\to t$: the profile $\Phi\langle h,p\rangle:=\{i : i^tp\in X\}$ satisfies the coherence
-    condition $i^t\Phi\langle h,p\rangle=\Phi\langle i\circ h,i^tp\rangle$, and each of its
-    values is pinned down by a finite set, the value at $\{g_n\}$ being
-    $\{1_{\mathbb N}\}\cup\{g_m : m>n\}$, pinned down by $\{0,\ldots,n+1\}$, and the value at
-    other propositions being computed likewise from the truncation order.
-
-# migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
-# the sentence that followed the Σ argument (sigma-top), referring to its failures; and the
-# parenthesis that closed its Weakly Inextensible Comprehension argument, now the group's (2 October).
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
-  identifies its evaluation point; construction and verification are given at the PDF locations
-  in References. Everything that implies these fails with them. Even the universal property has no
+  identifies its evaluation point; construction and verification are given at the PDF locations in
+  References. Everything that implies these fails with them. Even the universal property has no
   inextensible coextension, since $\operatorname{Inextensible}(\top_{et})$ unfolds to $\Box$BF at
   type $e$.
 

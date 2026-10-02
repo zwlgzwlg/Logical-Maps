@@ -30,31 +30,36 @@ settings:
     individual $n$ plays the role actually played by $hn$, and the roles can be redistributed in any
     way.
   sigma: top
+
 meets:
   evens-avoidable: >-
     Let $i$ swap an even $b$ and an odd $o$, both outside $N_0$, and let $N^{\prime}:=\{o\}$: an
     arrow agreeing with $i$ on $\{o\}$ sends $o$ to $b$, so, being injective, it sends no even
     number to $b$.
+  unbounded-haecceities: >-
+    With $A$ the even numbers, the part 2 argument transfers: the strongest persistent property
+    pinned down by a finite $X$ whose extension contains the even numbers has, at an arrow $h$, the
+    extension $h(X\cap\text{evens})\cup(\mathbb N\setminus hX)$, which strictly shrinks as $X$
+    grows.
+  no-least-pinned-cover: >-
+    Let $F$ be the family of propositions $A_m$ ($m\ge1$), each pinned down by $\{0,m\}$, that the
+    permutation swaps $0$ and $m$. A permutation $\pi$ belongs to the least superset of $\bigcup F$
+    pinned down by $S=\{0,\ldots,N\}$ iff either $\pi(0)\in S\setminus\{0\}$ and $\pi(\pi(0))=0$,
+    or $\pi(0)\notin S$ and $0\notin\pi(S)$; the $3$-cycle $(0\ N{+}1\ N{+}2)$ satisfies the second
+    clause for $S$ but neither clause for $\{0,\ldots,N+1\}$, so these supersets strictly shrink.
 
 arguments:
 
-# migration (2 October): these arguments moved to the group finite-support-one-object, whose
-# shared arguments no-pure-contingency, axiom-of-infinity, sigma-top, countable-boolean-completeness,
-# transversal-choice apply here; the Relational Choice argument went, Relational Choice now
-# following from Transversal Choice; its own Weakly Inextensible Comprehension argument stays, a
-# second route that also covers type $t\to t$; its Σ argument was the group's sigma-top, reworded.
-
+# Rewritten at Cian Dorr's direction on 2 October 2026 (Claude Opus 5.5): every argument this
+# record shared in substance with another member is now a shared argument of the group
+# finite-support-one-object, with this record's witness under `meets`; second arguments for a
+# verdict already argued (the trawl's, among them) were dropped. What follows is this record's own.
 # Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
 # naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
-
-# --- from the source (17 Sep record) ---
+# holds, fails, by and date.
 
 - holds: [distinctness-necessary-r, atomlessness]
   source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(1), pp. 75–76'}
-
-# --- later additions ---
 
 - holds: [no-contingency-signature-r]
   # migration: `by` adds "at Cian Dorr’s request" from the change's summary.
@@ -68,44 +73,21 @@ arguments:
     whichever is true is necessary by No Pure Contingency, and instantiation under the box gives
     $\Box P(d,\ldots,d)$ or $\Box\neg P(d,\ldots,d)$.
 
-- fails: [boolean-completeness-r]
-  # migration: `by` and `date` are those of the 23 September change that added Countable Boolean
-  # Completeness; the commit that made it added this text.
-  # Recorded although the other verdicts give it: the Countable Boolean Completeness argument builds
-  # on this one.
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Through C5 and the failure of Actuality (Propositions 2.5–2.6), which gives nothing about
-    countable families; but the part 2 argument transfers: the strongest persistent property
-    pinned down by a finite $X$ whose extension contains the even numbers has, at an arrow $h$,
-    the extension $h(X\cap\text{evens})\cup(\mathbb N\setminus hX)$, which strictly shrinks as $X$
-    grows, so the haecceities of the even numbers have no least upper bound.
-
 - fails: [weakly-inextensible-comprehension-r]
-  # migration: the closing "Observations of 23 September 2026, answering …, in the simpler form and
-  # with the type-$(t\to t)$ instance of 25 September 2026." becomes `by`, `date` and the revision,
-  # whose note is the 25 September change.
-  # Recorded although the other verdicts give it: the argument for Weakly Inextensible Comprehension
-  # in finite-support-two-object-all-maps refers to this one.
+  # Recorded although the group's shared argument gives the verdict at type e→t: this one shows the
+  # failure at type t→t, and the argument for Weakly Inextensible Comprehension in
+  # finite-support-two-object-all-maps refers to it.
   by: Claude Fable 5.1 (Anthropic), answering Cian Dorr’s question whether the failure of
     Actuality can be sharpened to a failure of Inextensible Comprehension
   date: '2026-09-23'
   text: >-
-    At type $e\to t$, for the property of being even, which is in the domain as the constant
-    intension, pinned down by $\emptyset$; indeed no coextension $Y$ is even weakly inextensible,
-    so Weakly Inextensible Comprehension fails too. For an odd $o$, the property of being distinct
-    from $o$ is necessarily true of each even number, as permutations never collapse two
-    individuals; so weak inextensibility would give $Y\le\lambda x\, .\,x\ne o$ for every odd $o$,
-    and the extension of $Y$ at every arrow $h$ would lie within $h(\text{evens})$. But if $Y$ is
-    pinned down by the finite set $S$, a permutation $h$ fixing $S$ pointwise has $h\cdot Y=Y$, so
-    the extension of $Y$ at $h$ is the evens, and $h$ may swap an even and an odd number outside
-    $S$. Both fail at type $t\to t$ as well, for the family $E$ of propositions $p_n$ that $n$ is
-    fixed: for $Y$ weakly inextensible with extension $E$ pinned down by $S$, pick $k\notin S$ and
-    let $X$, pinned down by $S_X:=S\cup\{k\}$, hold at an arrow $h$ exactly of the propositions
-    $\{i : i(m)=n\}$ with $n\notin S_X$ and of the propositions $\{i : i(h(n))=n\}$ with $n\in
-    S_X$; $X$ is necessary of every $p_n$, but at a permutation $h$ fixing $S$ pointwise and
-    moving $k$ its extension omits $p_k$, which the extension of $Y$ at $h$ contains.
+    At type $t\to t$, for the family $E$ of propositions $p_n$ that $n$ is fixed: for $Y$ weakly
+    inextensible with extension $E$ pinned down by $S$, pick $k\notin S$ and let $X$, pinned down
+    by $S_X:=S\cup\{k\}$, hold at an arrow $h$ exactly of the propositions $\{i : i(m)=n\}$ with
+    $n\notin S_X$ and of the propositions $\{i : i(h(n))=n\}$ with $n\in S_X$; $X$ is necessary
+    of every $p_n$, but at a permutation $h$ fixing $S$ pointwise and moving $k$ its extension
+    omits $p_k$, which the extension of $Y$ at $h$ contains. Inextensible Comprehension fails
+    with it.
   revisions:
   - date: '2026-09-25'
     by: Claude Opus 5.5 (Anthropic)
@@ -113,35 +95,17 @@ arguments:
       Merged the two sets of arguments recorded on 23 and 25 September into one: the simpler 25
       September argument for Inextensible Comprehension, which also refutes the weak form,
       replaces the 23 September one.
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      Cut to its type $t\to t$ part; the type $e\to t$ part duplicated the group's shared argument
+      weakly-inextensible-comprehension, which applies here.
 
-- fails: [boolean-completeness-t]
-  # migration: the first sentence rewrites "Boolean Completeness fails at type $t$ as well, which
-  # the source (n. 92) conjectures but does not show."; the closing "Observation of Claude Fable 5.1
-  # (Anthropic), 25 September 2026; not in the source." becomes `by` and `date`.
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-25'
-  text: >-
-    The source (n. 92) conjectures this but does not show it. Any set $F$ of propositions is the
-    extension at the identity of an element of the domain at type $t\to t$, namely the profile
-    $\langle h,p\rangle\mapsto\{i : i\cdot p\in F\}$: it is natural, independent of $h$ and so
-    pinned down by the empty set, and each of its values is pinned down by the pinning set of $p$,
-    since $i\cdot p$ depends only on the values of $i$ there. A least upper bound of $F$ under
-    entailment is a least finitely pinned superset of $\bigcup F$, and it exists only if the least
-    $S$-pinned superset of $\bigcup F$ stops shrinking as the finite set $S$ grows. Here let $A_m$
-    ($m\ge1$) be the proposition, pinned down by $\{0,m\}$, that the permutation swaps $0$ and
-    $m$. A permutation $\pi$ belongs to the least superset of $\bigcup_mA_m$ pinned down by
-    $S=\{0,\ldots,N\}$ iff either $\pi(0)\in S\setminus\{0\}$ and $\pi(\pi(0))=0$, or
-    $\pi(0)\notin S$ and $0\notin\pi(S)$; the $3$-cycle $(0\ N{+}1\ N{+}2)$ satisfies the second
-    clause for $S$ but neither clause for $\{0,\ldots,N+1\}$, so these supersets strictly shrink.
-    So $F$ has no least upper bound, and, taking pointwise negations, the family of complements
-    has no greatest lower bound.
-
-# migration: text of the old notes that no argument holds, verbatim: their first two sentences. The
-# argument for the failure of the Distinctness-preserving collapse, now derived, is dropped.
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
   identifies its evaluation point; construction and verification are given at the PDF locations in
-  References.
+  References. The source derives the failure of Boolean Completeness through C5 and the failure of Actuality
+  (Propositions 2.5–2.6), which gives nothing about countable families.
 
 was_conjectured: true
 

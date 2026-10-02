@@ -38,6 +38,7 @@ settings:
     package, and restricts to the monotone ones to make the failure of Boolean Completeness easier
     to exhibit).
   sigma: top
+
 meets:
   evens-avoidable: >-
     With $N_0\subseteq[0,M_0]$: $i$ the monotone surjection that is the identity on $[0,M_0+1]$,
@@ -45,45 +46,36 @@ meets:
     preimage under $i$ is the odd $b+1$; and $N^{\prime}:=[0,b+2]$: a monotone map agreeing with $i$
     there has the same preimages of $b$ within $[0,b+2]$ and takes values at least $i(b+2)=b+1$
     beyond it.
+  surjective: >-
+    The arrows are the monotone surjections.
+  unbounded-haecceities: >-
+    With $A$ the even numbers: the strongest persistent property containing them and pinned down by
+    $\{0,\ldots,n\}$ becomes strictly stronger as $n$ grows.
+  no-least-pinned-cover: >-
+    Let $F$ be the family of propositions $A_m$ ($m\ge1$), each pinned down by $\{2m-1,2m\}$, that
+    the arrow sends $2m-1$ to $0$ and $2m$ to $1$, so that its first step is at the even position
+    $2m$. The least superset of $\bigcup F$ pinned down by $\{0,\ldots,N\}$ consists of the arrows
+    whose first step is at an even position or beyond $N$, and it strictly shrinks as $N$ grows.
 
 arguments:
 
-# migration (2 October): these arguments moved to the group finite-support-one-object, whose
-# shared arguments no-pure-contingency, axiom-of-infinity, sigma-top, countable-boolean-completeness,
-# transversal-choice, weakly-inextensible-comprehension apply here; the Relational Choice argument
-# went, Relational Choice now following from Transversal Choice; its Weakly Inextensible
-# Comprehension argument is the group's, with the witness under `meets`.
-
+# Rewritten at Cian Dorr's direction on 2 October 2026 (Claude Opus 5.5): every argument this
+# record shared in substance with another member is now a shared argument of the group
+# finite-support-one-object, with this record's witness under `meets`; second arguments for a
+# verdict already argued (the trawl's, among them) were dropped. What follows is this record's own.
 # Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
 # naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
-
-# --- from the source (17 Sep record) ---
+# holds, fails, by and date.
 
 - fails: [distinctness-necessary-r]
   source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(2), pp. 76–77'}
   text: >-
     At the non-injective arrows.
 
-- holds: [barcan-r]
-  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(2), pp. 76–77'}
-  text: >-
-    By Proposition D.6 since every arrow is a surjection.
-
 - holds: [atomlessness]
   source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(2), pp. 76–77'}
   text: >-
     As in part 1.
-
-- fails: [boolean-completeness-r]
-  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(2), pp. 76–77'}
-  text: >-
-    At type $e\to t$ because the haecceities of the even numbers have no least upper bound, the
-    strongest persistent property containing them and pinned down by $\{0,\ldots,n\}$ becoming
-    strictly stronger as $n$ grows.
-
-# --- later additions ---
 
 - holds: [distinctness-preserving-collapse]
   by: Claude Fable 5.1 (Anthropic)
@@ -95,42 +87,6 @@ arguments:
     moved point $m\le N$, has $hm<m$ by monotone surjectivity and so collapses $m-1$ and $m$; then
     no $k\circ h$ can fix both, so $\Diamond q$ fails at $h$. Hence $\Box(\Diamond q\to p)$.
 
-- fails: [boolean-completeness-t]
-  # migration: the first sentence rewrites "Boolean Completeness fails at type $t$ as well, which
-  # the source (n. 92) conjectures but does not show."; the closing "Observation of Claude Fable 5.1
-  # (Anthropic), 25 September 2026; not in the source." becomes `by` and `date`.
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-25'
-  text: >-
-    The source (n. 92) conjectures this but does not show it. Any set $F$ of propositions is the
-    extension at the identity of an element of the domain at type $t\to t$, namely the profile
-    $\langle h,p\rangle\mapsto\{i : i\cdot p\in F\}$: it is natural, independent of $h$ and so
-    pinned down by the empty set, and each of its values is pinned down by the pinning set of $p$,
-    since $i\cdot p$ depends only on the values of $i$ there. A least upper bound of $F$ under
-    entailment is a least finitely pinned superset of $\bigcup F$, and it exists only if the least
-    $S$-pinned superset of $\bigcup F$ stops shrinking as the finite set $S$ grows. Here let $A_m$
-    ($m\ge1$) be the proposition, pinned down by $\{2m-1,2m\}$, that the arrow sends $2m-1$ to $0$
-    and $2m$ to $1$, so that its first step is at the even position $2m$. The least superset of
-    $\bigcup_mA_m$ pinned down by $\{0,\ldots,N\}$ consists of the arrows whose first step is at
-    an even position or beyond $N$, and it strictly shrinks as $N$ grows. So $F$ has no least
-    upper bound, and, taking pointwise negations, the family of complements has no greatest lower
-    bound.
-
-- fails: [boolean-completeness-t]
-  # migration: "Review of 25 September 2026." becomes `date`; `by` condenses the record's second
-  # source. A second, independent argument for the same verdict.
-  by: DeepSeek (deepseek-flash), trawl; reviewed and corrected by OpenAI Codex (GPT-6)
-  date: '2026-09-25'
-  writeup: finite-support-monotone-surjections
-  provenance: admission-c0a37bbe6b6c45cc985428b174812564
-  text: >-
-    The dated write-up supplies the accepted BC-t witness using alternating differences of
-    agreement classes and Definition D.3's extensional-fullness lemma. It replaces the trawl's
-    invalid inference from an unavailable intersection to an unavailable greatest lower bound.
-
-# migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
-# the sentence that followed the Σ argument, referring to its failures. The argument for the failure
-# of Vicinity, now derived, is dropped.
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
   identifies its evaluation point; construction and verification are given at the PDF locations in
