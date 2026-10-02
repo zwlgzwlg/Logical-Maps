@@ -49,7 +49,7 @@ conditions:
     $b$, and a finite $N^{\prime}$ such that no arrow agreeing with $i$ on $N^{\prime}$ sends an
     even number to $b$.
 
-criteria:
+arguments:
 
 - id: no-pure-contingency
   holds: [no-pure-contingency-r]

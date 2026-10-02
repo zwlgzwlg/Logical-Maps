@@ -428,7 +428,7 @@
   .page .prose.reading { background: var(--reading); padding: 10px 14px; border-radius: 4px; }
   .page h3.argument-source { font: 500 13px var(--sans); color: var(--ink-2); margin: 14px 0 4px; }
   .page details.argument .condition { margin: 4px 0 4px 14px; }
-  .page .criterion-scope { margin: -4px 0 10px 14px; }
+  .page .shared-scope { margin: -4px 0 10px 14px; }
   .page dl.group-params dt { font-weight: 600; margin-top: 6px; } .page dl.group-params dd { margin: 2px 0 6px 14px; }
   .page details.argument details.review { margin: 2px 0 6px 14px; font-size: 12.5px; color: var(--ink-2); }
   .page details.argument details.review > summary { cursor: pointer; }
@@ -944,8 +944,8 @@ class Engine {
 
 // ---------------------------------------------------------------- state
 const PROVENANCE = new Map((DATA.provenance || []).map(x => [x.id, x]));
-// Model groups: a shared definition and criteria; the build has already expanded each
-// member's criteria into its arguments, marked with the group.
+// Model groups: a shared definition and shared arguments; the build has already expanded each
+// member's shared arguments into its arguments, marked with the group.
 const GROUPS = DATA.groups || [];
 const byGid = new Map(GROUPS.map(g => [g.id, g]));
 const P = DATA.principles, R = DATA.results.map(r => ({...r, conclusion: r.conclusion === false ? FALSE : r.conclusion})), MODELS = DATA.models, T = DATA.topic;
@@ -2832,10 +2832,10 @@ function argumentHtml(m, a, i) {
     a.like ? `Like <button class="lnk" data-open-model="${esc(a.like.split('#')[0])}">${esc(a.like)}</button>${(a.adapt || '').trim() ? ':' : ', word for word.'}` : '',
     side?.folded ? `Folded in from the record <span class="mono">${esc(side.id)}</span>.` : '',
     a.provenance ? `Provenance: <span class="mono">provenance/${esc(a.provenance)}.yaml</span>.` : '',
-    a.group && !m.criteria ? `From the group <button class="lnk" data-open-group="${esc(a.group)}">${esc(byGid.get(a.group)?.name || a.group)}</button>.` : '',
+    a.group && !m.shared ? `From the group <button class="lnk" data-open-group="${esc(a.group)}">${esc(byGid.get(a.group)?.name || a.group)}</button>.` : '',
     a.id ? `<span class="mono">${esc(a.group || m.companion_of || m.id)}#${esc(a.id)}</span>` : '',
   ].filter(Boolean).join(' ');
-  // A criterion applies to a member through the conditions it requires; say why the member meets each.
+  // A shared argument applies to a member through the conditions it requires; say why the member meets each.
   const conditions = (a.conditions || []).map(c => `<div class="note condition"><b>Requires:</b> ${fmt(c.text || '')}${c.reason ? ` <b>Here:</b> ${fmt(c.reason)}` : ''}</div>`).join('');
   return `<details class="argument${a.withdrawn ? ' withdrawn' : ''}"${i === undefined ? '' : ` id="argument-${i}"`}><summary><span class="argument-verdicts">${marks}</span> ${argumentTags(a)}</summary>`
     + (a.text ? `<div class="prose reading">${fmt(a.text)}</div>` : '')
@@ -2874,7 +2874,7 @@ function argumentsSection(m) {
       + `<div class="arguments">${shared.map(([a, i]) => argumentHtml(m, a, i)).join('')}</div>` : '');
 }
 // A group's page: its definition with the slots its members fill, its parameters and conditions,
-// each criterion with the members it applies to, and the members with their settings.
+// each shared argument with the members it applies to, and the members with their settings.
 function groupPage(g) {
   const members = MODELS.filter(m => m.group === g.id && !m.companion_of);
   const applies = c => members.filter(m => (m.arguments || []).some(a => a.group === g.id && a.id === c.id));
@@ -2885,11 +2885,11 @@ function groupPage(g) {
   h += `<h2>Parameters</h2><dl class="group-params">${Object.entries(g.parameters || {}).map(([name, p]) => `<dt>⟨${esc(name)}⟩</dt><dd>${fmt(p.text)}`
     + (p.values ? `<ul class="src">${Object.entries(p.values).map(([v, t]) => `<li><b>${esc(v)}:</b> ${fmt(t)}</li>`).join('')}</ul>` : '') + '</dd>').join('')}</dl>`;
   if ((g.conditions || []).length) h += `<h2>Conditions</h2><ul class="src">${g.conditions.map(c => `<li><b>${esc(c.id)}:</b> ${fmt(c.text)} <span class="dim">Met by ${members.filter(m => (m.meets || {})[c.id]).map(m => esc(m.name)).join('; ') || 'no member'}.</span></li>`).join('')}</ul>`;
-  h += `<h2>Criteria</h2><div class="arguments">${(g.criteria || []).map(c => {
+  h += `<h2>Shared arguments</h2><div class="arguments">${(g.arguments || []).map(c => {
     const when = Object.entries(c.when || {}).map(([k, v]) => `${esc(k)} = ${[].concat(v).map(esc).join(' or ')}`), req = (c.requires || []).map(esc);
     const to = applies(c);
-    return argumentHtml({ id: g.id, certificate: {}, criteria: true }, { ...c, group: g.id })
-      + `<p class="note criterion-scope">${when.length || req.length ? `Applies when ${[...when, ...req.map(r => 'it meets ' + r)].join(' and ')}: ` : 'Applies to every member: '}${to.map(m => `<button class="lnk" data-open-model="${esc(m.id)}">${esc(m.name)}</button>`).join('; ') || 'none yet'}.</p>`;
+    return argumentHtml({ id: g.id, certificate: {}, shared: true }, { ...c, group: g.id })
+      + `<p class="note shared-scope">${when.length || req.length ? `Applies when ${[...when, ...req.map(r => 'it meets ' + r)].join(' and ')}: ` : 'Applies to every member: '}${to.map(m => `<button class="lnk" data-open-model="${esc(m.id)}">${esc(m.name)}</button>`).join('; ') || 'none yet'}.</p>`;
   }).join('')}</div>`;
   h += `<h2>Members</h2><table class="results"><tbody>${members.map(m => `<tr><td><button class="lnk" data-open-model="${esc(m.id)}">${esc(m.name)}</button></td>${named.map(([name]) => `<td class="dim">${esc(name)}: ${esc(setting(m, name))}</td>`).join('')}</tr>`).join('') || '<tr><td>—</td></tr>'}</tbody></table>`;
   if (g.notes) h += `<h2>Notes</h2><div class="prose">${fmt(g.notes)}</div>`;

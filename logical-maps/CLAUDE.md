@@ -177,10 +177,10 @@ When you (an AI) add or edit a result or model:
   argument with `standing: conjectured`, not a separate record. Such a record
   lists only the verdicts from which the engine derives the rest, its source's
   first (README); add an argument only for a verdict the engine cannot derive.
-- A model in a group (README, "Model groups") gets the group's criteria that
+- A model in a group (README, "Model groups") gets the group's shared arguments that
   match its settings and the conditions it `meets`. An argument that would hold
   for every member that meets some condition belongs in the group as a
-  criterion, not copied into members; lift one only when another member would
+  shared argument, not copied into members; lift one only when another member would
   otherwise copy it, and check closures with `check_flattening.py --closure`.
 - When you add content to an existing record after its certificate date (a
   newly verified property of a model, an added proof, a corrected statement),

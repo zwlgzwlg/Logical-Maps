@@ -39,7 +39,7 @@ meets:
 arguments:
 
 # migration (2 October): these arguments moved to the group finite-support-one-object, whose
-# criteria no-pure-contingency, axiom-of-infinity, sigma-top, countable-boolean-completeness,
+# shared arguments no-pure-contingency, axiom-of-infinity, sigma-top, countable-boolean-completeness,
 # transversal-choice apply here; the Relational Choice argument went, Relational Choice now
 # following from Transversal Choice; its own Weakly Inextensible Comprehension argument stays, a
 # second route that also covers type $t\to t$; its Σ argument was the group's sigma-top, reworded.

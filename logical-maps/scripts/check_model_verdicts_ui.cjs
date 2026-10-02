@@ -210,18 +210,18 @@ try{
   console.log('PASS: a model page sorts every principle into three columns, satisfied, violated and unsettled, counts each, gives each principle one control to its evidence or derivation, a derivation that starts from the verdicts it uses and links each to its argument, a back button that retraces the pages, holds the derived verdicts behind a closed toggle, keeps Lean status on the pop-up of a verdict while the explorer list keeps its marks; a model written as arguments shows its definition, then three columns of principles with one control each and no sources, each argument once in record order headed by its verdicts with who supplied it inside (for a trawl argument, who found, reviewed and admitted it), its history behind a toggle, a write-up that does not replace the definition, and its companion.');
 }finally{w2.close();}
 
-// A group's member, as the build exports it: its own arguments, then the group's criteria
+// A group's member, as the build exports it: its own arguments, then the group's shared arguments
 // that apply, each marked with the group; and the group's own page.
 const group={id:'g',name:'Fixture group',file:'topics/t/groups/g.yaml',definition:'Arrows: {{monoid}}. {{sigma}}',
   parameters:{monoid:{text:'The monoid.'},sigma:{text:'Σ.',values:{top:'Σ is top.',atom:'Σ is an atom.'}}},
   conditions:[{id:'perturbable',text:'Some arrow perturbs.'}],
-  criteria:[{id:'always',holds:['a'],text:'Always.',by:'Group author',date:'2026-03-01'},
+  arguments:[{id:'always',holds:['a'],text:'Always.',by:'Group author',date:'2026-03-01'},
             {id:'perturbed',fails:['b'],requires:['perturbable'],text:'Perturbed.',by:'Group author',date:'2026-03-02'},
             {id:'atom',fails:['d'],when:{sigma:'atom'},text:'Atom.',by:'Group author',date:'2026-03-03'}]};
 const member={id:'gm',name:'Group member',status:'proved',satisfies:['e','a'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
   group:'g',settings:{monoid:'the truncations',sigma:'top'},meets:{perturbable:'g_n does.'},definition:'Arrows: the truncations. Σ is top.',
-  arguments:[{holds:['e'],text:'Own.'},{...group.criteria[0],group:'g'},
-             {...group.criteria[1],group:'g',conditions:[{id:'perturbable',text:'Some arrow perturbs.',reason:'g_n does.'}]}].map(a=>{const {when,requires,...rest}=a;return rest;})};
+  arguments:[{holds:['e'],text:'Own.'},{...group.arguments[0],group:'g'},
+             {...group.arguments[1],group:'g',conditions:[{id:'perturbable',text:'Some arrow perturbs.',reason:'g_n does.'}]}].map(a=>{const {when,requires,...rest}=a;return rest;})};
 const data3={...data,models:[member],groups:[group]};
 const errors3=[],vc3=new VirtualConsole();vc3.on('jsdomError',e=>errors3.push(e));
 const dom3=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data3)),
@@ -234,25 +234,25 @@ try{
   const own=[...page.querySelectorAll('h2 + .arguments details.argument')].map(x=>x.id);
   assert.deepEqual(own,['argument-0'],'Its own arguments first');
   const source=page.querySelector('h3.argument-source');
-  assert.match(source.textContent,/From the group Fixture group/,'Then the criteria, under their group');
+  assert.match(source.textContent,/From the group Fixture group/,'Then the shared arguments, under their group');
   const shared=[...source.nextElementSibling.querySelectorAll('details.argument')];
   assert.deepEqual(shared.map(x=>x.id),['argument-1','argument-2']);
-  assert.match(shared[1].textContent,/Requires: Some arrow perturbs\. Here: g_n does\./,'A criterion says which condition the member meets, and why');
+  assert.match(shared[1].textContent,/Requires: Some arrow perturbs\. Here: g_n does\./,'A shared argument says which condition the member meets, and why');
   assert.match(shared[1].textContent,/Group author, 2026-03-02\./,'And who supplied it');
   assert.match(shared[1].textContent,/g#perturbed/);
   const item=id=>page.querySelector(`.verdict-columns [data-principle="${id}"]`).closest('li');
-  assert.equal(item('b').querySelector('button.vc').dataset.jump,'2','A verdict from a criterion jumps to it');
+  assert.equal(item('b').querySelector('button.vc').dataset.jump,'2','A verdict from a shared argument jumps to it');
   // The group's page.
   page.querySelector('button[data-open-group="g"]').click();
   assert.equal(page.querySelector('h1').textContent,'Fixture group');
   assert.match(page.textContent,/Arrows: ⟨monoid⟩\. ⟨sigma⟩/,'Its definition shows the slots');
   assert.match(page.textContent,/perturbable: Some arrow perturbs\. Met by Group member\./);
-  const scopes=[...page.querySelectorAll('.criterion-scope')].map(x=>x.textContent);
+  const scopes=[...page.querySelectorAll('.shared-scope')].map(x=>x.textContent);
   assert.deepEqual(scopes,['Applies to every member: Group member.','Applies when it meets perturbable: Group member.','Applies when sigma = atom: none yet.'],
-    'Each criterion, with the members it applies to');
+    'Each shared argument, with the members it applies to');
   assert.match(page.querySelector('table.results').textContent,/Group member.*sigma: top/);
   page.querySelector('#page-back').click();
   assert.equal(page.querySelector('h1').textContent,'Group member','Back to the member');
   assert.deepEqual(errors3.map(String),[]);
-  console.log('PASS: a group\'s member lists its own arguments, then the criteria that apply under their group, each saying which condition it relies on and why the member meets it; a group\'s page shows its definition with the slots, its parameters and conditions, each criterion with its members, and the members\' settings.');
+  console.log('PASS: a group\'s member lists its own arguments, then the shared arguments that apply under their group, each saying which condition it relies on and why the member meets it; a group\'s page shows its definition with the slots, its parameters and conditions, each shared argument with its members, and the members\' settings.');
 }finally{w3.close();}

@@ -48,7 +48,7 @@ topics/<topic>/principles/<id>.yaml   one principle per file
 topics/<topic>/results/<id>.yaml      implication: premises ⇒ conclusion
 topics/<topic>/models/<id>.yaml       model: satisfies [...], violates [...]; or a definition and arguments
 topics/<topic>/provenance/<id>.yaml   provenance moved verbatim out of model records, named by their arguments
-topics/<topic>/groups/<id>.yaml       a model group: shared definition and criteria for models written as arguments
+topics/<topic>/groups/<id>.yaml       a model group: shared definition and shared arguments for models written as arguments
 topics/<topic>/papers.yaml           source-paper catalogue and external links
 topics/<topic>/sources/              documents authorised for redistribution
 schema/                               JSON schemas
@@ -344,7 +344,7 @@ parameters:
     values: {top: …, true-atom: …}                # named values: their prose fills the slot
 conditions:
 - {id: evens-avoidable, text: …}    # stated in prose
-criteria:                           # arguments, each with its own id, by and date
+arguments:                          # shared arguments, each with its own id, by and date
 - id: sigma-top
   when: {sigma: top}                # a conjunction over parameters; a list of values means any
   fails: [witnessed-possibility-r, …]
@@ -366,18 +366,18 @@ arguments: [...]                    # what is specific to it
 ```
 
 `load_topic` expands a member before flattening. Its definition becomes the group's
-with the slots filled, followed by its own if it has one. The criteria whose `when`
+with the slots filled, followed by its own if it has one. The shared arguments whose `when`
 its settings match, and whose `requires` it meets, follow its own arguments, marked
 with the group and carrying the member's reasons. Nothing is inherited by default: a
-member that does not meet a condition does not get the criterion. The engine never
+member that does not meet a condition does not get the shared argument. The engine never
 sees a group. `validate` checks groups once (slots, `when` values, unknown
-conditions, duplicate criteria) and each member's settings, `meets` and argument ids,
-and counts a criterion's verdicts towards a member's clashes. A criterion lists
+conditions, duplicate shared arguments) and each member's settings, `meets` and argument ids,
+and counts a shared argument's verdicts towards a member's clashes. A shared argument lists
 everything its argument shows; only a member's own arguments are held to minimal
 verdicts. Moving arguments into a group must leave every closure unchanged:
 `check_flattening.py --closure`, against the revision before the move. `like` may name a
-criterion as `<group>#<id>`. The viewer lists a member's own arguments, then the
-criteria that apply to it, and gives each group a page with its criteria and members.
+shared argument as `<group>#<id>`. The viewer lists a member's own arguments, then the
+shared arguments that apply to it, and gives each group a page with its shared arguments and members.
 
 ## Viewer
 

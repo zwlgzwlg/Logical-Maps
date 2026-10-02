@@ -42,7 +42,7 @@ settings:
 arguments:
 
 # migration (2 October): these arguments moved to the group finite-support-one-object, whose
-# criteria no-pure-contingency, axiom-of-infinity, sigma-true-atom, countable-boolean-completeness
+# shared arguments no-pure-contingency, axiom-of-infinity, sigma-true-atom, countable-boolean-completeness
 # apply here; the Relational Choice argument went, Relational Choice now following from
 # Transversal Choice.
 

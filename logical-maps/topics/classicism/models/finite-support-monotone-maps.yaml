@@ -42,7 +42,7 @@ meets:
 arguments:
 
 # migration (2 October): these arguments moved to the group finite-support-one-object, whose
-# criteria no-pure-contingency, axiom-of-infinity, countable-boolean-completeness,
+# shared arguments no-pure-contingency, axiom-of-infinity, countable-boolean-completeness,
 # transversal-choice, weakly-inextensible-comprehension apply here; the Relational Choice argument
 # went, Relational Choice now following from Transversal Choice; its Weakly Inextensible
 # Comprehension argument is the group's, with the witness under `meets`.

@@ -2,10 +2,10 @@
  "$schema": "https://json-schema.org/draft/2020-12/schema",
  "$id": "group.schema.json",
  "title": "Model group",
- "description": "What a family of models written as arguments would otherwise copy: a definition with {{parameter}} slots that each member fills, named conditions stated in prose, and criteria, arguments that apply to every member whose settings match `when` and that meets every condition in `requires`. Kept in topics/<topic>/groups/<id>.yaml. Members stay in their own files and name the group. Nothing is inherited by default, and the engine never sees a group: the build expands each member's criteria into its arguments before flattening.",
+ "description": "What a family of models written as arguments would otherwise copy: a definition with {{parameter}} slots that each member fills, named conditions stated in prose, and shared arguments, arguments that apply to every member whose settings match `when` and that meets every condition in `requires`. Kept in topics/<topic>/groups/<id>.yaml. Members stay in their own files and name the group. Nothing is inherited by default, and the engine never sees a group: the build expands each member's shared arguments into its arguments before flattening.",
  "type": "object",
  "additionalProperties": false,
- "required": ["id", "name", "definition", "parameters", "criteria"],
+ "required": ["id", "name", "definition", "parameters", "arguments"],
  "properties": {
   "id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Equals the file stem."},
   "name": {"type": "string", "minLength": 1},
@@ -42,7 +42,7 @@
     }
    }
   },
-  "criteria": {"type": "array", "items": {"$ref": "#/$defs/criterion"}},
+  "arguments": {"type": "array", "items": {"$ref": "#/$defs/shared_argument"}},
   "notes": {"type": "string", "description": "Text that supports no verdict."},
   "references": {}
  },
@@ -67,6 +67,6 @@
     }
    }
   },
-  "criterion": {}
+  "shared_argument": {}
  }
 }

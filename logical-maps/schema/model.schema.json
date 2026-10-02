@@ -37,7 +37,7 @@
   "group": {
    "type": "string",
    "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-   "description": "Argument format: a group groups/<id>.yaml the model belongs to. The group's definition, completed by the settings, comes before the record's own, which is then optional; the group's criteria that apply join the record's arguments."
+   "description": "Argument format: a group groups/<id>.yaml the model belongs to. The group's definition, completed by the settings, comes before the record's own, which is then optional; the group's shared arguments that apply join the record's arguments."
   },
   "settings": {
    "type": "object",

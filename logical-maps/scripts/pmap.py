@@ -67,14 +67,14 @@ def _schema(name: str):
     sch = json.loads((SCHEMA / f"{name}.schema.json").read_text(encoding="utf-8"))
     if name == "model":  # inline the certificate definition shared with results
         sch["properties"]["certificate"] = _schema("result")["properties"]["certificate"]
-    if name == "group":  # a criterion is an argument with conditions of application, and an author and date of its own
+    if name == "group":  # a shared argument is an argument with conditions of application, and an author and date of its own
         model = _schema("model")
-        criterion = json.loads(json.dumps(model["$defs"]["argument"]))
+        shared = json.loads(json.dumps(model["$defs"]["argument"]))
         for key in ("provenance", "companion_id"):
-            criterion["properties"].pop(key, None)
-        criterion["properties"].update(sch["$defs"]["applies"]["properties"])
-        criterion["required"] = ["id", "by", "date"]
-        sch["$defs"]["criterion"] = criterion
+            shared["properties"].pop(key, None)
+        shared["properties"].update(sch["$defs"]["applies"]["properties"])
+        shared["required"] = ["id", "by", "date"]
+        sch["$defs"]["shared_argument"] = shared
         sch["$defs"]["withdrawal"] = model["$defs"]["withdrawal"]
         sch["properties"]["references"] = model["properties"]["references"]
     if name == "provenance":  # and the certificate and references a folded record had
@@ -113,7 +113,7 @@ def load_topic(topic_id: str) -> dict:
                 d["conclusion"] = FALSE
             if sub == "models" and is_argument_record(d):
                 d.setdefault("certificate", {}).setdefault("lean", "none")
-                full = expand_member(d, groups_by_id)  # a group's member gets its definition and criteria
+                full = expand_member(d, groups_by_id)  # a group's member gets its definition and shared arguments
                 sources.append(full)
                 flat = flatten_model(full, raw=d)
                 lst += flat
@@ -163,14 +163,14 @@ TIERS = ("bronze", "silver", "gold")
 #
 # A group (groups/<id>.yaml) holds what a family of argument-format models would otherwise
 # copy: a definition with {{parameter}} slots that each member fills, named conditions stated
-# in prose, and criteria: arguments that apply to every member whose settings match `when`
+# in prose, and shared arguments: arguments that apply to every member whose settings match `when`
 # and that meets every condition in `requires`. A member names its group and gives its
 # settings: for a parameter with named values, one of them or {text: ...} for prose of its
 # own; for a prose slot, the prose. Under `meets` it gives a reason for each condition it
-# claims. Nothing is inherited by default: a member gets only the criteria it matches.
+# claims. Nothing is inherited by default: a member gets only the shared arguments it matches.
 #
 # load_topic expands a member before flattening: its definition becomes the group's with the
-# slots filled, followed by its own if it has one, and the criteria that apply follow its own
+# slots filled, followed by its own if it has one, and the shared arguments that apply follow its own
 # arguments, so its own keep their positions. Each carries `group` and, if it requires any,
 # `conditions` with the member's reasons. The engine never sees a group, so upgrading a record
 # into one cannot change a verdict that the flattened lists do not change.
@@ -194,7 +194,7 @@ def setting_text(group: dict, name: str, setting):
     return setting
 
 
-def criterion_applies(c: dict, rec: dict) -> bool:
+def shared_applies(c: dict, rec: dict) -> bool:
     """`when`: each named parameter is set to one of the listed values (a member's own prose
     matches none); `requires`: the member meets each condition."""
     settings = rec.get("settings") if isinstance(rec.get("settings"), dict) else {}
@@ -207,7 +207,7 @@ def criterion_applies(c: dict, rec: dict) -> bool:
 
 
 def expand_member(rec: dict, groups: dict) -> dict:
-    """A group member as the build sees it: the group's definition completed, and the criteria
+    """A group member as the build sees it: the group's definition completed, and the shared arguments
     that apply after its own arguments. Anything else is returned as it is."""
     import copy
     group = groups.get(rec.get("group"))
@@ -219,17 +219,17 @@ def expand_member(rec: dict, groups: dict) -> dict:
     filled = SLOT.sub(lambda mt: setting_text(group, mt[1], settings.get(mt[1])) or mt[0], str(group.get("definition") or ""))
     out["definition"] = "\n\n".join(x.strip() for x in (filled, rec.get("definition")) if isinstance(x, str) and x.strip())
     conditions = {c.get("id"): c for c in group.get("conditions") or [] if isinstance(c, dict)}
-    criteria = []
-    for c in group.get("criteria") or []:
-        if not isinstance(c, dict) or not criterion_applies(c, rec):
+    shared = []
+    for c in group.get("arguments") or []:
+        if not isinstance(c, dict) or not shared_applies(c, rec):
             continue
         a = {k: copy.deepcopy(v) for k, v in c.items() if k not in ("when", "requires")}
         a["group"] = group.get("id")
         if c.get("requires"):
             a["conditions"] = [{"id": k, "text": str((conditions.get(k) or {}).get("text", "")), "reason": meets.get(k)}
                                for k in c["requires"]]
-        criteria.append(a)
-    out["arguments"] = list(rec.get("arguments") or []) + criteria
+        shared.append(a)
+    out["arguments"] = list(rec.get("arguments") or []) + shared
     return out
 
 
@@ -238,7 +238,7 @@ def is_argument_record(rec) -> bool:
 
 
 def argument_label(a: dict, i: int) -> str:
-    """How messages name an argument: its id (a group's criterion as <group>#<id>), else its position."""
+    """How messages name an argument: its id (a group's shared argument as <group>#<id>), else its position."""
     if isinstance(a, dict) and a.get("group") and isinstance(a.get("id"), str):
         return f"{a['group']}#{a['id']}"
     return a["id"] if isinstance(a, dict) and isinstance(a.get("id"), str) else f"arguments[{i}]"
@@ -1478,13 +1478,13 @@ def _argument_by_date(a: dict, rec: dict) -> tuple[str, str]:
 
 
 def _argument_target(data: dict, address: str):
-    """The argument that <record>#<id> names, or the criterion that <group>#<id> names, or None."""
+    """The argument that <record>#<id> names, or the shared argument that <group>#<id> names, or None."""
     rid, _, aid = address.partition("#")
     rec = next((s for s in data.get("model_sources", []) if s.get("id") == rid), None)
     if rec is not None:
         return next((a for _, a in _arguments(rec) if isinstance(a, dict) and a.get("id") == aid and not a.get("group")), None)
     group = next((g for g in data.get("groups", []) if g.get("id") == rid), None)
-    return next((c for c in group.get("criteria") or [] if isinstance(c, dict) and c.get("id") == aid), None) if group else None
+    return next((c for c in group.get("arguments") or [] if isinstance(c, dict) and c.get("id") == aid), None) if group else None
 
 
 def provenance_records(side: dict) -> list:
@@ -1546,7 +1546,7 @@ def chain_md(chain: dict) -> str:
 
 
 def _argument_checks(a: dict, where: str, ids, papers, writeups: Path, data: dict) -> list[str]:
-    """What is wrong with one argument or criterion on its own."""
+    """What is wrong with one argument or shared argument on its own."""
     errors = []
     holds = a.get("holds") if isinstance(a.get("holds"), list) else []
     fails = a.get("fails") if isinstance(a.get("fails"), list) else []
@@ -1591,12 +1591,12 @@ def group_errors(data: dict, ids) -> list[str]:
             if slot not in params:
                 errors.append(f"{f}: the definition's slot {{{{{slot}}}}} is no parameter")
         seen = set()
-        for c in g.get("criteria") or []:
+        for c in g.get("arguments") or []:
             if not isinstance(c, dict):
                 continue
             where = f"{f}: {c.get('id', '?')}"
             if c.get("id") in seen:
-                errors.append(f"{where}: duplicate criterion id")
+                errors.append(f"{where}: duplicate shared argument id")
             seen.add(c.get("id"))
             errors += _argument_checks(c, where, ids, papers, (ROOT / f).parent.parent / "writeups", data)
             for name, want in (c.get("when") or {}).items():
@@ -1638,12 +1638,12 @@ def group_errors(data: dict, ids) -> list[str]:
         own = {a.get("id") for a in rec.get("arguments") or [] if isinstance(a, dict) and a.get("id") and not a.get("group")}
         for a in rec.get("arguments") or []:
             if isinstance(a, dict) and a.get("group") and a.get("id") in own:
-                errors.append(f"{f}: argument id '{a['id']}' is also a criterion of {g.get('id')} that applies to it")
+                errors.append(f"{f}: argument id '{a['id']}' is also a shared argument of {g.get('id')} that applies to it")
     return errors
 
 
 def argument_errors(data: dict, ids) -> list[str]:
-    """The errors of argument-format model records that need no engine. A group's criteria are
+    """The errors of argument-format model records that need no engine. A group's shared arguments are
     checked once, in group_errors; here they count only towards a member's clashes."""
     errors = group_errors(data, ids)
     papers = {p.get("id") for p in data["papers"] if isinstance(p, dict)}
@@ -1753,7 +1753,7 @@ def model_coverage(data: dict, an: dict) -> list[dict]:
         derived_holds, derived_fails, unknown = [], [], []
         if m is not None and m["status"] == "proved" and mid in E.holds and mid not in E.model_conflicts:
             sat, vio = m["satisfies"], m["violates"]
-            # A group's criterion lists everything its argument shows; only a record's own arguments
+            # A group's shared argument lists everything its argument shows; only a record's own arguments
             # are held to minimal verdicts.
             shared = {p for _, a in _live_arguments(rec) if a.get("group") for p in (a.get("holds") or []) + (a.get("fails") or [])}
             redundant = [f"holds {p}" for p in sat if p not in shared and p in E.cl([x for x in sat if x != p])[0]]
@@ -2241,7 +2241,7 @@ def argument_md(item: dict, data: dict, level: int = 3, link=lambda wid: f"[{wid
             reasons.append(f"Provenance: `provenance/{a['provenance']}.yaml`.")
         if a.get("group"):
             group = next((g for g in data.get("groups", []) if g.get("id") == a["group"]), {})
-            reasons.append(f"From the group *{group.get('name', a['group'])}*, criterion `{a['group']}#{a.get('id')}`.")
+            reasons.append(f"From the group *{group.get('name', a['group'])}*, shared argument `{a['group']}#{a.get('id')}`.")
             reasons += [f"It requires that {' '.join(str(c.get('text', '')).split())} Here: {' '.join(str(c.get('reason') or '').split())}"
                         for c in a.get("conditions") or []]
         elif a.get("id"):
@@ -2289,7 +2289,7 @@ def generate_writeup(item: dict, data: dict) -> str:
             group = next((g for g in data.get("groups", []) if g.get("id") == item.get("group")), None)
             if group:
                 out += ["", f"*A member of the group {group.get('name', group['id'])}, which supplies this definition "
-                        "with the record's settings, and the arguments marked as its criteria.*"]
+                        "with the record's settings, and the arguments marked as shared.*"]
         if "arguments" in item:
             out += ["", "## Arguments", ""] + argument_md(item, data)
     else:
@@ -3700,7 +3700,7 @@ def _selftest_groups():
              "parameters": {"monoid": {"text": "The monoid."},
                             "sigma": {"text": "Σ.", "values": {"top": "Σ is top.", "atom": "Σ is an atom."}}},
              "conditions": [{"id": "perturbable", "text": "Some arrow perturbs."}],
-             "criteria": [{"id": "always", "holds": ["a"], "text": "Always.", "by": "X", "date": "2026-02-01"},
+             "arguments": [{"id": "always", "holds": ["a"], "text": "Always.", "by": "X", "date": "2026-02-01"},
                           {"id": "top", "fails": ["c"], "when": {"sigma": "top"}, "text": "Top.", "by": "X", "date": "2026-02-01"},
                           {"id": "either", "holds": ["e"], "when": {"sigma": ["top", "atom"]}, "text": "Either.", "by": "X", "date": "2026-02-01"},
                           {"id": "perturbed", "fails": ["d"], "requires": ["perturbable"], "text": "Perturbed.", "by": "Y", "date": "2026-02-02"}]}
@@ -3712,13 +3712,13 @@ def _selftest_groups():
     full = expand_member(rec, {"g": group})
     assert rec == raw, "expansion leaves the record as written"
     assert full["definition"] == "Arrows: the truncations. Shared text. Σ is top.\n\nOwn text.", full["definition"]
-    assert [a.get("id") for a in full["arguments"]] == [None, "always", "top", "either", "perturbed"], "own first, then criteria"
+    assert [a.get("id") for a in full["arguments"]] == [None, "always", "top", "either", "perturbed"], "own first, then shared arguments"
     assert all(a["group"] == "g" for a in full["arguments"][1:]) and "when" not in full["arguments"][2]
     assert full["arguments"][4]["conditions"] == [{"id": "perturbable", "text": "Some arrow perturbs.", "reason": "g_n does."}]
     assert argument_label(full["arguments"][4], 4) == "g#perturbed"
     [m] = flatten_model(full, raw=rec)
     assert (m["satisfies"], m["violates"]) == (["b", "a", "e"], ["c", "d"]) and m["_source"] == raw
-    # A member's own prose for a parameter matches no `when`; not meeting a condition loses its criterion.
+    # A member's own prose for a parameter matches no `when`; not meeting a condition loses its shared argument.
     other = {**rec, "settings": {"monoid": "permutations", "sigma": {"text": "Σ is contingent."}}, "meets": {}}
     full2 = expand_member(other, {"g": group})
     assert [a.get("id") for a in full2["arguments"]] == [None, "always"] and full2["definition"].startswith("Arrows: permutations. Shared text. Σ is contingent.")
@@ -3731,30 +3731,30 @@ def _selftest_groups():
     assert not V.is_valid({k: v for k, v in member.items() if k != "group"})
     G = jsonschema.Draft202012Validator(_schema("group"))
     assert G.is_valid(clean(group)), list(G.iter_errors(clean(group)))
-    assert not G.is_valid({**clean(group), "criteria": [{"id": "x", "holds": ["a"], "text": "t"}]}), "a criterion needs by and date"
-    assert not G.is_valid({**clean(group), "criteria": [{**group["criteria"][0], "provenance": "p"}]})
-    # Validation: criteria once, in the group; members' settings and meets.
+    assert not G.is_valid({**clean(group), "arguments": [{"id": "x", "holds": ["a"], "text": "t"}]}), "a shared argument needs by and date"
+    assert not G.is_valid({**clean(group), "arguments": [{**group["arguments"][0], "provenance": "p"}]})
+    # Validation: shared arguments once, in the group; members' settings and meets.
     data = {"principles": [{"id": x} for x in "abcde"], "results": [], "papers": [], "provenance": [], "groups": [group],
             "models": [m], "model_sources": [full]}
     assert argument_errors(data, set("abcde")) == [], argument_errors(data, set("abcde"))
     bad_group = {**group, "definition": "{{monoid}} {{colour}}",
-                 "criteria": group["criteria"] + [{"id": "always", "holds": ["zz"], "when": {"monoid": "x", "sigma": "bottom"},
+                 "arguments": group["arguments"] + [{"id": "always", "holds": ["zz"], "when": {"monoid": "x", "sigma": "bottom"},
                                                    "requires": ["nowhere"], "text": "t", "by": "X", "date": "2026-02-01"}]}
     bad = {**rec, "settings": {"monoid": "x", "sigma": "bottom", "colour": "red"}, "meets": {"elsewhere": "?"},
            "arguments": [{"id": "always", "holds": ["b"], "text": "Clash."}]}
     data = {**data, "groups": [bad_group], "model_sources": [expand_member(bad, {"g": bad_group}), {**rec, "id": "n", "group": "nowhere"},
                                                             {"id": "o", "_file": "topics/t/models/o.yaml", "settings": {}, "arguments": []}]}
     errors = argument_errors(data, set("abcde"))
-    for want in ("slot {{colour}} is no parameter", "always: duplicate criterion id", "unknown principle 'zz'",
+    for want in ("slot {{colour}} is no parameter", "always: duplicate shared argument id", "unknown principle 'zz'",
                  "when names 'monoid', which is not a parameter with named values", "'bottom' is not a value of sigma",
                  "requires unknown condition 'nowhere'", "setting 'colour' is not a parameter", "setting 'sigma' must be one of",
                  "meets 'elsewhere', which is not a condition", "no group groups/nowhere.yaml", "settings is only for a group's member"):
         assert any(want in e for e in errors), (want, errors)
     clash = {**rec, "arguments": [{"id": "always", "holds": ["b"], "text": "Clash."}, {"fails": ["a"], "text": "No."}]}
     errors = argument_errors({**data, "groups": [group], "model_sources": [expand_member(clash, {"g": group})]}, set("abcde"))
-    assert any("argument id 'always' is also a criterion of g" in e for e in errors), errors
+    assert any("argument id 'always' is also a shared argument of g" in e for e in errors), errors
     assert any("'a' both holds (arguments: g#always) and fails (arguments: arguments[1])" in e for e in errors), errors
-    assert _argument_target({"model_sources": [], "groups": [group]}, "g#top") is group["criteria"][1]
+    assert _argument_target({"model_sources": [], "groups": [group]}, "g#top") is group["arguments"][1]
 
 
 def selftest():
