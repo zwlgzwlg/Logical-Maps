@@ -1,0 +1,285 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Clipped expectation: liminf dominance [−t, 2t]</title><link rel="icon" type="image/png" href="../favicon.png">
+<style>/* Fixed forest palette, adapted from the supplied style example.
+   Semantic and source hues retain their meaning in both modes. */
+:root {
+  --bg: #f3f1e8;
+  --panel: #f8f7f0;
+  --panel-2: #e9ecdf;
+  --line: #d4d9c9;
+  --line-strong: #a2ae97;
+  --ink: #283c28;
+  --ink-2: #4f604b;
+  --ink-3: #5f6d58;
+  --accent: #356044;
+  --link-hover: #914b30;
+  --human: #3e7052;
+  --assisted: #746044;
+  --ai: #a35b36;
+  --derived: #7b8271;
+  --indep: #a0483a;
+  --open: #e2e5d9;
+  --open-ink: #65705f;
+  --conj: #896b27;
+  --node-fill: #f8f7f0;
+  --node-stroke: #98a68b;
+  --junction: #52634b;
+  --hl: #e0e7cd;
+  --focus: #914b30;
+  --badge-ink: #ffffff;
+  --warning-bg: #f4e6dc;
+  --source-forest: #3e7052;
+  --source-rust: #a25336;
+  --source-ochre: #896b27;
+  --source-slate: #4c7279;
+  --source-berry: #80556d;
+  --source-olive: #69753c;
+  --source-misc: #696d61;
+  --shadow: 0 4px 24px rgb(40 60 40 / 12%);
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --serif: var(--sans);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0e1912;
+  --panel: #142018;
+  --panel-2: #1d2b20;
+  --line: #304332;
+  --line-strong: #596e51;
+  --ink: #d7dfca;
+  --ink-2: #b3c1a7;
+  --ink-3: #96aa8d;
+  --accent: #a6c699;
+  --link-hover: #dfab89;
+  --human: #94bc95;
+  --assisted: #c1ad8d;
+  --ai: #dca17b;
+  --derived: #83937c;
+  --indep: #e09b86;
+  --open: #243327;
+  --open-ink: #a2b398;
+  --conj: #d0b36b;
+  --node-fill: #19261c;
+  --node-stroke: #627957;
+  --junction: #b3c1a7;
+  --hl: #30422a;
+  --focus: #dfab89;
+  --badge-ink: #0e1912;
+  --warning-bg: #32251f;
+  --source-forest: #94bc95;
+  --source-rust: #dca17b;
+  --source-ochre: #d0b36b;
+  --source-slate: #95bcc1;
+  --source-berry: #c5a0b7;
+  --source-olive: #b6c383;
+  --source-misc: #a9b09c;
+  --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); scrollbar-color: var(--line-strong) var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.6 var(--sans); }
+button, input, select { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 3px; }
+input[type="checkbox"] { accent-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+::selection { background: var(--hl); color: var(--ink); }
+.theme-toggle { border: 0; padding: 6px 0; background: transparent; color: var(--ink-2); cursor: pointer; font: 13px var(--sans); white-space: nowrap; }
+.theme-toggle:hover { color: var(--link-hover); }
+.display-toggles { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 16px; }
+.theme-toggle[aria-pressed="true"] { color: var(--accent); }
+
+/* Standalone write-ups use the same quiet, ruled typography as the map. */
+html:has(body.writeup-page) { background: var(--bg); }
+body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; font: 16px/1.7 var(--sans); overflow-wrap: anywhere; }
+.writeup-nav { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 24px; font-size: 13px; }
+.writeup-page h1 { font-size: 1.4em; line-height: 1.4; margin: 0 0 20px; color: var(--ink); }
+.writeup-page h2 { font-size: 1.15em; line-height: 1.4; margin: 1.8em 0 .5em; padding-top: 14px; border-top: 1px solid var(--line); }
+.writeup-page h3 { font-size: 1em; }
+.writeup-page p { margin: 0 0 12px; }
+.writeup-page .cert { color: var(--ink-2); font-size: .85em; }
+.writeup-page code, .writeup-page pre { font: .85em/1.6 var(--mono); color: var(--ink); }
+.writeup-page pre { padding: 14px; background: var(--panel-2); overflow-x: auto; }
+.writeup-page blockquote { color: var(--ink-2); border-left: 2px solid var(--line-strong); margin-left: 0; padding-left: 20px; }
+.writeup-page math[display="block"] { display: block; overflow-x: auto; padding: 8px 0; }
+.writeup-page table { display: block; overflow-x: auto; border-collapse: collapse; }
+.writeup-page th, .writeup-page td { border-bottom: 1px solid var(--line); padding: 8px 12px; }
+@media (max-width: 600px) {
+  body.writeup-page { margin: 1.5em auto; padding: 0 1em 2em; }
+}
+@media print {
+  :root, :root[data-theme="dark"] { --bg: white; --ink: #283c28; --ink-2: #4f604b; --accent: #356044; --line: #d4d9c9; color-scheme: light; }
+  .writeup-nav { display: none; }
+  body.writeup-page { max-width: none; margin: 0; padding: 0; }
+}
+
+/* Shared Okabe–Ito palette: https://jfly.uni-koeln.de/color/#pallet
+   Loaded after topic themes. Sky blue and orange distinguish positive and
+   negative relations; darker inks keep small labels readable in light mode.
+   Neutral surfaces are identical across maps. Print uses the shared theme. */
+@media screen {
+  :root[data-palette="colourblind"] {
+    --bg: #f4f5f6;
+    --panel: #ffffff;
+    --panel-2: #e9edf0;
+    --line: #d0d6da;
+    --line-strong: #87949d;
+    --ink: #202930;
+    --ink-2: #45535d;
+    --ink-3: #586670;
+    --accent: #0072b2;
+    --link-hover: #925f00;
+    --human: #0072b2;
+    --assisted: #80506a;
+    --ai: #a44500;
+    --derived: #687780;
+    --indep: #925f00;
+    --open: #e9edf0;
+    --open-ink: #586670;
+    --conj: #80506a;
+    --node-fill: #ffffff;
+    --node-stroke: #7a8b96;
+    --junction: #45535d;
+    --hl: #dce4ea;
+    --focus: #0072b2;
+    --badge-ink: #ffffff;
+    --warning-bg: #fff0ce;
+    --source-forest: #56b4e9;
+    --source-rust: #e69f00;
+    --source-ochre: #d55e00;
+    --source-slate: #0072b2;
+    --source-berry: #cc79a7;
+    --source-olive: #009e73;
+    --source-misc: #687780;
+    --rel-positive: #56b4e9;
+    --rel-negative: #e69f00;
+    --shadow: 0 4px 24px rgb(32 41 48 / 12%);
+  }
+  :root[data-palette="colourblind"][data-theme="dark"] {
+    --bg: #111820;
+    --panel: #18222b;
+    --panel-2: #23303b;
+    --line: #354550;
+    --line-strong: #718492;
+    --ink: #edf2f5;
+    --ink-2: #c1ced7;
+    --ink-3: #a5b5c1;
+    --accent: #56b4e9;
+    --link-hover: #e69f00;
+    --human: #56b4e9;
+    --assisted: #cc79a7;
+    --ai: #e69f00;
+    --derived: #91a1ad;
+    --indep: #e69f00;
+    --open: #23303b;
+    --open-ink: #a5b5c1;
+    --conj: #cc79a7;
+    --node-fill: #1c2933;
+    --node-stroke: #8094a3;
+    --junction: #c1ced7;
+    --hl: #354654;
+    --focus: #56b4e9;
+    --badge-ink: #111820;
+    --warning-bg: #352b18;
+    --source-misc: #91a1ad;
+    --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  }
+  /* Source swatches use the unmodified palette; outlined badges allow their
+     text to keep the normal contrast on both light and dark surfaces. */
+  :root[data-palette="colourblind"] .badge.source {
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--source-color);
+    border-left-width: 4px;
+  }
+}
+</style>
+<script>/* Apply before paint; share the preference between every map and write-up. */
+(() => {
+  const key = 'pmap-theme';
+  const paletteKey = 'pmap-palette';
+  const system = window.matchMedia?.('(prefers-color-scheme: dark)');
+  let preference;
+  let palette;
+  try { preference = localStorage.getItem(key); } catch (_) {}
+  try { palette = localStorage.getItem(paletteKey); } catch (_) {}
+  if (!['light', 'dark'].includes(preference)) preference = null;
+  if (palette !== 'colourblind') palette = 'default';
+  function apply(theme) {
+    document.documentElement.dataset.theme = theme;
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.textContent = theme === 'dark' ? '[Light mode]' : '[Dark mode]';
+      button.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+    });
+  }
+  function applyPalette() {
+    document.documentElement.dataset.palette = palette;
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.setAttribute('aria-pressed', String(palette === 'colourblind'));
+      button.textContent = `[Colourblind mode: ${palette === 'colourblind' ? 'on' : 'off'}]`;
+    });
+  }
+  const initial = () => preference || (system?.matches ? 'dark' : 'light');
+  apply(initial());
+  applyPalette();
+  document.addEventListener('DOMContentLoaded', () => {
+    apply(initial());
+    applyPalette();
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        preference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        apply(preference);
+        try { localStorage.setItem(key, preference); } catch (_) {}
+      });
+    });
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        palette = palette === 'colourblind' ? 'default' : 'colourblind';
+        applyPalette();
+        try { localStorage.setItem(paletteKey, palette); } catch (_) {}
+      });
+    });
+  });
+  system?.addEventListener('change', () => { if (!preference) apply(initial()); });
+  window.addEventListener('storage', event => {
+    if (event.key === key || event.key === null) {
+      preference = ['light', 'dark'].includes(event.newValue) ? event.newValue : null;
+      apply(initial());
+    }
+    if (event.key === paletteKey || event.key === null) {
+      palette = event.newValue === 'colourblind' ? 'colourblind' : 'default';
+      applyPalette();
+    }
+  });
+})();
+</script>
+<link rel="stylesheet" href="../math/katex.min.css">
+<script defer src="../math/katex.min.js"></script>
+<script defer src="../math/contrib/auto-render.min.js"></script>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Clipped expectation: liminf dominance [−t, 2t]</h1></header><p><strong>Source:</strong> AI-generated results communicated by <strong>Branden Fitelson</strong>, <em>Unbounded Utility: Five Top-Ranked Open Conjectures Resolved</em>, 30 September 2026, §§3 and 4(b). The report identifies Claude agents, with model versions unspecified. The clipping method is Goodsell’s; the liminf specialization and its witnesses are attributed to the report. GPT-6 (Codex) expanded and informally checked the proofs on 2 October 2026. No Lean verification is claimed.</p>
+<h2 id="construction-and-affine-invariance">Construction and affine invariance</h2>
+<p>On all real-valued gambles with identity utility define</p>
+<p><span class="math display">v_X(t)=E[\max(-t,\min(X,2t))],\qquad
+X\succeq Y\iff\liminf_{t\to\infty}(v_X(t)-v_Y(t))\ge0.</span></p>
+<p>The parameter ranges over <strong>all positive real numbers</strong>. The <a href="calibrated-geometric-continuous-ultrafilter.html#shared-clipping-and-shuffle-copula-proof">common proof</a> establishes DU, CDF-Area Extension, Relative Expectation, Expected Utility, L¹ Continuity, Shift Invariance, and Existential Copula Sum Invariance.</p>
+<p>For <span class="math inline">a&gt;0</span>, clipping gives the exact identity</p>
+<p><span class="math display">v_{aX}(t)-v_{aY}(t)=a\bigl(v_X(t/a)-v_Y(t/a)\bigr).</span></p>
+<p>Reparametrizing all real <span class="math inline">t</span> preserves the liminf sign in both directions. Together with Shift Invariance this proves full Positive Affine Invariance, including preservation of strict order, and hence Integer Affine Preservation. This reparametrization argument is not an assertion that an arbitrary ultrafilter is invariant under dilation.</p>
+<h2 id="symmetric-st-petersburg-has-value-12">Symmetric St Petersburg has value 1/2</h2>
+<p>Let <span class="math inline">\Pr(S=2^j)=\Pr(S=-2^j)=2^{-j-1}</span>, <span class="math inline">j\ge1</span>, and put <span class="math inline">m(r)=E[\min(S_+,r)]</span>. Symmetry gives <span class="math inline">v_S(t)=m(2t)-m(t)</span>. If <span class="math inline">2^k\le t\le2^{k+1}</span>, <span class="math inline">k\ge0</span>, then</p>
+<p><span class="math display">m(2t)-m(t)
+=(2^{k+1}-t)2^{-k-1}+(2t-2^{k+1})2^{-k-2}=\tfrac12.</span></p>
+<p>Thus <span class="math inline">S\sim1/2\sim-S</span>, whereas <span class="math inline">-S\succ-1/2</span>. Reflecting the true comparison <span class="math inline">S\succeq1/2</span> would require <span class="math inline">-1/2\succeq-S</span>, which fails. This refutes Reflection and Negative Affine Anti-Invariance despite full Positive Affine Invariance. Since <span class="math inline">S</span> is symmetric, it also refutes Symmetric Neutrality and Folded Expectation.</p>
+<h2 id="incompleteness-and-the-alternating-game">Incompleteness and the alternating game</h2>
+<p>For incompleteness let <span class="math inline">\Pr(R=4^j)=\Pr(R=-4^j)=\tfrac32\,4^{-j}</span>, <span class="math inline">j\ge1</span>. These probabilities sum to one. The positive tail is <span class="math inline">\tfrac12\,4^{-k}</span> on <span class="math inline">[4^k,4^{k+1})</span>. Therefore</p>
+<p><span class="math display">v_R(4^k)=\tfrac12,\qquad v_R(2\cdot4^k)=1\quad(k\ge1).</span></p>
+<p>Against the constant <span class="math inline">3/4</span> these two unbounded sequences give gaps of <span class="math inline">-1/4</span> and <span class="math inline">1/4</span>. Neither ordered comparison holds, proving failure of Totality.</p>
+<p>For alternating St Petersburg <span class="math inline">A</span>, pair each negative atom <span class="math inline">-2\cdot4^j</span> with the positive atom <span class="math inline">4\cdot4^j</span>, for <span class="math inline">j\ge0</span>. The latter has half the probability, and its positive clipped value is twice the absolute negative clipped value. Every pair cancels. Boundedness of clipping licenses this grouping, so <span class="math inline">v_A(t)=0</span> for every <span class="math inline">t&gt;0</span>. Hence <span class="math inline">A\sim0\succ-1/2</span>, refuting the alternating evaluation principle in this particular model.</p>
+<p>The incompleteness witness and exact atom identities are checked in <code>checks/fitelson_report.py</code>. The model establishes the report’s third non-implication without claiming its Totality strengthening.</p>
+<h2 id="paper-references">Paper references</h2>
+<ul>
+<li><strong>Origin: Unbounded Utility: Five Top-Ranked Open Conjectures Resolved.</strong> AI-generated report, 30 September 2026, 4 pages; communicated by Branden Fitelson. The report attributes production to Claude agents without specifying model versions. Fitelson is the communicator, not the credited producer of the proofs. — §§3 and 4(b), pp. 2–3</li>
+<li><strong>Background: <a href="https://doi.org/10.1111/nous.12473">Decision theory unbound</a>.</strong> Zachary Goodsell (2024). Decision theory unbound. Noûs, 58, 669–695. First published online in 2023. — Appendix B, Definition 3, Lemma 6 and Remark 3</li>
+</ul>
+</body></html>

@@ -305,52 +305,176 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <link rel="stylesheet" href="../math/katex.min.css">
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
-<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Symmetric ideally-full model: Base 1 with least-support representatives</h1></header><p><strong>Status: conjectured; bronze star.</strong> Recorded at Zachary Goodsell’s request, 30 September 2026. The proposed verification below is by GPT-6 (OpenAI Codex), following the question whether Transversal holds in Base 1. It has not been independently checked and is not recorded as proved.</p>
-<p>The underlying model is Cian Dorr’s Base 1 from <em>Boolean Completeness does not imply Rigid Comprehension</em>, draft of 30 July 2026, §3.1, p. 9. Its established properties and their verification history remain in <code>symmetric-all-surjections</code>. This record proposes two additional verdicts for that same model: Transversal and necessary Transversal at every admitted type. It does not propose a new underlying construction.</p>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Symmetric ideally-full model: Base 1 with least-support representatives</h1></header><p><strong>Status: conjectured; bronze star.</strong> Recorded at
+Zachary Goodsell’s request, 30 September 2026. The proposed verification
+below is by GPT-6 (OpenAI Codex), following the question whether
+Transversal holds in Base 1. It has not been independently checked and
+is not recorded as proved.</p>
+<p>The underlying model is Cian Dorr’s Base 1 from <em>Boolean
+Completeness does not imply Rigid Comprehension</em>, draft of 30 July
+2026, §3.1, p. 9. Its established properties and their verification
+history remain in <code>symmetric-all-surjections</code>. This record
+proposes two additional verdicts for that same model: Transversal and
+necessary Transversal at every admitted type. It does not propose a new
+underlying construction.</p>
 <h2 id="the-proposed-witness">The proposed witness</h2>
-<p>There is one object, <span class="math inline">\mathbb N</span>. Arrows are all surjections <span class="math inline">h:\mathbb N\to\mathbb N</span>, and the symmetry group <span class="math inline">G</span> is the full permutation group. Relational domains contain exactly the symmetric, finitely pinned intensions of the relevant type. Evaluation is at the identity arrow <span class="math inline">1</span>.</p>
-<p>Fix a type <span class="math inline">\sigma</span>. Write <span class="math inline">D_\sigma</span> for its domain and <span class="math inline">A_h</span> for a property’s extension at the arrow <span class="math inline">h</span>. Transport satisfies <span class="math inline">(k\cdot A)_h=A_{hk}</span>, with composition read as <span class="math inline">hk=h\circ k</span>. Symmetry gives <span class="math inline">A_{gh}=g\cdot A_h</span> for <span class="math inline">g\in G</span>, where the action on a set is the pointwise action on its members.</p>
-<p>Let <span class="math inline">E\subseteq D_\sigma</span> be an actual extension <span class="math inline">X_1</span>. If <span class="math inline">X</span> is pinned by a finite set <span class="math inline">S</span>, then every permutation fixing <span class="math inline">S</span> pointwise fixes <span class="math inline">E</span>: pinning gives <span class="math inline">X_g=X_1</span>, while symmetry gives <span class="math inline">X_g=g\cdot E</span>.</p>
+<p>There is one object, <span class="math inline">\mathbb N</span>.
+Arrows are all surjections <span class="math inline">h:\mathbb
+N\to\mathbb N</span>, and the symmetry group <span
+class="math inline">G</span> is the full permutation group. Relational
+domains contain exactly the symmetric, finitely pinned intensions of the
+relevant type. Evaluation is at the identity arrow <span
+class="math inline">1</span>.</p>
+<p>Fix a type <span class="math inline">\sigma</span>. Write <span
+class="math inline">D_\sigma</span> for its domain and <span
+class="math inline">A_h</span> for a property’s extension at the arrow
+<span class="math inline">h</span>. Transport satisfies <span
+class="math inline">(k\cdot A)_h=A_{hk}</span>, with composition read as
+<span class="math inline">hk=h\circ k</span>. Symmetry gives <span
+class="math inline">A_{gh}=g\cdot A_h</span> for <span
+class="math inline">g\in G</span>, where the action on a set is the
+pointwise action on its members.</p>
+<p>Let <span class="math inline">E\subseteq D_\sigma</span> be an actual
+extension <span class="math inline">X_1</span>. If <span
+class="math inline">X</span> is pinned by a finite set <span
+class="math inline">S</span>, then every permutation fixing <span
+class="math inline">S</span> pointwise fixes <span
+class="math inline">E</span>: pinning gives <span
+class="math inline">X_g=X_1</span>, while symmetry gives <span
+class="math inline">X_g=g\cdot E</span>.</p>
 <h3 id="least-supports-of-extensions">Least supports of extensions</h3>
-<p>Use the least finite <strong>permutation support</strong> <span class="math inline">S_E</span> of <span class="math inline">E</span>, not a pinning set of an arbitrary property with extension <span class="math inline">E</span>.</p>
-<p>The relevant support lemma says that finite permutation supports are closed under intersection. Here is the proposed elementary justification for this setting. If finite <span class="math inline">A,B</span> support <span class="math inline">E</span>, every transposition of two points outside <span class="math inline">A\cap B</span> fixes <span class="math inline">E</span>: choose a fresh point outside <span class="math inline">A\cup B</span> and the two points, and express that transposition as three transpositions through the fresh point. Each of those fixes <span class="math inline">A</span> or fixes <span class="math inline">B</span> pointwise. Thus every finite permutation fixing <span class="math inline">A\cap B</span> fixes <span class="math inline">E</span>. For an arbitrary permutation fixing <span class="math inline">A\cap B</span>, choose a finite permutation fixing that intersection and agreeing with it on <span class="math inline">A</span>; the two have the same action on <span class="math inline">E</span> because <span class="math inline">A</span> supports <span class="math inline">E</span>. Hence the intersection is a support.</p>
-<p>Starting with any finite support and intersecting supports that omit each dispensable member gives a least support. Its characterization yields <span class="math inline">S_{g\cdot E}=g[S_E]</span> for every permutation <span class="math inline">g</span>.</p>
+<p>Use the least finite <strong>permutation support</strong> <span
+class="math inline">S_E</span> of <span class="math inline">E</span>,
+not a pinning set of an arbitrary property with extension <span
+class="math inline">E</span>.</p>
+<p>The relevant support lemma says that finite permutation supports are
+closed under intersection. Here is the proposed elementary justification
+for this setting. If finite <span class="math inline">A,B</span> support
+<span class="math inline">E</span>, every transposition of two points
+outside <span class="math inline">A\cap B</span> fixes <span
+class="math inline">E</span>: choose a fresh point outside <span
+class="math inline">A\cup B</span> and the two points, and express that
+transposition as three transpositions through the fresh point. Each of
+those fixes <span class="math inline">A</span> or fixes <span
+class="math inline">B</span> pointwise. Thus every finite permutation
+fixing <span class="math inline">A\cap B</span> fixes <span
+class="math inline">E</span>. For an arbitrary permutation fixing <span
+class="math inline">A\cap B</span>, choose a finite permutation fixing
+that intersection and agreeing with it on <span
+class="math inline">A</span>; the two have the same action on <span
+class="math inline">E</span> because <span class="math inline">A</span>
+supports <span class="math inline">E</span>. Hence the intersection is a
+support.</p>
+<p>Starting with any finite support and intersecting supports that omit
+each dispensable member gives a least support. Its characterization
+yields <span class="math inline">S_{g\cdot E}=g[S_E]</span> for every
+permutation <span class="math inline">g</span>.</p>
 <h3 id="canonical-representatives">Canonical representatives</h3>
-<p>Propose the property <span class="math inline">\widehat E</span> with extensions</p>
+<p>Propose the property <span class="math inline">\widehat E</span> with
+extensions</p>
 <p><span class="math display">
 (\widehat E)_h=
 \begin{cases}
-g\cdot E,&amp;\text{if }h|_{S_E}\text{ is injective and }g|_{S_E}=h|_{S_E}
+g\cdot E,&amp;\text{if }h|_{S_E}\text{ is injective and
+}g|_{S_E}=h|_{S_E}
              \text{ for a permutation }g,\\
 \varnothing,&amp;\text{if }h|_{S_E}\text{ is not injective}.
 \end{cases}
 </span></p>
 <p>The proposed checks are:</p>
 <ol type="1">
-<li><strong>Well-definedness.</strong> An injection on a finite set extends to a permutation. If <span class="math inline">g,g&#39;</span> both agree with <span class="math inline">h</span> on <span class="math inline">S_E</span>, then <span class="math inline">g^{-1}g&#39;</span> fixes <span class="math inline">S_E</span> and hence <span class="math inline">E</span>, so <span class="math inline">g\cdot E=g&#39;\cdot E</span>.</li>
-<li><strong>Pinning.</strong> The extension depends only on <span class="math inline">h|_{S_E}</span>. If arrows <span class="math inline">k,k&#39;</span> agree on <span class="math inline">S_E</span>, then <span class="math inline">hk,hk&#39;</span> also agree there for every arrow <span class="math inline">h</span>. Thus <span class="math inline">(k\cdot\widehat E)_h=(k&#39;\cdot\widehat E)_h</span> for every <span class="math inline">h</span>, so the whole intension is pinned by <span class="math inline">S_E</span>.</li>
-<li><strong>Symmetry.</strong> Postcomposing <span class="math inline">h</span> with a permutation <span class="math inline">g</span> preserves whether <span class="math inline">h</span> is injective on <span class="math inline">S_E</span>, and carries the chosen image of <span class="math inline">E</span> to its <span class="math inline">g</span>-image. Hence <span class="math inline">(\widehat E)_{gh}=g\cdot(\widehat E)_h</span>.</li>
-<li><strong>Actual extension.</strong> <span class="math inline">(\widehat E)_1=E</span>.</li>
+<li><strong>Well-definedness.</strong> An injection on a finite set
+extends to a permutation. If <span class="math inline">g,g&#39;</span>
+both agree with <span class="math inline">h</span> on <span
+class="math inline">S_E</span>, then <span
+class="math inline">g^{-1}g&#39;</span> fixes <span
+class="math inline">S_E</span> and hence <span
+class="math inline">E</span>, so <span class="math inline">g\cdot
+E=g&#39;\cdot E</span>.</li>
+<li><strong>Pinning.</strong> The extension depends only on <span
+class="math inline">h|_{S_E}</span>. If arrows <span
+class="math inline">k,k&#39;</span> agree on <span
+class="math inline">S_E</span>, then <span
+class="math inline">hk,hk&#39;</span> also agree there for every arrow
+<span class="math inline">h</span>. Thus <span
+class="math inline">(k\cdot\widehat E)_h=(k&#39;\cdot\widehat
+E)_h</span> for every <span class="math inline">h</span>, so the whole
+intension is pinned by <span class="math inline">S_E</span>.</li>
+<li><strong>Symmetry.</strong> Postcomposing <span
+class="math inline">h</span> with a permutation <span
+class="math inline">g</span> preserves whether <span
+class="math inline">h</span> is injective on <span
+class="math inline">S_E</span>, and carries the chosen image of <span
+class="math inline">E</span> to its <span
+class="math inline">g</span>-image. Hence <span
+class="math inline">(\widehat E)_{gh}=g\cdot(\widehat E)_h</span>.</li>
+<li><strong>Actual extension.</strong> <span
+class="math inline">(\widehat E)_1=E</span>.</li>
 </ol>
-<p>If these checks apply to the full ideally-full domain at every type, <span class="math inline">\widehat E</span> is an admissible property with the required actual extension.</p>
+<p>If these checks apply to the full ideally-full domain at every type,
+<span class="math inline">\widehat E</span> is an admissible property
+with the required actual extension.</p>
 <h3 id="a-classifier-in-the-domain">A classifier in the domain</h3>
 <p>The construction should also satisfy</p>
 <p><span class="math display">
 g\cdot\widehat E=\widehat{g\cdot E}\qquad(g\in G).
 </span></p>
-<p>To check this at an arrow <span class="math inline">h</span>, compare <span class="math inline">(\widehat E)_{hg}</span> with <span class="math inline">(\widehat{g\cdot E})_h</span>. The injectivity tests agree because <span class="math inline">S_{g\cdot E}=g[S_E]</span>; in the injective case, compose a permutation agreeing with <span class="math inline">h</span> on <span class="math inline">g[S_E]</span> with <span class="math inline">g</span> to obtain one agreeing with <span class="math inline">hg</span> on <span class="math inline">S_E</span>.</p>
+<p>To check this at an arrow <span class="math inline">h</span>, compare
+<span class="math inline">(\widehat E)_{hg}</span> with <span
+class="math inline">(\widehat{g\cdot E})_h</span>. The injectivity tests
+agree because <span class="math inline">S_{g\cdot E}=g[S_E]</span>; in
+the injective case, compose a permutation agreeing with <span
+class="math inline">h</span> on <span class="math inline">g[S_E]</span>
+with <span class="math inline">g</span> to obtain one agreeing with
+<span class="math inline">hg</span> on <span
+class="math inline">S_E</span>.</p>
 <p>Consequently the proposed collection</p>
 <p><span class="math display">
 \mathcal C_\sigma=\{\widehat E:E\text{ is an actual extension of a }
 \sigma\text{-property}\}
 </span></p>
-<p>is permutation-invariant. Define <span class="math inline">F^{(\sigma t)t}</span> to have extension <span class="math inline">\mathcal C_\sigma</span> at every arrow. It is then pinned by the empty set, and permutation-invariance of its extension gives symmetry. Ideal fullness should therefore put this classifier in the domain.</p>
-<p>At <span class="math inline">1</span>, every extension <span class="math inline">E</span> has its representative <span class="math inline">\widehat E</span> in <span class="math inline">\mathcal C_\sigma</span>. If another member <span class="math inline">\widehat{E&#39;}</span> has extension <span class="math inline">E</span>, then <span class="math inline">E&#39;=E</span>, and the canonical construction gives the same intension. Thus the proposed <span class="math inline">F</span> selects exactly one property in each coextension class, as Transversal requires.</p>
-<h2 id="scope-and-remaining-verification">Scope and remaining verification</h2>
-<p>The argument is intended for every admitted <span class="math inline">\sigma</span>, including <span class="math inline">e</span> and higher types. If verified, it establishes the full Transversal schema. The model’s already established No Pure Contingency would then give its boxed form, instance by instance. Together with the established failures of Actuality and Relational Choice, this would witness that Transversal implies neither of them.</p>
-<p>The conjecture remains the Base 1 satisfaction claim, not merely the existence of a model with the displayed package. Check the domain and transport claims at arbitrary types, the use of permutation supports of extensions, and the admissibility of the single classifier. A defect in this witness construction would leave the satisfaction claim open; a negative resolution would require showing that no admissible classifier works at some type. No new verdict has been added to the proved Base 1 record, and no independent or Lean verification is claimed.</p>
+<p>is permutation-invariant. Define <span class="math inline">F^{(\sigma
+t)t}</span> to have extension <span class="math inline">\mathcal
+C_\sigma</span> at every arrow. It is then pinned by the empty set, and
+permutation-invariance of its extension gives symmetry. Ideal fullness
+should therefore put this classifier in the domain.</p>
+<p>At <span class="math inline">1</span>, every extension <span
+class="math inline">E</span> has its representative <span
+class="math inline">\widehat E</span> in <span
+class="math inline">\mathcal C_\sigma</span>. If another member <span
+class="math inline">\widehat{E&#39;}</span> has extension <span
+class="math inline">E</span>, then <span
+class="math inline">E&#39;=E</span>, and the canonical construction
+gives the same intension. Thus the proposed <span
+class="math inline">F</span> selects exactly one property in each
+coextension class, as Transversal requires.</p>
+<h2 id="scope-and-remaining-verification">Scope and remaining
+verification</h2>
+<p>The argument is intended for every admitted <span
+class="math inline">\sigma</span>, including <span
+class="math inline">e</span> and higher types. If verified, it
+establishes the full Transversal schema. The model’s already established
+No Pure Contingency would then give its boxed form, instance by
+instance. Together with the established failures of Actuality and
+Relational Choice, this would witness that Transversal implies neither
+of them.</p>
+<p>The conjecture remains the Base 1 satisfaction claim, not merely the
+existence of a model with the displayed package. Check the domain and
+transport claims at arbitrary types, the use of permutation supports of
+extensions, and the admissibility of the single classifier. A defect in
+this witness construction would leave the satisfaction claim open; a
+negative resolution would require showing that no admissible classifier
+works at some type. No new verdict has been added to the proved Base 1
+record, and no independent or Lean verification is claimed.</p>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Background: Boolean Completeness does not imply Rigid Comprehension.</strong> Dorr, Cian. Boolean Completeness does not imply Rigid Comprehension. Unpublished draft in progress, 30 July 2026, 27 pages. All page, proposition and lemma locators for this source refer to that draft. Parts of the draft were drafted with AI assistance; its mathematical claims are attributed to the author. — §3.1, p. 9; symmetric ideally-full domains and transport in §3. Source of Base 1 and its semantics, not of the proposed Transversal verification.</li>
+<li><strong>Background: Boolean Completeness does not imply Rigid
+Comprehension.</strong> Dorr, Cian. Boolean Completeness does not imply
+Rigid Comprehension. Unpublished draft in progress, 30 July 2026, 27
+pages. All page, proposition and lemma locators for this source refer to
+that draft. Parts of the draft were drafted with AI assistance; its
+mathematical claims are attributed to the author. — §3.1, p. 9;
+symmetric ideally-full domains and transport in §3. Source of Base 1 and
+its semantics, not of the proposed Transversal verification.</li>
 </ul>
 </body></html>

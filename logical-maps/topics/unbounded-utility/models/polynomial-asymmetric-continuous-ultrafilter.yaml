@@ -12,6 +12,7 @@ satisfies:
 - l1-continuity
 - shift-invariance
 - shift-transfer
+- existential-copula-sum-consistency
 violates:
 - pasadena-value
 - arroyo-value
@@ -20,7 +21,7 @@ violates:
 status: proved
 certificate:
   source_id: misc
-  lean: stated
+  lean: none
   produced_by: Zachary Goodsell (asymmetric continuous clipping construction); GPT-6 (Codex) (cutoff specialization and evaluation calculations)
   recorded_by: GPT-6 (Codex), 2026-09-09
   checked_by: []
@@ -32,11 +33,15 @@ sources:
 - 'Zachary Goodsell, Decision theory unbound, Noûs 58 (2024), 669–695, DOI 10.1111/nous.12473, Appendix B, Definition 3, Lemma 6, Remark 3 and Corollary 3, pp. 691–693: continuous clipped-expectation quotient and separate cutoff functions.'
 - 'Zachary Goodsell, Symmetries of value, Noûs 60 (2026), 16–37, DOI 10.1111/nous.12549, Theorem 1, p. 24: asymmetric source model and failure of reflection even with DTU, L1 Continuity and Relative Expectation; pp. 28–33 for the named prospects.'
 - 'Claude (Fable 5.1), Logical Maps, 23 September 2026: failure of Comonotonic Sum Invariance (half-Cauchy common summand) in writeups/polynomial-asymmetric-continuous-ultrafilter.md; diagnostic checks/comonotonic_witnesses.py.'
+- 'AI-generated report communicated by Branden Fitelson, Unbounded Utility: Five Top-Ranked Open Conjectures
+  Resolved, 30 September 2026, §4(b), p. 3. AI (Claude agents; model versions unspecified), communicated
+  by Branden Fitelson. Proof expanded and informally checked by GPT-6 (Codex), 2 October 2026.'
 source_names:
 - GPT-6 cutoff calculations 9 Sep
 - Decision Theory Unbound
 - Symmetries of Value
 - Claude comonotonic failure 23 Sep
+- AI report via Branden Fitelson (2 Oct addition)
 notes: >-
   Original work: model specialization with moderate evaluation calculations.
   The asymmetric clipping method and its strong expectation/continuity
@@ -50,6 +55,7 @@ notes: >-
 checks:
 - topics/unbounded-utility/checks/calculation_factorizations.py
 - topics/unbounded-utility/checks/comonotonic_witnesses.py
+- topics/unbounded-utility/checks/fitelson_report.py
 changes:
 - date: '2026-09-23'
   by: Claude (Fable 5.1)
@@ -57,6 +63,16 @@ changes:
     Comonotonic Sum Invariance shown to fail (write-up section “Failure of Comonotonic Sum Invariance”). Y = max(C,0) + 2 min(C,0) − (2 ln 2 − 1)/π is indifferent to sure 0, but with the common comonotonic summand Z = max(C,0) the clipped gap between 0 + Z and Y + Z tends to (2 ln 2)/π, so 0 + Z ≻ Y + Z.
   violates:
   - comonotonic-sum-consistency
+- date: '2026-10-02'
+  by: AI (Claude agents; model versions unspecified), communicated by Branden Fitelson; GPT-6 (Codex),
+    proof expansion and informal verification, 2026-10-02
+  summary: 'A single copula exchanging adjacent quarters works for every marginal pair: on each quarter
+    one quantile is bounded, so dominated convergence makes clipped addition additive up to an error tending
+    to zero. The tolerance-based comparison ignores that error in both directions. Full proof in writeups/calibrated-geometric-continuous-ultrafilter.md (shared clipping proof);
+    original construction attribution and date are preserved. The previous record was Lean stated; the
+    expanded statement is not Lean-checked.'
+  satisfies:
+  - existential-copula-sum-consistency
 references:
 - paper: decision-theory-unbound
   role: background
@@ -66,3 +82,6 @@ references:
   role: background
   locator: 'Theorem 1, p. 24: asymmetric source model and failure of reflection even with DTU, L1 Continuity
     and Relative Expectation; pp. 28–33 for the named prospects'
+- paper: fitelson-ai-unbounded-report-2026
+  role: proof
+  locator: §4(b), p. 3

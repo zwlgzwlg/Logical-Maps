@@ -94,3 +94,20 @@ Scale Invariance flag.
 The same doubling refutes Integer Affine Preservation: $\mu\succ\nu$ is not
 carried to $2\mu\succeq2\nu$, since the second set in the theorem's proof
 ranks $2\nu$ strictly above $2\mu$.
+
+
+## A fixed shuffle copula
+
+**Added 2 October 2026.** The AI-generated report communicated by **Branden
+Fitelson**, *Unbounded Utility: Five Top-Ranked Open Conjectures Resolved*
+(30 September 2026), §4(b), supplies a new property of this construction.
+Its producers are identified as Claude agents, with model versions unspecified.
+GPT-6 (Codex) expanded and informally checked the argument.
+
+The [fixed shuffle-copula proof](calibrated-geometric-continuous-ultrafilter.html#shared-clipping-and-shuffle-copula-proof)
+applies to this model's cutoffs and tolerance-based ultrafilter comparison.
+It proves **Existential Copula Sum Invariance** using one copula for all
+triples, including atomic marginals. This does not change the model's
+existing failure of Comonotonic Sum Invariance. The original construction
+and earlier results retain their original attribution. The expanded model
+has no Lean verification; its earlier record was marked stated.

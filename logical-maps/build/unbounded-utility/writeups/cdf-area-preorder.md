@@ -2,6 +2,12 @@
 
 This is a model of **DU**, but not **DTU**, because Totality fails.
 
+**Update, 2 October 2026:** Independent Sum Cancellation is now refuted for
+this exact model by the [block-smoothing counterexample](#cancellation-counterexample)
+from the AI-generated report communicated by Branden Fitelson. The earlier
+discussion below explains why the manuscript's proof did not settle it;
+the new result supplies an actual counterexample, not an inference from that gap.
+
 It is also the **least DU preorder with L¹ Continuity**, equivalently with
 Continuity under Vanishing Shifts. The continuity verification below and
 the new [DU continuity theorem](du-vanishing-shifts-imply-relative.html)
@@ -110,7 +116,8 @@ Originally both areas are $1/2$; after convolution both are $1/4$. Tonelli
 still preserves the integrals of the separately convolved $f$ and $g$.
 This demonstrates the false identification; it is **not** a counterexample
 to convolution invariance itself. Independent Sum Cancellation, and hence
-full Independent Sum Invariance, remain unasserted for this exact model.
+full Independent Sum Invariance, were left unasserted in the original record;
+the separately attributed 2 October counterexample below now refutes both.
 A [total extension satisfying Independent Sum Invariance](conjectured-total-independent-sum-extension.html)
 is now proved separately: saturating the area cone first supplies
 cancellation while preserving its strict comparisons, after which an
@@ -274,6 +281,133 @@ discoverer as `deepseek-flash`, correcting the draft's Claude attribution.
 The model's `certificate.trawl` records the corrected checkpoint, scoped
 review, admission time, original response identity and evidence references.
 
+
+<a id="cancellation-counterexample"></a>
+
+## Independent Sum Cancellation refuted
+
+**Source:** AI-generated results communicated by **Branden Fitelson**,
+*Unbounded Utility: Five Top-Ranked Open Conjectures Resolved*, 30 September
+2026, §§2 and 5(a). The report identifies Claude agents, without model versions.
+The CDF-area model is Goodsell's; the cancellation counterexample is credited
+to the report's AI producers. GPT-6 (Codex) expanded and informally checked
+the proof on 2 October 2026. No human check or Lean verification is asserted.
+
+### The ordering and the plan
+
+For $v=S_X-S_Y$ the [CDF-area ordering](cdf-area-preorder.html) declares
+$X\succeq_RY$ iff $\int v_-<\infty$ and $\int v_+\ge\int v_-$.
+We construct probability laws whose two signed areas are infinite, but
+whose survival difference becomes nonnegative after convolution with one
+independent noise law. The smoothed positive area is infinite. Thus
+$X+Z\succ_RY+Z$ while $X,Y$ are incomparable.
+
+### A block smoothing lemma
+
+Let $\mu$ have a symmetric density nonincreasing on $[0,\infty)$, and let
+$T(r)=\mu(|Z|>r)$. Suppose $L\ge2w>0$,
+$\Delta=T(w)-T(L)>0$ and $H\Delta\ge h>0$. Define
+
+$$b=H\mathbf1_{[-L,0)}-h\mathbf1_{[0,w)}
+       +H\mathbf1_{[w,w+L)}.$$
+
+We prove $b*\mu\ge0$ everywhere. At location $x$, write
+
+$$N=\mu([x-w,x]),\qquad
+P=\mu([x,x+L])+\mu([x-w-L,x-w]).$$
+
+Endpoints have measure zero. The convolution equals $HP-hN$.
+For $0\le x\le w$, the two wing intervals contain $[w,L]$ and $[-L,-w]$,
+so $P\ge\Delta\ge\Delta N$. For $x\ge2w$, the left wing contains
+$[x-2w,x-w]$, whose density integral is at least that on $[x-w,x]$ by
+monotonicity on the positive half-line. For $w\le x\le2w$, the left wing
+contains $[-w,0]$ because $L\ge2w$; symmetry and monotonicity again make
+its integral at least $N$. Thus outside the middle interval on the right
+$P\ge N\ge\Delta N$. Reflection about $w/2$ gives the same conclusion
+for $x\le0$. In every case $HP-hN\ge(H\Delta-h)N\ge0$.
+
+### Infinite blocks and actual probability laws
+
+Take $Z=\epsilon(U^{-2}-1)$ with $U$ uniform on $(0,1)$ and $\epsilon$ an
+independent fair sign. Its density is
+$f(z)=\tfrac14(1+|z|)^{-3/2}$, and
+$T(r)=(1+r)^{-1/2}$, so $E|Z|=\infty$.
+For $k\ge1$ put
+
+$$c=\tfrac3{13},\quad w_k=4^k-1,\quad L_k=16^k-1,
+\quad h_k=c4^{-k},\quad H_k=2c2^{-k}.$$
+
+Then $L_k\ge2w_k$ and
+
+$$\Delta_k=2^{-k}-4^{-k},\qquad
+\frac{H_k\Delta_k}{h_k}=2(1-2^{-k})\ge1.$$
+
+Place these blocks consecutively. More precisely, set $r_1=0$ and
+$r_{k+1}=r_k+2L_k+w_k$, and define $v$ to be $H_k$ on
+$[r_k,r_k+L_k)$, $-h_k$ on $[r_k+L_k,r_k+L_k+w_k)$, and $H_k$ on
+$[r_k+L_k+w_k,r_{k+1})$. Let $v=0$ on the negative half-line. It is
+right-continuous and tends to zero at both infinities.
+
+Its total variation is
+
+$$\operatorname{TV}(v)
+=2H_1+2\sum_{k\ge1}(H_k+h_k)
+=2c+4c+\tfrac{2c}{3}=\tfrac{20}{13}.$$
+
+Here the initial jump and the downward jumps between consecutive positive
+plateaus together contribute $2H_1$. It would be incorrect to count a
+return to zero at every adjoining block boundary.
+
+The finite signed atomic measure $\nu=-dv$ has mass zero and Jordan parts
+of mass $10/13$ each. Define probability laws
+
+$$\mathcal L(X)=\nu^++\tfrac3{13}\delta_0,\qquad
+  \mathcal L(Y)=\nu^-+\tfrac3{13}\delta_0.$$
+
+Then $S_X-S_Y=\nu((t,\infty))=v(t)$, so these are genuine gamble laws,
+not merely formal survival differences. They can be realized on the standing
+atomless space together with a $Z$ independent of the pair $(X,Y)$.
+
+The negative area is
+
+$$\sum_{k\ge1}h_kw_k=c\sum_{k\ge1}(1-4^{-k})=\infty,$$
+
+and the positive area $\sum 2H_kL_k$ is also infinite. Thus neither
+comparison holds before adding the noise.
+
+### Convolution gives strict dominance
+
+Write $v$ as the sum of its translated blocks $b_k$. Their supports are
+disjoint, and every finite partial sum is bounded in absolute value by one
+fixed constant. Dominated convergence with respect to the probability
+measure $\mu$ therefore gives
+
+$$v*\mu=\sum_{k\ge1}b_k*\mu.$$
+
+Every summand is nonnegative by the lemma. Each individual block is integrable,
+so Fubini gives
+
+$$\int(b_k*\mu)=\int b_k=2H_kL_k-h_kw_k.$$
+
+These positive quantities have divergent sum. Tonelli, now applied to
+nonnegative convolved blocks, yields $\int v*\mu=+\infty$. In particular
+$v*\mu$ is not identically zero. Independent convolution gives
+$S_{X+Z}-S_{Y+Z}=v*\mu\ge0$. Thus $X+Z$ strictly stochastically dominates
+$Y+Z$ and is strictly preferred by the area rule. This refutes Independent
+Sum Cancellation and therefore Independent Sum Invariance.
+
+The original model still satisfies Independent Sum Preservation, Positive
+Affine Invariance and Comonotonic Sum Invariance. Its existing comonotonic
+copula establishes Existential Copula Sum Invariance. Consequently this
+one model supplies the report's second and fifth non-implications, and also
+separates Independent Sum Preservation from Cancellation over DU.
+
+`checks/fitelson_report.py` checks the exact block inequalities, finite-prefix
+variation and areas, and samples the closed-form convolution. Those numerical
+samples do not substitute for the global smoothing lemma or the divergent
+series proof.
+
 ## Paper references
 
 - **Proof: Unbounded Utility and Background Risk.** Zachary Goodsell (5 June 2026). Unbounded Utility and Background Risk. Unpublished working manuscript. — §3, pp. 7–8; Theorems 6–7, pp. 19–20
+- **Proof: Unbounded Utility: Five Top-Ranked Open Conjectures Resolved.** AI-generated report, 30 September 2026, 4 pages; communicated by Branden Fitelson. The report attributes production to Claude agents without specifying model versions. Fitelson is the communicator, not the credited producer of the proofs. — §§2 and 5(a), p. 2

@@ -13,6 +13,7 @@ satisfies:
 - cdf-area-extension
 - shift-invariance
 - shift-transfer
+- existential-copula-sum-consistency
 violates:
 - symmetric-neutrality
 - reflection-anti-invariance
@@ -25,7 +26,7 @@ violates:
 status: proved
 certificate:
   source_id: symmetries-of-value
-  lean: stated
+  lean: none
   produced_by: Zachary Goodsell (construction and source non-implication); GPT-6 (Codex) (explicit specialization
     and additional property calculations)
   recorded_by: GPT-6 (Codex), 2026-09-09
@@ -44,16 +45,21 @@ sources:
   692–693. Source of the clipped-expectation ultrafilter, continuous quotient, and asymmetric-cutoff strategy,
   including the possibility of assigning nonzero values to symmetric gambles.
 - 'Claude (Fable 5.1), Logical Maps, 23 September 2026: failure of Comonotonic Sum Invariance (half-Cauchy common summand) in writeups/asymmetric-continuous-ultrafilter.md; diagnostic checks/comonotonic_witnesses.py.'
+- 'AI-generated report communicated by Branden Fitelson, Unbounded Utility: Five Top-Ranked Open Conjectures
+  Resolved, 30 September 2026, §4(b), p. 3. AI (Claude agents; model versions unspecified), communicated
+  by Branden Fitelson. Proof expanded and informally checked by GPT-6 (Codex), 2 October 2026.'
 source_names:
 - Symmetries of Value
 - GPT-6 generated 9 Sep
 - Decision Theory Unbound
 - Claude comonotonic failure 23 Sep
+- AI report via Branden Fitelson (2 Oct addition)
 notes: |-
   Original work: source-model specialization and additional verification. The asymmetric construction and the non-implication of reflection even under DTU $+ L^{1}$ Continuity + Relative Expectation are already Goodsell’s: Symmetries of value, Theorem 1 (p. 24), citing Decision theory unbound, Remark 3. They are not new AI results. The 2024 paper supplies the continuous quotient and separate increasing cutoffs; Corollary 3 already permits nonzero values for symmetric gambles. Work recorded here chooses $f(t)=2t$ and $g(t)=t$ and spells out the CDF-area/shift-transfer verification and exact Cauchy, alternating-game and negative-self-similarity witnesses. These added calculations are not a claim of literature novelty. No scale or sum-invariance verdict is asserted without proof. Diagnostic checks do not certify the general axioms or ultrafilter existence.
 checks:
 - topics/unbounded-utility/checks/asymmetric_continuous_ultrafilter.py
 - topics/unbounded-utility/checks/comonotonic_witnesses.py
+- topics/unbounded-utility/checks/fitelson_report.py
 changes:
 - date: '2026-09-23'
   by: Claude (Fable 5.1)
@@ -67,6 +73,16 @@ changes:
     Uniqueness of Negative Self-Similarity (integer ratios) shown to fail: the recorded uniqueness witness uses p = 1/2, a = 2, b = 0 and Z = 0, with C₁ ≻ 0 both fixed values.
   violates:
   - integer-negative-self-similarity
+- date: '2026-10-02'
+  by: AI (Claude agents; model versions unspecified), communicated by Branden Fitelson; GPT-6 (Codex),
+    proof expansion and informal verification, 2026-10-02
+  summary: 'A single copula exchanging adjacent quarters works for every marginal pair: on each quarter
+    one quantile is bounded, so dominated convergence makes clipped addition additive up to an error tending
+    to zero. The tolerance-based comparison ignores that error in both directions. Full proof in writeups/calibrated-geometric-continuous-ultrafilter.md (shared clipping proof);
+    original construction attribution and date are preserved. The previous record was Lean stated; the
+    expanded statement is not Lean-checked.'
+  satisfies:
+  - existential-copula-sum-consistency
 references:
 - paper: symmetries-of-value
   role: proof
@@ -78,3 +94,6 @@ references:
   locator: Appendix B, Definition 3, Lemma 6 and proof of Theorem 3, pp. 691–692; Remark 3 and Corollary 3,
     pp. 692–693. Source of the clipped-expectation ultrafilter, continuous quotient, and asymmetric-cutoff
     strategy, including the possibility of assigning nonzero values to symmetric gambles
+- paper: fitelson-ai-unbounded-report-2026
+  role: proof
+  locator: §4(b), p. 3

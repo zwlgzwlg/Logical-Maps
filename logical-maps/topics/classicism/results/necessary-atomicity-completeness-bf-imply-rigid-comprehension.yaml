@@ -41,9 +41,23 @@ notes: >-
   boxed Atomicity, Boolean Completeness and BF; or a model of C with those three principles that fails
   Rigid Comprehension. The source's first cross-reference to Proposition 2.6 was replaced in the earlier
   transcription by Proposition 2.7; the statement and premises are unchanged.
+
+
+  Refuted, 1 October 2026: the model ultralimit-fork, from Branden Fitelson (with Claude and GPT-6 Astra),
+  satisfies Classicism, □Atomicity, □Boolean Completeness, □BF and □Actuality, and fails Rigid Comprehension
+  at type $t\to t$. It extends the propositional structure mentioned above to a model of C with all the
+  premises, so gap (b) is a genuine gap. The record stays conjectured, as the map's convention requires; the
+  model is the refuting evidence. Gap-free in the end is part (ii), which gets Actuality: Atomicity (type
+  $t$) and Weak Inextensible Comprehension imply Actuality
+  (atomicity-t-and-weakly-inextensible-comprehension-imply-actuality), and Boolean Completeness implies Weak
+  Inextensible Comprehension.
 changes:
 - date: '2026-09-28'
   by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request
   summary: 'Downgraded from proved to conjectured: the proof in note 42 has two gaps (see the notes), found
     in the Lean-Classicism project. The summary of the paper''s argument moved from the proof field to
     the write-up, where the gaps are marked.'
+- date: '2026-10-01'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request
+  summary: Recorded the refutation by the model ultralimit-fork, and that part (ii) of note 42 follows from
+    atomicity-t-and-weakly-inextensible-comprehension-imply-actuality.

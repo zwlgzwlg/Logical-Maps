@@ -1,0 +1,63 @@
+id: asymmetric-liminf-clipped-expectation
+name: 'Clipped expectation: liminf dominance [−t, 2t]'
+satisfies:
+- rich-outcomes
+- archimedean-outcomes
+- stochastic-equivalence
+- stochastic-dominance
+- independence
+- expected-utility
+- cdf-area-extension
+- relative-expectation
+- l1-continuity
+- shift-invariance
+- existential-copula-sum-consistency
+- positive-affine-invariance
+violates:
+- totality
+- reflection-anti-invariance
+- negative-affine-anti-invariance
+- symmetric-neutrality
+- folded-expectation
+- alternating-st-petersburg-value
+status: proved
+certificate:
+  source_id: misc
+  lean: none
+  produced_by: Unspecified Claude agents (AI-generated specialization and witnesses, communicated by Branden
+    Fitelson); Zachary Goodsell (underlying clipping method)
+  recorded_by: GPT-6 (Codex), proof expansion and informal verification, 2026-10-02
+  checked_by: []
+  date: '2026-10-02'
+description: Use all real-valued gambles with identity utility. Put v_X(t)=E[max(-t,min(X,2t))] for every real
+  t>0, and X≽Y iff liminf(v_X(t)-v_Y(t))≥0 as t tends to infinity. The common clipping proof establishes DU
+  and the stated expectation, continuity and fixed-copula properties. Reparametrizing t by t/a and the bounded
+  shift argument give full Positive Affine Invariance. Symmetric St Petersburg has constant clipped value 1/2
+  for t≥1, refuting neutral symmetry and reflection. A symmetric base-four law has values 1/2 and 1 on two
+  cofinal sequences, making it incomparable with 3/4. Alternating St Petersburg has value zero. The accompanying
+  write-up supplies every witness and all quantified proofs.
+sources:
+- 'AI-generated report communicated by Branden Fitelson, Unbounded Utility: Five Top-Ranked Open Conjectures
+  Resolved, 30 September 2026, §§3 and 4(b), pp. 2–3. The report identifies Claude agents but no model version.'
+- 'Zachary Goodsell, Decision theory unbound, Noûs 58 (2024), 669–695, DOI 10.1111/nous.12473, Appendix B,
+  Definition 3, Lemma 6 and Remark 3: underlying continuous clipped-expectation construction and asymmetric
+  cutoffs.'
+- 'GPT-6 (Codex), 2 October 2026: full proof expansion and informal check in writeups/asymmetric-liminf-clipped-expectation.md
+  and writeups/calibrated-geometric-continuous-ultrafilter.md (shared clipping proof).'
+source_names:
+- AI report via Branden Fitelson
+- Decision Theory Unbound (construction)
+- GPT-6 proof expansion 2 Oct
+notes: Branden Fitelson communicated the AI-generated results; he is not credited as the AI proof author or
+  as a checker. The supplied summary reports a separate Codex review, but its referee files were unavailable
+  and have not been inspected. Acceptance rests on the complete arguments recorded here. No machine verification
+  or literature-novelty claim is made.
+checks:
+- topics/unbounded-utility/checks/fitelson_report.py
+references:
+- paper: fitelson-ai-unbounded-report-2026
+  role: origin
+  locator: §§3 and 4(b), pp. 2–3
+- paper: decision-theory-unbound
+  role: background
+  locator: Appendix B, Definition 3, Lemma 6 and Remark 3
