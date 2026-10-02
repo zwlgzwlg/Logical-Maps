@@ -20,11 +20,20 @@
     "required": ["text"],
     "properties": {
      "text": {"type": "string", "minLength": 1, "description": "What the parameter is."},
+     "generate": {"type": "boolean", "description": "Each member also gives a variant, a model of its own, for every other value whose requires it meets."},
+     "default": {"type": "string", "description": "A generated parameter's value for a member that sets none."},
      "values": {
       "type": "object",
       "minProperties": 1,
       "propertyNames": {"pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
-      "additionalProperties": {"type": "string", "minLength": 1, "description": "The prose this value puts in the definition."}
+      "additionalProperties": {"oneOf": [
+       {"type": "string", "minLength": 1, "description": "The prose this value puts in the definition."},
+       {"type": "object", "additionalProperties": false, "required": ["text"], "properties": {
+        "text": {"type": "string", "minLength": 1, "description": "The prose this value puts in the definition."},
+        "label": {"type": "string", "minLength": 1, "description": "A few words naming the value in a variant's name."},
+        "requires": {"type": "array", "items": {"type": "string"}, "uniqueItems": true, "description": "Conditions a member must meet to take this value."}
+       }}
+      ]}
      }
     }
    }

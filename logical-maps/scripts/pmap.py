@@ -114,9 +114,17 @@ def load_topic(topic_id: str) -> dict:
             if sub == "models" and is_argument_record(d):
                 d.setdefault("certificate", {}).setdefault("lean", "none")
                 full = expand_member(d, groups_by_id)  # a group's member gets its definition and shared arguments
+                if full is not d:
+                    full["_raw"] = d  # its own arguments that apply only at other settings are checked from here
                 sources.append(full)
                 flat = flatten_model(full, raw=d)
                 lst += flat
+                group = groups_by_id.get(d.get("group"))
+                for vs in member_variants(d, group) if flat and isinstance(group, dict) else []:
+                    suffix, tag = variant_label(group, d, vs)
+                    v = expand_member(d, groups_by_id, vs)
+                    v.update(id=f"{d['id']}-{suffix}", name=f"{d.get('name', d['id'])} [{tag}]", variant_of=d["id"])
+                    lst += flatten_model(v, raw=d)
                 if not flat:  # a withdrawn construction: kept, and validated, but out of the engine
                     retired.append({**full, "_source": d})
                 continue
@@ -174,9 +182,21 @@ TIERS = ("bronze", "silver", "gold")
 # arguments, so its own keep their positions. Each carries `group` and, if it requires any,
 # `conditions` with the member's reasons. The engine never sees a group, so upgrading a record
 # into one cannot change a verdict that the flattened lists do not change.
+#
+# A parameter marked `generate` also makes variants. A member's setting for it (or the parameter's
+# `default`) gives the member itself; every other value whose `requires` the member meets gives a
+# variant: a model of its own, with an id and name derived from the member's, the same file, and
+# the arguments that apply at its settings. A member's own argument applies at every setting unless
+# its `when` says otherwise; `own` in a `when` matches a setting given as the member's own prose.
 
 import re as _re
 SLOT = _re.compile(r"\{\{\s*([a-z0-9]+(?:-[a-z0-9]+)*)\s*\}\}")
+
+
+def value_entry(param: dict, value: str) -> dict:
+    """A named value as {text, label, requires}; a bare string is its text."""
+    v = ((param or {}).get("values") or {}).get(value)
+    return {"text": v} if isinstance(v, str) else v if isinstance(v, dict) else {}
 
 
 def setting_text(group: dict, name: str, setting):
@@ -188,40 +208,95 @@ def setting_text(group: dict, name: str, setting):
         return setting.get("text") if isinstance(setting.get("text"), str) else None
     if not isinstance(setting, str):
         return None
-    values = param.get("values")
-    if isinstance(values, dict):
-        return values.get(setting) if isinstance(values.get(setting), str) else None
+    if isinstance(param.get("values"), dict):
+        t = value_entry(param, setting).get("text")
+        return t if isinstance(t, str) else None
     return setting
 
 
-def shared_applies(c: dict, rec: dict) -> bool:
-    """`when`: each named parameter is set to one of the listed values (a member's own prose
-    matches none); `requires`: the member meets each condition."""
-    settings = rec.get("settings") if isinstance(rec.get("settings"), dict) else {}
-    meets = rec.get("meets") if isinstance(rec.get("meets"), dict) else {}
-    for name, want in (c.get("when") or {}).items():
+def member_settings(group: dict, rec: dict) -> dict:
+    """A member's settings, a generated parameter it leaves unset taking the group's default."""
+    settings = dict(rec.get("settings") or {}) if isinstance(rec.get("settings"), dict) else {}
+    for name, param in (group.get("parameters") or {}).items():
+        if isinstance(param, dict) and param.get("generate") and name not in settings and param.get("default"):
+            settings[name] = param["default"]
+    return settings
+
+
+def settings_match(when, settings: dict) -> bool:
+    """`when`: each named parameter is set to one of the listed values; `own` matches prose of the
+    member's own, which no named value matches."""
+    for name, want in (when or {}).items():
         want = want if isinstance(want, list) else [want]
-        if not (isinstance(settings.get(name), str) and settings[name] in want):
+        v = settings.get(name)
+        if not ((isinstance(v, str) and v in want) or (isinstance(v, dict) and "own" in want)):
             return False
-    return all(cond in meets for cond in c.get("requires") or [])
+    return True
 
 
-def expand_member(rec: dict, groups: dict) -> dict:
-    """A group member as the build sees it: the group's definition completed, and the shared arguments
-    that apply after its own arguments. Anything else is returned as it is."""
+def shared_applies(c: dict, rec: dict, settings: dict | None = None) -> bool:
+    """`when` matches the member's settings and the member meets every condition in `requires`."""
+    if settings is None:
+        settings = rec.get("settings") if isinstance(rec.get("settings"), dict) else {}
+    meets = rec.get("meets") if isinstance(rec.get("meets"), dict) else {}
+    return settings_match(c.get("when"), settings) and all(cond in meets for cond in c.get("requires") or [])
+
+
+def member_variants(rec: dict, group: dict) -> list[dict]:
+    """The settings of each variant of a member: every combination of the generated parameters'
+    values other than the member's own, each value's `requires` met by the member."""
+    import itertools
+    base = member_settings(group, rec)
+    meets = rec.get("meets") if isinstance(rec.get("meets"), dict) else {}
+    axes = []
+    for name, param in (group.get("parameters") or {}).items():
+        if not (isinstance(param, dict) and param.get("generate") and isinstance(param.get("values"), dict)):
+            continue
+        vals = [v for v in param["values"] if all(c in meets for c in value_entry(param, v).get("requires") or [])]
+        if not isinstance(base.get(name), str):  # the member's own prose stays one of its choices
+            vals = [base.get(name)] + vals
+        elif base.get(name) not in vals:
+            vals = [base.get(name)] + vals
+        axes.append((name, vals))
+    out = []
+    for combo in itertools.product(*[vals for _, vals in axes]):
+        s = {**base, **{name: v for (name, _), v in zip(axes, combo)}}
+        if any(s[name] != base.get(name) for name, _ in axes):
+            out.append(s)
+    return out
+
+
+def variant_label(group: dict, rec: dict, settings: dict) -> tuple[str, str]:
+    """The id suffix and the name tag of a variant: its settings that differ from the member's."""
+    base = member_settings(group, rec)
+    slugs, tags = [], []
+    for name, param in (group.get("parameters") or {}).items():
+        v = settings.get(name)
+        if v == base.get(name) or not isinstance(v, str):
+            continue
+        slugs.append(f"{name}-{v}")
+        tags.append(value_entry(param, v).get("label") or f"{name} {v}")
+    return "-".join(slugs), "; ".join(tags)
+
+
+def expand_member(rec: dict, groups: dict, settings: dict | None = None) -> dict:
+    """A group member as the build sees it, at its own settings or a variant's: the group's
+    definition completed, its own arguments that apply there, and then the shared arguments that
+    apply. Anything else is returned as it is."""
     import copy
     group = groups.get(rec.get("group"))
     if not isinstance(group, dict):
         return rec
     out = dict(rec)
-    settings = rec.get("settings") if isinstance(rec.get("settings"), dict) else {}
+    settings = settings if settings is not None else member_settings(group, rec)
+    out["settings"] = settings
     meets = rec.get("meets") if isinstance(rec.get("meets"), dict) else {}
     filled = SLOT.sub(lambda mt: setting_text(group, mt[1], settings.get(mt[1])) or mt[0], str(group.get("definition") or ""))
     out["definition"] = "\n\n".join(x.strip() for x in (filled, rec.get("definition")) if isinstance(x, str) and x.strip())
     conditions = {c.get("id"): c for c in group.get("conditions") or [] if isinstance(c, dict)}
     shared = []
     for c in group.get("arguments") or []:
-        if not isinstance(c, dict) or not shared_applies(c, rec):
+        if not isinstance(c, dict) or not shared_applies(c, rec, settings):
             continue
         a = {k: copy.deepcopy(v) for k, v in c.items() if k not in ("when", "requires")}
         a["group"] = group.get("id")
@@ -229,7 +304,8 @@ def expand_member(rec: dict, groups: dict) -> dict:
             a["conditions"] = [{"id": k, "text": str((conditions.get(k) or {}).get("text", "")), "reason": meets.get(k)}
                                for k in c["requires"]]
         shared.append(a)
-    out["arguments"] = list(rec.get("arguments") or []) + shared
+    own = [a for a in rec.get("arguments") or [] if not isinstance(a, dict) or settings_match(a.get("when"), settings)]
+    out["arguments"] = own + shared
     return out
 
 
@@ -1590,6 +1666,18 @@ def group_errors(data: dict, ids) -> list[str]:
         for slot in SLOT.findall(str(g.get("definition") or "")):
             if slot not in params:
                 errors.append(f"{f}: the definition's slot {{{{{slot}}}}} is no parameter")
+        for name, param in params.items():
+            if not isinstance(param, dict):
+                continue
+            values = param.get("values") if isinstance(param.get("values"), dict) else None
+            if param.get("generate") and values is None:
+                errors.append(f"{f}: parameter '{name}' is generated but has no named values")
+            if param.get("default") is not None and (values is None or param["default"] not in values):
+                errors.append(f"{f}: the default of '{name}' is not one of its values")
+            for v in values or {}:
+                for cond in value_entry(param, v).get("requires") or []:
+                    if cond not in conditions:
+                        errors.append(f"{f}: value '{v}' of '{name}' requires unknown condition '{cond}'")
         seen = set()
         for c in g.get("arguments") or []:
             if not isinstance(c, dict):
@@ -1626,7 +1714,7 @@ def group_errors(data: dict, ids) -> list[str]:
             if name not in params:
                 errors.append(f"{f}: setting '{name}' is not a parameter of {g.get('id')}")
         for name in params:
-            if name not in settings:
+            if name not in settings and not (isinstance(params[name], dict) and params[name].get("generate") and params[name].get("default")):
                 errors.append(f"{f}: no setting for the parameter '{name}' of {g.get('id')}")
             elif setting_text(g, name, settings[name]) is None:
                 values = (params[name] or {}).get("values") if isinstance(params[name], dict) else None
@@ -1635,6 +1723,17 @@ def group_errors(data: dict, ids) -> list[str]:
         for cond in (rec.get("meets") or {}):
             if cond not in conditions:
                 errors.append(f"{f}: meets '{cond}', which is not a condition of {g.get('id')}")
+        for i, a in enumerate((rec.get("_raw") or rec).get("arguments") or []):
+            if not isinstance(a, dict) or a.get("group"):
+                continue
+            for name, want in (a.get("when") or {}).items():
+                values = (params.get(name) or {}).get("values") if isinstance(params.get(name), dict) else None
+                if not isinstance(values, dict):
+                    errors.append(f"{f}: {argument_label(a, i)}: when names '{name}', which is not a parameter with named values")
+                    continue
+                for v in want if isinstance(want, list) else [want]:
+                    if v not in values and v != "own":
+                        errors.append(f"{f}: {argument_label(a, i)}: '{v}' is not a value of {name}")
         own = {a.get("id") for a in rec.get("arguments") or [] if isinstance(a, dict) and a.get("id") and not a.get("group")}
         for a in rec.get("arguments") or []:
             if isinstance(a, dict) and a.get("group") and a.get("id") in own:
@@ -1676,6 +1775,10 @@ def argument_errors(data: dict, ids) -> list[str]:
                 for key, pids in (("holds", holds), ("fails", fails)):
                     for pid in pids:
                         settled.setdefault(pid, {}).setdefault(key, []).append(argument_label(a, i))
+        present = [a for _, a in _arguments(rec)]
+        for i, a in enumerate((rec.get("_raw") or {}).get("arguments") or []):
+            if isinstance(a, dict) and not any(a is b for b in present):  # applies only at other settings
+                errors += _argument_checks(a, f"{f}: {argument_label(a, i)}", ids, papers, writeups, data)
         for pid, by in settled.items():
             if len(by) == 2:
                 errors.append(f"{f}: '{pid}' both holds (arguments: {', '.join(by['holds'])}) and fails (arguments: {', '.join(by['fails'])})")
@@ -1889,6 +1992,11 @@ def validate_topic(topic_id: str, *, quiet=False) -> bool:
         if r.get("_companion_of"):  # generated: only its id and its model check are its own
             if r.get("id") in rids:
                 errors.append(f"{r['_file']}: the conjectured companion's id '{r['id']}' is already taken; set companion_id")
+            rids.add(r.get("id"))
+            continue
+        if r.get("variant_of"):  # generated from a member's file, which is checked as the member
+            if r.get("id") in rids:
+                errors.append(f"{r['_file']}: the variant id '{r['id']}' is already taken")
             rids.add(r.get("id"))
             continue
         source = r.get("_source")  # an argument-format record, checked as written
@@ -3755,6 +3863,39 @@ def _selftest_groups():
     assert any("argument id 'always' is also a shared argument of g" in e for e in errors), errors
     assert any("'a' both holds (arguments: g#always) and fails (arguments: arguments[1])" in e for e in errors), errors
     assert _argument_target({"model_sources": [], "groups": [group]}, "g#top") is group["arguments"][1]
+    # Generated parameters: a variant for every other value the member may take, a default for a
+    # member that sets none, own arguments limited by `when`, `own` matching a member's own prose.
+    gen = copy.deepcopy(group)
+    gen["definition"] = "Arrows: {{monoid}}. {{size}} {{sigma}}"
+    gen["parameters"]["size"] = {"text": "Size.", "generate": True, "default": "big", "values": {
+        "big": {"text": "Big.", "label": "big"}, "one": {"text": "One.", "label": "one thing"}}}
+    gen["parameters"]["sigma"] = {"text": "Σ.", "generate": True, "values": {
+        "top": {"text": "Σ is top.", "label": "Σ top"}, "atom": {"text": "Σ is an atom.", "label": "Σ atom", "requires": ["perturbable"]}}}
+    mem = {**rec, "definition": None, "arguments": [{"holds": ["b"], "text": "Own.", "when": {"size": "big"}},
+                                                   {"fails": ["e"], "text": "Own prose.", "when": {"sigma": "own"}}]}
+    assert member_settings(gen, mem) == {"monoid": "the truncations", "sigma": "top", "size": "big"}
+    vs = member_variants(mem, gen)
+    assert [(v["sigma"], v["size"]) for v in vs] == [("top", "one"), ("atom", "big"), ("atom", "one")], vs
+    assert member_variants({**mem, "meets": {}}, gen) == [{"monoid": "the truncations", "sigma": "top", "size": "one"}], "a value's requires is met first"
+    assert variant_label(gen, mem, vs[2]) == ("sigma-atom-size-one", "Σ atom; one thing")
+    v = expand_member(mem, {"g": gen}, vs[0])
+    assert v["definition"] == "Arrows: the truncations. One. Σ is top." and [a.get("id") for a in v["arguments"]] == ["always", "top", "either", "perturbed"]
+    prose = {**mem, "settings": {"monoid": "x", "sigma": {"text": "Σ is mine."}}}
+    assert [a.get("text") for a in expand_member(prose, {"g": gen})["arguments"]][:2] == ["Own.", "Own prose."]
+    assert len(member_variants(prose, gen)) == 5, "the member's own prose stays one of its choices"
+    G2 = jsonschema.Draft202012Validator(_schema("group"))
+    assert G2.is_valid(clean(gen)), list(G2.iter_errors(clean(gen)))
+    assert V.is_valid({k: x for k, x in clean(mem).items() if k != "definition"})
+    bad_gen = copy.deepcopy(gen)
+    bad_gen["parameters"]["size"]["default"] = "huge"
+    bad_gen["parameters"]["sigma"]["values"]["atom"]["requires"] = ["nowhere"]
+    bad_mem = {**mem, "arguments": [{"holds": ["b"], "text": "Own.", "when": {"size": "medium"}}]}
+    full_bad = expand_member(bad_mem, {"g": bad_gen})
+    full_bad["_raw"] = bad_mem
+    errors = argument_errors({**data, "groups": [bad_gen], "model_sources": [full_bad]}, set("abcde"))
+    for want in ("the default of 'size' is not one of its values", "value 'atom' of 'sigma' requires unknown condition 'nowhere'",
+                 "'medium' is not a value of size"):
+        assert any(want in e for e in errors), (want, errors)
 
 
 def selftest():
