@@ -426,6 +426,10 @@
   .page { --reading: color-mix(in srgb, var(--bg) 25%, #fff); }
   :root[data-theme="dark"] .page { --reading: color-mix(in srgb, var(--bg) 88%, #fff); }
   .page .prose.reading { background: var(--reading); padding: 10px 14px; border-radius: 4px; }
+  .page h3.argument-source { font: 500 13px var(--sans); color: var(--ink-2); margin: 14px 0 4px; }
+  .page details.argument .condition { margin: 4px 0 4px 14px; }
+  .page .criterion-scope { margin: -4px 0 10px 14px; }
+  .page dl.group-params dt { font-weight: 600; margin-top: 6px; } .page dl.group-params dd { margin: 2px 0 6px 14px; }
   .page details.argument details.review { margin: 2px 0 6px 14px; font-size: 12.5px; color: var(--ink-2); }
   .page details.argument details.review > summary { cursor: pointer; }
   .page .argument-verdicts { color: var(--ink); }
@@ -940,6 +944,10 @@ class Engine {
 
 // ---------------------------------------------------------------- state
 const PROVENANCE = new Map((DATA.provenance || []).map(x => [x.id, x]));
+// Model groups: a shared definition and criteria; the build has already expanded each
+// member's criteria into its arguments, marked with the group.
+const GROUPS = DATA.groups || [];
+const byGid = new Map(GROUPS.map(g => [g.id, g]));
 const P = DATA.principles, R = DATA.results.map(r => ({...r, conclusion: r.conclusion === false ? FALSE : r.conclusion})), MODELS = DATA.models, T = DATA.topic;
 const byPid = new Map(P.map(p => [p.id, p])), byRid = new Map(R.map(r => [r.id, r])), byMid = new Map(MODELS.map(m => [m.id, m]));
 const ids = P.map(p => p.id);
@@ -2824,11 +2832,15 @@ function argumentHtml(m, a, i) {
     a.like ? `Like <button class="lnk" data-open-model="${esc(a.like.split('#')[0])}">${esc(a.like)}</button>${(a.adapt || '').trim() ? ':' : ', word for word.'}` : '',
     side?.folded ? `Folded in from the record <span class="mono">${esc(side.id)}</span>.` : '',
     a.provenance ? `Provenance: <span class="mono">provenance/${esc(a.provenance)}.yaml</span>.` : '',
-    a.id ? `<span class="mono">${esc(m.companion_of || m.id)}#${esc(a.id)}</span>` : '',
+    a.group && !m.criteria ? `From the group <button class="lnk" data-open-group="${esc(a.group)}">${esc(byGid.get(a.group)?.name || a.group)}</button>.` : '',
+    a.id ? `<span class="mono">${esc(a.group || m.companion_of || m.id)}#${esc(a.id)}</span>` : '',
   ].filter(Boolean).join(' ');
+  // A criterion applies to a member through the conditions it requires; say why the member meets each.
+  const conditions = (a.conditions || []).map(c => `<div class="note condition"><b>Requires:</b> ${fmt(c.text || '')}${c.reason ? ` <b>Here:</b> ${fmt(c.reason)}` : ''}</div>`).join('');
   return `<details class="argument${a.withdrawn ? ' withdrawn' : ''}"${i === undefined ? '' : ` id="argument-${i}"`}><summary><span class="argument-verdicts">${marks}</span> ${argumentTags(a)}</summary>`
     + (a.text ? `<div class="prose reading">${fmt(a.text)}</div>` : '')
     + ((a.adapt || '').trim() ? `<div class="prose reading">${fmt(a.adapt)}</div>` : '')
+    + conditions
     + creditHtml(m, a)
     + (meta ? `<p class="note">${meta}</p>` : '')
     + (a.revisions || []).map(r => `<p class="note">Revised ${esc(r.date)}${r.by ? ' by ' + esc(r.by) : ''}: ${esc(r.note)}</p>`).join('')
@@ -2853,8 +2865,35 @@ function derivationStarts(m, c, e) {
 function argumentRoutes(m, c) { const list = argumentsFor(m, c); return list.length ? `<div class="arguments">${list.map(a => argumentHtml(m, a)).join('')}</div>` : ''; }
 // The model's arguments, each once, in the record's order.
 function argumentsSection(m) {
-  const list = m.arguments || [];
-  return list.length ? `<h2>Arguments</h2><div class="arguments">${list.map((a, i) => argumentHtml(m, a, i)).join('')}</div>` : '';
+  const list = (m.arguments || []).map((a, i) => [a, i]);
+  if (!list.length) return '';
+  const own = list.filter(([a]) => !a.group), shared = list.filter(([a]) => a.group);
+  const group = byGid.get(m.group);
+  return `<h2>Arguments</h2><div class="arguments">${own.map(([a, i]) => argumentHtml(m, a, i)).join('')}</div>`
+    + (shared.length ? `<h3 class="argument-source">From the group <button class="lnk" data-open-group="${esc(m.group)}">${esc(group?.name || m.group)}</button></h3>`
+      + `<div class="arguments">${shared.map(([a, i]) => argumentHtml(m, a, i)).join('')}</div>` : '');
+}
+// A group's page: its definition with the slots its members fill, its parameters and conditions,
+// each criterion with the members it applies to, and the members with their settings.
+function groupPage(g) {
+  const members = MODELS.filter(m => m.group === g.id && !m.companion_of);
+  const applies = c => members.filter(m => (m.arguments || []).some(a => a.group === g.id && a.id === c.id));
+  const setting = (m, name) => { const v = (m.settings || {})[name]; return typeof v === 'string' ? v : 'its own'; };
+  const named = Object.entries(g.parameters || {}).filter(([, p]) => p.values);
+  let h = `<h1>${esc(g.name)}</h1><div class="badges"><span class="badge kind">group of models</span></div>`;
+  h += `<h2>Definition</h2><div class="prose reading">${fmt(String(g.definition || '').replace(/\{\{\s*([a-z0-9-]+)\s*\}\}/g, '⟨$1⟩'))}</div>`;
+  h += `<h2>Parameters</h2><dl class="group-params">${Object.entries(g.parameters || {}).map(([name, p]) => `<dt>⟨${esc(name)}⟩</dt><dd>${fmt(p.text)}`
+    + (p.values ? `<ul class="src">${Object.entries(p.values).map(([v, t]) => `<li><b>${esc(v)}:</b> ${fmt(t)}</li>`).join('')}</ul>` : '') + '</dd>').join('')}</dl>`;
+  if ((g.conditions || []).length) h += `<h2>Conditions</h2><ul class="src">${g.conditions.map(c => `<li><b>${esc(c.id)}:</b> ${fmt(c.text)} <span class="dim">Met by ${members.filter(m => (m.meets || {})[c.id]).map(m => esc(m.name)).join('; ') || 'no member'}.</span></li>`).join('')}</ul>`;
+  h += `<h2>Criteria</h2><div class="arguments">${(g.criteria || []).map(c => {
+    const when = Object.entries(c.when || {}).map(([k, v]) => `${esc(k)} = ${[].concat(v).map(esc).join(' or ')}`), req = (c.requires || []).map(esc);
+    const to = applies(c);
+    return argumentHtml({ id: g.id, certificate: {}, criteria: true }, { ...c, group: g.id })
+      + `<p class="note criterion-scope">${when.length || req.length ? `Applies when ${[...when, ...req.map(r => 'it meets ' + r)].join(' and ')}: ` : 'Applies to every member: '}${to.map(m => `<button class="lnk" data-open-model="${esc(m.id)}">${esc(m.name)}</button>`).join('; ') || 'none yet'}.</p>`;
+  }).join('')}</div>`;
+  h += `<h2>Members</h2><table class="results"><tbody>${members.map(m => `<tr><td><button class="lnk" data-open-model="${esc(m.id)}">${esc(m.name)}</button></td>${named.map(([name]) => `<td class="dim">${esc(name)}: ${esc(setting(m, name))}</td>`).join('')}</tr>`).join('') || '<tr><td>—</td></tr>'}</tbody></table>`;
+  if (g.notes) h += `<h2>Notes</h2><div class="prose">${fmt(g.notes)}</div>`;
+  return h + `<div class="file">${esc(g.file)}</div>`;
 }
 // The one control beside a principle on a model's page: to its arguments when the record
 // argues for it, to how it follows when it is derived, to its evidence otherwise.
@@ -2898,6 +2937,7 @@ function renderPage(sel) {
     h += `<div class="record-summary">${writeupNote(m)}${m.description ? `<h2>Construction</h2><div class="prose">${fmt(m.description)}</div>` : ''}`
       + (base ? `<p class="note">The conjectured verdicts of <button class="lnk" data-open-model="${esc(base.id)}">${esc(base.name)}</button>: its established verdicts, and those its conjectured arguments propose.</p>` : '')
       + (m.definition ? `<h2>Definition</h2><div class="prose reading">${fmt(m.definition)}</div>` : '')
+      + (m.group && byGid.has(m.group) ? `<p class="note">A member of the group <button class="lnk" data-open-group="${esc(m.group)}">${esc(byGid.get(m.group).name)}</button>, which supplies this definition with the record's settings, and the arguments it applies to the record.</p>` : '')
       + (doubt ? `<p class="note"><span class="badge conj">construction ${doubt}</span> Each verdict below holds only if this is a model.</p>${construction.text ? `<div class="prose">${fmt(construction.text)}</div>` : ''}` : '')
       + '</div>';
     // Three columns by what the model says: the recorded verdicts, each with one control
@@ -2925,6 +2965,8 @@ function renderPage(sel) {
     if ((m.checks || []).length) h += `<h2>Checks</h2><ul class="src">${m.checks.map(x => `<li class="mono">${esc(x)}</li>`).join('')}</ul>`;
     if (!m.arguments) h += sourceList([m]);
     h += `<div class="file">${esc(m.file)}</div>`;
+  } else if (sel.type === 'group') {
+    h += groupPage(byGid.get(sel.id));
   } else if (sel.type === 'model-verdict') {
     const m = byMid.get(sel.id), e = modelEvidence(m, sel.principle);
     h += `<h1><button class="lnk" data-open-model="${m.id}" title="The model's page">${esc(m.name)}</button>: ${esc(name(sel.principle))}</h1>`;
@@ -3026,6 +3068,7 @@ function wire(el) {
   el.querySelectorAll('button[data-verdict-page]').forEach(b => b.addEventListener('click', () => openPage({ type: 'model-verdict', id: b.dataset.verdictModel, principle: b.dataset.verdictPage })));
   el.querySelectorAll('button[data-open-arg]').forEach(b => b.addEventListener('click', () => openPage({ type: 'model', id: b.dataset.openArg, jump: b.dataset.argPrinciple })));
   el.querySelectorAll('button[data-open-model]').forEach(b => b.addEventListener('click', () => openPage({ type: 'model', id: b.dataset.openModel })));
+  el.querySelectorAll('button[data-open-group]').forEach(b => b.addEventListener('click', () => openPage({ type: 'group', id: b.dataset.openGroup })));
   el.querySelectorAll('button[data-open-result]').forEach(b => b.addEventListener('click', () => openPage({ type: 'result', id: b.dataset.openResult })));
 }
 function relList(items) { return items.length ? `<ul class="rel">${items.map(([id, via]) => `<li><button data-principle="${id}">${esc(name(id))}</button>${via ? `<span class="via">${via}</span>` : ''}</li>`).join('')}</ul>` : `<div class="empty">—</div>`; }
