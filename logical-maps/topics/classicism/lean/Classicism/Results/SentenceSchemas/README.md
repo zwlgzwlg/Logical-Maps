@@ -35,6 +35,7 @@ lemma of the shallow layer is carried into a signature by `Term.ofPure`
 | `no-pure-contingency-r-implies-pure-b-r` | `npc_entails_pureB` |
 | `signature-b-r-implies-pure-b-r` | `signatureB_entails_pureB` |
 | `modal-b-implies-signature-b-r` | `modalB_entails_signatureB` |
+| `modal-b-implies-pure-b-r` | `modalB_entails_pureB` |
 | `fregean-axiom-implies-no-contingency-signature-r` | `fregean_entails_noContingency` |
 | `fregean-axiom-implies-no-pure-contingency-r` | `fregean_entails_npc` |
 | `possibility-and-necessary-barcan-t-incompatible` | `possibility_necBarcanT_inconsistent` |

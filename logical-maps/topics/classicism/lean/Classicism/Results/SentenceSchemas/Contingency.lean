@@ -184,6 +184,7 @@ theorem fregean_entails_npc_pure : P.FregeanAxiom.schema ⟹ npc Signature.pure 
   exact Theorem.mp (Derivable.allEβ (Theorem.ofCMinus fregean_box.derivable) p)
     (Theorem.ax (Ax := P.FregeanAxiom.schema) (a := P.FregeanAxiom.quoted) rfl)
 
+/-- `modal-b-implies-pure-b-r`: B gives B for every pure sentence, in the pure language. -/
 theorem modalB_entails_pureB : P.ModalB.schema ⟹ pureB Signature.pure := by
   rintro a ⟨p, hp, rfl⟩
   exact Derivable.allEβ (Theorem.ax (Ax := P.ModalB.schema) (a := P.ModalB.quoted) rfl) p

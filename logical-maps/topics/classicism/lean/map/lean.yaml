@@ -176,6 +176,12 @@ forms:
     statement: "Modalized Functionality for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
     lean_def: "Classicism.P.ModalizedFunctionality.listSchemaIn"
     lean_ref: Classicism.Map.modalized_functionality_r.list
+  modalized-plenitude-r:
+  - id: list
+    name: List form
+    statement: "Modalized Plenitude for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
+    lean_def: "Classicism.P.ModalizedPlenitude.listSchemaIn"
+    lean_ref: Classicism.Map.modalized_plenitude_r.list
   necessary-barcan-r:
   - id: list
     name: List form
@@ -317,6 +323,7 @@ lean_ref:
   maximalist-distinctness-incompatible-with-necessary-boolean-completeness-r: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_boolean_completeness_r
   maximalist-distinctness-incompatible-with-necessary-tractarianism-r: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_tractarianism_r
   modal-b-implies-distinctness-necessary-r: Classicism.Map.modal_b_implies_distinctness_necessary_r
+  modal-b-implies-pure-b-r: Classicism.Map.modal_b_implies_pure_b_r
   modal-b-implies-signature-b-r: Classicism.Map.modal_b_implies_signature_b_r
   modal-five-implies-modal-b: Classicism.Map.modal_five_implies_modal_b
   nd-and-bf-imply-necessary-nd: Classicism.Map.nd_and_bf_imply_necessary_nd

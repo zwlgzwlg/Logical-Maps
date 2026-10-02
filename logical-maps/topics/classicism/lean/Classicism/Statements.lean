@@ -2258,6 +2258,14 @@ def modalized_functionality_r.list : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.ModalizedFunctionality.schemaIn ↔
       Classicism.Meta.AxiomSet.Entails Ax Classicism.P.ModalizedFunctionality.listSchemaIn
 
+/-- `modalized-plenitude-r`, form `list`
+
+Modalized Plenitude ⇔ List form -/
+def modalized_plenitude_r.list : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.ModalizedPlenitude.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.ModalizedPlenitude.listSchemaIn
+
 /-- `necessary-barcan-r`, form `list`
 
 □BF ⇔ List form -/

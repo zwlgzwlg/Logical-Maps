@@ -497,6 +497,10 @@ theorem maximalist_distinctness_incompatible_with_necessary_tractarianism_r : St
 theorem modal_b_implies_distinctness_necessary_r : Statements.modal_b_implies_distinctness_necessary_r := by
   map_cert Proofs.modal_b_implies_distinctness_necessary_r.entails
 
+/-- `modal-b-implies-pure-b-r` -/
+theorem modal_b_implies_pure_b_r : Statements.modal_b_implies_pure_b_r := by
+  map_cert_sig (Entails.to_pureVersion_signatureB (Entails.ofPure modalB_entails_pureB))
+
 /-- `modal-b-implies-signature-b-r` -/
 theorem modal_b_implies_signature_b_r : Statements.modal_b_implies_signature_b_r := by
   map_cert_sig modalB_entails_signatureB
@@ -1084,5 +1088,10 @@ theorem identity_necessary_r.list : Statements.identity_necessary_r.list := by
 /-- `broad-necessitism-r`, form `list`: the principle for every list of argument types. -/
 theorem broad_necessitism_r.list : Statements.broad_necessitism_r.list := by
   map_form P.BroadNecessitism.schema_entails_listSchema P.BroadNecessitism.listSchema_entails_schema
+
+
+/-- `modalized-plenitude-r`, form `list`: the principle for every list of argument types. -/
+theorem modalized_plenitude_r.list : Statements.modalized_plenitude_r.list := by
+  map_form P.ModalizedPlenitude.schema_entails_listSchema P.ModalizedPlenitude.listSchema_entails_schema
 
 end Classicism.Map

@@ -218,6 +218,16 @@ theorem mp₂ {p q r : Sentence Sig} (h : Theorem Ax (Term.imp p (Term.imp q r))
     (hp : Theorem Ax p) (hq : Theorem Ax q) : Theorem Ax r :=
   Derivable.impE (Derivable.impE h hp) hq
 
+/-- **Necessitation**: what `C` proves, it proves necessary. `p` and `⊤` are each derivable
+from the other in the logical part, so Subst turns `⊤ = ⊤` into `p = ⊤`, which is `□p`.
+(Only for theorems of `C`: the premises of Subst carry no axioms.) -/
+theorem _root_.Classicism.Meta.C.Theorem.nec {p : Sentence Sig} (h : C.Theorem p) :
+    C.Theorem (Term.box p) :=
+  Derivable.subst (P := Term.top) (Q := p) (Hole.appL (Hole.appR (Term.eq _) Hole.hole) Term.top)
+    (Derivable.weaken₁ (Derivable.mono (fun _ ha => ⟨ha, ha⟩) h))
+    Derivable.top
+    (Derivable.refl Term.top)
+
 /-- A theorem under an equal sentence: where a sentence and the form it is meant as are
 equal but not by computation, as a vectorized sentence and a list form are equal up to
 the translations of closed types (`classicism_vec_eq`). -/

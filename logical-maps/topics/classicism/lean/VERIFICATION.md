@@ -1156,6 +1156,22 @@ too, 251 of 252 transformed. `Modal.lean` 38 of 38 and `Lattice.lean` 47 of 47 t
 pass. `Results/Forms.lean`: 2 of 2. The 202 result certificates and 21 form certificates
 prove their generated statements; `scripts/MapIndex.lean` indexes all 223.
 
+## Modalized Plenitude's list form, and Necessitation, 2 October (later still)
+
+Modalized Plenitude is a theorem of `C` at every list of input types
+(`Lists.modalized_plenitude_list`), so its list form is equivalent to it and is a form on the
+map. Its record is at output `σ' → t`, where the operation it builds is a meet, so its
+vectorization covers every output, not every input list; the input list goes by induction.
+The step (`modalized_plenitude_cons`, two inputs, certified as a rule and carried to every
+tail by its list rule) uses the tail's instance under the box, which an axiom cannot supply
+but a theorem of `C` can: **Necessitation**, `C.Theorem.nec` (`Syntax/Entailment.lean`),
+from Subst with `p` and `⊤` each derivable from the other in the logical part. Also
+`modal-b-implies-pure-b-r` is certified: `modalB_entails_pureB` proved it but was not
+counted.
+
+*Checked.* The full build passes. 203 result certificates and 22 form certificates prove
+their generated statements; 3 rest on `Classicism.e` and `e_exists`, as before.
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

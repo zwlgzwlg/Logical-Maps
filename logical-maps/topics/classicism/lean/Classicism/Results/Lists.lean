@@ -10,7 +10,7 @@ A principle with a Ty-parameter has a restricted form, one instance per type, an
 form, one instance per finite list of types (`VECTORIZATION-PLAN.md`; the README's
 *Names*). The list form entails the restricted form at once, a one-element list being the
 type itself (`P.listSchema_entails_schema`, generated). This file proves the converse,
-`P.schema_entails_listSchema`, for each of the twenty principles with a list form (D8):
+`P.schema_entails_listSchema`, for twenty-one of the twenty-five principles with a list form (D8):
 
 - by **induction on the list**, for BF, Tractarianism, ND, Existence, Functionality and
   the two Choices, and their boxed forms. The empty list is a theorem of `C`, derived from
@@ -31,7 +31,14 @@ type itself (`P.listSchema_entails_schema`, generated). This file proves the con
   its conclusion;
 - for the theorems of `C` (Modalized Functionality, Converse Barcan, Necessity of
   Identity, Broad Necessitism), by their list entailments from the empty set, which the
-  audit generates.
+  audit generates;
+- for Modalized Plenitude, also a theorem of `C`, by induction on the list as above, but
+  of theorems of `C`: its step uses the tail's instance under the box, which only a theorem
+  of `C` can supply (`C.Theorem.nec`). Its record is at output `σ' → t` (the operation it
+  builds is a meet there), so its list entailment vectorizes the output, not the input.
+
+Transversal, Transversal Choice and their boxed forms have list forms but not yet this
+direction.
 
 And a principle over relational types holds at every one once it holds at `σs ⇒* t` for
 every list `σs` (`schema_subset_args`): the form in which a unary result at `σ → t`,
@@ -98,6 +105,13 @@ def RelationalChoiceNil (τ : Type) [Ty τ] : Prop :=
   ∀ U : τ → Prop, (∃ y, U y) → ∃ S : τ → Prop, (∃ y, S y ∧ ∀ z, S z → y = z) ∧ ∀ y, S y → U y
 /-- `□`Relational Choice from no inputs. -/
 def NecRelationalChoiceNil (τ : Type) [Ty τ] : Prop := □ (RelationalChoiceNil τ)
+
+/-- Modalized Plenitude over `x : σ, x' : τ`, into `ρ`. -/
+def ModalizedPlenitudeCons (τ σ ρ : Type) [Ty τ] [Ty σ] [Rel ρ] : Prop :=
+  ∀ U : σ → τ → ρ → Prop, □ (∀ x x', ∃ y, □ (U x x' y ∧ ∀ z, U x x' z → y = z)) →
+    ∃ X : σ → τ → ρ, □ (∀ x x' y, U x x' y ↔ y = X x x')
+/-- `□`Modalized Plenitude: a stepping stone, Modalized Plenitude being a theorem of `C`. -/
+def NecModalizedPlenitude (σ ρ : Type) [Ty σ] [Rel ρ] : Prop := □ (ModalizedPlenitude σ ρ)
 
 end P
 
@@ -294,6 +308,64 @@ theorem actual_profile_of_codes {σ : Type} [Ty σ] :
     ⟨λ y ↦ Y' (λ R ↦ R y), hY'.1, fun Z hZ =>
       le_of_codes Y' Z (hY'.2 (λ c ↦ ∃ y, c = (λ R ↦ R y) ∧ Z y) ⟨x, rfl, hZ⟩)⟩
 
+/-! ### Modalized Plenitude
+
+Over two inputs: necessarily, for each outer input `x`, Modalized Plenitude at the inner
+input gives an operation necessarily representing `U x`, the only one by Modalized
+Functionality; Modalized Plenitude at the outer input then gives one operation representing
+those. The inner instance is used under the box, so the step takes it boxed. -/
+
+/-- Two operations representing `U x` agree everywhere. -/
+theorem mp_cons_unique {τ σ ρ : Type} [Ty τ] [Ty σ] [Rel ρ] (U : σ → τ → ρ → Prop) (x : σ)
+    (F G : τ → ρ) :
+    (∀ x' y, U x x' y ↔ y = F x') → (∀ x' y, U x x' y ↔ y = G x') → ∀ x', F x' = G x' :=
+  fun hF hG x' => (hG x' (F x')).1 ((hF x' (F x')).2 rfl)
+
+/-- Two operations each necessarily representing `U x` are identical, by Modalized
+Functionality. -/
+theorem mp_cons_eq {τ σ ρ : Type} [Ty τ] [Ty σ] [Rel ρ] (U : σ → τ → ρ → Prop) (x : σ)
+    (F : τ → ρ) :
+    □ (∀ x' y, U x x' y ↔ y = F x') →
+      ∀ G : τ → ρ, □ (∀ x' y, U x x' y ↔ y = G x') → F = G := fun hF G hG =>
+  modalized_functionality F G (modal_K _ _ (modal_K _ _ (nec% (mp_cons_unique U x F G)) hF) hG)
+
+/-- For each `x`, Modalized Plenitude at `τ` gives an operation necessarily representing
+`U x`, and necessarily the only one. -/
+theorem mp_cons_step {τ σ ρ : Type} [Ty τ] [Ty σ] [Rel ρ] (U : σ → τ → ρ → Prop) :
+    ModalizedPlenitude τ ρ → □ (∀ x x', ∃ y, □ (U x x' y ∧ ∀ z, U x x' z → y = z)) →
+      ∀ x, ∃ F : τ → ρ, □ (□ (∀ x' y, U x x' y ↔ y = F x') ∧
+        ∀ G : τ → ρ, □ (∀ x' y, U x x' y ↔ y = G x') → F = G) := fun mp H x =>
+  (mp (U x) (modal_K _ _ (nec% (fun (h : ∀ x x', ∃ y, □ (U x x' y ∧ ∀ z, U x x' z → y = z)) =>
+      h x)) H)).elim fun F hF =>
+    ⟨F, (box_and_eq _ _).mpr ⟨modal_four _ hF, modal_K _ _ (nec% (mp_cons_eq U x F)) (modal_four _ hF)⟩⟩
+
+/-- The operations representing each `U x`, read back: `∀x F. (□∀x' y. Uxx'y ↔ y = Fx') ↔
+F = X'x` gives `∀x x' y. Uxx'y ↔ y = X'xx'`. -/
+theorem mp_cons_out {τ σ ρ : Type} [Ty τ] [Ty σ] [Rel ρ] (U : σ → τ → ρ → Prop)
+    (X' : σ → τ → ρ) :
+    (∀ x (F : τ → ρ), □ (∀ x' y, U x x' y ↔ y = F x') ↔ F = X' x) →
+      ∀ x x' y, U x x' y ↔ y = X' x x' :=
+  fun h x => box_elim ((h x (X' x)).2 rfl)
+
+/-- Modalized Plenitude over two inputs, from `□`Modalized Plenitude at the inner input and
+Modalized Plenitude at the outer one, into the operations on the inner. -/
+theorem modalized_plenitude_cons {τ σ ρ : Type} [Ty τ] [Ty σ] [Rel ρ] :
+    NecModalizedPlenitude τ ρ → ModalizedPlenitude σ (τ → ρ) → ModalizedPlenitudeCons τ σ ρ :=
+  fun hτ hσ U H =>
+    (hσ (λ x F ↦ □ (∀ x' y, U x x' y ↔ y = F x'))
+      (modal_K _ _ (modal_K _ _ (nec% (mp_cons_step U)) hτ) (modal_four _ H))).elim fun X' hX' =>
+      ⟨X', modal_K _ _ (nec% (mp_cons_out U X')) hX'⟩
+
+/-- `(Uy ∧ ∀z. Uz → y = z) → ∀w. Uw ↔ w = y`. -/
+theorem mp_nil_coext {ρ : Type} [Rel ρ] (U : ρ → Prop) (y : ρ) :
+    (U y ∧ ∀ z, U z → y = z) → ∀ w, U w ↔ w = y :=
+  fun h w => ⟨fun hw => (h.2 w hw).symm, fun e => e ▸ h.1⟩
+
+/-- Modalized Plenitude from no inputs: the empty-list instance. -/
+theorem modalized_plenitude_nil {ρ : Type} [Rel ρ] :
+    ∀ U : ρ → Prop, □ (∃ y, □ (U y ∧ ∀ z, U z → y = z)) → ∃ X : ρ, □ (∀ y, U y ↔ y = X) :=
+  fun U H => (box_elim H).elim fun y hy => ⟨y, modal_K _ _ (nec% (mp_nil_coext U y)) hy⟩
+
 end Lists
 
 #classicism_schema Classicism.P.BarcanCons Classicism.P.NecBarcanCons
@@ -303,6 +375,7 @@ end Lists
   Classicism.P.FunctionalChoiceCons Classicism.P.NecFunctionalChoiceCons
   Classicism.P.RelationalChoiceCons Classicism.P.NecRelationalChoiceCons
   Classicism.P.RelationalChoiceNil Classicism.P.NecRelationalChoiceNil
+  Classicism.P.ModalizedPlenitudeCons Classicism.P.NecModalizedPlenitude
 #classicism_certify Classicism.Lists.barcan_cons Classicism.Lists.nec_barcan_cons
   Classicism.Lists.tractarianism_cons Classicism.Lists.nec_tractarianism_cons
   Classicism.Lists.nd_cons Classicism.Lists.nec_nd_cons Classicism.Lists.existence_cons
@@ -311,12 +384,13 @@ end Lists
   Classicism.Lists.relational_choice_cons Classicism.Lists.nec_relational_choice_cons
   Classicism.Lists.relational_choice_nil Classicism.Lists.nec_relational_choice_nil
   Classicism.Lists.plenitude_of_codes Classicism.Lists.nec_plenitude_of_codes
-  Classicism.Lists.actual_profile_of_codes
+  Classicism.Lists.actual_profile_of_codes Classicism.Lists.modalized_plenitude_cons
 #classicism_derive Classicism.Lists.barcan_nil Classicism.Lists.nec_barcan_nil
   Classicism.Lists.tractarianism_nil Classicism.Lists.nec_tractarianism_nil
   Classicism.Lists.nd_nil Classicism.Lists.nec_nd_nil Classicism.Lists.existence_nil
   Classicism.Lists.functionality_nil Classicism.Lists.nec_functionality_nil
   Classicism.Lists.functional_choice_nil Classicism.Lists.nec_functional_choice_nil
+  Classicism.Lists.modalized_plenitude_nil
 
 /-! ## 3. Restricted ⇒ list -/
 
@@ -570,6 +644,37 @@ theorem schema_subset_args₂ (q : Ty → RTy → Sentence Signature.pure) :
       (fun a => ∃ σs : List Ty, ∃ σ : Ty, Ty.AllClosed σs ∧ σ.Closed ∧ a = q σ (σs ⇒* .t)) :=
   fun _ ⟨σ, ρ, hσ, hρ, h⟩ =>
     ⟨ρ.args, σ, RTy.closed_args hρ, hσ, h.trans (congrArg (q σ) (RTy.ofArgs_args ρ).symm)⟩
+
+
+/-! ## 5. Modalized Plenitude over every list
+
+A theorem of `C` at every list, by induction on the list: the empty list from its shallow
+instance; the step from `σ` and the tail `τs`, at the restricted instance (a theorem of `C`
+at every type, its record vectorized in the output) and the tail's instance necessitated. -/
+
+open Lists in
+/-- **Modalized Plenitude over every list**, a theorem of `C`. -/
+theorem modalized_plenitude_list : ∀ (σs : List Ty) (ρ : RTy), Ty.AllClosed σs → ρ.Closed →
+    C.Theorem (P.ModalizedPlenitude.listQuoted σs ρ)
+  | [], ρ, _, _ =>
+    Theorem.cast (Derivable.mono (fun _ h => h.elim) (modalized_plenitude_nil.derivable ρ))
+      (by classicism_vec_eq)
+  | σ :: τs, ρ, hσs, hρ =>
+    have ih := modalized_plenitude_list τs ρ hσs.tail hρ
+    have hres : Theorem (C.axioms ∪ empty) (P.ModalizedPlenitude.quoted σ (τs ⇒* ρ)) :=
+      Entails.mono_right (schema_subset_args₂ _)
+        Classicism.Proofs.classicism_implies_modalized_plenitude_r.listEntails _
+        ⟨σ, τs ⇒* ρ, hσs.head, (RTy.closed_arrs τs ρ).2 ⟨hσs.tail, hρ⟩, rfl⟩
+    Theorem.cast (Theorem.mp₂ (modalized_plenitude_cons.listRule τs σ ρ hσs.head hρ)
+      (Theorem.cast (C.Theorem.nec ih) (by classicism_vec_eq))
+      (Derivable.mono (fun _ h => h.elim (fun h => h) (fun h => h.elim)) hres))
+      (by classicism_vec_eq)
+
+/-- **Modalized Plenitude over every list, from Modalized Plenitude**: a theorem of `C`. -/
+theorem _root_.Classicism.P.ModalizedPlenitude.schema_entails_listSchema :
+    P.ModalizedPlenitude.schema ⟹ P.ModalizedPlenitude.listSchema := by
+  rintro a ⟨σs, ρ, hσs, hρ, rfl⟩
+  exact Theorem.ofC (modalized_plenitude_list σs ρ hσs hρ)
 
 end Meta
 

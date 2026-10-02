@@ -14,7 +14,7 @@ Made 28 September 2026 from `ciandorr/Logical-Maps` at commit 7c928c4 ("first tr
 
 Since 2 October each result counted as proved has a certificate in `Classicism/Map.lean`: a
 theorem named by its id whose type is the statement the map's own generator writes for it
-(`map/README.md`). The 202 certificates agree with the table below; `map/index.json` gives,
+(`map/README.md`). The 203 certificates agree with the table below; `map/index.json` gives,
 for each, the file and lines of its proof.
 
 A record theorem in `Results/Records.lean` named exactly by a map id proves the map's claim, and its certificate is the entailment between the map's schemas. One named by a map id plus `_at_t` proves only the instances at type `t` (or with output `t`); its certificate is from the map's premise schemas to those instances. Where a full version exists too, the `_at_t` one is the instance at `t` that other proofs at `t` cite. A record with a Ty-parameter is proved at every list of types too, by its list form (`foo.listEntails`, the vectorized derivation); where the map's principle is over argument tuples, as Actual Profile is, or the record is proved at `σ → t` for a principle over relational types, that list form is the map's claim (`Results/Lists.lean`, `Results/Arity.lean`). `classicism_implies_existence_r_at_e` and `_relational` together cover their record, composed in `Results/Arity.lean`. Results proved by the metalogical theorems of `Results/SentenceSchemas/` are counted as proved too: those whose docstrings name the record, and the twenty-four "No Pure Contingency and X imply □X" results, all instances of `npc_union_entails_box`.
@@ -22,11 +22,11 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 | class | results | proved in Lean | in part only | not yet |
 | --- | --- | --- | --- | --- |
 | Per-type routine | 139 | 130 | 0 | 9 |
-| Per-instance routine over sentences | 52 | 31 | 0 | 21 |
+| Per-instance routine over sentences | 52 | 32 | 0 | 20 |
 | Sweet spot | 47 | 32 | 0 | 15 |
 | Metalogic-dominated | 26 | 9 | 0 | 17 |
 | Conjectured | 6 | 0 | 0 | 6 |
-| total | 270 | 202 | 0 | 68 |
+| total | 270 | 203 | 0 | 67 |
 
 ## Sweet spot (47)
 
@@ -116,7 +116,7 @@ A record theorem in `Results/Records.lean` named exactly by a map id proves the 
 - `logical-necessity-r-implies-modal-freedom-signature-r`
 - `logical-necessity-r-implies-no-pure-contingency-r`
 - `logical-necessity-r-implies-witnessed-possibility-r`
-- `modal-b-implies-pure-b-r`
+- `modal-b-implies-pure-b-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `modal-b-implies-signature-b-r` — **Lean: metalogical theorem in `Results/SentenceSchemas/`**
 - `modal-freedom-signature-r-implies-no-pure-contingency-r`
 - `no-contingency-signature-incompatible-with-witnessed-possibility`
