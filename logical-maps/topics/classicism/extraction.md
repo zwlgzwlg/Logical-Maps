@@ -142,3 +142,46 @@ Chapter 18's coherence results (Corollary 18.2, Proposition 18.8,
 Corollaries 18.3–18.4, Propositions 18.9–18.11) concern maximalizations of
 extensions of C other than C itself; whether to record them as relativized
 Possibility Maximalism principles awaits a decision.
+
+## Deferred model verdicts: Tame Rigidity (2 October 2026)
+
+**To do.** Add `tame-rigidity-r` and `necessary-tame-rigidity-r` to `satisfies` in
+`finite-support-truncations`, `finite-support-dyadic-roundings` and
+`finite-support-truncated-shifts`, with a `changes` entry and a write-up of the
+argument below. Also record the result C5 ⇒ □Tame Rigidity, whose proof
+necessitates the C-proof of □ND → Tame Rigidity in `c5-implies-tame-rigidity`
+and then applies 4. That settles □Tame Rigidity in
+`full-boolean-valued-atom-and-atomless` and `symmetric-qualitative-contrast`.
+These are deferred because the model records are being moved to a new format on
+the `model-records-layer0` branch. Add them in whichever format is current once
+that work has landed, then delete this section. An engine check on 2 October
+2026 found no conflicts with these verdicts.
+
+**Argument** (Claude Opus 5.5 (Anthropic), 2 October 2026; not yet checked by a
+human). In a one-object action model, write a relation $Y$ as its intension
+$k\mapsto Y_k$. Then $Y\bar a$ holds at $k$ iff $k\cdot\bar a\in Y_k$,
+$(h\cdot Y)_k=Y_{k\circ h}$, and $\le$ is inclusion of intensions. Put
+$X_0(S)_k:=k\cdot S$.
+
+*Lemma 1 (any one-object model).* If $Y_k=k\cdot Y_1$ for every $k$, then $Y$ is
+rigid. Persistence is immediate. For the boxed weak inextensibility,
+$(h\cdot Y)_k=k\cdot(h\cdot Y_1)=X_0(Y_h)_k$, which lies inside every $X$ that
+contains $X_0(Y_h)$.
+
+*Lemma 2 (ideally full, finitely pinned; also symmetric).* Let $Y$ be weakly rigid
+with extension $S$. For each finite $N'$, the intension
+$B_{N'}(S)_k:=\bigcup_{k'\equiv_{N'}k}k'\cdot S$ is pinned down by $N'$. It is
+symmetric whenever the model is, since $B_{N'}(S)_{g\circ k}=g\cdot B_{N'}(S)_k$. So it
+is in the domain. It contains $X_0(S)$, so weak inextensibility gives
+$Y\subseteq B_{N'}(S)$, and persistence gives $Y\supseteq X_0(S)$. Hence
+$k\cdot S\subseteq Y_k\subseteq\bigcap_{N'}\bigcup_{k'\equiv_{N'}k}k'\cdot S$.
+
+*Theorem.* Suppose every non-identity arrow $k$ is finitely determined, that is,
+$\{k\}$ is a pinned proposition. Then every weakly rigid relation at every type has
+$Y_k=k\cdot Y_1$, so it is rigid and Tame Rigidity holds. A one-object model has
+No Pure Contingency, so □Tame Rigidity holds as well. The hypothesis holds in the
+three models above:
+- truncations: $g_n$ is the only arrow with $g_n(n+1)=n$;
+- dyadic roundings: each $\{f_n\}$ is pinned;
+- truncated shifts: $k_n(n+1)=1$ singles out $k_n$ for $n\ge1$, and $k_0(1)=1$
+  singles out $k_0$.
