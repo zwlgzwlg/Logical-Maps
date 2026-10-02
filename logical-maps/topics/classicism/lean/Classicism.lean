@@ -87,3 +87,6 @@ import Classicism.Strict.Mirror
 import Classicism.Strict.Transformed
 import Classicism.Strict.Audit
 import Classicism.Strict.Tests
+import Classicism.Statements
+import Classicism.Map
+import Classicism.Tools.MapIndex

@@ -1064,6 +1064,32 @@ gate and type checks and are derived, 152 of 152 records are certified as entail
 (70 of the 74 with a Ty-parameter in list form too, the same four exceptions), and 296 of
 297 are transformed by the strict transformer, the same one exception.
 
+## The map's certificates, 2 October
+
+`Classicism/Statements.lean` is written by the map's own generator (`generate_lean_statements`
+in `zwlgzwlg/Logical-Maps`, `scripts/pmap.py`, at 8edffb3), run by `map/generate.py` with the
+fields of `map/lean.yaml` added; so the statements are the map's, not a transcription of
+them. A statement says that every consistent schema, over any signature, that entails the
+premises entails the conclusion (or `False`); that is equivalent to the entailment between
+the schemas, or to their inconsistency. `Classicism/Map.lean` proves 202 of them, one per
+result counted as proved in `MAP-SURVEY.md`, each from the certified entailment it cites.
+
+*Checked.* The full build passes. `scripts/MapIndex.lean` reports the axioms of each
+certificate: 193 rest on `propext` and `Quot.sound` only, 6 on `Classical.choice` as well
+(consistency facts from models), and 3 on `Classicism.e` and `e_exists` as well (the model in
+`Prop`), which the map's list of allowed axioms does not include.
+
+*Choices.*
+- The certificate is the object-language entailment, not the shallow proof: the map's
+  allowed `propext` is the Fregean Axiom, so a shallow proof passing its check would show
+  nothing about `C`.
+- The statements quantify over signatures, so that the seven results about
+  signature-relative principles can be stated; a pure entailment is carried to every
+  signature by `AxiomSet.Entails.ofPure` (`Map.lean`).
+- The glue lives in `Map.lean`: carrying an entailment to a signature, assembling the
+  premises in any order (`map_premises`), and identifying a boxed principle's schema with
+  the box of the principle's (`map_box`).
+
 ## Certificates
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen

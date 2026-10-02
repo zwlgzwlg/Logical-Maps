@@ -1,0 +1,311 @@
+# The Lean side of the map, as the map's own fields would record it.
+#
+# A proposal for topics/classicism in zwlgzwlg/Logical-Maps: `lean_lib` and `lean` go in
+# topic.yaml, each `lean_def` in its principle's YAML, each `lean_ref` in its result's
+# certificate. `generate.py` runs the map's own generator (pmap's
+# generate_lean_statements) on the map with these fields added, writing
+# Classicism/Statements.lean; `Classicism/Map.lean` proves those statements.
+#
+# A statement reads: for every signature and every consistent schema Ax over it, if Ax
+# entails each premise then it entails the conclusion (or, for an incompatibility, False).
+# That is equivalent to the entailment between the schemas, and makes an incompatibility
+# the inconsistency of the premises. A principle of the pure language is read in the
+# signature by `ofPure`; a signature-relative principle is at the signature itself.
+
+lean_lib: Classicism
+lean:
+  imports: [Classicism.Certified.Schemas, Classicism.Syntax.SentenceSchemas, Classicism.Syntax.Pure]
+  namespace: Classicism
+  definition_check: |-
+    example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
+      {def}
+  result:
+    binder: "∀ {Sig : Classicism.Meta.Signature} (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax →"
+    principle: "Classicism.Meta.AxiomSet.Entails Ax {def}"
+  model:
+    binder: "∃ (Sig : Classicism.Meta.Signature) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧"
+    principle: "Classicism.Meta.AxiomSet.Entails Ax {def}"
+
+# principle id -> its schema, read in the signature
+lean_def:
+  actual-profile-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ActualProfile.listSchema)"
+  actuality: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Actuality.schema)"
+  atomicity-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Atomicity.schema)"
+  atomicity-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.AtomicityT.schema)"
+  atomlessness: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Atomlessness.schema)"
+  barcan-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Barcan.schema)"
+  barcan-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.BarcanT.schema)"
+  boolean-completeness-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.BooleanCompleteness.schema)"
+  boolean-completeness-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.BooleanCompletenessT.schema)"
+  broad-necessitism-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.BroadNecessitism.schema)"
+  converse-barcan-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ConverseBarcan.schema)"
+  distinctness-necessary-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecessityOfDistinctness.schema)"
+  distinctness-necessary-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecessityOfDistinctnessT.schema)"
+  distinctness-preserving-collapse: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.DistinctnessPreservingCollapse.schema)"
+  distinctness-schema-r: "(Classicism.Meta.AxiomSet.ofPure (Classicism.Meta.AxiomSet.distinctness (Classicism.Meta.AxiomSet.empty : Classicism.Meta.AxiomSet Classicism.Meta.Signature.pure)))"
+  distinctness-signature-r: "(Classicism.Meta.AxiomSet.distinctness Classicism.Meta.AxiomSet.empty)"
+  existence-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Existence.schema)"
+  extensionality-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Extensionality.schema)"
+  fregean-axiom: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.FregeanAxiom.schema)"
+  functional-choice-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.FunctionalChoice.schema)"
+  functionality-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Functionality.schema)"
+  gallin-extensional-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.GallinExtensionalComprehension.schema)"
+  identity-necessary-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecessityOfIdentity.schema)"
+  inextensible-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.InextensibleComprehension.schema)"
+  intensionality-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Intensionality.schema)"
+  modal-b: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalB.schema)"
+  modal-five: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalFive.schema)"
+  modal-four: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalFour.schema)"
+  modal-k: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalK.schema)"
+  modal-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalT.schema)"
+  modalized-fregean: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalizedFregean.schema)"
+  modalized-functionality-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalizedFunctionality.schema)"
+  modalized-plenitude-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.ModalizedPlenitude.schema)"
+  necessary-actuality: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecActuality.schema)"
+  necessary-atomicity-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecAtomicity.schema)"
+  necessary-barcan-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecBarcan.schema)"
+  necessary-barcan-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecBarcanT.schema)"
+  necessary-boolean-completeness-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecBooleanCompleteness.schema)"
+  necessary-distinctness-necessary-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecNecessityOfDistinctness.schema)"
+  necessary-distinctness-necessary-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecNecessityOfDistinctnessT.schema)"
+  necessary-extensionality-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecExtensionality.schema)"
+  necessary-fregean-axiom: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecFregeanAxiom.schema)"
+  necessary-functional-choice-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecFunctionalChoice.schema)"
+  necessary-functionality-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecFunctionality.schema)"
+  necessary-gallin-extensional-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecGallinExtensionalComprehension.schema)"
+  necessary-modal-b: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecModalB.schema)"
+  necessary-modal-five: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecModalFive.schema)"
+  necessary-plenitude-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecPlenitude.schema)"
+  necessary-relational-choice-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecRelationalChoice.schema)"
+  necessary-rigid-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecRigidComprehension.schema)"
+  necessary-strong-leibniz-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecStrongLeibniz.schema)"
+  necessary-strong-leibniz-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecStrongLeibnizT.schema)"
+  necessary-tractarianism-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecTractarianism.schema)"
+  necessary-transversal-choice-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecTransversalChoice.schema)"
+  necessary-transversal-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecTransversal.schema)"
+  necessary-vicinity: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecVicinity.schema)"
+  necessary-weakly-inextensible-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.NecWeaklyInextensibleComprehension.schema)"
+  no-contingency-signature-r: "(Classicism.Meta.AxiomSet.noContingency _)"
+  no-pure-contingency-r: "(Classicism.Meta.AxiomSet.ofPure (Classicism.Meta.AxiomSet.npc Classicism.Meta.Signature.pure))"
+  persistent-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.PersistentComprehension.schema)"
+  plenitude-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Plenitude.schema)"
+  possibility-schema-r: "(Classicism.Meta.AxiomSet.ofPure (Classicism.Meta.AxiomSet.possibility (Classicism.Meta.AxiomSet.empty : Classicism.Meta.AxiomSet Classicism.Meta.Signature.pure)))"
+  possibility-signature-r: "(Classicism.Meta.AxiomSet.possibility Classicism.Meta.AxiomSet.empty)"
+  pure-b-r: "(Classicism.Meta.AxiomSet.ofPure (Classicism.Meta.AxiomSet.pureB Classicism.Meta.Signature.pure))"
+  relational-choice-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.RelationalChoice.schema)"
+  rigid-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.RigidComprehension.schema)"
+  signature-b-r: "(Classicism.Meta.AxiomSet.signatureB _)"
+  strong-leibniz-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.StrongLeibniz.schema)"
+  strong-leibniz-t: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.StrongLeibnizT.schema)"
+  tractarianism-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Tractarianism.schema)"
+  transversal-choice-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.TransversalChoice.schema)"
+  transversal-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Transversal.schema)"
+  very-weak-rigid-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.VeryWeakRigidComprehension.schema)"
+  vicinity: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.Vicinity.schema)"
+  weak-rigid-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.WeakRigidComprehension.schema)"
+  weakly-inextensible-comprehension-r: "(Classicism.Meta.AxiomSet.ofPure Classicism.P.WeaklyInextensibleComprehension.schema)"
+
+# result id -> its certificate, a theorem of Classicism/Map.lean (written by generate.py)
+lean_ref:
+  actual-profile-r-implies-actuality: Classicism.Map.actual_profile_r_implies_actuality
+  actuality-and-bf-imply-inextensible-comprehension: Classicism.Map.actuality_and_bf_imply_inextensible_comprehension
+  actuality-and-distinctness-preserving-collapse-imply-inextensible-comprehension: Classicism.Map.actuality_and_distinctness_preserving_collapse_imply_inextensible_comprehension
+  actuality-implies-actual-profile-r: Classicism.Map.actuality_implies_actual_profile_r
+  actuality-implies-persistent-comprehension-r: Classicism.Map.actuality_implies_persistent_comprehension_r
+  actuality-implies-transversal: Classicism.Map.actuality_implies_transversal
+  actuality-implies-vicinity: Classicism.Map.actuality_implies_vicinity
+  actuality-implies-weakly-inextensible-comprehension-r: Classicism.Map.actuality_implies_weakly_inextensible_comprehension_r
+  actuality-incompatible-with-atomlessness: Classicism.Map.actuality_incompatible_with_atomlessness
+  atomicity-and-bf-imply-necessary-actuality: Classicism.Map.atomicity_and_bf_imply_necessary_actuality
+  atomicity-and-bf-imply-strong-leibniz: Classicism.Map.atomicity_and_bf_imply_strong_leibniz
+  atomicity-r-implies-atomicity-t: Classicism.Map.atomicity_r_implies_atomicity_t
+  atomicity-t-and-bf-imply-atomicity: Classicism.Map.atomicity_t_and_bf_imply_atomicity
+  atomicity-t-and-bf-imply-necessary-actuality: Classicism.Map.atomicity_t_and_bf_imply_necessary_actuality
+  atomicity-t-and-bf-t-imply-strong-leibniz-t: Classicism.Map.atomicity_t_and_bf_t_imply_strong_leibniz_t
+  atomicity-t-incompatible-with-atomlessness: Classicism.Map.atomicity_t_incompatible_with_atomlessness
+  barcan-r-implies-barcan-t: Classicism.Map.barcan_r_implies_barcan_t
+  barcan-r-implies-functionality-r: Classicism.Map.barcan_r_implies_functionality_r
+  boolean-completeness-r-implies-boolean-completeness-t: Classicism.Map.boolean_completeness_r_implies_boolean_completeness_t
+  boolean-completeness-r-implies-weakly-inextensible-comprehension-r: Classicism.Map.boolean_completeness_r_implies_weakly_inextensible_comprehension_r
+  c5-and-actuality-imply-completeness: Classicism.Map.c5_and_actuality_imply_completeness
+  c5-and-actuality-imply-rigid-comprehension: Classicism.Map.c5_and_actuality_imply_rigid_comprehension
+  c5-and-atomicity-imply-necessary-atomicity: Classicism.Map.c5_and_atomicity_imply_necessary_atomicity
+  c5-and-atomicity-imply-necessary-completeness: Classicism.Map.c5_and_atomicity_imply_necessary_completeness
+  c5-and-atomicity-imply-necessary-plenitude: Classicism.Map.c5_and_atomicity_imply_necessary_plenitude
+  c5-and-atomicity-imply-necessary-rigid-comprehension: Classicism.Map.c5_and_atomicity_imply_necessary_rigid_comprehension
+  c5-and-completeness-imply-actuality: Classicism.Map.c5_and_completeness_imply_actuality
+  c5-and-completeness-imply-plenitude: Classicism.Map.c5_and_completeness_imply_plenitude
+  c5-and-necessary-actuality-imply-atomicity: Classicism.Map.c5_and_necessary_actuality_imply_atomicity
+  c5-and-necessary-completeness-imply-atomicity: Classicism.Map.c5_and_necessary_completeness_imply_atomicity
+  c5-and-necessary-rigid-comprehension-imply-necessary-gallin-comprehension: Classicism.Map.c5_and_necessary_rigid_comprehension_imply_necessary_gallin_comprehension
+  c5-and-persistent-comprehension-imply-gallin: Classicism.Map.c5_and_persistent_comprehension_imply_gallin
+  classicism-implies-broad-necessitism-r: Classicism.Map.classicism_implies_broad_necessitism_r
+  classicism-implies-converse-barcan-r: Classicism.Map.classicism_implies_converse_barcan_r
+  classicism-implies-existence-r: Classicism.Map.classicism_implies_existence_r
+  classicism-implies-identity-necessary-r: Classicism.Map.classicism_implies_identity_necessary_r
+  classicism-implies-intensionality-r: Classicism.Map.classicism_implies_intensionality_r
+  classicism-implies-modal-four: Classicism.Map.classicism_implies_modal_four
+  classicism-implies-modal-k: Classicism.Map.classicism_implies_modal_k
+  classicism-implies-modal-t: Classicism.Map.classicism_implies_modal_t
+  classicism-implies-modalized-fregean: Classicism.Map.classicism_implies_modalized_fregean
+  classicism-implies-modalized-functionality-r: Classicism.Map.classicism_implies_modalized_functionality_r
+  classicism-implies-modalized-plenitude-r: Classicism.Map.classicism_implies_modalized_plenitude_r
+  completeness-and-actuality-imply-weak-rigid-comprehension: Classicism.Map.completeness_and_actuality_imply_weak_rigid_comprehension
+  distinctness-necessary-r-implies-distinctness-necessary-t: Classicism.Map.distinctness_necessary_r_implies_distinctness_necessary_t
+  distinctness-necessary-t-implies-modal-five: Classicism.Map.distinctness_necessary_t_implies_modal_five
+  distinctness-necessary-t-implies-vicinity: Classicism.Map.distinctness_necessary_t_implies_vicinity
+  distinctness-preserving-collapse-and-nd-imply-fregean-axiom: Classicism.Map.distinctness_preserving_collapse_and_nd_imply_fregean_axiom
+  distinctness-schema-r-implies-possibility-schema-r: Classicism.Map.distinctness_schema_r_implies_possibility_schema_r
+  distinctness-signature-r-implies-possibility-signature-r: Classicism.Map.distinctness_signature_r_implies_possibility_signature_r
+  extensionality-r-implies-actuality: Classicism.Map.extensionality_r_implies_actuality
+  extensionality-r-implies-atomicity-r: Classicism.Map.extensionality_r_implies_atomicity_r
+  extensionality-r-implies-boolean-completeness-r: Classicism.Map.extensionality_r_implies_boolean_completeness_r
+  extensionality-r-implies-fregean-axiom: Classicism.Map.extensionality_r_implies_fregean_axiom
+  extensionality-r-implies-functionality-r: Classicism.Map.extensionality_r_implies_functionality_r
+  extensionality-r-implies-necessary-extensionality-r: Classicism.Map.extensionality_r_implies_necessary_extensionality_r
+  extensionality-r-implies-plenitude-r: Classicism.Map.extensionality_r_implies_plenitude_r
+  extensionality-r-implies-rigid-comprehension-r: Classicism.Map.extensionality_r_implies_rigid_comprehension_r
+  fregean-axiom-implies-distinctness-preserving-collapse: Classicism.Map.fregean_axiom_implies_distinctness_preserving_collapse
+  fregean-axiom-implies-extensionality-r: Classicism.Map.fregean_axiom_implies_extensionality_r
+  fregean-axiom-implies-necessary-distinctness-necessary-r: Classicism.Map.fregean_axiom_implies_necessary_distinctness_necessary_r
+  fregean-axiom-implies-necessary-fregean-axiom: Classicism.Map.fregean_axiom_implies_necessary_fregean_axiom
+  fregean-axiom-implies-no-contingency-signature-r: Classicism.Map.fregean_axiom_implies_no_contingency_signature_r
+  fregean-axiom-implies-no-pure-contingency-r: Classicism.Map.fregean_axiom_implies_no_pure_contingency_r
+  functional-choice-r-implies-plenitude-r: Classicism.Map.functional_choice_r_implies_plenitude_r
+  functional-choice-r-implies-relational-choice-r: Classicism.Map.functional_choice_r_implies_relational_choice_r
+  functionality-r-implies-tractarianism-r: Classicism.Map.functionality_r_implies_tractarianism_r
+  gallin-comprehension-and-bf-imply-rigid-comprehension: Classicism.Map.gallin_comprehension_and_bf_imply_rigid_comprehension
+  gallin-comprehension-and-bf-imply-weak-rigid-comprehension: Classicism.Map.gallin_comprehension_and_bf_imply_weak_rigid_comprehension
+  gallin-comprehension-implies-nd: Classicism.Map.gallin_comprehension_implies_nd
+  inextensible-comprehension-r-implies-weakly-inextensible-comprehension-r: Classicism.Map.inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r
+  maximalist-distinctness-incompatible-with-nd: Classicism.Map.maximalist_distinctness_incompatible_with_nd
+  maximalist-distinctness-incompatible-with-necessary-actuality: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_actuality
+  maximalist-distinctness-incompatible-with-necessary-atomicity-r: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_atomicity_r
+  maximalist-distinctness-incompatible-with-necessary-barcan-r: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_barcan_r
+  maximalist-distinctness-incompatible-with-necessary-boolean-completeness-r: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_boolean_completeness_r
+  maximalist-distinctness-incompatible-with-necessary-tractarianism-r: Classicism.Map.maximalist_distinctness_incompatible_with_necessary_tractarianism_r
+  modal-b-implies-distinctness-necessary-r: Classicism.Map.modal_b_implies_distinctness_necessary_r
+  modal-b-implies-signature-b-r: Classicism.Map.modal_b_implies_signature_b_r
+  modal-five-implies-modal-b: Classicism.Map.modal_five_implies_modal_b
+  nd-and-bf-imply-necessary-nd: Classicism.Map.nd_and_bf_imply_necessary_nd
+  necessary-actuality-implies-actuality: Classicism.Map.necessary_actuality_implies_actuality
+  necessary-actuality-implies-necessary-transversal: Classicism.Map.necessary_actuality_implies_necessary_transversal
+  necessary-actuality-implies-necessary-vicinity: Classicism.Map.necessary_actuality_implies_necessary_vicinity
+  necessary-actuality-implies-necessary-weakly-inextensible-comprehension-r: Classicism.Map.necessary_actuality_implies_necessary_weakly_inextensible_comprehension_r
+  necessary-atomicity-and-necessary-bf-imply-necessary-strong-leibniz: Classicism.Map.necessary_atomicity_and_necessary_bf_imply_necessary_strong_leibniz
+  necessary-atomicity-and-necessary-bf-t-imply-necessary-strong-leibniz-t: Classicism.Map.necessary_atomicity_and_necessary_bf_t_imply_necessary_strong_leibniz_t
+  necessary-atomicity-r-implies-atomicity-r: Classicism.Map.necessary_atomicity_r_implies_atomicity_r
+  necessary-barcan-r-implies-barcan-r: Classicism.Map.necessary_barcan_r_implies_barcan_r
+  necessary-barcan-r-implies-necessary-barcan-t: Classicism.Map.necessary_barcan_r_implies_necessary_barcan_t
+  necessary-barcan-r-implies-necessary-functionality-r: Classicism.Map.necessary_barcan_r_implies_necessary_functionality_r
+  necessary-barcan-t-implies-barcan-t: Classicism.Map.necessary_barcan_t_implies_barcan_t
+  necessary-bf-and-actuality-imply-inextensible-comprehension: Classicism.Map.necessary_bf_and_actuality_imply_inextensible_comprehension
+  necessary-boolean-completeness-r-implies-boolean-completeness-r: Classicism.Map.necessary_boolean_completeness_r_implies_boolean_completeness_r
+  necessary-distinctness-necessary-r-implies-distinctness-necessary-r: Classicism.Map.necessary_distinctness_necessary_r_implies_distinctness_necessary_r
+  necessary-distinctness-necessary-r-implies-necessary-barcan-r: Classicism.Map.necessary_distinctness_necessary_r_implies_necessary_barcan_r
+  necessary-distinctness-necessary-r-implies-necessary-distinctness-necessary-t: Classicism.Map.necessary_distinctness_necessary_r_implies_necessary_distinctness_necessary_t
+  necessary-distinctness-necessary-r-implies-necessary-modal-five: Classicism.Map.necessary_distinctness_necessary_r_implies_necessary_modal_five
+  necessary-distinctness-necessary-t-implies-distinctness-necessary-t: Classicism.Map.necessary_distinctness_necessary_t_implies_distinctness_necessary_t
+  necessary-distinctness-necessary-t-implies-necessary-distinctness-necessary-r: Classicism.Map.necessary_distinctness_necessary_t_implies_necessary_distinctness_necessary_r
+  necessary-distinctness-necessary-t-implies-necessary-vicinity: Classicism.Map.necessary_distinctness_necessary_t_implies_necessary_vicinity
+  necessary-extensionality-r-implies-extensionality-r: Classicism.Map.necessary_extensionality_r_implies_extensionality_r
+  necessary-fregean-axiom-implies-fregean-axiom: Classicism.Map.necessary_fregean_axiom_implies_fregean_axiom
+  necessary-functional-choice-r-implies-functional-choice-r: Classicism.Map.necessary_functional_choice_r_implies_functional_choice_r
+  necessary-functional-choice-r-implies-necessary-plenitude-r: Classicism.Map.necessary_functional_choice_r_implies_necessary_plenitude_r
+  necessary-functional-choice-r-implies-necessary-relational-choice-r: Classicism.Map.necessary_functional_choice_r_implies_necessary_relational_choice_r
+  necessary-functionality-r-implies-functionality-r: Classicism.Map.necessary_functionality_r_implies_functionality_r
+  necessary-functionality-r-implies-necessary-tractarianism-r: Classicism.Map.necessary_functionality_r_implies_necessary_tractarianism_r
+  necessary-gallin-comprehension-implies-gallin-comprehension: Classicism.Map.necessary_gallin_comprehension_implies_gallin_comprehension
+  necessary-gallin-comprehension-implies-necessary-nd: Classicism.Map.necessary_gallin_comprehension_implies_necessary_nd
+  necessary-gallin-comprehension-implies-necessary-rigid-comprehension: Classicism.Map.necessary_gallin_comprehension_implies_necessary_rigid_comprehension
+  necessary-modal-b-implies-modal-b: Classicism.Map.necessary_modal_b_implies_modal_b
+  necessary-modal-b-implies-necessary-distinctness-necessary-r: Classicism.Map.necessary_modal_b_implies_necessary_distinctness_necessary_r
+  necessary-modal-five-implies-modal-five: Classicism.Map.necessary_modal_five_implies_modal_five
+  necessary-modal-five-implies-necessary-modal-b: Classicism.Map.necessary_modal_five_implies_necessary_modal_b
+  necessary-nd-implies-bf: Classicism.Map.necessary_nd_implies_bf
+  necessary-plenitude-r-implies-atomicity-r: Classicism.Map.necessary_plenitude_r_implies_atomicity_r
+  necessary-plenitude-r-implies-necessary-actuality: Classicism.Map.necessary_plenitude_r_implies_necessary_actuality
+  necessary-plenitude-r-implies-necessary-atomicity-r: Classicism.Map.necessary_plenitude_r_implies_necessary_atomicity_r
+  necessary-plenitude-r-implies-necessary-distinctness-necessary-r: Classicism.Map.necessary_plenitude_r_implies_necessary_distinctness_necessary_r
+  necessary-plenitude-r-implies-plenitude-r: Classicism.Map.necessary_plenitude_r_implies_plenitude_r
+  necessary-relational-choice-and-necessary-plenitude-imply-necessary-functional-choice: Classicism.Map.necessary_relational_choice_and_necessary_plenitude_imply_necessary_functional_choice
+  necessary-relational-choice-r-implies-relational-choice-r: Classicism.Map.necessary_relational_choice_r_implies_relational_choice_r
+  necessary-rigid-comprehension-r-implies-necessary-actuality: Classicism.Map.necessary_rigid_comprehension_r_implies_necessary_actuality
+  necessary-rigid-comprehension-r-implies-necessary-boolean-completeness-r: Classicism.Map.necessary_rigid_comprehension_r_implies_necessary_boolean_completeness_r
+  necessary-rigid-comprehension-r-implies-rigid-comprehension-r: Classicism.Map.necessary_rigid_comprehension_r_implies_rigid_comprehension_r
+  necessary-strong-leibniz-implies-necessary-atomicity: Classicism.Map.necessary_strong_leibniz_implies_necessary_atomicity
+  necessary-strong-leibniz-r-implies-necessary-strong-leibniz-t: Classicism.Map.necessary_strong_leibniz_r_implies_necessary_strong_leibniz_t
+  necessary-strong-leibniz-r-implies-strong-leibniz-r: Classicism.Map.necessary_strong_leibniz_r_implies_strong_leibniz_r
+  necessary-strong-leibniz-t-and-necessary-bf-imply-necessary-strong-leibniz: Classicism.Map.necessary_strong_leibniz_t_and_necessary_bf_imply_necessary_strong_leibniz
+  necessary-strong-leibniz-t-implies-strong-leibniz-t: Classicism.Map.necessary_strong_leibniz_t_implies_strong_leibniz_t
+  necessary-tractarianism-r-implies-necessary-barcan-r: Classicism.Map.necessary_tractarianism_r_implies_necessary_barcan_r
+  necessary-tractarianism-r-implies-tractarianism-r: Classicism.Map.necessary_tractarianism_r_implies_tractarianism_r
+  necessary-transversal-and-necessary-relational-choice-imply-necessary-transversal-choice: Classicism.Map.necessary_transversal_and_necessary_relational_choice_imply_necessary_transversal_choice
+  necessary-transversal-choice-r-implies-necessary-relational-choice-r: Classicism.Map.necessary_transversal_choice_r_implies_necessary_relational_choice_r
+  necessary-transversal-choice-r-implies-necessary-transversal-r: Classicism.Map.necessary_transversal_choice_r_implies_necessary_transversal_r
+  necessary-transversal-choice-r-implies-transversal-choice-r: Classicism.Map.necessary_transversal_choice_r_implies_transversal_choice_r
+  necessary-transversal-r-implies-transversal-r: Classicism.Map.necessary_transversal_r_implies_transversal_r
+  necessary-vicinity-and-necessary-weakly-inextensible-comprehension-imply-necessary-actuality: Classicism.Map.necessary_vicinity_and_necessary_weakly_inextensible_comprehension_imply_necessary_actuality
+  necessary-vicinity-implies-vicinity: Classicism.Map.necessary_vicinity_implies_vicinity
+  necessary-weakly-inextensible-comprehension-r-implies-weakly-inextensible-comprehension-r: Classicism.Map.necessary_weakly_inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r
+  no-contingency-signature-r-implies-no-pure-contingency-r: Classicism.Map.no_contingency_signature_r_implies_no_pure_contingency_r
+  no-contingency-signature-r-implies-signature-b-r: Classicism.Map.no_contingency_signature_r_implies_signature_b_r
+  no-pure-contingency-and-actuality-imply-necessary-actuality: Classicism.Map.no_pure_contingency_and_actuality_imply_necessary_actuality
+  no-pure-contingency-and-atomicity-imply-necessary-atomicity: Classicism.Map.no_pure_contingency_and_atomicity_imply_necessary_atomicity
+  no-pure-contingency-and-b-imply-necessary-b: Classicism.Map.no_pure_contingency_and_b_imply_necessary_b
+  no-pure-contingency-and-bf-imply-necessary-bf: Classicism.Map.no_pure_contingency_and_bf_imply_necessary_bf
+  no-pure-contingency-and-bf-t-imply-necessary-bf-t: Classicism.Map.no_pure_contingency_and_bf_t_imply_necessary_bf_t
+  no-pure-contingency-and-completeness-imply-necessary-completeness: Classicism.Map.no_pure_contingency_and_completeness_imply_necessary_completeness
+  no-pure-contingency-and-extensionality-imply-necessary-extensionality: Classicism.Map.no_pure_contingency_and_extensionality_imply_necessary_extensionality
+  no-pure-contingency-and-five-imply-necessary-five: Classicism.Map.no_pure_contingency_and_five_imply_necessary_five
+  no-pure-contingency-and-fregean-imply-necessary-fregean: Classicism.Map.no_pure_contingency_and_fregean_imply_necessary_fregean
+  no-pure-contingency-and-functional-choice-imply-necessary-functional-choice: Classicism.Map.no_pure_contingency_and_functional_choice_imply_necessary_functional_choice
+  no-pure-contingency-and-functionality-imply-necessary-functionality: Classicism.Map.no_pure_contingency_and_functionality_imply_necessary_functionality
+  no-pure-contingency-and-gallin-comprehension-imply-necessary-gallin-comprehension: Classicism.Map.no_pure_contingency_and_gallin_comprehension_imply_necessary_gallin_comprehension
+  no-pure-contingency-and-nd-imply-necessary-nd: Classicism.Map.no_pure_contingency_and_nd_imply_necessary_nd
+  no-pure-contingency-and-nd-t-imply-necessary-nd-t: Classicism.Map.no_pure_contingency_and_nd_t_imply_necessary_nd_t
+  no-pure-contingency-and-plenitude-imply-necessary-plenitude: Classicism.Map.no_pure_contingency_and_plenitude_imply_necessary_plenitude
+  no-pure-contingency-and-relational-choice-imply-necessaryelational-choice: Classicism.Map.no_pure_contingency_and_relational_choice_imply_necessaryelational_choice
+  no-pure-contingency-and-rigid-comprehension-imply-necessary-rigid-comprehension: Classicism.Map.no_pure_contingency_and_rigid_comprehension_imply_necessary_rigid_comprehension
+  no-pure-contingency-and-strong-leibniz-imply-necessary-strong-leibniz: Classicism.Map.no_pure_contingency_and_strong_leibniz_imply_necessary_strong_leibniz
+  no-pure-contingency-and-strong-leibniz-t-imply-necessary-strong-leibniz-t: Classicism.Map.no_pure_contingency_and_strong_leibniz_t_imply_necessary_strong_leibniz_t
+  no-pure-contingency-and-tractarianism-imply-necessary-tractarianism: Classicism.Map.no_pure_contingency_and_tractarianism_imply_necessary_tractarianism
+  no-pure-contingency-and-transversal-choice-imply-necessary-transversal-choice: Classicism.Map.no_pure_contingency_and_transversal_choice_imply_necessary_transversal_choice
+  no-pure-contingency-and-transversal-imply-necessary-transversal: Classicism.Map.no_pure_contingency_and_transversal_imply_necessary_transversal
+  no-pure-contingency-and-vicinity-imply-necessary-vicinity: Classicism.Map.no_pure_contingency_and_vicinity_imply_necessary_vicinity
+  no-pure-contingency-and-weakly-inextensible-comprehension-imply-necessary-weakly-inextensible-comprehension: Classicism.Map.no_pure_contingency_and_weakly_inextensible_comprehension_imply_necessary_weakly_inextensible_comprehension
+  no-pure-contingency-r-implies-pure-b-r: Classicism.Map.no_pure_contingency_r_implies_pure_b_r
+  persistent-comprehension-r-implies-actuality: Classicism.Map.persistent_comprehension_r_implies_actuality
+  plenitude-r-implies-actuality: Classicism.Map.plenitude_r_implies_actuality
+  plenitude-r-implies-distinctness-necessary-r: Classicism.Map.plenitude_r_implies_distinctness_necessary_r
+  possibility-and-necessary-barcan-t-incompatible: Classicism.Map.possibility_and_necessary_barcan_t_incompatible
+  possibility-and-no-pure-contingency-incompatible: Classicism.Map.possibility_and_no_pure_contingency_incompatible
+  possibility-schema-r-implies-distinctness-schema-r: Classicism.Map.possibility_schema_r_implies_distinctness_schema_r
+  possibility-signature-r-implies-distinctness-signature-r: Classicism.Map.possibility_signature_r_implies_distinctness_signature_r
+  pure-b-and-pure-possibility-incompatible: Classicism.Map.pure_b_and_pure_possibility_incompatible
+  relational-choice-and-extensionality-imply-transversal-choice: Classicism.Map.relational_choice_and_extensionality_imply_transversal_choice
+  relational-choice-and-plenitude-imply-functional-choice-r: Classicism.Map.relational_choice_and_plenitude_imply_functional_choice_r
+  relational-choice-and-very-weak-rigid-comprehension-imply-transversal-choice: Classicism.Map.relational_choice_and_very_weak_rigid_comprehension_imply_transversal_choice
+  rigid-comprehension-and-bf-imply-necessary-bf: Classicism.Map.rigid_comprehension_and_bf_imply_necessary_bf
+  rigid-comprehension-and-nd-imply-plenitude: Classicism.Map.rigid_comprehension_and_nd_imply_plenitude
+  rigid-comprehension-r-implies-actuality: Classicism.Map.rigid_comprehension_r_implies_actuality
+  rigid-comprehension-r-implies-boolean-completeness-r: Classicism.Map.rigid_comprehension_r_implies_boolean_completeness_r
+  rigid-comprehension-r-implies-inextensible-comprehension-r: Classicism.Map.rigid_comprehension_r_implies_inextensible_comprehension_r
+  rigid-comprehension-r-implies-persistent-comprehension-r: Classicism.Map.rigid_comprehension_r_implies_persistent_comprehension_r
+  rigid-comprehension-r-implies-weak-rigid-comprehension-r: Classicism.Map.rigid_comprehension_r_implies_weak_rigid_comprehension_r
+  signature-b-r-implies-pure-b-r: Classicism.Map.signature_b_r_implies_pure_b_r
+  strong-leibniz-r-implies-atomicity-r: Classicism.Map.strong_leibniz_r_implies_atomicity_r
+  strong-leibniz-r-implies-strong-leibniz-t: Classicism.Map.strong_leibniz_r_implies_strong_leibniz_t
+  strong-leibniz-t-implies-atomicity-t: Classicism.Map.strong_leibniz_t_implies_atomicity_t
+  strong-leibniz-t-implies-necessary-actuality: Classicism.Map.strong_leibniz_t_implies_necessary_actuality
+  tractarianism-r-implies-barcan-r: Classicism.Map.tractarianism_r_implies_barcan_r
+  transversal-and-relational-choice-imply-transversal-choice: Classicism.Map.transversal_and_relational_choice_imply_transversal_choice
+  transversal-choice-r-implies-relational-choice-r: Classicism.Map.transversal_choice_r_implies_relational_choice_r
+  transversal-choice-r-implies-transversal-r: Classicism.Map.transversal_choice_r_implies_transversal_r
+  very-weak-rigid-comprehension-r-implies-weak-rigid-comprehension-r: Classicism.Map.very_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r
+  vicinity-and-distinctness-preserving-collapse-imply-actuality: Classicism.Map.vicinity_and_distinctness_preserving_collapse_imply_actuality
+  vicinity-and-weakly-inextensible-comprehension-imply-actuality: Classicism.Map.vicinity_and_weakly_inextensible_comprehension_imply_actuality
+  weak-rigid-comprehension-r-implies-boolean-completeness-r: Classicism.Map.weak_rigid_comprehension_r_implies_boolean_completeness_r
+  weak-rigid-comprehension-r-implies-persistent-comprehension-r: Classicism.Map.weak_rigid_comprehension_r_implies_persistent_comprehension_r
+  weak-rigid-comprehension-r-implies-very-weak-rigid-comprehension-r: Classicism.Map.weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r
+  weak-rigid-comprehension-r-implies-weakly-inextensible-comprehension-r: Classicism.Map.weak_rigid_comprehension_r_implies_weakly_inextensible_comprehension_r

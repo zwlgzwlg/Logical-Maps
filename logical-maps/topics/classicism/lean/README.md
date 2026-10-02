@@ -344,6 +344,9 @@ Classicism/Certified/Schemas.lean       the principles quoted, and their schemas
 Classicism/Certified/Derivations.lean   the record theorems derived; home of foo.derivable
 Classicism/Certified/Entailed.lean      the records as entailments; home of foo.entails
 Classicism/Certified/Vectorized.lean    checks of the vectorization on three principles and one arrow
+Classicism/Statements.lean              the map's statements, written by the map's own generator (map/generate.py)
+Classicism/Map.lean                     one certificate per map result proved, of its generated statement: the map's lean_refs
+Classicism/Tools/MapIndex.lean          #classicism_map_index: where each certificate and its proofs are (map/index.json)
 
 Classicism/Strict/                      the strict layer; see its README
 ```

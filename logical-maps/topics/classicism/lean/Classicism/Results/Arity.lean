@@ -216,6 +216,15 @@ theorem fregean_actuality_necessary_actuality : P.FregeanAxiom → P.Actuality �
 namespace Meta
 open AxiomSet
 
+/-- `classicism-implies-existence-r`, at every type: the instance at `e` (the axiom
+`e_exists`) and those at relational types (theorems of `C⁻`), the two records. -/
+theorem classicism_implies_existence_r : empty ⟹ P.Existence.schema := by
+  rintro a ⟨σ, hσ, rfl⟩
+  cases σ with
+  | e => exact Proofs.classicism_implies_existence_r_at_e.entails _ rfl
+  | rel ρ => exact Proofs.classicism_implies_existence_r_relational.entails _ ⟨ρ, hσ, rfl⟩
+  | var i => exact hσ.elim
+
 /-- `actuality-implies-persistent-comprehension-r`, the map's record, at every arity. -/
 theorem actuality_implies_persistent_comprehension_r :
     P.Actuality.schema ⟹ P.PersistentComprehension.schema :=
