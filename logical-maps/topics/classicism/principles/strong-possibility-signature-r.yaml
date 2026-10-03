@@ -21,13 +21,3 @@ notes: This keeps the signature-expanded reference theory throughout the consist
   under the distinctness-preserving modality. Incompatibilities of the form Strong Possibility (signature
   Σ) + □Y are inherited through Possibility Maximalism (signature Σ) and Possibility Maximalism (pure); the collapse is refuted
   directly.
-variants:
-- id: dual
-  name: Dual form
-  statement: Only theorems of the signature's Maximalist Classicism are necessary under the distinctness-preserving
-    modality.
-  formal: $\neg\Box_{\ne}P\quad(P\in\mathcal L(\Sigma)\text{ closed; }\operatorname{Max}(C(\Sigma))\nvdash
-    P)$
-  equivalence: $\operatorname{Max}(C(\Sigma))+\neg P$ is consistent iff $\operatorname{Max}(C(\Sigma))\nvdash
-    P$, and $\Diamond_{\ne}\neg P$ is $\neg\Box_{\ne}P$; so the instances correspond at $P$ and $\neg
-    P$.

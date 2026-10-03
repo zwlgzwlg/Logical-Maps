@@ -13,10 +13,3 @@ references:
   role: formulation
   locator: §2.4, pp. 35–36
 notes: ''
-variants:
-- id: dual
-  name: Dual form
-  statement: 'Only theorems of C are necessary: every closed pure sentence not provable in C is not necessary.'
-  formal: $\neg\Box P\quad(P\text{ closed and pure; }C\nvdash P)$
-  equivalence: $C+\neg P$ is consistent iff $C\nvdash P$, and $\Diamond\neg P$ is $\neg\Box P$; so the
-    instance of the official form at $\neg P$ is the instance of this form at $P$, and conversely.

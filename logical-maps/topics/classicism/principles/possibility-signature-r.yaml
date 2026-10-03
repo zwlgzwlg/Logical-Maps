@@ -13,11 +13,3 @@ references:
   role: formulation
   locator: §2.5, pp. 37–39
 notes: ''
-variants:
-- id: dual
-  name: Dual form
-  statement: 'Only theorems of C(Σ) are necessary: every closed sentence of the signature not provable
-    in C(Σ) is not necessary.'
-  formal: $\neg\Box P\quad(P\text{ closed in }\mathcal L(\Sigma);\ C(\Sigma)\nvdash P)$
-  equivalence: $C(\Sigma)+\neg P$ is consistent iff $C(\Sigma)\nvdash P$, and $\Diamond\neg P$ is $\neg\Box
-    P$; so the instance of the official form at $\neg P$ is the instance of this form at $P$, and conversely.
