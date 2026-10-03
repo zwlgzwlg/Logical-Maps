@@ -44,6 +44,12 @@ checks:
 - checks/boolean_valued_choice.py
 
 # migration: the definition is the old description up to its verdict sentences.
+# 3 October 2026, at Cian Dorr's direction: its second paragraph fixes $A$ (Claude Fable 5.1's
+# suggestion), and its third interprets Σ, which the record had left uninterpreted.
+meets:
+  sigma-top: This is the interpretation the definition fixes.
+  one-individual: >-
+    $D_e=\{*\}$.
 definition: >-
   A singleton-base specialization of Bacon’s full Boolean-valued construction in §B.2. Work in
   ZFC, let $A$ be a nontrivial complete atomless Boolean algebra, and set $B=\mathbf{2}\times A$,
@@ -51,6 +57,16 @@ definition: >-
   type. Use ordinary application and abstraction, Boolean connectives, quantifiers given by meets
   and joins, and crisp equality. Evaluation point: the atom $a=(1,0_A)$; a proposition is true iff
   its first coordinate is $1$.
+
+
+  For concreteness, $A$ is fixed as the regular open algebra of the real line. Other choices of $A$
+  can be put to interesting uses; for the principles on the map the choice matters, as far as is
+  known, only to $\Box$Boolean Completeness (type $t$), whose failure below uses a real that forcing
+  with $A$ adds.
+
+
+  Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each denotes
+  the top element of its type.
 
 arguments:
 
@@ -73,10 +89,6 @@ arguments:
     The sole atom $a$ witnesses Actuality and refutes Atomlessness, while $(0,1_A)$ is nonzero
     with no atom below it, refuting Atomicity at type $t$ and the full schema.
 
-# migration: the old description's last sentence, then the old notes whole. The description's
-# sentence on the boxed forms of Actuality, Plenitude and Functional Choice, whose failures are now
-# derived, is dropped.
-
 - holds: [necessary-intensional-choice-r]
   by: Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion
   date: '2026-10-03'
@@ -88,6 +100,57 @@ arguments:
     $\bigvee_x(G(x)\land\bigwedge_{y\ne x}\neg G(y))=\bigvee_xG(x)=1_B$, and so does its box. The function
     domains are full, so $G$ is in the domain. Every closed instance has value $1_B$, so Intensional
     Choice holds necessarily.
+
+# --- 3 October 2026: Claude Fable 5.1, settling the verdicts the map had left open ---
+
+- holds: [necessary-transversal-choice-r]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's request
+  date: '2026-10-03'
+  text: >-
+    Write $\pi$ and $\rho$ for the two coordinate projections of $B=\mathbf 2\times A$, both complete
+    homomorphisms; $\Box p$ is $p=\top$, so a closed sentence is necessary when it is true and its
+    $\rho$-coordinate is $1_A$. Under $\rho$ a sentence without $\Box$ takes its value in the
+    Boolean-valued universe $V^A$, each $D_\sigma$ read as a ground set with crisp identity and the
+    $\rho$-parts of relations on it ranging over all names for subsets of it. So a theorem of ZFC
+    about relations on well-orderable sets has $\rho$-value $1_A$. Transversal Choice is of this kind:
+    the least element of each class, $F(y):=\bigwedge_{y^{\prime}<y}\neg R(y^{\prime},y)$, is a
+    transversal. Its truth is already derived, so it is necessary.
+
+- holds: [necessary-countable-boolean-completeness-r]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's request
+  date: '2026-10-03'
+  text: >-
+    An effect of the single individual. The type-$e$ numerals are crisply three entities,
+    $\mathbf 0_e$, $\mathbf 1_e$, and the empty cardinality, which is its own successor, so
+    $\operatorname{Ctbl}(X)$ makes $X$ have at most three members internally; a finite subset of a
+    ground set is a ground set, and finite families have joins in the complete pointwise order. So
+    every closed instance has value $1_B$.
+
+- holds: [axiom-of-infinity-t]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's request
+  date: '2026-10-03'
+  text: >-
+    $B$ is infinite and identity is crisp. The crisp characteristic function of the standard
+    numerals is inductive, so finite cardinality has value $0_B$ off the standard numerals, and the
+    $n$th numeral holds of the universal property of propositions with the value of "$B$ has exactly
+    $n$ elements", $0_B$.
+
+- fails: [necessary-boolean-completeness-t]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's request
+  date: '2026-10-03'
+  text: >-
+    For the algebra fixed in the definition. Take a countable maximal antichain $(a_n)$ in $A$, put
+    $w_n:=(0,\neg a_n)$, choose $c_n\in A$, and let $X$ of type $t\to t$ have $\rho X(w_n)=c_n$ and
+    $0$ elsewhere. With $s$ the fuzzy subset of $\omega$ given by the $c_n$, a direct computation
+    gives $\rho[\![\exists y\, .\,\operatorname{GLB}_t(y,X)]\!]=\bigvee_{U\subseteq\omega}[\![s=\check
+    U]\!]$, the value of "$s$ is a ground set". The regular open algebra of $\mathbb R$ adds a Cohen
+    real; taking the $c_n$ to be its coordinates, $[\![s=\check U]\!]=0_A$ for every $U$, so the closed
+    instance of Boolean Completeness (type $t$) has value exactly $a$: true, and not necessary. Whether
+    it is necessary for an algebra adding no reals is open.
+
+# migration: the old description's last sentence, then the old notes whole. The description's
+# sentence on the boxed forms of Actuality, Plenitude and Functional Choice, whose failures are now
+# derived, is dropped.
 
 notes: >-
   Full verification is in the write-up.
