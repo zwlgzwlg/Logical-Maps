@@ -3,8 +3,8 @@ name: Plenitude
 category: choice
 statement: Every total single-valued binary relation is represented by an operation. Its output type is
   relational, as required by the type system.
-formal: $\forall^{\mathrm{Ty}}\sigma,\tau,\ \tau\ne e\, .\,\forall U^{\sigma\tau t}\, .\,\operatorname{Functional}(U)\to\exists
-  X^{\sigma\tau}\, .\,\forall y\, .\,(Uy)(Xy)$
+formal: $\forall U^{\sigma\tau t}\, .\,\operatorname{Functional}(U)\to\exists X^{\sigma\tau}\, .\,\forall
+  y\, .\,(Uy)(Xy)\qquad(\tau\ne e)$
 date: '2026-09-17'
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §2.3, pp. 31–33.

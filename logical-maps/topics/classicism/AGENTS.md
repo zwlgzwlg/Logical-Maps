@@ -77,9 +77,12 @@ Read a matching `writeups/<id>.md` when it exists.
 - The fixed framework is C in the paper's relational type system: base types
   e and t, with sigma→tau allowed only when tau is not e. Principle names
   omit a type-system suffix. Do not reintroduce full-simple-type comparisons.
-- Keep metalinguistic type quantifiers outside object closure and boxes.
-  Use one homogeneous outer type-quantifier block. Preserve formula-schema
-  side conditions and the source reference theory C.
+- Write a type schema with its type variables free in the formula, not with
+  a type quantifier ($\forall^{\mathrm{Ty}}$ is no longer used), and add a
+  parenthesized proviso such as $\qquad(\tau\ne e)$ only where the range is
+  restricted; see Background, Type scope. Type variables stay outside object
+  closure and boxes. Preserve formula-schema side conditions and the source
+  reference theory C.
 - Application associates to the right. Parenthesize curried application.
 - The user authorized model entries with precise construction references in
   Classicism instead of full construction details. The paper's models use

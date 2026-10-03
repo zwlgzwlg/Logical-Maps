@@ -2,8 +2,12 @@ id: atomicity-r
 name: Atomicity
 category: lattice
 statement: Every non-bottom entity of each relational type has an atom below it.
-formal: $\forall^{\mathrm{Ty}}\tau\ne e\, .\,\forall x^\tau\, .\,x\le_\tau\neg_\tau x\lor\exists y^\tau\,
-  .\,\operatorname{Atom}_\tau(y)\land y\le_\tau x$
+formal: $\forall x^\tau\, .\,x\le_\tau\neg_\tau x\lor\exists y^\tau\, .\,\operatorname{Atom}_\tau(y)\land
+  y\le_\tau x\qquad(\tau\ne e)$
+definitions: |-
+  where $\operatorname{Atom}_\tau(y):=\forall z^\tau\, .\,(z\le_\tau y\land z\ne y)\leftrightarrow z\le_\tau\neg_\tau z$:
+  the entities strictly below $y$ are exactly the bottom elements of $\tau$. In particular an atom is
+  not itself bottom. Here $x\le_\tau\neg_\tau x$ says that $x$ is bottom.
 date: '2026-09-17'
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §2.2, p. 24.
@@ -26,3 +30,32 @@ changes:
   by: Claude Fable 5.1 (Anthropic)
   summary: Added the alias Weak Leibniz Biconditionals and a reference to Bacon’s 2024 book; the statement
     is unchanged.
+about: |-
+  At type $t$, entailment orders the propositions, and an atom is a maximally specific possibility: a
+  proposition that is possible and settles every proposition one way or the other. Atomicity says that
+  every possible proposition is entailed by such a possibility. So the propositions behave as if they
+  were sets of possible worlds, with the atoms as the worlds. At a type $\sigma\to t$ the same holds for
+  properties, ordered by necessary inclusion.
+
+  Atomicity says nothing about how many atoms there are or which of them obtains. That some atom is true
+  is Actuality. That every property of propositions has a meet is Boolean Completeness. Together the two
+  make the propositions isomorphic to the powerset of the atoms.
+variants:
+- id: dual
+  name: Dual form
+  statement: Whatever is entailed by every atom of its type is the top element of that type.
+  formal: $\forall x^\tau\, .\,(\forall y^\tau\, .\,\operatorname{Atom}_\tau(y)\to y\le_\tau x)\to\neg_\tau
+    x\le_\tau x\qquad(\tau\ne e)$
+  equivalence: |-
+    In C each relational type is a Boolean algebra under $\le_\tau$, with $\neg_\tau$ an order-reversing
+    involution; $x\le_\tau\neg_\tau x$ says that $x$ is the bottom element, and $\neg_\tau x\le_\tau x$
+    that it is the top. An atom $y$ is not bottom (take $z:=y$ in the definition). It also lies below
+    $z$ or below $\neg_\tau z$ for every $z$: the meet $y\land z$ lies below $y$, so it is either $y$
+    itself or bottom.
+
+    Official form to dual form. Suppose every atom lies below $x$. Apply Atomicity to $\neg_\tau x$. If
+    $\neg_\tau x$ is bottom, $x$ is top. Otherwise some atom lies below $\neg_\tau x$ and below $x$, hence
+    below bottom, which is impossible.
+
+    Dual form to official form. Suppose $x$ is not bottom but no atom lies below it. Then every atom lies
+    below $\neg_\tau x$, so by the dual form $\neg_\tau x$ is top and $x$ is bottom, a contradiction.

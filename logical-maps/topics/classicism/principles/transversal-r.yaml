@@ -4,10 +4,9 @@ category: choice
 statement: >-
   There is a property of properties that picks out exactly one property from each coextension class,
   that is, exactly one property coextensive with any given property.
-formal: >-
-  $\forall^{\mathrm{Ty}}\sigma\, .\,\exists F^{(\sigma t)t}\, .\,\forall X^{\sigma t}\, .\,\exists Y^{\sigma
-  t}\, .\,FY\land(\forall z^\sigma\, .\,Xz\leftrightarrow Yz)\land\forall Y'^{\sigma t}\, .\,(FY'\land\forall
-  z^\sigma\, .\,Xz\leftrightarrow Y'z)\to Y'=Y$
+formal: $\exists F^{(\sigma t)t}\, .\,\forall X^{\sigma t}\, .\,\exists Y^{\sigma t}\, .\,FY\land(\forall
+  z^\sigma\, .\,Xz\leftrightarrow Yz)\land\forall Y'^{\sigma t}\, .\,(FY'\land\forall z^\sigma\, .\,Xz\leftrightarrow
+  Y'z)\to Y'=Y$
 date: '2026-09-26'
 sources:
 - Christopher Sun, 26 September 2026, principle and its connections to Transversal Choice, Relational

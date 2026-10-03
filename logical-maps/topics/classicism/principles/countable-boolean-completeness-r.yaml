@@ -3,7 +3,8 @@ name: Countable Boolean Completeness
 category: lattice
 statement: Every countable property of entities of a relational type has a least upper bound in that type,
   where a property is countable when it injects into the natural numbers.
-formal: $\forall^{\mathrm{Ty}}\tau\ne e\, .\,\forall X^{\tau t}\, .\,\operatorname{Ctbl}_\tau(X)\to\exists y^\tau\, .\,\operatorname{LUB}_\tau(y,X)$
+formal: $\forall X^{\tau t}\, .\,\operatorname{Ctbl}_\tau(X)\to\exists y^\tau\, .\,\operatorname{LUB}_\tau(y,X)\qquad(\tau\ne
+  e)$
 date: '2026-09-20'
 sources:
 - Zachary Goodsell, Arithmetic is Necessary, draft of 5 June 2024, §3.1, eq. (10), p. 8; Definition 6, p. 13.

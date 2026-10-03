@@ -40,6 +40,122 @@
    "type": "string",
    "description": "Optional formal rendering (LaTeX or symbolic)."
   },
+  "definitions": {
+   "type": "string",
+   "description": "Definitions of the notions the formal statement uses, shown directly beneath it, e.g. \"where $\\operatorname{Atom}_\\tau(y):=\\ldots$\". Markdown-style text with LaTeX math."
+  },
+  "about": {
+   "type": "string",
+   "description": "Explanatory prose for the principle's page: what it intuitively says and why it matters. Markdown-style paragraphs; LaTeX math in $...$."
+  },
+  "variants": {
+   "type": "array",
+   "description": "Equivalent forms of the principle: each is provably equivalent to the official statement in the topic's base theory, at each instance. They share the principle's node; they are not separate principles.",
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "id",
+     "name",
+     "equivalence"
+    ],
+    "anyOf": [
+     {
+      "required": [
+       "statement"
+      ]
+     },
+     {
+      "required": [
+       "formal"
+      ]
+     }
+    ],
+    "properties": {
+     "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Stable kebab-case identifier, unique within the principle; used for page anchors and future Lean names."
+     },
+     "name": {
+      "type": "string",
+      "description": "Short label, e.g. 'Dual form' or 'Least-upper-bound form'."
+     },
+     "statement": {
+      "type": "string",
+      "description": "Informal statement of this form."
+     },
+     "formal": {
+      "type": "string",
+      "description": "Formal rendering of this form (LaTeX)."
+     },
+     "definitions": {
+      "type": "string",
+      "description": "Definitions of the notions the formal statement uses, shown directly beneath it, e.g. \"where $\\operatorname{Atom}_\\tau(y):=\\ldots$\". Markdown-style text with LaTeX math."
+     },
+     "equivalence": {
+      "type": "string",
+      "description": "Why this form is equivalent to the official one in the base theory: a proof sketch at the level of a referee."
+     },
+     "references": {
+      "type": "array",
+      "description": "References to papers.yaml; roles distinguish definition origins and background from direct proofs.",
+      "items": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "paper",
+        "role"
+       ],
+       "properties": {
+        "paper": {
+         "type": "string",
+         "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "role": {
+         "enum": [
+          "origin",
+          "formulation",
+          "proof",
+          "background",
+          "related"
+         ]
+        },
+        "locator": {
+         "type": "string",
+         "minLength": 1
+        },
+        "note": {
+         "type": "string",
+         "minLength": 1
+        }
+       }
+      }
+     },
+     "lean": {
+      "description": "Reserved for Lean: this form's statement and the proof of its equivalence with the official form.",
+      "type": [
+       "null",
+       "object"
+      ],
+      "additionalProperties": false,
+      "properties": {
+       "ref": {
+        "type": "string",
+        "description": "Lean declaration stating this form."
+       },
+       "equivalence_ref": {
+        "type": "string",
+        "description": "Lean theorem proving the equivalence."
+       },
+       "file": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   }
+  },
   "aliases": {
    "type": "array",
    "items": {
