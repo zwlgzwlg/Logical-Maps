@@ -52,7 +52,12 @@
     }
    }
   },
-  "meets": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}, "description": "Conditions of the topic (conditions.yaml) every member meets, with the reason."},
+  "meets": {"type": "object", "additionalProperties": {"oneOf": [
+   {"type": "string", "minLength": 1},
+   {"type": "object", "additionalProperties": false, "required": ["text", "requires"], "properties": {
+    "text": {"type": "string", "minLength": 1},
+    "requires": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true}}}
+  ]}, "description": "Conditions of the topic (conditions.yaml) every member meets, with the reason; or, given as {text, requires}, those that the members meeting `requires` meet."},
   "arguments": {"type": "array", "items": {"$ref": "#/$defs/shared_argument"}},
   "notes": {"type": "string", "description": "Text that supports no verdict."},
   "references": {}

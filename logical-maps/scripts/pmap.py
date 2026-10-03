@@ -294,14 +294,23 @@ def conditions_met(rec: dict, group: dict | None, settings: dict) -> dict:
     """Each condition a record meets, with its reason: from its group (for every member), from the
     values of the group's parameters at these settings, and from the record itself, in that order,
     a later reason replacing an earlier one."""
-    met = {}
+    met, conditional = {}, {}
     if isinstance(group, dict):
-        met.update(group.get("meets") or {})
+        for k, v in (group.get("meets") or {}).items():
+            if isinstance(v, dict):  # met by the members that meet these conditions
+                conditional[k] = v
+            else:
+                met[k] = v
         for name, param in (group.get("parameters") or {}).items():
             if isinstance(param, dict) and isinstance(settings.get(name), str):
                 met.update(value_entry(param, settings[name]).get("meets") or {})
     met.update(rec.get("meets") if isinstance(rec.get("meets"), dict) else {})
-    return met
+    while True:
+        ready = [k for k, v in conditional.items() if k not in met and all(c in met for c in v.get("requires") or [])]
+        if not ready:
+            return met
+        for k in ready:
+            met[k] = conditional[k].get("text", "")
 
 
 def _applied(c: dict, mark: dict, met: dict, texts: dict) -> dict:
@@ -1735,9 +1744,12 @@ def group_errors(data: dict, ids) -> list[str]:
         for cond in set(own_conditions) & set(topic_conditions):
             errors.append(f"{f}: condition '{cond}' is also one of the topic's (conditions.yaml)")
         conditions = own_conditions + topic_conditions
-        for cond in g.get("meets") or {}:
+        for cond, why in (g.get("meets") or {}).items():
             if cond not in conditions:
                 errors.append(f"{f}: meets '{cond}', which is no condition of the group or the topic")
+            for req in (why.get("requires") or []) if isinstance(why, dict) else []:
+                if req not in conditions:
+                    errors.append(f"{f}: meets '{cond}' for members meeting '{req}', which is no condition of the group or the topic")
         for slot in SLOT.findall(str(g.get("definition") or "")):
             if slot not in params:
                 errors.append(f"{f}: the definition's slot {{{{{slot}}}}} is no parameter")
@@ -3996,6 +4008,10 @@ def _selftest_groups():
     at = lambda settings: [a.get("general") for a in expand_member(mem, {"g": lg}, settings, lib)["arguments"] if a.get("general")]
     assert at(None) == ["npc"], "the group meets one-object for every member"
     assert at(vs[0]) == ["npc", "nc"], "a value meets single; nc waits for npc's verdict"
+    cg = copy.deepcopy(lg)
+    cg["meets"] = {"one-object": {"text": "Those that perturb have one object.", "requires": ["perturbable"]}}
+    assert at.__call__ and [a.get("general") for a in expand_member(mem, {"g": cg}, None, lib)["arguments"] if a.get("general")] == ["npc"], "met through perturbable"
+    assert [a.get("general") for a in expand_member({**mem, "meets": {}}, {"g": cg}, None, lib)["arguments"] if a.get("general")] == [], "not without it"
     full_l = expand_member(mem, {"g": lg}, vs[0], lib)
     assert full_l["arguments"][-1]["conditions"] == [{"id": "single", "text": "Single.", "reason": "One thing."}]
     assert argument_label(full_l["arguments"][-1], 0) == "arguments/nc"
