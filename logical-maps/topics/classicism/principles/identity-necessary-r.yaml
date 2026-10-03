@@ -20,14 +20,3 @@ variants:
   formal: $\forall\bar x\,\bar y^{\bar\sigma}\, .\,\bar x=\bar y\to\Box(\bar x=\bar y)$
   equivalence: 'Both forms are theorems of C, so they are equivalent there. Directly: $\bar x=\bar y$
     is a conjunction of identities, each necessary, and a conjunction of necessities is necessary.'
-- id: dual
-  name: Dual form
-  statement: Things of any type that could be distinct are distinct.
-  formal: $\forall x y^\sigma\, .\,\Diamond(x\ne y)\to x\ne y$
-  equivalence: Each instance of one form is the contrapositive of the corresponding instance of the other.
-- id: dual-polyadic
-  name: Dual polyadic form
-  statement: Tuples that could be distinct are distinct.
-  formal: $\forall\bar x\,\bar y^{\bar\sigma}\, .\,\Diamond(\bar x\ne\bar y)\to\bar x\ne\bar y$
-  equivalence: Each instance of one form is the contrapositive of the corresponding instance of the other.
-    Combined with the polyadic form, this gives the equivalence with the official form.

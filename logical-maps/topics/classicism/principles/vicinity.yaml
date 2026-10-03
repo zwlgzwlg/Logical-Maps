@@ -22,10 +22,3 @@ notes: >-
   Christopher Sun, who showed that it recovers Actuality from Weakly Inextensible Comprehension, so
   that Actuality is equivalent to Vicinity together with Weakly Inextensible Comprehension. ND at type
   $t$ gives it trivially, with $\top$ as witness.
-variants:
-- id: dual
-  name: Dual form
-  statement: Some falsehood is entailed by the necessity of every falsehood.
-  formal: $\exists p\, .\,\neg p\land\forall q\, .\,\neg q\to\Box q\le p$
-  equivalence: 'If $p$ witnesses one form, $\neg p$ witnesses the other: substitute $\neg q$ for $q$ and
-    use $\neg p\le\Diamond\neg q\leftrightarrow\Box q\le p$.'

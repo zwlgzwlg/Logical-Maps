@@ -15,12 +15,3 @@ references:
   role: formulation
   locator: §2.2, n. 31, p. 25
 notes: ''
-variants:
-- id: dual
-  name: Dual form
-  statement: For every finite tuple there is a relation it lacks that is entailed by every relation it
-    lacks.
-  formal: $\forall\bar x^{\bar\sigma}\, .\,\exists Y^{\bar\sigma t}\, .\,\neg Y[\bar x]\land\forall Z^{\bar\sigma
-    t}\, .\,\neg Z[\bar x]\to Z\le Y$
-  equivalence: 'If $Y$ witnesses one form for $\bar x$, then $\neg Y$ witnesses the other: substitute
-    $\neg Z$ for $Z$ and use $Y\le Z\leftrightarrow\neg Z\le\neg Y$.'

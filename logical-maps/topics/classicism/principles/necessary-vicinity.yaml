@@ -11,11 +11,3 @@ source_names:
 - Dorr 27 Sep
 notes: Vicinity has no type parameters, so this is the single sentence $\Box\exists p\, .\,p\land\forall
   q\, .\,q\to p\le\Diamond q$.
-variants:
-- id: dual
-  name: Dual form
-  statement: Every closed instance of the dual form of Vicinity is necessary.
-  formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of the dual form of Vicinity}$
-  equivalence: Each instance of the dual form of Vicinity is derivable in C from finitely many instances
-    of the official form, and conversely; the derivation is on the page of Vicinity. Necessitating it
-    and applying K carries the equivalence to the boxed forms.
