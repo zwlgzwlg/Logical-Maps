@@ -21,45 +21,64 @@ references:
 # migration: the definition is the old description's first paragraph, then the notes' interpretation
 # of Σ, in which "described above" becomes ", the symmetry group", the Actuality witness of the
 # argument below.
-definition: >-
-  A symmetric ideally-full intensional action model over one object whose individuals carry
-  qualitative structure. The domain is the disjoint union of points, of two companions for each
-  point, and of infinitely many links for each ordered pair of distinct points. A ternary relation
-  holds of two points and a third individual when that individual is a link over the two if they
-  differ, and a companion of them if they coincide, so the relation's fibres are infinite over
-  distinct points and of size two over a repeated point. The arrows are required to preserve that
-  relation. The symmetry group is the relation-preserving permutations that fix a distinguished
-  pair of points setwise, and the remaining arrows are the surjective relation-preserving maps
-  that collapse that pair. The evaluation point is the identity arrow.
-
-
-  Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type
-  $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of the
-  model, the actual-world proposition, the symmetry group; every other relational constant denotes
-  the top element of its type and every individual constant one fixed individual.
+group: symmetric-ideally-full
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values.
+settings:
+  construction: >-
+    A symmetric ideally-full intensional action model over one object whose individuals carry
+    qualitative structure. The domain is the disjoint union of points, of two companions for each
+    point, and of infinitely many links for each ordered pair of distinct points. A ternary relation
+    holds of two points and a third individual when that individual is a link over the two if they
+    differ, and a companion of them if they coincide, so the relation's fibres are infinite over
+    distinct points and of size two over a repeated point. The arrows are required to preserve that
+    relation. The symmetry group is the relation-preserving permutations that fix a distinguished
+    pair of points setwise, and the remaining arrows are the surjective relation-preserving maps
+    that collapse that pair. The evaluation point is the identity arrow.
+  sigma: true-atom
+meets:
+  one-object-action-model: >-
+    It has one object (Dorr, draft, §3.1: closed pure terms denote entities fixed by every arrow).
+  transposable: >-
+    $M=\emptyset$, and for $N$ the property of being a link not in $N$ (links are carried to links
+    by every member of the symmetry group, whose inverse is again $R$-preserving): a chosen $y$ is a
+    link $\langle m,n,k\rangle$, and its transposition with a link $\langle m,n,k'\rangle\notin N$,
+    which exists since the fibre is infinite, preserves $R$ and fixes every point, so lies in the
+    symmetry group.
+  separable-collapses: >-
+    The pairs $\{0,m\}$ for points $m$ other than the distinguished pair $0,1$: by the draft's
+    extension step (proof of its Proposition 50), an $R$-coherent prescription on a closed finite set
+    containing $0$, $1$, $m$ and $m'$ that merges $0$, $1$ and $m$ but not $m'$ extends to a
+    collapsing arrow, as in the record's argument for the failure of Atomicity (type t).
+  surjective-arrows: The arrows are relation-preserving permutations and surjective relation-preserving maps.
+  symmetry-group-pinned: >-
+    Membership in the symmetry group is the condition that the distinguished pair is not collapsed,
+    so the group is pinned down by that pair.
+  actual-world-isolated: >-
+    The actual-world proposition is the symmetry group, pinned down by the distinguished pair; under
+    a collapsing arrow $i$, a composite $k\circ i$ would have to be a permutation, and no composite
+    with a map that collapses the distinguished pair is injective.
+  actuality-contingent: >-
+    The actual-world proposition, the symmetry group, is in the domain; at every world a collapsing
+    arrow leads outside it, and a collapsing arrow carries it to the empty set.
+  irreversible-arrow: >-
+    A collapsing arrow: no composite with it is injective.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another symmetric model is now a shared argument of the group
+# symmetric-ideally-full or one of the topic's general arguments (arguments/), with this record's
+# witness under `meets`; what follows is this record's own. Only the verdicts the engine needs to
+# derive the rest are recorded, the source's first.
 
 # --- from the source (19 Sep record) ---
-
-- holds: [actuality]
-  text: >-
-    Membership in the symmetry group is again the condition that the distinguished pair is not
-    collapsed, so the group is pinned down by that pair.
 
 - holds: [boolean-completeness-r]
   text: >-
     By the draft's main theorem in its closure-operation form: the constant closure operations do
     not work here, and the operation used instead adds to a finite set the point coordinates of
     its members and then both companions of each of its points.
-
-- holds: [no-pure-contingency-r]
-  source: {paper: dorr-bc-not-rc, locator: '§8, pp. 23–26'}
 
 - fails: [rigid-comprehension-r]
   text: >-
@@ -71,105 +90,6 @@ arguments:
     that world.
 
 # --- later additions ---
-
-- holds: [axiom-of-infinity-e, axiom-of-infinity-t]
-  # migration: `by` adds "at Cian Dorr's direction" from the change's summary, which is the text.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
-  date: '2026-09-20'
-  text: >-
-    The individuals are the natural numbers and identity at the identity arrow is literal, so no
-    numeral counts them. The propositions that a given individual is fixed by the arrow, one for
-    each individual, are pairwise distinct, symmetric and pinned by that individual, so there are
-    infinitely many propositions. The set of numerals at each type is invariant under every arrow,
-    hence symmetric and pinned by the empty set, so finite cardinality is standard and no finite
-    cardinality holds of the universal property at either type.
-
-- id: sigma-true-atom
-  fails: [independence-signature-r, signature-b-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The text is the 23
-  # September version; the revision notes are the two 23 September changes, the first without its
-  # closing "; see the notes". The sentence that followed the text in the old notes is in `notes`.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    No Contingency (signature Σ) fails, since the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes
-    $a$, true and contingent; B for sentences of Σ fails, since under any arrow that no arrow
-    composes back into $a$, $\Diamond a$ is false, so $\Box\Diamond a$ fails; Witnessed
-    Possibility fails for the pure formula $x=\top_\tau$, witnessed by $\top_\tau$, since
-    $\Diamond(c=\top_\tau)$ is $\Diamond\Box a$ and $a$ is necessary at no arrow; Separated
-    Structure fails with it, being equivalent to Possibly Witnessed Possibility; Independence
-    (signature Σ) and Distinctness Maximalism (signature Σ) fail through the other relational
-    constants, Σ being assumed to contain at least one: such a constant $c'$ of type $\tau'$
-    denotes what the closed pure term $\top_{\tau'}$ denotes, and $c'=\top_{\tau'}$ is a true
-    identity that C(Σ) does not prove. The designated constant refutes neither: closed pure terms
-    denote entities fixed by every arrow (Classicism, §3.5, p. 58), whereas $a$ is fixed by no
-    arrow but the identity, so no closed pure term denotes $\lambda\bar x\, .\,a$.
-  revisions:
-  - date: '2026-09-23'
-    by: Claude Fable 5.1 (Anthropic)
-    note: >-
-      Re-fixed the interpretation of Σ so as to settle No Contingency (signature Σ) and B for
-      sentences of Σ, at Cian Dorr’s request.
-  - date: '2026-09-23'
-    by: Claude Fable 5.1 (Anthropic)
-    note: >-
-      Corrected the reason given for the failures of Independence (signature Σ) and Distinctness
-      (signature Σ): the true atom is denoted by no closed pure term, since such terms denote
-      entities fixed by every arrow; the failures come from the other relational constants, which
-      denote top. No verdict changes.
-
-- fails: [relational-choice-r]
-  # migration: the closing "Argument of 23 September 2026, after Cian Dorr’s observation that a
-  # choice over the individuals cannot be finitely pinned down;" becomes `by` and `date`; in what
-  # followed it, "he" becomes "Cian Dorr".
-  by: Claude Fable 5.1 (Anthropic), after Cian Dorr’s observation that a choice over the
-    individuals cannot be finitely pinned down
-  date: '2026-09-23'
-  text: >-
-    At the types $(e\to t)$ and $e$. Let $U:=\lambda Xy\, .\,Xy\lor\neg\exists z\, .\,Xz$, a
-    closed term, hence in the domain, and serial. A functional subrelation $S$ of $U$ would lie in
-    the domain at the evaluation object, so it is symmetric and pinned down by a finite set $N$.
-    Two facts about such an $S$ (Dorr, draft, Lemma 21): every $g\in G$ fixing $N$ pointwise
-    satisfies $g^{[\sigma]}S=S$, and symmetry gives $\langle gA,gy,g\rangle\in S$ whenever
-    $\langle A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$. Now let $A$ be the
-    property of being a link not in $N$ (links are carried to links by every member of $G$, whose
-    inverse is again $R$-preserving). It is in the domain, being pinned down by that finite set
-    and symmetric, and its extension is nonempty, so $S$ relates $A$ at the identity to some $y$
-    in its extension. The chosen $y$ is a link $\langle m,n,k\rangle$; the transposition of $y$
-    with a link $\langle m,n,k^{\prime}\rangle\notin N$, which exists since the fibre is infinite,
-    preserves $R$ and fixes every point, so lies in $G$, fixes $A$ and moves $y$ to some $gy\ne
-    y$, so $S$ relates $A$ to $gy$ as well, and $S$ is not functional at the identity arrow. The
-    well-ordering of the individuals that Cian Dorr had in mind is refuted by the same two facts,
-    but the direct route needs no derivation of a well-ordering from Relational Choice in C.
-
-- holds: [distinctness-preserving-collapse]
-  # migration: the summary of the 25 September change, without "Recorded the Distinctness-preserving
-  # collapse".
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-25'
-  text: >-
-    By the argument used for the other symmetric models. Let $a$ be the symmetry group, the
-    model’s Actuality witness, so $a\le p$ for every true $p$. Take $q:=a$: under an arrow $i$ in
-    the group, $p$ holds since $i\in a\subseteq p$; under a collapsing arrow $i$, $\Diamond a$
-    would need $k\circ i$ to be a permutation, and no composite with a map that collapses the
-    distinguished pair is injective. So every truth is $\Box_{\ne}$-necessary.
-
-- holds: [barcan-r]
-  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request
-  date: '2026-09-27'
-  text: >-
-    Only the surjectivity of the arrows is used, by the argument recorded for the all-surjections
-    model (symmetric-all-surjections). Let B be an entity at the target of an arrow $i$, pinned
-    down by the finite set $M$, and choose a finite set $P$ with a map $s:M\to P$ such that
-    $i\circ s$ is the identity on $M$, possible because $i$ is surjective. Put $A:=\{\langle\bar
-    x,j\rangle : \langle\bar x,k\rangle\in B$ for some arrow $k$ with $k|_M=j\circ s\}$. This is
-    well defined because $B$ is pinned down by $M$. It is pinned down by $P$ and symmetric, since
-    $B$ is. And $i\cdot A=B$: $\langle\bar x,k\rangle\in i\cdot A$ iff $\langle\bar x,k\circ
-    i\rangle\in A$ iff $\langle\bar x,k'\rangle\in B$ for some $k'$ with $k'|_M=k|_M$, iff
-    $\langle\bar x,k\rangle\in B$. So every entity at every world is the transport of an entity at
-    the evaluation point, and a relation that is necessarily true of every entity is necessarily
-    true of all of them. The necessitation is the one-object observation. This settles the draft's
-    open comment on higher-type BF.
 
 - fails: [atomicity-t]
   by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request

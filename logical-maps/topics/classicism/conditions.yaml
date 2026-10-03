@@ -5,7 +5,9 @@
 conditions:
 - id: one-object-action-model
   text: >-
-    The model is an action model (Classicism, Appendix D) with a single object.
+    The model is an action model (Classicism, Appendix D), or an intensional action model in the
+    sense of Dorr's draft (Boolean Completeness does not imply Rigid Comprehension), with a single
+    object.
 - id: extensionally-full
   text: >-
     The model is extensionally full at every object: every set of tuples from the domains at an

@@ -28,23 +28,37 @@ references:
   note: The ideally-full action models of which this is the symmetric variant, and the failures of Boolean
     Completeness that symmetry blocks.
 
-definition: >-
-  A symmetric ideally-full intensional action model over one object, the set of natural numbers.
-  Its arrows are all the surjections of that set, and its symmetry group is all the
-  permutations. A relational domain holds exactly the intensions that are symmetric, meaning
-  indifferent to relabelling the individuals of a world, and pinned down by some finite set. The
-  evaluation point is the identity arrow.
-
-
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element
-  of its type and each individual constant denotes one fixed individual $d$.
+group: symmetric-ideally-full
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values. The
+# interpretation's "one fixed individual $d$" lost its "$d$", which the No Contingency (signature Σ)
+# argument, now a general one, names itself.
+settings:
+  construction: >-
+    A symmetric ideally-full intensional action model over one object, the set of natural numbers.
+    Its arrows are all the surjections of that set, and its symmetry group is all the
+    permutations. A relational domain holds exactly the intensions that are symmetric, meaning
+    indifferent to relabelling the individuals of a world, and pinned down by some finite set. The
+    evaluation point is the identity arrow.
+  sigma: top
+meets:
+  one-object-action-model: >-
+    It has one object (Dorr, draft, §3.1: closed pure terms denote entities fixed by every arrow).
+  transposable: >-
+    $M=\emptyset$, and for $N$ the property of not belonging to $N$: the transposition of $y$ with
+    another individual outside $N$ is a permutation, so lies in the symmetry group.
+  surjective-arrows: The arrows are all the surjections of $\mathbb N$.
+  homogeneous-individuals: >-
+    Every permutation of $\mathbb N$ is in the symmetry group, and relabelling by it is an
+    automorphism of the model, carrying each individual to its image.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another symmetric model is now a shared argument of the group
+# symmetric-ideally-full or one of the topic's general arguments (arguments/), with this record's
+# witness under `meets`; what follows is this record's own. Only the verdicts the engine needs to
+# derive the rest are recorded, the source's first.
 
 # --- from the source (19 Sep record) ---
 
@@ -55,18 +69,6 @@ arguments:
     finite set and extends freely, and points can always be moved off a given finite set by a
     permutation. The least upper bound of a property of type-tau entities is the union of the
     hulls of its instances.
-
-- holds: [no-pure-contingency-r]
-  text: >-
-    The model has one object, so a closed sentence of pure logic denotes the same thing relative
-    to every arrow and is true only if necessarily true. That gives No Pure Contingency
-    directly, and it promotes every pure principle true here to its boxed form, which is how
-    boxed Boolean Completeness and boxed BF are obtained.
-
-- holds: [barcan-r]
-  text: >-
-    At every type because every arrow is surjective and a finitely pinned symmetric intension can
-    be pulled back along an arrow.
 
 - fails: [actuality]
   # Recorded although the other verdicts give it: the Atomlessness argument builds on this one.
@@ -81,66 +83,6 @@ arguments:
     at type t.
 
 # --- later additions ---
-
-- holds: [axiom-of-infinity-e]
-  # migration: `by` adds "at Cian Dorr's direction" from the change's summary, whose first sentence
-  # ("Added both Axioms of Infinity at Cian Dorr's direction.") is dropped.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
-  date: '2026-09-20'
-  text: >-
-    The individuals are the natural numbers and identity at the identity arrow is literal, so no
-    numeral counts them. The propositions that a given individual is fixed by the arrow, one for
-    each individual, are pairwise distinct, symmetric and pinned by that individual, so there
-    are infinitely many propositions. The set of numerals at each type is invariant under every
-    arrow, hence symmetric and pinned by the empty set, so finite cardinality is standard and no
-    finite cardinality holds of the universal property at either type.
-
-- id: sigma-top
-  fails: [independence-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    With $c\in\Sigma$ of relational type $\tau$, $c=\top_\tau$ necessarily, so Witnessed
-    Possibility fails for the pure formula $x\ne\top_\tau$, Separated Structure fails since
-    $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$, Independence (signature Σ)
-    fails since $c$ denotes what a closed pure term denotes, and Distinctness Maximalism
-    (signature Σ) fails since $c=\top_\tau$ is true and unprovable.
-
-- holds: [no-contingency-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-23'
-  text: >-
-    The relational constants denote pure entities, so a closed Σ-sentence denotes what some
-    $P(d,\ldots,d)$ denotes for a pure formula $P$; the model’s automorphisms carry every
-    individual to every other, so $P(d,\ldots,d)$ is materially equivalent to the pure sentence
-    $\forall x\, .\,P(x,\ldots,x)$ and its negation to $\forall x\, .\,\neg P(x,\ldots,x)$;
-    whichever is true is necessary by No Pure Contingency, and instantiation under the box gives
-    $\Box P(d,\ldots,d)$ or $\Box\neg P(d,\ldots,d)$.
-
-- id: relational-choice
-  fails: [relational-choice-r]
-  by: Claude Fable 5.1 (Anthropic), after Cian Dorr’s observation that a choice over the individuals
-    cannot be finitely pinned down
-  date: '2026-09-23'
-  # migration: the closing "Argument of 23 September 2026, after Cian Dorr’s observation that a
-  # choice over the individuals cannot be finitely pinned down;" becomes `by` and `date`; in what
-  # followed it, "he" becomes "Cian Dorr".
-  text: >-
-    At the types $(e\to t)$ and $e$. Let $U:=\lambda Xy\, .\,Xy\lor\neg\exists z\, .\,Xz$, a
-    closed term, hence in the domain, and serial. A functional subrelation $S$ of $U$ would lie in
-    the domain at the evaluation object, so it is symmetric and pinned down by a finite set $N$.
-    Two facts about such an $S$ (Dorr, draft, Lemma 21): every $g\in G$ fixing $N$ pointwise
-    satisfies $g^{[\sigma]}S=S$, and symmetry gives $\langle gA,gy,g\rangle\in S$ whenever
-    $\langle A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$. Now let $A$ be the
-    property of not belonging to $N$. It is in the domain, being pinned down by that finite set
-    and symmetric, and its extension is nonempty, so $S$ relates $A$ at the identity to some $y$
-    in its extension. The transposition of $y$ with another individual outside $N$ is a
-    permutation, so lies in $G$, fixes $A$ and moves $y$ to some $gy\ne y$, so $S$ relates $A$ to
-    $gy$ as well, and $S$ is not functional at the identity arrow. The well-ordering of the
-    individuals that Cian Dorr had in mind is refuted by the same two facts, but the direct route
-    needs no derivation of a well-ordering from Relational Choice in C.
 
 - id: inextensible-comprehension
   holds: [inextensible-comprehension-r]

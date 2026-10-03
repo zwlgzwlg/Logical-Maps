@@ -26,19 +26,35 @@ references:
     lemmas and Boolean Completeness theorem used in the verification.
 
 # migration: the definition is the old description's first paragraph.
-definition: >-
-  A symmetric ideally-full intensional action model over one object, the set of natural numbers,
-  equipped with an equivalence relation that has infinitely many classes, each infinite. Its
-  arrows are all the surjections of that set, as in Base 1 of the draft, and its symmetry group is
-  the automorphism group of the equivalence relation: the permutations that map classes onto
-  classes. The evaluation point is the identity arrow.
+group: symmetric-ideally-full
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values.
+settings:
+  construction: >-
+    A symmetric ideally-full intensional action model over one object, the set of natural numbers,
+    equipped with an equivalence relation that has infinitely many classes, each infinite. Its
+    arrows are all the surjections of that set, as in Base 1 of the draft, and its symmetry group is
+    the automorphism group of the equivalence relation: the permutations that map classes onto
+    classes. The evaluation point is the identity arrow.
+  sigma:
+    text: >-
+      No interpretation of Σ is fixed for this record.
+meets:
+  one-object-action-model: >-
+    It has one object (Dorr, draft, §3.1: closed pure terms denote entities fixed by every arrow).
+  transposable: >-
+    $M=\emptyset$, and for $N$ the property of not belonging to $N$: the transposition of $y$ with
+    another individual of its class outside $N$, which exists since the classes are infinite, maps
+    classes onto classes, so lies in the symmetry group.
+  surjective-arrows: The arrows are all the surjections of $\mathbb N$, as in Base 1.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another symmetric model is now a shared argument of the group
+# symmetric-ideally-full or one of the topic's general arguments (arguments/), with this record's
+# witness under `meets`; what follows is this record's own. Only the verdicts the engine needs to
+# derive the rest are recorded, the source's first.
 
 # --- as first recorded (27 Sep) ---
 
@@ -50,14 +66,6 @@ arguments:
     representative is fixed by every automorphism that fixes the pinning set of F and preserves
     the class, so its least pinning set lies inside the pinning set of F, and then its extension
     would be preserved by an automorphism that swaps the class with another.
-
-- holds: [no-pure-contingency-r, atomlessness, boolean-completeness-r, barcan-r]
-  fails: [relational-choice-r]
-  # migration: the sentence "Boolean Completeness, BF and No Pure Contingency hold as in Base 1, and
-  # Actuality, Relational Choice, Atomicity at type t and ND fail as there." becomes "As in Base
-  # 1."; Atomlessness, which had no sentence of its own, holds as in Base 1 too.
-  text: >-
-    As in Base 1.
 
 # --- later additions ---
 
@@ -72,6 +80,13 @@ arguments:
     preserve the equivalence pattern on S, and is the S-hull of the extension of X elsewhere.
     Details in the write-up.
 
+- holds: [atomlessness, boolean-completeness-r]
+  # migration (2 October): what is left of the clause "Boolean Completeness, BF and No Pure
+  # Contingency hold as in Base 1, and Actuality, Relational Choice, Atomicity at type t and ND fail
+  # as there" once No Pure Contingency, BF and Relational Choice come from the group and the topic.
+  text: >-
+    As in Base 1.
+
 # migration: the old notes, whole.
 notes: >-
   The first recorded model refuting Transversal, so Transversal is not a theorem of C. Since the
@@ -85,6 +100,10 @@ notes: >-
   Left unknown: the Axiom of Infinity at type e, and every signature schema, since no
   interpretation of Σ has been fixed. Vicinity fails by derivation: Weakly Inextensible
   Comprehension holds, and with Vicinity it would give Actuality.
+
+  Since 2 October the Axiom of Infinity at type e holds by the group's argument, and the record's
+  interpretation of Σ is its own text saying that none is fixed; its variants with each of the
+  group's interpretations are generated.
 
 # The old `changes` log, verbatim and frozen.
 history:
