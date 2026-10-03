@@ -38,22 +38,25 @@ group: full-action-models
 # is its first paragraph, verbatim; its interpretation of Σ is one of the group's values. The
 # interpretation's "one fixed individual $d$" lost its "$d$", which the No Contingency (signature Σ)
 # argument, now a general one, names itself.
+# migration (3 October): the record full-permutation-group-one-individual is this member at the
+# group's default individuals, and the source's natural action on $X$ gives on the map's principles
+# what the generated variant with infinitely many fixed individuals gives; see the notes. The
+# construction drops "acting on the individuals $W^e=X$ by evaluation", the individuals now being
+# the group's parameter. Its `meets` for homogeneous-individuals, which concerned the natural
+# action, is now each individuals value's.
 settings:
   construction: >-
     The full one-object action model whose arrows are all the permutations of a countably infinite
-    set $X$, composed as functions, acting on the individuals $W^e=X$ by evaluation. Propositions
-    are all sets of arrows with the division action $i\cdot p=\{j : j\circ i\in p\}$, and every
-    function type carries the full function-space M-set, which here is the set of all functions
-    since every arrow acts bijectively. Evaluate at the identity arrow.
+    set $X$, composed as functions. Propositions are all sets of arrows with the division action
+    $i\cdot p=\{j : j\circ i\in p\}$, and every function type carries the full function-space
+    M-set, which here is the set of all functions since every arrow acts bijectively. Evaluate at
+    the identity arrow.
+  individuals: singleton
   sigma: top
 meets:
   sigma-apart: The construction does not mention Σ.
   one-object-action-model: >-
     It has one object.
-  homogeneous-individuals: >-
-    For every bijection $\beta$ of $X$ the map that is $\beta$ at type $e$, the identity on
-    propositions and conjugation at the function types is an automorphism of the pure part of the
-    model, carrying each individual to its image under $\beta$.
 
 arguments:
 
@@ -63,14 +66,33 @@ arguments:
 # what follows is this record's own. Only the verdicts the engine needs to derive the rest are
 # recorded, the source's first.
 
-- holds: [axiom-of-infinity-t, axiom-of-infinity-e, functional-choice-r]
+- holds: [axiom-of-infinity-t, functional-choice-r]
+  writeup: full-permutation-group-infinite-set
+  # migration (3 October): "the individuals and the propositions are both infinite" becomes "the
+  # propositions are infinite", the Axiom of Infinity at type $e$ being now the general argument
+  # for infinitely many fixed individuals; the one-individual record's argument for the same
+  # verdicts said the same.
   text: >-
     Because the arrows form a group, $\Box p$ holds at an arrow exactly when $p$ is the set of all
     arrows and $\Diamond p$ exactly when $p$ is nonempty, so the propositional modal logic is S5
     with the arrows as worlds; every arrow acts injectively and surjectively at every type, giving
     $\Box$ND and $\Box$BF; fullness gives the necessitations of Atomicity, Actuality, Boolean
     Completeness, Rigid Comprehension, Functionality, Plenitude and the choice principles; and the
-    individuals and the propositions are both infinite.
+    propositions are infinite.
+
+# migration (3 October): from full-permutation-group-one-individual, verbatim, where it was
+# recorded at its interpretation of Σ, the true atom. The argument uses only that every constant
+# but the designated one denotes a fixed point, which holds with either choice of individuals,
+# each fixed by every arrow.
+- holds: [modal-freedom-signature-r]
+  when: {sigma: true-atom}
+  writeup: full-permutation-group-one-individual
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    The two tuples of constants are disjoint, so one of the two sentences contains no designated
+    constant and denotes a fixed point, hence the empty set or the set of all arrows; if it is
+    possible it is the latter, and the conjunction is as possible as the other conjunct.
 
 # migration: the old notes' first and last sentences and the old description's last, verbatim. The
 # notes' arguments for Converse Witnessed Possibility and for the failures of the Fregean Axiom,
@@ -81,3 +103,11 @@ notes: >-
   Axiom of Infinity at type $t$ and $\Box$Relational Choice. Suggested by Cian Dorr on 23
   September 2026 to fill a gap: no earlier record settled $\Box$ND, the Axiom of Infinity at type
   $t$ and $\Box$Relational Choice together.
+
+
+  The write-up full-permutation-group-infinite-set treats the source's natural action, on the
+  individuals $X$ by evaluation; the write-up full-permutation-group-one-individual records what
+  changes with one individual, recorded separately until 3 October 2026, when it became this
+  member at the group's default. The natural action, like the identity action on infinitely many
+  individuals, is bijective and has the Axiom of Infinity at type $e$, which is all the map's
+  principles see of the individuals here.

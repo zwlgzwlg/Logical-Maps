@@ -24,6 +24,8 @@ references:
 group: full-action-models
 # migration (2 October): the old definition is the group's, completed by these settings: `construction`
 # is its first paragraph, verbatim; its interpretation of Σ is one of the group's values.
+# migration (3 October): recorded at the group's defaults, one individual and Σ top; the source
+# leaves the individuals open, and Σ true atom, until then the record's, is now a variant.
 settings:
   construction: >-
     The full action model on the two-element group $\{1,k\}$ with $k^2=1$: the construction of
@@ -31,7 +33,8 @@ settings:
     to $k^2=1$. Evaluate at the sole object. The propositions at the evaluation object are the
     subsets of the two arrows out of it, four in all, and every intension of a full model is
     present.
-  sigma: true-atom
+  individuals: singleton
+  sigma: top
 meets:
   sigma-apart: The construction does not mention Σ.
   one-object-action-model: >-

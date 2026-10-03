@@ -40,7 +40,9 @@ references:
 
 # migration: the definition is the old description without its last sentence, which is the first
 # argument.
-group: full-action-models
+# migration (3 October): moved from full-action-models to its own group, whose definition gives
+# the interpretation of Σ that was this record's `sigma` setting.
+group: glued-free-monoid
 # migration (2 October): the old definition is the group's, completed by these settings: `construction`
 # is its first paragraph, verbatim; its interpretation of Σ is one of the group's values. The
 # construction interprets Σ by gluing, so the record meets no sigma-apart and has no variants.
@@ -50,9 +52,6 @@ settings:
     singleton at every world, with identity counterparts; equivalently the full action model over
     the free monoid on countably many generators with the trivial M-set at type e, with the
     constants glued as there. Evaluation point: the root.
-  sigma:
-    text: >-
-      The constants of Σ are glued as in the construction above.
 meets:
   one-object-action-model: >-
     It has one object.

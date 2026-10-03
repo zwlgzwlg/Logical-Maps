@@ -39,6 +39,10 @@ conditions:
   text: >-
     The model is a full action model: an action model (Classicism, Appendix D) that is full at
     every object.
+- id: fixed-infinite-individuals
+  text: >-
+    At every object the individuals are the same infinite set, and every arrow acts on them as the
+    identity.
 - id: homogeneous-individuals
   text: >-
     The model's automorphisms carry every individual to every other.

@@ -27,10 +27,14 @@ group: full-action-models
 # is its first paragraph, verbatim; its interpretation of Σ is one of the group's values. The
 # interpretation's "one fixed individual $d$" lost its "$d$", which the No Contingency (signature Σ)
 # argument, now a general one, names itself.
+# migration (3 October): the construction drops "and a surjective individual action", the
+# individuals now being the group's parameter; both of its values act surjectively, which is what
+# the source's argument below uses. The `meets` for homogeneous-individuals, which concerned the
+# source's action, is now each individuals value's.
 settings:
   construction: >-
-    Use the monoid of surjections of an infinite set and a surjective individual action, at its sole
-    object.
+    Use the monoid of surjections of an infinite set, at its sole object.
+  individuals: singleton
   sigma: top
 meets:
   sigma-apart: The construction does not mention Σ.
@@ -38,9 +42,6 @@ meets:
     It has one object.
   irreversible-arrow: >-
     A surjection that is not injective: no composite with it is the identity.
-  homogeneous-individuals: >-
-    Every permutation of the set is a surjection, and conjugation by it is an automorphism of the
-    model, carrying each individual to its image.
 
 arguments:
 
@@ -55,19 +56,23 @@ arguments:
 - holds: [no-pure-contingency-r, rigid-comprehension-r, atomicity-r, barcan-r]
   fails: [distinctness-necessary-t]
   source: {paper: bacon-dorr-classicism, locator: '§3.5, p. 59, third paragraph'}
+  # migration (3 October): the source takes a surjective individual action; one individual and
+  # infinitely many fixed individuals both act surjectively.
   text: >-
     The source cites Bacon 2020, Proposition A.3 for the higher-type surjectivity argument.
 
 # --- later additions ---
 
-- holds: [axiom-of-infinity-e, axiom-of-infinity-t]
+- holds: [axiom-of-infinity-t]
   # migration: `by` adds "at Cian Dorr's direction" from the change's summary.
+  # migration (3 October): the type-$e$ half is now the general argument for infinitely many fixed
+  # individuals, which is this argument's; the text keeps the type-$t$ half.
   by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
   date: '2026-09-20'
   text: >-
-    The individuals are an infinite set and the arrows an infinite monoid, identity at the
-    identity arrow is literal, and the numeral sets at each type are intensions of a full model,
-    so no finite cardinality holds of the universal property at type e or at type t.
+    The arrows are an infinite monoid, identity at the identity arrow is literal, and the numeral
+    sets at type t are intensions of a full model, so no finite cardinality holds of the universal
+    property at type t.
 
 - fails: [distinctness-preserving-collapse]
   by: Claude Fable 5.1 (Anthropic)
@@ -85,6 +90,12 @@ notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
   identifies its evaluation point; construction and verification are given at the PDF locations in
   References.
+
+
+  The source takes infinitely many individuals with a surjective action, such as the surjections'
+  action on the set by evaluation. That action gives, on the map's principles, what the variant
+  with infinitely many fixed individuals gives: it is surjective and homogeneous, and the failure
+  of ND at type $e$ that its non-injectivity brings adds nothing, ND failing already at type $t$.
 
 was_conjectured: true
 

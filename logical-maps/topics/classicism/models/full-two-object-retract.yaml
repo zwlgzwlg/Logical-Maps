@@ -22,9 +22,12 @@ references:
 group: full-action-models
 # migration (2 October): the old definition is the group's, completed by these settings: `construction`
 # is its first paragraph, verbatim; its interpretation of Σ is one of the group's values.
+# migration (3 October): recorded at the group's defaults, one individual and Σ top; the source
+# leaves the individuals open.
 settings:
   construction: >-
     Use the source’s category with h:W0→W1, j:W1→W0 and k:W1→W1, evaluated at W0.
+  individuals: singleton
   sigma: top
 meets:
   sigma-apart: The construction does not mention Σ.

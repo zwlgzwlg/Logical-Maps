@@ -21,9 +21,12 @@ references:
 group: full-action-models
 # migration (2 October): the old definition is the group's, completed by these settings: `construction`
 # is its first paragraph, verbatim; its interpretation of Σ is one of the group's values.
+# migration (3 October): recorded at the group's defaults, one individual and Σ top; the source
+# leaves the individuals open.
 settings:
   construction: >-
     Use two objects with one nonidentity arrow from W0 to W1, evaluated at W0.
+  individuals: singleton
   sigma: top
 meets:
   sigma-apart: The construction does not mention Σ.
@@ -68,6 +71,20 @@ arguments:
     every possible relation has a strong world below it, at $W_0$ and trivially at the one-world
     $W_1$.
 
+- holds: [necessary-barcan-r]
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-03'
+  text: >-
+    The arrows out of $W_0$ are the identity and $k$. A relation at $W_0$ of relational type
+    $\bar\sigma t$ is a set of pairs $\langle i,\bar a\rangle$ with $\bar a$ a tuple at $i$'s
+    target, and $k$ carries it to the relation at $W_1$ whose extension at the identity of $W_1$
+    is its extension at $k$, the only arrow into $W_1$'s identity being composed with $k$. In a
+    full model that extension at $k$ is any set of tuples at $W_1$, so $k$ acts surjectively at
+    every relational type; at type $e$ it does under either choice of individuals, sending the one
+    individual to the one individual, or each natural number to itself. So BF holds at $W_0$ by
+    Classicism, Proposition 3.24(ii), and it holds at $W_1$, whose only arrow is the identity, so
+    $\Box$BF holds.
+
 - fails: [pure-b-r]
   by: Claude Fable 5.1 (Anthropic)
   date: '2026-09-25'
@@ -79,11 +96,12 @@ arguments:
 # sentence that followed the Σ argument, and the last sentence of the argument for BF (type $t$).
 # That argument, the one for the failure of Possible Infinity (type $t$) and the one for □Relational
 # Choice of 20 September, whose verdicts are now derived, are dropped.
+# migration (3 October): its last sentence, that BF at type $e$ was left open since the record did
+# not fix the individual domains, is dropped: they are fixed now, and BF is argued above.
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
   identifies its evaluation point; construction and verification are given at the PDF locations in
-  References. Everything that implies these fails with them. Whether BF holds at type $e$ depends
-  on the individual domains, which the record does not fix, so the schema is left open.
+  References. Everything that implies these fails with them.
 
 was_conjectured: true
 

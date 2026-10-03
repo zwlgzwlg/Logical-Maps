@@ -11,12 +11,21 @@ references:
 # because they are full lives in the topic's general arguments (Relational Choice and its boxed
 # form, Transversal Choice, Distinctness-Preserving Collapse, Σ), which the group's `meets` brings
 # to every member. Built on 2 October 2026 by Claude Opus 5.5 at Cian Dorr's direction; texts are
-# the members' unless a revision says otherwise. The two free-monoid models are full action models
-# whose interpretation of Σ is part of the construction (Bacon's glued constants), so they have no
-# generated variants.
+# the members' unless a revision says otherwise.
+#
+# Revised 3 October 2026 (Claude Opus 5.5, at Cian Dorr's direction). The two free-monoid models,
+# whose construction interprets Σ, moved to their own group, glued-free-monoid. Every member is now
+# recorded at the same settings, one individual and Σ top, with the others generated, so that the
+# group's grid shows how the constructions differ and its variants show what the settings change.
+# Where the source gave a member an individual action of its own (the natural actions of the
+# permutation and surjection models), its record says so in its notes: on the map's principles that
+# action gives what the infinitely many fixed individuals give.
 
 definition: >-
   {{construction}}
+
+
+  {{individuals}}
 
 
   {{sigma}}
@@ -25,10 +34,36 @@ parameters:
   construction:
     text: The category, its action on the individuals, and the evaluation point, as the member's
       source gives them.
-  sigma:
-    text: The interpretation of Σ. Each member fixes one; its variants with the others are
-      generated, except where the construction itself interprets Σ.
+  individuals:
+    text: What the individuals are. Each member is recorded with one individual; its variant with
+      infinitely many individuals, which every arrow fixes, is generated.
     generate: true
+    default: singleton
+    values:
+      singleton:
+        text: >-
+          Individuals, fixed for this record: there is a single individual at every object, and
+          every arrow sends it to the single individual at its target.
+        label: one individual
+        meets:
+          one-individual: There is a single individual at every object.
+          homogeneous-individuals: There is only one individual.
+      fixed-infinite:
+        text: >-
+          Individuals, fixed for this record: at every object the individuals are the natural
+          numbers, and every arrow acts on them as the identity.
+        label: infinitely many fixed individuals
+        meets:
+          fixed-infinite-individuals: This is the choice of individuals.
+          homogeneous-individuals: >-
+            A permutation of the natural numbers commutes with every arrow's action, the identity,
+            so it is an automorphism at type $e$ and extends, by conjugation, to the full domains
+            of the other types, carrying each individual to its image.
+  sigma:
+    text: The interpretation of Σ. Each member is recorded with Σ top; its variants with the
+      others are generated.
+    generate: true
+    default: top
     values:
       top:
         text: >-

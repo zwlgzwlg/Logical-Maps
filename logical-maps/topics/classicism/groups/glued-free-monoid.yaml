@@ -1,0 +1,43 @@
+id: glued-free-monoid
+name: 'Full action models over the free monoid, with glued constants'
+references:
+- paper: bacon-2020
+  role: origin
+  locator: Appendix A.2–A.3, pp. 580–587
+  note: The construction, and its claimed validation of Logical Necessity.
+
+# Bacon's models of Logical Necessity: full action models over the free monoid on countably many
+# generators in which the constants of Σ are glued, so that the construction itself interprets Σ.
+# Moved out of full-action-models on 3 October 2026 by Claude Opus 5.5, at Cian Dorr's direction:
+# their Σ cannot be exchanged for another, so they have no Σ variants, and they are the only full
+# action models with Logical Necessity. The members differ in their individuals. What they share
+# as full action models (the group's `meets`, as in full-action-models) brings the topic's general
+# arguments; texts are the members'.
+
+definition: >-
+  {{construction}}
+
+
+  The constants of Σ are glued as in the construction above.
+
+parameters:
+  construction:
+    text: The individuals and the gluing, as the member's write-up gives them.
+
+meets:
+  full-model: >-
+    Every intension of every relational type is present at every object (Classicism, §3.5,
+    p. 59).
+  full-action-model: >-
+    An action model, full at every object (Classicism, §3.5, p. 59; Appendix D).
+  extensionally-full: >-
+    A full model contains every intension, so in particular one with any given extension at the
+    identity.
+  metatheory-choice: The constructions are carried out in ZFC.
+  actuality-contingent: >-
+    The singleton $a$ of the identity arrow is in the domain, the model being full. It is necessary
+    at no world: a world other than the identity sees itself, which lies outside $a$, and the
+    identity sees an arrow other than itself. And a non-identity arrow $k$ does not fix it, since
+    $1\in k\cdot a$ would need $1\circ k=1$.
+
+arguments: []
