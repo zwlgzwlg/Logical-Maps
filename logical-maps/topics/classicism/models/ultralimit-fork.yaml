@@ -39,6 +39,9 @@ references:
   note: The proposition this model refutes.
 
 # migration: the definition is the old description.
+# migration (3 October): the interpretation of Σ has no individual constants, as the topic's condition
+# sigma-top now says (Cian Dorr's decision); it read "and each individual constant the individual
+#".
 definition: >-
   An intensional action model with one individual. The objects are the root $o$, $s$, $u$, and $n$ for
   each $n\ge1$; besides identities the arrows are $h_s\colon o\to s$, $j\colon s\to u$, $h_u:=j\circ h_s$
@@ -49,8 +52,8 @@ definition: >-
   full intension space whose extension at $u$ is the $\mathcal U$-limit of its extensions at the worlds
   $n$; its extensions at $o$, at $s$ and at each $n$ are unconstrained. So a root proposition is any choice
   of truth values at $o$, $s$ and the $n$s, with its value at $u$ fixed as the limit. Evaluation point: the
-  root. Interpretation of Σ, fixed for this record: each relational constant denotes the top element of its
-  type and each individual constant the individual.
+  root. Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each
+  denotes the top element of its type.
 
 # 2 October 2026: the topic's general argument sigma-top replaces this record's copy of it.
 meets:

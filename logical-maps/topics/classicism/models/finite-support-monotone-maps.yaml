@@ -26,12 +26,13 @@ settings:
   monoid: >-
     Proposition D.5, part 3 (p. 77): the one-object category whose arrows are all the monotone maps
     of $\mathbb N$.
+  # migration (3 October): no individual constants, as in the group's interpretations of Σ.
   sigma:
     text: >-
       Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type
       $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,p_0$, where $p_0$ is the proposition that the
-      arrow fixes $0$, pinned down by $\{0\}$; every other relational constant denotes the top
-      element of its type and every individual constant one fixed individual.
+      arrow fixes $0$, pinned down by $\{0\}$; every other constant of Σ is relational and
+      denotes the top element of its type.
 
 meets:
   evens-avoidable: >-

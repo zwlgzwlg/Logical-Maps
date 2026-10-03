@@ -38,11 +38,13 @@ group: finite-support-one-object
 # migration: the definition is the group's, completed by these settings: `monoid` is the
 # sentence before "In every part", verbatim; Σ is one of the group's two interpretations.
 # Its text named the actual-world proposition by the identity arrow; the group describes it.
+# migration (3 October): recorded at Σ top, as every member whose interpretation is one of the
+# group's values now is; Σ true atom, until then the record's, is now a variant.
 settings:
   monoid: >-
     Proposition D.5, part 7 (p. 78): the arrows are the maps $f_n$, for $n$ a power of $2$, sending
     $m$ to the greatest multiple of $n$ not exceeding $m$; $f_1$ is the identity.
-  sigma: true-atom
+  sigma: top
 
 meets:
   actual-world-pinned: >-

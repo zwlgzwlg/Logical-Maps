@@ -24,6 +24,7 @@ references:
 group: symmetric-ideally-full
 # migration (2 October): the old definition is the group's, completed by these settings: `construction`
 # is its first paragraph, verbatim; its interpretation of Σ is one of the group's values.
+# migration (3 October): recorded at the group's defaults, Σ top and the base as the individuals; Σ true atom, until then the record's, is now a variant.
 settings:
   construction: >-
     A symmetric ideally-full intensional action model over one object whose individuals carry
@@ -35,7 +36,8 @@ settings:
     relation. The symmetry group is the relation-preserving permutations that fix a distinguished
     pair of points setwise, and the remaining arrows are the surjective relation-preserving maps
     that collapse that pair. The evaluation point is the identity arrow.
-  sigma: true-atom
+  individuals: base
+  sigma: top
 meets:
   one-object-action-model: >-
     It has one object (Dorr, draft, §3.1: closed pure terms denote entities fixed by every arrow).
@@ -81,6 +83,7 @@ arguments:
     its members and then both companions of each of its points.
 
 - fails: [rigid-comprehension-r]
+  when: {individuals: base}  # proved at type $e$ (3 October: the one-individual variant leaves it open)
   text: >-
     At type e. The property of being related to the distinguished pair is persistent and finitely
     pinned, and it is shown to be the only candidate coextensive with itself. But at a world

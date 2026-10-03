@@ -32,6 +32,7 @@ group: symmetric-ideally-full
 # is its first paragraph, verbatim; its interpretation of Σ is one of the group's values. Its
 # text named the actual-world proposition "the set of arrows that are permutations", which is the
 # symmetry group, as the group's text calls it.
+# migration (3 October): recorded at the group's defaults, Σ top and the base as the individuals; Σ true atom, until then the record's, is now a variant.
 settings:
   construction: >-
     A symmetric ideally-full intensional action model over one object, the set of natural numbers.
@@ -39,7 +40,8 @@ settings:
     its arrows are those permutations together with all the surjections that collapse the two
     members of that pair. Every arrow is therefore invertible or a collapser, and which it is can be
     read off from its behaviour on that pair. The evaluation point is the identity arrow.
-  sigma: true-atom
+  individuals: base
+  sigma: top
 meets:
   one-object-action-model: >-
     It has one object (Dorr, draft, §3.1: closed pure terms denote entities fixed by every arrow).

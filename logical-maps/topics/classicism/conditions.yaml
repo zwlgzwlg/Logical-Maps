@@ -20,11 +20,7 @@ conditions:
     hypothesis).
 - id: sigma-top
   text: >-
-    Σ is interpreted with every relational constant denoting the top element of its type (and
-    every individual constant, if any, one fixed individual).
-- id: sigma-single-top
-  text: >-
-    Σ is a single relational constant $c$ of type $t$, denoting $\top$.
+    Every constant of Σ is relational, and each denotes the top element of its type.
 - id: one-individual
   text: >-
     There is exactly one individual, at every world.
@@ -53,8 +49,8 @@ conditions:
   text: >-
     Σ has a designated relational constant $c$ of type $\tau=\bar\sigma t$ denoting
     $\lambda\bar x\, .\,a$, where $a$ is the actual-world proposition, the unique true atom; every
-    other relational constant, of which there is at least one, denotes the top element of its type,
-    and every individual constant one fixed individual.
+    other constant, of which there is at least one, is relational and denotes the top element of
+    its type.
 - id: actuality-contingent
   text: >-
     The actual-world proposition $a$, the strongest truth, is in the domain; it is necessary at no

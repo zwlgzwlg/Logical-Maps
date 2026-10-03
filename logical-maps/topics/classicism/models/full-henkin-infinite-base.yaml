@@ -19,6 +19,9 @@ references:
 
 # migration: the definition is the old description up to its verdict sentences, then the notes'
 # interpretation of Σ.
+# migration (3 October): the interpretation of Σ has no individual constants, as the topic's condition
+# sigma-top now says (Cian Dorr's decision); it read "and each individual constant denotes one
+# fixed individual".
 definition: >-
   Use the ordinary full Henkin interpretation with $D_e$ countably infinite, $D_t=\{0,1\}$, and
   every admitted function type containing all functions between its domains; by Proposition 3.7 it
@@ -26,8 +29,8 @@ definition: >-
   $\Diamond$ is truth.
 
 
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element of
-  its type and each individual constant denotes one fixed individual.
+  Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each
+  denotes the top element of its type.
 
 # The interpretation of Σ in the definition meets the topic's condition sigma-top, so the general
 # argument sigma-top (arguments/) gives its failures (2 October 2026; this record's copy of it went).

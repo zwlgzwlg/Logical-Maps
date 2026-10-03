@@ -40,6 +40,10 @@ parameters:
     generate: true
     default: naturals
     values:
+      # Revised 3 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): Σ has no individual
+      # constants. The value "Σ one constant for ⊤" went, its verdicts never differing from these;
+      # the individual constants that `top` and `true-atom` had left verdicts unknown where the
+      # individuals are not homogeneous, and settled none differently.
       naturals:
         text: The individuals are the natural numbers, acted on by the arrows themselves.
         label: individuals ℕ
@@ -60,27 +64,18 @@ parameters:
       # $\{k_0\}$); here it is described instead.
       top:
         text: >-
-          Interpretation of Σ, fixed for this record: each relational constant denotes the top
-          element of its type and each individual constant denotes one fixed individual.
+          Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each
+          denotes the top element of its type.
         label: Σ top
         meets:
           sigma-top: This is the interpretation.
-      single-top:
-        # Cian Dorr, 2 October 2026.
-        text: >-
-          Interpretation of Σ, fixed for this record: Σ is a single relational constant $c$ of type
-          $t$, which denotes $\top$.
-        label: Σ one constant for ⊤
-        meets:
-          sigma-top: Its one relational constant denotes the top element of type $t$.
-          sigma-single-top: This is the interpretation.
       true-atom:
         text: >-
-          Interpretation of Σ, fixed for this record: one designated relational constant $c$ of
-          type $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom
-          of the model, the actual-world proposition, whose only member is the identity arrow;
-          every other relational constant denotes the top element of its type and every individual
-          constant one fixed individual.
+          Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type
+          $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of
+          the model, the actual-world proposition, whose only member is the identity arrow; every
+          other constant of Σ, of which there is at least one, is relational and denotes the top
+          element of its type.
         label: Σ true atom
         requires: [actual-world-pinned]
         meets:

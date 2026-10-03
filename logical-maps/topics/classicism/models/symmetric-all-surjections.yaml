@@ -33,6 +33,7 @@ group: symmetric-ideally-full
 # is its first paragraph, verbatim; its interpretation of Σ is one of the group's values. The
 # interpretation's "one fixed individual $d$" lost its "$d$", which the No Contingency (signature Σ)
 # argument, now a general one, names itself.
+# migration (3 October): recorded at the group's defaults, Σ top and the base as the individuals; the individuals were the base already.
 settings:
   construction: >-
     A symmetric ideally-full intensional action model over one object, the set of natural numbers.
@@ -40,6 +41,7 @@ settings:
     permutations. A relational domain holds exactly the intensions that are symmetric, meaning
     indifferent to relabelling the individuals of a world, and pinned down by some finite set. The
     evaluation point is the identity arrow.
+  individuals: base
   sigma: top
 meets:
   one-object-action-model: >-

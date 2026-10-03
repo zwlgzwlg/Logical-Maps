@@ -31,6 +31,7 @@ references:
 group: symmetric-ideally-full
 # migration (2 October): the old definition is the group's, completed by these settings: `construction`
 # is its first paragraph, verbatim; its interpretation of Σ is one of the group's values.
+# migration (3 October): recorded at the group's defaults, Σ top and the base as the individuals; the individuals were the base already.
 settings:
   construction: >-
     Appendix D, p. 79, the final construction, the paper’s precursor of the symmetric ideally-full
@@ -44,6 +45,7 @@ settings:
     to the entities’ values. Intuitively $W_0$ is a state in which all individuals are qualitatively
     indiscernible and $W_1$ one in which each plays a unique role. Evaluation point: $W_0$, at its
     identity arrow.
+  individuals: base
   sigma: top
 meets:
   transposable: >-

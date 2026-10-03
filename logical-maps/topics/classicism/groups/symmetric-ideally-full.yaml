@@ -15,9 +15,18 @@ references:
 # that more than one member gave in substance is here, or in the topic's arguments/, stated once,
 # with what varies between members under each member's `meets`. Built on 2 October 2026 by Claude
 # Opus 5.5 at Cian Dorr's direction; texts are the members' unless a revision says otherwise.
+#
+# Revised 3 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every member is recorded at Σ
+# top, its other interpretation generated, and with the individuals its construction gives, the
+# base; its variant with one individual, the arrows still acting on the base, is generated. The
+# arguments that work at type $e$ apply only at the base: in the variant, whether Relational
+# Choice, Transversal and Rigid Comprehension still fail is open.
 
 definition: >-
   {{construction}}
+
+
+  {{individuals}}
 
 
   {{sigma}}
@@ -26,33 +35,48 @@ parameters:
   construction:
     text: The objects, arrows and symmetry groups, and which intensions the domains hold, as the
       member's source gives them.
+  individuals:
+    text: What the individuals are. Each member is recorded with the individuals its construction
+      gives; its variant with one individual is generated.
+    generate: true
+    default: base
+    values:
+      base:
+        text: >-
+          Individuals, fixed for this record: the individuals at each object are the base the
+          construction describes, and the arrows act on them as on the base.
+        label: individuals the base
+      singleton:
+        text: >-
+          Individuals, fixed for this record: there is a single individual at every object. The
+          arrows still act on the base as the construction says, and the base still supplies the
+          pinning sets and the symmetry groups.
+        label: one individual
+        meets:
+          one-individual: There is a single individual at every object.
+          homogeneous-individuals: There is only one individual.
   sigma:
-    text: The interpretation of Σ. Each member fixes one; its variants with the others are
-      generated.
+    text: The interpretation of Σ. Each member is recorded with Σ top; its variant with the other
+      is generated.
     generate: true
     values:
+      # Revised 3 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): Σ has no individual
+      # constants. The value "Σ one constant for ⊤" went, its verdicts never differing from these;
+      # the individual constants that `top` and `true-atom` had left verdicts unknown where the
+      # individuals are not homogeneous, and settled none differently.
       top:
         text: >-
-          Interpretation of Σ, fixed for this record: each relational constant denotes the top
-          element of its type and each individual constant denotes one fixed individual.
+          Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each
+          denotes the top element of its type.
         label: Σ top
         meets:
           sigma-top: This is the interpretation.
-      single-top:
-        text: >-
-          Interpretation of Σ, fixed for this record: Σ is a single relational constant $c$ of type
-          $t$, which denotes $\top$.
-        label: Σ one constant for ⊤
-        meets:
-          sigma-top: Its one relational constant denotes the top element of type $t$.
-          sigma-single-top: This is the interpretation.
       true-atom:
         text: >-
-          Interpretation of Σ, fixed for this record: one designated relational constant $c$ of
-          type $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom
-          of the model, the actual-world proposition, the symmetry group; every other relational
-          constant denotes the top element of its type and every individual constant one fixed
-          individual.
+          Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type
+          $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of
+          the model, the actual-world proposition, the symmetry group; every other constant of Σ, of
+          which there is at least one, is relational and denotes the top element of its type.
         label: Σ true atom
         requires: [actuality-contingent]
         meets:
@@ -84,6 +108,7 @@ conditions:
 arguments:
 
 - id: relational-choice
+  when: {individuals: base}
   requires: [transposable]
   fails: [relational-choice-r]
   by: Claude Fable 5.1 (Anthropic), after Cian Dorr’s observation that a choice over the
@@ -111,6 +136,7 @@ arguments:
       qualitative-contrast model's second argument (OpenAI Codex, 24 September) was dropped.
 
 - id: axiom-of-infinity-e
+  when: {individuals: base}
   holds: [axiom-of-infinity-e]
   by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
   date: '2026-09-20'
@@ -189,6 +215,7 @@ arguments:
     note: The three members' versions stated once; what pins the group down is each member's reason for meeting symmetry-group-pinned.
 
 - id: barcan-fixes-or-omits
+  when: {individuals: base}
   requires: [fixes-or-omits]
   fails: [barcan-r]
   source: {paper: dorr-bc-not-rc, locator: '§7.1, p. 21; §7.2, p. 22'}
