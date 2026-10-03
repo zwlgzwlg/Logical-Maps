@@ -22,6 +22,9 @@ $\sigma\to(\tau\to\rho)$. Application also associates to the right:
 $fgx=f(gx)$. Write $(fx)y$ for curried application. A dot separates a
 binder from its scope. The abbreviation $X[\bar x]$ means explicitly
 left-nested application to the displayed tuple; it is $X$ for an empty tuple.
+For a finite, possibly empty, tuple of types $\bar\sigma=\sigma_1\ldots\sigma_n$,
+$\bar\sigma t$ is the type $\sigma_1\cdots\sigma_n t$, and $\bar x^{\bar\sigma}$ gives
+$x_i$ the type $\sigma_i$.
 
 Put $\Box p:=(p=\top)$ and $\Diamond p:=(p\ne\bot)$.
 At a relational type $\tau$, Boolean operations are defined pointwise.
@@ -206,18 +209,16 @@ $$
 
 ## Conventions
 
-**Type scope.** Type parameters range over the fixed type system above.
-A relational type is any admitted type other than $e$, including $t$.
-Display restrictions such as $\tau\ne e$ when the schema needs them;
-the overall type range is implicit.
-
-**Schema scope.** $\forall^{\mathrm{Ty}}$ is metalinguistic. It ranges over
-simple types, outside the object-language sentence, and does not add a
-quantifier to C. A principle may have one outer universal or existential
-block of type parameters; quantifier alternation requires a separate
-extension of the convention. The present import has positive schemata and
-selected individual instances. Finite tuples and formula schemata retain
-their stated metalinguistic side conditions.
+**Type scope.** A formula containing type variables ($\sigma$, $\tau$, $\bar\sigma$)
+is a schema. The principle is the set of its instances, one for each admissible
+assignment of types to the variables. Type variables range over the fixed type system
+above; $\bar\sigma$ ranges over finite tuples, including the empty one. A relational
+type is any admitted type other than $e$, including $t$. A restriction is written as
+a parenthesized proviso after the formula, as in $\ldots\qquad(\tau\ne e)$; a formula
+without a proviso admits every assignment. The type variables are metalinguistic: there
+is no quantification over types in C, and a type variable never falls within the scope
+of an object-language operator except as a fixed parameter. Finite tuples and formula
+schemata retain their stated metalinguistic side conditions.
 
 **Modal scope.** A boxed schema means that each admitted, fully closed
 object-language instance is necessary. Close its object variables before
@@ -226,15 +227,12 @@ C5 abbreviates C plus boxed ND at all types. It is an optional preset,
 not part of the fixed background. A proof under an optional premise cannot
 be necessitated unless that premise is discharged or supplied necessarily.
 
-**Negation.** Failure of a type schema means failure of at least one of
-its admitted instances, not failure at every type. For example,
-$\neg\forall^{\mathrm{Ty}}\sigma\, .\,A_\sigma$ means
-$\exists^{\mathrm{Ty}}\sigma\, .\,\neg A_\sigma$.
-A necessarily false instance,
-$\exists^{\mathrm{Ty}}\sigma\, .\,\Box\neg A_\sigma$, is stronger and
-different from failure of the boxed schema. Negated principle nodes are
-not added by this positive import. Incompatibilities conclude False;
-model `violates` entries record schema failure.
+**Negation.** Failure of a type schema means failure of at least one of its
+admitted instances, not failure at every type: the negation of a principle $A_\sigma$
+says that $\neg A_\sigma$ for some $\sigma$. A necessarily false instance,
+$\Box\neg A_\sigma$ for some $\sigma$, is stronger and different from failure of the
+boxed schema. Negated principle nodes are not added by this positive import.
+Incompatibilities conclude False; model `violates` entries record schema failure.
 
 **Pure and signature schemata.** In Distinctness Maximalism and Possibility Maximalism,
 $C$ denotes the fixed background logic. Its theoremhood and consistency

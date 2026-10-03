@@ -2,7 +2,7 @@ id: tame-rigidity-r
 name: Tame Rigidity
 category: comprehension
 statement: Every weakly rigid relation, including a proposition, is rigid.
-formal: $\forall^{\mathrm{Ty}}\bar\sigma\, .\,\forall F\, .\,\operatorname{WeaklyRigid}(F)\to\operatorname{Rigid}(F)$
+formal: $\forall F^{\bar\sigma t}\, .\,\operatorname{WeaklyRigid}(F)\to\operatorname{Rigid}(F)$
 date: '2026-10-02'
 sources:
 - Christopher Sun, Possible Worlds Without Atomicity, draft of September 2026.

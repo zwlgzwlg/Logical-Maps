@@ -2047,6 +2047,13 @@ def validate_topic(topic_id: str, *, quiet=False) -> bool:
             errors.append(f"{p['_file']}: id '{p.get('id')}' must equal file stem '{stem}'")
         if p.get("id") in ids:
             errors.append(f"{p['_file']}: duplicate id {p['id']}")
+        variant_ids = [v.get("id") for v in p.get("variants") or [] if isinstance(v, dict)]
+        if len(variant_ids) != len(set(variant_ids)):
+            errors.append(f"{p['_file']}: duplicate variant id")
+        for v in p.get("variants") or []:
+            for ref in (v.get("references") or []) if isinstance(v, dict) else []:
+                if isinstance(ref, dict) and isinstance(ref.get("paper"), str) and ref["paper"] not in paper_ids:
+                    errors.append(f"{p['_file']}: variant {v.get('id')}: unknown paper '{ref['paper']}'")
         if p.get("id") == FALSE:
             errors.append(f"{p['_file']}: false is a reserved logical conclusion, not a principle")
         ids.add(p.get("id"))
@@ -3065,6 +3072,19 @@ def bundle_map_md(topic_id: str, data: dict, an: dict) -> str:
             o += _para(p.get("statement", ""))
             if p.get("formal"):
                 o += [f"Formal: `{p['formal']}`", ""]
+            if (p.get("definitions") or "").strip():
+                o += _para(p["definitions"])
+            if (p.get("about") or "").strip():
+                o += _para(p["about"])
+            for v in p.get("variants") or []:
+                o += [f"Equivalent form, {v['name']} (`{p['id']}#{v['id']}`):"]
+                if v.get("statement"):
+                    o += _para(v["statement"])
+                if v.get("formal"):
+                    o += [f"Formal: `{v['formal']}`", ""]
+                if (v.get("definitions") or "").strip():
+                    o += _para(v["definitions"])
+                o += _para("Equivalence. " + v["equivalence"].strip())
             if p.get("negates"):
                 o += [f"Explicit negation of {label(p['negates'])}.", ""]
             if p.get("tags"):

@@ -3,9 +3,8 @@ name: Intensional Choice
 category: choice
 statement: If a property is necessarily instantiated, then some property entailing it is necessarily
   uniquely instantiated.
-formal: >-
-  $\forall^{\mathrm{Ty}}\sigma\, .\,\forall F^{\sigma t}\, .\,\Box(\exists x^\sigma\, .\,Fx)\to\exists
-  G^{\sigma t}\, .\,G\le F\land\Box\exists x^\sigma\, .\,(Gx\land\forall y^\sigma\, .\,Gy\to y=x)$
+formal: $\forall F^{\sigma t}\, .\,\Box(\exists x^\sigma\, .\,Fx)\to\exists G^{\sigma t}\, .\,G\le F\land\Box\exists
+  x^\sigma\, .\,(Gx\land\forall y^\sigma\, .\,Gy\to y=x)$
 date: '2026-10-03'
 sources:
 - Andrew Bacon, Could the truths of mathematics have been different?, draft of 9 October 2025, §6, p. 27.

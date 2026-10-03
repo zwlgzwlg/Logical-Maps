@@ -3,8 +3,8 @@ name: Very Weak Rigid Comprehension
 category: comprehension
 statement: Every relation, including a proposition, is coextensive with a very weakly rigid one, that
   is, with one that is weakly persistent and weakly inextensible.
-formal: $\forall^{\mathrm{Ty}}\bar\sigma\, .\,\forall X\, .\,\exists Y\, .\,\operatorname{VeryWeaklyRigid}(Y)\land(\forall\bar
-  z\, .\,X[\bar z]\leftrightarrow Y[\bar z])$
+formal: $\forall X^{\bar\sigma t}\, .\,\exists Y^{\bar\sigma t}\, .\,\operatorname{VeryWeaklyRigid}(Y)\land(\forall\bar
+  z^{\bar\sigma}\, .\,X[\bar z]\leftrightarrow Y[\bar z])$
 date: '2026-09-19'
 sources:
 - Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, p. 12.

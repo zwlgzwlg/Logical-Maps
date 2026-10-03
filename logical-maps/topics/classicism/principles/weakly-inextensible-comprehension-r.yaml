@@ -2,8 +2,8 @@ id: weakly-inextensible-comprehension-r
 name: Weakly Inextensible Comprehension
 category: comprehension
 statement: Every relation, including a proposition, is coextensive with a weakly inextensible one.
-formal: $\forall^{\mathrm{Ty}}\bar\sigma\, .\,\forall X\, .\,\exists Y\, .\,\operatorname{WeaklyInextensible}(Y)\land(\forall\bar
-  z\, .\,X[\bar z]\leftrightarrow Y[\bar z])$
+formal: $\forall X^{\bar\sigma t}\, .\,\exists Y^{\bar\sigma t}\, .\,\operatorname{WeaklyInextensible}(Y)\land(\forall\bar
+  z^{\bar\sigma}\, .\,X[\bar z]\leftrightarrow Y[\bar z])$
 date: '2026-09-25'
 sources:
 - Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, Proposition

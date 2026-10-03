@@ -3,9 +3,8 @@ name: Transversal Choice
 category: choice
 statement: Every equivalence relation, at any type including e, has a transversal, that is, a property
   with exactly one instance in each of its cells.
-formal: $\forall^{\mathrm{Ty}}\sigma\, .\,\forall R^{\sigma\sigma t}\, .\,\operatorname{Equiv}(R)\to\exists
-  F^{\sigma t}\, .\,\forall x^\sigma\, .\,\exists y^\sigma\, .\,(Rx)y\land Fy\land\forall z^\sigma\, .\,((Rx)z\land
-  Fz)\to y=z$
+formal: $\forall R^{\sigma\sigma t}\, .\,\operatorname{Equiv}(R)\to\exists F^{\sigma t}\, .\,\forall x^\sigma\,
+  .\,\exists y^\sigma\, .\,(Rx)y\land Fy\land\forall z^\sigma\, .\,((Rx)z\land Fz)\to y=z$
 date: '2026-09-25'
 sources:
 - Christopher Sun, observation communicated by Zachary Goodsell on 25 September 2026, that this formulation
