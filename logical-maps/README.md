@@ -437,7 +437,11 @@ date: …
 A record meets a condition, with its reason, in one of three places: its own `meets`
 (any argument-format record, in a group or not), its group's `meets` (every member), or
 the `meets` of one of its group's parameter values (every model at that value, variants
-included). `expand_member` gives a record its own arguments, then its group's shared
+included). A group's `meets` entry may also be `{text, requires}`: the members that meet
+the listed conditions meet this one too, for that reason (so the finite-support group says
+once why its members with a pinned actual world and non-injective arrows have an isolated
+actual world). Each model's data carries `met`, every condition it meets with its reason,
+which is where a Lean reference for each fact will attach. `expand_member` gives a record its own arguments, then its group's shared
 arguments, then every general argument whose `requires` it meets, each carrying the
 reasons as its conditions; one with `given` is added only once the arguments already
 applied record those verdicts as holding, so a general argument can build on another
