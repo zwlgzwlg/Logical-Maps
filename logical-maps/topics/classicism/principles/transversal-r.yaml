@@ -26,3 +26,19 @@ notes: >-
   representative of each coextension class of properties, shared by coextensive properties even when
   they are distinct. The coextension and the choice are unboxed, so both concern the evaluation point.
   The type $\sigma$ may be $e$; the type $(\sigma\to t)\to t$ of $F$ is admitted since its output is $t$.
+variants:
+- id: polyadic
+  name: Polyadic form
+  statement: There is a property of relations that picks out exactly one relation from each coextension
+    class.
+  formal: $\exists F^{(\bar\sigma t)t}\, .\,\forall X^{\bar\sigma t}\, .\,\exists Y^{\bar\sigma t}\, .\,FY\land(\forall\bar
+    z^{\bar\sigma}\, .\,X[\bar z]\leftrightarrow Y[\bar z])\land\forall Y'^{\bar\sigma t}\, .\,(FY'\land\forall\bar
+    z^{\bar\sigma}\, .\,X[\bar z]\leftrightarrow Y'[\bar z])\to Y'=Y$
+  equivalence: The original form is the case of a one-element tuple. Code tuples by their haecceities
+    (Background, Polyadic forms). Let $F''$ witness the original form at $\bar\sigma t$, and let $\operatorname{Code}:=\lambda
+    A\, .\,\exists\bar x\, .\,A=H_{\bar x}$. Put $F:=\lambda Y\, .\,\exists Z\, .\,F''Z\land(\forall A\,
+    .\,ZA\to\operatorname{Code}(A))\land Y=\lambda\bar x\, .\,Z(H_{\bar x})$. For each $X$, let $X'':=\lambda
+    A\, .\,\exists\bar x\, .\,A=H_{\bar x}\land X[\bar x]$. A relation $Y$ with $FY$, built from $Z$,
+    is coextensive with $X$ iff $Z$ is coextensive with $X''$, since both $Z$ and $X''$ hold only of codes.
+    So exactly one such $Y$ is coextensive with $X$, namely the one built from the $Z$ that $F''$ picks
+    in the coextension class of $X''$.

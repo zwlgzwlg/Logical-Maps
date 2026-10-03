@@ -23,8 +23,32 @@ $fgx=f(gx)$. Write $(fx)y$ for curried application. A dot separates a
 binder from its scope. The abbreviation $X[\bar x]$ means explicitly
 left-nested application to the displayed tuple; it is $X$ for an empty tuple.
 For a finite, possibly empty, tuple of types $\bar\sigma=\sigma_1\ldots\sigma_n$,
-$\bar\sigma t$ is the type $\sigma_1\cdots\sigma_n t$, and $\bar x^{\bar\sigma}$ gives
-$x_i$ the type $\sigma_i$.
+$\bar\sigma\rho$ is the type $\sigma_1\cdots\sigma_n\rho$ (so $\bar\sigma t$ is
+$\sigma_1\cdots\sigma_n t$), and $\bar x^{\bar\sigma}$ gives $x_i$ the type $\sigma_i$.
+A tuple quantifier $\forall\bar x$ or $\exists\bar x$ binds $x_1,\ldots,x_n$ one at a
+time; $\bar x=\bar y$ is the conjunction of the identities $x_i=y_i$ (true for the empty
+tuple), and $\bar x\ne\bar y$ is its negation. With tuples in place of single
+arguments, the definitions below are read in the evident way; for instance
+$\operatorname{Serial}(U):=\forall\bar x^{\bar\sigma}\, .\,\exists y^\tau\, .\,(U[\bar x])y$
+for $U^{\bar\sigma\tau t}$, and $\operatorname{Equiv}(R)$ for $R^{\bar\sigma\bar\sigma t}$
+uses $(R[\bar x])[\bar y]$.
+
+**Polyadic forms.** A principle with a type variable that may take the value
+$e$ has a *polyadic form*, listed among its equivalent forms. The polyadic form
+replaces that variable $\sigma$ by a tuple $\bar\sigma$, and its variables of type
+$\sigma$ by tuples. (Relational Choice has two such variables; only the input one
+is made a tuple.) The original form is the case of a one-element tuple. The converse
+is proved in one of two ways.
+- *One argument at a time*: by induction on the length of the tuple, currying the
+  first argument.
+- *Coding a tuple by its haecceity*: $H_{\bar x}:=\lambda\bar y^{\bar\sigma}\,
+  .\,\bar y=\bar x$, of type $\bar\sigma t$. C proves $H_{\bar x}=H_{\bar y}\leftrightarrow
+  \bar x=\bar y$, so the original form at the single type $\bar\sigma t$, applied to
+  a relation on codes, yields the polyadic form at $\bar\sigma$. For the empty tuple the
+  code type is $t$ and the only code is $\top$.
+
+The equivalence of the boxed forms follows by necessitating these derivations.
+Several of the equivalences have been checked in a Lean formalization of C.
 
 Put $\Box p:=(p=\top)$ and $\Diamond p:=(p\ne\bot)$.
 At a relational type $\tau$, Boolean operations are defined pointwise.

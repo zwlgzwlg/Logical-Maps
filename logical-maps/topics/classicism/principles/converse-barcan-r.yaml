@@ -13,3 +13,11 @@ references:
   role: formulation
   locator: §1.5, p. 19
 notes: ''
+variants:
+- id: polyadic
+  name: Polyadic form
+  statement: The Converse Barcan Formula for relations with any finite number of arguments.
+  formal: $\forall X^{\bar\sigma t}\, .\,\Box(\forall\bar x^{\bar\sigma}\, .\,X[\bar x])\to(\forall\bar
+    x^{\bar\sigma}\, .\,\Box X[\bar x])$
+  equivalence: Both forms are theorems of C, so they are equivalent there. The polyadic form also follows
+    from the original by instantiating one variable at a time.

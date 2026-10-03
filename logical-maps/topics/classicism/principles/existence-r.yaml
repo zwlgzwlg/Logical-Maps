@@ -13,3 +13,10 @@ references:
   role: formulation
   locator: §1.1, p. 7
 notes: ''
+variants:
+- id: polyadic
+  name: Polyadic form
+  statement: Every finite tuple of types is jointly inhabited.
+  formal: $\exists\bar x^{\bar\sigma}\, .\,\bar x=\bar x$
+  equivalence: Both forms are theorems of C, so they are equivalent there. The polyadic form is the conjunction
+    of the original at each $\sigma_i$; for the empty tuple it is $\top$.

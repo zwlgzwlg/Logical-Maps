@@ -14,3 +14,16 @@ references:
   role: formulation
   locator: §2.3, pp. 31–33
 notes: ''
+variants:
+- id: polyadic
+  name: Polyadic form
+  statement: Every serial relation from tuples has a functional subrelation.
+  formal: $\forall U^{\bar\sigma\tau t}\, .\,\operatorname{Serial}(U)\to\exists S^{\bar\sigma\tau t}\,
+    .\,\operatorname{Functional}(S)\land(\forall\bar x^{\bar\sigma}\,y^\tau\, .\,(S[\bar x])y\to(U[\bar
+    x])y)$
+  equivalence: The original form is the case of a one-element tuple. Code tuples by their haecceities
+    (Background, Polyadic forms). Given a serial $U$, put $U':=\lambda A\,y\, .\,(\exists\bar x\, .\,A=H_{\bar
+    x}\land(U[\bar x])y)\lor\neg\exists\bar x\, .\,A=H_{\bar x}$, which is serial. The original form at
+    $\bar\sigma t$ and $\tau$ gives a functional $S'\subseteq U'$, and $S:=\lambda\bar x\,y\, .\,(S'H_{\bar
+    x})y$ is a functional subrelation of $U$. The output type $\tau$ could be made a tuple as well, giving
+    an equivalent doubly polyadic form; it is not listed.

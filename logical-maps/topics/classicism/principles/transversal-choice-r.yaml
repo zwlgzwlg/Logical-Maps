@@ -25,3 +25,15 @@ notes: >-
   $\lambda z\, .\,(Rx)z$. Two members of one cell have coextensive cells, but in C properties are identical
   only when necessarily coextensive; this is what separates the principle from Relational Choice, which
   chooses from each property separately.
+variants:
+- id: polyadic
+  name: Polyadic form
+  statement: Every equivalence relation on tuples has a transversal.
+  formal: $\forall R^{\bar\sigma\bar\sigma t}\, .\,\operatorname{Equiv}(R)\to\exists F^{\bar\sigma t}\,
+    .\,\forall\bar x^{\bar\sigma}\, .\,\exists\bar y^{\bar\sigma}\, .\,(R[\bar x])[\bar y]\land F[\bar
+    y]\land\forall\bar z^{\bar\sigma}\, .\,((R[\bar x])[\bar z]\land F[\bar z])\to\bar y=\bar z$
+  equivalence: The original form is the case of a one-element tuple. Code tuples by their haecceities
+    (Background, Polyadic forms). Given an equivalence $R$ on tuples, put $R':=\lambda A\,B\, .\,A=B\lor\exists\bar
+    x\,\bar y\, .\,A=H_{\bar x}\land B=H_{\bar y}\land(R[\bar x])[\bar y]$, an equivalence on $\bar\sigma
+    t$ whose cells are either the codes of one $R$-cell or singletons of non-codes. The original form
+    gives a transversal $F'$ of $R'$, and $F:=\lambda\bar y\, .\,F'(H_{\bar y})$ is a transversal of $R$.

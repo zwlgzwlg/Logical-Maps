@@ -13,3 +13,11 @@ references:
   role: formulation
   locator: §1.5, p. 18 and n. 22
 notes: ''
+variants:
+- id: polyadic
+  name: Polyadic form
+  statement: Necessarily co-functional operations of several arguments are identical.
+  formal: $\forall X Y^{\bar\sigma\tau}\, .\,\Box(\forall\bar z^{\bar\sigma}\, .\,X[\bar z]=Y[\bar z])\to
+    X=Y\qquad(\tau\ne e)$
+  equivalence: Both forms are theorems of C, so they are equivalent there. The polyadic form also follows
+    from the original one argument at a time, as for Functionality, with the box carried through.

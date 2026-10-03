@@ -19,3 +19,13 @@ references:
 notes: ''
 aliases:
 - Barcan Formula
+variants:
+- id: polyadic
+  name: Polyadic form
+  statement: BF for relations with any finite number of arguments.
+  formal: $\forall X^{\bar\sigma t}\, .\,(\forall\bar x^{\bar\sigma}\, .\,\Box X[\bar x])\to\Box(\forall\bar
+    x^{\bar\sigma}\, .\,X[\bar x])$
+  equivalence: The original form is the case of a one-element tuple. Conversely, apply BF one variable
+    at a time from the innermost. From $\forall x_1\ldots x_n\, .\,\Box X[\bar x]$, BF at $\sigma_n$,
+    applied to $\lambda x_n\, .\,X[x_1\ldots x_n]$, gives $\forall x_1\ldots x_{n-1}\, .\,\Box\forall
+    x_n\, .\,X[\bar x]$; repeat $n$ times. For the empty tuple both sides are $\Box X$.

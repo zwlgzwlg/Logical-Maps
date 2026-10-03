@@ -13,3 +13,10 @@ references:
   role: formulation
   locator: §2.1, p. 22
 notes: ''
+variants:
+- id: polyadic
+  name: Polyadic form
+  statement: Identical tuples of entities are necessarily identical.
+  formal: $\forall\bar x\,\bar y^{\bar\sigma}\, .\,\bar x=\bar y\to\Box(\bar x=\bar y)$
+  equivalence: 'Both forms are theorems of C, so they are equivalent there. Directly: $\bar x=\bar y$
+    is a conjunction of identities, each necessary, and a conjunction of necessities is necessary.'

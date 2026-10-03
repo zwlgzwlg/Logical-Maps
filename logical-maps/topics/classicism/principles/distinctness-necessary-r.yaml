@@ -15,3 +15,11 @@ references:
 notes: ''
 aliases:
 - Necessity of distinctness
+variants:
+- id: polyadic
+  name: Polyadic form
+  statement: Distinct tuples of entities are necessarily distinct.
+  formal: $\forall\bar x\,\bar y^{\bar\sigma}\, .\,\bar x\ne\bar y\to\Box(\bar x\ne\bar y)$
+  equivalence: The original form is the case of a one-element tuple. Conversely, if $\bar x\ne\bar y$
+    then $x_i\ne y_i$ for some $i$, and ND at $\sigma_i$ gives $\Box(x_i\ne y_i)$, hence $\Box(\bar x\ne\bar
+    y)$. For the empty tuple, $\bar x\ne\bar y$ is false.

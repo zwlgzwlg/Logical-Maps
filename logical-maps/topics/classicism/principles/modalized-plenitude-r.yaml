@@ -23,3 +23,13 @@ notes: >-
   about the logic even though it does not change the shape of the map. The inner box is what makes it
   provable: the unique value is then necessarily unique, and a definable operation can pick it out.
   Plenitude, which asks only for actual functionality and an actual representation, is not a theorem.
+variants:
+- id: polyadic
+  name: Polyadic form
+  statement: Modalized Plenitude for relations from tuples.
+  formal: $\forall U^{\bar\sigma\tau t}\, .\,\Box\bigl(\forall\bar x^{\bar\sigma}\, .\,\exists y^\tau\,
+    .\,\Box((U[\bar x])y\land\forall z^\tau\, .\,(U[\bar x])z\to y=z)\bigr)\to\exists X^{\bar\sigma\tau}\,
+    .\,\Box\forall\bar x^{\bar\sigma}\, .\,\forall y^\tau\, .\,(U[\bar x])y\leftrightarrow y=X[\bar x]\qquad(\tau\ne
+    e)$
+  equivalence: Both forms are theorems of C, so they are equivalent there. The polyadic form also follows
+    from the original one argument at a time, using each step's instance under the box.

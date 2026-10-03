@@ -13,3 +13,9 @@ references:
   role: formulation
   locator: §1.5, p. 19
 notes: ''
+variants:
+- id: polyadic
+  name: Polyadic form
+  statement: Every tuple of entities is necessarily identical to some tuple.
+  formal: $\forall\bar x^{\bar\sigma}\, .\,\Box(\exists\bar y^{\bar\sigma}\, .\,\bar y=\bar x)$
+  equivalence: Both forms are theorems of C, so they are equivalent there. Take $\bar y:=\bar x$ coordinatewise.
