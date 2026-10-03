@@ -29,6 +29,15 @@ definition: >-
   Interpretation of Σ, fixed for this record: each relational constant denotes the top element of
   its type and each individual constant denotes one fixed individual.
 
+# 2 October 2026: the topic's general arguments sigma-top and transversal-choice-extensionally-full
+# replace this record's copies of them, through these conditions.
+meets:
+  sigma-top: This is the interpretation the definition fixes.
+  extensionally-full: >-
+    The model is ideally full, hence extensionally full at every object (Appendix D, the remark
+    after Definition D.3).
+  metatheory-choice: The construction is carried out in ZFC (Appendix D).
+
 arguments:
 
 # Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
@@ -69,20 +78,6 @@ arguments:
     there are infinitely many propositions. The set of numerals at each type is invariant under
     every arrow, hence has empty support and lies in the domain, so finite cardinality is standard
     and no finite cardinality holds of the universal property at either type.
-
-- id: sigma-top
-  fails: [independence-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The sentence that
-  # followed the text in the old notes is in `notes`.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed
-    Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but
-    impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\,
-    .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what
-    the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since
-    $c=\top_\tau$ is a true identity that C(Σ) does not prove.
 
 - fails: [distinctness-preserving-collapse]
   # migration: the lead-in "Distinctness-preserving collapse fails at $W_0$:" is dropped, $W_0$
@@ -173,18 +168,6 @@ arguments:
     A closed $\Sigma$-sentence denotes what $P(d,\ldots,d)$ denotes for a pure $P$ and the
     individual $d$, and from any world some arrow into $W_0$ carries the current image of $d$ back
     to $d$, as all maps are arrows.
-
-- holds: [transversal-choice-r]
-  # migration: `by` adds the summary's last sentence; the lead-in "Added Transversal Choice, by"
-  # becomes "By".
-  by: Claude Fable 5.1 (Anthropic), on a question of Zachary Goodsell, after an observation of
-    Christopher Sun
-  date: '2026-09-25'
-  text: >-
-    By the argument recorded for Relational Choice: the model is extensionally full at every
-    object, so for an equivalence relation at the evaluation point a transversal of its extension
-    there, chosen in the metatheory, is the extension of an element pinned down by the empty set;
-    the equivalence and transversal conditions are unboxed.
 
 - fails: [vicinity]
   by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request
