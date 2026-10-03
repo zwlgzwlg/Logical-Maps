@@ -53,7 +53,9 @@ meets:
   transport-gap: >-
     Take $N=\{0\}$, $i$ any arrow with $i0=2$ (hence $i1=2$ and range within $[2,\infty)$), and
     $q:=\{k : k1=1\}$, pinned down by $\{1\}$: the arrows $k$ with $k0=k1=1\le k2$ and
-    $k^{\prime}$ with $k^{\prime}0=k^{\prime}1=0$, agreeing beyond $1$, are separated by $q$.
+    $k^{\prime}$ with $k^{\prime}0=k^{\prime}1=0$, agreeing beyond $1$, are separated by $q$. The
+    model is a one-object finite-support model, and the intension the argument uses is pinned down
+    by $N$.
   unbounded-haecceities: >-
     As in parts 2 and 3, with $A$ the even numbers.
   no-least-pinned-cover: >-

@@ -45,6 +45,8 @@ meets:
     Take $N=\{0\}$, $i$ any monotone map with $i0=2$, so that every $i^{\prime}$ agreeing with it
     on $N$ has range within $[2,\infty)$, and $q:=\{k : k1=1\}$, pinned down by $\{1\}$: two
     monotone maps agreeing on $[2,\infty)$ with $k2\ge1$ may take the values $1$ and $0$ at $1$.
+    The model is a one-object finite-support model, and the intension the argument uses is pinned
+    down by $N$.
   unbounded-haecceities: >-
     As in part 2, with $A$ the even numbers.
   no-least-pinned-cover: >-

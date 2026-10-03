@@ -32,6 +32,9 @@ settings:
   sigma: top
 
 meets:
+  homogeneous-individuals: >-
+    The arrows are all the permutations of $\mathbb N$, and conjugation by any of them is an
+    automorphism of the model, carrying each individual to its image.
   evens-avoidable: >-
     Let $i$ swap an even $b$ and an odd $o$, both outside $N_0$, and let $N^{\prime}:=\{o\}$: an
     arrow agreeing with $i$ on $\{o\}$ sends $o$ to $b$, so, being injective, it sends no even
@@ -68,19 +71,6 @@ arguments:
     note: >-
       The reason for No Distinctness Necessity's holding, added so that it visibly covers the
       variant with a single individual; Atomlessness concerns propositions only.
-
-- holds: [no-contingency-signature-r]
-  when: {sigma: top}
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-23'
-  text: >-
-    The relational constants denote pure entities, so a closed Σ-sentence denotes what some
-    $P(d,\ldots,d)$ denotes for a pure formula $P$; the model’s automorphisms carry every
-    individual to every other, so $P(d,\ldots,d)$ is materially equivalent to the pure sentence
-    $\forall x\, .\,P(x,\ldots,x)$ and its negation to $\forall x\, .\,\neg P(x,\ldots,x)$;
-    whichever is true is necessary by No Pure Contingency, and instantiation under the box gives
-    $\Box P(d,\ldots,d)$ or $\Box\neg P(d,\ldots,d)$.
 
 - fails: [weakly-inextensible-comprehension-r]
   # Recorded although the group's shared argument gives the verdict at type e→t: this one shows the

@@ -83,6 +83,8 @@ parameters:
           constant one fixed individual.
         label: Σ true atom
         requires: [actual-world-pinned]
+        meets:
+          sigma-true-atom: This is the interpretation.
 
 # Conditions of the topic (conditions.yaml) that every member meets; members meet others under their
 # own `meets`, and parameter values under theirs.
@@ -96,6 +98,24 @@ meets:
     intension that assigns to every arrow out of $V$ into an object $U$ a fixed set $R_U$ of tuples
     from $U$’s domains, with $R_V=R$, is pinned down by $\emptyset$, so it is the intension of an
     element of $V^{\bar\sigma\to t}$ with extension $R$ at $1_V$.
+  metatheory-choice: The construction is carried out in ZFC (Appendix D).
+  # The members meeting both actual-world-pinned and non-identity-non-injective meet these.
+  actual-world-isolated:
+    requires: [actual-world-pinned, non-identity-non-injective]
+    text: >-
+      The actual-world proposition, whose only member is the identity, is pinned down by a finite
+      set, so it is in the domain and entails every truth; every other arrow is non-injective, so
+      no composite with it is the identity.
+  actuality-contingent:
+    requires: [actual-world-pinned, non-identity-non-injective]
+    text: >-
+      The actual-world proposition is in the domain, being pinned down by a finite set; at every
+      arrow some composite is not the identity, since every other arrow is non-injective, so it is
+      necessary at no arrow, and a non-identity arrow carries it to the empty set.
+  irreversible-arrow:
+    requires: [actual-world-pinned, non-identity-non-injective]
+    text: >-
+      A non-identity arrow is non-injective, so no arrow composes it back to the identity.
 
 conditions:
 
@@ -129,10 +149,6 @@ conditions:
   text: >-
     Every arrow is monotone, and some arrow sends $0$ to a positive number.
 
-- id: transport-gap
-  text: >-
-    There are a finite set $N$, an arrow $i$ and a proposition $q$ such that $q$ separates two
-    arrows that agree on the range of every arrow agreeing with $i$ on $N$.
 
 - id: unbounded-haecceities
   text: >-
@@ -182,26 +198,6 @@ arguments:
 
 
 
-- id: sigma-true-atom
-  when: {sigma: true-atom}
-  fails: [no-contingency-signature-r, signature-b-r, witnessed-possibility-r, separated-structure-r, independence-signature-r,
-    distinctness-signature-r]
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    No Contingency (signature Σ) fails, since the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes
-    $a$, true and contingent; B for sentences of Σ fails, since under any arrow that no arrow
-    composes back into $a$, $\Diamond a$ is false, so $\Box\Diamond a$ fails; Witnessed Possibility
-    fails for the pure formula $x=\top_\tau$, witnessed by $\top_\tau$, since
-    $\Diamond(c=\top_\tau)$ is $\Diamond\Box a$ and $a$ is necessary at no arrow; Separated
-    Structure fails with it, being equivalent to Possibly Witnessed Possibility; Independence
-    (signature Σ) and Distinctness Maximalism (signature Σ) fail through the other relational
-    constants, Σ being assumed to contain at least one: such a constant $c'$ of type $\tau'$ denotes
-    what the closed pure term $\top_{\tau'}$ denotes, and $c'=\top_{\tau'}$ is a true identity that
-    C(Σ) does not prove. The designated constant refutes neither: closed pure terms denote entities
-    fixed by every arrow (Classicism, §3.5, p. 58), whereas $a$ is fixed by no arrow but the
-    identity, so no closed pure term denotes $\lambda\bar x\, .\,a$.
-
 
 - id: actual-world
   requires: [actual-world-pinned]
@@ -217,19 +213,6 @@ arguments:
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: Stated once for the group; each member's pinning set moved to the condition actual-world-pinned.
 
-- id: distinctness-preserving-collapse
-  requires: [actual-world-pinned, non-identity-non-injective]
-  holds: [distinctness-preserving-collapse]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    For a true proposition $p$ pinned down by a finite set take as the witness $q$ the
-    actual-world proposition: under any other arrow $h$, $\Diamond q$ would need $k\circ h$ to be
-    the identity, impossible since $h$ is not injective.
-  revisions:
-  - date: '2026-10-02'
-    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
-    note: The four members' copies, which differed only in the name of the identity arrow, stated once.
 
 - id: atomicity
   requires: [pinned-atoms]
@@ -278,27 +261,6 @@ arguments:
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: The monotone maps' argument (part 3), which part 4 invokes with "as in part 3", stated once.
 
-- id: barcan-t
-  requires: [transport-gap]
-  fails: [barcan-t]
-  by: Claude Fable 5.1 (Anthropic), answering Cian Dorr’s question whether the failure of BF
-    sharpens to type $t$
-  date: '2026-09-23'
-  text: >-
-    In a one-object finitely pinned model, BF (type t) fails as soon as there are a finite $N$, an
-    arrow $i$ and a proposition $q$ in the domain that is the transport $i^{\prime}\cdot p=\{k :
-    k\circ i^{\prime}\in p\}$ of no proposition $p$ along any arrow $i^{\prime}$ agreeing with $i$
-    on $N$: the intension $X:=\{\langle r,j\rangle : r\ne q\text{ or }j\text{ disagrees with
-    }i\text{ on }N\}$ is pinned down by $N$, contains $\langle i^{\prime}\cdot
-    p,i^{\prime}\rangle$ for every $p$ and $i^{\prime}$, so $\forall p\, .\,\Box Xp$ holds at the
-    identity, and omits $\langle q,i\rangle$, so $\Box\forall p\, .\,Xp$ fails there. Since
-    membership of $k$ in $i^{\prime}\cdot p$ depends only on $k$ restricted to the range of
-    $i^{\prime}$, it suffices that $q$ separate two arrows agreeing on every such range, as the
-    condition provides.
-  revisions:
-  - date: '2026-10-02'
-    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
-    note: The two members' copies stated once; each member's $N$, $i$ and $q$ moved to the condition transport-gap.
 
 - id: boolean-completeness
   when: {individuals: naturals}

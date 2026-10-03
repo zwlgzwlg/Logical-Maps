@@ -1,0 +1,22 @@
+id: sigma-true-atom
+requires: [sigma-true-atom, actuality-contingent]
+fails: [no-contingency-signature-r, witnessed-possibility-r, separated-structure-r, independence-signature-r,
+  distinctness-signature-r]
+by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
+date: '2026-09-22'
+text: >-
+  No Contingency (signature Σ) fails, since the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes
+  $a$, true and contingent; Witnessed Possibility fails for the pure formula $x=\top_\tau$,
+  witnessed by $\top_\tau$, since $\Diamond(c=\top_\tau)$ is $\Diamond\Box a$ and $a$ is necessary
+  at no world; Separated Structure fails with it, being equivalent to Possibly Witnessed
+  Possibility; Independence (signature Σ) and Distinctness Maximalism (signature Σ) fail through
+  the other relational constants: such a constant $c'$ of type $\tau'$ denotes what the closed pure
+  term $\top_{\tau'}$ denotes, and $c'=\top_{\tau'}$ is a true identity that C(Σ) does not prove.
+  The designated constant refutes neither: closed pure terms denote entities fixed by every arrow
+  (Classicism, §3.5, p. 58), whereas some arrow does not fix $a$, so no closed pure term denotes
+  $\lambda\bar x\, .\,a$.
+revisions:
+- date: '2026-10-02'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: >-
+    The verbatim copies in ten records (finite-support, symmetric and full action models) stated once for the topic. Its B clause is now sigma-true-atom-b, which needs an arrow from which the actual world is out of reach. "$a$ is fixed by no arrow but the identity" became "some arrow does not fix $a$": in a symmetric model the actual-world proposition is the symmetry group, which its members fix, and the conclusion needs only the weaker claim.

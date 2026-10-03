@@ -1,5 +1,5 @@
 id: transversal-choice-extensionally-full
-requires: [extensionally-full]
+requires: [extensionally-full, metatheory-choice]
 holds: [transversal-choice-r]
 by: Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic), on a question of Zachary
   Goodsell, after an observation of Christopher Sun

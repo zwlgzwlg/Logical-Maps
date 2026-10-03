@@ -26,3 +26,44 @@ conditions:
 - id: one-individual
   text: >-
     There is exactly one individual, at every world.
+- id: metatheory-choice
+  text: >-
+    The model is constructed in a metatheory with the axiom of choice.
+- id: full-model
+  text: >-
+    The model is full: at each object, the domain of each relational type contains every intension
+    of that type.
+- id: full-action-model
+  text: >-
+    The model is a full action model: an action model (Classicism, Appendix D) that is full at
+    every object.
+- id: homogeneous-individuals
+  text: >-
+    The model's automorphisms carry every individual to every other.
+- id: finitely-many-propositions
+  text: >-
+    There are finitely many propositions at the evaluation world.
+- id: sigma-true-atom
+  text: >-
+    Σ has a designated relational constant $c$ of type $\tau=\bar\sigma t$ denoting
+    $\lambda\bar x\, .\,a$, where $a$ is the actual-world proposition, the unique true atom; every
+    other relational constant, of which there is at least one, denotes the top element of its type,
+    and every individual constant one fixed individual.
+- id: actuality-contingent
+  text: >-
+    The actual-world proposition $a$, the strongest truth, is in the domain; it is necessary at no
+    world, and some arrow does not fix it.
+- id: irreversible-arrow
+  text: >-
+    Some world sees no world at which the actual-world proposition is true.
+- id: actual-world-isolated
+  text: >-
+    The actual-world proposition $a$ is in the domain and entails every truth, and no world outside
+    $a$ sees a world in $a$.
+- id: transport-gap
+  text: >-
+    The model is a one-object action model whose entities are finitely pinned, and there are a
+    finite set $N$, an arrow $i$ and a proposition $q$ in the domain such that $q$ separates two
+    arrows that agree on the range of every arrow agreeing with $i$ on $N$, and the intension
+    $\{\langle r,j\rangle : r\ne q\text{ or }j\text{ disagrees with }i\text{ on }N\}$ is in the
+    domain.
