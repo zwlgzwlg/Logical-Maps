@@ -25,6 +25,8 @@ parameters:
     text: The individuals and the gluing, as the member's write-up gives them.
 
 meets:
+  codomain-intensions: >-
+    The domains are full at every object.
   full-model: >-
     Every intension of every relational type is present at every object (Classicism, §3.5,
     p. 59).

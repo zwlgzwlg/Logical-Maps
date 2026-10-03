@@ -143,94 +143,17 @@ Corollaries 18.3–18.4, Propositions 18.9–18.11) concern maximalizations of
 extensions of C other than C itself; whether to record them as relativized
 Possibility Maximalism principles awaits a decision.
 
-## Deferred model verdicts: Tame Rigidity (2 October 2026)
+## Deferred model verdicts: Tame Rigidity and Intensional Choice (recorded 3 October 2026)
 
-**To do.** Add `tame-rigidity-r` and `necessary-tame-rigidity-r` to `satisfies` in
-`finite-support-truncations`, `finite-support-dyadic-roundings` and
-`finite-support-truncated-shifts`, with a `changes` entry and a write-up of the
-argument below. Also record the result C5 ⇒ □Tame Rigidity, whose proof
-necessitates the C-proof of □ND → Tame Rigidity in `c5-implies-tame-rigidity`
-and then applies 4. That settles □Tame Rigidity in
-`full-boolean-valued-atom-and-atomless` and `symmetric-qualitative-contrast`.
-These are deferred because the model records are being moved to a new format on
-the `model-records-layer0` branch. Add them in whichever format is current once
-that work has landed, then delete this section. An engine check on 2 October
-2026 found no conflicts with these verdicts.
-
-**Argument** (Claude Opus 5.5 (Anthropic), 2 October 2026; not yet checked by a
-human). In a one-object action model, write a relation $Y$ as its intension
-$k\mapsto Y_k$. Then $Y\bar a$ holds at $k$ iff $k\cdot\bar a\in Y_k$,
-$(h\cdot Y)_k=Y_{k\circ h}$, and $\le$ is inclusion of intensions. Put
-$X_0(S)_k:=k\cdot S$.
-
-*Lemma 1 (any one-object model).* If $Y_k=k\cdot Y_1$ for every $k$, then $Y$ is
-rigid. Persistence is immediate. For the boxed weak inextensibility,
-$(h\cdot Y)_k=k\cdot(h\cdot Y_1)=X_0(Y_h)_k$, which lies inside every $X$ that
-contains $X_0(Y_h)$.
-
-*Lemma 2 (ideally full, finitely pinned; also symmetric).* Let $Y$ be weakly rigid
-with extension $S$. For each finite $N'$, the intension
-$B_{N'}(S)_k:=\bigcup_{k'\equiv_{N'}k}k'\cdot S$ is pinned down by $N'$. It is
-symmetric whenever the model is, since $B_{N'}(S)_{g\circ k}=g\cdot B_{N'}(S)_k$. So it
-is in the domain. It contains $X_0(S)$, so weak inextensibility gives
-$Y\subseteq B_{N'}(S)$, and persistence gives $Y\supseteq X_0(S)$. Hence
-$k\cdot S\subseteq Y_k\subseteq\bigcap_{N'}\bigcup_{k'\equiv_{N'}k}k'\cdot S$.
-
-*Theorem.* Suppose every non-identity arrow $k$ is finitely determined, that is,
-$\{k\}$ is a pinned proposition. Then every weakly rigid relation at every type has
-$Y_k=k\cdot Y_1$, so it is rigid and Tame Rigidity holds. A one-object model has
-No Pure Contingency, so □Tame Rigidity holds as well. The hypothesis holds in the
-three models above:
-- truncations: $g_n$ is the only arrow with $g_n(n+1)=n$;
-- dyadic roundings: each $\{f_n\}$ is pinned;
-- truncated shifts: $k_n(n+1)=1$ singles out $k_n$ for $n\ge1$, and $k_0(1)=1$
-  singles out $k_0$.
-
-## Deferred model verdicts: Intensional Choice (3 October 2026)
-
-**To do.** Once the model-record migration has landed, add `intensional-choice-r`
-to `violates` in the six symmetric models below, with a `changes` entry and the
-argument. □Intensional Choice then fails by T. Positive verdicts are still to be
-established. Cian Dorr expects Intensional Choice to hold in every full model, and
-in every plain (non-symmetric) ideally full model, because the domain contains a
-qualitative well-ordering of each object's individuals that can select the unique
-witness. That argument has not yet been written out. The engine already derives the
-positive verdict in several full models. An engine check on 3 October 2026 found no
-conflicts with the six failures.
-
-**Collapse lemma** (Claude Opus 5.5 (Anthropic), 3 October 2026; not yet checked by
-a human). In a symmetric ideally full action model, Intensional Choice fails at type
-$e$ if, for some individual $a$ and every finite set $N$ of individuals at the base,
-there is an arrow $h$ sending $N\cup\{a\}$ to a single individual $p$ such that
-every individual $y$ with $y\ne p$ in $F_h$ is moved by a symmetry fixing $p$.
-Here $F$ is a necessarily instantiated property, $F_h$ is its extension at $h$, and
-the symmetry composed with $h$ must again be an arrow.
-
-*Proof.* Let $G\le F$ be necessarily uniquely instantiated and pinned down by
-$N\ni a$. Then $G_h=\{y\}$ with $y\in F_h$. If $\sigma$ fixes $p$, then
-$\sigma\circ h$ agrees with $h$ on $N$, so $G_{\sigma\circ h}=G_h$ by pinning. By
-symmetry, $G_{\sigma\circ h}=\{\sigma y\}$. So no symmetry fixing $p$ moves $y$.
-
-*Applications.* Take $F:=\lambda x\, .\,x\ne a$, so $p\notin F_h$:
-- `symmetric-all-surjections`: $h$ is any surjection that is constant on
-  $N\cup\{a\}$.
-- `symmetric-infinite-classes`: the same $h$; a transposition inside $y$'s class
-  that fixes $p$ is an automorphism.
-- `symmetric-collapse-pair`: $h$ is a surjection sending $N\cup\{a\}$ and both
-  members of the pair to one $p$ outside the pair. Swapping the pair, or
-  transposing $y$ with a point outside the pair, fixes $p$.
-- `symmetric-two-object-unpinned`: $h$ is a function from the first object to the
-  second that is constant on $N\cup\{a\}$.
-- `symmetric-range-gap` and `symmetric-range-gap-without-actuality`: here the
-  distinguished individual $d$ is fixed by every symmetry, so use
-  $F:=\lambda x\, .\,x\ne a\land\neg Ex$, where $E$ is the constant intension
-  $\{d\}$, pinned down by $\varnothing$. Let $h$ be a range-deficient function that
-  is constant with value $p\ne d$ on $N\cup\{a\}$. Then $F_h$ omits $p$ and $d$,
-  and permutations fixing $p$ and $d$ move every other point.
-
-*Not covered:*
-- `symmetric-qualitative-links`: its arrows preserve a ternary relation, so they
-  cannot send everything to one point.
-- `symmetric-qualitative-contrast`: every arrow is a bijection. At type $e$,
-  Intensional Choice appears to hold there: pick the image of the first member of
-  $F$'s pinning set that lies in $F_h$, and otherwise a fixed point outside that set.
+The verdicts deferred here on 2 and 3 October, until the model records' new format landed, are now
+recorded; the arguments, not yet checked by a human, moved into the records and are no longer kept
+here (see git history before 3 October for the notes). Tame Rigidity: the finite-support group's
+argument `tame-rigidity` under the condition `arrows-finitely-determined` (truncations, dyadic
+roundings, truncated shifts), and the result `c5-implies-necessary-tame-rigidity`. Intensional
+Choice: the collapse lemma as the symmetric group's argument `intensional-choice` under
+`collapse-onto-point`, at the base individuals only; and, from a Classicism session of the same
+day, the general argument `intensional-choice-well-ordering` under `codomain-intensions` (ideally
+full and full models), the coalesced group's `intensional-choice-component`, and the own arguments
+of the Boolean-valued, ultralimit-fork, all-finite coalesced, qualitative-links and
+qualitative-contrast models. Open: Intensional Choice in the symmetric models' one-individual
+variants.

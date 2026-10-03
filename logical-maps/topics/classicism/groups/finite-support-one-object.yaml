@@ -84,6 +84,9 @@ parameters:
 # Conditions of the topic (conditions.yaml) that every member meets; members meet others under their
 # own `meets`, and parameter values under theirs.
 meets:
+  codomain-intensions: >-
+    With one object such an intension is constant, so it is pinned down by $\emptyset$, and the
+    domain holds every finitely pinned intension.
   one-object-action-model: >-
     Each part of Proposition D.5 is a one-object category acting on $\mathbb N$ (Appendix D,
     Definitions D.1–D.3).
@@ -155,7 +158,41 @@ conditions:
     Some family $F$ of propositions has no least finitely pinned superset of its union
     $\bigcup F$.
 
+- id: arrows-finitely-determined
+  # Claude Opus 5.5, 2 October 2026: the hypothesis of the Tame Rigidity argument.
+  text: >-
+    Every arrow other than the identity is finitely determined: its singleton is a proposition
+    pinned down by a finite set.
+
 arguments:
+
+- id: tame-rigidity
+  requires: [arrows-finitely-determined]
+  holds: [tame-rigidity-r]
+  by: Claude Opus 5.5 (Anthropic)
+  date: '2026-10-02'
+  text: >-
+    Write a relation $Y$ as its intension $k\mapsto Y_k$. Then $Y\bar a$ holds at $k$ iff
+    $k\cdot\bar a\in Y_k$, $(h\cdot Y)_k=Y_{k\circ h}$, and $\le$ is inclusion of intensions.
+    Put $X_0(S)_k:=k\cdot S$. (1) In any one-object model, if $Y_k=k\cdot Y_1$ for every $k$ then
+    $Y$ is rigid: persistence is immediate, and for the boxed weak inextensibility, $(h\cdot
+    Y)_k=k\cdot(h\cdot Y_1)=X_0(Y_h)_k$, which lies inside every $X$ that contains $X_0(Y_h)$. (2) Let
+    $Y$ be weakly rigid with extension $S$. For each finite $N^{\prime}$ the intension
+    $B_{N^{\prime}}(S)_k:=\bigcup_{k^{\prime}\equiv_{N^{\prime}}k}k^{\prime}\cdot S$ is pinned down by
+    $N^{\prime}$, so it is in the domain. It contains $X_0(S)$, so weak inextensibility gives
+    $Y\subseteq B_{N^{\prime}}(S)$, and persistence gives $Y\supseteq X_0(S)$; hence $k\cdot
+    S\subseteq Y_k\subseteq\bigcap_{N^{\prime}}\bigcup_{k^{\prime}\equiv_{N^{\prime}}k}k^{\prime}\cdot
+    S$. By the condition, for $k$ other than the identity some finite $N^{\prime}$ has $k$ as the only
+    arrow agreeing with it there, and the bounds meet: $Y_k=k\cdot S$. So every weakly rigid relation
+    at every type is rigid by (1), and Tame Rigidity holds. With No Pure Contingency, which holds
+    in a one-object model, the map's results give $\Box$Tame Rigidity.
+  revisions:
+  - date: '2026-10-03'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      Recorded from the argument deferred in extraction.md on 2 October until the model records'
+      new format landed (not yet checked by a human). Lemma 2's remark that $B_{N^{\prime}}(S)$ is
+      symmetric whenever the model is, which these models do not need, is left out.
 
 
 - id: axiom-of-infinity

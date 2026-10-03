@@ -38,6 +38,8 @@ settings:
   sigma: top
 
 meets:
+  arrows-finitely-determined: >-
+    Each $g_n$ is the only arrow with $g_n(n+1)=n$, so $\{g_n\}$ is pinned down by $\{n+1\}$.
   evens-avoidable: >-
     With $N_0\subseteq[0,M_0]$: $i:=g_n$ with $n\ge M_0$, an even $b>n$, and $N^{\prime}:=[0,n+1]$:
     the only arrow agreeing with $g_n$ on $[0,n+1]$ is $g_n$ itself, whose range $[0,n]$ omits $b$.

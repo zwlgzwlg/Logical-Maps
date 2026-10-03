@@ -89,6 +89,3 @@ Read a matching `writeups/<id>.md` when it exists.
   refer to the draft dated 16 May 2023. `papers.yaml` records the references.
 - Preserve direct mathematical attribution separately from transcription.
   Do not promote the two source-reported results without supplying proofs.
-- Deferred work: `extraction.md` has sections headed "Deferred model
-  verdicts" listing verdicts to add once the model-record migration on the
-  `model-records-layer0` branch has landed. Check them before editing those models.

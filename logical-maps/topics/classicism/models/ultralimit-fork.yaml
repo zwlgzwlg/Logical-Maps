@@ -101,6 +101,20 @@ arguments:
 # migration: text of the old notes that no argument holds, verbatim: their first sentence. The
 # argument for Actuality at every world, now derived, is dropped: "Actuality holds at every world: at
 # the root the proposition true at $o$ alone is a true atom."
+
+- holds: [necessary-intensional-choice-r]
+  by: Claude (Anthropic), Classicism session of 3 October 2026, at Cian Dorr's suggestion
+  date: '2026-10-03'
+  text: >-
+    At the root: given $F$ with $\Box\exists x\, .\,Fx$, let $G$ pick the least element of $F$ at $o$, $s$
+    and each $n$, under fixed well-orderings, the same ordering of $M^\sigma$ at every $n$. The sets
+    $\{n : G(n)=\{a\}\}$ for $a\in M^\sigma$ partition the positive integers into finitely many pieces, so
+    exactly one is in $\mathcal U$, say for $a_0$; then $\lim_{\mathcal U}G(n)=\{a_0\}$, and $a_0\in
+    F(u)=\lim_{\mathcal U}F(n)$. Setting $G(u):=\{a_0\}$ puts $G$ in the root domain, with $G\le F$
+    and every extension a singleton. At $s$, $u$ and the $n$ the domains are full, and the
+    well-ordering argument (arguments/intensional-choice-well-ordering) applies there, so the
+    boxed form holds too.
+
 notes: >-
   It is a model: the limit condition commutes with every finite operation, so every term denotes in
   the domains (write-up, Lemma 2).

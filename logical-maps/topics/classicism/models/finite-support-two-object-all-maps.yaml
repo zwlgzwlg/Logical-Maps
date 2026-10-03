@@ -35,6 +35,10 @@ definition: >-
 # 2 October 2026: the topic's general arguments sigma-top and transversal-choice-extensionally-full
 # replace this record's copies of them, through these conditions.
 meets:
+  codomain-intensions: >-
+    The model is ideally full at both objects, and an intension whose value at an arrow depends
+    only on the arrow's codomain is pinned down by $\emptyset$ (Appendix D, the remark after
+    Definition D.3).
   sigma-top: This is the interpretation the definition fixes.
   extensionally-full: >-
     The model is ideally full, hence extensionally full at every object (Appendix D, the remark

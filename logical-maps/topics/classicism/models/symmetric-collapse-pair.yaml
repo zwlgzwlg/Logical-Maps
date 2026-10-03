@@ -43,6 +43,8 @@ settings:
   individuals: base
   sigma: top
 meets:
+  collapse-onto-point: >-
+    Take $F:=\lambda x\, .\,x\ne a$, so $p\notin F_h$. $h$ is a surjection sending $N\cup\{a\}$ and both members of the pair to one $p$ outside the pair. Swapping the pair, or transposing $y$ with a point outside the pair, fixes $p$.
   one-object-action-model: >-
     It has one object (Dorr, draft, §3.1: closed pure terms denote entities fixed by every arrow).
   transposable: >-

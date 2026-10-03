@@ -52,6 +52,21 @@ conditions:
     root arguments.
 
 arguments:
+- id: intensional-choice-component
+  requires: [complete-components]
+  fails: [intensional-choice-r]
+  by: Claude (Anthropic), Classicism session of 3 October 2026, at Cian Dorr's suggestion
+  date: '2026-10-03'
+  text: >-
+    The type-$e$ instance of Intensional Choice fails in a model of C (symmetric-all-surjections),
+    so its negation is consistent with C and some component $M$ refutes it at its root $M_0$: some
+    $F$ in $M_0$'s domain is necessarily instantiated and no $G\le F$ there is necessarily uniquely
+    instantiated. As in barcan-t-component, the thread $F^{\prime}$ that is universal at the root and in
+    every other component and is carried onto $F$ by the distinguished arrow to $M_0$ is in the root
+    domain, and it is necessarily instantiated. A root $G\le F^{\prime}$ that is necessarily uniquely
+    instantiated would be carried onto such a $G$ for $F$ at $M_0$, every arrow from the root into $M$
+    factoring through the distinguished one. So the unboxed principle fails at the root.
+
 
 - id: relational-choice-free-root
   requires: [free-root-component, metatheory-choice]

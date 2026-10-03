@@ -115,6 +115,26 @@ arguments:
 # migration: the old notes' paragraphs that no argument holds, verbatim, with the old description's
 # sentence on the type-$e$ instance of BF, a principle the map does not list, as the second. The
 # argument for the failure of ND, now derived, is dropped.
+
+- fails: [intensional-choice-r]
+  when: {individuals: base}  # proved at type $e$
+  by: Claude (Anthropic), Classicism session of 3 October 2026, at Cian Dorr's suggestion
+  date: '2026-10-03'
+  text: >-
+    At type $e$. Let $F$ be the constant property whose extension at every world is the distinguished
+    pair $\{0,1\}$: symmetric, since the symmetry group preserves the pair setwise, pinned down by
+    $\varnothing$, and necessarily instantiated. Suppose $G\le F$ is pinned down by a finite $N$ with
+    every extension a singleton, so $G(h)\in\{\{0\},\{1\}\}$. Choose a surjective relation-preserving
+    arrow $h$ that sends $0$ and $1$ to a point $p\notin\{0,1\}$ and whose preimages of $0$, $1$, their
+    companions and the links at $0$ or $1$ avoid $N$ (take as preimages of $0$ and $1$ two points
+    outside $N$ that are endpoints of no link in $N$; the pair's links go to companions of $p$, and
+    surjectivity is arranged on the infinite fibres). Let $\sigma$ be the relation automorphism
+    swapping $0$ and $1$ with their companions and links and fixing every other point. It is in the
+    symmetry group, fixes $h(N)$ pointwise, and $\sigma\circ h$ is again an arrow. Pinning gives
+    $G(\sigma\circ h)=G(h)$, while symmetry gives $G(\sigma\circ h)=\sigma(G(h))\ne G(h)$. The collapse
+    argument of the group cannot reach this model, its arrows preserving sorts; the pair property
+    sidesteps that.
+
 notes: >-
   This is the draft's answer to the question its two-object model leaves open. Boxed Boolean
   Completeness, boxed Actuality and the boxed type-e instance of BF all hold, and Rigid

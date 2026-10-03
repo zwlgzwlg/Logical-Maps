@@ -76,6 +76,19 @@ arguments:
 # migration: the old description's last sentence, then the old notes whole. The description's
 # sentence on the boxed forms of Actuality, Plenitude and Functional Choice, whose failures are now
 # derived, is dropped.
+
+- holds: [necessary-intensional-choice-r]
+  by: Claude (Anthropic), Classicism session of 3 October 2026, at Cian Dorr's suggestion
+  date: '2026-10-03'
+  text: >-
+    Here $\Box p$ is $p=\top$, so $\Box\exists x\, .\,Fx$ says $\bigvee_{x\in D_\sigma}F(x)=1_B$. Well-order
+    $D_\sigma$ and put $G(x):=F(x)\land\neg\bigvee_{y<x}F(y)$. Then $G\le F$ pointwise, the $G(x)$ are
+    pairwise disjoint, and $\bigvee_xG(x)=\bigvee_xF(x)=1_B$. With crisp equality
+    $\exists x\, .\,(Gx\land\forall y\, .\,(Gy\to y=x))$ has value
+    $\bigvee_x(G(x)\land\bigwedge_{y\ne x}\neg G(y))=\bigvee_xG(x)=1_B$, and so does its box. The function
+    domains are full, so $G$ is in the domain. Every closed instance has value $1_B$, so Intensional
+    Choice holds necessarily.
+
 notes: >-
   Full verification is in the write-up.
 

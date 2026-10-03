@@ -34,6 +34,8 @@ settings:
   individuals: base
   sigma: top
 meets:
+  collapse-onto-point: >-
+    As for the range-gap model: $F:=\lambda x\, .\,x\ne a\land\neg Ex$ with $E$ the constant intension $\{d\}$ of the distinguished individual, and $h$ a range-deficient function constant with value $p\ne d$ on $N\cup\{a\}$; $F_h$ omits $p$ and $d$, and permutations fixing $p$ and $d$ move every other point.
   one-object-action-model: >-
     It has one object (Dorr, draft, §3.1: closed pure terms denote entities fixed by every arrow).
   transposable: >-

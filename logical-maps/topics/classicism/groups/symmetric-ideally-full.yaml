@@ -100,6 +100,14 @@ conditions:
   text: >-
     The symmetry group, the smallest symmetric set of arrows containing the identity, is pinned
     down by a finite set.
+- id: collapse-onto-point
+  # Claude Opus 5.5, 3 October 2026: the hypothesis of the collapse lemma for Intensional Choice.
+  text: >-
+    There are an individual $a$ and a necessarily instantiated property $F$ in the domain such
+    that, for every finite set $N$ of individuals at the evaluation object, some arrow $h$ sends
+    $N\cup\{a\}$ to a single individual $p$, and every individual $y\ne p$ in $F$'s extension at
+    $h$ is moved by a member $\sigma$ of the symmetry group that fixes $p$, with $\sigma\circ h$
+    again an arrow.
 - id: fixes-or-omits
   text: >-
     There is a distinguished individual that every arrow either fixes or omits from its range, and
@@ -213,6 +221,32 @@ arguments:
   - date: '2026-10-02'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: The three members' versions stated once; what pins the group down is each member's reason for meeting symmetry-group-pinned.
+
+- id: intensional-choice
+  when: {individuals: base}
+  requires: [collapse-onto-point]
+  fails: [intensional-choice-r]
+  by: Claude Opus 5.5 (Anthropic)
+  date: '2026-10-03'
+  text: >-
+    At type $e$. Let $F$ and $a$ be as the condition gives them, and suppose $G\le F$ is necessarily
+    uniquely instantiated. $G$ is in the domain, so it is symmetric and pinned down by a finite
+    set, which we may take to contain $a$; call it $N$. Let $h$ be the arrow the condition gives for
+    $N$. Then $G_h=\{y\}$ for some $y$ in $F_h$. If $\sigma$ in the symmetry group fixes $p$, then
+    $\sigma\circ h$ agrees with $h$ on $N$, so $G_{\sigma\circ h}=G_h$ by pinning, while symmetry
+    gives $G_{\sigma\circ h}=\{\sigma y\}$. So no symmetry fixing $p$ moves $y$, and by the condition
+    $y=p$. Each member's witness takes $F$ with $p$ outside its extension at $h$, a contradiction.
+    $\Box$Intensional Choice fails with it, by T.
+  revisions:
+  - date: '2026-10-03'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      Recorded from the collapse lemma deferred in extraction.md on 3 October until the model
+      records' new format landed (not yet checked by a human). It needs the individuals the
+      construction gives, so it applies at the base only. Not covered: the qualitative-links
+      model, whose arrows preserve a ternary relation and so cannot send everything to one point,
+      and the qualitative-contrast model, whose arrows are bijections and where Intensional Choice
+      appears to hold at type $e$. Positive verdicts are not yet established.
 
 - id: barcan-fixes-or-omits
   when: {individuals: base}

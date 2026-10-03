@@ -33,6 +33,8 @@ settings:
   individuals: base
   sigma: top
 meets:
+  collapse-onto-point: >-
+    The distinguished individual $d$ is fixed by every symmetry, so take $F:=\lambda x\, .\,x\ne a\land\neg Ex$, where $E$ is the constant intension $\{d\}$, pinned down by $\varnothing$. Let $h$ be a range-deficient function constant with value $p\ne d$ on $N\cup\{a\}$. Then $F_h$ omits $p$ and $d$, and permutations fixing $p$ and $d$ move every other point.
   one-object-action-model: >-
     It has one object (Dorr, draft, §3.1: closed pure terms denote entities fixed by every arrow).
   transposable: >-

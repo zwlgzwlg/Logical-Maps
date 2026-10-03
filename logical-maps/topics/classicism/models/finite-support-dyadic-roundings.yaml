@@ -47,6 +47,8 @@ settings:
   sigma: top
 
 meets:
+  arrows-finitely-determined: >-
+    Each $\{f_n\}$ is pinned down by a finite set: $f_n$ is the only arrow sending $n$ to $n$ and $n-1$ to $0$.
   actual-world-pinned: >-
     $\{f_1\}$, $f_1$ being the identity, is pinned down by $\{0,1\}$.
   non-identity-non-injective: >-

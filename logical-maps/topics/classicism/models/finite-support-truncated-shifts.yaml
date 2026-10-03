@@ -42,6 +42,8 @@ settings:
   sigma: top
 
 meets:
+  arrows-finitely-determined: >-
+    For $n\ge1$, $k_n(n+1)=1$ singles out $k_n$, and $k_0(1)=1$ singles out $k_0$; each singleton is pinned down by that one point.
   actual-world-pinned: >-
     $\{k_0\}$ is pinned down by $\{1\}$, since $k_n1=0$ for $n>0$.
   non-identity-non-injective: >-

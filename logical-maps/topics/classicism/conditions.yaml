@@ -35,6 +35,10 @@ conditions:
   text: >-
     The model is a full action model: an action model (Classicism, Appendix D) that is full at
     every object.
+- id: codomain-intensions
+  text: >-
+    At every object reachable from the evaluation point, the domain contains every intension
+    whose value at an arrow depends only on the arrow's codomain.
 - id: fixed-infinite-individuals
   text: >-
     At every object the individuals are the same infinite set, and every arrow acts on them as the

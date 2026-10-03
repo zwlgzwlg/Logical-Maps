@@ -163,6 +163,16 @@ arguments:
 
 # migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
 # the sentence that followed the Σ argument.
+
+- holds: [necessary-intensional-choice-r]
+  by: Claude (Anthropic), Classicism session of 3 October 2026, at Cian Dorr's suggestion
+  date: '2026-10-03'
+  text: >-
+    Intensional Choice holds at the root, as the map derives from this record's other verdicts. Every
+    other world is a world of one of the full Henkin components, where a necessarily instantiated
+    $F$ has an instance $a$ and $G:=\lambda x\, .\,x=a$ is in the domain, entails $F$ and is
+    necessarily uniquely instantiated. So Intensional Choice holds at every world.
+
 notes: >-
   Recorded to witness the consistency with C of the sentence through which Possibility Maximalism
   (pure) reaches the Axiom of Infinity at type $t$, and of that Axiom itself. The construction and
