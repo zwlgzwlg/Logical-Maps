@@ -539,7 +539,18 @@
   .ex-p.fout, .ex-p.model-out { background: color-mix(in srgb, var(--indep) 10%, transparent); }
   .seg button.auto-positive { color: var(--human); background: color-mix(in srgb, var(--human) 18%, var(--panel)); }
   .seg button.auto-negative { color: var(--indep); background: color-mix(in srgb, var(--indep) 18%, var(--panel)); }
-  #model-principles .model-category { padding-top: 8px; }
+  #model-principles .model-category { padding-top: 10px; }
+  #model-principles .model-category:not([open]) { padding-bottom: 9px; }
+  /* The box stays in reach while the list scrolls under it. */
+  .ex-find { position: sticky; top: 0; z-index: 5; margin: 0 0 10px; padding: 6px 0; background: var(--bg); box-shadow: 0 -6px 0 var(--bg); }
+  .ex-find .search { width: min(100%, 320px); margin: 0; }
+  .ex-find-list { position: absolute; z-index: 20; left: 0; width: min(100%, 320px); top: 100%; margin: 2px 0 0; padding: 3px 0; list-style: none; background: var(--panel); border: 1px solid var(--line-strong); border-radius: 3px; box-shadow: 0 4px 14px rgb(0 0 0 / .14); max-height: 320px; overflow-y: auto; }
+  .ex-find-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 4px 8px; cursor: pointer; font-size: 13px; }
+  .ex-find-list li[aria-selected="true"] { background: var(--hl); }
+  .ex-find-list .ex-find-cat { color: var(--ink-3); font-size: 11px; white-space: nowrap; }
+  .ex-find-list .ex-find-none { color: var(--ink-3); cursor: default; }
+  #model-principles .model-category > summary { scroll-margin-top: 64px; }
+  .ex-p.found { outline: 2px solid var(--focus); outline-offset: 1px; border-radius: 3px; }
   #model-principles .model-category h3 { margin-bottom: 5px; }
   #model-principles .model-category > summary h3 { margin: 0; }
   #model-principles .ex-list { margin-bottom: 10px; }
@@ -1557,10 +1568,13 @@ function computeLayout(g) {
   const contracted = [...g.edges, ...(g.layoutEdges || [])].map(e => ({...e, from: parent(e.from), to: parent(e.to), fromJunction: !byId.get(e.from).parent && e.fromJunction}));
   const looseConstants = roots.filter(n => (n.kind === 'falsity' || n.kind === 'truth') && !contracted.some(e => e.from === n.id || e.to === n.id));
   const L = computeLayoutCore({nodes: roots.filter(n => !looseConstants.includes(n)), edges: contracted});
+  // A constant without arrows sits over the middle of the diagram, not its left edge.
+  const spans = L.visible.map(n => [L.x.get(n.id) - L.size.get(n.id).w / 2, L.x.get(n.id) + L.size.get(n.id).w / 2]);
+  const middle = spans.length ? (Math.min(...spans.map(s => s[0])) + Math.max(...spans.map(s => s[1]))) / 2 : 0;
   for (const n of looseConstants) {
     const size = measureGraphNode(n);
     const bounds = L.visible.map(n => ({top: L.y.get(n.id) - L.size.get(n.id).h / 2, bottom: L.y.get(n.id) + L.size.get(n.id).h / 2}));
-    L.x.set(n.id, 0);
+    L.x.set(n.id, middle);
     L.y.set(n.id, n.kind === 'falsity' ? Math.max(0, ...bounds.map(b => b.bottom)) + 63 + size.h / 2 : Math.min(0, ...bounds.map(b => b.top)) - 63 - size.h / 2);
     L.size.set(n.id, size); L.visible.push(n); L.vis.add(n.id); L.layers.push([n]);
   }
@@ -2407,6 +2421,7 @@ function wireCategories(el) {
     // handler still runs; cancelling the default only stopped the disclosure.
     if (ev.target.closest('button, a, input, select, textarea')) return;
     const id = group.dataset.category;
+    exFind.opened.delete(id);
     state.collapsed.has(id) ? state.collapsed.delete(id) : state.collapsed.add(id);
     applyAllCategories();
   });
@@ -2480,6 +2495,97 @@ function familyVerdict(fits, c) {
   for (const m of fits) { const st = cellOf(m, c)[0]; if (st === 'h') h++; else if (st === 'f') f++; }
   return { h, f, u: fits.length - h - f };
 }
+// The theory explorer's find box. Unlike the diagrams' search it highlights
+// nothing while the reader types: it offers principles by name, and only the
+// one chosen is revealed, by opening its category. A category the box opened
+// closes again when the box moves elsewhere; one the reader opened stays.
+const exFind = { query: '', options: [], active: 0, open: false, found: null, opened: new Set() };
+const findText = text => text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+function exFindOptions(value) {
+  const q = findText(value);
+  if (!q) return [];
+  const terms = q.split(' '), out = [];
+  for (const g of principleGroups()) for (const p of g.principles) {
+    if (!terms.every(t => findText([p.name, p.id, ...(p.aliases || [])].join(' ')).includes(t))) continue;
+    const n = findText(p.name), words = n.split(' ');
+    // Exact name, then name prefix, then every term starting a word of the name.
+    const rank = n === q ? 0 : n.startsWith(q) ? 1 : terms.every(t => words.some(w => w.startsWith(t))) ? 2 : 3;
+    out.push({ id: p.id, name: p.name, category: g.id === 'all' ? '' : g.name, rank });
+  }
+  return out.sort((a, b) => a.rank - b.rank || a.name.length - b.name.length || a.name.localeCompare(b.name));
+}
+function drawExFind() {
+  const input = document.getElementById('ex-find'), list = document.getElementById('ex-find-list');
+  if (!input || !list) return;
+  const shown = exFind.open && exFind.query.trim();
+  list.hidden = !shown; input.setAttribute('aria-expanded', String(!!shown));
+  if (!shown) { input.removeAttribute('aria-activedescendant'); return; }
+  list.innerHTML = exFind.options.length
+    ? exFind.options.map((o, i) => `<li role="option" id="ex-find-${i}" data-find="${esc(o.id)}" aria-selected="${i === exFind.active}"><span>${esc(o.name)}</span><span class="ex-find-cat">${esc(o.category)}</span></li>`).join('')
+    : '<li class="ex-find-none" role="presentation">No matching principles</li>';
+  if (exFind.options.length) { input.setAttribute('aria-activedescendant', 'ex-find-' + exFind.active); list.querySelector('[aria-selected="true"]')?.scrollIntoView?.({block: 'nearest'}); }
+}
+function markFound() {
+  document.querySelectorAll('#model-principles .ex-p').forEach(row => row.classList.toggle('found', row.dataset.assumptionRow === exFind.found));
+}
+function closeFindOpened(except = null) {
+  for (const c of exFind.opened) if (c !== except) { state.collapsed.add(c); exFind.opened.delete(c); }
+}
+function pickFound(id) {
+  const group = principleGroups().find(g => g.principles.some(p => p.id === id));
+  closeFindOpened(group?.id);
+  if (group && state.collapsed.has(group.id)) { state.collapsed.delete(group.id); exFind.opened.add(group.id); }
+  applyAllCategories();
+  exFind.found = id; exFind.query = name(id); exFind.open = false;
+  const input = document.getElementById('ex-find');
+  if (input) input.value = exFind.query;
+  drawExFind(); markFound();
+  // Bring the category's heading up under the box, unless that would leave the
+  // principle itself below the fold.
+  const row = document.querySelector(`#model-principles [data-assumption-row="${id}"]`), pane = row?.closest('.pane');
+  row?.closest('[data-category]')?.querySelector('summary')?.scrollIntoView?.({block: 'start'});
+  if (row && pane && row.getBoundingClientRect().bottom > pane.getBoundingClientRect().bottom) row.scrollIntoView?.({block: 'nearest'});
+}
+function clearFound() {
+  closeFindOpened(); applyAllCategories();
+  Object.assign(exFind, { query: '', options: [], active: 0, open: false, found: null });
+  const input = document.getElementById('ex-find');
+  if (input) input.value = '';
+  drawExFind(); markFound();
+}
+function wireExFind(el) {
+  const input = el.querySelector('#ex-find'), list = el.querySelector('#ex-find-list');
+  input.addEventListener('input', () => {
+    exFind.query = input.value; exFind.options = exFindOptions(input.value); exFind.active = 0; exFind.open = true;
+    if (!input.value.trim()) { exFind.found = null; markFound(); }
+    // A name narrowed to one principle needs no Enter.
+    if (exFind.options.length === 1 && exFind.options[0].id !== exFind.found) return pickFound(exFind.options[0].id);
+    drawExFind();
+  });
+  input.addEventListener('keydown', e => {
+    const n = exFind.options.length;
+    if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && n) {
+      e.preventDefault();
+      if (!exFind.open) exFind.open = true;
+      else exFind.active = (exFind.active + (e.key === 'ArrowDown' ? 1 : -1) + n) % n;
+      drawExFind();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (exFind.open && n) pickFound(exFind.options[exFind.active].id);
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      if (exFind.open && exFind.query.trim()) { exFind.open = false; drawExFind(); } else clearFound();
+    }
+  });
+  input.addEventListener('focus', () => { if (exFind.query.trim() && exFind.found == null) { exFind.open = true; drawExFind(); } });
+  input.addEventListener('blur', () => setTimeout(() => { if (document.activeElement !== input) { exFind.open = false; drawExFind(); } }, 120));
+  // mousedown, not click: the input keeps focus and the list is not closed by the blur first.
+  list.addEventListener('mousedown', e => {
+    const option = e.target.closest('[data-find]');
+    e.preventDefault();
+    if (option) pickFound(option.dataset.find);
+  });
+}
 function renderModels() {
   const candidate = byMid.get(state.modelId);
   const inspected = candidate && passes(candidate) && (candidate.status === 'proved' || state.showConj) ? candidate : null;
@@ -2491,6 +2597,7 @@ function renderModels() {
   let h = `<div class="ex"><div class="ex-col"><div class="ex-head">Principles <span class="n">${backgroundIds().length} assumed</span></div><div class="explorer-actions">${backgroundPresets.map(p => `<button class="btn small" data-background-preset="${esc(p.id)}">Background ${esc(p.name)}</button>`).join('')}<button class="btn small" id="ex-clear">clear background</button></div>`;
   if (inspected) h += `<div class="inspection-note">Inspecting <b>${esc(inspected.name)}</b> <button class="lnk" id="ex-deselect">clear selection</button></div>`;
   else if (ig) h += `<div class="inspection-note">Inspecting <b>${esc(ig.name)}</b>, ${igFits.length ? `through the ${igFits.length} of its models that ${modelFit(igFits[0], IN, OUT) === 'known' ? 'fit' : 'might fit'}` : 'none of whose models fits these assumptions'} <button class="lnk" id="ex-deselect">clear selection</button></div>`;
+  h += `<div class="ex-find"><input class="search" id="ex-find" type="search" role="combobox" placeholder="Find a principle…" aria-label="Find a principle" aria-autocomplete="list" aria-controls="ex-find-list" aria-expanded="false" autocomplete="off" spellcheck="false" value="${esc(exFind.query)}"><ul class="ex-find-list" id="ex-find-list" role="listbox" aria-label="Matching principles" hidden></ul></div>`;
   h += '<div id="model-principles">';
   for (const group of principleGroups()) {
     // A closed category must still report the assumptions it holds, or
@@ -2553,7 +2660,10 @@ function renderModels() {
   h += '</div></div>';
   const el = document.getElementById('models');
   const focused = el.contains(document.activeElement) ? ['data-assume-positive', 'data-assume-negative'].map(a => [a, document.activeElement.getAttribute(a)]).find(([,id]) => id) : null;
+  const finding = document.activeElement?.id === 'ex-find';
   el.innerHTML = h;
+  wireExFind(el);
+  if (finding) el.querySelector('#ex-find').focus({preventScroll: true});
   wireAssumptions(el);
   el.querySelectorAll('[data-background-preset]').forEach(button => { button.disabled = backgroundPresets.find(p => p.id === button.dataset.backgroundPreset).principles.every(id => background.has(id)); button.addEventListener('click', () => addBackgroundPreset(button.dataset.backgroundPreset)); });
   wireCategories(el.querySelector('#model-principles'));
@@ -2583,6 +2693,7 @@ function renderModels() {
   }));
   wire(el);
   if (focused) el.querySelector(`[${focused[0]}="${focused[1]}"]`)?.focus({preventScroll: true});
+  drawExFind(); markFound();
 }
 
 function certBadges(r) {
@@ -3973,7 +4084,8 @@ function runGraphSearch(value) {
   const normalize = text => text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
   const query = normalize(value);
   const terms = query.split(/\s+/);
-  graphSearch.matches = new Set(query ? P.filter(p => {
+  // Matches are stepped through in the order the category lists show them.
+  graphSearch.matches = new Set(query ? principleGroups().flatMap(g => g.principles).filter(p => {
     const text = normalize([p.name, p.id, ...(p.aliases || [])].join(' '));
     return terms.every(term => text.includes(term));
   }).map(p => p.id) : []);
