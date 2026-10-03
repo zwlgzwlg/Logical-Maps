@@ -33,7 +33,7 @@ function drag(win,target){
   svg.dispatchEvent(new win.MouseEvent('pointerup',{bubbles:true,button:0}));
 }
 function page(data=fixture){const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));
-  const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data)),{url:'https://maps.example/?assume=',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});
+  const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data)),{url:'https://maps.example/?assume=',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});
   pages.push(dom);return dom;}
 try{
   const dom=page(),w=dom.window,d=w.document;

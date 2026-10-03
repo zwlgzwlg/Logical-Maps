@@ -9,7 +9,7 @@ const fixture={topic:{id:'graph-modes',title:'Graph modes',background:[],source_
  rule('ac',['a'],'c','draft'),rule('cd',['c'],'d','submission'),
  rule('published-guess',['automatic','a'],'e','paper','conjectured'),rule('draft-guess',['a','b'],'f','draft','conjectured'),rule('draft-open',['a','b'],'g','draft','conjectured')]};
 const pages=[],errors=[];
-function page(data,url){const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data)),{url,runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});pages.push(dom);return dom;}
+function page(data,url){const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data)),{url,runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});pages.push(dom);return dom;}
 const graph=dom=>JSON.parse(dom.window.eval('JSON.stringify(buildGraph())'));
 const direct=dom=>new Set(graph(dom).edges.filter(e=>e.r).map(e=>e.r.id));
 const conjectural=e=>e.conjectured||e.r?.status==='conjectured';

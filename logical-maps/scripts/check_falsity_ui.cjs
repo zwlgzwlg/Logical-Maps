@@ -4,7 +4,7 @@ const {JSDOM,VirtualConsole}=require('jsdom');
 const root=path.resolve(__dirname,'..');
 const template=fs.readFileSync(path.join(root,'viewer/template.html'),'utf8');
 const pages=[],errors=[];
-function page(data,url='http://localhost/'){const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data)),{url,runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});pages.push(dom);return dom;}
+function page(data,url='http://localhost/'){const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data)),{url,runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});pages.push(dom);return dom;}
 const cert=source_id=>({source_id,lean:'none',produced_by:'Fixture author',checked_by:[]});
 const fixture={topic:{id:'fixture',title:'Fixture',background:[],source_catalog:[{id:'paper',name:'A paper',kind:'published-paper'},{id:'submission',name:'A submission',kind:'online-submission'}]},principles:'abcde'.split('').map(id=>({id,name:id.toUpperCase(),statement:`Principle ${id}`})),results:[{id:'ea',premises:['e'],conclusion:'a',status:'proved',certificate:cert('paper')},{id:'conflict',premises:['a','b','c','d'],conclusion:false,status:'proved',certificate:cert('submission'),proof:'The four premises contradict each other.',sources:['Fixture theorem'],source_names:['A submission']}],models:[{id:'m',name:'ABC model',satisfies:['a','b','c'],violates:[],status:'proved',certificate:cert('paper'),sources:['Fixture construction'],source_names:['A paper']}]};
 const dom=page(fixture),w=dom.window,d=w.document;

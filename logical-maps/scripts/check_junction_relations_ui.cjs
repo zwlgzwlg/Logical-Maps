@@ -16,7 +16,7 @@ const data = {
     model('separate-p', ['g','p']), model('separate-q', ['g','q'])]
 };
 const errors = [], vc = new VirtualConsole(); vc.on('jsdomError', e => errors.push(String(e)));
-const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {url: 'https://maps.example/', runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc});
+const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', ()=>JSON.stringify(data)), {url: 'https://maps.example/', runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc});
 const w = dom.window, d = w.document;
 const junction = () => d.querySelector('[data-graph-node="j:pqr"]');
 const fill = () => w.getComputedStyle(junction().querySelector('circle')).fill.replaceAll('"','');

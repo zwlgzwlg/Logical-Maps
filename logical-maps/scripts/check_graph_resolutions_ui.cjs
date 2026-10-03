@@ -14,7 +14,7 @@ const data = {
 };
 function page(data) {
   const vc = new VirtualConsole(); vc.on('jsdomError', e => errors.push(String(e)));
-  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {url: 'https://maps.example/', runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc});
+  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', ()=>JSON.stringify(data)), {url: 'https://maps.example/', runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc});
   pages.push(dom); return dom.window;
 }
 const absent = (w, id) => assert.ok(w.eval(`!buildGraph().edges.some(e=>e.r?.id===${JSON.stringify(id)}||e.via?.includes(${JSON.stringify(id)}))`), id + ' supplies neither arrows nor derived paths');

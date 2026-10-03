@@ -21,7 +21,7 @@ const pages = [], errors = [];
 async function page(topic = 'unbounded-utility', saved = {}, blocked = false) {
   const system = {matches: false, addEventListener(_, handler) { this.change = handler; }};
   const vc = new VirtualConsole(); vc.on('jsdomError', error => errors.push(String(error)));
-  const dom = new JSDOM(template.replace('<!--__PMAP_THEME__-->', heads[topic]).replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {
+  const dom = new JSDOM(template.replace('<!--__PMAP_THEME__-->', heads[topic]).replace('/*__PMAP_DATA__*/null', ()=>JSON.stringify(data)), {
     url: `https://maps.example/${topic}/`, runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc,
     beforeParse(w) {
       w.matchMedia = query => query === '(prefers-color-scheme: dark)' ? system : {matches: true, addEventListener() {}};

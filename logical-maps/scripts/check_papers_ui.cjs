@@ -7,7 +7,7 @@ const data = JSON.parse(fs.readFileSync(path.join(root, 'build/unbounded-utility
 data.papers.find(p => p.id === 'bartha-2016').file = 'sources/Bartha (2016).pdf';
 const template = fs.readFileSync(path.join(root, 'viewer/template.html'), 'utf8');
 const errors = [], vc = new VirtualConsole(); vc.on('jsdomError', e => errors.push(e));
-const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {
+const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', ()=>JSON.stringify(data)), {
   url: 'https://maps.example/', runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc,
   beforeParse(w) { w.matchMedia = () => ({matches: false, addEventListener() {}}); w.HTMLElement.prototype.scrollIntoView = function() {}; }
 });

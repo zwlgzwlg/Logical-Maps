@@ -18,7 +18,7 @@ const data=(perGroup,principle_categories=categories)=>({topic:topic(principle_c
   models:[]});
 function page(fixture){
   const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));
-  const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(fixture)),
+  const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(fixture)),
     {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});
   pages.push(dom);return dom;
 }

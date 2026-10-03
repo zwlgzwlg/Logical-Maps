@@ -17,7 +17,7 @@ const data={topic:{id:'verdicts',title:'Verdict fixture',background:[],source_ca
   results:[rule('ac',['a'],'c'),rule('db',['d'],'b')],
   models:[{id:'m',name:'Fixture model',status:'proved',satisfies:['a'],violates:['b'],certificate:leanCert,sources:['Fixture'],source_names:['Fixture']}]};
 const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));
-const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data)),
+const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data)),
   {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});
 const w=dom.window,d=w.document;
 try{
@@ -107,7 +107,7 @@ const provenance=[{id:'admission-x',file:'topics/t/provenance/admission-x.yaml',
   admitted_by:'Curator',admitted_at:'2026-02-07T10:00:00+00:00'}}}];
 const data2={...data,models:[flat,companion],provenance,papers:[{id:'fixture-paper',title:'Fixture paper',citation:'A. Author, Fixture paper.'}]};
 const errors2=[],vc2=new VirtualConsole();vc2.on('jsdomError',e=>errors2.push(e));
-const dom2=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data2)),
+const dom2=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data2)),
   {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc2});
 const w2=dom2.window,d2=w2.document;
 try{
@@ -233,7 +233,7 @@ const variant={...member,id:'gm-sigma-atom',name:'Fixture: group member [Σ atom
   arguments:[member.arguments[1],member.arguments[2],{...strip(group.arguments[2]),group:'g'}]};
 const data3={...data,models:[member,variant],groups:[group],general_arguments:[generalArg],conditions:[{id:'one-object',text:'One object.'}]};
 const errors3=[],vc3=new VirtualConsole();vc3.on('jsdomError',e=>errors3.push(e));
-const dom3=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data3)),
+const dom3=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data3)),
   {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc3});
 const w3=dom3.window,d3=w3.document;
 try{

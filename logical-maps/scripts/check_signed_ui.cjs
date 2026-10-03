@@ -15,7 +15,7 @@ const data = {
 };
 function page(url = 'https://maps.example/?assume=', reduced = false) {
   const vc = new VirtualConsole(); vc.on('jsdomError', e => errors.push(e));
-  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {url, runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc,
+  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', ()=>JSON.stringify(data)), {url, runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc,
     beforeParse(w) { w.matchMedia = () => ({matches: reduced, addEventListener() {}}); },
   });
   pages.push(dom); return dom;
