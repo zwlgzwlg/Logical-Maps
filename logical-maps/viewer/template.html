@@ -3199,13 +3199,15 @@ function groupGrid(g, view) {
   const rows = groupRows(g, view), members = rows.filter(r => r.first);
   const varies = (rs, c) => new Set(rs.map(r => cellOf(r.m, c)[0])).size > 1;
   const qualifies = (rs, c) => varies(rs, c) && (view.derived || rs.some(r => cellOf(r.m, c)[1]));
-  const order = principleOrder();
+  // Principles hidden in the sidebar (signature schemata, by default) are left out here too.
+  const all = principleOrder(), order = all.filter(c => !state.excluded.has(c));
   const baseCols = order.filter(c => qualifies(members, c)), extra = order.filter(c => !baseCols.includes(c) && qualifies(rows, c));
   const cols = [...baseCols, ...extra];
   const hiddenDerived = order.filter(c => varies(rows, c) && !rows.some(r => cellOf(r.m, c)[1])).length;
+  const hiddenInSidebar = all.filter(c => state.excluded.has(c) && qualifies(rows, c)).length;
   const assumptionsActive = background.size > topicBackground.length || negativeBackground.size > 0;
   const assumed = [...background].filter(p => !topicBackground.includes(p)).map(p => esc(name(p))).concat([...negativeBackground].map(p => '¬' + esc(name(p))));
-  let h = `<div class="group-bar"><label><input type="checkbox" id="group-derived"${view.derived ? ' checked' : ''}> Principles derived in every row <span class="dim">(${hiddenDerived})</span></label>`
+  let h = `<div class="group-bar"><label><input type="checkbox" id="group-derived"${view.derived ? ' checked' : ''}> Principles derived in every row <span class="dim">(${hiddenDerived})</span></label>${hiddenInSidebar ? ` <span class="dim">${hiddenInSidebar} more differ${hiddenInSidebar === 1 ? 's' : ''} among principles hidden in the sidebar</span>` : ''}`
     + `<span class="group-legend"><span class="gcell h r">✓</span> recorded <span class="gcell h d">✓</span> derived <span class="gcell u">?</span> unknown</span></div>`
     + (assumptionsActive ? `<p class="note">Assumed in the theory explorer: ${assumed.join(', ')}. Rows that do not fit are dimmed; rows that might fit are marked ?.</p>` : '');
   h += `<div class="group-grid-wrap"><table class="group-grid"><thead><tr><th></th>${cols.map(c => `<th class="gcol${extra.includes(c) && c === extra[0] ? ' xfirst' : ''}${rows.some(r => cellOf(r.m, c)[1]) ? '' : ' derived'}"><button class="lnk" data-principle="${c}" title="${esc(name(c))}">${esc(name(c))}</button></th>`).join('')}</tr></thead><tbody>`;

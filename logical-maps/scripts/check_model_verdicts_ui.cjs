@@ -278,6 +278,11 @@ try{
   page.querySelector('button[data-group-toggle="sigma"]').click();
   assert.deepEqual(rowNames(),['group member','Σ atom'],'The variant as a sub-row');
   assert.deepEqual(colNames(),['E'],'And the column it needs');
+  w3.eval("state.excluded.add('e'); renderPage(state.page)");
+  assert.deepEqual(colNames(),[],'A principle hidden in the sidebar is not a column');
+  assert.match(page.querySelector('.group-bar').textContent,/1 more differs among principles hidden in the sidebar/,'But is counted');
+  w3.eval("state.excluded.delete('e'); renderPage(state.page)");
+  assert.deepEqual(colNames(),['E']);
   const cell=ri=>page.querySelector(`button.gcell[data-gcell="${ri}"][data-gc="e"]`);
   assert.ok(cell(0).classList.contains('r')&&cell(0).classList.contains('h')&&cell(1).classList.contains('f'),'Recorded cells');
   cell(1).click();
