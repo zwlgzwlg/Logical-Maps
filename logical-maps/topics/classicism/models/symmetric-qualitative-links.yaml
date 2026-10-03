@@ -118,7 +118,7 @@ arguments:
 
 - fails: [intensional-choice-r]
   when: {individuals: base}  # proved at type $e$
-  by: Claude (Anthropic), Classicism session of 3 October 2026, at Cian Dorr's suggestion
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion
   date: '2026-10-03'
   text: >-
     At type $e$. Let $F$ be the constant property whose extension at every world is the distinguished

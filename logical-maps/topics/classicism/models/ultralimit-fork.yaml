@@ -103,7 +103,7 @@ arguments:
 # the root the proposition true at $o$ alone is a true atom."
 
 - holds: [necessary-intensional-choice-r]
-  by: Claude (Anthropic), Classicism session of 3 October 2026, at Cian Dorr's suggestion
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion
   date: '2026-10-03'
   text: >-
     At the root: given $F$ with $\Box\exists x\, .\,Fx$, let $G$ pick the least element of $F$ at $o$, $s$

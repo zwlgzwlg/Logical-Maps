@@ -78,7 +78,7 @@ arguments:
 # derived, is dropped.
 
 - holds: [necessary-intensional-choice-r]
-  by: Claude (Anthropic), Classicism session of 3 October 2026, at Cian Dorr's suggestion
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion
   date: '2026-10-03'
   text: >-
     Here $\Box p$ is $p=\top$, so $\Box\exists x\, .\,Fx$ says $\bigvee_{x\in D_\sigma}F(x)=1_B$. Well-order

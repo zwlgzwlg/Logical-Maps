@@ -52,10 +52,39 @@ conditions:
     root arguments.
 
 arguments:
+- id: tame-rigidity-component
+  requires: [complete-components, free-root-component]
+  fails: [tame-rigidity-r]
+  by: Claude Fable 5.1 (Anthropic), answering Cian Dorr's conjecture
+  date: '2026-10-03'
+  text: >-
+    Tame Rigidity fails at a relational argument type in models of C (ultralimit-fork,
+    symmetric-qualitative-links), so some component $M$ refutes it at its root $M_0$: some $F_M$
+    of type $\sigma\to t$, $\sigma$ relational, is weakly rigid there but not rigid. A root entity
+    $F$ of that type is a root extension $F_o$ together with a component $F_N$ in each component
+    $N$, and a formula about $F$ at a world of $N$ is the same formula about $F_N$ in $N$. Since
+    the components of root entities are arbitrary, $F$ is weakly inextensible at the root exactly
+    when, for every $N$, every $X_N$ that necessarily holds of the $N$-components of the members of
+    $F_o$ has $F_N\le X_N$. For each other component $N$ fix $z_N$, and for each $y$ in the
+    extension of $F_M$ at $M_0$ let $x_y$ be the root entity with $M$-component $y$ and
+    $N$-components $z_N$, free at the root by the condition. Put $F_o:=\{x_y\}$, $F_N:=\lambda
+    y\, .\,y=z_N$, a haecceity, rigid in every model of C, and keep $F_M$. Then $F$ is persistent
+    and weakly inextensible at the root, each component's condition being the weak
+    inextensibility of its own component, but not inextensible, since $F_M$ is not inextensible in
+    $M$ and every arrow from the root into $M$ factors through the distinguished one. So Tame
+    Rigidity fails at the root.
+  revisions:
+  - date: '2026-10-03'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      One direction of Fable's transfer theorem: at a coalesced root, Tame Rigidity at a
+      relational type holds iff it holds at the root of every component. The other direction is
+      not recorded, the engine deriving the positive verdict in the one model where it applies.
+
 - id: intensional-choice-component
   requires: [complete-components]
   fails: [intensional-choice-r]
-  by: Claude (Anthropic), Classicism session of 3 October 2026, at Cian Dorr's suggestion
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion
   date: '2026-10-03'
   text: >-
     The type-$e$ instance of Intensional Choice fails in a model of C (symmetric-all-surjections),
