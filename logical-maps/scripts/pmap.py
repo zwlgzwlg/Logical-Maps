@@ -342,6 +342,7 @@ def expand_member(rec: dict, groups: dict, settings: dict | None = None, library
     else:
         settings = {}
     met = conditions_met(rec, group, settings)
+    out["met"] = met  # every condition the record meets at these settings, with its reason
     own = [a for a in rec.get("arguments") or [] if not isinstance(a, dict) or settings_match(a.get("when"), settings)]
     shared = [_applied(c, {"group": group.get("id")}, met, texts) for c in (group or {}).get("arguments") or []
               if isinstance(c, dict) and settings_match(c.get("when"), settings) and all(k in met for k in c.get("requires") or [])]

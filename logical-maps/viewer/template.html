@@ -3111,7 +3111,7 @@ function groupPage(g) {
     return `<section class="verdict-col"><h3 class="verdict-group">${st === 'h' ? 'Hold' : 'Fail'} <span class="n">${list.length}</span></h3><ul class="verdict-list">${rec.map(c => `<li><button class="lnk" data-principle="${c}">${esc(name(c))}</button></li>`).join('')}</ul>`
       + (der.length ? `<details class="derived-verdicts"><summary>+ ${der.length} derived</summary><ul class="verdict-list derived">${der.map(c => `<li><button class="lnk" data-principle="${c}">${esc(name(c))}</button></li>`).join('')}</ul></details>` : '') + '</section>';
   }).join('')}</div>`;
-  h += `<h2>Shared arguments</h2><div class="arguments">${(g.arguments || []).map(c => {
+  if ((g.arguments || []).length) h += `<h2>Shared arguments</h2><div class="arguments">${(g.arguments || []).map(c => {
     const when = Object.entries(c.when || {}).map(([k, v]) => `${esc(k)} = ${[].concat(v).map(x => esc(valueLabel(g.parameters[k] || {}, x))).join(' or ')}`), req = (c.requires || []).map(esc);
     const to = applies(c);
     return `<div id="shared-${esc(c.id)}">` + argumentHtml({ id: g.id, certificate: {}, shared: true }, { ...c, group: g.id })
@@ -3126,7 +3126,9 @@ function groupPage(g) {
   h += `<h2>Definition</h2><div class="prose reading">${fmt(String(g.definition || '').replace(/\{\{\s*([a-z0-9-]+)\s*\}\}/g, '⟨$1⟩'))}</div>`;
   h += `<h2>Parameters</h2><dl class="group-params">${Object.entries(g.parameters || {}).map(([k, p]) => `<dt>⟨${esc(k)}⟩</dt><dd>${fmt(p.text)}`
     + (p.values ? `<ul class="src">${Object.entries(p.values).map(([v, t]) => `<li><b>${esc(valueLabel(p, v))}:</b> ${fmt(typeof t === 'string' ? t : t.text)}${(t && t.requires || []).length ? ` <span class="dim">Requires ${t.requires.map(esc).join(', ')}.</span>` : ''}</li>`).join('')}</ul>` : '') + '</dd>').join('')}</dl>`;
-  if (Object.keys(g.meets || {}).length) h += `<h2>Conditions every member meets</h2><ul class="src">${Object.entries(g.meets).map(([c, why]) => `<li><b>${esc(c)}:</b> ${fmt(byCid.get(c)?.text || '')} <span class="dim">Here: ${fmt(why)}</span></li>`).join('')}</ul>`;
+  const gm = Object.entries(g.meets || {}), always = gm.filter(([, w]) => typeof w === 'string'), given = gm.filter(([, w]) => typeof w !== 'string');
+  if (always.length) h += `<h2>Conditions every member meets</h2><ul class="src">${always.map(([c, why]) => `<li><b>${esc(c)}:</b> ${fmt(byCid.get(c)?.text || '')} <span class="dim">Here: ${fmt(why)}</span></li>`).join('')}</ul>`;
+  if (given.length) h += `<h2>Conditions met through others</h2><ul class="src">${given.map(([c, why]) => `<li><b>${esc(c)}:</b> ${fmt(byCid.get(c)?.text || '')} <span class="dim">By the members that meet ${why.requires.map(esc).join(' and ')}: ${fmt(why.text)} (${members.filter(m => (m.met || {})[c] !== undefined).map(m => esc(shortName(g, m))).join('; ') || 'no member at its own settings'})</span></li>`).join('')}</ul>`;
   if ((g.conditions || []).length) h += `<h2>Conditions</h2><ul class="src">${g.conditions.map(c => `<li><b>${esc(c.id)}:</b> ${fmt(c.text)} <span class="dim">Met by ${members.filter(m => (m.meets || {})[c.id]).map(m => esc(shortName(g, m))).join('; ') || 'no member'}.</span></li>`).join('')}</ul>`;
   if (g.notes) h += `<h2>Notes</h2><div class="prose">${fmt(g.notes)}</div>`;
   return h + `<div class="file">${esc(g.file)}</div>`;
