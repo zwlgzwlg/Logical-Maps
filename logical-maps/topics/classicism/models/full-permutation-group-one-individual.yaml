@@ -33,25 +33,34 @@ references:
 
 # migration: the definition is the old description up to its verdict sentences, then the notes'
 # interpretation of Σ.
-definition: >-
-  The full one-object action model whose arrows are all the permutations of a countably infinite
-  set, as in the record for the natural action, but with a single individual, fixed by every
-  arrow. Propositions are all sets of arrows with the division action and every function type
-  carries all functions. Evaluate at the identity arrow.
-
-
-  Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type
-  $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the singleton of the identity
-  arrow, the unique true atom; every other relational constant denotes the top element of its
-  type, Σ being assumed to contain at least one; and every individual constant denotes the sole
-  individual.
+group: full-action-models
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values. Its
+# text ("$a$ is the singleton of the identity arrow, the unique true atom; ... Σ being assumed to
+# contain at least one; and every individual constant denotes the sole individual") said the same
+# as the group's, which the topic's condition sigma-true-atom spells out.
+settings:
+  construction: >-
+    The full one-object action model whose arrows are all the permutations of a countably infinite
+    set, as in the record for the natural action, but with a single individual, fixed by every
+    arrow. Propositions are all sets of arrows with the division action and every function type
+    carries all functions. Evaluate at the identity arrow.
+  sigma: true-atom
+meets:
+  sigma-apart: The construction does not mention Σ.
+  one-object-action-model: >-
+    It has one object.
+  one-individual: >-
+    There is a single individual, fixed by every arrow, at the sole object.
+  homogeneous-individuals: There is only one individual.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another full action model is now one of the topic's general
+# arguments (arguments/), reached through the group full-action-models and this record's `meets`;
+# what follows is this record's own. Only the verdicts the engine needs to derive the rest are
+# recorded, the source's first.
 
 - holds: [axiom-of-infinity-t, functional-choice-r]
   text: >-
@@ -60,30 +69,12 @@ arguments:
     principles as in the natural-action record; the propositions are infinite while there is
     exactly one individual at every arrow.
 
-- fails: [no-contingency-signature-r, independence-signature-r]
-  text: >-
-    No Contingency (signature Σ) fails, since the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes
-    $a$, true and not the set of all arrows; B for sentences of Σ holds by B. Witnessed
-    Possibility fails for the pure formula $x=\top_\tau$, witnessed by $\top_\tau$, since
-    $c=\top_\tau$ is false at every arrow, $\lambda\bar x\, .\,a$ differing from $\lambda\bar x\,
-    .\,\top$ and identity being uniform; Separated Structure, Distinctness Maximalism (signature
-    Σ), Possibility Maximalism (signature Σ) and Logical Necessity fail with it. Independence
-    (signature Σ) fails through the other relational constants, which denote closed pure terms;
-    $\lambda\bar x\, .\,a$ itself is denoted by no closed pure term, since such terms denote
-    entities fixed by every arrow and $a$ is fixed only by the identity.
-
 - holds: [modal-freedom-signature-r]
+  when: {sigma: true-atom}
   text: >-
     The two tuples of constants are disjoint, so one of the two sentences contains no designated
     constant and denotes a fixed point, hence the empty set or the set of all arrows; if it is
     possible it is the latter, and the conjunction is as possible as the other conjunct.
-
-- fails: [infinity-e]
-  text: >-
-    There is exactly one individual at every arrow, so the first numeral holds of the universal
-    property of individuals, the second instance of the Infinity Schema at type $e$ is false,
-    Possible Infinity at type $e$ fails, and Possibility Maximalism (pure) fails for the
-    C-consistent sentence that there are two individuals.
 
 # migration: the old notes' first and last sentences and the old description's last, verbatim. The
 # notes' sentences on Converse Witnessed Possibility, the Fregean Axiom, Extensionality, the

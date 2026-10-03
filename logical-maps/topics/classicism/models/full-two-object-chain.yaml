@@ -18,19 +18,31 @@ references:
 
 # migration: the definition is the old description's first sentence, then the notes' interpretation
 # of Σ.
-definition: >-
-  Use two objects with one nonidentity arrow from W0 to W1, evaluated at W0.
-
-
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element of
-  its type and each individual constant denotes one fixed individual.
+group: full-action-models
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values.
+settings:
+  construction: >-
+    Use two objects with one nonidentity arrow from W0 to W1, evaluated at W0.
+  sigma: top
+meets:
+  sigma-apart: The construction does not mention Σ.
+  finitely-many-propositions: >-
+    The propositions at the evaluation object are the subsets of the two arrows out of it, four in
+    all.
+  actual-world-isolated: >-
+    The actual-world proposition, the singleton of the identity, is in the domain, the model being
+    full; no arrow leads back from $W_1$ to $W_0$.
+  irreversible-arrow: >-
+    The arrow $k$ to $W_1$, from which no arrow leads back.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another full action model is now one of the topic's general
+# arguments (arguments/), reached through the group full-action-models and this record's `meets`;
+# what follows is this record's own. Only the verdicts the engine needs to derive the rest are
+# recorded, the source's first.
 
 # --- from the source (17 Sep record) ---
 
@@ -43,48 +55,6 @@ arguments:
     The source makes the Fregean Axiom false at W0 and true at W1.
 
 # --- later additions ---
-
-- fails: [infinity-t]
-  # migration: `by` adds "at Cian Dorr's direction" from the change's summary.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
-  date: '2026-09-20'
-  text: >-
-    The propositions at the evaluation object are the subsets of the two arrows out of it, four in
-    all, and every intension of a full model is present, so the numerals are the finite
-    cardinalities and the fourth holds of the universal property of propositions: the Axiom of
-    Infinity at type t fails, as does the fifth instance of the schema.
-
-- id: sigma-top
-  fails: [witnessed-possibility-r, independence-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The sentence that
-  # followed the text in the old notes is in `notes`.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed
-    Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but
-    impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\,
-    .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what
-    the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since
-    $c=\top_\tau$ is a true identity that C(Σ) does not prove.
-
-- holds: [necessary-relational-choice-r]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    The truncation of a full action model at any arrow is again a full action model, its domains
-    at the reachable objects being unchanged, and Relational Choice holds in every full model
-    given choice in the metatheory (Classicism, p. 61).
-
-- holds: [distinctness-preserving-collapse]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Let $a$ be the proposition true at the actual world alone (the identity arrow). For any true
-    $p$, take $q:=a$ in the definition of $\Box_{\ne}p$: under a arrow $k$ to $W_1$, $\Diamond a$
-    would need an arrow back to $W_0$, and none exists, since no arrow leads back to the actual
-    world; under the identity, $p$ holds. So every truth is $\Box_{\ne}$-necessary, although ND
-    fails.
 
 - holds: [necessary-strong-leibniz-r]
   # migration: the argument of 22 September for the type-$t$ principle, now derived, is dropped.

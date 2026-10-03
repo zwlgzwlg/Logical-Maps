@@ -22,20 +22,33 @@ references:
 
 # migration: the definition is the old description's first sentence, then the notes' interpretation
 # of Σ.
-definition: >-
-  Use the monoid of surjections of an infinite set and a surjective individual action, at its sole
-  object.
-
-
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element of
-  its type and each individual constant denotes one fixed individual $d$.
+group: full-action-models
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values. The
+# interpretation's "one fixed individual $d$" lost its "$d$", which the No Contingency (signature Σ)
+# argument, now a general one, names itself.
+settings:
+  construction: >-
+    Use the monoid of surjections of an infinite set and a surjective individual action, at its sole
+    object.
+  sigma: top
+meets:
+  sigma-apart: The construction does not mention Σ.
+  one-object-action-model: >-
+    It has one object.
+  irreversible-arrow: >-
+    A surjection that is not injective: no composite with it is the identity.
+  homogeneous-individuals: >-
+    Every permutation of the set is a surjection, and conjugation by it is an automorphism of the
+    model, carrying each individual to its image.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another full action model is now one of the topic's general
+# arguments (arguments/), reached through the group full-action-models and this record's `meets`;
+# what follows is this record's own. Only the verdicts the engine needs to derive the rest are
+# recorded, the source's first.
 
 # --- from the source (17 Sep record) ---
 
@@ -47,17 +60,6 @@ arguments:
 
 # --- later additions ---
 
-- holds: [relational-choice-r]
-  # migration: `by` adds "at Cian Dorr's direction" from the change's summary; `source` is the page
-  # the text cites.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
-  date: '2026-09-20'
-  source: {paper: bacon-dorr-classicism, locator: 'p. 61'}
-  text: >-
-    With choice in the metatheory a serial relation has a functional subrelation, and a full model
-    contains every intension, so that subrelation is in the domain; see Classicism, p. 61, on the
-    principles common to full models.
-
 - holds: [axiom-of-infinity-e, axiom-of-infinity-t]
   # migration: `by` adds "at Cian Dorr's direction" from the change's summary.
   by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
@@ -66,30 +68,6 @@ arguments:
     The individuals are an infinite set and the arrows an infinite monoid, identity at the
     identity arrow is literal, and the numeral sets at each type are intensions of a full model,
     so no finite cardinality holds of the universal property at type e or at type t.
-
-- id: sigma-top
-  fails: [independence-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    With $c\in\Sigma$ of relational type $\tau$, $c=\top_\tau$ necessarily, so Witnessed
-    Possibility fails for the pure formula $x\ne\top_\tau$, Separated Structure fails since
-    $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$, Independence (signature Σ)
-    fails since $c$ denotes what a closed pure term denotes, and Distinctness Maximalism
-    (signature Σ) fails since $c=\top_\tau$ is true and unprovable.
-
-- holds: [no-contingency-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-23'
-  text: >-
-    The relational constants denote pure entities, so a closed Σ-sentence denotes what some
-    $P(d,\ldots,d)$ denotes for a pure formula $P$; the model’s automorphisms carry every
-    individual to every other, so $P(d,\ldots,d)$ is materially equivalent to the pure sentence
-    $\forall x\, .\,P(x,\ldots,x)$ and its negation to $\forall x\, .\,\neg P(x,\ldots,x)$;
-    whichever is true is necessary by No Pure Contingency, and instantiation under the box gives
-    $\Box P(d,\ldots,d)$ or $\Box\neg P(d,\ldots,d)$.
 
 - fails: [distinctness-preserving-collapse]
   by: Claude Fable 5.1 (Anthropic)

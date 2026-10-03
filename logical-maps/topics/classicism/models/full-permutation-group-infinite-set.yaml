@@ -33,23 +33,35 @@ references:
 
 # migration: the definition is the old description up to its verdict sentences, then the notes'
 # interpretation of Σ.
-definition: >-
-  The full one-object action model whose arrows are all the permutations of a countably infinite
-  set $X$, composed as functions, acting on the individuals $W^e=X$ by evaluation. Propositions
-  are all sets of arrows with the division action $i\cdot p=\{j : j\circ i\in p\}$, and every
-  function type carries the full function-space M-set, which here is the set of all functions
-  since every arrow acts bijectively. Evaluate at the identity arrow.
-
-
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element of
-  its type and each individual constant denotes one fixed individual $d$.
+group: full-action-models
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values. The
+# interpretation's "one fixed individual $d$" lost its "$d$", which the No Contingency (signature Σ)
+# argument, now a general one, names itself.
+settings:
+  construction: >-
+    The full one-object action model whose arrows are all the permutations of a countably infinite
+    set $X$, composed as functions, acting on the individuals $W^e=X$ by evaluation. Propositions
+    are all sets of arrows with the division action $i\cdot p=\{j : j\circ i\in p\}$, and every
+    function type carries the full function-space M-set, which here is the set of all functions
+    since every arrow acts bijectively. Evaluate at the identity arrow.
+  sigma: top
+meets:
+  sigma-apart: The construction does not mention Σ.
+  one-object-action-model: >-
+    It has one object.
+  homogeneous-individuals: >-
+    For every bijection $\beta$ of $X$ the map that is $\beta$ at type $e$, the identity on
+    propositions and conjugation at the function types is an automorphism of the pure part of the
+    model, carrying each individual to its image under $\beta$.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another full action model is now one of the topic's general
+# arguments (arguments/), reached through the group full-action-models and this record's `meets`;
+# what follows is this record's own. Only the verdicts the engine needs to derive the rest are
+# recorded, the source's first.
 
 - holds: [axiom-of-infinity-t, axiom-of-infinity-e, functional-choice-r]
   text: >-
@@ -59,22 +71,6 @@ arguments:
     $\Box$ND and $\Box$BF; fullness gives the necessitations of Atomicity, Actuality, Boolean
     Completeness, Rigid Comprehension, Functionality, Plenitude and the choice principles; and the
     individuals and the propositions are both infinite.
-
-- fails: [independence-signature-r]
-  text: >-
-    Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but
-    impossible of a relational constant $c$; Independence (signature Σ) fails since $c$ denotes
-    what the closed pure term $\top_\tau$ denotes; Separated Structure, Distinctness Maximalism
-    (signature Σ), Possibility Maximalism (signature Σ) and Logical Necessity fail with them by
-    the recorded results.
-
-- holds: [no-contingency-signature-r]
-  text: >-
-    For every bijection $\beta$ of $X$ the map that is $\beta$ at type $e$, the identity on
-    propositions and conjugation at the function types is an automorphism of the pure part of the
-    model, so a pure formula $P$ denotes the same proposition at $(d,\ldots,d)$ as at
-    $(a,\ldots,a)$ for every individual $a$; hence every closed Σ-sentence denotes what the pure
-    sentence $\forall x\, .\,P(x,\ldots,x)$ denotes, and No Pure Contingency finishes.
 
 # migration: the old notes' first and last sentences and the old description's last, verbatim. The
 # notes' arguments for Converse Witnessed Possibility and for the failures of the Fregean Axiom,

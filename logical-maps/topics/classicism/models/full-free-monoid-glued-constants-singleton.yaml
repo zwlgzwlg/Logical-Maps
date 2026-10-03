@@ -40,18 +40,37 @@ references:
 
 # migration: the definition is the old description without its last sentence, which is the first
 # argument.
-definition: >-
-  The model of full-free-monoid-glued-constants with the type-e modalized set replaced by a
-  singleton at every world, with identity counterparts; equivalently the full action model over
-  the free monoid on countably many generators with the trivial M-set at type e, with the
-  constants glued as there. Evaluation point: the root.
+group: full-action-models
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values. The
+# construction interprets Σ by gluing, so the record meets no sigma-apart and has no variants.
+settings:
+  construction: >-
+    The model of full-free-monoid-glued-constants with the type-e modalized set replaced by a
+    singleton at every world, with identity counterparts; equivalently the full action model over
+    the free monoid on countably many generators with the trivial M-set at type e, with the
+    constants glued as there. Evaluation point: the root.
+  sigma:
+    text: >-
+      The constants of Σ are glued as in the construction above.
+meets:
+  one-object-action-model: >-
+    It has one object.
+  one-individual: >-
+    The type-$e$ set is a singleton at every world.
+  actual-world-isolated: >-
+    The actual-world proposition, true at the root alone, is in the domain, the model being full;
+    under a non-identity arrow $i$ no arrow $k$ has $k\circ i$ the identity, since no arrow leads
+    back to the root.
+  irreversible-arrow: Any non-identity arrow, since no arrow leads back to the root.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another full action model is now one of the topic's general
+# arguments (arguments/), reached through the group full-action-models and this record's `meets`;
+# what follows is this record's own. Only the verdicts the engine needs to derive the rest are
+# recorded, the source's first.
 
 # --- as first recorded (22 Sep) ---
 
@@ -66,24 +85,7 @@ arguments:
     The Infinity principles at type e fail at every world; those at type t hold as in the thread
     variant.
 
-- holds: [relational-choice-r]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Every truncation is a standard model over a frame isomorphic to the original, and Relational
-    Choice holds in every full model given choice in the metatheory.
-
 # --- later additions ---
-
-- holds: [distinctness-preserving-collapse]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Let $a$ be the proposition true at the actual world alone (the identity arrow). For any true
-    $p$, take $q:=a$ in the definition of $\Box_{\ne}p$: under a non-identity arrow $i$, $\Diamond
-    a$ would need an arrow $k$ with $k\circ i$ the identity, and none exists, since no arrow leads
-    back to the actual world; under the identity, $p$ holds. So every truth is
-    $\Box_{\ne}$-necessary, although ND fails.
 
 # migration: text of the old notes that no argument holds, verbatim.
 notes: >-
