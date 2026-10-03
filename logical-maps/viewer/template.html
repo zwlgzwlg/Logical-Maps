@@ -549,16 +549,23 @@
   .ex-m { display: block; padding: 7px 0; }
   .model-heading { display: flex; align-items: baseline; gap: 12px; }
   .model-heading > .lnk { min-width: 0; flex: 1; font-size: 14px; line-height: 1.55; text-align: left; }
-  .ex-m.sel { padding-inline: 12px; border-left: 2px solid var(--accent); }
-  .ex-p.model-split { background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--human) 12%, transparent) 0 6px, color-mix(in srgb, var(--indep) 12%, transparent) 6px 12px); }
+  .ex-m > .model-heading[data-ex-inspect] { cursor: pointer; margin: -2px -6px; padding: 2px 6px; border-radius: 5px; }
+  .ex-m > .model-heading[data-ex-inspect]:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+  .ex-m > .model-heading[data-ex-inspect]:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .ex-m.sel > .model-heading[data-ex-inspect] { background: var(--hl); }
   .ex-p .family-verdict { font-size: 11.5px; margin-left: 6px; font-variant-numeric: tabular-nums; }
-  .ex-m .ex-fit { font-size: 12px; color: var(--ink-2); margin-top: 2px; }
-  .ex-m details.ex-members > summary { cursor: pointer; font-size: 12px; color: var(--ink-3); margin-top: 3px; }
-  .ex-m details.ex-members .ex-list { margin: 4px 0 6px 12px; }
-  .ex-m details.ex-members > button.lnk { font-size: 12px; }
+  .ex-m .ex-fit { font-size: 12px; color: var(--ink-2); margin: 2px 0 0 16px; }
+  .ex-m .twisty { flex: none; align-self: center; width: 18px; height: 18px; margin: -4px 2px -4px -4px; padding: 0; border: 0; border-radius: 4px; background: none; color: var(--ink-3); font-size: 10px; line-height: 18px; cursor: pointer; transition: transform .12s; }
+  .ex-m .twisty:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 8%, transparent); }
+  .ex-m .twisty[aria-expanded="true"] { transform: rotate(90deg); }
+  .ex-m .twisty-gap { flex: none; width: 16px; }
+  .ex-m .ex-sub > .ex-list { margin: 2px 0 4px 16px; }
+  .ex-m .ex-sub > button.lnk { font-size: 12px; margin-left: 16px; }
   .ex-m.ex-inner { padding: 3px 0; border-bottom: 0; }
   .ex-m.ex-inner .lnk { font: 400 13px var(--sans); }
   .ex-m.ex-variant { margin-left: 14px; }
+  .ex-m.ex-unfit > .model-heading > .lnk { color: var(--ink-3); }
+  .ex-m .fit-note { font-size: 11.5px; line-height: normal; color: var(--ink-3); }
   .page table.group-grid tbody tr.nofit > * { opacity: .35; }
   .page table.group-grid tbody tr.mayfit th .gname::after, .page table.group-grid tbody tr.mayfit:not(.first) th .gtags::after { content: ' ?'; color: var(--ink-3); }
   .inspection-note { font-size: 12px; color: var(--ink-2); margin-bottom: 8px; }
@@ -1020,7 +1027,7 @@ const sourceColor = s => {
   return `var(--source-${sourceHues[s.id] || sourcePalette[hash % sourcePalette.length]})`;
 };
 const sourceMarker = s => 'source-' + sourceCatalog.indexOf(s);
-const state = { allowed: new Set(sourceCatalog.map(s => s.id)), leanOnly: false, showConj: false, conjectureOnly: false, unpublishedOnly: false, reduced: true, trivial: false, focus: null, showResolved: backgroundParams.get('resolved') === '1', lynchpins: false, recorded: false, auto: false, showIso: true, selected: null, modelId: null, groupId: null, openGroups: new Set(), tab: 'graph', search: '', excluded: new Set(), negativeShown: new Set(), collapsed: new Set(), flipped: false };
+const state = { allowed: new Set(sourceCatalog.map(s => s.id)), leanOnly: false, showConj: false, conjectureOnly: false, unpublishedOnly: false, reduced: true, trivial: false, focus: null, showResolved: backgroundParams.get('resolved') === '1', lynchpins: false, recorded: false, auto: false, showIso: true, selected: null, modelId: null, groupId: null, openGroups: new Set(), variantsOpen: new Map(), tab: 'graph', search: '', excluded: new Set(), negativeShown: new Set(), collapsed: new Set(), flipped: false };
 // Initial visibility is shared by the graph and conjecture lists.
 for (const g of principleGroups()) if (g.hidden_by_default)
   for (const p of g.principles) state.excluded.add(p.id);
@@ -2446,12 +2453,13 @@ function familyEntries(models) {
   return out;
 }
 // Which of a group's models these are, as coarsely as is exact: the members, then each generated
-// parameter whose values among them are not all of the values those members take.
+// parameter whose values among them are not all of the values those members take. Empty when they
+// are all the group's models, or all its members with nothing to narrow.
 function fitDescription(g, fits) {
   const all = groupFamily(g.id), memberOf = m => m.variant_of || m.id;
   const members = [...new Set(fits.map(memberOf))], everyMember = members.length === new Set(all.map(memberOf)).size;
   const pool = all.filter(m => members.includes(memberOf(m)));
-  const parts = [everyMember ? 'every member' : members.map(id => shortName(g, byMid.get(id))).join(', ')];
+  const parts = everyMember ? [] : [members.map(id => shortName(g, byMid.get(id))).join(', ')];
   let box = pool;
   for (const [k, p] of generatedParams(g)) {
     const key = m => JSON.stringify((m.settings || {})[k]), vals = new Set(fits.map(key));
@@ -2460,7 +2468,7 @@ function fitDescription(g, fits) {
       box = box.filter(m => vals.has(key(m)));
     }
   }
-  return parts.join(' · ') + (box.length > fits.length ? ' (not every combination)' : '');
+  return [parts.join(' · '), box.length > fits.length ? '(not every combination)' : ''].filter(Boolean).join(' ');
 }
 function groupCount(g, fits) {
   const n = groupFamily(g.id).length;
@@ -2494,7 +2502,7 @@ function renderModels() {
       const follows = !conflict && implied.has(id), ruledOut = !conflict && backgroundExcluded.has(id);
       const evidence = inspected && modelEvidence(inspected, id);
       const fv = ig && igFits.length ? familyVerdict(igFits, id) : null;
-      const groupTint = fv ? (fv.h === igFits.length ? 'model-in' : fv.f === igFits.length ? 'model-out' : fv.h && fv.f ? 'model-split' : '') : '';
+      const groupTint = fv ? (fv.h === igFits.length ? 'model-in' : fv.f === igFits.length ? 'model-out' : '') : '';
       const tint = inspected ? evidence ? evidence.value ? 'model-in' : 'model-out' : '' : ig ? groupTint : positive ? 'in' : negative ? 'out' : follows ? 'fin' : ruledOut ? 'fout' : '';
       const groupNote = fv ? `<span class="via family-verdict">${fv.h === igFits.length ? '✓ in all' : fv.f === igFits.length ? '✗ in all' : [fv.h ? fv.h + '✓' : '', fv.f ? fv.f + '✗' : '', fv.u ? fv.u + '?' : ''].filter(Boolean).join(' ')}</span>` : '';
       h += `<li class="ex-p ${tint}" data-assumption-row="${id}">${assumptionButtons(id, follows, ruledOut)}<div class="principle-line"><button class="lnk" data-principle="${id}">${esc(name(id))}</button>${inspected ? ' ' + verdictButton(inspected, id, evidence, true) : groupNote ? ' ' + groupNote : ''}</div></li>`;
@@ -2510,14 +2518,30 @@ function renderModels() {
   const knownEntries = familyEntries(known), groupsKnown = new Set(knownEntries.filter(e => e.g).map(e => e.g.id));
   const unknownEntries = familyEntries(unknown).filter(e => !e.g || !groupsKnown.has(e.g.id));
   const potentialOf = gid => unknown.filter(m => m.group === gid);
-  const modelRow = (m, inner = false) => `<li class="ex-m${inner ? ' ex-inner' : ''}${m.variant_of ? ' ex-variant' : ''}${state.modelId === m.id ? ' sel' : ''}"><div class="model-heading"><button class="lnk" data-model="${m.id}" aria-pressed="${state.modelId === m.id}">${esc(inner && m.group ? shortName(byGid.get(m.group), m) : m.name)}</button><span class="via ex-sum">${m.satisfies.length}✓ ${m.violates.length}✗</span></div></li>`;
+  const twisty = (kind, id, open, label) => `<button class="twisty" data-ex-twisty="${kind}" data-id="${esc(id)}" aria-expanded="${open}" aria-label="${esc(label)}" title="${esc(label)}">▶</button>`;
+  const inspector = (kind, id, sel) => `class="model-heading" data-ex-inspect="${kind}" data-id="${esc(id)}" role="button" tabindex="0" aria-pressed="${sel}" title="Inspect: tint the principles by its verdicts"`;
+  const modelRow = (m, inner = false, label = null) => `<li class="ex-m${inner ? ' ex-inner' : ''}${m.variant_of ? ' ex-variant' : ''}${state.modelId === m.id ? ' sel' : ''}"><div ${inspector('model', m.id, state.modelId === m.id)}><span class="twisty-gap"></span><button class="lnk" data-open-model="${m.id}">${esc(label || (inner && m.group ? shortName(byGid.get(m.group), m) : m.name))}</button><span class="via ex-sum">${m.satisfies.length}✓ ${m.violates.length}✗</span></div></li>`;
+  // A group lists its members; each member's fitting variants are tucked under it, and open of
+  // themselves when an assumed principle tells a variant apart from its member, or when the member
+  // itself does not fit. The reader's own opening or closing holds until the assumptions change.
+  const assumedIds = [...IN, ...OUT], assumedKey = [...IN].sort().join() + '|' + [...OUT].sort().join();
+  const memberRow = (g, m, fits) => {
+    const own = fits.includes(m), vs = fits.filter(v => v.variant_of === m.id);
+    if (!own && !vs.length) return '';
+    const fit = own ? '' : modelFit(m, IN, OUT) === 'potential' ? 'might fit' : 'does not fit';
+    const auto = !own || vs.some(v => assumedIds.some(p => cellOf(v, p)[0] !== cellOf(m, p)[0]));
+    const mine = state.variantsOpen.get(m.id), open = mine && mine.key === assumedKey ? mine.open : auto;
+    const label = v => variantDiff(g, v, m).map(k => valueLabel(g.parameters[k], (v.settings || {})[k])).join(' · ') || shortName(g, v);
+    const count = `${vs.length} variant${vs.length === 1 ? '' : 's'}`, note = [fit, vs.length ? '+' + count : ''].filter(Boolean).join(' · ');
+    const variants = vs.length ? `<div class="ex-sub" data-ex-variants="${esc(m.id)}"${open ? '' : ' hidden'}><ul class="ex-list">${vs.map(v => modelRow(v, true, label(v))).join('')}</ul></div>` : '';
+    return `<li class="ex-m ex-inner${fit ? ' ex-unfit' : ''}${state.modelId === m.id ? ' sel' : ''}"><div ${inspector('model', m.id, state.modelId === m.id)}>${vs.length ? twisty('variants', m.id, open, 'Its ' + count) : '<span class="twisty-gap"></span>'}<button class="lnk" data-open-model="${m.id}">${esc(shortName(g, m))}</button>${note ? `<span class="fit-note">${note}</span>` : ''}<span class="via ex-sum">${m.satisfies.length}✓ ${m.violates.length}✗</span></div>${variants}</li>`;
+  };
   const groupRow = e => {
     const extra = groupsKnown.has(e.g.id) ? potentialOf(e.g.id).length : 0, sel = state.groupId === e.g.id && !inspected;
-    const rank = m => MODELS.indexOf(byMid.get(m.variant_of || m.id));  // each member, then its variants
-    const ordered = [...e.fits].sort((a, b) => rank(a) - rank(b) || (a.variant_of ? 1 : 0) - (b.variant_of ? 1 : 0) || MODELS.indexOf(a) - MODELS.indexOf(b));
-    return `<li class="ex-m ex-group${sel ? ' sel' : ''}"><div class="model-heading"><button class="lnk" data-ex-group="${esc(e.g.id)}" aria-pressed="${sel}">${esc(e.g.name)}</button><span class="via ex-sum">${groupCount(e.g, e.fits)}${extra ? ` +${extra} potential` : ''}</span></div>`
-      + `<div class="ex-fit">${esc(fitDescription(e.g, e.fits))}</div>`
-      + `<details class="ex-members"${state.openGroups.has(e.g.id) ? ' open' : ''} data-ex-members="${esc(e.g.id)}"><summary>Its models</summary><ul class="ex-list">${ordered.map(m => modelRow(m, true)).join('')}</ul><button class="lnk" data-open-group="${esc(e.g.id)}">The group’s page →</button></details></li>`;
+    const open = state.openGroups.has(e.g.id);
+    return `<li class="ex-m ex-group${sel ? ' sel' : ''}"><div ${inspector('group', e.g.id, sel)}>${twisty('members', e.g.id, open, 'Its models')}<button class="lnk" data-open-group="${esc(e.g.id)}">${esc(e.g.name)}</button><span class="via ex-sum">${groupCount(e.g, e.fits)}${extra ? ` +${extra} potential` : ''}</span></div>`
+      + (fitDescription(e.g, e.fits) ? `<div class="ex-fit">${esc(fitDescription(e.g, e.fits))}</div>` : '')
+      + `<div class="ex-sub" data-ex-members="${esc(e.g.id)}"${open ? '' : ' hidden'}><ul class="ex-list">${groupMembers(e.g).map(m => memberRow(e.g, m, e.fits)).join('')}</ul></div></li>`;
   };
   const row = e => e.g ? groupRow(e) : modelRow(e.m);
 
@@ -2535,13 +2559,28 @@ function renderModels() {
   wireCategories(el.querySelector('#model-principles'));
   el.querySelector('#ex-clear').addEventListener('click', resetBackground);
   el.querySelector('#ex-deselect')?.addEventListener('click', () => { state.modelId = null; state.groupId = null; select(null); renderModels(); });
-  el.querySelectorAll('button[data-ex-group]').forEach(b => b.addEventListener('click', () => {
-    const id = b.dataset.exGroup;
-    state.modelId = null; state.groupId = state.groupId === id ? null : id;
-    if (state.selected?.type === 'model') select(null);
-    renderModels();
+  // Clicking a heading off its name and triangle inspects that model or group, or stops inspecting it.
+  el.querySelectorAll('[data-ex-inspect]').forEach(row => {
+    const inspect = () => {
+      const id = row.dataset.id, group = row.dataset.exInspect === 'group';
+      state.modelId = !group && state.modelId !== id ? id : null; state.groupId = group && state.groupId !== id ? id : null;
+      renderModels();
+    };
+    row.addEventListener('click', ev => { if (!ev.target.closest('button')) inspect(); });
+    row.addEventListener('keydown', ev => {
+      if (ev.target !== row || (ev.key !== 'Enter' && ev.key !== ' ')) return;
+      ev.preventDefault(); inspect();
+      document.querySelector(`#models [data-ex-inspect="${row.dataset.exInspect}"][data-id="${CSS.escape(row.dataset.id)}"]`)?.focus({ preventScroll: true });
+    });
+  });
+  // A triangle opens or closes in place, so nothing else in the list moves or re-renders.
+  el.querySelectorAll('button[data-ex-twisty]').forEach(b => b.addEventListener('click', () => {
+    const open = b.getAttribute('aria-expanded') !== 'true', id = b.dataset.id;
+    b.setAttribute('aria-expanded', open);
+    b.closest('li').querySelector(`:scope > .ex-sub`).hidden = !open;
+    if (b.dataset.exTwisty === 'members') open ? state.openGroups.add(id) : state.openGroups.delete(id);
+    else state.variantsOpen.set(id, { key: assumedKey, open });
   }));
-  el.querySelectorAll('details[data-ex-members]').forEach(d => d.addEventListener('toggle', () => { d.open ? state.openGroups.add(d.dataset.exMembers) : state.openGroups.delete(d.dataset.exMembers); }));
   wire(el);
   if (focused) el.querySelector(`[${focused[0]}="${focused[1]}"]`)?.focus({preventScroll: true});
 }
@@ -3250,7 +3289,7 @@ function renderPage(sel) {
     const groupRows = GROUPS.map(g => {
       const fam = groupFamily(g.id), sat = fam.filter(m => cellOf(m, p.id)[0] === 'h'), vio = fam.filter(m => cellOf(m, p.id)[0] === 'f');
       if (!sat.length && !vio.length) return '';
-      const part = (mark, list) => list.length ? `<div>${mark} ${list.length} of ${fam.length}: ${esc(fitDescription(g, list))}</div>` : '';
+      const part = (mark, list) => list.length ? `<div>${mark} ${list.length} of ${fam.length}${fitDescription(g, list) ? ': ' + esc(fitDescription(g, list)) : ''}</div>` : '';
       return `<tr data-open-group-row="${esc(g.id)}"><td class="mono nowrap">${sat.length && vio.length ? '✓✗' : sat.length ? '✓' : '✗'}</td><td class="stmt"><b>${esc(g.name)}</b> <span class="dim">group of ${fam.length} models</span>${part('✓', sat)}${part('✗', vio)}</td><td></td></tr>`;
     }).join('');
     h += `<h2>Results</h2><table class="results"><tbody>${inR.map(r => `<tr data-result="${r.id}"><td class="stmt">${resultStmt(r)}</td><td>${certBadges(r)}</td></tr>`).join('') || '<tr><td>—</td></tr>'}</tbody></table>`;
@@ -3260,7 +3299,7 @@ function renderPage(sel) {
   }
   el.innerHTML = h;
   el.querySelectorAll('tr[data-result]').forEach(tr => tr.addEventListener('click', () => select({ type: 'result', id: tr.dataset.result })));
-  el.querySelectorAll('tr[data-model]').forEach(tr => tr.addEventListener('click', () => select({ type: 'model', id: tr.dataset.model })));
+  el.querySelectorAll('tr[data-model]').forEach(tr => tr.addEventListener('click', () => openPage({ type: 'model', id: tr.dataset.model })));
   el.querySelectorAll('tr[data-open-group-row]').forEach(tr => tr.addEventListener('click', () => openPage({ type: 'group', id: tr.dataset.openGroupRow })));
   el.querySelector('#page-back').addEventListener('click', pageBack);
   el.querySelectorAll('button[data-jump]').forEach(b => b.addEventListener('click', () => jumpToArguments(el, b.dataset.jump.split(' '))));
@@ -3332,7 +3371,8 @@ function wire(el) {
   el.querySelectorAll('button[data-equivalent-show]').forEach(b => b.addEventListener('click', () => toggleEquivalent(b.dataset.equivalentShow)));
   el.querySelectorAll('button[data-equivalent-replace]').forEach(b => b.addEventListener('click', () => replaceWithEquivalent(b.dataset.equivalentReplace)));
   el.querySelectorAll('button[data-result]').forEach(b => b.addEventListener('click', () => select({ type: 'result', id: b.dataset.result })));
-  el.querySelectorAll('button[data-model]').forEach(b => b.addEventListener('click', () => select({ type: 'model', id: b.dataset.model })));
+  // A model's name opens its page: a pop-up would only repeat the name.
+  el.querySelectorAll('button[data-model]').forEach(b => b.addEventListener('click', () => openPage({ type: 'model', id: b.dataset.model })));
   el.querySelectorAll('button[data-verdict]').forEach(b => b.addEventListener('click', () => select({ type: 'model-verdict', id: b.dataset.verdictModel, principle: b.dataset.verdict })));
   el.querySelectorAll('button[data-verdict-page]').forEach(b => b.addEventListener('click', () => openPage({ type: 'model-verdict', id: b.dataset.verdictModel, principle: b.dataset.verdictPage })));
   el.querySelectorAll('button[data-open-arg]').forEach(b => b.addEventListener('click', () => openPage({ type: 'model', id: b.dataset.openArg, jump: b.dataset.argPrinciple })));
@@ -3353,7 +3393,7 @@ function statusLine(label, st, joint = false, head = '') {
   const via = (st.via || []).map(id => byRid.get(id)).filter(Boolean);
   // A group's witnesses are one entry: how many of its models, and which.
   const entries = familyEntries(models), shown = entries.slice(0, 3), more = entries.length - shown.length;
-  const entry = e => e.g ? `<li><button class="lnk" data-open-group="${esc(e.g.id)}">${esc(e.g.name)}</button> <span class="dim">${esc(groupCount(e.g, e.fits))}: ${esc(fitDescription(e.g, e.fits))}</span></li>`
+  const entry = e => e.g ? `<li><button class="lnk" data-open-group="${esc(e.g.id)}">${esc(e.g.name)}</button> <span class="dim">${esc(groupCount(e.g, e.fits))}${fitDescription(e.g, e.fits) ? ': ' + esc(fitDescription(e.g, e.fits)) : ''}</span></li>`
     : `<li><button class="lnk" data-model="${esc(e.m.id)}">${esc(e.m.name)}</button> ${certBadges(e.m)}</li>`;
   const evidence = models.length ? `<ul class="rel">${shown.map(entry).join('')}${more ? `<li class="dim">and ${more} more in the theory explorer</li>` : ''}</ul>`
     : via.length ? `<details class="rel-evidence"><summary>${via.length} proof step${via.length > 1 ? 's' : ''}</summary><ol>${via.map(r => `<li><button class="lnk" data-result="${esc(r.id)}">${resultStmt(r)}</button> ${certBadges(r)}</li>`).join('')}</ol></details>` : '';
@@ -3455,12 +3495,6 @@ function renderDetail() {
     if (e) h += `<div class="badges">${evidenceBadges(e, m, sel.principle)}</div><div class="pop-l">${e.direct ? 'Recorded directly for the model.' : 'Derived from the model and the recorded implications.'}</div>${sourceSummary(e.items)}<div class="links"><button class="lnk" data-goto="1">details</button></div>`;
   } else {
     const x = sel.type === 'result' ? byRid.get(sel.id) : byMid.get(sel.id);
-    if (sel.type === 'model') {
-      const holds = x.status === 'proved' ? baseE.holds.get(x.id) : new Set(x.satisfies);
-      const fails = x.status === 'proved' ? baseE.fails.get(x.id) : new Set(x.violates);
-      const gaps = [...background].filter(p => !holds.has(p)).concat([...negativeBackground].filter(p => !fails.has(p)).map(p => '!' + p));
-      if (gaps.length) h += `<p class="pop-l">Unknown assumptions: ${gaps.map(name).map(esc).join(', ')}</p>`;
-    }
     // The drawn form and the recorded one differ only when the background let
     // the graph drop a premise or contrapose the arrow. Where they agree,
     // saying it twice says nothing.
@@ -3518,7 +3552,6 @@ function select(sel, extend = false) {
   else if (sel.type === 'truth') state.focus = TRUE;
   else if (sel.type === 'junction') state.focus = [...layout.byId.get(sel.id).premises];
   else if (sel.type === 'selection') state.focus = [...sel.premises];
-  if (sel?.type === 'model') { state.modelId = sel.id; state.groupId = null; renderModels(); }
   state.selected = sel; renderDetail(); applySelection();
   if (state.tab === 'lattice' && typeof renderLattice === 'function') renderLattice();
 }

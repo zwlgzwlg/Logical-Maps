@@ -82,7 +82,7 @@ try{
 
   // The mark stays where no heading gives it: the theory explorer's own list.
   d.querySelector('.tab[data-tab="models"]').click();
-  w.eval('select({type:"model", id:"m"})');
+  d.querySelector('#models [data-ex-inspect="model"][data-id="m"]').click();
   const explorer=d.querySelector('#model-principles [data-assumption-row="a"] [data-verdict]');
   assert.equal(explorer.querySelector('.model-flag').textContent,'✓','The explorer still shows the verdict itself');
 
@@ -293,18 +293,41 @@ try{
   d3.querySelector('[data-tab="models"]').click();
   const exRows=()=>[...d3.querySelectorAll('#models .explorer-models > ul.ex-list > li.ex-m')];
   assert.equal(exRows().length,1,'One row for the group, none for its models');
-  assert.match(exRows()[0].textContent,/Fixture group\s*2 of 2 models\s*every member/);
+  assert.ok(!exRows()[0].querySelector('.ex-fit'));
+  assert.match(exRows()[0].querySelector('.model-heading').textContent,/^\s*▶\s*Fixture group\s*2 of 2 models\s*$/,'All of a group\'s models fit: nothing more is said');
+  const tw=exRows()[0].querySelector('button[data-ex-twisty="members"]'), sub=exRows()[0].querySelector(':scope > .ex-sub');
+  assert.ok(tw.getAttribute('aria-expanded')==='false'&&sub.hidden,'A group\'s models are behind a triangle on its line');
+  tw.click();
+  assert.ok(tw.getAttribute('aria-expanded')==='true'&&!sub.hidden,'Which opens them in place');
+  const inner=()=>[...exRows()[0].querySelectorAll(':scope > .ex-sub > .ex-list > li')];
+  assert.equal(inner().length,1,'Its models lists the members only');
+  let vd=inner()[0].querySelector('[data-ex-variants]');
+  assert.ok(vd&&vd.hidden&&/\+1 variant/.test(inner()[0].querySelector('.model-heading').textContent),'A member\'s variants are tucked under it, counted on its line');
+  assert.ok(exRows()[0].querySelector(':scope > .ex-sub').querySelector('button[data-ex-twisty="variants"]'),'Behind a triangle of their own');
+  assert.match(vd.querySelector('button[data-open-model="gm-sigma-atom"]').textContent,/^Σ atom$/,'A variant is named by what it changes');
+  w3.eval('setAssumption("e","negative")');
+  vd=inner()[0].querySelector('[data-ex-variants]');
+  assert.ok(!vd.hidden&&inner()[0].classList.contains('ex-unfit')&&/does not fit/.test(inner()[0].textContent),'When only the variant fits, the member heads it and its variants open');
   w3.eval('setAssumption("e","positive")');
-  assert.match(exRows()[0].textContent,/1 of 2 models\s*every member · Σ top/,'Only the member assumes E; the description names its Σ');
-  exRows()[0].querySelector('button[data-ex-group]').click();
+  assert.ok(!inner()[0].querySelector('[data-ex-variants]'),'No variant fits: none is listed');
+  assert.match(exRows()[0].textContent,/1 of 2 models\s*Σ top/,'Only the member assumes E; the description names its Σ');
+  const head=exRows()[0].querySelector('[data-ex-inspect="group"]');
+  assert.ok(head.querySelector('button[data-open-group]'),'The group\'s name is a link to its page');
+  assert.equal(exRows()[0].textContent.includes('The group’s page'),false,'With no separate link to it');
+  head.click();
   assert.match(d3.querySelector('#models .inspection-note').textContent,/Inspecting Fixture group, through the 1 of its models that fit/);
   const exP=id=>d3.querySelector(`#model-principles li[data-assumption-row="${id}"]`);
   assert.ok(exP('e').classList.contains('model-in')&&exP('b').classList.contains('model-out'),'Inspecting a group tints what holds or fails in all the models that fit');
+  const popBefore=d3.getElementById('pop').hidden;
+  exRows()[0].querySelector('[data-ex-inspect="group"] button[data-open-group]').click();
+  assert.equal(d3.getElementById('pop').hidden,popBefore,'Its name opens no pop-up');
+  assert.match(d3.querySelector('#page h1').textContent,/Fixture group/,'But its page');
+  d3.querySelector('#page-back').click();
   w3.eval('setAssumption("e",null)');
-  assert.ok(exP('e').classList.contains('model-split')&&/1✓ 1✗/.test(exP('e').textContent),'And marks a split');
+  assert.ok(!/model-(in|out|split)/.test(exP('e').className)&&/1✓ 1✗/.test(exP('e').textContent),'And notes a split, untinted');
   // A list of witnesses gathers a group's models into one entry.
   const line=d3.createElement('div');line.innerHTML=w3.eval('statusLine("X", {status:"independent", models:["gm","gm-sigma-atom"]})');
-  assert.match(line.textContent,/Fixture group 2 of 2 models: every member/,'Witnesses from a group are one entry');
+  assert.match(line.textContent,/Fixture group 2 of 2 models$/,'Witnesses from a group are one entry');
   assert.deepEqual(errors3.map(String),[]);
   console.log('PASS: the theory explorer lists a group once, counting the models that fit the assumptions and saying which, inspects a group through them (all hold, all fail, or split), and a list of witnesses gathers a group\'s models into one entry;');
   console.log('PASS: a group\'s member lists its own arguments, then the shared arguments that apply under their group, each saying which condition it relies on and why the member meets it; a group\'s page shows a grid of its members, adds a generated parameter\'s variants and the columns they need on request, says what the parameter changes, shows a cell\'s arguments and a row\'s settings, and lists its definition, parameters, conditions and shared arguments with where each applies.');

@@ -94,6 +94,11 @@ try{
   assert.deepEqual(JSON.parse(w.eval('JSON.stringify(state.focus)')),['a','d']);
   assert.match(pop().textContent,/A ∧ D[\s\S]*Joint consistency[\s\S]*consistent/);
   assert.ok(pop().querySelector('button[data-model="m2"]'),'The joint witness is linked');
+  pop().querySelector('button[data-model="m2"]').click();
+  assert.equal(w.eval('state.page && state.page.type+":"+state.page.id'),'model:m2','To its page, with no pop-up in between');
+  assert.equal(pop().hidden,true);
+  d.querySelector('#page-back').click();
+  w.handleGraphClick(node('a').querySelector('rect'));w.handleGraphClick(node('d').querySelector('rect'),true);
   assert.ok(node('a').classList.contains('selected')&&node('d').classList.contains('selected'));
   assert.deepEqual(rel('b'),['rel-entailed'],'The whole conjunction implies B');
   // A regular click replaces the selection; sidebar modifiers add to it.

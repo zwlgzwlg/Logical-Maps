@@ -60,11 +60,12 @@ try {
   click('#models [data-assume-negative="c"]');
   assert.equal(w.eval("negativeBackground.has('c')"), true);
   assert.equal(doc.querySelector('#models-background-dock'), null);
-  assert.ok(doc.querySelector('#models [data-model="negative"]'));
-  assert.equal(doc.querySelector('#models [data-model="positive"]'), null);
-  const unknown = doc.querySelector('#models [data-model="unknown"]').closest('.ex-m');
-  unknown.querySelector('[data-model]').click();
-  assert.match(doc.getElementById('pop').textContent, /Unknown assumptions: ¬C/);
+  assert.ok(doc.querySelector('#models [data-open-model="negative"]'));
+  assert.equal(doc.querySelector('#models [data-open-model="positive"]'), null);
+  const unknown = doc.querySelector('#models [data-open-model="unknown"]').closest('.ex-m');
+  unknown.querySelector('[data-ex-inspect]').click();
+  assert.match(doc.querySelector('#model-principles li[data-assumption-row="c"]').textContent, /\? unknown/, 'Inspecting a potential model marks the assumption it leaves unknown');
+  unknown.querySelector('[data-ex-inspect]').click();
   click('#models [data-assume-positive="a"]');
   assert.equal(w.eval("backgroundExcluded.has('b')"), true);
   assert.equal(doc.querySelector('#models [data-assume-negative="b"]').getAttribute('aria-pressed'), 'false', 'Derived is not explicitly assumed');

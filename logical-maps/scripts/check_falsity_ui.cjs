@@ -32,7 +32,7 @@ d.querySelector('[data-source-filter="submission"]').click();assert.equal(d.getE
 d.querySelector('[data-source-filter="submission"]').click();assert.equal(d.getElementById('graph-warning').hidden,false);
 d.getElementById('ex-clear').click();assert.equal(d.getElementById('graph-warning').hidden,true);
 // Models derive violations from incompatibility even when violates is empty.
-d.querySelector('#models [data-model="m"]').click();
+d.querySelector('#models [data-ex-inspect][data-id="m"]').click();
 const verdict=d.querySelector('#models [data-verdict="d"]');assert.match(verdict.textContent,/✗/);
 verdict.click();assert.match(d.getElementById('pop').textContent,/A paper/);assert.match(d.getElementById('pop').textContent,/A submission/);
 d.querySelector('#pop [data-goto]').click();
@@ -85,20 +85,20 @@ real.window.select({type:'principle',id:'archimedean-gambles'});
 assert.ok(rd.querySelector('#pop [data-result="rich-simple-dominance-refutes-archimedean-gambles"]'));
 
 for(const id of ['total-exact-ultrafilter','total-continuous-ultrafilter','affine-symmetric-extension']){
- assert.ok(rd.querySelector(`#models .ex-m [data-model="${id}"]`));
+ assert.ok(rd.querySelector(`#models .ex-m [data-open-model="${id}"]`));
 }
 const incomplete=['eventual-clipped-expectation','cdf-area-preorder','cdf-conclosure-preorder'];
-for(const id of incomplete)assert.ok(rd.querySelector(`#models .ex-m [data-model="${id}"]`));
+for(const id of incomplete)assert.ok(rd.querySelector(`#models .ex-m [data-open-model="${id}"]`));
 rd.querySelector('#models [data-background-preset="dtu"]').click();
 assert.deepEqual(assumptions(real),dtu);
 assert.deepEqual(assumptions(page(data,real.window.location.href)),dtu);
 for(const id of incomplete){
- assert.equal(rd.querySelector(`#models .ex-m [data-model="${id}"]`),null);
+ assert.equal(rd.querySelector(`#models .ex-m [data-open-model="${id}"]`),null);
 }
 rd.querySelector('#models [data-assume-positive="totality"]').click();
 assert.deepEqual(assumptions(real),du);
 assert.deepEqual(assumptions(page(data,real.window.location.href)),du);
-for(const id of incomplete)assert.ok(rd.querySelector(`#models .ex-m [data-model="${id}"]`));
+for(const id of incomplete)assert.ok(rd.querySelector(`#models .ex-m [data-open-model="${id}"]`));
 rd.getElementById('background-reset').click();
 assert.equal(rd.querySelectorAll('#models .ex-m').length,data.models.filter(m=>m.status==='proved').length);
 assert.deepEqual(assumptions(page(data,real.window.location.href)),[]);
