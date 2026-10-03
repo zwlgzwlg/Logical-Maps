@@ -3243,15 +3243,23 @@ function renderPage(sel) {
     const p = byPid.get(sel.id);
     h += `<h1>${sel.negative ? '¬' : ''}${esc(p.name)}</h1>${sel.negative ? '<p>Negation of the following principle:</p>' : ''}${(p.aliases || []).length ? `<div class="id">${esc(p.aliases.join(', '))}</div>` : ''}<div class="prose statement">${esc(p.statement)}</div>${p.formal ? `<div class="formal">${esc(p.formal)}</div>` : ''}`;
     if (p.notes) h += `<h2>Notes</h2><div class="prose">${fmt(p.notes)}</div>`;
-    const inR = R.filter(r => r.premises.includes(p.id) || r.conclusion === p.id), inM = MODELS.filter(m => !m.variant_of && (m.satisfies.includes(p.id) || m.violates.includes(p.id)));
+    const inR = R.filter(r => r.premises.includes(p.id) || r.conclusion === p.id), inM = MODELS.filter(m => !m.group && (m.satisfies.includes(p.id) || m.violates.includes(p.id)));
+    // A group is one row: how many of its models satisfy the principle and how many violate it, and which.
+    const groupRows = GROUPS.map(g => {
+      const fam = groupFamily(g.id), sat = fam.filter(m => cellOf(m, p.id)[0] === 'h'), vio = fam.filter(m => cellOf(m, p.id)[0] === 'f');
+      if (!sat.length && !vio.length) return '';
+      const part = (mark, list) => list.length ? `<div>${mark} ${list.length} of ${fam.length}: ${esc(fitDescription(g, list))}</div>` : '';
+      return `<tr data-open-group-row="${esc(g.id)}"><td class="mono nowrap">${sat.length && vio.length ? '✓✗' : sat.length ? '✓' : '✗'}</td><td class="stmt"><b>${esc(g.name)}</b> <span class="dim">group of ${fam.length} models</span>${part('✓', sat)}${part('✗', vio)}</td><td></td></tr>`;
+    }).join('');
     h += `<h2>Results</h2><table class="results"><tbody>${inR.map(r => `<tr data-result="${r.id}"><td class="stmt">${resultStmt(r)}</td><td>${certBadges(r)}</td></tr>`).join('') || '<tr><td>—</td></tr>'}</tbody></table>`;
-    h += `<h2>Models</h2><table class="results"><tbody>${inM.map(m => `<tr data-model="${m.id}"><td class="mono nowrap">${m.satisfies.includes(p.id) ? '✓' : '✗'}</td><td class="stmt"><b>${esc(m.name)}</b> &nbsp; ${modelStmt(m)}</td><td>${certBadges(m)}</td></tr>`).join('') || '<tr><td>—</td></tr>'}</tbody></table>`;
+    h += `<h2>Models</h2><table class="results"><tbody>${groupRows}${inM.map(m => `<tr data-model="${m.id}"><td class="mono nowrap">${m.satisfies.includes(p.id) ? '✓' : '✗'}</td><td class="stmt"><b>${esc(m.name)}</b> &nbsp; ${modelStmt(m)}</td><td>${certBadges(m)}</td></tr>`).join('') || (groupRows ? '' : '<tr><td>—</td></tr>')}</tbody></table>`;
     h += sourceList([p]);
     h += `<div class="file">${esc(p.file)}</div>`;
   }
   el.innerHTML = h;
   el.querySelectorAll('tr[data-result]').forEach(tr => tr.addEventListener('click', () => select({ type: 'result', id: tr.dataset.result })));
   el.querySelectorAll('tr[data-model]').forEach(tr => tr.addEventListener('click', () => select({ type: 'model', id: tr.dataset.model })));
+  el.querySelectorAll('tr[data-open-group-row]').forEach(tr => tr.addEventListener('click', () => openPage({ type: 'group', id: tr.dataset.openGroupRow })));
   el.querySelector('#page-back').addEventListener('click', pageBack);
   el.querySelectorAll('button[data-jump]').forEach(b => b.addEventListener('click', () => jumpToArguments(el, b.dataset.jump.split(' '))));
   wire(el);
