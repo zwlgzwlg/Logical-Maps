@@ -21,3 +21,20 @@ variants:
     x^{\bar\sigma}\, .\,\Box X[\bar x])$
   equivalence: Both forms are theorems of C, so they are equivalent there. The polyadic form also follows
     from the original by instantiating one variable at a time.
+- id: dual
+  name: Dual form
+  statement: If something possibly has a property, then possibly something has it.
+  formal: $\forall X^{\sigma t}\, .\,(\exists x^\sigma\, .\,\Diamond Xx)\to\Diamond(\exists x^\sigma\,
+    .\,Xx)$
+  equivalence: Instantiate either form at the negations of its propositional or relational variables,
+    contrapose, and rewrite with $\Diamond=\neg\Box\neg$ and $q\le r\leftrightarrow\neg r\le\neg q$. This
+    yields the other form, and the same steps lead back.
+- id: dual-polyadic
+  name: Dual polyadic form
+  statement: If some tuple possibly stands in a relation, then possibly some tuple stands in it.
+  formal: $\forall X^{\bar\sigma t}\, .\,(\exists\bar x^{\bar\sigma}\, .\,\Diamond X[\bar x])\to\Diamond(\exists\bar
+    x^{\bar\sigma}\, .\,X[\bar x])$
+  equivalence: Instantiate either form at the negations of its propositional or relational variables,
+    contrapose, and rewrite with $\Diamond=\neg\Box\neg$ and $q\le r\leftrightarrow\neg r\le\neg q$. This
+    yields the other form, and the same steps lead back. Combined with the polyadic form, this gives the
+    equivalence with the official form.

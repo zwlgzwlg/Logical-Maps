@@ -18,3 +18,11 @@ notes: The paper leaves consistency open. The definition of Box_ne and its dual 
   what it adds is possibility under the distinctness-preserving modality. So incompatibilities of the
   form Strong Possibility + □Y are recorded at Possibility Maximalism (pure) and inherited, and the collapse is the
   one recorded principle refuted by the stronger modality alone.
+variants:
+- id: dual
+  name: Dual form
+  statement: Only theorems of Maximalist Classicism are necessary under the distinctness-preserving modality.
+  formal: $\neg\Box_{\ne}P\quad(P\text{ closed and pure; }\operatorname{Max}(C)\nvdash P)$
+  equivalence: $\operatorname{Max}(C)+\neg P$ is consistent iff $\operatorname{Max}(C)\nvdash P$, and
+    $\Diamond_{\ne}\neg P$ is $\neg\Box_{\ne}P$; so the instance of the official form at $\neg P$ is the
+    instance of this form at $P$, and conversely.

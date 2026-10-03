@@ -24,3 +24,14 @@ notes: >-
   source's hypothesis that the properties form a countably complete Boolean algebra modulo necessary
   equivalence. It suffices for the Necessity of Arithmetic and is therefore incompatible with Maximalist
   Classicism.
+variants:
+- id: glb
+  name: Greatest-lower-bound form
+  statement: Every countable property of entities of a relational type has a greatest lower bound in that
+    type.
+  formal: $\forall X^{\tau t}\, .\,\operatorname{Ctbl}_\tau(X)\to\exists y^\tau\, .\,\operatorname{GLB}_\tau(y,X)\qquad(\tau\ne
+    e)$
+  equivalence: 'As for the least-upper-bound form of Boolean Completeness: negation exchanges least upper
+    bounds of $X$ and greatest lower bounds of $X^\neg:=\lambda z\, .\,X(\neg_\tau z)$. Negation is a
+    bijection between the instances of $X$ and of $X^\neg$, so composing it with an injection into the
+    natural numbers shows that $X^\neg$ is countable iff $X$ is.'

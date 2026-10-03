@@ -28,3 +28,12 @@ notes: Strengthens Witnessed Possibility by weakening its antecedent from an act
   Separated Structure together with No Pure Contingency.
 aliases:
 - Necessity transfer
+variants:
+- id: dual
+  name: Dual form
+  statement: If a pure formula is necessary of distinct constants, it is necessary that it holds of everything.
+  formal: $\Box P[\bar c/\bar x]\to\Box(\forall\bar x\, .\,P)\quad(P\text{ pure, free variables among
+    }\bar x;\ \bar c\text{ distinct constants of }\Sigma)$
+  equivalence: Pure sentences (resp. sentences of $\mathcal L(\Sigma)$) are closed under negation, so
+    the instance of either form at $\neg P$ is, after contraposition and $\Diamond=\neg\Box\neg$, the
+    instance of the other at $P$.

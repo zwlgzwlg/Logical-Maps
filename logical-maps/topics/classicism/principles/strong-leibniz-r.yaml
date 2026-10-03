@@ -21,3 +21,15 @@ notes: Bacon’s higher-order rendering of the possible-worlds thesis that a pro
   types as new to it (§8.4, p. 177).
 aliases:
 - SL
+variants:
+- id: dual
+  name: Dual form
+  statement: Whatever is entailed by every strong world of its type is the top element of that type.
+  formal: $\forall X^\sigma\, .\,(\forall W^\sigma\, .\,\operatorname{SWorld}_\sigma(W)\to W\le_\sigma
+    X)\to\neg_\sigma X\le_\sigma X\qquad(\sigma\ne e)$
+  equivalence: 'As for the dual form of Atomicity. A strong world $W$ is non-bottom and, by T applied
+    to its boxed clause, lies below $Y$ or below $\neg_\sigma Y$ for every $Y$. Official to dual: if every
+    strong world lies below $X$ but $\neg_\sigma X$ is non-bottom, a strong world lies below $\neg_\sigma
+    X$ and $X$, hence below bottom, which is impossible. Dual to official: if $X$ is non-bottom and no
+    strong world lies below it, every strong world lies below $\neg_\sigma X$, so $X$ is bottom by the
+    dual form.'

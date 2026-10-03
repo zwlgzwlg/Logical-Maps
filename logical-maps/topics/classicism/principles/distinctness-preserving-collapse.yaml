@@ -13,3 +13,11 @@ references:
   role: formulation
   locator: Appendix E, p. 83
 notes: ''
+variants:
+- id: dual
+  name: Dual form
+  statement: Whatever is possible under the distinctness-preserving modality is true.
+  formal: $\forall p\, .\,\Diamond_{\ne}p\to p$
+  equivalence: Instantiate either form at the negations of its propositional or relational variables,
+    contrapose, and rewrite with $\Diamond_{\ne}=\neg\Box_{\ne}\neg$ and $q\le r\leftrightarrow\neg r\le\neg
+    q$. This yields the other form, and the same steps lead back.

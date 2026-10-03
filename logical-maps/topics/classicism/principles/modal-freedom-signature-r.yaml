@@ -24,3 +24,13 @@ changes:
   by: Claude Fable 5.1 (Anthropic)
   summary: Displayed the schema’s side conditions inside the math block, at Cian Dorr’s request; the statement
     is unchanged.
+variants:
+- id: dual
+  name: Dual form
+  statement: If a disjunction of pure formulas about disjoint constants is necessary, one of the disjuncts
+    is necessary.
+  formal: $\Box(P[\bar c/\bar x]\lor Q[\bar d/\bar y])\to\Box P[\bar c/\bar x]\lor\Box Q[\bar d/\bar y]\quad(P,Q\text{
+    pure, free variables among }\bar x\text{ resp. }\bar y;\ \bar c\bar d\text{ distinct constants of
+    }\Sigma)$
+  equivalence: The instance of either form at $\neg P,\neg Q$ is, after contraposition and $\Diamond=\neg\Box\neg$,
+    the instance of the other at $P,Q$.

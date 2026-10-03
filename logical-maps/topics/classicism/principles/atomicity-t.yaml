@@ -13,3 +13,10 @@ references:
   role: formulation
   locator: §2.2, p. 24
 notes: ''
+variants:
+- id: dual
+  name: Dual form
+  statement: Whatever is entailed by every atom is necessary.
+  formal: $\forall p\, .\,(\forall q\, .\,\operatorname{Atom}_t(q)\to q\le p)\to\Box p$
+  equivalence: The argument for the dual form of Atomicity, at type $t$, where $\neg p\le p$ says that
+    $p$ is necessary.

@@ -34,3 +34,12 @@ changes:
   by: Claude Fable 5.1 (Anthropic)
   summary: Displayed the schema’s side conditions inside the math block, at Cian Dorr’s request; the statement
     is unchanged.
+variants:
+- id: dual
+  name: Dual form
+  statement: If a pure formula is necessary of distinct constants, it holds of everything.
+  formal: $\Box P[\bar c/\bar x]\to(\forall\bar x\, .\,P)\quad(P\text{ pure, free variables among }\bar
+    x;\ \bar c\text{ distinct constants of }\Sigma)$
+  equivalence: Pure sentences (resp. sentences of $\mathcal L(\Sigma)$) are closed under negation, so
+    the instance of either form at $\neg P$ is, after contraposition and $\Diamond=\neg\Box\neg$, the
+    instance of the other at $P$.

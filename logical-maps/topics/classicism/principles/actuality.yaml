@@ -13,3 +13,10 @@ references:
   role: formulation
   locator: §2.2, p. 25
 notes: ''
+variants:
+- id: dual
+  name: Dual form
+  statement: Some falsehood is entailed by every falsehood.
+  formal: $\exists p\, .\,\neg p\land\forall q\, .\,\neg q\to q\le p$
+  equivalence: 'If $p$ witnesses one form, $\neg p$ witnesses the other: substitute $\neg q$ for $q$ and
+    use $q\le r\leftrightarrow\neg r\le\neg q$.'

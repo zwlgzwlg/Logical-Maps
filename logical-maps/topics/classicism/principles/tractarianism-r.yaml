@@ -21,3 +21,20 @@ variants:
     x^{\bar\sigma}\, .\,X[\bar x])$
   equivalence: The original form is the case of a one-element tuple. Conversely, apply the original one
     variable at a time from the innermost, as for BF. For the empty tuple both sides are $p\le X$.
+- id: dual
+  name: Dual form
+  statement: A proposition entailed by every instance of a property is entailed by its existential generalization.
+  formal: $\forall p^t X^{\sigma t}\, .\,(\forall x^\sigma\, .\,Xx\le p)\to(\exists x^\sigma\, .\,Xx)\le
+    p$
+  equivalence: Instantiate either form at the negations of its propositional or relational variables,
+    contrapose, and rewrite with $\Diamond=\neg\Box\neg$ and $q\le r\leftrightarrow\neg r\le\neg q$. This
+    yields the other form, and the same steps lead back.
+- id: dual-polyadic
+  name: Dual polyadic form
+  statement: A proposition entailed by every instance of a relation is entailed by its existential generalization.
+  formal: $\forall p^t X^{\bar\sigma t}\, .\,(\forall\bar x^{\bar\sigma}\, .\,X[\bar x]\le p)\to(\exists\bar
+    x^{\bar\sigma}\, .\,X[\bar x])\le p$
+  equivalence: Instantiate either form at the negations of its propositional or relational variables,
+    contrapose, and rewrite with $\Diamond=\neg\Box\neg$ and $q\le r\leftrightarrow\neg r\le\neg q$. This
+    yields the other form, and the same steps lead back. Combined with the polyadic form, this gives the
+    equivalence with the official form.

@@ -12,3 +12,14 @@ source_names:
 references: []
 notes: Box each fully closed instance of Countable Boolean Completeness. Type quantifiers and formula side conditions remain
   outside the box.
+variants:
+- id: glb
+  name: Greatest-lower-bound form
+  statement: Every closed instance of the greatest-lower-bound form of Countable Boolean Completeness
+    is necessary.
+  formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of the greatest-lower-bound form of
+    Countable Boolean Completeness}$
+  equivalence: Each instance of the greatest-lower-bound form of Countable Boolean Completeness is derivable
+    in C from finitely many instances of the official form, and conversely; the derivation is on the page
+    of Countable Boolean Completeness. Necessitating it and applying K carries the equivalence to the
+    boxed forms.

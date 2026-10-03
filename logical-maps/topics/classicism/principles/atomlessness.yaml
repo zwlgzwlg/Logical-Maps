@@ -13,3 +13,12 @@ references:
   role: formulation
   locator: Appendix D, p. 76
 notes: ''
+variants:
+- id: dual
+  name: Dual form
+  statement: Every proposition that is not necessary entails a strictly weaker proposition that is not
+    necessary.
+  formal: $\forall p\, .\,\neg\Box p\to\exists q\, .\,\neg\Box q\land p\le q\land q\ne p$
+  equivalence: Instantiate either form at the negations of its propositional or relational variables,
+    contrapose, and rewrite with $\Diamond=\neg\Box\neg$ and $q\le r\leftrightarrow\neg r\le\neg q$. This
+    yields the other form, and the same steps lead back.
