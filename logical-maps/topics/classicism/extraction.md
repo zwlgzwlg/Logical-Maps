@@ -185,3 +185,52 @@ three models above:
 - dyadic roundings: each $\{f_n\}$ is pinned;
 - truncated shifts: $k_n(n+1)=1$ singles out $k_n$ for $n\ge1$, and $k_0(1)=1$
   singles out $k_0$.
+
+## Deferred model verdicts: Intensional Choice (3 October 2026)
+
+**To do.** Once the model-record migration has landed, add `intensional-choice-r`
+to `violates` in the six symmetric models below, with a `changes` entry and the
+argument. □Intensional Choice then fails by T. Positive verdicts are still to be
+established. Cian Dorr expects Intensional Choice to hold in every full model, and
+in every plain (non-symmetric) ideally full model, because the domain contains a
+qualitative well-ordering of each object's individuals that can select the unique
+witness. That argument has not yet been written out. The engine already derives the
+positive verdict in several full models. An engine check on 3 October 2026 found no
+conflicts with the six failures.
+
+**Collapse lemma** (Claude Opus 5.5 (Anthropic), 3 October 2026; not yet checked by
+a human). In a symmetric ideally full action model, Intensional Choice fails at type
+$e$ if, for some individual $a$ and every finite set $N$ of individuals at the base,
+there is an arrow $h$ sending $N\cup\{a\}$ to a single individual $p$ such that
+every individual $y$ with $y\ne p$ in $F_h$ is moved by a symmetry fixing $p$.
+Here $F$ is a necessarily instantiated property, $F_h$ is its extension at $h$, and
+the symmetry composed with $h$ must again be an arrow.
+
+*Proof.* Let $G\le F$ be necessarily uniquely instantiated and pinned down by
+$N\ni a$. Then $G_h=\{y\}$ with $y\in F_h$. If $\sigma$ fixes $p$, then
+$\sigma\circ h$ agrees with $h$ on $N$, so $G_{\sigma\circ h}=G_h$ by pinning. By
+symmetry, $G_{\sigma\circ h}=\{\sigma y\}$. So no symmetry fixing $p$ moves $y$.
+
+*Applications.* Take $F:=\lambda x\, .\,x\ne a$, so $p\notin F_h$:
+- `symmetric-all-surjections`: $h$ is any surjection that is constant on
+  $N\cup\{a\}$.
+- `symmetric-infinite-classes`: the same $h$; a transposition inside $y$'s class
+  that fixes $p$ is an automorphism.
+- `symmetric-collapse-pair`: $h$ is a surjection sending $N\cup\{a\}$ and both
+  members of the pair to one $p$ outside the pair. Swapping the pair, or
+  transposing $y$ with a point outside the pair, fixes $p$.
+- `symmetric-two-object-unpinned`: $h$ is a function from the first object to the
+  second that is constant on $N\cup\{a\}$.
+- `symmetric-range-gap` and `symmetric-range-gap-without-actuality`: here the
+  distinguished individual $d$ is fixed by every symmetry, so use
+  $F:=\lambda x\, .\,x\ne a\land\neg Ex$, where $E$ is the constant intension
+  $\{d\}$, pinned down by $\varnothing$. Let $h$ be a range-deficient function that
+  is constant with value $p\ne d$ on $N\cup\{a\}$. Then $F_h$ omits $p$ and $d$,
+  and permutations fixing $p$ and $d$ move every other point.
+
+*Not covered:*
+- `symmetric-qualitative-links`: its arrows preserve a ternary relation, so they
+  cannot send everything to one point.
+- `symmetric-qualitative-contrast`: every arrow is a bijection. At type $e$,
+  Intensional Choice appears to hold there: pick the image of the first member of
+  $F$'s pinning set that lies in $F_h$, and otherwise a fixed point outside that set.

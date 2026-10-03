@@ -1,0 +1,17 @@
+id: necessary-intensional-choice-r
+name: □Intensional Choice
+category: choice
+statement: Every closed instance of Intensional Choice is necessary. Box the entire object-variable closure;
+  retain the same type range and other schema side conditions.
+formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of Intensional Choice}$
+date: '2026-10-03'
+sources:
+- Cian Dorr, suggestion of 3 October 2026.
+source_names:
+- Dorr 3 Oct
+references:
+- paper: bacon-mathematical-contingency
+  role: background
+  locator: §6, p. 27
+  note: Formulation of the unboxed principle.
+notes: Box each fully closed instance of Intensional Choice. Type quantifiers remain outside the box.
