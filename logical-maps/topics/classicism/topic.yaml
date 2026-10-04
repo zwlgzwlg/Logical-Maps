@@ -97,3 +97,23 @@ background_presets:
   category: schematic
   principles:
   - distinctness-schema-r
+
+views:
+- id: pilot
+  name: 'Pilot: necessity and rigidity'
+  description: 'Extensionality and five boxed principles: □ND, □Atomicity, □Actuality, □Rigid Comprehension
+    and □BF.'
+  default: true
+  principles: &id001
+  - extensionality-r
+  - necessary-distinctness-necessary-r
+  - necessary-atomicity-r
+  - necessary-actuality
+  - necessary-rigid-comprehension-r
+  - necessary-barcan-r
+lattice_views:
+- id: pilot
+  name: 'Pilot: necessity and rigidity'
+  description: 'The conjunctions of Extensionality and five boxed principles: □ND, □Atomicity, □Actuality,
+    □Rigid Comprehension and □BF.'
+  principles: *id001

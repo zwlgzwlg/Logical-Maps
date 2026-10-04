@@ -197,6 +197,16 @@
      scrolling, dividers and sizes are the same by construction. Each view shows
      its own blocks in it. */
   #lat-controls, #lat-principles { display: none; }
+  /* Curated views: the graph's and the lattice's are separate lists, each in its own pane. */
+  #lat-views { display: none; }
+  #pane-lattice #lat-views { display: block; }
+  #pane-lattice #graph-views, #pane-open #graph-views { display: none; }
+  .view-picker[hidden] { display: none !important; }
+  .view-picker { margin: 0 0 6px; }
+  .view-picker select { font: inherit; font-size: 13px; max-width: 100%; }
+  .view-picker .view-modified { font-size: 12px; margin-left: 6px; }
+  .view-picker .view-desc { font-size: 12px; line-height: 1.4; color: var(--ink-3); margin: 4px 0 0; }
+  .view-picker .view-desc:empty { display: none; }
   #pane-lattice #lat-controls, #pane-lattice #lat-principles { display: block; }
   #pane-lattice #conjecture-options, #pane-lattice #graph-options, #pane-lattice #graph-principles { display: none; }
   /* The arrow options (conjecture arrows, conjectures only, unpublished only, ...) are
@@ -722,6 +732,16 @@
       <section class="pane" id="pane-graph" data-active="true">
     <aside class="controls" id="graph-sidebar">
       <div class="controls-scroll" id="principle-controls">
+      <div id="graph-views" class="view-picker" hidden>
+        <h2><label for="graph-view">View</label><span id="graph-view-modified" class="view-modified dim" hidden>modified · <button class="lnk" id="graph-view-reset">reset</button></span></h2>
+        <select id="graph-view" aria-describedby="graph-view-desc"></select>
+        <p class="view-desc" id="graph-view-desc"></p>
+      </div>
+      <div id="lat-views" class="view-picker" hidden>
+        <h2><label for="lat-view">View</label><span id="lat-view-modified" class="view-modified dim" hidden>modified · <button class="lnk" id="lat-view-reset">reset</button></span></h2>
+        <select id="lat-view" aria-describedby="lat-view-desc"></select>
+        <p class="view-desc" id="lat-view-desc"></p>
+      </div>
       <div id="lat-controls">
         <h2>Lattice <button class="lnk dim" id="lat-from-graph" title="Draw the lattice of whatever the graph is showing.">from the graph</button> <button class="lnk dim" id="lat-clear">hide all</button></h2>
         <p class="background-hint">A Hasse diagram showing all the conjunctions of the selected principles. Solid arrows denote implications shown to be non-reversible by models in the selected sources; dashed arrows denote implications which might be reversible (as far as the selected sources are concerned).</p>
@@ -4917,6 +4937,85 @@ function renderLatticeFilters() {
   }, {passive: false});
 })();
 
+
+// ---------------------------------------------------------------- curated views
+// A view is an exact list of principles to show. The graph and the lattice each
+// have their own list of views; neither changes the background. Editing what is
+// shown afterwards marks the view as modified, and reset restores it.
+const graphViews = T.views || [], latticeViews = T.lattice_views || [];
+const viewChoice = { graph: null, lattice: null };
+function viewParam(key, value) {
+  try {
+    const url = new URL(window.location.href);
+    value == null ? url.searchParams.delete(key) : url.searchParams.set(key, value);
+    window.history.replaceState(window.history.state, '', url);
+  } catch { /* Local files may not allow history updates. */ }
+}
+function graphViewExpected(v) { return new Set(v ? ids.filter(id => !v.principles.includes(id)) : []); }
+function graphViewModified() {
+  const v = graphViews.find(x => x.id === viewChoice.graph), hidden = graphViewExpected(v);
+  if (state.negativeShown.size) return true;
+  return ids.some(id => !inBackground(id) && state.excluded.has(id) !== hidden.has(id));
+}
+function latticeViewModified() {
+  const v = latticeViews.find(x => x.id === viewChoice.lattice);
+  if (!v) return false;
+  return lattice.shown.length !== v.principles.length || v.principles.some(id => !lattice.shown.includes(id));
+}
+function syncViewPicker(pre, views, choice, modified) {
+  const box = document.getElementById(pre + '-views');
+  if (!views.length) { box.hidden = true; return; }
+  box.hidden = false;
+  const select = document.getElementById(pre + '-view'), v = views.find(x => x.id === choice);
+  select.value = choice || '';
+  document.getElementById(pre + '-view-desc').textContent = v?.description || '';
+  document.getElementById(pre + '-view-modified').hidden = !modified;
+}
+function syncViews() {
+  syncViewPicker('graph', graphViews, viewChoice.graph, graphViewModified());
+  syncViewPicker('lat', latticeViews, viewChoice.lattice, latticeViewModified());
+}
+function applyGraphView(id, render = true) {
+  const v = graphViews.find(x => x.id === id) || null;
+  state.excluded = graphViewExpected(v); state.negativeShown.clear();
+  viewChoice.graph = v ? v.id : '';
+  viewParam('view', v ? v.id : (graphViews.some(x => x.default) ? 'all' : null));
+  if (render) { refreshPrincipleControls(); renderAll(true); }
+  syncViews();
+}
+function applyLatticeView(id, render = true) {
+  const v = latticeViews.find(x => x.id === id) || null;
+  if (v) lattice.shown = v.principles.slice();
+  viewChoice.lattice = v ? v.id : '';
+  lattice.selected = null; lattice.builtKey = null;
+  viewParam('lview', v ? v.id : null);
+  if (render) { renderLatticeFilters(); renderLattice(); latticeFit(); }
+  syncViews();
+}
+(function setupViews() {
+  const fill = (pre, views, allLabel) => {
+    document.getElementById(pre + '-view').innerHTML = `<option value="">${allLabel}</option>`
+      + views.map(v => `<option value="${esc(v.id)}">${esc(v.name)}</option>`).join('');
+  };
+  fill('graph', graphViews, 'All principles'); fill('lat', latticeViews, 'None chosen');
+  document.getElementById('graph-view').addEventListener('change', e => applyGraphView(e.target.value));
+  document.getElementById('lat-view').addEventListener('change', e => applyLatticeView(e.target.value));
+  document.getElementById('graph-view-reset').addEventListener('click', () => applyGraphView(viewChoice.graph));
+  document.getElementById('lat-view-reset').addEventListener('click', () => applyLatticeView(viewChoice.lattice));
+  // Edits made through the sidebar or the diagrams pass through these, so they keep the marker current.
+  const controls = refreshPrincipleControls;
+  refreshPrincipleControls = () => { controls(); syncViews(); };
+  const filters = renderLatticeFilters;
+  renderLatticeFilters = (...args) => { const r = filters(...args); syncViews(); return r; };
+  const drawLattice = renderLattice;
+  renderLattice = (...args) => { const r = drawLattice(...args); syncViews(); return r; };
+  const requested = backgroundParams.get('view'), lrequested = backgroundParams.get('lview');
+  const graphStart = requested === 'all' ? null : graphViews.find(v => v.id === requested) || (requested == null ? graphViews.find(v => v.default) : null);
+  if (graphStart) applyGraphView(graphStart.id, false);
+  const latticeStart = latticeViews.find(v => v.id === lrequested) || (lrequested == null ? latticeViews.find(v => v.default) : null);
+  if (latticeStart) applyLatticeView(latticeStart.id, false);
+  refreshPrincipleControls();  // the sidebar's ticks and counts were drawn before the view applied
+})();
 renderAll(true);
 renderLattice();
 requestAnimationFrame(fit);

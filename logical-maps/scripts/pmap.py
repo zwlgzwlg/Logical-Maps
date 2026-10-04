@@ -2081,6 +2081,25 @@ def validate_topic(topic_id: str, *, quiet=False) -> bool:
             if pid not in ids:
                 errors.append(f"topic.yaml: background preset '{preset_id}' references unknown principle '{pid}'")
 
+    for key, label in (("views", "view"), ("lattice_views", "lattice view")):
+        seen, defaults = set(), 0
+        for view in data["topic"].get(key, []):
+            if not isinstance(view, dict):
+                continue
+            vid = view.get("id", "")
+            if vid in seen:
+                errors.append(f"topic.yaml: duplicate {label} '{vid}'")
+            seen.add(vid)
+            defaults += bool(view.get("default"))
+            for pid in view.get("principles", []):
+                if pid not in ids:
+                    errors.append(f"topic.yaml: {label} '{vid}' references unknown principle '{pid}'")
+            if key == "lattice_views" and len(view.get("principles", [])) > 7:
+                warnings.append(f"topic.yaml: lattice view '{vid}' has {len(view['principles'])} principles; "
+                                "the lattice may exceed its drawing cap")
+        if defaults > 1:
+            errors.append(f"topic.yaml: more than one default {label}")
+
     for b in data["topic"].get("background", []):
         if b not in ids:
             errors.append(f"topic.yaml: background principle '{b}' does not exist")
