@@ -108,3 +108,7 @@ papers:
     The public write-ups contain the arguments expanded and informally checked by GPT-6
     (Codex), 2 October 2026; the stronger steered-conclosure claims in §4(a) are not
     imported as proved.
+- id: fitelson-ai-comonotonic-incompleteness-2026
+  title: Comonotonic Sum Invariance Forces Incompleteness
+  citation: AI-generated report, 2 October 2026, 10 pages; communicated by Branden Fitelson. The producing AI was not identified. Fitelson is the communicator, not the credited producer or checker.
+  note: The source PDF remains private. The public St Petersburg write-up records GPT-6 (Codex)'s simplified witness and three-background identity from 2 October, and the preservation/cancellation audit from 3 October 2026, while crediting the report's original theorem and two-pair mechanism. No independent referee report or Lean verification is claimed.

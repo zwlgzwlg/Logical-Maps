@@ -1,0 +1,12 @@
+id: comonotonic-sum-cancellation
+name: Comonotonic Sum Cancellation
+statement: |-
+  If X and Z are comonotonic, and Y and Z are comonotonic, then $X+Z\succeq Y+Z$ implies $X\succeq Y$. A pair is comonotonic when its members admit nondecreasing representations in one common uniform random variable.
+category: invariance-principles
+tags: [background-risk]
+sources:
+- 'Zachary Goodsell, project conversation, 3 October 2026: request to distinguish preservation and cancellation in the St Petersburg incompleteness proof. Precise separation recorded by GPT-6 (Codex).'
+source_names: [Goodsell preservation/cancellation audit 3 Oct]
+notes: |-
+  Numerical scope is the same as Comonotonic Sum Invariance. This is the reverse weak implication, not preservation. In the recorded proof of forced incomparability without Totality, cancellation transfers a comparison of sums back to the auxiliary pair. Weak preservation and cancellation together are exactly full invariance; neither direction alone is claimed to suffice for that theorem.
+date: '2026-10-03'

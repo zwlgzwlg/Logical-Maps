@@ -1,5 +1,14 @@
 # CDF-area: total comonotonic extension
 
+**Resolution, 3 October 2026:** the proposed package is inconsistent by the
+[St Petersburg incompleteness proof](st-petersburg-refutes-total-comonotonic-preservation.html).
+The contradiction already follows from DTU and Comonotonic Sum Preservation
+including its strict clause. The original AI theorem was communicated by
+Branden Fitelson; GPT-6 (Codex) supplied the simpler witness and direction
+audit. The conjecture record and silver tier are retained as history; its
+negative verdict is derived from the proved incompatibility. The earlier
+proposal and exploratory arguments below are preserved in their original form.
+
 **Conjectured model, not constructed:** a preorder satisfying DTU,
 CDF-Area Extension, and Comonotonic Sum Invariance.
 

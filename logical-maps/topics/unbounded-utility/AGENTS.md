@@ -21,6 +21,8 @@ Display names and historical IDs differ. Confirm definitions in
 | Sym, symmetry, affine transformations, reflection, neutrality | `shift-invariance`, `scale-invariance`, `positive-affine-invariance`, `negative-affine-anti-invariance`, `reflection-anti-invariance`, `symmetric-neutrality`; inspect the cited result's actual package |
 | Background risk, independent addition, preservation vs cancellation | `independent-sum-consistency` (Independent Sum Invariance), `independent-sum-preservation`, `independent-sum-cancellation`, `full-sum-consistency` |
 | Copulas, comonotonic / antitonic addition | `comonotonic-sum-consistency`, `antitonic-sum-consistency`, `existential-copula-sum-consistency`, `universal-copula-sum-consistency` (displayed as Invariance) |
+| Comonotonic preservation/cancellation, St Petersburg incompleteness | `comonotonic-sum-weak-preservation`, `comonotonic-sum-preservation` (includes strict preservation), `comonotonic-sum-cancellation`; `writeups/st-petersburg-refutes-total-comonotonic-preservation.md` |
+| Nonindependent copulas, mixture commutation | `existential-nonindependent-copula-sum-consistency`; `writeups/independent-sum-eu-imply-nonindependent-copula.md` |
 | L¹, continuity, transfer of a shift | `l1-continuity`, `vanishing-shift-continuity`, `shift-transfer` |
 | Pasadena, Arroyo, alternating St Petersburg, self-similarity | `pasadena-value`, `arroyo-value`, `alternating-st-petersburg-value`, `negative-self-similarity` |
 
@@ -32,8 +34,9 @@ Display names and historical IDs differ. Confirm definitions in
 - Total comonotonic extension, killing lemma, survival profiles, quantile
   shears, or both-infinite areas: start at
   `models/conjectured-total-comonotonic-area-extension.yaml` and its matching
-  `writeups/` file. The write-up includes partial progress; check which parts
-  are proved separately from the proposed extension.
+  `writeups/` file. The proposal was refuted on 3 October 2026 by
+  `st-petersburg-refutes-total-comonotonic-preservation`; earlier exploratory
+  arguments are retained as history.
 - Independent-sum total extensions: start at
   `models/conjectured-total-independent-sum-extension.yaml` and its write-up.
   Read the current `status`; the historical filename does not establish it.

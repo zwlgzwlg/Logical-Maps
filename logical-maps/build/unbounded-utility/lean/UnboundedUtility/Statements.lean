@@ -1093,31 +1093,6 @@ def affine_symmetric_extension : Prop :=
     ¬ UnboundedUtility.CountableSureThing W.pref ∧
     ¬ UnboundedUtility.ArchimedeanGambles W.pref
 
-/-- `asymmetric-liminf-clipped-expectation`
-
-Clipped expectation: liminf dominance [−t, 2t]: a witness satisfying 12 principles
-and violating 6. -/
-def asymmetric_liminf_clipped_expectation : Prop :=
-  ∃ W : Witness,
-    UnboundedUtility.RichOutcomes W.pref ∧
-    UnboundedUtility.ArchimedeanOutcomes W.pref ∧
-    UnboundedUtility.StochasticEquivalence W.pref ∧
-    UnboundedUtility.StochasticDominance W.pref ∧
-    UnboundedUtility.MixtureIndependence W.pref ∧
-    UnboundedUtility.ExpectedUtility W.pref ∧
-    UnboundedUtility.CDFAreaExtension W.pref ∧
-    UnboundedUtility.RelativeExpectation W.pref ∧
-    UnboundedUtility.L1Continuity W.pref ∧
-    UnboundedUtility.ShiftInvariance W.pref ∧
-    UnboundedUtility.ExistentialCopulaSumConsistency W.pref ∧
-    UnboundedUtility.PositiveAffineInvariance W.pref ∧
-    ¬ UnboundedUtility.Totality W.pref ∧
-    ¬ UnboundedUtility.ReflectionAntiInvariance W.pref ∧
-    ¬ UnboundedUtility.NegativeAffineAntiInvariance W.pref ∧
-    ¬ UnboundedUtility.SymmetricNeutrality W.pref ∧
-    ¬ UnboundedUtility.FoldedExpectation W.pref ∧
-    ¬ UnboundedUtility.AlternatingStPetersburgValue W.pref
-
 /-- `cdf-conclosure-preorder`
 
 CDF-area conclosure: a witness satisfying 12 principles
@@ -1288,53 +1263,5 @@ def lexicographic_nonatomic_mass : Prop :=
     ¬ UnboundedUtility.AntitonicSumConsistency W.pref ∧
     ¬ UnboundedUtility.ExistentialCopulaSumConsistency W.pref ∧
     ¬ UnboundedUtility.UniversalCopulaSumConsistency W.pref
-
-/-- `polynomial-asymmetric-continuous-ultrafilter`
-
-Clipped expectation: continuous ultrafilter dominance [−4ⁿ, 4²ⁿ]: a witness satisfying 12 principles
-and violating 4. -/
-def polynomial_asymmetric_continuous_ultrafilter : Prop :=
-  ∃ W : Witness,
-    UnboundedUtility.RichOutcomes W.pref ∧
-    UnboundedUtility.Totality W.pref ∧
-    UnboundedUtility.StochasticEquivalence W.pref ∧
-    UnboundedUtility.SimpleEU W.pref ∧
-    UnboundedUtility.StochasticDominance W.pref ∧
-    UnboundedUtility.MixtureIndependence W.pref ∧
-    UnboundedUtility.CDFAreaExtension W.pref ∧
-    UnboundedUtility.RelativeExpectation W.pref ∧
-    UnboundedUtility.L1Continuity W.pref ∧
-    UnboundedUtility.ShiftInvariance W.pref ∧
-    UnboundedUtility.ShiftTransfer W.pref ∧
-    UnboundedUtility.ExistentialCopulaSumConsistency W.pref ∧
-    ¬ UnboundedUtility.PasadenaValue W.pref ∧
-    ¬ UnboundedUtility.ArroyoValue W.pref ∧
-    ¬ UnboundedUtility.SymmetricNeutrality W.pref ∧
-    ¬ UnboundedUtility.ComonotonicSumConsistency W.pref
-
-/-- `symmetric-liminf-clipped-expectation`
-
-Clipped expectation: liminf dominance [−t, t]: a witness satisfying 14 principles
-and violating 4. -/
-def symmetric_liminf_clipped_expectation : Prop :=
-  ∃ W : Witness,
-    UnboundedUtility.RichOutcomes W.pref ∧
-    UnboundedUtility.ArchimedeanOutcomes W.pref ∧
-    UnboundedUtility.StochasticEquivalence W.pref ∧
-    UnboundedUtility.StochasticDominance W.pref ∧
-    UnboundedUtility.MixtureIndependence W.pref ∧
-    UnboundedUtility.ExpectedUtility W.pref ∧
-    UnboundedUtility.CDFAreaExtension W.pref ∧
-    UnboundedUtility.RelativeExpectation W.pref ∧
-    UnboundedUtility.L1Continuity W.pref ∧
-    UnboundedUtility.ShiftInvariance W.pref ∧
-    UnboundedUtility.ExistentialCopulaSumConsistency W.pref ∧
-    UnboundedUtility.PositiveAffineInvariance W.pref ∧
-    UnboundedUtility.ReflectionAntiInvariance W.pref ∧
-    UnboundedUtility.FoldedExpectation W.pref ∧
-    ¬ UnboundedUtility.Totality W.pref ∧
-    ¬ UnboundedUtility.IndependentSumPreservation W.pref ∧
-    ¬ UnboundedUtility.ComonotonicSumConsistency W.pref ∧
-    ¬ UnboundedUtility.AlternatingStPetersburgValue W.pref
 
 end UnboundedUtility.Statements

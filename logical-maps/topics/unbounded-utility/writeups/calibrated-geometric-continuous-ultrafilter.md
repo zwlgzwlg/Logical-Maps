@@ -174,6 +174,11 @@ u-1/4,&3/4\le u<1.
 
 The distribution $C_\sigma$ of $(U,\sigma(U))$ is a copula, since $\sigma$
 preserves Lebesgue measure. It is fixed independently of all gamble laws.
+It is nonindependent: $H_{C_\sigma}(1/4,1/4)=0$, whereas the product
+copula gives $1/16$. Thus the argument below also verifies the separate
+Existential Nonindependent Copula Sum Invariance principle added on
+3 October 2026; this observation retains the attribution of the existing
+shuffle construction.
 For any two real probability laws take
 
 $$A=Q_A(U),\qquad B=Q_B(\sigma(U)).$$
