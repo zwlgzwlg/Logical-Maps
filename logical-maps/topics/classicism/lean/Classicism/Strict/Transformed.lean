@@ -21,5 +21,5 @@ The report lists any theorem not reached, with the reason. Today every theorem i
 -/
 
 #classicism_transform_audit Classicism.Booleanism Classicism.Identities Classicism.Modal
-#classicism_transform_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records
+#classicism_transform_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records.Base Classicism.Results.Records.Coarse Classicism.Results.Records.Extensionality Classicism.Results.Records.Comprehension Classicism.Results.Records.Lattice Classicism.Results.Records.Choice Classicism.Results.Records.C5 Classicism.Results.Records.Infinity
 #classicism_transform_audit Classicism.Results.Forms

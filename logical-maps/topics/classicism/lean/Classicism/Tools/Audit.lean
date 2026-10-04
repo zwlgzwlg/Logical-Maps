@@ -18,7 +18,7 @@ audit, `Classicism/Strict/Audit.lean`.
 
 -- Every theorem of the shallow layer: the prelude, the identities, the classes, the records.
 #classicism_audit Classicism.Booleanism Classicism.Identities Classicism.Modal
-#classicism_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records
+#classicism_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records.Base Classicism.Results.Records.Coarse Classicism.Results.Records.Extensionality Classicism.Results.Records.Comprehension Classicism.Results.Records.Lattice Classicism.Results.Records.Choice Classicism.Results.Records.C5 Classicism.Results.Records.Infinity
 #classicism_audit Classicism.Pointwise Classicism.Lattice Classicism.Results.Forms
 #classicism_audit Classicism.Cardinality
 
@@ -38,6 +38,6 @@ not guard, no type outside `R`, and no constant beyond the logical inductives, t
 plumbing and the formalisation's own metalanguage. -/
 
 #classicism_types_audit Classicism.Booleanism Classicism.Identities Classicism.Modal
-#classicism_types_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records
+#classicism_types_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records.Base Classicism.Results.Records.Coarse Classicism.Results.Records.Extensionality Classicism.Results.Records.Comprehension Classicism.Results.Records.Lattice Classicism.Results.Records.Choice Classicism.Results.Records.C5 Classicism.Results.Records.Infinity
 #classicism_types_audit Classicism.Pointwise Classicism.Lattice Classicism.Results.Forms
 #classicism_types_audit Classicism.Cardinality

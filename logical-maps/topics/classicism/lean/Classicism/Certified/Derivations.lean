@@ -12,5 +12,5 @@ part of the build and change only when the proofs do.
 -/
 
 set_option maxHeartbeats 0 in
-#classicism_derive_audit Classicism.Results.Records
+#classicism_derive_audit Classicism.Results.Records.Base Classicism.Results.Records.Coarse Classicism.Results.Records.Extensionality Classicism.Results.Records.Comprehension Classicism.Results.Records.Lattice Classicism.Results.Records.Choice Classicism.Results.Records.C5 Classicism.Results.Records.Infinity
 #classicism_derive_audit Classicism.Results.Forms
