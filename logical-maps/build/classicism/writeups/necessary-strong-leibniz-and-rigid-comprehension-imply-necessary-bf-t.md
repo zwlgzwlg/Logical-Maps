@@ -4,12 +4,12 @@
 
 ## Premises
 
-- **□Strong Leibniz Biconditionals.** Every closed instance of the Strong Leibniz Biconditionals is necessary. Box the entire object-variable closure; retain the type range.
+- **□Strong Leibniz Biconditionals.** Necessarily, at each relational type, every possible entity (one distinct from bottom) is entailed by a strong world: a possible entity that necessarily entails every entity of the type or its negation.
 - **Rigid Comprehension.** Every relation, including a proposition, is coextensive with a rigid one.
 
 ## Conclusion
 
-- **□BF (type t).** Every closed instance of BF (type t) is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□BF (type t).** Necessarily, BF (type t) holds, in the displayed closed propositional formulation.
 
 ## Proof
 

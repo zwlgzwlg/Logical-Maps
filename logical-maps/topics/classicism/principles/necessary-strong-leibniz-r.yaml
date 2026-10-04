@@ -1,8 +1,7 @@
 id: necessary-strong-leibniz-r
 name: □Strong Leibniz Biconditionals
 category: lattice
-statement: Every closed instance of the Strong Leibniz Biconditionals is necessary. Box the entire object-variable
-  closure; retain the type range.
+statement: "Necessarily, at each relational type, every possible entity (one distinct from bottom) is entailed by a strong world: a possible entity that necessarily entails every entity of the type or its negation."
 formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of Strong Leibniz Biconditionals}$
 date: '2026-09-22'
 sources:
@@ -18,3 +17,8 @@ notes: The boxed form is the one Theorem 8.2 of the book connects with □BF and
   Exercise 8.13 shows that requiring necessarily weak worlds does.
 aliases:
 - □SL
+changes:
+- date: '2026-10-03'
+  by: Claude Opus 5.5 (Anthropic)
+  summary: Restated the statement as the necessitation of the base principle's statement, in place of
+    a generic description of necessitation; the formal statement is unchanged.

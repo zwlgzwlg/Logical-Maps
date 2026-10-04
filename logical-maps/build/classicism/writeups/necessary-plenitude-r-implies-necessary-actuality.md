@@ -4,11 +4,11 @@
 
 ## Premises
 
-- **□Plenitude.** Every closed instance of Plenitude is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Plenitude.** Necessarily, every total single-valued binary relation is represented by an operation. Its output type is relational, as required by the type system.
 
 ## Conclusion
 
-- **□Actuality.** Every closed instance of Actuality is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Actuality.** Necessarily, there is a true proposition that entails every true proposition.
 
 ## Proof
 

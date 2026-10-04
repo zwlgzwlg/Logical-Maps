@@ -4,11 +4,11 @@
 
 ## Premises
 
-- **□Functional Choice.** Every closed instance of Functional Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Functional Choice.** Necessarily, every serial binary relation admits a selecting operation. Its output type is relational, as required by the type system.
 
 ## Conclusion
 
-- **□Relational Choice.** Every closed instance of Relational Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
 
 ## Proof
 

@@ -9,15 +9,15 @@
 - **Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
 - **Relational Choice.** Every serial binary relation has a functional subrelation.
 - **Transversal Choice.** Every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.
-- **¬ □Vicinity.** Every closed instance of Vicinity is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
-- **¬ □Transversal.** Every closed instance of Transversal is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
-- **¬ □Weakly Inextensible Comprehension.** Every closed instance of Weakly Inextensible Comprehension is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **¬ □Vicinity.** Necessarily, there is a true proposition that entails the possibility of each true proposition.
+- **¬ □Transversal.** Necessarily, there is a property of properties that picks out exactly one property from each coextension class, that is, exactly one property coextensive with any given property.
+- **¬ □Weakly Inextensible Comprehension.** Necessarily, every relation, including a proposition, is coextensive with a weakly inextensible one.
 - **¬ Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
 - **¬ Strong Possibility (pure).** Each closed pure sentence consistent with Maximalist Classicism is possible under the distinctness-preserving modality.
 - **¬ BF.** The Barcan Formula at every type. The predicate formulation closes the formula schema using lambda abstraction.
 - **¬ BF (type t).** BF (type t) in the displayed closed propositional formulation.
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
-- **¬ □Relational Choice.** Every closed instance of Relational Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **¬ □Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
 - **¬ Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
 - **¬ Countable Boolean Completeness.** Every countable property of entities of a relational type has a least upper bound in that type, where a property is countable when it injects into the natural numbers.
 - **¬ Boolean Completeness (type t).** Boolean Completeness (type t) in the displayed closed propositional formulation.

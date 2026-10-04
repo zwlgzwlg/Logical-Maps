@@ -4,12 +4,12 @@
 
 ## Premises
 
-- **□ND.** Every closed instance of ND is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□ND.** Necessarily, distinct things of any type are necessarily distinct.
 - **Atomicity.** Every non-bottom entity of each relational type has an atom below it.
 
 ## Conclusion
 
-- **□Plenitude.** Every closed instance of Plenitude is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Plenitude.** Necessarily, every total single-valued binary relation is represented by an operation. Its output type is relational, as required by the type system.
 
 ## Proof
 

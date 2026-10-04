@@ -222,6 +222,11 @@ When you (an AI) add or edit a result or model:
 - Optional display categories are declared in `topic.yaml` as ordered
   `principle_categories: [{id, name}, ...]`; assign each principle a `category`
   id. These group graph filters and do not change logical inference.
+- Optional `initial_principles: [id, ...]` in `topic.yaml` names the principles
+  the graph and the lattice start with; on the graph the rest start hidden, as do settled principles and
+  `hidden_by_default` categories. The theory explorer's assumptions are kept
+  apart from the graph's background (URL `theory` / `theory-deny` versus
+  `assume` / `deny`).
 - Use `background_presets` for named viewer assumption packages, with `id`,
   `name`, `category`, `principles`, and optional `default: true`. Defaults are
   removable and overridden by explicit URL selections; do not promote them

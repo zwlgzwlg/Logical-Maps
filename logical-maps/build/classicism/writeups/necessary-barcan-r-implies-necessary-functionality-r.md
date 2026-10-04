@@ -4,11 +4,11 @@
 
 ## Premises
 
-- **□BF.** Every closed instance of BF is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
 
 ## Conclusion
 
-- **□Functionality.** Every closed instance of Functionality is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Functionality.** Necessarily, operations with the same value on every argument are identical. The output type is relational.
 
 ## Proof
 

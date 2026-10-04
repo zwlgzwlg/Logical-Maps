@@ -4,11 +4,11 @@
 
 ## Premises
 
-- **□Tractarianism.** Every closed instance of Tractarianism is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Tractarianism.** Necessarily, a proposition entailing every instance of a property entails its universal generalization.
 
 ## Conclusion
 
-- **□BF.** Every closed instance of BF is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
 
 ## Proof
 

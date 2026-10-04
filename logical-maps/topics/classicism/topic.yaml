@@ -61,8 +61,6 @@ principle_categories:
   name: Comprehension
 - id: choice
   name: Choice and Plenitude
-- id: instances
-  name: Distinguished instances
 - id: infinity
   name: Infinity
 - id: schematic
@@ -72,6 +70,24 @@ principle_categories:
   hidden_by_default: true
 - id: base
   name: Background consequences
+initial_principles:
+- barcan-r
+- distinctness-necessary-r
+- necessary-distinctness-necessary-r
+- modal-b
+- modal-five
+- atomicity-r
+- boolean-completeness-r
+- actuality
+- extensionality-r
+- functionality-r
+- fregean-axiom
+- rigid-comprehension-r
+- plenitude-r
+- functional-choice-r
+- relational-choice-r
+- possibility-schema-r
+- strong-possibility-r
 background_presets:
 - id: c5
   name: C5

@@ -1,8 +1,7 @@
 id: necessary-transversal-r
 name: □Transversal
 category: choice
-statement: Every closed instance of Transversal is necessary. Box the entire object-variable closure;
-  retain the same type range and other schema side conditions.
+statement: "Necessarily, there is a property of properties that picks out exactly one property from each coextension class, that is, exactly one property coextensive with any given property."
 formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of Transversal}$
 date: '2026-09-26'
 sources:
@@ -11,3 +10,8 @@ source_names:
 - Sun 26 Sep
 references: []
 notes: Box each fully closed instance of Transversal. Type quantifiers remain outside the box.
+changes:
+- date: '2026-10-03'
+  by: Claude Opus 5.5 (Anthropic)
+  summary: Restated the statement as the necessitation of the base principle's statement, in place of
+    a generic description of necessitation; the formal statement is unchanged.

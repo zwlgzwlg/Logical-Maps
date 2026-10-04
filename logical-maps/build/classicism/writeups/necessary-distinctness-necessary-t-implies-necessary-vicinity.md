@@ -4,11 +4,11 @@
 
 ## Premises
 
-- **□ND (type t).** Every closed instance of ND (type t) is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□ND (type t).** Necessarily, ND (type t) holds, in the displayed closed propositional formulation.
 
 ## Conclusion
 
-- **□Vicinity.** Every closed instance of Vicinity is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Vicinity.** Necessarily, there is a true proposition that entails the possibility of each true proposition.
 
 ## Proof
 

@@ -45,7 +45,7 @@ try {
   assert.equal(w.eval("background.has('c')"), true, 'Neither form selected defaults to positive');
   click('#background-reset');
 
-  // Explorer choices are the same background, with no duplicate assumption dock.
+  // Explorer choices are its own assumptions, apart from the graph's background.
   click('[data-tab="models"]');
   assert.equal(doc.querySelector('.explorer-toolbar'), null);
   assert.equal(doc.querySelector('#models [data-clear-assumption]'), null);
@@ -53,12 +53,16 @@ try {
   assert.match(doc.querySelector('.explorer-models').textContent, /Potential models/);
   for (const sign of ['positive', 'negative']) {
     click(`#models [data-assume-${sign}="a"]`);
-    assert.equal(w.eval("inBackground('a')"), true);
+    assert.equal(w.eval("inTheory('a')"), true);
+    assert.equal(w.eval("inBackground('a')"), false, 'The graph background is unchanged');
     click(`#models [data-assume-${sign}="a"]`);
-    assert.equal(w.eval("inBackground('a')"), false, 'Click selected sign again to clear');
+    assert.equal(w.eval("inTheory('a')"), false, 'Click selected sign again to clear');
   }
   click('#models [data-assume-negative="c"]');
-  assert.equal(w.eval("negativeBackground.has('c')"), true);
+  assert.equal(w.eval("theory.negative.has('c')"), true);
+  assert.equal(w.eval("negativeBackground.has('c')"), false);
+  assert.match(w.location.search, /theory-deny=c/);
+  assert.equal(page(w.location.href).window.eval("theory.negative.has('c') && !negativeBackground.has('c')"), true);
   assert.equal(doc.querySelector('#models-background-dock'), null);
   assert.ok(doc.querySelector('#models [data-model="negative"]'));
   assert.equal(doc.querySelector('#models [data-model="positive"]'), null);
@@ -66,16 +70,16 @@ try {
   unknown.querySelector('[data-model]').click();
   assert.match(doc.getElementById('pop').textContent, /Unknown assumptions: ¬C/);
   click('#models [data-assume-positive="a"]');
-  assert.equal(w.eval("backgroundExcluded.has('b')"), true);
+  assert.equal(w.eval("theoryExcluded.has('b')"), true);
+  assert.equal(w.eval("backgroundExcluded.has('b')"), false);
   assert.equal(doc.querySelector('#models [data-assume-negative="b"]').getAttribute('aria-pressed'), 'false', 'Derived is not explicitly assumed');
   click('#models [data-assume-positive="b"]');
-  assert.equal(doc.getElementById('graph-warning').hidden, false);
   assert.match(doc.querySelector('#models .ex-bad').textContent, /inconsistent/);
-  assert.equal(doc.querySelectorAll('#graph .edge').length, 0);
+  assert.equal(doc.getElementById('graph-warning').hidden, true, 'An inconsistent theory leaves the graph alone');
   click('#models [data-assume-positive="b"]');
   assert.equal(doc.getElementById('graph-warning').hidden, true);
   click('[data-source-filter="paper"]');
-  assert.equal(w.eval("backgroundExcluded.has('b')"), false);
+  assert.equal(w.eval("theoryExcluded.has('b')"), false);
   click('[data-source-filter="paper"]');
   click('#ex-clear');
 

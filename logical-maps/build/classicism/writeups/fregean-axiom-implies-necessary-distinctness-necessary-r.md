@@ -8,7 +8,7 @@
 
 ## Conclusion
 
-- **□ND.** Every closed instance of ND is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□ND.** Necessarily, distinct things of any type are necessarily distinct.
 
 ## Proof
 

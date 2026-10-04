@@ -1,7 +1,7 @@
 id: necessary-strong-leibniz-t
 name: □Strong Leibniz Biconditionals (type t)
-category: instances
-statement: Every closed instance of Strong Leibniz Biconditionals (type t) is necessary.
+category: lattice
+statement: "Necessarily, every possible proposition is entailed by a strong world proposition, one that is possible and necessarily entails every proposition or its negation."
 formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of Strong Leibniz Biconditionals (type
   t)}$
 date: '2026-09-22'
@@ -16,3 +16,8 @@ references:
 notes: ''
 aliases:
 - □SL (type t)
+changes:
+- date: '2026-10-03'
+  by: Claude Opus 5.5 (Anthropic)
+  summary: Restated the statement as the necessitation of the base principle's statement, in place of
+    a generic description of necessitation; the formal statement is unchanged.

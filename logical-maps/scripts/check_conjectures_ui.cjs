@@ -97,7 +97,7 @@ try {
   assert.equal(doc.querySelectorAll('#graph-sidebar').length,1);
   assert.equal(doc.querySelector('[data-source-filter="paper"]'),sourceCheckbox);
   assert.equal(doc.querySelector('#pr-filters [data-show-positive="e"]'),graphCheckbox);
-  assert.equal(graphCheckbox.getAttribute('aria-pressed'),'false');
+  assert.equal(graphCheckbox.getAttribute('aria-pressed'),'true','the conjecture lists keep their own shown principles');
   assert.equal(doc.getElementById('source-filter-heading').textContent,'Evidence sources');
   assert.ok(!visible(dom,doc.getElementById('graph-options')));
   assert.ok(visible(dom,doc.getElementById('conjecture-options')));

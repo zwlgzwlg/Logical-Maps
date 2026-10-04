@@ -1,8 +1,7 @@
 id: necessary-weakly-inextensible-comprehension-r
 name: □Weakly Inextensible Comprehension
 category: comprehension
-statement: Every closed instance of Weakly Inextensible Comprehension is necessary. Box the entire object-variable
-  closure; retain the same type range and other schema side conditions.
+statement: "Necessarily, every relation, including a proposition, is coextensive with a weakly inextensible one."
 formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of Weakly Inextensible Comprehension}$
 date: '2026-09-27'
 sources:
@@ -19,3 +18,8 @@ notes: >-
   conditions remain outside the box. This differs from Inextensible Comprehension, which asks for a
   single actual witness that is weakly inextensible at every world; here the witness may vary from
   world to world.
+changes:
+- date: '2026-10-03'
+  by: Claude Opus 5.5 (Anthropic)
+  summary: Restated the statement as the necessitation of the base principle's statement, in place of
+    a generic description of necessitation; the formal statement is unchanged.

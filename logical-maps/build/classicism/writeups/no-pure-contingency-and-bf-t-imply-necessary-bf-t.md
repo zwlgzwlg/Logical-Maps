@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **□BF (type t).** Every closed instance of BF (type t) is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□BF (type t).** Necessarily, BF (type t) holds, in the displayed closed propositional formulation.
 
 ## Proof
 

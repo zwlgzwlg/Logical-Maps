@@ -1,6 +1,6 @@
 id: barcan-t
 name: BF (type t)
-category: instances
+category: coarse
 statement: BF (type t) in the displayed closed propositional formulation.
 formal: $\forall X^{tt}\, .\,(\forall p\, .\,\Box Xp)\to\Box(\forall p\, .\,Xp)$
 date: '2026-09-17'

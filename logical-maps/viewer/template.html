@@ -654,11 +654,11 @@
         </div>
       </div>
       <div id="graph-principles">
-        <h2>Principles <button class="lnk dim" id="pr-all">show all positive</button> <button class="lnk dim" id="pr-none">hide all</button></h2>
+        <h2 id="pr-heading">Principles <button class="lnk dim" id="pr-reset" title="Return to the principles this view starts with">reset</button> <button class="lnk dim" id="pr-all">show all positive</button> <button class="lnk dim" id="pr-none">hide all</button></h2>
         <div class="ctl" id="pr-filters"></div>
       </div>
       <div id="lat-principles">
-        <h2>Principles</h2>
+        <h2 id="lat-pr-heading">Principles <button class="lnk dim" id="lat-reset" title="Return to the principles the lattice starts with">reset</button></h2>
         <div class="ctl" id="lat-filters"></div>
       </div>
       </div>
@@ -943,9 +943,16 @@ const sourceColor = s => {
 };
 const sourceMarker = s => 'source-' + sourceCatalog.indexOf(s);
 const state = { allowed: new Set(sourceCatalog.map(s => s.id)), leanOnly: false, showConj: false, conjectureOnly: false, unpublishedOnly: false, reduced: true, trivial: false, focus: null, showResolved: backgroundParams.get('resolved') === '1', lynchpins: false, recorded: false, auto: false, showIso: true, selected: null, modelId: null, tab: 'graph', search: '', excluded: new Set(), negativeShown: new Set(), collapsed: new Set(), flipped: false };
-// Initial visibility is shared by the graph and conjecture lists.
-for (const g of principleGroups()) if (g.hidden_by_default)
-  for (const p of g.principles) state.excluded.add(p.id);
+// The theory explorer keeps its own assumptions, apart from the graph's
+// background, so trying out a theory there leaves the graph as it was.
+const theoryParam = (key, fallback) => backgroundParams.has(key) ? (backgroundParams.get(key) || '').split(',').filter(id => byPid.has(id)) : fallback;
+const theory = {
+  positive: new Set([...topicBackground, ...theoryParam('theory', backgroundPresets.filter(p => p.default).flatMap(p => p.principles))]),
+  negative: new Set(theoryParam('theory-deny', []).filter(id => !topicBackground.includes(id))),
+};
+for (const id of theory.negative) theory.positive.delete(id);
+const inTheory = id => theory.positive.has(id) || theory.negative.has(id);
+let theoryE = null, theoryExcluded = new Map();
 // A handful of categories reads better open; a long list is easier to navigate
 // closed. The threshold counts the topic's own principles, not the ones a
 // reader happens to be showing.
@@ -956,11 +963,28 @@ const graphSearch = { matches: new Set(), index: 0 };
 // A principle the topic's own background already settles, one way or the
 // other, can only sit in the True or False box. It starts hidden; the sidebar
 // still offers it. The reader's own assumptions are not consulted here.
-(function hideSettledByDefault() {
+const settledByTopic = (function () {
   const minimal = new Engine(ids, R.filter(r => r.status === 'proved'), [], topicBackground);
   const facts = minimal.cl([]).facts;
-  for (const id of ids) if (facts.has(id) || minimal.excludes([], id)) state.excluded.add(id);
+  return new Set(ids.filter(id => facts.has(id) || minimal.excludes([], id)));
 })();
+// The graph and the conjecture lists keep separate visibility, both edited
+// from the sidebar of whichever tab is open. Each starts without the
+// hidden_by_default categories and the settled principles; the graph also
+// keeps to the topic's initial_principles when it names some.
+function defaultHidden(view) {
+  const hidden = new Set(settledByTopic);
+  for (const g of principleGroups()) if (g.hidden_by_default) for (const p of g.principles) hidden.add(p.id);
+  if (view === 'graph' && T.initial_principles?.length) {
+    const start = new Set(T.initial_principles);
+    for (const id of ids) if (!start.has(id)) hidden.add(id);
+  }
+  return hidden;
+}
+state.excluded = defaultHidden('graph');
+state.openExcluded = defaultHidden('open'); state.openNegativeShown = new Set();
+const sidebarSets = () => state.tab === 'open' ? [state.openExcluded, state.openNegativeShown] : [state.excluded, state.negativeShown];
+const openShown = l => isNegative(l) ? state.openNegativeShown.has(baseId(l)) : !state.openExcluded.has(l);
 let graphRelations = new Map();
 let E = null, EC = null, baseE = null, baseEC = null, A = null, layout = null, backgroundConflicts = [], backgroundExcluded = new Map();
 let graphBackgroundE = null, graphInferenceE = null, graphBackgroundConflict = null, graphBackgroundExcluded = new Map();
@@ -1009,10 +1033,18 @@ function recompute() {
   backgroundConflicts = conflict ? [conflict] : [];
   backgroundExcluded = new Map(conflict ? [] : ids.map(id => [id, E.excludes([], id)]).filter(([,proof]) => proof));
   EC = new Engine(ids, conjecturalRules, fits(baseEC), [...background], [...negativeBackground]);
+  recomputeTheory();
   const pair = new Map(); for (const a of ids) for (const b of ids) if (a !== b) pair.set(a + '|' + b, E.pair(a, b));
   const classes = [], seen = new Set();
   for (const a of ids) { if (seen.has(a)) continue; const cls = [a, ...ids.filter(b => b !== a && pair.get(a + '|' + b).status === 'implies' && pair.get(b + '|' + a).status === 'implies')]; cls.forEach(x => seen.add(x)); classes.push(cls); }
   A = { pair, classes };
+}
+// The explorer's counterpart of E's background readouts, under its own
+// assumptions and the same source-filtered proved rules.
+function recomputeTheory() {
+  theoryE = new Engine(ids, R.filter(r => r.status === 'proved' && passes(r)), [], [...theory.positive], [...theory.negative]);
+  const conflict = theoryE.conflict([]);
+  theoryExcluded = new Map(conflict ? [] : ids.map(id => [id, theoryE.excludes([], id)]).filter(([, proof]) => proof));
 }
 function pairStatus(a, b) {
   if (isNegative(a) || isNegative(b)) return literalPair(a, b);
@@ -1765,10 +1797,9 @@ function computeLayoutCore(g) {
       layers.push(...piece.part.layers);
     }
   }
-  // Principles without displayed arrows are packed in labelled bands above
-  // the diagram: background consequences first (they are the weakest, entailed
-  // by everything shown), then principles with no displayed arrows at all.
-  // Nothing sits beneath ⊥.
+  // Background consequences without displayed arrows are packed in a labelled
+  // band above the diagram (they are the weakest, entailed by everything
+  // shown). Nothing sits beneath ⊥.
   const bands = [], connectedRows = layers.length;
   if (isolated.length) {
     const gapX = 24, gapY = 20, treeGap = 56;
@@ -1791,12 +1822,37 @@ function computeLayoutCore(g) {
       if (row.length) rows.push(row);
       return rows;
     };
+    const bandHeight = rows => rows.reduce((sum, row) => sum + Math.max(...row.map(n => size.get(n.id).h)), 0) + gapY * (rows.length - 1);
+    // Principles with no displayed arrows sit beside the diagram at mid
+    // height, as ⊤ does. The missing arrows say what they are, so no label.
+    const loose = isolated.filter(n => !graphNodeFollows(n));
+    if (connected.length && loose.length) {
+      const bottom = Math.max(...connected.map(n => y.get(n.id) + size.get(n.id).h / 2));
+      const looseArea = loose.reduce((sum, n) => sum + (size.get(n.id).w + gapX) * (size.get(n.id).h + gapY), 0);
+      const sideWidth = Math.max(Math.max(...loose.map(n => size.get(n.id).w)), Math.sqrt(looseArea));
+      const rows = [];
+      let row = [], rowWidth = 0;
+      for (const n of loose) {
+        const width = size.get(n.id).w;
+        if (row.length && rowWidth + gapX + width > sideWidth) { rows.push(row); row = []; rowWidth = 0; }
+        rowWidth += (row.length ? gapX : 0) + width;
+        row.push(n);
+      }
+      if (row.length) rows.push(row);
+      let cursor = (top + bottom - bandHeight(rows)) / 2;
+      for (const row of rows) {
+        const height = Math.max(...row.map(n => size.get(n.id).h));
+        let cx = right + treeGap;
+        for (const n of row) { x.set(n.id, cx + size.get(n.id).w / 2); y.set(n.id, cursor + height / 2); cx += size.get(n.id).w + gapX; }
+        cursor += height + gapY;
+      }
+      layers.push(...rows);
+    }
     const groups = [
-      {label: 'No displayed arrows', members: isolated.filter(n => !graphNodeFollows(n))},
+      {label: 'No displayed arrows', members: connected.length ? [] : loose},
       {label: 'Follows from the background', members: isolated.filter(graphNodeFollows)},
     ].filter(g => g.members.length);
     const packed = groups.map(g => ({...g, rows: pack(g.members)}));
-    const bandHeight = rows => rows.reduce((sum, row) => sum + Math.max(...row.map(n => size.get(n.id).h)), 0) + gapY * (rows.length - 1);
     const total = packed.reduce((sum, g) => sum + bandHeight(g.rows), 0) + treeGap * (packed.length - (connected.length ? 0 : 1));
     let cursor = connected.length ? top - total : -total / 2;
     for (const group of packed) {
@@ -2299,7 +2355,24 @@ function setCategoryToggle(button, shown) {
 function applyCategories(el) {
   el?.querySelectorAll('[data-category]').forEach(g => { g.open = !state.collapsed.has(g.dataset.category); });
 }
-function applyAllCategories() { for (const id of CATEGORY_LISTS) applyCategories(document.getElementById(id)); }
+// One control opens every category, or closes them all once none is closed.
+// It acts on the shared set, so all three lists follow.
+const anyCategoryCollapsed = () => principleGroups().some(g => state.collapsed.has(g.id));
+function categoryExpander() {
+  return principleGroups().length > 1 ? ` <button class="lnk dim" data-expand-categories>${anyCategoryCollapsed() ? 'expand all' : 'collapse all'}</button>` : '';
+}
+function wireCategoryExpander(root) {
+  root.querySelectorAll('[data-expand-categories]').forEach(b => b.addEventListener('click', () => {
+    if (anyCategoryCollapsed()) state.collapsed.clear();
+    else for (const g of principleGroups()) state.collapsed.add(g.id);
+    applyAllCategories();
+  }));
+}
+function applyAllCategories() {
+  for (const id of CATEGORY_LISTS) applyCategories(document.getElementById(id));
+  const label = anyCategoryCollapsed() ? 'expand all' : 'collapse all';
+  document.querySelectorAll('[data-expand-categories]').forEach(b => { b.textContent = label; });
+}
 function wireCategories(el) {
   applyCategories(el);
   if (!el || el.dataset.categoriesWired) return;
@@ -2324,39 +2397,40 @@ function openCategoryOf(row) {
   if (id == null || !state.collapsed.has(id)) return;
   state.collapsed.delete(id); applyAllCategories();
 }
-function assumptionButtons(id, follows = false, ruledOut = false) {
+// The graph's background by default; the explorer passes its own sets.
+function assumptionButtons(id, follows = false, ruledOut = false, positive = background, negative = negativeBackground) {
   const fixed = topicBackground.includes(id);
-  return `<span class="seg assumption-choice" role="group" aria-label="Assume ${esc(name(id))}"><button data-assume-positive="${id}" class="${follows && !background.has(id) ? 'auto-positive' : ''}" title="${follows && !background.has(id) ? 'Follows from background; click to assume explicitly' : background.has(id) ? 'Click again to remove this assumption' : 'Assume this principle'}" aria-label="Assume ${esc(name(id))}" aria-pressed="${background.has(id)}"${fixed ? ' disabled' : ''}>✓</button><button data-assume-negative="${id}" class="${ruledOut && !negativeBackground.has(id) ? 'auto-negative' : ''}" title="${ruledOut && !negativeBackground.has(id) ? 'Ruled out by background; click to assume explicitly' : negativeBackground.has(id) ? 'Click again to remove this assumption' : 'Assume this negation'}" aria-label="Assume not ${esc(name(id))}" aria-pressed="${negativeBackground.has(id)}"${fixed ? ' disabled' : ''}>✗</button></span>`;
+  return `<span class="seg assumption-choice" role="group" aria-label="Assume ${esc(name(id))}"><button data-assume-positive="${id}" class="${follows && !positive.has(id) ? 'auto-positive' : ''}" title="${follows && !positive.has(id) ? 'Follows from background; click to assume explicitly' : positive.has(id) ? 'Click again to remove this assumption' : 'Assume this principle'}" aria-label="Assume ${esc(name(id))}" aria-pressed="${positive.has(id)}"${fixed ? ' disabled' : ''}>✓</button><button data-assume-negative="${id}" class="${ruledOut && !negative.has(id) ? 'auto-negative' : ''}" title="${ruledOut && !negative.has(id) ? 'Ruled out by background; click to assume explicitly' : negative.has(id) ? 'Click again to remove this assumption' : 'Assume this negation'}" aria-label="Assume not ${esc(name(id))}" aria-pressed="${negative.has(id)}"${fixed ? ' disabled' : ''}>✗</button></span>`;
 }
-function wireAssumptions(el) {
+function wireAssumptions(el, set = setAssumption, positive = background, negative = negativeBackground) {
   for (const [attribute, sign] of [['assume-positive', 'positive'], ['assume-negative', 'negative']]) {
     el.querySelectorAll(`[data-${attribute}]`).forEach(button => button.addEventListener('click', () => {
       const id = button.getAttribute('data-' + attribute);
       // In the background these choices are exclusive, never graph visibility.
-      const selected = sign === 'positive' ? background.has(id) : negativeBackground.has(id);
-      setAssumption(id, selected ? null : sign);
+      const selected = sign === 'positive' ? positive.has(id) : negative.has(id);
+      set(id, selected ? null : sign);
     }));
   }
 }
 function renderModels() {
   const candidate = byMid.get(state.modelId);
   const inspected = candidate && passes(candidate) && (candidate.status === 'proved' || state.showConj) ? candidate : null;
-  const IN = [...background], OUT = [...negativeBackground];
-  const conflict = E.conflict([]), implied = conflict ? new Set() : E.cl([]).facts;
-  let h = `<div class="ex"><div class="ex-col"><div class="ex-head">Principles <span class="n">${backgroundIds().length} assumed</span></div><div class="explorer-actions">${backgroundPresets.map(p => `<button class="btn small" data-background-preset="${esc(p.id)}">Background ${esc(p.name)}</button>`).join('')}<button class="btn small" id="ex-clear">clear background</button></div>`;
+  const IN = [...theory.positive], OUT = [...theory.negative];
+  const conflict = theoryE.conflict([]), implied = conflict ? new Set() : theoryE.cl([]).facts;
+  let h = `<div class="ex"><div class="ex-col"><div class="ex-head">Principles <span class="n">${ids.filter(inTheory).length} assumed</span>${categoryExpander()}</div><div class="explorer-actions">${backgroundPresets.map(p => `<button class="btn small" data-theory-preset="${esc(p.id)}">Background ${esc(p.name)}</button>`).join('')}<button class="btn small" id="ex-clear">clear background</button></div>`;
   if (inspected) h += `<div class="inspection-note">Inspecting <b>${esc(inspected.name)}</b> <button class="lnk" id="ex-deselect">clear selection</button></div>`;
   h += '<div id="model-principles">';
   for (const group of principleGroups()) {
     // A closed category must still report the assumptions it holds, or
     // collapsing one would hide a choice the reader made.
-    const assumed = group.principles.filter(p => inBackground(p.id)).length;
+    const assumed = group.principles.filter(p => inTheory(p.id)).length;
     h += `<details class="model-category" data-category="${esc(group.id)}">${categoryHeader(group, assumed ? `${assumed} assumed` : '')}<ul class="ex-list">`;
     for (const p of group.principles) {
-      const id = p.id, positive = background.has(id), negative = negativeBackground.has(id);
-      const follows = !conflict && implied.has(id), ruledOut = !conflict && backgroundExcluded.has(id);
+      const id = p.id, positive = theory.positive.has(id), negative = theory.negative.has(id);
+      const follows = !conflict && implied.has(id), ruledOut = !conflict && theoryExcluded.has(id);
       const evidence = inspected && modelEvidence(inspected, id);
       const tint = inspected ? evidence ? evidence.value ? 'model-in' : 'model-out' : '' : positive ? 'in' : negative ? 'out' : follows ? 'fin' : ruledOut ? 'fout' : '';
-      h += `<li class="ex-p ${tint}" data-assumption-row="${id}">${assumptionButtons(id, follows, ruledOut)}<div class="principle-line"><button class="lnk" data-principle="${id}">${esc(name(id))}</button>${inspected ? ' ' + verdictButton(inspected, id, evidence, true) : ''}</div></li>`;
+      h += `<li class="ex-p ${tint}" data-assumption-row="${id}">${assumptionButtons(id, follows, ruledOut, theory.positive, theory.negative)}<div class="principle-line"><button class="lnk" data-principle="${id}">${esc(name(id))}</button>${inspected ? ' ' + verdictButton(inspected, id, evidence, true) : ''}</div></li>`;
 
     }
     h += '</ul></details>';
@@ -2382,10 +2456,11 @@ function renderModels() {
   const el = document.getElementById('models');
   const focused = el.contains(document.activeElement) ? ['data-assume-positive', 'data-assume-negative'].map(a => [a, document.activeElement.getAttribute(a)]).find(([,id]) => id) : null;
   el.innerHTML = h;
-  wireAssumptions(el);
-  el.querySelectorAll('[data-background-preset]').forEach(button => { button.disabled = backgroundPresets.find(p => p.id === button.dataset.backgroundPreset).principles.every(id => background.has(id)); button.addEventListener('click', () => addBackgroundPreset(button.dataset.backgroundPreset)); });
+  wireAssumptions(el, setTheoryAssumption, theory.positive, theory.negative);
+  el.querySelectorAll('[data-theory-preset]').forEach(button => { button.disabled = backgroundPresets.find(p => p.id === button.dataset.theoryPreset).principles.every(id => theory.positive.has(id)); button.addEventListener('click', () => addTheoryPreset(button.dataset.theoryPreset)); });
   wireCategories(el.querySelector('#model-principles'));
-  el.querySelector('#ex-clear').addEventListener('click', resetBackground);
+  wireCategoryExpander(el);
+  el.querySelector('#ex-clear').addEventListener('click', resetTheory);
   el.querySelector('#ex-deselect')?.addEventListener('click', () => { state.modelId = null; select(null); renderModels(); });
   wire(el);
   if (focused) el.querySelector(`[${focused[0]}="${focused[1]}"]`)?.focus({preventScroll: true});
@@ -2518,11 +2593,11 @@ function shownProgress(p) {
   if (!p?.selection) return p;
   // Count stored question statuses using the same shown principles as the lists.
   // No proof search or rescoring: masks encode conclusions per premise group.
-  const mask = p.selection.principles.reduce((m, id, i) => literalShown(id) ? m | (1n << BigInt(i)) : m, 0n);
+  const mask = p.selection.principles.reduce((m, id, i) => openShown(id) ? m | (1n << BigInt(i)) : m, 0n);
   const count = bits => { let n = 0; for (; bits; bits &= bits - 1n) n++; return n; };
   let questions = 0, settled = 0;
   for (const [premises, conclusions, resolved, consistency] of p.selection.groups) {
-    if (!premises.every(literalShown)) continue;
+    if (!premises.every(openShown)) continue;
     questions += count(BigInt(conclusions) & mask) + (consistency !== null ? 1 : 0);
     settled += count(BigInt(resolved) & mask) + (consistency === 'proved' || consistency === 'refuted' ? 1 : 0);
   }
@@ -2586,7 +2661,7 @@ function renderLynchpins() {
   // Non-entailment (P ⊬ Q) still mentions positive P and Q; it is not ¬Q.
   // Members of the theorem class render as ⊤, independent of their switches.
   const trivial = new Set(rep?.trivial || []);
-  const shown = id => id === TRUE || id === FALSE || trivial.has(id) || literalShown(id);
+  const shown = id => id === TRUE || id === FALSE || trivial.has(id) || openShown(id);
   const shownQuestion = r => {
     if (r.kind === 'check') return shown(r.principle) ? r : null;
     const premise_sets = (r.premise_sets || [r.premises]).filter(S => S.every(shown));
@@ -2808,6 +2883,7 @@ function showTab(tab) {
     pane.prepend(document.getElementById('graph-sidebar'), document.getElementById('sidebar-divider'));
     const heading = document.getElementById('source-filter-heading');
     heading.textContent = tab === 'open' ? 'Evidence sources' : 'Arrow sources';
+    refreshPrincipleControls();
     heading.title = tab === 'open' ? 'Filter the evidence used to assess conjectures.'
       : tab === 'lattice' ? 'Draw the lattice from the selected sources alone. Background consequences always use all recorded proofs.'
       : 'Filter displayed arrows. Background consequences always use all recorded proofs.';
@@ -2935,7 +3011,7 @@ function renderDetail() {
     for (const mid of [sel.id]) {
       const m = byPid.get(mid);
       h += `<div class="pop-t">${sel.negative ? '¬' : ''}${esc(m.name)}</div>${sel.negative ? '<p class="note">Negation of the following principle:</p>' : ''}<div class="pop-s">${esc(m.statement)}</div>${m.formal ? `<div class="formal">${esc(m.formal)}</div>` : ''}${m.lean && m.lean.ref ? `<div class="pop-l">Lean: <code>${esc(m.lean.ref)}</code></div>` : ''}${sourceSummary([m])}`;
-      const exclusion = (state.tab === 'graph' ? graphBackgroundExcluded : backgroundExcluded).get(mid);
+      const exclusion = (state.tab === 'graph' ? graphBackgroundExcluded : state.tab === 'models' ? theoryExcluded : backgroundExcluded).get(mid);
       if (exclusion) h += `<div class="${sel.negative ? 'note' : 'ex-bad'}">${sel.negative ? 'This negation follows from the background' : 'Ruled out by the background'} (⇒ ¬${esc(m.name)}).</div><ul>${exclusion.via.map(id => `<li><button class="lnk" data-result="${id}">${resultStmt(byRid.get(id))}</button> ${certBadges(byRid.get(id))}</li>`).join('')}</ul>`;
     }
     if (!selectionInLegend()) {
@@ -2953,7 +3029,8 @@ function renderDetail() {
     if (sel.type === 'model') {
       const holds = x.status === 'proved' ? baseE.holds.get(x.id) : new Set(x.satisfies);
       const fails = x.status === 'proved' ? baseE.fails.get(x.id) : new Set(x.violates);
-      const gaps = [...background].filter(p => !holds.has(p)).concat([...negativeBackground].filter(p => !fails.has(p)).map(p => '!' + p));
+      const [positive, negative] = state.tab === 'models' ? [theory.positive, theory.negative] : [background, negativeBackground];
+      const gaps = [...positive].filter(p => !holds.has(p)).concat([...negative].filter(p => !fails.has(p)).map(p => '!' + p));
       if (gaps.length) h += `<p class="pop-l">Unknown assumptions: ${gaps.map(name).map(esc).join(', ')}</p>`;
     }
     // The drawn form and the recorded one differ only when the background let
@@ -3216,10 +3293,14 @@ function applySelectionAction(kind) {
 function changeBackground(id, assumed) {
   if (!assumed) {
     // Returning an assumption reveals the same sign on the graph.
-    if (negativeBackground.has(id)) { state.negativeShown.add(id); state.excluded.add(id); }
-    else { state.excluded.delete(id); state.negativeShown.delete(id); }
+    const [excluded, negativeShown] = sidebarSets();
+    if (negativeBackground.has(id)) { negativeShown.add(id); excluded.add(id); }
+    else { excluded.delete(id); negativeShown.delete(id); }
     setAssumption(id, null);
-  } else setAssumption(id, state.excluded.has(id) && state.negativeShown.has(id) ? 'negative' : 'positive');
+  } else {
+    const [excluded, negativeShown] = sidebarSets();
+    setAssumption(id, excluded.has(id) && negativeShown.has(id) ? 'negative' : 'positive');
+  }
 }
 function addBackgroundPreset(presetId) {
   const preset = backgroundPresets.find(p => p.id === presetId);
@@ -3227,6 +3308,39 @@ function addBackgroundPreset(presetId) {
   for (const id of preset.principles) { background.add(id); negativeBackground.delete(id); }
   state.modelId = null; state.selected = null;
   saveBackground(); refreshPrincipleControls(); renderAll(true);
+}
+// The explorer's assumptions change only the explorer.
+function rerenderTheory() {
+  state.modelId = null; state.selected = null; document.getElementById('pop').hidden = true; syncDetailHint();
+  saveTheory(); recomputeTheory(); renderModels();
+}
+function setTheoryAssumption(id, sign) {
+  if (!byPid.has(id) || topicBackground.includes(id)) return;
+  theory.positive.delete(id); theory.negative.delete(id);
+  if (sign === 'positive') theory.positive.add(id);
+  if (sign === 'negative') theory.negative.add(id);
+  rerenderTheory();
+}
+function addTheoryPreset(presetId) {
+  const preset = backgroundPresets.find(p => p.id === presetId);
+  if (!preset) return;
+  for (const id of preset.principles) { theory.positive.add(id); theory.negative.delete(id); }
+  rerenderTheory();
+}
+function resetTheory() {
+  for (const id of [...theory.positive]) if (!topicBackground.includes(id)) theory.positive.delete(id);
+  theory.negative.clear();
+  rerenderTheory();
+}
+function saveTheory() {
+  try {
+    const url = new URL(window.location.href);
+    const additions = [...theory.positive].filter(p => !topicBackground.includes(p)).sort();
+    if (additions.length || backgroundPresets.some(p => p.default)) url.searchParams.set('theory', additions.join(','));
+    else url.searchParams.delete('theory');
+    theory.negative.size ? url.searchParams.set('theory-deny', [...theory.negative].sort().join(',')) : url.searchParams.delete('theory-deny');
+    window.history.replaceState(window.history.state, '', url);
+  } catch { /* Local files may not allow history updates. */ }
 }
 function saveBackground() {
   try {
@@ -3393,12 +3507,25 @@ document.getElementById('fit').addEventListener('click', fit);
   const labels = principles => principles.map(p => `<div class="pr-row${inBackground(p.id) ? ' in-background is-collapsed' : ''}" data-pr-row="${p.id}"><span class="seg graph-choice" role="group" aria-label="Show forms of ${esc(p.name)}"><button data-show-positive="${p.id}" aria-label="Show ${esc(p.name)}" aria-pressed="true">✓</button><button data-show-negative="${p.id}" aria-label="Show not ${esc(p.name)}" aria-pressed="false">✗</button></span><span class="sidebar-principle-line"><button class="lnk principle-name" data-principle="${p.id}">${esc(p.name)}</button><span class="pr-actions"><button class="lnk" data-add-background="${p.id}" aria-label="Move ${esc(p.name)} to background">background</button></span></span></div>`).join('');
   el.innerHTML = principleGroups().map((g, i) => `<details class="pr-category" data-category="${g.id}">${categoryHeader(g, '', `<div class="pr-category-actions"><button class="lnk" data-category-select="none">hide</button></div>`)}<div class="ctl">${labels(g.principles)}</div></details>`).join('');
   wireCategories(el);
-  const repaint = repaintGraph;
-  el.querySelectorAll('[data-show-positive]').forEach(b => b.addEventListener('click', () => { const id = b.dataset.showPositive; state.excluded.has(id) ? state.excluded.delete(id) : state.excluded.add(id); repaint(); }));
-  el.querySelectorAll('[data-show-negative]').forEach(b => b.addEventListener('click', () => { const id = b.dataset.showNegative; state.negativeShown.has(id) ? state.negativeShown.delete(id) : state.negativeShown.add(id); repaint(); }));
+  for (const heading of ['pr-heading', 'lat-pr-heading'].map(id => document.getElementById(id))) {
+    heading.insertAdjacentHTML('beforeend', categoryExpander());
+    wireCategoryExpander(heading);
+  }
+  // The sidebar edits the visibility of whichever of the graph and the
+  // conjecture lists is open; the other keeps its own.
+  const repaint = () => state.tab === 'open' ? (refreshPrincipleControls(), renderLynchpins()) : repaintGraph();
+  const toggle = (set, id) => set.has(id) ? set.delete(id) : set.add(id);
+  el.querySelectorAll('[data-show-positive]').forEach(b => b.addEventListener('click', () => { toggle(sidebarSets()[0], b.dataset.showPositive); repaint(); }));
+  el.querySelectorAll('[data-show-negative]').forEach(b => b.addEventListener('click', () => { toggle(sidebarSets()[1], b.dataset.showNegative); repaint(); }));
   const setSelection = (rows, selected) => {
-    rows.forEach(row => { const id = row.dataset.prRow; if (inBackground(id)) return; selected ? state.excluded.delete(id) : state.excluded.add(id); if (!selected) state.negativeShown.delete(id); }); repaint();
+    const [excluded, negativeShown] = sidebarSets();
+    rows.forEach(row => { const id = row.dataset.prRow; if (inBackground(id)) return; selected ? excluded.delete(id) : excluded.add(id); if (!selected) negativeShown.delete(id); }); repaint();
   };
+  document.getElementById('pr-reset').addEventListener('click', () => {
+    if (state.tab === 'open') { state.openExcluded = defaultHidden('open'); state.openNegativeShown = new Set(); }
+    else { state.excluded = defaultHidden('graph'); state.negativeShown = new Set(); }
+    repaint();
+  });
   el.querySelectorAll('[data-category-select]').forEach(b => b.addEventListener('click', () => setSelection(b.closest('.pr-category').querySelectorAll('.pr-row'), b.dataset.categorySelect === 'all')));
   document.getElementById('pr-all').addEventListener('click', () => setSelection(el.querySelectorAll('.pr-row'), true));
   document.getElementById('pr-none').addEventListener('click', () => setSelection(el.querySelectorAll('.pr-row'), false));
@@ -3412,16 +3539,17 @@ document.getElementById('fit').addEventListener('click', fit);
   el.addEventListener('pointerleave', compact);
   el.addEventListener('focusout', ev => { if (!el.contains(ev.relatedTarget) && !el.matches(':hover')) compact(); });
   refreshPrincipleControls = () => {
+    const [excluded, negativeShown] = sidebarSets();
     el.querySelectorAll('.pr-row').forEach(row => {
       const id = row.dataset.prRow, assumed = inBackground(id);
       row.classList.toggle('in-background', assumed); row.inert = assumed;
       if (!assumed) row.classList.remove('is-collapsed');
-      row.querySelector('[data-show-positive]').setAttribute('aria-pressed', !state.excluded.has(id));
-      row.querySelector('[data-show-negative]').setAttribute('aria-pressed', state.negativeShown.has(id));
+      row.querySelector('[data-show-positive]').setAttribute('aria-pressed', !excluded.has(id));
+      row.querySelector('[data-show-negative]').setAttribute('aria-pressed', negativeShown.has(id));
     });
     el.querySelectorAll('.pr-category').forEach(group => {
       const ordinary = [...group.querySelectorAll('.pr-row')].filter(row => !inBackground(row.dataset.prRow));
-      const shown = ordinary.filter(row => !state.excluded.has(row.dataset.prRow) || state.negativeShown.has(row.dataset.prRow)).length;
+      const shown = ordinary.filter(row => !excluded.has(row.dataset.prRow) || negativeShown.has(row.dataset.prRow)).length;
       group.querySelector('.pr-category-count').textContent = `${shown}/${ordinary.length}`;
       setCategoryToggle(group.querySelector('[data-category-select]'), shown > 0);
     });
@@ -3592,7 +3720,9 @@ const LATTICE_CAP = 220;
 // Where the diagram stops being worth reading, which is well below the cap:
 // ten principles already give four hundred arrows.
 const LATTICE_COMFORTABLE = 8;
-const lattice = {shown: [], nodes: [], edges: [], selected: null, capped: 0, view: {k: 1, tx: 0, ty: 0}, fitted: false};
+// The lattice starts from the topic's initial principles too, if it names any.
+const latticeDefault = () => (T.initial_principles || []).filter(id => byPid.has(id) && !inBackground(id));
+const lattice = {shown: latticeDefault(), nodes: [], edges: [], selected: null, capped: 0, view: {k: 1, tx: 0, ty: 0}, fitted: false};
 
 // Entailment answers are memoised per evidence version and background. The
 // build asks the same questions many times over: every candidate meet is
@@ -4180,6 +4310,7 @@ function renderLatticeFilters() {
     lattice.selected = null; lattice.builtKey = null;
     renderLatticeFilters(); renderLattice(); latticeFit();
   });
+  document.getElementById('lat-reset').addEventListener('click', () => { lattice.shown = latticeDefault(); lattice.selected = null; renderLatticeFilters(); renderLattice(); latticeFit(); });
   document.getElementById('lat-clear').addEventListener('click', () => { lattice.shown = []; lattice.selected = null; renderLattice(); latticeFit(); });
   document.getElementById('lat-fit').addEventListener('click', latticeFit);
   const svg = document.getElementById('lat-graph');

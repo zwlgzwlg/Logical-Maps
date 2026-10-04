@@ -1322,6 +1322,10 @@ def validate_topic(topic_id: str, *, quiet=False) -> bool:
             if pid not in ids:
                 errors.append(f"topic.yaml: background preset '{preset_id}' references unknown principle '{pid}'")
 
+    for pid in data["topic"].get("initial_principles", []):
+        if pid not in ids:
+            errors.append(f"topic.yaml: initial_principles references unknown principle '{pid}'")
+
     for b in data["topic"].get("background", []):
         if b not in ids:
             errors.append(f"topic.yaml: background principle '{b}' does not exist")

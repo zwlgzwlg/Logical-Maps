@@ -1,6 +1,6 @@
 id: distinctness-necessary-t
 name: ND (type t)
-category: instances
+category: coarse
 statement: ND (type t) in the displayed closed propositional formulation.
 formal: $\forall p q\, .\,p\ne q\to\Box(p\ne q)$
 date: '2026-09-17'

@@ -5,7 +5,7 @@
 ## Premises
 
 - **Distinctness Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
-- **□Atomicity.** Every closed instance of Atomicity is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Atomicity.** Necessarily, every non-bottom entity of each relational type has an atom below it.
 
 ## Conclusion
 

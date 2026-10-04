@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **□Extensionality.** Every closed instance of Extensionality is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Extensionality.** Necessarily, at each relational type, coextensive relations are identical, including in the nullary propositional case.
 
 ## Proof
 

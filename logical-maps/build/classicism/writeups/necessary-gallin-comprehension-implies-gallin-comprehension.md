@@ -4,7 +4,7 @@
 
 ## Premises
 
-- **□Gallin Extensional Comprehension.** Every closed instance of Gallin Extensional Comprehension is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Gallin Extensional Comprehension.** Necessarily, every relation is coextensive with one that is persistent and has a persistent pointwise negation.
 
 ## Conclusion
 

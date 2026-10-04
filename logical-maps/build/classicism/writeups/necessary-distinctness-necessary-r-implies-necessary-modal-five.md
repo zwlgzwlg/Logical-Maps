@@ -4,11 +4,11 @@
 
 ## Premises
 
-- **□ND.** Every closed instance of ND is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□ND.** Necessarily, distinct things of any type are necessarily distinct.
 
 ## Conclusion
 
-- **□5.** Every closed instance of 5 is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□5.** Necessarily, every possible proposition is necessarily possible.
 
 ## Proof
 
