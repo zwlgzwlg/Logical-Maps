@@ -36,7 +36,7 @@ and, in the library:
 | `Classicism/Certified/Signatures.lean` | Each principle as a schema at every signature: `P.X.schemaIn`, `pureVersion`, `distinctnessC`, `possibilityC`. |
 | `Classicism/Statements.lean` | The generated statements: 265 of the 270 results (those whose principles all have a `lean_def`), 35 models, 22 forms. Not edited by hand. |
 | `Classicism/Map.lean` | One certificate per result proved, named by its id, and per form, named `<principle>.<form>`, each of the generated type: the `lean_ref`s. Each is one line citing the proof. |
-| `Classicism/Results/Forms.lean` | The shallow proofs of the equivalences between a principle's forms, a section per principle (the list forms' are in `Results/Lists.lean`). |
+| `Classicism/Principles/*.lean` | The principles, a file per category of the map, each form defined beside its principle with the shallow proofs of the two directions, `P.X.to_<form>` and `P.X.of_<form>` (the list forms' are in `Results/Lists.lean`). |
 | `Classicism/Tools/MapIndex.lean` | `#classicism_map_index`, which writes `index.json`. |
 
 To regenerate, from `Cian/`:
@@ -110,15 +110,16 @@ results', and the viewer to show the forms on a principle's page.
 Today the viewer's "lean" link is the root of the topic's Lean directory for every result.
 With `index.json` it can link each result to its proof:
 
-- **Proof**, the first entry of `proofs`: the shallow proof in `Results/Records.lean`, at one
+- **Proof**, the first entry of `proofs`: the shallow proof in `Results/Records/`, at one
   argument type for a result at every arity, or the metalogical proof in
   `Results/SentenceSchemas/`;
 - **At every arity**, when there is a second entry: the theorem in `Results/Arity.lean`;
 - **Certificate**: the line in `Classicism/Map.lean`, with its axioms.
 
 and, on a principle's page, each form with its **definition** (beside the official one in
-`Principles.lean`, or for a list form its definition by vectorization, `P.X.listQuoted`),
-its **proofs** (in `Results/Forms.lean` or `Results/Lists.lean`) and its **certificate**.
+`Principles/`, or for a list form its definition by vectorization, `P.X.listQuoted`),
+its **proofs** (beside the definition in `Principles/`, or in `Results/Lists.lean`) and its
+**certificate**.
 
 A link is a file and a line range, made into a URL by the map's build (a GitHub blob at a
 pinned commit, `#L2145-L2160`, or a rendered source page with line anchors). This needs a

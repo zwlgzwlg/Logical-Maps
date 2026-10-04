@@ -16,8 +16,8 @@ said about them.
 This class says what can be said: the pointwise implication is a preorder under which
 `∧_τ` is a meet, `X ∧_τ ¬_τ X` is below everything, the constant relation at a
 proposition is above everything when the proposition holds and below everything when it
-fails, and coextension is implication both ways. These are the rules of natural deduction
-read pointwise, and every "by Leibniz's law" and "under the box" of a proof at a
+fails, coextension is implication both ways, and negation is classical (negation
+introduction and double negation). These are the rules of natural deduction read pointwise, and every "by Leibniz's law" and "under the box" of a proof at a
 relational type is a short chain of them. The list is a basis, not a catalogue; a law
 that is a consequence of these goes below as a theorem, and a law that is not can be
 added as a field.
@@ -71,11 +71,19 @@ class Pointwise (τ : Type) [Rel τ] : Type where
   /-- With `B`, where `Y` fails and `□(Y → □Y)`, `Y` fails necessarily: `¬Y ⊑ □¬Y`. -/
   neg_incl_boxAt_of_b : ∀ Y : τ, (∀ p : Prop, p → □ ◇ p) →
     incl (Rel.top τ) (boxAt (Rel.or (Rel.neg Y) (boxAt Y))) → incl (Rel.neg Y) (boxAt (Rel.neg Y))
+  -- The classical laws of negation, added 4 October for the dual forms of the lattice
+  -- principles (`Principles/Lattice.lean`): with them `¬_τ` is an involution and an atom
+  -- lies below `X` or below `¬_τ X` (`Lattice.lean`).
+  /-- `X ∧_τ Y ⊑ Z → X ∧_τ Y ⊑ ¬_τ Z → X ⊑ ¬_τ Y`: negation introduction, pointwise. -/
+  incl_neg_intro : ∀ X Y Z : τ, (X ∧ Y) ⊆ Z → (X ∧ Y) ⊆ (¬ Z) → X ⊆ ¬ Y
+  /-- `¬_τ ¬_τ X ⊑ X`: double negation, pointwise. -/
+  incl_neg_neg : ∀ X : τ, (¬ ¬ X) ⊆ X
 
 export Pointwise (incl_refl incl_trans incl_and incl_and_left incl_and_right
   incl_and_neg incl_constP incl_of_constP coext_of_incl incl_of_coext
   incl_of_coext' top_boxAt_of_box boxAt_four
-  coext_boxAt_actual boxAt_T incl_boxAt_of_all neg_incl_boxAt_of_b)
+  coext_boxAt_actual boxAt_T incl_boxAt_of_all neg_incl_boxAt_of_b
+  incl_neg_intro incl_neg_neg)
 
 /-! ### Type `t`
 
@@ -117,6 +125,11 @@ theorem incl_boxAt_of_all_prop (X : Prop) : (∀ p : Prop, p → □ p) → X �
 theorem neg_incl_boxAt_of_b_prop (Y : Prop) : (∀ p : Prop, p → □ ◇ p) →
     Rel.top Prop ⊆ boxAt (Rel.or (Rel.neg Y) (boxAt Y)) → Rel.neg Y ⊆ boxAt (Rel.neg Y) :=
   fun b h hny => modal_K _ _ (modal_K _ _ (nec% (neg_of_dia_neg_persist Y)) (b _ hny)) (h trivial)
+theorem incl_neg_intro_prop (X Y Z : Prop) :
+    Rel.and X Y ⊆ Z → Rel.and X Y ⊆ Rel.neg Z → X ⊆ Rel.neg Y :=
+  fun h₁ h₂ hx hy => h₂ ⟨hx, hy⟩ (h₁ ⟨hx, hy⟩)
+theorem incl_neg_neg_prop (X : Prop) : Rel.neg (Rel.neg X) ⊆ X :=
+  fun h => (em X).elim (fun hx => hx) (fun hn => absurd hn h)
 
 instance instPointwiseProp : Pointwise Prop where
   incl_refl := incl_refl_prop
@@ -136,6 +149,8 @@ instance instPointwiseProp : Pointwise Prop where
   boxAt_T := boxAt_T_prop
   incl_boxAt_of_all := incl_boxAt_of_all_prop
   neg_incl_boxAt_of_b := neg_incl_boxAt_of_b_prop
+  incl_neg_intro := incl_neg_intro_prop
+  incl_neg_neg := incl_neg_neg_prop
 
 /-! ### Relational function types
 
@@ -180,6 +195,10 @@ theorem incl_boxAt_of_all_arrow (X : σ → τ) : (∀ p : Prop, p → □ p) �
 theorem neg_incl_boxAt_of_b_arrow (Y : σ → τ) : (∀ p : Prop, p → □ ◇ p) →
     Rel.top (σ → τ) ⊆ boxAt (Rel.or (Rel.neg Y) (boxAt Y)) → Rel.neg Y ⊆ boxAt (Rel.neg Y) :=
   fun b h z => neg_incl_boxAt_of_b (Y z) b (h z)
+theorem incl_neg_intro_arrow (X Y Z : σ → τ) :
+    (X ∧ Y) ⊆ Z → (X ∧ Y) ⊆ (¬ Z) → X ⊆ ¬ Y :=
+  fun h₁ h₂ z => incl_neg_intro (X z) (Y z) (Z z) (h₁ z) (h₂ z)
+theorem incl_neg_neg_arrow (X : σ → τ) : (¬ ¬ X) ⊆ X := fun z => incl_neg_neg (X z)
 
 instance instPointwiseArrow : Pointwise (σ → τ) where
   incl_refl := incl_refl_arrow
@@ -199,6 +218,8 @@ instance instPointwiseArrow : Pointwise (σ → τ) where
   boxAt_T := boxAt_T_arrow
   incl_boxAt_of_all := incl_boxAt_of_all_arrow
   neg_incl_boxAt_of_b := neg_incl_boxAt_of_b_arrow
+  incl_neg_intro := incl_neg_intro_arrow
+  incl_neg_neg := incl_neg_neg_arrow
 
 end arrow
 
@@ -240,6 +261,19 @@ theorem incl_of_and_constP (X Y : τ) (p : Prop) : ¬ p → (X ∧ constP p) ⊆
 theorem incl_neg_of_and_constP (X : τ) (p : Prop) :
     p → (X ∧ constP p) ⊆ (¬ (X ∧ constP p)) → X ⊆ ¬ X :=
   fun hp h => incl_neg_of_incl X (X ∧ constP p) (incl_and_constP_self X p hp) h
+
+/-- `X ⊑ ¬_τ ¬_τ X`, from negation introduction. -/
+theorem incl_neg_neg' (X : τ) : X ⊆ ¬ ¬ X :=
+  incl_neg_intro X (¬ X) X (incl_and_left X (¬ X)) (incl_and_right X (¬ X))
+
+/-- `X ⊑ Y → X ⊑ ¬_τ Y → X ⊑ ¬_τ X`: what is below a relation and its negation is below
+its own negation. -/
+theorem incl_neg_of_incl_both (X Y : τ) : X ⊆ Y → X ⊆ ¬ Y → X ⊆ ¬ X :=
+  fun h₁ h₂ => incl_trans X (Y ∧ ¬ Y) (¬ X) (incl_and Y (¬ Y) X h₁ h₂) (incl_and_neg Y (¬ X))
+
+/-- `X ∧_τ Y ⊑ ¬_τ (X ∧_τ Y) → X ⊑ ¬_τ Y`: if the meet is bottom, `X` is below `¬_τ Y`. -/
+theorem incl_neg_of_and_incl_neg (X Y : τ) : (X ∧ Y) ⊆ ¬ (X ∧ Y) → X ⊆ ¬ Y :=
+  fun h => incl_neg_intro X Y (X ∧ Y) (incl_refl (X ∧ Y)) h
 
 end consequences
 

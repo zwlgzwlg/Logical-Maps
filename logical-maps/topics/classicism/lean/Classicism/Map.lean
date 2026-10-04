@@ -1,6 +1,5 @@
 import Classicism.Statements
 import Classicism.Results.Arity
-import Classicism.Results.Forms
 import Classicism.Results.SentenceSchemas.Incompatibilities
 import Classicism.Results.SentenceSchemas.WitnessedPossibility
 import Classicism.Results.SentenceSchemas.PossibilityPlus
@@ -26,7 +25,8 @@ Each certificate is one line citing the result's proof. That proof is found, for
 by name: `Proofs.<id>` in `Results/Records.lean` (the shallow proof, at one argument type
 where the result is at every arity), `<id>` or `Meta.<id>` in `Results/Arity.lean` (a shallow
 core, the result at every arity); otherwise the theorem the certificate cites, in
-`Results/SentenceSchemas/`; for a form, the two directions in `Results/Forms.lean`.
+`Results/SentenceSchemas/`; for a form, the two directions beside the principle in `Principles/`
+(`P.<Name>.to_<form>`, `P.<Name>.of_<form>`), or for a list form in `Results/Lists.lean`.
 `#classicism_map_index` (`Tools/MapIndex.lean`) writes these locations out for the map
 (`map/index.json`).
 -/
@@ -1100,8 +1100,7 @@ theorem witnessed_possibility_incompatible_with_nd : Statements.witnessed_possib
 
 /-- `boolean-completeness-r`, form `lub`: Boolean Completeness and its LUB form. -/
 theorem boolean_completeness_r.lub : Statements.boolean_completeness_r.lub := by
-  map_form Proofs.boolean_completeness_implies_lub_form.entails
-    Proofs.lub_form_implies_boolean_completeness.entails
+  map_form P.BooleanCompleteness.to_lub.entails P.BooleanCompleteness.of_lub.entails
 
 /-- `barcan-r`, form `list`: the principle for every list of argument types. -/
 theorem barcan_r.list : Statements.barcan_r.list := by

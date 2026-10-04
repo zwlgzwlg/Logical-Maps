@@ -187,6 +187,27 @@ theorem atom_le_imp_le (w q : Prop) (hw : Atom w) : w ≤ (q → w ≤ q) :=
       rw [imp_eq_not_or q (w ≤ q)]
       exact le_or_of_le_left_prop w (¬ q) _ h)
 
+/-- `¬p ≤ p` says that `p` is necessary: `p = (¬p ∨ p)` and `¬p ∨ p` is `⊤`. The duals of
+Atomicity and Strong Leibniz at `t` are stated with `□p`. -/
+theorem neg_le_iff_box (p : Prop) : (¬ p) ≤ p ↔ □ p :=
+  have e : (¬ p ∨ p) = True := (or_comm_eq (¬ p) p).trans (em_eq p)
+  ⟨fun h => h.trans e, fun h => h.trans e.symm⟩
+
+/-- Negation reverses entailment: `p ≤ q` gives `¬q ≤ ¬p`. Stated with `entails`, the
+constant of Tractarianism. -/
+theorem entails_neg_neg (p q : Prop) (h : entails p q) : entails (¬ q) (¬ p) :=
+  (le_iff_prop _ _).2 (modal_K _ _ (nec% (contra_imp p q)) ((le_iff_prop p q).1 h))
+
+/-- `(¬p → ∀x. ¬Xx) → (∃x. Xx) → p`: for the dual form of Tractarianism. -/
+theorem exists_imp_of_not_imp_forall_not {σ : Type} [Ty σ] (p : Prop) (X : σ → Prop) :
+    (¬ p → ∀ x, ¬ X x) → (∃ x, X x) → p := fun h he =>
+  (em p).elim (fun hp => hp) fun hn => he.elim fun x hx => absurd hx (h hn x)
+
+/-- `((∃x. ¬Xx) → ¬p) → p → ∀x. Xx`: for the dual form of Tractarianism. -/
+theorem forall_of_exists_not_imp_not {σ : Type} [Ty σ] (p : Prop) (X : σ → Prop) :
+    ((∃ x, ¬ X x) → ¬ p) → p → ∀ x, X x := fun h hp x =>
+  (em (X x)).elim (fun hx => hx) fun hn => absurd hp (h ⟨x, hn⟩)
+
 end prop
 
 /-! ### The order at `σ → t`
@@ -333,6 +354,41 @@ theorem lub_of_glb_ubs (X : τ → Prop) (y : τ) (hy : GLB y (λ z ↦ UB z X))
 theorem glb_of_lub_lbs (X : τ → Prop) (y : τ) (hy : LUB y (λ z ↦ LB z X)) : GLB y X :=
   fun z => ⟨fun hz => (hy y).2 (le_refl_rel y) z hz,
     fun hzy x hx => le_trans_rel z y x hzy ((hy x).1 fun w hw => hw x hx)⟩
+
+/-- `≤` is antisymmetric at a relational type: inclusion both ways under the box is
+coextension under the box, which Intensionality makes identity. -/
+theorem le_antisymm_rel (x y : τ) (h₁ : x ≤ y) (h₂ : y ≤ x) : x = y :=
+  intensionality x y (modal_K _ _ (modal_K _ _ (nec% (coext_of_incl x y))
+    ((le_iff _ _).1 h₁)) ((le_iff _ _).1 h₂))
+
+/-- `⊥_τ` is below everything. -/
+theorem bot_le_rel (x : τ) : (⊥ : τ) ≤ x :=
+  (le_iff _ _).2 (nec% (incl_of_constP x False (fun h => h)))
+
+/-- `¬_τ ¬_τ x ≤ x`. -/
+theorem neg_neg_le_rel (x : τ) : (¬ ¬ x) ≤ x := (le_iff _ _).2 (nec% (incl_neg_neg x))
+
+/-- `x ≤ ¬_τ ¬_τ x`. -/
+theorem le_neg_neg_rel (x : τ) : x ≤ ¬ ¬ x := (le_iff _ _).2 (nec% (incl_neg_neg' x))
+
+/-- What is below `y` and below `¬_τ y` is below its own negation: it is `⊥_τ`. -/
+theorem le_neg_of_le_both_rel (x y : τ) (h₁ : x ≤ y) (h₂ : x ≤ ¬ y) : x ≤ ¬ x :=
+  (le_iff _ _).2 (modal_K _ _ (modal_K _ _ (nec% (incl_neg_of_incl_both x y))
+    ((le_iff _ _).1 h₁)) ((le_iff _ _).1 h₂))
+
+/-- What is below its own negation is `⊥_τ`. -/
+theorem eq_bot_of_le_neg_rel (x : τ) (h : x ≤ ¬ x) : x = ⊥ :=
+  le_antisymm_rel x ⊥
+    ((le_iff _ _).2 (modal_K _ _ (nec% (incl_of_incl_neg x (⊥ : τ))) ((le_iff _ _).1 h)))
+    (bot_le_rel x)
+
+/-- An atom lies below `x` or below `¬_τ x`: its meet with `x` is below it, so is either the
+atom itself or bottom. -/
+theorem atom_le_or_le_neg_rel (y x : τ) (hy : Atom y) : y ≤ x ∨ y ≤ ¬ x :=
+  (em ((y ∧ x) = y)).elim
+    (fun e => Or.inl (by rw [← e]; exact (le_iff _ _).2 (nec% (incl_and_right y x))))
+    (fun hne => Or.inr ((le_iff _ _).2 (modal_K _ _ (nec% (incl_neg_of_and_incl_neg y x))
+      ((le_iff _ _).1 ((hy (y ∧ x)).1 ⟨(le_iff _ _).2 (nec% (incl_and_left y x)), hne⟩)))))
 
 end rel
 

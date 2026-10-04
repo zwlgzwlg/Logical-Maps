@@ -42,3 +42,16 @@ Ty-parameter, also its list form: `P.listQuoted`, the instance at a list of type
   Classicism.P.Vicinity Classicism.P.NecVicinity Classicism.P.ModalizedPlenitude
   Classicism.P.AxiomOfInfinityE Classicism.P.AxiomOfInfinityT Classicism.P.PossibleInfinityE
   Classicism.P.PossibleInfinityT Classicism.P.CountableBooleanCompleteness
+  -- the equivalent forms (`Principles/`)
+  Classicism.P.ModalKDual Classicism.P.ModalTDual Classicism.P.ModalFourDual
+  Classicism.P.ConverseBarcanDual Classicism.P.ModalBDual Classicism.P.NecModalBDual
+  Classicism.P.ModalFiveDual Classicism.P.NecModalFiveDual
+  Classicism.P.NecessityOfDistinctnessDual Classicism.P.NecNecessityOfDistinctnessDual
+  Classicism.P.BarcanDual Classicism.P.NecBarcanDual Classicism.P.TractarianismDual
+  Classicism.P.NecTractarianismDual Classicism.P.AtomicityDual Classicism.P.NecAtomicityDual
+  Classicism.P.NecBooleanCompletenessLUB Classicism.P.StrongLeibnizDual
+  Classicism.P.NecStrongLeibnizDual Classicism.P.NecessityOfDistinctnessTDual
+  Classicism.P.NecNecessityOfDistinctnessTDual Classicism.P.BarcanTDual
+  Classicism.P.NecBarcanTDual Classicism.P.AtomicityTDual
+  Classicism.P.BooleanCompletenessTLUB Classicism.P.StrongLeibnizTDual
+  Classicism.P.NecStrongLeibnizTDual Classicism.P.DistinctnessPreservingCollapseDual

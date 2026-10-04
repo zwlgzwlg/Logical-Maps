@@ -17,7 +17,7 @@ One definition per principle of the map with a shallow statement, named as the m
 
 | file | the map's category |
 | --- | --- |
-| `Principles/Base.lean` | `base`: theorems of `C`, `K`, `T`, `4`, CBF, NI, Existence |
+| `Principles/Base.lean` | `base`: theorems of `C`: `K`, `T`, `4`, CBF, NI, Existence |
 | `Principles/Coarse.lean` | `coarse`: `B`, `5`, ND, BF, Tractarianism |
 | `Principles/Extensionality.lean` | `extensionality`: the Fregean Axiom, Extensionality, Functionality |
 | `Principles/Lattice.lean` | `lattice`: Atomicity, Boolean Completeness, Actuality, Strong Leibniz |
@@ -54,6 +54,33 @@ principle boxes the formula after its type parameters, as the Background says.
 
 Definitions are from `topics/classicism/background.md`; each statement is the record's
 `formal` field with its type quantifier made a parameter.
+
+## Forms
+
+A principle's equivalent forms, the map's *variants* (`dual`, `lub`, …), are stated beside
+it, so that a link from the principle's page lands on all of them:
+
+* the form is defined right after the official definition, named `P.<Name><Form>`
+  (`P.BarcanDual`, `P.BooleanCompletenessLUB`), its docstring naming the map's principle
+  and variant (`` `barcan-r`, form `dual` ``);
+* the two directions of the equivalence follow, as record theorems `P.<Name>.to_<form>`
+  and `P.<Name>.of_<form>` (`P.Barcan.to_dual : Barcan σ → BarcanDual σ`), held to the
+  gate and certified as entailments between schemas by the same audits as the records
+  (`Certified/`);
+* the map's certificate `Map.<principle-id>.<form-id>` cites `P.<Name>.to_<form>.entails`
+  and `P.<Name>.of_<form>.entails`.
+
+A boxed principle's form is the boxed form (`P.NecBarcanDual σ := □ BarcanDual σ`), and its
+equivalence is the unboxed one necessitated, with `K`. A form of an instance at `t` is the
+instance of the general form, unless the map words it at `t` in its own way (`□p` for
+`¬p ≤ p`, `neg_le_iff_box`).
+
+Two kinds of form are not shallow statements, and live elsewhere. The **polyadic** form of
+a principle with a Ty-parameter is its vectorization, `P.X.listQuoted` (`Certified/Schemas.lean`),
+with the two directions in `Results/Lists.lean`; a **dual polyadic** form is the
+vectorization of the dual, and its equivalence is composed from those and the vectorized
+directions `P.X.to_dual.listEntails` and `P.X.of_dual.listEntails`. A form of a sentence
+schema is a sentence schema, defined beside it in `Syntax/`.
 
 ## The paper's symbols
 

@@ -82,11 +82,14 @@ relational type is a field, proved once at `Prop` and once at `σ → τ`, since
 layer has no induction on types (the metalogical layer does, and derives each such law
 for every object type from those two proofs).
 
-*The map's principles.* `Principles.lean` states each principle of the Logical Map as a
+*The map's principles.* `Principles/` states each principle of the Logical Map as a
 proposition with its types as parameters, `Barcan σ`, `Atomicity τ`, in the map's own
-formal wording. The records that relate them — the map's arrows — are proved in
-`Results/Records.lean`, one theorem per record, and it is those theorems, together with
-the metalogical results beside them, that the pipeline certifies.
+formal wording, one file per category of the map. Each principle's equivalent forms (the
+map's variants: its dual, its LUB form) are defined beside it, with the two directions of
+the equivalence, `P.Barcan.to_dual` and `P.Barcan.of_dual`. The records that relate the
+principles — the map's arrows — are proved in `Results/Records/`, one theorem per record,
+a file per topic, and it is those theorems, together with the metalogical results beside
+them, that the pipeline certifies.
 
 ## C and C⁻
 
@@ -291,7 +294,7 @@ Classicism/Comprehension.lean           persistence, inextensibility and the rig
 Classicism/Pointwise.lean               the pointwise laws of ⊑ at a relational type, as a class
 Classicism/Lattice.lean                 Atom, the bounds LB/GLB/UB/LUB, ActualWorld; the order, atoms and bounds at t, at σ → t and at a relational type
 Classicism/Cardinality.lean             the finite cardinalities 𝟎, Suc, FiniteCardinality, and countability Ctbl, of the Background
-Classicism/Principles.lean              one Prop per principle of the map
+Classicism/Principles/                  one Prop per principle of the map, a file per category; its forms and their equivalences beside it
 
 Classicism/Syntax/Types.lean            the types of R as an inductive, with type variables; closed types; σs ⇒* ρ
 Classicism/Syntax/Term.lean             intrinsically typed de Bruijn terms; renaming, substitution
@@ -338,8 +341,7 @@ Classicism/Models/MonoidModel.lean      the ideally full model over any monoid a
 Classicism/Models/Monoids.lean          Appendix D, Parts 2 to 8: the seven monoids of functions on ℕ, the verdicts as instances
 Classicism/Models/README.md             the verdict table; the survey of two-object variants and what they would add to the map
 
-Classicism/Results/Records.lean         the map's records proved in the shallow layer, one theorem per record
-Classicism/Results/Forms.lean           the equivalences between a principle's forms, a section per principle
+Classicism/Results/Records/             the map's records proved in the shallow layer, one theorem per record, a file per topic
 Classicism/Results/SentenceSchemas/     results about the sentence schemas: Distinctness, Possibility, No Pure Contingency and their kin
 Classicism/Results/Consistency/         consistency and non-entailment facts from the models, which the incompatibilities rest on
 

@@ -6,7 +6,6 @@ import Classicism.Pointwise
 import Classicism.Lattice
 import Classicism.Cardinality
 import Classicism.Results.Records
-import Classicism.Results.Forms
 
 /-!
 # Audit
@@ -19,7 +18,8 @@ audit, `Classicism/Strict/Audit.lean`.
 -- Every theorem of the shallow layer: the prelude, the identities, the classes, the records.
 #classicism_audit Classicism.Booleanism Classicism.Identities Classicism.Modal
 #classicism_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records.Base Classicism.Results.Records.Coarse Classicism.Results.Records.Extensionality Classicism.Results.Records.Comprehension Classicism.Results.Records.Lattice Classicism.Results.Records.Choice Classicism.Results.Records.C5 Classicism.Results.Records.Infinity
-#classicism_audit Classicism.Pointwise Classicism.Lattice Classicism.Results.Forms
+#classicism_audit Classicism.Pointwise Classicism.Lattice
+#classicism_audit Classicism.Principles.Base Classicism.Principles.Coarse Classicism.Principles.Extensionality Classicism.Principles.Lattice Classicism.Principles.Instances Classicism.Principles.Comprehension Classicism.Principles.Choice Classicism.Principles.Infinity Classicism.Principles.Schematic
 #classicism_audit Classicism.Cardinality
 
 -- The type-class instances carry the Logical-Equivalence instances that Intensionality
@@ -39,5 +39,6 @@ plumbing and the formalisation's own metalanguage. -/
 
 #classicism_types_audit Classicism.Booleanism Classicism.Identities Classicism.Modal
 #classicism_types_audit Classicism.Order Classicism.Comprehension Classicism.Results.Records.Base Classicism.Results.Records.Coarse Classicism.Results.Records.Extensionality Classicism.Results.Records.Comprehension Classicism.Results.Records.Lattice Classicism.Results.Records.Choice Classicism.Results.Records.C5 Classicism.Results.Records.Infinity
-#classicism_types_audit Classicism.Pointwise Classicism.Lattice Classicism.Results.Forms
+#classicism_types_audit Classicism.Pointwise Classicism.Lattice
+#classicism_types_audit Classicism.Principles.Base Classicism.Principles.Coarse Classicism.Principles.Extensionality Classicism.Principles.Lattice Classicism.Principles.Instances Classicism.Principles.Comprehension Classicism.Principles.Choice Classicism.Principles.Infinity Classicism.Principles.Schematic
 #classicism_types_audit Classicism.Cardinality
