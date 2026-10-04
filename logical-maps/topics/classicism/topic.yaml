@@ -114,6 +114,7 @@ views:
 lattice_views:
 - id: pilot
   name: 'Pilot: necessity and rigidity'
+  default: true
   description: 'The conjunctions of Extensionality and five boxed principles: □ND, □Atomicity, □Actuality,
     □Rigid Comprehension and □BF.'
   principles: *id001

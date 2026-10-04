@@ -3547,9 +3547,23 @@ function pageBack() {
   const prev = pageHistory.pop();
   if (prev) openPage(prev.sel, prev); else { state.page = null; showTab(state.tab); }
 }
+// What is shown is per view: the Conjectures tab keeps its own list, starting from
+// every principle, while the graph keeps the one its View menu and sidebar set.
+// The background is one setting everywhere. The sidebar edits whichever list is
+// in place, so the lists are swapped as the tab changes.
+const shownLists = { graph: null, open: { excluded: new Set(), negativeShown: new Set() } };
+function swapShownList(from, to) {
+  const key = tab => tab === 'open' ? 'open' : 'graph';
+  if (key(from) === key(to)) return false;
+  shownLists[key(from)] = { excluded: state.excluded, negativeShown: state.negativeShown };
+  ({ excluded: state.excluded, negativeShown: state.negativeShown } = shownLists[key(to)] || { excluded: new Set(), negativeShown: new Set() });
+  return true;
+}
 function showTab(tab) {
   hover(null); stopFlow();
+  const swapped = swapShownList(state.tab, tab);
   state.tab = tab; state.page = null; pageHistory.length = 0;
+  if (swapped) { refreshPrincipleControls(); if (tab !== 'open') renderGraph(); }
   if (tab === 'graph' || tab === 'open' || tab === 'lattice') {
     // One sidebar for the three views, so background, source selections,
     // click slots, scrolling and pane sizes are shared rather than duplicated.
@@ -5028,13 +5042,15 @@ function syncViewPicker(pre, views, choice, modified) {
   document.getElementById(pre + '-view-modified').hidden = !modified;
 }
 function syncViews() {
-  const graphModified = graphViewModified(), latticeModified = latticeViewModified() || (!viewChoice.lattice && lattice.shown.length > 0);
-  syncViewPicker('graph', graphViews, viewChoice.graph, graphModified);
+  const latticeModified = latticeViewModified() || (!viewChoice.lattice && lattice.shown.length > 0);
   syncViewPicker('lat', latticeViews, viewChoice.lattice, latticeModified && !!viewChoice.lattice);
+  viewParam('lat', latticeModified ? lattice.shown.join(',') : null);
+  if (state.tab === 'open') return;  // the Conjectures tab's own list is in place, not the graph's
+  const graphModified = graphViewModified();
+  syncViewPicker('graph', graphViews, viewChoice.graph, graphModified);
   // What is shown, once it differs from the view, so a link reproduces it exactly.
   viewParam('show', graphModified ? ids.filter(id => !inBackground(id) && !state.excluded.has(id)).join(',') : null);
   viewParam('neg', graphModified && state.negativeShown.size ? [...state.negativeShown].sort().join(',') : null);
-  viewParam('lat', latticeModified ? lattice.shown.join(',') : null);
 }
 function applyGraphView(id, render = true) {
   const v = graphViews.find(x => x.id === id) || null;
