@@ -1553,7 +1553,8 @@ def build_landing() -> Path | None:
     links = []
     for topic_id in site["maps"]:
         topic = load_topic(topic_id)["topic"]
-        if not (BUILD / topic_id / "index.html").exists():
+        # A draft is built but not listed on the homepage.
+        if topic.get("draft") or not (BUILD / topic_id / "index.html").exists():
             continue
         links.append(f'<li><a class="map-link" href="{escape(topic_id)}/">'
                      f'<span class="map-name">{escape(topic["title"])}</span>'

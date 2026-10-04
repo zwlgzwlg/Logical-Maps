@@ -46,7 +46,8 @@ the topic subject in each map's email link.
 
 A topic with `draft: true` in its `topic.yaml` (intuitionisticism) is built and
 validated but nothing derived is computed for it: no rankings, settled share or
-recorded-conjecture list, and `lynchpins` skips it. Leave it out of feature work
+recorded-conjecture list, and `lynchpins` skips it. Its page is built but not
+listed on the homepage. Leave it out of feature work
 and reports unless it is asked for by name.
 
 ## Commands
