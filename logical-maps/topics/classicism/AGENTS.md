@@ -41,6 +41,8 @@ Read a matching `writeups/<id>.md` when it exists.
   use `models/full-free-monoid-glued-constants*.yaml` and matching write-ups.
   For signature claims, check the specified interpretation of constants and
   any pending expansion obligation, even when the pure-language model is proved.
+- `CANDIDATES.md` lists candidate principles not yet recorded, with notes on what
+  each would need; check it before adding a principle.
 - `extraction.md` indexes Classicism by proposition/section, followed by
   sections on *Arithmetic is Necessary*, *Logical Combinatorialism*, and
   *A Philosophical Introduction to Higher-Order Logics*. Use `papers.yaml`

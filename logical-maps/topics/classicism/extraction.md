@@ -157,3 +157,26 @@ full and full models), the coalesced group's `intensional-choice-component`, and
 of the Boolean-valued, ultralimit-fork, all-finite coalesced, qualitative-links and
 qualitative-contrast models. Open: Intensional Choice in the symmetric models' one-individual
 variants.
+
+## Deferred model verdicts: Rigid Power (3 October 2026)
+
+**To do.** Record `rigid-power-r` and `necessary-rigid-power-r` as satisfied, in the
+new model-record format (an argument of the full action models' group would cover them), in `full-idempotent-monoid`,
+`full-two-object-chain` and `full-two-object-retract`, with the argument below. (Moved here from the `classicism-edits`
+worktree on 3 October 2026, after the new format had landed.)
+The engine already derives both in the other full models, through C5 or
+□BF + □Atomicity + □Rigid Comprehension.
+
+**Argument** (Claude Opus 5.5 (Anthropic), 3 October 2026; not yet checked by a
+human). In a full action model, write $X_0(S)_k:=k\cdot S$. At any object,
+$X_0(S)$ is in the domain, so a relation $Y$ is weakly rigid iff $Y=X_0(Y_1)$.
+Every such $Y$ is rigid, since $(h\cdot Y)_k=k\cdot(h\cdot Y_1)$. So the rigid
+relations are exactly the $X_0(S)$. Moreover $X_0(T)\le X_0(S)$ iff $T\subseteq S$.
+For rigid $F=X_0(S)$ and $P:=\lambda X\, .\,\operatorname{Rigid}(X)\land X\le F$:
+- at an arrow $k$, $P_k=\{X_0(T'):T'\subseteq k\cdot S\}$;
+- transport gives $k\cdot P_1=\{X_0(k\cdot T):T\subseteq S\}$;
+- these coincide, because the image map $T\mapsto k\cdot T$ from subsets of $S$ to
+  subsets of $k\cdot S$ is onto.
+
+So $P=X_0(P_1)$, and $P$ is rigid. The same holds at every object, so both forms of
+Rigid Power hold in every full action model.
