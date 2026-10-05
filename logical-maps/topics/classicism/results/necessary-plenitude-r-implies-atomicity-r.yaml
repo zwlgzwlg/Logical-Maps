@@ -9,7 +9,8 @@ certificate:
   recorded_by: OpenAI Codex (GPT-6), 17 September 2026
   checked_by: []
   date: '2026-09-17'
-  lean: none
+  lean: verified
+  lean_ref: Classicism.Map.necessary_plenitude_r_implies_atomicity_r
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §2.3, concluding equivalences, p. 33.
 source_names:

@@ -24,3 +24,4 @@ changes:
   summary: >-
     Renamed from “Infinity (type e)” to mark it as the schema, now that the quantified Axiom of Infinity
     (type e) is recorded separately. The id, the statement and every connection are unchanged.
+lean_def: (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE)

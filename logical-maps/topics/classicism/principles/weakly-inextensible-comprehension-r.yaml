@@ -34,3 +34,4 @@ notes: >-
   argument types. The principle follows from Actuality and separately from Boolean Completeness, which
   the recorded models show to be independent of one another, so it is strictly weaker than each. Whether
   it implies the boxed principle, Inextensible Comprehension, is open.
+lean_def: Classicism.P.WeaklyInextensibleComprehension.schemaIn

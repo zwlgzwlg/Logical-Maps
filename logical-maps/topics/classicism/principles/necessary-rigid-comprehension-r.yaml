@@ -15,3 +15,4 @@ references:
   locator: §2.1, pp. 21–23; §§2.2–2.3, pp. 25–34
 notes: Box each fully closed instance of Rigid Comprehension. Type quantifiers and formula side conditions
   remain outside the box.
+lean_def: Classicism.P.NecRigidComprehension.schemaIn

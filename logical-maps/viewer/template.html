@@ -3119,9 +3119,13 @@ function openPaper(id) {
   const target = document.getElementById('paper-' + id);
   target.scrollIntoView({block: 'start'}); target.focus({preventScroll: true});
 }
+// Links to the Lean sources: a record's own, pinned to the commit the map was built from,
+// when the topic's Lean index has them; else the Lean files.
+const leanLinkTags = ls => (ls || []).map(l => `<a href="${esc(l.url)}" target="_blank">Lean ${esc(l.label)}</a>`);
 function fileLinks(x) {
   const f = x.files || {}; const parts = [];
-  if (x.certificate.lean_ref && (DATA.downloads || {}).lean) parts.push(`<a href="${DATA.downloads.lean}" target="_blank">lean</a>`);
+  if ((x.lean_links || []).length) parts.push(...leanLinkTags(x.lean_links));
+  else if (x.certificate.lean_ref && (DATA.downloads || {}).lean) parts.push(`<a href="${DATA.downloads.lean}" target="_blank">lean</a>`);
   return parts.length ? `<div class="links">${parts.join(' · ')}</div>` : '';
 }
 // A record with a hand-written write-up shows that write-up in full on its page.
@@ -3487,7 +3491,8 @@ function renderPage(sel) {
     }
   } else if (sel.type === 'principle') {
     const p = byPid.get(sel.id);
-    h += `<h1>${sel.negative ? '¬' : ''}${esc(p.name)}</h1>${sel.negative ? '<p>Negation of the following principle:</p>' : ''}${(p.aliases || []).length ? `<div class="id">${esc(p.aliases.join(', '))}</div>` : ''}<div class="prose statement">${esc(p.statement)}</div>${p.formal ? `<div class="formal">${esc(p.formal)}</div>` : ''}${p.definitions ? `<div class="defs">${fmt(p.definitions)}</div>` : ''}`;
+    h += `<h1>${sel.negative ? '¬' : ''}${esc(p.name)}</h1>${sel.negative ? '<p>Negation of the following principle:</p>' : ''}${(p.aliases || []).length ? `<div class="id">${esc(p.aliases.join(', '))}</div>` : ''}<div class="prose statement">${esc(p.statement)}</div>${p.formal ? `<div class="formal">${esc(p.formal)}</div>` : ''}${p.definitions ? `<div class="defs">${fmt(p.definitions)}</div>` : ''}`
+      + (p.lean_def ? `<div class="pop-l">Lean: <code>${esc(p.lean_def)}</code>${(p.lean_links || []).length ? ' · ' + leanLinkTags(p.lean_links).join(' · ') : ''}</div>` : '');
     if (p.about) h += `<h2>About</h2><div class="prose about">${fmt(p.about)}</div>`;
     h += variantsSection(p);
     if (p.notes) h += `<h2>Notes</h2><div class="prose">${fmt(p.notes)}</div>`;
@@ -3524,7 +3529,7 @@ function variantsSection(p) {
   return `<h2>Equivalent forms</h2><p class="note">Each is provably equivalent to the statement above in the base theory, instance by instance.</p><div class="variants">${vs.map(v =>
     `<section class="variant" id="variant-${esc(v.id)}"><h3>${esc(v.name)}</h3>${v.statement ? `<div class="prose">${esc(v.statement)}</div>` : ''}${v.formal ? `<div class="formal">${esc(v.formal)}</div>` : ''}${v.definitions ? `<div class="defs">${fmt(v.definitions)}</div>` : ''}`
     + `<details><summary>Why it is equivalent</summary><div class="prose">${fmt(v.equivalence)}</div>${(v.references || []).length ? paperReferenceList(paperReferences([v])) : ''}</details>`
-    + (v.lean && v.lean.ref ? `<div class="pop-l">Lean: <code>${esc(v.lean.ref)}</code>${v.lean.equivalence_ref ? `; equivalence <code>${esc(v.lean.equivalence_ref)}</code>` : ''}</div>` : '')
+    + (v.lean && v.lean.ref ? `<div class="pop-l">${v.lean.status === 'verified' ? '<span class="badge lean verified">Lean ✓</span> ' : ''}Lean: <code>${esc(v.lean.ref)}</code>${v.lean.equivalence_ref ? `; equivalence <code>${esc(v.lean.equivalence_ref)}</code>` : ''}${(v.lean_links || []).length ? ' · ' + leanLinkTags(v.lean_links).join(' · ') : ''}</div>` : '')
     + '</section>').join('')}</div>`;
 }
 function jumpToArguments(el, indices) {

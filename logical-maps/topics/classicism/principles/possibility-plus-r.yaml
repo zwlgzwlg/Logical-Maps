@@ -33,3 +33,4 @@ variants:
   equivalence: The instance of either form at $\neg P$ is, after contraposition and $\Diamond=\neg\Box\neg$,
     the instance of the other at $P$; $\neg P$ is pure with the same free variables. For $n=0$ the disjunction
     is $\bot$.
+lean_def: (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityPlus)

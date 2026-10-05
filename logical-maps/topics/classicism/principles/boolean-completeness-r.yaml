@@ -29,6 +29,10 @@ about: |-
   Comprehension with it.
 variants:
 - id: lub
+  lean:
+    ref: Classicism.P.BooleanCompletenessLUB.schemaIn
+    equivalence_ref: Classicism.Map.boolean_completeness_r.lub
+    status: verified
   name: Least-upper-bound form
   statement: Every property of entities of a relational type has a least upper bound in that type.
   formal: $\forall X^{\tau t}\, .\,\exists y^\tau\, .\,\operatorname{LUB}_\tau(y,X)\qquad(\tau\ne e)$
@@ -45,3 +49,4 @@ variants:
     the same $\tau$.
 
     Background records the same equivalence where it defines $\operatorname{LUB}$.
+lean_def: Classicism.P.BooleanCompleteness.schemaIn

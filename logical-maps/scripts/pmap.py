@@ -2640,6 +2640,57 @@ def render_lean_index(data: dict, source: Path, destination: Path) -> None:
     (destination / "index.html").write_text(html, encoding="utf-8")
 
 
+def lean_source_links(topic_id: str, data: dict) -> dict | None:
+    """Links from records to the Lean sources, from the index lean-check writes.
+
+    Each is a URL made from the topic's `lean.source_url` template, pinned to the commit the
+    build runs at, so the lines it points to are the lines that were indexed. Lean changes
+    must therefore be committed before building; the build warns when they are not.
+    """
+    import subprocess
+    cfg = data["topic"].get("lean") or {}
+    template, index = cfg.get("source_url"), (cfg.get("index") or {}).get("file")
+    root = TOPICS / topic_id / "lean"
+    if not template or not index or not (root / index).exists():
+        return None
+    git = lambda *args: subprocess.run(["git", *args], cwd=root, capture_output=True, text=True).stdout.strip()
+    commit = git("rev-parse", "HEAD")
+    if not commit:
+        return None
+    if git("status", "--porcelain", "--", "."):
+        print(f"warning: {topic_id}: Lean links pin {commit[:7]}, but lean/ has uncommitted changes")
+    idx = json.loads((root / index).read_text(encoding="utf-8"))
+    link = lambda loc, label: {"label": label, "url": template.format(
+        commit=commit, file=loc["file"], start=loc["lines"][0], end=loc["lines"][1])}
+
+    def links(entry: dict, definitions: bool = False) -> list[dict]:
+        out = [link(d, "definition") for d in entry.get("definitions", [])[1:]] if definitions else []
+        def label(p: dict) -> str:  # a variant's two directions: official ⇒ form, form ⇒ official
+            last = p["name"].rsplit(".", 1)[-1]
+            return ("proof ⇒" if last.startswith("to_") else "proof ⇐" if last.startswith("of_")
+                    else "proof at every arity" if p["file"].endswith("Arity.lean") else "proof")
+        out += [link(p, label(p)) for p in entry.get("proofs", [])]
+        out.append(link(entry["certificate"], "certificate"))
+        seen, unique = set(), []
+        for item in out:
+            if item["url"] not in seen:
+                seen.add(item["url"]); unique.append(item)
+        return unique
+
+    definitions = idx.get("definitions", {})
+    principles = {}
+    for p in data["principles"]:
+        name = p.get("lean_def", "")
+        for suffix in (".schemaIn", ".listSchemaIn"):
+            name = name.removesuffix(suffix)
+        if name in definitions:
+            principles[p["id"]] = [link(definitions[name], "definition")]
+    return {"results": {rid: links(e) for rid, e in idx.get("results", {}).items()},
+            "principles": principles,
+            "variants": {pid: {vid: links(e, True) for vid, e in vs.items()}
+                         for pid, vs in idx.get("forms", {}).items()}}
+
+
 def build_topic(topic_id: str, out: Path | None = None, *, fragment: bool = False, starter_archive: Path | None = None) -> Path:
     """Build build/<topic>/ : index.html (viewer), data.json, source.zip, <topic>-map.zip, writeups/, sources/, lean/.
     With --out, write only the viewer HTML to that path (fragment=True omits the page skeleton)."""
@@ -2678,6 +2729,17 @@ def build_topic(topic_id: str, out: Path | None = None, *, fragment: bool = Fals
     payload = enriched_payload(topic_id, downloads)
     for item in payload["results"] + payload["models"]:
         item["files"] = files.get(item["id"], {})
+    lean_links = lean_source_links(topic_id, data)
+    if lean_links:
+        for item in payload["results"]:
+            if item["id"] in lean_links["results"]:
+                item["lean_links"] = lean_links["results"][item["id"]]
+        for p in payload["principles"]:
+            if p["id"] in lean_links["principles"]:
+                p["lean_links"] = lean_links["principles"][p["id"]]
+            for v in p.get("variants") or []:
+                if v["id"] in lean_links["variants"].get(p["id"], {}):
+                    v["lean_links"] = lean_links["variants"][p["id"]][v["id"]]
     (outdir / "data.json").write_text(json.dumps(payload, indent=1, ensure_ascii=False), encoding="utf-8")
     bundle_topic(topic_id)
     html = TEMPLATE.read_text(encoding="utf-8").replace("<!--__PMAP_THEME__-->", theme_head(topic_id, math_path=None if out else 'math'))
@@ -2797,11 +2859,30 @@ def generate_lean_statements(topic_id: str) -> Path | None:
             pad = "    "
         if "premises" in item:
             out += [f"{pad}{fill(shape['principle'], x)} →" for x in item["premises"]]
-            out += [pad + ("False" if item["conclusion"] == FALSE else fill(shape["principle"], item["conclusion"])), ""]
+            out += [pad + (shape.get("falsum", "False") if item["conclusion"] == FALSE else fill(shape["principle"], item["conclusion"])), ""]
         else:
             lines = [f"{pad}{fill(shape['principle'], x)}" for x in item["satisfies"]] + \
                     [f"{pad}¬ {fill(shape['principle'], x)}" for x in item["violates"]]
             out += [" ∧\n".join(lines), ""]
+
+    # Variants (equivalent forms) of a principle: each is stated as equivalent to the
+    # official form, where its reserved `lean` field names its statement.
+    shape = cfg["result"]
+    apply = lambda d: shape["principle"].replace("{def}", d)
+    for p in data["principles"]:
+        for form in p.get("variants") or []:
+            ref = (form.get("lean") or {}).get("ref")
+            if p["id"] not in defs or not ref:
+                continue
+            nm = f"{_lean_name(p['id'])}.{_lean_name(form['id'])}"
+            out += [f"/-- `{p['id']}`, variant `{form['id']}`", "",
+                    f"{names[p['id']]} ⇔ {form.get('name', form['id'])} -/",
+                    f"def {nm} : Prop :="]
+            pad = "  "
+            if shape["binder"]:
+                out.append("  " + shape["binder"])
+                pad = "    "
+            out += [f"{pad}{apply(defs[p['id']])} ↔", f"{pad}  {apply(ref)}", ""]
 
     out += [f"end {ns}.Statements", ""]
     path = root / lib / "Statements.lean"
@@ -2854,6 +2935,13 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
         print(r.stdout[-8000:]); print(r.stderr[-4000:])
         print(f"{topic_id}: LEAN BUILD FAILED")
         return False
+    index = (data["topic"].get("lean") or {}).get("index") or {}
+    if index.get("script"):
+        r = subprocess.run(["lake", "env", "lean", index["script"]], cwd=root, capture_output=True, text=True)
+        if r.returncode != 0:
+            print(r.stdout[-4000:]); print(r.stderr[-4000:])
+            print(f"{topic_id}: LEAN INDEX FAILED ({index['script']})")
+            return False
     records = data["results"] + data["models"]
     ready = {i["id"] for i in cov["ready"]}
     ns = lean_config(data)["namespace"]
@@ -2865,9 +2953,22 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
         wrappers[item["id"]] = f"PmapAudit.{wrapper}"
         probe += [f"theorem {wrapper} : {ns}.Statements.{_lean_name(item['id'])} := {item['certificate']['lean_ref']}",
                   f"#print axioms {wrapper}"]
+    # A principle's variants: each equivalence_ref must inhabit the generated equivalence.
+    defined = {p["id"] for p in data["principles"] if p.get("lean_def")}
+    variants = [(p, v) for p in data["principles"] for v in p.get("variants") or []
+                if (v.get("lean") or {}).get("ref")]
+    variant_wrappers = {}
+    for index_, (p, v) in enumerate(variants):
+        ref = v["lean"].get("equivalence_ref")
+        if p["id"] not in defined or not ref:
+            continue
+        wrapper = f"variant_{index_}"
+        variant_wrappers[(p["id"], v["id"])] = f"PmapAudit.{wrapper}"
+        probe += [f"theorem {wrapper} : {ns}.Statements.{_lean_name(p['id'])}.{_lean_name(v['id'])} := {ref}",
+                  f"#print axioms {wrapper}"]
     probe += ["end PmapAudit"]
     verdicts, bad = {}, []
-    if references:
+    if references or variant_wrappers:
         with tempfile.NamedTemporaryFile(mode="w", suffix=".lean", prefix="_pmap_audit_", dir=root, delete=False) as f:
             f.write("\n".join(probe) + "\n")
             pf = Path(f.name)
@@ -2876,7 +2977,8 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
         finally:
             pf.unlink(missing_ok=True)
         output = result.stdout + result.stderr
-        verdicts = lean_probe_verdicts(result.returncode, output, list(wrappers.values()))
+        verdicts = lean_probe_verdicts(result.returncode, output,
+                                       list(wrappers.values()) + list(variant_wrappers.values()))
         if result.returncode:
             print(output[-10000:])
         for item in references:
@@ -2884,6 +2986,14 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
                 bad.append(f"{item['id']}: proof failed its generated type or axiom audit")
             if item.get("status") == "conjectured":
                 bad.append(f"{item['id']}: resolve conjecture status before certifying a proof")
+        for (pid, vid), wrapper in variant_wrappers.items():
+            if not verdicts.get(wrapper, False):
+                bad.append(f"{pid}#{vid}: equivalence failed its generated type or axiom audit")
+    for p, v in variants:
+        if p["id"] not in defined:
+            bad.append(f"{p['id']}#{v['id']}: has a Lean statement but the principle has no lean_def")
+        if v["lean"].get("status") == "verified" and not verdicts.get(variant_wrappers.get((p["id"], v["id"])), False):
+            bad.append(f"{p['id']}#{v['id']}: claims verified but has no checked equivalence")
     for item in records:
         state = item["certificate"].get("lean", "none")
         if state in ("stated", "verified") and item["id"] not in ready:
@@ -2894,20 +3004,41 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
     print(f"  generated statements: {len(ready)}/{len(records)}")
     verified = {rid for rid, wrapper in wrappers.items() if verdicts.get(wrapper, False)}
     print(f"  verified proofs: {len(verified)}/{len(records)}")
+    verified_variants = {key for key, wrapper in variant_wrappers.items() if verdicts.get(wrapper, False)}
+    all_variants = sum(len(p.get("variants") or []) for p in data["principles"])
+    print(f"  variants: {len(variants)}/{all_variants} stated, {len(verified_variants)} verified")
     for item in records:
         rid = item["id"]
         print(f"  {rid:58} {'verified' if rid in verified else 'stated / proof pending' if rid in ready else 'definition missing'}")
     if update and not bad:
+        unwritten = []
         for item in records:
             rid = item["id"]
             state = "verified" if rid in verified else "stated" if rid in ready else "none"
-            kind = "results" if "premises" in item else "models"
-            path = TOPICS / topic_id / kind / f"{rid}.yaml"
+            if state == item["certificate"].get("lean", "none"):
+                continue
+            if item.get("variant_of") or item.get("_companion_of"):  # generated: no file of its own
+                unwritten.append(rid)
+                continue
+            path = ROOT / item["_file"]
             text = path.read_text(encoding="utf-8")
             # Only certificate metadata changes; preserve mathematical prose and formatting.
             text, count = re.subn(r"(?m)^(  lean:) (?:none|stated|verified)\s*$", lambda m: m.group(1) + " " + state, text)
+            if count != 1:  # a record written as arguments, with no certificate lean field
+                unwritten.append(rid)
+                continue
+            path.write_text(text, encoding="utf-8")
+        if unwritten:
+            print(f"  not written (no certificate lean field of its own): {', '.join(unwritten)}")
+        for p, v in variants:
+            state = "verified" if (p["id"], v["id"]) in verified_variants else "stated"
+            path = TOPICS / topic_id / "principles" / f"{p['id']}.yaml"
+            text = path.read_text(encoding="utf-8")
+            # The variant's lean block: `- id: <vid>` then `  lean:` and its four-space lines.
+            pattern = re.compile(rf"(?m)^(- id: {re.escape(v['id'])}\n  lean:\n(?:    (?!status:).*\n)*)(    status: (?:stated|verified)\n)?")
+            text, count = pattern.subn(lambda m: m.group(1) + f"    status: {state}\n", text)
             if count != 1:
-                raise ValueError(f"{path}: expected exactly one certificate lean field")
+                raise ValueError(f"{path}: expected exactly one lean block for variant {v['id']}")
             path.write_text(text, encoding="utf-8")
         print("  updated Lean certificates after successful audit")
     for issue in bad:

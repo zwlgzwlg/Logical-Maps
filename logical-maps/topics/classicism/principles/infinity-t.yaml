@@ -24,3 +24,4 @@ changes:
   summary: >-
     Renamed from “Infinity (type t)” to mark it as the schema, now that the quantified Axiom of Infinity
     (type t) is recorded separately. The id, the statement and every connection are unchanged.
+lean_def: (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT)

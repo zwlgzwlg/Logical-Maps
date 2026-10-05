@@ -249,6 +249,10 @@
             "principle": {
               "type": "string",
               "description": "How a principle applies inside the statement; {def} is its lean_def. Default {def}."
+            },
+            "falsum": {
+              "type": "string",
+              "description": "How a result concluding False is written. Default: False."
             }
           }
         },
@@ -265,6 +269,25 @@
               "description": "How a principle applies inside the statement; {def} is its lean_def. Default {def}."
             }
           }
+        },
+        "index": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "script": {
+              "type": "string",
+              "description": "Lean file, relative to the topic's lean directory, that lean-check runs with `lake env lean` after a successful build to write the index."
+            },
+            "file": {
+              "type": "string",
+              "description": "The index it writes, relative to the topic's lean directory: for each certificate and variant, where its proofs and definitions are."
+            }
+          },
+          "description": "The index of source locations the viewer links each result, principle and variant to."
+        },
+        "source_url": {
+          "type": "string",
+          "description": "Template for a link to a source location: {commit}, {file} (relative to the topic's lean directory), {start} and {end} lines. The build fills {commit} with the commit it was built from."
         }
       }
     },

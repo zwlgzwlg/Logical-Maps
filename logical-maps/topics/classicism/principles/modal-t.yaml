@@ -15,9 +15,14 @@ references:
 notes: ''
 variants:
 - id: dual
+  lean:
+    ref: Classicism.P.ModalTDual.schemaIn
+    equivalence_ref: Classicism.Map.modal_t.dual
+    status: verified
   name: Dual form
   statement: Every truth is possible.
   formal: $\forall p\, .\,p\to\Diamond p$
   equivalence: Instantiate either form at the negations of its propositional or relational variables,
     contrapose, and rewrite with $\Diamond=\neg\Box\neg$ and $q\le r\leftrightarrow\neg r\le\neg q$. This
     yields the other form, and the same steps lead back.
+lean_def: Classicism.P.ModalT.schemaIn

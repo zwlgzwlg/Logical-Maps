@@ -13,3 +13,4 @@ source_names:
 - Classicism
 notes: Box each fully closed instance of Gallin Extensional Comprehension. Type quantifiers and formula side
   conditions remain outside the box. Recorded to match the boxed forms of the other comprehension principles.
+lean_def: Classicism.P.NecGallinExtensionalComprehension.schemaIn

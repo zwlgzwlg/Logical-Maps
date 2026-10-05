@@ -24,6 +24,10 @@ notes: Added at Cian Dorr’s request on 22 September 2026, after the coalesced 
   Choice holding at a root while failing at accessible worlds.
 variants:
 - id: polyadic
+  lean:
+    ref: Classicism.P.NecRelationalChoice.listSchemaIn
+    equivalence_ref: Classicism.Map.necessary_relational_choice_r.polyadic
+    status: verified
   name: Polyadic form
   statement: Every closed instance of the polyadic form of Relational Choice is necessary.
   formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of the polyadic form of Relational
@@ -31,3 +35,4 @@ variants:
   equivalence: Each instance of the polyadic form of Relational Choice is derivable in C from finitely
     many instances of the original form, and conversely; the derivations are on the page of the unboxed
     principle. Necessitating them and applying K carries the equivalence to the boxed forms.
+lean_def: Classicism.P.NecRelationalChoice.schemaIn

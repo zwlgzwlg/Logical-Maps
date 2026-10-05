@@ -21,3 +21,4 @@ notes: This keeps the signature-expanded reference theory throughout the consist
   under the distinctness-preserving modality. Incompatibilities of the form Strong Possibility (signature
   Σ) + □Y are inherited through Possibility Maximalism (signature Σ) and Possibility Maximalism (pure); the collapse is refuted
   directly.
+lean_def: (Classicism.Meta.AxiomSet.strongPossibility _)

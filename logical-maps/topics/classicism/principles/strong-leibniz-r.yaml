@@ -23,6 +23,10 @@ aliases:
 - SL
 variants:
 - id: dual
+  lean:
+    ref: Classicism.P.StrongLeibnizDual.schemaIn
+    equivalence_ref: Classicism.Map.strong_leibniz_r.dual
+    status: verified
   name: Dual form
   statement: Whatever is entailed by every strong world of its type is the top element of that type.
   formal: $\forall X^\sigma\, .\,(\forall W^\sigma\, .\,\operatorname{SWorld}_\sigma(W)\to W\le_\sigma
@@ -33,3 +37,4 @@ variants:
     X$ and $X$, hence below bottom, which is impossible. Dual to official: if $X$ is non-bottom and no
     strong world lies below it, every strong world lies below $\neg_\sigma X$, so $X$ is bottom by the
     dual form.'
+lean_def: Classicism.P.StrongLeibniz.schemaIn

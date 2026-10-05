@@ -15,9 +15,14 @@ references:
 notes: ''
 variants:
 - id: dual
+  lean:
+    ref: Classicism.P.BarcanTDual.schemaIn
+    equivalence_ref: Classicism.Map.barcan_t.dual
+    status: verified
   name: Dual form
   statement: If possibly some proposition has a property, then some proposition possibly has it.
   formal: $\forall X^{tt}\, .\,\Diamond(\exists p\, .\,Xp)\to\exists p\, .\,\Diamond Xp$
   equivalence: Instantiate either form at the negations of its propositional or relational variables,
     contrapose, and rewrite with $\Diamond=\neg\Box\neg$ and $q\le r\leftrightarrow\neg r\le\neg q$. This
     yields the other form, and the same steps lead back.
+lean_def: Classicism.P.BarcanT.schemaIn
