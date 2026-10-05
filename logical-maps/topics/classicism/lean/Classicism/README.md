@@ -724,6 +724,4 @@ the compositions in `Results/Arity.lean` and `Results/SentenceSchemas/`.
 
 ## Next
 
-The remaining verdicts of the two M-set records; then the map's other models as
-instances, the symmetric and coalesced ones included. Appendix A as a theorem, and the
-coincidence with the Equivalence-rule system, is deferred: nothing depends on it.
+Open work and questions are in `../TODO.md`.

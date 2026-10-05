@@ -117,7 +117,7 @@ entailments use `propext` and `Quot.sound` only as reasoning about syntax.
   six conjectured ones, most of those about Separated Structure and Independence, Strong
   Possibility, the Infinity schemas, Bacon's Theorem 8.2, and C5 and Atomicity ⇒ No Pure
   Contingency (now that No Pure Contingency ranges over the paper's language only, this one
-  is open to the automorphism proof; see HANDOFF, §8).
+  is open to the automorphism proof; see `TODO.md`).
 - **Variants.** 60 of the map's 77 have a Lean statement, and 56 of those a certificate:
   the 20 polyadic variants whose two directions are proved (`P.X.listSchema_entails_schema`,
   by inclusion; `P.X.schema_entails_listSchema`, `Results/Lists.lean`); the 26 duals of

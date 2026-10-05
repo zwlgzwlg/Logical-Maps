@@ -5,7 +5,7 @@ open Lean Elab Meta
 is a proposition) or a term of a type in `Type`. Prints one line per `fun`:
 `<kind> <byte offset of fun> <byte offset of =>/↦>` with kind `proof`, `term` or `mixed`.
 
-It is the check behind the shallow layer's convention (`HANDOFF.md`, §3): `λ x ↦ …` for a
+It is the check behind the shallow layer's convention (`AGENTS.md`, "Conventions"): `λ x ↦ …` for a
 term of a type in `Type`, `fun h => …` for a proof. Run from `Cian/`:
 
     lake env lean --run scripts/FunKinds.lean Classicism/Results/Records.lean Classicism.Results.Records

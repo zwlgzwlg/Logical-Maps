@@ -51,8 +51,8 @@ Read a matching `writeups/<id>.md` when it exists.
 - Mathematical brainstorming uses the records and write-ups. Do not start
   Lean work unless explicitly requested or already agreed; asking for a proof
   or an argument check is not a Lean request.
-- For requested formalization work, start at `lean/README.md` and
-  `lean/VERIFICATION.md`.
+- For requested formalization work, start at `lean/AGENTS.md`, which says what
+  to read and how the work is done; open work is in `lean/TODO.md`.
   The file map in the README routes to definitions, proofs, the Equivalence
   gate, strict identities, and the type-system checker. Ordinary Lean tactics
   can import principles stronger than C; follow that library's proof policy.

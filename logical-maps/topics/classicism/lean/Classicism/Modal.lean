@@ -138,7 +138,7 @@ theorem modalized_functionality {σ τ : Type} [Ty σ] [Rel τ] (X Y : σ → τ
 
 Laws the results use, with the closed propositional lemmas they necessitate. A lemma
 stating a broadly applicable property lives in the library, not beside the result that
-first needs it (`HANDOFF.md` §3). -/
+first needs it (`AGENTS.md`, "Conventions"). -/
 
 /-- `□¬p → ¬◇p`. -/
 theorem not_dia_of_box_not (p : Prop) : □ (¬ p) → ¬ ◇ p := fun h => (box_not_eq_not_dia p).mp h

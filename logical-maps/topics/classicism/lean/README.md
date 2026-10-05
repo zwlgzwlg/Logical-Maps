@@ -4,7 +4,8 @@
 > of the Logical Maps: run `lake build` from here. It was developed here until 21 September
 > 2026, in the repository `zwlgzwlg/Lean-Classicism` (as `Cian/`) until 4 October, and is
 > now back. Paths of the form `topics/classicism/…`, and the record and principle ids named
-> in docstrings, refer to this topic. How the map uses it: `map/README.md`.
+> in docstrings, refer to this topic. How the map uses it: `map/README.md`. Working on it:
+> `AGENTS.md`; open work: `TODO.md`; the audit record, dated: `VERIFICATION.md`.
 
 A formalisation of Bacon and Dorr's **Classicism** inside base Lean 4, with no Mathlib
 in the shallow and strict layers and none of Lean's own classical axioms taken for

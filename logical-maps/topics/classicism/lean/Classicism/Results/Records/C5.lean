@@ -496,7 +496,7 @@ written. Part (iv), inextensibility, has two steps that do not: it boxes a point
 claim with `BF` where `□BF` would be needed, and its "without loss of generality" step
 assumes that, for `w` an atom and `w′` possibly an atom below `X*z ∧ ¬Yz`, the greatest
 lower bound `w″` of the `p` with `w ≤ (p = w′)` is still identical to `w′` wherever `w`
-is true, which nothing in the premises gives (see `HANDOFF.md`, §4).
+is true, which nothing in the premises gives (see `VERIFICATION.md`, "Proposition 2.11").
 
 What part (iv) needs from `w″` is only this: for a proposition `p` (here `∀x. X*x →
 □Yx`) and a proposition `q` (here `∃z. X*z ∧ ¬Yz`), a proposition `r` that is identical
