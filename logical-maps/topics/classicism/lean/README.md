@@ -5,7 +5,8 @@
 > 2026, in the repository `zwlgzwlg/Lean-Classicism` (as `Cian/`) until 4 October, and is
 > now back. Paths of the form `topics/classicism/…`, and the record and principle ids named
 > in docstrings, refer to this topic. How the map uses it: `map/README.md`. Working on it:
-> `AGENTS.md`; open work: `TODO.md`; the audit record, dated: `VERIFICATION.md`.
+> `AGENTS.md`; open work: `TODO.md`; what changed: `CHANGELOG.md`; the audit record:
+> `VERIFICATION.md`; finished plans and surveys: `history/`.
 
 A formalisation of Bacon and Dorr's **Classicism** inside base Lean 4, with no Mathlib
 in the shallow and strict layers and none of Lean's own classical axioms taken for
@@ -226,7 +227,7 @@ for each type, and a **list form**, with one instance for each finite list of ty
 empty list included: a variable of the type becomes a block of variables, a quantifier a
 block of quantifiers, identity the conjunction of identities. The list forms are defined
 by vectorization, and a record's list form comes from its derivation by the vectorization
-theorem (`VECTORIZATION-PLAN.md`): the last seven rows of the table. The two forms of a
+theorem (`history/VECTORIZATION-PLAN.md`): the last seven rows of the table. The two forms of a
 principle are equivalent, and a unary result at `σ → t`, vectorized, is the result at
 every relational type, each being its argument types' `⇒* t`. A principle's first
 Ty-parameter is the one vectorized; a second (Relational Choice's output) stays one type.

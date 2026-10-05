@@ -5,7 +5,8 @@ modules moved from `Classicism/Meta/` to `Classicism/Syntax/`, `Semantics/`, `Re
 `Tools/` and `Certified/`, the checkers from `Classicism/` to `Classicism/Tools/`, and the
 strict layer to `Classicism/Strict/` (`Strict.lean` became `Strict/Vocabulary.lean`,
 `SyntaxSchemas.lean` became `Syntax/SentenceSchemas.lean`). The sections below keep the
-paths of their day; `README.md` has the current map.
+paths of their day; `README.md` has the current map. The sections run in date order; the
+last dated one, "4 October", has the current status, and `CHANGELOG.md` the summary.
 
 **29/77 principles defined; 27/208 records proved in Lean; 0 records carry a Lean
 certificate. 122 of the library's 124 theorems are theorems of `C⁻`. The strict layer uses
@@ -942,7 +943,7 @@ map's principles, and are derived in the object language like the rest of the fi
 
 ## Vectorization, 1 October
 
-`VECTORIZATION-PLAN.md`, Phases 1 to 7: type variables in the object language, the
+`history/VECTORIZATION-PLAN.md`, Phases 1 to 7: type variables in the object language, the
 vectorization theorem, the list form of every principle with a Ty-parameter and of every
 record with one, the equivalence of each principle's restricted and list forms, and the
 results at every arity as unary proofs vectorized. It supersedes the auxiliary schemas
@@ -1072,7 +1073,7 @@ fields of `map/lean.yaml` added; so the statements are the map's, not a transcri
 them. A statement says that every consistent schema, over any signature, that entails the
 premises entails the conclusion (or `False`); that is equivalent to the entailment between
 the schemas, or to their inconsistency. `Classicism/Map.lean` proves 202 of them, one per
-result counted as proved in `MAP-SURVEY.md`, each from the certified entailment it cites.
+result counted as proved in `history/MAP-SURVEY.md`, each from the certified entailment it cites.
 
 *Checked.* The full build passes. `scripts/MapIndex.lean` reports the axioms of each
 certificate: 193 rest on `propext` and `Quot.sound` only, 6 on `Classical.choice` as well
@@ -1324,7 +1325,68 @@ into a lemma (`eq_top_not_dia_ne`).
 *Checked.* The full build passes. 234 result certificates and 22 form certificates prove
 their generated statements; 3 rest on `Classicism.e` and `e_exists`, as before.
 
+## 4 October: the forms, an audit, and the move into the map
+
+**Splits and notation.** `Principles.lean` and `Results/Records.lean` were split by the map's
+categories (`Principles/<Category>.lean`, `Results/Records/<Topic>.lean`, the old paths now
+umbrellas), and the principles written in the paper's notation. Every principle's
+elaborated term was checked unchanged, by hashing each definition's type and value before
+and after; `Principles/Coarse.lean` keeps the old notation, since there Tractarianism's `≤`
+at `Prop` is `entails`. The audit counts did not change: 259 theorems derived, 158 records
+certified as entailments, 70 of 74 in list form.
+
+**Forms.** A principle's equivalent forms, the map's variants, are defined beside it, each
+followed by the two directions `P.X.to_<form>` and `P.X.of_<form>`, which the audits
+certify like records. Written: the duals of the 26 principles with a shallow statement and
+a dual on the map, and the LUB forms of Boolean Completeness at `t` and boxed, 58 theorems.
+For the duals at a type parameter, `Pointwise` gained two classical laws
+(`incl_neg_intro`, `incl_neg_neg`) and `Lattice.lean` the order there
+(`le_antisymm_rel`, `atom_le_or_le_neg_rel`, …). Ten of the equivalences are not reached by
+the strict transformer, whose mirror `SPointwise` has only the class's first eleven laws.
+
+**The map's variants.** The statements were regenerated from the map at `2abe6c1` (109
+principles, 316 results, 77 variants), the 234 certified ones unchanged; `Map.lean`
+certifies 56 variants: 20 polyadic, 26 dual, 3 LUB and 7 dual polyadic, the last composed
+from the polyadic directions and the vectorized duals.
+
+**An adversarial audit** (by Astra, another model). Five findings, four fixed here:
+
+1. *Sentence schemas included sentences outside the paper's language*: the object language
+   has type variables, and every sentence schema admitted instances with them, such as
+   "type variable 0 is empty" in No Contingency and Possibility. Each now requires its
+   instances to have only closed types (`Term.closedTypes`, `Syntax/ClosedTypes.lean`, with
+   the lemmas for the connectives, renaming, substitution, the block quantifiers and
+   `P[c̄/x̄]`); every principle's schema is shown to satisfy it (`P.X.schema_closedTypes`,
+   generated); instances are built through membership lemmas; the counterexample is a
+   regression check.
+2. *Model statements did not require one model*: separate non-entailments need not fail
+   together. The template now asks for a consistent complete theory (`AxiomSet.Complete`).
+3. *Three certificates rested on `Classicism.e` and `e_exists`*, through the model in `Prop`
+   on the shallow layer's `e`; it is now on `Unit`.
+4. *The quoter's documentation overclaimed*: reflection checks a sentence's reading in one
+   interpretation, which identifies `e` with the type variables, not its syntax; the
+   closed-types check covers that.
+5. The Background's claim that every signature schema is trivial over the empty
+   signature was false; the map's text is corrected.
+
+Not done, and recorded in `TODO.md`: that the type variables are conservative over the
+paper's language, which should follow by instantiating them at `e`.
+
+**The move.** The project moved from `Cian/` in `zwlgzwlg/Lean-Classicism` into
+`topics/classicism/lean/`, replacing the copy left here on 21 September, with its history
+merged in. The records carry the Lean fields; `pmap lean` writes the statements (byte
+identical to the ones generated before); `pmap lean-check` audits results and variants
+alike and writes the index the viewer's links come from.
+
+*Checked.* The full build passes. `pmap lean-check classicism`: 234 of 234 result
+certificates and 56 of 56 variant certificates inhabit their generated statements within
+`propext`, `Classical.choice` and `Quot.sound`; `--update` set the statuses (234 results
+verified, 35 records stated, 56 variants verified, 4 stated). `pmap validate` and
+`pmap selftest` pass.
+
 ## Certificates
+
+*As of 21 September; superseded by the section above.*
 
 No record's `lean` field was changed; all 208 remain `none`. Two things have to happen
 first, and both are outside this topic's directory:

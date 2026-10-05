@@ -557,7 +557,7 @@ Classicism, apply an implication — are `Theorem.ax`, `Theorem.ofC` and `Theore
 `P` of the shallow layer with parameters `σ …` is quoted as `∀ σ …, P σ …`:
 `P.quoted : Ty → … → Sentence`, `P.reflect`, and
 `P.schema = {P.quoted σ' … | σ' … closed}`, the instances at the paper's types, those with
-no type variable (1 October; `VECTORIZATION-PLAN.md`, D2). A parameter-free principle gives
+no type variable (1 October; `history/VECTORIZATION-PLAN.md`, D2). A parameter-free principle gives
 a singleton. All 68 principles are quoted; the map's
 sentence schemas — No Pure Contingency, Distinctness, Possibility, `max` — are written by
 hand in `Syntax/SentenceSchemas.lean`.
@@ -580,7 +580,7 @@ over the derivation's parameters when it builds them (`Existence (σ → t)`).
 certify**, at build time. These `foo.entails` are what the map's arrows can
 cite as certificates, once the map's generator is taught the statement shape.
 
-**List forms** (`VECTORIZATION-PLAN.md`). A principle with a Ty-parameter has a list form
+**List forms** (`history/VECTORIZATION-PLAN.md`). A principle with a Ty-parameter has a list form
 beside its schema: `P.listQuoted σs …` is `P.quoted` at the type variable `var 0`,
 vectorized along `0 ↦ σs`, so it is defined and cannot be mis-stated. `P.listSchema` is
 its instances at closed types. `P.listQuoted_single` says that at `[σ]` it is the
@@ -620,7 +620,7 @@ rule.
 A principle with a Ty-parameter has a list form beside its restricted form: one instance
 for each finite list of types, a variable of the type becoming a block of variables, a
 function from it a function of the block, a quantifier over it a block of quantifiers,
-identity at it the conjunction of identities (`VECTORIZATION-PLAN.md`; the vocabulary is
+identity at it the conjunction of identities (`history/VECTORIZATION-PLAN.md`; the vocabulary is
 in the top-level README). The list forms come from one theorem about the proof system.
 
 **Type variables** (`Syntax/Types.lean`). `Ty.var i` is a type of the object language

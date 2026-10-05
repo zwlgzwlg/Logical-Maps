@@ -157,7 +157,7 @@ def schemaMem (P : Name) (x : Expr) (hyps : Array (Expr × Expr) := #[]) : MetaM
 /-! ### List forms
 
 A principle with a Ty-parameter has a **list form** beside its schema: one instance for
-each finite list of types, the empty list included (`VECTORIZATION-PLAN.md`). It is
+each finite list of types, the empty list included (`history/VECTORIZATION-PLAN.md`). It is
 *defined*, never written: `P.listQuoted σs …` is `P.quoted` at the type variable `var 0`,
 vectorized along `0 ↦ σs` (`Syntax/Vectorize.lean`), so it cannot be mis-stated. The
 first Ty-parameter is the one vectorized, which in every principle of the map is its

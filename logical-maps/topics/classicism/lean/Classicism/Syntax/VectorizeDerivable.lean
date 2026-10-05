@@ -20,7 +20,7 @@ convertible.
 This is the theorem behind the list forms of the map's principles: a certified rule
 `foo.rule : ∀ σ …, C.Theorem (P.quoted σ … → Q.quoted σ …)` is uniform in its types, so
 it holds at `var 0`, and vectorizing it there gives the rule between the list forms
-(`VECTORIZATION-PLAN.md`, D5 and D6).
+(`history/VECTORIZATION-PLAN.md`, D5 and D6).
 -/
 
 namespace Classicism.Meta

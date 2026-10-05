@@ -12,7 +12,8 @@ serves: treat the mathematics as his, and check claims against the paper, not me
 - `Classicism/README.md`: the metalogical layer, its design decisions and modules, and how
   to write a metalogical proof with object-level steps.
 - `map/README.md`: how the map uses the project, and what to run after a change.
-- `TODO.md`: open work and open questions. `VERIFICATION.md`: the audit record, dated.
+- `TODO.md`: open work and open questions. `CHANGELOG.md`: what changed, by day.
+  `VERIFICATION.md`: the audit record, dated: what was checked, and why.
 - `Classicism/Strict/` is an earlier route (Appendix A on Lean proof terms), kept as a
   sideline; nothing the map relies on uses it.
 
@@ -79,7 +80,7 @@ serves: treat the mathematics as his, and check claims against the paper, not me
   `_at_t` or `_unary`, and its certificate claims no more. Helper lemmas must not look like
   records (a statement whose head is a `Classicism.P` principle is read as one): state them
   unfolded.
-- **A result at every arity is a unary proof, vectorized** (`VECTORIZATION-PLAN.md`). Prove
+- **A result at every arity is a unary proof, vectorized** (`history/VECTORIZATION-PLAN.md`). Prove
   it at `σ` or `σ → t` in the shallow layer and let the audit certify it, which gives
   `foo.listEntails`; then compose with `P.X.schema_entails_listSchema` for a list premise and
   with `schema_subset_args` for a conclusion over relational types. In `C5`, take `□ND` at

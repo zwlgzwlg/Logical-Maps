@@ -7,7 +7,7 @@ import Classicism.Results.Records
 # Restricted forms and list forms
 
 A principle with a Ty-parameter has a restricted form, one instance per type, and a list
-form, one instance per finite list of types (`VECTORIZATION-PLAN.md`; the README's
+form, one instance per finite list of types (`history/VECTORIZATION-PLAN.md`; the README's
 *Names*). The list form entails the restricted form at once, a one-element list being the
 type itself (`P.listSchema_entails_schema`, generated). This file proves the converse,
 `P.schema_entails_listSchema`, for twenty-one of the twenty-five principles with a list form (D8):

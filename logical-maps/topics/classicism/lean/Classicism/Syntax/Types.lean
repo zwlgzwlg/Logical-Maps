@@ -33,7 +33,7 @@ a variable of the type becoming a block of variables (`Syntax/Vectorize.lean`). 
 *parameter*, by contrast, is a variable of Lean, `σ : Ty`, ranging over all types; a
 proof of `∀ σ : Ty, …` may split on `σ`, and says nothing about uniformity. The
 translator's derivations are uniform, so they can be instantiated at a type variable, and
-that is how every certified result gets its list form (`VECTORIZATION-PLAN.md`).
+that is how every certified result gets its list form (`history/VECTORIZATION-PLAN.md`).
 -/
 
 namespace Classicism.Meta
