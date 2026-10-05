@@ -111,6 +111,26 @@ views:
   - necessary-actuality
   - necessary-rigid-comprehension-r
   - necessary-barcan-r
+- id: classicism-2-1-to-2-3
+  name: '''Classicism'' §2.1–2.3'
+  description: The principles discussed in Bacon and Dorr, Classicism, §§2.1–2.3, with their necessitations.
+  principles:
+  - actuality
+  - atomicity-r
+  - barcan-r
+  - boolean-completeness-r
+  - distinctness-necessary-r
+  - extensionality-r
+  - necessary-actuality
+  - necessary-atomicity-r
+  - necessary-barcan-r
+  - necessary-boolean-completeness-r
+  - necessary-distinctness-necessary-r
+  - necessary-plenitude-r
+  - necessary-rigid-comprehension-r
+  - no-pure-contingency-r
+  - plenitude-r
+  - rigid-comprehension-r
 lattice_views:
 - id: pilot
   name: 'Pilot: necessity and rigidity'
