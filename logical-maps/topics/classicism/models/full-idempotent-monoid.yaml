@@ -183,3 +183,41 @@ history:
     here the transport of {k} along k is {1, k}. The type-t principle fails; see the notes.'
   violates:
   - strong-leibniz-t
+
+# Verdicts proved in Lean (Classicism/MapModels.lean); statuses are written by lean-check --update.
+lean:
+  model: Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem
+  verdicts:
+  - holds: no-pure-contingency-r
+    ref: Classicism.Map.Models.full_idempotent_monoid.no_pure_contingency_r
+    status: verified
+  - fails: distinctness-necessary-r
+    ref: Classicism.Map.Models.full_idempotent_monoid.distinctness_necessary_r
+    status: verified
+  - fails: necessary-distinctness-necessary-r
+    ref: Classicism.Map.Models.full_idempotent_monoid.necessary_distinctness_necessary_r
+    status: verified
+  - fails: distinctness-necessary-t
+    ref: Classicism.Map.Models.full_idempotent_monoid.distinctness_necessary_t
+    status: verified
+  - fails: necessary-distinctness-necessary-t
+    ref: Classicism.Map.Models.full_idempotent_monoid.necessary_distinctness_necessary_t
+    status: verified
+  - fails: barcan-r
+    ref: Classicism.Map.Models.full_idempotent_monoid.barcan_r
+    status: verified
+  - fails: necessary-barcan-r
+    ref: Classicism.Map.Models.full_idempotent_monoid.necessary_barcan_r
+    status: verified
+  - fails: barcan-t
+    ref: Classicism.Map.Models.full_idempotent_monoid.barcan_t
+    status: verified
+  - fails: necessary-barcan-t
+    ref: Classicism.Map.Models.full_idempotent_monoid.necessary_barcan_t
+    status: verified
+  - fails: fregean-axiom
+    ref: Classicism.Map.Models.full_idempotent_monoid.fregean_axiom
+    status: verified
+  - fails: necessary-fregean-axiom
+    ref: Classicism.Map.Models.full_idempotent_monoid.necessary_fregean_axiom
+    status: verified

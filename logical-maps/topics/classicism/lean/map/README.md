@@ -114,8 +114,10 @@ signature (category `signature`), the statement also asks `A.Admitted`, that the
 signature is one the map's statements range over, so a model of the pure language cannot
 certify those. The models of `Models/` are of the pure language, where `P.X.schemaIn` holds
 iff `P.X.schema` does (`Premodel.holdsAx_schemaIn_iff`, `Semantics/IntensionalTheory.lean`).
-On 5 October the nine finite-support models of Appendix D had 69 verdicts certified this
-way: Parts 1 to 8 and the two-object model after Part 8 (`finite-support-*` on the map).
+On 5 October 91 verdicts of eleven models were certified this way: Parts 1 to 8 of Appendix D
+and the two-object model after Part 8 (`finite-support-*` on the map), and the two M-set models
+of §3, on the idempotent monoid and the two-element group (`full-idempotent-monoid`,
+`full-involution-group`, from `Semantics/IntensionalExamples.lean`).
 
 The verdicts compose into the whole model's statement once the model is of an admitted
 signature: `Premodel.theory`, the sentences holding in a model, is consistent
@@ -156,8 +158,8 @@ entailments use `propext` and `Quot.sound` only as reasoning about syntax.
   `lean_def`.
 - **Models.** 14 of the map's 97 models get statements (`∃` a consistent complete `Ax`
   entailing what the model satisfies and not what it violates, above); the others' verdicts
-  mention a principle without a `lean_def`. None is certified as a whole yet; 69 single
-  verdicts of nine models are (above).
+  mention a principle without a `lean_def`. None is certified as a whole yet; 91 single
+  verdicts of eleven models are (above).
 - **No Pure Contingency defined twice.** `npc Σ` (P → □P for each pure sentence of `Σ`'s
   language) and `pureVersion noContingency` are the same set (`npc_eq_pureVersion`), and so
   are the two Pure B's.

@@ -173,6 +173,7 @@ lean:
     - Classicism.Models.Permutations
     - Classicism.Models.Monoids
     - Classicism.Models.ContingentBarcan
+    - Classicism.Semantics.IntensionalExamples
     holds: ({model}).IsModel ∧ ({model}).HoldsAx {def}
     fails: ({model}).IsModel ∧ ¬ ({model}).HoldsAx {def}
     relative_categories: [signature]

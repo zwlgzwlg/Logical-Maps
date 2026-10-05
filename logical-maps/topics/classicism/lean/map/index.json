@@ -2627,7 +2627,197 @@
     "file": "Classicism/Map.lean",
     "axioms": ["propext", "Quot.sound"]}}},
  "models":
- {"finite-support-two-object-all-maps":
+ {"full-involution-group":
+  {"no-pure-contingency-r":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_involution_group.no_pure_contingency_r",
+     "lines": [495, 497],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "necessary-fregean-axiom":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_involution_group.necessary_fregean_axiom",
+     "lines": [503, 505],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "necessary-distinctness-necessary-t":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_involution_group.necessary_distinctness_necessary_t",
+     "lines": [475, 477],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "necessary-distinctness-necessary-r":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_involution_group.necessary_distinctness_necessary_r",
+     "lines": [467, 469],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "necessary-barcan-t":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name": "Classicism.Map.Models.full_involution_group.necessary_barcan_t",
+     "lines": [491, 493],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "necessary-barcan-r":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name": "Classicism.Map.Models.full_involution_group.necessary_barcan_r",
+     "lines": [483, 485],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "fregean-axiom":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name": "Classicism.Map.Models.full_involution_group.fregean_axiom",
+     "lines": [499, 501],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "distinctness-necessary-t":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_involution_group.distinctness_necessary_t",
+     "lines": [471, 473],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "distinctness-necessary-r":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_involution_group.distinctness_necessary_r",
+     "lines": [463, 465],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "barcan-t":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name": "Classicism.Map.Models.full_involution_group.barcan_t",
+     "lines": [487, 489],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "barcan-r":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name": "Classicism.Map.Models.full_involution_group.barcan_r",
+     "lines": [479, 481],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
+  "full-idempotent-monoid":
+  {"no-pure-contingency-r":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_idempotent_monoid.no_pure_contingency_r",
+     "lines": [413, 415],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "necessary-fregean-axiom":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_idempotent_monoid.necessary_fregean_axiom",
+     "lines": [453, 455],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "necessary-distinctness-necessary-t":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_idempotent_monoid.necessary_distinctness_necessary_t",
+     "lines": [429, 431],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "necessary-distinctness-necessary-r":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_idempotent_monoid.necessary_distinctness_necessary_r",
+     "lines": [421, 423],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "necessary-barcan-t":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name": "Classicism.Map.Models.full_idempotent_monoid.necessary_barcan_t",
+     "lines": [445, 447],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "necessary-barcan-r":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name": "Classicism.Map.Models.full_idempotent_monoid.necessary_barcan_r",
+     "lines": [437, 439],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "fregean-axiom":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name": "Classicism.Map.Models.full_idempotent_monoid.fregean_axiom",
+     "lines": [449, 451],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "distinctness-necessary-t":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_idempotent_monoid.distinctness_necessary_t",
+     "lines": [425, 427],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "distinctness-necessary-r":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_idempotent_monoid.distinctness_necessary_r",
+     "lines": [417, 419],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "barcan-t":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name": "Classicism.Map.Models.full_idempotent_monoid.barcan_t",
+     "lines": [441, 443],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "barcan-r":
+   {"proofs": [],
+    "definitions": [],
+    "certificate":
+    {"name": "Classicism.Map.Models.full_idempotent_monoid.barcan_r",
+     "lines": [433, 435],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
+  "finite-support-two-object-all-maps":
   {"necessary-barcan-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.ContingentBarcan.model_isModel",
@@ -2652,7 +2842,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_two_object_all_maps.necessary_barcan_r",
-     "lines": [399, 401],
+     "lines": [403, 405],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "barcan-r":
@@ -2679,7 +2869,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_two_object_all_maps.barcan_r",
-     "lines": [395, 397],
+     "lines": [399, 401],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
   "finite-support-truncations":
@@ -2698,7 +2888,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_truncations.no_pure_contingency_r",
-     "lines": [284, 286],
+     "lines": [288, 290],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-distinctness-necessary-r":
@@ -2719,7 +2909,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_truncations.necessary_distinctness_necessary_r",
-     "lines": [292, 294],
+     "lines": [296, 298],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-barcan-r":
@@ -2740,7 +2930,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_truncations.necessary_barcan_r",
-     "lines": [300, 302],
+     "lines": [304, 306],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "distinctness-necessary-r":
@@ -2761,7 +2951,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_truncations.distinctness_necessary_r",
-     "lines": [288, 290],
+     "lines": [292, 294],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "boolean-completeness-r":
@@ -2782,7 +2972,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_truncations.boolean_completeness_r",
-     "lines": [308, 310],
+     "lines": [312, 314],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "barcan-r":
@@ -2802,7 +2992,7 @@
       "file": "Classicism/Models/MonoidModel.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_truncations.barcan_r",
-     "lines": [296, 298],
+     "lines": [300, 302],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "atomicity-t":
@@ -2822,7 +3012,7 @@
       "file": "Classicism/Models/MonoidModel.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_truncations.atomicity_t",
-     "lines": [280, 282],
+     "lines": [284, 286],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "actuality":
@@ -2842,7 +3032,7 @@
       "file": "Classicism/Models/MonoidModel.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_truncations.actuality",
-     "lines": [304, 306],
+     "lines": [308, 310],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
   "finite-support-truncated-shifts":
@@ -2861,7 +3051,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_truncated_shifts.no_pure_contingency_r",
-     "lines": [373, 375],
+     "lines": [377, 379],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-distinctness-necessary-r":
@@ -2882,7 +3072,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_truncated_shifts.necessary_distinctness_necessary_r",
-     "lines": [381, 383],
+     "lines": [385, 387],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-barcan-r":
@@ -2903,7 +3093,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_truncated_shifts.necessary_barcan_r",
-     "lines": [360, 363],
+     "lines": [364, 367],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "distinctness-necessary-r":
@@ -2924,7 +3114,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_truncated_shifts.distinctness_necessary_r",
-     "lines": [377, 379],
+     "lines": [381, 383],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "boolean-completeness-r":
@@ -2945,7 +3135,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_truncated_shifts.boolean_completeness_r",
-     "lines": [385, 387],
+     "lines": [389, 391],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "barcan-r":
@@ -2965,7 +3155,7 @@
       "file": "Classicism/Models/MonoidModel.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_truncated_shifts.barcan_r",
-     "lines": [356, 358],
+     "lines": [360, 362],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "atomicity-t":
@@ -2986,7 +3176,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_truncated_shifts.atomicity_t",
-     "lines": [369, 371],
+     "lines": [373, 375],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "actuality":
@@ -3006,7 +3196,7 @@
       "file": "Classicism/Models/MonoidModel.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_truncated_shifts.actuality",
-     "lines": [365, 367],
+     "lines": [369, 371],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
   "finite-support-permutations":
@@ -3022,7 +3212,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_permutations.no_pure_contingency_r",
-     "lines": [96, 98],
+     "lines": [100, 102],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-distinctness-necessary-r":
@@ -3040,7 +3230,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_permutations.necessary_distinctness_necessary_r",
-     "lines": [80, 82],
+     "lines": [84, 86],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-barcan-r":
@@ -3058,7 +3248,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_permutations.necessary_barcan_r",
-     "lines": [88, 90],
+     "lines": [92, 94],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "distinctness-necessary-r":
@@ -3076,7 +3266,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_permutations.distinctness_necessary_r",
-     "lines": [76, 78],
+     "lines": [80, 82],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "boolean-completeness-r":
@@ -3094,7 +3284,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_permutations.boolean_completeness_r",
-     "lines": [108, 110],
+     "lines": [112, 114],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "barcan-r":
@@ -3111,7 +3301,7 @@
       "file": "Classicism/Models/Permutations.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_permutations.barcan_r",
-     "lines": [84, 86],
+     "lines": [88, 90],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "atomlessness":
@@ -3128,7 +3318,7 @@
       "file": "Classicism/Models/Permutations.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_permutations.atomlessness",
-     "lines": [92, 94],
+     "lines": [96, 98],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "atomicity-t":
@@ -3145,7 +3335,7 @@
       "file": "Classicism/Models/Permutations.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_permutations.atomicity_t",
-     "lines": [104, 106],
+     "lines": [108, 110],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "actuality":
@@ -3162,7 +3352,7 @@
       "file": "Classicism/Models/Permutations.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_permutations.actuality",
-     "lines": [100, 102],
+     "lines": [104, 106],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
   "finite-support-monotone-surjections":
@@ -3181,7 +3371,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_monotone_surjections.no_pure_contingency_r",
-     "lines": [131, 133],
+     "lines": [135, 137],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-distinctness-necessary-r":
@@ -3202,7 +3392,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_monotone_surjections.necessary_distinctness_necessary_r",
-     "lines": [139, 141],
+     "lines": [143, 145],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-barcan-r":
@@ -3223,7 +3413,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_monotone_surjections.necessary_barcan_r",
-     "lines": [122, 125],
+     "lines": [126, 129],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "distinctness-necessary-r":
@@ -3244,7 +3434,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_monotone_surjections.distinctness_necessary_r",
-     "lines": [135, 137],
+     "lines": [139, 141],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "boolean-completeness-r":
@@ -3265,7 +3455,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_monotone_surjections.boolean_completeness_r",
-     "lines": [151, 153],
+     "lines": [155, 157],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "barcan-r":
@@ -3286,7 +3476,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_monotone_surjections.barcan_r",
-     "lines": [118, 120],
+     "lines": [122, 124],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "atomlessness":
@@ -3307,7 +3497,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_monotone_surjections.atomlessness",
-     "lines": [127, 129],
+     "lines": [131, 133],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "atomicity-t":
@@ -3328,7 +3518,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_monotone_surjections.atomicity_t",
-     "lines": [147, 149],
+     "lines": [151, 153],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "actuality":
@@ -3349,7 +3539,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_monotone_surjections.actuality",
-     "lines": [143, 145],
+     "lines": [147, 149],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
   "finite-support-monotone-maps":
@@ -3368,7 +3558,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_monotone_maps.no_pure_contingency_r",
-     "lines": [165, 167],
+     "lines": [169, 171],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-distinctness-necessary-r":
@@ -3389,7 +3579,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_monotone_maps.necessary_distinctness_necessary_r",
-     "lines": [173, 175],
+     "lines": [177, 179],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-barcan-r":
@@ -3410,7 +3600,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_monotone_maps.necessary_barcan_r",
-     "lines": [181, 183],
+     "lines": [185, 187],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "distinctness-necessary-r":
@@ -3431,7 +3621,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_monotone_maps.distinctness_necessary_r",
-     "lines": [169, 171],
+     "lines": [173, 175],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "boolean-completeness-r":
@@ -3452,7 +3642,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_monotone_maps.boolean_completeness_r",
-     "lines": [193, 195],
+     "lines": [197, 199],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "barcan-r":
@@ -3472,7 +3662,7 @@
       "file": "Classicism/Models/MonoidModel.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_monotone_maps.barcan_r",
-     "lines": [177, 179],
+     "lines": [181, 183],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "atomlessness":
@@ -3492,7 +3682,7 @@
       "file": "Classicism/Models/MonoidModel.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_monotone_maps.atomlessness",
-     "lines": [161, 163],
+     "lines": [165, 167],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "atomicity-t":
@@ -3512,7 +3702,7 @@
       "file": "Classicism/Models/MonoidModel.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_monotone_maps.atomicity_t",
-     "lines": [189, 191],
+     "lines": [193, 195],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "actuality":
@@ -3532,7 +3722,7 @@
       "file": "Classicism/Models/MonoidModel.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_monotone_maps.actuality",
-     "lines": [185, 187],
+     "lines": [189, 191],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
   "finite-support-identity-or-collapse-surjections":
@@ -3551,7 +3741,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse_surjections.no_pure_contingency_r",
-     "lines": [254, 256],
+     "lines": [258, 260],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-distinctness-necessary-r":
@@ -3572,7 +3762,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse_surjections.necessary_distinctness_necessary_r",
-     "lines": [262, 264],
+     "lines": [266, 268],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-barcan-r":
@@ -3593,7 +3783,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse_surjections.necessary_barcan_r",
-     "lines": [245, 248],
+     "lines": [249, 252],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "distinctness-necessary-r":
@@ -3614,7 +3804,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse_surjections.distinctness_necessary_r",
-     "lines": [258, 260],
+     "lines": [262, 264],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "boolean-completeness-r":
@@ -3635,7 +3825,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse_surjections.boolean_completeness_r",
-     "lines": [270, 272],
+     "lines": [274, 276],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "barcan-r":
@@ -3656,7 +3846,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse_surjections.barcan_r",
-     "lines": [241, 243],
+     "lines": [245, 247],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "atomicity-t":
@@ -3677,7 +3867,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse_surjections.atomicity_t",
-     "lines": [266, 268],
+     "lines": [270, 272],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "actuality":
@@ -3698,7 +3888,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse_surjections.actuality",
-     "lines": [250, 252],
+     "lines": [254, 256],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
   "finite-support-identity-or-collapse":
@@ -3717,7 +3907,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse.no_pure_contingency_r",
-     "lines": [207, 209],
+     "lines": [211, 213],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-distinctness-necessary-r":
@@ -3738,7 +3928,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse.necessary_distinctness_necessary_r",
-     "lines": [215, 217],
+     "lines": [219, 221],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-barcan-r":
@@ -3759,7 +3949,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse.necessary_barcan_r",
-     "lines": [223, 225],
+     "lines": [227, 229],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "distinctness-necessary-r":
@@ -3780,7 +3970,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse.distinctness_necessary_r",
-     "lines": [211, 213],
+     "lines": [215, 217],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "boolean-completeness-r":
@@ -3801,7 +3991,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse.boolean_completeness_r",
-     "lines": [231, 233],
+     "lines": [235, 237],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "barcan-r":
@@ -3822,7 +4012,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse.barcan_r",
-     "lines": [219, 221],
+     "lines": [223, 225],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "atomicity-t":
@@ -3843,7 +4033,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse.atomicity_t",
-     "lines": [227, 229],
+     "lines": [231, 233],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "actuality":
@@ -3864,7 +4054,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_identity_or_collapse.actuality",
-     "lines": [203, 205],
+     "lines": [207, 209],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
   "finite-support-dyadic-roundings":
@@ -3883,7 +4073,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_dyadic_roundings.no_pure_contingency_r",
-     "lines": [326, 328],
+     "lines": [330, 332],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-distinctness-necessary-r":
@@ -3904,7 +4094,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_dyadic_roundings.necessary_distinctness_necessary_r",
-     "lines": [334, 336],
+     "lines": [338, 340],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-barcan-r":
@@ -3925,7 +4115,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_dyadic_roundings.necessary_barcan_r",
-     "lines": [342, 344],
+     "lines": [346, 348],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "distinctness-necessary-r":
@@ -3946,7 +4136,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_dyadic_roundings.distinctness_necessary_r",
-     "lines": [330, 332],
+     "lines": [334, 336],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "boolean-completeness-r":
@@ -3967,7 +4157,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_dyadic_roundings.boolean_completeness_r",
-     "lines": [346, 348],
+     "lines": [350, 352],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "barcan-r":
@@ -3987,7 +4177,7 @@
       "file": "Classicism/Models/MonoidModel.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_dyadic_roundings.barcan_r",
-     "lines": [338, 340],
+     "lines": [342, 344],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "atomicity-t":
@@ -4008,7 +4198,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.finite_support_dyadic_roundings.atomicity_t",
-     "lines": [322, 324],
+     "lines": [326, 328],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "actuality":
@@ -4028,7 +4218,7 @@
       "file": "Classicism/Models/MonoidModel.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.finite_support_dyadic_roundings.actuality",
-     "lines": [318, 320],
+     "lines": [322, 324],
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}}},
  "forms":

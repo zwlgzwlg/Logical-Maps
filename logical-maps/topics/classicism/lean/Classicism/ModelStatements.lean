@@ -3,6 +3,7 @@ import Classicism.Semantics.IntensionalTheory
 import Classicism.Models.Permutations
 import Classicism.Models.Monoids
 import Classicism.Models.ContingentBarcan
+import Classicism.Semantics.IntensionalExamples
 
 /-!
 # Generated statements: models' verdicts
@@ -291,5 +292,93 @@ def Models.finite_support_two_object_all_maps.barcan_r : Prop :=
 /-- `finite-support-two-object-all-maps`: □BF fails. -/
 def Models.finite_support_two_object_all_maps.necessary_barcan_r : Prop :=
   (Classicism.Meta.Intensional.ContingentBarcan.model).IsModel ∧ ¬ (Classicism.Meta.Intensional.ContingentBarcan.model).HoldsAx Classicism.P.NecBarcan.schemaIn
+
+/-- `full-idempotent-monoid`: No Pure Contingency holds. -/
+def Models.full_idempotent_monoid.no_pure_contingency_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `full-idempotent-monoid`: ND fails. -/
+def Models.full_idempotent_monoid.distinctness_necessary_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.NecessityOfDistinctness.schemaIn
+
+/-- `full-idempotent-monoid`: □ND fails. -/
+def Models.full_idempotent_monoid.necessary_distinctness_necessary_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.NecNecessityOfDistinctness.schemaIn
+
+/-- `full-idempotent-monoid`: ND (type t) fails. -/
+def Models.full_idempotent_monoid.distinctness_necessary_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.NecessityOfDistinctnessT.schemaIn
+
+/-- `full-idempotent-monoid`: □ND (type t) fails. -/
+def Models.full_idempotent_monoid.necessary_distinctness_necessary_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.NecNecessityOfDistinctnessT.schemaIn
+
+/-- `full-idempotent-monoid`: BF fails. -/
+def Models.full_idempotent_monoid.barcan_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.Barcan.schemaIn
+
+/-- `full-idempotent-monoid`: □BF fails. -/
+def Models.full_idempotent_monoid.necessary_barcan_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.NecBarcan.schemaIn
+
+/-- `full-idempotent-monoid`: BF (type t) fails. -/
+def Models.full_idempotent_monoid.barcan_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.BarcanT.schemaIn
+
+/-- `full-idempotent-monoid`: □BF (type t) fails. -/
+def Models.full_idempotent_monoid.necessary_barcan_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.NecBarcanT.schemaIn
+
+/-- `full-idempotent-monoid`: Fregean Axiom fails. -/
+def Models.full_idempotent_monoid.fregean_axiom : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.FregeanAxiom.schemaIn
+
+/-- `full-idempotent-monoid`: □Fregean Axiom fails. -/
+def Models.full_idempotent_monoid.necessary_fregean_axiom : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.NecFregeanAxiom.schemaIn
+
+/-- `full-involution-group`: ND holds. -/
+def Models.full_involution_group.distinctness_necessary_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.NecessityOfDistinctness.schemaIn
+
+/-- `full-involution-group`: □ND holds. -/
+def Models.full_involution_group.necessary_distinctness_necessary_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.NecNecessityOfDistinctness.schemaIn
+
+/-- `full-involution-group`: ND (type t) holds. -/
+def Models.full_involution_group.distinctness_necessary_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.NecessityOfDistinctnessT.schemaIn
+
+/-- `full-involution-group`: □ND (type t) holds. -/
+def Models.full_involution_group.necessary_distinctness_necessary_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.NecNecessityOfDistinctnessT.schemaIn
+
+/-- `full-involution-group`: BF holds. -/
+def Models.full_involution_group.barcan_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.Barcan.schemaIn
+
+/-- `full-involution-group`: □BF holds. -/
+def Models.full_involution_group.necessary_barcan_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.NecBarcan.schemaIn
+
+/-- `full-involution-group`: BF (type t) holds. -/
+def Models.full_involution_group.barcan_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.BarcanT.schemaIn
+
+/-- `full-involution-group`: □BF (type t) holds. -/
+def Models.full_involution_group.necessary_barcan_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.NecBarcanT.schemaIn
+
+/-- `full-involution-group`: No Pure Contingency holds. -/
+def Models.full_involution_group.no_pure_contingency_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `full-involution-group`: Fregean Axiom fails. -/
+def Models.full_involution_group.fregean_axiom : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.FregeanAxiom.schemaIn
+
+/-- `full-involution-group`: □Fregean Axiom fails. -/
+def Models.full_involution_group.necessary_fregean_axiom : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.NecFregeanAxiom.schemaIn
 
 end Classicism.Statements

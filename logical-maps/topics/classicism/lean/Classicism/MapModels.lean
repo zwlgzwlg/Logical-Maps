@@ -10,7 +10,8 @@ One theorem per verdict a model record proves in Lean (its `lean.verdicts`), nam
 model, and that the principle holds in it, or fails. These are the refs `pmap lean-check`
 checks, against the generated statements and the map's list of allowed axioms.
 
-The models are those of Appendix D (`Models/`), over the pure signature. A principle at every
+The models are those of Appendix D (`Models/`) and the two M-set models of §3
+(`Semantics/IntensionalExamples.lean`), over the pure signature. A principle at every
 signature, `P.X.schemaIn`, holds in such a model iff its pure schema does
 (`Premodel.holdsAx_schemaIn_iff`), so each certificate cites a verdict proved in `Models/`
 about a sentence of the schema. A verdict on a principle relative to a signature would need a
@@ -50,6 +51,9 @@ theorem holdsAx_eq {q : Sentence Signature.pure} : B.HoldsAx (fun a => a = q) �
 theorem not_holdsAx_of {Ax : AxiomSet Signature.pure} {a : Sentence Signature.pure} (ha : Ax a)
     (h : ¬ B.HoldsSentence a) : ¬ B.HoldsAx Ax :=
   fun H => h (H a ha)
+
+/-- A monoid's one-object category has one object. -/
+instance {M : Type} [Monoid M] : Subsingleton (SingleObj M) := inferInstanceAs (Subsingleton Unit)
 
 /-- No Pure Contingency, in a model on one object: every model on a monoid. -/
 theorem holdsAx_npc_pure [Subsingleton C] (M : B.IsModel) : B.HoldsAx (AxiomSet.noContingency _) := by
@@ -401,5 +405,105 @@ theorem necessary_barcan_r : Statements.Models.finite_support_two_object_all_map
     not_holdsAx_of ⟨.e, trivial, rfl⟩ (ContingentBarcan.not_box_bf_e)
 
 end finite_support_two_object_all_maps
+
+namespace full_idempotent_monoid
+
+local notation "M" => MSet.model_isModel Idem
+
+theorem no_pure_contingency_r : Statements.Models.full_idempotent_monoid.no_pure_contingency_r :=
+  verdict_holds M <|
+    holdsAx_npc_pure M
+
+theorem distinctness_necessary_r : Statements.Models.full_idempotent_monoid.distinctness_necessary_r :=
+  verdict_fails M <|
+    not_holdsAx_of ⟨.rel .t, by simp, rfl⟩ (Idem.not_nd_t)
+
+theorem necessary_distinctness_necessary_r : Statements.Models.full_idempotent_monoid.necessary_distinctness_necessary_r :=
+  verdict_fails M <|
+    not_holdsAx_of ⟨.rel .t, by simp, rfl⟩ (fun h => Idem.not_nd_t (holdsSentence_of_box _ M h))
+
+theorem distinctness_necessary_t : Statements.Models.full_idempotent_monoid.distinctness_necessary_t :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (Idem.not_nd_t)
+
+theorem necessary_distinctness_necessary_t : Statements.Models.full_idempotent_monoid.necessary_distinctness_necessary_t :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (fun h => Idem.not_nd_t (holdsSentence_of_box _ M h))
+
+theorem barcan_r : Statements.Models.full_idempotent_monoid.barcan_r :=
+  verdict_fails M <|
+    not_holdsAx_of ⟨.rel .t, by simp, rfl⟩ (Idem.not_bf_t)
+
+theorem necessary_barcan_r : Statements.Models.full_idempotent_monoid.necessary_barcan_r :=
+  verdict_fails M <|
+    not_holdsAx_of ⟨.rel .t, by simp, rfl⟩ (fun h => Idem.not_bf_t (holdsSentence_of_box _ M h))
+
+theorem barcan_t : Statements.Models.full_idempotent_monoid.barcan_t :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (Idem.not_bf_t)
+
+theorem necessary_barcan_t : Statements.Models.full_idempotent_monoid.necessary_barcan_t :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (fun h => Idem.not_bf_t (holdsSentence_of_box _ M h))
+
+theorem fregean_axiom : Statements.Models.full_idempotent_monoid.fregean_axiom :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (Idem.not_fregean)
+
+theorem necessary_fregean_axiom : Statements.Models.full_idempotent_monoid.necessary_fregean_axiom :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (fun h => Idem.not_fregean (holdsSentence_of_box _ M h))
+
+end full_idempotent_monoid
+
+namespace full_involution_group
+
+local notation "M" => MSet.model_isModel Invol
+
+theorem distinctness_necessary_r : Statements.Models.full_involution_group.distinctness_necessary_r :=
+  verdict_holds M <|
+    holdsAx_indexed.2 fun σ _ => holdsSentence_of_box _ M (Invol.box_nd σ)
+
+theorem necessary_distinctness_necessary_r : Statements.Models.full_involution_group.necessary_distinctness_necessary_r :=
+  verdict_holds M <|
+    holdsAx_indexed.2 fun σ _ => Invol.box_nd σ
+
+theorem distinctness_necessary_t : Statements.Models.full_involution_group.distinctness_necessary_t :=
+  verdict_holds M <|
+    holdsAx_eq.2 (holdsSentence_of_box _ M (Invol.box_nd (.rel .t)))
+
+theorem necessary_distinctness_necessary_t : Statements.Models.full_involution_group.necessary_distinctness_necessary_t :=
+  verdict_holds M <|
+    holdsAx_eq.2 (Invol.box_nd (.rel .t))
+
+theorem barcan_r : Statements.Models.full_involution_group.barcan_r :=
+  verdict_holds M <|
+    holdsAx_indexed.2 fun σ _ => holdsSentence_of_box _ M (Invol.box_bf σ)
+
+theorem necessary_barcan_r : Statements.Models.full_involution_group.necessary_barcan_r :=
+  verdict_holds M <|
+    holdsAx_indexed.2 fun σ _ => Invol.box_bf σ
+
+theorem barcan_t : Statements.Models.full_involution_group.barcan_t :=
+  verdict_holds M <|
+    holdsAx_eq.2 (holdsSentence_of_box _ M (Invol.box_bf (.rel .t)))
+
+theorem necessary_barcan_t : Statements.Models.full_involution_group.necessary_barcan_t :=
+  verdict_holds M <|
+    holdsAx_eq.2 (Invol.box_bf (.rel .t))
+
+theorem no_pure_contingency_r : Statements.Models.full_involution_group.no_pure_contingency_r :=
+  verdict_holds M <|
+    holdsAx_npc_pure M
+
+theorem fregean_axiom : Statements.Models.full_involution_group.fregean_axiom :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (Invol.not_fregean)
+
+theorem necessary_fregean_axiom : Statements.Models.full_involution_group.necessary_fregean_axiom :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (fun h => Invol.not_fregean (holdsSentence_of_box _ M h))
+
+end full_involution_group
 
 end Classicism.Map.Models
