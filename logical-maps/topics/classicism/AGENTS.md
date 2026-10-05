@@ -32,8 +32,10 @@ Read a matching `writeups/<id>.md` when it exists.
 - Dorr's BC versus RC examples are in `models/symmetric-*.yaml`. Read the
   individual record's `definition` (construction and evaluation point), its
   `arguments` and its `history`; do not transfer one variant's flags to another.
-- A model record lists only the verdicts the engine cannot derive; `status
-  --model <id>` or the viewer shows the rest.
+- A model record's ordinary arguments give only the verdicts the engine cannot
+  derive; arguments marked `reserve` keep the others it states directly, and its
+  notes end with the old text no argument keeps. `status --model <id>` or the
+  viewer shows every verdict.
 - Coalesced sums use `models/coalesced-*.yaml`. The glued free-monoid models
   use `models/full-free-monoid-glued-constants*.yaml` and matching write-ups.
   For signature claims, check the specified interpretation of constants and

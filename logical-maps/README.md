@@ -285,6 +285,9 @@ arguments:
 - holds: [transversal-r]
   text: …
   standing: conjectured             # optional tier; withdrawn: {date, by, reason}
+- holds: [necessary-actuality]      # after the others: a verdict the engine also derives,
+  reserve: true                     # kept so that it rests on more than the results
+  text: …
 notes: …                            # text that supports no verdict
 history: [...]                      # the old changes log, frozen when the record was migrated
 construction: {standing: conjectured, text: …}   # optional doubt about the model itself
@@ -312,14 +315,25 @@ notices), and `status --model ID` prints one. After migrating a record, run
 `python3 scripts/check_flattening.py`: it compares the flattened records, and every
 derived output including the lynchpin rows, with `origin/main` (or `--ref`).
 
-Such a record lists only the verdicts from which the engine derives the rest. Its
-source's own verdicts are minimized first, among themselves, so that they never rest on
-later additions; a later verdict is recorded only where it adds something. Among
-equally few, the simpler is recorded, so an unboxed principle with No Pure Contingency
-rather than its boxed form. An argument whose verdicts are all derived is dropped,
-unless another argument builds on it. The notice "each derivable from the other recorded
-verdicts" lists what remains redundant, and `check_flattening.py --closure` checks that
-a shortened record derives the same holds and fails as before.
+Such a record's ordinary arguments list only the verdicts from which the engine derives
+the rest. Its source's own verdicts are minimized first, among themselves, so that they
+never rest on later additions; a later verdict is recorded only where it adds something.
+Among equally few, the simpler is recorded, so an unboxed principle with No Pure
+Contingency rather than its boxed form. The notice "each derivable from the other
+recorded verdicts" lists what remains redundant among them, and
+`check_flattening.py --closure` checks that a record derives the same holds and fails as
+before.
+
+A verdict the record states directly that the engine also derives is not dropped: it is
+kept, with its argument, in an argument marked `reserve: true` after the others, so that
+it does not rest on the results alone. Reserve verdicts are recorded verdicts, and the
+viewer lists their arguments under "In reserve". A reserve argument is never deleted
+because the engine derives its verdicts; the notice "kept in reserve, and no longer given
+by the other arguments" says when it has started to carry one alone, as when a result it
+was derived through is withdrawn. Each classicism model keeps in reserve what it stated
+before it was written as arguments: the verdicts with the change-log entry that added
+them (its summary verbatim, by and date) or the record's source, and, at the end of its
+notes, the sentences of its old description and notes that no argument keeps.
 
 ## Viewer
 

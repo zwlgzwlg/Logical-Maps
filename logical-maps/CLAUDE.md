@@ -176,17 +176,21 @@ When you (an AI) add or edit a result or model:
   its own `by` and `date`, and a correction as an entry in the `revisions` of
   the argument it corrects. Its `history` is frozen; never add `changes`,
   `satisfies`, `violates` or `status` to it. A conjectured verdict is an
-  argument with `standing: conjectured`, not a separate record. Such a record
-  lists only the verdicts from which the engine derives the rest, its source's
-  first (README); add an argument only for a verdict the engine cannot derive.
+  argument with `standing: conjectured`, not a separate record. Its ordinary
+  arguments list only the verdicts from which the engine derives the rest, its
+  source's first (README). A verdict it states directly that the engine also
+  derives stays, with its argument, in an argument marked `reserve: true` after
+  the others; never delete a reserve argument because the engine derives it.
 - When you add content to an existing record after its certificate date (a
   newly verified property of a model, an added proof, a corrected statement),
   append an entry to its `changes` list: `date`, `by`, `summary`, and for models
-  the newly verified `satisfies`/`violates` ids. The Changes tab lists each entry
+  the newly verified `satisfies`/`violates` ids (a model written as arguments
+  takes a new argument instead, as above). The Changes tab lists each entry
   under its own date. Never move `certificate.date`; it is the record's origin.
 - Independences are recorded as models (`models/<id>.yaml`), never as results.
   For a model, list every principle you have actually verified in `satisfies`
-  and `violates` — the engine derives the rest and lists what is unknown. Add a
+  and `violates` (in a model written as arguments, as arguments) — the engine
+  derives the rest and lists what is unknown. Add a
   numerical sanity check under the topic's `checks/` when the model is concrete.
 - For conjectured extra properties of an existing proved model, add
   `model_check: {model: <existing-id>, satisfies: [...], violates: [...]}` to
