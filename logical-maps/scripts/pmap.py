@@ -2390,14 +2390,17 @@ def build_landing() -> Path | None:
     site = site_config()
     if not site:
         return None
-    links = []
+    links, stars = [], site.get("stars") or {}
     for topic_id in site["maps"]:
         topic = load_topic(topic_id)["topic"]
         # A draft is built but not listed on the homepage.
         if topic.get("draft") or not (BUILD / topic_id / "index.html").exists():
             continue
+        tier = stars.get(topic_id)
+        star = (f' <span class="star iridescent {escape(tier)}" title="{escape(tier.capitalize())} star">★</span>'
+                if tier in ("bronze", "silver", "gold") else "")
         links.append(f'<li><a class="map-link" href="{escape(topic_id)}/">'
-                     f'<span class="map-name">{escape(topic["title"])}</span>'
+                     f'<span class="map-name">{escape(topic["title"])}{star}</span>'
                      '<span class="arrow" aria-hidden="true">→</span></a></li>')
     introduction = ROOT / "site" / "introduction.md"
     intro = _md_to_html(introduction.read_text(encoding="utf-8")) if introduction.exists() else ""
