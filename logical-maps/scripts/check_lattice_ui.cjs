@@ -227,28 +227,24 @@ try{
   assert.equal(pop.hidden,false);
   assert.equal(d.querySelector('#pop .pop-t').textContent,'A','The popup names the principle');
   assert.match(pop.textContent,/Statement of A/,'And gives its statement');
-  const shaded=[...d.querySelectorAll('#lat-graph .lat-node')].map(g=>[...g.classList].find(c=>c.startsWith('rel-'))).filter(Boolean);
-  assert.equal(shaded.length,snap().n,'Every node takes a relation class');
-  assert.ok(shaded.includes('rel-base'),'The selection marks itself');
-  assert.ok(shaded.some(c=>c==='rel-entailed'||c==='rel-excluded'||c==='rel-consistent'||c==='rel-separated'||c==='rel-independent'),
-    'And the others take the graph\'s own kinds');
-  assert.equal(d.getElementById('lat-legend').hidden,false,'A legend explains them');
+  // The lattice draws entailment and consistency itself, so it does not colour its
+  // nodes by their relation to the selection as the graph does: the selection is
+  // marked, and nothing else takes a relation class.
+  const relClasses=()=>[...d.querySelectorAll('#lat-graph .lat-node')].map(g=>[...g.classList].find(c=>c.startsWith('rel-'))).filter(Boolean);
+  assert.deepEqual(relClasses(),['rel-base'],'Only the selection is marked');
+  assert.equal(d.getElementById('lat-legend').hidden,false,'The legend names the selection');
   assert.equal(d.querySelector('#lat-legend b').textContent,'A');
+  assert.equal(d.querySelector('#lat-legend .key'),null,'With no colours to explain');
   assert.equal(d.querySelector('#lat-legend .rel-status'),null,'The consistency report leaves the top line');
   assert.match(d.getElementById('lat-detail-foot').textContent,/background/,'And reports from the foot instead');
-  // The constants take the graph's reading: the ceiling follows from anything,
-  // the floor is ruled out by any consistent selection.
   const rel=sel=>[...d.querySelector(sel).classList].find(c=>c.startsWith('rel-'));
-  assert.equal(rel('#lat-graph .lat-top'),'rel-entailed','True is entailed by the selection');
-  assert.equal(rel('#lat-graph .lat-bottom'),'rel-excluded','False is excluded by it');
-  // The class is not enough: a later rule that paints the constants in the
-  // selection colour would still show the floor as if it followed.
+  assert.equal(rel('#lat-graph .lat-top'),undefined,'True is not coloured');
+  assert.equal(rel('#lat-graph .lat-bottom'),undefined,'Nor is False');
   add('d');
   const fill=sel=>w.getComputedStyle(d.querySelector(sel+' rect')).fill;
-  assert.equal(rel('#lat-graph .lat-node[data-lat-node="lat:d"]'),'rel-excluded','D is excluded by A');
-  assert.equal(fill('#lat-graph .lat-bottom'),fill('#lat-graph .lat-node[data-lat-node="lat:d"]'),'And the floor is painted as D is');
-  assert.notEqual(fill('#lat-graph .lat-bottom'),fill('#lat-graph .lat-top'),'Not as the ceiling is');
-  assert.notEqual(fill('#lat-graph .lat-bottom'),fill('#lat-graph .rel-base'),'Nor as the selection is');
+  assert.equal(rel('#lat-graph .lat-node[data-lat-node="lat:d"]'),undefined,'D, which A excludes, is not coloured either');
+  assert.notEqual(fill('#lat-graph .lat-node[data-lat-node="lat:d"]'),fill('#lat-graph .rel-base'),'The selection stands out from it');
+  assert.ok(!/Shift-click/.test(d.getElementById('lat-hint').textContent),'The lattice hint does not offer shift-click');
   w.eval('latticeToggle("d")');
   // The selected name is marked as it is on the graph, and only that name.
   const marked=()=>[...d.querySelectorAll('#lat-graph text.selection-member')].map(t=>t.textContent);

@@ -237,11 +237,6 @@
   .lat-node.lat-bottom rect { fill: var(--rel-excluded); stroke: var(--indep); stroke-width: 2; }
   .lat-node.lat-top rect { fill: var(--rel-entailed); }
   .lat-node.lat-bottom text[data-falsity] { fill: var(--indep); font-weight: 700; }
-  .lat-node.rel-entailed rect, .lat-node.rel-entailed circle { fill: var(--rel-entailed); }
-  .lat-node.rel-excluded rect, .lat-node.rel-excluded circle { fill: var(--rel-excluded); stroke: var(--indep); }
-  .lat-node.rel-consistent rect, .lat-node.rel-consistent circle { fill: url(#lat-split-consistent); }
-  .lat-node.rel-separated rect, .lat-node.rel-separated circle { fill: url(#lat-split-separated); }
-  .lat-node.rel-independent rect, .lat-node.rel-independent circle { fill: url(#lat-split-independent); }
   .lat-node.rel-base rect, .lat-node.rel-base circle { fill: var(--hl); stroke: var(--accent); stroke-width: 2.4; }
   .lat-node text[data-principle], .lat-node text[data-falsity], .lat-node text[data-truth] { cursor: pointer; pointer-events: auto; }
   #lat-detail .relation-legend { margin-bottom: 6px; }
@@ -4910,14 +4905,9 @@ function latticeDraw(svg) {
     // The tooltip is filled in on hover: see the pointerover handler below.
     return `<g class="${cls}" data-lat-node="${esc(n.id)}">${body}</g>`;
   };
-  const halves = [
-    ['consistent', 'var(--rel-entailed)', 'var(--node-fill)'],
-    ['separated', 'var(--node-fill)', 'var(--rel-excluded)'],
-    ['independent', 'var(--rel-entailed)', 'var(--rel-excluded)']
-  ].map(([id, upper, lower]) => `<linearGradient id="lat-split-${id}" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="1"><stop offset="50%" stop-color="${upper}"/><stop offset="50%" stop-color="${lower}"/></linearGradient>`).join('');
   // A capped build is whatever the search reached before it stopped, not a
   // lattice, so nothing of it is drawn behind the warning.
-  svg.innerHTML = `<defs>${halves}
+  svg.innerHTML = `<defs>
       <marker id="lat-solid" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-2)"/></marker>
       <marker id="lat-open" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0.5,0.5 L9.5,5 L0.5,9.5 z" fill="var(--bg)" stroke="var(--conj)" stroke-width="1.4"/></marker>
     </defs><g id="lat-vp">${lattice.capped ? '' : lattice.edges.map(edge).join('') + lattice.nodes.map(node).join('')}</g>`;
@@ -4933,25 +4923,14 @@ function latticeDraw(svg) {
   if (lattice.capped) warn.textContent = `These ${lattice.shown.length} choices generate more than ${LATTICE_CAP} conjunctions, past what the diagram can show or anyone can read. Choose about ${LATTICE_COMFORTABLE}.`;
   refreshLatticeControls();
 }
-// How a node stands to the selection, memoised with the entailments: a
-// re-render with the same selection asks the same questions.
-function latticeRelation(base, n) {
-  const memo = latticeMemo(), k = 'rel:' + JSON.stringify(base) + '|' + n.key;
-  let v = memo.get(k);
-  if (v === undefined) { v = selectionRelation(base, latticeExpression(n)).kind; memo.set(k, v); }
-  return v;
-}
 const latticeRelationClasses = ['rel-base', 'rel-entailed', 'rel-excluded', 'rel-consistent', 'rel-separated', 'rel-independent', 'rel-inconsistent', 'rel-conjectured', 'rel-open'];
-// The shading: the same as the graph's, read off the same selection, applied
-// to the elements already drawn. Here it repeats what the diagram already
-// shows in places, which does no harm and keeps one reading of the colours
-// across the two views.
+// The lattice draws entailment and consistency itself, so its nodes are not
+// coloured by their relation to the selection, as the graph's are: the selected
+// node is marked, and the arrows rising from it come forward.
 function latticeShade(svg) {
-  // Shaded against the background when nothing is selected, as on the graph.
   const selected = shadingBase(), implicit = selected == null, base = selected ?? TRUE;
   const baseLiterals = base == null ? [] : expressionLiterals(base);
   const baseMembers = new Set(implicit ? [] : base === TRUE ? [TRUE] : baseLiterals);
-  const baseInconsistent = base != null && consistencyStatus(baseLiterals).status === 'inconsistent';
   // The selected node is the one whose closure the selection generates, so a
   // click on any of the names an equivalence box carries selects that box,
   // as on the graph. A selection made elsewhere from principles this diagram
@@ -4972,24 +4951,10 @@ function latticeShade(svg) {
       for (const m of out.get(n.id) || []) stack.push(m);
     }
   }
-  const counts = {entailed: 0, excluded: 0, consistent: 0, separated: 0};
   for (const el of svg.querySelectorAll('[data-lat-node]')) {
     const n = lattice.byId.get(el.dataset.latNode);
     if (!n) continue;
-    let relation = '';
-    if (base != null) {
-      if (isBase(n)) relation = 'rel-base';
-      else if (baseInconsistent) { relation = 'rel-excluded'; counts.excluded++; }
-      // The floor is excluded by any consistent selection, as on the graph;
-      // asking the proof engine about it would count it as entailed instead.
-      else if (n.inconsistent) { relation = 'rel-excluded'; counts.excluded++; }
-      else {
-        const kind = latticeRelation(base, n);
-        relation = 'rel-' + kind;
-        if (kind === 'independent') { counts.consistent++; counts.separated++; }
-        else if (Object.hasOwn(counts, kind)) counts[kind]++;
-      }
-    }
+    const relation = isBase(n) ? 'rel-base' : '';
     el.classList.remove(...latticeRelationClasses, 'sel');
     if (relation) el.classList.add(relation);
     if (lattice.selected === n.id) el.classList.add('sel');
@@ -5010,18 +4975,15 @@ function latticeShade(svg) {
     if (emphasis) el.classList.add(emphasis);
   }
   applyGraphSearch();
-  renderLatticeLegend(lattice.capped || implicit ? null : base, baseInconsistent, counts);
+  renderLatticeLegend(lattice.capped || implicit ? null : base);
   document.getElementById('lat-hint').hidden = !!state.selected;
-  document.getElementById('lat-hint').textContent = 'Click a principle name, an ∧ or an arrow for its details. Shift-click a name to add or remove it from the selection.';
+  document.getElementById('lat-hint').textContent = 'Click a principle name, an ∧ or an arrow for its details.';
 }
-function renderLatticeLegend(base, baseInconsistent, counts) {
+function renderLatticeLegend(base) {
   const legend = document.getElementById('lat-legend');
   if (base == null) { legend.hidden = true; setDetailFoot('lat-detail-foot', null); return; }
   legend.hidden = false;
-  const key = (kind, label) => `<span class="key ${kind}"><i aria-hidden="true"></i>${label} <span class="n">${counts[kind]}</span></span>`;
-  legend.innerHTML = `<b>${esc(expressionName(base))}</b>`
-    + key('entailed', 'entailed') + key('excluded', 'excluded') + key('consistent', 'consistent') + key('separated', 'negation is consistent')
-    + selectionToolbar();
+  legend.innerHTML = `<b>${esc(expressionName(base))}</b>` + selectionToolbar();
   wireLegendActions(legend);
   setDetailFoot('lat-detail-foot', selectionConsistencyLine(consistencyStatus(expressionLiterals(base))));
 }

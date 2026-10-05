@@ -481,7 +481,10 @@ against everything already shown. Each group has the graph's own
 show-or-hide control as well, under the same node cap. The toolbar is the graph's too:
 a box to find a principle, then **Flip** and **Fit**. One query serves both
 diagrams; on the lattice a match nobody has chosen to build with has no node,
-and the readout says so rather than pretending otherwise.
+and the readout says so rather than pretending otherwise. The lattice is not
+shaded as the graph is: its order already shows what a selection entails and
+excludes, so it marks the selected node and brings forward the arrows rising
+from it.
 
 **Flip** turns a diagram over, so the stronger principles sit at the top and the
 arrows descend. It is one reflection of the finished layout, so nothing else
