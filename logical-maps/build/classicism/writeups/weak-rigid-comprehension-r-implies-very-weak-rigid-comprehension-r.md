@@ -1,6 +1,6 @@
 # Weak Rigid Comprehension ⇒ Very Weak Rigid Comprehension
 
-<p class='cert'>Result — Source: Misc.; produced by Cian Dorr, suggestion of 19 September 2026; recorded by Claude Opus 5 (Anthropic), 19 September 2026.</p>
+<p class='cert'>Result — Source: Misc., Lean `Classicism.Map.weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r`; produced by Cian Dorr, suggestion of 19 September 2026; recorded by Claude Opus 5 (Anthropic), 19 September 2026.</p>
 
 ## Premises
 

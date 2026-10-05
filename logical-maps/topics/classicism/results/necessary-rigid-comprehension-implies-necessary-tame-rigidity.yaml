@@ -1,0 +1,30 @@
+id: necessary-rigid-comprehension-implies-necessary-tame-rigidity
+premises:
+- necessary-rigid-comprehension-r
+conclusion: necessary-tame-rigidity-r
+status: proved
+certificate:
+  source_id: sun-possible-worlds-without-atomicity
+  produced_by: Christopher Sun
+  recorded_by: Claude Opus 5.5 (Anthropic), 2 October 2026
+  checked_by: []
+  date: '2026-10-02'
+  lean: none
+sources:
+- Christopher Sun, Possible Worlds Without Atomicity, draft of September 2026.
+source_names:
+- Possible Worlds Without Atomicity
+proof: >-
+  The argument of Rigid Comprehension ⇒ Tame Rigidity uses Rigid Comprehension only at the conclusion's
+  type tuple and nothing beyond C. So for each closed instance, C proves the conditional from the instance
+  of Rigid Comprehension to the instance of Tame Rigidity. Necessitate that theorem and apply K with the
+  boxed premise instance. Generalization over the admitted types is metalinguistic; no type quantifier is
+  placed inside the box.
+references:
+- paper: sun-possible-worlds-without-atomicity
+  role: origin
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §1.5, pp. 16–17
+  note: Necessitation of theorems and K.
+notes: ''

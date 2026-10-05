@@ -15,7 +15,7 @@ const data = {
 };
 function page(url = 'https://maps.example/?assume=', reduced = false) {
   const vc = new VirtualConsole(); vc.on('jsdomError', e => errors.push(e));
-  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {url, runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc,
+  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', ()=>JSON.stringify(data)), {url, runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc,
     beforeParse(w) { w.matchMedia = () => ({matches: reduced, addEventListener() {}}); },
   });
   pages.push(dom); return dom;
@@ -64,11 +64,12 @@ try {
   assert.match(w.location.search, /theory-deny=c/);
   assert.equal(page(w.location.href).window.eval("theory.negative.has('c') && !negativeBackground.has('c')"), true);
   assert.equal(doc.querySelector('#models-background-dock'), null);
-  assert.ok(doc.querySelector('#models [data-model="negative"]'));
-  assert.equal(doc.querySelector('#models [data-model="positive"]'), null);
-  const unknown = doc.querySelector('#models [data-model="unknown"]').closest('.ex-m');
-  unknown.querySelector('[data-model]').click();
-  assert.match(doc.getElementById('pop').textContent, /Unknown assumptions: ¬C/);
+  assert.ok(doc.querySelector('#models [data-open-model="negative"]'));
+  assert.equal(doc.querySelector('#models [data-open-model="positive"]'), null);
+  const unknown = doc.querySelector('#models [data-open-model="unknown"]').closest('.ex-m');
+  unknown.querySelector('[data-ex-inspect]').click();
+  assert.match(doc.querySelector('#model-principles li[data-assumption-row="c"]').textContent, /\? unknown/, 'Inspecting a potential model marks the assumption it leaves unknown');
+  unknown.querySelector('[data-ex-inspect]').click();
   click('#models [data-assume-positive="a"]');
   assert.equal(w.eval("theoryExcluded.has('b')"), true);
   assert.equal(w.eval("backgroundExcluded.has('b')"), false);

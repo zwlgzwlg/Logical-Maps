@@ -1,0 +1,384 @@
+id: finite-support-one-object
+name: 'Finite-support action models on one object'
+references:
+- paper: bacon-dorr-classicism
+  role: proof
+  locator: Appendix D, Definitions D.1–D.3 and Proposition D.5, pp. 73–79
+
+# The eight one-object models of Proposition D.5. Each member keeps its own file, id and the
+# arguments that are its alone. An argument that more than one member gave in substance is here,
+# stated once, with what varies between members moved into a condition that each member meets in
+# its own words. Rewritten at Cian Dorr's direction on 2 October 2026 (Claude Opus 5.5): the
+# members' copies were merged, second routes to the same verdict were dropped (the trawl's among
+# them), and the source's "as in part N" clauses became shared arguments. Texts are the members'
+# unless a revision says otherwise.
+# Arguments that hold far beyond this group (No Pure Contingency in one-object action models,
+# Transversal Choice in extensionally full models, Proposition D.6, the Σ-as-top arguments and those
+# for a single individual) moved to the topic's arguments/ the same day; the group meets their
+# conditions under `meets`, and its parameter values under theirs.
+
+# revision (2 October, Claude Opus 5.5, at Cian Dorr's direction): "individuals" became "numbers"
+# where the pinning sets are meant, and what the individuals are became the parameter
+# `individuals`, its value `naturals` restoring the old wording.
+definition: >-
+  {{monoid}} In every part, $W_0^\ddagger$ is the set of finite subsets of $\mathbb N$ and the model
+  is ideally full: a proposition is a set of arrows whose membership depends only on the arrows’
+  values on some finite set of numbers (it is pinned down by that set), and an entity of a higher
+  type is an applicative behaviour profile pinned down by a finite set in the same sense.
+  {{individuals}} Propositions and properties are thus about finitely many numbers and indifferent
+  to how the arrows treat the rest. Evaluation point: the sole object, at the identity arrow.
+
+
+  {{sigma}}
+
+parameters:
+  monoid:
+    text: The monoid of arrows, as the member's part of Proposition D.5 gives it.
+  individuals:
+    text: What the individuals are. Each member is a model with the natural numbers; its variant
+      with a single individual is generated.
+    generate: true
+    default: naturals
+    values:
+      # Revised 3 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): Σ has no individual
+      # constants. The value "Σ one constant for ⊤" went, its verdicts never differing from these;
+      # the individual constants that `top` and `true-atom` had left verdicts unknown where the
+      # individuals are not homogeneous, and settled none differently.
+      naturals:
+        text: The individuals are the natural numbers, acted on by the arrows themselves.
+        label: individuals ℕ
+      singleton:
+        text: >-
+          There is a single individual, which every arrow fixes; the arrows still act on
+          $\mathbb N$, which supplies the pinning sets.
+        label: one individual
+        meets:
+          one-individual: The only individual is fixed by every arrow, at the sole object.
+  sigma:
+    text: The interpretation of Σ. Each member fixes one; its variants with the others are
+      generated.
+    generate: true
+    values:
+      # migration: the two texts the members shared. In `true-atom` the members named the
+      # actual-world proposition by their identity arrow ($\{1_{\mathbb N}\}$, $\{f_1\}$,
+      # $\{k_0\}$); here it is described instead.
+      top:
+        text: >-
+          Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each
+          denotes the top element of its type.
+        label: Σ top
+        meets:
+          sigma-top: This is the interpretation.
+      true-atom:
+        text: >-
+          Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type
+          $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of
+          the model, the actual-world proposition, whose only member is the identity arrow; every
+          other constant of Σ, of which there is at least one, is relational and denotes the top
+          element of its type.
+        label: Σ true atom
+        requires: [actual-world-pinned]
+        meets:
+          sigma-true-atom: This is the interpretation.
+
+# Conditions of the topic (conditions.yaml) that every member meets; members meet others under their
+# own `meets`, and parameter values under theirs.
+meets:
+  codomain-intensions: >-
+    With one object such an intension is constant, so it is pinned down by $\emptyset$, and the
+    domain holds every finitely pinned intension.
+  one-object-action-model: >-
+    Each part of Proposition D.5 is a one-object category acting on $\mathbb N$ (Appendix D,
+    Definitions D.1–D.3).
+  extensionally-full: >-
+    The model is ideally full, hence extensionally full at every object (Appendix D, the remark
+    after Definition D.3): for any set $R$ of tuples from the domains at an object $V$, the
+    intension that assigns to every arrow out of $V$ into an object $U$ a fixed set $R_U$ of tuples
+    from $U$’s domains, with $R_V=R$, is pinned down by $\emptyset$, so it is the intension of an
+    element of $V^{\bar\sigma\to t}$ with extension $R$ at $1_V$.
+  metatheory-choice: The construction is carried out in ZFC (Appendix D).
+  # The members meeting both actual-world-pinned and non-identity-non-injective meet these.
+  actual-world-isolated:
+    requires: [actual-world-pinned, non-identity-non-injective]
+    text: >-
+      The actual-world proposition, whose only member is the identity, is pinned down by a finite
+      set, so it is in the domain and entails every truth; every other arrow is non-injective, so
+      no composite with it is the identity.
+  actuality-contingent:
+    requires: [actual-world-pinned, non-identity-non-injective]
+    text: >-
+      The actual-world proposition is in the domain, being pinned down by a finite set; at every
+      arrow some composite is not the identity, since every other arrow is non-injective, so it is
+      necessary at no arrow, and a non-identity arrow carries it to the empty set.
+  irreversible-arrow:
+    requires: [actual-world-pinned, non-identity-non-injective]
+    text: >-
+      A non-identity arrow is non-injective, so no arrow composes it back to the identity.
+
+conditions:
+
+- id: evens-avoidable
+  # Cian Dorr and Claude Opus 5.5, 2 October 2026: the condition the members' failures of Weakly
+  # Inextensible Comprehension used, each with its own witness.
+  text: >-
+    For every finite $N_0\subseteq\mathbb N$ there are an arrow $i$ fixing $N_0$ pointwise, an even
+    $b$, and a finite $N^{\prime}$ such that no arrow agreeing with $i$ on $N^{\prime}$ sends an
+    even number to $b$.
+
+- id: actual-world-pinned
+  text: >-
+    The singleton of the identity arrow is pinned down by a finite set.
+
+- id: non-identity-non-injective
+  text: >-
+    Every arrow other than the identity is non-injective.
+
+- id: pinned-atoms
+  text: >-
+    Every nonempty proposition contains an arrow whose singleton is pinned down by a finite set.
+
+- id: collapse-unpinned
+  text: >-
+    The arrows other than the identity form a nonempty proposition pinned down by a finite set,
+    and none of them has a singleton pinned down by a finite set.
+
+
+- id: positive-preserving
+  text: >-
+    Every arrow is monotone, and some arrow sends $0$ to a positive number.
+
+
+- id: unbounded-haecceities
+  text: >-
+    For some set $A$ of individuals, the strongest persistent property whose extension contains
+    $A$ and which is pinned down by $\{0,\ldots,n\}$ becomes strictly stronger as $n$ grows.
+
+- id: no-least-pinned-cover
+  text: >-
+    Some family $F$ of propositions has no least finitely pinned superset of its union
+    $\bigcup F$.
+
+- id: arrows-finitely-determined
+  # Claude Opus 5.5, 2 October 2026: the hypothesis of the Tame Rigidity argument.
+  text: >-
+    Every arrow other than the identity is finitely determined: its singleton is a proposition
+    pinned down by a finite set.
+
+arguments:
+
+- id: tame-rigidity
+  requires: [arrows-finitely-determined]
+  holds: [tame-rigidity-r]
+  by: Claude Opus 5.5 (Anthropic)
+  date: '2026-10-02'
+  text: >-
+    Write a relation $Y$ as its intension $k\mapsto Y_k$. Then $Y\bar a$ holds at $k$ iff
+    $k\cdot\bar a\in Y_k$, $(h\cdot Y)_k=Y_{k\circ h}$, and $\le$ is inclusion of intensions.
+    Put $X_0(S)_k:=k\cdot S$. (1) In any one-object model, if $Y_k=k\cdot Y_1$ for every $k$ then
+    $Y$ is rigid: persistence is immediate, and for the boxed weak inextensibility, $(h\cdot
+    Y)_k=k\cdot(h\cdot Y_1)=X_0(Y_h)_k$, which lies inside every $X$ that contains $X_0(Y_h)$. (2) Let
+    $Y$ be weakly rigid with extension $S$. For each finite $N^{\prime}$ the intension
+    $B_{N^{\prime}}(S)_k:=\bigcup_{k^{\prime}\equiv_{N^{\prime}}k}k^{\prime}\cdot S$ is pinned down by
+    $N^{\prime}$, so it is in the domain. It contains $X_0(S)$, so weak inextensibility gives
+    $Y\subseteq B_{N^{\prime}}(S)$, and persistence gives $Y\supseteq X_0(S)$; hence $k\cdot
+    S\subseteq Y_k\subseteq\bigcap_{N^{\prime}}\bigcup_{k^{\prime}\equiv_{N^{\prime}}k}k^{\prime}\cdot
+    S$. By the condition, for $k$ other than the identity some finite $N^{\prime}$ has $k$ as the only
+    arrow agreeing with it there, and the bounds meet: $Y_k=k\cdot S$. So every weakly rigid relation
+    at every type is rigid by (1), and Tame Rigidity holds. With No Pure Contingency, which holds
+    in a one-object model, the map's results give $\Box$Tame Rigidity.
+  revisions:
+  - date: '2026-10-03'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      Recorded from the argument deferred in extraction.md on 2 October until the model records'
+      new format landed (not yet checked by a human). Lemma 2's remark that $B_{N^{\prime}}(S)$ is
+      symmetric whenever the model is, which these models do not need, is left out.
+
+
+- id: axiom-of-infinity
+  # revision: split on 2 October; its type-t half is axiom-of-infinity-t.
+  when: {individuals: naturals}
+  holds: [axiom-of-infinity-e]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-09-20'
+  text: >-
+    The individuals are the natural numbers and identity at the evaluation arrow is literal, so no
+    numeral counts them. The set of numerals at type $e$ is invariant under every arrow, hence has
+    empty support and lies in the domain, so finite cardinality is standard and no finite
+    cardinality holds of the universal property.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: Split from the argument for both types; the type-$t$ half, which does not need infinitely many individuals, is axiom-of-infinity-t.
+
+- id: axiom-of-infinity-t
+  holds: [axiom-of-infinity-t]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-09-20'
+  text: >-
+    The propositions that a given number is fixed by the arrow, one for each number, are pairwise
+    distinct and each has that number as finite support, so there are infinitely many
+    propositions. The set of numerals at type $t$ is invariant under every arrow, hence has empty
+    support and lies in the domain, so finite cardinality is standard and no finite cardinality
+    holds of the universal property.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: The type-$t$ half of the old argument, "individual" becoming "number", so that it covers the one-individual variants.
+
+
+
+
+
+
+- id: actual-world
+  requires: [actual-world-pinned]
+  holds: [actuality]
+  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5, parts 4, 5, 7 and 8, pp. 78–79'}
+  by: Andrew Bacon and Cian Dorr
+  date: '2026-09-17'
+  text: >-
+    The actual-world proposition, whose only member is the identity, is then in the domain. It is
+    true, and it entails every truth, since every true proposition contains the identity.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: Stated once for the group; each member's pinning set moved to the condition actual-world-pinned.
+
+
+- id: atomicity
+  requires: [pinned-atoms]
+  holds: [atomicity-r]
+  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5, parts 6–8, pp. 78–79'}
+  by: Andrew Bacon and Cian Dorr
+  date: '2026-09-17'
+  text: >-
+    That singleton is an atom below the proposition.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: Stated once for the group; each member's pinning sets moved to the condition pinned-atoms.
+
+- id: collapsing-atomless
+  requires: [collapse-unpinned]
+  fails: [atomicity-r, atomicity-t]
+  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5(4), p. 78'}
+  by: Claude Fable 5.1 (Anthropic), from the source's remark
+  date: '2026-09-23'
+  text: >-
+    The only finitely pinned singleton is that of the identity, and every atom is a finitely
+    pinned singleton, since two arrows in a proposition pinned down by $S$ that differ at $m$ are
+    separated by a proposition pinned down by $S\cup\{m\}$. So the nonempty proposition of all
+    arrows other than the identity has no atom below it. As the source puts it, the actual world
+    is the only world, and Atomlessness restricted to false propositions holds.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: The identity-or-collapse models' arguments (the source's for Atomicity, part 4 and "as in part 4"; Fable's for type $t$) stated once, with the step from atoms to singletons spelled out.
+
+
+- id: barcan-positive
+  when: {individuals: naturals}
+  requires: [positive-preserving]
+  fails: [barcan-r]
+  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5, parts 3 and 4, pp. 77–78'}
+  by: Andrew Bacon and Cian Dorr
+  date: '2026-09-17'
+  text: >-
+    Witnessed by the qualitative property of being positive: an arrow sending $0$ to a positive
+    number sends everything to positive numbers, so $\forall y\,\Box(Xz\to Xy)$ holds with
+    $z:=0$ while $\Box\forall y(Xz\to Xy)$ fails.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: The monotone maps' argument (part 3), which part 4 invokes with "as in part 3", stated once.
+
+
+- id: boolean-completeness
+  when: {individuals: naturals}
+  requires: [unbounded-haecceities]
+  fails: [boolean-completeness-r]
+  source: {paper: bacon-dorr-classicism, locator: 'Proposition D.5, parts 1–8, pp. 75–79'}
+  by: Andrew Bacon and Cian Dorr
+  date: '2026-09-17'
+  text: >-
+    At type $e\to t$. In the source's terms an upper bound of the haecceities of the members of
+    $A$ is a persistent property whose extension contains $A$. A least one, pinned down by
+    $\{0,\ldots,n\}$, would be the strongest such property pinned down by $\{0,\ldots,n\}$, and
+    would also lie below the strongest pinned down by $\{0,\ldots,m\}$ for each $m>n$, which by
+    the condition is strictly stronger. So the haecceities have no least upper bound.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: Stated once for the group, with the step from "ever stronger" to the missing least upper bound spelled out; each member's strongest persistent properties moved to the condition unbounded-haecceities.
+
+- id: countable-boolean-completeness
+  when: {individuals: naturals}
+  requires: [unbounded-haecceities]
+  fails: [countable-boolean-completeness-r]
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    At type $e\to t$: the property $E$ whose extension is the family of haecceities of the members
+    of $A$, which has no least upper bound by the shared argument boolean-completeness, is
+    countable, and the extensional fullness the source invokes to put $E$ in the domain also puts
+    in the relation pairing the haecceity of the $k$-th member of $A$ with the numeral $k$, which
+    injects $E$ into the numerals.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: Now builds on the shared argument boolean-completeness instead of on each member's source argument; no change of substance.
+
+- id: boolean-completeness-t
+  requires: [no-least-pinned-cover]
+  fails: [boolean-completeness-t]
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-25'
+  text: >-
+    The source (n. 92) conjectures this but does not show it. Any set $F$ of propositions is the
+    extension at the identity of an element of the domain at type $t\to t$, namely the profile
+    $\langle h,p\rangle\mapsto\{i : i\cdot p\in F\}$: it is natural, independent of $h$ and so
+    pinned down by the empty set, and each of its values is pinned down by the pinning set of $p$,
+    since $i\cdot p$ depends only on the values of $i$ there. A least upper bound of $F$ under
+    entailment is a least finitely pinned superset of $\bigcup F$, and it exists only if the least
+    $S$-pinned superset of $\bigcup F$ stops shrinking as the finite set $S$ grows. So the family
+    $F$ of the condition has no least upper bound, and, taking pointwise negations, the family of
+    complements has no greatest lower bound.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: The seven members' copies stated once, each member's family moved to the condition no-least-pinned-cover; the truncations' separate argument of 23 September, by Claude Fable 5.1 prompted by Cian Dorr, is now its witness, its own proof that the family is in the domain giving way to the profile above. The trawl's second arguments for the same verdict (25 September, DeepSeek, reviewed by OpenAI Codex) were dropped.
+
+- id: weakly-inextensible-comprehension
+  when: {individuals: naturals}
+  # migration: the members' common argument, from the truncations' text with its witness moved
+  # to the condition (2 October, at Cian Dorr's direction); each member's witness is its reason
+  # under `meets`. The 25 September revision is the members' own.
+  requires: [evens-avoidable]
+  fails: [weakly-inextensible-comprehension-r]
+  by: Claude Fable 5.1 (Anthropic), answering Cian Dorr’s question whether the failure of
+    Actuality can be sharpened to a failure of Inextensible Comprehension
+  date: '2026-09-23'
+  text: >-
+    At type $e\to t$, for the property of being even, which is in the domain as the constant
+    intension $\{\langle b,h\rangle : b\text{ even}\}$, pinned down by $\emptyset$. Unpacking
+    $\operatorname{Inextensible}$ as in the left-to-right half of Dorr’s rigidity criterion (draft,
+    Lemma 14, p. 7, with Lemma 13): even the unboxed matrix, evaluated at the identity, says that
+    $Y$ is contained in every persistent (transport-closed) $B$ in the domain whose extension
+    includes $Y$’s. For a finite $N^{\prime}$, the smallest such $B$ pinned down by $N^{\prime}$ is
+    $B_{N^{\prime}}:=\{\langle b^{\prime\prime},i^{\prime}\rangle :
+    i^{\prime\prime}(b)=b^{\prime\prime}\text{ for some even }b\text{ and some arrow
+    }i^{\prime\prime}\text{ agreeing with }i^{\prime}\text{ on }N^{\prime}\}$, which is
+    transport-closed and pinned down by $N^{\prime}$. Now let $Y$ be coextensive with evenness and
+    pinned down by a finite $N_0$; then $\langle b,i\rangle\in Y$ for every even $b$ and every arrow
+    $i$ fixing $N_0$ pointwise. Take the arrow $i$, the even $b$ and the finite $N^{\prime}$ that
+    the condition provides for $N_0$: no arrow agreeing with $i$ on $N^{\prime}$ sends an even
+    number to $b$. So $\langle b,i\rangle\in Y\setminus B_{N^{\prime}}$, and $Y$ is not even weakly
+    inextensible.
+  revisions:
+  - date: '2026-09-25'
+    by: Claude Opus 5.5 (Anthropic)
+    note: Merged with the 25 September version; the argument already refutes the weak form, which was added.
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: Stated once for the group, the witness moving to the condition evens-avoidable.

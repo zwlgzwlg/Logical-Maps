@@ -1,0 +1,26 @@
+id: tame-rigidity-and-weak-rigid-comprehension-imply-rigid-comprehension
+premises:
+- tame-rigidity-r
+- weak-rigid-comprehension-r
+conclusion: rigid-comprehension-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 2 October 2026, from a suggestion of Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 2 October 2026
+  checked_by: []
+  date: '2026-10-02'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 2 October 2026.
+source_names:
+- Dorr 2 Oct
+proof: >-
+  Fix the type tuple. Given $X$, Weak Rigid Comprehension supplies a weakly rigid $Y$ coextensive with
+  $X$. Tame Rigidity at the same type makes $Y$ rigid, so $Y$ witnesses Rigid Comprehension for $X$.
+references:
+- paper: sun-possible-worlds-without-atomicity
+  role: related
+  note: Half of Sun's equivalence of Rigid Comprehension with Tame Rigidity plus Weak Rigid Comprehension;
+    the converse is recorded separately.
+notes: ''

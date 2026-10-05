@@ -39,6 +39,9 @@ references:
   note: The proposition this model refutes.
 
 # migration: the definition is the old description.
+# migration (3 October): the interpretation of Σ has no individual constants, as the topic's condition
+# sigma-top now says (Cian Dorr's decision); it read "and each individual constant the individual
+#".
 definition: >-
   An intensional action model with one individual. The objects are the root $o$, $s$, $u$, and $n$ for
   each $n\ge1$; besides identities the arrows are $h_s\colon o\to s$, $j\colon s\to u$, $h_u:=j\circ h_s$
@@ -49,8 +52,12 @@ definition: >-
   full intension space whose extension at $u$ is the $\mathcal U$-limit of its extensions at the worlds
   $n$; its extensions at $o$, at $s$ and at each $n$ are unconstrained. So a root proposition is any choice
   of truth values at $o$, $s$ and the $n$s, with its value at $u$ fixed as the limit. Evaluation point: the
-  root. Interpretation of Σ, fixed for this record: each relational constant denotes the top element of its
-  type and each individual constant the individual.
+  root. Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each
+  denotes the top element of its type.
+
+# 2 October 2026: the topic's general argument sigma-top replaces this record's copy of it.
+meets:
+  sigma-top: This is the interpretation the definition fixes.
 
 arguments:
 
@@ -91,35 +98,23 @@ arguments:
     (necessary-atomicity-completeness-bf-imply-rigid-comprehension); the gap is the normalization
     step of n. 42, part (iv), which the write-up runs inside the model (§5).
 
-- id: sigma-top
-  fails: [witnessed-possibility-r, independence-signature-r]
-  # migration: the lead-in "Under the interpretation of Σ, the signature schemata fail." is dropped.
-  text: >-
-    Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed
-    Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible
-    of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree
-    on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term
-    $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true
-    identity that C(Σ) does not prove. Everything that implies these fails with them.
-
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [necessary-actuality]
-  fails: [separated-structure-r, distinctness-signature-r]
-  reserve: true
-  source: {paper: dorr-prop-2-11-counterexample, locator: "§§2–4"}
-
 # migration: text of the old notes that no argument holds, verbatim: their first sentence. The
 # argument for Actuality at every world, now derived, is dropped: "Actuality holds at every world: at
 # the root the proposition true at $o$ alone is a true atom."
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
+
+- holds: [necessary-intensional-choice-r]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion
+  date: '2026-10-03'
+  text: >-
+    At the root: given $F$ with $\Box\exists x\, .\,Fx$, let $G$ pick the least element of $F$ at $o$, $s$
+    and each $n$, under fixed well-orderings, the same ordering of $M^\sigma$ at every $n$. The sets
+    $\{n : G(n)=\{a\}\}$ for $a\in M^\sigma$ partition the positive integers into finitely many pieces, so
+    exactly one is in $\mathcal U$, say for $a_0$; then $\lim_{\mathcal U}G(n)=\{a_0\}$, and $a_0\in
+    F(u)=\lim_{\mathcal U}F(n)$. Setting $G(u):=\{a_0\}$ puts $G$ in the root domain, with $G\le F$
+    and every extension a singleton. At $s$, $u$ and the $n$ the domains are full, and the
+    well-ordering argument (arguments/intensional-choice-well-ordering) applies there, so the
+    boxed form holds too.
+
 notes: >-
-  It is a model: the limit condition commutes with every finite operation, so every term denotes
-  in the domains (write-up, Lemma 2).
-
-  Actuality holds at every world: at the root the proposition true at $o$ alone is a true atom.
-
-  Under the interpretation of Σ, the signature schemata fail.
+  It is a model: the limit condition commutes with every finite operation, so every term denotes in
+  the domains (write-up, Lemma 2).

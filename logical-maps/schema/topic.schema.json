@@ -90,6 +90,10 @@
       "uniqueItems": true,
       "description": "Principle ids the graph starts with; the rest start hidden and stay available in the sidebar. Omit to start with every principle shown."
     },
+    "default_tab": {
+      "enum": ["background", "graph", "lattice", "models", "open", "results", "contribute"],
+      "description": "The tab the map opens on; default graph. models is the theory explorer, open the Conjectures tab and results the Changes tab."
+    },
     "framework": {
       "type": "string",
       "description": "The setting all principles are stated in: the objects, the primitive relation(s), standing conventions. Every result is a claim about this framework."
@@ -140,6 +144,84 @@
         }
       }
     },
+    "views": {
+      "type": "array",
+      "description": "Curated graph views, offered in the graph's View menu. A view sets exactly which principles the graph shows; it does not change the background.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "principles"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string"
+          },
+          "default": {
+            "type": "boolean",
+            "description": "Open the graph on this view when the URL names none."
+          },
+          "principles": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            },
+            "description": "Exactly the principles the view shows."
+          }
+        }
+      }
+    },
+    "lattice_views": {
+      "type": "array",
+      "description": "Curated lattice views, offered in the lattice's View menu, independent of the graph views. A view sets exactly which principles the lattice draws; it does not change the background.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "principles"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string"
+          },
+          "default": {
+            "type": "boolean",
+            "description": "Open the lattice on this view when the URL names none."
+          },
+          "principles": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            },
+            "description": "Exactly the principles the view shows. Keep it small: the lattice draws every conjunction."
+          }
+        }
+      }
+    },
     "notation": {
       "type": "string",
       "description": "Optional notation guide shown in the viewer."
@@ -179,6 +261,10 @@
             "principle": {
               "type": "string",
               "description": "How a principle applies inside the statement; {def} is its lean_def. Default {def}."
+            },
+            "falsum": {
+              "type": "string",
+              "description": "How a result concluding False is written. Default: False."
             }
           }
         },
@@ -195,6 +281,25 @@
               "description": "How a principle applies inside the statement; {def} is its lean_def. Default {def}."
             }
           }
+        },
+        "index": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "script": {
+              "type": "string",
+              "description": "Lean file, relative to the topic's lean directory, that lean-check runs with `lake env lean` after a successful build to write the index."
+            },
+            "file": {
+              "type": "string",
+              "description": "The index it writes, relative to the topic's lean directory: for each certificate and variant, where its proofs and definitions are."
+            }
+          },
+          "description": "The index of source locations the viewer links each result, principle and variant to."
+        },
+        "source_url": {
+          "type": "string",
+          "description": "Template for a link to a source location: {commit}, {file} (relative to the topic's lean directory), {start} and {end} lines. The build fills {commit} with the commit it was built from."
         }
       }
     },

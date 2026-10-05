@@ -268,5 +268,5 @@ ratios.
 
 ## Paper references
 
-- **Background: [Symmetries of value](https://doi.org/10.1111/nous.12549).** Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — pp. 27–29; alternating St Petersburg and negative self-similarity, pp. 29–31; cone-extension framework, §5, pp. 33–37
+- **Background: [Symmetries of value](https://doi.org/10.1111/nous.12549).** ([PDF](../sources/Goodsell%20-%202026%20-%20Symmetries%20of%20value.pdf)) Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — pp. 27–29; alternating St Petersburg and negative self-similarity, pp. 29–31; cone-extension framework, §5, pp. 33–37
 - **Background: Unbounded Utility and Background Risk.** Zachary Goodsell (5 June 2026). Unbounded Utility and Background Risk. Unpublished working manuscript. — §3, pp. 7–8, the base area preorder. Its withdrawn symmetric-extension theorem is not used

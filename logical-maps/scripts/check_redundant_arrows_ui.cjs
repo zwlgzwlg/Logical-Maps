@@ -7,7 +7,7 @@ const rule=(id,premises,conclusion,status='proved',source_id='weak')=>({id,premi
 function page(results){
  const data={topic:{id:'redundancy',title:'Redundancy',background:[],source_catalog:[{id:'strong',name:'Stronger implication',kind:'published-paper'},{id:'weak',name:'Other implications',kind:'misc'}]},principles:['a','b','c','d','x','z'].map(id=>({id,name:id.toUpperCase(),statement:id})),results,models:[]};
  const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));
- const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data)),{url:'https://maps.example/?assume=',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});pages.push(dom);return dom;
+ const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data)),{url:'https://maps.example/?assume=',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});pages.push(dom);return dom;
 }
 const graph=dom=>JSON.parse(dom.window.eval('JSON.stringify(buildGraph())'));
 const arrows=dom=>graph(dom).edges.filter(e=>!e.toJunction);

@@ -10,12 +10,10 @@
 - **□Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
 - **Necessity of Arithmetic.** Every arithmetical sentence is either necessarily true or necessarily false, given that possibly zero is not a successor and successor is injective on numbers. One sentence for each arithmetical sentence.
 - **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
+- **□Intensional Choice.** Every closed instance of Intensional Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
 - **Transversal Choice.** Every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.
-- **Relational Choice.** Every serial binary relation has a functional subrelation.
-- **B for pure sentences.** The B instance for every closed sentence in the pure language.
 - **¬ □BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
 - **¬ Atomlessness.** Atomlessness in the displayed closed propositional formulation.
-- **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
 - **¬ Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
 - **¬ Boolean Completeness (type t).** Boolean Completeness (type t) in the displayed closed propositional formulation.
 - **¬ Countable Boolean Completeness.** Every countable property of entities of a relational type has a least upper bound in that type, where a property is countable when it injects into the natural numbers.
@@ -25,15 +23,14 @@
 - **¬ Weakly Inextensible Comprehension.** Every relation, including a proposition, is coextensive with a weakly inextensible one.
 - **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
 - **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
+- **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
 - **¬ Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
-- **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
-- **¬ Actuality.** There is a true proposition that entails every true proposition.
 
 ## Definition
 
 Appendix D, p. 79, the paragraph beginning “One particularly interesting result”: two objects, $W_0=\mathbb N$ and $W_1=\{0\}$, with all functions between them as arrows, $W_i^\ddagger$ the finite subsets of $W_i$, and the model ideally full as in Proposition D.5. Evaluation point: $W_0$, at its identity arrow.
 
-Interpretation of Σ, fixed for this record: each relational constant denotes the top element of its type and each individual constant denotes one fixed individual.
+Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each denotes the top element of its type.
 
 ## Arguments
 
@@ -54,12 +51,6 @@ The closed sentence that there is exactly one individual denotes the singleton o
 The individuals are the natural numbers and identity at the evaluation arrow is literal, so no numeral counts them. The propositions that a given individual is fixed by the arrow, one for each individual, are pairwise distinct and each has that individual as finite support, so there are infinitely many propositions. The set of numerals at each type is invariant under every arrow, hence has empty support and lies in the domain, so finite cardinality is standard and no finite cardinality holds of the universal property at either type.
 
 *By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-09-20.*
-
-### Fails Independence (signature Σ).
-
-Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true identity that C(Σ) does not prove. Everything that implies these fails with them.
-
-*Address: `finite-support-two-object-all-maps#sigma-top`. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
 
 ### Fails Distinctness-preserving collapse.
 
@@ -103,12 +94,6 @@ A closed $\Sigma$-sentence denotes what $P(d,\ldots,d)$ denotes for a pure $P$ a
 
 *By Claude Fable 5.1 (Anthropic), 2026-09-25.*
 
-### Holds Transversal Choice.
-
-By the argument recorded for Relational Choice: the model is extensionally full at every object, so for an equivalence relation at the evaluation point a transversal of its extension there, chosen in the metatheory, is the extension of an element pinned down by the empty set; the equivalence and transversal conditions are unboxed.
-
-*By Claude Fable 5.1 (Anthropic), on a question of Zachary Goodsell, after an observation of Christopher Sun, 2026-09-25.*
-
 ### Fails Vicinity.
 
 A true $w$ pinned down by a finite set $S$ contains every arrow agreeing with the identity on $S$, among them a map $W_0\to W_0$ that collapses two individuals $a\ne b$ outside $S$. The proposition that $a$ and $b$ are distinct is true, and it is possible at no arrow that collapses them, since a collapse persists under composition, so $w\not\le\Diamond(a\ne b)$.
@@ -121,36 +106,34 @@ The argument above against Inextensible Comprehension at type $t\to t$ uses only
 
 *By Claude Opus 5.5 (Anthropic), at Cian Dorr's request, 2026-09-27.*
 
-### Fails Witnessed Possibility, Separated Structure, Distinctness Maximalism (signature Σ). In reserve.
+### Holds □Intensional Choice.
 
-Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+For each object $U$ and type $\sigma$ fix a well-ordering $<_U$ of the domain $D^\sigma_U$, and let $W$ be the intension of type $\sigma\to\sigma\to t$ with $W(h):={<_{\operatorname{cod}h}}$. Its value depends only on the arrow's codomain, so by the condition it is in the domain, and at every world its extension well-orders that world's type-$\sigma$ domain. Given $F$ with $\Box\exists x\, .\,Fx$, put $G:=\lambda x\, .\,Fx\land\forall y\, .\,(Fy\to\neg Wyx)$, the $W$-least $F$. It is definable from $F$ and $W$, so in the domain; $G\le F$, and its extension at every arrow is the singleton of the least element of $F$'s. So Intensional Choice holds, and the same at every reachable object gives $\Box$Intensional Choice. Cian Dorr's observation that such models are qualitatively full, made precise.
 
-*By Claude Fable 5.1 (Anthropic), 2026-09-22.*
+*General argument `arguments/intensional-choice-well-ordering`. It requires that At every object reachable from the evaluation point, the domain contains every intension whose value at an arrow depends only on the arrow's codomain. Here: The model is ideally full at both objects, and an intension whose value at an arrow depends only on the arrow's codomain is pinned down by $\emptyset$ (Appendix D, the remark after Definition D.3). It requires that The model is constructed in a metatheory with the axiom of choice. Here: The construction is carried out in ZFC (Appendix D). By Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion, 2026-10-03.*
 
-### Holds Relational Choice. In reserve.
+### Fails Witnessed Possibility, Separated Structure, Independence (signature Σ), Distinctness Maximalism (signature Σ).
 
-Added Relational Choice and its necessitation at Cian Dorr’s direction: ideally full models are extensionally full at every object, and choice in the metatheory supplies the functional subrelation; see the notes.
+Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true identity that C(Σ) does not prove.
 
-*By Claude Fable 5.1 (Anthropic), 2026-09-23.*
+*General argument `arguments/sigma-top`. It requires that Every constant of Σ is relational, and each denotes the top element of its type. Here: This is the interpretation the definition fixes. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
 
-### Fails Atomicity (type t). In reserve.
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic; it uses nothing about the model.
 
-Recorded the failure of Atomicity (type t), and with it of the Strong Leibniz Biconditionals; see the notes.
+### Holds Transversal Choice.
 
-*By Claude Fable 5.1 (Anthropic), 2026-09-23.*
+For an equivalence relation at the evaluation point, a transversal of its extension there, chosen in the metatheory, is by extensional fullness the extension of an element of the domain; the equivalence and transversal conditions are unboxed.
 
-### Holds B for pure sentences. Fails Actuality. In reserve.
+*General argument `arguments/transversal-choice-extensionally-full`. It requires that The model is extensionally full at every object: every set of tuples from the domains at an object is the extension, at the identity arrow, of an element of the domain of the matching relational type there. Here: The model is ideally full, hence extensionally full at every object (Appendix D, the remark after Definition D.3). It requires that The model is constructed in a metatheory with the axiom of choice. Here: The construction is carried out in ZFC (Appendix D). By Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic), on a question of Zachary Goodsell, after an observation of Christopher Sun, 2026-09-25.*
 
-Settled Actuality, Atomicity (type t), Boolean Completeness (type t), Countable Boolean Completeness, □BF (type t) and Inextensible Comprehension as failing, and Necessity of Arithmetic, B for pure sentences and B for sentences of Σ as holding, with the arguments in the notes.
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The Relational Choice and Transversal Choice arguments merged into one, stated for every extensionally full model.
 
-*By Claude Fable 5.1 (Anthropic), 2026-09-25.*
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic. Its first sentence, deriving extensional fullness from ideal fullness, is now the group's reason for meeting extensionally-full.
 
 
 ## Notes
 
-The cited construction is a model of the map’s relational-type framework. The description identifies its evaluation point; construction and verification are given at the PDF locations in References.
-Atomlessness fails at $W_0$: the closed sentence that there is exactly one individual denotes the singleton of the unique map to $W_1$, a nonempty proposition with no nonempty proper subproposition.
-Distinctness-preserving collapse fails at $W_0$: the transposition of $5$ and $6$ is an arrow with an inverse, so for any true $q$ the composite of a member of $q$ with the inverse carries the transposition into $q$, making $\Diamond q$ true there, while the true proposition that $5$ is fixed is false there. Atomicity fails at $W_0$ already at type $t$. A proposition at $W_0$ is a set of arrows out of $W_0$ whose membership depends on the target and on the values on a finite set; the singleton of the map to $W_1$ is one, and is an atom, but no singleton of a map $\mathbb N\to\mathbb N$ is, since such a map is not determined by finitely many values. So the nonempty proposition of the maps $h\colon\mathbb N\to\mathbb N$ with $h0=0$ has no atom below it: any nonempty subproposition pinned down by $N$ containing $h$ contains all arrows agreeing with $h$ on $N$, and those agreeing with it on $N\cup\{m\}$ form a smaller nonempty one. Actuality fails: the strongest true proposition pinned down by $\{0,\ldots,N\}$ is the set of maps $W_0\to W_0$ agreeing with the identity there, and it strictly shrinks as $N$ grows, so no truth entails every truth; Actual Profile, $\Box$Actuality, Persistent Comprehension and the weak rigid comprehension principles fail with it. Boolean Completeness fails at type $t$: any set $F$ of propositions is the extension of the profile $\langle h,p\rangle\mapsto\{i : i\cdot p\in F\}$, and for $F$ the family of propositions $A_m$ that a map $W_0\to W_0$ is constant on $\{0,\ldots,2m-1\}$ and first changes value at $2m$, the least superset of $\bigcup F$ pinned down by $\{0,\ldots,N\}$, the maps whose first change is at an even position or beyond $N$, strictly shrinks as $N$ grows, so $F$ has no least upper bound. Necessity of Arithmetic nevertheless holds: at $W_0$ the finite cardinalities are the standard numerals and $I^*$ is true; at $W_1$ the numerals remain pairwise distinct, because they differ at the arrows back into $W_0$ and identity is necessary, $I^*$ is again true, the numerals are the finite cardinalities by extensional fullness, and $\operatorname{Sum}$ and $\operatorname{Prod}$ are standard, their graphs being in the domain; so every arithmetical sentence has its standard truth value at every world. $\Box$BF fails already at type $t$: at $W_1$ the arrow $c_n\colon W_1\to W_0$ picking $n$ sends a proposition $q$ to $\{j : c_{j(n)}\in q\}$ (with the arrow to $W_1$ added when $q$ contains $1_{W_1}$), a proposition pinned down by $\{n\}$, so the proposition that $0$ and $1$ are collapsed is in no such image; the profile holding at $\langle h,d\rangle$ iff $h=1_{W_1}$ or $d$ is in the image of $h$, pinned down by $\{0\}$, is necessary of every proposition at $W_1$ but not universal at the world $c_0$. B for pure sentences holds: every world can reach $W_0$ again, by a map $W_0\to W_0$ or by an arrow $c_n$ out of $W_1$, and a closed pure sentence true at $W_0$ is true at every arrow into $W_0$. B for sentences of $\Sigma$ holds under the record's interpretation: a closed $\Sigma$-sentence denotes what $P(d,\ldots,d)$ denotes for a pure $P$ and the individual $d$, and from any world some arrow into $W_0$ carries the current image of $d$ back to $d$, as all maps are arrows. Observations of Claude Fable 5.1 (Anthropic), 25 September 2026; not in the source. Weakly Inextensible Comprehension fails as well: the argument above against Inextensible Comprehension at type $t\to t$ uses only the unboxed matrix of inextensibility at the identity arrow of $W_0$, as the corresponding argument in the permutation model does.
+The cited construction is a model of the map’s relational-type framework. The description identifies its evaluation point; construction and verification are given at the PDF locations in References. Everything that implies these fails with them.
 
 ## History
 

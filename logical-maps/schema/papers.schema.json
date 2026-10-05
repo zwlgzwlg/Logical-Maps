@@ -35,6 +35,11 @@
       "type": "string",
       "pattern": "^https?://[^\\s]+$"
      },
+     "file": {
+      "type": "string",
+      "pattern": "^sources/[^\\\\]+$",
+      "description": "A copy of the paper in this topic's sources/ folder, as sources/<file>. It is published with the site and downloads, so only authorised documents belong there. Wherever the paper is cited, it is linked alongside url."
+     },
      "note": {
       "type": "string",
       "minLength": 1

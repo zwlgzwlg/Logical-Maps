@@ -10,7 +10,7 @@ certificate:
   recorded_by: Claude Fable 5.1 (Anthropic), 22 September 2026
   checked_by: []
   date: '2026-09-22'
-  lean: none
+  lean: stated
 sources:
 - Andrew Bacon, A Philosophical Introduction to Higher-Order Logics, Routledge, 2024, §8.2, Theorem 8.2,
   pp. 169–171.

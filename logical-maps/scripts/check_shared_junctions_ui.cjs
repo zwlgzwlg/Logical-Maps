@@ -4,7 +4,7 @@ const {JSDOM,VirtualConsole}=require('jsdom');
 const root=path.resolve(__dirname,'..'),template=fs.readFileSync(path.join(root,'viewer/template.html'),'utf8');
 const pages=[],errors=[];
 const rule=(id,premises,conclusion,status='proved',source_id='paper')=>({id,premises,conclusion,status,certificate:{source_id,lean:'none'},sources:['Fixture'],source_names:['Fixture']});
-function page(data){const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data)),{url:'https://maps.example/?assume=',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});pages.push(dom);
+function page(data){const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data)),{url:'https://maps.example/?assume=',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});pages.push(dom);
   // These fixtures assert over the full arrow set, so turn off the default transitive reduction.
  dom.window.document.getElementById('reduce-arrows').click();
  return dom;}

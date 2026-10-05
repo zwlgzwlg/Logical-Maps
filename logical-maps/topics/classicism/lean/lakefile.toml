@@ -1,9 +1,21 @@
 name = "Classicism"
 defaultTargets = ["Classicism"]
 
-# No Mathlib: the shallow layer lives in base Lean so that nothing classical
-# (propext, Quot.sound, Classical.choice) is available except where the
-# Classicism prelude admits it. See README.md.
+# Mathlib is a dependency for the metalogical layer's model theory only
+# (`Classicism.Meta.Action*`). The shallow and strict layers never import it:
+# they live in base Lean so that nothing classical (propext, Quot.sound,
+# Classical.choice) is available except where the Classicism prelude admits
+# it. See README.md.
+#
+# Pinned to the Mathlib tag matching `lean-toolchain`. Dependencies go to the
+# default `.lake/packages`; to keep a single copy of Mathlib shared by every
+# Lean project on a machine, make that directory a symlink to a shared one
+# (see README.md, Building). `.lake/` is not committed.
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.33.1"
 
 [[lean_lib]]
 name = "Classicism"

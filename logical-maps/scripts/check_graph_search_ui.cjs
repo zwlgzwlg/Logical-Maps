@@ -6,7 +6,7 @@ const data = JSON.parse(fs.readFileSync(path.join(root, 'build/unbounded-utility
 const target = 'reflection-anti-invariance';
 data.principles.find(p => p.id === target).aliases = ['Mirror preference'];
 const errors = [], vc = new VirtualConsole(); vc.on('jsdomError', e => errors.push(e));
-const dom = new JSDOM(fs.readFileSync(path.join(root, 'viewer/template.html'), 'utf8').replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {
+const dom = new JSDOM(fs.readFileSync(path.join(root, 'viewer/template.html'), 'utf8').replace('/*__PMAP_DATA__*/null', ()=>JSON.stringify(data)), {
   url: 'https://maps.example/', runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc,
 });
 const w = dom.window, doc = w.document, input = doc.getElementById('graph-search');

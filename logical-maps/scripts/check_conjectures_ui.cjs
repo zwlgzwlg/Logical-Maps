@@ -9,7 +9,7 @@ const pages=[],errors=[];
 function page(data,url='http://localhost/?assume=') {
   const vc=new VirtualConsole();
   vc.on('jsdomError',error=>errors.push(error));
-  const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data)),{
+  const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data)),{
     url,runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc,
   });
   pages.push(dom);
@@ -247,8 +247,9 @@ try {
   assert.deepEqual(keys(dom),['q|b|a','q|a|b','q|b|false']);
   assert.equal(progressEl().textContent,settled);
 
-  // Real Classicism: hide either version of Distinctness Maximalism from
-  // Central Questions and Automatically Generated Conjectures, then restore it.
+  // Real Classicism: hide the principle each of Central Questions and Automatically Generated
+  // Conjectures asks about first, then restore them. (Chosen from the data, since new records move
+  // the rankings: this once used the two Distinctness Maximalisms.)
   const classicData=JSON.parse(fs.readFileSync(path.join(root,'build/classicism/data.json'),'utf8'));
   const classic=page(classicData);
   const cd=classic.window.document;
@@ -287,11 +288,11 @@ try {
     }).slice(0,30);
   };
   assert.ok(report.rows.length>30 && report.auto.length>30,'the export retains questions beyond the initial top 30');
-  const hidden=['distinctness-schema-r','distinctness-signature-r'];
-  assert.ok(baseline.lynchpins.some(k=>k.split(/[|+]/).includes(hidden[1])));
-  assert.ok(baseline['open-auto'].some(k=>k.split(/[|+]/).includes(hidden[0])));
+  const asked=k=>k.split('|')[2];  // a check's principle, or a question's conclusion
+  const hidden=[...new Set(sections.map(id=>baseline[id].map(asked).find(c=>cd.querySelector(`#pr-filters [data-show-positive="${c}"]`))))];
+  assert.ok(hidden.length&&hidden.every(Boolean),'each list asks about a principle that can be hidden');
   for(const id of hidden) cd.querySelector(`#pr-filters [data-show-positive="${id}"]`).click();
-  for(const id of sections) assert.deepEqual(listed(id),expected(id),`${id}: Distinctness Maximalism is hidden and later questions fill the list`);
+  for(const id of sections) assert.deepEqual(listed(id),expected(id),`${id}: the principles are hidden and later questions fill the list`);
   for(const id of hidden) cd.querySelector(`#pr-filters [data-show-positive="${id}"]`).click();
   for(const id of sections) assert.deepEqual(listed(id),baseline[id],'showing the principles restores the real ranking');
   assert.equal(cd.getElementById('open-progress').textContent,baselineProgress,'showing the principles restores the percentage and count');
@@ -299,7 +300,9 @@ try {
   for(const id of sections) {
     assert.equal(listed(id).length,30,'hiding the Σ category still gives 30 questions');
     assert.deepEqual(listed(id),expected(id),'the highest-ranked eligible questions replace hidden Σ questions');
-    assert.ok(listed(id).some(k=>!baseline[id].includes(k)),'later entries fill the gaps');
+    const sigmaIds=new Set(signatureButtons.map(b=>b.dataset.showPositive));
+    if(baseline[id].some(k=>k.split(/[|+]/).some(p=>sigmaIds.has(p))))  // a list may have no Σ question to replace
+      assert.ok(listed(id).some(k=>!baseline[id].includes(k)),'later entries fill the gaps');
     assert.deepEqual(listed(id),defaultLists[id],'hiding signature schemata restores the initial filtered top 30');
   }
   const sigmaProgress=cd.getElementById('open-progress').textContent;

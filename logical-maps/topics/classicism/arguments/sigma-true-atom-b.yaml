@@ -1,0 +1,14 @@
+id: sigma-true-atom-b
+requires: [sigma-true-atom, actuality-contingent, irreversible-arrow]
+fails: [signature-b-r]
+by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
+date: '2026-09-22'
+text: >-
+  B for sentences of Σ fails: the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes $a$, which is
+  true, and under an arrow from which no world in $a$ is accessible $\Diamond a$ is false, so
+  $\Box\Diamond a$ fails.
+revisions:
+- date: '2026-10-02'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: >-
+    The B clause of the records' Σ-as-true-atom argument, stated once for the topic.

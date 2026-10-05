@@ -33,82 +33,81 @@ references:
 
 # migration: the definition is the old description up to its verdict sentences, then the notes'
 # interpretation of Σ.
-definition: >-
-  The full one-object action model whose arrows are all the permutations of a countably infinite
-  set $X$, composed as functions, acting on the individuals $W^e=X$ by evaluation. Propositions
-  are all sets of arrows with the division action $i\cdot p=\{j : j\circ i\in p\}$, and every
-  function type carries the full function-space M-set, which here is the set of all functions
-  since every arrow acts bijectively. Evaluate at the identity arrow.
-
-
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element of
-  its type and each individual constant denotes one fixed individual $d$.
+group: full-action-models
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values. The
+# interpretation's "one fixed individual $d$" lost its "$d$", which the No Contingency (signature Σ)
+# argument, now a general one, names itself.
+# migration (3 October): the record full-permutation-group-one-individual is this member at the
+# group's default individuals, and the source's natural action on $X$ gives on the map's principles
+# what the generated variant with infinitely many fixed individuals gives; see the notes. The
+# construction drops "acting on the individuals $W^e=X$ by evaluation", the individuals now being
+# the group's parameter. Its `meets` for homogeneous-individuals, which concerned the natural
+# action, is now each individuals value's.
+settings:
+  construction: >-
+    The full one-object action model whose arrows are all the permutations of a countably infinite
+    set $X$, composed as functions. Propositions are all sets of arrows with the division action
+    $i\cdot p=\{j : j\circ i\in p\}$, and every function type carries the full function-space
+    M-set, which here is the set of all functions since every arrow acts bijectively. Evaluate at
+    the identity arrow.
+  individuals: singleton
+  sigma: top
+meets:
+  sigma-apart: The construction does not mention Σ.
+  one-object-action-model: >-
+    It has one object.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another full action model is now one of the topic's general
+# arguments (arguments/), reached through the group full-action-models and this record's `meets`;
+# what follows is this record's own. Only the verdicts the engine needs to derive the rest are
+# recorded, the source's first.
 
-- holds: [axiom-of-infinity-t, axiom-of-infinity-e, functional-choice-r]
+- holds: [axiom-of-infinity-t, functional-choice-r]
+  writeup: full-permutation-group-infinite-set
+  # migration (3 October): "the individuals and the propositions are both infinite" becomes "the
+  # propositions are infinite", the Axiom of Infinity at type $e$ being now the general argument
+  # for infinitely many fixed individuals; the one-individual record's argument for the same
+  # verdicts said the same.
   text: >-
     Because the arrows form a group, $\Box p$ holds at an arrow exactly when $p$ is the set of all
     arrows and $\Diamond p$ exactly when $p$ is nonempty, so the propositional modal logic is S5
     with the arrows as worlds; every arrow acts injectively and surjectively at every type, giving
     $\Box$ND and $\Box$BF; fullness gives the necessitations of Atomicity, Actuality, Boolean
     Completeness, Rigid Comprehension, Functionality, Plenitude and the choice principles; and the
-    individuals and the propositions are both infinite.
+    propositions are infinite.
 
-- fails: [independence-signature-r]
+# migration (3 October): from full-permutation-group-one-individual, verbatim, where it was
+# recorded at its interpretation of Σ, the true atom. The argument uses only that every constant
+# but the designated one denotes a fixed point, which holds with either choice of individuals,
+# each fixed by every arrow.
+- holds: [modal-freedom-signature-r]
+  when: {sigma: true-atom}
+  writeup: full-permutation-group-one-individual
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
   text: >-
-    Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but
-    impossible of a relational constant $c$; Independence (signature Σ) fails since $c$ denotes
-    what the closed pure term $\top_\tau$ denotes; Separated Structure, Distinctness Maximalism
-    (signature Σ), Possibility Maximalism (signature Σ) and Logical Necessity fail with them by
-    the recorded results.
-
-- holds: [no-contingency-signature-r]
-  text: >-
-    For every bijection $\beta$ of $X$ the map that is $\beta$ at type $e$, the identity on
-    propositions and conjugation at the function types is an automorphism of the pure part of the
-    model, so a pure formula $P$ denotes the same proposition at $(d,\ldots,d)$ as at
-    $(a,\ldots,a)$ for every individual $a$; hence every closed Σ-sentence denotes what the pure
-    sentence $\forall x\, .\,P(x,\ldots,x)$ denotes, and No Pure Contingency finishes.
-
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [distinctness-necessary-r, necessary-distinctness-necessary-r, barcan-r, necessary-barcan-r, modal-five, necessary-modal-five, no-pure-contingency-r, necessary-atomicity-r, necessary-actuality, necessary-boolean-completeness-r, necessary-rigid-comprehension-r, necessary-gallin-extensional-comprehension-r, necessary-functionality-r, necessary-plenitude-r, necessary-relational-choice-r, necessary-functional-choice-r, converse-witnessed-possibility-r, infinity-e]
-  fails: [fregean-axiom, extensionality-r, possibility-schema-r, witnessed-possibility-r, distinctness-preserving-collapse, distinctness-schema-r]
-  reserve: true
-  source: {paper: bacon-dorr-classicism, locator: "§3.5, pp. 58–59; p. 61 and n. 84"}
+    The two tuples of constants are disjoint, so one of the two sentences contains no designated
+    constant and denotes a fixed point, hence the empty set or the set of all arrows; if it is
+    possible it is the latter, and the conjunction is as possible as the other conjunct.
 
 # migration: the old notes' first and last sentences and the old description's last, verbatim. The
 # notes' arguments for Converse Witnessed Possibility and for the failures of the Fregean Axiom,
 # Extensionality, Possibility Maximalism (pure), the Distinctness-preserving collapse and
 # Distinctness Maximalism (pure), all now derived, are dropped.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
 notes: >-
   Full proofs are in the write-up. The model witnesses the joint consistency of $\Box$ND, the
   Axiom of Infinity at type $t$ and $\Box$Relational Choice. Suggested by Cian Dorr on 23
-  September 2026 to fill a gap: no earlier record settled $\Box$ND, the Axiom of Infinity at
-  type $t$ and $\Box$Relational Choice together.
+  September 2026 to fill a gap: no earlier record settled $\Box$ND, the Axiom of Infinity at type
+  $t$ and $\Box$Relational Choice together.
 
-  No Contingency (signature Σ) holds: for every bijection $\beta$ of $X$ the map that is $\beta$
-  at type $e$, the identity on propositions and conjugation at the function types is an
-  automorphism of the pure part of the model, so a pure formula $P$ denotes the same proposition
-  at $(d,\ldots,d)$ as at $(a,\ldots,a)$ for every individual $a$; hence every closed Σ-sentence
-  denotes what the pure sentence $\forall x\, .\,P(x,\ldots,x)$ denotes, and No Pure Contingency
-  finishes. Converse Witnessed Possibility holds under every interpretation of Σ, since $i\in
-  P(\bar c)$ gives $1\in P(i\cdot\bar c)$ for pure $P$. The Fregean Axiom fails since the
-  singleton of the identity arrow and the set of all arrows are both true and distinct, and
-  Extensionality fails with it in its nullary case. Possibility Maximalism (pure) fails since
-  the C-consistent sentence that there is exactly one individual is false at every arrow, so
-  Possibility+, Strong Possibility and Possibility Maximalism (signature Σ) fail too.
-  Distinctness-preserving collapse fails since every true $q$ is possible at every arrow, so
-  $\Box(\Diamond q\to p)$ forces $p=\top$, which the true singleton of the identity is not.
-  Distinctness Maximalism (pure) fails: $(\exists xy\, .\,x\ne y)=\top$ is a true closed pure
-  identity that C does not prove.
+
+  The write-up full-permutation-group-infinite-set treats the source's natural action, on the
+  individuals $X$ by evaluation; the write-up full-permutation-group-one-individual records what
+  changes with one individual, recorded separately until 3 October 2026, when it became this
+  member at the group's default. The natural action, like the identity action on infinitely many
+  individuals, is bijective and has the Axiom of Infinity at type $e$, which is all the map's
+  principles see of the individuals here.

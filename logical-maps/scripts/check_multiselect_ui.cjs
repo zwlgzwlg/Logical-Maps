@@ -14,7 +14,7 @@ const data = {
   models: [{id: 'joint', name: 'Joint model', status: 'proved', satisfies: ['a', 'c', 'e'], violates: ['g'], certificate}]
 };
 const errors = [], vc = new VirtualConsole(); vc.on('jsdomError', error => errors.push(String(error)));
-const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {
+const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', ()=>JSON.stringify(data)), {
   url: 'https://maps.example/', runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc,
   beforeParse(w) { w.SVGElement.prototype.setPointerCapture = () => {}; }
 });

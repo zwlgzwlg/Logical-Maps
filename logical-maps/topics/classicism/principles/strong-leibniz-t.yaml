@@ -38,3 +38,14 @@ notes: 'Broken out as its own principle, like Atomicity (type t), at Cian Dorrâ€
   strong-worlds-one-object-action-models proof and the full-idempotent-monoid change history.'
 aliases:
 - SL (type t)
+variants:
+- id: dual
+  lean:
+    ref: Classicism.P.StrongLeibnizTDual.schemaIn
+    equivalence_ref: Classicism.Map.strong_leibniz_t.dual
+    status: verified
+  name: Dual form
+  statement: Whatever is entailed by every strong world is necessary.
+  formal: $\forall p\, .\,(\forall w\, .\,\operatorname{SWorld}_t(w)\to w\le p)\to\Box p$
+  equivalence: The argument for the dual form of the Strong Leibniz Biconditionals, at type $t$.
+lean_def: Classicism.P.StrongLeibnizT.schemaIn

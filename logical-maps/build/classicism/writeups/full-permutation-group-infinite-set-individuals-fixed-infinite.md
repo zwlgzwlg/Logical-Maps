@@ -1,0 +1,120 @@
+# Full action model: permutations of an infinite set [infinitely many fixed individuals]
+
+<p class='cert'>Model — Source: Misc.; produced by Claude Fable 5.1 (Anthropic), 23 September 2026; recorded by Claude Fable 5.1 (Anthropic), 23 September 2026.</p>
+
+## Package
+
+- **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
+- **Functional Choice.** Every serial binary relation admits a selecting operation. Its output type is relational, as required by the type system.
+- **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
+- **□Intensional Choice.** Every closed instance of Intensional Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
+- **□Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
+- **Relational Choice.** Every serial binary relation has a functional subrelation.
+- **Transversal Choice.** Every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.
+- **No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
+- **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
+- **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
+- **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
+- **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
+- **¬ Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
+
+## Definition
+
+The full one-object action model whose arrows are all the permutations of a countably infinite set $X$, composed as functions. Propositions are all sets of arrows with the division action $i\cdot p=\{j : j\circ i\in p\}$, and every function type carries the full function-space M-set, which here is the set of all functions since every arrow acts bijectively. Evaluate at the identity arrow.
+
+Individuals, fixed for this record: at every object the individuals are the natural numbers, and every arrow acts on them as the identity.
+
+Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each denotes the top element of its type.
+
+*A member of the group Full action models, which supplies this definition with the record's settings, and the arguments marked as shared.*
+
+## Arguments
+
+### Holds Axiom of Infinity (type t), Functional Choice.
+
+Because the arrows form a group, $\Box p$ holds at an arrow exactly when $p$ is the set of all arrows and $\Diamond p$ exactly when $p$ is nonempty, so the propositional modal logic is S5 with the arrows as worlds; every arrow acts injectively and surjectively at every type, giving $\Box$ND and $\Box$BF; fullness gives the necessitations of Atomicity, Actuality, Boolean Completeness, Rigid Comprehension, Functionality, Plenitude and the choice principles; and the propositions are infinite.
+
+*Write-up: [full-permutation-group-infinite-set](full-permutation-group-infinite-set.html). By Claude Fable 5.1 (Anthropic), 23 September 2026.*
+
+### Holds Axiom of Infinity (type e).
+
+The individuals at the evaluation object are an infinite set and identity there is literal. The numerals at type $e$ are intensions of a full model, so they are the finite cardinalities, and none of them holds of the universal property: no finite cardinality holds of an infinite set. This is the argument the full surjection-monoid record gave for its own infinite individuals.
+
+*General argument `arguments/fixed-infinite-individuals`. It requires that At every object the individuals are the same infinite set, and every arrow acts on them as the identity. Here: This is the choice of individuals. It requires that The model is full: at each object, the domain of each relational type contains every intension of that type. Here: Every intension of every relational type is present at every object (Classicism, §3.5, p. 59). By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-03.*
+
+### Holds □Intensional Choice.
+
+For each object $U$ and type $\sigma$ fix a well-ordering $<_U$ of the domain $D^\sigma_U$, and let $W$ be the intension of type $\sigma\to\sigma\to t$ with $W(h):={<_{\operatorname{cod}h}}$. Its value depends only on the arrow's codomain, so by the condition it is in the domain, and at every world its extension well-orders that world's type-$\sigma$ domain. Given $F$ with $\Box\exists x\, .\,Fx$, put $G:=\lambda x\, .\,Fx\land\forall y\, .\,(Fy\to\neg Wyx)$, the $W$-least $F$. It is definable from $F$ and $W$, so in the domain; $G\le F$, and its extension at every arrow is the singleton of the least element of $F$'s. So Intensional Choice holds, and the same at every reachable object gives $\Box$Intensional Choice. Cian Dorr's observation that such models are qualitatively full, made precise.
+
+*General argument `arguments/intensional-choice-well-ordering`. It requires that At every object reachable from the evaluation point, the domain contains every intension whose value at an arrow depends only on the arrow's codomain. Here: The domains are full at every object. It requires that The model is constructed in a metatheory with the axiom of choice. Here: The constructions are carried out in ZFC. By Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion, 2026-10-03.*
+
+### Holds No Pure Contingency.
+
+Closed pure terms denote entities fixed by every arrow (§3.5, p. 58). With a single object, a proposition fixed by every arrow contains every arrow if it contains the identity and no arrow otherwise, so a true closed pure sentence is necessary: the source's one-object No Pure Contingency observation (p. 79), applied to each closed instance.
+
+*Source: Classicism, §3.5, p. 58; p. 79. General argument `arguments/no-pure-contingency-one-object`. It requires that The model is an action model (Classicism, Appendix D), or an intensional action model in the sense of Dorr's draft (Boolean Completeness does not imply Rigid Comprehension), with a single object. Here: It has one object. By Andrew Bacon and Cian Dorr, 2026-09-17.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic, for every one-object action model; the reason the source's observation holds is spelled out in place of "Boxed positive flags use the source’s explicit one-object No Pure Contingency observation, applied separately to each closed instance."
+
+### Holds □Relational Choice.
+
+The truncation of a full action model at any arrow is again a full action model, its domains at the reachable objects being unchanged, and Relational Choice holds in every full model given choice in the metatheory (Classicism, p. 61).
+
+*General argument `arguments/relational-choice-full-boxed`. It requires that The model is a full action model: an action model (Classicism, Appendix D) that is full at every object. Here: An action model, full at every object (Classicism, §3.5, p. 59; Appendix D). It requires that The model is constructed in a metatheory with the axiom of choice. Here: The constructions are carried out in ZFC. By Claude Fable 5.1 (Anthropic), 2026-09-22.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The two-object full action models' copies stated once for the topic, for every full action model.
+
+### Holds Relational Choice.
+
+With choice in the metatheory a serial relation has a functional subrelation, and a full model contains every intension, so that subrelation is in the domain; see Classicism, p. 61, on the principles common to full models.
+
+*General argument `arguments/relational-choice-full`. It requires that The model is full: at each object, the domain of each relational type contains every intension of that type. Here: Every intension of every relational type is present at every object (Classicism, §3.5, p. 59). It requires that The model is constructed in a metatheory with the axiom of choice. Here: The constructions are carried out in ZFC. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-09-20.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The full action models' copies stated once for the topic.
+
+### Fails Witnessed Possibility, Separated Structure, Independence (signature Σ), Distinctness Maximalism (signature Σ).
+
+Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true identity that C(Σ) does not prove.
+
+*General argument `arguments/sigma-top`. It requires that Every constant of Σ is relational, and each denotes the top element of its type. Here: This is the interpretation. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic; it uses nothing about the model.
+
+### Holds Transversal Choice.
+
+For an equivalence relation at the evaluation point, a transversal of its extension there, chosen in the metatheory, is by extensional fullness the extension of an element of the domain; the equivalence and transversal conditions are unboxed.
+
+*General argument `arguments/transversal-choice-extensionally-full`. It requires that The model is extensionally full at every object: every set of tuples from the domains at an object is the extension, at the identity arrow, of an element of the domain of the matching relational type there. Here: A full model contains every intension, so in particular one with any given extension at the identity. It requires that The model is constructed in a metatheory with the axiom of choice. Here: The constructions are carried out in ZFC. By Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic), on a question of Zachary Goodsell, after an observation of Christopher Sun, 2026-09-25.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The Relational Choice and Transversal Choice arguments merged into one, stated for every extensionally full model.
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic. Its first sentence, deriving extensional fullness from ideal fullness, is now the group's reason for meeting extensionally-full.
+
+### Holds No Contingency (signature Σ), B for sentences of Σ.
+
+Each constant of Σ denotes what the closed pure term $\top_\tau$ of its type denotes, so a closed sentence of the language of Σ denotes what the pure sentence with $\top_\tau$ in place of each constant denotes; if true it is necessary by No Pure Contingency, which holds here. So No Contingency (signature Σ) holds, and B for sentences of Σ with it: a true Σ-sentence is necessary, hence necessarily possible.
+
+*General argument `arguments/sigma-top-npc`. It requires that Every constant of Σ is relational, and each denotes the top element of its type. Here: This is the interpretation. By Cian Dorr (observation); recorded by Claude Opus 5.5 (Anthropic), 2026-10-02.*
+
+*Revised 2026-10-03 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The argument sigma-single-top, for Σ a single constant of type $t$ denoting $\top$, stated for every interpretation of Σ by top elements, now that such interpretations have no individual constants. It replaces that argument and nc-sigma-homogeneous, which reached the same verdicts through an individual constant when the model's automorphisms carry every individual to every other. With an individual constant and no such automorphisms the verdicts were unknown in 19 models, and nowhere did the individual constants settle a verdict differently.
+
+
+## Notes
+
+Full proofs are in the write-up. The model witnesses the joint consistency of $\Box$ND, the Axiom of Infinity at type $t$ and $\Box$Relational Choice. Suggested by Cian Dorr on 23 September 2026 to fill a gap: no earlier record settled $\Box$ND, the Axiom of Infinity at type $t$ and $\Box$Relational Choice together.
+
+The write-up full-permutation-group-infinite-set treats the source's natural action, on the individuals $X$ by evaluation; the write-up full-permutation-group-one-individual records what changes with one individual, recorded separately until 3 October 2026, when it became this member at the group's default. The natural action, like the identity action on infinitely many individuals, is bijective and has the Axiom of Infinity at type $e$, which is all the map's principles see of the individuals here.
+
+## Sources
+
+- **Fable 23 Sep** — Claude Fable 5.1 (Anthropic), construction and verification of 23 September 2026, at Cian Dorr’s suggestion (see the write-up).
+- **Classicism** — Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §3.5, pp. 58–59 (full M-set models, Proposition 3.24, No Pure Contingency); p. 61 and n. 84 (principles of full models).
+- **Logical Combinatorialism** — Andrew Bacon, Logical Combinatorialism, Philosophical Review 129 (2020), Appendix A.2, Definitions A.1–A.4 and Proposition A.5, pp. 581–583 (M-set models).
+
+<p class='cert'>Record: <code>topics/classicism/models/full-permutation-group-infinite-set.yaml</code></p>
+
+## Paper references
+
+- **Proof: Classicism.** Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds), Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated 16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition and footnote locators in this map refer to that draft's numbering. — §3.5, pp. 58–59; p. 61 and n. 84. The source describes full M-set models and proves the facts used: Proposition 3.24 on ND and BF, the one-object No Pure Contingency observation, and the principles common to full models. The specific group and the verification are in the write-up.
+- **Background: Logical Combinatorialism.** Bacon, Andrew (2020). Logical Combinatorialism. Philosophical Review 129(4), 537–589. As cited in Classicism, §§2.5 and 3.5. Read directly for the import of 22 September 2026; section, footnote and page locators refer to the published pagination. — Appendix A.2, Definitions A.1–A.4 and Proposition A.5, pp. 581–583. The M-set presentation of one-object action models: the division action on propositions and the function-space M-set.

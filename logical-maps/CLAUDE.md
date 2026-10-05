@@ -176,21 +176,29 @@ When you (an AI) add or edit a result or model:
   its own `by` and `date`, and a correction as an entry in the `revisions` of
   the argument it corrects. Its `history` is frozen; never add `changes`,
   `satisfies`, `violates` or `status` to it. A conjectured verdict is an
-  argument with `standing: conjectured`, not a separate record. Its ordinary
-  arguments list only the verdicts from which the engine derives the rest, its
-  source's first (README). A verdict it states directly that the engine also
-  derives stays, with its argument, in an argument marked `reserve: true` after
-  the others; never delete a reserve argument because the engine derives it.
+  argument with `standing: conjectured`, not a separate record. Such a record
+  lists only the verdicts from which the engine derives the rest, its source's
+  first (README); add an argument only for a verdict the engine cannot derive.
+- A model in a group (README, "Model groups") gets the group's shared arguments that
+  match its settings and the conditions it `meets`. An argument that would hold
+  for every member that meets some condition belongs in the group as a
+  shared argument, not copied into members; lift one only when another member would
+  otherwise copy it, and check closures with `check_flattening.py --closure`.
+  An argument that holds for every model with some property, in or beyond one
+  group, belongs in the topic's `arguments/` with the property in
+  `conditions.yaml`; records, groups and parameter values say why they meet it
+  under `meets` (README, "General arguments").
+  When a group generates variants, every argument (own or shared) applies to
+  every variant unless its `when` limits it: give `when` to any argument that
+  relies on a particular setting, and check the variants' verdicts.
 - When you add content to an existing record after its certificate date (a
   newly verified property of a model, an added proof, a corrected statement),
   append an entry to its `changes` list: `date`, `by`, `summary`, and for models
-  the newly verified `satisfies`/`violates` ids (a model written as arguments
-  takes a new argument instead, as above). The Changes tab lists each entry
+  the newly verified `satisfies`/`violates` ids. The Changes tab lists each entry
   under its own date. Never move `certificate.date`; it is the record's origin.
 - Independences are recorded as models (`models/<id>.yaml`), never as results.
   For a model, list every principle you have actually verified in `satisfies`
-  and `violates` (in a model written as arguments, as arguments) — the engine
-  derives the rest and lists what is unknown. Add a
+  and `violates` — the engine derives the rest and lists what is unknown. Add a
   numerical sanity check under the topic's `checks/` when the model is concrete.
 - For conjectured extra properties of an existing proved model, add
   `model_check: {model: <existing-id>, satisfies: [...], violates: [...]}` to
@@ -202,8 +210,9 @@ When you (an AI) add or edit a result or model:
 
 ## Editing data
 
-- Catalogue source papers in `topics/<topic>/papers.yaml`, with citations and
-  external URLs. Connect records with `references` entries (`paper`, `role`,
+- Catalogue source papers in `topics/<topic>/papers.yaml`, with citations,
+  external URLs, and optionally `file: sources/<name>` for a copy published with
+  the site (only documents authorised for redistribution). Connect records with `references` entries (`paper`, `role`,
   optional `locator` and `note`). Roles are `origin`, `formulation`, `proof`,
   `background`, or `related`; explain adapted formulations. A reference does
   not change `certificate.source_id` or verify a result.
@@ -238,7 +247,11 @@ When you (an AI) add or edit a result or model:
   id. These group graph filters and do not change logical inference.
 - Optional `initial_principles: [id, ...]` in `topic.yaml` names the principles
   the graph and the lattice start with; on the graph the rest start hidden, as do settled principles and
-  `hidden_by_default` categories. The theory explorer's assumptions are kept
+  `hidden_by_default` categories. Without it the graph starts with what the
+  Conjectures tab shows. Optional `views` and `lattice_views` give the graph and
+  the lattice a View menu of named principle lists, one of each marked `default`;
+  a pane with no views has no menu. Optional `default_tab` names the tab the map
+  opens on (Classicism: `lattice`). The theory explorer's assumptions are kept
   apart from the graph's background (URL `theory` / `theory-deny` versus
   `assume` / `deny`).
 - Use `background_presets` for named viewer assumption packages, with `id`,

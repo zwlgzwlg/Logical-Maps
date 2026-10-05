@@ -1,0 +1,14 @@
+id: relational-choice-full
+requires: [full-model, metatheory-choice]
+holds: [relational-choice-r]
+by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+date: '2026-09-20'
+text: >-
+  With choice in the metatheory a serial relation has a functional subrelation, and a full model
+  contains every intension, so that subrelation is in the domain; see Classicism, p. 61, on the
+  principles common to full models.
+revisions:
+- date: '2026-10-02'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: >-
+    The full action models' copies stated once for the topic.

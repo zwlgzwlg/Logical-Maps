@@ -1,0 +1,13 @@
+id: necessary-rigid-power-r
+name: □Rigid Power
+category: comprehension
+statement: Every closed instance of Rigid Power is necessary. Box the entire object-variable closure;
+  retain the same type range and other schema side conditions.
+formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of Rigid Power}$
+date: '2026-10-03'
+sources:
+- Cian Dorr, suggestion of 3 October 2026.
+source_names:
+- Dorr 3 Oct
+references: []
+notes: Box each fully closed instance of Rigid Power. Type quantifiers remain outside the box.

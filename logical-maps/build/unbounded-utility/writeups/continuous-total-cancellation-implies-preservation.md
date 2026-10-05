@@ -83,6 +83,6 @@ Direct source: Misc. No independent checker or Lean verification is claimed.
 
 ## Paper references
 
-- **Background: [Symmetries of value](https://doi.org/10.1111/nous.12549).** Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — §3, p. 23: source for the upper-section L1 Continuity axiom only
+- **Background: [Symmetries of value](https://doi.org/10.1111/nous.12549).** ([PDF](../sources/Goodsell%20-%202026%20-%20Symmetries%20of%20value.pdf)) Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — §3, p. 23: source for the upper-section L1 Continuity axiom only
 - **Background: Unbounded Utility and Background Risk.** Zachary Goodsell (5 June 2026). Unbounded Utility and Background Risk. Unpublished working manuscript. — Lemma 1, pp. 7–8: source for the independent-sum principles only
 - **Background: [Flummoxing expectations](https://doi.org/10.1111/nous.12530).** Hayden Wilkinson (2025). Flummoxing expectations. Noûs, 59(3), 700–728. First published online in 2024. — §6.1. Source of Independent Sum Consistency; see the principle reference for the changed independence condition. The proof or conjecture recorded here retains its separate attribution.

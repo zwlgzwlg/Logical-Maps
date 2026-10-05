@@ -1,0 +1,17 @@
+id: three-numbers
+requires: [one-individual, extensionally-full]
+holds: [countable-boolean-completeness-r]
+by: Claude Opus 5.5 (Anthropic), on Cian Dorr's question whether the failure of Boolean
+  Completeness at type $t$ refutes its countable form here
+date: '2026-10-02'
+text: >-
+  The natural numbers are the finite cardinalities at type $e$ (Background, after Goodsell), and
+  with a single individual there are three: $\mathbf{0}_e$, true of the empty property;
+  $\operatorname{Suc}_e\mathbf{0}_e$, true of the universal one; and the empty cardinality, which
+  is $\operatorname{Suc}_e$ of the second and of itself. By extensional fullness the property of
+  being one of these three is in the domain, so it bounds natural numberhood. A countable property
+  therefore has at most three members in its extension, and their join is its least upper bound.
+revisions:
+- date: '2026-10-02'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: Moved from the group finite-support-one-object to the topic.

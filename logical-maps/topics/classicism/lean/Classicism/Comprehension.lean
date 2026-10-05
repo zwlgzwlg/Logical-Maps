@@ -1,3 +1,4 @@
+import Classicism.Paper
 import Classicism.Order
 
 /-!
@@ -14,7 +15,7 @@ and the weak variants obtained by dropping a leading box. It also records that, 
 `Y ≤ Z` *is* the necessitated universally closed pointwise implication, `Persistent(Y)`
 unpacks as `□∀x̄. Y[x̄] → □Y[x̄]`.
 
-The definitions below are written in that unpacked form, using `boxImp` and `boxAt`, and
+The definitions below are written in that unpacked form, using `incl` and `boxAt`, and
 `persistent_iff_le` and `inextensible_iff_le` then prove that they agree with the
 algebraic definitions above. That way the predicates need only `Rel τ`, while the
 equivalence with the map's own wording is a theorem rather than something assumed;
@@ -22,18 +23,19 @@ equivalence with the map's own wording is a theorem rather than something assume
 -/
 
 namespace Classicism
+open Paper
 
 variable {τ : Type} [Rel τ]
 
 /-- `∀x̄. Y[x̄] → □Y[x̄]`. -/
-def WeaklyPersistent (Y : τ) : Prop := boxImp Y (boxAt Y)
+def WeaklyPersistent (Y : τ) : Prop := Y ⊆ boxAt Y
 
 /-- `Y ≤ λx̄. □Y[x̄]`, that is `□∀x̄. Y[x̄] → □Y[x̄]`. -/
 def Persistent (Y : τ) : Prop := □ (WeaklyPersistent Y)
 
 /-- `∀X. (∀x̄. Y[x̄] → □X[x̄]) → Y ≤ X`. -/
 def WeaklyInextensible (Y : τ) : Prop :=
-  ∀ X : τ, boxImp Y (boxAt X) → □ (boxImp Y X)
+  ∀ X : τ, Y ⊆ boxAt X → □ (Y ⊆ X)
 
 /-- `□∀X. (∀x̄. Y[x̄] → □X[x̄]) → Y ≤ X`. -/
 def Inextensible (Y : τ) : Prop := □ (WeaklyInextensible Y)
@@ -80,18 +82,18 @@ section order
 variable [Order τ]
 
 /-- `Persistent(Y)` is the map's `Y ≤ λx̄. □Y[x̄]`. -/
-theorem persistent_iff_le (Y : τ) : Persistent Y ↔ Rel.le Y (boxAt Y) :=
+theorem persistent_iff_le (Y : τ) : Persistent Y ↔ Y ≤ boxAt Y :=
   (le_iff Y (boxAt Y)).symm
 
 /-- `WeaklyInextensible(Y)` is the map's `∀X. (∀x̄. Y[x̄] → □X[x̄]) → Y ≤ X`. -/
 theorem weaklyInextensible_iff_le (Y : τ) :
-    WeaklyInextensible Y ↔ ∀ X : τ, boxImp Y (boxAt X) → Rel.le Y X :=
-  ⟨fun h X hX => le_of_box_boxImp (h X hX), fun h X hX => (le_iff Y X).1 (h X hX)⟩
+    WeaklyInextensible Y ↔ ∀ X : τ, Y ⊆ boxAt X → Y ≤ X :=
+  ⟨fun h X hX => le_of_box_incl (h X hX), fun h X hX => (le_iff Y X).1 (h X hX)⟩
 
 /-- `Inextensible(Y)` is the necessitation of the same. -/
 theorem inextensible_iff_le (Y : τ) :
-    Inextensible Y ↔ □ (∀ X : τ, boxImp Y (boxAt X) → Rel.le Y X) := by
-  rw [show (∀ X : τ, boxImp Y (boxAt X) → Rel.le Y X)
+    Inextensible Y ↔ □ (∀ X : τ, Y ⊆ boxAt X → Y ≤ X) := by
+  rw [show (∀ X : τ, Y ⊆ boxAt X → Y ≤ X)
         = WeaklyInextensible Y from
       propext (weaklyInextensible_iff_le Y).symm]
   exact Iff.rfl
@@ -111,7 +113,7 @@ theorem weaklyPersistent_apply {Y : σ → Prop} (h : WeaklyPersistent Y) (z : �
 
 /-- Weak persistence of the pointwise negation `¬_τ Y`. -/
 theorem weaklyPersistent_neg_apply {Y : σ → Prop}
-    (h : WeaklyPersistent (Rel.neg Y)) (z : σ) : ¬ Y z → □ (¬ Y z) := h z
+    (h : WeaklyPersistent (¬ Y)) (z : σ) : ¬ Y z → □ (¬ Y z) := h z
 
 end pointwise
 

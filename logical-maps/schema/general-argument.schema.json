@@ -1,0 +1,33 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "general-argument.schema.json",
+ "title": "General argument",
+ "description": "An argument of the topic's, kept in topics/<topic>/arguments/<id>.yaml: any argument-format model record that meets every condition in `requires` (conditions.yaml), and whose other arguments record every verdict in `given` as holding, gets it. A record meets a condition by its own `meets`, by its group's, or by the value of one of its group's parameters. Otherwise an argument as in a model record, with its own id, by and date.",
+ "properties": {
+  "id": {
+   "type": "string",
+   "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+   "description": "Equals the file stem."
+  },
+  "requires": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "minItems": 1,
+   "uniqueItems": true,
+   "description": "Conditions of the topic (conditions.yaml) a record must meet."
+  },
+  "given": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "uniqueItems": true,
+   "description": "Principles the record's other arguments must record as holding; the argument builds on them."
+  },
+  "notes": {
+   "type": "string"
+  }
+ }
+}

@@ -1,0 +1,104 @@
+# Symmetric ideally-full model: qualitative contrast (Appendix D precursor) [Σ true atom]
+
+<p class='cert'>Model — Source: Classicism (2024); produced by Andrew Bacon and Cian Dorr; recorded by OpenAI Codex (GPT-6), 17 September 2026.</p>
+
+## Package
+
+- **□ND.** Necessarily, distinct things of any type are necessarily distinct.
+- **Actuality.** There is a true proposition that entails every true proposition.
+- **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
+- **□Intensional Choice.** Every closed instance of Intensional Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
+- **¬ Atomicity.** Every non-bottom entity of each relational type has an atom below it.
+- **¬ Relational Choice.** Every serial binary relation has a functional subrelation.
+- **¬ No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
+- **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
+- **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
+- **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
+- **¬ Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
+
+## Definition
+
+Appendix D, p. 79, the final construction, the paper’s precursor of the symmetric ideally-full models of Dorr’s draft (Definitions 15–18, p. 8): the base has two objects $W_0$ and $W_1$, both copies of $\mathbb N$, all permutations of $\mathbb N$ as the arrows between any pair of objects, the ideal of finite sets at each, and the symmetry groups $G_{W_0}$ = all permutations and $G_{W_1}$ trivial. The paper states the symmetry condition on propositions only, as the constraint that a set of arrows in $W_i^t$ containing an arrow $h$ into $W_0$ contains $g\circ h$ for every permutation $g$ of $W_0$, and takes the finitely pinned entities at higher types; since every arrow is invertible, that is the draft’s symmetry condition at every type, applied to the entities’ values. Intuitively $W_0$ is a state in which all individuals are qualitatively indiscernible and $W_1$ one in which each plays a unique role. Evaluation point: $W_0$, at its identity arrow.
+
+Individuals, fixed for this record: the individuals at each object are the base the construction describes, and the arrows act on them as on the base.
+
+Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of the model, the actual-world proposition, the symmetry group; every other constant of Σ, of which there is at least one, is relational and denotes the top element of its type.
+
+*A member of the group Symmetric ideally-full models, which supplies this definition with the record's settings, and the arguments marked as shared.*
+
+## Arguments
+
+### Holds □ND, Actuality. Fails Atomicity.
+
+The smallest proposition of $W_0^t$ containing the identity is the set of all arrows $W_0\to W_0$, which witnesses Actuality at $W_0$; Actuality fails at $W_1$ as in part 1, so $\Box$Actuality and hence Atomicity fail at $W_0$ although C5 holds.
+
+*Source: Classicism, Appendix D, p. 79. By Andrew Bacon and Cian Dorr, 2026-09-17.*
+
+### Holds Axiom of Infinity (type t).
+
+The propositions that the arrow leads to $W_1$ and sends a given individual to itself, one for each individual, are pairwise distinct and each is pinned down by that individual; they meet the symmetry condition since $G_{W_1}$ is trivial. So there are infinitely many propositions. The set of numerals at type $t$ is fixed by every arrow, hence has empty support and lies in the domain, so finite cardinality is standard and no finite cardinality holds of the universal property.
+
+*By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-09-20.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The type-$t$ half of the old argument, which used the propositions that the arrow fixes a given individual; those include arrows into $W_0$, where the symmetry condition asks for closure under every permutation of $W_0$. Restricted to arrows into $W_1$, where the symmetry group is trivial.
+
+### Holds □Intensional Choice.
+
+At every type. (i) An element $a$ of an ideally full domain at $W_0$ is fixed by every permutation fixing its pinning set $T$ pointwise, since $(g\cdot a)(k)=a(k\circ g)$ and $k\circ g$ agrees with $k$ on $T$. (ii) The arrows into $W_0$ are exactly the symmetries, so $F(h)=h\cdot F(1)$ for them. Given $F$ at $W_0$, pick $a\in F(1)$ with pinning set $T$ and let $G(h):=\{h\cdot a\}$ for $h$ into $W_0$: the haecceity of $a$, inside $F(h)$ by (ii), symmetric, and pinned down by $T$ by (i). For $h$ into $W_1$ there is no symmetry constraint, $G_{W_1}$ being trivial, so let $G(h)$ be the least element of $F(h)$ under a fixed well-ordering, which depends only on $h$ on $F$'s pinning set. The combined $G$ is in the domain, entails $F$, and has singleton extensions. At $W_1$ the same two moves work: the arrows $W_1\to W_0$ are one orbit $h=g\circ h_0$, where $G(h):=\{g\cdot a_0\}$ for some $a_0\in F(h_0)$, and the arrows $W_1\to W_1$ are unconstrained. So Intensional Choice holds at both objects, hence necessarily. In general, the haecceity of an actual instance witnesses Intensional Choice wherever every arrow out of the object is a symmetry.
+
+*By Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion, 2026-10-03.*
+
+### Fails Relational Choice.
+
+At the types $(e\to t)$ and $e$. Let $U:=\lambda Xy\, .\,Xy\lor\neg\exists z\, .\,Xz$, a closed term, hence in the domain, and serial. A functional subrelation $S$ of $U$ would lie in the domain at the evaluation object, so it is symmetric and pinned down by a finite set $N$. Two facts about such an $S$ (Dorr, draft, Lemma 21): every $g\in G$ fixing $N$ pointwise satisfies $g^{[\sigma]}S=S$, and symmetry gives $\langle gA,gy,g\rangle\in S$ whenever $\langle A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$. Now let $A$ be the property the condition gives for $N$. Its extension is nonempty, so $S$ relates $A$ at the identity to some $y$ in its extension. The condition gives a member $g$ of the symmetry group that fixes $N\cup M$ pointwise, fixes $A$ and moves $y$ to some $gy\ne y$, so $S$ relates $A$ to $gy$ as well, and $S$ is not functional at the identity arrow. The well-ordering of the individuals that Cian Dorr had in mind is refuted by the same two facts, but the direct route needs no derivation of a well-ordering from Relational Choice in C.
+
+*From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#relational-choice`. It requires that There is a finite set $M$ of individuals at the evaluation object such that, for each finite set $N$, some property $A$ in the domain, symmetric and pinned down by $N\cup M$, has a nonempty extension, and each individual $y$ in that extension is moved by a member of the symmetry group that fixes $N\cup M$ pointwise and fixes $A$. Here: $M=\emptyset$, and for $N$ the property of not belonging to $N$, at $W_0$: the transposition of $y$ with another individual outside $N$ is a permutation of $W_0$, so lies in $G_{W_0}$. By Claude Fable 5.1 (Anthropic), after Cian Dorr’s observation that a choice over the individuals cannot be finitely pinned down, 2026-09-23.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The members' seven copies, which differed in the property $A$ and the transposition, stated once; each member's $A$ and transposition moved to the condition transposable. The qualitative-contrast model's second argument (OpenAI Codex, 24 September) was dropped.
+
+### Holds Axiom of Infinity (type e).
+
+There are infinitely many individuals, and identity at the identity arrow is literal, so no numeral counts them. The set of numerals at type $e$ is fixed by every arrow, hence symmetric and pinned down by the empty set, so finite cardinality is standard and no finite cardinality holds of the universal property.
+
+*From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#axiom-of-infinity-e`. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-09-20.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The type-$e$ half of the members' argument, stated once; "the individuals are the natural numbers" became "there are infinitely many individuals", which also covers the qualitative links model. The type-$t$ half is axiom-of-infinity-t.
+
+### Fails No Contingency (signature Σ), Witnessed Possibility, Separated Structure, Independence (signature Σ), Distinctness Maximalism (signature Σ).
+
+No Contingency (signature Σ) fails, since the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes $a$, true and contingent; Witnessed Possibility fails for the pure formula $x=\top_\tau$, witnessed by $\top_\tau$, since $\Diamond(c=\top_\tau)$ is $\Diamond\Box a$ and $a$ is necessary at no world; Separated Structure fails with it, being equivalent to Possibly Witnessed Possibility; Independence (signature Σ) and Distinctness Maximalism (signature Σ) fail through the other relational constants: such a constant $c'$ of type $\tau'$ denotes what the closed pure term $\top_{\tau'}$ denotes, and $c'=\top_{\tau'}$ is a true identity that C(Σ) does not prove. The designated constant refutes neither: closed pure terms denote entities fixed by every arrow (Classicism, §3.5, p. 58), whereas some arrow does not fix $a$, so no closed pure term denotes $\lambda\bar x\, .\,a$.
+
+*General argument `arguments/sigma-true-atom`. It requires that Σ has a designated relational constant $c$ of type $\tau=\bar\sigma t$ denoting $\lambda\bar x\, .\,a$, where $a$ is the actual-world proposition, the unique true atom; every other constant, of which there is at least one, is relational and denotes the top element of its type. Here: This is the interpretation. It requires that The actual-world proposition $a$, the strongest truth, is in the domain; it is necessary at no world, and some arrow does not fix it. Here: The actual-world proposition is the set of all arrows $W_0\to W_0$, in the domain by the source argument; at every world an arrow into $W_1$ leads outside it, and such an arrow carries it to the empty set. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The verbatim copies in ten records (finite-support, symmetric and full action models) stated once for the topic. Its B clause is now sigma-true-atom-b, which needs an arrow from which the actual world is out of reach. "$a$ is fixed by no arrow but the identity" became "some arrow does not fix $a$": in a symmetric model the actual-world proposition is the symmetry group, which its members fix, and the conclusion needs only the weaker claim.
+
+
+## Notes
+
+The cited construction is a model of the map’s relational-type framework. The description identifies its evaluation point; construction and verification are given at the PDF locations in References. Everything that implies these fails with them. Plenitude still holds by C5 plus Actuality and Propositions 2.5 and 2.14, so this model separates it from Functional Choice even under C5, Rigid Comprehension and Boolean Completeness. This does not settle whether C5 plus Functional Choice implies Atomicity: the model fails the proposed premise.
+
+## History
+
+The record's revision log before it was written as arguments.
+
+- **2026-09-24** (OpenAI Codex (GPT-6)) — Resolved the choice questions by the finite-support transposition argument in the accompanying write-up. Relational Choice fails already for selection from two-element properties of individuals; haecceity coding gives an admitted relational-output counterinstance to Functional Choice. The original construction and its source attribution are unchanged; these choice verifications are new. Now violates: Relational Choice, Functional Choice.
+- **2026-09-23** (Claude Fable 5.1 (Anthropic)) — Expanded the description from Appendix D; settled the Distinctness-preserving collapse. Now violates: Distinctness-preserving collapse.
+- **2026-09-23** (Claude Fable 5.1 (Anthropic)) — Noted why Relational Choice is left unknown: the construction goes beyond ideal fullness, so the extensional-fullness argument used for the other Appendix D models does not apply as stated.
+- **2026-09-23** (Claude Fable 5.1 (Anthropic)) — Relabelled as a symmetric ideally-full model, the precursor of the draft’s construction, at Cian Dorr’s direction; the id changed from finite-support-qualitative-contrast, which nothing referenced.
+- **2026-09-23** (Claude Fable 5.1 (Anthropic)) — Recorded the failure of Relational Choice, at types (e→t) and e: a functional subrelation of the serial relation pairing each property with its members would be symmetric and finitely pinned, and a symmetry fixing its pinning set would carry its choice for the property of lying outside that set to a second choice. Cian Dorr’s observation that a choice cannot be finitely pinned; argument in the notes. Now violates: Relational Choice.
+- **2026-09-22** (Claude Fable 5.1 (Anthropic)) — Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed individual) and recorded the signature schemata it refutes, at Cian Dorr’s request. Now violates: Witnessed Possibility, Separated Structure, Independence (signature Σ), Distinctness Maximalism (signature Σ).
+- **2026-09-20** (Claude Fable 5.1 (Anthropic)) — Added both Axioms of Infinity at Cian Dorr's direction. The individuals are the natural numbers and identity at the evaluation arrow is literal, so no numeral counts them. The propositions that a given individual is fixed by the arrow, one for each individual, are pairwise distinct and each has that individual as finite support, so there are infinitely many propositions. The set of numerals at each type is invariant under every arrow, hence has empty support and lies in the domain, so finite cardinality is standard and no finite cardinality holds of the universal property at either type. Now satisfies: Axiom of Infinity (type e), Axiom of Infinity (type t).
+- **2026-09-17** (OpenAI Codex (GPT-6)) — Adopted the source’s relational type system at the user’s request. The cited construction now directly supplies the recorded model; the former type-extension obligation is removed. Now satisfies: □ND, Actuality. Now violates: □Actuality, Atomicity.
+
+## Sources
+
+- **Classicism** — Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, p. 79, final construction (two copies of N).
+- **GPT-6 proof 24 Sep** — OpenAI Codex (GPT-6), 24 September 2026. Finite-support transposition proof that Relational Choice and Functional Choice fail at W0, following the user’s suggestion to transfer Plenitude countermodels to Functional Choice; see the accompanying write-up.
+
+<p class='cert'>Record: <code>topics/classicism/models/symmetric-qualitative-contrast.yaml</code></p>
+
+## Paper references
+
+- **Proof: Classicism.** Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds), Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated 16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition and footnote locators in this map refer to that draft's numbering. — Appendix D, p. 79, final construction (two copies of N)
+- **Related: Boolean Completeness does not imply Rigid Comprehension.** Dorr, Cian. Boolean Completeness does not imply Rigid Comprehension. Unpublished draft in progress, 30 July 2026, 27 pages. All page, proposition and lemma locators for this source refer to that draft. Parts of the draft were drafted with AI assistance; its mathematical claims are attributed to the author. — Definitions 15–18, p. 8; Definition 39, p. 19. The draft’s symmetric ideally-full models generalise this construction; its two-object model of Definition 39 is the closest relative.

@@ -3,8 +3,8 @@ name: Weak Rigid Comprehension
 category: comprehension
 statement: Every relation, including a proposition, is coextensive with a weakly rigid one, that is, with
   one that is persistent and weakly inextensible.
-formal: $\forall^{\mathrm{Ty}}\bar\sigma\, .\,\forall X\, .\,\exists Y\, .\,\operatorname{WeaklyRigid}(Y)\land(\forall\bar
-  z\, .\,X[\bar z]\leftrightarrow Y[\bar z])$
+formal: $\forall X^{\bar\sigma t}\, .\,\exists Y^{\bar\sigma t}\, .\,\operatorname{WeaklyRigid}(Y)\land(\forall\bar
+  z^{\bar\sigma}\, .\,X[\bar z]\leftrightarrow Y[\bar z])$
 date: '2026-09-19'
 sources:
 - Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, Proposition
@@ -23,3 +23,4 @@ notes: >-
   Weak rigidity drops the leading box from the inextensibility conjunct of Rigid but keeps persistence
   in its necessitated form. See Background for the definitions. The draft that introduces the principle
   is a work in progress.
+lean_def: Classicism.P.WeakRigidComprehension.schemaIn

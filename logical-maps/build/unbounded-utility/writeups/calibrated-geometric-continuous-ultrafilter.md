@@ -223,4 +223,4 @@ ultrafilter or eventual-comparison rules.
 ## Paper references
 
 - **Origin: Unbounded Utility: Five Top-Ranked Open Conjectures Resolved.** AI-generated report, 30 September 2026, 4 pages; communicated by Branden Fitelson. The report attributes production to Claude agents without specifying model versions. Fitelson is the communicator, not the credited producer of the proofs. — §§1 and 4(b), pp. 1 and 3
-- **Background: [Decision theory unbound](https://doi.org/10.1111/nous.12473).** Zachary Goodsell (2024). Decision theory unbound. Noûs, 58, 669–695. First published online in 2023. — Appendix B, Definition 3, Lemma 6 and Remark 3
+- **Background: [Decision theory unbound](https://doi.org/10.1111/nous.12473).** ([PDF](../sources/Nous%20-%202023%20-%20Goodsell%20-%20Decision%20theory%20unbound%20%281%29.pdf)) Zachary Goodsell (2024). Decision theory unbound. Noûs, 58, 669–695. First published online in 2023. — Appendix B, Definition 3, Lemma 6 and Remark 3

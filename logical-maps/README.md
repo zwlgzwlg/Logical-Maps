@@ -48,6 +48,9 @@ topics/<topic>/principles/<id>.yaml   one principle per file
 topics/<topic>/results/<id>.yaml      implication: premises ⇒ conclusion
 topics/<topic>/models/<id>.yaml       model: satisfies [...], violates [...]; or a definition and arguments
 topics/<topic>/provenance/<id>.yaml   provenance moved verbatim out of model records, named by their arguments
+topics/<topic>/groups/<id>.yaml       a model group: shared definition and shared arguments for models written as arguments
+topics/<topic>/conditions.yaml        conditions a model may meet, which general arguments require
+topics/<topic>/arguments/<id>.yaml    a general argument: any model record meeting its conditions gets it
 topics/<topic>/papers.yaml           source-paper catalogue and external links
 topics/<topic>/sources/              documents authorised for redistribution
 schema/                               JSON schemas
@@ -92,14 +95,15 @@ Run `python3 scripts/check_math.py` and the UI checks after changing rendering o
 mathematical notation; the check requires Node and the Python requirements.
 
 Catalogue papers in `topics/<topic>/papers.yaml`. The Background tab’s Literature section
-shows citations, external links, and the principles/results/models referencing
-each paper. Record `references` distinguish origins, formulations, proofs,
+shows citations, external links, links to any copy in `sources/`, and the
+principles/results/models referencing each paper. Record `references` distinguish origins, formulations, proofs,
 background, and related work. They do not change arrow-source filters or proof
 status. See [the data-format guide](starter/DATA_FORMAT.md#source-paper-catalogue).
 
 Only place documents intended and authorised for redistribution in
 `topics/<topic>/sources/`: the builder copies that entire folder into the
 public site and downloads. External paper links are not downloaded or bundled.
+A paper whose `file:` names such a copy is linked to it wherever it is cited.
 
 ## The working bundle
 
@@ -285,9 +289,6 @@ arguments:
 - holds: [transversal-r]
   text: …
   standing: conjectured             # optional tier; withdrawn: {date, by, reason}
-- holds: [necessary-actuality]      # after the others: a verdict the engine also derives,
-  reserve: true                     # kept so that it rests on more than the results
-  text: …
 notes: …                            # text that supports no verdict
 history: [...]                      # the old changes log, frozen when the record was migrated
 construction: {standing: conjectured, text: …}   # optional doubt about the model itself
@@ -315,25 +316,142 @@ notices), and `status --model ID` prints one. After migrating a record, run
 `python3 scripts/check_flattening.py`: it compares the flattened records, and every
 derived output including the lynchpin rows, with `origin/main` (or `--ref`).
 
-Such a record's ordinary arguments list only the verdicts from which the engine derives
-the rest. Its source's own verdicts are minimized first, among themselves, so that they
-never rest on later additions; a later verdict is recorded only where it adds something.
-Among equally few, the simpler is recorded, so an unboxed principle with No Pure
-Contingency rather than its boxed form. The notice "each derivable from the other
-recorded verdicts" lists what remains redundant among them, and
-`check_flattening.py --closure` checks that a record derives the same holds and fails as
-before.
+Such a record lists only the verdicts from which the engine derives the rest. Its
+source's own verdicts are minimized first, among themselves, so that they never rest on
+later additions; a later verdict is recorded only where it adds something. Among
+equally few, the simpler is recorded, so an unboxed principle with No Pure Contingency
+rather than its boxed form. An argument whose verdicts are all derived is dropped,
+unless another argument builds on it. The notice "each derivable from the other recorded
+verdicts" lists what remains redundant, and `check_flattening.py --closure` checks that
+a shortened record derives the same holds and fails as before.
 
-A verdict the record states directly that the engine also derives is not dropped: it is
-kept, with its argument, in an argument marked `reserve: true` after the others, so that
-it does not rest on the results alone. Reserve verdicts are recorded verdicts, and the
-viewer lists their arguments under "In reserve". A reserve argument is never deleted
-because the engine derives its verdicts; the notice "kept in reserve, and no longer given
-by the other arguments" says when it has started to carry one alone, as when a result it
-was derived through is withdrawn. Each classicism model keeps in reserve what it stated
-before it was written as arguments: the verdicts with the change-log entry that added
-them (its summary verbatim, by and date) or the record's source, and, at the end of its
-notes, the sentences of its old description and notes that no argument keeps.
+### Model groups
+
+A group holds what a family of models written as arguments would otherwise copy.
+Each member keeps its own file, id and arguments, and names the group:
+
+```yaml
+# groups/finite-support-one-object.yaml
+id: finite-support-one-object
+name: Finite-support action models on one object
+definition: >-                      # the shared construction; {{name}} marks a parameter's slot
+  {{monoid}} In every part, … Evaluation point: the sole object, at the identity arrow.
+
+
+  {{sigma}}
+parameters:
+  monoid: {text: The monoid of arrows.}           # a prose slot
+  individuals:
+    text: What the individuals are.
+    generate: true                                # each member also gives a variant per other value
+    default: naturals                             # for a member that sets none
+    values:
+      naturals: {text: The individuals are the natural numbers …, label: individuals ℕ}
+      singleton: {text: There is a single individual …, label: one individual}
+  sigma:
+    text: The interpretation of Σ.
+    generate: true
+    values:                                       # named values: their prose fills the slot
+      top: …                                      # a string is the text
+      true-atom: {text: …, label: Σ true atom, requires: [actual-world-pinned]}
+conditions:
+- {id: evens-avoidable, text: …}    # stated in prose
+arguments:                          # shared arguments, each with its own id, by and date
+- id: sigma-top
+  when: {sigma: top}                # a conjunction over parameters; a list of values means any
+  fails: [witnessed-possibility-r, …]
+  text: …
+- id: weakly-inextensible-comprehension
+  requires: [evens-avoidable]       # every member it applies to meets these
+  fails: [weakly-inextensible-comprehension-r]
+  text: …
+
+# models/finite-support-truncations.yaml
+group: finite-support-one-object
+settings:
+  monoid: 'Proposition D.5, part 6 (p. 78): …'
+  sigma: top                        # or {text: …}: prose of its own, which no `when` matches
+meets:
+  evens-avoidable: …                # why it meets the condition: here, the witness
+definition: …                       # optional: text of its own, after the group's
+arguments:                          # what is specific to it
+- fails: [barcan-r]
+  when: {individuals: naturals}     # only at these settings; `own` matches its own prose
+  text: …
+```
+
+`load_topic` expands a member before flattening. Its definition becomes the group's
+with the slots filled, followed by its own if it has one. The shared arguments whose `when`
+its settings match, and whose `requires` it meets, follow its own arguments, marked
+with the group and carrying the member's reasons. Nothing is inherited by default: a
+member that does not meet a condition does not get the shared argument. The engine never
+sees a group. `validate` checks groups once (slots, `when` values, unknown
+conditions, duplicate shared arguments) and each member's settings, `meets` and argument ids,
+and counts a shared argument's verdicts towards a member's clashes. A shared argument lists
+everything its argument shows; only a member's own arguments are held to minimal
+verdicts. Moving arguments into a group must leave every closure unchanged:
+`check_flattening.py --closure`, against the revision before the move. `like` may name a
+shared argument as `<group>#<id>`. The viewer lists a member's own arguments, then the
+shared arguments that apply to it, and gives each group a page with its shared arguments and members.
+
+A parameter marked `generate` also makes variants. The member's own setting (or the
+parameter's `default`) gives the member itself; every other value whose `requires` the
+member meets gives a variant, and so does every combination across generated parameters.
+A variant is a model of its own for the engine: its id is the member's followed by its
+differing settings (`finite-support-truncations-individuals-singleton-sigma-single-top`),
+its name the member's followed by the values' labels, and its `variant_of` names the
+member. Its definition is the group's at its settings, and its arguments are the member's
+own that apply there and the shared arguments that do. A member's own argument applies at
+every setting unless its `when` says otherwise, so an argument that needs, say, infinitely
+many individuals must say `when: {individuals: naturals}`. Validation checks the member's
+file once; the engine reports any variant whose verdicts clash. The group page shows a
+grid of its members, with a generated parameter's variants added as sub-rows on request,
+and says what each parameter changes. In the theory explorer a group is one row, counting
+its models (members and variants) that fit the assumptions and describing which; it is
+listed under Matching when some are known to fit, else under Potential. Inspecting a group
+tints each principle by whether it holds in all of those models, fails in all, or splits
+them. Lists of witnesses gather a group's models into one entry the same way, and the
+group page dims the rows that do not fit the explorer's assumptions.
+
+### General arguments
+
+Some arguments hold far beyond one group: No Pure Contingency in every one-object action
+model, Transversal Choice in every extensionally full one. They live once in the topic:
+
+```yaml
+# conditions.yaml
+conditions:
+- {id: one-object-action-model, text: The model is an action model with a single object.}
+- {id: sigma-single-top, text: Σ is a single relational constant of type t, denoting ⊤.}
+
+# arguments/sigma-single-top.yaml
+id: sigma-single-top
+requires: [sigma-single-top]         # conditions of the topic, all of them met
+given: [no-pure-contingency-r]       # optional: verdicts the record's other arguments must hold
+holds: [no-contingency-signature-r, signature-b-r]
+text: …
+by: …
+date: …
+```
+
+A record meets a condition, with its reason, in one of three places: its own `meets`
+(any argument-format record, in a group or not), its group's `meets` (every member), or
+the `meets` of one of its group's parameter values (every model at that value, variants
+included). A group's `meets` entry may also be `{text, requires}`: the members that meet
+the listed conditions meet this one too, for that reason (so the finite-support group says
+once why its members with a pinned actual world and non-injective arrows have an isolated
+actual world). Each model's data carries `met`, every condition it meets with its reason,
+which is where a Lean reference for each fact will attach. `expand_member` gives a record its own arguments, then its group's shared
+arguments, then every general argument whose `requires` it meets, each carrying the
+reasons as its conditions; one with `given` is added only once the arguments already
+applied record those verdicts as holding, so a general argument can build on another
+without the engine. Validation checks each general argument once, in its own file, and
+every `meets` against the group's and the topic's conditions. The viewer gives each
+general argument a page (its conditions, its text, the models it applies to), lists a
+model's general arguments after its group's, and lists on a group's page the general
+arguments its models use and the conditions every member meets. A general argument, and
+a reason for meeting a condition, are where Lean references will attach: a theorem for
+the argument, a theorem that the model has the property for the reason.
 
 ## Viewer
 
@@ -363,7 +481,10 @@ against everything already shown. Each group has the graph's own
 show-or-hide control as well, under the same node cap. The toolbar is the graph's too:
 a box to find a principle, then **Flip** and **Fit**. One query serves both
 diagrams; on the lattice a match nobody has chosen to build with has no node,
-and the readout says so rather than pretending otherwise.
+and the readout says so rather than pretending otherwise. The lattice is not
+shaded as the graph is: its order already shows what a selection entails and
+excludes, so it marks the selected node and brings forward the arrows rising
+from it.
 
 **Flip** turns a diagram over, so the stronger principles sit at the top and the
 arrows descend. It is one reflection of the finished layout, so nothing else

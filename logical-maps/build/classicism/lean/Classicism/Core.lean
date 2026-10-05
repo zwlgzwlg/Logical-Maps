@@ -146,14 +146,14 @@ class Rel (τ : Type) extends RelTy τ where
   boxAt : τ → τ
   /-- `∀x̄. X[x̄] → Y[x̄]`, the universally closed pointwise implication. Unboxed: the
   algebraic order `X ≤_τ Y` is its *necessitation*, which is `Order.le_iff`. -/
-  boxImp : τ → τ → Prop
+  incl : τ → τ → Prop
   /-- `X ∧_τ ⊤ = X`. -/
   and_constP_true : ∀ X : τ, and X (constP True) = X
   /-- `(λz̄. X[z̄] ∧ (p ∧ ∀ū. X[ū] ↔ Y[ū])) = (λz̄. Y[z̄] ∧ (p ∧ ∀ū. X[ū] ↔ Y[ū]))`. -/
   and_constP_coext : ∀ (X Y : τ) (p : Prop),
     and X (constP (p ∧ coext X Y)) = and Y (constP (p ∧ coext X Y))
 
-export Rel (coext constP boxAt boxImp)
+export Rel (coext constP boxAt incl)
 
 instance instTyE : Ty e := ⟨()⟩
 
@@ -174,7 +174,7 @@ instance instRelProp : Rel Prop where
   coext := Iff
   coext_refl := fun _ => Iff.rfl
   boxAt := Box
-  boxImp := fun p q => p → q
+  incl := fun p q => p → q
   and_constP_true := fun _ =>
     propext ⟨fun h => h.1, fun h => ⟨h, trivial⟩⟩
   and_constP_coext := fun _ _ _ =>
@@ -190,7 +190,7 @@ instance instRelArrow {σ τ : Type} [Ty σ] [Rel τ] : Rel (σ → τ) where
   coext := fun X Y => ∀ z, Rel.coext (X z) (Y z)
   coext_refl := fun X z => Rel.coext_refl (X z)
   boxAt := fun X z => Rel.boxAt (X z)
-  boxImp := fun X Y => ∀ z, Rel.boxImp (X z) (Y z)
+  incl := fun X Y => ∀ z, Rel.incl (X z) (Y z)
   and_constP_true := fun X => funext fun z => Rel.and_constP_true (X z)
   and_constP_coext := fun X Y p => funext fun z =>
     -- `H := ∀ u, coext (X u) (Y u)` is identical to `H ∧ coext (X z) (Y z)`; rewrite
@@ -217,5 +217,16 @@ defined as the pointwise implication; that they agree, once the implication is b
 abbrev Rel.le {τ : Type} [Rel τ] (X Y : τ) : Prop := Y = Rel.or X Y
 
 @[inherit_doc] scoped infix:50 " ≼ " => Rel.le
+
+/-! ### The paper's symbols
+
+`⊆` is `incl`, the unboxed inclusion `∀x̄. X[x̄] → Y[x̄]`, as notation. It overloads core
+Lean's subset symbol; no relational type has a `HasSubset` instance, so at a relation only
+this reading elaborates. The other symbols of the paper, `∧`, `∨`, `¬`, `⊤`, `⊥` at every
+relational type, and `≡` for coextension, are in `Classicism/Paper.lean`, in the scope
+`Classicism.Paper`, since at `Prop` they must still mean `And`, `Or`, `Not`, `True` and
+`False`, which takes an elaborator rather than a notation. -/
+
+@[inherit_doc Rel.incl] scoped infix:50 " ⊆ " => Rel.incl
 
 end Classicism

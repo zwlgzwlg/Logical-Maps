@@ -6,7 +6,7 @@ certificate:
   recorded_by: OpenAI Codex (GPT-6), 17 September 2026
   checked_by: []
   date: '2026-09-17'
-  lean: none
+  lean: stated
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §3.2, Definition 3.6 and Proposition 3.7,
   pp. 47–48; §1.4, n. 18, p. 16.
@@ -19,13 +19,21 @@ references:
 
 # migration: the definition is the old description's first sentence, then the notes' interpretation
 # of Σ.
+# migration (3 October): the interpretation of Σ has no individual constants, as the topic's condition
+# sigma-top now says (Cian Dorr's decision); it read "and each individual constant denotes one
+# fixed individual".
 definition: >-
   Use the ordinary full Henkin interpretation: D_e is a singleton, D_t={0,1}, and every admitted
   function type contains all functions between its domains.
 
 
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element of
-  its type and each individual constant denotes one fixed individual.
+  Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each
+  denotes the top element of its type.
+
+# The interpretation of Σ in the definition meets the topic's condition sigma-top, so the general
+# argument sigma-top (arguments/) gives its failures (2 October 2026; this record's copy of it went).
+meets:
+  sigma-top: This is the interpretation the definition fixes.
 
 arguments:
 
@@ -50,102 +58,13 @@ arguments:
 
 # --- later additions ---
 
-- id: sigma-top
-  fails: [independence-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The sentence that
-  # followed the text in the old notes is in `notes`.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed
-    Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but
-    impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\,
-    .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what
-    the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since
-    $c=\top_\tau$ is a true identity that C(Σ) does not prove.
-    Everything that implies these fails with them.
-
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [functionality-r, modalized-functionality-r, plenitude-r, relational-choice-r, no-pure-contingency-r, distinctness-preserving-collapse]
-  fails: [infinity-t, atomlessness, possibility-schema-r]
-  reserve: true
-  source: {paper: bacon-dorr-classicism, locator: "§3.2, Definition 3.6 and Proposition 3.7, pp. 47–48; §1.4, n. 18, p. 16"}
-
-- fails: [possible-infinity-e, possible-infinity-t]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-20'
-  text: >-
-    Verified the Possible Infinity principles added on this date. Box is the identity on truth
-    values, so each fails with the corresponding Axiom of Infinity.
-
-- holds: [necessary-fregean-axiom, modalized-fregean, extensionality-r, necessary-extensionality-r, intensionality-r, necessary-functionality-r, necessary-plenitude-r, tractarianism-r, necessary-tractarianism-r, necessary-distinctness-necessary-r, necessary-actuality, necessary-atomicity-r, necessary-boolean-completeness-r, necessary-rigid-comprehension-r, necessary-gallin-extensional-comprehension-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-20'
-  text: >-
-    Listed the strongest principles the model obviously satisfies, at Cian Dorr's request. Since
-    Box is truth and identity is genuine, each boxed principle reduces to its unboxed form;
-    coextensive relations are identical because every function type is full; every relation is
-    persistent, inextensible and Gallin-extensional trivially; Actuality holds with top as the
-    actual world; each relational type is a complete atomic Boolean algebra, giving Atomicity
-    and Boolean Completeness; Tractarianism is the tautology that a proposition entailing each
-    instance entails the universal claim; and ND holds outright, giving C5.
-
-- holds: [strong-leibniz-r, necessary-strong-leibniz-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Added the Strong Leibniz Biconditionals and their necessitation. Box is truth in this model,
-    so a strong world is an atom and the principle reduces to Atomicity, which holds; boxed
-    principles reduce to their unboxed forms.
-
-- holds: [no-contingency-signature-r, signature-b-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Added No Contingency (signature Σ) and B for sentences of Σ: Box is truth in this model, so
-    every closed sentence, whatever the constants denote, is necessary if true and necessarily
-    possible if true.
-
-- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
-    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
-
-- holds: [necessary-relational-choice-r, necessary-functional-choice-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Boxed the two Choice claims.
-
 # migration: text of the old notes that no argument holds, verbatim. Their arguments of 20 and 22
 # September for verdicts now derived (the one-world principles, the pure schemata, No Contingency
 # (signature Σ), the boxed choice principles) are dropped.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
-# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
 notes: >-
   Explicit specialization of the source’s standard Henkin construction to a singleton individual
-  domain. No independent checking or formal verification is claimed.
-
-  The model is a standard model of extensional classical type theory in which the defined
-  necessity is truth: a boxed principle holds exactly when its unboxed form does, coextensive
-  relations are identical, every relation is rigid in every recorded sense, the Boolean algebra
-  at each relational type is the complete atomic algebra of subsets of the domain, and every
-  closed sentence is non-contingent. The pure schemata fail because C-consistent sentences about
-  how many individuals there are can be false. No Contingency (signature Σ) and B for sentences
-  of Σ hold in a one-world model however the constants are interpreted. Box is truth in this
-  one-world model, so □Relational Choice and □Functional Choice hold with their unboxed forms.
+  domain. No independent checking or formal verification is claimed. Everything that implies these
+  fails with them.
 
 # The old `changes` log, verbatim and frozen.
 history:

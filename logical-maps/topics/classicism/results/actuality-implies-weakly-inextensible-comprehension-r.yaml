@@ -10,7 +10,8 @@ certificate:
     25 September 2026
   checked_by: []
   date: '2026-09-17'
-  lean: none
+  lean: verified
+  lean_ref: Classicism.Map.actuality_implies_weakly_inextensible_comprehension_r
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §2.3, n. 38, p. 29.
 source_names:

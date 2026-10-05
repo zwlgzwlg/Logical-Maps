@@ -18,3 +18,4 @@ notes: The paper leaves consistency open. The definition of Box_ne and its dual 
   what it adds is possibility under the distinctness-preserving modality. So incompatibilities of the
   form Strong Possibility + □Y are recorded at Possibility Maximalism (pure) and inherited, and the collapse is the
   one recorded principle refuted by the stronger modality alone.
+lean_def: (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.strongPossibility)

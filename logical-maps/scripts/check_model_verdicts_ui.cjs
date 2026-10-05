@@ -17,7 +17,7 @@ const data={topic:{id:'verdicts',title:'Verdict fixture',background:[],source_ca
   results:[rule('ac',['a'],'c'),rule('db',['d'],'b')],
   models:[{id:'m',name:'Fixture model',status:'proved',satisfies:['a'],violates:['b'],certificate:leanCert,sources:['Fixture'],source_names:['Fixture']}]};
 const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));
-const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data)),
+const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data)),
   {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});
 const w=dom.window,d=w.document;
 try{
@@ -52,8 +52,12 @@ try{
   assert.deepEqual(['a','b','c','d','e'].map(id=>control(id).length),[1,1,1,1,0],'One control each, none for an open question');
   assert.equal(control('a')[0].dataset.verdictModel,'m','A recorded verdict of a list-format model goes to its evidence');
   assert.equal(control('a')[0].textContent,'↗');
-  assert.equal(control('c')[0].dataset.verdict,'c','A derived one to how it follows');
+  assert.equal(control('c')[0].dataset.verdictPage,'c','A derived one to how it follows');
   assert.equal(control('c')[0].textContent,'⇐');
+  control('c')[0].click();
+  assert.match(d.getElementById('page').querySelector('h1').textContent,/: /,'⇐ opens the derivation page, not a pop-up');
+  assert.ok(d.getElementById('pop').hidden);
+  w.eval('openPage({type:"model", id:"m"})');
   assert.equal(page.querySelectorAll('.verdict-columns .badge').length,0,'No source information in the columns');
   assert.equal(w.getComputedStyle(page.querySelector('.verdict-columns')).display,'grid');
 
@@ -78,7 +82,7 @@ try{
 
   // The mark stays where no heading gives it: the theory explorer's own list.
   d.querySelector('.tab[data-tab="models"]').click();
-  w.eval('select({type:"model", id:"m"})');
+  d.querySelector('#models [data-ex-inspect="model"][data-id="m"]').click();
   const explorer=d.querySelector('#model-principles [data-assumption-row="a"] [data-verdict]');
   assert.equal(explorer.querySelector('.model-flag').textContent,'✓','The explorer still shows the verdict itself');
 
@@ -92,20 +96,18 @@ const args=[{holds:['a'],text:'Why A holds.'},{fails:['b'],text:'First reason B 
   {fails:['b'],writeup:'b-writeup',by:'Later author',date:'2026-02-01',revisions:[{date:'2026-02-02',note:'Tidied.'}]},
   {holds:['e'],standing:'conjectured',tier:'bronze',text:'Why E might hold.',companion_id:'n-conj',date:'2026-01-20'},
   {holds:['a'],fails:['b'],text:'One argument for both.',by:'Both author (Lab), later',date:'2026-02-04'},
-  {fails:['b'],text:'Found in a trawl.',by:'Trawl agent, trawl',date:'2026-02-05',provenance:'admission-x'},
-  // D fails by D ⇒ B; the record keeps its own argument for that in reserve.
-  {fails:['d'],reserve:true,text:'Why D fails, kept in reserve.',by:'Old, 15 January 2026',date:'2026-01-15'}];
-const flat={id:'n',name:'Argument model',status:'proved',satisfies:['a'],violates:['b','d'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
-  definition:'What the model is.',arguments:args,notes:'Miscellany.',history:[{date:'2026-01-15',by:'Old',summary:'An old change.',satisfies:['a']}]};
+  {fails:['b'],text:'Found in a trawl.',by:'Trawl agent, trawl',date:'2026-02-05',provenance:'admission-x'}];
+const flat={id:'n',name:'Argument model',status:'proved',satisfies:['a'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
+  definition:'What the model is.',arguments:args,notes:'Miscellany.',references:[{paper:'fixture-paper',role:'related',locator:'§1',note:'How the construction relates.'}],history:[{date:'2026-01-15',by:'Old',summary:'An old change.',satisfies:['a']}]};
 const companion={id:'n-conj',name:'Argument model',status:'conjectured',tier:'bronze',satisfies:['a','e'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
   definition:'What the model is.',arguments:[args[3]],notes:'Why E might hold.',companion_of:'n',model_check:{model:'n',satisfies:['e'],violates:[]}};
 // The chain of a theorem-trawl admission, as the build exports it for each record it added to.
 const provenance=[{id:'admission-x',file:'topics/t/provenance/admission-x.yaml',records:{n:{found_by:'deepseek/deepseek-flash',found_at:'2026-02-05T10:00:00+00:00',
   reviews:[{by:'openai/gpt-6',at:'2026-02-06T10:00:00+00:00',verdict:'accept',summary:'Checked.',argument_check:'Every step.',source_check:'The source.',issues:[]}],
   admitted_by:'Curator',admitted_at:'2026-02-07T10:00:00+00:00'}}}];
-const data2={...data,models:[flat,companion],provenance};
+const data2={...data,models:[flat,companion],provenance,papers:[{id:'fixture-paper',title:'Fixture paper',citation:'A. Author, Fixture paper.'}]};
 const errors2=[],vc2=new VirtualConsole();vc2.on('jsdomError',e=>errors2.push(e));
-const dom2=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data2)),
+const dom2=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data2)),
   {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc2});
 const w2=dom2.window,d2=w2.document;
 try{
@@ -119,11 +121,36 @@ try{
   const control=id=>item(id).querySelector('button.vc');
   assert.equal(control('a').dataset.jump,'0 4','A recorded verdict goes to each argument for it');
   assert.equal(control('b').dataset.jump,'1 2 4 5','However many there are');
-  assert.equal(control('c').dataset.verdict,'c','A derived verdict goes to how it follows');
+  assert.equal(control('c').dataset.verdictPage,'c','A derived verdict goes to how it follows');
+  // The derivation starts from the verdicts it uses, each linking back to its argument,
+  // and ← back retraces the pages, then returns to the tab.
+  const pane=d2.getElementById('pane-page');
+  control('c').click();
+  const lines=()=>[...page.querySelectorAll('ol li')].map(li=>li.textContent.replace(/\s+/g,' ').trim());
+  assert.match(lines()[0],/^✓ A by its argument in the model/,'The starting point first');
+  assert.match(lines()[1],/^A ⇒ C/,'Then the result');
+  assert.ok(![...page.querySelectorAll('h2')].some(h=>/Paper references|Record provenance|Model evidence/.test(h.textContent)),'No credits on a derivation: its records credit themselves');
+  assert.equal(page.querySelectorAll('.badge.source').length,0);
+  assert.equal(page.querySelector('h1 button[data-open-model]').textContent,'Argument model','The heading links back to the model');
+  page.querySelector('ol li button[data-open-arg]').click();
+  assert.ok(page.querySelector('#argument-0').open&&page.querySelector('#argument-4').open,'The link opens the model at its arguments');
+  assert.ok(!page.querySelector('#argument-1').open);
+  page.querySelector('#page-back').click();
+  assert.match(page.querySelector('h1').textContent,/: C$/,'Back to the derivation');
+  page.querySelector('#page-back').click();
+  assert.equal(page.querySelector('h1').textContent,'Argument model','Back to the model page');
+  page.querySelector('#page-back').click();
+  assert.notEqual(pane.dataset.active,'true','Then back to the tab');
+  w2.eval('openPage({type:"model-verdict", id:"n", principle:"d"})');
+  assert.deepEqual(lines().map(l=>l.split(' ').slice(0,3).join(' ')),['D supposed, to','✗ B by','D ⇒ B'],'A failure starts from the supposition and the verdict it clashes with');
+  w2.eval('openPage({type:"model", id:"n"})');
   assert.equal(control('e').dataset.jump,'3','An open question with a conjectured argument goes to it');
   assert.ok(control('e').classList.contains('conj'));
   assert.equal(page.querySelectorAll('.verdict-columns .badge').length,0,'No source information in the columns');
   assert.ok(h2s.indexOf('Principles')<h2s.indexOf('Arguments')&&h2s.indexOf('Arguments')<h2s.indexOf('Notes'));
+  assert.ok(!h2s.some(h=>/Paper references|Record provenance/.test(h)),'An argument model credits inside its arguments, not in record-level lists');
+  const notesList=[...page.querySelectorAll('h2')].find(h=>h.textContent==='Notes').nextElementSibling.nextElementSibling;
+  assert.match(notesList.textContent,/Related: Fixture paper — §1How the construction relates\./,'Its paper references sit with its notes');
   const listed=[...page.querySelectorAll('details.argument[id]')];
   assert.deepEqual(listed.map(x=>x.id),args.map((_,i)=>'argument-'+i),"Each argument once, in the record's order");
   assert.equal(page.querySelectorAll('h3.argument-group').length,0,'Not grouped by date');
@@ -144,14 +171,6 @@ try{
     'A trawl argument is credited to who found, reviewed and admitted it');
   assert.match(trawled.querySelector('details.review').textContent,/Checked\..*Argument check: Every step\..*Source check: The source\./s,'With the review report at hand');
   assert.match(trawled.textContent,/provenance\/admission-x\.yaml/);
-  // An argument kept in reserve comes after the others, under its own heading, and still
-  // takes its verdict's control.
-  const reserveHead=[...page.querySelectorAll('h3.verdict-group')].find(h=>/^In reserve/.test(h.textContent));
-  assert.ok(reserveHead&&/1$/.test(reserveHead.textContent.trim()),'The reserve has its own heading, with a count');
-  assert.ok(page.querySelector('.arguments.reserve #argument-6')&&!page.querySelector('.arguments.reserve #argument-5'),'Only reserve arguments sit under it');
-  assert.equal(summary(6),'✗ D reserve');
-  assert.equal(control('d').dataset.jump,'6','A verdict kept in reserve is recorded, and its control goes to the argument');
-  assert.equal(page.querySelector('#argument-6 .credit').textContent,'Old, 15 January 2026.','A date the name already gives is not repeated');
   assert.ok(h2s.includes('Notes')&&h2s.includes('History'));
   const history=page.querySelector('details.history');
   assert.ok(history&&!history.open&&/An old change\./.test(history.textContent),'The old log waits behind a toggle');
@@ -181,7 +200,6 @@ try{
   assert.ok(changes.some(x=>x.includes('Argument added.')&&x.includes('2026-02-01')),'A later argument is one');
   assert.ok(changes.some(x=>x.includes('Tidied.')),'And so is its revision');
   assert.ok(!changes.some(x=>x.includes('Why A holds')),'An argument as old as the record is not');
-  assert.ok(!changes.some(x=>x.includes('kept in reserve')),'Nor one kept in reserve with the date of a logged change');
   assert.ok(changes.some(x=>x.includes('Conjectured argument added: Why E might hold.')),'A later conjectured argument is a change too');
   companion.arguments[0].revisions=[{date:'2026-03-01',note:'Conjecture restated.'}];
   w2.eval(`byMid.get('n-conj').arguments[0].revisions=[{date:'2026-03-01',note:'Conjecture restated.'}];renderResults()`);
@@ -189,5 +207,133 @@ try{
   assert.ok(rows.some(tr=>tr.dataset.id==='n-conj'&&tr.textContent.includes('Conjecture restated.')),'A companion\'s changes are its arguments\' revisions');
   assert.ok(rows.some(tr=>tr.dataset.id==='n-conj'&&tr.textContent.includes('2026-01-20')&&!tr.classList.contains('revision')),'And it is dated by its latest argument, not by the model');
   assert.deepEqual(errors2.map(String),[]);
-  console.log('PASS: a model page sorts every principle into three columns, satisfied, violated and unsettled, counts each, gives each principle one control to its evidence or derivation, holds the derived verdicts behind a closed toggle, keeps Lean status on the pop-up of a verdict while the explorer list keeps its marks; a model written as arguments shows its definition, then three columns of principles with one control each and no sources, each argument once in record order headed by its verdicts with who supplied it inside (for a trawl argument, who found, reviewed and admitted it), those kept in reserve under their own heading, its history behind a toggle, a write-up that does not replace the definition, and its companion.');
+  console.log('PASS: a model page sorts every principle into three columns, satisfied, violated and unsettled, counts each, gives each principle one control to its evidence or derivation, a derivation that starts from the verdicts it uses and links each to its argument, a back button that retraces the pages, holds the derived verdicts behind a closed toggle, keeps Lean status on the pop-up of a verdict while the explorer list keeps its marks; a model written as arguments shows its definition, then three columns of principles with one control each and no sources, each argument once in record order headed by its verdicts with who supplied it inside (for a trawl argument, who found, reviewed and admitted it), its history behind a toggle, a write-up that does not replace the definition, and its companion.');
 }finally{w2.close();}
+
+// A group's member, as the build exports it: its own arguments, then the group's shared arguments
+// that apply, each marked with the group; and the group's own page.
+const group={id:'g',name:'Fixture group',file:'topics/t/groups/g.yaml',definition:'Arrows: {{monoid}}. {{sigma}}',
+  parameters:{monoid:{text:'The monoid.'},sigma:{text:'Σ.',generate:true,values:{top:{text:'Σ is top.',label:'Σ top'},atom:{text:'Σ is an atom.',label:'Σ atom'}}}},
+  conditions:[{id:'perturbable',text:'Some arrow perturbs.'}],
+  arguments:[{id:'always',holds:['a'],text:'Always.',by:'Group author',date:'2026-03-01'},
+            {id:'perturbed',fails:['b'],requires:['perturbable'],text:'Perturbed.',by:'Group author',date:'2026-03-02'},
+            {id:'atom',fails:['e'],when:{sigma:'atom'},text:'Atom.',by:'Group author',date:'2026-03-03'}]};
+const strip=a=>{const {when,requires,...rest}=a;return rest;};
+const member={id:'gm',name:'Fixture: group member',status:'proved',satisfies:['e','a'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
+  group:'g',settings:{monoid:'the truncations',sigma:'top'},meets:{perturbable:'g_n does.'},definition:'Arrows: the truncations. Σ is top.',
+  arguments:[{holds:['e'],text:'Own.',when:{sigma:'top'}},{...group.arguments[0],group:'g'},
+             {...group.arguments[1],group:'g',conditions:[{id:'perturbable',text:'Some arrow perturbs.',reason:'g_n does.'}]}].map(a=>a.group?strip(a):a)};
+// A general argument of the topic, which the member gets by meeting its condition.
+const generalArg={id:'gen-c',requires:['one-object'],holds:['c'],text:'In general.',by:'Topic author',date:'2026-03-04',file:'topics/t/arguments/gen-c.yaml'};
+member.arguments.push({...strip(generalArg),file:undefined,general:'gen-c',conditions:[{id:'one-object',text:'One object.',reason:'It has one.'}]});
+member.satisfies.push('c');
+// Its variant with the other value of the generated parameter, as the build exports it.
+const variant={...member,id:'gm-sigma-atom',name:'Fixture: group member [Σ atom]',variant_of:'gm',satisfies:['a'],violates:['b','e'],
+  settings:{monoid:'the truncations',sigma:'atom'},definition:'Arrows: the truncations. Σ is an atom.',
+  arguments:[member.arguments[1],member.arguments[2],{...strip(group.arguments[2]),group:'g'}]};
+const data3={...data,models:[member,variant],groups:[group],general_arguments:[generalArg],conditions:[{id:'one-object',text:'One object.'}]};
+const errors3=[],vc3=new VirtualConsole();vc3.on('jsdomError',e=>errors3.push(e));
+const dom3=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data3)),
+  {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc3});
+const w3=dom3.window,d3=w3.document;
+try{
+  w3.eval('openPage({type:"model", id:"gm"})');
+  const page=d3.getElementById('page');
+  assert.ok(page.querySelector('button[data-open-group="g"]'),'A member says which group it belongs to');
+  const own=[...page.querySelectorAll('h2 + .arguments details.argument')].map(x=>x.id);
+  assert.deepEqual(own,['argument-0'],'Its own arguments first');
+  const source=page.querySelector('h3.argument-source');
+  assert.match(source.textContent,/From the group Fixture group/,'Then the shared arguments, under their group');
+  const shared=[...source.nextElementSibling.querySelectorAll('details.argument')];
+  assert.deepEqual(shared.map(x=>x.id),['argument-1','argument-2']);
+  assert.match(shared[1].textContent,/Requires: Some arrow perturbs\. Here: g_n does\./,'A shared argument says which condition the member meets, and why');
+  assert.match(shared[1].textContent,/Group author, 2026-03-02\./,'And who supplied it');
+  assert.match(shared[1].textContent,/g#perturbed/);
+  const heads=[...page.querySelectorAll('h3.argument-source')].map(x=>x.textContent);
+  assert.deepEqual(heads,['From the group Fixture group','General arguments of the topic'],'Then the topic\'s general arguments');
+  const gen=page.querySelector('#argument-3');
+  assert.match(gen.textContent,/In general\..*Requires: One object\. Here: It has one\./,'A general argument says how the model meets its condition');
+  const item=id=>page.querySelector(`.verdict-columns [data-principle="${id}"]`).closest('li');
+  assert.equal(item('b').querySelector('button.vc').dataset.jump,'2','A verdict from a shared argument jumps to it');
+  // The general argument's page: its condition and the models it applies to.
+  gen.querySelector('button[data-open-argument="gen-c"]').click();
+  assert.equal(page.querySelector('h1').textContent,'gen-c');
+  assert.match(page.textContent,/Requiresone-object: One object\..*In general\..*Applies toFixture: group member/,'A general argument\'s page');
+  page.querySelector('#page-back').click();
+  // The group's page.
+  page.querySelector('button[data-open-group="g"]').click();
+  assert.equal(page.querySelector('h1').textContent,'Fixture group');
+  assert.match(page.textContent,/Arrows: ⟨monoid⟩\. ⟨sigma⟩/,'Its definition shows the slots');
+  assert.match(page.textContent,/perturbable: Some arrow perturbs\. Met by group member\./);
+  const scopes=[...page.querySelectorAll('.shared-scope')].map(x=>x.textContent);
+  assert.deepEqual(scopes,['Applies to every member.','Requires perturbable. Applies to every member.','At sigma = Σ atom. Applies to no member at its own settings, only to variants.'],
+    'Each shared argument, with where it applies');
+  // The grid: a row per member; the variants of a generated parameter on request, with the column they need.
+  const rowNames=()=>[...page.querySelectorAll('table.group-grid tbody th')].map(x=>x.textContent);
+  const colNames=()=>[...page.querySelectorAll('table.group-grid th.gcol')].map(x=>x.textContent);
+  assert.deepEqual(rowNames(),['group member'],'One row per member, named without the shared prefix');
+  assert.deepEqual(colNames(),[],'Nothing varies across one member');
+  assert.match(page.textContent,/General arguments used.*gen-c ✓ C\. Every member\./,'The general arguments its models use');
+  assert.match(page.textContent,/For every member, Σ atom: E: holds → fails\./,'What the parameter changes');
+  page.querySelector('button[data-group-toggle="sigma"]').click();
+  assert.deepEqual(rowNames(),['group member','Σ atom'],'The variant as a sub-row');
+  assert.deepEqual(colNames(),['E'],'And the column it needs');
+  w3.eval("state.excluded.add('e'); renderPage(state.page)");
+  assert.deepEqual(colNames(),[],'A principle hidden in the sidebar is not a column');
+  assert.match(page.querySelector('.group-bar').textContent,/1 more differs among principles hidden in the sidebar/,'But is counted');
+  w3.eval("state.excluded.delete('e'); renderPage(state.page)");
+  assert.deepEqual(colNames(),['E']);
+  const cell=ri=>page.querySelector(`button.gcell[data-gcell="${ri}"][data-gc="e"]`);
+  assert.ok(cell(0).classList.contains('r')&&cell(0).classList.contains('h')&&cell(1).classList.contains('f'),'Recorded cells');
+  cell(1).click();
+  assert.match(page.querySelector('#group-detail').textContent,/E fails in group member \(Σ atom\).*Atom\./,'A cell shows its argument');
+  page.querySelector('button[data-grow="0"]').click();
+  assert.match(page.querySelector('#group-detail').textContent,/the truncations.*Σ top/,'A row name shows the settings');
+  assert.ok(page.querySelector('#group-detail button[data-open-model="gm"]'),'And links to the model');
+  page.querySelector('button[data-group-toggle="sigma"]').click();
+  assert.deepEqual(rowNames(),['group member']);
+  page.querySelector('#page-back').click();
+  assert.equal(page.querySelector('h1').textContent,'Fixture: group member','Back to the member');
+  // The theory explorer lists the group once, counting the models that fit and saying which.
+  d3.querySelector('[data-tab="models"]').click();
+  const exRows=()=>[...d3.querySelectorAll('#models .explorer-models > ul.ex-list > li.ex-m')];
+  assert.equal(exRows().length,1,'One row for the group, none for its models');
+  assert.ok(!exRows()[0].querySelector('.ex-fit'));
+  assert.match(exRows()[0].querySelector('.model-heading').textContent,/^\s*▶\s*Fixture group\s*2 of 2 models\s*$/,'All of a group\'s models fit: nothing more is said');
+  const tw=exRows()[0].querySelector('button[data-ex-twisty="members"]'), sub=exRows()[0].querySelector(':scope > .ex-sub');
+  assert.ok(tw.getAttribute('aria-expanded')==='false'&&sub.hidden,'A group\'s models are behind a triangle on its line');
+  tw.click();
+  assert.ok(tw.getAttribute('aria-expanded')==='true'&&!sub.hidden,'Which opens them in place');
+  const inner=()=>[...exRows()[0].querySelectorAll(':scope > .ex-sub > .ex-list > li')];
+  assert.equal(inner().length,1,'Its models lists the members only');
+  let vd=inner()[0].querySelector('[data-ex-variants]');
+  assert.ok(vd&&vd.hidden&&/\+1 variant/.test(inner()[0].querySelector('.model-heading').textContent),'A member\'s variants are tucked under it, counted on its line');
+  assert.ok(exRows()[0].querySelector(':scope > .ex-sub').querySelector('button[data-ex-twisty="variants"]'),'Behind a triangle of their own');
+  assert.match(vd.querySelector('button[data-open-model="gm-sigma-atom"]').textContent,/^Σ atom$/,'A variant is named by what it changes');
+  w3.eval('setTheoryAssumption("e","negative")');
+  vd=inner()[0].querySelector('[data-ex-variants]');
+  assert.ok(!vd.hidden&&inner()[0].classList.contains('ex-unfit')&&/does not fit/.test(inner()[0].textContent),'When only the variant fits, the member heads it and its variants open');
+  w3.eval('setTheoryAssumption("e","positive")');
+  assert.ok(!inner()[0].querySelector('[data-ex-variants]'),'No variant fits: none is listed');
+  assert.match(exRows()[0].textContent,/1 of 2 models\s*Σ top/,'Only the member assumes E; the description names its Σ');
+  const head=exRows()[0].querySelector('[data-ex-inspect="group"]');
+  assert.ok(head.querySelector('button[data-open-group]'),'The group\'s name is a link to its page');
+  assert.equal(exRows()[0].textContent.includes('The group’s page'),false,'With no separate link to it');
+  head.click();
+  assert.match(d3.querySelector('#models .inspection-note').textContent,/Inspecting Fixture group, through the 1 of its models that fit/);
+  const exP=id=>d3.querySelector(`#model-principles li[data-assumption-row="${id}"]`);
+  assert.ok(exP('e').classList.contains('model-in')&&exP('b').classList.contains('model-out'),'Inspecting a group tints what holds or fails in all the models that fit');
+  const popBefore=d3.getElementById('pop').hidden;
+  exRows()[0].querySelector('[data-ex-inspect="group"] button[data-open-group]').click();
+  assert.equal(d3.getElementById('pop').hidden,popBefore,'Its name opens no pop-up');
+  assert.match(d3.querySelector('#page h1').textContent,/Fixture group/,'But its page');
+  d3.querySelector('#page-back').click();
+  w3.eval('setTheoryAssumption("e",null)');
+  assert.ok(!/model-(in|out|split)/.test(exP('e').className)&&/1✓ 1✗/.test(exP('e').textContent),'And notes a split, untinted');
+  // A list of witnesses gathers a group's models into one entry.
+  const line=d3.createElement('div');line.innerHTML=w3.eval('statusLine("X", {status:"independent", models:["gm","gm-sigma-atom"]})');
+  assert.match(line.textContent,/Fixture group 2 of 2 models$/,'Witnesses from a group are one entry');
+  assert.deepEqual(errors3.map(String),[]);
+  console.log('PASS: the theory explorer lists a group once, counting the models that fit the assumptions and saying which, inspects a group through them (all hold, all fail, or split), and a list of witnesses gathers a group\'s models into one entry;');
+  console.log('PASS: a group\'s member lists its own arguments, then the shared arguments that apply under their group, each saying which condition it relies on and why the member meets it; a group\'s page shows a grid of its members, adds a generated parameter\'s variants and the columns they need on request, says what the parameter changes, shows a cell\'s arguments and a row\'s settings, and lists its definition, parameters, conditions and shared arguments with where each applies.');
+}finally{w3.close();}

@@ -13,3 +13,4 @@ references:
   role: formulation
   locator: §2.4, pp. 35–36
 notes: ''
+lean_def: (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC)

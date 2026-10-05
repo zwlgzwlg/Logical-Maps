@@ -1,0 +1,267 @@
+id: symmetric-ideally-full
+name: 'Symmetric ideally-full models'
+references:
+- paper: dorr-bc-not-rc
+  role: proof
+  locator: §3.1, p. 9; Definitions 15–18, p. 8; Lemma 21, p. 10
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, pp. 73–79
+  note: The ideally-full action models of which these are the symmetric variants, and on p. 79 the
+    precursor recorded as symmetric-qualitative-contrast.
+
+# The symmetric ideally-full intensional action models of Dorr's draft, with the Appendix D
+# precursor. Each member keeps its own file, id and the arguments that are its alone; an argument
+# that more than one member gave in substance is here, or in the topic's arguments/, stated once,
+# with what varies between members under each member's `meets`. Built on 2 October 2026 by Claude
+# Opus 5.5 at Cian Dorr's direction; texts are the members' unless a revision says otherwise.
+#
+# Revised 3 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every member is recorded at Σ
+# top, its other interpretation generated, and with the individuals its construction gives, the
+# base; its variant with one individual, the arrows still acting on the base, is generated. The
+# arguments that work at type $e$ apply only at the base: in the variant, whether Relational
+# Choice, Transversal and Rigid Comprehension still fail is open.
+
+definition: >-
+  {{construction}}
+
+
+  {{individuals}}
+
+
+  {{sigma}}
+
+parameters:
+  construction:
+    text: The objects, arrows and symmetry groups, and which intensions the domains hold, as the
+      member's source gives them.
+  individuals:
+    text: What the individuals are. Each member is recorded with the individuals its construction
+      gives; its variant with one individual is generated.
+    generate: true
+    default: base
+    values:
+      base:
+        text: >-
+          Individuals, fixed for this record: the individuals at each object are the base the
+          construction describes, and the arrows act on them as on the base.
+        label: individuals the base
+      singleton:
+        text: >-
+          Individuals, fixed for this record: there is a single individual at every object. The
+          arrows still act on the base as the construction says, and the base still supplies the
+          pinning sets and the symmetry groups.
+        label: one individual
+        meets:
+          one-individual: There is a single individual at every object.
+          homogeneous-individuals: There is only one individual.
+  sigma:
+    text: The interpretation of Σ. Each member is recorded with Σ top; its variant with the other
+      is generated.
+    generate: true
+    values:
+      # Revised 3 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): Σ has no individual
+      # constants. The value "Σ one constant for ⊤" went, its verdicts never differing from these;
+      # the individual constants that `top` and `true-atom` had left verdicts unknown where the
+      # individuals are not homogeneous, and settled none differently.
+      top:
+        text: >-
+          Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each
+          denotes the top element of its type.
+        label: Σ top
+        meets:
+          sigma-top: This is the interpretation.
+      true-atom:
+        text: >-
+          Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type
+          $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of
+          the model, the actual-world proposition, the symmetry group; every other constant of Σ, of
+          which there is at least one, is relational and denotes the top element of its type.
+        label: Σ true atom
+        requires: [actuality-contingent]
+        meets:
+          sigma-true-atom: This is the interpretation.
+
+conditions:
+- id: transposable
+  text: >-
+    There is a finite set $M$ of individuals at the evaluation object such that, for each finite set
+    $N$, some property $A$ in the domain, symmetric and pinned down by $N\cup M$, has a nonempty
+    extension, and each individual $y$ in that extension is moved by a member of the symmetry group
+    that fixes $N\cup M$ pointwise and fixes $A$.
+- id: separable-collapses
+  text: >-
+    There are infinitely many pairs of individuals such that, for any two of these pairs, some
+    arrow collapses the one and not the other.
+- id: surjective-arrows
+  text: >-
+    Every arrow is surjective.
+- id: symmetry-group-pinned
+  text: >-
+    The symmetry group, the smallest symmetric set of arrows containing the identity, is pinned
+    down by a finite set.
+- id: collapse-onto-point
+  # Claude Opus 5.5, 3 October 2026: the hypothesis of the collapse lemma for Intensional Choice.
+  text: >-
+    There are an individual $a$ and a necessarily instantiated property $F$ in the domain such
+    that, for every finite set $N$ of individuals at the evaluation object, some arrow $h$ sends
+    $N\cup\{a\}$ to a single individual $p$, and every individual $y\ne p$ in $F$'s extension at
+    $h$ is moved by a member $\sigma$ of the symmetry group that fixes $p$, with $\sigma\circ h$
+    again an arrow.
+- id: fixes-or-omits
+  text: >-
+    There is a distinguished individual that every arrow either fixes or omits from its range, and
+    some arrow moves it.
+
+arguments:
+
+- id: relational-choice
+  when: {individuals: base}
+  requires: [transposable]
+  fails: [relational-choice-r]
+  by: Claude Fable 5.1 (Anthropic), after Cian Dorr’s observation that a choice over the
+    individuals cannot be finitely pinned down
+  date: '2026-09-23'
+  text: >-
+    At the types $(e\to t)$ and $e$. Let $U:=\lambda Xy\, .\,Xy\lor\neg\exists z\, .\,Xz$, a closed
+    term, hence in the domain, and serial. A functional subrelation $S$ of $U$ would lie in the
+    domain at the evaluation object, so it is symmetric and pinned down by a finite set $N$. Two
+    facts about such an $S$ (Dorr, draft, Lemma 21): every $g\in G$ fixing $N$ pointwise satisfies
+    $g^{[\sigma]}S=S$, and symmetry gives $\langle gA,gy,g\rangle\in S$ whenever $\langle
+    A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$. Now let $A$ be the property the
+    condition gives for $N$. Its extension is nonempty, so $S$ relates $A$ at the identity to some
+    $y$ in its extension. The condition gives a member $g$ of the symmetry group that fixes
+    $N\cup M$ pointwise, fixes $A$ and moves $y$ to some $gy\ne y$, so $S$ relates $A$ to $gy$ as
+    well, and $S$ is not functional at the identity arrow. The well-ordering of the individuals
+    that Cian Dorr had in mind is refuted by the same two facts, but the direct route needs no
+    derivation of a well-ordering from Relational Choice in C.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      The members' seven copies, which differed in the property $A$ and the transposition, stated
+      once; each member's $A$ and transposition moved to the condition transposable. The
+      qualitative-contrast model's second argument (OpenAI Codex, 24 September) was dropped.
+
+- id: axiom-of-infinity-e
+  when: {individuals: base}
+  holds: [axiom-of-infinity-e]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-09-20'
+  text: >-
+    There are infinitely many individuals, and identity at the identity arrow is literal, so no
+    numeral counts them. The set of numerals at type $e$ is fixed by every arrow, hence symmetric
+    and pinned down by the empty set, so finite cardinality is standard and no finite cardinality
+    holds of the universal property.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      The type-$e$ half of the members' argument, stated once; "the individuals are the natural
+      numbers" became "there are infinitely many individuals", which also covers the qualitative
+      links model. The type-$t$ half is axiom-of-infinity-t.
+
+- id: axiom-of-infinity-t
+  requires: [separable-collapses]
+  holds: [axiom-of-infinity-t]
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-02'
+  text: >-
+    The propositions $C_{n,m}:=\{h : hn=hm\}$, that an arrow collapses $n$ and $m$, are symmetric,
+    since relabelling the individuals of a world by a member of the symmetry group keeps identities
+    among them, and each is pinned down by $\{n,m\}$; by the condition infinitely many of them are
+    pairwise distinct, so there are infinitely many propositions. The set of numerals at type $t$
+    is fixed by every arrow, hence symmetric and pinned down by the empty set, so finite cardinality
+    is standard and no finite cardinality holds of the universal property.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      Replaces the members' argument of 20 September (Claude Fable 5.1), which used the
+      propositions $\{h : hn=n\}$ that an arrow fixes a given individual. Those are not symmetric
+      when the symmetry group moves $n$: symmetry asks that $h\in p$ imply $g\circ h\in p$, and
+      $(g\circ h)n=gn$.
+
+- id: barcan-surjective
+  requires: [surjective-arrows]
+  holds: [barcan-r]
+  source: {paper: dorr-bc-not-rc, locator: '§3.1, p. 9; Proposition 22, p. 11'}
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request
+  date: '2026-09-27'
+  text: >-
+    At every type. Let $B$ be an entity at the target of an arrow $i$, pinned down by the finite set
+    $M$, and choose a finite set $P$ with a map $s:M\to P$ such that $i\circ s$ is the identity on
+    $M$, possible because $i$ is surjective. Put $A:=\{\langle\bar x,j\rangle : \langle\bar
+    x,k\rangle\in B$ for some arrow $k$ with $k|_M=j\circ s\}$. This is well defined because $B$ is
+    pinned down by $M$. It is pinned down by $P$ and symmetric, since $B$ is. And $i\cdot A=B$:
+    $\langle\bar x,k\rangle\in i\cdot A$ iff $\langle\bar x,k\circ i\rangle\in A$ iff $\langle\bar
+    x,k'\rangle\in B$ for some $k'$ with $k'|_M=k|_M$, iff $\langle\bar x,k\rangle\in B$. So every
+    entity at every world is the transport of an entity at the evaluation point, and a relation
+    that is necessarily true of every entity is necessarily true of all of them.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      The qualitative links model's argument, which proves the draft's claim for the
+      all-surjections model ("at every type because every arrow is surjective and a finitely
+      pinned symmetric intension can be pulled back along an arrow"), stated once for every member
+      whose arrows are surjective.
+
+- id: actuality
+  requires: [symmetry-group-pinned]
+  holds: [actuality]
+  source: {paper: dorr-bc-not-rc, locator: 'Proposition 24, p. 13; §7.1, p. 21; §8, pp. 23–26'}
+  by: Cian Dorr
+  date: '2026-09-19'
+  text: >-
+    The symmetry group is the smallest symmetric set of arrows containing the identity, and by the
+    condition it is pinned down by a finite set, so it is a proposition in the domain, and an atom
+    entailing every truth.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: The three members' versions stated once; what pins the group down is each member's reason for meeting symmetry-group-pinned.
+
+- id: intensional-choice
+  when: {individuals: base}
+  requires: [collapse-onto-point]
+  fails: [intensional-choice-r]
+  by: Claude Opus 5.5 (Anthropic)
+  date: '2026-10-03'
+  text: >-
+    At type $e$. Let $F$ and $a$ be as the condition gives them, and suppose $G\le F$ is necessarily
+    uniquely instantiated. $G$ is in the domain, so it is symmetric and pinned down by a finite
+    set, which we may take to contain $a$; call it $N$. Let $h$ be the arrow the condition gives for
+    $N$. Then $G_h=\{y\}$ for some $y$ in $F_h$. If $\sigma$ in the symmetry group fixes $p$, then
+    $\sigma\circ h$ agrees with $h$ on $N$, so $G_{\sigma\circ h}=G_h$ by pinning, while symmetry
+    gives $G_{\sigma\circ h}=\{\sigma y\}$. So no symmetry fixing $p$ moves $y$, and by the condition
+    $y=p$. Each member's witness takes $F$ with $p$ outside its extension at $h$, a contradiction.
+    $\Box$Intensional Choice fails with it, by T.
+  revisions:
+  - date: '2026-10-03'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      Recorded from the collapse lemma deferred in extraction.md on 3 October until the model
+      records' new format landed (not yet checked by a human). It needs the individuals the
+      construction gives, so it applies at the base only. Not covered: the qualitative-links
+      model, whose arrows preserve a ternary relation and so cannot send everything to one point,
+      and the qualitative-contrast model, whose arrows are bijections and where Intensional Choice
+      appears to hold at type $e$. Positive verdicts are not yet established.
+
+- id: barcan-fixes-or-omits
+  when: {individuals: base}
+  requires: [fixes-or-omits]
+  fails: [barcan-r]
+  source: {paper: dorr-bc-not-rc, locator: '§7.1, p. 21; §7.2, p. 22'}
+  by: Cian Dorr
+  date: '2026-09-19'
+  text: >-
+    At type e. Take the property of being positive unless things are as they actually are, which is
+    pinned down by the distinguished individual and is symmetric. Every individual necessarily has
+    it, since an arrow either fixes the distinguished individual or omits it from its range and so
+    sends everything to something positive; but it is not necessary that everything has it, since
+    any arrow moving the distinguished individual leaves it out.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: The range-gap model's argument, which its variant without Actuality invoked ("by the argument of the previous variant, which goes through verbatim"), stated once.

@@ -5,51 +5,37 @@
 ## Package
 
 - **Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
-- **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
-- **BF.** The Barcan Formula at every type. The predicate formulation closes the formula schema using lambda abstraction.
 - **Atomlessness.** Atomlessness in the displayed closed propositional formulation.
-- **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
-- **No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
 - **Inextensible Comprehension.** Every relation, including a proposition, is coextensive with a inextensible one.
 - **Transversal.** There is a property of properties that picks out exactly one property from each coextension class, that is, exactly one property coextensive with any given property.
-- **□Boolean Completeness.** Necessarily, every property of entities of a relational type has a greatest lower bound in that type.
-- **□BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
-- **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
+- **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
+- **BF.** The Barcan Formula at every type. The predicate formulation closes the formula schema using lambda abstraction.
+- **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
+- **No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
 - **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
-- **□Transversal.** Necessarily, there is a property of properties that picks out exactly one property from each coextension class, that is, exactly one property coextensive with any given property.
 - **¬ Actuality.** There is a true proposition that entails every true proposition.
-- **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
 - **¬ Relational Choice.** Every serial binary relation has a functional subrelation.
-- **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
-- **¬ Rigid Comprehension.** Every relation, including a proposition, is coextensive with a rigid one.
-- **¬ ND.** Distinct things of any type are necessarily distinct.
+- **¬ Intensional Choice.** If a property is necessarily instantiated, then some property entailing it is necessarily uniquely instantiated.
 - **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
 - **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
+- **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
 - **¬ Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
 
 ## Definition
 
 A symmetric ideally-full intensional action model over one object, the set of natural numbers. Its arrows are all the surjections of that set, and its symmetry group is all the permutations. A relational domain holds exactly the intensions that are symmetric, meaning indifferent to relabelling the individuals of a world, and pinned down by some finite set. The evaluation point is the identity arrow.
 
-Interpretation of Σ, fixed for this record: each relational constant denotes the top element of its type and each individual constant denotes one fixed individual $d$.
+Individuals, fixed for this record: the individuals at each object are the base the construction describes, and the arrows act on them as on the base.
+
+Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each denotes the top element of its type.
+
+*A member of the group Symmetric ideally-full models, which supplies this definition with the record's settings, and the arguments marked as shared.*
 
 ## Arguments
 
 ### Holds Boolean Completeness.
 
 By the draft's main theorem, whose two hypotheses are verified here with the empty distinguished set: every finite set is amalgamable, since an arrow is prescribed only on a finite set and extends freely, and points can always be moved off a given finite set by a permutation. The least upper bound of a property of type-tau entities is the union of the hulls of its instances.
-
-*By Cian Dorr, 2026-09-19.*
-
-### Holds No Pure Contingency.
-
-The model has one object, so a closed sentence of pure logic denotes the same thing relative to every arrow and is true only if necessarily true. That gives No Pure Contingency directly, and it promotes every pure principle true here to its boxed form, which is how boxed Boolean Completeness and boxed BF are obtained.
-
-*By Cian Dorr, 2026-09-19.*
-
-### Holds BF.
-
-At every type because every arrow is surjective and a finitely pinned symmetric intension can be pulled back along an arrow.
 
 *By Cian Dorr, 2026-09-19.*
 
@@ -64,30 +50,6 @@ Given a true proposition pinned down by a finite set, the proposition that a fre
 The same construction, applied to an arbitrary nonzero proposition rather than a true one, splits every possible proposition, which is Atomlessness and hence the failure of Atomicity at type t.
 
 *By Cian Dorr, 2026-09-19.*
-
-### Holds Axiom of Infinity (type e).
-
-The individuals are the natural numbers and identity at the identity arrow is literal, so no numeral counts them. The propositions that a given individual is fixed by the arrow, one for each individual, are pairwise distinct, symmetric and pinned by that individual, so there are infinitely many propositions. The set of numerals at each type is invariant under every arrow, hence symmetric and pinned by the empty set, so finite cardinality is standard and no finite cardinality holds of the universal property at either type.
-
-*By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-09-20.*
-
-### Fails Independence (signature Σ).
-
-With $c\in\Sigma$ of relational type $\tau$, $c=\top_\tau$ necessarily, so Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$, Independence (signature Σ) fails since $c$ denotes what a closed pure term denotes, and Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is true and unprovable.
-
-*Address: `symmetric-all-surjections#sigma-top`. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
-
-### Holds No Contingency (signature Σ).
-
-The relational constants denote pure entities, so a closed Σ-sentence denotes what some $P(d,\ldots,d)$ denotes for a pure formula $P$; the model’s automorphisms carry every individual to every other, so $P(d,\ldots,d)$ is materially equivalent to the pure sentence $\forall x\, .\,P(x,\ldots,x)$ and its negation to $\forall x\, .\,\neg P(x,\ldots,x)$; whichever is true is necessary by No Pure Contingency, and instantiation under the box gives $\Box P(d,\ldots,d)$ or $\Box\neg P(d,\ldots,d)$.
-
-*By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-23.*
-
-### Fails Relational Choice.
-
-At the types $(e\to t)$ and $e$. Let $U:=\lambda Xy\, .\,Xy\lor\neg\exists z\, .\,Xz$, a closed term, hence in the domain, and serial. A functional subrelation $S$ of $U$ would lie in the domain at the evaluation object, so it is symmetric and pinned down by a finite set $N$. Two facts about such an $S$ (Dorr, draft, Lemma 21): every $g\in G$ fixing $N$ pointwise satisfies $g^{[\sigma]}S=S$, and symmetry gives $\langle gA,gy,g\rangle\in S$ whenever $\langle A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$. Now let $A$ be the property of not belonging to $N$. It is in the domain, being pinned down by that finite set and symmetric, and its extension is nonempty, so $S$ relates $A$ at the identity to some $y$ in its extension. The transposition of $y$ with another individual outside $N$ is a permutation, so lies in $G$, fixes $A$ and moves $y$ to some $gy\ne y$, so $S$ relates $A$ to $gy$ as well, and $S$ is not functional at the identity arrow. The well-ordering of the individuals that Cian Dorr had in mind is refuted by the same two facts, but the direct route needs no derivation of a well-ordering from Relational Choice in C.
-
-*Address: `symmetric-all-surjections#relational-choice`. By Claude Fable 5.1 (Anthropic), after Cian Dorr’s observation that a choice over the individuals cannot be finitely pinned down, 2026-09-23.*
 
 ### Holds Inextensible Comprehension.
 
@@ -105,45 +67,68 @@ At every type. Write $A_h$ for the extension of a property $A$ at the arrow $h$;
 
 *Address: `symmetric-all-surjections#transversal`. By Claude Opus 5.5 (Anthropic), checked by Cian Dorr, verifying GPT-6's proposed least-support witness of 30 September, 2026-10-01.*
 
-### Holds □Boolean Completeness, □BF. Fails Atomicity (type t), Rigid Comprehension, ND. In reserve.
+### Fails Relational Choice.
 
-*Source: Boolean Completeness does not imply Rigid Comprehension, §3.1, p. 9; Proposition 22, p. 11; Proposition 23, p. 12; Theorem 36, p. 18; Corollary 37 and Remark 38, p. 19. By Cian Dorr, 2026-09-19.*
+At the types $(e\to t)$ and $e$. Let $U:=\lambda Xy\, .\,Xy\lor\neg\exists z\, .\,Xz$, a closed term, hence in the domain, and serial. A functional subrelation $S$ of $U$ would lie in the domain at the evaluation object, so it is symmetric and pinned down by a finite set $N$. Two facts about such an $S$ (Dorr, draft, Lemma 21): every $g\in G$ fixing $N$ pointwise satisfies $g^{[\sigma]}S=S$, and symmetry gives $\langle gA,gy,g\rangle\in S$ whenever $\langle A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$. Now let $A$ be the property the condition gives for $N$. Its extension is nonempty, so $S$ relates $A$ at the identity to some $y$ in its extension. The condition gives a member $g$ of the symmetry group that fixes $N\cup M$ pointwise, fixes $A$ and moves $y$ to some $gy\ne y$, so $S$ relates $A$ to $gy$ as well, and $S$ is not functional at the identity arrow. The well-ordering of the individuals that Cian Dorr had in mind is refuted by the same two facts, but the direct route needs no derivation of a well-ordering from Relational Choice in C.
 
-### Holds Axiom of Infinity (type t). In reserve.
+*From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#relational-choice`. It requires that There is a finite set $M$ of individuals at the evaluation object such that, for each finite set $N$, some property $A$ in the domain, symmetric and pinned down by $N\cup M$, has a nonempty extension, and each individual $y$ in that extension is moved by a member of the symmetry group that fixes $N\cup M$ pointwise and fixes $A$. Here: $M=\emptyset$, and for $N$ the property of not belonging to $N$: the transposition of $y$ with another individual outside $N$ is a permutation, so lies in the symmetry group. By Claude Fable 5.1 (Anthropic), after Cian Dorr’s observation that a choice over the individuals cannot be finitely pinned down, 2026-09-23.*
 
-Added both Axioms of Infinity at Cian Dorr's direction. The individuals are the natural numbers and identity at the identity arrow is literal, so no numeral counts them. The propositions that a given individual is fixed by the arrow, one for each individual, are pairwise distinct, symmetric and pinned by that individual, so there are infinitely many propositions. The set of numerals at each type is invariant under every arrow, hence symmetric and pinned by the empty set, so finite cardinality is standard and no finite cardinality holds of the universal property at either type.
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The members' seven copies, which differed in the property $A$ and the transposition, stated once; each member's $A$ and transposition moved to the condition transposable. The qualitative-contrast model's second argument (OpenAI Codex, 24 September) was dropped.
 
-*By Claude Fable 5.1 (Anthropic), 2026-09-20.*
+### Holds Axiom of Infinity (type e).
 
-### Fails Witnessed Possibility, Separated Structure, Distinctness Maximalism (signature Σ). In reserve.
+There are infinitely many individuals, and identity at the identity arrow is literal, so no numeral counts them. The set of numerals at type $e$ is fixed by every arrow, hence symmetric and pinned down by the empty set, so finite cardinality is standard and no finite cardinality holds of the universal property.
 
-Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+*From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#axiom-of-infinity-e`. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-09-20.*
 
-*By Claude Fable 5.1 (Anthropic), 2026-09-22.*
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The type-$e$ half of the members' argument, stated once; "the individuals are the natural numbers" became "there are infinitely many individuals", which also covers the qualitative links model. The type-$t$ half is axiom-of-infinity-t.
 
-### Holds B for sentences of Σ. In reserve.
+### Holds BF.
 
-Re-fixed the interpretation of Σ so as to settle No Contingency (signature Σ) and B for sentences of Σ, at Cian Dorr’s request; see the notes.
+At every type. Let $B$ be an entity at the target of an arrow $i$, pinned down by the finite set $M$, and choose a finite set $P$ with a map $s:M\to P$ such that $i\circ s$ is the identity on $M$, possible because $i$ is surjective. Put $A:=\{\langle\bar x,j\rangle : \langle\bar x,k\rangle\in B$ for some arrow $k$ with $k|_M=j\circ s\}$. This is well defined because $B$ is pinned down by $M$. It is pinned down by $P$ and symmetric, since $B$ is. And $i\cdot A=B$: $\langle\bar x,k\rangle\in i\cdot A$ iff $\langle\bar x,k\circ i\rangle\in A$ iff $\langle\bar x,k'\rangle\in B$ for some $k'$ with $k'|_M=k|_M$, iff $\langle\bar x,k\rangle\in B$. So every entity at every world is the transport of an entity at the evaluation point, and a relation that is necessarily true of every entity is necessarily true of all of them.
 
-*By Claude Fable 5.1 (Anthropic), 2026-09-23.*
+*Source: Boolean Completeness does not imply Rigid Comprehension, §3.1, p. 9; Proposition 22, p. 11. From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#barcan-surjective`. It requires that Every arrow is surjective. Here: The arrows are all the surjections of $\mathbb N$. By Claude Opus 5.5 (Anthropic), at Cian Dorr's request, 2026-09-27.*
 
-### Holds □Transversal. In reserve.
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The qualitative links model's argument, which proves the draft's claim for the all-surjections model ("at every type because every arrow is surjective and a finitely pinned symmetric intension can be pulled back along an arrow"), stated once for every member whose arrows are surjective.
 
-Recorded Transversal and its necessitation at every type, verifying GPT-6's proposed least-support witness of 30 September; see the notes. The separate conjectured record symmetric-all-surjections-transversal is retired. Added the open question whether the classifier is denoted by a closed term.
+### Fails Intensional Choice.
 
-*By Claude Opus 5.5 (Anthropic), checked by Cian Dorr, 2026-10-01.*
+At type $e$. Let $F$ and $a$ be as the condition gives them, and suppose $G\le F$ is necessarily uniquely instantiated. $G$ is in the domain, so it is symmetric and pinned down by a finite set, which we may take to contain $a$; call it $N$. Let $h$ be the arrow the condition gives for $N$. Then $G_h=\{y\}$ for some $y$ in $F_h$. If $\sigma$ in the symmetry group fixes $p$, then $\sigma\circ h$ agrees with $h$ on $N$, so $G_{\sigma\circ h}=G_h$ by pinning, while symmetry gives $G_{\sigma\circ h}=\{\sigma y\}$. So no symmetry fixing $p$ moves $y$, and by the condition $y=p$. Each member's witness takes $F$ with $p$ outside its extension at $h$, a contradiction. $\Box$Intensional Choice fails with it, by T.
+
+*From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#intensional-choice`. It requires that There are an individual $a$ and a necessarily instantiated property $F$ in the domain such that, for every finite set $N$ of individuals at the evaluation object, some arrow $h$ sends $N\cup\{a\}$ to a single individual $p$, and every individual $y\ne p$ in $F$'s extension at $h$ is moved by a member $\sigma$ of the symmetry group that fixes $p$, with $\sigma\circ h$ again an arrow. Here: Take $F:=\lambda x\, .\,x\ne a$, so $p\notin F_h$. $h$ is any surjection constant on $N\cup\{a\}$, and a transposition of $y$ with a point outside $N\cup\{a,p\}$ fixes $p$ and moves $y$. By Claude Opus 5.5 (Anthropic), 2026-10-03.*
+
+*Revised 2026-10-03 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Recorded from the collapse lemma deferred in extraction.md on 3 October until the model records' new format landed (not yet checked by a human). It needs the individuals the construction gives, so it applies at the base only. Not covered: the qualitative-links model, whose arrows preserve a ternary relation and so cannot send everything to one point, and the qualitative-contrast model, whose arrows are bijections and where Intensional Choice appears to hold at type $e$. Positive verdicts are not yet established.
+
+### Holds No Pure Contingency.
+
+Closed pure terms denote entities fixed by every arrow (§3.5, p. 58). With a single object, a proposition fixed by every arrow contains every arrow if it contains the identity and no arrow otherwise, so a true closed pure sentence is necessary: the source's one-object No Pure Contingency observation (p. 79), applied to each closed instance.
+
+*Source: Classicism, §3.5, p. 58; p. 79. General argument `arguments/no-pure-contingency-one-object`. It requires that The model is an action model (Classicism, Appendix D), or an intensional action model in the sense of Dorr's draft (Boolean Completeness does not imply Rigid Comprehension), with a single object. Here: It has one object (Dorr, draft, §3.1: closed pure terms denote entities fixed by every arrow). By Andrew Bacon and Cian Dorr, 2026-09-17.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic, for every one-object action model; the reason the source's observation holds is spelled out in place of "Boxed positive flags use the source’s explicit one-object No Pure Contingency observation, applied separately to each closed instance."
+
+### Fails Witnessed Possibility, Separated Structure, Independence (signature Σ), Distinctness Maximalism (signature Σ).
+
+Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true identity that C(Σ) does not prove.
+
+*General argument `arguments/sigma-top`. It requires that Every constant of Σ is relational, and each denotes the top element of its type. Here: This is the interpretation. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic; it uses nothing about the model.
+
+### Holds No Contingency (signature Σ), B for sentences of Σ.
+
+Each constant of Σ denotes what the closed pure term $\top_\tau$ of its type denotes, so a closed sentence of the language of Σ denotes what the pure sentence with $\top_\tau$ in place of each constant denotes; if true it is necessary by No Pure Contingency, which holds here. So No Contingency (signature Σ) holds, and B for sentences of Σ with it: a true Σ-sentence is necessary, hence necessarily possible.
+
+*General argument `arguments/sigma-top-npc`. It requires that Every constant of Σ is relational, and each denotes the top element of its type. Here: This is the interpretation. By Cian Dorr (observation); recorded by Claude Opus 5.5 (Anthropic), 2026-10-02.*
+
+*Revised 2026-10-03 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The argument sigma-single-top, for Σ a single constant of type $t$ denoting $\top$, stated for every interpretation of Σ by top elements, now that such interpretations have no individual constants. It replaces that argument and nc-sigma-homogeneous, which reached the same verdicts through an individual constant when the model's automorphisms carry every individual to every other. With an individual constant and no such automorphisms the verdicts were unknown in 19 models, and nowhere did the individual constants settle a verdict differently.
 
 
 ## Notes
 
 This is the draft's headline separation. Boolean Completeness holds while Rigid Comprehension fails, and since Actuality fails too, Weak Rigid Comprehension fails here as well, which is recorded as a derived verdict. The source is a work in progress.
+
 Open question: is there a closed term of the language, at each type, that denotes this classifier $F$? Pairwise distinctness over a variable number of individuals is expressible with a plural variable $Y^{e\to t}$, as $\forall y\,y'\,((Yy\land Yy'\land y\ne y')\to\Box(\exists z\, .\,Xz\to y\ne y'))$. What is not obvious is how to say in the object language that $X$ is minimally pinned down by the $Y$s.
-Rigid Comprehension fails already at type e, and concretely rather than only through Actuality: a persistent property with a cofinite extension must be closed under everything an arrow can send an instance to, and no finite pinning set can sustain that short of the top property, so nothing rigid is coextensive with being distinct from a fixed individual.
-Atomlessness is the Proposition 22 argument read for an arbitrary nonzero proposition rather than for a true one, and the failure of ND at type e follows from the presence of a non-injective surjection, since the proposition that two fixed individuals are identical is then a nonzero proposition; neither is displayed separately in the draft.
-Transversal holds at every type, and so does its necessitation. The witness was proposed by GPT-6 on 30 September 2026 and checked on 1 October 2026.
-Under it the signature schemata that give the constants a special role fail: with $c\in\Sigma$ of relational type $\tau$, $c=\top_\tau$ necessarily, so Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$, Independence (signature Σ) fails since $c$ denotes what a closed pure term denotes, and Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is true and unprovable. But No Contingency (signature Σ), and with it B for sentences of Σ, hold. Argument of 23 September 2026, after Cian Dorr’s observation that a choice over the individuals cannot be finitely pinned down; the well-ordering of the individuals that he had in mind is refuted by the same two facts, but the direct route needs no derivation of a well-ordering from Relational Choice in C.
-Argument of Claude Opus 5.5 (Anthropic), 27 September 2026, checked by Cian Dorr the same day; it extends the earlier observations at types $t$ and $e\to t$ and the case $X=\lambda p\, .\,p$ at type $t\to t$, which are instances.
-Transversal and its boxed form are conjectured to hold here, in the separate bronze-tier record symmetric-all-surjections-transversal (30 September 2026). Its write-up proposes canonical representatives using least permutation supports of extensions. This proposal has not been promoted to a verified property of this model.
 
 ## History
 

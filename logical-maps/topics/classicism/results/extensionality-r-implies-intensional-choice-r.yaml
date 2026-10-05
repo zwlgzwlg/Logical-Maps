@@ -1,0 +1,27 @@
+id: extensionality-r-implies-intensional-choice-r
+premises:
+- extensionality-r
+conclusion: intensional-choice-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 3 October 2026, from a suggestion of Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 3 October 2026
+  checked_by: []
+  date: '2026-10-03'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 3 October 2026.
+source_names:
+- Dorr 3 Oct
+proof: >-
+  Extensionality at type $t$ identifies every truth with $\top$, so $p\to\Box p$ for every
+  proposition $p$. Let $F$ be necessarily instantiated. By T it is instantiated, say by $a$, and then
+  $\Box Fa$. Put $G:=\lambda x\, .\,x=a$. Then $\Box\forall x\, .\,Gx\to Fx$, that is $G\le F$, and
+  $\exists x\, .\,(Gx\land\forall y\, .\,Gy\to y=x)$ is a theorem, hence necessary.
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.1, pp. 21–23
+  note: Extensionality and its modal collapse.
+notes: The witness is the haecceity of any instance.

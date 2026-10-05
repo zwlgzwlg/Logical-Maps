@@ -154,7 +154,7 @@ def main(argv=None) -> int:
         if not same and key == "conjectures":
             # A resolved conjecture lists its supporting results in the order of the record's own
             # satisfies and violates. Those are sets, which the arguments need not list in the old order.
-            unordered = lambda d: {k: {**v, "via": sorted(v["via"])} for k, v in d.items()}
+            unordered = lambda d: {k: {**v, "via": sorted(v.get("via") or [])} if isinstance(v, dict) else v for k, v in d.items()}
             if unordered(was[key]) == unordered(now[key]):
                 same, reordered = True, [k for k in was[key] if was[key][k] != now[key][k]]
         print(f"  {key}: {'unchanged' if same else 'CHANGED'}"

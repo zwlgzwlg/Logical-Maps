@@ -41,10 +41,14 @@ papers:
     title: Paper title
     citation: Full bibliographic citation
     url: https://example.org/paper
+    file: sources/paper.pdf
 ```
 
 Replace these placeholders with verified references. `url` is optional and
-must use HTTP(S); `note` can describe a version or availability. Use `papers: []`
+must use HTTP(S); `file` is optional and names a copy in the topic's `sources/`
+folder, which is published with the site, so use it only for documents authorised
+for redistribution. Wherever the paper is cited, the viewer and write-ups link
+both; `note` can describe a version or availability. Use `papers: []`
 for an empty catalogue. Missing catalogues are also supported.
 
 Principles, results, and models can link to entries:

@@ -13,19 +13,24 @@
 - **¬ □BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
 - **¬ No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
 - **¬ ND.** Distinct things of any type are necessarily distinct.
-- **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
-- **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
-- **¬ Relational Choice.** Every serial binary relation has a functional subrelation.
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
 - **¬ B for pure sentences.** The B instance for every closed sentence in the pure language.
+- **¬ Relational Choice.** Every serial binary relation has a functional subrelation.
+- **¬ Intensional Choice.** If a property is necessarily instantiated, then some property entailing it is necessarily uniquely instantiated.
+- **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
 - **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
+- **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
 - **¬ Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
 
 ## Definition
 
 A symmetric ideally-full intensional action model over two objects, each a copy of the natural numbers. The arrows from the first object to itself are the permutations; the arrows from the first to the second and from the second to itself are all the functions; there are none back. Both symmetry groups are all the permutations. The first object carries the ideal of finite sets, the second the improper ideal, so at the second object every symmetric intension belongs to the domain. The evaluation point is the identity arrow on the first object.
 
-Interpretation of Σ, fixed for this record: each relational constant denotes the top element of its type and each individual constant denotes one fixed individual.
+Individuals, fixed for this record: the individuals at each object are the base the construction describes, and the arrows act on them as on the base.
+
+Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each denotes the top element of its type.
+
+*A member of the group Symmetric ideally-full models, which supplies this definition with the record's settings, and the arguments marked as shared.*
 
 ## Arguments
 
@@ -59,30 +64,6 @@ At type e because some arrow to the second object collapses two individuals.
 
 *By Cian Dorr, 2026-09-19.*
 
-### Holds Axiom of Infinity (type e), Axiom of Infinity (type t).
-
-The individuals are the natural numbers and identity at the identity arrow is literal, so no numeral counts them. The propositions that a given individual is fixed by the arrow, one for each individual, are pairwise distinct, symmetric and pinned by that individual, so there are infinitely many propositions. The set of numerals at each type is invariant under every arrow, hence symmetric and pinned by the empty set, so finite cardinality is standard and no finite cardinality holds of the universal property at either type.
-
-*By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-09-20.*
-
-### Fails Witnessed Possibility, Independence (signature Σ).
-
-Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true identity that C(Σ) does not prove. Everything that implies these fails with them.
-
-*Address: `symmetric-two-object-unpinned#sigma-top`. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
-
-### Holds Distinctness-preserving collapse.
-
-Let $a$ be the set of arrows from the first object to itself, all permutations, a symmetric proposition true at the identity and, as the record’s Actuality witness, entailed by no other truth. For a true $p$, $a\le p$. Take $q:=a$: under a permutation $i$, $p$ holds since $i\in a\subseteq p$; under a non-permutation $i$, $\Diamond a$ would need $k\circ i$ to be a permutation, and no arrow from the second object returns to the first. So every truth is $\Box_{\ne}$-necessary.
-
-*By Claude Fable 5.1 (Anthropic), 2026-09-23.*
-
-### Fails Relational Choice.
-
-At the types $(e\to t)$ and $e$. Let $U:=\lambda Xy\, .\,Xy\lor\neg\exists z\, .\,Xz$, a closed term, hence in the domain, and serial. A functional subrelation $S$ of $U$ would lie in the domain at the evaluation object, so it is symmetric and pinned down by a finite set $N$. Two facts about such an $S$ (Dorr, draft, Lemma 21): every $g\in G$ fixing $N$ pointwise satisfies $g^{[\sigma]}S=S$, and symmetry gives $\langle gA,gy,g\rangle\in S$ whenever $\langle A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$. Now let $A$ be the property of not belonging to $N$, evaluated at the first object, where the domain is symmetric and finitely pinned. It is in the domain, being pinned down by that finite set and symmetric, and its extension is nonempty, so $S$ relates $A$ at the identity to some $y$ in its extension. The transposition of $y$ with another individual of the first object outside $N$ lies in $G_{W_0}$, fixes $A$ and moves $y$ to some $gy\ne y$, so $S$ relates $A$ to $gy$ as well, and $S$ is not functional at the identity arrow. The well-ordering of the individuals that Cian Dorr had in mind is refuted by the same two facts, but the direct route needs no derivation of a well-ordering from Relational Choice in C.
-
-*By Claude Fable 5.1 (Anthropic), after Cian Dorr’s observation that a choice over the individuals cannot be finitely pinned down, 2026-09-23.*
-
 ### Fails Atomicity (type t).
 
 The symmetry group of $W_0$ is an atom, but no atom lies inside the nonempty proposition of the arrows into $W_1$, which is pinned down by the empty set since targets are: a nonempty symmetric $p$ of such arrows pinned down by $N$ and containing $h$ contains every arrow into $W_1$ whose restriction to $N$ has the same fibres as $h$’s, the symmetry group of $W_1$ being all permutations, and those agreeing in that sense on $N\cup\{m\}$ form a smaller nonempty symmetric proposition.
@@ -95,17 +76,58 @@ The type-$e$ instance of BF is a closed pure sentence true at the base world and
 
 *By Claude Fable 5.1 (Anthropic), 2026-09-25.*
 
-### Fails Separated Structure, Distinctness Maximalism (signature Σ). In reserve.
+### Fails Relational Choice.
 
-Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+At the types $(e\to t)$ and $e$. Let $U:=\lambda Xy\, .\,Xy\lor\neg\exists z\, .\,Xz$, a closed term, hence in the domain, and serial. A functional subrelation $S$ of $U$ would lie in the domain at the evaluation object, so it is symmetric and pinned down by a finite set $N$. Two facts about such an $S$ (Dorr, draft, Lemma 21): every $g\in G$ fixing $N$ pointwise satisfies $g^{[\sigma]}S=S$, and symmetry gives $\langle gA,gy,g\rangle\in S$ whenever $\langle A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$. Now let $A$ be the property the condition gives for $N$. Its extension is nonempty, so $S$ relates $A$ at the identity to some $y$ in its extension. The condition gives a member $g$ of the symmetry group that fixes $N\cup M$ pointwise, fixes $A$ and moves $y$ to some $gy\ne y$, so $S$ relates $A$ to $gy$ as well, and $S$ is not functional at the identity arrow. The well-ordering of the individuals that Cian Dorr had in mind is refuted by the same two facts, but the direct route needs no derivation of a well-ordering from Relational Choice in C.
 
-*By Claude Fable 5.1 (Anthropic), 2026-09-22.*
+*From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#relational-choice`. It requires that There is a finite set $M$ of individuals at the evaluation object such that, for each finite set $N$, some property $A$ in the domain, symmetric and pinned down by $N\cup M$, has a nonempty extension, and each individual $y$ in that extension is moved by a member of the symmetry group that fixes $N\cup M$ pointwise and fixes $A$. Here: $M=\emptyset$, and for $N$ the property of not belonging to $N$, at the first object, where the domain is symmetric and finitely pinned: the transposition of $y$ with another individual of the first object outside $N$ lies in its symmetry group. By Claude Fable 5.1 (Anthropic), after Cian Dorr’s observation that a choice over the individuals cannot be finitely pinned down, 2026-09-23.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The members' seven copies, which differed in the property $A$ and the transposition, stated once; each member's $A$ and transposition moved to the condition transposable. The qualitative-contrast model's second argument (OpenAI Codex, 24 September) was dropped.
+
+### Holds Axiom of Infinity (type e).
+
+There are infinitely many individuals, and identity at the identity arrow is literal, so no numeral counts them. The set of numerals at type $e$ is fixed by every arrow, hence symmetric and pinned down by the empty set, so finite cardinality is standard and no finite cardinality holds of the universal property.
+
+*From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#axiom-of-infinity-e`. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-09-20.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The type-$e$ half of the members' argument, stated once; "the individuals are the natural numbers" became "there are infinitely many individuals", which also covers the qualitative links model. The type-$t$ half is axiom-of-infinity-t.
+
+### Holds Axiom of Infinity (type t).
+
+The propositions $C_{n,m}:=\{h : hn=hm\}$, that an arrow collapses $n$ and $m$, are symmetric, since relabelling the individuals of a world by a member of the symmetry group keeps identities among them, and each is pinned down by $\{n,m\}$; by the condition infinitely many of them are pairwise distinct, so there are infinitely many propositions. The set of numerals at type $t$ is fixed by every arrow, hence symmetric and pinned down by the empty set, so finite cardinality is standard and no finite cardinality holds of the universal property.
+
+*From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#axiom-of-infinity-t`. It requires that There are infinitely many pairs of individuals such that, for any two of these pairs, some arrow collapses the one and not the other. Here: The pairs $\{n,m\}$ of individuals of the first object: a function into the second object that collapses $n$ with $m$ and nothing else is an arrow, all functions being arrows there. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-02.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Replaces the members' argument of 20 September (Claude Fable 5.1), which used the propositions $\{h : hn=n\}$ that an arrow fixes a given individual. Those are not symmetric when the symmetry group moves $n$: symmetry asks that $h\in p$ imply $g\circ h\in p$, and $(g\circ h)n=gn$.
+
+### Fails Intensional Choice.
+
+At type $e$. Let $F$ and $a$ be as the condition gives them, and suppose $G\le F$ is necessarily uniquely instantiated. $G$ is in the domain, so it is symmetric and pinned down by a finite set, which we may take to contain $a$; call it $N$. Let $h$ be the arrow the condition gives for $N$. Then $G_h=\{y\}$ for some $y$ in $F_h$. If $\sigma$ in the symmetry group fixes $p$, then $\sigma\circ h$ agrees with $h$ on $N$, so $G_{\sigma\circ h}=G_h$ by pinning, while symmetry gives $G_{\sigma\circ h}=\{\sigma y\}$. So no symmetry fixing $p$ moves $y$, and by the condition $y=p$. Each member's witness takes $F$ with $p$ outside its extension at $h$, a contradiction. $\Box$Intensional Choice fails with it, by T.
+
+*From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#intensional-choice`. It requires that There are an individual $a$ and a necessarily instantiated property $F$ in the domain such that, for every finite set $N$ of individuals at the evaluation object, some arrow $h$ sends $N\cup\{a\}$ to a single individual $p$, and every individual $y\ne p$ in $F$'s extension at $h$ is moved by a member $\sigma$ of the symmetry group that fixes $p$, with $\sigma\circ h$ again an arrow. Here: Take $F:=\lambda x\, .\,x\ne a$, so $p\notin F_h$. $h$ is a function from the first object to the second that is constant on $N\cup\{a\}$; the symmetry group of the second object is all permutations. By Claude Opus 5.5 (Anthropic), 2026-10-03.*
+
+*Revised 2026-10-03 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Recorded from the collapse lemma deferred in extraction.md on 3 October until the model records' new format landed (not yet checked by a human). It needs the individuals the construction gives, so it applies at the base only. Not covered: the qualitative-links model, whose arrows preserve a ternary relation and so cannot send everything to one point, and the qualitative-contrast model, whose arrows are bijections and where Intensional Choice appears to hold at type $e$. Positive verdicts are not yet established.
+
+### Holds Distinctness-preserving collapse.
+
+For a true $p$, $a\le p$, since $a$ entails every truth. Take $q:=a$ in the definition of $\Box_{\ne}p$: at a world in $a$, $p$ holds; at a world outside $a$, $\Diamond a$ fails. So every truth is $\Box_{\ne}$-necessary.
+
+*General argument `arguments/dpc-isolated-actual-world`. It requires that The actual-world proposition $a$ is in the domain and entails every truth, and no world outside $a$ sees a world in $a$. Here: The actual-world proposition is the set of arrows from the first object to itself, all permutations, in the domain by the source argument for Actuality; no arrow from the second object returns to the first. By Claude Fable 5.1 (Anthropic), 2026-09-23.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The finite-support, symmetric and full action models' copies (eight records) stated once for the topic; what varied, why no world outside the actual world sees back into it, is each record's reason for meeting actual-world-isolated.
+
+### Fails Witnessed Possibility, Separated Structure, Independence (signature Σ), Distinctness Maximalism (signature Σ).
+
+Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true identity that C(Σ) does not prove.
+
+*General argument `arguments/sigma-top`. It requires that Every constant of Σ is relational, and each denotes the top element of its type. Here: This is the interpretation. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic; it uses nothing about the model.
 
 
 ## Notes
 
-The point of the model is that boxed Boolean Completeness and boxed Actuality, and so Weak Rigid Comprehension, do not yield Rigid Comprehension. The gap is exactly the leading box of the inextensibility conjunct. The status of the unboxed BF schema at the base world is left unknown here: the draft's working comments report that higher-type instances fail there, which would make the schema fail, but its text does not. The source is a work in progress.
-Argument of 23 September 2026, after Cian Dorr’s observation that a choice over the individuals cannot be finitely pinned down; the well-ordering of the individuals that he had in mind is refuted by the same two facts, but the direct route needs no derivation of a well-ordering from Relational Choice in C. Atomicity fails at $W_0$ already at type $t$, although Actuality holds. B for pure sentences fails, and B for sentences of $\Sigma$ with it: the type-$e$ instance of BF is a closed pure sentence true at the base world and false at the second object, and no arrow leads back from the second object, so at that world the sentence is not even possible. Observation of Claude Fable 5.1 (Anthropic), 25 September 2026.
+The point of the model is that boxed Boolean Completeness and boxed Actuality, and so Weak Rigid Comprehension, do not yield Rigid Comprehension. The gap is exactly the leading box of the inextensibility conjunct. The status of the unboxed BF schema at the base world is left unknown here: the draft's working comments report that higher-type instances fail there, which would make the schema fail, but its text does not. The source is a work in progress. Everything that implies these fails with them.
 
 ## History
 

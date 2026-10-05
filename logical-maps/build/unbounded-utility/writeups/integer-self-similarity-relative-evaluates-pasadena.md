@@ -33,4 +33,4 @@ Premise audit of relative-self-similarity-evaluates-pasadena, which stays record
 
 ## Paper references
 
-- **Background: [Symmetries of value](https://doi.org/10.1111/nous.12549).** Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — Theorem 11, pp. 32–33
+- **Background: [Symmetries of value](https://doi.org/10.1111/nous.12549).** ([PDF](../sources/Goodsell%20-%202026%20-%20Symmetries%20of%20value.pdf)) Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — Theorem 11, pp. 32–33

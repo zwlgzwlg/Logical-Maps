@@ -9,7 +9,7 @@ const pages = [], errors = [], EPS = 1e-7;
 function page(data, url = 'http://localhost/?assume=') {
   const console = new VirtualConsole();
   console.on('jsdomError', error => errors.push(error));
-  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {
+  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', ()=>JSON.stringify(data)), {
     url, runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: console,
   });
   pages.push(dom);

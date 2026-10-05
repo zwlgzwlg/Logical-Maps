@@ -1,0 +1,30 @@
+# □Actuality ∧ □BF ⇒ □Inextensible Comprehension
+
+<p class='cert'>Result — Source: Misc.; produced by Claude Opus 5.5 (Anthropic), 2 October 2026, from a suggestion of Cian Dorr; recorded by Claude Opus 5.5 (Anthropic), 2 October 2026.</p>
+
+## Premises
+
+- **□Actuality.** Necessarily, there is a true proposition that entails every true proposition.
+- **□BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
+
+## Conclusion
+
+- **□Inextensible Comprehension.** Every closed instance of Inextensible Comprehension is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+
+## Proof
+
+The proof of actuality-and-bf-imply-inextensible-comprehension uses its premises only at finitely many closed instances and nothing beyond C. So for each closed instance of the conclusion, C proves the conditional from the corresponding premise instances to it. Necessitate that theorem and apply K with the boxed premise instances. Generalization over the admitted types is metalinguistic; no type quantifier is placed inside the box.
+
+## Notes
+
+Boxed counterpart of actuality-and-bf-imply-inextensible-comprehension.
+
+## Sources
+
+- **Dorr 2 Oct** — Cian Dorr, suggestion of 2 October 2026.
+
+<p class='cert'>Record: <code>topics/classicism/results/necessary-actuality-and-necessary-bf-imply-necessary-inextensible-comprehension.yaml</code></p>
+
+## Paper references
+
+- **Background: Classicism.** Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds), Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated 16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition and footnote locators in this map refer to that draft's numbering. — §1.5, pp. 16–17. Necessitation of theorems, K and 4.

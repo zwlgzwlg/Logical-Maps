@@ -13,3 +13,12 @@ references:
   role: formulation
   locator: §3.5, n. 81, p. 59
 notes: ''
+variants:
+- id: dual
+  name: Dual form
+  statement: Each closed pure sentence that is possibly necessary is true.
+  formal: $\Diamond\Box P\to P\quad(P\text{ a closed pure sentence})$
+  equivalence: Pure sentences (resp. sentences of $\mathcal L(\Sigma)$) are closed under negation, so
+    the instance of either form at $\neg P$ is, after contraposition and $\Diamond=\neg\Box\neg$, the
+    instance of the other at $P$.
+lean_def: (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.signatureB)

@@ -23,3 +23,12 @@ references:
     Possibility independently of contingent distinctness.
 notes: Sits between B and B for pure sentences. Incompatible with Witnessed Possibility, unlike its pure
   counterpart, which Witnessed Possibility tolerates.
+variants:
+- id: dual
+  name: Dual form
+  statement: Each closed sentence of the signature that is possibly necessary is true.
+  formal: $\Diamond\Box P\to P\quad(P\text{ a closed sentence of }\mathcal L(\Sigma))$
+  equivalence: Pure sentences (resp. sentences of $\mathcal L(\Sigma)$) are closed under negation, so
+    the instance of either form at $\neg P$ is, after contraposition and $\Diamond=\neg\Box\neg$, the
+    instance of the other at $P$.
+lean_def: (Classicism.Meta.AxiomSet.signatureB _)

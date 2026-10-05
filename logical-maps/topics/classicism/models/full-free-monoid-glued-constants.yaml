@@ -40,24 +40,40 @@ references:
 
 # migration: the definition is the old description without its last sentence, which is the first
 # argument.
-definition: >-
-  Let M be the free monoid of finite sequences of natural numbers under concatenation; its induced
-  Kripke frame is the infinitely branching tree with the initial-segment relation and the empty
-  sequence as root. Take the standard model over this frame (propositions all sets of accessible
-  worlds, function types all homomorphisms) whose individuals at a world are the functions from
-  the infinite branches through that world to the natural numbers, with restriction as
-  counterpart; equivalently, the full action model over M with this surjective M-set at type e.
-  This higher-order frame is isomorphic to the coalesced sum of countably many copies of itself,
-  so coalesced sums of Σ-models over it are again Σ-models over it. Enumerate the Σ-sentences
-  satisfiable in some Σ-model over the frame, choose a model of each, and glue them by the book’s
-  Definition 18.15. Evaluation point: the root.
+# migration (3 October): moved from full-action-models to its own group, whose definition gives
+# the interpretation of Σ that was this record's `sigma` setting.
+group: glued-free-monoid
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values. The
+# construction interprets Σ by gluing, so the record meets no sigma-apart and has no variants.
+settings:
+  construction: >-
+    Let M be the free monoid of finite sequences of natural numbers under concatenation; its induced
+    Kripke frame is the infinitely branching tree with the initial-segment relation and the empty
+    sequence as root. Take the standard model over this frame (propositions all sets of accessible
+    worlds, function types all homomorphisms) whose individuals at a world are the functions from
+    the infinite branches through that world to the natural numbers, with restriction as
+    counterpart; equivalently, the full action model over M with this surjective M-set at type e.
+    This higher-order frame is isomorphic to the coalesced sum of countably many copies of itself,
+    so coalesced sums of Σ-models over it are again Σ-models over it. Enumerate the Σ-sentences
+    satisfiable in some Σ-model over the frame, choose a model of each, and glue them by the book’s
+    Definition 18.15. Evaluation point: the root.
+meets:
+  one-object-action-model: >-
+    It has one object.
+  actual-world-isolated: >-
+    The actual-world proposition, true at the root alone, is in the domain, the model being full;
+    under a non-identity arrow $i$ no arrow $k$ has $k\circ i$ the identity, since no arrow leads
+    back to the root.
+  irreversible-arrow: Any non-identity arrow, since no arrow leads back to the root.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another full action model is now one of the topic's general
+# arguments (arguments/), reached through the group full-action-models and this record's `meets`;
+# what follows is this record's own. Only the verdicts the engine needs to derive the rest are
+# recorded, the source's first.
 
 # --- as first recorded (22 Sep) ---
 
@@ -66,63 +82,20 @@ arguments:
   text: >-
     The write-up carries the full verification.
 
-- holds: [relational-choice-r]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Every truncation is a standard model over a frame isomorphic to the original, and Relational
-    Choice holds in every full model given choice in the metatheory.
-
 # --- later additions ---
-
-- holds: [distinctness-preserving-collapse]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Let $a$ be the proposition true at the actual world alone (the identity arrow). For any true
-    $p$, take $q:=a$ in the definition of $\Box_{\ne}p$: under a non-identity arrow $i$, $\Diamond
-    a$ would need an arrow $k$ with $k\circ i$ the identity, and none exists, since no arrow leads
-    back to the actual world; under the identity, $p$ holds. So every truth is
-    $\Box_{\ne}$-necessary, although ND fails.
-
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [no-pure-contingency-r, necessary-barcan-r, necessary-actuality, necessary-atomicity-r, necessary-rigid-comprehension-r, strong-leibniz-r, necessary-strong-leibniz-r, necessary-relational-choice-r]
-  fails: [distinctness-necessary-r, distinctness-necessary-t, modal-b, possibility-schema-r]
-  reserve: true
-  source: {paper: bacon-2020, locator: "Appendix A.2–A.3, pp. 580–587; n. 15, p. 547; n. 48, p. 566"}
-
-- holds: [transversal-choice-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-25'
-  text: >-
-    Added Transversal Choice, by the argument recorded for Relational Choice: a full model
-    contains every intension, in particular one whose extension at the evaluation point is a
-    transversal, chosen in the metatheory, of the extension there of an equivalence relation;
-    the equivalence and transversal conditions are unboxed. Recorded on a question of Zachary
-    Goodsell, after an observation of Christopher Sun.
 
 # migration: text of the old notes that no argument holds, verbatim. Their sentences on ND and B at
 # type t and on Possibility Maximalism (pure), now derived, are dropped.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
 notes: >-
   Promoted from conjectured on 22 September 2026. The gap in the source was its Theorem A.8,
   stated without proof, and the deferred type-e case; the write-up closes both by choosing a
-  self-similar individual domain and applying the book’s coalesced sums. The signature is
-  assumed countable; for a larger signature use a tree with as many branches. Distinct constants
-  of one type denote distinct entities at the root, since every domain, including the
-  individuals, has more than one element; they are also possibly identical. Everything else
-  follows from the listed principles by the map’s results. Bacon’s interpretation of his
-  predicates Pure and Fun in this model, and the principles stated with them, are not recorded,
-  following Zachary Goodsell’s decision to keep the map to the logical vocabulary and the
-  constants of Σ.
-
-  ND and B fail at type t already. Possibility Maximalism (pure) fails because Actuality is
-  necessary while its negation is consistent with C.
+  self-similar individual domain and applying the book’s coalesced sums. The signature is assumed
+  countable; for a larger signature use a tree with as many branches. Distinct constants of one
+  type denote distinct entities at the root, since every domain, including the individuals, has
+  more than one element; they are also possibly identical. Everything else follows from the listed
+  principles by the map’s results. Bacon’s interpretation of his predicates Pure and Fun in this
+  model, and the principles stated with them, are not recorded, following Zachary Goodsell’s
+  decision to keep the map to the logical vocabulary and the constants of Σ.
 
 was_conjectured: true
 

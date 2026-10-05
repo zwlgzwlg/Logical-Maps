@@ -9,7 +9,8 @@ certificate:
   recorded_by: OpenAI Codex (GPT-6), curation and informal mathematical review, 25 September 2026
   checked_by: []
   date: '2026-09-25'
-  lean: none
+  lean: verified
+  lean_ref: Classicism.Map.necessary_strong_leibniz_r_implies_strong_leibniz_r
   trawl:
     quarantine_id: quarantine-0113be29928e4d2fbf33c5d150b87c73
     candidate_id: checkpoint-0cd1f2d674504d27a1758698cd564383

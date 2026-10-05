@@ -9,7 +9,7 @@ const {JSDOM,VirtualConsole}=require('jsdom');
 const root=path.resolve(__dirname,'..');
 const template=fs.readFileSync(path.join(root,'viewer/template.html'),'utf8');
 const pages=[],errors=[];
-function page(data,url='https://maps.example/'){const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data)),{url,runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});pages.push(dom);dom.window.eval('state.excluded.clear(); repaintGraph();');return dom;}
+function page(data,url='https://maps.example/'){const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data)),{url,runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});pages.push(dom);dom.window.eval('state.excluded.clear(); repaintGraph();');return dom;}
 const cert=source_id=>({source_id,lean:'none',produced_by:'Fixture',checked_by:[]});
 const rule=(id,premises,conclusion,status='proved',source='paper')=>({id,premises,conclusion,status,certificate:cert(source),sources:['Fixture'],source_names:['Fixture']});
 const model=(id,satisfies,violates,source='submission',status='proved')=>({id,name:'Model '+id.toUpperCase(),status,satisfies,violates,certificate:cert(source),sources:['Fixture'],source_names:['Fixture']});
@@ -94,6 +94,11 @@ try{
   assert.deepEqual(JSON.parse(w.eval('JSON.stringify(state.focus)')),['a','d']);
   assert.match(pop().textContent,/A ∧ D[\s\S]*Joint consistency[\s\S]*consistent/);
   assert.ok(pop().querySelector('button[data-model="m2"]'),'The joint witness is linked');
+  pop().querySelector('button[data-model="m2"]').click();
+  assert.equal(w.eval('state.page && state.page.type+":"+state.page.id'),'model:m2','To its page, with no pop-up in between');
+  assert.equal(pop().hidden,true);
+  d.querySelector('#page-back').click();
+  w.handleGraphClick(node('a').querySelector('rect'));w.handleGraphClick(node('d').querySelector('rect'),true);
   assert.ok(node('a').classList.contains('selected')&&node('d').classList.contains('selected'));
   assert.deepEqual(rel('b'),['rel-entailed'],'The whole conjunction implies B');
   // A regular click replaces the selection; sidebar modifiers add to it.

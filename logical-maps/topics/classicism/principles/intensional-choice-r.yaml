@@ -1,0 +1,37 @@
+id: intensional-choice-r
+name: Intensional Choice
+category: choice
+statement: If a property is necessarily instantiated, then some property entailing it is necessarily
+  uniquely instantiated.
+formal: $\forall F^{\sigma t}\, .\,\Box(\exists x^\sigma\, .\,Fx)\to\exists G^{\sigma t}\, .\,G\le F\land\Box\exists
+  x^\sigma\, .\,(Gx\land\forall y^\sigma\, .\,Gy\to y=x)$
+date: '2026-10-03'
+sources:
+- Andrew Bacon, Could the truths of mathematics have been different?, draft of 9 October 2025, §6, p. 27.
+source_names:
+- Could mathematics have been different?
+references:
+- paper: bacon-mathematical-contingency
+  role: formulation
+  locator: §6, p. 27
+  note: Introduced as a modal version of choice, used with □Rigid Comprehension and Mathematical Possibilism
+    for the contingency of CH (Theorem 6.1).
+notes: >-
+  The source motivates it as a modalized generalization of interworld choice, which selects at each world
+  one instance of a property instantiated at every world; the modal formulation needs no world propositions.
+  The type $\sigma$ may be $e$. The selected property is unboxed: it exists at the evaluation point, but
+  its unique instance may vary from world to world.
+variants:
+- id: polyadic
+  name: Polyadic form
+  statement: If a relation is necessarily instantiated, then some relation entailing it is necessarily
+    uniquely instantiated.
+  formal: $\forall F^{\bar\sigma t}\, .\,\Box(\exists\bar x^{\bar\sigma}\, .\,F[\bar x])\to\exists G^{\bar\sigma
+    t}\, .\,G\le F\land\Box\exists\bar x^{\bar\sigma}\, .\,(G[\bar x]\land\forall\bar y^{\bar\sigma}\,
+    .\,G[\bar y]\to\bar y=\bar x)$
+  equivalence: The original form is the case of a one-element tuple. Code tuples by their haecceities
+    (Background, Polyadic forms). Given $F$, the property $F':=\lambda A\, .\,\exists\bar x\, .\,A=H_{\bar
+    x}\land F[\bar x]$ of type $(\bar\sigma t)t$ is necessarily instantiated. The original form at $\bar\sigma
+    t$ gives $G'\le F'$ necessarily uniquely instantiated. Put $G:=\lambda\bar x\, .\,G'(H_{\bar x})$.
+    Then $G\le F$. At each world the unique instance of $G'$ is a code $H_{\bar x}$, since $G'\le F'$,
+    and by injectivity of coding $\bar x$ is then the unique instance of $G$.

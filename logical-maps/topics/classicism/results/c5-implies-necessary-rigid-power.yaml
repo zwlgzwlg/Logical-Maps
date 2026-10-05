@@ -1,0 +1,33 @@
+id: c5-implies-necessary-rigid-power
+premises:
+- necessary-distinctness-necessary-r
+conclusion: necessary-rigid-power-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 3 October 2026, answering Cian Dorr's question whether C5 suffices
+  recorded_by: Claude Opus 5.5 (Anthropic), 3 October 2026
+  checked_by: []
+  date: '2026-10-03'
+  lean: none
+sources:
+- Original argument of 3 October 2026, answering a question of Cian Dorr.
+source_names:
+- Claude Opus 5.5 3 Oct
+proof: >-
+  Let $P:=\lambda X\, .\,\operatorname{Rigid}(X)\land X\le F$, for any $F$, rigid or not. Both conjuncts
+  have the form $\Box\phi$. C5 gives S5 and BF at every world, and in S5 a formula $\Box\phi$ is
+  non-contingent; so at every world $PX\to\Box PX$ and $\neg PX\to\Box\neg PX$. The first gives
+  persistence. For weak inextensibility at any world, let $\forall X\, .\,PX\to\Box\mathcal XX$ and suppose
+  $\Diamond\exists X\, .\,PX\land\neg\mathcal XX$. BF gives an $X$ with $\Diamond(PX\land\neg\mathcal XX)$,
+  so $\Diamond PX$ and hence $PX$, so $\Box\mathcal XX$, a contradiction. So $P$ is rigid. The argument is
+  a C-proof of Rigid Power from $\Box$ND, so necessitation and 4 give the boxed form.
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.1, pp. 21–23
+  note: ND, B, 5 and BF under C5.
+notes: >-
+  Under C5 the power property is rigid whether or not $F$ is, so the principle's content lies in settings
+  without B, where a rigid subrelation can come into being at a world that cannot see back to the actual
+  one. Cian Dorr expected C5 and Atomicity to be needed; Atomicity is not.

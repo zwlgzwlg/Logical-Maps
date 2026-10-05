@@ -76,4 +76,4 @@ not a claim of priority in the literature.
 
 ## Paper references
 
-- **Background: [Symmetries of value](https://doi.org/10.1111/nous.12549).** Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — Theorem 3, pp. 25–26: paired-reflection and centering argument
+- **Background: [Symmetries of value](https://doi.org/10.1111/nous.12549).** ([PDF](../sources/Goodsell%20-%202026%20-%20Symmetries%20of%20value.pdf)) Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — Theorem 3, pp. 25–26: paired-reflection and centering argument

@@ -31,4 +31,4 @@ The mean correction is essential for obtaining approximants on the required side
 
 ## Paper references
 
-- **Background: [Symmetries of value](https://doi.org/10.1111/nous.12549).** Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — p. 27. The cited argument is adapted with the explicitly listed sufficient premises; the reduced-premise claim is the present project contribution
+- **Background: [Symmetries of value](https://doi.org/10.1111/nous.12549).** ([PDF](../sources/Goodsell%20-%202026%20-%20Symmetries%20of%20value.pdf)) Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — p. 27. The cited argument is adapted with the explicitly listed sufficient premises; the reduced-premise claim is the present project contribution

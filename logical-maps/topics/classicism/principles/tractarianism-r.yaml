@@ -2,8 +2,7 @@ id: tractarianism-r
 name: Tractarianism
 category: coarse
 statement: A proposition entailing every instance of a property entails its universal generalization.
-formal: $\forall^{\mathrm{Ty}}\sigma\, .\,\forall p^t X^{\sigma t}\, .\,(\forall x^\sigma\, .\,p\le Xx)\to
-  p\le(\forall x^\sigma\, .\,Xx)$
+formal: $\forall p^t X^{\sigma t}\, .\,(\forall x^\sigma\, .\,p\le Xx)\to p\le(\forall x^\sigma\, .\,Xx)$
 date: '2026-09-17'
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Proposition 2.1 and n. 27, pp. 20–21.
@@ -14,3 +13,41 @@ references:
   role: formulation
   locator: Proposition 2.1 and n. 27, pp. 20–21
 notes: ''
+variants:
+- id: polyadic
+  lean:
+    ref: Classicism.P.Tractarianism.listSchemaIn
+    equivalence_ref: Classicism.Map.tractarianism_r.polyadic
+    status: verified
+  name: Polyadic form
+  statement: A proposition entailing every instance of a relation entails its universal generalization.
+  formal: $\forall p^t X^{\bar\sigma t}\, .\,(\forall\bar x^{\bar\sigma}\, .\,p\le X[\bar x])\to p\le(\forall\bar
+    x^{\bar\sigma}\, .\,X[\bar x])$
+  equivalence: The original form is the case of a one-element tuple. Conversely, apply the original one
+    variable at a time from the innermost, as for BF. For the empty tuple both sides are $p\le X$.
+- id: dual
+  lean:
+    ref: Classicism.P.TractarianismDual.schemaIn
+    equivalence_ref: Classicism.Map.tractarianism_r.dual
+    status: verified
+  name: Dual form
+  statement: A proposition entailed by every instance of a property is entailed by its existential generalization.
+  formal: $\forall p^t X^{\sigma t}\, .\,(\forall x^\sigma\, .\,Xx\le p)\to(\exists x^\sigma\, .\,Xx)\le
+    p$
+  equivalence: Instantiate either form at the negations of its propositional or relational variables,
+    contrapose, and rewrite with $\Diamond=\neg\Box\neg$ and $q\le r\leftrightarrow\neg r\le\neg q$. This
+    yields the other form, and the same steps lead back.
+- id: dual-polyadic
+  lean:
+    ref: Classicism.P.TractarianismDual.listSchemaIn
+    equivalence_ref: Classicism.Map.tractarianism_r.dual_polyadic
+    status: verified
+  name: Dual polyadic form
+  statement: A proposition entailed by every instance of a relation is entailed by its existential generalization.
+  formal: $\forall p^t X^{\bar\sigma t}\, .\,(\forall\bar x^{\bar\sigma}\, .\,X[\bar x]\le p)\to(\exists\bar
+    x^{\bar\sigma}\, .\,X[\bar x])\le p$
+  equivalence: Instantiate either form at the negations of its propositional or relational variables,
+    contrapose, and rewrite with $\Diamond=\neg\Box\neg$ and $q\le r\leftrightarrow\neg r\le\neg q$. This
+    yields the other form, and the same steps lead back. Combined with the polyadic form, this gives the
+    equivalence with the official form.
+lean_def: Classicism.P.Tractarianism.schemaIn

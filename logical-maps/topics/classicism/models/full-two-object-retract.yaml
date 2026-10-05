@@ -19,19 +19,26 @@ references:
 
 # migration: the definition is the old description's first sentence, then the notes' interpretation
 # of Σ.
-definition: >-
-  Use the source’s category with h:W0→W1, j:W1→W0 and k:W1→W1, evaluated at W0.
-
-
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element of
-  its type and each individual constant denotes one fixed individual.
+group: full-action-models
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values.
+# migration (3 October): recorded at the group's defaults, one individual and Σ top; the source
+# leaves the individuals open.
+settings:
+  construction: >-
+    Use the source’s category with h:W0→W1, j:W1→W0 and k:W1→W1, evaluated at W0.
+  individuals: singleton
+  sigma: top
+meets:
+  sigma-apart: The construction does not mention Σ.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another full action model is now one of the topic's general
+# arguments (arguments/), reached through the group full-action-models and this record's `meets`;
+# what follows is this record's own. Only the verdicts the engine needs to derive the rest are
+# recorded, the source's first.
 
 # --- from the source (17 Sep record) ---
 
@@ -46,21 +53,6 @@ arguments:
 
 # --- later additions ---
 
-- id: sigma-top
-  fails: [independence-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The sentence that
-  # followed the text in the old notes is in `notes`.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed
-    Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but
-    impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\,
-    .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what
-    the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since
-    $c=\top_\tau$ is a true identity that C(Σ) does not prove.
-    Everything that implies these fails with them.
-
 - fails: [strong-leibniz-t]
   # migration: the lead-in "The type-t Strong Leibniz Biconditionals fail at $W_0$:" is dropped,
   # $W_0$ being the evaluation point.
@@ -73,14 +65,6 @@ arguments:
     settle every proposition. Since Atomicity holds in this full model, this shows that Atomicity
     (type t) alone does not yield the type-t Strong Leibniz Biconditionals; BF (type t) fails
     here, $h$ acting non-surjectively from a four-element to an eight-element domain.
-
-- holds: [necessary-relational-choice-r]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    The truncation of a full action model at any arrow is again a full action model, its domains
-    at the reachable objects being unchanged, and Relational Choice holds in every full model
-    given choice in the metatheory (Classicism, p. 61).
 
 - holds: [gallin-extensional-comprehension-r]
   # migration: the lead-in "Gallin Extensional Comprehension holds at $W_0$." is dropped, $W_0$
@@ -105,72 +89,15 @@ arguments:
     $W_0$ has exactly four propositions with literal identity, so there are no five pairwise
     distinct ones; Possible Infinity (type $t$) fails as well, since $W_1$ has eight.
 
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [necessary-actuality, pure-b-r]
-  fails: [necessary-distinctness-necessary-t]
-  reserve: true
-  source: {paper: bacon-dorr-classicism, locator: "§3.5, p. 59, fifth paragraph and n. 81; p. 61"}
-
-- holds: [relational-choice-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-20'
-  text: >-
-    Added Relational Choice at Cian Dorr's direction. With choice in the metatheory a serial
-    relation has a functional subrelation, and a full model contains every intension, so that
-    subrelation is in the domain; see Classicism, p. 61, on the principles common to full
-    models.
-
-- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
-    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
-
-- fails: [distinctness-preserving-collapse]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Recorded the Distinctness-preserving collapse; see the notes.
-
-- holds: [transversal-choice-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-25'
-  text: >-
-    Added Transversal Choice, by the argument recorded for Relational Choice: a full model
-    contains every intension, in particular one whose extension at the evaluation point is a
-    transversal, chosen in the metatheory, of the extension there of an equivalence relation;
-    the equivalence and transversal conditions are unboxed. Recorded on a question of Zachary
-    Goodsell, after an observation of Christopher Sun.
-
 # migration: the old description's last sentence and the text of the old notes that no argument
 # holds, verbatim. The argument for the failure of the Distinctness-preserving collapse, now
 # derived, is dropped.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
-# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
+
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
-  identifies its evaluation point; construction and verification are given at the PDF locations
-  in References. Only the type-t ND assertion is recorded.
-
-  The type-t Strong Leibniz Biconditionals fail at $W_0$: the possible proposition $\{h\}$ has
-  only itself as a candidate strong world below it, but under $h$ it becomes $\{x : x\circ
-  h=h\}=\{\mathrm{id}_{W_1},k\}$, which the proposition $\{\mathrm{id}_{W_1}\}$ of $W_1$’s full
-  domain separates, so $\{h\}$ does not necessarily settle every proposition.
-  Distinctness-preserving collapse fails at $W_0$: let $p:=\{\mathrm{id}_{W_0}\}$, true. A
-  witness $q$ contains $\mathrm{id}_{W_0}$, and $j\circ h=\mathrm{id}_{W_0}$, so $\Diamond q$
-  holds under $h$ while $p$ does not. The Infinity Schema at type $t$ fails: $W_0$ has exactly
-  four propositions with literal identity, so there are no five pairwise distinct ones; Possible
-  Infinity (type $t$) fails as well, since $W_1$ has eight. Observations of Claude Fable 5.1
-  (Anthropic), 25 September 2026.
+  identifies its evaluation point; construction and verification are given at the PDF locations in
+  References. Only the type-t ND assertion is recorded. Everything that implies these fails with
+  them.
 
 was_conjectured: true
 

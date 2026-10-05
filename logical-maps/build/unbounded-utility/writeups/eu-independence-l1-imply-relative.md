@@ -107,4 +107,4 @@ Relative Expectation and even Folded Expectation while violating $L^{1}$ Continu
 
 ## Paper references
 
-- **Background: [Symmetries of value](https://doi.org/10.1111/nous.12549).** Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — §3, p. 23; Relative Expectation and Corollary 5 in the full DTU+Sym context, pp. 26–27
+- **Background: [Symmetries of value](https://doi.org/10.1111/nous.12549).** ([PDF](../sources/Goodsell%20-%202026%20-%20Symmetries%20of%20value.pdf)) Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — §3, p. 23; Relative Expectation and Corollary 5 in the full DTU+Sym context, pp. 26–27

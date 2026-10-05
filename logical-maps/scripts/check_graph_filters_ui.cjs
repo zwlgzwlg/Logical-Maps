@@ -9,7 +9,7 @@ const data=JSON.parse(fs.readFileSync(path.join(root,'build/unbounded-utility/da
 data.principles.push({id:'ui-open-target',name:'Open fixture target',statement:'Fixture'});
 data.results.push({id:'ui-open-query',premises:['simple-eu','shift-invariance'],conclusion:'ui-open-target',status:'conjectured',certificate:{source_id:'misc',lean:'none'},sources:['Fixture']});
 const template=fs.readFileSync(path.join(root,'viewer/template.html'),'utf8');
-const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data)),{
+const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data)),{
  url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc,
  beforeParse(w){w.matchMedia=()=>({matches:false,addEventListener(){}});},
 });

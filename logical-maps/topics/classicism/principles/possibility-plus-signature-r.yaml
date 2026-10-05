@@ -22,3 +22,14 @@ references:
     Dorr’s request to parallel Possibility (signature Σ).
 notes: 'The clause requiring the individuals to differ from the constants named in P is forced: without
   it the C(Σ)-consistent formula x ≠ c would yield ◇(c ≠ c).'
+variants:
+- id: dual
+  name: Dual form
+  statement: If a formula of the signature is necessary of some individuals and its negation is consistent
+    with C(Σ), two of those individuals are identical or one of them is denoted by a constant of the formula.
+  formal: $\forall x_1^e\cdots x_n^e\, .\,\Box P\to\bigl(\bigvee_{i<j}x_i=x_j\lor\bigvee_{i,\,c}x_i=c\bigr)\quad(P\in\mathcal
+    L(\Sigma),\text{ free variables among }x_1\ldots x_n;\ c\text{ over the individual constants in }P;\
+    C(\Sigma)+\neg P\text{ consistent};\ n\ge0)$
+  equivalence: The instance of either form at $\neg P$ is, after contraposition and $\Diamond=\neg\Box\neg$,
+    the instance of the other at $P$; $\neg P$ has the same free variables and constants as $P$.
+lean_def: (Classicism.Meta.AxiomSet.possibilityPlusSig _)

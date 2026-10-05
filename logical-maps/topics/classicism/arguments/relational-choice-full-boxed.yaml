@@ -1,0 +1,14 @@
+id: relational-choice-full-boxed
+requires: [full-action-model, metatheory-choice]
+holds: [necessary-relational-choice-r]
+by: Claude Fable 5.1 (Anthropic)
+date: '2026-09-22'
+text: >-
+  The truncation of a full action model at any arrow is again a full action model, its domains at
+  the reachable objects being unchanged, and Relational Choice holds in every full model given
+  choice in the metatheory (Classicism, p. 61).
+revisions:
+- date: '2026-10-02'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: >-
+    The two-object full action models' copies stated once for the topic, for every full action model.

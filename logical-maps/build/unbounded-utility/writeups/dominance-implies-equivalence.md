@@ -26,4 +26,4 @@ Source-based result or immediate restriction/composition. Premises are sufficien
 
 ## Paper references
 
-- **Proof: [Decision theory unbound](https://doi.org/10.1111/nous.12473).** Zachary Goodsell (2024). Decision theory unbound. Noûs, 58, 669–695. First published online in 2023. — §3.2, p. 678
+- **Proof: [Decision theory unbound](https://doi.org/10.1111/nous.12473).** ([PDF](../sources/Nous%20-%202023%20-%20Goodsell%20-%20Decision%20theory%20unbound%20%281%29.pdf)) Zachary Goodsell (2024). Decision theory unbound. Noûs, 58, 669–695. First published online in 2023. — §3.2, p. 678

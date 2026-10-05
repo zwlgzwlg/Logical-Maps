@@ -79,10 +79,12 @@ papers:
   citation: Zachary Goodsell (2024). Decision theory unbound. Noûs, 58, 669–695. First published online in
     2023.
   url: https://doi.org/10.1111/nous.12473
+  file: sources/Nous - 2023 - Goodsell - Decision theory unbound (1).pdf
 - id: symmetries-of-value
   title: Symmetries of value
   citation: Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37.
   url: https://doi.org/10.1111/nous.12549
+  file: sources/Goodsell - 2026 - Symmetries of value.pdf
 - id: unpublished-background-risk
   title: Unbounded Utility and Background Risk
   citation: Zachary Goodsell (5 June 2026). Unbounded Utility and Background Risk. Unpublished working manuscript.

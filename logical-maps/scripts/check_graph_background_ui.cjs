@@ -8,7 +8,7 @@ const data={topic:{id:'background-fixture',title:'Background fixture',background
  rule('k',[],'k','hidden'),rule('ab',['a'],'b','hidden'),rule('bcd',['b','c'],'d','shown'),rule('de',['d'],'e','shown'),
  rule('az',['a','z'],false,'hidden'),rule('bf',['b'],'f','hidden','conjectured'),rule('cfe',['c','f'],'e','hidden','conjectured')]};
 const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));
-const dom=new JSDOM(fs.readFileSync(path.join(root,'viewer/template.html'),'utf8').replace('/*__PMAP_DATA__*/null',JSON.stringify(data)),{url:'https://maps.example/?assume=a',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});
+const dom=new JSDOM(fs.readFileSync(path.join(root,'viewer/template.html'),'utf8').replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data)),{url:'https://maps.example/?assume=a',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});
 const w=dom.window,d=w.document;
 try{
  // The reader's assumption A sits in the True box, where its consequences

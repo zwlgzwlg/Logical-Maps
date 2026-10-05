@@ -1,6 +1,6 @@
 # Relational Choice ∧ Very Weak Rigid Comprehension ⇒ Transversal Choice
 
-<p class='cert'>Result — Source: Misc.; produced by Claude Fable 5.1 (Anthropic), 25 September 2026, on a question of Zachary Goodsell after an observation of Christopher Sun; recorded by Claude Fable 5.1 (Anthropic), 25 September 2026.</p>
+<p class='cert'>Result — Source: Misc., Lean `Classicism.Map.relational_choice_and_very_weak_rigid_comprehension_imply_transversal_choice`; produced by Claude Fable 5.1 (Anthropic), 25 September 2026, on a question of Zachary Goodsell after an observation of Christopher Sun; recorded by Claude Fable 5.1 (Anthropic), 25 September 2026.</p>
 
 ## Premises
 
