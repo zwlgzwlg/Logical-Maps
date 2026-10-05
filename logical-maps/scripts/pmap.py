@@ -2784,7 +2784,8 @@ def build_topic(topic_id: str, out: Path | None = None, *, fragment: bool = Fals
             for v in p.get("variants") or []:
                 if v["id"] in lean_links["variants"].get(p["id"], {}):
                     v["lean_links"] = lean_links["variants"][p["id"]][v["id"]]
-    (outdir / "data.json").write_text(json.dumps(payload, indent=1, ensure_ascii=False), encoding="utf-8")
+    # Compact: the website host serves no file over 25 MiB, and indentation alone added half again.
+    (outdir / "data.json").write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     bundle_topic(topic_id)
     html = TEMPLATE.read_text(encoding="utf-8").replace("<!--__PMAP_THEME__-->", theme_head(topic_id, math_path=None if out else 'math'))
     blob = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
@@ -4647,6 +4648,11 @@ def main(argv=None):
         landing = build_landing()
         if landing:
             print(f"built {landing.relative_to(ROOT)}")
+        # Cloudflare Pages, which serves the website, refuses a deployment with any file over 25 MiB.
+        for path in sorted(BUILD.rglob("*")):
+            if path.is_file() and path.stat().st_size > 25 * 1024 * 1024:
+                print(f"WARNING: {path.relative_to(ROOT)} is {path.stat().st_size / 2**20:.1f} MiB, over the website host's "
+                      "25 MiB limit per file; the website will not deploy", file=sys.stderr)
 
 
 if __name__ == "__main__":
