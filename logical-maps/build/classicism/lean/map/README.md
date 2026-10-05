@@ -150,7 +150,7 @@ model, it certifies the model's verdict by applying the argument's certificate t
 proofs. So the Lean follows the map's route: a verdict that rests on an argument is proved
 by that argument, and only the meeting of conditions is particular to the model.
 
-By 6 October, fourteen verdicts of eleven arguments were proved this way:
+By 6 October, 32 verdicts of 25 arguments were proved this way:
 
 | Argument | Condition | Verdict |
 | --- | --- | --- |
@@ -165,15 +165,41 @@ By 6 October, fourteen verdicts of eleven arguments were proved this way:
 | `dpc-isolated-actual-world` | actual world isolated | Distinctness-Preserving Collapse holds |
 | `one-individual` | one individual | the Axiom of Infinity, the Infinity schema and Possible Infinity at `e` fail |
 | `finitely-many-propositions` | full, finitely many propositions | the Infinity schema at `t` fails |
+| `finitely-many-propositions-everywhere` | finitely many propositions at every reachable object | Possible Infinity at `t` fails |
+| `infinitely-many-individuals`, `infinitely-many-propositions` | extensionally full, infinitely many | the Axiom of Infinity and the Infinity schema hold at `e`, at `t` |
+| `full-atomicity` | full | □Atomicity holds |
+| `full-rigid-comprehension` | full | □Rigid Comprehension holds |
+| `full-epic-barcan` | full, epic arrows | □BF holds |
+| `invertible-arrows` | invertible arrows | □ND and □BF hold |
+| `retractions` | retractions | ND holds |
+| `unretracted-arrow` | full, an arrow with no retraction | ND (`t`) fails |
+| `nonidentity-arrow` | full, an arrow other than the identity | the Fregean Axiom fails |
+| `nonepic-strong-leibniz` | full, a non-epi arrow | Strong Leibniz (`t`) fails |
+| `dpc-returning-arrow` | full, a returning arrow | Distinctness-Preserving Collapse fails |
+| `coherent-retractions` | full, coherent retractions | Gallin Extensional Comprehension holds |
+| `fewer-propositions-after` | fewer propositions after some arrow, and after it | B for pure sentences fails |
 
 The semantic facts behind them are in `Semantics/FullModels.lean` (choice, transversals, the
 isolated actual world), `Semantics/Counting.lean` (the `n`-th instance of the Infinity schema
-holds iff there are `n` distinct entities) and `Semantics/OneIndividual.lean` (`Suc 𝟎` counts
-the universal property). Lean's metatheory has choice, so `metatheory-choice` is `True`.
+holds iff there are `n` distinct entities, and the sentences counting them are pure and in the
+paper's language), `Semantics/OneIndividual.lean` (`Suc 𝟎` counts the universal property),
+`Semantics/Numerals.lean` (the numerals, and the Axiom of Infinity from infinitely many
+entities) and `Semantics/Arrows.lean` (the conditions on arrows). Lean's metatheory has choice, so `metatheory-choice` is `True`.
 
 On 6 October they gave 66 of the 166 model verdicts certified. The first 23 replaced 21
 that had been certified model by model and added Atomicity's failure in the two
-identity-or-collapse models.
+identity-or-collapse models. Later that day they gave 125 of 211.
+
+**The division of labour.** A verdict is proved by a general argument whenever its proof uses
+only a property the model has; the model record then proves only that it meets the condition,
+usually in a line or two (`Models/FullActionModels.lean`, `MapModels.lean`'s `Meets`). A
+verdict the engine derives from others is not proved at all. So the six full action models of
+§3 have no arguments of their own left: everything they get beyond the derivation is a topic
+argument, and their `lean.verdicts`, proved one by one before the arguments existed, are
+superseded but kept. The Σ verdicts and `three-numbers`, `intensional-choice-well-ordering` and
+`rigid-power-tight` are the ones without Lean yet. The finite-support models' group meets
+`extensionally-full` (`Premodel.ideal_extFull`: the intension blind to arrows is pinned down by
+`∅`) and `metatheory-choice` in Lean.
 
 Several arguments are not proved yet, because the condition the Lean proves differs from
 the map's prose:

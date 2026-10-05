@@ -2,6 +2,8 @@ import Classicism.Models.MonoidModel
 import Classicism.Semantics.IntensionalTheory
 import Classicism.Semantics.FullModels
 import Classicism.Semantics.Counting
+import Classicism.Semantics.Arrows
+import Classicism.Semantics.Numerals
 import Mathlib.Algebra.Group.Action.Faithful
 import Mathlib.Algebra.Group.Submonoid.MulAction
 import Mathlib.Algebra.Group.Action.End
@@ -51,6 +53,18 @@ def OneIndividual (A : Premodel Sig C) : Prop := ∀ W : C, Subsingleton (A.Dom 
 world. -/
 def FinitelyManyPropositions (A : Premodel Sig C) : Prop := Finite (A.Dom A.W₀ (.rel .t))
 
+/-- `finitely-many-propositions-everywhere`: there are finitely many propositions at every object
+reachable from the evaluation point. -/
+def FinitelyManyPropositionsEverywhere (A : Premodel Sig C) : Prop :=
+  ∀ {V : C} (_ : A.W₀ ⟶ V), Finite (A.Dom V (.rel .t))
+
+/-- `infinitely-many-individuals`: there are infinitely many individuals at the evaluation world. -/
+def InfinitelyManyIndividuals (A : Premodel Sig C) : Prop := Infinite (A.Dom A.W₀ .e)
+
+/-- `infinitely-many-propositions`: there are infinitely many propositions at the evaluation
+world. -/
+def InfinitelyManyPropositions (A : Premodel Sig C) : Prop := Infinite (A.Dom A.W₀ (.rel .t))
+
 /-! `full-model` and `full-action-model` are `Premodel.Full` (`IntensionalProperties.lean`): in
 the intensional form a full action model is a full model, every intension present at every
 object. `extensionally-full` is `Premodel.ExtFull` and `actual-world-isolated` is
@@ -71,6 +85,26 @@ theorem reduct_ideal (De : C ⥤ Type) (W₀ : C) (ne : ∀ W : C, Nonempty (De.
       Premodel.ideal (Sig := Signature.pure) De W₀ ne (fun c => nomatch c) := by
   unfold reduct Premodel.ideal
   congr
+
+/-- **An ideally full model is extensionally full** (Appendix D, the remark after Definition
+D.3): the intension of the tuples, at any arrow, that are members of `E`, wherever the arrow
+leads, is blind to the arrow, so pinned down by `∅`. -/
+theorem ideal_extFull (De : C ⥤ Type) (W₀ : C) (ne : ∀ W : C, Nonempty (De.obj W))
+    (I : ∀ c : Sig.Const, (IdealT De (Sig.typeOf c)).obj W₀) :
+    (Premodel.ideal De W₀ ne I).ExtFull := by
+  intro ρ W E
+  let R : IdealRaw De ρ W := {p | ∃ b ∈ E,
+    (⟨W, idealArgs De ρ W b⟩ : Σ V : C, (IdealArgs De ρ).obj V) = ⟨p.1, p.2.1⟩}
+  refine ⟨⟨R, ∅, Set.finite_empty, fun V h i _ => Set.ext fun _ => Iff.rfl⟩, ?_⟩
+  ext a
+  show (∃ b ∈ E, _ = _) ↔ a ∈ E
+  constructor
+  · rintro ⟨b, hb, e⟩
+    have e' : idealArgs De ρ W b = idealArgs De ρ W a := eq_of_heq (Sigma.mk.inj_iff.1 e).2
+    have hab : b = a := (idealArgs'_idealArgs De ρ W b).symm.trans
+      ((congrArg (idealArgs' De ρ W) e').trans (idealArgs'_idealArgs De ρ W a))
+    exact hab ▸ hb
+  · exact fun ha => ⟨a, ha, rfl⟩
 
 end Premodel
 

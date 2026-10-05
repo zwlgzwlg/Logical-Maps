@@ -1,5 +1,6 @@
-import Classicism.Semantics.IntensionalSoundness
+import Classicism.Semantics.IntensionalFacts
 import Classicism.Syntax.Infinity
+import Classicism.Syntax.ClosedTypes
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.List.OfFn
 
@@ -14,9 +15,73 @@ block take those values (`semList_vars`), and pairwise distinctness is `List.Nod
 
 So the schema fails at a world with fewer than two individuals (the map's `one-individual`),
 and at a world with finitely many propositions (`finitely-many-propositions`).
+
+The sentences counting `n` entities are pure and in the paper's language (`closedTypes_count`),
+so B for pure sentences fails where the evaluation object has `n` propositions but some world
+after it, and every world after that, has fewer (`not_holds_b_count`, the map's
+`fewer-propositions-after`).
 -/
 
 namespace Classicism.Meta.Intensional
+
+/-! ### The counting sentences are in the paper's language -/
+
+namespace Count
+
+variable {Sig : Signature}
+
+/-- `∃x₁ … xₙ. ⋀_{i<j} xᵢ ≠ xⱼ` at `σ`. -/
+abbrev count (Sig : Signature) (σ : Ty) (n : Nat) : Sentence Sig :=
+  Term.existsBlock (List.replicate n σ) (Term.distinct n (Terms.vars (List.replicate n σ) []))
+
+/-- Every term of the tuple is in the paper's language. -/
+def AllClosed {Γ : Ctx} : ∀ {σs : List Ty}, Terms Sig Γ σs → Prop
+  | _, .nil => True
+  | _, .cons a as => a.closedTypes = true ∧ AllClosed as
+
+theorem allClosed_cons {Γ : Ctx} {σ : Ty} {σs : List Ty} :
+    ∀ xs : Terms Sig Γ (σ :: σs), AllClosed xs → xs.head.closedTypes = true ∧ AllClosed xs.tail
+  | .cons _ _, h => h
+
+theorem allClosed_vars {σ : Ty} (hσ : σ.Closed) : ∀ (n : Nat) (Γ : Ctx),
+    AllClosed (Terms.vars (Sig := Sig) (List.replicate n σ) Γ)
+  | 0, _ => trivial
+  | n + 1, Γ => ⟨by rw [Term.closedTypes_rename]; simpa [Term.closedTypes] using hσ,
+      allClosed_vars hσ n (σ :: Γ)⟩
+
+theorem closedTypes_neAll {Γ : Ctx} {σ : Ty} (hσ : σ.Closed) (a : Term Sig Γ σ)
+    (ha : a.closedTypes = true) : ∀ (n : Nat) (xs : Terms Sig Γ (List.replicate n σ)),
+    AllClosed xs → (Term.neAll a n xs).closedTypes = true
+  | 0, _, _ => by simp [Term.neAll, Term.closedTypes]
+  | n + 1, xs, h => by
+    obtain ⟨h1, h2⟩ := allClosed_cons xs h
+    simp [Term.neAll, Term.closedTypes, ha, h1, hσ, closedTypes_neAll hσ a ha n xs.tail h2]
+
+theorem closedTypes_distinct {Γ : Ctx} {σ : Ty} (hσ : σ.Closed) : ∀ (n : Nat)
+    (xs : Terms Sig Γ (List.replicate n σ)), AllClosed xs → (Term.distinct n xs).closedTypes = true
+  | 0, _, _ => by simp [Term.distinct, Term.closedTypes]
+  | n + 1, xs, h => by
+    obtain ⟨h1, h2⟩ := allClosed_cons xs h
+    simp [Term.distinct, Term.closedTypes, closedTypes_neAll hσ _ h1 n xs.tail h2,
+      closedTypes_distinct hσ n xs.tail h2]
+
+theorem closedTypes_existsBlock {σ : Ty} (hσ : σ.Closed) : ∀ (n : Nat) {Γ : Ctx}
+    (p : Formula Sig (Ctx.block (List.replicate n σ) Γ)), p.closedTypes = true →
+    (Term.existsBlock (List.replicate n σ) p).closedTypes = true
+  | 0, _, _, h => h
+  | n + 1, _, p, h => by
+    show (Term.exists' (Term.existsBlock (List.replicate n σ) p)).closedTypes = true
+    simp [Term.closedTypes, hσ, closedTypes_existsBlock hσ n p h]
+
+theorem closedTypes_count {σ : Ty} (hσ : σ.Closed) (n : Nat) : (count Sig σ n).closedTypes = true :=
+  closedTypes_existsBlock hσ n _ (closedTypes_distinct hσ n _ (allClosed_vars hσ n []))
+
+/-- `P → □◇P` for a counting sentence is in the paper's language. -/
+theorem closedTypes_b_count {σ : Ty} (hσ : σ.Closed) (n : Nat) :
+    (Term.imp (count Sig σ n) (Term.box (Term.dia (count Sig σ n)))).closedTypes = true := by
+  simp [Term.closedTypes, closedTypes_count hσ n]
+
+end Count
 
 open CategoryTheory
 
@@ -59,6 +124,12 @@ theorem semList_vars {W : C} (h : A.W₀ ⟶ W) {σ : Ty} : ∀ (n : Nat) {Γ : 
     show A.Incl σ W ((IEnv.ren _ _).get .zero) = _
     rw [IEnv.get_ren, A.blockEnv_get_wkBlock]
     rfl
+
+/-- `fewer-propositions-after`: the evaluation object has `n` distinct propositions, and some
+world after it, and every world after that, has fewer. -/
+def FewerPropositionsAfter : Prop :=
+  ∃ (n : Nat) (V : C) (_ : A.W₀ ⟶ V), (∃ f : Fin n → A.Dom A.W₀ (.rel .t), Function.Injective f) ∧
+    ∀ (U : C) (_ : V ⟶ U) (f : Fin n → A.Dom U (.rel .t)), ¬ Function.Injective f
 
 variable {A} (M : A.IsModel)
 include M
@@ -107,6 +178,22 @@ theorem holds_count {W : C} (h : A.W₀ ⟶ W) (σ : Ty) (n : Nat) :
   refine exists_congr fun f => ?_
   rw [holds_distinct M h, A.semList_vars h n f, List.nodup_ofFn]
   exact ⟨fun H _ _ e => H (congrArg _ e), fun H _ _ e => H (A.Incl_injective σ W e)⟩
+
+/-- **B for the sentence counting `n` propositions fails** where the evaluation object has `n`
+propositions and some world after it, and every world after that, has fewer. -/
+theorem not_holds_b_count (hF : A.FewerPropositionsAfter) : ∃ n, ¬ A.Holds (𝟙 _)
+    (Term.imp (Count.count Sig (.rel .t) n) (Term.box (Term.dia (Count.count Sig (.rel .t) n)))) .nil := by
+  obtain ⟨n, V, k, h0, h1⟩ := hF
+  refine ⟨n, fun H => ?_⟩
+  rw [A.holds_imp M] at H
+  have H := H ((holds_count M (𝟙 _) (.rel .t) n).2 h0)
+  rw [A.holds_box M] at H
+  have H := H k
+  rw [A.holds_dia M] at H
+  obtain ⟨U, j, hj⟩ := H
+  rw [IEnv.nil_eq (A.push j _)] at hj
+  obtain ⟨f, hf⟩ := (holds_count M _ (.rel .t) n).1 hj
+  exact h1 U j f hf
 
 end Premodel
 

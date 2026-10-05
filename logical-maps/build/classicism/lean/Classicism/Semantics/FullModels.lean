@@ -11,6 +11,12 @@ topic), as theorems about intensional action models:
 - **Relational Choice** holds in every extensionally full model (`holds_rc`), the map's
   `relational-choice-full`; and at every arrow of a full one, so `□`Relational Choice
   (`holds_box_rc`), `relational-choice-full-boxed`.
+- **Transversal Choice** holds in every extensionally full model (`holds_tc`).
+- **Distinctness-Preserving Collapse** holds where the actual world is isolated (`holds_dpc`).
+- **Atomicity** and **Rigid Comprehension** hold at every arrow of a full model
+  (`holds_box_atomicity`, `holds_box_rigid_comprehension`): below a nonzero relation is the
+  singleton of one of its tuples; and the relation whose extension at an arrow is `X`'s
+  extension transported along it is rigid and coextensive with `X`.
 
 Lean's metatheory has choice, so the map's condition `metatheory-choice` is met by every
 model here; the choice is `Classical.choose`.
@@ -146,6 +152,134 @@ theorem holds_dpc {B : Premodel Signature.pure C} (M : B.IsModel) (hI : B.Actual
   refine ⟨a, ha, fun {V} k ⟨U, j, hj⟩ => ?_⟩
   by_contra hk
   exact hiso k j (fun h => hk (hle p hp h)) hj
+
+/-! ### The relational constants, applied -/
+
+theorem sem_var {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (g : IEnv (A.Dom W) Γ) {ρ : RTy}
+    (v : Var Γ (.rel ρ)) : A.sem h (.var v) g = A.incl ρ W (g.get v) := rfl
+
+section Constants
+
+variable (M : A.IsModel)
+include M
+
+theorem sem_negR {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (g : IEnv (A.Dom W) Γ) (ρ : RTy)
+    (a : Term Sig Γ ρ) : A.sem h (.app (.negR ρ) a) g = (A.sem h a g)ᶜ := by
+  obtain ⟨a', ha⟩ := Set.mem_range.mp (M h a g)
+  show A.apply (A.negRead ρ W) (A.sem h a g) = _
+  rw [← ha, A.apply_Incl]
+  exact A.app_negRead a'
+
+theorem sem_boxR {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (g : IEnv (A.Dom W) Γ) (ρ : RTy)
+    (a : Term Sig Γ ρ) : A.sem h (.app (.boxR ρ) a) g =
+      {p | ∀ (U : C) (k : p.1 ⟶ U), (⟨U, Args.map A.inner ρ k p.2.1, p.2.2 ≫ k⟩ : Tuple A.inner ρ W) ∈ A.sem h a g} := by
+  obtain ⟨a', ha⟩ := Set.mem_range.mp (M h a g)
+  show A.apply (A.boxRead ρ W) (A.sem h a g) = _
+  rw [← ha, A.apply_Incl]
+  exact A.app_boxRead a'
+
+theorem holds_inclR {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (g : IEnv (A.Dom W) Γ) (ρ : RTy)
+    (a b : Term Sig Γ ρ) : A.Holds h (.app (.app (.inclR ρ) a) b) g ↔
+      ∀ x : Args A.inner ρ W, (⟨W, x, 𝟙 W⟩ : Tuple A.inner ρ W) ∈ A.sem h a g →
+        (⟨W, x, 𝟙 W⟩ : Tuple A.inner ρ W) ∈ A.sem h b g := by
+  obtain ⟨a', ha⟩ := Set.mem_range.mp (M h a g)
+  obtain ⟨b', hb⟩ := Set.mem_range.mp (M h b g)
+  unfold Holds
+  show _ ∈ A.apply (A.apply (A.inclRead ρ W) (A.sem h a g)) (A.sem h b g) ↔ _
+  rw [← ha, ← hb, A.apply_Incl, A.apply_Incl, A.app_inclRead]
+  rfl
+
+theorem holds_coextR {Γ : Ctx} {W : C} (h : A.W₀ ⟶ W) (g : IEnv (A.Dom W) Γ) (ρ : RTy)
+    (a b : Term Sig Γ ρ) : A.Holds h (.app (.app (.coextR ρ) a) b) g ↔
+      ∀ x : Args A.inner ρ W, (⟨W, x, 𝟙 W⟩ : Tuple A.inner ρ W) ∈ A.sem h a g ↔
+        (⟨W, x, 𝟙 W⟩ : Tuple A.inner ρ W) ∈ A.sem h b g := by
+  obtain ⟨a', ha⟩ := Set.mem_range.mp (M h a g)
+  obtain ⟨b', hb⟩ := Set.mem_range.mp (M h b g)
+  unfold Holds
+  show _ ∈ A.apply (A.apply (A.coextRead ρ W) (A.sem h a g)) (A.sem h b g) ↔ _
+  rw [← ha, ← hb, A.apply_Incl, A.apply_Incl, A.app_coextRead]
+  rfl
+
+end Constants
+
+/-! ### Atomicity -/
+
+/-- Atomicity at `ρ`, at any arrow to an object where the model is full: below a nonzero
+relation is the singleton of one of its tuples, an atom, entailment being inclusion. -/
+theorem holds_atomicity {B : Premodel Signature.pure C} (M : B.IsModel) (hF : B.Full) {W : C}
+    (h : B.W₀ ⟶ W) (ρ : RTy) : B.Holds h (P.Atomicity.quoted ρ) .nil := by
+  simp only [P.Atomicity.quoted, B.holds_forall M, B.holds_disj M, B.holds_exists M, B.holds_conj M,
+    B.holds_neg M, B.holds_eq M, B.sem_orR M, sem_negR M, sem_var, IEnv.get]
+  have e1 : ∀ S : Set (Tuple B.inner ρ W), Sᶜ = S ∪ Sᶜ ↔ S = ∅ := fun S => by
+    rw [Set.union_compl_self, Set.compl_univ_iff]
+  intro x
+  by_cases hx : B.incl ρ W x = ∅
+  · exact Or.inl ((e1 _).2 hx)
+  · right
+    obtain ⟨p, hp⟩ := Set.nonempty_iff_ne_empty.2 hx
+    obtain ⟨y, hy⟩ := hF ρ W {p}
+    have e2 : ∀ S : Set (Tuple B.inner ρ W), ({p} = S ∪ {p} ∧ ¬ S = {p}) ↔ S = ∅ := fun S => by
+      constructor
+      · rintro ⟨h1, h2⟩
+        have hs : S ⊆ {p} := Set.union_eq_right.1 h1.symm
+        exact (Set.subset_singleton_iff_eq.1 hs).resolve_right h2
+      · rintro rfl
+        exact ⟨(Set.empty_union _).symm, fun e => Set.singleton_ne_empty p e.symm⟩
+    refine ⟨y, fun z => ?_, ?_⟩
+    · rw [hy, e1, e2]
+      tauto
+    · rw [hy]
+      exact (Set.union_eq_right.2 (Set.singleton_subset_iff.2 hp)).symm
+
+/-! ### Rigid Comprehension -/
+
+/-- Rigid Comprehension at `ρ`, at any arrow to an object where the model is full: for `X`,
+the relation `Y` whose extension at an arrow `i` is `X`'s extension at `W` transported along `i`
+is coextensive with `X`, persistent, and inextensible. -/
+theorem holds_rigid_comprehension {B : Premodel Signature.pure C} (M : B.IsModel) (hF : B.Full)
+    {W : C} (h : B.W₀ ⟶ W) (ρ : RTy) : B.Holds h (P.RigidComprehension.quoted ρ) .nil := by
+  simp only [P.RigidComprehension.quoted, B.holds_forall M, B.holds_exists M, B.holds_conj M,
+    B.holds_box M, B.holds_imp M, holds_inclR M, holds_coextR M, sem_boxR M, sem_var, IEnv.get,
+    IEnv.get_map, B.incl_map, Intension.mem_map, Set.mem_ofPred_eq, Category.comp_id,
+    Category.id_comp]
+  intro X
+  obtain ⟨Y, hY⟩ := hF ρ W {p | ∃ e, (⟨W, e, 𝟙 W⟩ : Tuple B.inner ρ W) ∈ B.incl ρ W X ∧
+    p.2.1 = Args.map B.inner ρ p.2.2 e}
+  refine ⟨Y, ⟨fun k x hx U k₁ => ?_, fun k Z hZ V₁ k₁ x hx => ?_⟩, fun x => ?_⟩
+  · rw [hY] at hx ⊢
+    obtain ⟨e, he, hxe⟩ := hx
+    change x = Args.map B.inner ρ k e at hxe
+    subst hxe
+    exact ⟨e, he, (Args.map_comp _ ρ k k₁ e).symm⟩
+  · rw [hY] at hx
+    obtain ⟨e, he, hxe⟩ := hx
+    change x = Args.map B.inner ρ (k ≫ k₁) e at hxe
+    subst hxe
+    have := hZ (Args.map B.inner ρ k e) (by rw [hY]; exact ⟨e, he, rfl⟩) V₁ k₁
+    rwa [← Args.map_comp] at this
+  · rw [hY]
+    constructor
+    · intro hx
+      exact ⟨x, hx, (Args.map_id _ ρ W x).symm⟩
+    · rintro ⟨e, he, hx⟩
+      rw [show x = e from hx.trans (Args.map_id _ ρ W e)]
+      exact he
+
+/-- `□`Atomicity: Atomicity at every arrow, every object being full. -/
+theorem holds_box_atomicity {B : Premodel Signature.pure C} (M : B.IsModel) (hF : B.Full) {W : C}
+    (h : B.W₀ ⟶ W) (ρ : RTy) : B.Holds h (P.NecAtomicity.quoted ρ) .nil := by
+  show B.Holds h (Term.box (P.Atomicity.quoted ρ)) .nil
+  rw [B.holds_box M]
+  intro V k
+  exact holds_atomicity M hF (h ≫ k) ρ
+
+/-- `□`Rigid Comprehension: Rigid Comprehension at every arrow, every object being full. -/
+theorem holds_box_rigid_comprehension {B : Premodel Signature.pure C} (M : B.IsModel) (hF : B.Full)
+    {W : C} (h : B.W₀ ⟶ W) (ρ : RTy) : B.Holds h (P.NecRigidComprehension.quoted ρ) .nil := by
+  show B.Holds h (Term.box (P.RigidComprehension.quoted ρ)) .nil
+  rw [B.holds_box M]
+  intro V k
+  exact holds_rigid_comprehension M hF (h ≫ k) ρ
 
 end Premodel
 

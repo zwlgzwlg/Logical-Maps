@@ -4,11 +4,10 @@
 
 ## Package
 
-- **□Rigid Comprehension.** Necessarily, every relation, including a proposition, is coextensive with a rigid one.
-- **□Atomicity.** Necessarily, every non-bottom entity of each relational type has an atom below it.
-- **□Strong Leibniz Biconditionals.** Necessarily, at each relational type, every possible entity (one distinct from bottom) is entailed by a strong world: a possible entity that necessarily entails every entity of the type or its negation.
-- **□BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
 - **Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
+- **□Atomicity.** Necessarily, every non-bottom entity of each relational type has an atom below it.
+- **□BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
+- **□Rigid Comprehension.** Necessarily, every relation, including a proposition, is coextensive with a rigid one.
 - **□Intensional Choice.** Every closed instance of Intensional Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
 - **□Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
 - **Relational Choice.** Every serial binary relation has a functional subrelation.
@@ -16,9 +15,11 @@
 - **□Rigid Power.** Every closed instance of Rigid Power is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
 - **Countable Boolean Completeness.** Every countable property of entities of a relational type has a least upper bound in that type, where a property is countable when it injects into the natural numbers.
 - **Transversal Choice.** Every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.
-- **¬ No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
 - **¬ B for pure sentences.** The B instance for every closed sentence in the pure language.
+- **¬ Possible Infinity (type t).** Possibly there are not finitely many propositions: the Axiom of Infinity at this type, under a diamond.
 - **¬ Infinity Schema (type t).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
+- **¬ Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
+- **¬ Fregean Axiom.** Materially equivalent propositions are identical.
 - **¬ Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **¬ Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
 - **¬ Possible Infinity (type e).** Possibly there are not finitely many individuals: the Axiom of Infinity at this type, under a diamond.
@@ -28,6 +29,7 @@
 - **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
 - **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
 - **¬ Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
+- **¬ ND (type t).** ND (type t) in the displayed closed propositional formulation.
 
 ## Definition
 
@@ -41,34 +43,6 @@ Interpretation of Σ, fixed for this record: one designated relational constant 
 
 ## Arguments
 
-### Holds □Rigid Comprehension, □Atomicity.
-
-*Source: Classicism, §3.5, p. 59, fourth paragraph. By Andrew Bacon and Cian Dorr, 2026-09-17.*
-
-### Fails No Pure Contingency.
-
-The source makes the Fregean Axiom false at W0 and true at W1.
-
-*Source: Classicism, §3.5, p. 59, fourth paragraph. By Andrew Bacon and Cian Dorr, 2026-09-17.*
-
-### Holds □Strong Leibniz Biconditionals.
-
-An atom of type $\bar\sigma t$ at $W_0$ is a single pair $\{\langle\bar a,h\rangle\}$, and its transport along $k$ is $\{\langle\bar a,j\rangle : j\circ k=h\}$ with $j$ ranging over the arrows out of $W_1$, of which there is one; so the transport is empty or a single pair, and decides every relation of $W_1$’s full domain. Every possible relation contains a pair, so every possible relation has a strong world below it, at $W_0$ and trivially at the one-world $W_1$.
-
-*By Claude Fable 5.1 (Anthropic), 2026-09-23.*
-
-### Holds □BF.
-
-The arrows out of $W_0$ are the identity and $k$. A relation at $W_0$ of relational type $\bar\sigma t$ is a set of pairs $\langle i,\bar a\rangle$ with $\bar a$ a tuple at $i$'s target, and $k$ carries it to the relation at $W_1$ whose extension at the identity of $W_1$ is its extension at $k$, the only arrow into $W_1$'s identity being composed with $k$. In a full model that extension at $k$ is any set of tuples at $W_1$, so $k$ acts surjectively at every relational type; at type $e$ it does under either choice of individuals, sending the one individual to the one individual, or each natural number to itself. So BF holds at $W_0$ by Classicism, Proposition 3.24(ii), and it holds at $W_1$, whose only arrow is the identity, so $\Box$BF holds.
-
-*By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-03.*
-
-### Fails B for pure sentences.
-
-The pure sentence that there are three pairwise distinct propositions is true at $W_0$ and false at $W_1$, from which no arrow returns.
-
-*By Claude Fable 5.1 (Anthropic), 2026-09-25.*
-
 ### Holds Distinctness-preserving collapse.
 
 For a true $p$, $a\le p$, since $a$ entails every truth. Take $q:=a$ in the definition of $\Box_{\ne}p$: at a world in $a$, $p$ holds; at a world outside $a$, $\Diamond a$ fails. So every truth is $\Box_{\ne}$-necessary.
@@ -77,7 +51,19 @@ For a true $p$, $a\le p$, since $a$ entails every truth. Take $q:=a$ in the defi
 
 *Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The finite-support, symmetric and full action models' copies (eight records) stated once for the topic; what varied, why no world outside the actual world sees back into it, is each record's reason for meeting actual-world-isolated.
 
-### Fails Infinity Schema (type t).
+### Fails B for pure sentences.
+
+The pure sentence $\exists p_1\ldots p_n\bigwedge_{i<j}p_i\ne p_j$ is true at the evaluation object and false at the world $V$ after it and at every world after $V$; so $\Diamond$ of it is false at $V$, and $\Box\Diamond$ of it false at the evaluation object. (The chain's own argument of 25 September, stated once.)
+
+*General argument `arguments/fewer-propositions-after`. It requires that For some $n$, the evaluation object has $n$ distinct propositions, while some world after it, and every world after that one, has fewer. Here: $W_0$ has four propositions and $W_1$, after which there is only itself, two. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Fails Possible Infinity (type t).
+
+At a world with $n$ propositions, the numeral $\operatorname{Suc}^n_t\mathbf{0}_t$, a finite cardinality, holds of the universal property of propositions, so the Axiom of Infinity at type $t$ fails there. It fails at every world, so Possible Infinity at type $t$ fails.
+
+*General argument `arguments/finitely-many-propositions-everywhere`. It requires that There are finitely many propositions at every object reachable from the evaluation point. Here: $W_0$ has four propositions and $W_1$ two. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Fails Infinity Schema (type t), Axiom of Infinity (type t).
 
 The propositions at the evaluation world are finitely many, and every intension of a full model is present, so the numerals are the finite cardinalities and one of them holds of the universal property of propositions: the Axiom of Infinity at type t fails, as does an instance of the schema.
 
@@ -85,11 +71,37 @@ The propositions at the evaluation world are finitely many, and every intension 
 
 *Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The copies in three full action models (each with four propositions) stated once for the topic; each record's count is its reason for meeting finitely-many-propositions.
 
+*Revised 2026-10-06 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The Axiom of Infinity's failure, which the text states, recorded as a verdict of its own, so that it is certified without the result that the Axiom implies the schema.
+
+### Holds □Atomicity.
+
+Entailment is inclusion of intensions. Below a relation $Y\ne\bot_\tau$ lies the relation whose intension is the singleton of one of $Y$'s tuples, which is in the domain since the model is full, and is an atom: its only proper part is $\bot_\tau$. Every object being full, the same holds at every arrow, so Atomicity is necessary. The source notes that full models are atomic (p. 61); stated once for the topic, in place of the full models' own arguments.
+
+*Source: Classicism, p. 61. General argument `arguments/full-atomicity`. It requires that The model is a full action model: an action model (Classicism, Appendix D) that is full at every object. Here: An action model, full at every object (Classicism, §3.5, p. 59; Appendix D). By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Holds □BF.
+
+BF holds at an object whose arrows out all act surjectively at every type (Proposition 3.24(ii)). In a full model the transport of intensions along an epimorphism $k$ is onto: an intension $Y$ at its target is the transport of $\{\langle\bar a,k\circ m\rangle : \langle\bar a,m\rangle\in Y\}$, since $k\circ m=k\circ m'$ only if $m=m'$; and on the individuals the arrows are onto by the condition. So BF holds at every object reachable from the evaluation point, and BF is necessary.
+
+*Source: Classicism, §3.5, Proposition 3.24(ii). General argument `arguments/full-epic-barcan`. It requires that The model is a full action model: an action model (Classicism, Appendix D) that is full at every object. Here: An action model, full at every object (Classicism, §3.5, p. 59; Appendix D). It requires that Every arrow out of every object reachable from the evaluation point is an epimorphism (arrows after it that agree after it are equal) and acts surjectively on the individuals. Here: Out of $W_1$ there is only the identity, so the arrow $W_0\to W_1$ is an epimorphism; and on the individuals every arrow is the identity. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Holds □Rigid Comprehension.
+
+Given $X$ of type $\tau$ at an object $W$, let $Y$ be the relation whose extension at an arrow $i$ out of $W$ is $X$'s extension at $W$ transported along $i$, which is in the domain since the model is full. It is coextensive with $X$. It is persistent, since its extension at $i\circ j$ is its extension at $i$ transported along $j$. And it is inextensible: if $\Box X'$ holds at $i$ of everything $Y$ holds of there, then at $i\circ j$ everything $Y$ holds of is the transport along $j$ of something $Y$ holds of at $i$, of which $X'$ then holds. Every object being full, the same holds at every arrow, so Rigid Comprehension is necessary. The source notes that full models satisfy it (p. 61); stated once for the topic, in place of the full models' own arguments.
+
+*Source: Classicism, p. 61. General argument `arguments/full-rigid-comprehension`. It requires that The model is a full action model: an action model (Classicism, Appendix D) that is full at every object. Here: An action model, full at every object (Classicism, §3.5, p. 59; Appendix D). By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
 ### Holds □Intensional Choice.
 
 For each object $U$ and type $\sigma$ fix a well-ordering $<_U$ of the domain $D^\sigma_U$, and let $W$ be the intension of type $\sigma\to\sigma\to t$ with $W(h):={<_{\operatorname{cod}h}}$. Its value depends only on the arrow's codomain, so by the condition it is in the domain, and at every world its extension well-orders that world's type-$\sigma$ domain. Given $F$ with $\Box\exists x\, .\,Fx$, put $G:=\lambda x\, .\,Fx\land\forall y\, .\,(Fy\to\neg Wyx)$, the $W$-least $F$. It is definable from $F$ and $W$, so in the domain; $G\le F$, and its extension at every arrow is the singleton of the least element of $F$'s. So Intensional Choice holds, and the same at every reachable object gives $\Box$Intensional Choice. Cian Dorr's observation that such models are qualitatively full, made precise.
 
 *General argument `arguments/intensional-choice-well-ordering`. It requires that At every object reachable from the evaluation point, the domain contains every intension whose value at an arrow depends only on the arrow's codomain. Here: The domains are full at every object. It requires that The model is constructed in a metatheory with the axiom of choice. Here: The constructions are carried out in ZFC. By Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion, 2026-10-03.*
+
+### Fails Fregean Axiom.
+
+The propositions $\top$ and $\{1\}$ are in the domain, the model being full; they are both true at the evaluation point and differ at the other arrow, so the Fregean Axiom fails.
+
+*Source: Classicism, p. 61. General argument `arguments/nonidentity-arrow`. It requires that The model is full: at each object, the domain of each relational type contains every intension of that type. Here: Every intension of every relational type is present at every object (Classicism, §3.5, p. 59). It requires that Some arrow out of the evaluation object is not its identity. Here: The arrow $W_0\to W_1$. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
 
 ### Fails Axiom of Infinity (type e), Infinity Schema (type e), Possible Infinity (type e).
 
@@ -156,6 +168,12 @@ For an equivalence relation at the evaluation point, a transversal of its extens
 *Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The Relational Choice and Transversal Choice arguments merged into one, stated for every extensionally full model.
 
 *Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic. Its first sentence, deriving extensional fullness from ideal fullness, is now the group's reason for meeting extensionally-full.
+
+### Fails ND (type t).
+
+Let $k$ out of the evaluation object have no retraction. The propositions $\bot$ and $\{1\}$ are in the domain, the model being full, and $k$ transports both to $\bot$: no arrow $m$ after $k$ has $m\circ k=1$. So $k$'s action at type $t$ is not injective, and ND fails there (Proposition 3.24(i)).
+
+*Source: Classicism, §3.5, Proposition 3.24(i). General argument `arguments/unretracted-arrow`. It requires that The model is full: at each object, the domain of each relational type contains every intension of that type. Here: Every intension of every relational type is present at every object (Classicism, §3.5, p. 59). It requires that Some arrow out of the evaluation object has no retraction. Here: There is no arrow from $W_1$ back to $W_0$. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
 
 
 ## Notes

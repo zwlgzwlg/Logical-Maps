@@ -141,7 +141,194 @@ theorem infinity_t : Statements.Arguments.finitely_many_propositions.infinity_t 
   have := Nat.card_le_card_of_injective f hf
   simp at this
 
+/-- The numeral counting the propositions holds of the universal property
+(`Premodel.not_holds_axInf_of_finite`). -/
+theorem axiom_of_infinity_t : Statements.Arguments.finitely_many_propositions.axiom_of_infinity_t := by
+  intro Sig C _ A M _ hfin H
+  have : Finite (A.reduct.Dom A.reduct.W₀ (.rel .t)) := hfin
+  rw [holdsAx_ofPure] at H
+  exact not_holds_axInf_of_finite (A.reduct_isModel M) (𝟙 _) (.rel .t) (H _ rfl)
+
 end finitely_many_propositions
+
+namespace finitely_many_propositions_everywhere
+
+/-- At every world the numeral counting the propositions holds of the universal property
+(`Premodel.not_holds_dia_axInf_of_finite`). -/
+theorem possible_infinity_t :
+    Statements.Arguments.finitely_many_propositions_everywhere.possible_infinity_t := by
+  intro Sig C _ A M hfin H
+  rw [holdsAx_ofPure] at H
+  exact not_holds_dia_axInf_of_finite (A.reduct_isModel M) (𝟙 _) (.rel .t)
+    (fun k => hfin (𝟙 _ ≫ k)) (H _ rfl)
+
+end finitely_many_propositions_everywhere
+
+namespace infinitely_many_individuals
+
+/-- The property of holding only of finite properties is in the domain
+(`Premodel.holds_axInf_of_infinite`). -/
+theorem axiom_of_infinity_e : Statements.Arguments.infinitely_many_individuals.axiom_of_infinity_e := by
+  intro Sig C _ A M hE hinf
+  have : Infinite (A.reduct.Dom A.reduct.W₀ .e) := hinf
+  rw [holdsAx_ofPure]
+  rintro _ rfl
+  exact holds_axInf_of_infinite (A.reduct_isModel M) hE (𝟙 _) .e
+
+theorem infinity_e : Statements.Arguments.infinitely_many_individuals.infinity_e := by
+  intro Sig C _ A M _ hinf
+  have : Infinite (A.reduct.Dom A.reduct.W₀ .e) := hinf
+  rw [holdsAx_ofPure]
+  rintro _ ⟨n, -, rfl⟩
+  exact holds_count_of_infinite (A.reduct_isModel M) (𝟙 _) .e n
+
+end infinitely_many_individuals
+
+namespace infinitely_many_propositions
+
+theorem axiom_of_infinity_t : Statements.Arguments.infinitely_many_propositions.axiom_of_infinity_t := by
+  intro Sig C _ A M hE hinf
+  have : Infinite (A.reduct.Dom A.reduct.W₀ (.rel .t)) := hinf
+  rw [holdsAx_ofPure]
+  rintro _ rfl
+  exact holds_axInf_of_infinite (A.reduct_isModel M) hE (𝟙 _) (.rel .t)
+
+theorem infinity_t : Statements.Arguments.infinitely_many_propositions.infinity_t := by
+  intro Sig C _ A M _ hinf
+  have : Infinite (A.reduct.Dom A.reduct.W₀ (.rel .t)) := hinf
+  rw [holdsAx_ofPure]
+  rintro _ ⟨n, -, rfl⟩
+  exact holds_count_of_infinite (A.reduct_isModel M) (𝟙 _) (.rel .t) n
+
+end infinitely_many_propositions
+
+namespace full_atomicity
+
+/-- Atomicity holds at every arrow of a full model (`Premodel.holds_box_atomicity`). -/
+theorem necessary_atomicity_r : Statements.Arguments.full_atomicity.necessary_atomicity_r := by
+  intro Sig C _ A M hF
+  rw [holdsAx_ofPure]
+  rintro _ ⟨ρ, -, rfl⟩
+  exact holds_box_atomicity (A.reduct_isModel M) hF (𝟙 _) ρ
+
+end full_atomicity
+
+namespace full_rigid_comprehension
+
+/-- Rigid Comprehension holds at every arrow of a full model
+(`Premodel.holds_box_rigid_comprehension`). -/
+theorem necessary_rigid_comprehension_r :
+    Statements.Arguments.full_rigid_comprehension.necessary_rigid_comprehension_r := by
+  intro Sig C _ A M hF
+  rw [holdsAx_ofPure]
+  rintro _ ⟨ρ, -, rfl⟩
+  exact holds_box_rigid_comprehension (A.reduct_isModel M) hF (𝟙 _) ρ
+
+end full_rigid_comprehension
+
+namespace full_epic_barcan
+
+/-- `BF` at every world of a full model whose arrows are epimorphisms acting surjectively on the
+individuals (`Premodel.holds_box_bf_of_epic`). -/
+theorem necessary_barcan_r : Statements.Arguments.full_epic_barcan.necessary_barcan_r := by
+  intro Sig C _ A M hF hE
+  rw [holdsAx_ofPure]
+  rintro _ ⟨σ, hσ, rfl⟩
+  exact holds_box_bf_of_epic (A.reduct_isModel M) hF hE (𝟙 _) σ hσ
+
+end full_epic_barcan
+
+namespace invertible_arrows
+
+theorem necessary_distinctness_necessary_r :
+    Statements.Arguments.invertible_arrows.necessary_distinctness_necessary_r := by
+  intro Sig C _ A M hI
+  rw [holdsAx_ofPure]
+  rintro _ ⟨σ, -, rfl⟩
+  exact holds_box_nd_of_invertible (A.reduct_isModel M) hI (𝟙 _) σ
+
+theorem necessary_barcan_r : Statements.Arguments.invertible_arrows.necessary_barcan_r := by
+  intro Sig C _ A M hI
+  rw [holdsAx_ofPure]
+  rintro _ ⟨σ, -, rfl⟩
+  exact holds_box_bf_of_invertible (A.reduct_isModel M) hI (𝟙 _) σ
+
+end invertible_arrows
+
+namespace retractions
+
+theorem distinctness_necessary_r : Statements.Arguments.retractions.distinctness_necessary_r := by
+  intro Sig C _ A M hr
+  rw [holdsAx_ofPure]
+  rintro _ ⟨σ, -, rfl⟩
+  exact holds_nd_of_retractions (A.reduct_isModel M) hr σ
+
+end retractions
+
+namespace unretracted_arrow
+
+theorem distinctness_necessary_t : Statements.Arguments.unretracted_arrow.distinctness_necessary_t := by
+  intro Sig C _ A M hF hU H
+  rw [holdsAx_ofPure] at H
+  exact not_holds_nd_t_of_unretracted (A.reduct_isModel M) hF hU (H _ rfl)
+
+end unretracted_arrow
+
+namespace nonidentity_arrow
+
+theorem fregean_axiom : Statements.Arguments.nonidentity_arrow.fregean_axiom := by
+  intro Sig C _ A M hF ⟨V, k, hk⟩ H
+  rw [holdsAx_ofPure] at H
+  exact A.reduct.not_fregean_of_propFull (A.reduct_isModel M) (Full.propFull _ hF) k hk (H _ rfl)
+
+end nonidentity_arrow
+
+namespace nonepic_strong_leibniz
+
+/-- The type-`t` Strong Leibniz Biconditionals fail in a full model with a non-epi arrow out of
+the evaluation object (`Premodel.not_holds_strongLeibnizT_of_nonepic`). -/
+theorem strong_leibniz_t : Statements.Arguments.nonepic_strong_leibniz.strong_leibniz_t := by
+  intro Sig C _ A M hF hN H
+  rw [holdsAx_ofPure] at H
+  exact not_holds_strongLeibnizT_of_nonepic (A.reduct_isModel M) hF hN (H _ rfl)
+
+end nonepic_strong_leibniz
+
+namespace dpc_returning_arrow
+
+/-- Distinctness-Preserving Collapse fails in a full model where some arrow other than the
+identity returns (`Premodel.not_holds_dpc_of_returning`). -/
+theorem distinctness_preserving_collapse :
+    Statements.Arguments.dpc_returning_arrow.distinctness_preserving_collapse := by
+  intro Sig C _ A M hF hR H
+  rw [holdsAx_ofPure] at H
+  exact not_holds_dpc_of_returning (A.reduct_isModel M) hF hR (H _ rfl)
+
+end dpc_returning_arrow
+
+namespace coherent_retractions
+
+/-- Gallin Extensional Comprehension holds in a full model with coherent retractions
+(`Premodel.holds_gallin_of_coherent`). -/
+theorem gallin_extensional_comprehension_r :
+    Statements.Arguments.coherent_retractions.gallin_extensional_comprehension_r := by
+  intro Sig C _ A M hF hR
+  rw [holdsAx_ofPure]
+  rintro _ ⟨ρ, -, rfl⟩
+  exact holds_gallin_of_coherent (A.reduct_isModel M) hF hR ρ
+
+end coherent_retractions
+
+namespace fewer_propositions_after
+
+/-- B for the pure sentence counting `n` propositions fails (`Premodel.not_holds_b_count`). -/
+theorem pure_b_r : Statements.Arguments.fewer_propositions_after.pure_b_r := by
+  intro Sig C _ A M hF H
+  rw [holdsAx_ofPure] at H
+  obtain ⟨n, hn⟩ := not_holds_b_count (A.reduct_isModel M) hF
+  exact hn (H _ ⟨Count.closedTypes_b_count (by decide) n, _, rfl⟩)
+
+end fewer_propositions_after
 
 /-! ## Arguments of the finite-support models on one object -/
 

@@ -344,10 +344,6 @@ theorem necessary_distinctness_necessary_r : Statements.Models.full_idempotent_m
   verdict_fails M <|
     not_holdsAx_of ⟨.rel .t, by simp, rfl⟩ (fun h => Idem.not_nd_t (holdsSentence_of_box _ M h))
 
-theorem distinctness_necessary_t : Statements.Models.full_idempotent_monoid.distinctness_necessary_t :=
-  verdict_fails M <|
-    not_holdsAx_of rfl (Idem.not_nd_t)
-
 theorem necessary_distinctness_necessary_t : Statements.Models.full_idempotent_monoid.necessary_distinctness_necessary_t :=
   verdict_fails M <|
     not_holdsAx_of rfl (fun h => Idem.not_nd_t (holdsSentence_of_box _ M h))
@@ -368,10 +364,6 @@ theorem necessary_barcan_t : Statements.Models.full_idempotent_monoid.necessary_
   verdict_fails M <|
     not_holdsAx_of rfl (fun h => Idem.not_bf_t (holdsSentence_of_box _ M h))
 
-theorem fregean_axiom : Statements.Models.full_idempotent_monoid.fregean_axiom :=
-  verdict_fails M <|
-    not_holdsAx_of rfl (Idem.not_fregean)
-
 theorem necessary_fregean_axiom : Statements.Models.full_idempotent_monoid.necessary_fregean_axiom :=
   verdict_fails M <|
     not_holdsAx_of rfl (fun h => Idem.not_fregean (holdsSentence_of_box _ M h))
@@ -386,10 +378,6 @@ theorem distinctness_necessary_r : Statements.Models.full_involution_group.disti
   verdict_holds M <|
     holdsAx_indexed.2 fun σ _ => holdsSentence_of_box _ M (Invol.box_nd σ)
 
-theorem necessary_distinctness_necessary_r : Statements.Models.full_involution_group.necessary_distinctness_necessary_r :=
-  verdict_holds M <|
-    holdsAx_indexed.2 fun σ _ => Invol.box_nd σ
-
 theorem distinctness_necessary_t : Statements.Models.full_involution_group.distinctness_necessary_t :=
   verdict_holds M <|
     holdsAx_eq.2 (holdsSentence_of_box _ M (Invol.box_nd (.rel .t)))
@@ -402,10 +390,6 @@ theorem barcan_r : Statements.Models.full_involution_group.barcan_r :=
   verdict_holds M <|
     holdsAx_indexed.2 fun σ _ => holdsSentence_of_box _ M (Invol.box_bf σ)
 
-theorem necessary_barcan_r : Statements.Models.full_involution_group.necessary_barcan_r :=
-  verdict_holds M <|
-    holdsAx_indexed.2 fun σ _ => Invol.box_bf σ
-
 theorem barcan_t : Statements.Models.full_involution_group.barcan_t :=
   verdict_holds M <|
     holdsAx_eq.2 (holdsSentence_of_box _ M (Invol.box_bf (.rel .t)))
@@ -413,10 +397,6 @@ theorem barcan_t : Statements.Models.full_involution_group.barcan_t :=
 theorem necessary_barcan_t : Statements.Models.full_involution_group.necessary_barcan_t :=
   verdict_holds M <|
     holdsAx_eq.2 (Invol.box_bf (.rel .t))
-
-theorem fregean_axiom : Statements.Models.full_involution_group.fregean_axiom :=
-  verdict_fails M <|
-    not_holdsAx_of rfl (Invol.not_fregean)
 
 theorem necessary_fregean_axiom : Statements.Models.full_involution_group.necessary_fregean_axiom :=
   verdict_fails M <|
@@ -436,17 +416,9 @@ theorem necessary_distinctness_necessary_r : Statements.Models.full_surjection_m
   verdict_fails M <|
     not_holdsAx_of ⟨.rel .t, by simp, rfl⟩ (fun h => Classicism.Meta.Intensional.FullActionModels.surj_not_nd_t (holdsSentence_of_box _ M h))
 
-theorem distinctness_necessary_t : Statements.Models.full_surjection_monoid.distinctness_necessary_t :=
-  verdict_fails M <|
-    not_holdsAx_of rfl (Classicism.Meta.Intensional.FullActionModels.surj_not_nd_t)
-
 theorem necessary_distinctness_necessary_t : Statements.Models.full_surjection_monoid.necessary_distinctness_necessary_t :=
   verdict_fails M <|
     not_holdsAx_of rfl (fun h => Classicism.Meta.Intensional.FullActionModels.surj_not_nd_t (holdsSentence_of_box _ M h))
-
-theorem fregean_axiom : Statements.Models.full_surjection_monoid.fregean_axiom :=
-  verdict_fails M <|
-    not_holdsAx_of rfl (Classicism.Meta.Intensional.FullActionModels.surj_not_fregean)
 
 theorem necessary_fregean_axiom : Statements.Models.full_surjection_monoid.necessary_fregean_axiom :=
   verdict_fails M <|
@@ -462,10 +434,6 @@ theorem distinctness_necessary_r : Statements.Models.full_permutation_group_infi
   verdict_holds M <|
     holdsAx_indexed.2 fun σ _ => holdsSentence_of_box _ M (Classicism.Meta.Intensional.FullActionModels.perm_box_nd σ)
 
-theorem necessary_distinctness_necessary_r : Statements.Models.full_permutation_group_infinite_set.necessary_distinctness_necessary_r :=
-  verdict_holds M <|
-    holdsAx_indexed.2 fun σ _ => Classicism.Meta.Intensional.FullActionModels.perm_box_nd σ
-
 theorem distinctness_necessary_t : Statements.Models.full_permutation_group_infinite_set.distinctness_necessary_t :=
   verdict_holds M <|
     holdsAx_eq.2 (holdsSentence_of_box _ M (Classicism.Meta.Intensional.FullActionModels.perm_box_nd (.rel .t)))
@@ -478,10 +446,6 @@ theorem barcan_r : Statements.Models.full_permutation_group_infinite_set.barcan_
   verdict_holds M <|
     holdsAx_indexed.2 fun σ _ => holdsSentence_of_box _ M (Classicism.Meta.Intensional.FullActionModels.perm_box_bf σ)
 
-theorem necessary_barcan_r : Statements.Models.full_permutation_group_infinite_set.necessary_barcan_r :=
-  verdict_holds M <|
-    holdsAx_indexed.2 fun σ _ => Classicism.Meta.Intensional.FullActionModels.perm_box_bf σ
-
 theorem barcan_t : Statements.Models.full_permutation_group_infinite_set.barcan_t :=
   verdict_holds M <|
     holdsAx_eq.2 (holdsSentence_of_box _ M (Classicism.Meta.Intensional.FullActionModels.perm_box_bf (.rel .t)))
@@ -489,10 +453,6 @@ theorem barcan_t : Statements.Models.full_permutation_group_infinite_set.barcan_
 theorem necessary_barcan_t : Statements.Models.full_permutation_group_infinite_set.necessary_barcan_t :=
   verdict_holds M <|
     holdsAx_eq.2 (Classicism.Meta.Intensional.FullActionModels.perm_box_bf (.rel .t))
-
-theorem fregean_axiom : Statements.Models.full_permutation_group_infinite_set.fregean_axiom :=
-  verdict_fails M <|
-    not_holdsAx_of rfl (Classicism.Meta.Intensional.FullActionModels.perm_not_fregean)
 
 theorem necessary_fregean_axiom : Statements.Models.full_permutation_group_infinite_set.necessary_fregean_axiom :=
   verdict_fails M <|
@@ -512,17 +472,9 @@ theorem necessary_distinctness_necessary_r : Statements.Models.full_two_object_c
   verdict_fails M <|
     not_holdsAx_of ⟨.rel .t, by simp, rfl⟩ (fun h => Classicism.Meta.Intensional.FullActionModels.chain_not_nd_t (holdsSentence_of_box _ M h))
 
-theorem distinctness_necessary_t : Statements.Models.full_two_object_chain.distinctness_necessary_t :=
-  verdict_fails M <|
-    not_holdsAx_of rfl (Classicism.Meta.Intensional.FullActionModels.chain_not_nd_t)
-
 theorem necessary_distinctness_necessary_t : Statements.Models.full_two_object_chain.necessary_distinctness_necessary_t :=
   verdict_fails M <|
     not_holdsAx_of rfl (fun h => Classicism.Meta.Intensional.FullActionModels.chain_not_nd_t (holdsSentence_of_box _ M h))
-
-theorem fregean_axiom : Statements.Models.full_two_object_chain.fregean_axiom :=
-  verdict_fails M <|
-    not_holdsAx_of rfl (Classicism.Meta.Intensional.FullActionModels.chain_not_fregean)
 
 theorem necessary_fregean_axiom : Statements.Models.full_two_object_chain.necessary_fregean_axiom :=
   verdict_fails M <|
@@ -533,10 +485,6 @@ end full_two_object_chain
 namespace full_two_object_retract
 
 local notation "M" => Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _
-
-theorem distinctness_necessary_r : Statements.Models.full_two_object_retract.distinctness_necessary_r :=
-  verdict_holds M <|
-    holdsAx_indexed.2 fun σ _ => Classicism.Meta.Intensional.FullActionModels.retract_nd σ
 
 theorem distinctness_necessary_t : Statements.Models.full_two_object_retract.distinctness_necessary_t :=
   verdict_holds M <|
@@ -557,10 +505,6 @@ theorem barcan_t : Statements.Models.full_two_object_retract.barcan_t :=
 theorem necessary_barcan_t : Statements.Models.full_two_object_retract.necessary_barcan_t :=
   verdict_fails M <|
     not_holdsAx_of rfl (fun h => Classicism.Meta.Intensional.FullActionModels.retract_not_bf_t (holdsSentence_of_box _ M h))
-
-theorem fregean_axiom : Statements.Models.full_two_object_retract.fregean_axiom :=
-  verdict_fails M <|
-    not_holdsAx_of rfl (Classicism.Meta.Intensional.FullActionModels.retract_not_fregean)
 
 theorem necessary_fregean_axiom : Statements.Models.full_two_object_retract.necessary_fregean_axiom :=
   verdict_fails M <|
@@ -649,6 +593,13 @@ instance : Fintype Idem := ⟨{.one, .k}, fun x => by cases x <;> simp⟩
 instance : Fintype Invol := ⟨{.one, .k}, fun x => by cases x <;> simp⟩
 
 namespace full_idempotent_monoid
+
+/-- `k` has no retraction: `m · k = k` for both arrows `m`. -/
+theorem unretracted : (MSet.model Idem).UnretractedArrow :=
+  ⟨CategoryTheory.SingleObj.star Idem,
+    (Idem.k : CategoryTheory.SingleObj.star Idem ⟶ CategoryTheory.SingleObj.star Idem),
+    fun (m : CategoryTheory.SingleObj.star Idem ⟶ CategoryTheory.SingleObj.star Idem) e =>
+      Idem.k_ne_one ((Idem.mul_k m).symm.trans (show (show Idem from m) * Idem.k = 1 from e))⟩
 
 /-- The actual-world proposition `{1}` is isolated: the only other arrow is `k`, and every
 arrow after `k` is `k` again. -/
