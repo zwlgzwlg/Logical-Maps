@@ -310,10 +310,10 @@ try{
   assert.ok(vd&&vd.hidden&&/\+1 variant/.test(inner()[0].querySelector('.model-heading').textContent),'A member\'s variants are tucked under it, counted on its line');
   assert.ok(exRows()[0].querySelector(':scope > .ex-sub').querySelector('button[data-ex-twisty="variants"]'),'Behind a triangle of their own');
   assert.match(vd.querySelector('button[data-open-model="gm-sigma-atom"]').textContent,/^Σ atom$/,'A variant is named by what it changes');
-  w3.eval('setAssumption("e","negative")');
+  w3.eval('setTheoryAssumption("e","negative")');
   vd=inner()[0].querySelector('[data-ex-variants]');
   assert.ok(!vd.hidden&&inner()[0].classList.contains('ex-unfit')&&/does not fit/.test(inner()[0].textContent),'When only the variant fits, the member heads it and its variants open');
-  w3.eval('setAssumption("e","positive")');
+  w3.eval('setTheoryAssumption("e","positive")');
   assert.ok(!inner()[0].querySelector('[data-ex-variants]'),'No variant fits: none is listed');
   assert.match(exRows()[0].textContent,/1 of 2 models\s*Σ top/,'Only the member assumes E; the description names its Σ');
   const head=exRows()[0].querySelector('[data-ex-inspect="group"]');
@@ -328,7 +328,7 @@ try{
   assert.equal(d3.getElementById('pop').hidden,popBefore,'Its name opens no pop-up');
   assert.match(d3.querySelector('#page h1').textContent,/Fixture group/,'But its page');
   d3.querySelector('#page-back').click();
-  w3.eval('setAssumption("e",null)');
+  w3.eval('setTheoryAssumption("e",null)');
   assert.ok(!/model-(in|out|split)/.test(exP('e').className)&&/1✓ 1✗/.test(exP('e').textContent),'And notes a split, untinted');
   // A list of witnesses gathers a group's models into one entry.
   const line=d3.createElement('div');line.innerHTML=w3.eval('statusLine("X", {status:"independent", models:["gm","gm-sigma-atom"]})');

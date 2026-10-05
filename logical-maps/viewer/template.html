@@ -4319,6 +4319,7 @@ document.getElementById('fit').addEventListener('click', fit);
   });
   el.querySelectorAll('[data-category-select]').forEach(b => b.addEventListener('click', () => setSelection(b.closest('.pr-category').querySelectorAll('.pr-row'), b.dataset.categorySelect === 'all')));
   document.getElementById('pr-none').addEventListener('click', () => setSelection(el.querySelectorAll('.pr-row'), false));
+  document.getElementById('pr-all').addEventListener('click', () => setSelection(el.querySelectorAll('.pr-row'), true));
   el.querySelectorAll('[data-add-background]').forEach(b => b.addEventListener('click', () => changeBackground(b.dataset.addBackground, true)));
   const presets = document.getElementById('background-presets');
   presets.innerHTML = backgroundPresets.map(p => `<button class="btn small" data-background-preset="${esc(p.id)}">Background ${esc(p.name)}</button>`).join('');
@@ -5212,8 +5213,10 @@ function syncViewPicker(pre, views, choice, modified) {
 // a short choice; size it to the entry showing instead.
 function fitSelect(select) {
   const text = select.options[select.selectedIndex]?.textContent || '';
+  if (typeof CanvasRenderingContext2D === 'undefined') return;  // no canvas, as in a test DOM: the menu keeps its natural width
   const style = getComputedStyle(select), ctx = (fitSelect.canvas ||= document.createElement('canvas')).getContext('2d');
-  ctx.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+  if (!ctx) return;
+  ctx.font =`${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
   select.style.width = Math.ceil(ctx.measureText(text).width + 38) + 'px';
 }
 function syncViews() {
