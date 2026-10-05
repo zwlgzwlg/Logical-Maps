@@ -236,11 +236,75 @@ arguments:
     proposition that $a$ and $b$ are distinct is true, and it is possible at no arrow that
     collapses them, since a collapse persists under composition, so $w\not\le\Diamond(a\ne b)$.
 
+# In reserve: verdicts the record stated directly before it was written as arguments, which
+# the engine also derives from the arguments above. Each comes back with the change-log entry
+# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
+
+- fails: [distinctness-necessary-r, atomicity-r, actuality, rigid-comprehension-r]
+  reserve: true
+  source: {paper: bacon-dorr-classicism, locator: "Appendix D, Proposition D.5(3), pp. 74–75; construction p. 77; p. 79 (No Pure Contingency)"}
+
+- holds: [axiom-of-infinity-t]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-20'
+  text: >-
+    Added both Axioms of Infinity at Cian Dorr's direction. The individuals are the natural
+    numbers and identity at the evaluation arrow is literal, so no numeral counts them. The
+    propositions that a given individual is fixed by the arrow, one for each individual, are
+    pairwise distinct and each has that individual as finite support, so there are infinitely
+    many propositions. The set of numerals at each type is invariant under every arrow, hence
+    has empty support and lies in the domain, so finite cardinality is standard and no finite
+    cardinality holds of the universal property at either type.
+
+- fails: [separated-structure-r, distinctness-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
+    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+
+- holds: [necessary-relational-choice-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    Added Relational Choice and its necessitation at Cian Dorr’s direction: ideally full models
+    are extensionally full at every object, and choice in the metatheory supplies the functional
+    subrelation; see the notes.
+
+- fails: [inextensible-comprehension-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    Recorded the failure of Inextensible Comprehension at type e→t for the property of being
+    even, sharpening the failure of Actuality; argument in the notes.
+
 # migration: text of the old notes that no argument holds, verbatim: their first two sentences.
+# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
+# written as arguments that no argument keeps (5 October 2026).
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
-  identifies its evaluation point; construction and verification are given at the PDF locations in
-  References.
+  identifies its evaluation point; construction and verification are given at the PDF locations
+  in References.
+
+  ND, Actuality and Atomicity fail, Atomlessness holds, and Boolean Completeness fails as in
+  part 2.
+
+  Countable Boolean Completeness fails as well, at type $e\to t$: the property $E$ that the
+  source shows to lack a least upper bound has as its extension a countable family of
+  haecceities, and the extensional fullness the source invokes to put $E$ in the domain also
+  puts in the relation pairing the haecceity of the $k$-th member of that family with the
+  numeral $k$, which injects $E$ into the numerals. So $\langle b,i\rangle\in Y\setminus
+  B_{N^{\prime}}$, and $Y$ is not even weakly inextensible, so Weakly Inextensible Comprehension
+  fails too. Observation of 23 September 2026, answering Cian Dorr’s question whether the
+  failure of Actuality can be sharpened to a failure of Inextensible Comprehension. Observation
+  of 23 September 2026, answering Cian Dorr’s question whether the failure of BF sharpens to
+  type $t$. Boolean Completeness fails at type $t$ as well, which the source (n. 92) conjectures
+  but does not show. Observation of Claude Fable 5.1 (Anthropic), 25 September 2026; not in the
+  source.
 
 was_conjectured: true
 

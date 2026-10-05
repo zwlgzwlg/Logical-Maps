@@ -89,6 +89,7 @@ arguments:
     .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what
     the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since
     $c=\top_\tau$ is a true identity that C(Σ) does not prove.
+    Everything that implies these fails with them.
 
 - fails: [relational-choice-r]
   # migration: the closing "Argument of 23 September 2026, after Cian Dorr’s observation that a
@@ -126,14 +127,49 @@ arguments:
     fails already for selection from two-element properties of individuals; haecceity coding gives
     an admitted relational-output counterinstance to Functional Choice.
 
+# In reserve: verdicts the record stated directly before it was written as arguments, which
+# the engine also derives from the arguments above. Each comes back with the change-log entry
+# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
+
+- fails: [necessary-actuality]
+  reserve: true
+  source: {paper: bacon-dorr-classicism, locator: "Appendix D, p. 79, final construction (two copies of N)"}
+
+- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
+    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+
+- fails: [distinctness-preserving-collapse]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    Expanded the description from Appendix D; settled the Distinctness-preserving collapse.
+
+- fails: [functional-choice-r]
+  reserve: true
+  by: OpenAI Codex (GPT-6)
+  date: '2026-09-24'
+  text: >-
+    Resolved the choice questions by the finite-support transposition argument in the
+    accompanying write-up. Relational Choice fails already for selection from two-element
+    properties of individuals; haecceity coding gives an admitted relational-output
+    counterinstance to Functional Choice. The original construction and its source attribution
+    are unchanged; these choice verifications are new.
+
 # migration: text of the old notes that no argument holds, verbatim.
+# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
-  identifies its evaluation point; construction and verification are given at the PDF locations in
-  References. Everything that implies these fails with them. Plenitude still holds by C5 plus
-  Actuality and Propositions 2.5 and 2.14, so this model separates it from Functional Choice even
-  under C5, Rigid Comprehension and Boolean Completeness. This does not settle whether C5 plus
-  Functional Choice implies Atomicity: the model fails the proposed premise.
+  identifies its evaluation point; construction and verification are given at the PDF locations
+  in References. Plenitude still holds by C5 plus Actuality and Propositions 2.5 and 2.14, so
+  this model separates it from Functional Choice even under C5, Rigid Comprehension and Boolean
+  Completeness. This does not settle whether C5 plus Functional Choice implies Atomicity: the
+  model fails the proposed premise.
 
 was_conjectured: true
 

@@ -106,6 +106,7 @@ arguments:
     $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since
     $c$ denotes what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism
     (signature Σ) fails since $c=\top_\tau$ is a true identity that C(Σ) does not prove.
+    Everything that implies these fails with them.
 
 - fails: [countable-boolean-completeness-r]
   # migration: the lead-in "Countable Boolean Completeness fails as well, at type $e\to t$:"
@@ -214,12 +215,102 @@ arguments:
     by: Claude Opus 5.5 (Anthropic)
     note: Merged with the 25 September version; the argument already refutes the weak form, which was added.
 
+# In reserve: verdicts the record stated directly before it was written as arguments, which
+# the engine also derives from the arguments above. Each comes back with the change-log entry
+# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
+
+- holds: [necessary-atomicity-r]
+  fails: [distinctness-necessary-r, barcan-r, rigid-comprehension-r]
+  reserve: true
+  source: {paper: bacon-dorr-classicism, locator: "Appendix D, Proposition D.5(6), pp. 74–75; construction p. 78, Part 6; p. 79 (No Pure Contingency)"}
+
+- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
+    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+
+- holds: [necessary-relational-choice-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    Added Relational Choice and its necessitation at Cian Dorr’s direction: ideally full models
+    are extensionally full at every object, and choice in the metatheory supplies the functional
+    subrelation; see the notes.
+
+- fails: [strong-leibniz-t]
+  reserve: true
+  by: OpenAI Codex (GPT-6)
+  date: '2026-09-25'
+  provenance: admission-c0a37bbe6b6c45cc985428b174812564
+  text: >-
+    Confirmed the trawl's Strong Leibniz-t failure: an admitted nonidentity-idempotent singleton
+    shifts to a set containing both the identity and the idempotent, which a target-domain
+    proposition separates. Quantifiers inside the box range over the entire target domain. The
+    boxed failure follows by T.
+
+- fails: [inextensible-comprehension-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    Recorded the failure of Inextensible Comprehension at type e→t for the property of being
+    even, sharpening the failure of Actuality; argument in the notes.
+
+- fails: [barcan-t]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    Recorded the failure of BF at type t, sharpening the failure of BF; argument in the notes.
+
+- fails: [vicinity]
+  reserve: true
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request
+  date: '2026-09-27'
+  text: >-
+    Recorded the failure of Vicinity; argument in the notes.
+
 # migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
 # the sentence that followed the Σ argument (sigma-top), referring to its failures.
+# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
+# written as arguments that no argument keeps (5 October 2026).
+# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
   identifies its evaluation point; construction and verification are given at the PDF locations
-  in References. Everything that implies these fails with them.
+  in References.
+
+  BF fails since an arrow sending $1$ to $0$ sends everything to $0$; Actuality fails because
+  the strongest true proposition pinned down by $\{0,\ldots,n\}$ is $\{1_{\mathbb
+  N}\}\cup\{g_m:m\ge n\}$, ever stronger as $n$ grows; Atomicity holds because every nonempty
+  proposition contains some $g_n$ and each $\{g_n\}$ is pinned down by a finite set
+  ($\{n-1,n,n+1\}$ for $n>0$, $\{0,1\}$ for $n=0$); Boolean Completeness fails because the
+  strongest persistent property with extension $\mathbb N$ pinned down by $\{0,\ldots,n\}$
+  becomes ever stronger.
+
+  Countable Boolean Completeness fails as well, at type $e\to t$: the property $E$ that the
+  source shows to lack a least upper bound has as its extension a countable family of
+  haecceities, and the extensional fullness the source invokes to put $E$ in the domain also
+  puts in the relation pairing the haecceity of the $k$-th member of that family with the
+  numeral $k$, which injects $E$ into the numerals. Boolean Completeness fails at type $t$ as
+  well, which the source (n. 92) conjectures but does not show. Observation of Claude Fable 5.1
+  (Anthropic), 23 September 2026, prompted by Cian Dorr; not in the source.
+
+  Strong Leibniz-t fails by the nonidentity-idempotent singleton witness in
+  writeups/strong-worlds-one-object-action-models.md. The successor quantifier ranges over all
+  propositions at the target object, including ones outside the transported image. The same
+  write-up gives an explicit finitely pinned BF-t counterexample, also covered by source
+  footnote 92; BF-t and its boxed form now fail under the engine's closure as well.
+
+  A true $w$ pinned down by a finite set $S$ contains every arrow agreeing with the identity on
+  $S$, among them the truncation $g_n$ with $n$ above $S$, one that collapses two individuals
+  $a\ne b$ outside $S$. The proposition that $a$ and $b$ are distinct is true, and it is
+  possible at no arrow that collapses them, since a collapse persists under composition, so
+  $w\not\le\Diamond(a\ne b)$. Observation of Claude Opus 5.5 (Anthropic), 27 September 2026.
 
 was_conjectured: true
 # The old `changes` log, verbatim and frozen.

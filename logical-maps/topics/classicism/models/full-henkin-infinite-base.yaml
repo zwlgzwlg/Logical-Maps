@@ -75,22 +75,77 @@ arguments:
     .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what
     the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since
     $c=\top_\tau$ is a true identity that C(Σ) does not prove.
+    Everything that implies these fails with them.
+
+# In reserve: verdicts the record stated directly before it was written as arguments, which
+# the engine also derives from the arguments above. Each comes back with the change-log entry
+# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
+
+- holds: [infinity-e, necessary-fregean-axiom, modalized-fregean, extensionality-r, necessary-extensionality-r, intensionality-r, functionality-r, modalized-functionality-r, necessary-functionality-r, plenitude-r, necessary-plenitude-r, relational-choice-r, tractarianism-r, necessary-tractarianism-r, necessary-distinctness-necessary-r, necessary-actuality, necessary-atomicity-r, necessary-boolean-completeness-r, necessary-rigid-comprehension-r, necessary-gallin-extensional-comprehension-r, no-pure-contingency-r, distinctness-preserving-collapse]
+  fails: [axiom-of-infinity-t, infinity-t, possible-infinity-t, possibility-schema-r]
+  reserve: true
+  source: {paper: bacon-dorr-classicism, locator: "§3.2, Definition 3.6 and Proposition 3.7, pp. 47–48"}
+
+- holds: [strong-leibniz-r, necessary-strong-leibniz-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Added the Strong Leibniz Biconditionals and their necessitation. Box is truth in this model,
+    so a strong world is an atom and the principle reduces to Atomicity, which holds; boxed
+    principles reduce to their unboxed forms.
+
+- holds: [no-contingency-signature-r, signature-b-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Added No Contingency (signature Σ) and B for sentences of Σ: Box is truth in this model, so
+    every closed sentence, whatever the constants denote, is necessary if true and necessarily
+    possible if true.
+
+- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
+    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+
+- holds: [necessary-relational-choice-r, necessary-functional-choice-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Boxed the two Choice claims.
 
 # migration: text of the old notes that no argument holds, verbatim; "listed" in the second sentence
 # now means derived. The sentences on No Contingency (signature Σ) and on the boxed choice
 # principles, whose verdicts are now derived, are dropped.
+# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
+# written as arguments that no argument keeps (5 October 2026).
+# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
 notes: >-
   Explicit specialization of the source's standard Henkin construction to an infinite individual
   domain, recorded to separate the type-$e$ infinity principles from the type-$t$ ones: it
   satisfies the Axiom of Infinity at type $e$, hence Possible Infinity at type $e$, while
   violating the Axiom of Infinity at type $t$. It also shows that the sentence used in
   pure-possibility-implies-axiom-of-infinity-t, that there could be any positive number of
-  individuals, does not follow from the Axiom of Infinity at type $e$: here there is not possibly
-  exactly one individual. It also witnesses the consistency of C with Goodsell's $I$, assumed in
-  n. 14 of Arithmetic is Necessary: with infinitely many individuals the numerals are pairwise
-  distinct, so $\operatorname{Suc}_e$ is injective on finite cardinalities and $I^*$, hence $I$,
-  is true. With Boolean Completeness listed, the model also shows Countable Boolean Completeness
-  consistent with C. Everything that implies these fails with them.
+  individuals, does not follow from the Axiom of Infinity at type $e$: here there is not
+  possibly exactly one individual. It also witnesses the consistency of C with Goodsell's $I$,
+  assumed in n. 14 of Arithmetic is Necessary: with infinitely many individuals the numerals are
+  pairwise distinct, so $\operatorname{Suc}_e$ is injective on finite cardinalities and $I^*$,
+  hence $I$, is true. With Boolean Completeness listed, the model also shows Countable Boolean
+  Completeness consistent with C.
+
+  At type $t$ the second numeral holds of $\lambda p\, .\,\top$, so the Axiom of Infinity at
+  type $t$ fails, as does the third instance of the schema, and Possible Infinity at type $t$
+  fails because $\Diamond$ is truth. Possibility Maximalism (pure) fails since the C-consistent
+  pure sentence that there is exactly one individual is false.
+
+  No Contingency (signature Σ) and B for sentences of Σ hold in a one-world model however the
+  constants are interpreted. Box is truth in this one-world model, so □Relational Choice and
+  □Functional Choice hold with their unboxed forms.
 
 # The old `changes` log, verbatim and frozen.
 history:

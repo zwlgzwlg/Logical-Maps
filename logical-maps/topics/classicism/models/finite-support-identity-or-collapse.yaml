@@ -113,6 +113,7 @@ arguments:
     identity that C(Σ) does not prove. The designated constant refutes neither: closed pure terms
     denote entities fixed by every arrow (Classicism, §3.5, p. 58), whereas $a$ is fixed by no
     arrow but the identity, so no closed pure term denotes $\lambda\bar x\, .\,a$.
+    Everything that implies these fails with them.
   revisions:
   - date: '2026-09-23'
     by: Claude Fable 5.1 (Anthropic)
@@ -224,12 +225,71 @@ arguments:
     Atomicity-t also fails, as already specified by the source's footnote 92 and checked by
     splitting any nonempty finitely pinned subproposition of the false proposition h(0)=h(1)=0.
 
+# In reserve: verdicts the record stated directly before it was written as arguments, which
+# the engine also derives from the arguments above. Each comes back with the change-log entry
+# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
+
+- holds: [necessary-actuality]
+  fails: [distinctness-necessary-r, rigid-comprehension-r]
+  reserve: true
+  source: {paper: bacon-dorr-classicism, locator: "Appendix D, Proposition D.5(4), pp. 74–75; construction p. 78, Part 4; p. 79 (No Pure Contingency)"}
+
+- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
+    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+
+- fails: [no-contingency-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    Re-fixed the interpretation of Σ so as to settle No Contingency (signature Σ) and B for
+    sentences of Σ, at Cian Dorr’s request; see the notes.
+
+- holds: [necessary-relational-choice-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    Added Relational Choice and its necessitation at Cian Dorr’s direction: ideally full models
+    are extensionally full at every object, and choice in the metatheory supplies the functional
+    subrelation; see the notes.
+
+- holds: [transversal-choice-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-25'
+  text: >-
+    Added Transversal Choice, by the argument recorded for Relational Choice: the model is
+    extensionally full at every object, so for an equivalence relation at the evaluation point a
+    transversal of its extension there, chosen in the metatheory, is the extension of an element
+    pinned down by the empty set; the equivalence and transversal conditions are unboxed.
+    Recorded on a question of Zachary Goodsell, after an observation of Christopher Sun.
+
 # migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
 # the sentence that followed the Σ argument, referring to its failures.
+# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
+# written as arguments that no argument keeps (5 October 2026).
+# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
-  identifies its evaluation point; construction and verification are given at the PDF locations in
-  References. Everything that implies these fails with them.
+  identifies its evaluation point; construction and verification are given at the PDF locations
+  in References.
+
+  Actuality holds because the identity is the only arrow that does not collapse $0$ and $1$, so
+  $\{1_{\mathbb N}\}$ is pinned down by $\{0,1\}$; the actual world is the only world,
+  Atomlessness restricted to false propositions holds, and Atomicity fails; BF, ND and Boolean
+  Completeness fail as in part 3.
+
+  Countable Boolean Completeness fails as well, at type $e\to t$: the property $E$ that the
+  source shows to lack a least upper bound has as its extension a countable family of
+  haecceities, and the extensional fullness the source invokes to put $E$ in the domain also
+  puts in the relation pairing the haecceity of the $k$-th member of that family with the
+  numeral $k$, which injects $E$ into the numerals.
 
 was_conjectured: true
 

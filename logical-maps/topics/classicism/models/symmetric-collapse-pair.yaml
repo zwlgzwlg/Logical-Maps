@@ -123,6 +123,7 @@ arguments:
     identity that C(Σ) does not prove. The designated constant refutes neither: closed pure terms
     denote entities fixed by every arrow (Classicism, §3.5, p. 58), whereas $a$ is fixed by no
     arrow but the identity, so no closed pure term denotes $\lambda\bar x\, .\,a$.
+    Everything that implies these fails with them.
   revisions:
   - date: '2026-09-23'
     by: Claude Fable 5.1 (Anthropic)
@@ -169,16 +170,50 @@ arguments:
     well-ordering of the individuals that Cian Dorr had in mind is refuted by the same two facts,
     but the direct route needs no derivation of a well-ordering from Relational Choice in C.
 
+# In reserve: verdicts the record stated directly before it was written as arguments, which
+# the engine also derives from the arguments above. Each comes back with the change-log entry
+# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
+
+- holds: [necessary-boolean-completeness-r, necessary-barcan-r, necessary-actuality, necessary-rigid-comprehension-r]
+  fails: [distinctness-necessary-r]
+  reserve: true
+  source: {paper: dorr-bc-not-rc, locator: "§3.1, p. 9; Lemma 21, p. 10; Proposition 22, p. 11; Proposition 24, p. 13; Corollary 37 and Remark 38, p. 19"}
+
+- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
+    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+
+- fails: [no-contingency-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    Re-fixed the interpretation of Σ so as to settle No Contingency (signature Σ) and B for
+    sentences of Σ, at Cian Dorr’s request; see the notes.
+
 # migration: text of the old notes that no argument holds, verbatim. Their argument for the failure
 # of ND, now derived, is dropped.
+# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
+# written as arguments that no argument keeps (5 October 2026).
+# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
 notes: >-
   This model is not a second witness to the draft's main result but a counterweight to it. Rigid
   Comprehension holds, so the failure of Actuality in the all-surjections model is no accident.
   Because Atomicity fails here, the model settles a question left open in Classicism: Rigid
-  Comprehension does not imply Atomicity. The boxed forms of Actuality and Rigid Comprehension use
-  the draft's one-object observation, which it states for Boolean Completeness and applies in the
-  same way in its final section. The source is a work in progress. Everything that implies these
-  fails with them.
+  Comprehension does not imply Atomicity. The boxed forms of Actuality and Rigid Comprehension
+  use the draft's one-object observation, which it states for Boolean Completeness and applies
+  in the same way in its final section. The source is a work in progress.
+
+  ND fails at type e because the proposition that the two members of the fixed pair are
+  identical is true at exactly the non-invertible arrows and so is nonzero; the draft displays
+  that proposition without drawing the consequence for ND. Argument of 23 September 2026, after
+  Cian Dorr’s observation that a choice over the individuals cannot be finitely pinned down; the
+  well-ordering of the individuals that he had in mind is refuted by the same two facts, but the
+  direct route needs no derivation of a well-ordering from Relational Choice in C.
 
 # The old `changes` log, verbatim and frozen.
 history:

@@ -17,8 +17,8 @@ references:
   locator: §3.5, p. 59, second paragraph; p. 61
 
 # migration: the first two sentences restate the old description, "Change the two-arrow
-# multiplication to k²=1; evaluate at the sole object.", as the proposal's Appendix B does;
-# the third is copied from the 20 September change. In the Σ paragraph, moved from the notes,
+# multiplication to k²=1; evaluate at the sole object."; the third is copied from the
+# 20 September change. In the Σ paragraph, moved from the notes,
 # "$\{1\}$" replaces "described above", since nothing above described the actual-world
 # proposition.
 definition: >-
@@ -86,6 +86,7 @@ arguments:
     refutes neither: closed pure terms denote entities fixed by every arrow (Classicism, §3.5,
     p. 58), whereas $a$ is fixed by no arrow but the identity, so no closed pure term denotes
     $\lambda\bar x\, .\,a$.
+    Everything that implies these fails with them.
   revisions:
   - date: '2026-09-23'
     by: Claude Fable 5.1 (Anthropic)
@@ -98,12 +99,83 @@ arguments:
       Corrected the reason for the Independence and Distinctness failures: they come from the
       other relational constants, not the designated one. No verdict changed.
 
+# In reserve: verdicts the record stated directly before it was written as arguments, which
+# the engine also derives from the arguments above. Each comes back with the change-log entry
+# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
+
+- holds: [necessary-rigid-comprehension-r, necessary-atomicity-r, necessary-actuality, no-pure-contingency-r]
+  reserve: true
+  source: {paper: bacon-dorr-classicism, locator: "§3.5, p. 59, second paragraph; p. 61"}
+
+- fails: [axiom-of-infinity-t]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-20'
+  text: >-
+    Added Relational Choice at Cian Dorr's direction. With choice in the metatheory a serial
+    relation has a functional subrelation, and a full model contains every intension, so that
+    subrelation is in the domain; see Classicism, p. 61, on the principles common to full
+    models. The propositions at the evaluation object are the subsets of the two arrows out of
+    it, four in all, and every intension of a full model is present, so the numerals are the
+    finite cardinalities and the fourth holds of the universal property of propositions: the
+    Axiom of Infinity at type t fails, as does the fifth instance of the schema.
+
+- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
+    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+
+- holds: [necessary-strong-leibniz-t]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Added □Strong Leibniz Biconditionals (type t): every singleton of an arrow is a strong world
+    in a propositionally full one-object model; see the notes.
+
+- holds: [necessary-relational-choice-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Boxed the Relational Choice claim; see the notes.
+
+- holds: [transversal-choice-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-25'
+  text: >-
+    Added Transversal Choice, by the argument recorded for Relational Choice: a full model
+    contains every intension, in particular one whose extension at the evaluation point is a
+    transversal, chosen in the metatheory, of the extension there of an equivalence relation;
+    the equivalence and transversal conditions are unboxed. Recorded on a question of Zachary
+    Goodsell, after an observation of Christopher Sun.
+
 # migration: sentences of the old notes that no argument holds, verbatim. The last one followed
 # the Σ argument (sigma-true-atom) and refers to its failures.
+# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
+# written as arguments that no argument keeps (5 October 2026).
+# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
   identifies its evaluation point; construction and verification are given at the PDF locations
-  in References. Everything that implies these fails with them.
+  in References.
+
+  Change the two-arrow multiplication to k²=1; evaluate at the sole object.
+
+  In a one-object model whose propositions are all the sets of arrows, a singleton $\{h\}$ is a
+  strong world exactly when its transport $\{j : j\circ i=h\}$ along every arrow $i$ has at most
+  one member, since the propositions at that world are again all sets of arrows and a
+  two-element set is split by a singleton. Here the arrows form a group, so $j\circ
+  i=j^{\prime}\circ i$ forces $j=j^{\prime}$. So every singleton is a strong world, every
+  possible proposition contains an arrow, and the type-t Strong Leibniz Biconditionals hold at
+  every world. □Relational Choice holds: the truncation of a full action model at any arrow is
+  again a full action model, its domains at the reachable objects being unchanged, and
+  Relational Choice holds in every full model given choice in the metatheory (Classicism, p.
+  61).
 
 was_conjectured: true
 # The old `changes` log, verbatim and frozen.

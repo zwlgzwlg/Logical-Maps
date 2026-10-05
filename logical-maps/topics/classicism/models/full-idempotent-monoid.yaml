@@ -96,6 +96,7 @@ arguments:
     identity that C(Σ) does not prove. The designated constant refutes neither: closed pure terms
     denote entities fixed by every arrow (Classicism, §3.5, p. 58), whereas $a$ is fixed by no
     arrow but the identity, so no closed pure term denotes $\lambda\bar x\, .\,a$.
+    Everything that implies these fails with them.
   revisions:
   - date: '2026-09-23'
     by: Claude Fable 5.1 (Anthropic)
@@ -143,13 +144,77 @@ arguments:
     image. Its necessary form therefore also fails. The earlier positive flag and supporting
     paragraph were erroneous; their original dated change remains as superseded history.
 
+# In reserve: verdicts the record stated directly before it was written as arguments, which
+# the engine also derives from the arguments above. Each comes back with the change-log entry
+# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
+
+- holds: [necessary-rigid-comprehension-r, necessary-atomicity-r, necessary-actuality]
+  fails: [distinctness-necessary-t, fregean-axiom]
+  reserve: true
+  source: {paper: bacon-dorr-classicism, locator: "§3.5, p. 59, first paragraph; p. 61 (full-model principles)"}
+
+- fails: [axiom-of-infinity-t]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-20'
+  text: >-
+    Added Relational Choice at Cian Dorr's direction. With choice in the metatheory a serial
+    relation has a functional subrelation, and a full model contains every intension, so that
+    subrelation is in the domain; see Classicism, p. 61, on the principles common to full
+    models. The propositions at the evaluation object are the subsets of the two arrows out of
+    it, four in all, and every intension of a full model is present, so the numerals are the
+    finite cardinalities and the fourth holds of the universal property of propositions: the
+    Axiom of Infinity at type t fails, as does the fifth instance of the schema.
+
+- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
+    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+
+- holds: [necessary-relational-choice-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Boxed the Relational Choice claim; see the notes.
+
+- fails: [no-contingency-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    Re-fixed the interpretation of Σ so as to settle No Contingency (signature Σ) and B for
+    sentences of Σ, at Cian Dorr’s request; see the notes.
+
+- holds: [transversal-choice-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-25'
+  text: >-
+    Added Transversal Choice, by the argument recorded for Relational Choice: a full model
+    contains every intension, in particular one whose extension at the evaluation point is a
+    transversal, chosen in the metatheory, of the extension there of an equivalence relation;
+    the equivalence and transversal conditions are unboxed. Recorded on a question of Zachary
+    Goodsell, after an observation of Christopher Sun.
+
 # migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
 # the sentence that followed the Σ argument, referring to its failures. The argument for □Relational
 # Choice, now derived, is dropped.
+# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
+# written as arguments that no argument keeps (5 October 2026).
+# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
-  identifies its evaluation point; construction and verification are given at the PDF locations in
-  References. Everything that implies these fails with them.
+  identifies its evaluation point; construction and verification are given at the PDF locations
+  in References.
+
+  ($\{1\}$ is a strong world, its transport along $k$ being empty.) □Relational Choice holds:
+  the truncation of a full action model at any arrow is again a full action model, its domains
+  at the reachable objects being unchanged, and Relational Choice holds in every full model
+  given choice in the metatheory (Classicism, p. 61).
 
 was_conjectured: true
 

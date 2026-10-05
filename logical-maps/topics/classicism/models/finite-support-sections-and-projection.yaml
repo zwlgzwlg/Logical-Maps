@@ -53,7 +53,18 @@ arguments:
     would have to hold, at the world $f_T$, of exactly the range of $f_T$, and no finite set of
     individuals pins that down. See the write-up.
 
+# In reserve: verdicts the record stated directly before it was written as arguments, which
+# the engine also derives from the arguments above. Each comes back with the change-log entry
+# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
+
+- holds: [actuality]
+  fails: [barcan-r]
+  reserve: true
+  writeup: finite-support-sections-and-projection
+
 # migration: the old notes without their sentence on BF, now derived.
+# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
+# written as arguments that no argument keeps (5 October 2026).
 notes: >-
   Found on 27 September 2026 in answer to Cian Dorr's question whether Actuality implies
   Inextensible Comprehension, after the observation that Christopher Sun's witness $\lambda\bar
@@ -62,3 +73,11 @@ notes: >-
   write-up also records a sufficient condition for Inextensible Comprehension in models of this
   kind, which explains why every earlier model with Actuality satisfies it. Checked informally
   by Cian Dorr and Christopher Sun the same day.
+
+  Actuality and □Actuality hold, but Inextensible Comprehension fails at type $e\to t$ for the
+  universal property: an inextensible property coextensive with it would have to hold, at the
+  world $f_T$, of exactly the range of $f_T$, and no finite set of individuals pins that down.
+
+  BF fails, as it must by BF and Actuality ⇒ Inextensible Comprehension: the property holding at
+  the identity of everything and at $f_T$ of everything except $(0,1-T(0))$ is pinned down by
+  $\{0\}$ and necessary of every individual, but it is not necessarily universal.
