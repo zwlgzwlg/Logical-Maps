@@ -144,6 +144,8 @@ lean:
   model: Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol
   is_model: Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol
   meets:
+    one-individual: Classicism.Map.Meets.mset_one_individual Classicism.Meta.Intensional.Invol
+    finitely-many-propositions: Classicism.Map.Meets.mset_finitely_many_propositions Classicism.Meta.Intensional.Invol
     full-model: Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol
     full-action-model: Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol
     extensionally-full: Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol)

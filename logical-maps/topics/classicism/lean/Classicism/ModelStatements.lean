@@ -386,9 +386,17 @@ def Models.finite_support_truncations.no_pure_contingency_r : Prop :=
 def Models.full_idempotent_monoid.distinctness_preserving_collapse : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
 
+/-- `full-idempotent-monoid`: Infinity Schema (type t) fails. -/
+def Models.full_idempotent_monoid.infinity_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT)
+
 /-- `full-idempotent-monoid`: No Pure Contingency holds. -/
 def Models.full_idempotent_monoid.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `full-idempotent-monoid`: Infinity Schema (type e) fails. -/
+def Models.full_idempotent_monoid.infinity_e : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE)
 
 /-- `full-idempotent-monoid`: □Relational Choice holds. -/
 def Models.full_idempotent_monoid.necessary_relational_choice_r : Prop :=
@@ -402,9 +410,17 @@ def Models.full_idempotent_monoid.relational_choice_r : Prop :=
 def Models.full_idempotent_monoid.transversal_choice_r : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
+/-- `full-involution-group`: Infinity Schema (type t) fails. -/
+def Models.full_involution_group.infinity_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT)
+
 /-- `full-involution-group`: No Pure Contingency holds. -/
 def Models.full_involution_group.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `full-involution-group`: Infinity Schema (type e) fails. -/
+def Models.full_involution_group.infinity_e : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE)
 
 /-- `full-involution-group`: □Relational Choice holds. -/
 def Models.full_involution_group.necessary_relational_choice_r : Prop :=
@@ -426,9 +442,17 @@ def Arguments.barcan_d6.barcan_r : Prop :=
 def Arguments.dpc_isolated_actual_world.distinctness_preserving_collapse : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.ActualWorldIsolated A → (A).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
 
+/-- argument `finitely-many-propositions`: Infinity Schema (type t) fails in every model meeting its conditions. -/
+def Arguments.finitely_many_propositions.infinity_t : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.Full A → Classicism.Meta.Intensional.Premodel.FinitelyManyPropositions A → ¬ (A).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT)
+
 /-- argument `no-pure-contingency-one-object`: No Pure Contingency holds in every model meeting its conditions. -/
 def Arguments.no_pure_contingency_one_object.no_pure_contingency_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.OneObject A → (A).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- argument `one-individual`: Infinity Schema (type e) fails in every model meeting its conditions. -/
+def Arguments.one_individual.infinity_e : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.OneIndividual A → ¬ (A).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE)
 
 /-- argument `relational-choice-full-boxed`: □Relational Choice holds in every model meeting its conditions. -/
 def Arguments.relational_choice_full_boxed.necessary_relational_choice_r : Prop :=

@@ -1,6 +1,9 @@
 import Classicism.ModelStatements
 import Classicism.Results.Consistency.Consistency
 import Classicism.Models.Conditions
+import Mathlib.Data.Fintype.Powerset
+import Mathlib.Data.Finite.Sigma
+import Mathlib.Data.Finite.Prod
 
 /-!
 # The map's models, certified verdict by verdict
@@ -484,6 +487,21 @@ theorem collapse_unpinned : CollapseUnpinned monoSurj01 := by
   exact ⟨{0, 1}, Set.toFinite _, MonoSurj01.collapse_pinned⟩
 
 end finite_support_identity_or_collapse_surjections
+
+/-- A full M-set model has one individual. -/
+theorem mset_one_individual (M : Type) [Monoid M] : (MSet.model M).OneIndividual :=
+  fun _ => inferInstanceAs (Subsingleton Unit)
+
+/-- A full M-set model on a finite monoid has finitely many propositions: sets of arrows. -/
+theorem mset_finitely_many_propositions (M : Type) [Monoid M] [Finite M] :
+    (MSet.model M).FinitelyManyPropositions := by
+  haveI : Finite (SingleObj M) := inferInstanceAs (Finite Unit)
+  haveI : ∀ V W : SingleObj M, Finite (V ⟶ W) := fun _ _ => inferInstanceAs (Finite M)
+  change Finite (Set (Σ V : SingleObj M, PUnit × (SingleObj.star M ⟶ V)))
+  infer_instance
+
+instance : Fintype Idem := ⟨{.one, .k}, fun x => by cases x <;> simp⟩
+instance : Fintype Invol := ⟨{.one, .k}, fun x => by cases x <;> simp⟩
 
 namespace full_idempotent_monoid
 

@@ -27,6 +27,7 @@ conditions:
 - id: one-individual
   text: >-
     There is exactly one individual, at every world.
+  lean: Classicism.Meta.Intensional.Premodel.OneIndividual
 - id: metatheory-choice
   text: >-
     The model is constructed in a metatheory with the axiom of choice.
@@ -55,6 +56,7 @@ conditions:
 - id: finitely-many-propositions
   text: >-
     There are finitely many propositions at the evaluation world.
+  lean: Classicism.Meta.Intensional.Premodel.FinitelyManyPropositions
 - id: sigma-true-atom
   text: >-
     Σ has a designated relational constant $c$ of type $\tau=\bar\sigma t$ denoting

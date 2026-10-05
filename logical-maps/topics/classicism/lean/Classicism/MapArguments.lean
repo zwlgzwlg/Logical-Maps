@@ -1,5 +1,6 @@
 import Classicism.MapModels
 import Classicism.Models.Conditions
+import Mathlib.SetTheory.Cardinal.NatCard
 
 /-!
 # The map's general arguments, certified
@@ -98,6 +99,35 @@ theorem distinctness_preserving_collapse :
   exact holds_dpc (A.reduct_isModel M) hI
 
 end dpc_isolated_actual_world
+
+namespace one_individual
+
+/-- With one individual there are no two distinct ones: the second instance of the Infinity
+schema at `e` fails (`Premodel.holds_count`). -/
+theorem infinity_e : Statements.Arguments.one_individual.infinity_e := by
+  intro Sig C _ A M h1 H
+  rw [holdsAx_ofPure] at H
+  obtain ⟨f, hf⟩ := (holds_count (A.reduct_isModel M) (𝟙 _) .e 2).1 (H _ ⟨2, by decide, rfl⟩)
+  haveI : Subsingleton (A.reduct.Dom A.reduct.W₀ .e) := h1 A.W₀
+  exact absurd (hf (Subsingleton.elim (f 0) (f 1))) (by decide)
+
+end one_individual
+
+namespace finitely_many_propositions
+
+/-- With `k` propositions there are no `k + 1` distinct ones: that instance of the Infinity
+schema at `t` fails (`Premodel.holds_count`). -/
+theorem infinity_t : Statements.Arguments.finitely_many_propositions.infinity_t := by
+  intro Sig C _ A M _ hfin H
+  have : Finite (A.reduct.Dom A.reduct.W₀ (.rel .t)) := hfin
+  rw [holdsAx_ofPure] at H
+  obtain ⟨f, hf⟩ := (holds_count (A.reduct_isModel M) (𝟙 _) (.rel .t)
+    (Nat.card (A.reduct.Dom A.reduct.W₀ (.rel .t)) + 1)).1
+    (H _ ⟨_, Nat.le_add_left 1 _, rfl⟩)
+  have := Nat.card_le_card_of_injective f hf
+  simp at this
+
+end finitely_many_propositions
 
 /-! ## Arguments of the finite-support models on one object -/
 

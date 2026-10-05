@@ -13,3 +13,7 @@ revisions:
   by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
   note: >-
     The copies in three full action models (each with four propositions) stated once for the topic; each record's count is its reason for meeting finitely-many-propositions.
+# Proved in Lean (Classicism/MapArguments.lean), for every intensional action model meeting the conditions.
+lean:
+- fails: infinity-t
+  ref: Classicism.Map.Arguments.finitely_many_propositions.infinity_t

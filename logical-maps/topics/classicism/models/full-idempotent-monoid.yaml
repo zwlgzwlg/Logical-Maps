@@ -191,6 +191,8 @@ lean:
   model: Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem
   is_model: Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem
   meets:
+    one-individual: Classicism.Map.Meets.mset_one_individual Classicism.Meta.Intensional.Idem
+    finitely-many-propositions: Classicism.Map.Meets.mset_finitely_many_propositions Classicism.Meta.Intensional.Idem
     full-model: Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem
     full-action-model: Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem
     extensionally-full: Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem)
