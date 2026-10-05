@@ -1,0 +1,29 @@
+# □Weak Rigid Comprehension ⇒ □Persistent Comprehension
+
+<p class='cert'>Result — Source: Misc.; produced by Claude Opus 5.5 (Anthropic), 2 October 2026, from a suggestion of Cian Dorr; recorded by Claude Opus 5.5 (Anthropic), 2 October 2026.</p>
+
+## Premises
+
+- **□Weak Rigid Comprehension.** Every closed instance of Weak Rigid Comprehension is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+
+## Conclusion
+
+- **□Persistent Comprehension.** Every closed instance of Persistent Comprehension is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+
+## Proof
+
+The proof of weak-rigid-comprehension-r-implies-persistent-comprehension-r uses its premises only at finitely many closed instances and nothing beyond C. So for each closed instance of the conclusion, C proves the conditional from the corresponding premise instances to it. Necessitate that theorem and apply K with the boxed premise instances. Generalization over the admitted types is metalinguistic; no type quantifier is placed inside the box.
+
+## Notes
+
+Boxed counterpart of weak-rigid-comprehension-r-implies-persistent-comprehension-r.
+
+## Sources
+
+- **Dorr 2 Oct** — Cian Dorr, suggestion of 2 October 2026.
+
+<p class='cert'>Record: <code>topics/classicism/results/necessary-weak-rigid-comprehension-implies-necessary-persistent-comprehension.yaml</code></p>
+
+## Paper references
+
+- **Background: Classicism.** Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds), Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated 16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition and footnote locators in this map refer to that draft's numbering. — §1.5, pp. 16–17. Necessitation of theorems, K and 4.

@@ -6,28 +6,25 @@
 
 - **Possibility+ (signature Σ).** The Possibility+ schema for the fixed nonlogical signature Sigma: for a formula P of L(Sigma) consistent with C(Sigma) whose free variables are the displayed individual variables, if those individuals are pairwise distinct and distinct from every individual denoted by a constant occurring in P, then P is possible. Include the empty tuple.
 - **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
+- **Relational Choice.** Every serial binary relation has a functional subrelation.
 - **Actuality.** There is a true proposition that entails every true proposition.
 - **Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
-- **Relational Choice.** Every serial binary relation has a functional subrelation.
-- **Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
-- **Transversal Choice.** Every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.
+- **¬ Tame Rigidity.** Every weakly rigid relation, including a proposition, is rigid.
+- **¬ Intensional Choice.** If a property is necessarily instantiated, then some property entailing it is necessarily uniquely instantiated.
 - **¬ BF (type t).** BF (type t) in the displayed closed propositional formulation.
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
 - **¬ Boolean Completeness (type t).** Boolean Completeness (type t) in the displayed closed propositional formulation.
 - **¬ □Vicinity.** Necessarily, there is a true proposition that entails the possibility of each true proposition.
 - **¬ □Weakly Inextensible Comprehension.** Necessarily, every relation, including a proposition, is coextensive with a weakly inextensible one.
 - **¬ □Transversal.** Necessarily, there is a property of properties that picks out exactly one property from each coextension class, that is, exactly one property coextensive with any given property.
-- **¬ BF.** The Barcan Formula at every type. The predicate formulation closes the formula schema using lambda abstraction.
-- **¬ Strong Possibility (pure).** Each closed pure sentence consistent with Maximalist Classicism is possible under the distinctness-preserving modality.
-- **¬ □Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
-- **¬ Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
-- **¬ Countable Boolean Completeness.** Every countable property of entities of a relational type has a least upper bound in that type, where a property is countable when it injects into the natural numbers.
 
 ## Definition
 
 For a signature Σ with countably infinitely many individual constants and at least one relational constant, take a set of action models for L(Σ) complete for C(Σ), and coalesce them at a new root whose individual domain is the set of individual constants, each constant denoting itself there and being carried by the distinguished arrow to each component onto its interpretation in that component; relational constants are glued as in Definition E.2, with free root extensions. Evaluation point: the root.
 
 Root domains are as full as compatibility allows: a root proposition is a choice, for each component, of a proposition of that component’s root domain, together with a truth value at the root’s identity arrow, and a root entity of a relational type is likewise a family of component entities with a root component that is an arbitrary function of the root arguments.
+
+*A member of the group Coalesced sums at a new root, which supplies this definition with the record's settings, and the arguments marked as shared.*
 
 ## Arguments
 
@@ -43,69 +40,88 @@ Distinct constants denote distinct root individuals, so there are infinitely man
 
 *By Andrew Bacon and Cian Dorr; the signature reading and the BF failure by Cian Dorr, 22 September 2026.*
 
-### Holds Actuality, Distinctness-preserving collapse.
+### Fails Tame Rigidity.
 
-Actuality holds by the singleton root proposition, and the p. 83 discussion of the distinctness-preserving collapse and the obstruction to Strong Possibility applies to this root as to the maximalist one.
+Tame Rigidity fails at a relational argument type in models of C (ultralimit-fork, symmetric-qualitative-links), so some component $M$ refutes it at its root $M_0$: some $F_M$ of type $\sigma\to t$, $\sigma$ relational, is weakly rigid there but not rigid. A root entity $F$ of that type is a root extension $F_o$ together with a component $F_N$ in each component $N$, and a formula about $F$ at a world of $N$ is the same formula about $F_N$ in $N$. Since the components of root entities are arbitrary, $F$ is weakly inextensible at the root exactly when, for every $N$, every $X_N$ that necessarily holds of the $N$-components of the members of $F_o$ has $F_N\le X_N$. For each other component $N$ fix $z_N$, and for each $y$ in the extension of $F_M$ at $M_0$ let $x_y$ be the root entity with $M$-component $y$ and $N$-components $z_N$, free at the root by the condition. Put $F_o:=\{x_y\}$, $F_N:=\lambda y\, .\,y=z_N$, a haecceity, rigid in every model of C, and keep $F_M$. Then $F$ is persistent and weakly inextensible at the root, each component's condition being the weak inextensibility of its own component, but not inextensible, since $F_M$ is not inextensible in $M$ and every arrow from the root into $M$ factors through the distinguished one. So Tame Rigidity fails at the root.
 
-*By Andrew Bacon and Cian Dorr; the signature reading and the BF failure by Cian Dorr, 22 September 2026.*
+*From the group *Coalesced sums at a new root*, shared argument `coalesced-sums#tame-rigidity-component`. It requires that The components are a family of action models complete for C: every sentence consistent with C is true at the root of some component. Here: The action models for L(Σ) are a set complete for C(Σ), so in particular for C. It requires that A root entity of a relational type has a root component that is an arbitrary function of the root arguments. Here: The root domains are as full as compatibility allows. By Claude Fable 5.1 (Anthropic), answering Cian Dorr's conjecture, 2026-10-03.*
+
+*Revised 2026-10-03 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* One direction of Fable's transfer theorem: at a coalesced root, Tame Rigidity at a relational type holds iff it holds at the root of every component. The other direction is not recorded, the engine deriving the positive verdict in the one model where it applies.
+
+### Fails Intensional Choice.
+
+The type-$e$ instance of Intensional Choice fails in a model of C (symmetric-all-surjections), so its negation is consistent with C and some component $M$ refutes it at its root $M_0$: some $F$ in $M_0$'s domain is necessarily instantiated and no $G\le F$ there is necessarily uniquely instantiated. As in barcan-t-component, the thread $F^{\prime}$ that is universal at the root and in every other component and is carried onto $F$ by the distinguished arrow to $M_0$ is in the root domain, and it is necessarily instantiated. A root $G\le F^{\prime}$ that is necessarily uniquely instantiated would be carried onto such a $G$ for $F$ at $M_0$, every arrow from the root into $M$ factoring through the distinguished one. So the unboxed principle fails at the root.
+
+*From the group *Coalesced sums at a new root*, shared argument `coalesced-sums#intensional-choice-component`. It requires that The components are a family of action models complete for C: every sentence consistent with C is true at the root of some component. Here: The action models for L(Σ) are a set complete for C(Σ), so in particular for C. By Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion, 2026-10-03.*
+
+### Holds Relational Choice.
+
+The functionality of a subrelation is evaluated at the root’s identity arrow only, while the subrelation condition is boxed; so for a serial root relation take the subrelation whose root component is a functional choice from the root component, by choice in the metatheory, and whose component parts are empty. Where some component refutes Relational Choice at its root, as when the components are complete for C, its necessitation fails.
+
+*From the group *Coalesced sums at a new root*, shared argument `coalesced-sums#relational-choice-free-root`. It requires that A root entity of a relational type has a root component that is an arbitrary function of the root arguments. Here: The root domains are as full as compatibility allows. It requires that The model is constructed in a metatheory with the axiom of choice. Here: The constructions are carried out in ZFC. By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-22.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The three complete members' copies stated once; "Its necessitation fails, since some component refutes Relational Choice at its root" became conditional on that, since in the all-finite-domains member every component satisfies Relational Choice.
+
+### Holds Actuality.
+
+The singleton root proposition witnesses Actuality.
+
+*Source: Classicism, Appendix E, p. 83. From the group *Coalesced sums at a new root*, shared argument `coalesced-sums#actuality-singleton-root`. By Andrew Bacon and Cian Dorr, 2026-09-17.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The three members' versions stated once.
 
 ### Fails BF (type t).
 
 C is complete for the component set, so some component $M$ refutes BF at its root $M_0$, at type $t$ say: some $F$ in $M_0$’s domain has $\forall y\, .\,\Box Fy$ true and $\Diamond\exists y\, .\,\neg Fy$ true at $M_0$. Because the root’s domains are as full as possible, the thread $F^{\prime}$ that is universal at the root and in every other component and is carried onto $F$ by the distinguished arrow to $M_0$ is in the root domain. Every arrow from the root into $M$ factors through that distinguished arrow, so $\forall y\, .\,\Box F^{\prime}y$ at the root reduces to $\forall y\, .\,\Box Fy$ at $M_0$ together with trivial checks elsewhere, and $\Diamond\exists y\, .\,\neg F^{\prime}y$ at the root follows from $\Diamond\exists y\, .\,\neg Fy$ at $M_0$ through the same factorization.
 
-*By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-22.*
+*From the group *Coalesced sums at a new root*, shared argument `coalesced-sums#barcan-t-component`. It requires that The components are a family of action models complete for C: every sentence consistent with C is true at the root of some component. Here: The action models for L(Σ) are a set complete for C(Σ), so in particular for C. By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-22.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The three members' verbatim copies stated once.
 
 ### Fails Atomicity (type t).
 
 C is complete for the components, so some component $M$ refutes Atomicity at its root, by a proposition $p_M$ with no atom below it in $M$’s domain; the root proposition that is $p_M$ on $M$, empty on every other component and false at the root has as its root lower bounds exactly the root propositions that are lower bounds of $p_M$ on $M$ and empty elsewhere, so it has no atom below it either.
 
-*By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-22.*
+*From the group *Coalesced sums at a new root*, shared argument `coalesced-sums#atomicity-t-component`. It requires that The components are a family of action models complete for C: every sentence consistent with C is true at the root of some component. Here: The action models for L(Σ) are a set complete for C(Σ), so in particular for C. By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-22.*
 
-### Holds Relational Choice.
-
-The functionality of a subrelation is evaluated at the root’s identity arrow only, while the subrelation condition is boxed; so for a serial root relation take the subrelation whose root component is a functional choice from the root component, by choice in the metatheory, and whose component parts are empty. Its necessitation fails, since some component refutes Relational Choice at its root.
-
-*By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-22.*
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The three members' verbatim copies stated once.
 
 ### Fails Boolean Completeness (type t).
 
 The truncation model of Appendix D, part 6, refutes it at type $t$, as its record now shows, and the components are complete for C, so one of them does; the root propositions false at every arrow except those into that component form a copy of its propositional domain under the root’s entailment order, and a root property of propositions holding exactly of the copies of the members of that component’s counterexample family has no least upper bound at the root.
 
-*By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-23.*
+*From the group *Coalesced sums at a new root*, shared argument `coalesced-sums#boolean-completeness-t-component`. It requires that The components are a family of action models complete for C: every sentence consistent with C is true at the root of some component. Here: The action models for L(Σ) are a set complete for C(Σ), so in particular for C. By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-23.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The three members' verbatim copies stated once.
 
 ### Fails □Vicinity, □Weakly Inextensible Comprehension.
 
 The components are complete for C and a closed pure sentence at the distinguished arrow into a component has its truth value at that component root, so every pure sentence consistent with C is possible at the root; the negation of Vicinity is consistent (the truncation model) and so is the negation of a closed instance of Weakly Inextensible Comprehension at type $t\to t$ (the permutation model). Since □Actuality fails here while Vicinity and Weakly Inextensible Comprehension hold, the boxed results show that at least one of the boxed principles had to fail.
 
-*Address: `coalesced-constant-indexed-root#pure-sentences-possible`. By Claude Opus 5.5 (Anthropic), at Cian Dorr's request, 2026-09-27.*
+*From the group *Coalesced sums at a new root*, shared argument `coalesced-sums#pure-sentences-possible`. It requires that The components are a family of action models complete for C: every sentence consistent with C is true at the root of some component. Here: The action models for L(Σ) are a set complete for C(Σ), so in particular for C. By Claude Opus 5.5 (Anthropic), at Cian Dorr's request, 2026-09-27.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The three members' verbatim copies stated once.
 
 ### Fails □Transversal.
 
-By the same argument: the negation of the type-$e$ instance of Transversal is a pure sentence consistent with C, since it holds in symmetric-infinite-classes, so it is possible at the root.
+Every pure sentence consistent with C is possible at the root (pure-sentences-possible): the negation of the type-$e$ instance of Transversal is a pure sentence consistent with C, since it holds in symmetric-infinite-classes, so it is possible at the root.
 
-*By Claude Opus 5.5 (Anthropic), 2026-09-28.*
+*From the group *Coalesced sums at a new root*, shared argument `coalesced-sums#transversal-boxed`. It requires that The components are a family of action models complete for C: every sentence consistent with C is true at the root of some component. Here: The action models for L(Σ) are a set complete for C(Σ), so in particular for C. By Claude Opus 5.5 (Anthropic), 2026-09-28.*
 
-### Holds Infinity Schema (type e). Fails BF, Strong Possibility (pure), □Relational Choice. In reserve.
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The three members' verbatim copies stated once; "By the same argument" became a reference to pure-sentences-possible.
 
-*Source: Classicism, §2.6, pp. 41–42 and n. 61; Appendix E, pp. 80–83. By Andrew Bacon and Cian Dorr; the signature reading and the BF failure by Cian Dorr, 22 September 2026.*
+### Holds Distinctness-preserving collapse.
 
-### Fails Boolean Completeness, Countable Boolean Completeness. In reserve.
+For a true $p$, $a\le p$, since $a$ entails every truth. Take $q:=a$ in the definition of $\Box_{\ne}p$: at a world in $a$, $p$ holds; at a world outside $a$, $\Diamond a$ fails. So every truth is $\Box_{\ne}$-necessary.
 
-Corrected the Boolean Completeness claim from the type-t instance to the type schema, since no component is known to refute it at type t; added the failure of Countable Boolean Completeness by the same transfer.
+*General argument `arguments/dpc-isolated-actual-world`. It requires that The actual-world proposition $a$ is in the domain and entails every truth, and no world outside $a$ sees a world in $a$. Here: The singleton root proposition, true at the root's identity arrow and nowhere in a component, is in the domain and entails every truth; the components have no arrows back to the root (Classicism, Appendix E, p. 83, on the distinctness-preserving collapse). By Claude Fable 5.1 (Anthropic), 2026-09-23.*
 
-*By Claude Fable 5.1 (Anthropic), 2026-09-23.*
-
-### Holds Transversal Choice. In reserve.
-
-Added Transversal Choice at the root, by the argument recorded for Relational Choice: a root entity has an arbitrary root component, so take the property whose root component is a transversal, chosen in the metatheory, of the root component of an equivalence relation at the root, with empty component parts; the equivalence and transversal conditions are all evaluated at the root's identity arrow. Recorded on a question of Zachary Goodsell, after an observation of Christopher Sun.
-
-*By Claude Fable 5.1 (Anthropic), 2026-09-25.*
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The finite-support, symmetric and full action models' copies (eight records) stated once for the topic; what varied, why no world outside the actual world sees back into it, is each record's reason for meeting actual-world-isolated.
 
 
 ## Notes
 
 Possibility+ holds here, unlike at the maximalist root, because the root individuals are the constants, and two distinct constants stay distinct in every component where the sentence of their distinctness is realized, not in one component only.
-Atomicity fails at type t: C is complete for the components, so some component $M$ refutes Atomicity at its root, by a proposition $p_M$ with no atom below it in $M$’s domain; the root proposition that is $p_M$ on $M$, empty on every other component and false at the root has as its root lower bounds exactly the root propositions that are lower bounds of $p_M$ on $M$ and empty elsewhere, so it has no atom below it either. Boolean Completeness fails, at type $e\to t$, for the same reason: a component $M$ refutes it by a property $X_M$ of propositions without a greatest lower bound in $M$’s domain, and the root property holding of a root proposition iff $X_M$ holds of its $M$-component has no greatest lower bound at the root, since such a bound’s $M$-component would be one for $X_M$. Relational Choice holds at the root, contrary to a first guess: the functionality of a subrelation is evaluated at the root’s identity arrow only, while the subrelation condition is boxed; so for a serial root relation take the subrelation whose root component is a functional choice from the root component, by choice in the metatheory, and whose component parts are empty. □Relational Choice fails, as the notes on Relational Choice explain: some component refutes Relational Choice at its root, which is accessible from the root. Correction of 23 September 2026: the components are only known to refute Boolean Completeness at type $e\to t$ (Classicism, n. 92, conjectures failures at type $t$ but has none), so the transfer argument refutes the type schema of Boolean Completeness at the root, not its type-$t$ instance, which is left unknown; the same transfer, applied to the countable family of haecceities that witnesses the component failure, refutes Countable Boolean Completeness. Boolean Completeness fails at type $t$ (restoring the claim corrected earlier in the day): the truncation model of Appendix D, part 6, refutes it at type $t$, as its record now shows, and the components are complete for C, so one of them does; the root propositions false at every arrow except those into that component form a copy of its propositional domain under the root’s entailment order, and a root property of propositions holding exactly of the copies of the members of that component’s counterexample family has no least upper bound at the root. □Transversal fails as well, by the same argument: the negation of the type-$e$ instance of Transversal is a pure sentence consistent with C, since it holds in symmetric-infinite-classes, so it is possible at the root. Observation of Claude Opus 5.5 (Anthropic), 28 September 2026.
 
 ## History
 

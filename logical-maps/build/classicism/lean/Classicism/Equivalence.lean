@@ -40,10 +40,13 @@ closed. Write `nec% (theorem_name args)`; never `nec% h` for a hypothesis `h`.
 
 `rw`, `calc`, `Eq.subst`, `▸`, `congrArg` and `congrFun` are Leibniz's Law and are
 unrestricted. `rfl` proves only `βηδ`-conversions, which `H` proves, so it is
-unrestricted too. Avoid `simp`, `by_cases`, `by_contra`, `decide` and `tauto`:
-`simp` applies `propext` and `funext` to hypotheses through lemmas such as
-`forall_congr`, and the others reach `Classical.choice`. Case on a proposition with
-`em_cases`, which uses the axiom `em`.
+unrestricted too. `simp` with closed identities is admissible: the core lemmas it leaves
+in a proof term, `eq_true`, `eq_false` and `forall_congr`, are `propext` or `funext`
+applied to their hypothesis, and the checker gates them at the use site as it gates
+`propext` itself, so `simp only [and_true_eq]` passes while `simp [h]` with a hypothesis
+`h` fails exactly when the rewrite is the Fregean Axiom, Functionality or BF. Avoid
+`by_cases`, `by_contra`, `decide` and `tauto`, which reach `Classical.choice`. Case on a
+proposition with `em_cases`, which uses the axiom `em`.
 -/
 
 namespace Classicism

@@ -1,6 +1,6 @@
 # Possibility Maximalism (pure) ∧ No Pure Contingency ⇒ ⊥
 
-<p class='cert'>Result — Source: Classicism (2024); produced by Andrew Bacon and Cian Dorr; recorded by OpenAI Codex (GPT-6), 17 September 2026.</p>
+<p class='cert'>Result — Source: Classicism (2024), Lean `Classicism.Map.possibility_and_no_pure_contingency_incompatible`; produced by Andrew Bacon and Cian Dorr; recorded by OpenAI Codex (GPT-6), 17 September 2026.</p>
 
 ## Premises
 

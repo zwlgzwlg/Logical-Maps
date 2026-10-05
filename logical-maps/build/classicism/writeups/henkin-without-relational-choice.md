@@ -7,16 +7,16 @@
 - **Extensionality.** At each relational type, coextensive relations are identical; include the nullary propositional case.
 - **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **¬ Relational Choice.** Every serial binary relation has a functional subrelation.
-- **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
 - **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
 - **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
+- **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
 - **¬ Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
 
 ## Definition
 
 The source’s relative-consistency construction starts in a model of ZF without choice and uses the domain of a serial relation with no functional subrelation as its individual domain.
 
-Interpretation of Σ, fixed for this record: each relational constant denotes the top element of its type and each individual constant denotes one fixed individual.
+Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each denotes the top element of its type.
 
 ## Arguments
 
@@ -26,29 +26,24 @@ Refer to note 46; its set-theoretic hypothesis is part of the construction.
 
 *Source: Classicism, §2.3, n. 46, p. 32. By Andrew Bacon and Cian Dorr, 2026-09-17.*
 
-### Fails Independence (signature Σ).
-
-Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true identity that C(Σ) does not prove. Everything that implies these fails with them.
-
-*Address: `henkin-without-relational-choice#sigma-top`. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
-
 ### Holds Axiom of Infinity (type e).
 
 A serial relation on a finite set has a functional subrelation in ZF, so the individual domain is infinite, and in the full extensional construction the finite cardinalities are the standard numerals, none of which holds of an infinite universal property.
 
 *By Claude Fable 5.1 (Anthropic), 2026-09-25.*
 
-### Fails Witnessed Possibility, Separated Structure, Distinctness Maximalism (signature Σ). In reserve.
+### Fails Witnessed Possibility, Separated Structure, Independence (signature Σ), Distinctness Maximalism (signature Σ).
 
-Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true identity that C(Σ) does not prove.
 
-*By Claude Fable 5.1 (Anthropic), 2026-09-22.*
+*General argument `arguments/sigma-top`. It requires that Every constant of Σ is relational, and each denotes the top element of its type. Here: This is the interpretation the definition fixes. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic; it uses nothing about the model.
 
 
 ## Notes
 
-The cited construction is a model of the map’s relational-type framework. The description identifies its evaluation point; construction and verification are given at the PDF locations in References.
-The Axiom of Infinity at type $e$ holds, and with it the Infinity Schema and Possible Infinity at that type: a serial relation on a finite set has a functional subrelation in ZF, so the individual domain is infinite, and in the full extensional construction the finite cardinalities are the standard numerals, none of which holds of an infinite universal property. Observation of Claude Fable 5.1 (Anthropic), 25 September 2026.
+The cited construction is a model of the map’s relational-type framework. The description identifies its evaluation point; construction and verification are given at the PDF locations in References. Everything that implies these fails with them.
 
 ## History
 

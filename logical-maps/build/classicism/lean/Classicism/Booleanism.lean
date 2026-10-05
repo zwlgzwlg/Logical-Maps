@@ -121,14 +121,17 @@ theorem not_forall_eq (X : σ → Prop) : (¬ ∀ x, X x) = ∃ x, ¬ X x :=
            fun ⟨x, hnx⟩ h => hnx (h x)⟩
 theorem not_exists_eq (X : σ → Prop) : (¬ ∃ x, X x) = ∀ x, ¬ X x :=
   propext ⟨fun h x hx => h ⟨x, hx⟩, fun h ⟨x, hx⟩ => h x hx⟩
+/-- Distinctness is the negation of identity, by definition; stated so that `simp` can
+unfold `≠` with a lemma of this library. -/
+theorem ne_eq_not (y z : σ) : (y ≠ z) = ¬ (y = z) := rfl
 /-- The Identity Identity pointwise: `y = z` iff `y` and `z` share every property. The
 biconditional is the paper's `iff`, not Lean's `Iff`; see `Classicism/Core.lean`. -/
 theorem eq_eq_forall_iff (y z : σ) : (y = z) = ∀ X : σ → Prop, Classicism.iff (X y) (X z) :=
   propext
-    ⟨fun h X => Eq.subst (motive := fun w => Classicism.iff (X y) (X w)) h
+    ⟨fun h X => Eq.subst (motive := λ w ↦ Classicism.iff (X y) (X w)) h
         (show Classicism.iff (X y) (X y) from
           ⟨(em (X y)).elim Or.inr Or.inl, (em (X y)).elim Or.inr Or.inl⟩),
-     fun h => ((h (fun w => y = w)).1).elim (fun hn => absurd rfl hn) id⟩
+     fun h => ((h (λ w ↦ y = w)).1).elim (fun hn => absurd rfl hn) id⟩
 
 end quantifier_identities
 

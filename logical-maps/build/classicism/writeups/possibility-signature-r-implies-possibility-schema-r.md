@@ -1,6 +1,6 @@
 # Possibility Maximalism (signature Σ) ⇒ Possibility Maximalism (pure)
 
-<p class='cert'>Result — Source: Misc.; produced by Claude Fable 5.1 (Anthropic), 23 September 2026, following an observation of Cian Dorr’s of the same day; recorded by Claude Fable 5.1 (Anthropic), 23 September 2026.</p>
+<p class='cert'>Result — Source: Misc., Lean `Classicism.Map.possibility_signature_r_implies_possibility_schema_r`; produced by Claude Fable 5.1 (Anthropic), 23 September 2026, following an observation of Cian Dorr’s of the same day; recorded by Claude Fable 5.1 (Anthropic), 23 September 2026.</p>
 
 ## Premises
 

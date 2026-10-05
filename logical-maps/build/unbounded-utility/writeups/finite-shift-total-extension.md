@@ -282,4 +282,4 @@ above; no independent checker or Lean verification is claimed.
 ## Paper references
 
 - **Background: Unbounded Utility and Background Risk.** Zachary Goodsell (5 June 2026). Unbounded Utility and Background Risk. Unpublished working manuscript. — sections 3–4, pp. 7–14: conclosure and total-extension method. The new finite-shift separating extension is proved separately; the withdrawn symmetric-extension claim is not used.
-- **Formulation: [Symmetries of value](https://doi.org/10.1111/nous.12549).** Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — Theorems 3–4, pp. 25–27: Shift Transfer and Simple Relative Expectation
+- **Formulation: [Symmetries of value](https://doi.org/10.1111/nous.12549).** ([PDF](../sources/Goodsell%20-%202026%20-%20Symmetries%20of%20value.pdf)) Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — Theorems 3–4, pp. 25–27: Shift Transfer and Simple Relative Expectation

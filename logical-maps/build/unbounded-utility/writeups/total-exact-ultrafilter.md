@@ -122,4 +122,4 @@ verifies the closed forms.
 
 ## Paper references
 
-- **Proof: [Decision theory unbound](https://doi.org/10.1111/nous.12473).** Zachary Goodsell (2024). Decision theory unbound. Noûs, 58, 669–695. First published online in 2023. — Appendix B, Theorem 1, pp. 690–691; Theorems 3 and 10, pp. 691, 693–695
+- **Proof: [Decision theory unbound](https://doi.org/10.1111/nous.12473).** ([PDF](../sources/Nous%20-%202023%20-%20Goodsell%20-%20Decision%20theory%20unbound%20%281%29.pdf)) Zachary Goodsell (2024). Decision theory unbound. Noûs, 58, 669–695. First published online in 2023. — Appendix B, Theorem 1, pp. 690–691; Theorems 3 and 10, pp. 691, 693–695

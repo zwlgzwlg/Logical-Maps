@@ -5,61 +5,37 @@
 ## Package
 
 - **Atomlessness.** Atomlessness in the displayed closed propositional formulation.
-- **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
 - **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
-- **Relational Choice.** Every serial binary relation has a functional subrelation.
-- **Transversal Choice.** Every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.
 - **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
-- **□Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
-- **¬ BF.** The Barcan Formula at every type. The predicate formulation closes the formula schema using lambda abstraction.
-- **¬ Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
+- **□Intensional Choice.** Every closed instance of Intensional Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
+- **Transversal Choice.** Every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.
 - **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
 - **¬ No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
-- **¬ Countable Boolean Completeness.** Every countable property of entities of a relational type has a least upper bound in that type, where a property is countable when it injects into the natural numbers.
 - **¬ Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
+- **¬ Vicinity.** There is a true proposition that entails the possibility of each true proposition.
+- **¬ BF.** The Barcan Formula at every type. The predicate formulation closes the formula schema using lambda abstraction.
+- **¬ Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
+- **¬ Countable Boolean Completeness.** Every countable property of entities of a relational type has a least upper bound in that type, where a property is countable when it injects into the natural numbers.
+- **¬ Boolean Completeness (type t).** Boolean Completeness (type t) in the displayed closed propositional formulation.
 - **¬ Weakly Inextensible Comprehension.** Every relation, including a proposition, is coextensive with a weakly inextensible one.
 - **¬ BF (type t).** BF (type t) in the displayed closed propositional formulation.
-- **¬ Boolean Completeness (type t).** Boolean Completeness (type t) in the displayed closed propositional formulation.
-- **¬ Vicinity.** There is a true proposition that entails the possibility of each true proposition.
-- **¬ ND.** Distinct things of any type are necessarily distinct.
-- **¬ Atomicity.** Every non-bottom entity of each relational type has an atom below it.
-- **¬ Actuality.** There is a true proposition that entails every true proposition.
-- **¬ Rigid Comprehension.** Every relation, including a proposition, is coextensive with a rigid one.
-- **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
-- **¬ Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
-- **¬ Inextensible Comprehension.** Every relation, including a proposition, is coextensive with a inextensible one.
 
 ## Definition
 
-Proposition D.5, part 3 (p. 77): the one-object category whose arrows are all the monotone maps of $\mathbb N$. In every part, $W_0^\ddagger$ is the set of finite subsets of $\mathbb N$ and the model is ideally full: a proposition is a set of arrows whose membership depends only on the arrows’ values on some finite set of individuals (it is pinned down by that set), an entity of a higher type is an applicative behaviour profile pinned down by a finite set in the same sense, and the individuals are the natural numbers acted on by the arrows themselves. Propositions and properties are thus about finitely many individuals and indifferent to how the arrows treat the rest. Evaluation point: the sole object, at the identity arrow.
+Proposition D.5, part 3 (p. 77): the one-object category whose arrows are all the monotone maps of $\mathbb N$. In every part, $W_0^\ddagger$ is the set of finite subsets of $\mathbb N$ and the model is ideally full: a proposition is a set of arrows whose membership depends only on the arrows’ values on some finite set of numbers (it is pinned down by that set), and an entity of a higher type is an applicative behaviour profile pinned down by a finite set in the same sense. The individuals are the natural numbers, acted on by the arrows themselves. Propositions and properties are thus about finitely many numbers and indifferent to how the arrows treat the rest. Evaluation point: the sole object, at the identity arrow.
 
-Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,p_0$, where $p_0$ is the proposition that the arrow fixes $0$, pinned down by $\{0\}$; every other relational constant denotes the top element of its type and every individual constant one fixed individual.
+Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,p_0$, where $p_0$ is the proposition that the arrow fixes $0$, pinned down by $\{0\}$; every other constant of Σ is relational and denotes the top element of its type.
+
+*A member of the group Finite-support action models on one object, which supplies this definition with the record's settings, and the arguments marked as shared.*
 
 ## Arguments
 
-### Fails BF.
-
-The source notes that with all maps BF would still hold, since every map agrees on any finite set with a surjection; monotonicity makes it fail, witnessed by the qualitative property of being positive: any monotone map sending $0$ to a positive number sends everything to positive numbers, so $\forall y\,\Box(Xz\to Xy)$ holds with $z:=0$ while $\Box\forall y(Xz\to Xy)$ fails.
-
-*Source: Classicism, Proposition D.5(3), p. 77. By Andrew Bacon and Cian Dorr, 2026-09-17.*
-
-### Holds Atomlessness. Fails Boolean Completeness.
+### Holds Atomlessness.
 
 As in part 2.
 
 *Source: Classicism, Proposition D.5(3), p. 77. By Andrew Bacon and Cian Dorr, 2026-09-17.*
-
-### Holds No Pure Contingency.
-
-Boxed positive flags use the source’s explicit one-object No Pure Contingency observation, applied separately to each closed instance.
-
-*Source: Classicism, p. 79. By Andrew Bacon and Cian Dorr, 2026-09-17.*
-
-### Holds Axiom of Infinity (type e).
-
-The individuals are the natural numbers and identity at the evaluation arrow is literal, so no numeral counts them. The propositions that a given individual is fixed by the arrow, one for each individual, are pairwise distinct and each has that individual as finite support, so there are infinitely many propositions. The set of numerals at each type is invariant under every arrow, hence has empty support and lies in the domain, so finite cardinality is standard and no finite cardinality holds of the universal property at either type.
-
-*By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-09-20.*
 
 ### Fails Witnessed Possibility, No Contingency (signature Σ).
 
@@ -69,90 +45,114 @@ No Contingency (signature Σ) fails, since $\forall\bar x\, .\,c\bar x$ denotes 
 
 *Revised 2026-09-23 by Claude Fable 5.1 (Anthropic):* Re-fixed the interpretation of Σ so that the designated constant denotes a contingent proposition, refuting No Contingency (signature Σ) and settling the open question whether Atomlessness implies it; Independence (signature Σ) is no longer claimed for this model.
 
-### Fails Countable Boolean Completeness.
-
-At type $e\to t$: the property $E$ that the source shows to lack a least upper bound has as its extension a countable family of haecceities, and the extensional fullness the source invokes to put $E$ in the domain also puts in the relation pairing the haecceity of the $k$-th member of that family with the numeral $k$, which injects $E$ into the numerals.
-
-*By Claude Fable 5.1 (Anthropic), 2026-09-23.*
-
 ### Fails Distinctness-preserving collapse.
 
 The shift $h$ that fixes $0,\ldots,m-1$ and adds one to everything from $m$ on is a monotone injection, so for any true $q$ pinned down by a finite $Y$ a monotone $k$ with $k(hy)=y$ on $Y$ exists and $k\circ h\in q$; thus $\Diamond q$ holds at $h$, while the true proposition that $m$ is fixed is false there.
 
 *By Claude Fable 5.1 (Anthropic), 2026-09-23.*
 
-### Holds Relational Choice.
-
-The model is ideally full, hence extensionally full at every object (Appendix D, the remark after Definition D.3): for any set $R$ of tuples from the domains at an object $V$, the intension that assigns to every arrow out of $V$ into an object $U$ a fixed set $R_U$ of tuples from $U$’s domains, with $R_V=R$, is pinned down by $\emptyset$, so it is the intension of an element of $V^{\bar\sigma\to t}$ with extension $R$ at $1_V$. Given a relation $U$ serial at $V$, choose for each $x$ a $y$ with $(Ux)y$, by choice in the metatheory; the graph is such an $R$, and its element $S$ is functional and a subrelation of $U$ at $1_V$, both conditions being unboxed. The closed Relational Choice instance is true at an arrow $h\colon W_0\to V$ iff it is true at $1_V$ in the truncation by $h$, whose domains at $V$ are those of the model, so it holds at every arrow and $\Box$Relational Choice follows.
-
-*Address: `finite-support-monotone-maps#relational-choice`. By Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic), 2026-09-23.*
-
-### Fails Weakly Inextensible Comprehension.
-
-At type $e\to t$, for the property of being even, which is in the domain as the constant intension $\{\langle b,h\rangle : b\text{ even}\}$, pinned down by $\emptyset$. Unpacking $\operatorname{Inextensible}$ as in the left-to-right half of Dorr’s rigidity criterion (draft, Lemma 14, p. 7, with Lemma 13): even the unboxed matrix, evaluated at the identity, says that $Y$ is contained in every persistent (transport-closed) $B$ in the domain whose extension includes $Y$’s. For a finite $N^{\prime}$, the smallest such $B$ pinned down by $N^{\prime}$ is $B_{N^{\prime}}:=\{\langle b^{\prime\prime},i^{\prime}\rangle : i^{\prime\prime}(b)=b^{\prime\prime}\text{ for some even }b\text{ and some arrow }i^{\prime\prime}\text{ agreeing with }i^{\prime}\text{ on }N^{\prime}\}$, which is transport-closed and pinned down by $N^{\prime}$. Now let $Y$ be coextensive with evenness and pinned down by a finite $N_0\subseteq[0,M_0]$; then $\langle b,i\rangle\in Y$ for every even $b$ and every arrow $i$ fixing $N_0$ pointwise. Take $i$ the monotone map that is the identity on $[0,M_0]$ and adds one beyond it; an even $b>M_0+1$, whose only preimage under $i$ is the odd $b-1$; and $N^{\prime}:=[0,b]$: a monotone map agreeing with $i$ there has the same preimages of $b$ within $[0,b]$ and takes values at least $i(b)=b+1$ beyond it. So $\langle b,i\rangle\in Y\setminus B_{N^{\prime}}$, and $Y$ is not even weakly inextensible.
-
-*By Claude Fable 5.1 (Anthropic), answering Cian Dorr’s question whether the failure of Actuality can be sharpened to a failure of Inextensible Comprehension, 2026-09-23.*
-
-*Revised 2026-09-25 by Claude Opus 5.5 (Anthropic):* Merged the two sets of arguments recorded on 23 and 25 September into one, keeping the 23 September arguments for Inextensible Comprehension and BF (type t); the former already refutes the weak form.
-
-### Fails BF (type t).
-
-In a one-object finitely pinned model, BF (type t) fails as soon as there are a finite $N$, an arrow $i$ and a proposition $q$ in the domain that is the transport $i^{\prime}\cdot p=\{k : k\circ i^{\prime}\in p\}$ of no proposition $p$ along any arrow $i^{\prime}$ agreeing with $i$ on $N$: the intension $X:=\{\langle r,j\rangle : r\ne q\text{ or }j\text{ disagrees with }i\text{ on }N\}$ is pinned down by $N$, contains $\langle i^{\prime}\cdot p,i^{\prime}\rangle$ for every $p$ and $i^{\prime}$, so $\forall p\, .\,\Box Xp$ holds at the identity, and omits $\langle q,i\rangle$, so $\Box\forall p\, .\,Xp$ fails there. Since membership of $k$ in $i^{\prime}\cdot p$ depends only on $k$ restricted to the range of $i^{\prime}$, it suffices that $q$ separate two arrows agreeing on every such range. Here take $N=\{0\}$, $i$ any monotone map with $i0=2$, so that every $i^{\prime}$ agreeing with it on $N$ has range within $[2,\infty)$, and $q:=\{k : k1=1\}$, pinned down by $\{1\}$: two monotone maps agreeing on $[2,\infty)$ with $k2\ge1$ may take the values $1$ and $0$ at $1$.
-
-*By Claude Fable 5.1 (Anthropic), answering Cian Dorr’s question whether the failure of BF sharpens to type $t$, 2026-09-23.*
-
-### Holds Transversal Choice.
-
-By the argument recorded for Relational Choice: the model is extensionally full at every object, so for an equivalence relation at the evaluation point a transversal of its extension there, chosen in the metatheory, is the extension of an element pinned down by the empty set; the equivalence and transversal conditions are unboxed.
-
-*By Claude Fable 5.1 (Anthropic), on a question of Zachary Goodsell, after an observation of Christopher Sun, 2026-09-25.*
-
-### Fails Boolean Completeness (type t).
-
-The source (n. 92) conjectures this but does not show it. Any set $F$ of propositions is the extension at the identity of an element of the domain at type $t\to t$, namely the profile $\langle h,p\rangle\mapsto\{i : i\cdot p\in F\}$: it is natural, independent of $h$ and so pinned down by the empty set, and each of its values is pinned down by the pinning set of $p$, since $i\cdot p$ depends only on the values of $i$ there. A least upper bound of $F$ under entailment is a least finitely pinned superset of $\bigcup F$, and it exists only if the least $S$-pinned superset of $\bigcup F$ stops shrinking as the finite set $S$ grows. Here let $A_m$ ($m\ge1$) be the proposition, pinned down by $\{0,2m-1,2m\}$, that the arrow is constant on $\{0,\ldots,2m-1\}$ and first changes value at $2m$. The least superset of $\bigcup_mA_m$ pinned down by $\{0,\ldots,N\}$ consists of the arrows whose first change of value is at an even position or beyond $N$, and it strictly shrinks as $N$ grows. So $F$ has no least upper bound, and, taking pointwise negations, the family of complements has no greatest lower bound.
-
-*By Claude Fable 5.1 (Anthropic), 2026-09-25.*
-
 ### Fails Vicinity.
 
-A true $w$ pinned down by a finite set $S$ contains every arrow agreeing with the identity on $S$, among them the monotone map equal to the identity up to $M$ and constant at $M+1$ beyond it, for $S\subseteq[0,M]$, one that collapses two individuals $a\ne b$ outside $S$. The proposition that $a$ and $b$ are distinct is true, and it is possible at no arrow that collapses them, since a collapse persists under composition, so $w\not\le\Diamond(a\ne b)$.
+A true $w$ pinned down by a finite set $S$ contains every arrow agreeing with the identity on $S$, among them the monotone map equal to the identity up to $M$ and constant at $M+1$ beyond it, for $S\subseteq[0,M]$, one that collapses two numbers $a\ne b$ outside $S$. The proposition $\{k : ka\ne kb\}$ (with the natural numbers as individuals, that $a$ and $b$ are distinct) is true, and it is possible at no arrow that collapses them, since a collapse persists under composition, so $w$ does not entail its possibility.
 
 *By Claude Opus 5.5 (Anthropic), at Cian Dorr's request, 2026-09-27.*
 
-### Fails ND, Atomicity, Actuality, Rigid Comprehension. In reserve.
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The proposition that $a$ and $b$ are distinct is named as the set of arrows that keep them apart, so that the argument covers the variant with a single individual.
 
-*Source: Classicism, Appendix D, Proposition D.5(3), pp. 74–75; construction p. 77; p. 79 (No Pure Contingency). By Andrew Bacon and Cian Dorr, 2026-09-17.*
+### Holds Axiom of Infinity (type e).
 
-### Holds Axiom of Infinity (type t). In reserve.
+The individuals are the natural numbers and identity at the evaluation arrow is literal, so no numeral counts them. The set of numerals at type $e$ is invariant under every arrow, hence has empty support and lies in the domain, so finite cardinality is standard and no finite cardinality holds of the universal property.
 
-Added both Axioms of Infinity at Cian Dorr's direction. The individuals are the natural numbers and identity at the evaluation arrow is literal, so no numeral counts them. The propositions that a given individual is fixed by the arrow, one for each individual, are pairwise distinct and each has that individual as finite support, so there are infinitely many propositions. The set of numerals at each type is invariant under every arrow, hence has empty support and lies in the domain, so finite cardinality is standard and no finite cardinality holds of the universal property at either type.
+*From the group *Finite-support action models on one object*, shared argument `finite-support-one-object#axiom-of-infinity`. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-09-20.*
 
-*By Claude Fable 5.1 (Anthropic), 2026-09-20.*
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Split from the argument for both types; the type-$t$ half, which does not need infinitely many individuals, is axiom-of-infinity-t.
 
-### Fails Separated Structure, Distinctness Maximalism (signature Σ). In reserve.
+### Holds Axiom of Infinity (type t).
 
-Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+The propositions that a given number is fixed by the arrow, one for each number, are pairwise distinct and each has that number as finite support, so there are infinitely many propositions. The set of numerals at type $t$ is invariant under every arrow, hence has empty support and lies in the domain, so finite cardinality is standard and no finite cardinality holds of the universal property.
 
-*By Claude Fable 5.1 (Anthropic), 2026-09-22.*
+*From the group *Finite-support action models on one object*, shared argument `finite-support-one-object#axiom-of-infinity-t`. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-09-20.*
 
-### Holds □Relational Choice. In reserve.
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The type-$t$ half of the old argument, "individual" becoming "number", so that it covers the one-individual variants.
 
-Added Relational Choice and its necessitation at Cian Dorr’s direction: ideally full models are extensionally full at every object, and choice in the metatheory supplies the functional subrelation; see the notes.
+### Fails BF.
 
-*By Claude Fable 5.1 (Anthropic), 2026-09-23.*
+Witnessed by the qualitative property of being positive: an arrow sending $0$ to a positive number sends everything to positive numbers, so $\forall y\,\Box(Xz\to Xy)$ holds with $z:=0$ while $\Box\forall y(Xz\to Xy)$ fails.
 
-### Fails Inextensible Comprehension. In reserve.
+*Source: Classicism, Proposition D.5, parts 3 and 4, pp. 77–78. From the group *Finite-support action models on one object*, shared argument `finite-support-one-object#barcan-positive`. It requires that Every arrow is monotone, and some arrow sends $0$ to a positive number. Here: Every arrow is monotone, and the constant map to $1$ sends $0$ to a positive number. By Andrew Bacon and Cian Dorr, 2026-09-17.*
 
-Recorded the failure of Inextensible Comprehension at type e→t for the property of being even, sharpening the failure of Actuality; argument in the notes.
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The monotone maps' argument (part 3), which part 4 invokes with "as in part 3", stated once.
 
-*By Claude Fable 5.1 (Anthropic), 2026-09-23.*
+### Fails Boolean Completeness.
+
+At type $e\to t$. In the source's terms an upper bound of the haecceities of the members of $A$ is a persistent property whose extension contains $A$. A least one, pinned down by $\{0,\ldots,n\}$, would be the strongest such property pinned down by $\{0,\ldots,n\}$, and would also lie below the strongest pinned down by $\{0,\ldots,m\}$ for each $m>n$, which by the condition is strictly stronger. So the haecceities have no least upper bound.
+
+*Source: Classicism, Proposition D.5, parts 1–8, pp. 75–79. From the group *Finite-support action models on one object*, shared argument `finite-support-one-object#boolean-completeness`. It requires that For some set $A$ of individuals, the strongest persistent property whose extension contains $A$ and which is pinned down by $\{0,\ldots,n\}$ becomes strictly stronger as $n$ grows. Here: As in part 2, with $A$ the even numbers. By Andrew Bacon and Cian Dorr, 2026-09-17.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Stated once for the group, with the step from "ever stronger" to the missing least upper bound spelled out; each member's strongest persistent properties moved to the condition unbounded-haecceities.
+
+### Fails Countable Boolean Completeness.
+
+At type $e\to t$: the property $E$ whose extension is the family of haecceities of the members of $A$, which has no least upper bound by the shared argument boolean-completeness, is countable, and the extensional fullness the source invokes to put $E$ in the domain also puts in the relation pairing the haecceity of the $k$-th member of $A$ with the numeral $k$, which injects $E$ into the numerals.
+
+*From the group *Finite-support action models on one object*, shared argument `finite-support-one-object#countable-boolean-completeness`. It requires that For some set $A$ of individuals, the strongest persistent property whose extension contains $A$ and which is pinned down by $\{0,\ldots,n\}$ becomes strictly stronger as $n$ grows. Here: As in part 2, with $A$ the even numbers. By Claude Fable 5.1 (Anthropic), 2026-09-23.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Now builds on the shared argument boolean-completeness instead of on each member's source argument; no change of substance.
+
+### Fails Boolean Completeness (type t).
+
+The source (n. 92) conjectures this but does not show it. Any set $F$ of propositions is the extension at the identity of an element of the domain at type $t\to t$, namely the profile $\langle h,p\rangle\mapsto\{i : i\cdot p\in F\}$: it is natural, independent of $h$ and so pinned down by the empty set, and each of its values is pinned down by the pinning set of $p$, since $i\cdot p$ depends only on the values of $i$ there. A least upper bound of $F$ under entailment is a least finitely pinned superset of $\bigcup F$, and it exists only if the least $S$-pinned superset of $\bigcup F$ stops shrinking as the finite set $S$ grows. So the family $F$ of the condition has no least upper bound, and, taking pointwise negations, the family of complements has no greatest lower bound.
+
+*From the group *Finite-support action models on one object*, shared argument `finite-support-one-object#boolean-completeness-t`. It requires that Some family $F$ of propositions has no least finitely pinned superset of its union $\bigcup F$. Here: Let $F$ be the family of propositions $A_m$ ($m\ge1$), each pinned down by $\{0,2m-1,2m\}$, that the arrow is constant on $\{0,\ldots,2m-1\}$ and first changes value at $2m$. The least superset of $\bigcup F$ pinned down by $\{0,\ldots,N\}$ consists of the arrows whose first change of value is at an even position or beyond $N$, and it strictly shrinks as $N$ grows. By Claude Fable 5.1 (Anthropic), 2026-09-25.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The seven members' copies stated once, each member's family moved to the condition no-least-pinned-cover; the truncations' separate argument of 23 September, by Claude Fable 5.1 prompted by Cian Dorr, is now its witness, its own proof that the family is in the domain giving way to the profile above. The trawl's second arguments for the same verdict (25 September, DeepSeek, reviewed by OpenAI Codex) were dropped.
+
+### Fails Weakly Inextensible Comprehension.
+
+At type $e\to t$, for the property of being even, which is in the domain as the constant intension $\{\langle b,h\rangle : b\text{ even}\}$, pinned down by $\emptyset$. Unpacking $\operatorname{Inextensible}$ as in the left-to-right half of Dorr’s rigidity criterion (draft, Lemma 14, p. 7, with Lemma 13): even the unboxed matrix, evaluated at the identity, says that $Y$ is contained in every persistent (transport-closed) $B$ in the domain whose extension includes $Y$’s. For a finite $N^{\prime}$, the smallest such $B$ pinned down by $N^{\prime}$ is $B_{N^{\prime}}:=\{\langle b^{\prime\prime},i^{\prime}\rangle : i^{\prime\prime}(b)=b^{\prime\prime}\text{ for some even }b\text{ and some arrow }i^{\prime\prime}\text{ agreeing with }i^{\prime}\text{ on }N^{\prime}\}$, which is transport-closed and pinned down by $N^{\prime}$. Now let $Y$ be coextensive with evenness and pinned down by a finite $N_0$; then $\langle b,i\rangle\in Y$ for every even $b$ and every arrow $i$ fixing $N_0$ pointwise. Take the arrow $i$, the even $b$ and the finite $N^{\prime}$ that the condition provides for $N_0$: no arrow agreeing with $i$ on $N^{\prime}$ sends an even number to $b$. So $\langle b,i\rangle\in Y\setminus B_{N^{\prime}}$, and $Y$ is not even weakly inextensible.
+
+*From the group *Finite-support action models on one object*, shared argument `finite-support-one-object#weakly-inextensible-comprehension`. It requires that For every finite $N_0\subseteq\mathbb N$ there are an arrow $i$ fixing $N_0$ pointwise, an even $b$, and a finite $N^{\prime}$ such that no arrow agreeing with $i$ on $N^{\prime}$ sends an even number to $b$. Here: With $N_0\subseteq[0,M_0]$: $i$ the monotone map that is the identity on $[0,M_0]$ and adds one beyond it; an even $b>M_0+1$, whose only preimage under $i$ is the odd $b-1$; and $N^{\prime}:=[0,b]$: a monotone map agreeing with $i$ there has the same preimages of $b$ within $[0,b]$ and takes values at least $i(b)=b+1$ beyond it. By Claude Fable 5.1 (Anthropic), answering Cian Dorr’s question whether the failure of Actuality can be sharpened to a failure of Inextensible Comprehension, 2026-09-23.*
+
+*Revised 2026-09-25 by Claude Opus 5.5 (Anthropic):* Merged with the 25 September version; the argument already refutes the weak form, which was added.
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Stated once for the group, the witness moving to the condition evens-avoidable.
+
+### Fails BF (type t).
+
+In a one-object finitely pinned model, BF (type t) fails as soon as there are a finite $N$, an arrow $i$ and a proposition $q$ in the domain that is the transport $i^{\prime}\cdot p=\{k : k\circ i^{\prime}\in p\}$ of no proposition $p$ along any arrow $i^{\prime}$ agreeing with $i$ on $N$: the intension $X:=\{\langle r,j\rangle : r\ne q\text{ or }j\text{ disagrees with }i\text{ on }N\}$, which the condition puts in the domain, contains $\langle i^{\prime}\cdot p,i^{\prime}\rangle$ for every $p$ and $i^{\prime}$, so $\forall p\, .\,\Box Xp$ holds at the identity, and omits $\langle q,i\rangle$, so $\Box\forall p\, .\,Xp$ fails there. Since membership of $k$ in $i^{\prime}\cdot p$ depends only on $k$ restricted to the range of $i^{\prime}$, it suffices that $q$ separate two arrows agreeing on every such range, as the condition provides.
+
+*General argument `arguments/barcan-t-transport`. It requires that The model is a one-object action model whose entities are finitely pinned, and there are a finite set $N$, an arrow $i$ and a proposition $q$ in the domain such that $q$ separates two arrows that agree on the range of every arrow agreeing with $i$ on $N$, and the intension $\{\langle r,j\rangle : r\ne q\text{ or }j\text{ disagrees with }i\text{ on }N\}$ is in the domain. Here: Take $N=\{0\}$, $i$ any monotone map with $i0=2$, so that every $i^{\prime}$ agreeing with it on $N$ has range within $[2,\infty)$, and $q:=\{k : k1=1\}$, pinned down by $\{1\}$: two monotone maps agreeing on $[2,\infty)$ with $k2\ge1$ may take the values $1$ and $0$ at $1$. The model is a one-object finite-support model, and the intension the argument uses is pinned down by $N$. By Claude Fable 5.1 (Anthropic), answering Cian Dorr’s question whether the failure of BF sharpens to type $t$, 2026-09-23.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The finite-support group's argument and the symmetric range-gap models' copies stated once for the topic; that $X$ is in the domain (pinned down by $N$, and in a symmetric model symmetric) is now part of each record's reason for meeting transport-gap.
+
+### Holds □Intensional Choice.
+
+For each object $U$ and type $\sigma$ fix a well-ordering $<_U$ of the domain $D^\sigma_U$, and let $W$ be the intension of type $\sigma\to\sigma\to t$ with $W(h):={<_{\operatorname{cod}h}}$. Its value depends only on the arrow's codomain, so by the condition it is in the domain, and at every world its extension well-orders that world's type-$\sigma$ domain. Given $F$ with $\Box\exists x\, .\,Fx$, put $G:=\lambda x\, .\,Fx\land\forall y\, .\,(Fy\to\neg Wyx)$, the $W$-least $F$. It is definable from $F$ and $W$, so in the domain; $G\le F$, and its extension at every arrow is the singleton of the least element of $F$'s. So Intensional Choice holds, and the same at every reachable object gives $\Box$Intensional Choice. Cian Dorr's observation that such models are qualitatively full, made precise.
+
+*General argument `arguments/intensional-choice-well-ordering`. It requires that At every object reachable from the evaluation point, the domain contains every intension whose value at an arrow depends only on the arrow's codomain. Here: With one object such an intension is constant, so it is pinned down by $\emptyset$, and the domain holds every finitely pinned intension. It requires that The model is constructed in a metatheory with the axiom of choice. Here: The construction is carried out in ZFC (Appendix D). By Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion, 2026-10-03.*
+
+### Holds No Pure Contingency.
+
+Closed pure terms denote entities fixed by every arrow (§3.5, p. 58). With a single object, a proposition fixed by every arrow contains every arrow if it contains the identity and no arrow otherwise, so a true closed pure sentence is necessary: the source's one-object No Pure Contingency observation (p. 79), applied to each closed instance.
+
+*Source: Classicism, §3.5, p. 58; p. 79. General argument `arguments/no-pure-contingency-one-object`. It requires that The model is an action model (Classicism, Appendix D), or an intensional action model in the sense of Dorr's draft (Boolean Completeness does not imply Rigid Comprehension), with a single object. Here: Each part of Proposition D.5 is a one-object category acting on $\mathbb N$ (Appendix D, Definitions D.1–D.3). By Andrew Bacon and Cian Dorr, 2026-09-17.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic, for every one-object action model; the reason the source's observation holds is spelled out in place of "Boxed positive flags use the source’s explicit one-object No Pure Contingency observation, applied separately to each closed instance."
+
+### Holds Transversal Choice.
+
+For an equivalence relation at the evaluation point, a transversal of its extension there, chosen in the metatheory, is by extensional fullness the extension of an element of the domain; the equivalence and transversal conditions are unboxed.
+
+*General argument `arguments/transversal-choice-extensionally-full`. It requires that The model is extensionally full at every object: every set of tuples from the domains at an object is the extension, at the identity arrow, of an element of the domain of the matching relational type there. Here: The model is ideally full, hence extensionally full at every object (Appendix D, the remark after Definition D.3): for any set $R$ of tuples from the domains at an object $V$, the intension that assigns to every arrow out of $V$ into an object $U$ a fixed set $R_U$ of tuples from $U$’s domains, with $R_V=R$, is pinned down by $\emptyset$, so it is the intension of an element of $V^{\bar\sigma\to t}$ with extension $R$ at $1_V$. It requires that The model is constructed in a metatheory with the axiom of choice. Here: The construction is carried out in ZFC (Appendix D). By Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic), on a question of Zachary Goodsell, after an observation of Christopher Sun, 2026-09-25.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The Relational Choice and Transversal Choice arguments merged into one, stated for every extensionally full model.
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic. Its first sentence, deriving extensional fullness from ideal fullness, is now the group's reason for meeting extensionally-full.
 
 
 ## Notes
 
-The cited construction is a model of the map’s relational-type framework. The description identifies its evaluation point; construction and verification are given at the PDF locations in References.
-ND, Actuality and Atomicity fail, Atomlessness holds, and Boolean Completeness fails as in part 2.
-Countable Boolean Completeness fails as well, at type $e\to t$: the property $E$ that the source shows to lack a least upper bound has as its extension a countable family of haecceities, and the extensional fullness the source invokes to put $E$ in the domain also puts in the relation pairing the haecceity of the $k$-th member of that family with the numeral $k$, which injects $E$ into the numerals. So $\langle b,i\rangle\in Y\setminus B_{N^{\prime}}$, and $Y$ is not even weakly inextensible, so Weakly Inextensible Comprehension fails too. Observation of 23 September 2026, answering Cian Dorr’s question whether the failure of Actuality can be sharpened to a failure of Inextensible Comprehension. Observation of 23 September 2026, answering Cian Dorr’s question whether the failure of BF sharpens to type $t$. Boolean Completeness fails at type $t$ as well, which the source (n. 92) conjectures but does not show. Observation of Claude Fable 5.1 (Anthropic), 25 September 2026; not in the source.
+The cited construction is a model of the map’s relational-type framework. The description identifies its evaluation point; construction and verification are given at the PDF locations in References. The source notes that with all maps BF would still hold, since every map agrees on any finite set with a surjection; monotonicity is what makes it fail.
 
 ## History
 

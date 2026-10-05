@@ -156,4 +156,4 @@ diagnostics supplement this proof; they do not certify the preference axioms.
 
 ## Paper references
 
-- **Background: [Symmetries of value](https://doi.org/10.1111/nous.12549).** Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — Theorem 11, pp. 32–33: Pasadena, Highland Park, and Q constructions and relative-expectation identities
+- **Background: [Symmetries of value](https://doi.org/10.1111/nous.12549).** ([PDF](../sources/Goodsell%20-%202026%20-%20Symmetries%20of%20value.pdf)) Zachary Goodsell (2026). Symmetries of value. Noûs, 60, 16–37. — Theorem 11, pp. 32–33: Pasadena, Highland Park, and Q constructions and relative-expectation identities

@@ -1,6 +1,6 @@
 # Distinctness Maximalism (signature Σ) ⇒ Possibility Maximalism (signature Σ)
 
-<p class='cert'>Result — Source: Classicism (2024); produced by Andrew Bacon and Cian Dorr; recorded by OpenAI Codex (GPT-6), 17 September 2026.</p>
+<p class='cert'>Result — Source: Classicism (2024), Lean `Classicism.Map.distinctness_signature_r_implies_possibility_signature_r`; produced by Andrew Bacon and Cian Dorr; recorded by OpenAI Codex (GPT-6), 17 September 2026.</p>
 
 ## Premises
 

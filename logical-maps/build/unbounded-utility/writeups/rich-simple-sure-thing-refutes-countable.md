@@ -31,4 +31,4 @@ Russell and Isaacs supply the Countable Sure-Thing principle and original St Pet
 ## Paper references
 
 - **Origin: [Infinite prospects](https://doi.org/10.1111/phpr.12704).** Russell, J. S., & Isaacs, Y. (2021). Infinite prospects. Philosophy and Phenomenological Research, 103(1), 178–198. — §2, author’s April 2020 manuscript pp. 6–8; §4, p. 15, footnote 17. Original St Petersburg obstruction to Countable Sure-Thing with unbounded real utilities. The sufficient premises and proof recorded here follow Goodsell’s strengthened version in Decision theory unbound, §2.3.
-- **Proof: [Decision theory unbound](https://doi.org/10.1111/nous.12473).** Zachary Goodsell (2024). Decision theory unbound. Noûs, 58, 669–695. First published online in 2023. — §2.3, pp. 675–676
+- **Proof: [Decision theory unbound](https://doi.org/10.1111/nous.12473).** ([PDF](../sources/Nous%20-%202023%20-%20Goodsell%20-%20Decision%20theory%20unbound%20%281%29.pdf)) Zachary Goodsell (2024). Decision theory unbound. Noûs, 58, 669–695. First published online in 2023. — §2.3, pp. 675–676
