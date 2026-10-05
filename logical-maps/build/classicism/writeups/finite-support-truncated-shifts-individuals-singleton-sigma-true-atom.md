@@ -4,6 +4,7 @@
 
 ## Package
 
+- **Rigid Power.** If a relation is rigid, so is the property of being a rigid relation that entails it.
 - **Tame Rigidity.** Every weakly rigid relation, including a proposition, is rigid.
 - **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Actuality.** There is a true proposition that entails every true proposition.
@@ -34,6 +35,12 @@ Interpretation of Σ, fixed for this record: one designated relational constant 
 *A member of the group Finite-support action models on one object, which supplies this definition with the record's settings, and the arguments marked as shared.*
 
 ## Arguments
+
+### Holds Rigid Power.
+
+Write $X_0(E)$ for the intension $n\mapsto k_n\cdot E$. Every arrow is finitely determined, so, as in the group's argument for Tame Rigidity, a weakly inextensible relation is $X_0$ of its extension at the identity, and the rigid relations are the $X_0(E)$ that are in the domain, namely those with $k_n\cdot E$ constant for all $n$ beyond some $s$. For rigid $F=X_0(S)$ the power property $\lambda X\, .\,\operatorname{Rigid}(X)\land X\le F$ has extension $\{X_0(T'):T'\subseteq k_m\cdot S,\ X_0(T')\text{ in the domain}\}$ at $k_m$, while its extension at the identity transported along $k_m$ is $\{X_0(k_m\cdot T):T\subseteq S,\ X_0(T)\text{ in the domain}\}$. Given such a $T'$, put $T:=\{q\in S: k_m\cdot q\in T'\}$, so that $k_m\cdot T=T'$. Since $k_{n-m}\circ k_m=k_n$ for $n\ge m$, transport gives $k_n\cdot T=k_{n-m}\cdot T'$ for $n\ge m$, constant for large $n$; so $X_0(T)$ is in the domain. Hence the power property is $X_0$ of its extension; and $k_n$ applied to that extension is, by the same correspondence, $\{X_0(T''):T''\subseteq k_n\cdot S,\ X_0(T'')\text{ in the domain}\}$, constant for $n>s$, so the power property is in the domain and rigid. The boxed form follows from No Pure Contingency.
+
+*By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-10-04.*
 
 ### Holds Tame Rigidity.
 

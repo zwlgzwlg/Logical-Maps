@@ -1,0 +1,173 @@
+# Symmetry-constrained full model: all maps on three individuals [one individual; Σ true atom]
+
+<p class='cert'>Model — Source: Misc.; produced by Cian Dorr (the construction and the failure of Intensional Choice, 4 October 2026); Claude Fable 5.1 (Anthropic) (the counting of propositions, the repair of the type-$t$ witness, and the other verdicts, 4 October 2026); recorded by Claude Fable 5.1 (Anthropic), 4 October 2026.</p>
+
+## Package
+
+- **Atomicity.** Every non-bottom entity of each relational type has an atom below it.
+- **Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
+- **Rigid Comprehension.** Every relation, including a proposition, is coextensive with a rigid one.
+- **Tame Rigidity.** Every weakly rigid relation, including a proposition, is rigid.
+- **Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
+- **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
+- **Rigid Power.** If a relation is rigid, so is the property of being a rigid relation that entails it.
+- **□Rigid Power.** Every closed instance of Rigid Power is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **Countable Boolean Completeness.** Every countable property of entities of a relational type has a least upper bound in that type, where a property is countable when it injects into the natural numbers.
+- **Transversal Choice.** Every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.
+- **¬ Intensional Choice.** If a property is necessarily instantiated, then some property entailing it is necessarily uniquely instantiated.
+- **¬ BF (type t).** BF (type t) in the displayed closed propositional formulation.
+- **¬ ND (type t).** ND (type t) in the displayed closed propositional formulation.
+- **¬ Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
+- **¬ Infinity Schema (type t).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
+- **¬ Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
+- **¬ Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
+- **¬ Possible Infinity (type e).** Possibly there are not finitely many individuals: the Axiom of Infinity at this type, under a diamond.
+- **¬ B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
+- **¬ No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
+- **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
+- **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
+- **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
+- **¬ Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
+
+## Definition
+
+The arrows are all $27$ maps from $X$ to itself, so that the permutations are arrows and the symmetry condition is Dorr's; the collapses are the three constant maps. The individuals are a three-element set $X$ and $G$ is the group of all its permutations. An intension $D$ of a relational type is admitted exactly when it is symmetric: $\langle\bar x,h\rangle\in D$ implies $\langle g\cdot\bar x,g\circ h\rangle\in D$ for every $g\in G$ such that $g\circ h$ is an arrow, where $g$ acts on individuals as itself and on entities of higher types by relabelling. At the identity the condition is vacuous unless the permutations are arrows; at a collapse $c_i$, the constant map with value $i$, it says that $D(c_{g(i)})=g\cdot D(c_i)$. Every such domain is finite and closed under the operations of C: each $g$ is an automorphism of the whole structure, and every parameter transported along a collapse is fixed by $G$, so the extension at a collapse of any definable intension is invariant. Evaluation point: the sole object, at the identity arrow.
+
+Individuals, fixed for this record: there is a single individual, which every arrow fixes; the arrows still act on the three-element set $X$, which supplies the symmetry.
+
+Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of the model, the actual-world proposition, which is the orbit of the identity arrow under the symmetry group; every other constant of Σ, of which there is at least one, is relational and denotes the top element of its type.
+
+*A member of the group Symmetry-constrained full models, which supplies this definition with the record's settings, and the arguments marked as shared.*
+
+## Arguments
+
+### Fails Intensional Choice.
+
+At type $t$, for properties of propositions, so also in the variant with one individual. A symmetric set of arrows is a union of orbits under composition with permutations, and the orbit of a map is fixed by its kernel: the constants, the permutations $P$, and for each $i\in X$ the six maps that identify the two individuals other than $i$ and separate $i$, an atom $O_i$. So there are $2^5=32$ propositions, and transport along a permutation $g$ sends $O_i$ to $O_{g(i)}$. Take $F$ of type $t\to t$ with $F(c_m):=\{O_j,O_k\}$ at each collapse, where $\{j,k\}=X\setminus\{m\}$, and $F(h):=\{O_1,O_2,O_3\}$ at every other arrow; it is symmetric, in the domain by fullness, and necessarily instantiated. With three individuals it is also definable: for an individual $x$, $F=\lambda a\, .\,\operatorname{Atom}(a)\land\exists y\, .\, (y\ne x\land a\le x{=}y)\land\exists z\, .\,a\le x{\ne}z$, an atom under which $x$ is identified with some actually distinct individual but not with everything. Suppose $G\le F$ is necessarily uniquely instantiated. Then $G(c_m)$ is a singleton inside $\{O_j,O_k\}$, and the transposition $\tau$ of $j$ and $k$ fixes $m$, so $\tau\circ c_m=c_m$ and symmetry gives $G(c_m)=\tau\cdot G(c_m)$; but $\tau$ swaps $O_j$ and $O_k$. No closed term can witness the failure, since a closed term's value is a set of propositions fixed by every permutation, and every proposition is fixed by some transposition $\tau_m$ fixing $m$; the parameter $x$, or the non-definable $F$, is needed. Cian Dorr proposed the atoms entailing $x=y$ and $x\ne z$ for existentially quantified $x,y,z$; that closed term's value $\{O_1,O_2,O_3\}$ contains $O_m$, which $\tau_m$ fixes, so it admits a witness, and the repair above fixes $x$.
+
+*Address: `symmetry-constrained-full-all-maps-individuals-singleton-sigma-true-atom#intensional-choice-t`. By Claude Fable 5.1 (Anthropic), repairing a witness proposed by Cian Dorr, 2026-10-04.*
+
+### Holds Atomicity.
+
+At every type the domain is finite and closed under the pointwise lattice operations, since the union and intersection of symmetric intensions are symmetric; in a finite lattice every nonzero element has an atom below it.
+
+*From the group *Symmetry-constrained full models*, shared argument `symmetry-constrained-full#atomicity`. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-10-04.*
+
+### Holds Boolean Completeness.
+
+The entailment order is the pointwise order on intensions, and the pointwise intersection of any set of symmetric intensions is symmetric and in the domain, so every set has a greatest lower bound at every type.
+
+*From the group *Symmetry-constrained full models*, shared argument `symmetry-constrained-full#boolean-completeness`. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-10-04.*
+
+### Holds Rigid Comprehension.
+
+For a set $S$ of tuples at the identity, the intension $Y$ with $Y(h):=h\cdot S$, the transports of the members of $S$ along $h$, is symmetric: relabelling by $g$ the transport of a tuple along $h$ gives its transport along $g\circ h$ (when the permutations are arrows because transport composes; otherwise because $g\cdot(c\cdot z)=c_{g(i)}\cdot z$ for a collapse $c=c_i$ and every admissible $z$, the collapses being absorbed, $l\circ c=l$ for $l\ne1$, and $z$ symmetric). $Y$ is coextensive with $S$, persistent, and inextensible at every world $h$, since any persistent $B$ with $B(h)\supseteq Y(h)$ has $B(k\circ h)\supseteq k\cdot Y(h)= Y(k\circ h)$. So every extension has a rigid coextension, at every type.
+
+*From the group *Symmetry-constrained full models*, shared argument `symmetry-constrained-full#rigid-comprehension`. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-10-04.*
+
+### Holds Tame Rigidity.
+
+Let $Y$ be weakly rigid with extension $E$ at the identity. The intension $h\mapsto h\cdot E$ is symmetric, as in the argument for Rigid Comprehension, and satisfies the hypothesis of weak inextensibility, so $Y(h)\subseteq h\cdot E$ for every $h$; persistence gives the converse. So $Y$ is that intension, which is rigid.
+
+*From the group *Symmetry-constrained full models*, shared argument `symmetry-constrained-full#tame-rigidity`. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-10-04.*
+
+### Fails BF (type t).
+
+Transport along a collapse $c$ sends every proposition to $\bot$ or $\top$: $l\circ c$ is the constant map with value $l(i)$ for $c=c_i$, and the constant maps form one orbit of the symmetry group, so a symmetric proposition contains all of them or none. The intension $X$ of type $t\to t$ with $X(c):=\{\bot,\top\}$ at every collapse and $X(h):=$ every proposition elsewhere is symmetric, since both values are fixed by every relabelling. So $\forall p\, .\,\Box Xp$ holds at the identity while $\Box\forall p\, .\,Xp$ fails.
+
+*From the group *Symmetry-constrained full models*, shared argument `symmetry-constrained-full#barcan-t-collapse`. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-10-04.*
+
+### Fails ND (type t).
+
+The actual-world proposition $a$ and $\bot$ are distinct, and a collapse $c$ transports both to $\bot$, since $l\circ c$ is a collapse for every $l$ and so never in $a$.
+
+*From the group *Symmetry-constrained full models*, shared argument `symmetry-constrained-full#distinctness-necessary-t`. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-10-04.*
+
+### Fails Axiom of Infinity (type t), Infinity Schema (type t).
+
+There are finitely many propositions, $n$ say, with literal identity. The numerals are closed terms, so in the domain, and the numeral $n$ holds of the universal property of propositions, so the Axiom of Infinity at type $t$ fails, as does the instance of the schema asking for $n+1$ pairwise distinct propositions.
+
+*From the group *Symmetry-constrained full models*, shared argument `symmetry-constrained-full#axiom-of-infinity-t`. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-10-04.*
+
+### Holds Distinctness-preserving collapse.
+
+For a true $p$, $a\le p$, since $a$ entails every truth. Take $q:=a$ in the definition of $\Box_{\ne}p$: at a world in $a$, $p$ holds; at a world outside $a$, $\Diamond a$ fails. So every truth is $\Box_{\ne}$-necessary.
+
+*General argument `arguments/dpc-isolated-actual-world`. It requires that The actual-world proposition $a$ is in the domain and entails every truth, and no world outside $a$ sees a world in $a$. Here: $a$, the orbit of the identity, is in the domain and entails every truth; from a world outside $a$, a non-permutation $h$, every $l\circ h$ is again a non-permutation, outside $a$. By Claude Fable 5.1 (Anthropic), 2026-09-23.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The finite-support, symmetric and full action models' copies (eight records) stated once for the topic; what varied, why no world outside the actual world sees back into it, is each record's reason for meeting actual-world-isolated.
+
+### Holds No Pure Contingency.
+
+Closed pure terms denote entities fixed by every arrow (§3.5, p. 58). With a single object, a proposition fixed by every arrow contains every arrow if it contains the identity and no arrow otherwise, so a true closed pure sentence is necessary: the source's one-object No Pure Contingency observation (p. 79), applied to each closed instance.
+
+*Source: Classicism, §3.5, p. 58; p. 79. General argument `arguments/no-pure-contingency-one-object`. It requires that The model is an action model (Classicism, Appendix D), or an intensional action model in the sense of Dorr's draft (Boolean Completeness does not imply Rigid Comprehension), with a single object. Here: An action model with a single object. By Andrew Bacon and Cian Dorr, 2026-09-17.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic, for every one-object action model; the reason the source's observation holds is spelled out in place of "Boxed positive flags use the source’s explicit one-object No Pure Contingency observation, applied separately to each closed instance."
+
+### Fails Axiom of Infinity (type e), Infinity Schema (type e), Possible Infinity (type e).
+
+No two individuals are distinct, and the numeral $\operatorname{Suc}_e\mathbf{0}_e$ holds of the universal property at type $e$ at every world.
+
+*General argument `arguments/one-individual`. It requires that There is exactly one individual, at every world. Here: The only individual is fixed by every arrow, at the sole object. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-02.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic.
+
+### Holds Rigid Power, □Rigid Power.
+
+Write $X_0(E)$ for the intension $k\mapsto k\cdot E$. The extension at an arrow $h$ of the power property $\lambda X\, .\,\operatorname{Rigid}(X)\land X\le F$ is the set of rigid $X$ with $X\le h\cdot F$, the bound variable ranging over the domain untransported and the parameter transported. By the condition the rigid relations are the $X_0(E)$, and $X_0(T)\le X_0(S)$ iff $T\subseteq S$; so for rigid $F=X_0(S)$ the power property has extension $\{X_0(T'):T'\subseteq k\cdot S\}$ at $k$, while transporting its extension at the identity along $k$ gives $\{X_0(k\cdot T):T\subseteq S\}$. These coincide, since every $T'\subseteq k\cdot S$ is $k\cdot T$ for $T:=\{s\in S:k\cdot s\in T'\}$. So the power property is itself $X_0$ of its extension, hence rigid, and the same at every reachable object gives the boxed form.
+
+*General argument `arguments/rigid-power-tight`. It requires that At every object reachable from the evaluation point, the rigid relations of each relational type are exactly the intensions $k\mapsto k\cdot E$, the disjunctions of the haecceities of the members of $E$, for $E$ any set of tuples from the domains there; in particular every such intension is in the domain. Here: For any set $E$ the intension $k\mapsto k\cdot E$ is symmetric (as in the argument for Rigid Comprehension), so in the domain, and it is the smallest symmetric intension containing the transports of the members of $E$; so a weakly inextensible relation lies below it over its extension, and a rigid one equals it (as in the argument for Tame Rigidity). By Claude Opus 5.5 (Anthropic), 3 October 2026 (full action models); extended by Claude Fable 5.1 (Anthropic), 4 October 2026, at Cian Dorr's direction.*
+
+*Revised 2026-10-04 by Claude Fable 5.1 (Anthropic), at Cian Dorr's direction:* The argument deferred in extraction.md on 3 October for the full action models, where every intension is present, stated under the condition it actually uses, which the symmetry-constrained full models also meet.
+
+### Fails B for sentences of Σ.
+
+B for sentences of Σ fails: the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes $a$, which is true, and under an arrow from which no world in $a$ is accessible $\Diamond a$ is false, so $\Box\Diamond a$ fails.
+
+*General argument `arguments/sigma-true-atom-b`. It requires that Σ has a designated relational constant $c$ of type $\tau=\bar\sigma t$ denoting $\lambda\bar x\, .\,a$, where $a$ is the actual-world proposition, the unique true atom; every other constant, of which there is at least one, is relational and denotes the top element of its type. Here: This is the interpretation. It requires that The actual-world proposition $a$, the strongest truth, is in the domain; it is necessary at no world, and some arrow does not fix it. Here: The actual-world proposition $a$ is the orbit of the identity under the symmetry group, the identity alone when no permutation is an arrow and the permutations when they are; it is in the domain, true, and entails every truth, since a symmetric true proposition contains the identity and so its orbit. It is necessary at no world, since every world sees a collapse, which lies outside $a$; and a collapse $c$ does not fix it, since $l\circ c$ is a collapse for every $l$, so $c\cdot a$ is empty. It requires that Some world sees no world at which the actual-world proposition is true. Here: A collapse $c$: $l\circ c$ is a collapse for every arrow $l$, so from $c$ no world in $a$ is seen. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The B clause of the records' Σ-as-true-atom argument, stated once for the topic.
+
+### Fails No Contingency (signature Σ), Witnessed Possibility, Separated Structure, Independence (signature Σ), Distinctness Maximalism (signature Σ).
+
+No Contingency (signature Σ) fails, since the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes $a$, true and contingent; Witnessed Possibility fails for the pure formula $x=\top_\tau$, witnessed by $\top_\tau$, since $\Diamond(c=\top_\tau)$ is $\Diamond\Box a$ and $a$ is necessary at no world; Separated Structure fails with it, being equivalent to Possibly Witnessed Possibility; Independence (signature Σ) and Distinctness Maximalism (signature Σ) fail through the other relational constants: such a constant $c'$ of type $\tau'$ denotes what the closed pure term $\top_{\tau'}$ denotes, and $c'=\top_{\tau'}$ is a true identity that C(Σ) does not prove. The designated constant refutes neither: closed pure terms denote entities fixed by every arrow (Classicism, §3.5, p. 58), whereas some arrow does not fix $a$, so no closed pure term denotes $\lambda\bar x\, .\,a$.
+
+*General argument `arguments/sigma-true-atom`. It requires that Σ has a designated relational constant $c$ of type $\tau=\bar\sigma t$ denoting $\lambda\bar x\, .\,a$, where $a$ is the actual-world proposition, the unique true atom; every other constant, of which there is at least one, is relational and denotes the top element of its type. Here: This is the interpretation. It requires that The actual-world proposition $a$, the strongest truth, is in the domain; it is necessary at no world, and some arrow does not fix it. Here: The actual-world proposition $a$ is the orbit of the identity under the symmetry group, the identity alone when no permutation is an arrow and the permutations when they are; it is in the domain, true, and entails every truth, since a symmetric true proposition contains the identity and so its orbit. It is necessary at no world, since every world sees a collapse, which lies outside $a$; and a collapse $c$ does not fix it, since $l\circ c$ is a collapse for every $l$, so $c\cdot a$ is empty. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The verbatim copies in ten records (finite-support, symmetric and full action models) stated once for the topic. Its B clause is now sigma-true-atom-b, which needs an arrow from which the actual world is out of reach. "$a$ is fixed by no arrow but the identity" became "some arrow does not fix $a$": in a symmetric model the actual-world proposition is the symmetry group, which its members fix, and the conclusion needs only the weaker claim.
+
+### Holds Countable Boolean Completeness.
+
+The natural numbers are the finite cardinalities at type $e$ (Background, after Goodsell), and with a single individual there are three: $\mathbf{0}_e$, true of the empty property; $\operatorname{Suc}_e\mathbf{0}_e$, true of the universal one; and the empty cardinality, which is $\operatorname{Suc}_e$ of the second and of itself. By extensional fullness the property of being one of these three is in the domain, so it bounds natural numberhood. A countable property therefore has at most three members in its extension, and their join is its least upper bound.
+
+*General argument `arguments/three-numbers`. It requires that There is exactly one individual, at every world. Here: The only individual is fixed by every arrow, at the sole object. It requires that The model is extensionally full at every object: every set of tuples from the domains at an object is the extension, at the identity arrow, of an element of the domain of the matching relational type there. Here: Any set $S$ of tuples at the identity is the extension there of a symmetric intension: put $S$ at the identity, $g\cdot S$ at each permutation $g$ that is an arrow, and the empty set at every other arrow. By Claude Opus 5.5 (Anthropic), on Cian Dorr's question whether the failure of Boolean Completeness at type $t$ refutes its countable form here, 2026-10-02.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic.
+
+### Holds Transversal Choice.
+
+For an equivalence relation at the evaluation point, a transversal of its extension there, chosen in the metatheory, is by extensional fullness the extension of an element of the domain; the equivalence and transversal conditions are unboxed.
+
+*General argument `arguments/transversal-choice-extensionally-full`. It requires that The model is extensionally full at every object: every set of tuples from the domains at an object is the extension, at the identity arrow, of an element of the domain of the matching relational type there. Here: Any set $S$ of tuples at the identity is the extension there of a symmetric intension: put $S$ at the identity, $g\cdot S$ at each permutation $g$ that is an arrow, and the empty set at every other arrow. It requires that The model is constructed in a metatheory with the axiom of choice. Here: The construction is carried out in ZFC; everything in it is finite. By Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic), on a question of Zachary Goodsell, after an observation of Christopher Sun, 2026-09-25.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The Relational Choice and Transversal Choice arguments merged into one, stated for every extensionally full model.
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic. Its first sentence, deriving extensional fullness from ideal fullness, is now the group's reason for meeting extensionally-full.
+
+
+## Notes
+
+With three individuals, Intensional Choice fails at type $e$ by the shared argument and at type $t$ by the argument above; with one individual only the type-$t$ failure remains, which is why this member and not the collapse member carries the one-individual variant's refutation. Actuality holds with $P$, the six permutations, as the true atom. BF and ND fail at type $e$ with three individuals (the image intension $h\mapsto h(X)$ is symmetric; a collapse identifies distinct individuals), derived from the group's type-$t$ arguments. Everything is finite, so every verdict at low types is decidable by exhaustive computation, which has not yet been carried out.
+
+## Sources
+
+- **Dorr 4 Oct** — Cian Dorr, suggestion of 4 October 2026, in conversation with Claude Fable 5.1 (Anthropic): the monoid of all maps on three individuals under the symmetry condition, so that Intensional Choice also fails for properties of propositions, and still in the variant with one individual; transcript in .private.
+- **BC does not imply RC** — Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, Definitions 15–18, p. 8 (the symmetry condition).
+
+<p class='cert'>Record: <code>topics/classicism/models/symmetry-constrained-full-all-maps.yaml</code></p>
+
+## Paper references
+
+- **Background: Boolean Completeness does not imply Rigid Comprehension.** Dorr, Cian. Boolean Completeness does not imply Rigid Comprehension. Unpublished draft in progress, 30 July 2026, 27 pages. All page, proposition and lemma locators for this source refer to that draft. Parts of the draft were drafted with AI assistance; its mathematical claims are attributed to the author. — Definitions 15–18, p. 8. The symmetry condition. Since every permutation of $X$ is an arrow here, this is a symmetric intensional action model in the draft's sense, full because the base is finite.
+- **Background: Classicism.** Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds), Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated 16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition and footnote locators in this map refer to that draft's numbering. — §3.5, p. 59. Full action models.

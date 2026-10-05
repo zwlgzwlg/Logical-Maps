@@ -5,6 +5,7 @@
 ## Package
 
 - **Atomlessness.** Atomlessness in the displayed closed propositional formulation.
+- **Rigid Power.** If a relation is rigid, so is the property of being a rigid relation that entails it.
 - **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **□Intensional Choice.** Every closed instance of Intensional Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
 - **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
@@ -57,6 +58,12 @@ A true $w$ pinned down by a finite set $S$ contains every arrow agreeing with th
 *By Claude Opus 5.5 (Anthropic), at Cian Dorr's request, 2026-09-27.*
 
 *Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The proposition that $a$ and $b$ are distinct is named as the set of arrows that keep them apart, so that the argument covers the variant with a single individual.
+
+### Holds Rigid Power.
+
+Write $X_0(E)$ for the intension $k\mapsto k\cdot E$. For $E$ pinned down uniformly by a finite $S_0$, $X_0(E)$ is in the domain, pinned down by $S_0$, and so is $X_0(T)$ for every $T\subseteq E$ and $X_0(k\cdot E)$ for every arrow $k$. The extension at $k$ of the power property $\lambda X\, .\,\operatorname{Rigid}(X)\land X\le F$ is the set of rigid $X$ with $X\le k\cdot F$, the bound variable untransported and the parameter transported; by the condition, for rigid $F=X_0(S)$ it is $\{X_0(T'):T'\subseteq k\cdot S\}$, and transporting the extension at the identity along $k$ gives $\{X_0(k\cdot T):T\subseteq S\}$, the same set, since $T'\subseteq k\cdot S$ is $k\cdot T$ for $T:=\{s\in S:k\cdot s\in T'\}$. So the power property is $X_0$ of its own extension, which is pinned down uniformly, hence in the domain and rigid. In these models the rigid relations are thus (a) the haecceities, (b) the properties "being pinned down by $S$", which are $X_0(\operatorname{Pin}(S))$, and (c) the disjunctions, finite or infinite, of haecceities of entities pinned down by one finite set; the boxed form follows from No Pure Contingency.
+
+*From the group *Finite-support action models on one object*, shared argument `finite-support-one-object#rigid-power`. It requires that Every rigid relation is the intension $k\mapsto k\cdot E$, the disjunction of the haecceities of the members of its extension $E$ at the identity, and $E$ is pinned down uniformly: some finite set pins down every member of $E$. Here: Let $Y$ be rigid, pinned down by $S=[0,s]$, with extension $E$ at the identity; rigidity makes $\bigcup\{k_2\cdot E:k_2\text{ agrees with }k\text{ on }S\}$ independent of $S$ among the sets pinning down $Y$. If some $p\in E$ were pinned minimally at $T$ with $t:=\max T>s$, take $s'\ge t$ and the jump map $k$, the identity on $[0,s']$ and adding $100$ beyond: an arrow agreeing with $k$ on $S$ and sending $t$ to $s'+1$ puts into the $S$-union an element pinned at $s'+1$, while every element of the $[0,s']$-union is pinned inside $k([0,s'])\cup[s'+100,\infty)$. So $E\subseteq\operatorname{Pin}(S)$, and then $k_2\cdot p=k\cdot p$ whenever $k_2$ agrees with $k$ on $S$, so $Y(k)=k\cdot E$. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-10-04.*
 
 ### Holds Axiom of Infinity (type t).
 

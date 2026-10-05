@@ -333,6 +333,7 @@ Classicism/Semantics/Env.lean           assignments, shared by both forms of act
 Classicism/Semantics/Intensional.lean   intensional action premodels and models: relations as sets of tuples
 Classicism/Semantics/IntensionalSoundness.lean  soundness; the Boolean operations are set operations
 Classicism/Semantics/IntensionalFacts.lean  □ and ◇; consistency from a model; ND, BF, FA criteria; truncation
+Classicism/Semantics/IntensionalTheory.lean the theory of a model (consistent, complete); the pure reduct
 Classicism/Semantics/IntensionalFull.lean  full intensional models are models, at once; BF forces surjectivity
 Classicism/Semantics/IntensionalProperties.lean  fullness; NPC in every one-object model
 Classicism/Semantics/IntensionalExamples.lean  the M-set models in the intensional form, cited by the results
@@ -368,6 +369,11 @@ Classicism/Certified/Vectorized.lean    checks of the vectorization on three pri
 Classicism/Certified/Signatures.lean    each principle as a schema at every signature: P.X.schemaIn, pureVersion
 Classicism/Statements.lean              the map's statements, written by the map's generator (pmap lean classicism)
 Classicism/Map.lean                     one certificate per map result proved and per form, of its generated statement: the map's lean_refs
+Classicism/ModelStatements.lean         the map's models' single verdicts, written by the map's generator
+Classicism/MapModels.lean               one certificate per model verdict proved, of its generated statement
+Classicism/MapArguments.lean            one certificate per general argument's verdict proved
+Classicism/MapDerived.lean              the models' verdicts from those arguments, written by the map's generator
+Classicism/Models/Conditions.lean       the map's conditions on models, as predicates
 Classicism/Tools/MapIndex.lean          #classicism_map_index: where each certificate and its proofs are (map/index.json)
 
 Classicism/Strict/                      the strict layer; see its README

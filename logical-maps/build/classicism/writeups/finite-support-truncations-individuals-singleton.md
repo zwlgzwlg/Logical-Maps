@@ -5,6 +5,7 @@
 ## Package
 
 - **Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
+- **Rigid Power.** If a relation is rigid, so is the property of being a rigid relation that entails it.
 - **Tame Rigidity.** Every weakly rigid relation, including a proposition, is rigid.
 - **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Atomicity.** Every non-bottom entity of each relational type has an atom below it.
@@ -45,6 +46,12 @@ The strongest true proposition pinned down by $\{0,\ldots,n\}$ is $\{1_{\mathbb 
 For a true proposition $p$ pinned down by a finite set take as the witness $q$ the strongest true proposition pinned down by $\{0,\ldots,N\}$ for $N$ beyond the pinning set of $p$, namely $\{1_{\mathbb N}\}\cup\{g_m:m\ge N\}$. Under $g_n$ the only arrows reachable are $g_m$ with $m\le n$, so $\Diamond q$ holds at $g_n$ only if $n\ge N$, and then $g_n$ agrees with the identity on the pinning set of $p$ and is in $p$.
 
 *By Claude Fable 5.1 (Anthropic), 2026-09-23.*
+
+### Holds Rigid Power.
+
+Write $X_0(E)$ for the intension $k\mapsto k\cdot E$. For $E$ pinned down uniformly by a finite $S_0$, $X_0(E)$ is in the domain, pinned down by $S_0$, and so is $X_0(T)$ for every $T\subseteq E$ and $X_0(k\cdot E)$ for every arrow $k$. The extension at $k$ of the power property $\lambda X\, .\,\operatorname{Rigid}(X)\land X\le F$ is the set of rigid $X$ with $X\le k\cdot F$, the bound variable untransported and the parameter transported; by the condition, for rigid $F=X_0(S)$ it is $\{X_0(T'):T'\subseteq k\cdot S\}$, and transporting the extension at the identity along $k$ gives $\{X_0(k\cdot T):T\subseteq S\}$, the same set, since $T'\subseteq k\cdot S$ is $k\cdot T$ for $T:=\{s\in S:k\cdot s\in T'\}$. So the power property is $X_0$ of its own extension, which is pinned down uniformly, hence in the domain and rigid. In these models the rigid relations are thus (a) the haecceities, (b) the properties "being pinned down by $S$", which are $X_0(\operatorname{Pin}(S))$, and (c) the disjunctions, finite or infinite, of haecceities of entities pinned down by one finite set; the boxed form follows from No Pure Contingency.
+
+*From the group *Finite-support action models on one object*, shared argument `finite-support-one-object#rigid-power`. It requires that Every rigid relation is the intension $k\mapsto k\cdot E$, the disjunction of the haecceities of the members of its extension $E$ at the identity, and $E$ is pinned down uniformly: some finite set pins down every member of $E$. Here: An intension is pinned down by $[0,s]$ iff it is constant on $\{g_n:n\ge s\}\cup\{1\}$. Weak inextensibility at the identity, tested with $[0,s']$ for $s'>n$, where $g_n$ is the only arrow with its germ, forces $Y(g_n)=g_n\cdot Y(1)$ for every $n$; and $k\mapsto k\cdot E$ is in the domain iff $g_n\cdot E=E$ for all large $n$, which, as $g_n\cdot E\subseteq\operatorname{Pin}([0,n])$, holds iff $E\subseteq\operatorname{Pin}([0,n_0])$ for some $n_0$. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-10-04.*
 
 ### Holds Tame Rigidity.
 
