@@ -1731,6 +1731,13 @@ function computeLayoutCore(g) {
     // Recorded rules take precedence over derived arrows when a cycle must break.
     else constraints.push([e.from, e.to, implies(byId.get(e.from), byId.get(e.to)) ? (e.r ? 0 : 0.5) : 2]);
   }
+  // A box of equivalent conjunctions receives no arrows, since arrows never run
+  // into a conjunction, so nothing would keep a principle that entails it from
+  // landing on the same row. Such a principle is stronger, so it goes below the
+  // box, as an arrow into the box would put it; no arrow is drawn.
+  for (const box of connected.filter(n => n.kind === 'equivalence'))
+    for (const n of connected.filter(n => n.kind === 'class'))
+      if (implies(n, box)) constraints.push([n.id, box.id, 1.5]);
   // Keep the proved strength order first; drop any later constraint that
   // would close a cycle (a conjecture against a proved converse, or mutual
   // direct rules between inconsistent principles).
