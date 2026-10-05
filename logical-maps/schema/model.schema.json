@@ -220,6 +220,35 @@
     "gold"
    ],
    "description": "Human ranking of an unresolved question by importance and difficulty, shown on its lynchpin star. A conjecture with notes is bronze on its own; silver and gold are given by hand."
+  },
+  "lean": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["model", "verdicts"],
+   "description": "The model formalized in Lean, and its verdicts proved there one by one. The model's own record only: a group's generated variants are other models.",
+   "properties": {
+    "model": {
+     "type": "string",
+     "pattern": "\\S",
+     "description": "A Lean term for the model, filling {model} in the topic's lean.verdict templates."
+    },
+    "verdicts": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref"],
+      "oneOf": [{"required": ["holds"]}, {"required": ["fails"]}],
+      "properties": {
+       "holds": {"type": "string", "description": "A principle the Lean proof shows holds in the model."},
+       "fails": {"type": "string", "description": "A principle the Lean proof shows fails in the model."},
+       "ref": {"type": "string", "pattern": "\\S", "description": "The certificate: a declaration whose type is the generated statement of the verdict."},
+       "status": {"enum": ["stated", "verified"], "description": "Written by lean-check --update; never set by hand."}
+      }
+     }
+    }
+   }
   }
  },
  "if": {"anyOf": [{"required": ["arguments"]}, {"required": ["definition"]}]},

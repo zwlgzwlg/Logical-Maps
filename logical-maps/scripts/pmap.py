@@ -142,6 +142,7 @@ def load_topic(topic_id: str) -> dict:
                     suffix, tag = variant_label(group, d, vs)
                     v = expand_member(d, groups_by_id, vs, library)
                     v.update(id=f"{d['id']}-{suffix}", name=f"{d.get('name', d['id'])} [{tag}]", variant_of=d["id"])
+                    v.pop("lean", None)  # the member's Lean model is not the variant's
                     lst += flatten_model(v, raw=d)
                 if not flat:  # a withdrawn construction: kept, and validated, but out of the engine
                     retired.append({**full, "_source": d})
@@ -2207,6 +2208,23 @@ def validate_topic(topic_id: str, *, quiet=False) -> bool:
             errors.append(f"CONTRADICTION: {p}" + (f" (arguments: {', '.join(args)})" if args else ""))
         warnings += an["infos"]
         warnings += [f"{c['file']}: {n}" for c in model_coverage(data, an) for n in c["notices"]]
+        # A verdict proved in Lean must be one the map gives the model: the map's verdicts are
+        # its arguments' (and what follows from them), and Lean only certifies them.
+        E, seen = an["engine"], set()
+        for v in lean_verdicts(data):
+            where, pid, side = v["_file"], v["principle"], "holds" if v["holds"] else "fails"
+            if pid not in ids:
+                errors.append(f"{where}: lean verdict names unknown principle '{pid}'")
+                continue
+            if (v["model"], pid) in seen:
+                errors.append(f"{where}: lean verdict on '{pid}' given twice")
+            seen.add((v["model"], pid))
+            mine, other = (E.holds, E.fails) if v["holds"] else (E.fails, E.holds)
+            if pid in other.get(v["model"], set()):
+                errors.append(f"{where}: lean verdict says '{pid}' {side}, but the map says the opposite")
+            elif pid not in mine.get(v["model"], set()):
+                errors.append(f"{where}: lean verdict says '{pid}' {side}, which the map does not settle; "
+                              "add an argument for it")
 
     if not quiet:
         for e in errors:
@@ -2666,6 +2684,7 @@ def render_lean_index(data: dict, source: Path, destination: Path) -> None:
     definitions = sum(bool(p.get("lean_def")) for p in data["principles"])
     results = sum(r["certificate"].get("lean") == "verified" for r in data["results"])
     models = sum(m["certificate"].get("lean") == "verified" for m in data["models"])
+    verdicts = [v for v in lean_verdicts(data) if v["status"] == "verified"]
     files = sorted(p.relative_to(source) for p in source.rglob("*")
                    if p.is_file() and not any(_ignored(part) for part in p.relative_to(source).parts))
     links = ''.join(f'<li><a href="{quote(str(path))}">{escape(str(path))}</a></li>' for path in files)
@@ -2676,7 +2695,8 @@ def render_lean_index(data: dict, source: Path, destination: Path) -> None:
             f'<body class="writeup-page">{WRITEUP_NAV}<h1>Lean formalisation</h1>'
             f'<p>{definitions}/{len(data["principles"])} principles defined; '
             f'{results}/{len(data["results"])} result proofs verified; '
-            f'{models}/{len(data["models"])} model witnesses verified.</p>'
+            f'{models}/{len(data["models"])} model witnesses verified; '
+            f'{len(verdicts)} single verdicts verified in {len({v["model"] for v in verdicts})} models.</p>'
             '<p>Definitions and generated statements describe the claims. Only completed, '
             'audited proofs receive a Lean-verified certificate. The verification report '
             'records the remaining work and the formalisation assumptions.</p>'
@@ -2729,10 +2749,14 @@ def lean_source_links(topic_id: str, data: dict) -> dict | None:
             name = name.removesuffix(suffix)
         if name in definitions:
             principles[p["id"]] = [link(definitions[name], "definition")]
+    # A model's verdict: where the model is defined, then the proof and the certificate.
+    verdict_links = lambda e: [link(d, "model") for d in e.get("definitions", [])] + links(e)
     return {"results": {rid: links(e) for rid, e in idx.get("results", {}).items()},
             "principles": principles,
             "variants": {pid: {vid: links(e, True) for vid, e in vs.items()}
-                         for pid, vs in idx.get("forms", {}).items()}}
+                         for pid, vs in idx.get("forms", {}).items()},
+            "models": {mid: {pid: verdict_links(e) for pid, e in vs.items()}
+                       for mid, vs in idx.get("models", {}).items()}}
 
 
 def build_topic(topic_id: str, out: Path | None = None, *, fragment: bool = False, starter_archive: Path | None = None) -> Path:
@@ -2784,6 +2808,11 @@ def build_topic(topic_id: str, out: Path | None = None, *, fragment: bool = Fals
             for v in p.get("variants") or []:
                 if v["id"] in lean_links["variants"].get(p["id"], {}):
                     v["lean_links"] = lean_links["variants"][p["id"]][v["id"]]
+        for m in payload["models"]:
+            for v in (m.get("lean") or {}).get("verdicts") or []:
+                pid = v.get("holds", v.get("fails"))
+                if pid in lean_links["models"].get(m["id"], {}):
+                    v["lean_links"] = lean_links["models"][m["id"]][pid]
     # Compact: the website host serves no file over 25 MiB, and indentation alone added half again.
     (outdir / "data.json").write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     bundle_topic(topic_id)
@@ -2838,7 +2867,41 @@ def lean_coverage(data: dict) -> dict:
 
 LEAN_DEFAULTS = {"definition_check": "example : Prop := {def}",
                  "result": {"binder": "", "principle": "{def}"},
-                 "model": {"binder": "", "principle": "{def}"}}
+                 "model": {"binder": "", "principle": "{def}"},
+                 "verdict": {"imports": [], "holds": "{model} ⊨ {def}", "fails": "¬ ({model} ⊨ {def})",
+                             "relative_categories": [], "relative": ""}}
+
+
+def lean_verdicts(data: dict) -> list[dict]:
+    """The single verdicts of models proved in Lean: a model record's `lean.verdicts`, each
+    with the model's id and Lean term, the principle, whether it holds, and its generated
+    statement's name, `Models.<model>.<principle>` under the topic's `Statements`."""
+    out = []
+    for m in data["models"]:
+        lean = m.get("lean")
+        if not isinstance(lean, dict) or m.get("variant_of") or m.get("_companion_of"):
+            continue
+        for v in lean.get("verdicts") or []:
+            holds = "holds" in v
+            pid = v.get("holds" if holds else "fails")
+            out.append({"model": m["id"], "term": lean.get("model", ""), "principle": pid, "holds": holds,
+                        "ref": v.get("ref", ""), "status": v.get("status", "stated"), "_file": m["_file"],
+                        "statement": f"Models.{_lean_name(m['id'])}.{_lean_name(pid)}"})
+    return out
+
+
+def lean_verdict_statement(item: dict, data: dict, cfg: dict | None = None) -> str | None:
+    """The proposition a model's verdict asserts, or None while its principle has no lean_def."""
+    cfg = cfg or lean_config(data)
+    p = next((p for p in data["principles"] if p["id"] == item["principle"]), None)
+    if p is None or not p.get("lean_def"):
+        return None
+    shape = cfg["verdict"]
+    fill = lambda t: t.replace("{model}", item["term"]).replace("{def}", p["lean_def"])
+    body = fill(shape["holds" if item["holds"] else "fails"])
+    if p.get("category") in shape["relative_categories"] and shape["relative"]:
+        body = fill(shape["relative"]) + " ∧ " + body
+    return body
 
 
 def lean_config(data: dict) -> dict:
@@ -2846,7 +2909,10 @@ def lean_config(data: dict) -> dict:
 
     Declared under `lean:` in topic.yaml: `imports`, `namespace`, a `definition_check`
     template, and for results and models a `binder` and how a `principle` applies, with
-    `{def}` standing for the principle's `lean_def`. Without a declaration, principles are
+    `{def}` standing for the principle's `lean_def`; and for a model's single verdicts
+    (`lean_verdicts`) how one that `holds` or `fails` reads, `{model}` standing for the
+    record's Lean model, with a `relative` conjunct for principles whose definition
+    depends on the model's signature (`relative_categories`). Without a declaration, principles are
     plain propositions and a result reads A → B → C. Nothing here knows any framework.
     """
     lib = data["topic"].get("lean_lib")
@@ -2856,7 +2922,8 @@ def lean_config(data: dict) -> dict:
     return {"imports": list(cfg.get("imports") or [f"{lib}.Principles"]), "namespace": namespace,
             "definition_check": cfg.get("definition_check", LEAN_DEFAULTS["definition_check"]),
             "result": {**LEAN_DEFAULTS["result"], **cfg.get("result", {})},
-            "model": {**LEAN_DEFAULTS["model"], **cfg.get("model", {})}}
+            "model": {**LEAN_DEFAULTS["model"], **cfg.get("model", {})},
+            "verdict": {**LEAN_DEFAULTS["verdict"], **cfg.get("verdict", {})}}
 
 
 def generate_lean_statements(topic_id: str) -> Path | None:
@@ -2932,13 +2999,34 @@ def generate_lean_statements(topic_id: str) -> Path | None:
     out += [f"end {ns}.Statements", ""]
     path = root / lib / "Statements.lean"
     path.write_text("\n".join(out), encoding="utf-8")
+    wanted = [f"import {lib}.Statements"]
 
-    # keep the library root importing it
+    # A model's verdicts proved one by one, in a file of their own: they import the models.
+    verdicts = lean_verdicts(data)
+    if verdicts:
+        vout = [*(f"import {m}" for m in [*cfg["imports"], *cfg["verdict"]["imports"]]), "",
+                "/-!", "# Generated statements: models' verdicts", "",
+                "Written by `pmap lean " + topic_id + "` from the YAML records. **Do not edit.**", "",
+                "One declaration per verdict a model record proves in Lean (its `lean.verdicts`): that",
+                "the principle holds, or fails, in the record's Lean model.", "-/", "",
+                f"namespace {ns}.Statements", f"open {ns}", ""]
+        for v in verdicts:
+            body = lean_verdict_statement(v, data, cfg)
+            if body is None:
+                continue
+            vout += [f"/-- `{v['model']}`: {names.get(v['principle'], v['principle'])} "
+                     + ("holds" if v["holds"] else "fails") + ". -/",
+                     f"def {v['statement']} : Prop :=", f"  {body}", ""]
+        vout += [f"end {ns}.Statements", ""]
+        (root / lib / "ModelStatements.lean").write_text("\n".join(vout), encoding="utf-8")
+        wanted.append(f"import {lib}.ModelStatements")
+
+    # keep the library root importing them
     rootfile = root / f"{lib}.lean"
-    want = f"import {lib}.Statements"
     text = rootfile.read_text(encoding="utf-8") if rootfile.exists() else ""
-    if want not in text:
-        rootfile.write_text(text.rstrip() + "\n" + want + "\n", encoding="utf-8")
+    missing = [w for w in wanted if w not in text.splitlines()]
+    if missing:
+        rootfile.write_text(text.rstrip() + "\n" + "\n".join(missing) + "\n", encoding="utf-8")
     return path
 
 
@@ -3011,9 +3099,19 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
         variant_wrappers[(p["id"], v["id"])] = f"PmapAudit.{wrapper}"
         probe += [f"theorem {wrapper} : {ns}.Statements.{_lean_name(p['id'])}.{_lean_name(v['id'])} := {ref}",
                   f"#print axioms {wrapper}"]
+    # A model's single verdicts: each ref must inhabit the generated statement of the verdict.
+    model_verdicts = lean_verdicts(data)
+    verdict_wrappers = {}
+    for index_, v in enumerate(model_verdicts):
+        if not v["ref"] or lean_verdict_statement(v, data) is None:
+            continue
+        wrapper = f"verdict_{index_}"
+        verdict_wrappers[(v["model"], v["principle"])] = f"PmapAudit.{wrapper}"
+        probe += [f"theorem {wrapper} : {ns}.Statements.{v['statement']} := {v['ref']}",
+                  f"#print axioms {wrapper}"]
     probe += ["end PmapAudit"]
     verdicts, bad = {}, []
-    if references or variant_wrappers:
+    if references or variant_wrappers or verdict_wrappers:
         with tempfile.NamedTemporaryFile(mode="w", suffix=".lean", prefix="_pmap_audit_", dir=root, delete=False) as f:
             f.write("\n".join(probe) + "\n")
             pf = Path(f.name)
@@ -3023,7 +3121,8 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
             pf.unlink(missing_ok=True)
         output = result.stdout + result.stderr
         verdicts = lean_probe_verdicts(result.returncode, output,
-                                       list(wrappers.values()) + list(variant_wrappers.values()))
+                                       list(wrappers.values()) + list(variant_wrappers.values())
+                                       + list(verdict_wrappers.values()))
         if result.returncode:
             print(output[-10000:])
         for item in references:
@@ -3039,6 +3138,12 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
             bad.append(f"{p['id']}#{v['id']}: has a Lean statement but the principle has no lean_def")
         if v["lean"].get("status") == "verified" and not verdicts.get(variant_wrappers.get((p["id"], v["id"])), False):
             bad.append(f"{p['id']}#{v['id']}: claims verified but has no checked equivalence")
+    for v in model_verdicts:
+        key = (v["model"], v["principle"])
+        if key not in verdict_wrappers:
+            bad.append(f"{v['model']}: the verdict on {v['principle']} has no statement (its principle needs a lean_def)")
+        elif not verdicts.get(verdict_wrappers[key], False):
+            bad.append(f"{v['model']}: the verdict on {v['principle']} failed its generated type or axiom audit")
     for item in records:
         state = item["certificate"].get("lean", "none")
         if state in ("stated", "verified") and item["id"] not in ready:
@@ -3052,6 +3157,9 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
     verified_variants = {key for key, wrapper in variant_wrappers.items() if verdicts.get(wrapper, False)}
     all_variants = sum(len(p.get("variants") or []) for p in data["principles"])
     print(f"  variants: {len(variants)}/{all_variants} stated, {len(verified_variants)} verified")
+    verified_verdicts = {key for key, wrapper in verdict_wrappers.items() if verdicts.get(wrapper, False)}
+    print(f"  model verdicts: {len(verdict_wrappers)} stated, {len(verified_verdicts)} verified, "
+          f"in {len({v['model'] for v in model_verdicts})} models")
     for item in records:
         rid = item["id"]
         print(f"  {rid:58} {'verified' if rid in verified else 'stated / proof pending' if rid in ready else 'definition missing'}")
@@ -3084,6 +3192,17 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
             text, count = pattern.subn(lambda m: m.group(1) + f"    status: {state}\n", text)
             if count != 1:
                 raise ValueError(f"{path}: expected exactly one lean block for variant {v['id']}")
+            path.write_text(text, encoding="utf-8")
+        for v in model_verdicts:
+            state = "verified" if (v["model"], v["principle"]) in verified_verdicts else "stated"
+            path = ROOT / v["_file"]
+            text = path.read_text(encoding="utf-8")
+            # The verdict's entry: `  - holds: <pid>` (or fails), its ref, and its status.
+            side = "holds" if v["holds"] else "fails"
+            pattern = re.compile(rf"(?m)^(  - {side}: {re.escape(v['principle'])}\n    ref: .*\n)(    status: (?:stated|verified)\n)?")
+            text, count = pattern.subn(lambda m: m.group(1) + f"    status: {state}\n", text)
+            if count != 1:
+                raise ValueError(f"{path}: expected exactly one lean verdict entry for {side} {v['principle']}")
             path.write_text(text, encoding="utf-8")
         print("  updated Lean certificates after successful audit")
     for issue in bad:

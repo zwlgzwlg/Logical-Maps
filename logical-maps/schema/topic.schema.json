@@ -282,6 +282,26 @@
             }
           }
         },
+        "verdict": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "How a model's single verdict proved in Lean is stated (a model record's lean.verdicts). {model} is the record's lean.model, {def} the principle's lean_def.",
+          "properties": {
+            "imports": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Modules the verdict statements import, besides the topic's imports: where the models are."
+            },
+            "holds": {"type": "string", "description": "A verdict that the principle holds."},
+            "fails": {"type": "string", "description": "A verdict that the principle fails."},
+            "relative_categories": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Principle categories whose lean_def depends on the model's signature."
+            },
+            "relative": {"type": "string", "description": "A further conjunct for a verdict on a principle in one of those categories."}
+          }
+        },
         "index": {
           "type": "object",
           "additionalProperties": false,

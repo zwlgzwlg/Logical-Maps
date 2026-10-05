@@ -144,10 +144,20 @@ topic may use plain propositions, a semantics, or whatever its library provides.
 declaration, principles are plain propositions and a result reads `A → B → C`. Nothing in
 the tooling knows any particular framework, so topics formalise independently.
 
+A model can also be formalised verdict by verdict, before its whole package is. Its record
+gives `lean: {model, verdicts}`: a Lean term for the model, and a list of entries
+`{holds: <principle>, ref: …}` or `{fails: <principle>, ref: …}`. Each verdict gets its own
+generated statement, `Models.<model>.<principle>`, in `ModelStatements.lean`, from the
+topic's `lean.verdict` templates (`holds`, `fails`, with `{model}` and `{def}`; `imports`;
+and a `relative` conjunct for principles in `relative_categories`). Validation requires each
+such verdict to be one the map already gives the model. The record covers that model alone:
+a group's generated variants do not inherit it.
+
 `pmap lean-check` builds the library and audits wrapper proofs at the generated
 statement types. Failed elaboration, `sorryAx`, and nonstandard axioms are rejected. The `lean` certificate field is `none`,
 `stated` (statement elaborates, proof missing), or `verified` (machine-checked, sorry-free);
-only `lean-check --update` may persist the last. See the topic's `lean/VERIFICATION.md` for current coverage. Build caches under `.lake/` are excluded from the
+only `lean-check --update` may persist the last (for a model's single verdicts, their
+`status`, `stated` or `verified`). See the topic's `lean/VERIFICATION.md` for current coverage. Build caches under `.lake/` are excluded from the
 source zip and the bundle.
 
 ## Semantics
