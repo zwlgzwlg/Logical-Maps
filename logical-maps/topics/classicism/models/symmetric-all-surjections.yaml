@@ -1,30 +1,5 @@
 id: symmetric-all-surjections
 name: 'Symmetric ideally-full model: all surjections of N (Base 1)'
-satisfies:
-- boolean-completeness-r
-- necessary-boolean-completeness-r
-- barcan-r
-- necessary-barcan-r
-- no-pure-contingency-r
-- atomlessness
-- axiom-of-infinity-e
-- axiom-of-infinity-t
-- no-contingency-signature-r
-- signature-b-r
-- inextensible-comprehension-r
-- transversal-r
-- necessary-transversal-r
-violates:
-- actuality
-- atomicity-t
-- rigid-comprehension-r
-- distinctness-necessary-r
-- witnessed-possibility-r
-- separated-structure-r
-- independence-signature-r
-- distinctness-signature-r
-- relational-choice-r
-status: proved
 certificate:
   source_id: dorr-bc-not-rc
   produced_by: Cian Dorr
@@ -52,140 +27,306 @@ references:
   locator: Appendix D, pp. 73–79
   note: The ideally-full action models of which this is the symmetric variant, and the failures of Boolean
     Completeness that symmetry blocks.
-description: 'A symmetric ideally-full intensional action model over one object, the set of natural numbers.
-  Its arrows are all the surjections of that set, and its symmetry group is all the permutations. A relational
-  domain holds exactly the intensions that are symmetric, meaning indifferent to relabelling the individuals
-  of a world, and pinned down by some finite set. The evaluation point is the identity arrow.
+
+definition: >-
+  A symmetric ideally-full intensional action model over one object, the set of natural numbers.
+  Its arrows are all the surjections of that set, and its symmetry group is all the
+  permutations. A relational domain holds exactly the intensions that are symmetric, meaning
+  indifferent to relabelling the individuals of a world, and pinned down by some finite set. The
+  evaluation point is the identity arrow.
 
 
-  Boolean Completeness holds by the draft''s main theorem, whose two hypotheses are verified here with
-  the empty distinguished set: every finite set is amalgamable, since an arrow is prescribed only on a
-  finite set and extends freely, and points can always be moved off a given finite set by a permutation.
-  The least upper bound of a property of type-tau entities is the union of the hulls of its instances.
-  The model has one object, so a closed sentence of pure logic denotes the same thing relative to every
-  arrow and is true only if necessarily true. That gives No Pure Contingency directly, and it promotes
-  every pure principle true here to its boxed form, which is how boxed Boolean Completeness and boxed
-  BF are obtained.
+  Interpretation of Σ, fixed for this record: each relational constant denotes the top element
+  of its type and each individual constant denotes one fixed individual $d$.
 
+arguments:
 
-  BF holds at every type because every arrow is surjective and a finitely pinned symmetric intension can
-  be pulled back along an arrow. Actuality fails: given a true proposition pinned down by a finite set,
-  the proposition that a fresh individual is not collapsed with that set is a strictly stronger truth.
-  The same construction, applied to an arbitrary nonzero proposition rather than a true one, splits every
-  possible proposition, which is Atomlessness and hence the failure of Atomicity at type t. Rigid Comprehension
-  fails already at type e, and concretely rather than only through Actuality: a persistent property with
-  a cofinite extension must be closed under everything an arrow can send an instance to, and no finite
-  pinning set can sustain that short of the top property, so nothing rigid is coextensive with being distinct
-  from a fixed individual.'
+# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
+# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
+# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
+# full stop.
+
+# --- from the source (19 Sep record) ---
+
+- holds: [boolean-completeness-r]
+  text: >-
+    By the draft's main theorem, whose two hypotheses are verified here with the empty
+    distinguished set: every finite set is amalgamable, since an arrow is prescribed only on a
+    finite set and extends freely, and points can always be moved off a given finite set by a
+    permutation. The least upper bound of a property of type-tau entities is the union of the
+    hulls of its instances.
+
+- holds: [no-pure-contingency-r]
+  text: >-
+    The model has one object, so a closed sentence of pure logic denotes the same thing relative
+    to every arrow and is true only if necessarily true. That gives No Pure Contingency
+    directly, and it promotes every pure principle true here to its boxed form, which is how
+    boxed Boolean Completeness and boxed BF are obtained.
+
+- holds: [barcan-r]
+  text: >-
+    At every type because every arrow is surjective and a finitely pinned symmetric intension can
+    be pulled back along an arrow.
+
+- fails: [actuality]
+  # Recorded although the other verdicts give it: the Atomlessness argument builds on this one.
+  text: >-
+    Given a true proposition pinned down by a finite set, the proposition that a fresh individual
+    is not collapsed with that set is a strictly stronger truth.
+
+- holds: [atomlessness]
+  text: >-
+    The same construction, applied to an arbitrary nonzero proposition rather than a true one,
+    splits every possible proposition, which is Atomlessness and hence the failure of Atomicity
+    at type t.
+
+# --- later additions ---
+
+- holds: [axiom-of-infinity-e]
+  # migration: `by` adds "at Cian Dorr's direction" from the change's summary, whose first sentence
+  # ("Added both Axioms of Infinity at Cian Dorr's direction.") is dropped.
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-09-20'
+  text: >-
+    The individuals are the natural numbers and identity at the identity arrow is literal, so no
+    numeral counts them. The propositions that a given individual is fixed by the arrow, one for
+    each individual, are pairwise distinct, symmetric and pinned by that individual, so there
+    are infinitely many propositions. The set of numerals at each type is invariant under every
+    arrow, hence symmetric and pinned by the empty set, so finite cardinality is standard and no
+    finite cardinality holds of the universal property at either type.
+
+- id: sigma-top
+  fails: [independence-signature-r]
+  # migration: `by` adds "at Cian Dorr’s request" from the change's summary.
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
+  date: '2026-09-22'
+  text: >-
+    With $c\in\Sigma$ of relational type $\tau$, $c=\top_\tau$ necessarily, so Witnessed
+    Possibility fails for the pure formula $x\ne\top_\tau$, Separated Structure fails since
+    $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$, Independence (signature Σ)
+    fails since $c$ denotes what a closed pure term denotes, and Distinctness Maximalism
+    (signature Σ) fails since $c=\top_\tau$ is true and unprovable.
+
+- holds: [no-contingency-signature-r]
+  # migration: `by` adds "at Cian Dorr’s request" from the change's summary.
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
+  date: '2026-09-23'
+  text: >-
+    The relational constants denote pure entities, so a closed Σ-sentence denotes what some
+    $P(d,\ldots,d)$ denotes for a pure formula $P$; the model’s automorphisms carry every
+    individual to every other, so $P(d,\ldots,d)$ is materially equivalent to the pure sentence
+    $\forall x\, .\,P(x,\ldots,x)$ and its negation to $\forall x\, .\,\neg P(x,\ldots,x)$;
+    whichever is true is necessary by No Pure Contingency, and instantiation under the box gives
+    $\Box P(d,\ldots,d)$ or $\Box\neg P(d,\ldots,d)$.
+
+- id: relational-choice
+  fails: [relational-choice-r]
+  by: Claude Fable 5.1 (Anthropic), after Cian Dorr’s observation that a choice over the individuals
+    cannot be finitely pinned down
+  date: '2026-09-23'
+  # migration: the closing "Argument of 23 September 2026, after Cian Dorr’s observation that a
+  # choice over the individuals cannot be finitely pinned down;" becomes `by` and `date`; in what
+  # followed it, "he" becomes "Cian Dorr".
+  text: >-
+    At the types $(e\to t)$ and $e$. Let $U:=\lambda Xy\, .\,Xy\lor\neg\exists z\, .\,Xz$, a
+    closed term, hence in the domain, and serial. A functional subrelation $S$ of $U$ would lie in
+    the domain at the evaluation object, so it is symmetric and pinned down by a finite set $N$.
+    Two facts about such an $S$ (Dorr, draft, Lemma 21): every $g\in G$ fixing $N$ pointwise
+    satisfies $g^{[\sigma]}S=S$, and symmetry gives $\langle gA,gy,g\rangle\in S$ whenever
+    $\langle A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$. Now let $A$ be the
+    property of not belonging to $N$. It is in the domain, being pinned down by that finite set
+    and symmetric, and its extension is nonempty, so $S$ relates $A$ at the identity to some $y$
+    in its extension. The transposition of $y$ with another individual outside $N$ is a
+    permutation, so lies in $G$, fixes $A$ and moves $y$ to some $gy\ne y$, so $S$ relates $A$ to
+    $gy$ as well, and $S$ is not functional at the identity arrow. The well-ordering of the
+    individuals that Cian Dorr had in mind is refuted by the same two facts, but the direct route
+    needs no derivation of a well-ordering from Relational Choice in C.
+
+- id: inextensible-comprehension
+  holds: [inextensible-comprehension-r]
+  by: Claude Opus 5.5 (Anthropic), checked by Cian Dorr
+  date: '2026-09-27'
+  # migration: "Argument of Claude Opus 5.5 (Anthropic), 27 September 2026, checked by Cian Dorr the
+  # same day;" becomes `by` and `date`.
+  text: >-
+    At every relational type. It extends the earlier observations at types $t$ and $e\to t$ and
+    the case $X=\lambda p\, .\,p$ at type $t\to t$, which are instances. Worlds are the arrows
+    $h$, and $h$ sees $i\circ h$. Write $i\cdot r$ for the transport of an entity along $i$; for
+    propositions $i\cdot p=\{k : k\circ i\in p\}$. Three facts about the model are used. (1)
+    Transport: a formula with parameters $\bar r$ holds at $h$ iff it holds at $1$ with parameters
+    $h\cdot\bar r$; in particular whether $Z$ holds of $\bar r$ at $i$ depends only on $i\cdot\bar
+    r$. (2) Pinning: if $r$ is pinned down by $S$ and $g$ fixes $S$ pointwise, then $g\cdot r=r$.
+    (3) Symmetry: the worlds $h$ and $\sigma\circ h$, for a permutation $\sigma$, agree on every
+    root entity; with (2), the extension at $1$ of an $X$ pinned down by $S_X$ is closed under
+    $\tau\cdot$ for every permutation $\tau$ fixing $S_X$ pointwise.
+
+    The witness. Given $X$ pinned down by the finite set $S_X$, let $\delta_{S_X}$ be the
+    proposition that no two members of $S_X$ are collapsed, and put $Y:=\lambda\bar z\,
+    .\,\delta_{S_X}\land X\bar z$. It is symmetric and pinned down by $S_X$, and since
+    $\delta_{S_X}$ is true at $1$ it is coextensive with $X$.
+
+    Transversal lemma. If $g$ fixes $S_X$ pointwise and $r$ is pinned down by a finite $T$, then
+    $r=g\cdot(\tau\cdot r)$ for a permutation $\tau$ fixing $S_X$ pointwise; so if $r$ is in the
+    extension of $X$ at $1$, then $r=g\cdot r^{\prime}$ for some $r^{\prime}$ also in it. Proof:
+    each $t\in T\setminus S_X$ has a preimage under $g$, as $g$ is surjective, and it lies outside
+    $S_X$, as $g$ fixes $S_X$; choose distinct preimages $t^{\prime}$ and let $\tau$ be a
+    permutation of $\mathbb N\setminus S_X$ with $\tau(t)=t^{\prime}$. Then $g\circ\tau$ fixes $T$
+    pointwise, so $g\cdot(\tau\cdot r)=(g\circ\tau)\cdot r=r$ by (2), and $\tau\cdot r$ is in the
+    extension of $X$ by (3). The same holds for tuples.
+
+    Weak inextensibility at $1$. Let $Z$ hold necessarily of every instance of $Y$, and let $i$ be
+    a world. If $i$ collapses two members of $S_X$, then $\delta_{S_X}$ is false at $i$, so $Y$ is
+    empty there. Otherwise relabel by a permutation, which does not change the world by (3), so
+    that $i$ fixes $S_X$ pointwise. By (1) and (2), $Y$ holds of $\bar r$ at $i$ iff $i\cdot\bar
+    r$ is in the extension of $X$ at $1$; the lemma gives $\bar r^{\prime}$ in that extension with
+    $i\cdot\bar r^{\prime}=i\cdot\bar r$; $Z$ holds of $\bar r^{\prime}$ at $i$, being necessary
+    of it; so by (1) $Z$ holds of $\bar r$ at $i$. Hence $Y\le Z$.
+
+    The leading box. At a world $h$ injective on $S_X$, relabel so that $h$ fixes $S_X$; then
+    $h\cdot Y=Y$, and by (1) weak inextensibility at $h$ is weak inextensibility of $Y$ at $1$. At
+    a world collapsing $S_X$, $Y$ is empty there and at every world it sees, since a collapse
+    persists, so it is trivially weakly inextensible. So $Y$ is inextensible. Nothing depends on
+    the argument types. The argument explains the cheapness of inextensibility here: surjectivity
+    and the full permutation group make the necessity of $Z$ cover everything that pinning forces
+    into the extension of $Y$, and the conjunct $\delta_{S_X}$ removes the worlds that collapse
+    the pinning set. The Appendix D models refuting Inextensible Comprehension lack one of these
+    features: an arrow fixing the pinning set may leave points without a preimage outside it, or
+    the relabelling permutations may be missing.
+
+# migration: the change of 1 October 2026 established Transversal and retired the record
+# symmetric-all-surjections-transversal, which had been folded in here as a conjectured argument.
+# That argument and the sidecar holding the rest of the record are removed with it.
+- id: transversal
+  holds: [transversal-r]
+  # migration: `by` adds "verifying GPT-6's proposed least-support witness of 30 September" from the
+  # change's summary.
+  by: Claude Opus 5.5 (Anthropic), checked by Cian Dorr, verifying GPT-6's proposed least-support
+    witness of 30 September
+  date: '2026-10-01'
+  # migration: the paragraph that the change of 1 October 2026 added to the notes. "Transversal holds
+  # at every type, and so does its necessitation." becomes "At every type."; the closing "The witness
+  # was proposed by GPT-6 on 30 September 2026 and checked on 1 October 2026." is dropped, its content
+  # being in `by`, `date` and the record's sources.
+  text: >-
+    At every type. Write $A_h$ for the extension of a property $A$ at the arrow $h$; transport gives
+    $(k\cdot A)_h=A_{h\circ k}$, symmetry gives $A_{g\circ h}=g\cdot A_h$ for permutations $g$, and
+    pinning by $S$ makes $A_h$ depend only on $h{\restriction}S$. If $A$ is pinned by $S$, every
+    permutation fixing $S$ pointwise fixes $E:=A_{\mathbf 1}$; finite supports for the full
+    permutation group are closed under intersection, so $E$ has a least support $S_E$, and
+    $S_{g\cdot E}=g[S_E]$. Let $\hat E$ have extension $g\cdot E$ at $h$ when $h$ is injective on
+    $S_E$, for any permutation $g$ agreeing with $h$ on $S_E$ (well defined, since two such $g$
+    differ by a permutation fixing $S_E$), and $\varnothing$ when it is not. Then $\hat E$ is pinned
+    by $S_E$, symmetric, and coextensive with $A$ at $\mathbf 1$, and $g\cdot\hat E=\widehat{g\cdot
+    E}$. So the property $F$ whose extension at every arrow is the set of all such $\hat E$ is
+    pinned by $\varnothing$ and symmetric, hence in the domain; at $\mathbf 1$ it holds of exactly
+    one property coextensive with any given property, since $\hat E$ is determined by $E$.
+    Qualitatively, $F$ holds of $X$ iff the least pinning set of $X$ is the least support of its
+    actual extension and, necessarily, if $X$ is instantiated then the members of that set are
+    pairwise distinct; the minimality clause is needed, since a property pinned by $S_E$ together
+    with one further point, and empty wherever that point collides with $S_E$, is coextensive with
+    $\hat E$ but distinct from it. Since a one-object model has No Pure Contingency and $F$ is
+    pinned by $\varnothing$, every instance of Transversal holds at every world.
+
+# In reserve: verdicts the record stated directly before it was written as arguments, which
+# the engine also derives from the arguments above. Each comes back with the change-log entry
+# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
+
+- holds: [necessary-boolean-completeness-r, necessary-barcan-r]
+  fails: [atomicity-t, rigid-comprehension-r, distinctness-necessary-r]
+  reserve: true
+  source: {paper: dorr-bc-not-rc, locator: "§3.1, p. 9; Proposition 22, p. 11; Proposition 23, p. 12; Theorem 36, p. 18; Corollary 37 and Remark 38, p. 19"}
+
+- holds: [axiom-of-infinity-t]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-20'
+  text: >-
+    Added both Axioms of Infinity at Cian Dorr's direction. The individuals are the natural
+    numbers and identity at the identity arrow is literal, so no numeral counts them. The
+    propositions that a given individual is fixed by the arrow, one for each individual, are
+    pairwise distinct, symmetric and pinned by that individual, so there are infinitely many
+    propositions. The set of numerals at each type is invariant under every arrow, hence
+    symmetric and pinned by the empty set, so finite cardinality is standard and no finite
+    cardinality holds of the universal property at either type.
+
+- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
+    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+
+- holds: [signature-b-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    Re-fixed the interpretation of Σ so as to settle No Contingency (signature Σ) and B for
+    sentences of Σ, at Cian Dorr’s request; see the notes.
+
+- holds: [necessary-transversal-r]
+  reserve: true
+  by: Claude Opus 5.5 (Anthropic), checked by Cian Dorr
+  date: '2026-10-01'
+  text: >-
+    Recorded Transversal and its necessitation at every type, verifying GPT-6's proposed
+    least-support witness of 30 September; see the notes. The separate conjectured record
+    symmetric-all-surjections-transversal is retired. Added the open question whether the
+    classifier is denoted by a closed term.
+
+# migration: text of the old notes that no argument holds, verbatim: two sentences of the first
+# paragraph, and the open question added on 1 October 2026. The old last paragraph, which said that
+# Transversal was conjectured in the separate record symmetric-all-surjections-transversal, is dropped,
+# since the change of 1 October retired that record.
+# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
+# written as arguments that no argument keeps (5 October 2026).
 notes: >-
-  This is the draft's headline separation. Boolean Completeness holds while Rigid Comprehension fails,
-  and since Actuality fails too, Weak Rigid Comprehension fails here as well, which is recorded as a
-  derived verdict. Atomlessness is the Proposition 22 argument read for an arbitrary nonzero proposition
-  rather than for a true one, and the failure of ND at type e follows from the presence of a
-  non-injective surjection, since the proposition that two fixed individuals are identical is then a
-  nonzero proposition; neither is displayed separately in the draft. The source is a work in progress.
+  This is the draft's headline separation. Boolean Completeness holds while Rigid Comprehension
+  fails, and since Actuality fails too, Weak Rigid Comprehension fails here as well, which is
+  recorded as a derived verdict. The source is a work in progress.
 
+  Open question: is there a closed term of the language, at each type, that denotes this
+  classifier $F$? Pairwise distinctness over a variable number of individuals is expressible
+  with a plural variable $Y^{e\to t}$, as $\forall y\,y'\,((Yy\land Yy'\land y\ne
+  y')\to\Box(\exists z\, .\,Xz\to y\ne y'))$. What is not obvious is how to say in the object
+  language that $X$ is minimally pinned down by the $Y$s.
 
-  Transversal holds at every type, and so does its necessitation. Write $A_h$ for the extension of a
-  property $A$ at the arrow $h$; transport gives $(k\cdot A)_h=A_{h\circ k}$, symmetry gives $A_{g\circ
-  h}=g\cdot A_h$ for permutations $g$, and pinning by $S$ makes $A_h$ depend only on $h{\restriction}S$.
-  If $A$ is pinned by $S$, every permutation fixing $S$ pointwise fixes $E:=A_{\mathbf 1}$; finite
-  supports for the full permutation group are closed under intersection, so $E$ has a least support
-  $S_E$, and $S_{g\cdot E}=g[S_E]$. Let $\hat E$ have extension $g\cdot E$ at $h$ when $h$ is injective
-  on $S_E$, for any permutation $g$ agreeing with $h$ on $S_E$ (well defined, since two such $g$ differ by
-  a permutation fixing $S_E$), and $\varnothing$ when it is not. Then $\hat E$ is pinned by $S_E$,
-  symmetric, and coextensive with $A$ at $\mathbf 1$, and $g\cdot\hat E=\widehat{g\cdot E}$. So the
-  property $F$ whose extension at every arrow is the set of all such $\hat E$ is pinned by $\varnothing$
-  and symmetric, hence in the domain; at $\mathbf 1$ it holds of exactly one property coextensive with
-  any given property, since $\hat E$ is determined by $E$. Qualitatively, $F$ holds of $X$ iff the
-  least pinning set of $X$ is the least support of its actual extension and, necessarily, if $X$ is
-  instantiated then the members of that set are pairwise distinct; the minimality clause is needed, since
-  a property pinned by $S_E$ together with one further point, and empty wherever that point collides with
-  $S_E$, is coextensive with $\hat E$ but distinct from it. Since a one-object model has No Pure
-  Contingency and $F$ is pinned by $\varnothing$, every instance of Transversal holds at every world.
-  The witness was proposed by GPT-6 on 30 September 2026 and checked on 1 October 2026.
+  Rigid Comprehension fails already at type e, and concretely rather than only through
+  Actuality: a persistent property with a cofinite extension must be closed under everything an
+  arrow can send an instance to, and no finite pinning set can sustain that short of the top
+  property, so nothing rigid is coextensive with being distinct from a fixed individual.
 
+  Atomlessness is the Proposition 22 argument read for an arbitrary nonzero proposition rather
+  than for a true one, and the failure of ND at type e follows from the presence of a
+  non-injective surjection, since the proposition that two fixed individuals are identical is
+  then a nonzero proposition; neither is displayed separately in the draft.
 
-  Open question: is there a closed term of the language, at each type, that denotes this classifier
-  $F$? Pairwise distinctness over a variable number of individuals is expressible with a plural variable
-  $Y^{e\to t}$, as $\forall y\,y'\,((Yy\land Yy'\land y\ne y')\to\Box(\exists z\, .\,Xz\to y\ne y'))$. What is
-  not obvious is how to say in the object language that $X$ is minimally pinned down by the $Y$s.
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element of its
-  type and each individual constant denotes one fixed individual $d$. Under it the signature schemata
-  that give the constants a special role fail: with $c\in\Sigma$ of relational type $\tau$,
-  $c=\top_\tau$ necessarily, so Witnessed Possibility fails for the pure formula $x\ne\top_\tau$,
-  Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$,
-  Independence (signature Σ) fails since $c$ denotes what a closed pure term denotes, and Distinctness
-  Maximalism (signature Σ) fails since $c=\top_\tau$ is true and unprovable. But No Contingency
-  (signature Σ), and with it B for sentences of Σ, hold. The relational constants denote pure entities,
-  so a closed Σ-sentence denotes what some $P(d,\ldots,d)$ denotes for a pure formula $P$; the model’s
-  automorphisms carry every individual to every other, so $P(d,\ldots,d)$ is materially equivalent to
-  the pure sentence $\forall x\, .\,P(x,\ldots,x)$ and its negation to $\forall x\, .\,\neg
-  P(x,\ldots,x)$; whichever is true is necessary by No Pure Contingency, and instantiation under the box
-  gives $\Box P(d,\ldots,d)$ or $\Box\neg P(d,\ldots,d)$. Relational Choice fails, at the types $(e\to
-  t)$ and $e$. Let $U:=\lambda Xy\, .\,Xy\lor\neg\exists z\, .\,Xz$, a closed term, hence in the domain,
-  and serial. A functional subrelation $S$ of $U$ would lie in the domain at the evaluation object, so
-  it is symmetric and pinned down by a finite set $N$. Two facts about such an $S$ (Dorr, draft, Lemma
-  21): every $g\in G$ fixing $N$ pointwise satisfies $g^{[\sigma]}S=S$, and symmetry gives $\langle
-  gA,gy,g\rangle\in S$ whenever $\langle A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$.
-  Now let $A$ be the property of not belonging to $N$. It is in the domain, being pinned down by that
-  finite set and symmetric, and its extension is nonempty, so $S$ relates $A$ at the identity to some
-  $y$ in its extension. The transposition of $y$ with another individual outside $N$ is a permutation,
-  so lies in $G$, fixes $A$ and moves $y$ to some $gy\ne y$, so $S$ relates $A$ to $gy$ as well, and $S$
-  is not functional at the identity arrow. Argument of 23 September 2026, after Cian Dorr’s observation
-  that a choice over the individuals cannot be finitely pinned down; the well-ordering of the
-  individuals that he had in mind is refuted by the same two facts, but the direct route needs no
-  derivation of a well-ordering from Relational Choice in C.
+  Transversal holds at every type, and so does its necessitation. The witness was proposed by
+  GPT-6 on 30 September 2026 and checked on 1 October 2026.
 
-  Inextensible Comprehension holds, at every relational type. Argument of Claude Opus 5.5 (Anthropic),
-  27 September 2026, checked by Cian Dorr the same day; it extends the earlier observations at types $t$
-  and $e\to t$ and the case $X=\lambda p\, .\,p$ at type $t\to t$, which are instances. Worlds are the
-  arrows $h$, and $h$ sees $i\circ h$. Write $i\cdot r$ for the transport of an entity along $i$; for
-  propositions $i\cdot p=\{k : k\circ i\in p\}$. Three facts about the model are used. (1) Transport: a
-  formula with parameters $\bar r$ holds at $h$ iff it holds at $1$ with parameters $h\cdot\bar r$; in
-  particular whether $Z$ holds of $\bar r$ at $i$ depends only on $i\cdot\bar r$. (2) Pinning: if $r$ is
-  pinned down by $S$ and $g$ fixes $S$ pointwise, then $g\cdot r=r$. (3) Symmetry: the worlds $h$ and
-  $\sigma\circ h$, for a permutation $\sigma$, agree on every root entity; with (2), the extension at
-  $1$ of an $X$ pinned down by $S_X$ is closed under $\tau\cdot$ for every permutation $\tau$ fixing
-  $S_X$ pointwise.
+  Under it the signature schemata that give the constants a special role fail: with $c\in\Sigma$
+  of relational type $\tau$, $c=\top_\tau$ necessarily, so Witnessed Possibility fails for the
+  pure formula $x\ne\top_\tau$, Separated Structure fails since $\lambda x\, .\,x$ and $\lambda
+  x\, .\,\top_\tau$ agree on $c$, Independence (signature Σ) fails since $c$ denotes what a
+  closed pure term denotes, and Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$
+  is true and unprovable. But No Contingency (signature Σ), and with it B for sentences of Σ,
+  hold. Argument of 23 September 2026, after Cian Dorr’s observation that a choice over the
+  individuals cannot be finitely pinned down; the well-ordering of the individuals that he had
+  in mind is refuted by the same two facts, but the direct route needs no derivation of a
+  well-ordering from Relational Choice in C.
 
-  The witness. Given $X$ pinned down by the finite set $S_X$, let $\delta_{S_X}$ be the proposition that
-  no two members of $S_X$ are collapsed, and put $Y:=\lambda\bar z\, .\,\delta_{S_X}\land X\bar z$. It
-  is symmetric and pinned down by $S_X$, and since $\delta_{S_X}$ is true at $1$ it is coextensive with
-  $X$.
+  Argument of Claude Opus 5.5 (Anthropic), 27 September 2026, checked by Cian Dorr the same day;
+  it extends the earlier observations at types $t$ and $e\to t$ and the case $X=\lambda p\,
+  .\,p$ at type $t\to t$, which are instances.
 
-  Transversal lemma. If $g$ fixes $S_X$ pointwise and $r$ is pinned down by a finite $T$, then
-  $r=g\cdot(\tau\cdot r)$ for a permutation $\tau$ fixing $S_X$ pointwise; so if $r$ is in the extension
-  of $X$ at $1$, then $r=g\cdot r^{\prime}$ for some $r^{\prime}$ also in it. Proof: each $t\in
-  T\setminus S_X$ has a preimage under $g$, as $g$ is surjective, and it lies outside $S_X$, as $g$
-  fixes $S_X$; choose distinct preimages $t^{\prime}$ and let $\tau$ be a permutation of $\mathbb
-  N\setminus S_X$ with $\tau(t)=t^{\prime}$. Then $g\circ\tau$ fixes $T$ pointwise, so $g\cdot(\tau\cdot
-  r)=(g\circ\tau)\cdot r=r$ by (2), and $\tau\cdot r$ is in the extension of $X$ by (3). The same holds
-  for tuples.
+  Transversal and its boxed form are conjectured to hold here, in the separate bronze-tier
+  record symmetric-all-surjections-transversal (30 September 2026). Its write-up proposes
+  canonical representatives using least permutation supports of extensions. This proposal has
+  not been promoted to a verified property of this model.
 
-  Weak inextensibility at $1$. Let $Z$ hold necessarily of every instance of $Y$, and let $i$ be a
-  world. If $i$ collapses two members of $S_X$, then $\delta_{S_X}$ is false at $i$, so $Y$ is empty
-  there. Otherwise relabel by a permutation, which does not change the world by (3), so that $i$ fixes
-  $S_X$ pointwise. By (1) and (2), $Y$ holds of $\bar r$ at $i$ iff $i\cdot\bar r$ is in the extension
-  of $X$ at $1$; the lemma gives $\bar r^{\prime}$ in that extension with $i\cdot\bar
-  r^{\prime}=i\cdot\bar r$; $Z$ holds of $\bar r^{\prime}$ at $i$, being necessary of it; so by (1) $Z$
-  holds of $\bar r$ at $i$. Hence $Y\le Z$.
-
-  The leading box. At a world $h$ injective on $S_X$, relabel so that $h$ fixes $S_X$; then $h\cdot
-  Y=Y$, and by (1) weak inextensibility at $h$ is weak inextensibility of $Y$ at $1$. At a world
-  collapsing $S_X$, $Y$ is empty there and at every world it sees, since a collapse persists, so it is
-  trivially weakly inextensible. So $Y$ is inextensible. Nothing depends on the argument types. The
-  argument explains the cheapness of inextensibility here: surjectivity and the full permutation group
-  make the necessity of $Z$ cover everything that pinning forces into the extension of $Y$, and the
-  conjunct $\delta_{S_X}$ removes the worlds that collapse the pinning set. The Appendix D models
-  refuting Inextensible Comprehension lack one of these features: an arrow fixing the pinning set may
-  leave points without a preimage outside it, or the relabelling permutations may be missing.
-
-  Transversal and its boxed form are conjectured to hold here, in the separate bronze-tier record
-  symmetric-all-surjections-transversal (30 September 2026). Its write-up proposes canonical
-  representatives using least permutation supports of extensions. This proposal has not been
-  promoted to a verified property of this model.
-changes:
+# The old `changes` log, verbatim and frozen.
+history:
 - date: '2026-09-20'
   by: Claude Fable 5.1 (Anthropic)
   summary: Added both Axioms of Infinity at Cian Dorr's direction. The individuals are the natural numbers

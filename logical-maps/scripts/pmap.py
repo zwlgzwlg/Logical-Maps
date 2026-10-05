@@ -66,6 +66,9 @@ def _schema(name: str):
     sch = json.loads((SCHEMA / f"{name}.schema.json").read_text(encoding="utf-8"))
     if name == "model":  # inline the certificate definition shared with results
         sch["properties"]["certificate"] = _schema("result")["properties"]["certificate"]
+    if name == "provenance":  # and the certificate and references a folded record had
+        sch["properties"]["certificate"] = _schema("result")["properties"]["certificate"]
+        sch["properties"]["references"] = _schema("model")["properties"]["references"]
     return sch
 
 
@@ -84,18 +87,135 @@ def load_topic(topic_id: str) -> dict:
         d = _load_yaml(p)
         d["_file"] = str(p.relative_to(ROOT))
         principles.append(d)
-    models = []
+    models, sources, retired = [], [], []
     for sub, lst in (("results", results), ("models", models)):
         for p in sorted((tdir / sub).glob("*.yaml")):
             d = _load_yaml(p)
             d["_file"] = str(p.relative_to(ROOT))
             if sub == "results" and d.get("conclusion") is False:
                 d["conclusion"] = FALSE
+            if sub == "models" and is_argument_record(d):
+                d.setdefault("certificate", {}).setdefault("lean", "none")
+                sources.append(d)
+                flat = flatten_model(d)
+                lst += flat
+                if not flat:  # a withdrawn construction: kept, and validated, but out of the engine
+                    retired.append({**d, "_source": d})
+                continue
             d.setdefault("status", "conjectured")
             d.setdefault("certificate", {}).setdefault("lean", "none")
             lst.append(d)
+    # A generated companion takes the place a file with its id would have.
+    models.sort(key=lambda m: str(m.get("id")) + ".yaml" if m.get("_companion_of") else Path(m["_file"]).name)
+    provenance = []
+    for p in sorted((tdir / "provenance").glob("*.yaml")):
+        d = _load_yaml(p)
+        d["_file"] = str(p.relative_to(ROOT))
+        provenance.append(d)
     papers = _load_yaml(tdir / "papers.yaml") if (tdir / "papers.yaml").exists() else {"papers": []}
-    return {"topic": topic, "principles": principles, "results": results, "models": models, "paper_catalogue": papers, "papers": papers.get("papers", []) if isinstance(papers, dict) else []}
+    return {"topic": topic, "principles": principles, "results": results, "models": models, "paper_catalogue": papers, "papers": papers.get("papers", []) if isinstance(papers, dict) else [],
+            "model_sources": sources, "retired_models": retired, "provenance": provenance}
+
+
+# ----------------------------------------------------------------------------
+# Model records in the argument format
+# ----------------------------------------------------------------------------
+#
+# A model record either lists satisfies, violates and status, or gives a definition
+# and a list of arguments, each naming the principles it settles (holds/fails) and
+# saying why. The second format is flattened here into the first, which is all the
+# engine reads:
+#   - satisfies/violates are the holds/fails of the established, unwithdrawn arguments;
+#   - a conjectured construction gives one conjectured model with every verdict;
+#   - conjectured arguments add a conjectured companion, holding the established and
+#     the conjectured verdicts, whose model_check names the base model and the verdicts
+#     only conjectured arguments give, so that only evidence about the base model can
+#     resolve it. Its id is <model>-conjectured unless an argument keeps an old one
+#     with companion_id.
+# certificate, sources and references pass through unchanged. The source record is
+# kept as _source for validation; a companion carries _companion_of.
+
+ARGUMENT_REASONS = ("text", "source", "writeup", "like")
+TIERS = ("bronze", "silver", "gold")
+
+
+def is_argument_record(rec) -> bool:
+    return isinstance(rec, dict) and ("arguments" in rec or "definition" in rec)
+
+
+def argument_label(a: dict, i: int) -> str:
+    """How messages name an argument: its id, else its position."""
+    return a["id"] if isinstance(a, dict) and isinstance(a.get("id"), str) else f"arguments[{i}]"
+
+
+def _arguments(rec: dict) -> list[tuple[int, dict]]:
+    args = rec.get("arguments")
+    return [(i, a) for i, a in enumerate(args)] if isinstance(args, list) else []
+
+
+def _live_arguments(rec: dict, standing: str | None = None) -> list[tuple[int, dict]]:
+    """Unwithdrawn arguments, optionally of one standing."""
+    return [(i, a) for i, a in _arguments(rec) if isinstance(a, dict) and not a.get("withdrawn")
+            and (standing is None or a.get("standing", "established") == standing)]
+
+
+def _settled(args, key: str) -> list:
+    return list(dict.fromkeys(p for _, a in args for p in (a.get(key) if isinstance(a.get(key), list) else [])))
+
+
+def _top_tier(tiers) -> str | None:
+    tiers = [t for t in tiers if t in TIERS]
+    return max(tiers, key=TIERS.index) if tiers else None
+
+
+def companion_id(rec: dict) -> str:
+    kept = [a["companion_id"] for _, a in _live_arguments(rec, "conjectured") if a.get("companion_id")]
+    return kept[0] if kept else f"{rec.get('id')}-conjectured"
+
+
+def flatten_model(rec: dict) -> list[dict]:
+    """The engine's model records for one argument-format record: none when its construction
+    is withdrawn, the model alone, or the model and its conjectured companion."""
+    import copy
+    construction = rec.get("construction") if isinstance(rec.get("construction"), dict) else {}
+    if construction.get("withdrawn"):
+        return []
+    base = {k: v for k, v in rec.items()}
+    base["_source"] = copy.deepcopy(rec)
+    established, conjectured = _live_arguments(rec, "established"), _live_arguments(rec, "conjectured")
+    if construction.get("standing") == "conjectured":
+        live = _live_arguments(rec)
+        base.update(satisfies=_settled(live, "holds"), violates=_settled(live, "fails"), status="conjectured")
+        tier = _top_tier([construction.get("tier"), *(a.get("tier") for _, a in conjectured)])
+        if tier:
+            base["tier"] = tier
+        # A conjecture's notes explain it: here, what remains to check about the construction.
+        base["notes"] = "\n\n".join(x.strip() for x in (construction.get("text"), rec.get("notes"))
+                                    if isinstance(x, str) and x.strip())
+        return [base]
+    satisfies, violates = _settled(established, "holds"), _settled(established, "fails")
+    base.update(satisfies=satisfies, violates=violates, status="proved")
+    extra_sat = [p for p in _settled(conjectured, "holds") if p not in satisfies]
+    extra_vio = [p for p in _settled(conjectured, "fails") if p not in violates]
+    if not (extra_sat or extra_vio):
+        return [base]
+    new = set(extra_sat) | set(extra_vio)
+    used = [a for _, a in conjectured if new & set(a.get("holds") or []) | new & set(a.get("fails") or [])]
+    companion = {
+        "id": companion_id(rec), "name": rec.get("name"),
+        "satisfies": satisfies + extra_sat, "violates": violates + extra_vio, "status": "conjectured",
+        "model_check": {"model": rec.get("id"), "satisfies": extra_sat, "violates": extra_vio},
+        **{k: copy.deepcopy(rec[k]) for k in ("certificate", "sources", "source_names", "references", "definition") if k in rec},
+        "arguments": copy.deepcopy(used),
+        # A conjecture's notes explain it: here, the conjectured arguments.
+        "notes": "\n\n".join(a["text"].strip() for a in used if isinstance(a.get("text"), str) and a["text"].strip()),
+        "companion_of": rec.get("id"),
+        "_companion_of": rec.get("id"), "_file": rec.get("_file"),
+    }
+    tier = _top_tier(a.get("tier") for a in used)
+    if tier:
+        companion["tier"] = tier
+    return [base, companion]
 
 
 # ----------------------------------------------------------------------------
@@ -1276,6 +1396,261 @@ def lynchpins(topic_id: str, backgrounds=None, top: int = 10, as_json: bool = Fa
 # Validation
 # ----------------------------------------------------------------------------
 
+def _argument_by_date(a: dict, rec: dict) -> tuple[str, str]:
+    """An argument's author and date; both default to the record's certificate."""
+    cert = rec.get("certificate") if isinstance(rec.get("certificate"), dict) else {}
+    return str(a.get("by") or cert.get("produced_by") or ""), str(a.get("date") or cert.get("date") or "")
+
+
+def _argument_target(data: dict, address: str):
+    """The argument that <record>#<id> names, or None."""
+    rid, _, aid = address.partition("#")
+    rec = next((s for s in data.get("model_sources", []) if s.get("id") == rid), None)
+    return next((a for _, a in _arguments(rec) if isinstance(a, dict) and a.get("id") == aid), None) if rec else None
+
+
+def provenance_records(side: dict) -> list:
+    """The model records a provenance sidecar belongs to: one folded record, or each record an
+    admission added to."""
+    if "records" in side:
+        return [e.get("record") for e in side.get("records") or [] if isinstance(e, dict)]
+    return [side.get("record")]
+
+
+def trawl_block(side: dict, record_id: str):
+    """The certificate.trawl block a record had, rebuilt from its admission's sidecar."""
+    entry = next((e for e in side.get("records") or [] if isinstance(e, dict) and e.get("record") == record_id), None)
+    if entry is None or not isinstance(side.get("trawl"), dict):
+        return None
+    return {**side["trawl"], "discovery": entry.get("discovery"), "evidence": entry.get("evidence")}
+
+
+def _actor_label(actor) -> str:
+    """A trawl actor as the trawl runner labels it: provider/model, or a person's name."""
+    if not isinstance(actor, dict):
+        return str(actor or "")
+    if actor.get("kind") == "human":
+        return str(actor.get("name", ""))
+    return f"{actor.get('provider', '')}/{actor.get('reported_model', actor.get('model', ''))}"
+
+
+def provenance_chain(side: dict, record_id: str):
+    """Who found, reviewed and admitted what a theorem-trawl admission added to a record."""
+    block = trawl_block(side, record_id)
+    if block is None:
+        return None
+    found, admitted = block.get("discovery") or {}, block.get("admission") or {}
+    reviews = []
+    for r in block.get("reviews") or []:
+        report = r.get("report") or {}
+        reviews.append({"by": _actor_label(r.get("actor")), "at": r.get("at"), "verdict": report.get("verdict"),
+                        **{k: report.get(k) for k in ("summary", "argument_check", "source_check", "issues")}})
+    return {"found_by": _actor_label(found.get("actor")), "found_at": found.get("at"), "reviews": reviews,
+            "admitted_by": admitted.get("by"), "admitted_at": admitted.get("at"),
+            "checkpoint": block.get("candidate_id"), "source_commit": (block.get("source") or {}).get("commit")}
+
+
+def provenance_export(side: dict) -> dict:
+    """A provenance sidecar as the viewer reads it: each record's chain, or the record folded in."""
+    if "records" in side:
+        return {"id": side.get("id"), "file": side.get("_file"),
+                "records": {r: provenance_chain(side, r) for r in provenance_records(side)}}
+    return {"id": side.get("id"), "file": side.get("_file"), "folded": True, "record": side.get("record")}
+
+
+def chain_md(chain: dict) -> str:
+    """One line: found by, reviewed by (verdict), admitted by, with dates."""
+    day = lambda t: str(t or "")[:10]
+    parts = [f"Found by {chain['found_by']}, {day(chain['found_at'])}"]
+    parts += [f"reviewed by {r['by']}, {day(r['at'])} ({r['verdict']})" for r in chain["reviews"]]
+    parts.append(f"admitted by {chain['admitted_by']}, {day(chain['admitted_at'])}")
+    return "; ".join(parts) + "."
+
+
+def argument_errors(data: dict, ids) -> list[str]:
+    """The errors of argument-format model records that need no engine."""
+    errors = []
+    papers = {p.get("id") for p in data["papers"] if isinstance(p, dict)}
+    sidecars = {s.get("id"): s for s in data.get("provenance", [])}
+    for rec in data.get("model_sources", []):
+        f = rec["_file"]
+        writeups = (ROOT / f).parent.parent / "writeups"
+        seen, companions, settled = set(), set(), {}
+        for i, a in _arguments(rec):
+            if not isinstance(a, dict):
+                continue  # the schema reports it
+            where = f"{f}: {argument_label(a, i)}"
+            holds = a.get("holds") if isinstance(a.get("holds"), list) else []
+            fails = a.get("fails") if isinstance(a.get("fails"), list) else []
+            if not holds and not fails:
+                errors.append(f"{where}: settles nothing; give holds or fails")
+            if not any(a.get(k) for k in ARGUMENT_REASONS):
+                errors.append(f"{where}: gives no reason; give text, source, writeup or like")
+            for pid in holds + fails:
+                if pid not in ids:
+                    errors.append(f"{where}: unknown principle '{pid}'")
+            if a.get("id") is not None:
+                if a["id"] in seen:
+                    errors.append(f"{where}: duplicate argument id")
+                seen.add(a["id"])
+            if isinstance(a.get("source"), dict) and a["source"].get("paper") not in papers:
+                errors.append(f"{where}: unknown paper '{a['source'].get('paper')}'")
+            if a.get("writeup") and not (writeups / f"{a['writeup']}.md").exists():
+                errors.append(f"{where}: no write-up writeups/{a['writeup']}.md")
+            if a.get("like") and _argument_target(data, a["like"]) is None:
+                errors.append(f"{where}: like names no argument: '{a['like']}'")
+            if "adapt" in a and not a.get("like"):
+                errors.append(f"{where}: adapt is used only with like")
+            if a.get("standing", "established") != "conjectured":
+                for key in ("tier", "companion_id"):
+                    if key in a:
+                        errors.append(f"{where}: {key} is for conjectured arguments only")
+            elif a.get("companion_id"):
+                companions.add(a["companion_id"])
+            if a.get("reserve") and a.get("standing", "established") == "conjectured":
+                errors.append(f"{where}: reserve is for established arguments only")
+            if a.get("provenance"):
+                side = sidecars.get(a["provenance"])
+                if side is None:
+                    errors.append(f"{where}: no provenance sidecar provenance/{a['provenance']}.yaml")
+                elif rec.get("id") not in provenance_records(side):
+                    errors.append(f"{where}: provenance/{a['provenance']}.yaml has nothing for '{rec.get('id')}'")
+            if not a.get("withdrawn"):
+                for key, pids in (("holds", holds), ("fails", fails)):
+                    for pid in pids:
+                        settled.setdefault(pid, {}).setdefault(key, []).append(argument_label(a, i))
+        for pid, by in settled.items():
+            if len(by) == 2:
+                errors.append(f"{f}: '{pid}' both holds (arguments: {', '.join(by['holds'])}) and fails (arguments: {', '.join(by['fails'])})")
+        if len(companions) > 1:
+            errors.append(f"{f}: conjectured arguments name different companion ids {sorted(companions)}; a model has one companion")
+    for side in data.get("provenance", []):
+        stem = Path(side["_file"]).stem
+        if side.get("id") != stem:
+            errors.append(f"{side['_file']}: id '{side.get('id')}' must equal file stem '{stem}'")
+        owners = provenance_records(side)
+        for owner in owners:
+            if owner not in {s.get("id") for s in data.get("model_sources", [])}:
+                errors.append(f"{side['_file']}: record '{owner}' is not a model in the argument format")
+        if len(owners) != len(set(owners)):
+            errors.append(f"{side['_file']}: a record has two entries")
+    return errors
+
+
+def conflict_arguments(rec: dict, conflict: dict, E) -> list[str]:
+    """The arguments behind an engine conflict in a flattened model: those settling the
+    premises of the rules used, and those failing a violated principle it reaches."""
+    used = {p for rid in conflict["via"] for p in E.rules_by_id[rid][1]} | {conflict["target"]}
+    return [argument_label(a, i) for i, a in _live_arguments(rec)
+            if used & set(a.get("holds") or []) or conflict["target"] in (a.get("fails") or [])]
+
+
+def model_coverage(data: dict, an: dict) -> list[dict]:
+    """For each argument-format model: every verdict with its routes, the derived verdicts,
+    the conjectures and the unknowns, and the notices a referee would want. Notices never
+    block a build."""
+    import re
+    E, names = an["engine"], {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
+    flat = {m["id"]: m for m in data["models"]}
+    model_ids = {m.get("id") for m in data["models"]} | {s.get("id") for s in data.get("model_sources", [])}
+    out = []
+    for rec in data.get("model_sources", []):
+        mid, f = rec.get("id"), rec["_file"]
+        m = flat.get(mid)
+        construction = rec.get("construction") if isinstance(rec.get("construction"), dict) else {}
+        verdicts, notices = {}, []
+        for i, a in _arguments(rec):
+            if not isinstance(a, dict):
+                continue
+            by, date = _argument_by_date(a, rec)
+            route = {"argument": argument_label(a, i), "standing": a.get("standing", "established"),
+                     "withdrawn": bool(a.get("withdrawn")), "reasons": [k for k in ARGUMENT_REASONS if a.get(k)],
+                     "by": by, "date": date, "reserve": bool(a.get("reserve"))}
+            for key, value in (("holds", True), ("fails", False)):
+                for pid in a.get(key) or []:
+                    verdicts.setdefault((pid, value), []).append(route)
+            if a.get("like") and not a.get("withdrawn"):
+                target = _argument_target(data, a["like"]) or {}
+                later = [r.get("date") for r in target.get("revisions") or [] if str(r.get("date", "")) > date]
+                if (target.get("withdrawn") or {}).get("date", "") > date:
+                    notices.append(f"{route['argument']}: its like target {a['like']} was withdrawn after it; recheck the adaptation")
+                elif later:
+                    notices.append(f"{route['argument']}: its like target {a['like']} was revised after it ({', '.join(map(str, later))}); recheck the adaptation")
+        for (pid, value), routes in verdicts.items():
+            live = [r for r in routes if not r["withdrawn"]]
+            settled = [r for r in live if r["standing"] == "established"]
+            core = [r for r in settled if not r["reserve"]]  # a reserve verdict is also derived; see below
+            what = f"{'holds' if value else 'fails'} {pid}"
+            if not live:
+                notices.append(f"{what}: no route left, every argument for it is withdrawn")
+            elif not settled:
+                notices.append(f"{what}: conjectured only")
+            elif core and all(r["reasons"] == ["source"] for r in core):
+                notices.append(f"{what}: source only")
+        if construction.get("standing") == "conjectured":
+            n = len({k for k, rs in verdicts.items() if any(r["standing"] == "established" and not r["withdrawn"] for r in rs)})
+            notices.append(f"construction conjectured: {n} verdict(s) established only if it is a model")
+        definition = rec.get("definition") if isinstance(rec.get("definition"), str) else ""
+        leans = sorted(x for x in model_ids - {mid} if re.search(rf"(?<![a-z0-9-]){re.escape(str(x))}(?![a-z0-9-])", definition))
+        if leans:
+            notices.append(f"definition leans on record {', '.join(leans)}")
+        derived_holds, derived_fails, unknown = [], [], []
+        if m is not None and m["status"] == "proved" and mid in E.holds and mid not in E.model_conflicts:
+            sat, vio = m["satisfies"], m["violates"]
+            # The ordinary arguments should derive everything; reserve arguments keep, beside them,
+            # verdicts the engine also derives, so that none rests on the results alone.
+            core = [a for _, a in _live_arguments(rec, "established") if not a.get("reserve")]
+            core_sat, core_vio = _settled([(0, a) for a in core], "holds"), _settled([(0, a) for a in core], "fails")
+            redundant = [f"holds {p}" for p in core_sat if p in E.cl([x for x in core_sat if x != p])[0]]
+            redundant += [f"fails {v}" for v in core_vio if E._reaches(core_sat, v, [x for x in core_vio if x != v])]
+            if redundant:
+                notices.append("each derivable from the other recorded verdicts: " + ", ".join(redundant))
+            needed = [f"holds {p}" for p in sat if p not in core_sat and p not in E.cl(core_sat)[0]]
+            needed += [f"fails {v}" for v in vio if v not in core_vio and not E._reaches(core_sat, v, core_vio)]
+            if needed:
+                notices.append("kept in reserve, and no longer given by the other arguments: " + ", ".join(needed))
+            derived_holds = [p for p in E.ids if p in E.holds[mid] and p not in sat]
+            derived_fails = [p for p in E.ids if p in E.fails[mid] and p not in vio]
+            unknown = an["unknown"].get(mid, [])
+        conjectures = []
+        for c in data["models"]:
+            if c.get("_companion_of") == mid:
+                st = an["conjectures"].get(c["id"], {}).get("status", "open")
+                conjectures += [{"companion": c["id"], "principle": p, "value": value, "status": st, "tier": c.get("tier")}
+                                for value, key in ((True, "satisfies"), (False, "violates")) for p in c["model_check"][key]]
+        out.append({"id": mid, "file": f, "name": rec.get("name"), "names": names,
+                    "construction": construction.get("standing", "established") if not construction.get("withdrawn") else "withdrawn",
+                    "verdicts": verdicts, "derived_holds": derived_holds, "derived_fails": derived_fails,
+                    "unknown": unknown, "conjectures": conjectures, "notices": notices})
+    return out
+
+
+def coverage_text(cov: dict) -> list[str]:
+    """A model's coverage report, as status prints it."""
+    nm = cov["names"]
+    def route(r):
+        bits = [r["argument"], "+".join(r["reasons"]) or "no reason", f"{r['by']}, {r['date']}"]
+        if r["standing"] != "established":
+            bits.append(r["standing"])
+        if r.get("reserve"):
+            bits.append("reserve")
+        if r["withdrawn"]:
+            bits.append("withdrawn")
+        return "[" + "; ".join(bits) + "]"
+    lines = [f"coverage {cov['id']} ({cov['name']}), construction {cov['construction']}"]
+    for value, label in ((True, "holds"), (False, "fails")):
+        rows = [(p, rs) for (p, v), rs in cov["verdicts"].items() if v == value]
+        lines.append(f"  {label} ({len(rows)} recorded)")
+        lines += [f"    {nm.get(p, p)}: " + " ".join(route(r) for r in rs) for p, rs in rows]
+    for label, key in (("derived holds", "derived_holds"), ("derived fails", "derived_fails"), ("unknown", "unknown")):
+        lines.append(f"  {label} ({len(cov[key])}): " + ", ".join(nm.get(p, p) for p in cov[key]))
+    for c in cov["conjectures"]:
+        lines.append(f"  conjectured {'holds' if c['value'] else 'fails'} {nm.get(c['principle'], c['principle'])}: "
+                     f"{c['status']}, in {c['companion']}" + (f", {c['tier']}" if c["tier"] else ""))
+    lines += [f"  notice: {n}" for n in cov["notices"]]
+    return lines
+
+
 def validate_topic(topic_id: str, *, quiet=False) -> bool:
     data = load_topic(topic_id)
     errors, warnings = [], []
@@ -1299,7 +1674,9 @@ def validate_topic(topic_id: str, *, quiet=False) -> bool:
     paper_ids = [p["id"] for p in papers if isinstance(p, dict) and isinstance(p.get("id"), str)]
     if len(paper_ids) != len(set(paper_ids)):
         errors.append("papers.yaml: duplicate paper id")
-    for item in data["principles"] + data["results"] + data["models"]:
+    for item in data["principles"] + data["results"] + data["models"] + data.get("retired_models", []):
+        if item.get("_companion_of"):
+            continue  # a generated companion repeats its model's references
         refs = item.get("references", [])
         for ref in refs if isinstance(refs, list) else []:
             if isinstance(ref, dict) and isinstance(ref.get("paper"), str) and ref["paper"] not in paper_ids:
@@ -1355,9 +1732,15 @@ def validate_topic(topic_id: str, *, quiet=False) -> bool:
     mschema = _schema("model")
     models_by_id = {m.get("id"): m for m in data["models"]}
     rids = set()
-    for r in data["results"] + data["models"]:
-        is_model = "satisfies" in r
-        check(mschema if is_model else rschema, r, r["_file"])
+    for r in data["results"] + data["models"] + data.get("retired_models", []):
+        if r.get("_companion_of"):  # generated: only its id and its model check are its own
+            if r.get("id") in rids:
+                errors.append(f"{r['_file']}: the conjectured companion's id '{r['id']}' is already taken; set companion_id")
+            rids.add(r.get("id"))
+            continue
+        source = r.get("_source")  # an argument-format record, checked as written
+        is_model = "satisfies" in r or source is not None
+        check(mschema if is_model else rschema, source if source is not None else r, r["_file"])
         if data["topic"].get("require_sources") and not r.get("sources"):
             errors.append(f"{r['_file']}: a result or model must have at least one source")
         stem = Path(r["_file"]).stem
@@ -1367,10 +1750,12 @@ def validate_topic(topic_id: str, *, quiet=False) -> bool:
             errors.append(f"{r['_file']}: duplicate id {r['id']}")
         rids.add(r.get("id"))
         refs = (r.get("satisfies", []) + r.get("violates", [])) if is_model else (list(r.get("premises", [])) + [r.get("conclusion")])
+        if source is not None:
+            refs = []  # checked argument by argument
         for pid in refs:
             if pid not in ids and not (not is_model and pid == FALSE and r.get("conclusion") == FALSE and pid not in r.get("premises", [])):
                 errors.append(f"{r['_file']}: unknown principle '{pid}'")
-        if is_model and set(r.get("satisfies", [])) & set(r.get("violates", [])):
+        if is_model and source is None and set(r.get("satisfies", [])) & set(r.get("violates", [])):
             errors.append(f"{r['_file']}: a principle is both satisfied and violated")
         if is_model and isinstance(r.get("model_check"), dict):
             mc = r["model_check"]
@@ -1399,10 +1784,20 @@ def validate_topic(topic_id: str, *, quiet=False) -> bool:
             if r.get("conclusion") in r.get("premises", []):
                 errors.append(f"{r['_file']}: conclusion is among the premises")
 
+    errors += argument_errors(data, ids)
+    for side in data.get("provenance", []):
+        check(_schema("provenance"), side, side["_file"])
+
     if not errors:
         an = analyse(data)
-        errors += [f"CONTRADICTION: {p}" for p in an["problems"]]
+        sources = {s["id"]: s for s in data.get("model_sources", [])}
+        for p in an["problems"]:
+            mid = next((m for m, c in an["engine"].model_conflicts.items()
+                        if m in sources and p.startswith(f"model {m} is inconsistent:")), None)
+            args = conflict_arguments(sources[mid], an["engine"].model_conflicts[mid], an["engine"]) if mid else []
+            errors.append(f"CONTRADICTION: {p}" + (f" (arguments: {', '.join(args)})" if args else ""))
         warnings += an["infos"]
+        warnings += [f"{c['file']}: {n}" for c in model_coverage(data, an) for n in c["notices"]]
 
     if not quiet:
         for e in errors:
@@ -1428,6 +1823,7 @@ def export_json(topic_id: str) -> dict:
         "principles": [clean(p) | {"file": p["_file"]} for p in data["principles"]],
         "results": [clean(r) | {"file": r["_file"]} for r in data["results"]],
         "models": [clean(m) | {"file": m["_file"]} for m in data["models"]],
+        "provenance": [provenance_export(x) for x in data.get("provenance", [])],
         "generated": _dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds"),
         "progress": progress_report(data),
         # The viewer takes its top 30 after applying the shown-principle filter.
@@ -1631,6 +2027,80 @@ def paper_references_md(item: dict, data: dict) -> str:
     return "\n".join(lines)
 
 
+def argument_md(item: dict, data: dict, level: int = 3, link=lambda wid: f"[{wid}]({wid}.html)") -> list[str]:
+    """Markdown for a model in the argument format: its construction's standing, then each argument
+    with the verdicts it settles and its reasons. A companion shows its conjectured arguments."""
+    names = {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
+    papers = {p["id"]: p for p in data.get("papers", [])}
+    out = []
+    construction = item.get("construction") or {}
+    if construction.get("standing") == "conjectured" or construction.get("withdrawn"):
+        state = "withdrawn" if construction.get("withdrawn") else "conjectured" + (f", {construction['tier']}" if construction.get("tier") else "")
+        out += [f"**Construction {state}.** Every verdict below holds only if this is a model.", ""]
+        if (construction.get("text") or "").strip():
+            out += [construction["text"].strip(), ""]
+    for i, a in _arguments(item):
+        by, date = _argument_by_date(a, item)
+        head = []
+        if a.get("holds"):
+            head.append("Holds " + ", ".join(names.get(x, x) for x in a["holds"]) + ".")
+        if a.get("fails"):
+            head.append("Fails " + ", ".join(names.get(x, x) for x in a["fails"]) + ".")
+        if a.get("standing") == "conjectured":
+            head.append("Conjectured" + (f", {a['tier']}" if a.get("tier") else "") + ".")
+        if a.get("reserve"):
+            head.append("In reserve.")
+        out += ["#" * level + " " + " ".join(head), ""]
+        if a.get("withdrawn"):
+            w = a["withdrawn"]
+            out += [f"*Withdrawn {w.get('date', '')}" + (f" by {w['by']}" if w.get("by") else "") + f": {w.get('reason', '')}*", ""]
+        if (a.get("text") or "").strip():
+            out += [a["text"].strip(), ""]
+        reasons = []
+        if isinstance(a.get("source"), dict):
+            paper = papers.get(a["source"].get("paper"), {})
+            reasons.append("Source: " + paper.get("title", a["source"].get("paper", ""))
+                           + (f", {a['source']['locator']}" if a["source"].get("locator") else "") + ".")
+        if a.get("writeup"):
+            reasons.append(f"Write-up: {link(a['writeup'])}.")
+        if a.get("like"):
+            reasons.append(f"Like `{a['like']}`" + (f": {' '.join(a['adapt'].split())}" if (a.get("adapt") or "").strip()
+                                                     else ", word for word.") )
+        if a.get("provenance"):
+            side = next((x for x in data.get("provenance", []) if x.get("id") == a["provenance"]), {})
+            chain = provenance_chain(side, item.get("companion_of") or item["id"])
+            if chain:  # the review's report covers the whole admission: it stays in the file
+                reasons.append(chain_md(chain))
+            reasons.append(f"Provenance: `provenance/{a['provenance']}.yaml`.")
+        if a.get("id"):
+            reasons.append(f"Address: `{item.get('companion_of') or item['id']}#{a['id']}`.")
+        reasons.append(f"By {_with_date(by, date)}." if by else f"{date}.")
+        out += ["*" + " ".join(reasons) + "*", ""]
+        for r in a.get("revisions") or []:
+            out += [f"*Revised {r.get('date', '')}" + (f" by {r['by']}" if r.get("by") else "") + f":* {' '.join(str(r.get('note', '')).split())}", ""]
+    return out
+
+
+def _with_date(by: str, date: str) -> str:
+    """Who and when, without repeating a date that the name already gives, as a certificate's
+    produced_by often does ("…, 20 September 2026")."""
+    months = ("January", "February", "March", "April", "May", "June", "July", "August",
+              "September", "October", "November", "December")
+    try:
+        d = _dt.date.fromisoformat(str(date)[:10])
+        spelled = f"{d.day} {months[d.month - 1]} {d.year}"
+    except ValueError:
+        spelled = None
+    if not date or str(date) in by or (spelled and spelled in by):
+        return by
+    return f"{by}, {date}" if by else str(date)
+
+
+def _companion_by(item: dict) -> str:
+    """Who proposed a generated companion's conjectured arguments, and when."""
+    return "; ".join(dict.fromkeys(_with_date(*_argument_by_date(a, item)) for _, a in _arguments(item)))
+
+
 def generate_writeup(item: dict, data: dict) -> str:
     """Markdown write-up generated from the YAML record."""
     names = {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
@@ -1642,6 +2112,8 @@ def generate_writeup(item: dict, data: dict) -> str:
         + (f"; recorded by {c['recorded_by']}" if c.get("recorded_by") else "") \
         + (f"; checked by {', '.join(c['checked_by'])}" if c.get("checked_by") else "")
     conj = item.get("status") == "conjectured"
+    if item.get("companion_of"):  # its certificate is its model's; what it adds is who proposed the conjectured arguments
+        cert = f"Source: {source}; conjectured by {_companion_by(item)}"
     out = []
     if "satisfies" in item:
         title = item["name"]
@@ -1651,6 +2123,14 @@ def generate_writeup(item: dict, data: dict) -> str:
         out += [f"- **¬ {names[x]}.** {stmts[x].strip()}" for x in item["violates"]]
         if item.get("description", "").strip():
             out += ["", "## Construction", "", item["description"].strip()]
+        if item.get("companion_of"):
+            base = next((m for m in data["models"] if m["id"] == item["companion_of"]), {})
+            out += ["", f"The conjectured verdicts of [{base.get('name', item['companion_of'])}]({item['companion_of']}.html): "
+                    "its established verdicts together with those its conjectured arguments propose."]
+        if (item.get("definition") or "").strip():
+            out += ["", "## Definition", "", item["definition"].strip()]
+        if "arguments" in item:
+            out += ["", "## Arguments", ""] + argument_md(item, data)
     else:
         prem = " ∧ ".join(names[x] for x in item["premises"]) or "⊤"
         title = f"{prem} ⇒ {names[item['conclusion']]}"
@@ -1659,10 +2139,12 @@ def generate_writeup(item: dict, data: dict) -> str:
         out += ["", "## Conclusion", "", _stmt_line(item["conclusion"], names, stmts)]
         if item.get("proof", "").strip():
             out += ["", "## Proof", "", item["proof"].strip()]
-    if item.get("notes", "").strip():
+    if item.get("notes", "").strip() and not item.get("companion_of"):  # a companion's notes are its arguments
         out += ["", "## Notes", "", item["notes"].strip()]
     if item.get("changes"):
         out += ["", "## Revisions", ""] + _change_lines(item, names)
+    if item.get("history"):
+        out += ["", "## History", "", "The record's revision log before it was written as arguments.", ""] + _change_lines(item, names, key="history")
     if item.get("sources"):
         labels = item.get("source_names", [])
         out += ["", "## Sources", ""] + [f"- **{labels[i]}** — {x}" if i < len(labels) else f"- {x}" for i, x in enumerate(item["sources"])]
@@ -1713,7 +2195,11 @@ def render_writeups(topic_id: str, data: dict, outdir: Path) -> dict:
     wdir.mkdir(parents=True, exist_ok=True)
     src = TOPICS / topic_id / "writeups"
     files = {}
-    for item in data["results"] + data["models"]:
+    # A write-up an argument names need not belong to a record of its own; it is published too.
+    named = {a["writeup"]: {"id": a["writeup"]} for s in data.get("model_sources", []) for _, a in _arguments(s)
+             if isinstance(a, dict) and a.get("writeup")}
+    records = {x["id"] for x in data["results"] + data["models"]}
+    for item in data["results"] + data["models"] + [x for i, x in named.items() if i not in records]:
         iid = item["id"]
         hand = src / f"{iid}.md"
         md = hand.read_text(encoding="utf-8") if hand.exists() else generate_writeup(item, data)
@@ -2090,10 +2576,10 @@ def _demote(md: str, levels: int) -> str:
     return "\n".join(out)
 
 
-def _change_lines(item: dict, names: dict, indent: str = "") -> list[str]:
+def _change_lines(item: dict, names: dict, indent: str = "", key: str = "changes") -> list[str]:
     """Markdown bullet per logged revision, newest first."""
     out = []
-    for ch in sorted(item.get("changes") or [], key=lambda c: str(c.get("date", "")), reverse=True):
+    for ch in sorted(item.get(key) or [], key=lambda c: str(c.get("date", "")), reverse=True):
         bits = [" ".join(str(ch.get("summary", "")).split())]
         if ch.get("satisfies"):
             bits.append("Now satisfies: " + ", ".join(names.get(x, x) for x in ch["satisfies"]) + ".")
@@ -2261,19 +2747,35 @@ def bundle_map_md(topic_id: str, data: dict, an: dict) -> str:
           "to what it violates. Independence is never recorded directly; the model is the record.", ""]
     for m in data["models"]:
         o += [f"### {m['name']} — `{m['id']}`", ""]
-        o += [("Conjectured model" if m["status"] != "proved" else "Model") + "; " + _cert_line(m, catalog), ""]
+        if m.get("companion_of"):
+            o += [f"Conjectured verdicts of `{m['companion_of']}`; conjectured by {_companion_by(m)}.", ""]
+        else:
+            o += [("Conjectured model" if m["status"] != "proved" else "Model") + "; " + _cert_line(m, catalog), ""]
         o += ["Satisfies:", ""] + [f"- {label(x)}" for x in m["satisfies"]] + [""]
         o += ["Violates:", ""] + [f"- {label(x)}" for x in m["violates"]] + [""]
+        if m["id"] in E.holds and m["id"] not in E.model_conflicts:  # what the results add to the record
+            for word, have, mine in (("satisfies", E.holds, m["satisfies"]), ("violates", E.fails, m["violates"])):
+                extra = [x for x in ids if x in have[m["id"]] and x not in mine]
+                if extra:
+                    o += [f"Also {word}, by the results: " + ", ".join(label(x) for x in extra) + ".", ""]
         unk = an["unknown"].get(m["id"], [])
         o += ["Unknown in this model: " + (", ".join(label(x) for x in unk) if unk else "nothing; every principle is settled.") , ""]
         if (m.get("description") or "").strip():
             o += ["Construction.", "", m["description"].strip(), ""]
+        if m.get("companion_of"):
+            o += [f"Generated from the conjectured arguments of `{m['companion_of']}`: its established verdicts and the conjectured ones.", ""]
+        if (m.get("definition") or "").strip():
+            o += ["Definition.", "", m["definition"].strip(), ""]
+        if "arguments" in m:
+            o += ["Arguments:", ""] + argument_md(m, data, 4, link=lambda wid: f"`writeups/{wid}.md`")
         if m.get("checks"):
             o += ["Executable checks: " + ", ".join(f"`{c}`" for c in m["checks"]) + ".", ""]
-        if (m.get("notes") or "").strip():
+        if (m.get("notes") or "").strip() and not m.get("companion_of"):
             o += [f"Notes. {m['notes'].strip()}", ""]
         if m.get("changes"):
             o += ["Revisions:", ""] + _change_lines(m, names) + [""]
+        if m.get("history"):
+            o += ["History, before the record was written as arguments:", ""] + _change_lines(m, names, key="history") + [""]
         o += ["Sources:", ""] + _source_lines(m) + [""]
         o += [paper_references_md(m, data), ""]
         o += [f"Record: `{m['_file']}`.", ""]
@@ -2511,7 +3013,8 @@ def bundle_readme_md(topic_id: str, data: dict, an: dict) -> str:
          f"  extraction.md               source inventory, transcription decisions, deferred items",
          f"  principles/<id>.yaml        one principle per file",
          f"  results/<id>.yaml           premises ⇒ conclusion, with its proof",
-         f"  models/<id>.yaml            satisfies [...] / violates [...]",
+         f"  models/<id>.yaml            satisfies [...] / violates [...], or a definition and arguments",
+         f"  provenance/<id>.yaml        provenance moved out of a model record, named by its arguments",
          f"  writeups/<id>.md            hand-written write-up, overrides the generated one",
          f"  checks/                     executable sanity checks for the models",
          f"  sources/                    original papers",
@@ -2686,6 +3189,13 @@ def bundle_agents_md(topic_id: str, data: dict) -> str:
         "derives the rest and reports what stays unknown.",
         "- Log every later addition to an existing record in its `changes` list (date, by, summary, "
         "and for models the newly verified `satisfies`/`violates` ids). Never move `certificate.date`.",
+        "- A model written as a `definition` and `arguments` takes a new verdict as a new argument "
+        "with its own `by` and `date`, and a correction in that argument's `revisions`. Its `history` "
+        "is frozen, and its `satisfies`/`violates` are computed: never write them. Its ordinary "
+        "arguments record only the verdicts the engine cannot derive from the others, its source's "
+        "first; arguments marked `reserve: true`, after them, keep verdicts the engine also derives, "
+        "so that none rests on the results alone. Never delete a reserve argument because the engine "
+        "derives its verdicts.",
         "- Write the real proof in `proof`, at referee detail. Put anything longer than a paragraph "
         f"in `topics/{topic_id}/writeups/<id>.md` instead.",
         "- Prefer `status: conjectured` with an empty proof and a note saying what would settle it, "
@@ -2806,9 +3316,15 @@ def bundle_topic(topic_id: str) -> Path:
 # Status
 # ----------------------------------------------------------------------------
 
-def status(topic_id: str):
+def status(topic_id: str, model: str | None = None):
     data = load_topic(topic_id)
     an = analyse(data)
+    if model is not None:  # one model's coverage report alone
+        covs = [c for c in model_coverage(data, an) if c["id"] == model]
+        if not covs:
+            sys.exit(f"{topic_id}: no model '{model}' in the argument format")
+        print("\n".join(coverage_text(covs[0])))
+        return
     names = {FALSE: "⊥", **{p["id"]: p["name"] for p in data["principles"]}}
     n = len(data["principles"])
     print(f"== {data['topic']['title']} ==")
@@ -2839,6 +3355,8 @@ def status(topic_id: str):
         print(f"CONTRADICTION: {p}")
     for i in an["infos"]:
         print(f"note: {i}")
+    for c in model_coverage(data, an):
+        print("\n".join(coverage_text(c)))
 
 
 # ----------------------------------------------------------------------------
@@ -2954,7 +3472,94 @@ notes: ""
 # Self-test of the engine
 # ----------------------------------------------------------------------------
 
+def _selftest_arguments():
+    """Flattening and validation of model records in the argument format."""
+    cert = {"source_id": "misc", "produced_by": "A", "date": "2026-01-01", "lean": "none"}
+    rec = {"id": "m", "name": "M", "certificate": cert, "sources": ["S"], "definition": "D", "_file": "topics/t/models/m.yaml",
+           "arguments": [{"holds": ["a", "b"], "text": "x"}, {"fails": ["c"], "source": {"paper": "p"}},
+                         {"holds": ["b"], "fails": ["d"], "text": "y"},
+                         {"holds": ["e"], "text": "z", "withdrawn": {"date": "2026-01-02", "reason": "wrong"}}]}
+    [m] = flatten_model(rec)
+    assert (m["satisfies"], m["violates"], m["status"]) == (["a", "b"], ["c", "d"], "proved"), m
+    assert "tier" not in m and "model_check" not in m and m["_source"] == rec and m["_source"] is not rec
+    rec["arguments"].append({"holds": ["a"], "standing": "conjectured", "text": "restated"})
+    assert len(flatten_model(rec)) == 1, "a conjecture of an established verdict adds no companion"
+    rec["arguments"] += [{"holds": ["f"], "fails": ["g"], "standing": "conjectured", "tier": "bronze", "text": "  first  "},
+                         {"holds": ["h"], "standing": "conjectured", "tier": "silver", "source": {"paper": "p"}}]
+    m, c = flatten_model(rec)
+    assert (m["satisfies"], m["violates"]) == (["a", "b"], ["c", "d"])
+    assert c["id"] == "m-conjectured" and c["status"] == "conjectured" and c["tier"] == "silver"
+    assert (c["satisfies"], c["violates"]) == (["a", "b", "f", "h"], ["c", "d", "g"])
+    assert c["model_check"] == {"model": "m", "satisfies": ["f", "h"], "violates": ["g"]}
+    assert c["notes"] == "first" and c["companion_of"] == "m" and c["certificate"] == cert and c["certificate"] is not cert
+    rec["arguments"][-1]["companion_id"] = "m-old"
+    assert flatten_model(rec)[1]["id"] == "m-old"
+    rec["construction"] = {"standing": "conjectured", "text": "Check it.", "tier": "gold"}
+    [m] = flatten_model(rec)
+    assert m["status"] == "conjectured" and m["tier"] == "gold" and m["notes"] == "Check it."
+    assert (m["satisfies"], m["violates"]) == (["a", "b", "f", "h"], ["c", "d", "g"])
+    rec["construction"]["withdrawn"] = {"date": "2026-01-03", "reason": "not a model"}
+    assert flatten_model(rec) == []
+    del rec["construction"]
+    # Both formats validate; a record cannot mix them.
+    V = jsonschema.Draft202012Validator(_schema("model"))
+    clean = {k: v for k, v in rec.items() if not k.startswith("_")}
+    assert V.is_valid(clean), list(V.iter_errors(clean))
+    old = {"id": "o", "name": "O", "certificate": cert, "sources": ["S"], "satisfies": [], "violates": [], "status": "proved", "description": "D"}
+    assert V.is_valid(old) and not V.is_valid({**old, "arguments": []}) and not V.is_valid({**clean, "status": "proved"})
+    assert not V.is_valid({k: v for k, v in clean.items() if k != "definition"}), "a model needs a definition"
+    # The errors that need no engine.
+    data = {"principles": [{"id": x} for x in "abcdefgh"], "results": [], "papers": [{"id": "p"}], "provenance": [],
+            "models": flatten_model(rec), "model_sources": [rec]}
+    assert argument_errors(data, set("abcdefgh")) == []
+    rec["arguments"] += [{"text": "nothing"}, {"holds": ["a"]}, {"holds": ["zz"], "text": "?"}, {"fails": ["a"], "text": "clash"},
+                         {"holds": ["a"], "like": "m#nowhere"}, {"holds": ["a"], "text": "t", "adapt": "x"},
+                         {"holds": ["a"], "text": "t", "tier": "gold"}, {"id": "k", "holds": ["a"], "source": {"paper": "q"}}]
+    errors = argument_errors(data, set("abcdefgh"))
+    for want in ("arguments[7]: settles nothing", "arguments[8]: gives no reason", "unknown principle 'zz'",
+                 "'a' both holds (arguments: arguments[0], arguments[4], arguments[8], arguments[11], arguments[12], arguments[13], k) and fails (arguments: arguments[10])",
+                 "like names no argument: 'm#nowhere'", "adapt is used only with like", "tier is for conjectured arguments only",
+                 "k: unknown paper 'q'"):
+        assert any(want in e for e in errors), (want, errors)
+    assert len(errors) == 8, errors
+    rec["arguments"][-1]["id"] = "nowhere"
+    assert not any("like names no argument" in e for e in argument_errors(data, set("abcdefgh")))
+    # An admission sidecar is shared by the records it added to; each argument naming it needs an entry.
+    side = {"id": "admission-x", "_file": "topics/t/provenance/admission-x.yaml", "trawl": {"reviews": [], "admission": {"id": "admission-x"}},
+            "records": [{"record": "m", "discovery": {"trawl_id": "trawl-1"}, "evidence": []}]}
+    data = {**data, "provenance": [side]}
+    del rec["arguments"][7:]
+    rec["arguments"][0]["provenance"] = "admission-x"
+    assert argument_errors(data, set("abcdefgh")) == [], argument_errors(data, set("abcdefgh"))
+    assert trawl_block(side, "m") == {"reviews": [], "admission": {"id": "admission-x"}, "discovery": {"trawl_id": "trawl-1"}, "evidence": []}
+    assert trawl_block(side, "n") is None and provenance_records(side) == ["m"]
+    side["records"] = [{**side["records"][0], "record": "n"}, {**side["records"][0], "record": "n"}]
+    errors = argument_errors(data, set("abcdefgh"))
+    assert any("has nothing for 'm'" in e for e in errors) and any("record 'n' is not a model" in e for e in errors) \
+        and any("a record has two entries" in e for e in errors), errors
+    # A reserve argument keeps a verdict the engine also derives: the verdict is recorded, the
+    # redundancy is not reported, and a reserve verdict the others stop giving is.
+    kept = {"id": "k", "name": "K", "certificate": cert, "sources": ["S"], "definition": "D", "_file": "topics/t/models/k.yaml",
+            "arguments": [{"holds": ["a"], "text": "x"}, {"holds": ["b"], "reserve": True, "text": "y", "by": "B", "date": "2026-01-03"},
+                          {"holds": ["c"], "reserve": True, "text": "z"}]}
+    [k] = flatten_model(kept)
+    assert k["satisfies"] == ["a", "b", "c"] and k["status"] == "proved"
+    kdata = {"topic": {"id": "t", "background": []}, "principles": [{"id": x, "name": x.upper()} for x in "abc"], "papers": [],
+             "results": [{"id": "ab", "premises": ["a"], "conclusion": "b", "status": "proved", "certificate": cert}],
+             "models": [k], "model_sources": [kept], "provenance": []}
+    assert argument_errors(kdata, set("abc")) == []
+    [cov] = model_coverage(kdata, analyse(kdata))
+    assert not any("derivable" in n for n in cov["notices"]), cov["notices"]
+    assert any("kept in reserve, and no longer given by the other arguments: holds c" in n for n in cov["notices"]), cov["notices"]
+    assert not any("holds b" in n for n in cov["notices"]), "a ⇒ b still gives the reserve verdict b"
+    assert "In reserve." in "\n".join(argument_md(kept, kdata)) and "By B, 2026-01-03." in "\n".join(argument_md(kept, kdata))
+    kept["arguments"].append({"holds": ["a"], "reserve": True, "standing": "conjectured", "text": "w"})
+    assert any("reserve is for established arguments only" in e for e in argument_errors(kdata, set("abc")))
+    assert _with_date("C, 20 September 2026", "2026-09-20") == "C, 20 September 2026" and _with_date("C", "2026-09-20") == "C, 2026-09-20"
+
+
 def selftest():
+    _selftest_arguments()
     P = lambda i: {"id": i, "name": i}
     R = lambda i, prem, c: {"id": i, "premises": prem, "conclusion": c, "status": "proved", "certificate": {"provenance": "human", "lean": "none"}}
     M = lambda i, sat, viol: {"id": i, "satisfies": sat, "violates": viol, "status": "proved", "certificate": {"provenance": "human", "lean": "none"}}
@@ -3281,6 +3886,8 @@ def main(argv=None):
             s.add_argument("--background", action="append", metavar="PRESET", help="a background preset id, or none; repeatable (default: none and every preset)")
             s.add_argument("--top", type=int, default=10, help="rows per list (default 10)")
             s.add_argument("--json", action="store_true", help="print the full rankings as JSON")
+        if name == "status":
+            s.add_argument("--model", help="print only this model's coverage report (argument format)")
         if name == "lean-check":
             s.add_argument("--update", action="store_true", help="persist stated/verified certificates after a successful audit")
         if name == "build":
@@ -3322,7 +3929,7 @@ def main(argv=None):
         if a.cmd == "validate":
             ok &= validate_topic(t)
         elif a.cmd == "status":
-            status(t)
+            status(t, a.model)
         elif a.cmd == "lynchpins":
             lynchpins(t, a.background, a.top, a.json)
         elif a.cmd == "lean":

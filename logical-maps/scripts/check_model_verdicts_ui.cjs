@@ -25,69 +25,45 @@ try{
   const page=d.getElementById('page');
   assert.equal(page.querySelector('h1').textContent,'Fixture model');
 
-  // The three groups, named and counted, in the order a reader asks about.
-  const heads=[...page.querySelectorAll('h3.verdict-group')];
-  assert.deepEqual(heads.map(h=>h.firstChild.textContent.trim()),['Satisfied','Violated','Unknown'],'Three groups, verdict first');
+  // Three columns, named and counted, in the order a reader asks about.
+  const cols=[...page.querySelectorAll('.verdict-columns section.verdict-col')];
+  const heads=cols.map(c=>c.querySelector('h3.verdict-group'));
+  assert.deepEqual(heads.map(h=>h.firstChild.textContent.trim()),['Satisfied','Violated','Unknown'],'Three columns, verdict first');
   assert.deepEqual(heads.map(h=>h.querySelector('.n').textContent),['2','2','1'],'Each counts everything it covers, shown or not');
-
-  // Everything between one heading and the next belongs to that group.
-  const section=head=>{const out=[];let n=head.nextElementSibling;
-    while(n&&!['H2','H3'].includes(n.tagName)){out.push(n);n=n.nextElementSibling;}return out;};
-  const named=el=>[...el.querySelectorAll('tr')].map(tr=>tr.querySelector('[data-principle]')?.dataset.principle);
-  const groups=Object.fromEntries(heads.map(h=>{
-    const parts=section(h), details=parts.find(x=>x.tagName==='DETAILS');
-    return [h.firstChild.textContent.trim(),
-      {listed:parts.filter(x=>x.tagName==='TABLE').flatMap(named), details, hidden:details?named(details):[]}];
-  }));
+  const named=el=>[...el.querySelectorAll(':scope > ul.verdict-list [data-principle]')].map(b=>b.dataset.principle);
+  const groups=Object.fromEntries(cols.map((c,i)=>{const details=c.querySelector('details.derived-verdicts');
+    return [heads[i].firstChild.textContent.trim(),{listed:named(c),details,hidden:details?[...details.querySelectorAll('[data-principle]')].map(b=>b.dataset.principle):[]}];}));
   assert.deepEqual(groups.Satisfied.listed,['a'],'The recorded verdict is listed');
-  assert.deepEqual(groups.Satisfied.hidden,['c'],'The derived one waits behind the disclosure');
+  assert.deepEqual(groups.Satisfied.hidden,['c'],'The derived one waits behind the toggle');
   assert.deepEqual(groups.Violated.listed,['b']);
   assert.deepEqual(groups.Violated.hidden,['d']);
   assert.deepEqual(groups.Unknown.listed,['e'],'Nothing is derived about a principle the model leaves open');
-  assert.equal(groups.Unknown.details,undefined,'So that group has no disclosure');
-  assert.equal([...page.querySelectorAll('.verdict-table tr')].length,data.principles.length,'Every principle appears exactly once');
-
-  // Closed by default, and the rows are inside it, which is what makes the
-  // browser hide them; jsdom lays nothing out, so the structure is the contract.
+  assert.equal(groups.Unknown.details,null,'So that column has no toggle');
+  assert.equal(page.querySelectorAll('.verdict-columns [data-principle]').length,data.principles.length,'Every principle appears exactly once');
   for (const key of ['Satisfied','Violated']) {
-    assert.equal(groups[key].details.open,false,`The ${key.toLowerCase()} disclosure starts closed`);
+    assert.equal(groups[key].details.open,false,`The ${key.toLowerCase()} toggle starts closed`);
     assert.equal(groups[key].details.firstElementChild.tagName,'SUMMARY');
-    assert.match(groups[key].details.querySelector('summary').textContent,/^1 more, derived/,'And says how many it holds');
+    assert.equal(groups[key].details.querySelector('summary').textContent,'+ 1 derived','And says how many it holds');
   }
 
-  // The principle is the left column; the evidence sits to its right and keeps
-  // its route to the derivation.
-  const row=id=>page.querySelector(`[data-principle="${id}"]`).closest('tr');
-  assert.equal(row('a').firstElementChild.querySelector('[data-principle]').dataset.principle,'a','The name leads the row');
-  const evidence=id=>row(id).querySelector('.verdict-cell [data-verdict]');
-  assert.equal(evidence('a').dataset.verdictModel,'m','A recorded verdict still links to its evidence');
-  assert.equal(evidence('c').dataset.verdict,'c','And so does a derived one');
-  assert.equal(row('e').querySelector('[data-verdict]'),null,'An unsettled principle has no evidence to link to');
+  // Each principle has one small control and nothing else: no sources, no marks.
+  const item=id=>page.querySelector(`.verdict-columns [data-principle="${id}"]`).closest('li');
+  const control=id=>item(id).querySelectorAll('button.vc');
+  assert.deepEqual(['a','b','c','d','e'].map(id=>control(id).length),[1,1,1,1,0],'One control each, none for an open question');
+  assert.equal(control('a')[0].dataset.verdictModel,'m','A recorded verdict of a list-format model goes to its evidence');
+  assert.equal(control('a')[0].textContent,'↗');
+  assert.equal(control('c')[0].dataset.verdict,'c','A derived one to how it follows');
+  assert.equal(control('c')[0].textContent,'⇐');
+  assert.equal(page.querySelectorAll('.verdict-columns .badge').length,0,'No source information in the columns');
+  assert.equal(w.getComputedStyle(page.querySelector('.verdict-columns')).display,'grid');
 
-  // One line per principle: the names column shrinks to its widest name so the
-  // evidence starts just past it rather than at the far edge, and the evidence
-  // is text rather than a bordered button. jsdom lays nothing out, so this
-  // pins the rules to the markup rather than measuring the result.
-  const style=el=>w.getComputedStyle(el);
-  assert.equal(style(row('a').firstElementChild).width,'1%','The names column takes only what it needs');
-  assert.equal(style(row('a').firstElementChild).whiteSpace,'nowrap','Keeping each name on one line');
-  assert.equal(style(row('a').firstElementChild).borderBottomWidth,'0px','No rule between rows to space them apart');
-  assert.equal(style(evidence('a')).padding,'0px','And the evidence carries no button chrome');
-  assert.equal(style(evidence('a').querySelector('.badge.source')).whiteSpace,'nowrap','A source badge stays on one line');
-
-  // The group heading carries the verdict, so the rows under it do not repeat
-  // the mark; what is left to report is the derivation and the sources.
-  assert.equal(evidence('a').querySelector('.model-flag').textContent,'','A recorded row adds no mark of its own');
-  assert.equal(evidence('c').querySelector('.model-flag').textContent,'derived','A derived row says only that');
-  assert.ok(evidence('a').querySelector('.badge.source'),'Both still carry their sources');
-  assert.ok(evidence('c').querySelector('.badge.source'));
-
-  // A verdict is Lean-checked only when everything under it is. The model is,
-  // so its recorded verdicts are; the results deriving the rest are not, so
-  // those are not.
-  assert.ok(evidence('a').querySelector('.badge.lean.verified'),'A recorded verdict of a Lean-checked model says so');
-  assert.ok(evidence('b').querySelector('.badge.lean.verified'),'Either way round');
-  assert.equal(evidence('c').querySelector('.badge.lean.verified'),null,'A verdict derived through an unverified result does not');
+  // Lean status and sources stay one click away, on the verdict's own pop-up: a
+  // verdict is Lean-checked only when everything under it is.
+  w.eval('select({type:"model-verdict", id:"m", principle:"a"})');
+  assert.ok(d.getElementById('pop').querySelector('.badge.lean.verified'),'A recorded verdict of a Lean-checked model says so');
+  w.eval('select({type:"model-verdict", id:"m", principle:"c"})');
+  assert.equal(d.getElementById('pop').querySelector('.badge.lean.verified'),null,'A verdict derived through an unverified result does not');
+  w.eval('select(null)');
 
   // And the one-line answer at the foot of the graph's details pane carries it
   // beside the witness it names.
@@ -107,5 +83,111 @@ try{
   assert.equal(explorer.querySelector('.model-flag').textContent,'✓','The explorer still shows the verdict itself');
 
   assert.deepEqual(errors.map(String),[]);
-  console.log('PASS: a model page sorts every principle into satisfied, violated and unsettled, counts each group, leads each row with the principle, keeps the route to the evidence, holds the derived verdicts in a closed disclosure, keeps each row to a single line while the ungrouped explorer list keeps its marks.');
 }finally{w.close();}
+
+// A model written as a definition and arguments, as the build exports it: the
+// flattened lists beside the arguments, and a generated conjectured companion.
+const argCert={...cert,date:'2026-01-01',produced_by:'Author'};
+const args=[{holds:['a'],text:'Why A holds.'},{fails:['b'],text:'First reason B fails.',id:'first'},
+  {fails:['b'],writeup:'b-writeup',by:'Later author',date:'2026-02-01',revisions:[{date:'2026-02-02',note:'Tidied.'}]},
+  {holds:['e'],standing:'conjectured',tier:'bronze',text:'Why E might hold.',companion_id:'n-conj',date:'2026-01-20'},
+  {holds:['a'],fails:['b'],text:'One argument for both.',by:'Both author (Lab), later',date:'2026-02-04'},
+  {fails:['b'],text:'Found in a trawl.',by:'Trawl agent, trawl',date:'2026-02-05',provenance:'admission-x'},
+  // D fails by D ⇒ B; the record keeps its own argument for that in reserve.
+  {fails:['d'],reserve:true,text:'Why D fails, kept in reserve.',by:'Old, 15 January 2026',date:'2026-01-15'}];
+const flat={id:'n',name:'Argument model',status:'proved',satisfies:['a'],violates:['b','d'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
+  definition:'What the model is.',arguments:args,notes:'Miscellany.',history:[{date:'2026-01-15',by:'Old',summary:'An old change.',satisfies:['a']}]};
+const companion={id:'n-conj',name:'Argument model',status:'conjectured',tier:'bronze',satisfies:['a','e'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
+  definition:'What the model is.',arguments:[args[3]],notes:'Why E might hold.',companion_of:'n',model_check:{model:'n',satisfies:['e'],violates:[]}};
+// The chain of a theorem-trawl admission, as the build exports it for each record it added to.
+const provenance=[{id:'admission-x',file:'topics/t/provenance/admission-x.yaml',records:{n:{found_by:'deepseek/deepseek-flash',found_at:'2026-02-05T10:00:00+00:00',
+  reviews:[{by:'openai/gpt-6',at:'2026-02-06T10:00:00+00:00',verdict:'accept',summary:'Checked.',argument_check:'Every step.',source_check:'The source.',issues:[]}],
+  admitted_by:'Curator',admitted_at:'2026-02-07T10:00:00+00:00'}}}];
+const data2={...data,models:[flat,companion],provenance};
+const errors2=[],vc2=new VirtualConsole();vc2.on('jsdomError',e=>errors2.push(e));
+const dom2=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data2)),
+  {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc2});
+const w2=dom2.window,d2=w2.document;
+try{
+  w2.eval('openPage({type:"model", id:"n"})');
+  const page=d2.getElementById('page');
+  const h2s=[...page.querySelectorAll('h2')].map(h=>h.textContent);
+  assert.ok(h2s.includes('Definition')&&page.textContent.includes('What the model is.'),'The definition comes first');
+  assert.ok(h2s.indexOf('Definition')<h2s.indexOf('Principles'));
+  // Each principle's one control goes to its arguments; the Arguments section shows each once.
+  const item=id=>page.querySelector(`.verdict-columns [data-principle="${id}"]`).closest('li');
+  const control=id=>item(id).querySelector('button.vc');
+  assert.equal(control('a').dataset.jump,'0 4','A recorded verdict goes to each argument for it');
+  assert.equal(control('b').dataset.jump,'1 2 4 5','However many there are');
+  assert.equal(control('c').dataset.verdict,'c','A derived verdict goes to how it follows');
+  assert.equal(control('e').dataset.jump,'3','An open question with a conjectured argument goes to it');
+  assert.ok(control('e').classList.contains('conj'));
+  assert.equal(page.querySelectorAll('.verdict-columns .badge').length,0,'No source information in the columns');
+  assert.ok(h2s.indexOf('Principles')<h2s.indexOf('Arguments')&&h2s.indexOf('Arguments')<h2s.indexOf('Notes'));
+  const listed=[...page.querySelectorAll('details.argument[id]')];
+  assert.deepEqual(listed.map(x=>x.id),args.map((_,i)=>'argument-'+i),"Each argument once, in the record's order");
+  assert.equal(page.querySelectorAll('h3.argument-group').length,0,'Not grouped by date');
+  const summary=i=>page.querySelector(`#argument-${i} summary`).textContent.trim();
+  assert.equal(summary(4),'✓ A ✗ B','An argument is headed by its verdicts, and only them');
+  assert.match(summary(3),/^✓ E conjecture · bronze$/,'A conjectured one says so');
+  assert.equal(page.querySelector('#argument-4 .credit').textContent,'Both author (Lab), later, 2026-02-04.','Who and when sit inside');
+  assert.equal(page.querySelector('#argument-0 .credit').textContent,'Author, 2026-01-01.','By default, the certificate');
+  assert.match(page.querySelector('#argument-1').textContent,/n#first/,'An argument with an id shows its address');
+  assert.equal(page.querySelector('#argument-2 a').getAttribute('href'),'writeups/b-writeup.html');
+  assert.match(page.querySelector('#argument-2').textContent,/Revised 2026-02-02: Tidied\./);
+  control('b').click();
+  assert.deepEqual(['1','2','4','5'].map(i=>page.querySelector('#argument-'+i).open),[true,true,true,true],'The control opens every argument for the verdict');
+  assert.ok(page.querySelector('#argument-1').classList.contains('flash'),'And marks them');
+  assert.equal(page.querySelector('#argument-0').open,false,'But no other');
+  const trawled=page.querySelector('#argument-5');
+  assert.equal(trawled.querySelector('.credit').textContent,'Found by deepseek/deepseek-flash, 2026-02-05 → reviewed by openai/gpt-6, 2026-02-06 (accept) → admitted by Curator, 2026-02-07.',
+    'A trawl argument is credited to who found, reviewed and admitted it');
+  assert.match(trawled.querySelector('details.review').textContent,/Checked\..*Argument check: Every step\..*Source check: The source\./s,'With the review report at hand');
+  assert.match(trawled.textContent,/provenance\/admission-x\.yaml/);
+  // An argument kept in reserve comes after the others, under its own heading, and still
+  // takes its verdict's control.
+  const reserveHead=[...page.querySelectorAll('h3.verdict-group')].find(h=>/^In reserve/.test(h.textContent));
+  assert.ok(reserveHead&&/1$/.test(reserveHead.textContent.trim()),'The reserve has its own heading, with a count');
+  assert.ok(page.querySelector('.arguments.reserve #argument-6')&&!page.querySelector('.arguments.reserve #argument-5'),'Only reserve arguments sit under it');
+  assert.equal(summary(6),'✗ D reserve');
+  assert.equal(control('d').dataset.jump,'6','A verdict kept in reserve is recorded, and its control goes to the argument');
+  assert.equal(page.querySelector('#argument-6 .credit').textContent,'Old, 15 January 2026.','A date the name already gives is not repeated');
+  assert.ok(h2s.includes('Notes')&&h2s.includes('History'));
+  const history=page.querySelector('details.history');
+  assert.ok(history&&!history.open&&/An old change\./.test(history.textContent),'The old log waits behind a toggle');
+  assert.match(history.querySelector('summary').textContent,/1 entry$/);
+
+  w2.eval('openPage({type:"model-verdict", id:"n", principle:"b"})');
+  assert.match(page.textContent,/recorded directly for the model, by the arguments below/);
+  assert.equal(page.querySelectorAll('details.argument').length,4,'Its own page shows every argument for the verdict in full');
+  assert.deepEqual([...page.querySelectorAll('.badges .badge')].map(b=>b.textContent),['Paper','Later author','Both author','trawl']);
+
+  // A hand-written write-up is linked, and does not take the definition's place.
+  w2.eval(`byMid.get('n').files={handwritten:true,html:'writeups/n.html'};openPage({type:"model", id:"n"})`);
+  assert.equal(page.querySelector('.writeup-note a').getAttribute('href'),'writeups/n.html');
+  assert.match(page.querySelector('.record-summary').textContent,/What the model is\./);
+
+  w2.eval('openPage({type:"model", id:"n-conj"})');
+  assert.ok(page.querySelector('.record-summary [data-open-model="n"]'),'A companion names the model it conjectures about');
+  assert.match(page.querySelector('dl').textContent,/conjectured by.*Author, 2026-01-20.*model.*Argument model/,'And who proposed its arguments, not the model\'s certificate');
+  assert.ok(![...page.querySelectorAll('h2')].some(h=>h.textContent==='Notes'),'Its notes are its arguments, shown once');
+  args[3].id='guess';w2.eval(`byMid.get('n-conj').arguments[0].id='guess';openPage({type:"model", id:"n-conj"})`);
+  assert.match(page.textContent,/n#guess/,'Its arguments keep the address they have in the model');
+
+  // The Changes tab keeps the logged history, and an argument added since it is a change of its own.
+  w2.eval('state.search="";renderResults()');
+  const changes=[...d2.querySelectorAll('#results tr')].map(tr=>tr.textContent);
+  assert.ok(changes.some(x=>x.includes('An old change.')),'History entries are changes');
+  assert.ok(changes.some(x=>x.includes('Argument added.')&&x.includes('2026-02-01')),'A later argument is one');
+  assert.ok(changes.some(x=>x.includes('Tidied.')),'And so is its revision');
+  assert.ok(!changes.some(x=>x.includes('Why A holds')),'An argument as old as the record is not');
+  assert.ok(!changes.some(x=>x.includes('kept in reserve')),'Nor one kept in reserve with the date of a logged change');
+  assert.ok(changes.some(x=>x.includes('Conjectured argument added: Why E might hold.')),'A later conjectured argument is a change too');
+  companion.arguments[0].revisions=[{date:'2026-03-01',note:'Conjecture restated.'}];
+  w2.eval(`byMid.get('n-conj').arguments[0].revisions=[{date:'2026-03-01',note:'Conjecture restated.'}];renderResults()`);
+  const rows=[...d2.querySelectorAll('#results tr')];
+  assert.ok(rows.some(tr=>tr.dataset.id==='n-conj'&&tr.textContent.includes('Conjecture restated.')),'A companion\'s changes are its arguments\' revisions');
+  assert.ok(rows.some(tr=>tr.dataset.id==='n-conj'&&tr.textContent.includes('2026-01-20')&&!tr.classList.contains('revision')),'And it is dated by its latest argument, not by the model');
+  assert.deepEqual(errors2.map(String),[]);
+  console.log('PASS: a model page sorts every principle into three columns, satisfied, violated and unsettled, counts each, gives each principle one control to its evidence or derivation, holds the derived verdicts behind a closed toggle, keeps Lean status on the pop-up of a verdict while the explorer list keeps its marks; a model written as arguments shows its definition, then three columns of principles with one control each and no sources, each argument once in record order headed by its verdicts with who supplied it inside (for a trawl argument, who found, reviewed and admitted it), those kept in reserve under their own heading, its history behind a toggle, a write-up that does not replace the definition, and its companion.');
+}finally{w2.close();}

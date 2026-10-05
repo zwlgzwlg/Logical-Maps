@@ -404,11 +404,29 @@
      past it, rather than being pushed to the far edge of the page. The group
      heading already gives the verdict, so the evidence loses its button chrome
      and the row comes down to a line of text. */
-  .page .verdict-table td { padding: 2px 8px 2px 0; border-bottom: 0; vertical-align: baseline; }
-  .page .verdict-table td:first-child { width: 1%; white-space: nowrap; }
-  .page .verdict-table .verdict { border: 0; padding: 0; }
-  .page .verdict-table .badge.source { white-space: nowrap; }
-  .page .derived-verdicts > summary { cursor: pointer; font-size: 13px; color: var(--ink-2); padding: 3px 0; }
+  .page .verdict-columns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 28px; }
+  @media (max-width: 760px) { .page .verdict-columns { grid-template-columns: 1fr; } }
+  .page ul.verdict-list { list-style: none; margin: 0 0 4px; padding: 0; }
+  .page ul.verdict-list li { padding: 1px 0; font-size: 13.5px; line-height: 1.4; }
+  .page ul.verdict-list.derived button.lnk[data-principle] { color: var(--ink-2); }
+  .page button.vc { border: 0; background: none; padding: 0 3px; margin-left: 2px; color: var(--ink-3); font-size: 12px; cursor: pointer; }
+  .page button.vc:hover, .page button.vc:focus-visible { color: var(--accent); }
+  .page button.vc.conj { color: var(--conj); }
+  .page .derived-verdicts > summary { cursor: pointer; font-size: 12.5px; color: var(--ink-3); padding: 2px 0; }
+  .page details.history > summary { cursor: pointer; font-size: 12.5px; color: var(--ink-2); }
+  .page .arguments { margin: 2px 0 6px; }
+  .page details.argument > summary { cursor: pointer; font-size: 12.5px; color: var(--ink-2); padding: 1px 0; }
+  .page details.argument[open] { margin-bottom: 8px; }
+  .page details.argument .prose, .page details.argument .note { margin: 4px 0 4px 14px; white-space: normal; }
+  .page details.argument .prose { font-size: 14px; }
+  .page details.argument.withdrawn > summary { text-decoration: line-through; }
+  .page details.argument .chain { font-size: 12.5px; }
+  .page details.argument details.review { margin: 2px 0 6px 14px; font-size: 12.5px; color: var(--ink-2); }
+  .page details.argument details.review > summary { cursor: pointer; }
+  .page .argument-verdicts { color: var(--ink); }
+  .page details.argument .credit { color: var(--ink-3); }
+  .page details.argument.flash > summary { background: var(--hl); }
+  .badge.trawl { background: transparent; color: var(--ink-2); border: 1px solid var(--line-strong); }
   .page .formal { font: 12.5px var(--mono); background: var(--panel-2); padding: 6px 8px; border-radius: 4px; margin-top: 8px; overflow-x: auto; }
   .page .id { font: 12px var(--mono); color: var(--ink-3); margin-bottom: 8px; }
   .page table.results tr { cursor: default; } .page table.results tr[data-result], .page table.results tr[data-model] { cursor: pointer; }
@@ -916,6 +934,7 @@ class Engine {
 }
 
 // ---------------------------------------------------------------- state
+const PROVENANCE = new Map((DATA.provenance || []).map(x => [x.id, x]));
 const P = DATA.principles, R = DATA.results.map(r => ({...r, conclusion: r.conclusion === false ? FALSE : r.conclusion})), MODELS = DATA.models, T = DATA.topic;
 const byPid = new Map(P.map(p => [p.id, p])), byRid = new Map(R.map(r => [r.id, r])), byMid = new Map(MODELS.map(m => [m.id, m]));
 const ids = P.map(p => p.id);
@@ -2312,7 +2331,15 @@ function modelEvidence(m, c) {
 // A verdict is Lean-checked only when everything it rests on is: the model
 // and, for a derived verdict, every result in the chain.
 const leanChecked = items => items.length && items.every(x => x.certificate?.lean === 'verified');
-function evidenceBadges(e) {
+// A verdict a model written as arguments records directly is credited to its arguments:
+// an argument by the record's own authors to the record's source, a trawl argument to the
+// trawl, and an argument with an author of its own to that author.
+function evidenceBadges(e, m, c) {
+  const args = m && c && e.direct ? argumentsFor(m, c).filter(a => !a.withdrawn) : [];
+  if (args.length) return [...new Set(args.map(a => argumentSource(m, a) ? sourceBadge(argumentSource(m, a))
+      : trawlChain(m, a) ? '<span class="badge trawl">trawl</span>' : `<span class="badge kind">${esc(shortAuthor(a.by))}</span>`))].join('')
+    + (leanChecked(e.items) ? '<span class="badge lean verified">Lean ✓</span>' : '')
+    + (e.items.some(x => x.status === 'conjectured') ? '<span class="badge conj">conjecture</span>' : '');
   return [...new Set(e.items.map(sourceOf))].map(sourceBadge).join('')
     + (leanChecked(e.items) ? '<span class="badge lean verified">Lean ✓</span>' : '')
     + (e.items.some(x => x.status === 'conjectured') ? '<span class="badge conj">conjecture</span>' : '');
@@ -2323,7 +2350,7 @@ function verdictButton(m, c, e, compact = false, showValue = true) {
   // A list already sorted by verdict says it once in its heading, so there the
   // mark is dropped and only the derivation and the sources are left to report.
   const flag = [showValue ? (e.value ? '✓' : '✗') : '', e.direct ? '' : 'derived'].filter(Boolean).join(' ');
-  return `<button class="verdict" data-verdict="${c}" data-verdict-model="${m.id}" title="View evidence for ${esc(name(c))}" aria-label="${esc(name(c))}: ${e.value ? 'satisfied' : 'violated'}${e.direct ? '' : ', derived'}; view evidence"><span class="model-flag">${flag}</span> ${compact ? '<span class="evidence-link">evidence ↗</span>' : evidenceBadges(e)}</button>`;
+  return `<button class="verdict" data-verdict="${c}" data-verdict-model="${m.id}" title="View evidence for ${esc(name(c))}" aria-label="${esc(name(c))}: ${e.value ? 'satisfied' : 'violated'}${e.direct ? '' : ', derived'}; view evidence"><span class="model-flag">${flag}</span> ${compact ? '<span class="evidence-link">evidence ↗</span>' : evidenceBadges(e, m, c)}</button>`;
 }
 function principleGroups() {
   const sorted = [...P].sort((a, b) => a.name.localeCompare(b.name));
@@ -2511,7 +2538,22 @@ function fullConjunctionDetails(x) {
   const definitions = grouped.presets.map(p => `<div class="full-conjunction-statement"><b>${esc(p.name)}</b> = ${p.principles.map(name).map(esc).join(' ∧ ')}</div>`).join('');
   return `<details class="full-conjunction"><summary>Show full conjunction</summary><div class="full-conjunction-statement"><b>Recorded conjunction:</b> ${statement}</div>${definitions}</details>`;
 }
-function dateOf(x) { return x.satisfies || x.premises ? (x.certificate.date || '') : (x.date || ''); }
+function dateOf(x) {
+  if (x.companion_of) return (x.arguments || []).map(a => String(a.date || x.certificate.date || '')).sort().pop() || '';  // dated by its conjectured arguments
+  return x.satisfies || x.premises ? (x.certificate.date || '') : (x.date || '');
+}
+// A record written as arguments logs its earlier revisions as history; an argument or
+// revision dated after everything logged there is a change of its own. A companion's
+// changes are the revisions of its conjectured arguments.
+function laterArguments(x) {
+  if (x.companion_of) return (x.arguments || []).flatMap(a => (a.revisions || []).map(r => ({ date: String(r.date || ''), by: r.by, summary: r.note })));
+  if (!x.arguments) return [];
+  const since = [x.certificate.date || '', ...(x.history || []).map(ch => String(ch.date || ''))].sort().pop();
+  return x.arguments.flatMap(a => [
+    { date: String(a.date || x.certificate.date || ''), by: a.by || x.certificate.produced_by, summary: (a.standing === 'conjectured' ? 'Conjectured argument' : 'Argument') + ` added${a.text ? ': ' + (a.text.length > 300 ? a.text.slice(0, 300) + '…' : a.text) : '.'}`, satisfies: a.standing === 'conjectured' ? [] : a.holds, violates: a.standing === 'conjectured' ? [] : a.fails },
+    ...(a.revisions || []).map(r => ({ date: String(r.date || ''), by: r.by, summary: r.note }))
+  ]).filter(ch => ch.date > since);
+}
 function kindOf(x) { return x.satisfies ? 'model' : x.premises ? 'result' : 'principle'; }
 function renderResults() {
   const q = state.search.trim().toLowerCase();
@@ -2519,7 +2561,7 @@ function renderResults() {
     .sort((a, b) => dateOf(b).localeCompare(dateOf(a)));
   // One row per record at its certificate date, plus one row per logged revision at
   // the revision's own date: later additions to a record are changes too.
-  const rows = items.flatMap(x => [{ date: dateOf(x), x }, ...(x.changes || []).map(change => ({ date: String(change.date || ''), x, change }))])
+  const rows = items.flatMap(x => [{ date: dateOf(x), x }, ...[...(x.changes || []), ...(x.history || []), ...laterArguments(x)].map(change => ({ date: String(change.date || ''), x, change }))])
     .sort((a, b) => b.date.localeCompare(a.date));
   let h = `<table class="results changes"><tbody>`;
   for (const { date, x, change } of rows) {
@@ -2783,11 +2825,12 @@ function fileLinks(x) {
 // network access; the write-up replaces it once fetched.
 function writeupNote(x) {
   const f = x.files || {};
+  if (x.definition) return f.handwritten && f.html ? `<p class="note writeup-note">Write-up: <a href="${esc(f.html)}" target="_blank">${esc(f.html)}</a>.</p>` : '';
   return f.handwritten && f.html ? `<p class="note writeup-note">The record’s own summary follows; the full details are at <a href="${esc(f.html)}" target="_blank">${esc(f.html)}</a>.</p>` : '';
 }
 function loadWriteup(el, x) {
   const f = x.files || {}, box = el.querySelector('.record-summary');
-  if (!box || !f.handwritten || !f.html || typeof fetch !== 'function') return;
+  if (!box || x.definition || !f.handwritten || !f.html || typeof fetch !== 'function') return;  // a definition is not replaced
   fetch(f.html).then(r => r.ok ? r.text() : Promise.reject(r.status)).then(html => {
     if (!box.isConnected) return;
     const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -2804,6 +2847,87 @@ function loadWriteup(el, x) {
   }).catch(() => {});
 }
 function pstmt(id) { if (id === FALSE) return "<li><b>⊥.</b> These premises cannot all hold together.</li>"; const p = byPid.get(id); return `<li><button class="lnk" data-principle="${id}"><b>${esc(p.name)}</b></button> ${esc(p.statement)}</li>`; }
+// A model written as arguments: each argument once, in the record's order, under its
+// verdicts; a recorded verdict links to its arguments. Derived verdicts have none.
+function argumentsFor(m, c) { return (m.arguments || []).filter(a => (a.holds || []).includes(c) || (a.fails || []).includes(c)); }
+function argumentSource(m, a) { return a.by ? null : sourceOf(m); }
+// "Claude Fable 5.1 (Anthropic), at Cian Dorr's direction" → "Claude Fable 5.1".
+function shortAuthor(by) { return String(by || '').split(/ \(|[,;]/)[0].trim(); }
+function trawlChain(m, a) { return a.provenance ? (PROVENANCE.get(a.provenance)?.records || {})[m.companion_of || m.id] || null : null; }
+const isoDay = t => String(t || '').slice(0, 10);
+function argumentTags(a) {
+  return (a.standing === 'conjectured' ? `<span class="badge conj">conjecture${a.tier ? ' · ' + esc(a.tier) : ''}</span>` : '')
+    + (a.reserve ? '<span class="badge reserve" title="The engine also derives these verdicts from the other arguments">reserve</span>' : '')
+    + (a.withdrawn ? '<span class="badge withdrawn">withdrawn</span>' : '');
+}
+// Who and when, without repeating a date the name already gives ("…, 20 September 2026").
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+function withDate(by, date) {
+  const d = /^(\d{4})-(\d{2})-(\d{2})/.exec(date || ''), spelled = d ? `${+d[3]} ${MONTHS[+d[2] - 1]} ${d[1]}` : '';
+  return !date || by.includes(date) || (spelled && by.includes(spelled)) ? by : by ? `${by}, ${date}` : date;
+}
+// Who supplied an argument, and when; for a trawl argument, who found, reviewed and admitted it.
+function creditHtml(m, a) {
+  const chain = trawlChain(m, a);
+  if (!chain) {
+    const by = a.by || m.certificate.produced_by || '', date = a.date || m.certificate.date || '';
+    return `<p class="note credit">${esc(withDate(by, date))}.</p>`;
+  }
+  const steps = [`Found by ${esc(chain.found_by)}, ${esc(isoDay(chain.found_at))}`,
+    ...chain.reviews.map(r => `reviewed by ${esc(r.by)}, ${esc(isoDay(r.at))} (${esc(r.verdict || '')})`),
+    `admitted by ${esc(chain.admitted_by || '')}, ${esc(isoDay(chain.admitted_at))}`];
+  return `<p class="note credit">${steps.join(' → ')}.</p>`
+    + chain.reviews.map(r => `<details class="review"><summary>The review by ${esc(r.by)}</summary>`
+      + [['', r.summary], ['Argument check: ', r.argument_check], ['Source check: ', r.source_check]].filter(([, t]) => t).map(([k, t]) => `<p>${esc(k)}${esc(t)}</p>`).join('')
+      + ((r.issues || []).length ? `<p>Issues: ${r.issues.map(esc).join('; ')}</p>` : '') + '</details>').join('');
+}
+// An argument is headed by the verdicts it settles; its text follows, then who supplied it
+// and its other reasons.
+function argumentHtml(m, a, i) {
+  const paper = a.source ? byPaperId.get(a.source.paper) : null, side = PROVENANCE.get(a.provenance);
+  const marks = [(a.holds || []).length ? '✓ ' + a.holds.map(name).map(esc).join(', ') : '', (a.fails || []).length ? '✗ ' + a.fails.map(name).map(esc).join(', ') : ''].filter(Boolean).join(' ');
+  const meta = [
+    a.source ? `Source: ${paper ? `<button class="lnk" data-paper="${esc(paper.id)}">${esc(paper.title)}</button>` : esc(a.source.paper)}${a.source.locator ? ', ' + esc(a.source.locator) : ''}.` : '',
+    a.writeup ? `Write-up: <a href="writeups/${esc(a.writeup)}.html" target="_blank">${esc(a.writeup)}</a>.` : '',
+    a.like ? `Like <button class="lnk" data-open-model="${esc(a.like.split('#')[0])}">${esc(a.like)}</button>${(a.adapt || '').trim() ? ':' : ', word for word.'}` : '',
+    side?.folded ? `Folded in from the record <span class="mono">${esc(side.id)}</span>.` : '',
+    a.provenance ? `Provenance: <span class="mono">provenance/${esc(a.provenance)}.yaml</span>.` : '',
+    a.id ? `<span class="mono">${esc(m.companion_of || m.id)}#${esc(a.id)}</span>` : '',
+  ].filter(Boolean).join(' ');
+  return `<details class="argument${a.withdrawn ? ' withdrawn' : ''}"${i === undefined ? '' : ` id="argument-${i}"`}><summary><span class="argument-verdicts">${marks}</span> ${argumentTags(a)}</summary>`
+    + (a.text ? `<div class="prose">${fmt(a.text)}</div>` : '')
+    + ((a.adapt || '').trim() ? `<div class="prose">${fmt(a.adapt)}</div>` : '')
+    + creditHtml(m, a)
+    + (meta ? `<p class="note">${meta}</p>` : '')
+    + (a.revisions || []).map(r => `<p class="note">Revised ${esc(r.date)}${r.by ? ' by ' + esc(r.by) : ''}: ${esc(r.note)}</p>`).join('')
+    + (a.withdrawn ? `<p class="note">Withdrawn ${esc(a.withdrawn.date)}${a.withdrawn.by ? ' by ' + esc(a.withdrawn.by) : ''}: ${esc(a.withdrawn.reason)}</p>` : '')
+    + '</details>';
+}
+// The full arguments for one verdict (its own page).
+function argumentRoutes(m, c) { const list = argumentsFor(m, c); return list.length ? `<div class="arguments">${list.map(a => argumentHtml(m, a)).join('')}</div>` : ''; }
+// The model's arguments, each once, in the record's order; those kept in reserve, whose
+// verdicts the engine also derives from the others, under their own heading.
+function argumentsSection(m) {
+  const list = (m.arguments || []).map((a, i) => [a, i]), kept = list.filter(([a]) => a.reserve);
+  const block = (xs, cls) => `<div class="arguments${cls}">${xs.map(([a, i]) => argumentHtml(m, a, i)).join('')}</div>`;
+  return !list.length ? '' : `<h2>Arguments</h2>${block(list.filter(([a]) => !a.reserve), '')}`
+    + (kept.length ? `<h3 class="verdict-group" title="Verdicts the engine also derives from the arguments above, kept so that none rests on the results alone">In reserve <span class="n">${kept.length}</span></h3>${block(kept, ' reserve')}` : '');
+}
+// The one control beside a principle on a model's page: to its arguments when the record
+// argues for it, to how it follows when it is derived, to its evidence otherwise.
+function verdictControl(m, c, e) {
+  const args = argumentsFor(m, c);
+  if (args.length && (!e || e.direct)) {
+    const conj = args.every(a => a.standing === 'conjectured');
+    return `<button class="vc${conj ? ' conj' : ''}" data-jump="${args.map(a => m.arguments.indexOf(a)).join(' ')}" title="${args.length > 1 ? `Its ${args.length} arguments` : 'Its argument'}" aria-label="${esc(name(c))}: ${args.length > 1 ? 'its arguments' : 'its argument'}">↓</button>`;
+  }
+  if (!e) return '';
+  return `<button class="vc" data-verdict="${c}" data-verdict-model="${m.id}" title="${e.direct ? 'Its evidence' : 'How it follows'}" aria-label="${esc(name(c))}: ${e.direct ? 'its evidence' : 'how it follows'}">${e.direct ? '↗' : '⇐'}</button>`;
+}
+function historyHtml(x) {
+  const rows = [...(x.history || [])].sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+  return rows.length ? `<h2>History</h2><details class="history"><summary>The record's revision log before it was written as arguments, ${rows.length} ${rows.length === 1 ? 'entry' : 'entries'}</summary><ul class="src">${rows.map(ch => `<li><span class="mono">${esc(ch.date)}</span>${ch.by ? ` (${esc(ch.by)})` : ''} — ${esc(ch.summary || '')}${(ch.satisfies || []).length ? ` Now satisfies: ${ch.satisfies.map(name).map(esc).join(', ')}.` : ''}${(ch.violates || []).length ? ` Now violates: ${ch.violates.map(name).map(esc).join(', ')}.` : ''}</li>`).join('')}</ul></details>` : '';
+}
 function renderPage(sel) {
   const el = document.getElementById('page');
   let h = `<button class="btn small" id="page-back">← back</button>`;
@@ -2820,26 +2944,35 @@ function renderPage(sel) {
     h += `<div class="file">${esc(r.file)}</div>`;
   } else if (sel.type === 'model') {
     const m = byMid.get(sel.id);
-    h += `<h1>${esc(m.name)}</h1><div class="badges">${certBadges(m)}</div>${fileLinks(m)}${certDl(m.certificate)}`;
-    h += `<div class="record-summary">${writeupNote(m)}${m.description ? `<h2>Construction</h2><div class="prose">${fmt(m.description)}</div>` : ''}</div>`;
-    // Sorted by what the model says, since that is what a reader comes here to
-    // find. A model records a handful of properties and the rest follow from
-    // them, so the derived verdicts outnumber the recorded ones several times
-    // over and wait behind a disclosure rather than burying them.
+    const base = m.companion_of ? byMid.get(m.companion_of) : null, construction = m.construction || {};
+    // A companion's certificate is its model's; what it adds is who proposed the conjectured arguments.
+    const proposed = [...new Set((m.arguments || []).map(a => withDate(a.by || m.certificate.produced_by || '', a.date || m.certificate.date || '')))];
+    h += `<h1>${esc(m.name)}</h1><div class="badges">${certBadges(m)}</div>${fileLinks(m)}`
+      + (base ? `<dl><dt>conjectured by</dt><dd>${proposed.map(esc).join('; ')}</dd><dt>model</dt><dd><button class="lnk" data-open-model="${esc(base.id)}">${esc(base.name)}</button></dd></dl>` : certDl(m.certificate));
+    const doubt = construction.withdrawn ? 'withdrawn' : construction.standing === 'conjectured' ? 'conjectured' : '';
+    h += `<div class="record-summary">${writeupNote(m)}${m.description ? `<h2>Construction</h2><div class="prose">${fmt(m.description)}</div>` : ''}`
+      + (base ? `<p class="note">The conjectured verdicts of <button class="lnk" data-open-model="${esc(base.id)}">${esc(base.name)}</button>: its established verdicts, and those its conjectured arguments propose.</p>` : '')
+      + (m.definition ? `<h2>Definition</h2><div class="prose">${fmt(m.definition)}</div>` : '')
+      + (doubt ? `<p class="note"><span class="badge conj">construction ${doubt}</span> Each verdict below holds only if this is a model.</p>${construction.text ? `<div class="prose">${fmt(construction.text)}</div>` : ''}` : '')
+      + '</div>';
+    // Three columns by what the model says: the recorded verdicts, each with one control
+    // to its argument, then the derived ones, which outnumber them, behind a toggle.
     const verdicts = principleOrder().map(c => ({c, e: modelEvidence(m, c)}));
-    const verdictTable = list => `<table class="results verdict-table"><tbody>${list.map(({c, e}) =>
-      `<tr><td><button class="lnk" data-principle="${c}">${esc(name(c))}</button></td><td class="verdict-cell">${e ? verdictButton(m, c, e, false, false) : ''}</td></tr>`).join('')}</tbody></table>`;
-    const verdictGroup = (title, list) => {
+    const item = ({c, e}) => `<li><button class="lnk" data-principle="${c}">${esc(name(c))}</button>${verdictControl(m, c, e)}</li>`;
+    const column = (title, list) => {
       const recorded = list.filter(v => !v.e || v.e.direct), derived = list.filter(v => v.e && !v.e.direct);
-      return `<h3 class="verdict-group">${title} <span class="n">${list.length}</span></h3>`
-        + (recorded.length ? verdictTable(recorded) : derived.length ? '' : '<p class="dim">—</p>')
-        + (derived.length ? `<details class="derived-verdicts"><summary>${derived.length} more, derived from the recorded properties</summary>${verdictTable(derived)}</details>` : '');
+      return `<section class="verdict-col"><h3 class="verdict-group">${title} <span class="n">${list.length}</span></h3>`
+        + (recorded.length ? `<ul class="verdict-list">${recorded.map(item).join('')}</ul>` : derived.length ? '' : '<p class="dim">—</p>')
+        + (derived.length ? `<details class="derived-verdicts"><summary>+ ${derived.length} derived</summary><ul class="verdict-list derived">${derived.map(item).join('')}</ul></details>` : '')
+        + '</section>';
     };
-    h += '<h2>Principles</h2>'
-      + verdictGroup('Satisfied', verdicts.filter(v => v.e?.value === true))
-      + verdictGroup('Violated', verdicts.filter(v => v.e?.value === false))
-      + verdictGroup('Unknown', verdicts.filter(v => !v.e));
-    if (m.notes) h += `<h2>Notes</h2><div class="prose">${fmt(m.notes)}</div>`;
+    h += '<h2>Principles</h2><div class="verdict-columns">'
+      + column('Satisfied', verdicts.filter(v => v.e?.value === true))
+      + column('Violated', verdicts.filter(v => v.e?.value === false))
+      + column('Unknown', verdicts.filter(v => !v.e)) + '</div>';
+    h += argumentsSection(m);
+    if (m.notes && !m.companion_of) h += `<h2>Notes</h2><div class="prose">${fmt(m.notes)}</div>`;  // a companion's notes are its arguments
+    h += historyHtml(m);
     if ((m.checks || []).length) h += `<h2>Checks</h2><ul class="src">${m.checks.map(x => `<li class="mono">${esc(x)}</li>`).join('')}</ul>`;
     h += sourceList([m]);
     h += `<div class="file">${esc(m.file)}</div>`;
@@ -2848,8 +2981,9 @@ function renderPage(sel) {
     h += `<h1>${esc(m.name)}: ${esc(name(sel.principle))}</h1>`;
     if (!e) h += '<p>No evidence is available under the current filters.</p>';
     else {
-      h += `<div class="badges">${e.value ? '✓ satisfied' : '✗ violated'} ${evidenceBadges(e)}</div>`;
-      h += `<p>${e.direct ? 'This assertion is recorded directly for the model.' : e.value ? 'This follows from the model’s recorded properties using the results below.' : `Assuming ${esc(name(sel.principle))} in this model would imply ${esc(name(e.contradiction))}, ${e.contradiction === FALSE ? 'a contradiction' : 'which the model violates'}.`}</p>`;
+      h += `<div class="badges">${e.value ? '✓ satisfied' : '✗ violated'} ${evidenceBadges(e, m, sel.principle)}</div>`;
+      h += `<p>${e.direct ? 'This assertion is recorded directly for the model' + (argumentsFor(m, sel.principle).length ? ', by the arguments below.' : '.') : e.value ? 'This follows from the model’s recorded properties using the results below.' : `Assuming ${esc(name(sel.principle))} in this model would imply ${esc(name(e.contradiction))}, ${e.contradiction === FALSE ? 'a contradiction' : 'which the model violates'}.`}</p>`;
+      if (e.direct && argumentsFor(m, sel.principle).length) h += `<h2>Arguments</h2>${argumentRoutes(m, sel.principle)}`;
       h += `<h2>Model evidence</h2><p><button class="lnk" data-open-model="${m.id}">${esc(m.name)} — details</button> ${certBadges(m)}</p>`;
       if (e.rules.length) h += `<h2>Derivation</h2><ol>${e.rules.map(id => `<li><button class="lnk" data-open-result="${id}">${resultStmt(byRid.get(id))} — details</button> ${certBadges(byRid.get(id))}</li>`).join('')}</ol>`;
       if (!e.direct && topicBackground.length) h += `<p>Standing background: ${topicBackground.map(name).map(esc).join(', ')}.</p>`;
@@ -2869,6 +3003,12 @@ function renderPage(sel) {
   el.querySelectorAll('tr[data-result]').forEach(tr => tr.addEventListener('click', () => select({ type: 'result', id: tr.dataset.result })));
   el.querySelectorAll('tr[data-model]').forEach(tr => tr.addEventListener('click', () => select({ type: 'model', id: tr.dataset.model })));
   el.querySelector('#page-back').addEventListener('click', () => showTab(state.tab));
+  el.querySelectorAll('button[data-jump]').forEach(b => b.addEventListener('click', () => {
+    const targets = b.dataset.jump.split(' ').map(i => el.querySelector('#argument-' + i)).filter(Boolean);
+    if (!targets.length) return;
+    targets.forEach(t => { t.open = true; t.classList.add('flash'); setTimeout(() => t.classList.remove('flash'), 1600); });
+    targets[0].scrollIntoView?.({ block: 'start' }); targets[0].querySelector('summary').focus({ preventScroll: true });
+  }));
   wire(el);
   if (sel.type === 'result' || sel.type === 'model') loadWriteup(el, sel.type === 'result' ? byRid.get(sel.id) : byMid.get(sel.id));
 }
@@ -3023,7 +3163,7 @@ function renderDetail() {
   } else if (sel.type === 'model-verdict') {
     const m = byMid.get(sel.id), e = modelEvidence(m, sel.principle);
     h += `<div class="pop-t">${esc(m.name)}</div><div class="pop-s">${esc(name(sel.principle))}: ${e ? e.value ? '✓ satisfied' : '✗ violated' : '? unknown'}</div>`;
-    if (e) h += `<div class="badges">${evidenceBadges(e)}</div><div class="pop-l">${e.direct ? 'Recorded directly for the model.' : 'Derived from the model and the recorded implications.'}</div>${sourceSummary(e.items)}<div class="links"><button class="lnk" data-goto="1">details</button></div>`;
+    if (e) h += `<div class="badges">${evidenceBadges(e, m, sel.principle)}</div><div class="pop-l">${e.direct ? 'Recorded directly for the model.' : 'Derived from the model and the recorded implications.'}</div>${sourceSummary(e.items)}<div class="links"><button class="lnk" data-goto="1">details</button></div>`;
   } else {
     const x = sel.type === 'result' ? byRid.get(sel.id) : byMid.get(sel.id);
     if (sel.type === 'model') {

@@ -1,28 +1,5 @@
 id: full-idempotent-monoid
 name: 'Full action model: idempotent two-arrow monoid'
-satisfies:
-- necessary-rigid-comprehension-r
-- necessary-atomicity-r
-- necessary-actuality
-- no-pure-contingency-r
-- relational-choice-r
-- necessary-relational-choice-r
-- distinctness-preserving-collapse
-- transversal-choice-r
-violates:
-- distinctness-necessary-t
-- barcan-t
-- fregean-axiom
-- axiom-of-infinity-t
-- infinity-t
-- witnessed-possibility-r
-- separated-structure-r
-- independence-signature-r
-- distinctness-signature-r
-- no-contingency-signature-r
-- signature-b-r
-- strong-leibniz-t
-status: proved
 certificate:
   source_id: bacon-dorr-classicism
   produced_by: Andrew Bacon and Cian Dorr
@@ -30,103 +7,10 @@ certificate:
   checked_by: []
   date: '2026-09-17'
   lean: none
-  trawl:
-    quarantine_id: quarantine-0113be29928e4d2fbf33c5d150b87c73
-    candidate_id: checkpoint-0cd1f2d674504d27a1758698cd564383
-    candidate_sha256: 9606da02aacb03dd1288524d8db1acc60c184a60afede465c2759d333382e52a
-    source:
-      repository: https://github.com/zwlgzwlg/Logical-Maps.git
-      ref: main
-      commit: a7bbaecf6f282ac27ea1ee52e3e75721bead6318
-    discovery:
-      trawl_id: trawl-22455d8a01ce49dbaddffeab06b806d6
-      at: '2026-09-25T16:50:45.878114+00:00'
-      actor:
-        kind: model
-        provider: deepseek
-        model: deepseek-flash
-        protocol: chat-completions
-        endpoint: https://api.deepseek.com/chat/completions
-        reported_model: deepseek-flash
-      prompt_sha256: 7467d0dbf27e2f2df7b757fe87bc7f09001bdacac65f5e2ec96b98fb7e331b4b
-      response_sha256: 0aed3cf487eed4e0606de72b8f284740cdae29af0a78eb5438b1b9349e5874f9
-      response_id: b9a7c28d-d638-4f89-a3e2-9e61ce6acd36
-      usage:
-        prompt_tokens: 242946
-        completion_tokens: 1256
-        total_tokens: 244202
-        prompt_tokens_details:
-          cached_tokens: 242432
-        completion_tokens_details:
-          reasoning_tokens: 875
-        prompt_cache_hit_tokens: 242432
-        prompt_cache_miss_tokens: 514
-      offline: false
-    evidence:
-    - kind: original-argument
-      citation: DeepSeek (deepseek-flash), saved 2026-09-25T16:50:45.900092+00:00; checkpoint-8016c2f10cff41c7940e3b327c9336f6
-        (SHA-256 61cd14d2136950fa473f80230d47b338fea7859fae52597b91d705d1cba47140). Frozen in quarantine
-        commit 8b0b53a1d081d9a416f1593a19724e027a747651. Corrected proof and accepted scope are in the curated
-        checkpoint.
-      locator: 'logical-maps/topics/classicism/models/full-idempotent-monoid.yaml: violates strong-leibniz-t;
-        workspaces/workspace-4d3603770c1d4f5e8e55ad548a6a4971/turns/trawl-22455d8a01ce49dbaddffeab06b806d6/000000-edit.json'
-      role: origin
-      verification: argument-in-writeup
-    - kind: literature
-      citation: Bacon and Dorr, Classicism, 16 May 2023 draft, https://philpapers.org/archive/BACC-8.pdf;
-        exact relevant sections inspected during review.
-      locator: Sections and proof dependencies are identified in the accompanying handwritten write-ups
-        and review report.
-      role: background
-      verification: argument-in-writeup
-    reviews:
-    - version: 1
-      id: review-b1d4be27f1d9472d8b87f930303b0a51
-      candidate_id: checkpoint-0cd1f2d674504d27a1758698cd564383
-      candidate_sha256: 9606da02aacb03dd1288524d8db1acc60c184a60afede465c2759d333382e52a
-      at: '2026-09-25T19:01:48.374392+00:00'
-      recorded_at: '2026-09-25T19:01:48.375706+00:00'
-      actor:
-        kind: model
-        provider: openai
-        model: gpt-6
-      source:
-        repository: https://github.com/zwlgzwlg/Logical-Maps.git
-        ref: HEAD
-        commit: a7bbaecf6f282ac27ea1ee52e3e75721bead6318
-      report:
-        verdict: accept
-        summary: 'Accept only the corrected curated changes: five BC-t failures, two source-reported Atomicity-t
-          localizations, three SL-t failures (including correction of the full idempotent model), three
-          boxed all-type coalesced-model flags, and the instancewise T bridge. Correct the supplementary
-          SL-t principle note; preserve original model authorship and historical dates. Repeated or already-derived
-          proposals add no duplicate verdicts.'
-        argument_check: Independently checked the finite/cofinite missing-bound argument, repaired three
-          descending-family errors using alternating agreement shells, checked arbitrary-family predicate
-          admissibility from extensional fullness, and repaired the two atomicity refinements. Checked all
-          target-domain quantifiers in the idempotent singleton obstruction and a properly pinned BF-t witness
-          for truncations. Checked product powerset atoms/meets, component behavior, and the projected-extension
-          rigid witness at every world of the coalesced finite-domain model. Checked T instance by instance.
-          Exact two-arrow checks exhaust four propositions and 256 property intensions; 237 finite prefixes
-          check shell indexing. Topic schema/reference/consistency validation passed before recording this
-          review. Finite calculations supplement, and do not replace, the infinite proofs.
-        source_check: 'Inspected the exact 16 May 2023, 87-page Classicism draft: §1.5 p.16; Definitions
-          3.19 and satisfaction clauses pp.55–57; Proposition 3.24 p.58; idempotent construction p.59; Definitions
-          D.1–D.3 and footnote92 pp.73–74; D.5 pp.75–79; E.2 pp.80–83. Checked current main definitions
-          and before-file hashes, all eight frozen checkpoints, 256 hashed edit events and 248 editing response
-          hashes. Actual requested/reported actor is DeepSeek deepseek-flash; draft Claude self-attributions
-          are discarded. No source PDF or private reading extract is admitted. Original construction authorship
-          and certificate dates remain; new deductions and proof repairs are separately attributed. No Lean
-          verification is claimed.'
-        issues: []
-      method: informal-mathematical-review
-    admission:
-      id: admission-c0a37bbe6b6c45cc985428b174812564
-      at: '2026-09-25T19:01:48.376481+00:00'
-      by: OpenAI Codex (GPT-6)
-      base_commit: a7bbaecf6f282ac27ea1ee52e3e75721bead6318
-      candidate_sha256: 9606da02aacb03dd1288524d8db1acc60c184a60afede465c2759d333382e52a
-      review_id: review-b1d4be27f1d9472d8b87f930303b0a51
+  # migration: the `trawl` block moves to
+  # provenance/admission-c0a37bbe6b6c45cc985428b174812564.yaml, which holds the blocks of the eight
+  # records admitted together: this record's discovery and evidence in its entry, and the
+  # checkpoint, review and admission they share once.
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §3.5, p. 59, first paragraph; p. 61 (full-model
   principles).
@@ -141,42 +25,201 @@ references:
 - paper: bacon-dorr-classicism
   role: proof
   locator: §3.5, p. 59, first paragraph; p. 61 (full-model principles)
-description: The full model on {1,k} with k²=k, evaluated at its sole object. Refer to the cited paragraph
-  for the four propositions and the failure witnesses.
-notes: 'The cited construction is a model of the map’s relational-type framework. The description identifies
-  its evaluation point; construction and verification are given at the PDF locations in References. Interpretation
-  of Σ, fixed for this record: one designated relational constant $c$ of type $\tau=\bar\sigma t$ denotes
-  $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of the model, the actual-world proposition
-  described above; every other relational constant denotes the top element of its type and every individual
-  constant one fixed individual. Under it: No Contingency (signature Σ) fails, since the Σ-sentence $\forall\bar
-  x\, .\,c\bar x$ denotes $a$, true and contingent; B for sentences of Σ fails, since under any arrow
-  that no arrow composes back into $a$, $\Diamond a$ is false, so $\Box\Diamond a$ fails; Witnessed Possibility
-  fails for the pure formula $x=\top_\tau$, witnessed by $\top_\tau$, since $\Diamond(c=\top_\tau)$ is
-  $\Diamond\Box a$ and $a$ is necessary at no arrow; Separated Structure fails with it, being equivalent
-  to Possibly Witnessed Possibility; Independence (signature Σ) and Distinctness Maximalism (signature
-  Σ) fail through the other relational constants, Σ being assumed to contain at least one: such a constant
-  $c''$ of type $\tau''$ denotes what the closed pure term $\top_{\tau''}$ denotes, and $c''=\top_{\tau''}$
-  is a true identity that C(Σ) does not prove. The designated constant refutes neither: closed pure terms
-  denote entities fixed by every arrow (Classicism, §3.5, p. 58), whereas $a$ is fixed by no arrow but
-  the identity, so no closed pure term denotes $\lambda\bar x\, .\,a$. Everything that implies these fails
-  with them. The type-t Strong Leibniz Biconditionals fail. The atoms are $\{1\}$ and $\{k\}$; transported
-  along $k$, $\{k\}$ becomes $\{j : j\circ k=k\}=\{1,k\}$, which the proposition $\{1\}$ of the full domain
-  splits, so $\{k\}$ is not a strong world, while the possible proposition $\{k\}$ has no other candidate
-  below it. ($\{1\}$ is a strong world, its transport along $k$ being empty.) □Relational Choice holds:
-  the truncation of a full action model at any arrow is again a full action model, its domains at the
-  reachable objects being unchanged, and Relational Choice holds in every full model given choice in the
-  metatheory (Classicism, p. 61). Distinctness-preserving collapse holds: for a true $p$ take $q:=\{1\}$;
-  under $k$, $\Diamond\{1\}$ would need $x\circ k=1$, but $x\circ k=k$ for both arrows, so it fails there,
-  and under $1$, $p$ holds.
+
+# migration: the definition is the old description's first sentence, then the notes' interpretation
+# of Σ, in which "$\{1\}$" replaces "described above", since nothing above described the
+# actual-world proposition.
+definition: >-
+  The full model on {1,k} with k²=k, evaluated at its sole object.
 
 
-  Review of 25 September 2026. Strong Leibniz-t fails by the nonidentity-idempotent singleton witness
-  in writeups/strong-worlds-one-object-action-models.md. The successor quantifier ranges over all propositions
-  at the target object, including ones outside the transported image. Its necessary form therefore also
-  fails. The earlier positive flag and supporting paragraph were erroneous; their original dated change
-  remains as superseded history.'
+  Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type
+  $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of the
+  model, the actual-world proposition $\{1\}$; every other relational constant denotes the top
+  element of its type and every individual constant one fixed individual.
+
+arguments:
+
+# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
+# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
+# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
+# full stop.
+
+# --- from the source (17 Sep record) ---
+
+- holds: [no-pure-contingency-r, rigid-comprehension-r, atomicity-r]
+  fails: [barcan-t]
+  source: {paper: bacon-dorr-classicism, locator: '§3.5, p. 59, first paragraph'}
+  text: >-
+    Refer to the cited paragraph for the four propositions and the failure witnesses.
+
+# --- later additions ---
+
+- holds: [relational-choice-r]
+  # migration: `by` adds "at Cian Dorr's direction" from the change's summary; `source` is the page
+  # the text cites.
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-09-20'
+  source: {paper: bacon-dorr-classicism, locator: 'p. 61'}
+  text: >-
+    With choice in the metatheory a serial relation has a functional subrelation, and a full model
+    contains every intension, so that subrelation is in the domain; see Classicism, p. 61, on the
+    principles common to full models.
+
+- fails: [infinity-t]
+  # migration: `by` adds "at Cian Dorr's direction" from the change's summary.
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-09-20'
+  text: >-
+    The propositions at the evaluation object are the subsets of the two arrows out of it, four in
+    all, and every intension of a full model is present, so the numerals are the finite
+    cardinalities and the fourth holds of the universal property of propositions: the Axiom of
+    Infinity at type t fails, as does the fifth instance of the schema.
+
+- id: sigma-true-atom
+  fails: [independence-signature-r, signature-b-r]
+  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The text is the 23
+  # September version; the revision notes are the two 23 September changes, the first without its
+  # closing "; see the notes". The sentence that followed the text in the old notes is in `notes`.
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
+  date: '2026-09-22'
+  text: >-
+    No Contingency (signature Σ) fails, since the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes
+    $a$, true and contingent; B for sentences of Σ fails, since under any arrow that no arrow
+    composes back into $a$, $\Diamond a$ is false, so $\Box\Diamond a$ fails; Witnessed
+    Possibility fails for the pure formula $x=\top_\tau$, witnessed by $\top_\tau$, since
+    $\Diamond(c=\top_\tau)$ is $\Diamond\Box a$ and $a$ is necessary at no arrow; Separated
+    Structure fails with it, being equivalent to Possibly Witnessed Possibility; Independence
+    (signature Σ) and Distinctness Maximalism (signature Σ) fail through the other relational
+    constants, Σ being assumed to contain at least one: such a constant $c'$ of type $\tau'$
+    denotes what the closed pure term $\top_{\tau'}$ denotes, and $c'=\top_{\tau'}$ is a true
+    identity that C(Σ) does not prove. The designated constant refutes neither: closed pure terms
+    denote entities fixed by every arrow (Classicism, §3.5, p. 58), whereas $a$ is fixed by no
+    arrow but the identity, so no closed pure term denotes $\lambda\bar x\, .\,a$.
+    Everything that implies these fails with them.
+  revisions:
+  - date: '2026-09-23'
+    by: Claude Fable 5.1 (Anthropic)
+    note: >-
+      Re-fixed the interpretation of Σ so as to settle No Contingency (signature Σ) and B for
+      sentences of Σ, at Cian Dorr’s request.
+  - date: '2026-09-23'
+    by: Claude Fable 5.1 (Anthropic)
+    note: >-
+      Corrected the reason given for the failures of Independence (signature Σ) and Distinctness
+      (signature Σ): the true atom is denoted by no closed pure term, since such terms denote
+      entities fixed by every arrow; the failures come from the other relational constants, which
+      denote top. No verdict changes.
+
+- fails: [strong-leibniz-t]
+  # migration: `by` and `date` are those of the 23 September change correcting the claim of 22
+  # September that □Strong Leibniz Biconditionals (type t) hold; that claim and its withdrawal are
+  # in `history`.
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    The atoms are $\{1\}$ and $\{k\}$; transported along $k$, $\{k\}$ becomes $\{j : j\circ
+    k=k\}=\{1,k\}$, which the proposition $\{1\}$ of the full domain splits, so $\{k\}$ is not a
+    strong world, while the possible proposition $\{k\}$ has no other candidate below it. ($\{1\}$
+    is a strong world, its transport along $k$ being empty.)
+
+- holds: [distinctness-preserving-collapse]
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    For a true $p$ take $q:=\{1\}$; under $k$, $\Diamond\{1\}$ would need $x\circ k=1$, but
+    $x\circ k=k$ for both arrows, so it fails there, and under $1$, $p$ holds.
+
+- fails: [strong-leibniz-t]
+  # migration: "Review of 25 September 2026." becomes `date`; "Strong Leibniz-t fails" is dropped;
+  # the write-up's path becomes "the write-up" and `writeup`. `by` condenses the record's second
+  # source. A second, independent argument for the same verdict.
+  by: DeepSeek (deepseek-flash), trawl; reviewed and corrected by OpenAI Codex (GPT-6)
+  date: '2026-09-25'
+  writeup: strong-worlds-one-object-action-models
+  provenance: admission-c0a37bbe6b6c45cc985428b174812564
+  text: >-
+    By the nonidentity-idempotent singleton witness in the write-up. The successor quantifier
+    ranges over all propositions at the target object, including ones outside the transported
+    image. Its necessary form therefore also fails. The earlier positive flag and supporting
+    paragraph were erroneous; their original dated change remains as superseded history.
+
+# In reserve: verdicts the record stated directly before it was written as arguments, which
+# the engine also derives from the arguments above. Each comes back with the change-log entry
+# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
+
+- holds: [necessary-rigid-comprehension-r, necessary-atomicity-r, necessary-actuality]
+  fails: [distinctness-necessary-t, fregean-axiom]
+  reserve: true
+  source: {paper: bacon-dorr-classicism, locator: "§3.5, p. 59, first paragraph; p. 61 (full-model principles)"}
+
+- fails: [axiom-of-infinity-t]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-20'
+  text: >-
+    Added Relational Choice at Cian Dorr's direction. With choice in the metatheory a serial
+    relation has a functional subrelation, and a full model contains every intension, so that
+    subrelation is in the domain; see Classicism, p. 61, on the principles common to full
+    models. The propositions at the evaluation object are the subsets of the two arrows out of
+    it, four in all, and every intension of a full model is present, so the numerals are the
+    finite cardinalities and the fourth holds of the universal property of propositions: the
+    Axiom of Infinity at type t fails, as does the fifth instance of the schema.
+
+- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
+    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+
+- holds: [necessary-relational-choice-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Boxed the Relational Choice claim; see the notes.
+
+- fails: [no-contingency-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    Re-fixed the interpretation of Σ so as to settle No Contingency (signature Σ) and B for
+    sentences of Σ, at Cian Dorr’s request; see the notes.
+
+- holds: [transversal-choice-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-25'
+  text: >-
+    Added Transversal Choice, by the argument recorded for Relational Choice: a full model
+    contains every intension, in particular one whose extension at the evaluation point is a
+    transversal, chosen in the metatheory, of the extension there of an equivalence relation;
+    the equivalence and transversal conditions are unboxed. Recorded on a question of Zachary
+    Goodsell, after an observation of Christopher Sun.
+
+# migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
+# the sentence that followed the Σ argument, referring to its failures. The argument for □Relational
+# Choice, now derived, is dropped.
+# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
+# written as arguments that no argument keeps (5 October 2026).
+# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
+notes: >-
+  The cited construction is a model of the map’s relational-type framework. The description
+  identifies its evaluation point; construction and verification are given at the PDF locations
+  in References.
+
+  ($\{1\}$ is a strong world, its transport along $k$ being empty.) □Relational Choice holds:
+  the truncation of a full action model at any arrow is again a full action model, its domains
+  at the reachable objects being unchanged, and Relational Choice holds in every full model
+  given choice in the metatheory (Classicism, p. 61).
+
 was_conjectured: true
-changes:
+
+# The old `changes` log, verbatim and frozen.
+history:
 - date: '2026-09-17'
   by: OpenAI Codex (GPT-6)
   summary: Adopted the source’s relational type system at the user’s request. The cited construction now

@@ -1,0 +1,50 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "provenance.schema.json",
+ "title": "Provenance sidecar",
+ "description": "Provenance moved verbatim out of model records: the certificate.trawl blocks of the records one theorem-trawl admission added to, or the fields of a record folded into another. Kept in topics/<topic>/provenance/<id>.yaml and named by the provenance field of the arguments it concerns. It changes no verdict.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": ["id"],
+ "anyOf": [{"required": ["record"]}, {"required": ["trawl", "records"]}],
+ "not": {"required": ["record", "records"]},
+ "properties": {
+  "id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Equals the file stem; for an admission, the admission id."},
+  "record": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "A folded record: the model record whose arguments name this sidecar."},
+  "trawl": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["quarantine_id", "candidate_id", "candidate_sha256", "source", "reviews", "admission"],
+   "description": "What the certificate.trawl blocks of one admission share. A record's block is this with its entry's discovery and evidence added.",
+   "properties": {
+    "quarantine_id": {"$ref": "#/properties/certificate/$defs/trawl/properties/quarantine_id"},
+    "candidate_id": {"$ref": "#/properties/certificate/$defs/trawl/properties/candidate_id"},
+    "candidate_sha256": {"$ref": "#/properties/certificate/$defs/trawl/properties/candidate_sha256"},
+    "source": {"$ref": "#/properties/certificate/$defs/trawl/properties/source"},
+    "reviews": {"$ref": "#/properties/certificate/$defs/trawl/properties/reviews"},
+    "admission": {"$ref": "#/properties/certificate/$defs/trawl/properties/admission"}
+   }
+  },
+  "records": {
+   "type": "array",
+   "minItems": 1,
+   "description": "One entry per model record the admission added to, with the parts of its certificate.trawl block that were its own.",
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["record", "discovery", "evidence"],
+    "properties": {
+     "record": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
+     "discovery": {"$ref": "#/properties/certificate/$defs/trawl/properties/discovery"},
+     "evidence": {"$ref": "#/properties/certificate/$defs/trawl/properties/evidence"}
+    }
+   }
+  },
+  "name": {"type": "string"},
+  "description": {"type": "string"},
+  "certificate": {"$ref": "result.schema.json#/properties/certificate"},
+  "sources": {"type": "array", "items": {"type": "string", "pattern": "\\S"}},
+  "source_names": {"type": "array", "items": {"type": "string", "pattern": "\\S"}},
+  "references": {"$ref": "model.schema.json#/properties/references"}
+ }
+}

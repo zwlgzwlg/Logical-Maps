@@ -1,20 +1,5 @@
 id: symmetric-infinite-classes
 name: 'Symmetric ideally-full model: automorphisms of infinitely many infinite classes'
-satisfies:
-- boolean-completeness-r
-- necessary-boolean-completeness-r
-- barcan-r
-- necessary-barcan-r
-- no-pure-contingency-r
-- atomlessness
-- inextensible-comprehension-r
-violates:
-- transversal-r
-- actuality
-- relational-choice-r
-- atomicity-t
-- distinctness-necessary-r
-status: proved
 certificate:
   source_id: misc
   produced_by: Cian Dorr, 27 September 2026 (the idea of a symmetric finitely pinned model whose symmetry
@@ -39,35 +24,84 @@ references:
   locator: §3; Lemma 21, p. 10; Proposition 22, p. 11; Theorem 36, p. 18
   note: The framework of symmetric ideally-full models, which are models of C for every base, and the
     lemmas and Boolean Completeness theorem used in the verification.
-description: 'A symmetric ideally-full intensional action model over one object, the set of natural numbers,
-  equipped with an equivalence relation that has infinitely many classes, each infinite. Its arrows are
-  all the surjections of that set, as in Base 1 of the draft, and its symmetry group is the automorphism
-  group of the equivalence relation: the permutations that map classes onto classes. The evaluation point
-  is the identity arrow.
 
+# migration: the definition is the old description's first paragraph.
+definition: >-
+  A symmetric ideally-full intensional action model over one object, the set of natural numbers,
+  equipped with an equivalence relation that has infinitely many classes, each infinite. Its
+  arrows are all the surjections of that set, as in Base 1 of the draft, and its symmetry group is
+  the automorphism group of the equivalence relation: the permutations that map classes onto
+  classes. The evaluation point is the identity arrow.
 
-  Transversal fails at type e. The class of a fixed individual is the extension of a property pinned down
-  by that individual. A classifier F pinned down by a finite set cannot choose a representative for the
-  class of an individual in a class disjoint from that set: by symmetry and uniqueness the representative
-  is fixed by every automorphism that fixes the pinning set of F and preserves the class, so its least
-  pinning set lies inside the pinning set of F, and then its extension would be preserved by an automorphism
-  that swaps the class with another. Boolean Completeness, BF and No Pure Contingency hold as in Base 1,
-  and Actuality, Relational Choice, Atomicity at type t and ND fail as there. Inextensible Comprehension
-  holds at every relational type: the witness for X pinned down by S agrees with X at the worlds that
-  preserve the equivalence pattern on S, and is the S-hull of the extension of X elsewhere. Details in
-  the write-up.'
+arguments:
+
+# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
+# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
+# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
+# full stop.
+
+# --- as first recorded (27 Sep) ---
+
+- fails: [transversal-r]
+  text: >-
+    At type e. The class of a fixed individual is the extension of a property pinned down by that
+    individual. A classifier F pinned down by a finite set cannot choose a representative for the
+    class of an individual in a class disjoint from that set: by symmetry and uniqueness the
+    representative is fixed by every automorphism that fixes the pinning set of F and preserves
+    the class, so its least pinning set lies inside the pinning set of F, and then its extension
+    would be preserved by an automorphism that swaps the class with another.
+
+- holds: [no-pure-contingency-r, atomlessness, boolean-completeness-r, barcan-r]
+  fails: [relational-choice-r]
+  # migration: the sentence "Boolean Completeness, BF and No Pure Contingency hold as in Base 1, and
+  # Actuality, Relational Choice, Atomicity at type t and ND fail as there." becomes "As in Base
+  # 1."; Atomlessness, which had no sentence of its own, holds as in Base 1 too.
+  text: >-
+    As in Base 1.
+
+# --- later additions ---
+
+- holds: [inextensible-comprehension-r]
+  # migration: `by` and `date` are those of the 28 September change, which adds that the argument
+  # was not yet checked.
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request
+  date: '2026-09-28'
+  writeup: symmetric-infinite-classes
+  text: >-
+    At every relational type: the witness for X pinned down by S agrees with X at the worlds that
+    preserve the equivalence pattern on S, and is the S-hull of the extension of X elsewhere.
+    Details in the write-up.
+
+# In reserve: verdicts the record stated directly before it was written as arguments, which
+# the engine also derives from the arguments above. Each comes back with the change-log entry
+# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
+
+- holds: [necessary-boolean-completeness-r, necessary-barcan-r]
+  fails: [actuality, atomicity-t, distinctness-necessary-r]
+  reserve: true
+  writeup: symmetric-infinite-classes
+
+# migration: the old notes, whole.
+# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
+# written as arguments that no argument keeps (5 October 2026).
 notes: >-
   The first recorded model refuting Transversal, so Transversal is not a theorem of C. Since the
-  coalesced roots make every pure sentence consistent with C possible, □Transversal fails there too.
-  The classes must be infinite: with finite classes, being identical to one of the members of a class
-  is a canonical representative. The mechanism is a failure of weak elimination of imaginaries: the
-  class, as a definable set, has no canonical finite set of parameters. Structures with weak elimination
-  of imaginaries, such as a dense linear order or the random graph, give no such failure, and in the
-  binary tree with a parent function the levels are fixed as soon as one node is. Since Inextensible
-  Comprehension holds, it does not imply Transversal. Left unknown: the Axiom of Infinity at type e,
-  and every signature schema, since no interpretation of Σ has been fixed. Vicinity fails by derivation: Weakly Inextensible
+  coalesced roots make every pure sentence consistent with C possible, □Transversal fails there
+  too. The classes must be infinite: with finite classes, being identical to one of the members
+  of a class is a canonical representative. The mechanism is a failure of weak elimination of
+  imaginaries: the class, as a definable set, has no canonical finite set of parameters.
+  Structures with weak elimination of imaginaries, such as a dense linear order or the random
+  graph, give no such failure, and in the binary tree with a parent function the levels are
+  fixed as soon as one node is. Since Inextensible Comprehension holds, it does not imply
+  Transversal. Left unknown: the Axiom of Infinity at type e, and every signature schema, since
+  no interpretation of Σ has been fixed. Vicinity fails by derivation: Weakly Inextensible
   Comprehension holds, and with Vicinity it would give Actuality.
-changes:
+
+  Boolean Completeness, BF and No Pure Contingency hold as in Base 1, and Actuality, Relational
+  Choice, Atomicity at type t and ND fail as there.
+
+# The old `changes` log, verbatim and frozen.
+history:
 - date: '2026-09-28'
   by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request
   summary: 'Recorded Inextensible Comprehension at every relational type. The witness for X pinned down

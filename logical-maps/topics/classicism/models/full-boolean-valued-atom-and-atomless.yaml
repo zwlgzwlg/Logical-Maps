@@ -1,21 +1,5 @@
 id: full-boolean-valued-atom-and-atomless
 name: 'Full Boolean-valued model: one atom and an atomless component'
-satisfies:
-- necessary-distinctness-necessary-r
-- necessary-barcan-r
-- barcan-r
-- relational-choice-r
-- functional-choice-r
-- plenitude-r
-- actuality
-violates:
-- atomicity-t
-- atomicity-r
-- atomlessness
-- necessary-functional-choice-r
-- necessary-plenitude-r
-- necessary-actuality
-status: proved
 certificate:
   source_id: bacon-mathematical-contingency
   produced_by: Andrew Bacon (underlying Boolean-valued construction); OpenAI Codex (GPT-6), 27 September
@@ -56,29 +40,72 @@ references:
   note: The recorded qualitative-contrast model satisfies C5 and Plenitude but fails Atomicity. Its additional
     symmetry condition prevents extensional fullness at the evaluation object and forces both choice principles
     to fail.
-description: 'A singleton-base specialization of Bacon’s full Boolean-valued construction in §B.2. Work
-  in ZFC, let $A$ be a nontrivial complete atomless Boolean algebra, and set $B=\mathbf{2}\times A$, $D_e=\{*\}$,
-  $D_t=B$, and $D_{\sigma\to\tau}=D_\tau^{D_\sigma}$ for every admitted function type. Use ordinary application
-  and abstraction, Boolean connectives, quantifiers given by meets and joins, and crisp equality. Evaluation
-  point: the atom $a=(1,0_A)$; a proposition is true iff its first coordinate is $1$. The full function
-  domains and complete truth projection validate C, boxed BF, and boxed ND. Extensional fullness and metatheoretic
-  choice give Relational Choice; full function domains give Plenitude, hence Functional Choice. The sole
-  atom $a$ witnesses Actuality and refutes Atomlessness, while $(0,1_A)$ is nonzero with no atom below
-  it, refuting Atomicity at type $t$ and the full schema. Actuality and the type-$t,t$ instances of Plenitude
-  and Functional Choice have Boolean value exactly $a$, so their boxed forms fail. Full verification is
-  in the write-up.'
 checks:
 - checks/boolean_valued_choice.py
-notes: 'The source uses an infinite individual domain and a particular regular-open algebra for its analysis
-  of the continuum hypothesis. Neither feature is needed for this counterexample; the recorded specialization
-  requires only ZFC. For an extensionally full model in ZFC, Relational Choice follows by representing
-  a set-theoretic functional subrelation, and Plenitude then gives Functional Choice. The qualitative-contrast
-  model of Classicism does not meet this fullness condition: its finite-support and symmetry restrictions
-  exclude the needed selector. In the present model, $R(p,q):=(p\land q=\top)\lor(\neg p\land q=\bot)$
-  has Seriality and Functionality of value $1_B$, but $\exists f\,\forall p\,R(p,f(p))$ has value exactly
-  $a$. The write-up includes the atomless-component calculation and the comparison with the older model.
-  The finite check tests the Boolean calculation, not the infinite construction.'
-changes:
+
+# migration: the definition is the old description up to its verdict sentences.
+definition: >-
+  A singleton-base specialization of Bacon’s full Boolean-valued construction in §B.2. Work in
+  ZFC, let $A$ be a nontrivial complete atomless Boolean algebra, and set $B=\mathbf{2}\times A$,
+  $D_e=\{*\}$, $D_t=B$, and $D_{\sigma\to\tau}=D_\tau^{D_\sigma}$ for every admitted function
+  type. Use ordinary application and abstraction, Boolean connectives, quantifiers given by meets
+  and joins, and crisp equality. Evaluation point: the atom $a=(1,0_A)$; a proposition is true iff
+  its first coordinate is $1$.
+
+arguments:
+
+# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
+# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
+# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
+# full stop.
+
+- holds: [barcan-r]
+  text: >-
+    The full function domains and complete truth projection validate C, boxed BF, and boxed ND.
+
+- holds: [functional-choice-r]
+  text: >-
+    Extensional fullness and metatheoretic choice give Relational Choice; full function domains
+    give Plenitude, hence Functional Choice.
+
+- fails: [atomicity-t]
+  text: >-
+    The sole atom $a$ witnesses Actuality and refutes Atomlessness, while $(0,1_A)$ is nonzero
+    with no atom below it, refuting Atomicity at type $t$ and the full schema.
+
+# In reserve: verdicts the record stated directly before it was written as arguments, which
+# the engine also derives from the arguments above. Each comes back with the change-log entry
+# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
+
+- holds: [necessary-distinctness-necessary-r, necessary-barcan-r, relational-choice-r, plenitude-r, actuality]
+  fails: [atomicity-r, atomlessness, necessary-functional-choice-r, necessary-plenitude-r, necessary-actuality]
+  reserve: true
+  source: {paper: bacon-mathematical-contingency, locator: "Online appendix §B.2, pp. 7–9 (PDF pp. 41–43)"}
+
+# migration: the old description's last sentence, then the old notes whole. The description's
+# sentence on the boxed forms of Actuality, Plenitude and Functional Choice, whose failures are now
+# derived, is dropped.
+# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
+# written as arguments that no argument keeps (5 October 2026).
+notes: >-
+  Full verification is in the write-up.
+
+  The source uses an infinite individual domain and a particular regular-open algebra for its
+  analysis of the continuum hypothesis. Neither feature is needed for this counterexample; the
+  recorded specialization requires only ZFC. For an extensionally full model in ZFC, Relational
+  Choice follows by representing a set-theoretic functional subrelation, and Plenitude then
+  gives Functional Choice. The qualitative-contrast model of Classicism does not meet this
+  fullness condition: its finite-support and symmetry restrictions exclude the needed selector.
+  In the present model, $R(p,q):=(p\land q=\top)\lor(\neg p\land q=\bot)$ has Seriality and
+  Functionality of value $1_B$, but $\exists f\,\forall p\,R(p,f(p))$ has value exactly $a$. The
+  write-up includes the atomless-component calculation and the comparison with the older model.
+  The finite check tests the Boolean calculation, not the infinite construction.
+
+  Actuality and the type-$t,t$ instances of Plenitude and Functional Choice have Boolean value
+  exactly $a$, so their boxed forms fail.
+
+# The old `changes` log, verbatim and frozen.
+history:
 - date: '2026-09-27'
   by: OpenAI Codex (GPT-6)
   summary: Identified Bacon’s earlier Boolean-valued construction at the user’s request, corrected the

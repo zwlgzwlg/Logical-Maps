@@ -46,7 +46,8 @@ topics/<topic>/background.md          Background tab (markdown)
 topics/<topic>/contribute.md          optional Contribute tab message (markdown)
 topics/<topic>/principles/<id>.yaml   one principle per file
 topics/<topic>/results/<id>.yaml      implication: premises ⇒ conclusion
-topics/<topic>/models/<id>.yaml       model: satisfies [...], violates [...]
+topics/<topic>/models/<id>.yaml       model: satisfies [...], violates [...]; or a definition and arguments
+topics/<topic>/provenance/<id>.yaml   provenance moved verbatim out of model records, named by their arguments
 topics/<topic>/papers.yaml           source-paper catalogue and external links
 topics/<topic>/sources/              documents authorised for redistribution
 schema/                               JSON schemas
@@ -247,7 +248,11 @@ are displayed under Misc. until attributed. Lean fields remain optional.
 An optional `certificate.trawl` preserves structured discovery, evidence, reviewer,
 and admission history for accepted trawl contributions. It does not change the
 meaning of `source_id`, proof status, or Lean verification. See the
-[trawl provenance workflow](trawl/README.md#evidence-storage).
+[trawl provenance workflow](trawl/README.md#evidence-storage). A model written as
+arguments keeps it in `provenance/<admission id>.yaml` instead, one file per
+admission: what the admitted records share (checkpoint, source, reviews, admission)
+under `trawl`, and each record's own `discovery` and `evidence` under `records`.
+The arguments the admission supplied name the file in `provenance`.
 
 Optional principle categories are declared in topic order as `principle_categories: [{id, name}, ...]`. Set each principle's `category` to one of these ids. The graph sidebar groups its checkboxes with one show-or-hide control per category; these only control visibility. Topics without categories retain the flat list.
 
@@ -258,6 +263,77 @@ Each category is collapsible in the three lists that show them: the graph sideba
 `require_sources: true` makes validation reject empty result/model sources. It is enabled for the unbounded-utility topic and new topics; the legacy example retains its existing records until its sources are audited.
 
 Add `source_names` alongside `sources`, with one short label per reference in the same order (for example, `Symmetries of Value`). Pop-ups show these labels; write-ups retain the full references. Original AI work should use its actual author/model and date, never an invented attribution.
+
+## Model records written as arguments
+
+A model record may give a definition and arguments in place of `description`,
+`satisfies`, `violates` and `status`:
+
+```yaml
+definition: >-                      # what the model is: construction, evaluation point,
+  …                                 # interpretation of Σ; no verdicts
+arguments:
+- holds: [atomicity-r]              # and/or fails: [...]
+  text: …                           # and/or source: {paper, locator}, writeup: <id>,
+                                    # like: <record>#<argument id> with adapt: …
+- id: sigma-top                     # optional; addresses the argument as <record>#<id>
+  fails: [witnessed-possibility-r]
+  text: …
+  by: …                             # by and date default to the certificate
+  date: '2026-09-22'
+  revisions: [{date: '…', by: …, note: …}]   # corrections that leave the verdicts alone
+- holds: [transversal-r]
+  text: …
+  standing: conjectured             # optional tier; withdrawn: {date, by, reason}
+- holds: [necessary-actuality]      # after the others: a verdict the engine also derives,
+  reserve: true                     # kept so that it rests on more than the results
+  text: …
+notes: …                            # text that supports no verdict
+history: [...]                      # the old changes log, frozen when the record was migrated
+construction: {standing: conjectured, text: …}   # optional doubt about the model itself
+```
+
+`load_topic` flattens such a record into what the engine reads. The holds and fails
+of the established, unwithdrawn arguments, in the order of the arguments, are its
+`satisfies` and `violates`. Conjectured arguments add a conjectured companion,
+`<id>-conjectured` unless an argument keeps an older id with `companion_id`. The
+companion holds every verdict, and its `model_check` names the model and lists only
+the conjectured ones. A conjectured construction gives a single conjectured model
+instead. Certificates, sources and references pass through. The engine explains a
+derived failure by the first recorded failure it reaches, so the order of the
+arguments can change which explanation is shown, though never a verdict.
+
+`validate` rejects an argument without holds or fails, or without a reason; an
+unknown principle, paper, write-up, `like` target or provenance sidecar; a missing
+definition; and a principle both held and failed, directly or after closure (named
+with its arguments). Its notices never fail: verdicts supported by a citation alone,
+recorded verdicts already derivable from the others, conjectured-only verdicts, a
+conjectured construction, a definition that leans on another record, and a `like`
+target revised or withdrawn since. `status` prints each such model's coverage report
+(every verdict with its routes, the derived verdicts, conjectures, unknowns and
+notices), and `status --model ID` prints one. After migrating a record, run
+`python3 scripts/check_flattening.py`: it compares the flattened records, and every
+derived output including the lynchpin rows, with `origin/main` (or `--ref`).
+
+Such a record's ordinary arguments list only the verdicts from which the engine derives
+the rest. Its source's own verdicts are minimized first, among themselves, so that they
+never rest on later additions; a later verdict is recorded only where it adds something.
+Among equally few, the simpler is recorded, so an unboxed principle with No Pure
+Contingency rather than its boxed form. The notice "each derivable from the other
+recorded verdicts" lists what remains redundant among them, and
+`check_flattening.py --closure` checks that a record derives the same holds and fails as
+before.
+
+A verdict the record states directly that the engine also derives is not dropped: it is
+kept, with its argument, in an argument marked `reserve: true` after the others, so that
+it does not rest on the results alone. Reserve verdicts are recorded verdicts, and the
+viewer lists their arguments under "In reserve". A reserve argument is never deleted
+because the engine derives its verdicts; the notice "kept in reserve, and no longer given
+by the other arguments" says when it has started to carry one alone, as when a result it
+was derived through is withdrawn. Each classicism model keeps in reserve what it stated
+before it was written as arguments: the verdicts with the change-log entry that added
+them (its summary verbatim, by and date) or the record's source, and, at the end of its
+notes, the sentences of its old description and notes that no argument keeps.
 
 ## Viewer
 
@@ -465,6 +541,16 @@ obtained only under a selected background as a global resolution.
 Model info pop-ups show the model name, sources, and write-up links. Model
 properties are displayed in Theory explorer; the pop-up and model page omit
 the redundant conjunction of satisfied and violated principles.
+
+A model's page sorts the principles into three columns, satisfied, violated and
+unknown, with the derived verdicts behind a toggle and no source information. Each
+principle has one control: for a model written as arguments, to the arguments for it;
+for a derived verdict, to how it follows; otherwise to its evidence. The Arguments
+section lists each argument once, in the record's order, headed by the verdicts it
+settles, with who supplied it inside (for a theorem-trawl admission, who found,
+reviewed and admitted it, with the review's report). A hand-written write-up of such a
+model is linked rather than shown in place of its definition. A verdict's pop-up and
+its own page credit its arguments' sources; source filters still act on whole records.
 
 Isolated principles are packed into compact rows just below the connected
 graph. Showing or hiding them leaves the connected layout intact. If no

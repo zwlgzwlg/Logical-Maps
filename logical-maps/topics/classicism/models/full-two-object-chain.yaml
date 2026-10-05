@@ -1,30 +1,5 @@
 id: full-two-object-chain
 name: 'Full action model: two-object chain'
-satisfies:
-- necessary-rigid-comprehension-r
-- necessary-atomicity-r
-- necessary-actuality
-- relational-choice-r
-- necessary-strong-leibniz-t
-- necessary-relational-choice-r
-- distinctness-preserving-collapse
-- transversal-choice-r
-- strong-leibniz-r
-- necessary-strong-leibniz-r
-- barcan-t
-- necessary-barcan-t
-violates:
-- fregean-axiom
-- no-pure-contingency-r
-- axiom-of-infinity-t
-- infinity-t
-- witnessed-possibility-r
-- separated-structure-r
-- independence-signature-r
-- distinctness-signature-r
-- possible-infinity-t
-- pure-b-r
-status: proved
 certificate:
   source_id: bacon-dorr-classicism
   produced_by: Andrew Bacon and Cian Dorr
@@ -40,42 +15,193 @@ references:
 - paper: bacon-dorr-classicism
   role: proof
   locator: §3.5, p. 59, fourth paragraph; p. 61
-description: Use two objects with one nonidentity arrow from W0 to W1, evaluated at W0. The source makes
-  the Fregean Axiom false at W0 and true at W1.
-notes: 'The cited construction is a model of the map’s relational-type framework. The description identifies
-  its evaluation point; construction and verification are given at the PDF locations in References. Interpretation
-  of Σ, fixed for this record: each relational constant denotes the top element of its type and each individual
-  constant denotes one fixed individual. Under it the signature schemata fail. Let $c\in\Sigma$ have relational
-  type $\tau$, so $c=\top_\tau$ necessarily. Witnessed Possibility fails for the pure formula $x\ne\top_\tau$,
-  witnessed by $\bot_\tau$ but impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and
-  $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes
-  what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$
-  is a true identity that C(Σ) does not prove. Everything that implies these fails with them. The type-t
-  Strong Leibniz Biconditionals hold necessarily: at $W_0$ the singleton $\{k\}$ becomes $\{\mathrm{id}_{W_1}\}$
-  under $k$ and $\{\mathrm{id}_{W_0}\}$ becomes empty, so both singletons are strong worlds; at $W_1$
-  there is one arrow and one non-bottom proposition. □Relational Choice holds: the truncation of a full
-  action model at any arrow is again a full action model, its domains at the reachable objects being unchanged,
-  and Relational Choice holds in every full model given choice in the metatheory (Classicism, p. 61).
-  Distinctness-preserving collapse holds: let $a$ be the proposition true at the actual world alone (the
-  identity arrow). For any true $p$, take $q:=a$ in the definition of $\Box_{\ne}p$: under a arrow $k$
-  to $W_1$, $\Diamond a$ would need an arrow back to $W_0$, and none exists, since no arrow leads back
-  to the actual world; under the identity, $p$ holds. So every truth is $\Box_{\ne}$-necessary, although
-  ND fails. The Strong Leibniz Biconditionals hold at every relational type, necessarily. An atom of type
-  $\bar\sigma t$ at $W_0$ is a single pair $\{\langle\bar a,h\rangle\}$, and its transport along $k$ is
-  $\{\langle\bar a,j\rangle : j\circ k=h\}$ with $j$ ranging over the arrows out of $W_1$, of which there
-  is one; so the transport is empty or a single pair, and decides every relation of $W_1$’s full domain.
-  Every possible relation contains a pair, so every possible relation has a strong world below it, at
-  $W_0$ and trivially at the one-world $W_1$. BF holds at type $t$, and necessarily. The arrow $k$ sends
-  a proposition $p\subseteq\{1_{W_0},k\}$ to $\{1_{W_1}\}$ if $k\in p$ and to $\emptyset$ otherwise, so
-  it acts surjectively on the two propositions of $W_1$, which gives the type-$t$ instance at $W_0$; $W_1$
-  is a one-world model, where BF is trivial. Whether BF holds at type $e$ depends on the individual domains,
-  which the record does not fix, so the schema is left open. Possible Infinity (type $t$) fails: $W_0$
-  has four propositions and $W_1$ two, the models being full, so the Axiom of Infinity at type $t$ is
-  false at both worlds. B for pure sentences fails, and B for sentences of $\Sigma$ with it: the pure
-  sentence that there are three pairwise distinct propositions is true at $W_0$ and false at $W_1$, from
-  which no arrow returns. Observations of Claude Fable 5.1 (Anthropic), 25 September 2026.'
+
+# migration: the definition is the old description's first sentence, then the notes' interpretation
+# of Σ.
+definition: >-
+  Use two objects with one nonidentity arrow from W0 to W1, evaluated at W0.
+
+
+  Interpretation of Σ, fixed for this record: each relational constant denotes the top element of
+  its type and each individual constant denotes one fixed individual.
+
+arguments:
+
+# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
+# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
+# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
+# full stop.
+
+# --- from the source (17 Sep record) ---
+
+- holds: [necessary-rigid-comprehension-r, necessary-atomicity-r]
+  source: {paper: bacon-dorr-classicism, locator: '§3.5, p. 59, fourth paragraph'}
+
+- fails: [no-pure-contingency-r]
+  source: {paper: bacon-dorr-classicism, locator: '§3.5, p. 59, fourth paragraph'}
+  text: >-
+    The source makes the Fregean Axiom false at W0 and true at W1.
+
+# --- later additions ---
+
+- fails: [infinity-t]
+  # migration: `by` adds "at Cian Dorr's direction" from the change's summary.
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-09-20'
+  text: >-
+    The propositions at the evaluation object are the subsets of the two arrows out of it, four in
+    all, and every intension of a full model is present, so the numerals are the finite
+    cardinalities and the fourth holds of the universal property of propositions: the Axiom of
+    Infinity at type t fails, as does the fifth instance of the schema.
+
+- id: sigma-top
+  fails: [witnessed-possibility-r, independence-signature-r]
+  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The sentence that
+  # followed the text in the old notes is in `notes`.
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
+  date: '2026-09-22'
+  text: >-
+    Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed
+    Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but
+    impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\,
+    .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what
+    the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since
+    $c=\top_\tau$ is a true identity that C(Σ) does not prove.
+    Everything that implies these fails with them.
+
+- holds: [necessary-relational-choice-r]
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    The truncation of a full action model at any arrow is again a full action model, its domains
+    at the reachable objects being unchanged, and Relational Choice holds in every full model
+    given choice in the metatheory (Classicism, p. 61).
+
+- holds: [distinctness-preserving-collapse]
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    Let $a$ be the proposition true at the actual world alone (the identity arrow). For any true
+    $p$, take $q:=a$ in the definition of $\Box_{\ne}p$: under a arrow $k$ to $W_1$, $\Diamond a$
+    would need an arrow back to $W_0$, and none exists, since no arrow leads back to the actual
+    world; under the identity, $p$ holds. So every truth is $\Box_{\ne}$-necessary, although ND
+    fails.
+
+- holds: [necessary-strong-leibniz-r]
+  # migration: the argument of 22 September for the type-$t$ principle, now derived, is dropped.
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    An atom of type $\bar\sigma t$ at $W_0$ is a single pair $\{\langle\bar a,h\rangle\}$, and its
+    transport along $k$ is $\{\langle\bar a,j\rangle : j\circ k=h\}$ with $j$ ranging over the
+    arrows out of $W_1$, of which there is one; so the transport is empty or a single pair, and
+    decides every relation of $W_1$’s full domain. Every possible relation contains a pair, so
+    every possible relation has a strong world below it, at $W_0$ and trivially at the one-world
+    $W_1$.
+
+- fails: [pure-b-r]
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-25'
+  text: >-
+    The pure sentence that there are three pairwise distinct propositions is true at $W_0$ and
+    false at $W_1$, from which no arrow returns.
+
+# In reserve: verdicts the record stated directly before it was written as arguments, which
+# the engine also derives from the arguments above. Each comes back with the change-log entry
+# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
+
+- holds: [necessary-actuality]
+  fails: [fregean-axiom]
+  reserve: true
+  source: {paper: bacon-dorr-classicism, locator: "§3.5, p. 59, fourth paragraph; p. 61"}
+
+- holds: [relational-choice-r]
+  fails: [axiom-of-infinity-t]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-20'
+  text: >-
+    Added Relational Choice at Cian Dorr's direction. With choice in the metatheory a serial
+    relation has a functional subrelation, and a full model contains every intension, so that
+    subrelation is in the domain; see Classicism, p. 61, on the principles common to full
+    models. The propositions at the evaluation object are the subsets of the two arrows out of
+    it, four in all, and every intension of a full model is present, so the numerals are the
+    finite cardinalities and the fourth holds of the universal property of propositions: the
+    Axiom of Infinity at type t fails, as does the fifth instance of the schema.
+
+- fails: [separated-structure-r, distinctness-signature-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
+    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+
+- holds: [necessary-strong-leibniz-t]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-22'
+  text: >-
+    Added □Strong Leibniz Biconditionals (type t); see the notes.
+
+- holds: [transversal-choice-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-25'
+  text: >-
+    Added Transversal Choice, by the argument recorded for Relational Choice: a full model
+    contains every intension, in particular one whose extension at the evaluation point is a
+    transversal, chosen in the metatheory, of the extension there of an equivalence relation;
+    the equivalence and transversal conditions are unboxed. Recorded on a question of Zachary
+    Goodsell, after an observation of Christopher Sun.
+
+- holds: [strong-leibniz-r]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-23'
+  text: >-
+    Extended the Strong Leibniz Biconditionals from type t to every relational type, with the
+    necessitation: transports of atoms along the unique arrow out of W1 are atoms or empty.
+
+- holds: [barcan-t, necessary-barcan-t]
+  fails: [possible-infinity-t]
+  reserve: true
+  by: Claude Fable 5.1 (Anthropic)
+  date: '2026-09-25'
+  text: >-
+    Added BF (type t) and □BF (type t), and the failure of Possible Infinity (type t) and of B
+    for pure sentences; see the notes.
+
+# migration: text of the old notes that no argument holds, verbatim: their first two sentences, the
+# sentence that followed the Σ argument, and the last sentence of the argument for BF (type $t$).
+# That argument, the one for the failure of Possible Infinity (type $t$) and the one for □Relational
+# Choice of 20 September, whose verdicts are now derived, are dropped.
+# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
+# written as arguments that no argument keeps (5 October 2026).
+# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
+notes: >-
+  The cited construction is a model of the map’s relational-type framework. The description
+  identifies its evaluation point; construction and verification are given at the PDF locations
+  in References. Whether BF holds at type $e$ depends on the individual domains, which the
+  record does not fix, so the schema is left open.
+
+  The type-t Strong Leibniz Biconditionals hold necessarily: at $W_0$ the singleton $\{k\}$
+  becomes $\{\mathrm{id}_{W_1}\}$ under $k$ and $\{\mathrm{id}_{W_0}\}$ becomes empty, so both
+  singletons are strong worlds; at $W_1$ there is one arrow and one non-bottom proposition. The
+  Strong Leibniz Biconditionals hold at every relational type, necessarily. The arrow $k$ sends
+  a proposition $p\subseteq\{1_{W_0},k\}$ to $\{1_{W_1}\}$ if $k\in p$ and to $\emptyset$
+  otherwise, so it acts surjectively on the two propositions of $W_1$, which gives the type-$t$
+  instance at $W_0$; $W_1$ is a one-world model, where BF is trivial. Possible Infinity (type
+  $t$) fails: $W_0$ has four propositions and $W_1$ two, the models being full, so the Axiom of
+  Infinity at type $t$ is false at both worlds. B for pure sentences fails, and B for sentences
+  of $\Sigma$ with it: the pure sentence that there are three pairwise distinct propositions is
+  true at $W_0$ and false at $W_1$, from which no arrow returns. Observations of Claude Fable
+  5.1 (Anthropic), 25 September 2026.
+
 was_conjectured: true
-changes:
+
+# The old `changes` log, verbatim and frozen.
+history:
 - date: '2026-09-17'
   by: OpenAI Codex (GPT-6)
   summary: Adopted the source’s relational type system at the user’s request. The cited construction now
