@@ -2927,14 +2927,31 @@ LEAN_DEFAULTS = {"definition_check": "example : Prop := {def}",
                  "model": {"binder": "", "principle": "{def}"},
                  "verdict": {"imports": [], "holds": "{model} ⊨ {def}", "fails": "¬ ({model} ⊨ {def})",
                              "relative_categories": [], "relative": ""},
-                 "argument": {"binder": "∀ M,", "model": "M", "condition": "{cond} {model}",
+                 "argument": {"binder": "∀ M,", "model": "M", "condition": "{cond} {model}", "relative": "",
                               "holds": "{model} ⊨ {def}", "fails": "¬ ({model} ⊨ {def})"}}
+
+
+def lean_relative_model(m: dict, model: str, is_model: str | None, cfg: dict) -> dict | None:
+    """The model a record's verdicts on the relative categories are about, when the topic builds
+    one from the record's own by the value of one of its settings (`lean.verdict.relative_models`):
+    its term, its proof of being a model, its proof of the `relative` conjunct, its proofs of
+    conditions, and how a verdict proved of the record's model carries over. None otherwise."""
+    rm = cfg["verdict"].get("relative_models") or {}
+    value = (m.get("settings") or {}).get(rm.get("setting"))
+    spec = (rm.get("values") or {}).get(value) if isinstance(value, str) else None
+    if not spec or not model or not is_model:
+        return None
+    f = lambda t: t.replace("{model}", model).replace("{is_model}", is_model)
+    return {"model": f(spec["model"]), "is_model": f(spec["is_model"]), "relative": f(spec["relative"]),
+            "meets": {k: f(v) for k, v in (spec.get("meets") or {}).items()}, "given": spec.get("given")}
 
 
 def lean_verdicts(data: dict) -> list[dict]:
     """The single verdicts of models proved in Lean: a model record's `lean.verdicts`, each
     with the model's id and Lean term, the principle, whether it holds, and its generated
     statement's name, `Models.<model>.<principle>` under the topic's `Statements`."""
+    cfg = lean_config(data)
+    relative = {p["id"] for p in data["principles"] if p.get("category") in cfg["verdict"]["relative_categories"]}
     out = []
     for m in data["models"]:
         lean = m.get("lean")
@@ -2944,10 +2961,14 @@ def lean_verdicts(data: dict) -> list[dict]:
         glean = (groups.get(m.get("group")) or {}).get("lean") or {}
         term = lean.get("model") or (glean["model"].replace("{param}", f"({lean['param']})")
                                      if glean and lean.get("param") else "")
+        is_model = lean.get("is_model") or (glean["is_model"].replace("{param}", f"({lean['param']})")
+                                            if glean and lean.get("param") else "")
+        rm = lean_relative_model(m, term, is_model, cfg)
         for v in lean.get("verdicts") or []:
             holds = "holds" in v
             pid = v.get("holds" if holds else "fails")
-            out.append({"model": m["id"], "term": term, "principle": pid, "holds": holds,
+            out.append({"model": m["id"], "term": rm["model"] if rm and pid in relative else term,
+                        "principle": pid, "holds": holds,
                         "ref": v.get("ref", ""), "status": v.get("status", "stated"), "_file": m["_file"],
                         "statement": f"Models.{_lean_name(m['id'])}.{_lean_name(pid)}"})
     return out
@@ -2999,6 +3020,9 @@ def lean_argument_statement(item: dict, data: dict, cfg: dict | None = None) -> 
     else:
         model, binder, own = shape["model"], shape["binder"], {}
     hyps = []
+    principle = next((p for p in data["principles"] if p["id"] == item["principle"]), {})
+    if principle.get("category") in cfg["verdict"]["relative_categories"] and shape.get("relative"):
+        hyps.append(shape["relative"].replace("{model}", model))
     for c in item["requires"]:
         if c in own:
             if not own[c].get("lean"):
@@ -3055,43 +3079,58 @@ def lean_derived_verdicts(data: dict) -> list[dict]:
                 proofs[c] = fill(glean["meets"][c])
         holding = {v["principle"]: v["ref"] for k, v in own.items() if k[0] == m["id"] and v["holds"]}
         done = {k[1] for k in own if k[0] == m["id"]}
-        for a in m.get("arguments") or []:
-            if not isinstance(a, dict) or a.get("standing") == "conjectured" or a.get("withdrawn"):
+        rm = lean_relative_model(m, model, is_model, cfg)
+        # Verdicts on the relative categories second, so that their `given` can cite the others.
+        for phase in (False, True):
+            if phase and not rm:
                 continue
-            gid = a.get("group")
-            if gid:
-                if not in_family:
+            have = {**proofs, **rm["meets"]} if phase else proofs
+            for a in m.get("arguments") or []:
+                if not isinstance(a, dict) or a.get("standing") == "conjectured" or a.get("withdrawn"):
                     continue
-                source = next((x for x in groups[gid].get("arguments") or [] if isinstance(x, dict) and x.get("id") == a.get("id")), None)
-            elif a.get("general"):
-                source = general.get(a["general"])
-            else:
-                continue
-            if not source:
-                continue
-            reqs = list(source.get("requires") or [])
-            if any(c not in proofs for c in reqs) or any(gp not in holding for gp in source.get("given") or []):
-                continue
-            for e in source.get("lean") or []:
-                holds = "holds" in e
-                pid = e.get("holds" if holds else "fails")
-                item = by_arg.get((gid, source.get("id"), pid))
-                if not item or pid in done or not defs.get(pid) or pid in relative:
-                    continue
-                args = [f"({proofs[c]})" for c in reqs]
+                gid = a.get("group")
                 if gid:
-                    cert = f"⟨{is_model}, {e['ref']} ({param}) {' '.join(args)}⟩"
+                    if not in_family:
+                        continue
+                    source = next((x for x in groups[gid].get("arguments") or [] if isinstance(x, dict) and x.get("id") == a.get("id")), None)
+                elif a.get("general"):
+                    source = general.get(a["general"])
                 else:
-                    givens = [f"({holding[gp]}).2" for gp in source.get("given") or []]
-                    cert = f"⟨{is_model}, {e['ref']} ({model}) ({is_model}) {' '.join(args + givens)}⟩"
-                done.add(pid)
-                if holds:
-                    holding[pid] = f"Classicism.Map.Models.{_lean_name(m['id'])}.{_lean_name(pid)}"
-                out.append({"model": m["id"], "term": model, "principle": pid, "holds": holds,
-                            "ref": f"Classicism.Map.Models.{_lean_name(m['id'])}.{_lean_name(pid)}",
-                            "status": "stated", "_file": m["_file"], "cert": cert, "derived": True,
-                            "via": {"group": gid, "argument": source.get("id")} if gid else {"argument": source.get("id")},
-                            "statement": f"Models.{_lean_name(m['id'])}.{_lean_name(pid)}"})
+                    continue
+                if not source:
+                    continue
+                reqs = list(source.get("requires") or [])
+                if any(c not in have for c in reqs) or any(gp not in holding for gp in source.get("given") or []):
+                    continue
+                for e in source.get("lean") or []:
+                    holds = "holds" in e
+                    pid = e.get("holds" if holds else "fails")
+                    item = by_arg.get((gid, source.get("id"), pid))
+                    if not item or pid in done or not defs.get(pid) or (pid in relative) != phase:
+                        continue
+                    args = [f"({have[c]})" for c in reqs]
+                    term = model
+                    if phase:
+                        if gid:
+                            continue
+                        given = rm["given"] or "{proof}"
+                        givens = [f"({given.replace('{proof}', f'({holding[gp]}).2')})" for gp in source.get("given") or []]
+                        term = rm["model"]
+                        cert = (f"⟨{rm['relative']}, {rm['is_model']}, {e['ref']} ({term}) ({rm['is_model']}) "
+                                f"({rm['relative']}) {' '.join(args + givens)}⟩")
+                    elif gid:
+                        cert = f"⟨{is_model}, {e['ref']} ({param}) {' '.join(args)}⟩"
+                    else:
+                        givens = [f"({holding[gp]}).2" for gp in source.get("given") or []]
+                        cert = f"⟨{is_model}, {e['ref']} ({model}) ({is_model}) {' '.join(args + givens)}⟩"
+                    done.add(pid)
+                    if holds:
+                        holding[pid] = f"Classicism.Map.Models.{_lean_name(m['id'])}.{_lean_name(pid)}"
+                    out.append({"model": m["id"], "term": term, "principle": pid, "holds": holds,
+                                "ref": f"Classicism.Map.Models.{_lean_name(m['id'])}.{_lean_name(pid)}",
+                                "status": "stated", "_file": m["_file"], "cert": cert, "derived": True,
+                                "via": {"group": gid, "argument": source.get("id")} if gid else {"argument": source.get("id")},
+                                "statement": f"Models.{_lean_name(m['id'])}.{_lean_name(pid)}"})
     return out
 
 

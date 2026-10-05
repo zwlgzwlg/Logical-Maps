@@ -20,3 +20,7 @@ revisions:
     through an individual constant when the model's automorphisms carry every individual to every
     other. With an individual constant and no such automorphisms the verdicts were unknown in 19
     models, and nowhere did the individual constants settle a verdict differently.
+# Proved in Lean (Classicism/MapArguments.lean), for every intensional action model meeting the conditions.
+lean:
+- holds: no-contingency-signature-r
+  ref: Classicism.Map.Arguments.sigma_top_npc.no_contingency_signature_r

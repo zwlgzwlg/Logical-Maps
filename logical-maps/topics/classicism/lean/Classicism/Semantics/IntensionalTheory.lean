@@ -37,7 +37,8 @@ def theory : AxiomSet Sig := fun p => A.HoldsSentence p
 
 /-- The premodel's signature is one the map's statements range over: its constants have
 closed types and one has a type other than `e`. -/
-def Admitted : Prop := Sig.Admitted
+@[nolint unusedArguments]
+def Admitted (_A : Premodel Sig C) : Prop := Sig.Admitted
 
 section theory
 

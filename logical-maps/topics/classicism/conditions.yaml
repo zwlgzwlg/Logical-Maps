@@ -24,6 +24,7 @@ conditions:
 - id: sigma-top
   text: >-
     Every constant of Σ is relational, and each denotes the top element of its type.
+  lean: Classicism.Meta.Intensional.Premodel.SigmaTop
 - id: one-individual
   text: >-
     There is exactly one individual, at every world.

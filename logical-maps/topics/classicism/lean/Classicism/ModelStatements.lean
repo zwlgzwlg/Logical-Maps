@@ -6,6 +6,7 @@ import Classicism.Models.ContingentBarcan
 import Classicism.Semantics.IntensionalExamples
 import Classicism.Models.Conditions
 import Classicism.Models.FullActionModels
+import Classicism.Semantics.Interpretations
 
 /-!
 # Generated statements: models' verdicts
@@ -375,6 +376,14 @@ def Models.finite_support_dyadic_roundings.no_pure_contingency_r : Prop :=
 def Models.finite_support_dyadic_roundings.transversal_choice_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
+/-- `finite-support-dyadic-roundings`: Independence (signature Σ) fails. -/
+def Models.finite_support_dyadic_roundings.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pow2))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pow2))).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pow2))).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `finite-support-dyadic-roundings`: No Contingency (signature Σ) holds. -/
+def Models.finite_support_dyadic_roundings.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pow2))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pow2))).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pow2))).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
+
 /-- `finite-support-identity-or-collapse-surjections`: Actuality holds. -/
 def Models.finite_support_identity_or_collapse_surjections.actuality : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)).HoldsAx Classicism.P.Actuality.schemaIn
@@ -398,6 +407,14 @@ def Models.finite_support_identity_or_collapse_surjections.no_pure_contingency_r
 /-- `finite-support-identity-or-collapse-surjections`: Transversal Choice holds. -/
 def Models.finite_support_identity_or_collapse_surjections.transversal_choice_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
+/-- `finite-support-identity-or-collapse-surjections`: Independence (signature Σ) fails. -/
+def Models.finite_support_identity_or_collapse_surjections.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01))).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01))).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `finite-support-identity-or-collapse-surjections`: No Contingency (signature Σ) holds. -/
+def Models.finite_support_identity_or_collapse_surjections.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01))).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01))).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
 
 /-- `finite-support-identity-or-collapse`: Actuality holds. -/
 def Models.finite_support_identity_or_collapse.actuality : Prop :=
@@ -423,6 +440,14 @@ def Models.finite_support_identity_or_collapse.no_pure_contingency_r : Prop :=
 def Models.finite_support_identity_or_collapse.transversal_choice_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
+/-- `finite-support-identity-or-collapse`: Independence (signature Σ) fails. -/
+def Models.finite_support_identity_or_collapse.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01))).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01))).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `finite-support-identity-or-collapse`: No Contingency (signature Σ) holds. -/
+def Models.finite_support_identity_or_collapse.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01))).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01))).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
+
 /-- `finite-support-monotone-maps`: BF fails. -/
 def Models.finite_support_monotone_maps.barcan_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono)).IsModel ∧ ¬ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono)).HoldsAx Classicism.P.Barcan.schemaIn
@@ -447,6 +472,14 @@ def Models.finite_support_monotone_surjections.no_pure_contingency_r : Prop :=
 def Models.finite_support_monotone_surjections.transversal_choice_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
+/-- `finite-support-monotone-surjections`: Independence (signature Σ) fails. -/
+def Models.finite_support_monotone_surjections.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj))).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj))).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `finite-support-monotone-surjections`: No Contingency (signature Σ) holds. -/
+def Models.finite_support_monotone_surjections.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj))).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj))).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
+
 /-- `finite-support-permutations`: No Pure Contingency holds. -/
 def Models.finite_support_permutations.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.Perms.model).IsModel ∧ (Classicism.Meta.Intensional.Perms.model).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
@@ -454,6 +487,14 @@ def Models.finite_support_permutations.no_pure_contingency_r : Prop :=
 /-- `finite-support-permutations`: Transversal Choice holds. -/
 def Models.finite_support_permutations.transversal_choice_r : Prop :=
   (Classicism.Meta.Intensional.Perms.model).IsModel ∧ (Classicism.Meta.Intensional.Perms.model).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
+/-- `finite-support-permutations`: Independence (signature Σ) fails. -/
+def Models.finite_support_permutations.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.Perms.model) (Classicism.Meta.Intensional.Perms.model_isModel)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.Perms.model) (Classicism.Meta.Intensional.Perms.model_isModel)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.Perms.model) (Classicism.Meta.Intensional.Perms.model_isModel)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `finite-support-permutations`: No Contingency (signature Σ) holds. -/
+def Models.finite_support_permutations.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.Perms.model) (Classicism.Meta.Intensional.Perms.model_isModel)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.Perms.model) (Classicism.Meta.Intensional.Perms.model_isModel)).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.Perms.model) (Classicism.Meta.Intensional.Perms.model_isModel)).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
 
 /-- `finite-support-truncated-shifts`: Actuality holds. -/
 def Models.finite_support_truncated_shifts.actuality : Prop :=
@@ -471,6 +512,14 @@ def Models.finite_support_truncated_shifts.no_pure_contingency_r : Prop :=
 def Models.finite_support_truncated_shifts.transversal_choice_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
+/-- `finite-support-truncated-shifts`: Independence (signature Σ) fails. -/
+def Models.finite_support_truncated_shifts.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts))).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts))).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `finite-support-truncated-shifts`: No Contingency (signature Σ) holds. -/
+def Models.finite_support_truncated_shifts.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts))).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts))).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
+
 /-- `finite-support-truncations`: No Pure Contingency holds. -/
 def Models.finite_support_truncations.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
@@ -478,6 +527,14 @@ def Models.finite_support_truncations.no_pure_contingency_r : Prop :=
 /-- `finite-support-truncations`: Transversal Choice holds. -/
 def Models.finite_support_truncations.transversal_choice_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
+/-- `finite-support-truncations`: Independence (signature Σ) fails. -/
+def Models.finite_support_truncations.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.truncs))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.truncs))).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.truncs))).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `finite-support-truncations`: No Contingency (signature Σ) holds. -/
+def Models.finite_support_truncations.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.truncs))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.truncs))).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.truncs))).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
 
 /-- `full-idempotent-monoid`: Distinctness-preserving collapse holds. -/
 def Models.full_idempotent_monoid.distinctness_preserving_collapse : Prop :=
@@ -542,6 +599,14 @@ def Models.full_idempotent_monoid.transversal_choice_r : Prop :=
 /-- `full-idempotent-monoid`: ND (type t) fails. -/
 def Models.full_idempotent_monoid.distinctness_necessary_t : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.NecessityOfDistinctnessT.schemaIn
+
+/-- `full-idempotent-monoid`: Independence (signature Σ) fails. -/
+def Models.full_idempotent_monoid.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `full-idempotent-monoid`: No Contingency (signature Σ) holds. -/
+def Models.full_idempotent_monoid.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem)).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem)).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
 
 /-- `full-involution-group`: Gallin Extensional Comprehension holds. -/
 def Models.full_involution_group.gallin_extensional_comprehension_r : Prop :=
@@ -611,6 +676,14 @@ def Models.full_involution_group.relational_choice_r : Prop :=
 def Models.full_involution_group.transversal_choice_r : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
+/-- `full-involution-group`: Independence (signature Σ) fails. -/
+def Models.full_involution_group.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `full-involution-group`: No Contingency (signature Σ) holds. -/
+def Models.full_involution_group.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol)).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol)).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
+
 /-- `full-permutation-group-infinite-set`: Gallin Extensional Comprehension holds. -/
 def Models.full_permutation_group_infinite_set.gallin_extensional_comprehension_r : Prop :=
   (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.GallinExtensionalComprehension.schemaIn
@@ -675,6 +748,14 @@ def Models.full_permutation_group_infinite_set.relational_choice_r : Prop :=
 def Models.full_permutation_group_infinite_set.transversal_choice_r : Prop :=
   (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
+/-- `full-permutation-group-infinite-set`: Independence (signature Σ) fails. -/
+def Models.full_permutation_group_infinite_set.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ))).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ))).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `full-permutation-group-infinite-set`: No Contingency (signature Σ) holds. -/
+def Models.full_permutation_group_infinite_set.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ))).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ))).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
+
 /-- `full-surjection-monoid`: Distinctness-preserving collapse fails. -/
 def Models.full_surjection_monoid.distinctness_preserving_collapse : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
@@ -734,6 +815,14 @@ def Models.full_surjection_monoid.transversal_choice_r : Prop :=
 /-- `full-surjection-monoid`: ND (type t) fails. -/
 def Models.full_surjection_monoid.distinctness_necessary_t : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx Classicism.P.NecessityOfDistinctnessT.schemaIn
+
+/-- `full-surjection-monoid`: Independence (signature Σ) fails. -/
+def Models.full_surjection_monoid.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `full-surjection-monoid`: No Contingency (signature Σ) holds. -/
+def Models.full_surjection_monoid.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj)).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj)).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
 
 /-- `full-two-object-chain`: Distinctness-preserving collapse holds. -/
 def Models.full_two_object_chain.distinctness_preserving_collapse : Prop :=
@@ -799,6 +888,10 @@ def Models.full_two_object_chain.transversal_choice_r : Prop :=
 def Models.full_two_object_chain.distinctness_necessary_t : Prop :=
   (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.NecessityOfDistinctnessT.schemaIn
 
+/-- `full-two-object-chain`: Independence (signature Σ) fails. -/
+def Models.full_two_object_chain.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
 /-- `full-two-object-retract`: Gallin Extensional Comprehension holds. -/
 def Models.full_two_object_retract.gallin_extensional_comprehension_r : Prop :=
   (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.GallinExtensionalComprehension.schemaIn
@@ -862,6 +955,10 @@ def Models.full_two_object_retract.distinctness_necessary_r : Prop :=
 /-- `full-two-object-retract`: Transversal Choice holds. -/
 def Models.full_two_object_retract.transversal_choice_r : Prop :=
   (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
+/-- `full-two-object-retract`: Independence (signature Σ) fails. -/
+def Models.full_two_object_retract.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
 
 /-- argument `barcan-d6`: BF holds in every model meeting its conditions. -/
 def Arguments.barcan_d6.barcan_r : Prop :=
@@ -966,6 +1063,14 @@ def Arguments.relational_choice_full.relational_choice_r : Prop :=
 /-- argument `retractions`: ND holds in every model meeting its conditions. -/
 def Arguments.retractions.distinctness_necessary_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.Retractions A → (A).HoldsAx Classicism.P.NecessityOfDistinctness.schemaIn
+
+/-- argument `sigma-top-npc`: No Contingency (signature Σ) holds in every model meeting its conditions. -/
+def Arguments.sigma_top_npc.no_contingency_signature_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → (A).Admitted → Classicism.Meta.Intensional.Premodel.SigmaTop A → (A).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) → (A).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
+
+/-- argument `sigma-top`: Independence (signature Σ) fails in every model meeting its conditions. -/
+def Arguments.sigma_top.independence_signature_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → (A).Admitted → Classicism.Meta.Intensional.Premodel.SigmaTop A → ¬ (A).HoldsAx (Classicism.Meta.AxiomSet.independence _)
 
 /-- argument `transversal-choice-extensionally-full`: Transversal Choice holds in every model meeting its conditions. -/
 def Arguments.transversal_choice_extensionally_full.transversal_choice_r : Prop :=

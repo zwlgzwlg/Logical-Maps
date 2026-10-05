@@ -14,3 +14,7 @@ revisions:
 - date: '2026-10-02'
   by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
   note: Moved from the group finite-support-one-object to the topic; it uses nothing about the model.
+# Proved in Lean (Classicism/MapArguments.lean), for every intensional action model meeting the conditions.
+lean:
+- fails: independence-signature-r
+  ref: Classicism.Map.Arguments.sigma_top.independence_signature_r

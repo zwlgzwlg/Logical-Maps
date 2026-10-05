@@ -299,7 +299,22 @@
               "items": {"type": "string"},
               "description": "Principle categories whose lean_def depends on the model's signature."
             },
-            "relative": {"type": "string", "description": "A further conjunct for a verdict on a principle in one of those categories."}
+            "relative": {"type": "string", "description": "A further conjunct for a verdict on a principle in one of those categories."},
+            "relative_models": {
+              "type": "object",
+              "required": ["setting", "values"],
+              "additionalProperties": false,
+              "description": "How a model whose verdicts on the relative categories need more than its lean.model is built from it, by the value of one of its settings: {model} and {is_model} are the record's. A value gives the model (`model`), its proof of being one (`is_model`), its proof of the `relative` conjunct (`relative`), proofs of conditions it meets (`meets`), and how a verdict proved of the record's model carries over to it (`given`, with {proof}).",
+              "properties": {
+                "setting": {"type": "string"},
+                "values": {"type": "object", "additionalProperties": {
+                  "type": "object", "required": ["model", "is_model", "relative"], "additionalProperties": false,
+                  "properties": {
+                    "model": {"type": "string"}, "is_model": {"type": "string"}, "relative": {"type": "string"},
+                    "meets": {"type": "object", "additionalProperties": {"type": "string"}},
+                    "given": {"type": "string"}}}}
+              }
+            }
           }
         },
         "argument": {
@@ -311,7 +326,8 @@
             "model": {"type": "string"},
             "condition": {"type": "string"},
             "holds": {"type": "string"},
-            "fails": {"type": "string"}
+            "fails": {"type": "string"},
+            "relative": {"type": "string", "description": "A further hypothesis, after the model's, for a verdict on a principle in the verdict's relative_categories."}
           }
         },
         "index": {
