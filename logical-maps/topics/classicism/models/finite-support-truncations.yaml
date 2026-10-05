@@ -38,6 +38,12 @@ settings:
   sigma: top
 
 meets:
+  uniformly-pinned-rigidity: >-
+    An intension is pinned down by $[0,s]$ iff it is constant on $\{g_n:n\ge s\}\cup\{1\}$. Weak
+    inextensibility at the identity, tested with $[0,s']$ for $s'>n$, where $g_n$ is the only arrow
+    with its germ, forces $Y(g_n)=g_n\cdot Y(1)$ for every $n$; and $k\mapsto k\cdot E$ is in the
+    domain iff $g_n\cdot E=E$ for all large $n$, which, as $g_n\cdot E\subseteq\operatorname{Pin}([0,n])$,
+    holds iff $E\subseteq\operatorname{Pin}([0,n_0])$ for some $n_0$.
   arrows-finitely-determined: >-
     Each $g_n$ is the only arrow with $g_n(n+1)=n$, so $\{g_n\}$ is pinned down by $\{n+1\}$.
   evens-avoidable: >-

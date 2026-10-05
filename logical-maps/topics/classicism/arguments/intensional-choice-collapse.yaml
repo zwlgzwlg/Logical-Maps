@@ -1,0 +1,30 @@
+id: intensional-choice-collapse
+requires: [symmetric-domains, construction-individuals, collapse-onto-point]
+fails: [intensional-choice-r]
+by: Claude Opus 5.5 (Anthropic)
+date: '2026-10-03'
+text: >-
+  At type $e$. Let $F$ and $a$ be as the condition gives them, and suppose $G\le F$ is necessarily
+  uniquely instantiated. $G$ is in the domain, so it is symmetric and pinned down by a finite set,
+  which we may take to contain $a$; call it $N$. Let $h$ be the arrow the condition gives for $N$.
+  Then $G_h=\{y\}$ for some $y$ in $F_h$. If $\sigma$ in the symmetry group fixes $p$, then
+  $\sigma\circ h$ agrees with $h$ on $N$, so $G_{\sigma\circ h}=G_h$ by pinning, while symmetry
+  gives $G_{\sigma\circ h}=\{\sigma y\}$. So no symmetry fixing $p$ moves $y$, and by the condition
+  $y=p$. Each model's witness takes $F$ with $p$ outside its extension at $h$, a contradiction.
+  $\Box$Intensional Choice fails with it, by T.
+revisions:
+- date: '2026-10-03'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: >-
+    Recorded from the collapse lemma deferred in extraction.md on 3 October until the model
+    records' new format landed (not yet checked by a human). It needs the individuals the
+    construction gives. Not covered: the qualitative-links model, whose arrows preserve a ternary
+    relation and so cannot send everything to one point, and the qualitative-contrast model, whose
+    arrows are bijections and where Intensional Choice holds.
+- date: '2026-10-04'
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  note: >-
+    Moved from the group symmetric-ideally-full to the topic, so that the symmetry-constrained full
+    models use it too: in those models every intension is pinned down by the finite set of all
+    individuals, and the collapses are the constant maps. The group's `when: individuals: base` is
+    now the condition construction-individuals, met by that parameter value.

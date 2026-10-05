@@ -1,0 +1,78 @@
+id: symmetry-constrained-full-all-maps
+name: 'Symmetry-constrained full model: all maps on three individuals'
+certificate:
+  source_id: misc
+  produced_by: Cian Dorr (the construction and the failure of Intensional Choice, 4 October 2026);
+    Claude Fable 5.1 (Anthropic) (the counting of propositions, the repair of the type-$t$ witness,
+    and the other verdicts, 4 October 2026)
+  recorded_by: Claude Fable 5.1 (Anthropic), 4 October 2026
+  checked_by: []
+  date: '2026-10-04'
+  lean: none
+sources:
+- >-
+  Cian Dorr, suggestion of 4 October 2026, in conversation with Claude Fable 5.1 (Anthropic): the
+  monoid of all maps on three individuals under the symmetry condition, so that Intensional Choice
+  also fails for properties of propositions, and still in the variant with one individual;
+  transcript in .private.
+- Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026,
+  Definitions 15–18, p. 8 (the symmetry condition).
+source_names:
+- Dorr 4 Oct
+- BC does not imply RC
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Definitions 15–18, p. 8
+  note: The symmetry condition. Since every permutation of $X$ is an arrow here, this is a symmetric
+    intensional action model in the draft's sense, full because the base is finite.
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §3.5, p. 59
+  note: Full action models.
+
+group: symmetry-constrained-full
+settings:
+  construction: >-
+    The arrows are all $27$ maps from $X$ to itself, so that the permutations are arrows and the
+    symmetry condition is Dorr's; the collapses are the three constant maps.
+  individuals: three
+  sigma: top
+meets:
+  sigma-apart: The construction does not mention Σ.
+
+arguments:
+
+- id: intensional-choice-t
+  fails: [intensional-choice-r]
+  by: Claude Fable 5.1 (Anthropic), repairing a witness proposed by Cian Dorr
+  date: '2026-10-04'
+  text: >-
+    At type $t$, for properties of propositions, so also in the variant with one individual. A
+    symmetric set of arrows is a union of orbits under composition with permutations, and the orbit
+    of a map is fixed by its kernel: the constants, the permutations $P$, and for each $i\in X$ the
+    six maps that identify the two individuals other than $i$ and separate $i$, an atom $O_i$. So
+    there are $2^5=32$ propositions, and transport along a permutation $g$ sends $O_i$ to
+    $O_{g(i)}$. Take $F$ of type $t\to t$ with $F(c_m):=\{O_j,O_k\}$ at each collapse, where
+    $\{j,k\}=X\setminus\{m\}$, and $F(h):=\{O_1,O_2,O_3\}$ at every other arrow; it is symmetric,
+    in the domain by fullness, and necessarily instantiated. With three individuals it is also
+    definable: for an individual $x$, $F=\lambda a\, .\,\operatorname{Atom}(a)\land\exists y\, .\,
+    (y\ne x\land a\le x{=}y)\land\exists z\, .\,a\le x{\ne}z$, an atom under which $x$ is identified
+    with some actually distinct individual but not with everything. Suppose $G\le F$ is necessarily
+    uniquely instantiated. Then $G(c_m)$ is a singleton inside $\{O_j,O_k\}$, and the transposition
+    $\tau$ of $j$ and $k$ fixes $m$, so $\tau\circ c_m=c_m$ and symmetry gives
+    $G(c_m)=\tau\cdot G(c_m)$; but $\tau$ swaps $O_j$ and $O_k$. No closed term can witness the
+    failure, since a closed term's value is a set of propositions fixed by every permutation, and
+    every proposition is fixed by some transposition $\tau_m$ fixing $m$; the parameter $x$, or the
+    non-definable $F$, is needed. Cian Dorr proposed the atoms entailing $x=y$ and $x\ne z$ for
+    existentially quantified $x,y,z$; that closed term's value $\{O_1,O_2,O_3\}$ contains $O_m$,
+    which $\tau_m$ fixes, so it admits a witness, and the repair above fixes $x$.
+
+notes: >-
+  With three individuals, Intensional Choice fails at type $e$ by the shared argument and at type
+  $t$ by the argument above; with one individual only the type-$t$ failure remains, which is why
+  this member and not the collapse member carries the one-individual variant's refutation.
+  Actuality holds with $P$, the six permutations, as the true atom. BF and ND fail at type $e$ with
+  three individuals (the image intension $h\mapsto h(X)$ is symmetric; a collapse identifies
+  distinct individuals), derived from the group's type-$t$ arguments. Everything is finite, so every
+  verdict at low types is decidable by exhaustive computation, which has not yet been carried out.

@@ -145,6 +145,15 @@ Possibility Maximalism principles awaits a decision.
 
 ## Deferred model verdicts: Tame Rigidity and Intensional Choice (recorded 3 October 2026)
 
+**4 October 2026 (Claude Fable 5.1, at Cian Dorr's direction).** The collapse lemma is now the
+topic's general argument `arguments/intensional-choice-collapse.yaml`, under the conditions
+`symmetric-domains`, `construction-individuals` and `collapse-onto-point`; the six symmetric models
+meet it as before, and so do the new symmetry-constrained full models
+(`groups/symmetry-constrained-full.yaml`), finite models in which Intensional Choice fails while
+Actuality, Atomicity, Boolean Completeness and Rigid Comprehension hold. qualitative-contrast's
+positive verdict and qualitative-links' failure (via the constant pair property) are worked out in
+the transcript of 3 October and not yet recorded.
+
 The verdicts deferred here on 2 and 3 October, until the model records' new format landed, are now
 recorded; the arguments, not yet checked by a human, moved into the records and are no longer kept
 here (see git history before 3 October for the notes). Tame Rigidity: the finite-support group's
@@ -159,6 +168,16 @@ qualitative-contrast models. Open: Intensional Choice in the symmetric models' o
 variants.
 
 ## Deferred model verdicts: Rigid Power (3 October 2026)
+
+**Done, 4 October 2026 (Claude Fable 5.1, at Cian Dorr's direction).** The argument below is the general
+argument `arguments/rigid-power-tight.yaml`, under the condition `rigid-haecceity-disjunctions`, met by
+the full action models and the symmetry-constrained full models. The finite-support group has a shared
+argument `rigid-power` under its condition `uniformly-pinned-rigidity`, met by truncations (eventual
+constancy) and by monotone-maps and identity-or-collapse (the jump-map lemma). Dyadic roundings and truncated shifts
+followed the same day by own arguments (finitely determined arrows give tightness, and the composition laws
+$f_n\circ f_m=f_n$, $k_{n-m}\circ k_m=k_n$ give the closure). Open: the surjective finite-support monoids
+monotone-surjections and identity-or-collapse-surjections, the two-object finite-support models, the symmetric models,
+the coalesced roots and the ultralimit fork.
 
 **To do.** Record `rigid-power-r` and `necessary-rigid-power-r` as satisfied, in the
 new model-record format (an argument of the full action models' group would cover them), in `full-idempotent-monoid`,

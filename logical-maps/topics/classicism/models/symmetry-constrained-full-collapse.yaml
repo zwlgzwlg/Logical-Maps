@@ -1,0 +1,57 @@
+id: symmetry-constrained-full-collapse
+name: 'Symmetry-constrained full model: identity and collapses on three individuals'
+certificate:
+  source_id: misc
+  produced_by: Cian Dorr (the construction and the failure of Intensional Choice, 3 and 4 October
+    2026); Claude Fable 5.1 (Anthropic) (verification that it is a model of C and the other verdicts,
+    4 October 2026)
+  recorded_by: Claude Fable 5.1 (Anthropic), 4 October 2026
+  checked_by: []
+  date: '2026-10-04'
+  lean: none
+sources:
+- >-
+  Cian Dorr, suggestion of 3 and 4 October 2026, in conversation with Claude Fable 5.1 (Anthropic):
+  a one-object model with the identity and the collapses of three individuals, whose intensions must
+  be permutation-invariant at the collapses, so that nothing distinguishes the individuals once they
+  have been identified and Intensional Choice fails; transcript in .private.
+- Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026,
+  Definitions 15–18, p. 8 (the symmetry condition).
+source_names:
+- Dorr 3–4 Oct
+- BC does not imply RC
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Definitions 15–18, p. 8
+  note: The symmetry condition, here imposed on a full model over three individuals.
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §3.5, p. 59
+  note: Full action models; the two-arrow idempotent monoid is this monoid with one individual and
+    no symmetry.
+
+group: symmetry-constrained-full
+settings:
+  construction: >-
+    The arrows are the identity of $X$ and the three collapses $c_i$, the constant maps with value
+    $i\in X$; they compose by $c_i\circ h=c_i$ and $h\circ c_i=h$ for $h\ne1$.
+  individuals: three
+  sigma: top
+meets:
+  sigma-apart: The construction does not mention Σ.
+
+arguments: []
+
+notes: >-
+  The propositions are $\bot$, $\{1\}$, the set of the three collapses, and $\top$: the symmetry
+  condition is vacuous at the identity, since no permutation is an arrow, and at a collapse it
+  identifies the three collapses. So the propositional structure is that of the full model on the
+  two-arrow idempotent monoid, and the relabellings act trivially on it; Intensional Choice fails
+  only at type $e$, by the shared argument, and holds at type $t$, where any singleton is fixed. The
+  variant with one individual therefore refutes nothing that the two-arrow full model does not. BF
+  also fails at type $e$ when there are three individuals: the intension with extension $X$ at the
+  identity and $\{i\}$ at $c_i$ is symmetric, holds necessarily of every individual, yet is not
+  necessarily universal. That failure, and the failure of ND at type $e$ from two individuals that
+  a collapse identifies, are derived from the group's arguments at type $t$ and are not recorded
+  separately.

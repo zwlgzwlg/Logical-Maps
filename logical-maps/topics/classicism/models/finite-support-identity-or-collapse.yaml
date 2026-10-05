@@ -42,6 +42,15 @@ settings:
   sigma: top
 
 meets:
+  uniformly-pinned-rigidity: >-
+    Let $Y$ be rigid, pinned down by $S=[0,s]$, with extension $E$ at the identity; rigidity makes
+    $\bigcup\{k_2\cdot E:k_2\text{ agrees with }k\text{ on }S\}$ independent of $S$ among the sets
+    pinning down $Y$. If some $p\in E$ were pinned minimally at $T$ with $t:=\max T>s$, take
+    $s'\ge t$ and the jump map $k$, sending $0$ and $1$ to $0$, the identity on $[2,s']$ and adding
+    $100$ beyond: an arrow agreeing with $k$ on $S$ and sending $t$ to $s'+1$ puts into the
+    $S$-union an element pinned at $s'+1$, while every element of the $[0,s']$-union is pinned
+    inside $k([0,s'])\cup[s'+100,\infty)$. So $E\subseteq\operatorname{Pin}(S)$, and then
+    $k_2\cdot p=k\cdot p$ whenever $k_2$ agrees with $k$ on $S$, so $Y(k)=k\cdot E$.
   actual-world-pinned: >-
     The identity is the only arrow that does not collapse $0$ and $1$, so $\{1_{\mathbb N}\}$ is
     pinned down by $\{0,1\}$.

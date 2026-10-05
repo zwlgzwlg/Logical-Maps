@@ -1,0 +1,223 @@
+id: symmetry-constrained-full
+name: 'Symmetry-constrained full models'
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Definitions 15–18, p. 8
+  note: The symmetry condition on intensions, here imposed on a full action model over finitely
+    many individuals instead of on a finitely pinned one over the natural numbers.
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §3.5, pp. 58–61
+  note: Full action models.
+
+# Full action models over finitely many individuals, cut down to the intensions that respect a group
+# of permutations of the individuals: Dorr's symmetry condition, imposed wherever composing with a
+# permutation gives an arrow. The members are finite, and the symmetry bites only at the arrows that
+# collapse individuals, where it leaves nothing to tell the collapsed individuals apart, so that
+# Intensional Choice fails while Actuality, Atomicity, Boolean Completeness, Rigid Comprehension
+# and the choice principles witnessed at the identity all hold. Proposed by Cian Dorr, 3 and 4
+# October 2026, as a one-object two-arrow collapse model refuting Intensional Choice; worked out and
+# recorded by Claude Fable 5.1 at his direction, 4 October 2026 (transcript in .private). The
+# failure of Intensional Choice is the topic's general argument intensional-choice-collapse, shared
+# with the symmetric ideally-full models.
+
+definition: >-
+  {{construction}} The individuals are a three-element set $X$ and $G$ is the group of all its
+  permutations. An intension $D$ of a relational type is admitted exactly when it is symmetric:
+  $\langle\bar x,h\rangle\in D$ implies $\langle g\cdot\bar x,g\circ h\rangle\in D$ for every
+  $g\in G$ such that $g\circ h$ is an arrow, where $g$ acts on individuals as itself and on
+  entities of higher types by relabelling. At the identity the condition is vacuous unless the
+  permutations are arrows; at a collapse $c_i$, the constant map with value $i$, it says that
+  $D(c_{g(i)})=g\cdot D(c_i)$. Every such domain is finite and closed under the operations of C:
+  each $g$ is an automorphism of the whole structure, and every parameter transported along a
+  collapse is fixed by $G$, so the extension at a collapse of any definable intension is
+  invariant. Evaluation point: the sole object, at the identity arrow.
+
+
+  {{individuals}}
+
+
+  {{sigma}}
+
+parameters:
+  construction:
+    text: The monoid of arrows on the three individuals, as the member gives it.
+  individuals:
+    text: What the individuals are. Each member is recorded with the three individuals the arrows
+      act on; its variant with a single individual, the arrows still acting on the three-element set
+      that supplies the symmetry, is generated.
+    generate: true
+    default: three
+    values:
+      three:
+        text: >-
+          Individuals, fixed for this record: the individuals are the three elements of $X$, acted
+          on by the arrows themselves.
+        label: three individuals
+        meets:
+          construction-individuals: The individuals are the three elements the arrows act on.
+          homogeneous-individuals: >-
+            Relabelling by a permutation of $X$ is an automorphism of the model, carrying each
+            individual to its image.
+          collapse-onto-point: >-
+            Take an individual $a$ and $F:=\lambda x\, .\,x\ne a$, whose extension at every arrow
+            $h$ is $X\setminus\{h(a)\}$, nonempty. For any $N$, the collapse $c_p$ onto any $p$ sends
+            $N\cup\{a\}$ to $p$, and the transposition $\sigma$ of the two individuals other than $p$
+            fixes $p$, moves every $y\ne p$, and has $\sigma\circ c_p=c_p$ an arrow.
+      singleton:
+        text: >-
+          Individuals, fixed for this record: there is a single individual, which every arrow fixes;
+          the arrows still act on the three-element set $X$, which supplies the symmetry.
+        label: one individual
+        meets:
+          one-individual: The only individual is fixed by every arrow, at the sole object.
+          homogeneous-individuals: There is only one individual.
+  sigma:
+    text: The interpretation of Σ. Each member is recorded with Σ top; its variant with the other
+      is generated.
+    generate: true
+    default: top
+    values:
+      top:
+        text: >-
+          Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each
+          denotes the top element of its type.
+        label: Σ top
+        requires: [sigma-apart]
+        meets:
+          sigma-top: This is the interpretation.
+      true-atom:
+        text: >-
+          Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type
+          $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of
+          the model, the actual-world proposition, which is the orbit of the identity arrow under
+          the symmetry group; every other constant of Σ, of which there is at least one, is
+          relational and denotes the top element of its type.
+        label: Σ true atom
+        requires: [sigma-apart, actuality-contingent]
+        meets:
+          sigma-true-atom: This is the interpretation.
+
+# Conditions of the topic that every member meets.
+meets:
+  one-object-action-model: An action model with a single object.
+  rigid-haecceity-disjunctions: >-
+    For any set $E$ the intension $k\mapsto k\cdot E$ is symmetric (as in the argument for Rigid
+    Comprehension), so in the domain, and it is the smallest symmetric intension containing the
+    transports of the members of $E$; so a weakly inextensible relation lies below it over its
+    extension, and a rigid one equals it (as in the argument for Tame Rigidity).
+  symmetric-domains: >-
+    The domains hold exactly the symmetric intensions; every intension is pinned down by the finite
+    set $X$ of all individuals.
+  extensionally-full: >-
+    Any set $S$ of tuples at the identity is the extension there of a symmetric intension: put
+    $S$ at the identity, $g\cdot S$ at each permutation $g$ that is an arrow, and the empty set
+    at every other arrow.
+  metatheory-choice: The construction is carried out in ZFC; everything in it is finite.
+  finitely-many-propositions: >-
+    The propositions are the symmetric sets of arrows, finitely many since there are finitely many
+    arrows.
+  actuality-contingent: >-
+    The actual-world proposition $a$ is the orbit of the identity under the symmetry group, the
+    identity alone when no permutation is an arrow and the permutations when they are; it is in the
+    domain, true, and entails every truth, since a symmetric true proposition contains the identity
+    and so its orbit. It is necessary at no world, since every world sees a collapse, which lies
+    outside $a$; and a collapse $c$ does not fix it, since $l\circ c$ is a collapse for every $l$,
+    so $c\cdot a$ is empty.
+  irreversible-arrow: >-
+    A collapse $c$: $l\circ c$ is a collapse for every arrow $l$, so from $c$ no world in $a$ is
+    seen.
+  actual-world-isolated: >-
+    $a$, the orbit of the identity, is in the domain and entails every truth; from a world outside
+    $a$, a non-permutation $h$, every $l\circ h$ is again a non-permutation, outside $a$.
+
+conditions:
+- id: sigma-apart
+  text: >-
+    The construction does not itself interpret Σ, so either of the group's interpretations can be
+    added to it.
+
+arguments:
+
+- id: atomicity
+  holds: [atomicity-r]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-04'
+  text: >-
+    At every type the domain is finite and closed under the pointwise lattice operations, since the
+    union and intersection of symmetric intensions are symmetric; in a finite lattice every nonzero
+    element has an atom below it.
+
+- id: boolean-completeness
+  holds: [boolean-completeness-r]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-04'
+  text: >-
+    The entailment order is the pointwise order on intensions, and the pointwise intersection of
+    any set of symmetric intensions is symmetric and in the domain, so every set has a greatest
+    lower bound at every type.
+
+- id: rigid-comprehension
+  holds: [rigid-comprehension-r]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-04'
+  text: >-
+    For a set $S$ of tuples at the identity, the intension $Y$ with $Y(h):=h\cdot S$, the
+    transports of the members of $S$ along $h$, is symmetric: relabelling by $g$ the transport of a
+    tuple along $h$ gives its transport along $g\circ h$ (when the permutations are arrows because
+    transport composes; otherwise because $g\cdot(c\cdot z)=c_{g(i)}\cdot z$ for a collapse $c=c_i$
+    and every admissible $z$, the collapses being absorbed, $l\circ c=l$ for $l\ne1$, and $z$
+    symmetric). $Y$ is coextensive with $S$, persistent, and inextensible at every world $h$,
+    since any persistent $B$ with $B(h)\supseteq Y(h)$ has $B(k\circ h)\supseteq k\cdot Y(h)=
+    Y(k\circ h)$. So every extension has a rigid coextension, at every type.
+
+- id: tame-rigidity
+  holds: [tame-rigidity-r]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-04'
+  text: >-
+    Let $Y$ be weakly rigid with extension $E$ at the identity. The intension $h\mapsto h\cdot E$
+    is symmetric, as in the argument for Rigid Comprehension, and satisfies the hypothesis of weak
+    inextensibility, so $Y(h)\subseteq h\cdot E$ for every $h$; persistence gives the converse. So
+    $Y$ is that intension, which is rigid.
+
+- id: barcan-t-collapse
+  fails: [barcan-t]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-04'
+  text: >-
+    Transport along a collapse $c$ sends every proposition to $\bot$ or $\top$: $l\circ c$ is the
+    constant map with value $l(i)$ for $c=c_i$, and the constant maps form one orbit of the symmetry
+    group, so a symmetric proposition contains all of them or none. The intension $X$ of type
+    $t\to t$ with $X(c):=\{\bot,\top\}$ at every collapse and $X(h):=$ every proposition elsewhere
+    is symmetric, since both values are fixed by every relabelling. So $\forall p\, .\,\Box Xp$
+    holds at the identity while $\Box\forall p\, .\,Xp$ fails.
+
+- id: distinctness-necessary-t
+  fails: [distinctness-necessary-t]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-04'
+  text: >-
+    The actual-world proposition $a$ and $\bot$ are distinct, and a collapse $c$ transports both to
+    $\bot$, since $l\circ c$ is a collapse for every $l$ and so never in $a$.
+
+- id: axiom-of-infinity-t
+  fails: [axiom-of-infinity-t, infinity-t]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-04'
+  text: >-
+    There are finitely many propositions, $n$ say, with literal identity. The numerals are closed
+    terms, so in the domain, and the numeral $n$ holds of the universal property of propositions,
+    so the Axiom of Infinity at type $t$ fails, as does the instance of the schema asking for
+    $n+1$ pairwise distinct propositions.
+
+- id: axiom-of-infinity-e
+  when: {individuals: three}
+  fails: [axiom-of-infinity-e, infinity-e, possible-infinity-e]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-04'
+  text: >-
+    There are exactly three individuals at every world, with literal identity, so the numeral
+    $3$ holds of the universal property at type $e$ necessarily, and no four individuals are
+    pairwise distinct.

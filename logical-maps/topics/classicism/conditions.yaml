@@ -73,3 +73,34 @@ conditions:
     arrows that agree on the range of every arrow agreeing with $i$ on $N$, and the intension
     $\{\langle r,j\rangle : r\ne q\text{ or }j\text{ disagrees with }i\text{ on }N\}$ is in the
     domain.
+# Added 4 October 2026 (Claude Fable 5.1, at Cian Dorr's direction) for the general argument
+# intensional-choice-collapse, shared by the symmetric ideally-full models and the
+# symmetry-constrained full models.
+- id: symmetric-domains
+  text: >-
+    A group $G$ acts on the individuals at the evaluation object, and every element of a relational
+    domain there is symmetric, meaning that $\langle\bar x,h\rangle\in D$ implies
+    $\langle g\cdot\bar x,g\circ h\rangle\in D$ whenever $g\in G$ and $g\circ h$ is an arrow, and is
+    pinned down by a finite set of individuals, its extension at an arrow depending only on the
+    arrow's values there.
+- id: construction-individuals
+  text: >-
+    The individuals at the evaluation object are those the construction acts on, and the arrows
+    act on them as the construction says.
+- id: collapse-onto-point
+  # Claude Opus 5.5, 3 October 2026, as a condition of the group symmetric-ideally-full: the
+  # hypothesis of the collapse lemma for Intensional Choice. Moved to the topic on 4 October 2026.
+  text: >-
+    There are an individual $a$ and a necessarily instantiated property $F$ in the domain such
+    that, for every finite set $N$ of individuals at the evaluation object, some arrow $h$ sends
+    $N\cup\{a\}$ to a single individual $p$, and every individual $y\ne p$ in $F$'s extension at
+    $h$ is moved by a member $\sigma$ of the symmetry group that fixes $p$, with $\sigma\circ h$
+    again an arrow.
+# Added 4 October 2026 (Claude Fable 5.1, at Cian Dorr's direction) for the general argument
+# rigid-power-tight.
+- id: rigid-haecceity-disjunctions
+  text: >-
+    At every object reachable from the evaluation point, the rigid relations of each relational
+    type are exactly the intensions $k\mapsto k\cdot E$, the disjunctions of the haecceities of the
+    members of $E$, for $E$ any set of tuples from the domains there; in particular every such
+    intension is in the domain.

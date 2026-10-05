@@ -1,0 +1,41 @@
+id: necessary-completeness-and-necessary-actuality-imply-necessary-weak-rigid-comprehension
+premises:
+- necessary-boolean-completeness-r
+- necessary-actuality
+conclusion: necessary-weak-rigid-comprehension-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Fable 5.1 (Anthropic), 4 October 2026, from a suggestion of Cian Dorr; the unboxed
+    argument is Cian Dorr's (Boolean Completeness does not imply Rigid Comprehension, Proposition 1)
+  recorded_by: Claude Fable 5.1 (Anthropic), 4 October 2026
+  checked_by: []
+  date: '2026-10-04'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 4 October 2026.
+- Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, Proposition
+  1, p. 2 (the unboxed argument).
+source_names:
+- Dorr 4 Oct
+- BC does not imply RC
+proof: >-
+  The argument of Boolean Completeness + Actuality ⇒ Weak Rigid Comprehension uses, for a relational
+  type $\tau$, only the least-upper-bound instance of Boolean Completeness at $\tau$ for the property of
+  being a haecceity of some $X$ things, the instance of Actuality, and C (4, and the necessity of a true
+  entailment). So for each closed instance, C proves the conditional from the corresponding instances of
+  Boolean Completeness and Actuality to the instance of Weak Rigid Comprehension at $\tau$. Necessitate
+  that theorem and apply K with the boxed premise instances. Generalization over the admitted types is
+  metalinguistic; no type quantifier is placed inside the box.
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Proposition 1, p. 2
+  note: The unboxed argument.
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §1.5, pp. 16–17
+  note: Necessitation of theorems and K.
+notes: >-
+  The boxed counterpart of completeness-and-actuality-imply-weak-rigid-comprehension, in the uniform
+  pattern of the boxed results of 2 October 2026.

@@ -90,6 +90,11 @@ parameters:
 
 # Conditions of the topic that every member meets.
 meets:
+  rigid-haecceity-disjunctions: >-
+    Every intension is present, so for any set $E$ the intension $k\mapsto k\cdot E$ is in the
+    domain, and a relation is weakly inextensible at a world iff it lies below that intension over
+    its extension there, since that is the smallest intension satisfying the hypothesis; with
+    persistence, a rigid relation equals it (the argument deferred in extraction.md, 3 October 2026).
   codomain-intensions: >-
     The domains are full at every object.
   full-model: >-

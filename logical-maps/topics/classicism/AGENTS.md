@@ -32,6 +32,10 @@ Read a matching `writeups/<id>.md` when it exists.
   they require in `conditions.yaml`.
   Full Henkin and full action constructions are in `models/full-*.yaml`;
   choice failure also has `models/henkin-without-relational-choice.yaml`.
+- Symmetry-constrained full models (finite, Dorr's symmetry condition on a full model;
+  Intensional Choice fails with Actuality and Atomicity) are `models/symmetry-constrained-full-*.yaml`,
+  grouped in `groups/symmetry-constrained-full.yaml`; their Intensional Choice failure is the
+  general argument `arguments/intensional-choice-collapse.yaml`, shared with the symmetric models.
 - Dorr's BC versus RC examples are in `models/symmetric-*.yaml`. Read the
   individual record's `definition` (construction and evaluation point), its
   `arguments` and its `history`; do not transfer one variant's flags to another.

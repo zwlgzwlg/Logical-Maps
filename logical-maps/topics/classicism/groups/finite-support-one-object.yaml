@@ -153,6 +153,13 @@ conditions:
     For some set $A$ of individuals, the strongest persistent property whose extension contains
     $A$ and which is pinned down by $\{0,\ldots,n\}$ becomes strictly stronger as $n$ grows.
 
+- id: uniformly-pinned-rigidity
+  # Claude Fable 5.1, 4 October 2026: the hypothesis of the shared argument rigid-power.
+  text: >-
+    Every rigid relation is the intension $k\mapsto k\cdot E$, the disjunction of the haecceities
+    of the members of its extension $E$ at the identity, and $E$ is pinned down uniformly: some
+    finite set pins down every member of $E$.
+
 - id: no-least-pinned-cover
   text: >-
     Some family $F$ of propositions has no least finitely pinned superset of its union
@@ -165,6 +172,27 @@ conditions:
     pinned down by a finite set.
 
 arguments:
+
+- id: rigid-power
+  requires: [uniformly-pinned-rigidity]
+  holds: [rigid-power-r]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-04'
+  text: >-
+    Write $X_0(E)$ for the intension $k\mapsto k\cdot E$. For $E$ pinned down uniformly by a finite
+    $S_0$, $X_0(E)$ is in the domain, pinned down by $S_0$, and so is $X_0(T)$ for every
+    $T\subseteq E$ and $X_0(k\cdot E)$ for every arrow $k$. The extension at $k$ of the power
+    property $\lambda X\, .\,\operatorname{Rigid}(X)\land X\le F$ is the set of rigid $X$ with
+    $X\le k\cdot F$, the bound variable untransported and the parameter transported; by the
+    condition, for rigid $F=X_0(S)$ it is $\{X_0(T'):T'\subseteq k\cdot S\}$, and transporting
+    the extension at the identity along $k$ gives $\{X_0(k\cdot T):T\subseteq S\}$, the same set,
+    since $T'\subseteq k\cdot S$ is $k\cdot T$ for $T:=\{s\in S:k\cdot s\in T'\}$. So the power
+    property is $X_0$ of its own extension, which is pinned down uniformly, hence in the domain
+    and rigid. In these models the rigid relations are thus (a) the haecceities, (b) the properties
+    "being pinned down by $S$", which are $X_0(\operatorname{Pin}(S))$, and (c) the disjunctions,
+    finite or infinite, of haecceities of entities pinned down by one finite set; the boxed form
+    follows from No Pure Contingency.
+
 
 - id: tame-rigidity
   requires: [arrows-finitely-determined]
