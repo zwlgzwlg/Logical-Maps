@@ -189,3 +189,32 @@ history:
   summary: Added the failure of Boolean Completeness (type t); see the notes.
   violates:
   - boolean-completeness-t
+
+# Verdicts proved in Lean (Classicism/MapModels.lean); statuses are written by lean-check --update.
+lean:
+  model: Classicism.Meta.Intensional.MonoidModel.model Classicism.Meta.Intensional.Monoids.shifts
+  verdicts:
+  - holds: barcan-r
+    ref: Classicism.Map.Models.finite_support_truncated_shifts.barcan_r
+    status: verified
+  - holds: necessary-barcan-r
+    ref: Classicism.Map.Models.finite_support_truncated_shifts.necessary_barcan_r
+    status: verified
+  - holds: actuality
+    ref: Classicism.Map.Models.finite_support_truncated_shifts.actuality
+    status: verified
+  - holds: atomicity-t
+    ref: Classicism.Map.Models.finite_support_truncated_shifts.atomicity_t
+    status: verified
+  - holds: no-pure-contingency-r
+    ref: Classicism.Map.Models.finite_support_truncated_shifts.no_pure_contingency_r
+    status: verified
+  - fails: distinctness-necessary-r
+    ref: Classicism.Map.Models.finite_support_truncated_shifts.distinctness_necessary_r
+    status: verified
+  - fails: necessary-distinctness-necessary-r
+    ref: Classicism.Map.Models.finite_support_truncated_shifts.necessary_distinctness_necessary_r
+    status: verified
+  - fails: boolean-completeness-r
+    ref: Classicism.Map.Models.finite_support_truncated_shifts.boolean_completeness_r
+    status: verified

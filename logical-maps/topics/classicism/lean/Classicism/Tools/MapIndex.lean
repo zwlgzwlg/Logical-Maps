@@ -15,7 +15,8 @@ link each result to the Lean a reader wants to see:
   `Results/Records.lean`, at one argument type for a result at every arity),
   `Classicism.<id>` (a shallow core certified where it is composed, in
   `Results/Arity.lean`), `Classicism.Meta.<id>` (the metalogical proof), and then the theorems of `Classicism/Results/` that the
-  certificate cites, `foo` for a cited `foo.entails`, `foo.derivable` and the like.
+  certificate cites, `foo` for a cited `foo.entails`, `foo.derivable` and the like; for a
+  model's verdict, the theorems of `Classicism/Models/` it cites.
 
 Files are relative to the Lean project's root. It is what `scripts/MapIndex.lean` runs,
 outside the library build.
@@ -71,9 +72,14 @@ def proofsOf (cert : Name) (byName : Bool) : CommandElabM (Array Name) := do
   let cited := ((valueOf env cert).map (·.getUsedConstants) |>.getD #[]).toList.map (base env)
   -- the proofs cited: in `Principles/` (a form's two directions, beside its definition) and
   -- in `Results/`
+  -- in `Models/`, the theorems only: the model's definitions are listed as its definitions
+  let isThm (c : Name) : Bool := match env.find? c, c with
+    | some (.thmInfo _), .str _ s => !s.startsWith "inst"  -- not an instance
+    | _, _ => false
   let inResults := cited.filter fun c =>
     ((`Classicism.Principles).isPrefixOf (moduleOf env c) ||
-      (`Classicism.Results).isPrefixOf (moduleOf env c)) && env.contains c
+      (`Classicism.Results).isPrefixOf (moduleOf env c) ||
+      ((`Classicism.Models).isPrefixOf (moduleOf env c) && isThm c)) && env.contains c
   let mut out : Array Name := #[]
   for c in named ++ inResults do
     unless out.contains c do out := out.push c
@@ -93,6 +99,19 @@ def definitionsOf (stmt : Name) : CommandElabM (Array Name) := do
         out := out.push d
   return out
 
+/-- Where a model's verdict statement finds its model: the definitions in `Classicism/Models/`
+that the generated statement mentions, in the order they appear. -/
+def modelsOf (stmt : Name) : CommandElabM (Array Name) := do
+  let env ← getEnv
+  let used := ((valueOf env stmt).map (·.getUsedConstants) |>.getD #[]).toList
+  let mut out : Array Name := #[]
+  for c in used do
+    if (`Classicism.Models).isPrefixOf (moduleOf env c) && !c.isInternal && !out.contains c then
+      -- the model and what it is built from, not the types it mentions
+      if let some (.defnInfo d) := env.find? c then
+        unless d.type.isSort do out := out.push c
+  return out
+
 /-- A certificate's entry: where it is and what it rests on, and where its proofs are. -/
 def entryOf (c : Name) (byName : Bool) : CommandElabM (Option (Json × Bool)) := do
   let allowed := [`propext, `Classical.choice, `Quot.sound]
@@ -108,7 +127,9 @@ def entryOf (c : Name) (byName : Bool) : CommandElabM (Option (Json × Bool)) :=
 /-- `#classicism_map_index "file.json"`: write the index of the certificates in
 `Classicism.Map`: the results' (`Classicism.Map.<id>`) and the forms'
 (`Classicism.Map.<principle id>.<form id>`), a form's entry also giving the definitions of
-the two forms it relates; and where each principle's definition `Classicism.P.X` is. -/
+the two forms it relates; the models' verdicts (`Classicism.Map.Models.<model id>.<principle
+id>`), each entry also giving where the model is defined; and where each principle's
+definition `Classicism.P.X` is. -/
 elab "#classicism_map_index " path:str : command => do
   let env ← getEnv
   let thms := env.constants.fold (init := #[]) fun acc n info =>
@@ -119,9 +140,22 @@ elab "#classicism_map_index " path:str : command => do
   let unhyphen (n : Name) := n.getString!.replace "_" "-"
   let mut results : Array (String × Json) := #[]
   let mut forms : Std.HashMap String (Array (String × Json)) := {}
+  let mut models : Std.HashMap String (Array (String × Json)) := {}
   let mut outside : Nat := 0
   for c in thms do
-    if c.getPrefix == `Classicism.Map then
+    if c.getPrefix.getPrefix == `Classicism.Map.Models then
+      let some (e, ok) ← entryOf c false | continue
+      unless ok do outside := outside + 1
+      let stmt := `Classicism.Statements.Models ++ c.getPrefix.getString!.toName ++ c.getString!.toName
+      let mut defs : Array Json := #[]
+      for d in ← modelsOf stmt do
+        if let some l ← location d then defs := defs.push l
+      let model := unhyphen c.getPrefix
+      models := models.insert model
+        ((models.getD model #[]).push (unhyphen c, e.setObjVal! "definitions" (Json.arr defs)))
+    else if (`Classicism.Map.Models).isPrefixOf c then
+      continue
+    else if c.getPrefix == `Classicism.Map then
       let some (e, ok) ← entryOf c true | continue
       unless ok do outside := outside + 1
       results := results.push (unhyphen c, e)
@@ -136,6 +170,7 @@ elab "#classicism_map_index " path:str : command => do
       forms := forms.insert principle
         ((forms.getD principle #[]).push (unhyphen c, e.setObjVal! "definitions" (Json.arr defs)))
   let formsJson := Json.mkObj (forms.toList.map fun (p, fs) => (p, Json.mkObj fs.toList))
+  let modelsJson := Json.mkObj (models.toList.map fun (m, vs) => (m, Json.mkObj vs.toList))
   -- the principles' definitions, `Classicism.P.X`, for the links from a principle's page
   let defNames := env.constants.fold (init := #[]) fun acc n info =>
     match info with
@@ -147,10 +182,10 @@ elab "#classicism_map_index " path:str : command => do
   for n in defNames.qsort (·.toString < ·.toString) do
     if let some l ← location n then defs := defs.push (n.toString, l)
   let json := Json.mkObj [("results", Json.mkObj results.toList), ("forms", formsJson),
-    ("definitions", Json.mkObj defs.toList)]
+    ("models", modelsJson), ("definitions", Json.mkObj defs.toList)]
   IO.FS.writeFile path.getString (json.pretty ++ "\n")
-  logInfo m!"{results.size} result certificates and {forms.fold (fun n _ fs => n + fs.size) 0} \
-    form certificates indexed to {path.getString}; {outside} rest on an axiom outside \
-    propext, Classical.choice, Quot.sound"
+  logInfo m!"{results.size} result certificates, {forms.fold (fun n _ fs => n + fs.size) 0} \
+    form certificates and {models.fold (fun n _ vs => n + vs.size) 0} model verdicts indexed to \
+    {path.getString}; {outside} rest on an axiom outside propext, Classical.choice, Quot.sound"
 
 end Classicism.Tools.MapIndex

@@ -167,3 +167,13 @@ lean:
   model:
     binder: '∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧'
     principle: Classicism.Meta.AxiomSet.Entails Ax {def}
+  verdict:
+    imports:
+    - Classicism.Semantics.IntensionalTheory
+    - Classicism.Models.Permutations
+    - Classicism.Models.Monoids
+    - Classicism.Models.ContingentBarcan
+    holds: ({model}).IsModel ∧ ({model}).HoldsAx {def}
+    fails: ({model}).IsModel ∧ ¬ ({model}).HoldsAx {def}
+    relative_categories: [signature]
+    relative: ({model}).Admitted

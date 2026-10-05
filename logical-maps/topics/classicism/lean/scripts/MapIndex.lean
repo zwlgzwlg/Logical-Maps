@@ -1,4 +1,5 @@
 import Classicism.Map
+import Classicism.MapModels
 import Classicism.Tools.MapIndex
 
 /-! Writes `map/index.json`, the index of the map's certificates (`Tools/MapIndex.lean`).

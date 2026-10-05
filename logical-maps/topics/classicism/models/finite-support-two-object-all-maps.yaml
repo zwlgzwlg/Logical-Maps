@@ -291,3 +291,14 @@ history:
   violates:
   - vicinity
   - weakly-inextensible-comprehension-r
+
+# Verdicts proved in Lean (Classicism/MapModels.lean); statuses are written by lean-check --update.
+lean:
+  model: Classicism.Meta.Intensional.ContingentBarcan.model
+  verdicts:
+  - holds: barcan-r
+    ref: Classicism.Map.Models.finite_support_two_object_all_maps.barcan_r
+    status: verified
+  - fails: necessary-barcan-r
+    ref: Classicism.Map.Models.finite_support_two_object_all_maps.necessary_barcan_r
+    status: verified

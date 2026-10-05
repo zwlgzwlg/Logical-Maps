@@ -39,6 +39,7 @@ import Classicism.Semantics.Env
 import Classicism.Semantics.Intensional
 import Classicism.Semantics.IntensionalSoundness
 import Classicism.Semantics.IntensionalFacts
+import Classicism.Semantics.IntensionalTheory
 import Classicism.Semantics.IntensionalFull
 import Classicism.Semantics.IntensionalProperties
 import Classicism.Semantics.IntensionalExamples
@@ -90,3 +91,5 @@ import Classicism.Strict.Tests
 import Classicism.Statements
 import Classicism.Map
 import Classicism.Tools.MapIndex
+import Classicism.ModelStatements
+import Classicism.MapModels

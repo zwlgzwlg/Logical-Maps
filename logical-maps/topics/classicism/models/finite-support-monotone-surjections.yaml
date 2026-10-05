@@ -189,3 +189,35 @@ history:
   summary: Recorded the failure of Vicinity; argument in the notes.
   violates:
   - vicinity
+
+# Verdicts proved in Lean (Classicism/MapModels.lean); statuses are written by lean-check --update.
+lean:
+  model: Classicism.Meta.Intensional.MonoidModel.model Classicism.Meta.Intensional.Monoids.monoSurj
+  verdicts:
+  - holds: barcan-r
+    ref: Classicism.Map.Models.finite_support_monotone_surjections.barcan_r
+    status: verified
+  - holds: necessary-barcan-r
+    ref: Classicism.Map.Models.finite_support_monotone_surjections.necessary_barcan_r
+    status: verified
+  - holds: atomlessness
+    ref: Classicism.Map.Models.finite_support_monotone_surjections.atomlessness
+    status: verified
+  - holds: no-pure-contingency-r
+    ref: Classicism.Map.Models.finite_support_monotone_surjections.no_pure_contingency_r
+    status: verified
+  - fails: distinctness-necessary-r
+    ref: Classicism.Map.Models.finite_support_monotone_surjections.distinctness_necessary_r
+    status: verified
+  - fails: necessary-distinctness-necessary-r
+    ref: Classicism.Map.Models.finite_support_monotone_surjections.necessary_distinctness_necessary_r
+    status: verified
+  - fails: actuality
+    ref: Classicism.Map.Models.finite_support_monotone_surjections.actuality
+    status: verified
+  - fails: atomicity-t
+    ref: Classicism.Map.Models.finite_support_monotone_surjections.atomicity_t
+    status: verified
+  - fails: boolean-completeness-r
+    ref: Classicism.Map.Models.finite_support_monotone_surjections.boolean_completeness_r
+    status: verified

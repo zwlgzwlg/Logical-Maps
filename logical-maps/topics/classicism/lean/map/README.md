@@ -14,6 +14,9 @@ topic puts into it.
 | a result's certificate | its record's `certificate.lean_ref`, e.g. `Classicism.Map.barcan_r_implies_functionality_r`; `certificate.lean`, which `lean-check --update` writes |
 | the statements the certificates prove | `Classicism/Statements.lean`, written by `pmap lean classicism` from the records. Never edited by hand. |
 | the certificates | `Classicism/Map.lean`: one theorem per result proved, named by its id, and per variant, `<principle>.<variant>`, each one line citing the proof |
+| a model's verdicts proved one by one | the model record's `lean`: `model`, a Lean term for it, and `verdicts`, each `holds` or `fails` a principle with its `ref` and `status`, which `lean-check --update` writes |
+| the statements of those verdicts | `Classicism/ModelStatements.lean`, written by `pmap lean classicism`. Never edited by hand. |
+| their certificates | `Classicism/MapModels.lean`: one theorem per verdict, `Models.<model id>.<principle id>`, citing the verdict proved in `Models/` |
 | where every certificate, proof and principle definition is | `map/index.json`, written by `scripts/MapIndex.lean` (`Classicism/Tools/MapIndex.lean`) |
 
 `lean-check` audits each certificate against its generated statement and the map's list of
@@ -100,6 +103,29 @@ shown to have only such instances (`P.X.schema_closedTypes`). Before 4 October t
 so that "type variable `0` is empty" was an instance of No Contingency and of Possibility
 (Astra's audit).
 
+**A model's verdicts, one by one.** A model whose whole package is not yet formalized can
+still have its verdicts certified singly. For the record's Lean model `A`, a verdict that `P`
+holds reads
+
+    A.IsModel ∧ A.HoldsAx P.schemaIn
+
+and one that it fails `A.IsModel ∧ ¬ A.HoldsAx P.schemaIn`; for a principle relative to a
+signature (category `signature`), the statement also asks `A.Admitted`, that the model's
+signature is one the map's statements range over, so a model of the pure language cannot
+certify those. The models of `Models/` are of the pure language, where `P.X.schemaIn` holds
+iff `P.X.schema` does (`Premodel.holdsAx_schemaIn_iff`, `Semantics/IntensionalTheory.lean`).
+On 5 October the nine finite-support models of Appendix D had 69 verdicts certified this
+way: Parts 1 to 8 and the two-object model after Part 8 (`finite-support-*` on the map).
+
+The verdicts compose into the whole model's statement once the model is of an admitted
+signature: `Premodel.theory`, the sentences holding in a model, is consistent
+(`theory_consistent`) and complete (`theory_complete`), and entails a schema iff the schema
+holds in the model (`theory_entails_iff`). With every verdict of a record certified, the
+model statement is `⟨Sig, hAdm, A.theory, theory_consistent M, theory_complete M, …⟩`, each
+conjunct `entails_of_holdsAx M h` or `not_entails_of_not_holdsAx M h`. What is missing is a
+model of an admitted signature: the Appendix D models with `Σ` interpreted as the records
+say, and the verdicts on the principles relative to a signature there.
+
 The certificate is the object-language entailment, not the shallow proof. The claim is
 about `C`, and the map's axiom list is harmless elsewhere but not here: `propext` is the
 Fregean Axiom, so a shallow proof passing that check would show nothing about `C`. The
@@ -128,9 +154,10 @@ entailments use `propext` and `Quot.sound` only as reasoning about syntax.
   Transversal Choice and their boxed forms. Not stated: the duals of the sentence schemas,
   the GLB forms of Countable Boolean Completeness, and the variants of principles without a
   `lean_def`.
-- **Models.** 14 of the map's 89 models get statements (`∃` a consistent complete `Ax`
+- **Models.** 14 of the map's 97 models get statements (`∃` a consistent complete `Ax`
   entailing what the model satisfies and not what it violates, above); the others' verdicts
-  mention a principle without a `lean_def`. None is certified yet.
+  mention a principle without a `lean_def`. None is certified as a whole yet; 69 single
+  verdicts of nine models are (above).
 - **No Pure Contingency defined twice.** `npc Σ` (P → □P for each pure sentence of `Σ`'s
   language) and `pureVersion noContingency` are the same set (`npc_eq_pureVersion`), and so
   are the two Pure B's.

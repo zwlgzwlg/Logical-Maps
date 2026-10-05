@@ -208,3 +208,32 @@ history:
   summary: Recorded the failure of Vicinity; argument in the notes.
   violates:
   - vicinity
+
+# Verdicts proved in Lean (Classicism/MapModels.lean); statuses are written by lean-check --update.
+lean:
+  model: Classicism.Meta.Intensional.MonoidModel.model Classicism.Meta.Intensional.Monoids.truncs
+  verdicts:
+  - holds: atomicity-t
+    ref: Classicism.Map.Models.finite_support_truncations.atomicity_t
+    status: verified
+  - holds: no-pure-contingency-r
+    ref: Classicism.Map.Models.finite_support_truncations.no_pure_contingency_r
+    status: verified
+  - fails: distinctness-necessary-r
+    ref: Classicism.Map.Models.finite_support_truncations.distinctness_necessary_r
+    status: verified
+  - fails: necessary-distinctness-necessary-r
+    ref: Classicism.Map.Models.finite_support_truncations.necessary_distinctness_necessary_r
+    status: verified
+  - fails: barcan-r
+    ref: Classicism.Map.Models.finite_support_truncations.barcan_r
+    status: verified
+  - fails: necessary-barcan-r
+    ref: Classicism.Map.Models.finite_support_truncations.necessary_barcan_r
+    status: verified
+  - fails: actuality
+    ref: Classicism.Map.Models.finite_support_truncations.actuality
+    status: verified
+  - fails: boolean-completeness-r
+    ref: Classicism.Map.Models.finite_support_truncations.boolean_completeness_r
+    status: verified
