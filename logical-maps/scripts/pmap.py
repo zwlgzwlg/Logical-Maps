@@ -2665,8 +2665,11 @@ def lean_source_links(topic_id: str, data: dict) -> dict | None:
 
     def links(entry: dict, definitions: bool = False) -> list[dict]:
         out = [link(d, "definition") for d in entry.get("definitions", [])[1:]] if definitions else []
-        out += [link(p, "proof at every arity" if p["file"].endswith("Arity.lean") else "proof")
-                for p in entry.get("proofs", [])]
+        def label(p: dict) -> str:  # a variant's two directions: official ⇒ form, form ⇒ official
+            last = p["name"].rsplit(".", 1)[-1]
+            return ("proof ⇒" if last.startswith("to_") else "proof ⇐" if last.startswith("of_")
+                    else "proof at every arity" if p["file"].endswith("Arity.lean") else "proof")
+        out += [link(p, label(p)) for p in entry.get("proofs", [])]
         out.append(link(entry["certificate"], "certificate"))
         seen, unique = set(), []
         for item in out:
