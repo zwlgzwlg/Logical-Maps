@@ -1508,4 +1508,16 @@ theorem extensionality_r_implies_intensional_choice_r : Statements.extensionalit
 theorem no_pure_contingency_implies_necessity_of_arithmetic : Statements.no_pure_contingency_implies_necessity_of_arithmetic := by
   map_cert npc_entails_necessityOfArithmetic
 
+/-- `c5-implies-necessary-rigid-power` -/
+theorem c5_implies_necessary_rigid_power : Statements.c5_implies_necessary_rigid_power := by
+  map_cert Meta.c5_implies_necessary_rigid_power
+
+/-- `c5-implies-tame-rigidity` -/
+theorem c5_implies_tame_rigidity : Statements.c5_implies_tame_rigidity := by
+  map_cert Meta.c5_implies_tame_rigidity
+
+/-- `c5-implies-necessary-tame-rigidity` -/
+theorem c5_implies_necessary_tame_rigidity : Statements.c5_implies_necessary_tame_rigidity := by
+  map_cert Meta.c5_implies_necessary_tame_rigidity
+
 end Classicism.Map

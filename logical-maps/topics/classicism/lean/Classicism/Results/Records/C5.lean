@@ -569,4 +569,43 @@ theorem restriction_of_box_b (hb : □ (∀ p : Prop, p → □ ◇ p)) :
     fun s h => (le_iff_prop _ _).2 (modal_K _ _ (modal_K _ _ (nec% (le_of_and_dia_of_b p q s)) hb)
       (modal_four _ ((le_iff_prop _ _).1 h)))⟩
 
+
+/-! ### Rigid Power in `C5` (3 October 2026) -/
+
+/-- Being rigid and entailing `F` is necessary if true: each conjunct is boxed, persistence
+and inextensibility by definition and `X ≤ F` as `□(X ⊑ F)`, and `4` boxes them again. -/
+theorem rigid_and_le_box {σ : Type} [Ty σ] (F X : σ → Prop) :
+    (Rigid X ∧ X ≤ F) → □ (Rigid X ∧ X ≤ F) := fun ⟨⟨hp, hi⟩, hle⟩ => by
+  have h3 : □ (X ≤ F) := modal_K _ _ (nec% (fun h : □ (X ⊆ F) => le_of_box_incl h))
+    (modal_four _ ((le_iff X F).1 hle))
+  show □ ((Persistent X ∧ Inextensible X) ∧ X ≤ F)
+  rw [box_and_eq, box_and_eq]
+  exact ⟨⟨modal_four _ hp, modal_four _ hi⟩, h3⟩
+
+/-- Rigid Power at `σ → t` in `C5`: the power property `λX. Rigid(X) ∧ X ≤ F` is persistent,
+by the last lemma, and in `C5` a persistent property is inextensible (n. 41). `F` need not
+be rigid. -/
+theorem c5_implies_rigid_power {σ : Type} [Ty σ] :
+    NecNecessityOfDistinctness Prop → RigidPower (σ → Prop) := fun hnd F _ =>
+  have hP : Persistent (fun X : σ → Prop => Rigid X ∧ X ≤ F) :=
+    nec% (fun X h => rigid_and_le_box F X h)
+  ⟨hP, inextensible_of_persistent_c5 (σ := σ → Prop) hnd _ hP⟩
+
+/-- `c5-implies-necessary-rigid-power`: the last theorem necessitated, with `4`. -/
+theorem c5_implies_necessary_rigid_power {σ : Type} [Ty σ] :
+    NecNecessityOfDistinctness Prop → NecRigidPower (σ → Prop) := fun hnd =>
+  modal_K _ _ (nec% (c5_implies_rigid_power (σ := σ))) (modal_four _ hnd)
+
+
+/-- `c5-implies-tame-rigidity`, at `σ → t`: a weakly rigid property is persistent, and in
+`C5` a persistent property is inextensible (n. 41). -/
+theorem c5_implies_tame_rigidity {σ : Type} [Ty σ] :
+    NecNecessityOfDistinctness Prop → TameRigidity (σ → Prop) := fun hnd F hF =>
+  ⟨hF.1, inextensible_of_persistent_c5 hnd F hF.1⟩
+
+/-- `c5-implies-necessary-tame-rigidity`: the last theorem necessitated, with `4`. -/
+theorem c5_implies_necessary_tame_rigidity {σ : Type} [Ty σ] :
+    NecNecessityOfDistinctness Prop → NecTameRigidity (σ → Prop) := fun hnd =>
+  modal_K _ _ (nec% (c5_implies_tame_rigidity (σ := σ))) (modal_four _ hnd)
+
 end Classicism.Proofs
