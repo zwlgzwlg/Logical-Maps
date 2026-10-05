@@ -117,7 +117,10 @@ iff `P.X.schema` does (`Premodel.holdsAx_schemaIn_iff`, `Semantics/IntensionalTh
 On 5 October 91 verdicts of eleven models were certified this way: Parts 1 to 8 of Appendix D
 and the two-object model after Part 8 (`finite-support-*` on the map), and the two M-set models
 of §3, on the idempotent monoid and the two-element group (`full-idempotent-monoid`,
-`full-involution-group`, from `Semantics/IntensionalExamples.lean`).
+`full-involution-group`, from `Semantics/IntensionalExamples.lean`). On 6 October the other
+four full action models of §3 followed (`Models/FullActionModels.lean`): the monoid of
+surjections and the group of permutations of `ℕ`, the two-object chain, and the retract, each
+with one individual.
 
 The verdicts compose into the whole model's statement once the model is of an admitted
 signature: `Premodel.theory`, the sentences holding in a model, is consistent
@@ -147,7 +150,7 @@ model, it certifies the model's verdict by applying the argument's certificate t
 proofs. So the Lean follows the map's route: a verdict that rests on an argument is proved
 by that argument, and only the meeting of conditions is particular to the model.
 
-On 5 October six verdicts of five arguments were proved this way:
+By 6 October, fourteen verdicts of eleven arguments were proved this way:
 
 | Argument | Condition | Verdict |
 | --- | --- | --- |
@@ -156,9 +159,21 @@ On 5 October six verdicts of five arguments were proved this way:
 | the finite-support group's `actual-world` | actual-world-pinned | Actuality holds |
 | `collapsing-atomless` | collapse-unpinned | Atomicity and Atomicity (`t`) fail |
 | `barcan-positive` | positive-preserving | BF fails |
+| `relational-choice-full` | full, choice | Relational Choice holds |
+| `relational-choice-full-boxed` | full action model, choice | □Relational Choice holds |
+| `transversal-choice-extensionally-full` | extensionally full, choice | Transversal Choice holds |
+| `dpc-isolated-actual-world` | actual world isolated | Distinctness-Preserving Collapse holds |
+| `one-individual` | one individual | the Axiom of Infinity, the Infinity schema and Possible Infinity at `e` fail |
+| `finitely-many-propositions` | full, finitely many propositions | the Infinity schema at `t` fails |
 
-They give 23 model verdicts. These replace 21 that had been certified model by model, and
-add Atomicity's failure in the two identity-or-collapse models.
+The semantic facts behind them are in `Semantics/FullModels.lean` (choice, transversals, the
+isolated actual world), `Semantics/Counting.lean` (the `n`-th instance of the Infinity schema
+holds iff there are `n` distinct entities) and `Semantics/OneIndividual.lean` (`Suc 𝟎` counts
+the universal property). Lean's metatheory has choice, so `metatheory-choice` is `True`.
+
+On 6 October they gave 66 of the 166 model verdicts certified. The first 23 replaced 21
+that had been certified model by model and added Atomicity's failure in the two
+identity-or-collapse models.
 
 Several arguments are not proved yet, because the condition the Lean proves differs from
 the map's prose:
@@ -167,6 +182,12 @@ the map's prose:
   the condition `unbounded-haecceities` as the map states it.
 - **`atomicity`:** the Lean lemma `atomicityT_of_singletons` gives Atomicity at `t` only,
   where the argument claims it at every relational type.
+
+Not proved yet for other reasons: `three-numbers` (Countable Boolean Completeness with one
+individual: the finite cardinalities are three, and a countable property's join exists),
+`sigma-top` and `sigma-top-npc` (they need models of an admitted signature, with `Σ`
+interpreted), and `intensional-choice-well-ordering` and `rigid-power-tight` (their principles
+have no `lean_def`).
 
 The certificate is the object-language entailment, not the shallow proof. The claim is
 about `C`, and the map's axiom list is harmless elsewhere but not here: `propext` is the
@@ -198,8 +219,8 @@ entailments use `propext` and `Quot.sound` only as reasoning about syntax.
   `lean_def`.
 - **Models.** 14 of the map's 97 models get statements (`∃` a consistent complete `Ax`
   entailing what the model satisfies and not what it violates, above); the others' verdicts
-  mention a principle without a `lean_def`. None is certified as a whole yet; 93 single
-  verdicts of eleven models are (above).
+  mention a principle without a `lean_def`. None is certified as a whole yet; 166 single
+  verdicts of fifteen models are (above).
 - **No Pure Contingency defined twice.** `npc Σ` (P → □P for each pure sentence of `Σ`'s
   language) and `pureVersion noContingency` are the same set (`npc_eq_pureVersion`), and so
   are the two Pure B's.

@@ -1,5 +1,7 @@
 import Classicism.Models.MonoidModel
 import Classicism.Semantics.IntensionalTheory
+import Classicism.Semantics.FullModels
+import Classicism.Semantics.Counting
 import Mathlib.Algebra.Group.Action.Faithful
 import Mathlib.Algebra.Group.Submonoid.MulAction
 import Mathlib.Algebra.Group.Action.End
@@ -34,6 +36,25 @@ abbrev OneObject (_A : Premodel Sig C) : Prop := Subsingleton C
 
 theorem oneObject_of_subsingleton (A : Premodel Sig C) [Subsingleton C] : A.OneObject :=
   inferInstance
+
+/-- `metatheory-choice`: the model is constructed in a metatheory with the axiom of choice.
+Lean's is one, so every model meets it. -/
+def MetatheoryChoice (_A : Premodel Sig C) : Prop := True
+
+theorem metatheoryChoice (A : Premodel Sig C) : A.MetatheoryChoice := trivial
+
+/-- `one-individual`: there is exactly one individual at every world. (There is at least one:
+the domains at `e` are nonempty.) -/
+def OneIndividual (A : Premodel Sig C) : Prop := ∀ W : C, Subsingleton (A.Dom W .e)
+
+/-- `finitely-many-propositions`: there are finitely many propositions at the evaluation
+world. -/
+def FinitelyManyPropositions (A : Premodel Sig C) : Prop := Finite (A.Dom A.W₀ (.rel .t))
+
+/-! `full-model` and `full-action-model` are `Premodel.Full` (`IntensionalProperties.lean`): in
+the intensional form a full action model is a full model, every intension present at every
+object. `extensionally-full` is `Premodel.ExtFull` and `actual-world-isolated` is
+`Premodel.ActualWorldIsolated` (`FullModels.lean`). -/
 
 /-- `d6-surjective`: the model is ideally full, and every arrow out of the evaluation object
 acts surjectively on the individuals (so on the finite sets of them, the pinning sets):
