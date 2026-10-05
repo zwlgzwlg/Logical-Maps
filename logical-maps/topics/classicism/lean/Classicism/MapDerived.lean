@@ -611,4 +611,24 @@ theorem full_two_object_retract.transversal_choice_r : Statements.Models.full_tw
 theorem full_two_object_retract.independence_signature_r : Statements.Models.full_two_object_retract.independence_signature_r :=
   ⟨Classicism.Meta.Signature.sigmaTop_admitted, Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _), Classicism.Map.Arguments.sigma_top.independence_signature_r (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)) (Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)) (Classicism.Meta.Signature.sigmaTop_admitted) (Classicism.Meta.Intensional.Premodel.withTop_sigmaTop (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _))⟩
 
+/-- `symmetry-constrained-full-all-maps`: Distinctness-preserving collapse holds, by the argument `dpc-isolated-actual-world`. -/
+theorem symmetry_constrained_full_all_maps.distinctness_preserving_collapse : Statements.Models.symmetry_constrained_full_all_maps.distinctness_preserving_collapse :=
+  ⟨Classicism.Meta.Intensional.SymFull.model_isModel, Classicism.Map.Arguments.dpc_isolated_actual_world.distinctness_preserving_collapse (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel) (Classicism.Meta.Intensional.SymFull.actualWorldIsolated)⟩
+
+/-- `symmetry-constrained-full-all-maps`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
+theorem symmetry_constrained_full_all_maps.no_pure_contingency_r : Statements.Models.symmetry_constrained_full_all_maps.no_pure_contingency_r :=
+  ⟨Classicism.Meta.Intensional.SymFull.model_isModel, Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel) (Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _)⟩
+
+/-- `symmetry-constrained-full-all-maps`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
+theorem symmetry_constrained_full_all_maps.transversal_choice_r : Statements.Models.symmetry_constrained_full_all_maps.transversal_choice_r :=
+  ⟨Classicism.Meta.Intensional.SymFull.model_isModel, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel) (Classicism.Meta.Intensional.SymFull.extFull) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+
+/-- `symmetry-constrained-full-all-maps`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
+theorem symmetry_constrained_full_all_maps.independence_signature_r : Statements.Models.symmetry_constrained_full_all_maps.independence_signature_r :=
+  ⟨Classicism.Meta.Signature.sigmaTop_admitted, Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.SymFull.model_isModel), Classicism.Map.Arguments.sigma_top.independence_signature_r (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel)) (Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.SymFull.model_isModel)) (Classicism.Meta.Signature.sigmaTop_admitted) (Classicism.Meta.Intensional.Premodel.withTop_sigmaTop (Classicism.Meta.Intensional.SymFull.model_isModel))⟩
+
+/-- `symmetry-constrained-full-all-maps`: No Contingency (signature Σ) holds, by the argument `sigma-top-npc`. -/
+theorem symmetry_constrained_full_all_maps.no_contingency_signature_r : Statements.Models.symmetry_constrained_full_all_maps.no_contingency_signature_r :=
+  ⟨Classicism.Meta.Signature.sigmaTop_admitted, Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.SymFull.model_isModel), Classicism.Map.Arguments.sigma_top_npc.no_contingency_signature_r (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel)) (Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.SymFull.model_isModel)) (Classicism.Meta.Signature.sigmaTop_admitted) (Classicism.Meta.Intensional.Premodel.withTop_sigmaTop (Classicism.Meta.Intensional.SymFull.model_isModel)) (Classicism.Meta.Intensional.Premodel.holdsAx_interp_ofPure.2 ((Classicism.Map.Models.symmetry_constrained_full_all_maps.no_pure_contingency_r).2))⟩
+
 end Classicism.Map.Models

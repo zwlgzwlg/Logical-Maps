@@ -76,3 +76,14 @@ notes: >-
   three individuals (the image intension $h\mapsto h(X)$ is symmetric; a collapse identifies
   distinct individuals), derived from the group's type-$t$ arguments. Everything is finite, so every
   verdict at low types is decidable by exhaustive computation, which has not yet been carried out.
+# The model in Lean (Classicism/Models/SymmetricFull.lean): the symmetric ideally full premodel
+# over all maps of a three-element set, with the permutations as the symmetries.
+lean:
+  model: Classicism.Meta.Intensional.SymFull.model
+  is_model: Classicism.Meta.Intensional.SymFull.model_isModel
+  meets:
+    one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
+    metatheory-choice: Classicism.Meta.Intensional.Premodel.metatheoryChoice _
+    finitely-many-propositions: Classicism.Meta.Intensional.SymFull.finitely_many_propositions
+    extensionally-full: Classicism.Meta.Intensional.SymFull.extFull
+    actual-world-isolated: Classicism.Meta.Intensional.SymFull.actualWorldIsolated

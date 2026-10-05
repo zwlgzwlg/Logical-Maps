@@ -103,6 +103,18 @@ so a merely consistent theory would "violate" both (Astra's audit, 4 October). T
 cannot name the model's construction; the certificate's proof is where that construction
 appears.
 
+**Symmetric ideally full models.** `Semantics/Symmetric.lean` has Dorr's Definitions 17–18
+(*BC does not imply RC*, draft of 30 July 2026): symmetry under a family of arrows `G V`
+closed under inverses, and `Premodel.symIdeal`, whose domains are the symmetric finitely
+pinned intensions. Proposition 20, that it is a model (`symIdeal_isModel`), combines the
+induction of Proposition D.4 with `sem_symmetric`: every logical constant's reading is
+symmetric when the domains are, and an abstraction's value moves along a symmetry as its
+body's does. `Models/SymmetricFull.lean` is `symmetry-constrained-full-all-maps` (all maps on
+three individuals, the permutations as symmetries), with the conditions one object,
+finitely many propositions, extensionally full (orbits) and actual world isolated (the
+permutations). The collapse member, whose permutations are not arrows, relabels by
+conjugation and is not covered by this construction.
+
 **The sentence schemas range over the paper's language.** The object language here also has
 type variables, a device of the metalogic; every sentence schema (No Contingency, No Pure
 Contingency, B, Distinctness, Possibility, Witnessed Possibility and its kin, Separated
