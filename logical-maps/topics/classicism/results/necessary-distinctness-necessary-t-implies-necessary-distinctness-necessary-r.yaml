@@ -9,7 +9,8 @@ certificate:
   recorded_by: OpenAI Codex (GPT-6), 17 September 2026
   checked_by: []
   date: '2026-09-17'
-  lean: none
+  lean: verified
+  lean_ref: Classicism.Map.necessary_distinctness_necessary_t_implies_necessary_distinctness_necessary_r
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Proposition 2.2, p. 22.
 source_names:

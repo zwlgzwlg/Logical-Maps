@@ -32,3 +32,4 @@ variants:
     C(\Sigma)+\neg P\text{ consistent};\ n\ge0)$
   equivalence: The instance of either form at $\neg P$ is, after contraposition and $\Diamond=\neg\Box\neg$,
     the instance of the other at $P$; $\neg P$ has the same free variables and constants as $P$.
+lean_def: (Classicism.Meta.AxiomSet.possibilityPlusSig _)

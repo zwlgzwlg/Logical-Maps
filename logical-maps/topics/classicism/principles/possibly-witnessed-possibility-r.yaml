@@ -37,3 +37,4 @@ variants:
   equivalence: Pure sentences (resp. sentences of $\mathcal L(\Sigma)$) are closed under negation, so
     the instance of either form at $\neg P$ is, after contraposition and $\Diamond=\neg\Box\neg$, the
     instance of the other at $P$.
+lean_def: (Classicism.Meta.AxiomSet.possiblyWitnessedPossibility _)

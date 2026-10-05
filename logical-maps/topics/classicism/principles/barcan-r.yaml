@@ -21,6 +21,10 @@ aliases:
 - Barcan Formula
 variants:
 - id: polyadic
+  lean:
+    ref: Classicism.P.Barcan.listSchemaIn
+    equivalence_ref: Classicism.Map.barcan_r.polyadic
+    status: verified
   name: Polyadic form
   statement: BF for relations with any finite number of arguments.
   formal: $\forall X^{\bar\sigma t}\, .\,(\forall\bar x^{\bar\sigma}\, .\,\Box X[\bar x])\to\Box(\forall\bar
@@ -30,6 +34,10 @@ variants:
     applied to $\lambda x_n\, .\,X[x_1\ldots x_n]$, gives $\forall x_1\ldots x_{n-1}\, .\,\Box\forall
     x_n\, .\,X[\bar x]$; repeat $n$ times. For the empty tuple both sides are $\Box X$.
 - id: dual
+  lean:
+    ref: Classicism.P.BarcanDual.schemaIn
+    equivalence_ref: Classicism.Map.barcan_r.dual
+    status: verified
   name: Dual form
   statement: If possibly something has a property, then something possibly has it.
   formal: $\forall X^{\sigma t}\, .\,\Diamond(\exists x^\sigma\, .\,Xx)\to\exists x^\sigma\, .\,\Diamond
@@ -38,6 +46,10 @@ variants:
     contrapose, and rewrite with $\Diamond=\neg\Box\neg$ and $q\le r\leftrightarrow\neg r\le\neg q$. This
     yields the other form, and the same steps lead back.
 - id: dual-polyadic
+  lean:
+    ref: Classicism.P.BarcanDual.listSchemaIn
+    equivalence_ref: Classicism.Map.barcan_r.dual_polyadic
+    status: verified
   name: Dual polyadic form
   statement: If possibly some tuple stands in a relation, then some tuple possibly stands in it.
   formal: $\forall X^{\bar\sigma t}\, .\,\Diamond(\exists\bar x^{\bar\sigma}\, .\,X[\bar x])\to\exists\bar
@@ -46,3 +58,4 @@ variants:
     contrapose, and rewrite with $\Diamond=\neg\Box\neg$ and $q\le r\leftrightarrow\neg r\le\neg q$. This
     yields the other form, and the same steps lead back. Combined with the polyadic form, this gives the
     equivalence with the official form.
+lean_def: Classicism.P.Barcan.schemaIn

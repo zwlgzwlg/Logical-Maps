@@ -35,3 +35,4 @@ variants:
     bounds of $X$ and greatest lower bounds of $X^\neg:=\lambda z\, .\,X(\neg_\tau z)$. Negation is a
     bijection between the instances of $X$ and of $X^\neg$, so composing it with an injection into the
     natural numbers shows that $X^\neg$ is countable iff $X$ is.'
+lean_def: Classicism.P.CountableBooleanCompleteness.schemaIn

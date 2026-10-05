@@ -17,6 +17,10 @@ aliases:
 - Necessity of distinctness
 variants:
 - id: polyadic
+  lean:
+    ref: Classicism.P.NecessityOfDistinctness.listSchemaIn
+    equivalence_ref: Classicism.Map.distinctness_necessary_r.polyadic
+    status: verified
   name: Polyadic form
   statement: Distinct tuples of entities are necessarily distinct.
   formal: $\forall\bar x\,\bar y^{\bar\sigma}\, .\,\bar x\ne\bar y\to\Box(\bar x\ne\bar y)$
@@ -24,13 +28,22 @@ variants:
     then $x_i\ne y_i$ for some $i$, and ND at $\sigma_i$ gives $\Box(x_i\ne y_i)$, hence $\Box(\bar x\ne\bar
     y)$. For the empty tuple, $\bar x\ne\bar y$ is false.
 - id: dual
+  lean:
+    ref: Classicism.P.NecessityOfDistinctnessDual.schemaIn
+    equivalence_ref: Classicism.Map.distinctness_necessary_r.dual
+    status: verified
   name: Dual form
   statement: Things of any type that could be identical are identical.
   formal: $\forall x y^\sigma\, .\,\Diamond(x=y)\to x=y$
   equivalence: Each instance of one form is the contrapositive of the corresponding instance of the other.
 - id: dual-polyadic
+  lean:
+    ref: Classicism.P.NecessityOfDistinctnessDual.listSchemaIn
+    equivalence_ref: Classicism.Map.distinctness_necessary_r.dual_polyadic
+    status: verified
   name: Dual polyadic form
   statement: Tuples that could be identical are identical.
   formal: $\forall\bar x\,\bar y^{\bar\sigma}\, .\,\Diamond(\bar x=\bar y)\to\bar x=\bar y$
   equivalence: Each instance of one form is the contrapositive of the corresponding instance of the other.
     Combined with the polyadic form, this gives the equivalence with the official form.
+lean_def: Classicism.P.NecessityOfDistinctness.schemaIn

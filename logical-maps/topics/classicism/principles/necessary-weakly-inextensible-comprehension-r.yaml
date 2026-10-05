@@ -19,3 +19,4 @@ notes: >-
   conditions remain outside the box. This differs from Inextensible Comprehension, which asks for a
   single actual witness that is weakly inextensible at every world; here the witness may vary from
   world to world.
+lean_def: Classicism.P.NecWeaklyInextensibleComprehension.schemaIn

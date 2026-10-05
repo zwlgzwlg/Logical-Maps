@@ -42,6 +42,10 @@ about: |-
   make the propositions isomorphic to the powerset of the atoms.
 variants:
 - id: dual
+  lean:
+    ref: Classicism.P.AtomicityDual.schemaIn
+    equivalence_ref: Classicism.Map.atomicity_r.dual
+    status: verified
   name: Dual form
   statement: Whatever is entailed by every atom of its type is the top element of that type.
   formal: $\forall x^\tau\, .\,(\forall y^\tau\, .\,\operatorname{Atom}_\tau(y)\to y\le_\tau x)\to\neg_\tau
@@ -59,3 +63,4 @@ variants:
 
     Dual form to official form. Suppose $x$ is not bottom but no atom lies below it. Then every atom lies
     below $\neg_\tau x$, so by the dual form $\neg_\tau x$ is top and $x$ is bottom, a contradiction.
+lean_def: Classicism.P.Atomicity.schemaIn

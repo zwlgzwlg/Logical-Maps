@@ -369,3 +369,20 @@ lattice_views:
   - weak-rigid-comprehension-r
   - rigid-comprehension-r
   - strong-leibniz-r
+lean_lib: Classicism
+lean:
+  index:
+    script: scripts/MapIndex.lean
+    file: map/index.json
+  source_url: https://github.com/zwlgzwlg/Logical-Maps/blob/{commit}/logical-maps/topics/classicism/lean/{file}#L{start}-L{end}
+  imports:
+  - Classicism.Certified.Signatures
+  namespace: Classicism
+  definition_check: "example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=\n  {def}"
+  result:
+    binder: '∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),'
+    principle: Classicism.Meta.AxiomSet.Entails Ax {def}
+    falsum: ¬ Classicism.Meta.AxiomSet.Consistent Ax
+  model:
+    binder: '∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧'
+    principle: Classicism.Meta.AxiomSet.Entails Ax {def}

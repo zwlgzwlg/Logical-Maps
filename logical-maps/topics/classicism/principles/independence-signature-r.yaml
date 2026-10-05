@@ -18,3 +18,4 @@ references:
 notes: Bacon’s independence of the fundamental, read for the constants of a fundamental language; his
   n. 53 derives it from Logical Necessity. The constant c has a relational type, since the applied term
   does.
+lean_def: (Classicism.Meta.AxiomSet.independence _)

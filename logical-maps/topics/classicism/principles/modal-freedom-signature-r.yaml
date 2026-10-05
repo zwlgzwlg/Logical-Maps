@@ -34,3 +34,4 @@ variants:
     }\Sigma)$
   equivalence: The instance of either form at $\neg P,\neg Q$ is, after contraposition and $\Diamond=\neg\Box\neg$,
     the instance of the other at $P,Q$.
+lean_def: (Classicism.Meta.AxiomSet.modalFreedom _)

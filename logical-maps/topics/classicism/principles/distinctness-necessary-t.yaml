@@ -15,7 +15,12 @@ references:
 notes: ''
 variants:
 - id: dual
+  lean:
+    ref: Classicism.P.NecessityOfDistinctnessTDual.schemaIn
+    equivalence_ref: Classicism.Map.distinctness_necessary_t.dual
+    status: verified
   name: Dual form
   statement: Propositions that could be identical are identical.
   formal: $\forall p q\, .\,\Diamond(p=q)\to p=q$
   equivalence: Each instance of one form is the contrapositive of the corresponding instance of the other.
+lean_def: Classicism.P.NecessityOfDistinctnessT.schemaIn

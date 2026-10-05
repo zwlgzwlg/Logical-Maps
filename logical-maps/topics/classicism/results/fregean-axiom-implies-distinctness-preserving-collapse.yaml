@@ -10,7 +10,8 @@ certificate:
   recorded_by: Claude Fable 5.1 (Anthropic), 23 September 2026
   checked_by: []
   date: '2026-09-23'
-  lean: none
+  lean: verified
+  lean_ref: Classicism.Map.fregean_axiom_implies_distinctness_preserving_collapse
 sources:
 - Cian Dorr, suggestion of 23 September 2026; proof as recorded.
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §2.6, p. 42 (the distinctness-preserving
