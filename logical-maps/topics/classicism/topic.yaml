@@ -158,6 +158,32 @@ views:
   - converse-witnessed-possibility-r
   - separated-structure-r
   - witnessed-possibility-r
+- id: modal-laws
+  name: Modal laws
+  principles:
+  - barcan-r
+  - necessary-barcan-r
+  - distinctness-necessary-r
+  - necessary-distinctness-necessary-r
+  - fregean-axiom
+- id: choice-principles
+  name: Choice principles
+  principles:
+  - intensional-choice-r
+  - relational-choice-r
+  - transversal-r
+  - transversal-choice-r
+  - plenitude-r
+  - functional-choice-r
+- id: boolean-structure
+  name: Boolean Structure
+  principles:
+  - actuality
+  - atomicity-r
+  - boolean-completeness-r
+  - weak-rigid-comprehension-r
+  - rigid-comprehension-r
+  - strong-leibniz-r
 lattice_views:
 - id: pilot
   name: 'Pilot: necessity and rigidity'
@@ -198,3 +224,29 @@ lattice_views:
   - converse-witnessed-possibility-r
   - separated-structure-r
   - witnessed-possibility-r
+- id: modal-laws
+  name: Modal laws
+  principles:
+  - barcan-r
+  - necessary-barcan-r
+  - distinctness-necessary-r
+  - necessary-distinctness-necessary-r
+  - fregean-axiom
+- id: choice-principles
+  name: Choice principles
+  principles:
+  - intensional-choice-r
+  - relational-choice-r
+  - transversal-r
+  - transversal-choice-r
+  - plenitude-r
+  - functional-choice-r
+- id: boolean-structure
+  name: Boolean Structure
+  principles:
+  - actuality
+  - atomicity-r
+  - boolean-completeness-r
+  - weak-rigid-comprehension-r
+  - rigid-comprehension-r
+  - strong-leibniz-r

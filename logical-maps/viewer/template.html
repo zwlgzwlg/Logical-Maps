@@ -203,8 +203,9 @@
   #pane-lattice #graph-views, #pane-open #graph-views { display: none; }
   .view-picker[hidden] { display: none !important; }
   .view-picker { margin: 0 0 6px; }
-  .view-picker select { font: inherit; font-size: 13px; max-width: 100%; }
-  .view-picker .view-modified { font-size: 12px; margin-left: 6px; }
+  .view-picker select { font: inherit; font-size: 13px; max-width: 100%; min-height: 28px; padding: 3px 6px; }
+  h2 .heading-note { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
+  #pane-open #graph-principles .heading-note { display: none; }
   .view-picker .view-desc { font-size: 12px; line-height: 1.4; color: var(--ink-3); margin: 4px 0 0; }
   .view-picker .view-desc:empty { display: none; }
   #pane-lattice #lat-controls, #pane-lattice #lat-principles { display: block; }
@@ -733,18 +734,17 @@
     <aside class="controls" id="graph-sidebar">
       <div class="controls-scroll" id="principle-controls">
       <div id="graph-views" class="view-picker" hidden>
-        <h2><label for="graph-view">View</label><span id="graph-view-modified" class="view-modified dim" hidden>modified · <button class="lnk" id="graph-view-reset">reset</button></span></h2>
+        <h2><label for="graph-view">View</label></h2>
         <select id="graph-view" aria-describedby="graph-view-desc"></select>
         <p class="view-desc" id="graph-view-desc"></p>
       </div>
       <div id="lat-views" class="view-picker" hidden>
-        <h2><label for="lat-view">View</label><span id="lat-view-modified" class="view-modified dim" hidden>modified · <button class="lnk" id="lat-view-reset">reset</button></span></h2>
+        <h2><label for="lat-view">View</label></h2>
         <select id="lat-view" aria-describedby="lat-view-desc"></select>
         <p class="view-desc" id="lat-view-desc"></p>
       </div>
       <div id="lat-controls">
         <h2>Lattice <button class="lnk dim" id="lat-from-graph" title="Draw the lattice of whatever the graph is showing.">from the graph</button> <button class="lnk dim" id="lat-clear">hide all</button></h2>
-        <p class="background-hint">A Hasse diagram showing all the conjunctions of the selected principles. Solid arrows denote implications shown to be non-reversible by models in the selected sources; dashed arrows denote implications which might be reversible (as far as the selected sources are concerned).</p>
         <p id="lat-count" class="lat-count" role="status" aria-live="polite"></p>
       </div>
       <div id="conjecture-options">
@@ -770,11 +770,11 @@
         </div>
       </div>
       <div id="graph-principles">
-        <h2>Principles <button class="lnk dim" id="pr-all">show all positive</button> <button class="lnk dim" id="pr-none">hide all</button></h2>
+        <h2>Principles <span class="heading-note">(all results shown)</span> <button class="lnk dim" id="pr-all">show all positive</button> <button class="lnk dim" id="pr-none">hide all</button></h2>
         <div class="ctl" id="pr-filters"></div>
       </div>
       <div id="lat-principles">
-        <h2>Principles</h2>
+        <h2>Principles <span class="heading-note">(all conjunctions shown)</span></h2>
         <div class="ctl" id="lat-filters"></div>
       </div>
       </div>
@@ -5022,14 +5022,18 @@ function viewParam(key, value) {
   } catch { /* Local files may not allow history updates. */ }
 }
 function graphViewExpected(v) { return new Set(v ? ids.filter(id => !v.principles.includes(id)) : []); }
+// A view is a starting point: once what is shown is edited, the menu forgets it
+// (viewChoice null) and the URL records the selection itself instead.
 function graphViewModified() {
+  if (viewChoice.graph === null) return true;
   const v = graphViews.find(x => x.id === viewChoice.graph), hidden = graphViewExpected(v);
   if (state.negativeShown.size) return true;
   return ids.some(id => !inBackground(id) && state.excluded.has(id) !== hidden.has(id));
 }
 function latticeViewModified() {
+  if (viewChoice.lattice === null) return true;
   const v = latticeViews.find(x => x.id === viewChoice.lattice);
-  if (!v) return false;
+  if (!v) return lattice.shown.length > 0;
   return lattice.shown.length !== v.principles.length || v.principles.some(id => !lattice.shown.includes(id));
 }
 function syncViewPicker(pre, views, choice, modified) {
@@ -5037,17 +5041,18 @@ function syncViewPicker(pre, views, choice, modified) {
   if (!views.length) { box.hidden = true; return; }
   box.hidden = false;
   const select = document.getElementById(pre + '-view'), v = views.find(x => x.id === choice);
-  select.value = choice || '';
+  select.value = choice === null ? '__custom' : choice || '';
   document.getElementById(pre + '-view-desc').textContent = v?.description || '';
-  document.getElementById(pre + '-view-modified').hidden = !modified;
 }
 function syncViews() {
-  const latticeModified = latticeViewModified() || (!viewChoice.lattice && lattice.shown.length > 0);
-  syncViewPicker('lat', latticeViews, viewChoice.lattice, latticeModified && !!viewChoice.lattice);
+  const latticeModified = latticeViewModified();
+  if (latticeModified && viewChoice.lattice !== null) { viewChoice.lattice = null; viewParam('lview', null); }
+  syncViewPicker('lat', latticeViews, viewChoice.lattice);
   viewParam('lat', latticeModified ? lattice.shown.join(',') : null);
   if (state.tab === 'open') return;  // the Conjectures tab's own list is in place, not the graph's
   const graphModified = graphViewModified();
-  syncViewPicker('graph', graphViews, viewChoice.graph, graphModified);
+  if (graphModified && viewChoice.graph !== null) { viewChoice.graph = null; viewParam('view', 'custom'); }
+  syncViewPicker('graph', graphViews, viewChoice.graph);
   // What is shown, once it differs from the view, so a link reproduces it exactly.
   viewParam('show', graphModified ? ids.filter(id => !inBackground(id) && !state.excluded.has(id)).join(',') : null);
   viewParam('neg', graphModified && state.negativeShown.size ? [...state.negativeShown].sort().join(',') : null);
@@ -5062,7 +5067,7 @@ function applyGraphView(id, render = true) {
 }
 function applyLatticeView(id, render = true) {
   const v = latticeViews.find(x => x.id === id) || null;
-  if (v) lattice.shown = v.principles.slice();
+  lattice.shown = v ? v.principles.slice() : [];
   viewChoice.lattice = v ? v.id : '';
   lattice.selected = null; lattice.builtKey = null;
   viewParam('lview', v ? v.id : null);
@@ -5071,14 +5076,12 @@ function applyLatticeView(id, render = true) {
 }
 (function setupViews() {
   const fill = (pre, views, allLabel) => {
-    document.getElementById(pre + '-view').innerHTML = `<option value="">${allLabel}</option>`
+    document.getElementById(pre + '-view').innerHTML = `<option value="__custom" hidden disabled>Choose a view…</option><option value="">${allLabel}</option>`
       + views.map(v => `<option value="${esc(v.id)}">${esc(v.name)}</option>`).join('');
   };
-  fill('graph', graphViews, 'All principles'); fill('lat', latticeViews, 'None chosen');
+  fill('graph', graphViews, 'All principles'); fill('lat', latticeViews, 'None');
   document.getElementById('graph-view').addEventListener('change', e => applyGraphView(e.target.value));
   document.getElementById('lat-view').addEventListener('change', e => applyLatticeView(e.target.value));
-  document.getElementById('graph-view-reset').addEventListener('click', () => applyGraphView(viewChoice.graph));
-  document.getElementById('lat-view-reset').addEventListener('click', () => applyLatticeView(viewChoice.lattice));
   // Edits made through the sidebar or the diagrams pass through these, so they keep the marker current.
   const controls = refreshPrincipleControls;
   refreshPrincipleControls = () => { controls(); syncViews(); };
@@ -5097,6 +5100,11 @@ function applyLatticeView(id, render = true) {
   if (show) { const keep = new Set(show); state.excluded = new Set(ids.filter(id => !keep.has(id))); }
   if (neg) state.negativeShown = new Set(neg.filter(id => ids.includes(id)));
   if (lat) { lattice.shown = lat.filter(l => ids.includes(baseId(l))); lattice.builtKey = null; }
+  // Nothing chosen and nothing edited: the menus start at "All principles" and "None".
+  if (viewChoice.graph === null && !show && requested !== 'custom') viewChoice.graph = '';
+  if (viewChoice.lattice === null && !lat) viewChoice.lattice = '';
+  if (show) viewChoice.graph = null;
+  if (lat) viewChoice.lattice = null;
   refreshPrincipleControls();  // the sidebar's ticks and counts were drawn before the view applied
 })();
 renderAll(true);
