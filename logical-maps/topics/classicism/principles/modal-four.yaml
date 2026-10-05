@@ -13,3 +13,16 @@ references:
   role: formulation
   locator: §1.5, p. 17
 notes: ''
+variants:
+- id: dual
+  lean:
+    ref: Classicism.P.ModalFourDual.schemaIn
+    equivalence_ref: Classicism.Map.modal_four.dual
+    status: verified
+  name: Dual form
+  statement: Whatever is possibly possible is possible.
+  formal: $\forall p\, .\,\Diamond\Diamond p\to\Diamond p$
+  equivalence: Instantiate either form at the negations of its propositional or relational variables,
+    contrapose, and rewrite with $\Diamond=\neg\Box\neg$ and $q\le r\leftrightarrow\neg r\le\neg q$. This
+    yields the other form, and the same steps lead back.
+lean_def: Classicism.P.ModalFour.schemaIn

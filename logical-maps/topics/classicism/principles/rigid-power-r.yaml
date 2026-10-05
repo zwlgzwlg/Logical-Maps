@@ -1,0 +1,18 @@
+id: rigid-power-r
+name: Rigid Power
+category: comprehension
+statement: If a relation is rigid, so is the property of being a rigid relation that entails it.
+formal: $\forall F^{\bar\sigma t}\, .\,\operatorname{Rigid}(F)\to\operatorname{Rigid}(\lambda X^{\bar\sigma
+  t}\, .\,\operatorname{Rigid}(X)\land X\le F)$
+date: '2026-10-03'
+sources:
+- Zachary Goodsell, 2019, as credited by Cian Dorr on 3 October 2026; full citation to be supplied.
+source_names:
+- Goodsell 2019
+references: []
+notes: >-
+  Due to Zachary Goodsell. Gloss: sets cannot acquire new subsets, where rigid relations play the role of
+  sets. It matters for the contingency of claims of analysis such as CH. Here $X$ ranges over relations
+  of the same type as $F$, so the power property has type $(\bar\sigma\to t)\to t$. That property is
+  persistent in C alone, since rigidity and entailment are both necessitated conditions and 4 holds; so
+  the principle's content is the boxed weak inextensibility of the power property.

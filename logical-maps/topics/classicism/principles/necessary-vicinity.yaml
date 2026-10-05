@@ -10,6 +10,7 @@ source_names:
 - Dorr 27 Sep
 notes: Vicinity has no type parameters, so this is the single sentence $\Box\exists p\, .\,p\land\forall
   q\, .\,q\to p\le\Diamond q$.
+lean_def: Classicism.P.NecVicinity.schemaIn
 changes:
 - date: '2026-10-03'
   by: Claude Opus 5.5 (Anthropic)

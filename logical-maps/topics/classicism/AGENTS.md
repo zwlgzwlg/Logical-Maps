@@ -26,7 +26,10 @@ Read a matching `writeups/<id>.md` when it exists.
 
 ## Constructions and sources
 
-- For finite-support action models, search `models/finite-support-*.yaml`.
+- For finite-support action models, search `models/finite-support-*.yaml`; the
+  one-object ones belong to `groups/finite-support-one-object.yaml`, and
+  arguments that hold beyond one group are in `arguments/`, with the conditions
+  they require in `conditions.yaml`.
   Full Henkin and full action constructions are in `models/full-*.yaml`;
   choice failure also has `models/henkin-without-relational-choice.yaml`.
 - Dorr's BC versus RC examples are in `models/symmetric-*.yaml`. Read the
@@ -38,6 +41,8 @@ Read a matching `writeups/<id>.md` when it exists.
   use `models/full-free-monoid-glued-constants*.yaml` and matching write-ups.
   For signature claims, check the specified interpretation of constants and
   any pending expansion obligation, even when the pure-language model is proved.
+- `CANDIDATES.md` lists candidate principles not yet recorded, with notes on what
+  each would need; check it before adding a principle.
 - `extraction.md` indexes Classicism by proposition/section, followed by
   sections on *Arithmetic is Necessary*, *Logical Combinatorialism*, and
   *A Philosophical Introduction to Higher-Order Logics*. Use `papers.yaml`
@@ -74,9 +79,12 @@ Read a matching `writeups/<id>.md` when it exists.
 - The fixed framework is C in the paper's relational type system: base types
   e and t, with sigma→tau allowed only when tau is not e. Principle names
   omit a type-system suffix. Do not reintroduce full-simple-type comparisons.
-- Keep metalinguistic type quantifiers outside object closure and boxes.
-  Use one homogeneous outer type-quantifier block. Preserve formula-schema
-  side conditions and the source reference theory C.
+- Write a type schema with its type variables free in the formula, not with
+  a type quantifier ($\forall^{\mathrm{Ty}}$ is no longer used), and add a
+  parenthesized proviso such as $\qquad(\tau\ne e)$ only where the range is
+  restricted; see Background, Type scope. Type variables stay outside object
+  closure and boxes. Preserve formula-schema side conditions and the source
+  reference theory C.
 - Application associates to the right. Parenthesize curried application.
 - The user authorized model entries with precise construction references in
   Classicism instead of full construction details. The paper's models use

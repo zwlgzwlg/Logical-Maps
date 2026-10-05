@@ -23,3 +23,14 @@ changes:
   summary: Displayed the schema’s side conditions inside the math block, at Cian Dorr’s request; the statement
     is unchanged. Renamed from “Possibility+” to mark it as the pure-language version, now that Possibility+
     (signature Σ) is recorded; id and connections unchanged.
+variants:
+- id: dual
+  name: Dual form
+  statement: If a pure formula is necessary of some individuals and its negation is consistent with C,
+    two of those individuals are identical.
+  formal: $\forall x_1^e\cdots x_n^e\, .\,\Box P\to\bigvee_{i<j}x_i=x_j\quad(P\text{ pure, free variables
+    among }x_1\ldots x_n;\ C+\neg P\text{ consistent};\ n\ge0)$
+  equivalence: The instance of either form at $\neg P$ is, after contraposition and $\Diamond=\neg\Box\neg$,
+    the instance of the other at $P$; $\neg P$ is pure with the same free variables. For $n=0$ the disjunction
+    is $\bot$.
+lean_def: (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityPlus)

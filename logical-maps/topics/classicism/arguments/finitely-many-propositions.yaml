@@ -1,0 +1,15 @@
+id: finitely-many-propositions
+requires: [full-model, finitely-many-propositions]
+fails: [infinity-t]
+by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
+date: '2026-09-20'
+text: >-
+  The propositions at the evaluation world are finitely many, and every intension of a full model is
+  present, so the numerals are the finite cardinalities and one of them holds of the universal
+  property of propositions: the Axiom of Infinity at type t fails, as does an instance of the
+  schema.
+revisions:
+- date: '2026-10-02'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: >-
+    The copies in three full action models (each with four propositions) stated once for the topic; each record's count is its reason for meeting finitely-many-propositions.

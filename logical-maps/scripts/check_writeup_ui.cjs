@@ -7,7 +7,7 @@ const data = JSON.parse(fs.readFileSync(path.join(root, 'build/unbounded-utility
 const template = fs.readFileSync(path.join(root, 'viewer/template.html'), 'utf8');
 const errors = [], vc = new VirtualConsole(); vc.on('jsdomError', e => errors.push(e));
 function page(withFetch) {
-  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {runScripts: 'dangerously', url: 'http://localhost/unbounded-utility/index.html', virtualConsole: vc, pretendToBeVisual: true, beforeParse(w) {
+  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', ()=>JSON.stringify(data)), {runScripts: 'dangerously', url: 'http://localhost/unbounded-utility/index.html', virtualConsole: vc, pretendToBeVisual: true, beforeParse(w) {
     if (withFetch) w.fetch = url => Promise.resolve({ok: true, text: () => Promise.resolve(fs.readFileSync(path.join(root, 'build/unbounded-utility', url), 'utf8'))});
   }});
   return dom.window;

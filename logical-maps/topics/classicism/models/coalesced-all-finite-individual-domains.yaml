@@ -32,20 +32,41 @@ references:
     E.2.
 
 # migration: the definition is the old description without its verdict sentences.
+group: coalesced-sums
+# migration (2 October): the old definition is the group's, completed by these settings.
+settings:
+  # migration: the old definition's sentences in the old order, except that the clause on domains
+  # ("propositions are sets of worlds; an entity of a function type is ...") is the `domains` slot,
+  # which the group's definition places last.
+  construction: >-
+    Take the full Henkin models $M_n$ with individual domain $\{1,\ldots,n\}$ for every $n\ge1$, and
+    add a root world. Individuals are threads $(a_n)_n$ with $a_n\in\{1,\ldots,n\}$. Application is
+    componentwise, identity at world $n$ is the identity of $M_n$ and at the root is identity of
+    elements. Every theorem of C holds at every world. Evaluation point: the root.
+  domains:
+    text: >-
+      Propositions are sets of worlds; an entity of a function type is a family of $M_n$-entities
+      together with an arbitrary root component defined on whole threads.
+# migration (3 October): the interpretation of Σ has no individual constants, as the topic's condition
+# sigma-top now says (Cian Dorr's decision); it read "and each individual constant denotes one
+# fixed individual".
+# migration (2 October): the interpretation of Σ that the change of 22 September fixed (see
+# `history`), stated in the definition, as every record's is. (Moved out of the definition's text
+# on 3 October, where YAML had read it as part of the definition.)
 definition: >-
-  Take the full Henkin models $M_n$ with individual domain $\{1,\ldots,n\}$ for every $n\ge1$, and
-  add a root world. Individuals are threads $(a_n)_n$ with $a_n\in\{1,\ldots,n\}$; propositions
-  are sets of worlds; an entity of a function type is a family of $M_n$-entities together with an
-  arbitrary root component defined on whole threads. Application is componentwise, identity at
-  world $n$ is the identity of $M_n$ and at the root is identity of elements. Every theorem of C
-  holds at every world. Evaluation point: the root.
+  Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each
+  denotes the top element of its type.
+meets:
+  free-root-component: An entity of a function type has an arbitrary root component defined on whole threads.
+  sigma-top: This is the interpretation the definition fixes.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another coalesced sum is now a shared argument of the group
+# coalesced-sums or one of the topic's general arguments (arguments/); what follows is this
+# record's own. Only the verdicts the engine needs to derive the rest are recorded, the source's
+# first.
 
 # --- as first recorded (20 Sep) ---
 
@@ -63,20 +84,6 @@ arguments:
     $e$.
 
 # --- later additions ---
-
-- id: sigma-top
-  fails: [witnessed-possibility-r, independence-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The sentence that
-  # followed the text in the old notes is in `notes`.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed
-    Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but
-    impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\,
-    .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what
-    the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since
-    $c=\top_\tau$ is a true identity that C(Σ) does not prove.
 
 - holds: [barcan-r]
   # migration: the arguments of 22 September before it in the old notes, for Actuality and their
@@ -100,7 +107,7 @@ arguments:
     non-identity arrow, so every singleton is a strong world; the components are one-world models.
 
 - id: free-root-component
-  holds: [atomicity-t, boolean-completeness-t, relational-choice-r]
+  holds: [atomicity-t, boolean-completeness-t]
   # migration: the argument after it in the old notes, for the failure of Possibility+ (pure), now
   # derived, is dropped.
   # Recorded although the other verdicts give them: the □Relational Choice argument builds on this
@@ -110,8 +117,13 @@ arguments:
   text: >-
     Here the components are full Henkin models, so every set of arrows is a root proposition: the
     root propositions form a complete atomic algebra, giving Atomicity and Boolean Completeness at
-    type t, and Relational Choice holds at the root by a functional choice in the free root
-    component.
+    type t.
+  revisions:
+  - date: '2026-10-02'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      Its closing clause, that Relational Choice holds at the root by a functional choice in the
+      free root component, is now the group's shared argument relational-choice-free-root.
 
 - holds: [necessary-relational-choice-r]
   by: Claude Fable 5.1 (Anthropic)
@@ -119,16 +131,6 @@ arguments:
   text: >-
     Relational Choice holds at the root by the free root component and at every component, each
     being a full Henkin model.
-
-- holds: [distinctness-preserving-collapse]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Let $a$ be the proposition true at the actual world alone (the identity arrow). For any true
-    $p$, take $q:=a$ in the definition of $\Box_{\ne}p$: under a non-identity arrow $i$, $\Diamond
-    a$ would need an arrow $k$ with $k\circ i$ the identity, and none exists, since the components
-    have no arrows to the root; under the identity, $p$ holds. So every truth is
-    $\Box_{\ne}$-necessary, although ND fails.
 
 - holds: [necessary-rigid-comprehension-r]
   by: Claude Fable 5.1 (Anthropic)
@@ -159,21 +161,18 @@ arguments:
     The pure sentence that there are two individuals is true at the root and false at the first
     component, from which no arrow returns.
 
-- holds: [necessary-rigid-comprehension-r]
-  # migration: "Review of 25 September 2026." becomes `date`; `by` condenses the record's third
-  # source. A second, independent argument for the same verdict.
-  by: DeepSeek (deepseek-flash), trawl; reviewed and corrected by OpenAI Codex (GPT-6)
-  date: '2026-09-25'
-  writeup: coalesced-all-finite-individual-domains
-  provenance: admission-c0a37bbe6b6c45cc985428b174812564
-  text: >-
-    The appended handwritten verification establishes necessary Atomicity, necessary Boolean
-    Completeness and necessary Rigid Comprehension at every relational type. The existing rules
-    derive the unboxed and Strong Leibniz consequences. These are additions for this particular
-    full-Henkin-component construction; they do not apply to arbitrary coalesced sums.
-
 # migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
 # the sentence that followed the Σ argument.
+
+- holds: [necessary-intensional-choice-r]
+  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion
+  date: '2026-10-03'
+  text: >-
+    Intensional Choice holds at the root, as the map derives from this record's other verdicts. Every
+    other world is a world of one of the full Henkin components, where a necessarily instantiated
+    $F$ has an instance $a$ and $G:=\lambda x\, .\,x=a$ is in the domain, entails $F$ and is
+    necessarily uniquely instantiated. So Intensional Choice holds at every world.
+
 notes: >-
   Recorded to witness the consistency with C of the sentence through which Possibility Maximalism
   (pure) reaches the Axiom of Infinity at type $t$, and of that Axiom itself. The construction and

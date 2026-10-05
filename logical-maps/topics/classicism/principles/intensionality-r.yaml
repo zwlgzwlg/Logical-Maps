@@ -2,7 +2,7 @@ id: intensionality-r
 name: Intensionality
 category: base
 statement: Necessarily coextensive relations are identical.
-formal: $\forall^{\mathrm{Ty}}\bar\sigma\, .\,\forall X Y\, .\,\Box(\forall\bar z\, .\,X[\bar z]\leftrightarrow
+formal: $\forall X Y^{\bar\sigma t}\, .\,\Box(\forall\bar z^{\bar\sigma}\, .\,X[\bar z]\leftrightarrow
   Y[\bar z])\to X=Y$
 date: '2026-09-17'
 sources:
@@ -14,3 +14,4 @@ references:
   role: formulation
   locator: §1.5, pp. 17–18
 notes: ''
+lean_def: Classicism.P.Intensionality.schemaIn

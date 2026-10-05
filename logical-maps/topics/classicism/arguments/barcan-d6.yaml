@@ -1,0 +1,14 @@
+id: barcan-d6
+requires: [d6-surjective]
+holds: [barcan-r]
+source: {paper: bacon-dorr-classicism, locator: 'Proposition D.6, p. 76'}
+by: Andrew Bacon and Cian Dorr
+date: '2026-09-17'
+text: >-
+  By Proposition D.6.
+revisions:
+- date: '2026-10-02'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: >-
+    The finite-support members' citations of Proposition D.6 stated once, then moved to the topic;
+    each model's reason for meeting D.6's hypothesis is under its `meets`.

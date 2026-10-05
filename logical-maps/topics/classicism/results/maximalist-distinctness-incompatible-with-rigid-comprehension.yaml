@@ -12,7 +12,7 @@ certificate:
     2026, from Goodsell's draft
   checked_by: []
   date: '2026-09-17'
-  lean: none
+  lean: stated
 sources:
 - Zachary Goodsell, Arithmetic is Necessary, draft of 5 June 2024, §6, Theorem 11 and the remark following
   it, p. 25.

@@ -1,0 +1,22 @@
+id: sigma-top-npc
+requires: [sigma-top]
+given: [no-pure-contingency-r]
+holds: [no-contingency-signature-r, signature-b-r]
+by: Cian Dorr (observation); recorded by Claude Opus 5.5 (Anthropic)
+date: '2026-10-02'
+text: >-
+  Each constant of Σ denotes what the closed pure term $\top_\tau$ of its type denotes, so a closed
+  sentence of the language of Σ denotes what the pure sentence with $\top_\tau$ in place of each
+  constant denotes; if true it is necessary by No Pure Contingency, which holds here. So No
+  Contingency (signature Σ) holds, and B for sentences of Σ with it: a true Σ-sentence is
+  necessary, hence necessarily possible.
+revisions:
+- date: '2026-10-03'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: >-
+    The argument sigma-single-top, for Σ a single constant of type $t$ denoting $\top$, stated for
+    every interpretation of Σ by top elements, now that such interpretations have no individual
+    constants. It replaces that argument and nc-sigma-homogeneous, which reached the same verdicts
+    through an individual constant when the model's automorphisms carry every individual to every
+    other. With an individual constant and no such automorphisms the verdicts were unknown in 19
+    models, and nowhere did the individual constants settle a verdict differently.

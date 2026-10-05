@@ -50,6 +50,10 @@ papers:
     that draft. Parts of the draft were drafted with AI assistance; its mathematical claims are attributed
     to the author.
   note: Work in progress. No PDF is copied into the topic or its downloads.
+- id: sun-possible-worlds-without-atomicity
+  title: Possible Worlds Without Atomicity
+  citation: Sun, Christopher. Possible Worlds Without Atomicity. Unpublished draft, September 2026.
+  note: Work in progress. No PDF is copied into the topic or its downloads.
 - id: goodsell-arithmetic-necessary
   title: Arithmetic is Necessary
   citation: Goodsell, Zachary William Lee. Arithmetic is Necessary. Draft dated 5 June 2024, 28 pages. Derives
@@ -80,6 +84,7 @@ papers:
     Branden Fitelson, with Claude (Anthropic) and GPT-6 Astra (OpenAI).
   url: https://github.com/zwlgzwlg/Logical-Maps/blob/main/logical-maps/topics/classicism/sources/prop-2-11-counterexample.pdf
   note: The PDF is also published with this map, in its sources folder.
+  file: sources/prop-2-11-counterexample.pdf
 - id: fitelson-prop-2-11-isabelle
   title: Proposition 2.11 refuted (Isabelle/HOL)
   citation: >-

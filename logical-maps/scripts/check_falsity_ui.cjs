@@ -4,7 +4,7 @@ const {JSDOM,VirtualConsole}=require('jsdom');
 const root=path.resolve(__dirname,'..');
 const template=fs.readFileSync(path.join(root,'viewer/template.html'),'utf8');
 const pages=[],errors=[];
-function page(data,url='http://localhost/'){const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(data)),{url,runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});pages.push(dom);return dom;}
+function page(data,url='http://localhost/'){const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(data)),{url,runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});pages.push(dom);return dom;}
 const cert=source_id=>({source_id,lean:'none',produced_by:'Fixture author',checked_by:[]});
 const fixture={topic:{id:'fixture',title:'Fixture',background:[],source_catalog:[{id:'paper',name:'A paper',kind:'published-paper'},{id:'submission',name:'A submission',kind:'online-submission'}]},principles:'abcde'.split('').map(id=>({id,name:id.toUpperCase(),statement:`Principle ${id}`})),results:[{id:'ea',premises:['e'],conclusion:'a',status:'proved',certificate:cert('paper')},{id:'conflict',premises:['a','b','c','d'],conclusion:false,status:'proved',certificate:cert('submission'),proof:'The four premises contradict each other.',sources:['Fixture theorem'],source_names:['A submission']}],models:[{id:'m',name:'ABC model',satisfies:['a','b','c'],violates:[],status:'proved',certificate:cert('paper'),sources:['Fixture construction'],source_names:['A paper']}]};
 const dom=page(fixture),w=dom.window,d=w.document;
@@ -32,7 +32,7 @@ d.querySelector('[data-source-filter="submission"]').click();assert.equal(d.getE
 d.querySelector('[data-source-filter="submission"]').click();assert.equal(d.getElementById('graph-warning').hidden,false);
 d.getElementById('background-reset').click();assert.equal(d.getElementById('graph-warning').hidden,true);
 // Models derive violations from incompatibility even when violates is empty.
-d.querySelector('#models [data-model="m"]').click();
+d.querySelector('#models [data-ex-inspect][data-id="m"]').click();
 const verdict=d.querySelector('#models [data-verdict="d"]');assert.match(verdict.textContent,/✗/);
 verdict.click();assert.match(d.getElementById('pop').textContent,/A paper/);assert.match(d.getElementById('pop').textContent,/A submission/);
 d.querySelector('#pop [data-goto]').click();
@@ -88,22 +88,22 @@ real.window.select({type:'principle',id:'archimedean-gambles'});
 assert.ok(rd.querySelector('#pop [data-result="rich-simple-dominance-refutes-archimedean-gambles"]'));
 
 for(const id of ['total-exact-ultrafilter','total-continuous-ultrafilter','affine-symmetric-extension']){
- assert.ok(rd.querySelector(`#models .ex-m [data-model="${id}"]`));
+ assert.ok(rd.querySelector(`#models .ex-m [data-open-model="${id}"]`));
 }
 const incomplete=['eventual-clipped-expectation','cdf-area-preorder','cdf-conclosure-preorder'];
-for(const id of incomplete)assert.ok(rd.querySelector(`#models .ex-m [data-model="${id}"]`));
+for(const id of incomplete)assert.ok(rd.querySelector(`#models .ex-m [data-open-model="${id}"]`));
 rd.querySelector('#models [data-theory-preset="dtu"]').click();
 assert.deepEqual(theoryOf(real),dtu);
 assert.deepEqual(assumptions(real),du,'The explorer preset leaves the graph background alone');
 assert.deepEqual(theoryOf(page(data,real.window.location.href)),dtu);
 assert.deepEqual(assumptions(page(data,real.window.location.href)),du);
 for(const id of incomplete){
- assert.equal(rd.querySelector(`#models .ex-m [data-model="${id}"]`),null);
+ assert.equal(rd.querySelector(`#models .ex-m [data-open-model="${id}"]`),null);
 }
 rd.querySelector('#models [data-assume-positive="totality"]').click();
 assert.deepEqual(theoryOf(real),du);
 assert.deepEqual(theoryOf(page(data,real.window.location.href)),du);
-for(const id of incomplete)assert.ok(rd.querySelector(`#models .ex-m [data-model="${id}"]`));
+for(const id of incomplete)assert.ok(rd.querySelector(`#models .ex-m [data-open-model="${id}"]`));
 rd.getElementById('background-reset').click();
 assert.deepEqual(theoryOf(real),du,'Clearing the graph background leaves the explorer alone');
 assert.deepEqual(assumptions(page(data,real.window.location.href)),[]);

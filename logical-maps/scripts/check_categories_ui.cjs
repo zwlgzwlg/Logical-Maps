@@ -18,7 +18,7 @@ const data=(perGroup,principle_categories=categories)=>({topic:topic(principle_c
   models:[]});
 function page(fixture){
   const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e));
-  const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',JSON.stringify(fixture)),
+  const dom=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify(fixture)),
     {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc});
   pages.push(dom);return dom;
 }
@@ -151,5 +151,35 @@ try{
   }
 
   assert.deepEqual(errors.map(String),[]);
+  // The theory explorer's find box offers principles by name; choosing one opens
+  // its category, outlines it, and a category the box opened closes when it moves on.
+  {
+    const dom=page(data(10)),w=dom.window,d=w.document;
+    d.querySelector('.tab[data-tab="models"]').click();
+    // The list re-renders on an assumption, so the box is looked up afresh each time.
+    const box=()=>d.getElementById('ex-find'),list=d.getElementById('ex-find-list');
+    const type=v=>{box().value=v;box().dispatchEvent(new w.Event('input'));};
+    const key=k=>box().dispatchEvent(new w.KeyboardEvent('keydown',{key:k,bubbles:true}));
+    const cat=c=>d.querySelector(`#model-principles details[data-category="${c}"]`);
+    assert.ok(box()&&list.hidden,'A find box sits above the explorer\'s list');
+    type('beta');
+    assert.equal(list.hidden,false);
+    assert.equal(list.querySelectorAll('[data-find]').length,10,'Typing lists the matches');
+    assert.match(list.querySelector('[data-find]').textContent,/Beta \d+Group two/,'Each with its category');
+    assert.ok(!cat('two').open,'Typing alone opens nothing');
+    key('ArrowDown');key('Enter');
+    assert.ok(cat('two').open&&!cat('one').open,'Choosing one opens its category');
+    const found=d.querySelector('#model-principles .ex-p.found');
+    assert.equal(found?.dataset.assumptionRow,'beta1','And outlines it');
+    assert.equal(box().value,'Beta 1');
+    found.querySelector('[data-assume-positive]').click();
+    assert.equal(d.querySelector('#model-principles .ex-p.found')?.dataset.assumptionRow,'beta1','An assumption keeps the find');
+    type('alpha 3');
+    assert.ok(cat('one').open&&!cat('two').open,'A name narrowed to one needs no Enter; the category the box opened closes');
+    key('Escape');
+    assert.ok(!cat('one').open&&!d.querySelector('#model-principles .ex-p.found')&&box().value==='','Escape clears it');
+  }
+  assert.deepEqual(errors.map(String),[]);
+  console.log('PASS: the theory explorer\'s find box lists matching principles with their categories, opens and outlines the one chosen, keeps it across a re-render, closes what it opened when it moves on, and clears on Escape.');
   console.log('PASS: categories collapse in the graph sidebar, the lattice sidebar and the theory explorer, from one shared set; a long list starts closed and a short one open; rows sit inside the disclosure while the group\'s controls stay in the summary and work closed; a rebuild keeps the reader\'s choice; a closed category reports its count and its assumptions; and a search opens the category it lands in.');
 }finally{pages.forEach(p=>p.window.close());}

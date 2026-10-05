@@ -21,3 +21,12 @@ notes: 'Holds in every one-world model whatever the constants denote, so it is c
   with Witnessed Possibility and hence with Logical Necessity, Separated Structure and Maximalist Classicism
   for Σ: a constant of relational type is possibly top and possibly not top under Witnessed Possibility,
   while this schema makes whichever obtains necessary.'
+variants:
+- id: dual
+  name: Dual form
+  statement: Each closed sentence of the signature, if possible, is true.
+  formal: $\Diamond P\to P\quad(P\text{ a closed sentence of }\mathcal L(\Sigma))$
+  equivalence: Pure sentences (resp. sentences of $\mathcal L(\Sigma)$) are closed under negation, so
+    the instance of either form at $\neg P$ is, after contraposition and $\Diamond=\neg\Box\neg$, the
+    instance of the other at $P$.
+lean_def: (Classicism.Meta.AxiomSet.noContingency _)

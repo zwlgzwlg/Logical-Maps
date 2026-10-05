@@ -18,19 +18,34 @@ references:
 
 # migration: the definition is the old description's first sentence, then the notes' interpretation
 # of Σ.
-definition: >-
-  Use two objects with one nonidentity arrow from W0 to W1, evaluated at W0.
-
-
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element of
-  its type and each individual constant denotes one fixed individual.
+group: full-action-models
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values.
+# migration (3 October): recorded at the group's defaults, one individual and Σ top; the source
+# leaves the individuals open.
+settings:
+  construction: >-
+    Use two objects with one nonidentity arrow from W0 to W1, evaluated at W0.
+  individuals: singleton
+  sigma: top
+meets:
+  sigma-apart: The construction does not mention Σ.
+  finitely-many-propositions: >-
+    The propositions at the evaluation object are the subsets of the two arrows out of it, four in
+    all.
+  actual-world-isolated: >-
+    The actual-world proposition, the singleton of the identity, is in the domain, the model being
+    full; no arrow leads back from $W_1$ to $W_0$.
+  irreversible-arrow: >-
+    The arrow $k$ to $W_1$, from which no arrow leads back.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another full action model is now one of the topic's general
+# arguments (arguments/), reached through the group full-action-models and this record's `meets`;
+# what follows is this record's own. Only the verdicts the engine needs to derive the rest are
+# recorded, the source's first.
 
 # --- from the source (17 Sep record) ---
 
@@ -44,48 +59,6 @@ arguments:
 
 # --- later additions ---
 
-- fails: [infinity-t]
-  # migration: `by` adds "at Cian Dorr's direction" from the change's summary.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
-  date: '2026-09-20'
-  text: >-
-    The propositions at the evaluation object are the subsets of the two arrows out of it, four in
-    all, and every intension of a full model is present, so the numerals are the finite
-    cardinalities and the fourth holds of the universal property of propositions: the Axiom of
-    Infinity at type t fails, as does the fifth instance of the schema.
-
-- id: sigma-top
-  fails: [witnessed-possibility-r, independence-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The sentence that
-  # followed the text in the old notes is in `notes`.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed
-    Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but
-    impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\,
-    .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what
-    the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since
-    $c=\top_\tau$ is a true identity that C(Σ) does not prove.
-
-- holds: [necessary-relational-choice-r]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    The truncation of a full action model at any arrow is again a full action model, its domains
-    at the reachable objects being unchanged, and Relational Choice holds in every full model
-    given choice in the metatheory (Classicism, p. 61).
-
-- holds: [distinctness-preserving-collapse]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Let $a$ be the proposition true at the actual world alone (the identity arrow). For any true
-    $p$, take $q:=a$ in the definition of $\Box_{\ne}p$: under a arrow $k$ to $W_1$, $\Diamond a$
-    would need an arrow back to $W_0$, and none exists, since no arrow leads back to the actual
-    world; under the identity, $p$ holds. So every truth is $\Box_{\ne}$-necessary, although ND
-    fails.
-
 - holds: [necessary-strong-leibniz-r]
   # migration: the argument of 22 September for the type-$t$ principle, now derived, is dropped.
   by: Claude Fable 5.1 (Anthropic)
@@ -98,6 +71,20 @@ arguments:
     every possible relation has a strong world below it, at $W_0$ and trivially at the one-world
     $W_1$.
 
+- holds: [necessary-barcan-r]
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-03'
+  text: >-
+    The arrows out of $W_0$ are the identity and $k$. A relation at $W_0$ of relational type
+    $\bar\sigma t$ is a set of pairs $\langle i,\bar a\rangle$ with $\bar a$ a tuple at $i$'s
+    target, and $k$ carries it to the relation at $W_1$ whose extension at the identity of $W_1$
+    is its extension at $k$, the only arrow into $W_1$'s identity being composed with $k$. In a
+    full model that extension at $k$ is any set of tuples at $W_1$, so $k$ acts surjectively at
+    every relational type; at type $e$ it does under either choice of individuals, sending the one
+    individual to the one individual, or each natural number to itself. So BF holds at $W_0$ by
+    Classicism, Proposition 3.24(ii), and it holds at $W_1$, whose only arrow is the identity, so
+    $\Box$BF holds.
+
 - fails: [pure-b-r]
   by: Claude Fable 5.1 (Anthropic)
   date: '2026-09-25'
@@ -109,11 +96,12 @@ arguments:
 # sentence that followed the Σ argument, and the last sentence of the argument for BF (type $t$).
 # That argument, the one for the failure of Possible Infinity (type $t$) and the one for □Relational
 # Choice of 20 September, whose verdicts are now derived, are dropped.
+# migration (3 October): its last sentence, that BF at type $e$ was left open since the record did
+# not fix the individual domains, is dropped: they are fixed now, and BF is argued above.
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
   identifies its evaluation point; construction and verification are given at the PDF locations in
-  References. Everything that implies these fails with them. Whether BF holds at type $e$ depends
-  on the individual domains, which the record does not fix, so the schema is left open.
+  References. Everything that implies these fails with them.
 
 was_conjectured: true
 

@@ -1,0 +1,88 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "group.schema.json",
+ "title": "Model group",
+ "description": "What a family of models written as arguments would otherwise copy: a definition with {{parameter}} slots that each member fills, named conditions stated in prose, and shared arguments, arguments that apply to every member whose settings match `when` and that meets every condition in `requires`. Kept in topics/<topic>/groups/<id>.yaml. Members stay in their own files and name the group. Nothing is inherited by default, and the engine never sees a group: the build expands each member's shared arguments into its arguments before flattening.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": ["id", "name", "definition", "parameters", "arguments"],
+ "properties": {
+  "id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Equals the file stem."},
+  "name": {"type": "string", "minLength": 1},
+  "definition": {"type": "string", "minLength": 1, "description": "The construction the members share. {{name}} marks where a parameter's setting goes; a member may add text of its own after it."},
+  "parameters": {
+   "type": "object",
+   "description": "The ways members differ. A parameter with named values is set to one of them, or to {text: ...} for prose of the member's own, which no `when` matches; a parameter without is a prose slot.",
+   "propertyNames": {"pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
+   "additionalProperties": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["text"],
+    "properties": {
+     "text": {"type": "string", "minLength": 1, "description": "What the parameter is."},
+     "generate": {"type": "boolean", "description": "Each member also gives a variant, a model of its own, for every other value whose requires it meets."},
+     "default": {"type": "string", "description": "A generated parameter's value for a member that sets none."},
+     "values": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {"pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
+      "additionalProperties": {"oneOf": [
+       {"type": "string", "minLength": 1, "description": "The prose this value puts in the definition."},
+       {"type": "object", "additionalProperties": false, "required": ["text"], "properties": {
+        "text": {"type": "string", "minLength": 1, "description": "The prose this value puts in the definition."},
+        "label": {"type": "string", "minLength": 1, "description": "A few words naming the value in a variant's name."},
+        "requires": {"type": "array", "items": {"type": "string"}, "uniqueItems": true, "description": "Conditions a member must meet to take this value."},
+        "meets": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}, "description": "Conditions (the group's or the topic's) every model at this value meets, with the reason."}
+       }}
+      ]}
+     }
+    }
+   }
+  },
+  "conditions": {
+   "type": "array",
+   "description": "Named properties a member may have, stated in prose. A member claims one under `meets`, with its reason.",
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "text"],
+    "properties": {
+     "id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
+     "text": {"type": "string", "minLength": 1}
+    }
+   }
+  },
+  "meets": {"type": "object", "additionalProperties": {"oneOf": [
+   {"type": "string", "minLength": 1},
+   {"type": "object", "additionalProperties": false, "required": ["text", "requires"], "properties": {
+    "text": {"type": "string", "minLength": 1},
+    "requires": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true}}}
+  ]}, "description": "Conditions of the topic (conditions.yaml) every member meets, with the reason; or, given as {text, requires}, those that the members meeting `requires` meet."},
+  "arguments": {"type": "array", "items": {"$ref": "#/$defs/shared_argument"}},
+  "notes": {"type": "string", "description": "Text that supports no verdict."},
+  "references": {}
+ },
+ "$defs": {
+  "applies": {
+   "properties": {
+    "when": {
+     "type": "object",
+     "description": "A conjunction over parameters with named values; a list of values within one means any of them.",
+     "additionalProperties": {
+      "oneOf": [
+       {"type": "string"},
+       {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true}
+      ]
+     }
+    },
+    "requires": {
+     "type": "array",
+     "items": {"type": "string"},
+     "uniqueItems": true,
+     "description": "Conditions every member it applies to meets."
+    }
+   }
+  },
+  "shared_argument": {}
+ }
+}

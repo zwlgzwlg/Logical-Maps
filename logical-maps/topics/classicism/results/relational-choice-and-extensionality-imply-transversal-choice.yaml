@@ -11,7 +11,8 @@ certificate:
   recorded_by: Claude Fable 5.1 (Anthropic), 25 September 2026
   checked_by: []
   date: '2026-09-25'
-  lean: none
+  lean: verified
+  lean_ref: Classicism.Map.relational_choice_and_extensionality_imply_transversal_choice
 sources:
 - Zachary Goodsell, question of 25 September 2026, after Christopher Sun's observation; the quotient
   argument as recorded.

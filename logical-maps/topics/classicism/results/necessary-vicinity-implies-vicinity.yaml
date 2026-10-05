@@ -9,7 +9,8 @@ certificate:
   recorded_by: Claude Opus 5.5 (Anthropic), 27 September 2026
   checked_by: []
   date: '2026-09-27'
-  lean: none
+  lean: verified
+  lean_ref: Classicism.Map.necessary_vicinity_implies_vicinity
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §1.5, T, p. 16.
 source_names:

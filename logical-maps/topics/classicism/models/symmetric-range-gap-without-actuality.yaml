@@ -19,24 +19,47 @@ references:
 
 # migration: the definition is the old description's first paragraph, then the notes' interpretation
 # of Σ.
-definition: >-
-  A symmetric ideally-full intensional action model over one object, the set of natural numbers.
-  Its arrows are of two disjoint kinds: the surjections for which the distinguished individual is
-  its own only preimage, and the functions that omit the distinguished individual from their
-  range. Its symmetry group is the permutations fixing that individual, which is now a proper
-  subset of the first kind. An arrow's value at the distinguished individual still tells the two
-  kinds apart, but no finite set separates any arrow. The evaluation point is the identity arrow.
-
-
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element of
-  its type and each individual constant denotes one fixed individual.
+group: symmetric-ideally-full
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values.
+# migration (3 October): recorded at the group's defaults, Σ top and the base as the individuals; the individuals were the base already.
+settings:
+  construction: >-
+    A symmetric ideally-full intensional action model over one object, the set of natural numbers.
+    Its arrows are of two disjoint kinds: the surjections for which the distinguished individual is
+    its own only preimage, and the functions that omit the distinguished individual from their
+    range. Its symmetry group is the permutations fixing that individual, which is now a proper
+    subset of the first kind. An arrow's value at the distinguished individual still tells the two
+    kinds apart, but no finite set separates any arrow. The evaluation point is the identity arrow.
+  individuals: base
+  sigma: top
+meets:
+  collapse-onto-point: >-
+    As for the range-gap model: $F:=\lambda x\, .\,x\ne a\land\neg Ex$ with $E$ the constant intension $\{d\}$ of the distinguished individual, and $h$ a range-deficient function constant with value $p\ne d$ on $N\cup\{a\}$; $F_h$ omits $p$ and $d$, and permutations fixing $p$ and $d$ move every other point.
+  one-object-action-model: >-
+    It has one object (Dorr, draft, §3.1: closed pure terms denote entities fixed by every arrow).
+  transposable: >-
+    $M=\{0\}$, the distinguished individual, and for $N$ the property of not belonging to
+    $N\cup\{0\}$: the transposition of $y$ with another individual outside $N\cup\{0\}$ fixes $0$, so
+    lies in the symmetry group.
+  fixes-or-omits: >-
+    The arrows are the surjections for which $0$ is its own only preimage, which fix it, and the
+    functions omitting $0$ from their range.
+  transport-gap: >-
+    Take $N=\{0\}$, $i$ any arrow with $i0\ne0$, so that every arrow agreeing with it on $N$ omits
+    $0$ from its range, and $q:=\{k : k0=0\}$, the first class of arrows, pinned down by $\{0\}$ and
+    symmetric: an arrow $k$ of the first class and the arrow $k^{\prime}$ agreeing with it off $0$ but
+    sending $0$ elsewhere, which omits $0$ from its range since $0$ is $k$’s only preimage of $0$,
+    are separated by $q$. The intension the argument uses is pinned down by $N$, and symmetric,
+    since $g\cdot q=q$ for $g$ fixing $0$ and $(g\circ j)0=0$ iff $j0=0$, so it lies in the domain.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another symmetric model is now a shared argument of the group
+# symmetric-ideally-full or one of the topic's general arguments (arguments/), with this record's
+# witness under `meets`; what follows is this record's own. Only the verdicts the engine needs to
+# derive the rest are recorded, the source's first.
 
 # --- from the source (19 Sep record) ---
 
@@ -47,14 +70,6 @@ arguments:
     the two of them extends within that class, by nonzero values in the second case and by
     surjective nonzero values in the first.
 
-- holds: [no-pure-contingency-r]
-  text: >-
-    One object gives No Pure Contingency and the boxed form.
-
-- fails: [barcan-r]
-  text: >-
-    At type e by the argument of the previous variant, which goes through verbatim.
-
 - holds: [atomlessness]
   text: >-
     The first class of arrows contains non-injective ones, which restores the arguments used for
@@ -64,75 +79,6 @@ arguments:
     arbitrary nonzero proposition rather than a true one gives Atomlessness.
 
 # --- later additions ---
-
-- holds: [axiom-of-infinity-e]
-  # migration: `by` adds "at Cian Dorr's direction" from the change's summary, which is the text.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
-  date: '2026-09-20'
-  text: >-
-    The individuals are the natural numbers and identity at the identity arrow is literal, so no
-    numeral counts them. The propositions that a given individual is fixed by the arrow, one for
-    each individual, are pairwise distinct, symmetric and pinned by that individual, so there are
-    infinitely many propositions. The set of numerals at each type is invariant under every arrow,
-    hence symmetric and pinned by the empty set, so finite cardinality is standard and no finite
-    cardinality holds of the universal property at either type.
-
-- id: sigma-top
-  fails: [independence-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The sentence that
-  # followed the text in the old notes is in `notes`.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed
-    Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but
-    impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\,
-    .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what
-    the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since
-    $c=\top_\tau$ is a true identity that C(Σ) does not prove.
-
-- fails: [relational-choice-r]
-  # migration: the closing "Argument of 23 September 2026, after Cian Dorr’s observation that a
-  # choice over the individuals cannot be finitely pinned down;" becomes `by` and `date`; in what
-  # followed it, "he" becomes "Cian Dorr".
-  by: Claude Fable 5.1 (Anthropic), after Cian Dorr’s observation that a choice over the
-    individuals cannot be finitely pinned down
-  date: '2026-09-23'
-  text: >-
-    At the types $(e\to t)$ and $e$. Let $U:=\lambda Xy\, .\,Xy\lor\neg\exists z\, .\,Xz$, a
-    closed term, hence in the domain, and serial. A functional subrelation $S$ of $U$ would lie in
-    the domain at the evaluation object, so it is symmetric and pinned down by a finite set $N$.
-    Two facts about such an $S$ (Dorr, draft, Lemma 21): every $g\in G$ fixing $N$ pointwise
-    satisfies $g^{[\sigma]}S=S$, and symmetry gives $\langle gA,gy,g\rangle\in S$ whenever
-    $\langle A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$. Now let $A$ be the
-    property of not belonging to $N\cup\{0\}$. It is in the domain, being pinned down by that
-    finite set and symmetric, and its extension is nonempty, so $S$ relates $A$ at the identity to
-    some $y$ in its extension. The transposition of $y$ with another individual outside
-    $N\cup\{0\}$ fixes $0$, so lies in $G$, fixes $A$ and moves $y$ to some $gy\ne y$, so $S$
-    relates $A$ to $gy$ as well, and $S$ is not functional at the identity arrow. The
-    well-ordering of the individuals that Cian Dorr had in mind is refuted by the same two facts,
-    but the direct route needs no derivation of a well-ordering from Relational Choice in C.
-
-- fails: [barcan-t]
-  by: Claude Fable 5.1 (Anthropic), answering Cian Dorr’s question whether the failure of BF
-    sharpens to type $t$
-  date: '2026-09-23'
-  text: >-
-    In a one-object finitely pinned model, BF (type t) fails as soon as there are a finite $N$, an
-    arrow $i$ and a proposition $q$ in the domain that is the transport $i^{\prime}\cdot p=\{k :
-    k\circ i^{\prime}\in p\}$ of no proposition $p$ along any arrow $i^{\prime}$ agreeing with $i$
-    on $N$: the intension $X:=\{\langle r,j\rangle : r\ne q\text{ or }j\text{ disagrees with
-    }i\text{ on }N\}$ is pinned down by $N$, contains $\langle i^{\prime}\cdot
-    p,i^{\prime}\rangle$ for every $p$ and $i^{\prime}$, so $\forall p\, .\,\Box Xp$ holds at the
-    identity, and omits $\langle q,i\rangle$, so $\Box\forall p\, .\,Xp$ fails there. Since
-    membership of $k$ in $i^{\prime}\cdot p$ depends only on $k$ restricted to the range of
-    $i^{\prime}$, it suffices that $q$ separate two arrows agreeing on every such range. Here take
-    $N=\{0\}$, $i$ any arrow with $i0\ne0$, so that every arrow agreeing with it on $N$ omits $0$
-    from its range, and $q:=\{k : k0=0\}$, the first class of arrows, pinned down by $\{0\}$ and
-    symmetric: an arrow $k$ of the first class and the arrow $k^{\prime}$ agreeing with it off $0$
-    but sending $0$ elsewhere, which omits $0$ from its range since $0$ is $k$’s only preimage of
-    $0$, are separated by $q$. The intension $X$ is symmetric, since $g\cdot q=q$ for $g$ fixing
-    $0$ and $(g\circ j)0=0$ iff $j0=0$, so it lies in the domain.
 
 - holds: [inextensible-comprehension-r]
   # migration: "Argument of Claude Opus 5.5 (Anthropic), 27 September 2026, at Cian Dorr's request."

@@ -33,6 +33,14 @@ definition: >-
   evaluation point is the identity of $W_0$; every world reachable from it can return to it
   through $\pi$.
 
+# 3 October 2026: met for the topic's general argument intensional-choice-well-ordering.
+meets:
+  codomain-intensions: >-
+    The model is ideally full at both objects, and an intension whose value at an arrow depends
+    only on the arrow's codomain is pinned down by $\emptyset$ (Appendix D, the remark after
+    Definition D.3).
+  metatheory-choice: The construction is carried out in ZFC (Appendix D).
+
 arguments:
 
 # Only the verdicts the engine needs to derive the rest are recorded. Lead-ins naming the verdict,

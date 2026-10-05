@@ -14,3 +14,14 @@ references:
   role: formulation
   locator: §2.2, pp. 23–26; Appendix D, n. 92, p. 74
 notes: ''
+variants:
+- id: lub
+  lean:
+    ref: Classicism.P.BooleanCompletenessTLUB.schemaIn
+    equivalence_ref: Classicism.Map.boolean_completeness_t.lub
+    status: verified
+  name: Least-upper-bound form
+  statement: Every property of propositions has a least upper bound.
+  formal: $\forall X^{tt}\, .\,\exists p\, .\,\operatorname{LUB}_t(p,X)$
+  equivalence: The argument for the least-upper-bound form of Boolean Completeness, at type $t$.
+lean_def: Classicism.P.BooleanCompletenessT.schemaIn

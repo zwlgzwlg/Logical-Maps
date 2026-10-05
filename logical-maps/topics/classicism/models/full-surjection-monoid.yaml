@@ -22,74 +22,57 @@ references:
 
 # migration: the definition is the old description's first sentence, then the notes' interpretation
 # of Σ.
-definition: >-
-  Use the monoid of surjections of an infinite set and a surjective individual action, at its sole
-  object.
-
-
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element of
-  its type and each individual constant denotes one fixed individual $d$.
+group: full-action-models
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values. The
+# interpretation's "one fixed individual $d$" lost its "$d$", which the No Contingency (signature Σ)
+# argument, now a general one, names itself.
+# migration (3 October): the construction drops "and a surjective individual action", the
+# individuals now being the group's parameter; both of its values act surjectively, which is what
+# the source's argument below uses. The `meets` for homogeneous-individuals, which concerned the
+# source's action, is now each individuals value's.
+settings:
+  construction: >-
+    Use the monoid of surjections of an infinite set, at its sole object.
+  individuals: singleton
+  sigma: top
+meets:
+  sigma-apart: The construction does not mention Σ.
+  one-object-action-model: >-
+    It has one object.
+  irreversible-arrow: >-
+    A surjection that is not injective: no composite with it is the identity.
 
 arguments:
 
-# Only the verdicts the engine needs to derive the rest are recorded, the source's first. Lead-ins
-# naming the verdict, and attribution sentences, are dropped from the texts, their content being in
-# holds, fails, by and date; a text cut from a longer sentence begins with a capital and ends with a
-# full stop.
+# Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
+# record shared in substance with another full action model is now one of the topic's general
+# arguments (arguments/), reached through the group full-action-models and this record's `meets`;
+# what follows is this record's own. Only the verdicts the engine needs to derive the rest are
+# recorded, the source's first.
 
 # --- from the source (17 Sep record) ---
 
 - holds: [no-pure-contingency-r, rigid-comprehension-r, atomicity-r, barcan-r]
   fails: [distinctness-necessary-t]
   source: {paper: bacon-dorr-classicism, locator: '§3.5, p. 59, third paragraph'}
+  # migration (3 October): the source takes a surjective individual action; one individual and
+  # infinitely many fixed individuals both act surjectively.
   text: >-
     The source cites Bacon 2020, Proposition A.3 for the higher-type surjectivity argument.
 
 # --- later additions ---
 
-- holds: [relational-choice-r]
-  # migration: `by` adds "at Cian Dorr's direction" from the change's summary; `source` is the page
-  # the text cites.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
-  date: '2026-09-20'
-  source: {paper: bacon-dorr-classicism, locator: 'p. 61'}
-  text: >-
-    With choice in the metatheory a serial relation has a functional subrelation, and a full model
-    contains every intension, so that subrelation is in the domain; see Classicism, p. 61, on the
-    principles common to full models.
-
-- holds: [axiom-of-infinity-e, axiom-of-infinity-t]
+- holds: [axiom-of-infinity-t]
   # migration: `by` adds "at Cian Dorr's direction" from the change's summary.
+  # migration (3 October): the type-$e$ half is now the general argument for infinitely many fixed
+  # individuals, which is this argument's; the text keeps the type-$t$ half.
   by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
   date: '2026-09-20'
   text: >-
-    The individuals are an infinite set and the arrows an infinite monoid, identity at the
-    identity arrow is literal, and the numeral sets at each type are intensions of a full model,
-    so no finite cardinality holds of the universal property at type e or at type t.
-
-- id: sigma-top
-  fails: [independence-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    With $c\in\Sigma$ of relational type $\tau$, $c=\top_\tau$ necessarily, so Witnessed
-    Possibility fails for the pure formula $x\ne\top_\tau$, Separated Structure fails since
-    $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$, Independence (signature Σ)
-    fails since $c$ denotes what a closed pure term denotes, and Distinctness Maximalism
-    (signature Σ) fails since $c=\top_\tau$ is true and unprovable.
-
-- holds: [no-contingency-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-23'
-  text: >-
-    The relational constants denote pure entities, so a closed Σ-sentence denotes what some
-    $P(d,\ldots,d)$ denotes for a pure formula $P$; the model’s automorphisms carry every
-    individual to every other, so $P(d,\ldots,d)$ is materially equivalent to the pure sentence
-    $\forall x\, .\,P(x,\ldots,x)$ and its negation to $\forall x\, .\,\neg P(x,\ldots,x)$;
-    whichever is true is necessary by No Pure Contingency, and instantiation under the box gives
-    $\Box P(d,\ldots,d)$ or $\Box\neg P(d,\ldots,d)$.
+    The arrows are an infinite monoid, identity at the identity arrow is literal, and the numeral
+    sets at type t are intensions of a full model, so no finite cardinality holds of the universal
+    property at type t.
 
 - fails: [distinctness-preserving-collapse]
   by: Claude Fable 5.1 (Anthropic)
@@ -107,6 +90,12 @@ notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
   identifies its evaluation point; construction and verification are given at the PDF locations in
   References.
+
+
+  The source takes infinitely many individuals with a surjective action, such as the surjections'
+  action on the set by evaluation. That action gives, on the map's principles, what the variant
+  with infinitely many fixed individuals gives: it is surjective and homogeneous, and the failure
+  of ND at type $e$ that its non-injectivity brings adds nothing, ND failing already at type $t$.
 
 was_conjectured: true
 

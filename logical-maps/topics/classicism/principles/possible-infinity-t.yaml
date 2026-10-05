@@ -15,3 +15,4 @@ notes: >-
   route. With No Pure Contingency, or with BF (type $t$), this principle gives the Axiom back; whether it
   does so in C alone is recorded as an open question. See Background for $\mathbf{0}$,
   $\operatorname{Suc}$ and $\operatorname{FiniteCardinality}$.
+lean_def: Classicism.P.PossibleInfinityT.schemaIn

@@ -19,7 +19,7 @@ const fixture = {
 };
 function page(data = fixture) {
   const vc = new VirtualConsole(); vc.on('jsdomError', e => errors.push(e));
-  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {url: 'https://maps.example/', runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc});
+  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', ()=>JSON.stringify(data)), {url: 'https://maps.example/', runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc});
   pages.push(dom); return dom.window;
 }
 const json = (w, code) => JSON.parse(w.eval(`JSON.stringify(${code})`) ?? 'null');

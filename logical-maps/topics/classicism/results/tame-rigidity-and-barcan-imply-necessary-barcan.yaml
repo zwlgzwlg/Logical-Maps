@@ -1,0 +1,34 @@
+id: tame-rigidity-and-barcan-imply-necessary-barcan
+premises:
+- tame-rigidity-r
+- barcan-r
+conclusion: necessary-barcan-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Fable 5.1 (Anthropic), 3 October 2026
+  recorded_by: Claude Opus 5.5 (Anthropic), 3 October 2026
+  checked_by: []
+  date: '2026-10-03'
+  lean: none
+sources:
+- Claude Fable 5.1 (Anthropic), Classicism session of 3 October 2026, answering Cian Dorr's question about
+  Tame Rigidity in the coalesced roots.
+source_names:
+- Fable 3 Oct
+proof: >-
+  Apply Tame Rigidity at the type tuple $\bar\sigma$ to $Y:=\lambda\bar x\, .\,\top$.
+  $\operatorname{Persistent}(Y)$ is $Y\le\lambda\bar x\, .\,\Box\top$, a theorem. Since $Y\le X$ is
+  $\Box\forall\bar x\, .\,X[\bar x]$, $\operatorname{WeaklyInextensible}(Y)$ unfolds to $\forall X\, .\,
+  (\forall\bar x\, .\,\Box X[\bar x])\to\Box\forall\bar x\, .\,X[\bar x]$, which is BF at $\bar\sigma$,
+  and $\operatorname{Inextensible}(Y)$ is its necessitation. So BF makes $Y$ weakly rigid, Tame
+  Rigidity makes it rigid, and its inextensibility is $\Box$BF at $\bar\sigma$. This for every type
+  tuple gives the result.
+references:
+- paper: sun-possible-worlds-without-atomicity
+  role: background
+  note: Tame Rigidity.
+notes: >-
+  Tame Rigidity applied to the top relation: weak inextensibility of $\top$ is BF and its
+  inextensibility is $\Box$BF. With it the map derives the failure of Tame Rigidity in
+  finite-support-two-object-all-maps, where BF holds and $\Box$BF fails.

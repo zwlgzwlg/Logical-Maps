@@ -34,6 +34,21 @@
    "items": {"$ref": "#/$defs/argument"},
    "description": "Argument format: the direct verdicts and their reasons. The build computes satisfies, violates and status from these."
   },
+  "group": {
+   "type": "string",
+   "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+   "description": "Argument format: a group groups/<id>.yaml the model belongs to. The group's definition, completed by the settings, comes before the record's own, which is then optional; the group's shared arguments that apply join the record's arguments."
+  },
+  "settings": {
+   "type": "object",
+   "additionalProperties": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "object", "additionalProperties": false, "required": ["text"], "properties": {"text": {"type": "string", "minLength": 1}}}]},
+   "description": "A group's member: a setting for each of the group's parameters. A parameter with named values takes one of them, or {text: ...} for prose of the record's own; a prose slot takes the prose."
+  },
+  "meets": {
+   "type": "object",
+   "additionalProperties": {"type": "string", "minLength": 1},
+   "description": "Each condition it meets, with the reason: a condition of its group's, or of the topic's (conditions.yaml), which brings the topic's general arguments that require it."
+  },
   "construction": {
    "type": "object",
    "additionalProperties": false,
@@ -209,12 +224,14 @@
  },
  "if": {"anyOf": [{"required": ["arguments"]}, {"required": ["definition"]}]},
  "then": {
-  "required": ["definition", "arguments"],
+  "required": ["arguments"],
+  "anyOf": [{"required": ["definition"]}, {"required": ["group"]}],
+  "dependentRequired": {"group": ["settings"], "settings": ["group"]},
   "properties": {"satisfies": false, "violates": false, "status": false, "description": false, "model_check": false, "tier": false, "changes": false}
  },
  "else": {
   "required": ["satisfies", "violates"],
-  "properties": {"construction": false, "history": false},
+  "properties": {"construction": false, "history": false, "group": false, "settings": false, "meets": false},
   "if": {
    "properties": {
     "status": {
@@ -252,6 +269,11 @@
     "writeup": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "A write-up writeups/<id>.md that gives the argument."},
     "like": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*#[a-z0-9]+(-[a-z0-9]+)*$", "description": "An analogous argument in another record, as <record>#<argument id>. Nothing is inherited from it."},
     "adapt": {"type": "string", "description": "What changes from the argument named by like; used only with like. Empty claims that it applies word for word."},
+    "when": {
+     "type": "object",
+     "description": "A group's member only: the settings of the group's parameters at which the argument applies, as in a shared argument; `own` matches a setting given as the member's own prose. Without it the argument applies at every setting, the member's variants included.",
+     "additionalProperties": {"oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true}]}
+    },
     "by": {"type": "string", "description": "Who supplied the argument. Defaults to the certificate."},
     "date": {"type": "string", "description": "When the argument was supplied. Defaults to the certificate date."},
     "standing": {"enum": ["established", "conjectured"], "default": "established"},

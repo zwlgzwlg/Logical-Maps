@@ -179,6 +179,18 @@ When you (an AI) add or edit a result or model:
   argument with `standing: conjectured`, not a separate record. Such a record
   lists only the verdicts from which the engine derives the rest, its source's
   first (README); add an argument only for a verdict the engine cannot derive.
+- A model in a group (README, "Model groups") gets the group's shared arguments that
+  match its settings and the conditions it `meets`. An argument that would hold
+  for every member that meets some condition belongs in the group as a
+  shared argument, not copied into members; lift one only when another member would
+  otherwise copy it, and check closures with `check_flattening.py --closure`.
+  An argument that holds for every model with some property, in or beyond one
+  group, belongs in the topic's `arguments/` with the property in
+  `conditions.yaml`; records, groups and parameter values say why they meet it
+  under `meets` (README, "General arguments").
+  When a group generates variants, every argument (own or shared) applies to
+  every variant unless its `when` limits it: give `when` to any argument that
+  relies on a particular setting, and check the variants' verdicts.
 - When you add content to an existing record after its certificate date (a
   newly verified property of a model, an added proof, a corrected statement),
   append an entry to its `changes` list: `date`, `by`, `summary`, and for models
@@ -198,8 +210,9 @@ When you (an AI) add or edit a result or model:
 
 ## Editing data
 
-- Catalogue source papers in `topics/<topic>/papers.yaml`, with citations and
-  external URLs. Connect records with `references` entries (`paper`, `role`,
+- Catalogue source papers in `topics/<topic>/papers.yaml`, with citations,
+  external URLs, and optionally `file: sources/<name>` for a copy published with
+  the site (only documents authorised for redistribution). Connect records with `references` entries (`paper`, `role`,
   optional `locator` and `note`). Roles are `origin`, `formulation`, `proof`,
   `background`, or `related`; explain adapted formulations. A reference does
   not change `certificate.source_id` or verify a result.

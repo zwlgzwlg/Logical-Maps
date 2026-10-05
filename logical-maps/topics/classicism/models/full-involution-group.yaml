@@ -21,18 +21,27 @@ references:
 # the third is copied from the 20 September change. In the Σ paragraph, moved from the notes,
 # "$\{1\}$" replaces "described above", since nothing above described the actual-world
 # proposition.
-definition: >-
-  The full action model on the two-element group $\{1,k\}$ with $k^2=1$: the construction of
-  Classicism p. 59 (record full-idempotent-monoid) with the two-arrow multiplication changed
-  to $k^2=1$. Evaluate at the sole object. The propositions at the evaluation object are the
-  subsets of the two arrows out of it, four in all, and every intension of a full model is
-  present.
-
-
-  Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type
-  $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of the
-  model, the actual-world proposition $\{1\}$; every other relational constant denotes the top
-  element of its type and every individual constant one fixed individual.
+group: full-action-models
+# migration (2 October): the old definition is the group's, completed by these settings: `construction`
+# is its first paragraph, verbatim; its interpretation of Σ is one of the group's values.
+# migration (3 October): recorded at the group's defaults, one individual and Σ top; the source
+# leaves the individuals open, and Σ true atom, until then the record's, is now a variant.
+settings:
+  construction: >-
+    The full action model on the two-element group $\{1,k\}$ with $k^2=1$: the construction of
+    Classicism p. 59 (record full-idempotent-monoid) with the two-arrow multiplication changed
+    to $k^2=1$. Evaluate at the sole object. The propositions at the evaluation object are the
+    subsets of the two arrows out of it, four in all, and every intension of a full model is
+    present.
+  individuals: singleton
+  sigma: top
+meets:
+  sigma-apart: The construction does not mention Σ.
+  one-object-action-model: >-
+    It has one object.
+  finitely-many-propositions: >-
+    The propositions at the evaluation object are the subsets of the two arrows out of it, four in
+    all.
 
 arguments:
 
@@ -45,61 +54,9 @@ arguments:
   text: The source establishes boxed ND and exhibits four propositions.
   # Recorded 17 Sep by OpenAI Codex (GPT-6); provenance as in the certificate, so nothing to add.
 
-- holds: [relational-choice-r]
-  # migration: `by` adds "at Cian Dorr's direction" from the change's summary; `source` is the
-  # page the text cites.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
-  date: '2026-09-20'
-  source: {paper: bacon-dorr-classicism, locator: p. 61}
-  text: >-
-    With choice in the metatheory a serial relation has a functional subrelation, and a full
-    model contains every intension, so that subrelation is in the domain; see Classicism, p. 61,
-    on the principles common to full models.
-
-- fails: [infinity-t]
-  # migration: `by` adds "at Cian Dorr's direction" from the change's summary.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
-  date: '2026-09-20'
-  text: >-
-    The propositions at the evaluation object are the subsets of the two arrows out of it, four
-    in all, and every intension of a full model is present, so the numerals are the finite
-    cardinalities and the fourth holds of the universal property of propositions: the Axiom of
-    Infinity at type t fails, as does the fifth instance of the schema.
-
-- id: sigma-true-atom
-  fails: [no-contingency-signature-r, independence-signature-r]
-  # migration: `by` adds "at Cian Dorr’s request" from the change's summary. The notes'
-  # lead-in "Under it:" is dropped; the sentence that followed this argument there is in `notes`.
-  # The text is the 23 September version; the revision notes paraphrase the two 23 September
-  # changes, which are verbatim in `history`.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
-  date: '2026-09-22'
-  text: >-
-    No Contingency (signature Σ) fails, since the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes
-    $a$, true and contingent; Witnessed Possibility fails for the pure formula $x=\top_\tau$,
-    witnessed by $\top_\tau$, since $\Diamond(c=\top_\tau)$ is $\Diamond\Box a$ and $a$ is
-    necessary at no arrow; Separated Structure fails with it, being equivalent to Possibly
-    Witnessed Possibility; Independence (signature Σ) and Distinctness Maximalism (signature Σ)
-    fail through the other relational constants, Σ being assumed to contain at least one: such a
-    constant $c'$ of type $\tau'$ denotes what the closed pure term $\top_{\tau'}$ denotes, and
-    $c'=\top_{\tau'}$ is a true identity that C(Σ) does not prove. The designated constant
-    refutes neither: closed pure terms denote entities fixed by every arrow (Classicism, §3.5,
-    p. 58), whereas $a$ is fixed by no arrow but the identity, so no closed pure term denotes
-    $\lambda\bar x\, .\,a$.
-  revisions:
-  - date: '2026-09-23'
-    by: Claude Fable 5.1 (Anthropic)
-    note: >-
-      Interpretation of Σ re-fixed (designated constant denotes the true atom) so as to settle
-      No Contingency (signature Σ), at Cian Dorr’s request; No Contingency added.
-  - date: '2026-09-23'
-    by: Claude Fable 5.1 (Anthropic)
-    note: >-
-      Corrected the reason for the Independence and Distinctness failures: they come from the
-      other relational constants, not the designated one. No verdict changed.
-
 # migration: sentences of the old notes that no argument holds, verbatim. The last one followed
 # the Σ argument (sigma-true-atom) and refers to its failures.
+
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
   identifies its evaluation point; construction and verification are given at the PDF locations

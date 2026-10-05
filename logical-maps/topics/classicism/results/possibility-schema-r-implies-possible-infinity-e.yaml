@@ -9,7 +9,8 @@ certificate:
   recorded_by: Claude Fable 5.1 (Anthropic), 20 September 2026
   checked_by: []
   date: '2026-09-20'
-  lean: none
+  lean: verified
+  lean_ref: Classicism.Map.possibility_schema_r_implies_possible_infinity_e
 sources:
 - Cian Dorr, suggestion of 20 September 2026.
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §3.2, Definition 3.6 and Proposition 3.7,

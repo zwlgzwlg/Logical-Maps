@@ -2,7 +2,10 @@ id: boolean-completeness-r
 name: Boolean Completeness
 category: lattice
 statement: Every property of entities of a relational type has a greatest lower bound in that type.
-formal: $\forall^{\mathrm{Ty}}\tau\ne e\, .\,\forall X^{\tau t}\, .\,\exists y^\tau\, .\,\operatorname{GLB}_\tau(y,X)$
+formal: $\forall X^{\tau t}\, .\,\exists y^\tau\, .\,\operatorname{GLB}_\tau(y,X)\qquad(\tau\ne e)$
+definitions: |-
+  where $\operatorname{GLB}_\tau(y,X):=\forall z^\tau\, .\,(\forall w^\tau\, .\,Xw\to z\le_\tau w)\leftrightarrow
+  z\le_\tau y$: the lower bounds of $X$ are exactly the entities below $y$.
 date: '2026-09-17'
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §2.2, pp. 23–24.
@@ -13,3 +16,37 @@ references:
   role: formulation
   locator: §2.2, pp. 23–24
 notes: ''
+about: |-
+  Classicism already makes each relational type a Boolean algebra under entailment, with finite meets
+  and joins: conjunction, disjunction and negation, pointwise at types $\sigma\to t$. Boolean
+  Completeness adds infinitary meets. However many entities a property collects, there is a strongest
+  entity entailed by all of them, the conjunction of the property's instances at type $t$. It is
+  needed whenever a construction conjoins an arbitrary collection of propositions, for instance in
+  building a world as the conjunction of all truths.
+
+  It fails in most of the finite-support action models, where the would-be meet of an infinite property need
+  not be pinned down by any finite set. Dorr's symmetric models show that it does not bring Rigid
+  Comprehension with it.
+variants:
+- id: lub
+  lean:
+    ref: Classicism.P.BooleanCompletenessLUB.schemaIn
+    equivalence_ref: Classicism.Map.boolean_completeness_r.lub
+    status: verified
+  name: Least-upper-bound form
+  statement: Every property of entities of a relational type has a least upper bound in that type.
+  formal: $\forall X^{\tau t}\, .\,\exists y^\tau\, .\,\operatorname{LUB}_\tau(y,X)\qquad(\tau\ne e)$
+  definitions: |-
+    where $\operatorname{LUB}_\tau(y,X):=\forall z^\tau\, .\,(\forall w^\tau\, .\,Xw\to w\le_\tau z)\leftrightarrow
+    y\le_\tau z$: the upper bounds of $X$ are exactly the entities above $y$.
+  equivalence: |-
+    Negation reverses the order and is an involution in C, so it exchanges least upper bounds and
+    greatest lower bounds. Given $X^{\tau t}$, let $X^\neg:=\lambda z\, .\,X(\neg_\tau z)$. For any $z$,
+    $z$ is an upper bound of $X$ iff $\neg_\tau z$ is a lower bound of $X^\neg$. So if $y$ is a greatest
+    lower bound of $X^\neg$, then for every $z$: $z$ is an upper bound of $X$ iff
+    $\neg_\tau z\le_\tau y$ iff $\neg_\tau y\le_\tau z$. That is, $\neg_\tau y$ is a least upper bound
+    of $X$. The converse direction is symmetric. Each instance at $\tau$ uses the other form only at
+    the same $\tau$.
+
+    Background records the same equivalence where it defines $\operatorname{LUB}$.
+lean_def: Classicism.P.BooleanCompleteness.schemaIn

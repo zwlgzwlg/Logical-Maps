@@ -1,3 +1,4 @@
+import Classicism.Paper
 import Classicism.Modal
 
 /-!
@@ -8,7 +9,7 @@ then records that "at `t` this is equivalent to `□(X → Y)`; at a relation ty
 equivalent to the necessary universal closure of the pointwise implication". That
 equivalence is what this file proves, as
 
-    Order.le_iff :  X ≼ Y  ↔  □ (boxImp X Y)
+    Order.le_iff :  X ≼ Y  ↔  □ (incl X Y)
 
 and it is the fact the comprehension predicates rest on. It is worth seeing why it is not
 a triviality. Left to right at a relational type, the identity `Y = λz. Xz ∨ Yz` gives
@@ -29,10 +30,11 @@ hypothesis, or the checker would see it as one and reject every proof that uses 
 -/
 
 namespace Classicism
+open Paper
 
 /-- The law connecting the algebraic order to the boxed pointwise implication. -/
 class Order (τ : Type) [Rel τ] : Type where
-  le_iff : ∀ X Y : τ, Rel.le X Y ↔ □ (boxImp X Y)
+  le_iff : ∀ X Y : τ, X ≤ Y ↔ □ (X ⊆ Y)
 
 export Order (le_iff)
 
@@ -40,11 +42,10 @@ export Order (le_iff)
 
 /-- At `t`: `q = (p ∨ q)` iff `□(p → q)`. Both directions are Leibniz's Law over closed
 Logical-Equivalence instances. -/
-instance instOrderProp : Order Prop where
-  le_iff p q :=
+theorem le_iff_prop (p q : Prop) : p ≤ q ↔ □ (p ⊆ q) :=
     ⟨fun h =>
         -- `p → q` is identical to `p → (p ∨ q)`, which is a tautology, hence `⊤`.
-        calc (p → q) = (p → (p ∨ q)) := congrArg (fun r => p → r) h
+        calc (p → q) = (p → (p ∨ q)) := congrArg (λ r ↦ p → r) h
           _ = True := propext ⟨fun _ => trivial, fun _ hp => Or.inl hp⟩,
       fun h =>
         -- `q` is identical to `(p ∨ q) ∧ (p → q)`, a tautology; then rewrite `p → q = ⊤`.
@@ -55,6 +56,11 @@ instance instOrderProp : Order Prop where
           _ = ((p ∨ q) ∧ True) := by rw [h']
           _ = (p ∨ q) := and_true_eq _⟩
 
+/-- The law is stated as a theorem first so that it has a name of its own: the strict
+mirror of this instance takes its law from the transform of `le_iff_prop`. -/
+instance instOrderProp : Order Prop where
+  le_iff := le_iff_prop
+
 /-! ### Relational function types -/
 
 section arrow
@@ -62,29 +68,31 @@ variable {σ τ : Type} [Ty σ] [Rel τ] [Order τ]
 
 /-- Left to right, as a closed lemma so that it can be necessitated: a pointwise
 identity chain from the identity `Y = λz. Xz ∨ Yz`. -/
-theorem boxImp_of_le_arrow (X Y : σ → τ) :
-    Rel.le X Y → boxImp X Y := fun h z =>
+theorem incl_of_le_arrow (X Y : σ → τ) :
+    X ≤ Y → X ⊆ Y := fun h z =>
   -- `congrFun` is Leibniz's Law, giving `Y z = X z ∨ Y z`, that is `X z ≼ Y z`.
   box_elim ((le_iff (X z) (Y z)).1 (congrFun h z))
 
 /-- Right to left, as a closed lemma so that it can be necessitated: from the *boxed*
 pointwise implication, `CBF` distributes the box and `Order τ` returns the pointwise
 identities. -/
-theorem forall_eq_of_box_boxImp (X Y : σ → τ) :
-    □ (boxImp X Y) → ∀ z, Y z = Rel.or (X z) (Y z) := fun h z =>
-  (le_iff (X z) (Y z)).2 (converse_barcan (fun z => boxImp (X z) (Y z)) h z)
+theorem forall_eq_of_box_incl (X Y : σ → τ) :
+    □ (X ⊆ Y) → ∀ z, Y z = (X z ∨ Y z) := fun h z =>
+  (le_iff (X z) (Y z)).2 (converse_barcan (λ z ↦ X z ⊆ Y z) h z)
 
 /-- `σ → τ` satisfies the law when `τ` does. -/
-instance instOrderArrow : Order (σ → τ) where
-  le_iff X Y :=
+theorem le_iff_arrow (X Y : σ → τ) : X ≤ Y ↔ □ (X ⊆ Y) :=
     ⟨fun h =>
         -- Box the identity with `NI`, then push the closed lemma through with `K`.
-        modal_K _ _ (nec% (boxImp_of_le_arrow X Y)) (necessity_of_identity _ _ h),
+        modal_K _ _ (nec% (incl_of_le_arrow X Y)) (necessity_of_identity _ _ h),
       fun h =>
         -- `4` then `CBF` inside the box give the boxed pointwise identities, and
         -- Modalized Functionality turns those back into an identity of relations.
-        modalized_functionality Y (fun z => Rel.or (X z) (Y z))
-          (modal_K _ _ (nec% (forall_eq_of_box_boxImp X Y)) (modal_four _ h))⟩
+        modalized_functionality Y (λ z ↦ X z ∨ Y z)
+          (modal_K _ _ (nec% (forall_eq_of_box_incl X Y)) (modal_four _ h))⟩
+
+instance instOrderArrow : Order (σ → τ) where
+  le_iff := le_iff_arrow
 
 end arrow
 
@@ -93,11 +101,11 @@ end arrow
 variable {τ : Type} [Rel τ] [Order τ]
 
 /-- The unboxed pointwise implication follows from the order, by `T`. -/
-theorem boxImp_of_le {X Y : τ} (h : Rel.le X Y) : boxImp X Y :=
+theorem incl_of_le {X Y : τ} (h : X ≤ Y) : X ⊆ Y :=
   box_elim ((le_iff X Y).1 h)
 
 /-- And the order follows from the boxed pointwise implication. -/
-theorem le_of_box_boxImp {X Y : τ} (h : □ (boxImp X Y)) : Rel.le X Y :=
+theorem le_of_box_incl {X Y : τ} (h : □ (X ⊆ Y)) : X ≤ Y :=
   (le_iff X Y).2 h
 
 end Classicism

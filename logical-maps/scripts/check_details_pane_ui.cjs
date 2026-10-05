@@ -15,7 +15,7 @@ const pages = [], errors = [], storageKey = 'principle-map:pane-sizes:v1';
 let height = 700;
 function page(stored, blocked = false) {
   const vc = new VirtualConsole(); vc.on('jsdomError', e => errors.push(String(e)));
-  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {
+  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', ()=>JSON.stringify(data)), {
     url: 'https://maps.example/', runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc,
     beforeParse(w) {
       Object.defineProperty(w.HTMLElement.prototype, 'clientHeight', {get() { return height; }});

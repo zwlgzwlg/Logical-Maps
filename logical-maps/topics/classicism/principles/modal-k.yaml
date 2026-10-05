@@ -13,3 +13,17 @@ references:
   role: formulation
   locator: §1.5, p. 16
 notes: ''
+variants:
+- id: dual
+  lean:
+    ref: Classicism.P.ModalKDual.schemaIn
+    equivalence_ref: Classicism.Map.modal_k.dual
+    status: verified
+  name: Dual form
+  statement: If a conditional is necessary, the possibility of its antecedent brings the possibility of
+    its consequent.
+  formal: $\forall p q\, .\,\Box(p\to q)\to(\Diamond p\to\Diamond q)$
+  equivalence: Instantiate either form at $\neg q,\neg p$ and contrapose the inner conditional, using
+    $\Box(\neg q\to\neg p)\leftrightarrow\Box(p\to q)$ and $\Diamond=\neg\Box\neg$. This yields the other
+    form.
+lean_def: Classicism.P.ModalK.schemaIn

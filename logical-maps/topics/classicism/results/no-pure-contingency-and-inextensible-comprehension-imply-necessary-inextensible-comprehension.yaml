@@ -1,0 +1,29 @@
+id: no-pure-contingency-and-inextensible-comprehension-imply-necessary-inextensible-comprehension
+premises:
+- no-pure-contingency-r
+- inextensible-comprehension-r
+conclusion: necessary-inextensible-comprehension-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 2 October 2026, from a suggestion of Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 2 October 2026
+  checked_by: []
+  date: '2026-10-02'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 2 October 2026.
+source_names:
+- Dorr 2 Oct
+proof: >-
+  Every closed instance of Inextensible Comprehension is a closed sentence of the pure language, since the principle is
+  stated with object-language quantifiers and contains no nonlogical constant. Given Inextensible Comprehension, each of
+  those instances is true, and No Pure Contingency makes a true closed pure sentence necessary. So every
+  closed instance is necessary, which is what the boxed principle asserts. Any type range and side
+  conditions stay outside the box, as the Modal scope convention requires.
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.2, p. 27
+  note: Formulation of No Pure Contingency.
+notes: One of the uniform family by which No Pure Contingency carries a pure principle to its boxed form.

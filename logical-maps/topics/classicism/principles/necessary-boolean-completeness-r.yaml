@@ -19,3 +19,17 @@ changes:
   by: Claude Opus 5.5 (Anthropic)
   summary: Restated the statement as the necessitation of the base principle's statement, in place of
     a generic description of necessitation; the formal statement is unchanged.
+variants:
+- id: lub
+  lean:
+    ref: Classicism.P.NecBooleanCompletenessLUB.schemaIn
+    equivalence_ref: Classicism.Map.necessary_boolean_completeness_r.lub
+    status: verified
+  name: Least-upper-bound form
+  statement: Every closed instance of the least-upper-bound form of Boolean Completeness is necessary.
+  formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of the least-upper-bound form of Boolean
+    Completeness}$
+  equivalence: Each instance of the least-upper-bound form of Boolean Completeness is derivable in C from
+    finitely many instances of the official form, and conversely; the derivation is on the page of Boolean
+    Completeness. Necessitating it and applying K carries the equivalence to the boxed forms.
+lean_def: Classicism.P.NecBooleanCompleteness.schemaIn

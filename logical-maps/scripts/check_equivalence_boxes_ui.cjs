@@ -17,7 +17,7 @@ const fixture = {
 };
 function page(data = fixture, query = '') {
   const vc = new VirtualConsole(); vc.on('jsdomError', e => errors.push(e));
-  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {url: 'https://maps.example/' + query, runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc});
+  const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', ()=>JSON.stringify(data)), {url: 'https://maps.example/' + query, runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc});
   pages.push(dom);
   // These fixtures assert over the full arrow set, so turn off the default transitive reduction.
   dom.window.document.getElementById('reduce-arrows').click();

@@ -44,6 +44,9 @@ source_catalog:
 - id: goodsell-arithmetic-necessary
   name: Arithmetic is Necessary (2024 draft)
   kind: misc
+- id: sun-possible-worlds-without-atomicity
+  name: Possible Worlds Without Atomicity (draft)
+  kind: misc
 - id: misc
   name: Misc.
   kind: misc
@@ -70,24 +73,7 @@ principle_categories:
   hidden_by_default: true
 - id: base
   name: Background consequences
-initial_principles:
-- barcan-r
-- distinctness-necessary-r
-- necessary-distinctness-necessary-r
-- modal-b
-- modal-five
-- atomicity-r
-- boolean-completeness-r
-- actuality
-- extensionality-r
-- functionality-r
-- fregean-axiom
-- rigid-comprehension-r
-- plenitude-r
-- functional-choice-r
-- relational-choice-r
-- possibility-schema-r
-- strong-possibility-r
+default_tab: lattice
 background_presets:
 - id: c5
   name: C5
@@ -110,3 +96,87 @@ background_presets:
   category: schematic
   principles:
   - distinctness-schema-r
+
+lattice_views:
+- id: pilot
+  name: 'Pilot: necessity and rigidity'
+  default: true
+  description: 'The conjunctions of Extensionality and five boxed principles: □ND, □Atomicity, □Actuality,
+    □Rigid Comprehension and □BF.'
+  principles:
+  - extensionality-r
+  - necessary-distinctness-necessary-r
+  - necessary-atomicity-r
+  - necessary-actuality
+  - necessary-rigid-comprehension-r
+  - necessary-barcan-r
+- id: below-rigid-comprehension
+  name: Below Rigid Comprehension
+  description: 'Boxed principles at and below □Rigid Comprehension: the rigidity and comprehension principles
+    with □Boolean Completeness, □Actuality and □Vicinity.'
+  principles:
+  - necessary-boolean-completeness-r
+  - necessary-rigid-comprehension-r
+  - necessary-weak-rigid-comprehension-r
+  - necessary-inextensible-comprehension-r
+  - necessary-tame-rigidity-r
+  - necessary-actuality
+  - necessary-weakly-inextensible-comprehension-r
+  - necessary-vicinity
+- id: combinatorialism
+  name: Combinatorialism
+  description: 'Logical Combinatorialism and its relatives for the signature Σ: Logical Necessity, the
+    witnessed-possibility principles, Modal Freedom, Separated Structure, No Contingency and the Possibility
+    schemata.'
+  principles:
+  - strong-possibility-signature-r
+  - logical-necessity-r
+  - possibility-signature-r
+  - modal-freedom-signature-r
+  - no-contingency-signature-r
+  - converse-witnessed-possibility-r
+  - separated-structure-r
+  - witnessed-possibility-r
+- id: modal-laws
+  name: Modal laws
+  principles:
+  - barcan-r
+  - necessary-barcan-r
+  - distinctness-necessary-r
+  - necessary-distinctness-necessary-r
+  - fregean-axiom
+- id: choice-principles
+  name: Choice principles
+  principles:
+  - intensional-choice-r
+  - relational-choice-r
+  - transversal-r
+  - transversal-choice-r
+  - plenitude-r
+  - functional-choice-r
+- id: boolean-structure
+  name: Boolean Structure
+  principles:
+  - actuality
+  - atomicity-r
+  - boolean-completeness-r
+  - weak-rigid-comprehension-r
+  - rigid-comprehension-r
+  - strong-leibniz-r
+lean_lib: Classicism
+lean:
+  index:
+    script: scripts/MapIndex.lean
+    file: map/index.json
+  source_url: https://github.com/zwlgzwlg/Logical-Maps/blob/{commit}/logical-maps/topics/classicism/lean/{file}#L{start}-L{end}
+  imports:
+  - Classicism.Certified.Signatures
+  namespace: Classicism
+  definition_check: "example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=\n  {def}"
+  result:
+    binder: '∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),'
+    principle: Classicism.Meta.AxiomSet.Entails Ax {def}
+    falsum: ¬ Classicism.Meta.AxiomSet.Consistent Ax
+  model:
+    binder: '∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧'
+    principle: Classicism.Meta.AxiomSet.Entails Ax {def}

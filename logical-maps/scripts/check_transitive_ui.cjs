@@ -14,7 +14,7 @@ const data = {
     rule('qsy', ['q', 's'], 'y', 'conjectured'), rule('eat', ['e', 'a'], 't')], models: [],
 };
 const errors = [], vc = new VirtualConsole(); vc.on('jsdomError', e => errors.push(e));
-const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', JSON.stringify(data)), {
+const dom = new JSDOM(template.replace('/*__PMAP_DATA__*/null', ()=>JSON.stringify(data)), {
   url: 'https://maps.example/?assume=', runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc,
 });
 const w = dom.window, doc = w.document;
