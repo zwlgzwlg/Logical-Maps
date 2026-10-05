@@ -164,7 +164,8 @@ When you (an AI) add or edit a result or model:
   topic background and each preset, never persisted as record statuses. The
   Conjectures tab lists each recorded conjecture as the question it asks, in the
   lynchpin format: at its rank with scores while open, with its status and no
-  scores once settled, marked when it has more than two premises. Refuting an
+  scores once settled, marked when it is still open with more than two premises.
+  An implication whose premises are inconsistent is incompatible. Refuting an
   implication requires an actual countermodel; a model witnesses a conjecture's
   required flags, not its proposed construction. The viewer hides settled
   questions unless **Show resolved** is checked.

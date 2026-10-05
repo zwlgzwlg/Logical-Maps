@@ -18903,7 +18903,7 @@
    }
   }
  ],
- "generated": "2026-10-04T02:15:04+00:00",
+ "generated": "2026-10-05T06:21:21+00:00",
  "progress": [
   {
    "background": null,
@@ -403029,7 +403029,7 @@
       "rank": null,
       "yes": null,
       "no": null,
-      "status": "outside",
+      "status": "refuted",
       "conjectures": [
        {
         "id": "necessary-atomicity-completeness-bf-imply-rigid-comprehension",
@@ -403039,7 +403039,8 @@
        }
       ],
       "claim": "entails",
-      "tier": "bronze"
+      "tier": "bronze",
+      "verdict": "refuted"
      },
      {
       "kind": "question",
@@ -585223,7 +585224,7 @@
       "rank": null,
       "yes": null,
       "no": null,
-      "status": "outside",
+      "status": "inconsistent",
       "conjectures": [
        {
         "id": "necessary-atomicity-completeness-bf-imply-rigid-comprehension",
@@ -585233,7 +585234,8 @@
        }
       ],
       "claim": "entails",
-      "tier": "bronze"
+      "tier": "bronze",
+      "verdict": "incompatible"
      },
      {
       "kind": "question",
@@ -585245,7 +585247,7 @@
       "rank": null,
       "yes": null,
       "no": null,
-      "status": "outside",
+      "status": "inconsistent",
       "conjectures": [
        {
         "id": "relational-choice-and-boolean-completeness-imply-transversal-choice",
@@ -585255,7 +585257,8 @@
        }
       ],
       "claim": "entails",
-      "tier": "bronze"
+      "tier": "bronze",
+      "verdict": "incompatible"
      },
      {
       "kind": "question",

@@ -846,11 +846,29 @@ class Lynchpins:
         pm = self.sets[j][1]
         return "refuted" if any(H & pm == pm and Fm & b for H, Fm in self.wit) else "open"
 
+    def settled_status(self, S, c):
+        """The status of S ⊢ c for a question not asked here, whatever the size of S: one with more
+        than two premises, or one that a smaller premise set settles, such as a premise that is
+        inconsistent by itself. Inconsistent premises settle every such question, so the status is
+        "inconsistent" whatever c is. None while the question stays open."""
+        F, pm = self._cl(S), self._mask(S)
+        if F & self.BAD:
+            return "inconsistent"
+        if c == FALSE:
+            return "consistent" if any(H & pm == pm for H, _ in self.wit) else None
+        b = self.bit[c]
+        if F & b:
+            return "proved"
+        if self._ext(F, c) & self.BAD:
+            return "excluded"
+        return "refuted" if any(H & pm == pm and Fm & b for H, Fm in self.wit) else None
+
     def _recorded(self, rows):
         """One row per question a conjectured record asks, in the lynchpin format: the ranked row
         itself when the question is open, else an unranked row carrying the question's status
-        ("outside": more than two premises). The record and its notes travel with the row, and a
-        question unresolved despite work is bronze unless a record ranks it silver or gold."""
+        ("outside": still open, with more than two premises). The record and its notes travel with
+        the row, and a question unresolved despite work is bronze unless a record ranks it silver
+        or gold."""
         by_question = {(tuple(r["premises"]), r["conclusion"]): r for r in rows if r["kind"] == "question"}
         by_check = {(r["model"], r["principle"]): r for r in rows if r["kind"] == "check"}
         rep_of = {p: cls[0] for cls in self.classes for p in cls}
@@ -891,7 +909,8 @@ class Lynchpins:
                 if row is None:
                     row = seen.get((S, c))
                     if row is None:
-                        status = (self.question_status(S, c) or "outside") if len(S) <= 2 else "outside"
+                        status = self.question_status(S, c) if len(S) <= 2 else None
+                        status = status or self.settled_status(S, c) or "outside"
                         row = seen[S, c] = {"kind": "question", "premises": list(S), "conclusion": c,
                                             "rank": None, "yes": None, "no": None, "status": status}
                         extra.append(row)
@@ -905,6 +924,9 @@ class Lynchpins:
                 row["tier"] = max(tiers, key=LYNCHPIN_TIERS.index)
             if row.get("status", "open") in LYNCHPIN_VERDICTS:
                 row["verdict"] = LYNCHPIN_VERDICTS[row["status"]][row["claim"]]
+                # Inconsistent premises give an implication only vacuously: incompatible, as resolve_conjecture says.
+                if row["status"] == "inconsistent" and row.get("conclusion") != FALSE and row["claim"] == "entails":
+                    row["verdict"] = "incompatible"
         ranked.sort(key=lambda r: r.get("rank") or 0)
         extra.sort(key=lambda r: (-LYNCHPIN_TIERS.index(r.get("tier", "bronze")), r["status"],
                                  r.get("premises", []), r.get("model", ""), r.get("conclusion", r.get("principle", ""))))
@@ -3152,7 +3174,8 @@ def selftest():
                    and r["conclusion"] == "c" for r in ranked) == expect_group
     # A settled question and one with more than two premises are listed without rank or scores.
     more = {**noted, "results": [*noted["results"], dict(R("pq2", ["p"], "q"), status="conjectured", notes="Long proved."),
-                                  dict(R("prs", ["p", "r", "s"], "q"), status="conjectured", notes="Three premises.")],
+                                  dict(R("prs", ["p", "r", "s"], "q"), status="conjectured", notes="Three premises."),
+                                  dict(R("qrs", ["q", "r", "s"], "p"), status="conjectured", notes="Three premises, open.")],
             "models": [*noted["models"], dict(M("m5", ["q"], ["s"]), status="conjectured", notes="Two points.")]}
     Lm = Lynchpins(more)
     rec = {(tuple(r["premises"]), r["conclusion"]): r for r in Lm.rank(top=2)["recorded"]}
@@ -3164,9 +3187,21 @@ def selftest():
     assert rec[("r",), "p"]["claim"] == "entails" and lynchpin_scores(rec[("r",), "p"]) == (4, 2)
     again = {(tuple(r["premises"]), r["conclusion"]): r for r in Lm.rank(top=2)["recorded"]}
     assert [c["id"] for c in again[("r",), "p"]["conjectures"]] == ["rp"], "a second ranking attaches nothing twice"
-    assert rec[("p", "r", "s"), "q"]["status"] == "outside" and rec[("p", "r", "s"), "q"]["tier"] == "bronze"
+    assert rec[("q", "r", "s"), "p"]["status"] == "outside" and rec[("q", "r", "s"), "p"]["tier"] == "bronze", "open, with three premises"
+    assert rec[("p", "r", "s"), "q"]["status"] == "proved" and rec[("p", "r", "s"), "q"]["verdict"] == "proved" \
+        and rec[("p", "r", "s"), "q"]["rank"] is None, "three premises, but p ⇒ q settles it"
     assert rec[("r",), "p"]["status" if "status" in rec[("r",), "p"] else "kind"] in ("open", "question") and rec[("r",), "p"]["yes"] == 4
     assert Lm.question_status(("p",), "s") == "refuted" and Lm.question_status(("p",), "q") == "proved" and Lm.question_status(("r",), "s") == "open"
+    # A pair with a premise inconsistent by itself is never asked; a model conjectured to hold
+    # both is refuted all the same, not left looking open, and an implication from such premises
+    # holds only vacuously, so it is incompatible, not proved.
+    clash = {**ly, "results": [*ly["results"], R("sx", ["s"], FALSE), dict(R("qsr", ["q", "s"], "r"), status="conjectured", notes="Vacuous.")],
+             "models": [*ly["models"], dict(M("m6", ["q", "s"], []), status="conjectured", notes="Hoped consistent.")]}
+    Lc = Lynchpins(clash)
+    assert Lc.question_status(("q", "s"), FALSE) is None
+    clashing = {r["conclusion"]: r for r in Lc.rank(top=None)["recorded"] if r["premises"] == ["q", "s"]}
+    assert clashing[FALSE]["status"] == "inconsistent" and clashing[FALSE]["verdict"] == "refuted" and clashing[FALSE]["rank"] is None
+    assert clashing["r"]["status"] == "inconsistent" and clashing["r"]["verdict"] == "incompatible" and clashing["r"]["rank"] is None
     # A sparse map is not ranked, but its recorded conjectures are still scored.
     sparse = Lynchpins(more).rank(top=5, score_all=False)
     assert sparse["rows"] == [] and all(r["rank"] is None for r in sparse["recorded"]) and rec_yes == 4 if (rec_yes := next(r["yes"] for r in sparse["recorded"] if r["premises"] == ["r"] and r["conclusion"] == "p")) else True

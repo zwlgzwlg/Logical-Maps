@@ -993,7 +993,7 @@
    }
   }
  ],
- "generated": "2026-10-04T02:15:43+00:00",
+ "generated": "2026-10-05T06:21:50+00:00",
  "progress": [
   {
    "background": null,
@@ -5080,7 +5080,7 @@
       "rank": null,
       "yes": null,
       "no": null,
-      "status": "outside",
+      "status": "refuted",
       "conjectures": [
        {
         "id": "betweenness-continuity-imply-transitivity",
@@ -5090,7 +5090,8 @@
        }
       ],
       "claim": "entails",
-      "tier": "bronze"
+      "tier": "bronze",
+      "verdict": "refuted"
      },
      {
       "kind": "question",
