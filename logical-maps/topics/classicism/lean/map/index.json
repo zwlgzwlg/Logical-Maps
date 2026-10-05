@@ -594,6 +594,14 @@
     "lines": [893, 895],
     "file": "Classicism/Map.lean",
     "axioms": ["propext", "Quot.sound"]}},
+  "no-pure-contingency-implies-necessity-of-arithmetic":
+  {"proofs": [],
+   "certificate":
+   {"name":
+    "Classicism.Map.no_pure_contingency_implies_necessity_of_arithmetic",
+    "lines": [1507, 1509],
+    "file": "Classicism/Map.lean",
+    "axioms": ["propext", "Quot.sound"]}},
   "no-pure-contingency-and-weakly-inextensible-comprehension-imply-necessary-weakly-inextensible-comprehension":
   {"proofs":
    [{"name": "Classicism.Meta.npc_weaklyInextensibleComprehension_entails_box",

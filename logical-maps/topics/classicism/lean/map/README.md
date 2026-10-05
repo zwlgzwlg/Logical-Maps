@@ -57,6 +57,15 @@ Lean a sentence's type records its signature, and `ofPure` is the inclusion. The
 `lean_def`s; Actual Profile's is its list form (`P.ActualProfile.listSchemaIn`), since the
 map states it for tuples.
 
+Since 6 October every principle has one. Two are schemas over syntax written directly:
+General Separated Structure (`generalSeparatedStructure _`, as `P[c̄/x̄] = Q[c̄/x̄] → λx̄. P =
+λx̄. Q`; its docstring says why that is the map's schema up to β), and Necessity of Arithmetic
+(`ofPure necessityOfArithmetic`, over Goodsell's arithmetical sentences `AForm`, in
+`Certified/Arithmetic.lean`). The latter's vocabulary, `𝟎`, `Suc`, `ℕ`, `Sum` and `Prod`, is
+written as shallow definitions and quoted by `#classicism_quote_term`
+(`Tools/QuoteTerm.lean`), which checks each term's reading against its definition as
+`#classicism_quote` does a statement's.
+
 ## The shape of a statement
 
 A result, `A₁, …, Aₙ ⇒ C`:

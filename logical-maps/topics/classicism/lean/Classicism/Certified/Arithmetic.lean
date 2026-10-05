@@ -120,6 +120,74 @@ def necessityOfArithmetic : AxiomSet Signature.pure := fun a =>
 
 end AxiomSet
 
+/-! ### The arithmetical sentences are in the paper's language, and No Pure Contingency
+gives Necessity of Arithmetic -/
+
+theorem closedTypes_close {σ : Ty} {Γ : Ctx} (t : Term Signature.pure [] σ) (h : t.closedTypes = true) :
+    (t.close : Term Signature.pure Γ σ).closedTypes = true := by
+  rw [Term.closedTypes_rename]; exact h
+
+theorem ATerm.closedTypes_toTerm : ∀ {k : Nat} (t : ATerm k), t.toTerm.closedTypes = true
+  | _, .var _ => rfl
+  | _, .zero => by
+    show (Arith.zero.term.close : Term Signature.pure _ _).closedTypes = true
+    exact closedTypes_close _ rfl
+  | _, .suc t => by
+    show (Term.app Arith.suc.term.close t.toTerm).closedTypes = true
+    simp only [Term.closedTypes, closedTypes_close _ (rfl : Arith.suc.term.closedTypes = true),
+      ATerm.closedTypes_toTerm t, Bool.and_self]
+
+theorem AForm.closedTypes_toTerm : ∀ {k : Nat} (φ : AForm k), φ.toTerm.closedTypes = true
+  | _, .nat t => by
+    show (Term.app Arith.N.term.close t.toTerm).closedTypes = true
+    simp only [Term.closedTypes, closedTypes_close _ (rfl : Arith.N.term.closedTypes = true),
+      ATerm.closedTypes_toTerm t, Bool.and_self]
+  | _, .sum t u v => by
+    show (Term.app (Term.app (Term.app Arith.Sum.term.close t.toTerm) u.toTerm) v.toTerm).closedTypes = true
+    simp only [Term.closedTypes, closedTypes_close _ (rfl : Arith.Sum.term.closedTypes = true),
+      ATerm.closedTypes_toTerm, Bool.and_self]
+  | _, .prod t u v => by
+    show (Term.app (Term.app (Term.app Arith.Prod.term.close t.toTerm) u.toTerm) v.toTerm).closedTypes = true
+    simp only [Term.closedTypes, closedTypes_close _ (rfl : Arith.Prod.term.closedTypes = true),
+      ATerm.closedTypes_toTerm, Bool.and_self]
+  | _, .eq t u => by
+    show (Term.eq' t.toTerm u.toTerm).closedTypes = true
+    simp [Term.closedTypes, ATerm.closedTypes_toTerm]
+  | _, .neg φ => by
+    show (Term.neg φ.toTerm).closedTypes = true
+    simp [Term.closedTypes, AForm.closedTypes_toTerm φ]
+  | _, .disj φ ψ => by
+    show (Term.disj φ.toTerm ψ.toTerm).closedTypes = true
+    simp [Term.closedTypes, AForm.closedTypes_toTerm φ, AForm.closedTypes_toTerm ψ]
+  | _, .conj φ ψ => by
+    show (Term.conj φ.toTerm ψ.toTerm).closedTypes = true
+    simp [Term.closedTypes, AForm.closedTypes_toTerm φ, AForm.closedTypes_toTerm ψ]
+  | _, .all φ => by
+    show (Term.forall' (Term.imp (Term.app Arith.N.term.close (Term.var .zero)) φ.toTerm)).closedTypes = true
+    simp [Term.closedTypes, closedTypes_close _ (rfl : Arith.N.term.closedTypes = true),
+      AForm.closedTypes_toTerm φ]
+
+theorem arithI_closedTypes : arithI.closedTypes = true := rfl
+
+open AxiomSet in
+/-- **No Pure Contingency gives Necessity of Arithmetic**: `I → A` and `I → ¬A` are closed pure
+sentences, so each is necessary if true; and by excluded middle on `A` one of them is true. -/
+theorem npc_entails_necessityOfArithmetic :
+    noContingency Signature.pure ⟹ necessityOfArithmetic := by
+  rintro _ ⟨A, rfl⟩
+  have hA := A.closedTypes_toTerm
+  have nc : ∀ p : Sentence Signature.pure, p.closedTypes = true →
+      Theorem (C.axioms ∪ noContingency Signature.pure) (Term.imp p (Term.box p)) := fun p hp =>
+    Theorem.ax ⟨by simp [Term.closedTypes, hp], p, rfl⟩
+  have h1 := nc (Term.imp arithI A.toTerm) (by simp [Term.closedTypes, hA, arithI_closedTypes])
+  have h2 := nc (Term.imp arithI (Term.neg A.toTerm))
+    (by simp [Term.closedTypes, hA, arithI_closedTypes])
+  refine Derivable.orE (Derivable.em A.toTerm) ?_ ?_
+  · exact Derivable.orI₁ (Derivable.impE (Derivable.weaken₁ h1)
+      (Derivable.impI (Derivable.hyp (by simp))))
+  · exact Derivable.orI₂ (Derivable.impE (Derivable.weaken₁ h2)
+      (Derivable.impI (Derivable.hyp (by simp))))
+
 end Classicism.Meta
 
 end

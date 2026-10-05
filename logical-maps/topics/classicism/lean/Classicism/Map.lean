@@ -1504,4 +1504,8 @@ theorem necessary_completeness_and_necessary_actuality_imply_necessary_weak_rigi
 theorem extensionality_r_implies_intensional_choice_r : Statements.extensionality_r_implies_intensional_choice_r := by
   map_cert Proofs.extensionality_r_implies_intensional_choice_r.entails
 
+/-- `no-pure-contingency-implies-necessity-of-arithmetic` -/
+theorem no_pure_contingency_implies_necessity_of_arithmetic : Statements.no_pure_contingency_implies_necessity_of_arithmetic := by
+  map_cert npc_entails_necessityOfArithmetic
+
 end Classicism.Map
