@@ -1507,6 +1507,8 @@ def argument_errors(data: dict, ids) -> list[str]:
                         errors.append(f"{where}: {key} is for conjectured arguments only")
             elif a.get("companion_id"):
                 companions.add(a["companion_id"])
+            if a.get("reserve") and a.get("standing", "established") == "conjectured":
+                errors.append(f"{where}: reserve is for established arguments only")
             if a.get("provenance"):
                 side = sidecars.get(a["provenance"])
                 if side is None:
@@ -1563,7 +1565,7 @@ def model_coverage(data: dict, an: dict) -> list[dict]:
             by, date = _argument_by_date(a, rec)
             route = {"argument": argument_label(a, i), "standing": a.get("standing", "established"),
                      "withdrawn": bool(a.get("withdrawn")), "reasons": [k for k in ARGUMENT_REASONS if a.get(k)],
-                     "by": by, "date": date}
+                     "by": by, "date": date, "reserve": bool(a.get("reserve"))}
             for key, value in (("holds", True), ("fails", False)):
                 for pid in a.get(key) or []:
                     verdicts.setdefault((pid, value), []).append(route)
@@ -1577,12 +1579,13 @@ def model_coverage(data: dict, an: dict) -> list[dict]:
         for (pid, value), routes in verdicts.items():
             live = [r for r in routes if not r["withdrawn"]]
             settled = [r for r in live if r["standing"] == "established"]
+            core = [r for r in settled if not r["reserve"]]  # a reserve verdict is also derived; see below
             what = f"{'holds' if value else 'fails'} {pid}"
             if not live:
                 notices.append(f"{what}: no route left, every argument for it is withdrawn")
             elif not settled:
                 notices.append(f"{what}: conjectured only")
-            elif all(r["reasons"] == ["source"] for r in settled):
+            elif core and all(r["reasons"] == ["source"] for r in core):
                 notices.append(f"{what}: source only")
         if construction.get("standing") == "conjectured":
             n = len({k for k, rs in verdicts.items() if any(r["standing"] == "established" and not r["withdrawn"] for r in rs)})
@@ -1594,10 +1597,18 @@ def model_coverage(data: dict, an: dict) -> list[dict]:
         derived_holds, derived_fails, unknown = [], [], []
         if m is not None and m["status"] == "proved" and mid in E.holds and mid not in E.model_conflicts:
             sat, vio = m["satisfies"], m["violates"]
-            redundant = [f"holds {p}" for p in sat if p in E.cl([x for x in sat if x != p])[0]]
-            redundant += [f"fails {v}" for v in vio if E._reaches(sat, v, [x for x in vio if x != v])]
+            # The ordinary arguments should derive everything; reserve arguments keep, beside them,
+            # verdicts the engine also derives, so that none rests on the results alone.
+            core = [a for _, a in _live_arguments(rec, "established") if not a.get("reserve")]
+            core_sat, core_vio = _settled([(0, a) for a in core], "holds"), _settled([(0, a) for a in core], "fails")
+            redundant = [f"holds {p}" for p in core_sat if p in E.cl([x for x in core_sat if x != p])[0]]
+            redundant += [f"fails {v}" for v in core_vio if E._reaches(core_sat, v, [x for x in core_vio if x != v])]
             if redundant:
                 notices.append("each derivable from the other recorded verdicts: " + ", ".join(redundant))
+            needed = [f"holds {p}" for p in sat if p not in core_sat and p not in E.cl(core_sat)[0]]
+            needed += [f"fails {v}" for v in vio if v not in core_vio and not E._reaches(core_sat, v, core_vio)]
+            if needed:
+                notices.append("kept in reserve, and no longer given by the other arguments: " + ", ".join(needed))
             derived_holds = [p for p in E.ids if p in E.holds[mid] and p not in sat]
             derived_fails = [p for p in E.ids if p in E.fails[mid] and p not in vio]
             unknown = an["unknown"].get(mid, [])
@@ -1621,6 +1632,8 @@ def coverage_text(cov: dict) -> list[str]:
         bits = [r["argument"], "+".join(r["reasons"]) or "no reason", f"{r['by']}, {r['date']}"]
         if r["standing"] != "established":
             bits.append(r["standing"])
+        if r.get("reserve"):
+            bits.append("reserve")
         if r["withdrawn"]:
             bits.append("withdrawn")
         return "[" + "; ".join(bits) + "]"
@@ -2035,6 +2048,8 @@ def argument_md(item: dict, data: dict, level: int = 3, link=lambda wid: f"[{wid
             head.append("Fails " + ", ".join(names.get(x, x) for x in a["fails"]) + ".")
         if a.get("standing") == "conjectured":
             head.append("Conjectured" + (f", {a['tier']}" if a.get("tier") else "") + ".")
+        if a.get("reserve"):
+            head.append("In reserve.")
         out += ["#" * level + " " + " ".join(head), ""]
         if a.get("withdrawn"):
             w = a["withdrawn"]
@@ -2059,16 +2074,31 @@ def argument_md(item: dict, data: dict, level: int = 3, link=lambda wid: f"[{wid
             reasons.append(f"Provenance: `provenance/{a['provenance']}.yaml`.")
         if a.get("id"):
             reasons.append(f"Address: `{item.get('companion_of') or item['id']}#{a['id']}`.")
-        reasons.append(f"By {by}, {date}." if by else f"{date}.")
+        reasons.append(f"By {_with_date(by, date)}." if by else f"{date}.")
         out += ["*" + " ".join(reasons) + "*", ""]
         for r in a.get("revisions") or []:
             out += [f"*Revised {r.get('date', '')}" + (f" by {r['by']}" if r.get("by") else "") + f":* {' '.join(str(r.get('note', '')).split())}", ""]
     return out
 
 
+def _with_date(by: str, date: str) -> str:
+    """Who and when, without repeating a date that the name already gives, as a certificate's
+    produced_by often does ("…, 20 September 2026")."""
+    months = ("January", "February", "March", "April", "May", "June", "July", "August",
+              "September", "October", "November", "December")
+    try:
+        d = _dt.date.fromisoformat(str(date)[:10])
+        spelled = f"{d.day} {months[d.month - 1]} {d.year}"
+    except ValueError:
+        spelled = None
+    if not date or str(date) in by or (spelled and spelled in by):
+        return by
+    return f"{by}, {date}" if by else str(date)
+
+
 def _companion_by(item: dict) -> str:
     """Who proposed a generated companion's conjectured arguments, and when."""
-    return "; ".join(dict.fromkeys(", ".join(_argument_by_date(a, item)) for _, a in _arguments(item)))
+    return "; ".join(dict.fromkeys(_with_date(*_argument_by_date(a, item)) for _, a in _arguments(item)))
 
 
 def generate_writeup(item: dict, data: dict) -> str:
@@ -2723,6 +2753,11 @@ def bundle_map_md(topic_id: str, data: dict, an: dict) -> str:
             o += [("Conjectured model" if m["status"] != "proved" else "Model") + "; " + _cert_line(m, catalog), ""]
         o += ["Satisfies:", ""] + [f"- {label(x)}" for x in m["satisfies"]] + [""]
         o += ["Violates:", ""] + [f"- {label(x)}" for x in m["violates"]] + [""]
+        if m["id"] in E.holds and m["id"] not in E.model_conflicts:  # what the results add to the record
+            for word, have, mine in (("satisfies", E.holds, m["satisfies"]), ("violates", E.fails, m["violates"])):
+                extra = [x for x in ids if x in have[m["id"]] and x not in mine]
+                if extra:
+                    o += [f"Also {word}, by the results: " + ", ".join(label(x) for x in extra) + ".", ""]
         unk = an["unknown"].get(m["id"], [])
         o += ["Unknown in this model: " + (", ".join(label(x) for x in unk) if unk else "nothing; every principle is settled.") , ""]
         if (m.get("description") or "").strip():
@@ -3156,8 +3191,11 @@ def bundle_agents_md(topic_id: str, data: dict) -> str:
         "and for models the newly verified `satisfies`/`violates` ids). Never move `certificate.date`.",
         "- A model written as a `definition` and `arguments` takes a new verdict as a new argument "
         "with its own `by` and `date`, and a correction in that argument's `revisions`. Its `history` "
-        "is frozen, and its `satisfies`/`violates` are computed: never write them. It records only "
-        "the verdicts the engine cannot derive from the others, its source's first.",
+        "is frozen, and its `satisfies`/`violates` are computed: never write them. Its ordinary "
+        "arguments record only the verdicts the engine cannot derive from the others, its source's "
+        "first; arguments marked `reserve: true`, after them, keep verdicts the engine also derives, "
+        "so that none rests on the results alone. Never delete a reserve argument because the engine "
+        "derives its verdicts.",
         "- Write the real proof in `proof`, at referee detail. Put anything longer than a paragraph "
         f"in `topics/{topic_id}/writeups/<id>.md` instead.",
         "- Prefer `status: conjectured` with an empty proof and a note saying what would settle it, "
@@ -3499,6 +3537,25 @@ def _selftest_arguments():
     errors = argument_errors(data, set("abcdefgh"))
     assert any("has nothing for 'm'" in e for e in errors) and any("record 'n' is not a model" in e for e in errors) \
         and any("a record has two entries" in e for e in errors), errors
+    # A reserve argument keeps a verdict the engine also derives: the verdict is recorded, the
+    # redundancy is not reported, and a reserve verdict the others stop giving is.
+    kept = {"id": "k", "name": "K", "certificate": cert, "sources": ["S"], "definition": "D", "_file": "topics/t/models/k.yaml",
+            "arguments": [{"holds": ["a"], "text": "x"}, {"holds": ["b"], "reserve": True, "text": "y", "by": "B", "date": "2026-01-03"},
+                          {"holds": ["c"], "reserve": True, "text": "z"}]}
+    [k] = flatten_model(kept)
+    assert k["satisfies"] == ["a", "b", "c"] and k["status"] == "proved"
+    kdata = {"topic": {"id": "t", "background": []}, "principles": [{"id": x, "name": x.upper()} for x in "abc"], "papers": [],
+             "results": [{"id": "ab", "premises": ["a"], "conclusion": "b", "status": "proved", "certificate": cert}],
+             "models": [k], "model_sources": [kept], "provenance": []}
+    assert argument_errors(kdata, set("abc")) == []
+    [cov] = model_coverage(kdata, analyse(kdata))
+    assert not any("derivable" in n for n in cov["notices"]), cov["notices"]
+    assert any("kept in reserve, and no longer given by the other arguments: holds c" in n for n in cov["notices"]), cov["notices"]
+    assert not any("holds b" in n for n in cov["notices"]), "a ⇒ b still gives the reserve verdict b"
+    assert "In reserve." in "\n".join(argument_md(kept, kdata)) and "By B, 2026-01-03." in "\n".join(argument_md(kept, kdata))
+    kept["arguments"].append({"holds": ["a"], "reserve": True, "standing": "conjectured", "text": "w"})
+    assert any("reserve is for established arguments only" in e for e in argument_errors(kdata, set("abc")))
+    assert _with_date("C, 20 September 2026", "2026-09-20") == "C, 20 September 2026" and _with_date("C", "2026-09-20") == "C, 2026-09-20"
 
 
 def selftest():

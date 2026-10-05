@@ -255,6 +255,7 @@
     "by": {"type": "string", "description": "Who supplied the argument. Defaults to the certificate."},
     "date": {"type": "string", "description": "When the argument was supplied. Defaults to the certificate date."},
     "standing": {"enum": ["established", "conjectured"], "default": "established"},
+    "reserve": {"type": "boolean", "description": "Established arguments only: verdicts the engine also derives from the other arguments, kept so that none rests on the results alone. Listed after the others."},
     "tier": {"enum": ["bronze", "silver", "gold"], "description": "Conjectured arguments only, as for conjectured records."},
     "revisions": {
      "type": "array",
