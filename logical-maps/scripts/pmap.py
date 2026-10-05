@@ -2507,16 +2507,31 @@ def argument_md(item: dict, data: dict, level: int = 3, link=lambda wid: f"[{wid
                         for c in a.get("conditions") or []]
         elif a.get("id"):
             reasons.append(f"Address: `{item.get('companion_of') or item['id']}#{a['id']}`.")
-        reasons.append(f"By {by}, {date}." if by else f"{date}.")
+        reasons.append(f"By {_with_date(by, date)}." if by else f"{date}.")
         out += ["*" + " ".join(reasons) + "*", ""]
         for r in a.get("revisions") or []:
             out += [f"*Revised {r.get('date', '')}" + (f" by {r['by']}" if r.get("by") else "") + f":* {' '.join(str(r.get('note', '')).split())}", ""]
     return out
 
 
+def _with_date(by: str, date: str) -> str:
+    """Who and when, without repeating a date that the name already gives, as a certificate's
+    produced_by often does ("…, 20 September 2026")."""
+    months = ("January", "February", "March", "April", "May", "June", "July", "August",
+              "September", "October", "November", "December")
+    try:
+        d = _dt.date.fromisoformat(str(date)[:10])
+        spelled = f"{d.day} {months[d.month - 1]} {d.year}"
+    except ValueError:
+        spelled = None
+    if not date or str(date) in by or (spelled and spelled in by):
+        return by
+    return f"{by}, {date}" if by else str(date)
+
+
 def _companion_by(item: dict) -> str:
     """Who proposed a generated companion's conjectured arguments, and when."""
-    return "; ".join(dict.fromkeys(", ".join(_argument_by_date(a, item)) for _, a in _arguments(item)))
+    return "; ".join(dict.fromkeys(_with_date(*_argument_by_date(a, item)) for _, a in _arguments(item)))
 
 
 def generate_writeup(item: dict, data: dict) -> str:
@@ -3319,6 +3334,11 @@ def bundle_map_md(topic_id: str, data: dict, an: dict) -> str:
             o += [("Conjectured model" if m["status"] != "proved" else "Model") + "; " + _cert_line(m, catalog), ""]
         o += ["Satisfies:", ""] + [f"- {label(x)}" for x in m["satisfies"]] + [""]
         o += ["Violates:", ""] + [f"- {label(x)}" for x in m["violates"]] + [""]
+        if m["id"] in E.holds and m["id"] not in E.model_conflicts:  # what the results add to the record
+            for word, have, mine in (("satisfies", E.holds, m["satisfies"]), ("violates", E.fails, m["violates"])):
+                extra = [x for x in ids if x in have[m["id"]] and x not in mine]
+                if extra:
+                    o += [f"Also {word}, by the results: " + ", ".join(label(x) for x in extra) + ".", ""]
         unk = an["unknown"].get(m["id"], [])
         o += ["Unknown in this model: " + (", ".join(label(x) for x in unk) if unk else "nothing; every principle is settled.") , ""]
         if (m.get("description") or "").strip():
@@ -4227,6 +4247,9 @@ def _selftest_groups():
     GA = jsonschema.Draft202012Validator(_schema("general-argument"))
     assert GA.is_valid(lib["arguments"][1]), list(GA.iter_errors(lib["arguments"][1]))
     assert not GA.is_valid({**lib["arguments"][0], "requires": []}) and not GA.is_valid({**lib["arguments"][0], "when": {"x": "y"}})
+
+    # A credit does not repeat a date its author string already gives.
+    assert _with_date("C, 20 September 2026", "2026-09-20") == "C, 20 September 2026" and _with_date("C", "2026-09-20") == "C, 2026-09-20"
 
 
 def selftest():

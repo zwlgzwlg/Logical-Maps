@@ -3256,12 +3256,18 @@ function argumentTags(a) {
   return (a.standing === 'conjectured' ? `<span class="badge conj">conjecture${a.tier ? ' · ' + esc(a.tier) : ''}</span>` : '')
     + (a.withdrawn ? '<span class="badge withdrawn">withdrawn</span>' : '');
 }
+// Who and when, without repeating a date the name already gives ("…, 20 September 2026").
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+function withDate(by, date) {
+  const d = /^(\d{4})-(\d{2})-(\d{2})/.exec(date || ''), spelled = d ? `${+d[3]} ${MONTHS[+d[2] - 1]} ${d[1]}` : '';
+  return !date || by.includes(date) || (spelled && by.includes(spelled)) ? by : by ? `${by}, ${date}` : date;
+}
 // Who supplied an argument, and when; for a trawl argument, who found, reviewed and admitted it.
 function creditHtml(m, a) {
   const chain = trawlChain(m, a);
   if (!chain) {
     const by = a.by || m.certificate.produced_by || '', date = a.date || m.certificate.date || '';
-    return `<p class="note credit">${esc(by)}${date ? ', ' + esc(date) : ''}.</p>`;
+    return `<p class="note credit">${esc(withDate(by, date))}.</p>`;
   }
   const steps = [`Found by ${esc(chain.found_by)}, ${esc(isoDay(chain.found_at))}`,
     ...chain.reviews.map(r => `reviewed by ${esc(r.by)}, ${esc(isoDay(r.at))} (${esc(r.verdict || '')})`),
@@ -3524,7 +3530,7 @@ function renderPage(sel) {
     const m = byMid.get(sel.id);
     const base = m.companion_of ? byMid.get(m.companion_of) : null, construction = m.construction || {};
     // A companion's certificate is its model's; what it adds is who proposed the conjectured arguments.
-    const proposed = [...new Set((m.arguments || []).map(a => `${a.by || m.certificate.produced_by || ''}, ${a.date || m.certificate.date || ''}`))];
+    const proposed = [...new Set((m.arguments || []).map(a => withDate(a.by || m.certificate.produced_by || '', a.date || m.certificate.date || '')))];
     h += `<h1>${esc(m.name)}</h1><div class="badges">${certBadges(m)}</div>${fileLinks(m)}`
       + (base ? `<dl><dt>conjectured by</dt><dd>${proposed.map(esc).join('; ')}</dd><dt>model</dt><dd><button class="lnk" data-open-model="${esc(base.id)}">${esc(base.name)}</button></dd></dl>` : certDl(m.certificate));
     const doubt = construction.withdrawn ? 'withdrawn' : construction.standing === 'conjectured' ? 'conjectured' : '';
