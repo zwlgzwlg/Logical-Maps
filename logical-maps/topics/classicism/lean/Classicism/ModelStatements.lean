@@ -382,21 +382,65 @@ def Models.finite_support_truncated_shifts.no_pure_contingency_r : Prop :=
 def Models.finite_support_truncations.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
 
+/-- `full-idempotent-monoid`: Distinctness-preserving collapse holds. -/
+def Models.full_idempotent_monoid.distinctness_preserving_collapse : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
+
 /-- `full-idempotent-monoid`: No Pure Contingency holds. -/
 def Models.full_idempotent_monoid.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `full-idempotent-monoid`: □Relational Choice holds. -/
+def Models.full_idempotent_monoid.necessary_relational_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.NecRelationalChoice.schemaIn
+
+/-- `full-idempotent-monoid`: Relational Choice holds. -/
+def Models.full_idempotent_monoid.relational_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.RelationalChoice.schemaIn
+
+/-- `full-idempotent-monoid`: Transversal Choice holds. -/
+def Models.full_idempotent_monoid.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
 /-- `full-involution-group`: No Pure Contingency holds. -/
 def Models.full_involution_group.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
 
+/-- `full-involution-group`: □Relational Choice holds. -/
+def Models.full_involution_group.necessary_relational_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.NecRelationalChoice.schemaIn
+
+/-- `full-involution-group`: Relational Choice holds. -/
+def Models.full_involution_group.relational_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.RelationalChoice.schemaIn
+
+/-- `full-involution-group`: Transversal Choice holds. -/
+def Models.full_involution_group.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
 /-- argument `barcan-d6`: BF holds in every model meeting its conditions. -/
 def Arguments.barcan_d6.barcan_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.D6Surjective A → (A).HoldsAx Classicism.P.Barcan.schemaIn
 
+/-- argument `dpc-isolated-actual-world`: Distinctness-preserving collapse holds in every model meeting its conditions. -/
+def Arguments.dpc_isolated_actual_world.distinctness_preserving_collapse : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.ActualWorldIsolated A → (A).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
+
 /-- argument `no-pure-contingency-one-object`: No Pure Contingency holds in every model meeting its conditions. -/
 def Arguments.no_pure_contingency_one_object.no_pure_contingency_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.OneObject A → (A).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- argument `relational-choice-full-boxed`: □Relational Choice holds in every model meeting its conditions. -/
+def Arguments.relational_choice_full_boxed.necessary_relational_choice_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.Full A → Classicism.Meta.Intensional.Premodel.MetatheoryChoice A → (A).HoldsAx Classicism.P.NecRelationalChoice.schemaIn
+
+/-- argument `relational-choice-full`: Relational Choice holds in every model meeting its conditions. -/
+def Arguments.relational_choice_full.relational_choice_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.Full A → Classicism.Meta.Intensional.Premodel.MetatheoryChoice A → (A).HoldsAx Classicism.P.RelationalChoice.schemaIn
+
+/-- argument `transversal-choice-extensionally-full`: Transversal Choice holds in every model meeting its conditions. -/
+def Arguments.transversal_choice_extensionally_full.transversal_choice_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.ExtFull A → Classicism.Meta.Intensional.Premodel.MetatheoryChoice A → (A).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
 /-- `finite-support-one-object`, argument `actual-world`: Actuality holds in every model meeting its conditions. -/
 def Arguments.finite_support_one_object.actual_world.actuality : Prop :=

@@ -12,3 +12,7 @@ revisions:
   by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
   note: >-
     The two-object full action models' copies stated once for the topic, for every full action model.
+# Proved in Lean (Classicism/MapArguments.lean), for every intensional action model meeting the conditions.
+lean:
+- holds: necessary-relational-choice-r
+  ref: Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r

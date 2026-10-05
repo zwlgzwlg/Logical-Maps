@@ -14,6 +14,7 @@ conditions:
     The model is extensionally full at every object: every set of tuples from the domains at an
     object is the extension, at the identity arrow, of an element of the domain of the matching
     relational type there.
+  lean: Classicism.Meta.Intensional.Premodel.ExtFull
 - id: d6-surjective
   text: >-
     The model is an ideally full action model in which every arrow out of the evaluation object
@@ -29,14 +30,17 @@ conditions:
 - id: metatheory-choice
   text: >-
     The model is constructed in a metatheory with the axiom of choice.
+  lean: Classicism.Meta.Intensional.Premodel.MetatheoryChoice
 - id: full-model
   text: >-
     The model is full: at each object, the domain of each relational type contains every intension
     of that type.
+  lean: Classicism.Meta.Intensional.Premodel.Full
 - id: full-action-model
   text: >-
     The model is a full action model: an action model (Classicism, Appendix D) that is full at
     every object.
+  lean: Classicism.Meta.Intensional.Premodel.Full
 - id: codomain-intensions
   text: >-
     At every object reachable from the evaluation point, the domain contains every intension
@@ -68,6 +72,7 @@ conditions:
   text: >-
     The actual-world proposition $a$ is in the domain and entails every truth, and no world outside
     $a$ sees a world in $a$.
+  lean: Classicism.Meta.Intensional.Premodel.ActualWorldIsolated
 - id: transport-gap
   text: >-
     The model is a one-object action model whose entities are finitely pinned, and there are a

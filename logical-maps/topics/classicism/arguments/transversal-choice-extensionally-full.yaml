@@ -20,3 +20,7 @@ revisions:
     Moved from the group finite-support-one-object to the topic. Its first sentence, deriving
     extensional fullness from ideal fullness, is now the group's reason for meeting
     extensionally-full.
+# Proved in Lean (Classicism/MapArguments.lean), for every intensional action model meeting the conditions.
+lean:
+- holds: transversal-choice-r
+  ref: Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r

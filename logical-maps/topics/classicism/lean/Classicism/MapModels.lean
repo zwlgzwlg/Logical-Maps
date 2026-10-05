@@ -429,7 +429,7 @@ proof: the conditions of the finite-support group, for the monoids of Appendix D
 
 namespace Classicism.Map.Meets
 
-open Meta Meta.Intensional Meta.Intensional.MonoidModel Meta.Intensional.Monoids
+open CategoryTheory Meta Meta.Intensional Meta.Intensional.MonoidModel Meta.Intensional.Monoids
 
 /-- Among the monotone maps with `h0 = h1`, and the identity, the arrows other than the
 identity are those collapsing `0` and `1`. -/
@@ -484,5 +484,40 @@ theorem collapse_unpinned : CollapseUnpinned monoSurj01 := by
   exact ⟨{0, 1}, Set.toFinite _, MonoSurj01.collapse_pinned⟩
 
 end finite_support_identity_or_collapse_surjections
+
+namespace full_idempotent_monoid
+
+/-- The actual-world proposition `{1}` is isolated: the only other arrow is `k`, and every
+arrow after `k` is `k` again. -/
+theorem actual_world_isolated : (MSet.model Idem).ActualWorldIsolated := by
+  let S := CategoryTheory.SingleObj.star Idem
+  obtain ⟨a, ha⟩ := MSet.model_full Idem .t S ({MSet.arrow Idem 1} : MSet.Prop' Idem)
+  refine ⟨a, ?_, fun p hp => ?_, fun {V U} i j hi => ?_⟩
+  · change (⟨S, PUnit.unit, 𝟙 S⟩ : Tuple (MSet.model Idem).inner .t S) ∈
+      (MSet.model Idem).incl .t S a
+    rw [ha, MSet.arrow_id]
+    rfl
+  · change (⟨S, PUnit.unit, 𝟙 S⟩ : Tuple (MSet.model Idem).inner .t S) ∈
+      (MSet.model Idem).incl .t S p at hp
+    change (MSet.model Idem).incl .t S a ⊆ (MSet.model Idem).incl .t S p
+    rw [ha]
+    intro t ht
+    rw [Set.mem_singleton_iff.1 ht, ← MSet.arrow_id]
+    exact hp
+  · obtain rfl : V = S := Subsingleton.elim _ _
+    obtain rfl : U = S := Subsingleton.elim _ _
+    change (⟨S, PUnit.unit, i⟩ : Tuple (MSet.model Idem).inner .t S) ∉
+      (MSet.model Idem).incl .t S a at hi
+    change (⟨S, PUnit.unit, i ≫ j⟩ : Tuple (MSet.model Idem).inner .t S) ∉
+      (MSet.model Idem).incl .t S a
+    rw [ha] at hi ⊢
+    have key : ∀ m n : Idem, m ≠ 1 → n * m ≠ 1 := by
+      intro m n; cases m <;> cases n <;> decide
+    intro h
+    have e := MSet.arrow_injective Idem (Set.mem_singleton_iff.1 h)
+    rw [CategoryTheory.SingleObj.comp_as_mul] at e
+    exact key i j (fun e' => hi (by rw [Set.mem_singleton_iff]; exact congrArg (MSet.arrow Idem) e')) e
+
+end full_idempotent_monoid
 
 end Classicism.Map.Meets

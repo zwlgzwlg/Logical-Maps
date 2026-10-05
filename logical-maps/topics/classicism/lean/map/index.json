@@ -2628,7 +2628,52 @@
     "axioms": ["propext", "Quot.sound"]}}},
  "models":
  {"full-involution-group":
-  {"no-pure-contingency-r":
+  {"transversal-choice-r":
+   {"proofs":
+    [{"name": "Classicism.Meta.Intensional.MSet.model_isModel",
+      "lines": [82, 82],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"},
+     {"name":
+      "Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r",
+      "lines": [79, 85],
+      "file": "Classicism/MapArguments.lean"},
+     {"name": "Classicism.Meta.Intensional.Premodel.Full.extFull",
+      "lines": [34, 46],
+      "file": "Classicism/Semantics/FullModels.lean"},
+     {"name": "Classicism.Meta.Intensional.MSet.model_full",
+      "lines": [84, 84],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"},
+     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
+      "lines": [43, 43],
+      "file": "Classicism/Models/Conditions.lean"}],
+    "definitions": [],
+    "certificate":
+    {"name": "Classicism.Map.Models.full_involution_group.transversal_choice_r",
+     "lines": [134, 136],
+     "file": "Classicism/MapDerived.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "relational-choice-r":
+   {"proofs":
+    [{"name": "Classicism.Meta.Intensional.MSet.model_isModel",
+      "lines": [82, 82],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"},
+     {"name":
+      "Classicism.Map.Arguments.relational_choice_full.relational_choice_r",
+      "lines": [55, 61],
+      "file": "Classicism/MapArguments.lean"},
+     {"name": "Classicism.Meta.Intensional.MSet.model_full",
+      "lines": [84, 84],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"},
+     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
+      "lines": [43, 43],
+      "file": "Classicism/Models/Conditions.lean"}],
+    "definitions": [],
+    "certificate":
+    {"name": "Classicism.Map.Models.full_involution_group.relational_choice_r",
+     "lines": [130, 132],
+     "file": "Classicism/MapDerived.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "no-pure-contingency-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.MSet.model_isModel",
       "lines": [82, 82],
@@ -2638,13 +2683,35 @@
       "lines": [31, 36],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton",
-      "lines": [35, 36],
+      "lines": [36, 37],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions": [],
     "certificate":
     {"name":
      "Classicism.Map.Models.full_involution_group.no_pure_contingency_r",
-     "lines": [106, 108],
+     "lines": [122, 124],
+     "file": "Classicism/MapDerived.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "necessary-relational-choice-r":
+   {"proofs":
+    [{"name": "Classicism.Meta.Intensional.MSet.model_isModel",
+      "lines": [82, 82],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"},
+     {"name":
+      "Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r",
+      "lines": [67, 73],
+      "file": "Classicism/MapArguments.lean"},
+     {"name": "Classicism.Meta.Intensional.MSet.model_full",
+      "lines": [84, 84],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"},
+     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
+      "lines": [43, 43],
+      "file": "Classicism/Models/Conditions.lean"}],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_involution_group.necessary_relational_choice_r",
+     "lines": [126, 128],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-fregean-axiom":
@@ -2793,7 +2860,53 @@
      "file": "Classicism/MapModels.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
   "full-idempotent-monoid":
-  {"no-pure-contingency-r":
+  {"transversal-choice-r":
+   {"proofs":
+    [{"name": "Classicism.Meta.Intensional.MSet.model_isModel",
+      "lines": [82, 82],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"},
+     {"name":
+      "Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r",
+      "lines": [79, 85],
+      "file": "Classicism/MapArguments.lean"},
+     {"name": "Classicism.Meta.Intensional.Premodel.Full.extFull",
+      "lines": [34, 46],
+      "file": "Classicism/Semantics/FullModels.lean"},
+     {"name": "Classicism.Meta.Intensional.MSet.model_full",
+      "lines": [84, 84],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"},
+     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
+      "lines": [43, 43],
+      "file": "Classicism/Models/Conditions.lean"}],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_idempotent_monoid.transversal_choice_r",
+     "lines": [118, 120],
+     "file": "Classicism/MapDerived.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "relational-choice-r":
+   {"proofs":
+    [{"name": "Classicism.Meta.Intensional.MSet.model_isModel",
+      "lines": [82, 82],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"},
+     {"name":
+      "Classicism.Map.Arguments.relational_choice_full.relational_choice_r",
+      "lines": [55, 61],
+      "file": "Classicism/MapArguments.lean"},
+     {"name": "Classicism.Meta.Intensional.MSet.model_full",
+      "lines": [84, 84],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"},
+     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
+      "lines": [43, 43],
+      "file": "Classicism/Models/Conditions.lean"}],
+    "definitions": [],
+    "certificate":
+    {"name": "Classicism.Map.Models.full_idempotent_monoid.relational_choice_r",
+     "lines": [114, 116],
+     "file": "Classicism/MapDerived.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "no-pure-contingency-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.MSet.model_isModel",
       "lines": [82, 82],
@@ -2803,13 +2916,35 @@
       "lines": [31, 36],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton",
-      "lines": [35, 36],
+      "lines": [36, 37],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions": [],
     "certificate":
     {"name":
      "Classicism.Map.Models.full_idempotent_monoid.no_pure_contingency_r",
-     "lines": [102, 104],
+     "lines": [106, 108],
+     "file": "Classicism/MapDerived.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "necessary-relational-choice-r":
+   {"proofs":
+    [{"name": "Classicism.Meta.Intensional.MSet.model_isModel",
+      "lines": [82, 82],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"},
+     {"name":
+      "Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r",
+      "lines": [67, 73],
+      "file": "Classicism/MapArguments.lean"},
+     {"name": "Classicism.Meta.Intensional.MSet.model_full",
+      "lines": [84, 84],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"},
+     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
+      "lines": [43, 43],
+      "file": "Classicism/Models/Conditions.lean"}],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_idempotent_monoid.necessary_relational_choice_r",
+     "lines": [110, 112],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "necessary-fregean-axiom":
@@ -2898,6 +3033,26 @@
     {"name": "Classicism.Map.Models.full_idempotent_monoid.fregean_axiom",
      "lines": [367, 369],
      "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "distinctness-preserving-collapse":
+   {"proofs":
+    [{"name": "Classicism.Meta.Intensional.MSet.model_isModel",
+      "lines": [82, 82],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"},
+     {"name":
+      "Classicism.Map.Arguments.dpc_isolated_actual_world.distinctness_preserving_collapse",
+      "lines": [91, 98],
+      "file": "Classicism/MapArguments.lean"},
+     {"name":
+      "Classicism.Map.Meets.full_idempotent_monoid.actual_world_isolated",
+      "lines": [490, 519],
+      "file": "Classicism/MapModels.lean"}],
+    "definitions": [],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.full_idempotent_monoid.distinctness_preserving_collapse",
+     "lines": [102, 104],
+     "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "distinctness-necessary-t":
    {"proofs":
@@ -3023,7 +3178,7 @@
       "lines": [31, 36],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [84, 84],
+      "lines": [96, 96],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.truncs",
@@ -3193,7 +3348,7 @@
       "lines": [31, 36],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [84, 84],
+      "lines": [96, 96],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.shifts",
@@ -3302,7 +3457,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.d6Surjective_of_surjective",
-      "lines": [90, 92],
+      "lines": [102, 104],
       "file": "Classicism/Models/Conditions.lean"},
      {"name": "Classicism.Meta.Intensional.Monoids.Shifts.surj",
       "lines": [764, 769],
@@ -3347,11 +3502,11 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality",
-      "lines": [59, 61],
+      "lines": [108, 110],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned",
-      "lines": [86, 88],
+      "lines": [98, 100],
       "file": "Classicism/Models/Conditions.lean"},
      {"name": "Classicism.Meta.Intensional.Monoids.Shifts.onePinned",
       "lines": [792, 794],
@@ -3379,7 +3534,7 @@
       "lines": [31, 36],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [84, 84],
+      "lines": [96, 96],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Perms.model",
@@ -3542,7 +3697,7 @@
       "lines": [31, 36],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [84, 84],
+      "lines": [96, 96],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.monoSurj",
@@ -3651,7 +3806,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.d6Surjective_of_surjective",
-      "lines": [90, 92],
+      "lines": [102, 104],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.monoSurj",
@@ -3740,7 +3895,7 @@
       "lines": [31, 36],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [84, 84],
+      "lines": [96, 96],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.mono",
@@ -3846,7 +4001,7 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.barcan_positive.barcan_r",
-      "lines": [80, 87],
+      "lines": [129, 136],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Map.Meets.finite_support_monotone_maps.positive_preserving",
@@ -3935,7 +4090,7 @@
       "lines": [31, 36],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [84, 84],
+      "lines": [96, 96],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.monoSurj01",
@@ -4044,7 +4199,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.d6Surjective_of_surjective",
-      "lines": [90, 92],
+      "lines": [102, 104],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.monoSurj01",
@@ -4066,7 +4221,7 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_t",
-      "lines": [67, 69],
+      "lines": [116, 118],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Map.Meets.finite_support_identity_or_collapse_surjections.collapse_unpinned",
@@ -4092,7 +4247,7 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_r",
-      "lines": [71, 74],
+      "lines": [120, 123],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Map.Meets.finite_support_identity_or_collapse_surjections.collapse_unpinned",
@@ -4118,11 +4273,11 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality",
-      "lines": [59, 61],
+      "lines": [108, 110],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned",
-      "lines": [86, 88],
+      "lines": [98, 100],
       "file": "Classicism/Models/Conditions.lean"},
      {"name": "Classicism.Meta.Intensional.Monoids.MonoSurj01.onePinned",
       "lines": [424, 425],
@@ -4151,7 +4306,7 @@
       "lines": [31, 36],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [84, 84],
+      "lines": [96, 96],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.mono01",
@@ -4257,7 +4412,7 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.barcan_positive.barcan_r",
-      "lines": [80, 87],
+      "lines": [129, 136],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Map.Meets.finite_support_identity_or_collapse.positive_preserving",
@@ -4283,7 +4438,7 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_t",
-      "lines": [67, 69],
+      "lines": [116, 118],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Map.Meets.finite_support_identity_or_collapse.collapse_unpinned",
@@ -4309,7 +4464,7 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_r",
-      "lines": [71, 74],
+      "lines": [120, 123],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Map.Meets.finite_support_identity_or_collapse.collapse_unpinned",
@@ -4335,11 +4490,11 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality",
-      "lines": [59, 61],
+      "lines": [108, 110],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned",
-      "lines": [86, 88],
+      "lines": [98, 100],
       "file": "Classicism/Models/Conditions.lean"},
      {"name": "Classicism.Meta.Intensional.Monoids.Mono01.onePinned",
       "lines": [346, 348],
@@ -4368,7 +4523,7 @@
       "lines": [31, 36],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [84, 84],
+      "lines": [96, 96],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.pow2",
@@ -4515,11 +4670,11 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality",
-      "lines": [59, 61],
+      "lines": [108, 110],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned",
-      "lines": [86, 88],
+      "lines": [98, 100],
       "file": "Classicism/Models/Conditions.lean"},
      {"name": "Classicism.Meta.Intensional.Monoids.Pow2.onePinned",
       "lines": [682, 684],
@@ -6168,7 +6323,46 @@
    "lines": [125, 130],
    "file": "Classicism/Principles/Lattice.lean"}},
  "arguments":
- {"no-pure-contingency-one-object/no-pure-contingency-r":
+ {"transversal-choice-extensionally-full/transversal-choice-r":
+  {"proofs":
+   [{"name": "Classicism.Meta.Intensional.Premodel.holds_tc",
+     "lines": [105, 123],
+     "file": "Classicism/Semantics/FullModels.lean"}],
+   "certificate":
+   {"name":
+    "Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r",
+    "lines": [79, 85],
+    "file": "Classicism/MapArguments.lean",
+    "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+  "relational-choice-full/relational-choice-r":
+  {"proofs":
+   [{"name": "Classicism.Meta.Intensional.Premodel.holds_rc",
+     "lines": [77, 92],
+     "file": "Classicism/Semantics/FullModels.lean"},
+    {"name": "Classicism.Meta.Intensional.Premodel.Full.extFull",
+     "lines": [34, 46],
+     "file": "Classicism/Semantics/FullModels.lean"}],
+   "certificate":
+   {"name":
+    "Classicism.Map.Arguments.relational_choice_full.relational_choice_r",
+    "lines": [55, 61],
+    "file": "Classicism/MapArguments.lean",
+    "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+  "relational-choice-full-boxed/necessary-relational-choice-r":
+  {"proofs":
+   [{"name": "Classicism.Meta.Intensional.Premodel.holds_box_rc",
+     "lines": [94, 101],
+     "file": "Classicism/Semantics/FullModels.lean"},
+    {"name": "Classicism.Meta.Intensional.Premodel.Full.extFull",
+     "lines": [34, 46],
+     "file": "Classicism/Semantics/FullModels.lean"}],
+   "certificate":
+   {"name":
+    "Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r",
+    "lines": [67, 73],
+    "file": "Classicism/MapArguments.lean",
+    "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+  "no-pure-contingency-one-object/no-pure-contingency-r":
   {"proofs":
    [{"name": "Classicism.Meta.Intensional.Premodel.holdsAx_npc",
      "lines": [66, 76],
@@ -6186,12 +6380,12 @@
      "file": "Classicism/Models/MonoidModel.lean"},
     {"name":
      "Classicism.Meta.Intensional.MonoidModel.not_atomicityT_of_collapseUnpinned",
-     "lines": [112, 118],
+     "lines": [124, 130],
      "file": "Classicism/Models/Conditions.lean"}],
    "certificate":
    {"name":
     "Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_t",
-    "lines": [67, 69],
+    "lines": [116, 118],
     "file": "Classicism/MapArguments.lean",
     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
   "finite-support-one-object/collapsing-atomless/atomicity-r":
@@ -6201,12 +6395,12 @@
      "file": "Classicism/Models/MonoidModel.lean"},
     {"name":
      "Classicism.Meta.Intensional.MonoidModel.not_atomicityT_of_collapseUnpinned",
-     "lines": [112, 118],
+     "lines": [124, 130],
      "file": "Classicism/Models/Conditions.lean"}],
    "certificate":
    {"name":
     "Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_r",
-    "lines": [71, 74],
+    "lines": [120, 123],
     "file": "Classicism/MapArguments.lean",
     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
   "finite-support-one-object/barcan-positive/barcan-r":
@@ -6220,7 +6414,7 @@
    "certificate":
    {"name":
     "Classicism.Map.Arguments.finite_support_one_object.barcan_positive.barcan_r",
-    "lines": [80, 87],
+    "lines": [129, 136],
     "file": "Classicism/MapArguments.lean",
     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
   "finite-support-one-object/actual-world/actuality":
@@ -6234,13 +6428,24 @@
    "certificate":
    {"name":
     "Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality",
-    "lines": [59, 61],
+    "lines": [108, 110],
+    "file": "Classicism/MapArguments.lean",
+    "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+  "dpc-isolated-actual-world/distinctness-preserving-collapse":
+  {"proofs":
+   [{"name": "Classicism.Meta.Intensional.Premodel.holds_dpc",
+     "lines": [137, 148],
+     "file": "Classicism/Semantics/FullModels.lean"}],
+   "certificate":
+   {"name":
+    "Classicism.Map.Arguments.dpc_isolated_actual_world.distinctness_preserving_collapse",
+    "lines": [91, 98],
     "file": "Classicism/MapArguments.lean",
     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
   "barcan-d6/barcan-r":
   {"proofs":
    [{"name": "Classicism.Meta.Intensional.Premodel.reduct_ideal",
-     "lines": [46, 52],
+     "lines": [58, 64],
      "file": "Classicism/Models/Conditions.lean"},
     {"name": "Classicism.Meta.Intensional.Premodel.ideal_bf_of_surjective",
      "lines": [533, 537],

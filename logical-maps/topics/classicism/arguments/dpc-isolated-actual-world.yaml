@@ -12,3 +12,7 @@ revisions:
   by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
   note: >-
     The finite-support, symmetric and full action models' copies (eight records) stated once for the topic; what varied, why no world outside the actual world sees back into it, is each record's reason for meeting actual-world-isolated.
+# Proved in Lean (Classicism/MapArguments.lean), for every intensional action model meeting the conditions.
+lean:
+- holds: distinctness-preserving-collapse
+  ref: Classicism.Map.Arguments.dpc_isolated_actual_world.distinctness_preserving_collapse

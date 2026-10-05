@@ -144,6 +144,10 @@ lean:
   model: Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol
   is_model: Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol
   meets:
+    full-model: Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol
+    full-action-model: Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol
+    extensionally-full: Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol)
+    metatheory-choice: Classicism.Meta.Intensional.Premodel.metatheoryChoice _
     one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
   verdicts:
   - holds: distinctness-necessary-r

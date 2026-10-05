@@ -133,6 +133,12 @@ theorem holdsAx_ofPure (Ax : AxiomSet Signature.pure) :
   ⟨fun h p hp => (A.holdsSentence_ofPure p).1 (h _ ⟨p, hp, rfl⟩),
    fun h _ ⟨p, hp, e⟩ => e ▸ (A.holdsSentence_ofPure p).2 (h p hp)⟩
 
+/-- The reduct of a model is a model: the value of a pure term in it is the value of the term
+read in the signature, which is inner. -/
+theorem reduct_isModel (M : A.IsModel) : A.reduct.IsModel := fun h t g => by
+  obtain ⟨x, hx⟩ := M h (Term.ofPure t) g
+  exact ⟨x, (A.reduct_Incl _ _ x).trans (hx.trans (A.sem_ofPure h t g))⟩
+
 /-- A premodel of the pure language is its own reduct. -/
 theorem reduct_pure (B : Premodel Signature.pure C) : B.reduct = B := by
   cases B
