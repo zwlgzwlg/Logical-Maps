@@ -103,8 +103,7 @@ views:
   name: 'Pilot: necessity and rigidity'
   description: 'Extensionality and five boxed principles: □ND, □Atomicity, □Actuality, □Rigid Comprehension
     and □BF.'
-  default: true
-  principles: &id001
+  principles:
   - extensionality-r
   - necessary-distinctness-necessary-r
   - necessary-atomicity-r
@@ -113,6 +112,7 @@ views:
   - necessary-barcan-r
 - id: classicism-2-1-to-2-3
   name: '''Classicism'' §2.1–2.3'
+  default: true
   description: The principles discussed in Bacon and Dorr, Classicism, §§2.1–2.3, with their necessitations.
   principles:
   - actuality
@@ -131,10 +131,42 @@ views:
   - no-pure-contingency-r
   - plenitude-r
   - rigid-comprehension-r
+- id: below-rigid-comprehension
+  name: Below Rigid Comprehension
+  description: 'Boxed principles at and below □Rigid Comprehension: the rigidity and comprehension principles
+    with □Boolean Completeness, □Actuality and □Vicinity.'
+  principles:
+  - necessary-boolean-completeness-r
+  - necessary-rigid-comprehension-r
+  - necessary-weak-rigid-comprehension-r
+  - necessary-inextensible-comprehension-r
+  - necessary-tame-rigidity-r
+  - necessary-actuality
+  - necessary-weakly-inextensible-comprehension-r
+  - necessary-vicinity
 lattice_views:
 - id: pilot
   name: 'Pilot: necessity and rigidity'
   default: true
   description: 'The conjunctions of Extensionality and five boxed principles: □ND, □Atomicity, □Actuality,
     □Rigid Comprehension and □BF.'
-  principles: *id001
+  principles:
+  - extensionality-r
+  - necessary-distinctness-necessary-r
+  - necessary-atomicity-r
+  - necessary-actuality
+  - necessary-rigid-comprehension-r
+  - necessary-barcan-r
+- id: below-rigid-comprehension
+  name: Below Rigid Comprehension
+  description: 'Boxed principles at and below □Rigid Comprehension: the rigidity and comprehension principles
+    with □Boolean Completeness, □Actuality and □Vicinity.'
+  principles:
+  - necessary-boolean-completeness-r
+  - necessary-rigid-comprehension-r
+  - necessary-weak-rigid-comprehension-r
+  - necessary-inextensible-comprehension-r
+  - necessary-tame-rigidity-r
+  - necessary-actuality
+  - necessary-weakly-inextensible-comprehension-r
+  - necessary-vicinity
