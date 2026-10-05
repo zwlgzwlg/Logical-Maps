@@ -4,8 +4,8 @@
 
 ## Package
 
-- **□Boolean Completeness.** Necessarily, every property of entities of a relational type has a greatest lower bound in that type.
 - **□Actuality.** Necessarily, there is a true proposition that entails every true proposition.
+- **□Boolean Completeness.** Necessarily, every property of entities of a relational type has a greatest lower bound in that type.
 - **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
@@ -14,26 +14,102 @@
 - **¬ No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
 - **¬ ND.** Distinct things of any type are necessarily distinct.
 - **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
-- **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
 - **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
-- **¬ Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
 - **¬ Relational Choice.** Every serial binary relation has a functional subrelation.
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
 - **¬ B for pure sentences.** The B instance for every closed sentence in the pure language.
+- **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
+- **¬ Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
 
-## Construction
+## Definition
 
 A symmetric ideally-full intensional action model over two objects, each a copy of the natural numbers. The arrows from the first object to itself are the permutations; the arrows from the first to the second and from the second to itself are all the functions; there are none back. Both symmetry groups are all the permutations. The first object carries the ideal of finite sets, the second the improper ideal, so at the second object every symmetric intension belongs to the domain. The evaluation point is the identity arrow on the first object.
 
-Actuality holds at both objects, and hence necessarily: at each, the orbit of the identity under the symmetry group is the smallest symmetric set of arrows containing it, and it is in the domain, at the first object because it is pinned down by the empty set and at the second because nothing is required there. Boolean Completeness holds at both, and hence necessarily: at the first by the draft's main theorem with the empty distinguished set, since an arrow to the first object is automatically a permutation and so separated, while for arrows to the second splicing is unconstrained; at the second trivially, since its domains are closed under arbitrary unions.
+Interpretation of Σ, fixed for this record: each relational constant denotes the top element of its type and each individual constant denotes one fixed individual.
 
-Rigid Comprehension fails: no rigid property of individuals is coextensive with the universal one. Weak persistence together with finite pinning forces any candidate to contain every pair whose arrow targets the second object, so its transport there is the top property. But the property of being in the range of one's arrow is symmetric and persistent, its extension at that world is everything, and the top property does not entail it, because the arrows out of the second object include non-surjections. So the rigidity criterion fails at that world.
+## Arguments
+
+### Holds □Actuality.
+
+At both objects, and hence necessarily: at each, the orbit of the identity under the symmetry group is the smallest symmetric set of arrows containing it, and it is in the domain, at the first object because it is pinned down by the empty set and at the second because nothing is required there.
+
+*By Cian Dorr, 2026-09-19.*
+
+### Holds □Boolean Completeness.
+
+At both, and hence necessarily: at the first by the draft's main theorem with the empty distinguished set, since an arrow to the first object is automatically a permutation and so separated, while for arrows to the second splicing is unconstrained; at the second trivially, since its domains are closed under arbitrary unions.
+
+*By Cian Dorr, 2026-09-19.*
+
+### Fails Rigid Comprehension.
+
+No rigid property of individuals is coextensive with the universal one. Weak persistence together with finite pinning forces any candidate to contain every pair whose arrow targets the second object, so its transport there is the top property. But the property of being in the range of one's arrow is symmetric and persistent, its extension at that world is everything, and the top property does not entail it, because the arrows out of the second object include non-surjections. So the rigidity criterion fails at that world.
+
+*By Cian Dorr, 2026-09-19.*
+
+### Fails □BF, No Pure Contingency.
+
+The draft records that the type-e instance of BF is true at the base world and false at the second object, so BF is true while boxed BF is false; that is what the violation of boxed BF records, and it also refutes No Pure Contingency, since that instance is a closed pure sentence true at the base and false at an accessible world.
+
+*By Cian Dorr, 2026-09-19.*
+
+### Fails ND.
+
+At type e because some arrow to the second object collapses two individuals.
+
+*By Cian Dorr, 2026-09-19.*
+
+### Holds Axiom of Infinity (type e), Axiom of Infinity (type t).
+
+The individuals are the natural numbers and identity at the identity arrow is literal, so no numeral counts them. The propositions that a given individual is fixed by the arrow, one for each individual, are pairwise distinct, symmetric and pinned by that individual, so there are infinitely many propositions. The set of numerals at each type is invariant under every arrow, hence symmetric and pinned by the empty set, so finite cardinality is standard and no finite cardinality holds of the universal property at either type.
+
+*By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-09-20.*
+
+### Fails Witnessed Possibility, Independence (signature Σ).
+
+Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true identity that C(Σ) does not prove. Everything that implies these fails with them.
+
+*Address: `symmetric-two-object-unpinned#sigma-top`. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
+
+### Holds Distinctness-preserving collapse.
+
+Let $a$ be the set of arrows from the first object to itself, all permutations, a symmetric proposition true at the identity and, as the record’s Actuality witness, entailed by no other truth. For a true $p$, $a\le p$. Take $q:=a$: under a permutation $i$, $p$ holds since $i\in a\subseteq p$; under a non-permutation $i$, $\Diamond a$ would need $k\circ i$ to be a permutation, and no arrow from the second object returns to the first. So every truth is $\Box_{\ne}$-necessary.
+
+*By Claude Fable 5.1 (Anthropic), 2026-09-23.*
+
+### Fails Relational Choice.
+
+At the types $(e\to t)$ and $e$. Let $U:=\lambda Xy\, .\,Xy\lor\neg\exists z\, .\,Xz$, a closed term, hence in the domain, and serial. A functional subrelation $S$ of $U$ would lie in the domain at the evaluation object, so it is symmetric and pinned down by a finite set $N$. Two facts about such an $S$ (Dorr, draft, Lemma 21): every $g\in G$ fixing $N$ pointwise satisfies $g^{[\sigma]}S=S$, and symmetry gives $\langle gA,gy,g\rangle\in S$ whenever $\langle A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$. Now let $A$ be the property of not belonging to $N$, evaluated at the first object, where the domain is symmetric and finitely pinned. It is in the domain, being pinned down by that finite set and symmetric, and its extension is nonempty, so $S$ relates $A$ at the identity to some $y$ in its extension. The transposition of $y$ with another individual of the first object outside $N$ lies in $G_{W_0}$, fixes $A$ and moves $y$ to some $gy\ne y$, so $S$ relates $A$ to $gy$ as well, and $S$ is not functional at the identity arrow. The well-ordering of the individuals that Cian Dorr had in mind is refuted by the same two facts, but the direct route needs no derivation of a well-ordering from Relational Choice in C.
+
+*By Claude Fable 5.1 (Anthropic), after Cian Dorr’s observation that a choice over the individuals cannot be finitely pinned down, 2026-09-23.*
+
+### Fails Atomicity (type t).
+
+The symmetry group of $W_0$ is an atom, but no atom lies inside the nonempty proposition of the arrows into $W_1$, which is pinned down by the empty set since targets are: a nonempty symmetric $p$ of such arrows pinned down by $N$ and containing $h$ contains every arrow into $W_1$ whose restriction to $N$ has the same fibres as $h$’s, the symmetry group of $W_1$ being all permutations, and those agreeing in that sense on $N\cup\{m\}$ form a smaller nonempty symmetric proposition.
+
+*By Claude Fable 5.1 (Anthropic), 2026-09-23.*
+
+### Fails B for pure sentences.
+
+The type-$e$ instance of BF is a closed pure sentence true at the base world and false at the second object, and no arrow leads back from the second object, so at that world the sentence is not even possible.
+
+*By Claude Fable 5.1 (Anthropic), 2026-09-25.*
+
+### Fails Separated Structure, Distinctness Maximalism (signature Σ). In reserve.
+
+Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
+
+*By Claude Fable 5.1 (Anthropic), 2026-09-22.*
+
 
 ## Notes
 
-The point of the model is that boxed Boolean Completeness and boxed Actuality, and so Weak Rigid Comprehension, do not yield Rigid Comprehension. The gap is exactly the leading box of the inextensibility conjunct. The draft records that the type-e instance of BF is true at the base world and false at the second object, so BF is true while boxed BF is false; that is what the violation of boxed BF records, and it also refutes No Pure Contingency, since that instance is a closed pure sentence true at the base and false at an accessible world. The status of the unboxed BF schema at the base world is left unknown here: the draft's working comments report that higher-type instances fail there, which would make the schema fail, but its text does not. ND fails at type e because some arrow to the second object collapses two individuals. The source is a work in progress. Interpretation of Σ, fixed for this record: each relational constant denotes the top element of its type and each individual constant denotes one fixed individual. Under it the signature schemata fail. Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true identity that C(Σ) does not prove. Everything that implies these fails with them. Distinctness-preserving collapse holds: let $a$ be the set of arrows from the first object to itself, all permutations, a symmetric proposition true at the identity and, as the record’s Actuality witness, entailed by no other truth. For a true $p$, $a\le p$. Take $q:=a$: under a permutation $i$, $p$ holds since $i\in a\subseteq p$; under a non-permutation $i$, $\Diamond a$ would need $k\circ i$ to be a permutation, and no arrow from the second object returns to the first. So every truth is $\Box_{\ne}$-necessary. Relational Choice fails, at the types $(e\to t)$ and $e$. Let $U:=\lambda Xy\, .\,Xy\lor\neg\exists z\, .\,Xz$, a closed term, hence in the domain, and serial. A functional subrelation $S$ of $U$ would lie in the domain at the evaluation object, so it is symmetric and pinned down by a finite set $N$. Two facts about such an $S$ (Dorr, draft, Lemma 21): every $g\in G$ fixing $N$ pointwise satisfies $g^{[\sigma]}S=S$, and symmetry gives $\langle gA,gy,g\rangle\in S$ whenever $\langle A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$. Now let $A$ be the property of not belonging to $N$, evaluated at the first object, where the domain is symmetric and finitely pinned. It is in the domain, being pinned down by that finite set and symmetric, and its extension is nonempty, so $S$ relates $A$ at the identity to some $y$ in its extension. The transposition of $y$ with another individual of the first object outside $N$ lies in $G_{W_0}$, fixes $A$ and moves $y$ to some $gy\ne y$, so $S$ relates $A$ to $gy$ as well, and $S$ is not functional at the identity arrow. Argument of 23 September 2026, after Cian Dorr’s observation that a choice over the individuals cannot be finitely pinned down; the well-ordering of the individuals that he had in mind is refuted by the same two facts, but the direct route needs no derivation of a well-ordering from Relational Choice in C. Atomicity fails at $W_0$ already at type $t$, although Actuality holds. The symmetry group of $W_0$ is an atom, but no atom lies inside the nonempty proposition of the arrows into $W_1$, which is pinned down by the empty set since targets are: a nonempty symmetric $p$ of such arrows pinned down by $N$ and containing $h$ contains every arrow into $W_1$ whose restriction to $N$ has the same fibres as $h$’s, the symmetry group of $W_1$ being all permutations, and those agreeing in that sense on $N\cup\{m\}$ form a smaller nonempty symmetric proposition. B for pure sentences fails, and B for sentences of $\Sigma$ with it: the type-$e$ instance of BF is a closed pure sentence true at the base world and false at the second object, and no arrow leads back from the second object, so at that world the sentence is not even possible. Observation of Claude Fable 5.1 (Anthropic), 25 September 2026.
+The point of the model is that boxed Boolean Completeness and boxed Actuality, and so Weak Rigid Comprehension, do not yield Rigid Comprehension. The gap is exactly the leading box of the inextensibility conjunct. The status of the unboxed BF schema at the base world is left unknown here: the draft's working comments report that higher-type instances fail there, which would make the schema fail, but its text does not. The source is a work in progress.
+Argument of 23 September 2026, after Cian Dorr’s observation that a choice over the individuals cannot be finitely pinned down; the well-ordering of the individuals that he had in mind is refuted by the same two facts, but the direct route needs no derivation of a well-ordering from Relational Choice in C. Atomicity fails at $W_0$ already at type $t$, although Actuality holds. B for pure sentences fails, and B for sentences of $\Sigma$ with it: the type-$e$ instance of BF is a closed pure sentence true at the base world and false at the second object, and no arrow leads back from the second object, so at that world the sentence is not even possible. Observation of Claude Fable 5.1 (Anthropic), 25 September 2026.
 
-## Revisions
+## History
+
+The record's revision log before it was written as arguments.
 
 - **2026-09-25** (Claude Fable 5.1 (Anthropic)) — Added the failure of B for pure sentences; see the notes. Now violates: B for pure sentences.
 - **2026-09-23** (Claude Fable 5.1 (Anthropic)) — Recorded the Distinctness-preserving collapse; see the notes. Now satisfies: Distinctness-preserving collapse.

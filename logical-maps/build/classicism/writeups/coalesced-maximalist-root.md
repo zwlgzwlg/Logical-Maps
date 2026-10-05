@@ -7,32 +7,132 @@
 - **Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
 - **Actuality.** There is a true proposition that entails every true proposition.
 - **Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
-- **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Relational Choice.** Every serial binary relation has a functional subrelation.
+- **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Transversal Choice.** Every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.
-- **¬ □Vicinity.** Necessarily, there is a true proposition that entails the possibility of each true proposition.
-- **¬ □Transversal.** Necessarily, there is a property of properties that picks out exactly one property from each coextension class, that is, exactly one property coextensive with any given property.
-- **¬ □Weakly Inextensible Comprehension.** Necessarily, every relation, including a proposition, is coextensive with a weakly inextensible one.
-- **¬ Strong Possibility (pure).** Each closed pure sentence consistent with Maximalist Classicism is possible under the distinctness-preserving modality.
-- **¬ ND.** Distinct things of any type are necessarily distinct.
-- **¬ BF.** The Barcan Formula at every type. The predicate formulation closes the formula schema using lambda abstraction.
 - **¬ BF (type t).** BF (type t) in the displayed closed propositional formulation.
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
 - **¬ Possibility+ (pure).** The strengthened Possibility Maximalism schema for pure C-consistent formulas whose only free variables are the displayed individual variables; include the empty tuple.
+- **¬ Boolean Completeness (type t).** Boolean Completeness (type t) in the displayed closed propositional formulation.
+- **¬ □Vicinity.** Necessarily, there is a true proposition that entails the possibility of each true proposition.
+- **¬ □Weakly Inextensible Comprehension.** Necessarily, every relation, including a proposition, is coextensive with a weakly inextensible one.
+- **¬ □Transversal.** Necessarily, there is a property of properties that picks out exactly one property from each coextension class, that is, exactly one property coextensive with any given property.
+- **¬ Strong Possibility (pure).** Each closed pure sentence consistent with Maximalist Classicism is possible under the distinctness-preserving modality.
+- **¬ ND.** Distinct things of any type are necessarily distinct.
+- **¬ BF.** The Barcan Formula at every type. The predicate formulation closes the formula schema using lambda abstraction.
 - **¬ □Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
 - **¬ Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
 - **¬ Countable Boolean Completeness.** Every countable property of entities of a relational type has a least upper bound in that type, where a property is countable when it injects into the natural numbers.
-- **¬ Boolean Completeness (type t).** Boolean Completeness (type t) in the displayed closed propositional formulation.
 
-## Construction
+## Definition
 
-Take a coalesced sum of a set of source action models complete for C in the fixed signature, evaluated at the new root. See Definition E.2 for the construction; the singleton root proposition witnesses Actuality. The p. 83 discussion supplies the distinctness-preserving collapse and the obstruction to Strong Possibility.
+Take a coalesced sum of a set of source action models complete for C in the fixed signature, evaluated at the new root. See Definition E.2 for the construction.
+
+Root domains are as full as compatibility allows: a root proposition is a choice, for each component, of a proposition of that component’s root domain, together with a truth value at the root’s identity arrow, and a root entity of a relational type is likewise a family of component entities with a root component that is an arbitrary function of the root arguments.
+
+## Arguments
+
+### Holds Distinctness Maximalism (signature Σ).
+
+*Source: Classicism, Theorem 3.26, §3.6, pp. 62–64. By Andrew Bacon and Cian Dorr, 2026-09-17.*
+
+### Holds Actuality.
+
+The singleton root proposition witnesses Actuality.
+
+*Source: Classicism, Appendix E, pp. 80–83. By Andrew Bacon and Cian Dorr, 2026-09-17.*
+
+### Holds Distinctness-preserving collapse.
+
+The p. 83 discussion supplies the distinctness-preserving collapse and the obstruction to Strong Possibility.
+
+*Source: Classicism, Appendix E, p. 83. By Andrew Bacon and Cian Dorr, 2026-09-17.*
+
+### Fails BF (type t).
+
+C is complete for the component set, so some component $M$ refutes BF at its root $M_0$, at type $t$ say: some $F$ in $M_0$’s domain has $\forall y\, .\,\Box Fy$ true and $\Diamond\exists y\, .\,\neg Fy$ true at $M_0$. Because the root’s domains are as full as possible, the thread $F^{\prime}$ that is universal at the root and in every other component and is carried onto $F$ by the distinguished arrow to $M_0$ is in the root domain. Every arrow from the root into $M$ factors through that distinguished arrow, so $\forall y\, .\,\Box F^{\prime}y$ at the root reduces to $\forall y\, .\,\Box Fy$ at $M_0$ together with trivial checks elsewhere, and $\Diamond\exists y\, .\,\neg F^{\prime}y$ at the root follows from $\Diamond\exists y\, .\,\neg Fy$ at $M_0$ through the same factorization.
+
+*By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-22.*
+
+### Fails Atomicity (type t).
+
+C is complete for the components, so some component $M$ refutes Atomicity at its root, by a proposition $p_M$ with no atom below it in $M$’s domain; the root proposition that is $p_M$ on $M$, empty on every other component and false at the root has as its root lower bounds exactly the root propositions that are lower bounds of $p_M$ on $M$ and empty elsewhere, so it has no atom below it either.
+
+*By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-22.*
+
+### Holds Relational Choice.
+
+The functionality of a subrelation is evaluated at the root’s identity arrow only, while the subrelation condition is boxed; so for a serial root relation take the subrelation whose root component is a functional choice from the root component, by choice in the metatheory, and whose component parts are empty. Its necessitation fails, since some component refutes Relational Choice at its root.
+
+*By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-22.*
+
+### Holds Axiom of Infinity (type e).
+
+The root individuals are all families of component individuals, infinitely many since components have arbitrarily many individuals; identity at the root is identity of families; and the property of cardinalities that is true of exactly the standard numerals at the root and universal in every component is a root entity, so a finite cardinality at the root is a standard numeral, and no standard numeral holds of the universal property over an infinite domain.
+
+*By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-22.*
+
+### Fails Possibility+ (pure).
+
+Some component $N$ satisfies necessarily that there are at least three individuals, since that sentence is consistent; take two root individuals that differ at $N$ and agree everywhere else; the pure formula saying that $x\ne y$ and there are exactly two individuals is consistent, but at the root there are infinitely many individuals, under every arrow into another component the two collapse, and under every arrow into $N$ there are at least three.
+
+*By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-22.*
+
+### Fails Boolean Completeness (type t).
+
+The truncation model of Appendix D, part 6, refutes it at type $t$, as its record now shows, and the components are complete for C, so one of them does; the root propositions false at every arrow except those into that component form a copy of its propositional domain under the root’s entailment order, and a root property of propositions holding exactly of the copies of the members of that component’s counterexample family has no least upper bound at the root.
+
+*By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-23.*
+
+### Fails □Vicinity, □Weakly Inextensible Comprehension.
+
+The components are complete for C and a closed pure sentence at the distinguished arrow into a component has its truth value at that component root, so every pure sentence consistent with C is possible at the root; the negation of Vicinity is consistent (the truncation model) and so is the negation of a closed instance of Weakly Inextensible Comprehension at type $t\to t$ (the permutation model). Since □Actuality fails here while Vicinity and Weakly Inextensible Comprehension hold, the boxed results show that at least one of the boxed principles had to fail.
+
+*Address: `coalesced-maximalist-root#pure-sentences-possible`. By Claude Opus 5.5 (Anthropic), at Cian Dorr's request, 2026-09-27.*
+
+### Fails □Transversal.
+
+By the same argument: the negation of the type-$e$ instance of Transversal is a pure sentence consistent with C, since it holds in symmetric-infinite-classes, so it is possible at the root.
+
+*By Claude Opus 5.5 (Anthropic), 2026-09-28.*
+
+### Fails Strong Possibility (pure), ND. In reserve.
+
+*Source: Classicism, Theorem 3.26, §§3.6, pp. 62–64; Appendix E, pp. 80–83; §2.6, p. 41. By Andrew Bacon and Cian Dorr, 2026-09-17.*
+
+### Fails BF. In reserve.
+
+Added the failure of BF and of BF (type t) at the root, by transporting a component’s counterexample to BF along the distinguished arrow; see the notes.
+
+*By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-22.*
+
+### Fails □Relational Choice. In reserve.
+
+Recorded the failure of □Relational Choice, already argued in the notes.
+
+*By Claude Fable 5.1 (Anthropic), 2026-09-22.*
+
+### Fails Boolean Completeness, Countable Boolean Completeness. In reserve.
+
+Corrected the Boolean Completeness claim from the type-t instance to the type schema, since no component is known to refute it at type t; added the failure of Countable Boolean Completeness by the same transfer.
+
+*By Claude Fable 5.1 (Anthropic), 2026-09-23.*
+
+### Holds Transversal Choice. In reserve.
+
+Added Transversal Choice at the root, by the argument recorded for Relational Choice: a root entity has an arbitrary root component, so take the property whose root component is a transversal, chosen in the metatheory, of the root component of an equivalence relation at the root, with empty component parts; the equivalence and transversal conditions are all evaluated at the root's identity arrow. Recorded on a question of Zachary Goodsell, after an observation of Christopher Sun.
+
+*By Claude Fable 5.1 (Anthropic), 2026-09-25.*
+
 
 ## Notes
 
-The cited construction is a model of the map’s relational-type framework. The description identifies its evaluation point; construction and verification are given at the PDF locations in References. BF fails at the root. C is complete for the component set, so some component $M$ refutes BF at its root $M_0$, at type $t$ say: some $F$ in $M_0$’s domain has $\forall y\, .\,\Box Fy$ true and $\Diamond\exists y\, .\,\neg Fy$ true at $M_0$. Because the root’s domains are as full as possible, the thread $F^{\prime}$ that is universal at the root and in every other component and is carried onto $F$ by the distinguished arrow to $M_0$ is in the root domain. Every arrow from the root into $M$ factors through that distinguished arrow, so $\forall y\, .\,\Box F^{\prime}y$ at the root reduces to $\forall y\, .\,\Box Fy$ at $M_0$ together with trivial checks elsewhere, and $\Diamond\exists y\, .\,\neg F^{\prime}y$ at the root follows from $\Diamond\exists y\, .\,\neg Fy$ at $M_0$ through the same factorization. Observation of Cian Dorr, 22 September 2026. Root domains are as full as compatibility allows: a root proposition is a choice, for each component, of a proposition of that component’s root domain, together with a truth value at the root’s identity arrow, and a root entity of a relational type is likewise a family of component entities with a root component that is an arbitrary function of the root arguments. Atomicity fails at type t: C is complete for the components, so some component $M$ refutes Atomicity at its root, by a proposition $p_M$ with no atom below it in $M$’s domain; the root proposition that is $p_M$ on $M$, empty on every other component and false at the root has as its root lower bounds exactly the root propositions that are lower bounds of $p_M$ on $M$ and empty elsewhere, so it has no atom below it either. Boolean Completeness fails, at type $e\to t$, for the same reason: a component $M$ refutes it by a property $X_M$ of propositions without a greatest lower bound in $M$’s domain, and the root property holding of a root proposition iff $X_M$ holds of its $M$-component has no greatest lower bound at the root, since such a bound’s $M$-component would be one for $X_M$. Relational Choice holds at the root, contrary to a first guess: the functionality of a subrelation is evaluated at the root’s identity arrow only, while the subrelation condition is boxed; so for a serial root relation take the subrelation whose root component is a functional choice from the root component, by choice in the metatheory, and whose component parts are empty. Its necessitation fails, since some component refutes Relational Choice at its root. The Axiom of Infinity at type e holds: the root individuals are all families of component individuals, infinitely many since components have arbitrarily many individuals; identity at the root is identity of families; and the property of cardinalities that is true of exactly the standard numerals at the root and universal in every component is a root entity, so a finite cardinality at the root is a standard numeral, and no standard numeral holds of the universal property over an infinite domain. Possibility+ (pure) fails: some component $N$ satisfies necessarily that there are at least three individuals, since that sentence is consistent; take two root individuals that differ at $N$ and agree everywhere else; the pure formula saying that $x\ne y$ and there are exactly two individuals is consistent, but at the root there are infinitely many individuals, under every arrow into another component the two collapse, and under every arrow into $N$ there are at least three. □Relational Choice fails, as the notes on Relational Choice explain: some component refutes Relational Choice at its root, which is accessible from the root.  Correction of 23 September 2026: the components are only known to refute Boolean Completeness at type $e\to t$ (Classicism, n. 92, conjectures failures at type $t$ but has none), so the transfer argument refutes the type schema of Boolean Completeness at the root, not its type-$t$ instance, which is left unknown; the same transfer, applied to the countable family of haecceities that witnesses the component failure, refutes Countable Boolean Completeness.  Boolean Completeness fails at type $t$ (restoring the claim corrected earlier in the day): the truncation model of Appendix D, part 6, refutes it at type $t$, as its record now shows, and the components are complete for C, so one of them does; the root propositions false at every arrow except those into that component form a copy of its propositional domain under the root’s entailment order, and a root property of propositions holding exactly of the copies of the members of that component’s counterexample family has no least upper bound at the root. Cian Dorr’s argument, 23 September 2026. □Vicinity and □Weakly Inextensible Comprehension fail. The components are complete for C and a closed pure sentence at the distinguished arrow into a component has its truth value at that component root, so every pure sentence consistent with C is possible at the root; the negation of Vicinity is consistent (the truncation model) and so is the negation of a closed instance of Weakly Inextensible Comprehension at type $t\to t$ (the permutation model). Since □Actuality fails here while Vicinity and Weakly Inextensible Comprehension hold, the boxed results show that at least one of the boxed principles had to fail. Observation of Claude Opus 5.5 (Anthropic), 27 September 2026. □Transversal fails as well, by the same argument: the negation of the type-$e$ instance of Transversal is a pure sentence consistent with C, since it holds in symmetric-infinite-classes, so it is possible at the root. Observation of Claude Opus 5.5 (Anthropic), 28 September 2026.
+The cited construction is a model of the map’s relational-type framework. The description identifies its evaluation point; construction and verification are given at the PDF locations in References.
+Atomicity fails at type t: C is complete for the components, so some component $M$ refutes Atomicity at its root, by a proposition $p_M$ with no atom below it in $M$’s domain; the root proposition that is $p_M$ on $M$, empty on every other component and false at the root has as its root lower bounds exactly the root propositions that are lower bounds of $p_M$ on $M$ and empty elsewhere, so it has no atom below it either. Boolean Completeness fails, at type $e\to t$, for the same reason: a component $M$ refutes it by a property $X_M$ of propositions without a greatest lower bound in $M$’s domain, and the root property holding of a root proposition iff $X_M$ holds of its $M$-component has no greatest lower bound at the root, since such a bound’s $M$-component would be one for $X_M$. Relational Choice holds at the root, contrary to a first guess: the functionality of a subrelation is evaluated at the root’s identity arrow only, while the subrelation condition is boxed; so for a serial root relation take the subrelation whose root component is a functional choice from the root component, by choice in the metatheory, and whose component parts are empty. The Axiom of Infinity at type e holds: the root individuals are all families of component individuals, infinitely many since components have arbitrarily many individuals; identity at the root is identity of families; and the property of cardinalities that is true of exactly the standard numerals at the root and universal in every component is a root entity, so a finite cardinality at the root is a standard numeral, and no standard numeral holds of the universal property over an infinite domain. □Relational Choice fails, as the notes on Relational Choice explain: some component refutes Relational Choice at its root, which is accessible from the root. Correction of 23 September 2026: the components are only known to refute Boolean Completeness at type $e\to t$ (Classicism, n. 92, conjectures failures at type $t$ but has none), so the transfer argument refutes the type schema of Boolean Completeness at the root, not its type-$t$ instance, which is left unknown; the same transfer, applied to the countable family of haecceities that witnesses the component failure, refutes Countable Boolean Completeness. Boolean Completeness fails at type $t$ (restoring the claim corrected earlier in the day): the truncation model of Appendix D, part 6, refutes it at type $t$, as its record now shows, and the components are complete for C, so one of them does; the root propositions false at every arrow except those into that component form a copy of its propositional domain under the root’s entailment order, and a root property of propositions holding exactly of the copies of the members of that component’s counterexample family has no least upper bound at the root. □Transversal fails as well, by the same argument: the negation of the type-$e$ instance of Transversal is a pure sentence consistent with C, since it holds in symmetric-infinite-classes, so it is possible at the root. Observation of Claude Opus 5.5 (Anthropic), 28 September 2026.
 
-## Revisions
+## History
+
+The record's revision log before it was written as arguments.
 
 - **2026-09-28** (Claude Opus 5.5 (Anthropic)) — Recorded the failure of □Transversal: every pure sentence consistent with C is possible at the root, and symmetric-infinite-classes refutes Transversal at type e. Now violates: □Transversal.
 - **2026-09-27** (Claude Opus 5.5 (Anthropic), at Cian Dorr's request) — Recorded the failure of □Vicinity and □Weakly Inextensible Comprehension; argument in the notes. Now violates: □Vicinity, □Weakly Inextensible Comprehension.
