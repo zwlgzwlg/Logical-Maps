@@ -1,0 +1,14 @@
+id: fewer-propositions-after
+requires: [fewer-propositions-after]
+fails: [pure-b-r]
+by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+date: '2026-10-06'
+text: >-
+  The pure sentence $\exists p_1\ldots p_n\bigwedge_{i<j}p_i\ne p_j$ is true at the evaluation
+  object and false at the world $V$ after it and at every world after $V$; so $\Diamond$ of it is
+  false at $V$, and $\Box\Diamond$ of it false at the evaluation object. (The chain's own argument
+  of 25 September, stated once.)
+# Proved in Lean (Classicism/MapArguments.lean), for every intensional action model meeting the conditions.
+lean:
+- fails: pure-b-r
+  ref: Classicism.Map.Arguments.fewer_propositions_after.pure_b_r

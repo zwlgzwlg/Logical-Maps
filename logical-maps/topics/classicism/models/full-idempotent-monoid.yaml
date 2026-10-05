@@ -40,6 +40,8 @@ settings:
   individuals: singleton
   sigma: top
 meets:
+  nonepic-arrow: >-
+    $1\cdot k=k\cdot k$, with $1\ne k$.
   nonidentity-arrow: >-
     The idempotent $k$.
   unretracted-arrow: >-
@@ -58,7 +60,7 @@ meets:
   irreversible-arrow: >-
     The arrow $k$: $x\circ k=k$ for both arrows $x$, so no composite with it is the identity.
 
-arguments:
+arguments: []
 
 # 6 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): verdicts now given by the topic's
 # general arguments (full-atomicity, full-rigid-comprehension, full-epic-barcan, invertible-arrows,
@@ -75,17 +77,8 @@ arguments:
 
 # --- later additions ---
 
-- fails: [strong-leibniz-t]
-  # migration: `by` and `date` are those of the 23 September change correcting the claim of 22
-  # September that □Strong Leibniz Biconditionals (type t) hold; that claim and its withdrawal are
-  # in `history`.
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    The atoms are $\{1\}$ and $\{k\}$; transported along $k$, $\{k\}$ becomes $\{j : j\circ
-    k=k\}=\{1,k\}$, which the proposition $\{1\}$ of the full domain splits, so $\{k\}$ is not a
-    strong world, while the possible proposition $\{k\}$ has no other candidate below it. ($\{1\}$
-    is a strong world, its transport along $k$ being empty.)
+# 6 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): the remaining own arguments are
+# now general arguments, reached through this record's `meets`, and dropped: strong-leibniz-t (nonepic-strong-leibniz).
 
 # migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
 # the sentence that followed the Σ argument, referring to its failures. The argument for □Relational
@@ -196,6 +189,7 @@ lean:
   model: Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem
   is_model: Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem
   meets:
+    nonepic-arrow: Classicism.Meta.Intensional.FullActionModels.idem_nonepic
     finitely-many-propositions-everywhere: Classicism.Meta.Intensional.FullActionModels.mset_finitely_many_everywhere Classicism.Meta.Intensional.Idem
     unretracted-arrow: Classicism.Map.Meets.full_idempotent_monoid.unretracted
     nonidentity-arrow: Classicism.Meta.Intensional.FullActionModels.mset_nonidentity Classicism.Meta.Intensional.Idem.k Classicism.Meta.Intensional.Idem.k_ne_one

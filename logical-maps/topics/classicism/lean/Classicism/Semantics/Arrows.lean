@@ -48,6 +48,22 @@ def UnretractedArrow : Prop := ∃ (V : C) (k : A.W₀ ⟶ V), ∀ m : V ⟶ A.W
 def NonidentityArrow : Prop :=
   ∃ (V : C) (k : A.W₀ ⟶ V), (⟨V, PUnit.unit, k⟩ : Tuple A.inner .t A.W₀) ≠ ⟨A.W₀, PUnit.unit, 𝟙 A.W₀⟩
 
+/-- `nonepic-arrow`: some arrow out of the evaluation object is not an epimorphism. -/
+def NonepicArrow : Prop :=
+  ∃ (V U : C) (k : A.W₀ ⟶ V) (j j' : V ⟶ U), j ≠ j' ∧ k ≫ j = k ≫ j'
+
+/-- `returning-arrow`: some arrow out of the evaluation object other than its identity has a
+retraction. -/
+def ReturningArrow : Prop :=
+  ∃ (V : C) (i : A.W₀ ⟶ V) (r : V ⟶ A.W₀), i ≫ r = 𝟙 A.W₀ ∧
+    (⟨V, PUnit.unit, i⟩ : Tuple A.inner .t A.W₀) ≠ ⟨A.W₀, PUnit.unit, 𝟙 A.W₀⟩
+
+/-- `coherent-retractions`: every arrow `g` out of the evaluation object has a retraction `r g`,
+chosen so that `x ≫ r (g ≫ x) = r g` for every arrow `x` after `g`. -/
+def CoherentRetractions : Prop :=
+  ∃ r : ∀ {V : C}, (A.W₀ ⟶ V) → (V ⟶ A.W₀), (∀ {V : C} (g : A.W₀ ⟶ V), g ≫ r g = 𝟙 A.W₀) ∧
+    ∀ {V U : C} (g : A.W₀ ⟶ V) (x : V ⟶ U), x ≫ r (g ≫ x) = r g
+
 variable {A} (M : A.IsModel)
 include M
 
@@ -129,6 +145,98 @@ theorem not_holds_nd_t_of_unretracted (hF : A.Full) (hU : A.UnretractedArrow) :
   subst this
   rw [hx] at hy
   exact Set.singleton_ne_empty _ hy.symm
+
+omit M in
+/-- **Distinctness-Preserving Collapse fails** in a full model with a returning arrow `i` other
+than the identity: `{1}` is true, every true `q` contains the identity, so after `i`, which
+returns, `◇q` holds while `{1}` does not. -/
+theorem not_holds_dpc_of_returning {B : Premodel Signature.pure C} (M : B.IsModel) (hF : B.Full)
+    (hR : B.ReturningArrow) : ¬ B.HoldsSentence P.DistinctnessPreservingCollapse.quoted := by
+  obtain ⟨V, i, r, hir, hne⟩ := hR
+  simp only [Premodel.HoldsSentence, P.DistinctnessPreservingCollapse.quoted, B.holds_forall M,
+    B.holds_imp M, B.holds_exists M, B.holds_conj M, B.holds_box M, B.holds_dia M, holds_var,
+    IEnv.get, IEnv.get_map, B.incl_map, Intension.mem_map, Category.comp_id, Category.id_comp]
+  intro H
+  obtain ⟨p, hp⟩ := hF .t B.W₀ {⟨B.W₀, PUnit.unit, 𝟙 B.W₀⟩}
+  obtain ⟨q, hq, hbox⟩ := H p (by rw [hp]; rfl)
+  have := @hbox V i ⟨B.W₀, r, by rw [hir]; exact hq⟩
+  rw [hp] at this
+  exact hne this
+
+omit M in
+/-- **Strong Leibniz at `t` fails** in a full model with an arrow `k` out of the evaluation
+object that is not an epimorphism, `k ≫ j = k ≫ j'` with `j ≠ j'`: the proposition `{k ≫ j}` is
+possible, its only candidate strong world is itself, and after `k` it holds at both `j` and
+`j'`, which a proposition there separates. -/
+theorem not_holds_strongLeibnizT_of_nonepic {B : Premodel Signature.pure C} (M : B.IsModel)
+    (hF : B.Full) (hN : B.NonepicArrow) : ¬ B.HoldsSentence P.StrongLeibnizT.quoted := by
+  obtain ⟨V, U, k, j, j', hjj', hk⟩ := hN
+  have sem_bot' : ∀ {Γ : Ctx} {W : C} (h : B.W₀ ⟶ W) (g : IEnv (B.Dom W) Γ),
+      B.sem h (Term.bot : Formula Signature.pure Γ) g = ∅ := fun h g => B.sem_bot M h g
+  simp only [Premodel.HoldsSentence, P.StrongLeibnizT.quoted, B.holds_forall M, B.holds_imp M,
+    B.holds_exists M, B.holds_conj M, B.holds_neg M, B.holds_box M, B.holds_disj M]
+  simp only [B.holds_eq M, sem_var, sem_bot', B.sem_disj M, B.sem_neg M, IEnv.get, IEnv.get_map,
+    B.incl_map]
+  intro H
+  obtain ⟨x, hx⟩ := hF .t B.W₀ {⟨U, PUnit.unit, k ≫ j⟩}
+  obtain ⟨w, ⟨hw, hbox⟩, hle⟩ := H x (by rw [hx]; exact Set.singleton_ne_empty _)
+  -- `w` is below `{k ≫ j}` and not `⊥`, so it is `{k ≫ j}`
+  rw [hx] at hle
+  have hwx : B.incl .t B.W₀ w = {⟨U, PUnit.unit, k ≫ j⟩} := by
+    have hsub : B.incl .t B.W₀ w ⊆ {⟨U, PUnit.unit, k ≫ j⟩} := Set.union_eq_right.1 hle.symm
+    exact (Set.subset_singleton_iff_eq.1 hsub).resolve_left hw
+  obtain ⟨y, hy⟩ := hF .t V {⟨U, PUnit.unit, j⟩}
+  have hj : (⟨U, PUnit.unit, j⟩ : Tuple B.inner .t V) ∈
+      Intension.map B.inner k (B.incl .t B.W₀ w) := by
+    rw [hwx]; rfl
+  have hj' : (⟨U, PUnit.unit, j'⟩ : Tuple B.inner .t V) ∈
+      Intension.map B.inner k (B.incl .t B.W₀ w) := by
+    rw [hwx]; show _ = _; rw [hk]
+  rcases @hbox V k y with e | e
+  · have : (⟨U, PUnit.unit, j'⟩ : Tuple B.inner .t V) ∈ B.incl .t V y := by
+      rw [e]; exact Or.inl hj'
+    rw [hy] at this
+    obtain ⟨_, hh⟩ := Sigma.mk.inj_iff.mp (Set.mem_singleton_iff.1 this)
+    exact hjj' (Prod.mk.inj (eq_of_heq hh)).2.symm
+  · have : (⟨U, PUnit.unit, j⟩ : Tuple B.inner .t V) ∈ (B.incl .t V y)ᶜ := by
+      rw [e]; exact Or.inl hj
+    rw [hy] at this
+    exact this rfl
+
+omit M in
+/-- **Gallin Extensional Comprehension** holds where the retractions are coherent and the model is
+full: the relation holding of a tuple at an arrow `g` when the tuple, pulled back along `g`'s
+retraction, is in `X`'s extension is coextensive with `X` and unchanged along every arrow, so
+it and its negation are persistent. -/
+theorem holds_gallin_of_coherent {B : Premodel Signature.pure C} (M : B.IsModel) (hF : B.Full)
+    (hR : B.CoherentRetractions) (ρ : RTy) :
+    B.HoldsSentence (P.GallinExtensionalComprehension.quoted ρ) := by
+  obtain ⟨r, hret, hcoh⟩ := hR
+  simp only [Premodel.HoldsSentence, P.GallinExtensionalComprehension.quoted, B.holds_forall M,
+    B.holds_exists M, B.holds_conj M, B.holds_box M, holds_inclR M, holds_coextR M, sem_boxR M,
+    sem_negR M, sem_var, IEnv.get, IEnv.get_map, B.incl_map, Intension.mem_map, Set.mem_ofPred_eq,
+    Set.mem_compl_iff, Category.comp_id, Category.id_comp]
+  intro X
+  have hr1 : r (𝟙 B.W₀) = 𝟙 B.W₀ := by simpa using hret (𝟙 B.W₀)
+  have inv : ∀ {V U : C} (k : B.W₀ ⟶ V) (k₁ : V ⟶ U) (x : Args B.inner ρ V),
+      Args.map B.inner ρ (r (k ≫ k₁)) (Args.map B.inner ρ k₁ x) = Args.map B.inner ρ (r k) x := by
+    intro V U k k₁ x
+    rw [← Args.map_comp, hcoh]
+  obtain ⟨Y, hY⟩ := hF ρ B.W₀ {p | (⟨B.W₀, Args.map B.inner ρ (r p.2.2) p.2.1, 𝟙 B.W₀⟩ : Tuple B.inner ρ B.W₀) ∈
+    B.incl ρ B.W₀ X}
+  refine ⟨Y, fun k x hx U k₁ => ?_, fun k x hx U k₁ => ?_, fun x => ?_⟩
+  · rw [hY] at hx ⊢
+    show _ ∈ B.incl ρ B.W₀ X
+    rw [inv]
+    exact hx
+  · rw [hY] at hx ⊢
+    intro h'
+    apply hx
+    change _ ∈ B.incl ρ B.W₀ X at h'
+    rwa [inv] at h'
+  · rw [hY]
+    show _ ↔ (⟨B.W₀, Args.map B.inner ρ (r (𝟙 B.W₀)) x, 𝟙 B.W₀⟩ : Tuple B.inner ρ B.W₀) ∈ B.incl ρ B.W₀ X
+    rw [hr1, Args.map_id]
 
 end Premodel
 

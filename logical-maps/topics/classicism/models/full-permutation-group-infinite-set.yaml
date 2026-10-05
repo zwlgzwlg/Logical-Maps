@@ -54,6 +54,10 @@ settings:
   individuals: singleton
   sigma: top
 meets:
+  returning-arrow: >-
+    Any permutation other than the identity, which its inverse retracts.
+  coherent-retractions: >-
+    $r_g:=g^{-1}$: then $r_{x\circ g}\circ x=g^{-1}\circ x^{-1}\circ x=g^{-1}$.
   nonidentity-arrow: >-
     Any permutation other than the identity.
   invertible-arrows: >-
@@ -119,6 +123,8 @@ lean:
   model: Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)
   is_model: Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)
   meets:
+    returning-arrow: Classicism.Meta.Intensional.FullActionModels.perm_returning
+    coherent-retractions: Classicism.Meta.Intensional.FullActionModels.group_coherent (Equiv.Perm ℕ)
     infinitely-many-propositions: Classicism.Meta.Intensional.FullActionModels.mset_infinitely_many_propositions (Equiv.Perm ℕ)
     invertible-arrows: Classicism.Meta.Intensional.FullActionModels.group_invertible (Equiv.Perm ℕ)
     epic-arrows: Classicism.Meta.Intensional.FullActionModels.group_epic (Equiv.Perm ℕ)

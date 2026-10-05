@@ -371,6 +371,10 @@ def Models.finite_support_dyadic_roundings.actuality : Prop :=
 def Models.finite_support_dyadic_roundings.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
 
+/-- `finite-support-dyadic-roundings`: Transversal Choice holds. -/
+def Models.finite_support_dyadic_roundings.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
 /-- `finite-support-identity-or-collapse-surjections`: Actuality holds. -/
 def Models.finite_support_identity_or_collapse_surjections.actuality : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)).HoldsAx Classicism.P.Actuality.schemaIn
@@ -390,6 +394,10 @@ def Models.finite_support_identity_or_collapse_surjections.barcan_r : Prop :=
 /-- `finite-support-identity-or-collapse-surjections`: No Pure Contingency holds. -/
 def Models.finite_support_identity_or_collapse_surjections.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `finite-support-identity-or-collapse-surjections`: Transversal Choice holds. -/
+def Models.finite_support_identity_or_collapse_surjections.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
 /-- `finite-support-identity-or-collapse`: Actuality holds. -/
 def Models.finite_support_identity_or_collapse.actuality : Prop :=
@@ -411,6 +419,10 @@ def Models.finite_support_identity_or_collapse.barcan_r : Prop :=
 def Models.finite_support_identity_or_collapse.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
 
+/-- `finite-support-identity-or-collapse`: Transversal Choice holds. -/
+def Models.finite_support_identity_or_collapse.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
 /-- `finite-support-monotone-maps`: BF fails. -/
 def Models.finite_support_monotone_maps.barcan_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono)).IsModel ∧ ¬ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono)).HoldsAx Classicism.P.Barcan.schemaIn
@@ -418,6 +430,10 @@ def Models.finite_support_monotone_maps.barcan_r : Prop :=
 /-- `finite-support-monotone-maps`: No Pure Contingency holds. -/
 def Models.finite_support_monotone_maps.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono)).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `finite-support-monotone-maps`: Transversal Choice holds. -/
+def Models.finite_support_monotone_maps.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono)).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
 /-- `finite-support-monotone-surjections`: BF holds. -/
 def Models.finite_support_monotone_surjections.barcan_r : Prop :=
@@ -427,9 +443,17 @@ def Models.finite_support_monotone_surjections.barcan_r : Prop :=
 def Models.finite_support_monotone_surjections.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
 
+/-- `finite-support-monotone-surjections`: Transversal Choice holds. -/
+def Models.finite_support_monotone_surjections.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
 /-- `finite-support-permutations`: No Pure Contingency holds. -/
 def Models.finite_support_permutations.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.Perms.model).IsModel ∧ (Classicism.Meta.Intensional.Perms.model).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `finite-support-permutations`: Transversal Choice holds. -/
+def Models.finite_support_permutations.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.Perms.model).IsModel ∧ (Classicism.Meta.Intensional.Perms.model).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
 /-- `finite-support-truncated-shifts`: Actuality holds. -/
 def Models.finite_support_truncated_shifts.actuality : Prop :=
@@ -443,9 +467,17 @@ def Models.finite_support_truncated_shifts.barcan_r : Prop :=
 def Models.finite_support_truncated_shifts.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
 
+/-- `finite-support-truncated-shifts`: Transversal Choice holds. -/
+def Models.finite_support_truncated_shifts.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
 /-- `finite-support-truncations`: No Pure Contingency holds. -/
 def Models.finite_support_truncations.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `finite-support-truncations`: Transversal Choice holds. -/
+def Models.finite_support_truncations.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
 /-- `full-idempotent-monoid`: Distinctness-preserving collapse holds. -/
 def Models.full_idempotent_monoid.distinctness_preserving_collapse : Prop :=
@@ -474,6 +506,10 @@ def Models.full_idempotent_monoid.necessary_rigid_comprehension_r : Prop :=
 /-- `full-idempotent-monoid`: No Pure Contingency holds. -/
 def Models.full_idempotent_monoid.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `full-idempotent-monoid`: Strong Leibniz Biconditionals (type t) fails. -/
+def Models.full_idempotent_monoid.strong_leibniz_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.StrongLeibnizT.schemaIn
 
 /-- `full-idempotent-monoid`: Fregean Axiom fails. -/
 def Models.full_idempotent_monoid.fregean_axiom : Prop :=
@@ -506,6 +542,14 @@ def Models.full_idempotent_monoid.transversal_choice_r : Prop :=
 /-- `full-idempotent-monoid`: ND (type t) fails. -/
 def Models.full_idempotent_monoid.distinctness_necessary_t : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.NecessityOfDistinctnessT.schemaIn
+
+/-- `full-involution-group`: Gallin Extensional Comprehension holds. -/
+def Models.full_involution_group.gallin_extensional_comprehension_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.GallinExtensionalComprehension.schemaIn
+
+/-- `full-involution-group`: Distinctness-preserving collapse fails. -/
+def Models.full_involution_group.distinctness_preserving_collapse : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
 
 /-- `full-involution-group`: Possible Infinity (type t) fails. -/
 def Models.full_involution_group.possible_infinity_t : Prop :=
@@ -567,6 +611,14 @@ def Models.full_involution_group.relational_choice_r : Prop :=
 def Models.full_involution_group.transversal_choice_r : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
+/-- `full-permutation-group-infinite-set`: Gallin Extensional Comprehension holds. -/
+def Models.full_permutation_group_infinite_set.gallin_extensional_comprehension_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.GallinExtensionalComprehension.schemaIn
+
+/-- `full-permutation-group-infinite-set`: Distinctness-preserving collapse fails. -/
+def Models.full_permutation_group_infinite_set.distinctness_preserving_collapse : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
+
 /-- `full-permutation-group-infinite-set`: □Atomicity holds. -/
 def Models.full_permutation_group_infinite_set.necessary_atomicity_r : Prop :=
   (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.NecAtomicity.schemaIn
@@ -622,6 +674,10 @@ def Models.full_permutation_group_infinite_set.relational_choice_r : Prop :=
 /-- `full-permutation-group-infinite-set`: Transversal Choice holds. -/
 def Models.full_permutation_group_infinite_set.transversal_choice_r : Prop :=
   (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
+/-- `full-surjection-monoid`: Distinctness-preserving collapse fails. -/
+def Models.full_surjection_monoid.distinctness_preserving_collapse : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
 
 /-- `full-surjection-monoid`: □Atomicity holds. -/
 def Models.full_surjection_monoid.necessary_atomicity_r : Prop :=
@@ -683,6 +739,10 @@ def Models.full_surjection_monoid.distinctness_necessary_t : Prop :=
 def Models.full_two_object_chain.distinctness_preserving_collapse : Prop :=
   (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
 
+/-- `full-two-object-chain`: B for pure sentences fails. -/
+def Models.full_two_object_chain.pure_b_r : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.signatureB)
+
 /-- `full-two-object-chain`: Possible Infinity (type t) fails. -/
 def Models.full_two_object_chain.possible_infinity_t : Prop :=
   (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.PossibleInfinityT.schemaIn
@@ -739,6 +799,14 @@ def Models.full_two_object_chain.transversal_choice_r : Prop :=
 def Models.full_two_object_chain.distinctness_necessary_t : Prop :=
   (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.NecessityOfDistinctnessT.schemaIn
 
+/-- `full-two-object-retract`: Gallin Extensional Comprehension holds. -/
+def Models.full_two_object_retract.gallin_extensional_comprehension_r : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.GallinExtensionalComprehension.schemaIn
+
+/-- `full-two-object-retract`: Distinctness-preserving collapse fails. -/
+def Models.full_two_object_retract.distinctness_preserving_collapse : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
+
 /-- `full-two-object-retract`: Possible Infinity (type t) fails. -/
 def Models.full_two_object_retract.possible_infinity_t : Prop :=
   (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.PossibleInfinityT.schemaIn
@@ -758,6 +826,10 @@ def Models.full_two_object_retract.necessary_atomicity_r : Prop :=
 /-- `full-two-object-retract`: □Rigid Comprehension holds. -/
 def Models.full_two_object_retract.necessary_rigid_comprehension_r : Prop :=
   (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.NecRigidComprehension.schemaIn
+
+/-- `full-two-object-retract`: Strong Leibniz Biconditionals (type t) fails. -/
+def Models.full_two_object_retract.strong_leibniz_t : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.StrongLeibnizT.schemaIn
 
 /-- `full-two-object-retract`: Fregean Axiom fails. -/
 def Models.full_two_object_retract.fregean_axiom : Prop :=
@@ -795,9 +867,21 @@ def Models.full_two_object_retract.transversal_choice_r : Prop :=
 def Arguments.barcan_d6.barcan_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.D6Surjective A → (A).HoldsAx Classicism.P.Barcan.schemaIn
 
+/-- argument `coherent-retractions`: Gallin Extensional Comprehension holds in every model meeting its conditions. -/
+def Arguments.coherent_retractions.gallin_extensional_comprehension_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.Full A → Classicism.Meta.Intensional.Premodel.CoherentRetractions A → (A).HoldsAx Classicism.P.GallinExtensionalComprehension.schemaIn
+
 /-- argument `dpc-isolated-actual-world`: Distinctness-preserving collapse holds in every model meeting its conditions. -/
 def Arguments.dpc_isolated_actual_world.distinctness_preserving_collapse : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.ActualWorldIsolated A → (A).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
+
+/-- argument `dpc-returning-arrow`: Distinctness-preserving collapse fails in every model meeting its conditions. -/
+def Arguments.dpc_returning_arrow.distinctness_preserving_collapse : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.Full A → Classicism.Meta.Intensional.Premodel.ReturningArrow A → ¬ (A).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
+
+/-- argument `fewer-propositions-after`: B for pure sentences fails in every model meeting its conditions. -/
+def Arguments.fewer_propositions_after.pure_b_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.FewerPropositionsAfter A → ¬ (A).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.signatureB)
 
 /-- argument `finitely-many-propositions-everywhere`: Possible Infinity (type t) fails in every model meeting its conditions. -/
 def Arguments.finitely_many_propositions_everywhere.possible_infinity_t : Prop :=
@@ -850,6 +934,10 @@ def Arguments.invertible_arrows.necessary_barcan_r : Prop :=
 /-- argument `no-pure-contingency-one-object`: No Pure Contingency holds in every model meeting its conditions. -/
 def Arguments.no_pure_contingency_one_object.no_pure_contingency_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.OneObject A → (A).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- argument `nonepic-strong-leibniz`: Strong Leibniz Biconditionals (type t) fails in every model meeting its conditions. -/
+def Arguments.nonepic_strong_leibniz.strong_leibniz_t : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.Full A → Classicism.Meta.Intensional.Premodel.NonepicArrow A → ¬ (A).HoldsAx Classicism.P.StrongLeibnizT.schemaIn
 
 /-- argument `nonidentity-arrow`: Fregean Axiom fails in every model meeting its conditions. -/
 def Arguments.nonidentity_arrow.fregean_axiom : Prop :=

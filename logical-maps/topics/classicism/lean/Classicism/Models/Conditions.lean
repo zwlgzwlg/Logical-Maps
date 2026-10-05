@@ -86,6 +86,26 @@ theorem reduct_ideal (De : C ⥤ Type) (W₀ : C) (ne : ∀ W : C, Nonempty (De.
   unfold reduct Premodel.ideal
   congr
 
+/-- **An ideally full model is extensionally full** (Appendix D, the remark after Definition
+D.3): the intension of the tuples, at any arrow, that are members of `E`, wherever the arrow
+leads, is blind to the arrow, so pinned down by `∅`. -/
+theorem ideal_extFull (De : C ⥤ Type) (W₀ : C) (ne : ∀ W : C, Nonempty (De.obj W))
+    (I : ∀ c : Sig.Const, (IdealT De (Sig.typeOf c)).obj W₀) :
+    (Premodel.ideal De W₀ ne I).ExtFull := by
+  intro ρ W E
+  let R : IdealRaw De ρ W := {p | ∃ b ∈ E,
+    (⟨W, idealArgs De ρ W b⟩ : Σ V : C, (IdealArgs De ρ).obj V) = ⟨p.1, p.2.1⟩}
+  refine ⟨⟨R, ∅, Set.finite_empty, fun V h i _ => Set.ext fun _ => Iff.rfl⟩, ?_⟩
+  ext a
+  show (∃ b ∈ E, _ = _) ↔ a ∈ E
+  constructor
+  · rintro ⟨b, hb, e⟩
+    have e' : idealArgs De ρ W b = idealArgs De ρ W a := eq_of_heq (Sigma.mk.inj_iff.1 e).2
+    have hab : b = a := (idealArgs'_idealArgs De ρ W b).symm.trans
+      ((congrArg (idealArgs' De ρ W) e').trans (idealArgs'_idealArgs De ρ W a))
+    exact hab ▸ hb
+  · exact fun ha => ⟨a, ha, rfl⟩
+
 end Premodel
 
 namespace MonoidModel

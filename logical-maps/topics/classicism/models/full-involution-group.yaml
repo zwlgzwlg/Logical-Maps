@@ -36,6 +36,10 @@ settings:
   individuals: singleton
   sigma: top
 meets:
+  returning-arrow: >-
+    $k$, its own inverse.
+  coherent-retractions: >-
+    $r_g:=g^{-1}$: then $r_{x\circ g}\circ x=g^{-1}\circ x^{-1}\circ x=g^{-1}$.
   nonidentity-arrow: >-
     The involution $k$.
   invertible-arrows: >-
@@ -153,6 +157,8 @@ lean:
   model: Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol
   is_model: Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol
   meets:
+    returning-arrow: Classicism.Meta.Intensional.FullActionModels.group_returning Classicism.Meta.Intensional.Invol.k Classicism.Meta.Intensional.Invol.k_ne_one
+    coherent-retractions: Classicism.Meta.Intensional.FullActionModels.group_coherent Classicism.Meta.Intensional.Invol
     finitely-many-propositions-everywhere: Classicism.Meta.Intensional.FullActionModels.mset_finitely_many_everywhere Classicism.Meta.Intensional.Invol
     invertible-arrows: Classicism.Meta.Intensional.FullActionModels.group_invertible Classicism.Meta.Intensional.Invol
     epic-arrows: Classicism.Meta.Intensional.FullActionModels.group_epic Classicism.Meta.Intensional.Invol

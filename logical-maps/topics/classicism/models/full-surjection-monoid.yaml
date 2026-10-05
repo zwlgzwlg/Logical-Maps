@@ -37,6 +37,8 @@ settings:
   individuals: singleton
   sigma: top
 meets:
+  returning-arrow: >-
+    A bijection other than the identity, which its inverse retracts.
   nonidentity-arrow: >-
     Halving.
   unretracted-arrow: >-
@@ -51,7 +53,7 @@ meets:
   irreversible-arrow: >-
     A surjection that is not injective: no composite with it is the identity.
 
-arguments:
+arguments: []
 
 # 6 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): verdicts now given by the topic's
 # general arguments (full-atomicity, full-rigid-comprehension, full-epic-barcan, invertible-arrows,
@@ -68,14 +70,8 @@ arguments:
 
 # --- later additions ---
 
-- fails: [distinctness-preserving-collapse]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Let $p:=\{\mathrm{id}\}$, true. Any witness $q$ for $\Box_{\ne}p$ is true, so contains the
-    identity, and for a non-identity bijection $i$ the arrow $i^{-1}$ gives $i^{-1}\circ i\in q$,
-    so $\Diamond q$ holds under $i$ while $p$ does not. So no true $q$ has $\Box(\Diamond q\to
-    p)$.
+# 6 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): the remaining own arguments are
+# now general arguments, reached through this record's `meets`, and dropped: distinctness-preserving-collapse (dpc-returning-arrow).
 
 # migration: text of the old notes that no argument holds, verbatim: their first two sentences. The
 # arguments for □Strong Leibniz Biconditionals (type t) and □Relational Choice, now derived, are
@@ -171,6 +167,7 @@ lean:
   model: Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj
   is_model: Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj
   meets:
+    returning-arrow: Classicism.Meta.Intensional.FullActionModels.surj_returning
     infinitely-many-propositions: Classicism.Meta.Intensional.FullActionModels.mset_infinitely_many_propositions Classicism.Meta.Intensional.FullActionModels.surj
     epic-arrows: Classicism.Meta.Intensional.FullActionModels.surj_epic
     unretracted-arrow: Classicism.Meta.Intensional.FullActionModels.surj_unretracted

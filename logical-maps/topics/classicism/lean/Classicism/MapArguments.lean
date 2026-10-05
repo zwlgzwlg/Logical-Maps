@@ -283,6 +283,53 @@ theorem fregean_axiom : Statements.Arguments.nonidentity_arrow.fregean_axiom := 
 
 end nonidentity_arrow
 
+namespace nonepic_strong_leibniz
+
+/-- The type-`t` Strong Leibniz Biconditionals fail in a full model with a non-epi arrow out of
+the evaluation object (`Premodel.not_holds_strongLeibnizT_of_nonepic`). -/
+theorem strong_leibniz_t : Statements.Arguments.nonepic_strong_leibniz.strong_leibniz_t := by
+  intro Sig C _ A M hF hN H
+  rw [holdsAx_ofPure] at H
+  exact not_holds_strongLeibnizT_of_nonepic (A.reduct_isModel M) hF hN (H _ rfl)
+
+end nonepic_strong_leibniz
+
+namespace dpc_returning_arrow
+
+/-- Distinctness-Preserving Collapse fails in a full model where some arrow other than the
+identity returns (`Premodel.not_holds_dpc_of_returning`). -/
+theorem distinctness_preserving_collapse :
+    Statements.Arguments.dpc_returning_arrow.distinctness_preserving_collapse := by
+  intro Sig C _ A M hF hR H
+  rw [holdsAx_ofPure] at H
+  exact not_holds_dpc_of_returning (A.reduct_isModel M) hF hR (H _ rfl)
+
+end dpc_returning_arrow
+
+namespace coherent_retractions
+
+/-- Gallin Extensional Comprehension holds in a full model with coherent retractions
+(`Premodel.holds_gallin_of_coherent`). -/
+theorem gallin_extensional_comprehension_r :
+    Statements.Arguments.coherent_retractions.gallin_extensional_comprehension_r := by
+  intro Sig C _ A M hF hR
+  rw [holdsAx_ofPure]
+  rintro _ ⟨ρ, -, rfl⟩
+  exact holds_gallin_of_coherent (A.reduct_isModel M) hF hR ρ
+
+end coherent_retractions
+
+namespace fewer_propositions_after
+
+/-- B for the pure sentence counting `n` propositions fails (`Premodel.not_holds_b_count`). -/
+theorem pure_b_r : Statements.Arguments.fewer_propositions_after.pure_b_r := by
+  intro Sig C _ A M hF H
+  rw [holdsAx_ofPure] at H
+  obtain ⟨n, hn⟩ := not_holds_b_count (A.reduct_isModel M) hF
+  exact hn (H _ ⟨Count.closedTypes_b_count (by decide) n, _, rfl⟩)
+
+end fewer_propositions_after
+
 /-! ## Arguments of the finite-support models on one object -/
 
 namespace finite_support_one_object

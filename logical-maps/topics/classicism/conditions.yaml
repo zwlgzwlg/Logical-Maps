@@ -150,3 +150,23 @@ conditions:
   text: >-
     Some arrow out of the evaluation object is not its identity.
   lean: Classicism.Meta.Intensional.Premodel.NonidentityArrow
+- id: nonepic-arrow
+  text: >-
+    Some arrow out of the evaluation object is not an epimorphism: two distinct arrows after it
+    agree after it.
+  lean: Classicism.Meta.Intensional.Premodel.NonepicArrow
+- id: returning-arrow
+  text: >-
+    Some arrow out of the evaluation object other than its identity has a retraction: an arrow back
+    after which it composes to the identity.
+  lean: Classicism.Meta.Intensional.Premodel.ReturningArrow
+- id: coherent-retractions
+  text: >-
+    Every arrow $g$ out of the evaluation object has a retraction $r_g$, chosen so that
+    $r_{x\circ g}\circ x=r_g$ for every arrow $x$ after $g$.
+  lean: Classicism.Meta.Intensional.Premodel.CoherentRetractions
+- id: fewer-propositions-after
+  text: >-
+    For some $n$, the evaluation object has $n$ distinct propositions, while some world after it,
+    and every world after that one, has fewer.
+  lean: Classicism.Meta.Intensional.Premodel.FewerPropositionsAfter

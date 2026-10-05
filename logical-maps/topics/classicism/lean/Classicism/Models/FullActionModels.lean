@@ -7,6 +7,8 @@ import Mathlib.Data.Fintype.Powerset
 import Mathlib.Data.Finite.Sigma
 import Mathlib.Data.Finite.Prod
 import Mathlib.Data.Fintype.Pi
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Tactic.FinCases
 
 /-!
 # The full action models of *Classicism* §3
@@ -360,6 +362,97 @@ theorem retract_finitely_many_everywhere : retract.FinitelyManyPropositionsEvery
 
 theorem retract_finitely_many_propositions : retract.FinitelyManyPropositions :=
   retract_finitely_many_everywhere (𝟙 _)
+
+/-- `W₀` has four propositions, and `W₁`, out of which there is only the identity, two. -/
+theorem chain_fewer_propositions_after : chain.FewerPropositionsAfter := by
+  refine ⟨3, 1, chainArrow, ?_, fun U j f hf => ?_⟩
+  · let t0 : Σ V : Fin 2, PUnit.{1} × ((0 : Fin 2) ⟶ V) := ⟨0, PUnit.unit, 𝟙 0⟩
+    let t1 : Σ V : Fin 2, PUnit.{1} × ((0 : Fin 2) ⟶ V) := ⟨1, PUnit.unit, chainArrow⟩
+    have h01 : t0 ≠ t1 := fun e => absurd (congrArg Sigma.fst e) (by decide : (0 : Fin 2) ≠ 1)
+    let f : Fin 3 → Set (Σ V : Fin 2, PUnit.{1} × ((0 : Fin 2) ⟶ V)) := ![∅, {t0}, {t1}]
+    refine ⟨f, fun i i' e => ?_⟩
+    fin_cases i <;> fin_cases i' <;> simp only [f] at e <;>
+      first
+        | rfl
+        | exact absurd e.symm (Set.singleton_ne_empty _)
+        | exact absurd e (Set.singleton_ne_empty _)
+        | exact absurd (Set.singleton_eq_singleton_iff.1 e) h01
+        | exact absurd (Set.singleton_eq_singleton_iff.1 e).symm h01
+  · have hU : U = 1 := le_antisymm (Fin.le_last U) (leOfHom j)
+    subst hU
+    have hs : Subsingleton (Σ W : Fin 2, PUnit.{1} × ((1 : Fin 2) ⟶ W)) := ⟨by
+      rintro ⟨W, ⟨⟩, h⟩ ⟨W', ⟨⟩, h'⟩
+      obtain rfl : W = 1 := le_antisymm (Fin.le_last W) (leOfHom h)
+      obtain rfl : W' = 1 := le_antisymm (Fin.le_last W') (leOfHom h')
+      obtain rfl : h = h' := Subsingleton.elim _ _
+      rfl⟩
+    have univ_of : ∀ S : Set (Σ W : Fin 2, PUnit.{1} × ((1 : Fin 2) ⟶ W)), S.Nonempty → S = Set.univ :=
+      fun S ⟨y, hy⟩ => Set.eq_univ_of_forall fun x => Subsingleton.elim y x ▸ hy
+    let g : Set (Σ W : Fin 2, PUnit.{1} × ((1 : Fin 2) ⟶ W)) → Bool :=
+      fun S => @decide S.Nonempty (Classical.dec _)
+    have hg : Function.Injective g := by
+      intro S S' e
+      by_cases hS : S.Nonempty <;> by_cases hS' : S'.Nonempty
+      · rw [univ_of S hS, univ_of S' hS']
+      · simp [g, hS, hS'] at e
+      · simp [g, hS, hS'] at e
+      · rw [Set.not_nonempty_iff_eq_empty.1 hS, Set.not_nonempty_iff_eq_empty.1 hS']
+    let f' : Fin 3 → Set (Σ W : Fin 2, PUnit.{1} × ((1 : Fin 2) ⟶ W)) := f
+    have := Fintype.card_le_of_injective (g ∘ f') (hg.comp hf)
+    simp at this
+
+/-! ### Non-epi arrows, returning arrows and coherent retractions -/
+
+/-- An element other than `1` with a left inverse is an arrow other than the identity that
+returns. -/
+theorem mset_returning {M : Type} [Monoid M] (m r : M) (hm : m ≠ 1) (hr : r * m = 1) :
+    (MSet.model M).ReturningArrow :=
+  ⟨_, (m : SingleObj.star M ⟶ SingleObj.star M), (r : SingleObj.star M ⟶ SingleObj.star M), hr,
+    fun e => hm (MSet.arrow_injective M (e.trans (MSet.arrow_id M)))⟩
+
+theorem group_returning {G : Type} [Group G] (g : G) (hg : g ≠ 1) : (MSet.model G).ReturningArrow :=
+  mset_returning g g⁻¹ hg (inv_mul_cancel g)
+
+theorem perm_returning : (MSet.model (Equiv.Perm ℕ)).ReturningArrow :=
+  group_returning (Equiv.swap 0 1) fun e => by
+    have := congrArg (fun f : Equiv.Perm ℕ => f 0) e
+    simp at this
+
+/-- The swap of `0` and `1`, a surjection undone by itself. -/
+def swap01 : surj := ⟨⇑(Equiv.swap (0 : ℕ) 1), (Equiv.swap (0 : ℕ) 1).surjective⟩
+
+theorem surj_returning : (MSet.model surj).ReturningArrow :=
+  mset_returning swap01 swap01 (fun e => by
+      have : (Equiv.swap (0 : ℕ) 1) 0 = 0 := congrFun (congrArg Subtype.val e) 0
+      simp at this)
+    (Subtype.ext (funext fun n => show (Equiv.swap (0 : ℕ) 1) ((Equiv.swap (0 : ℕ) 1) n) = n from
+      Equiv.swap_apply_self 0 1 n))
+
+/-- In a group, `r_g := g⁻¹` are coherent retractions. -/
+theorem group_coherent (G : Type) [Group G] : (MSet.model G).CoherentRetractions :=
+  ⟨fun g => ((show G from g)⁻¹ : G), fun g => inv_mul_cancel (show G from g), fun g x => by
+    show (show G from x * g)⁻¹ * (show G from x) = (show G from g)⁻¹
+    rw [mul_inv_rev, inv_mul_cancel_right]⟩
+
+/-- `1·k = k·k` with `1 ≠ k`. -/
+theorem idem_nonepic : (MSet.model Idem).NonepicArrow :=
+  ⟨SingleObj.star Idem, SingleObj.star Idem, (Idem.k : SingleObj.star Idem ⟶ SingleObj.star Idem),
+    ((1 : Idem) : SingleObj.star Idem ⟶ SingleObj.star Idem),
+    (Idem.k : SingleObj.star Idem ⟶ SingleObj.star Idem), Idem.k_ne_one.symm, rfl⟩
+
+/-- `1 ∘ h = k ∘ h` with `1 ≠ k`. -/
+theorem retract_nonepic : retract.NonepicArrow :=
+  ⟨W₁, W₁, rh, 𝟙 W₁, rk, rk_ne_id.symm, rh_rk.symm⟩
+
+/-- `h`, undone by `j`. -/
+theorem retract_returning : retract.ReturningArrow :=
+  ⟨W₁, rh, rj, FunCat.hom_ext (funext fun _ => rfl),
+    fun e => Bool.false_ne_true (congrArg Sigma.fst e).symm⟩
+
+/-- Every arrow into `W₀` is the one function to `Unit`, so any retractions are coherent. -/
+theorem retract_coherent : retract.CoherentRetractions :=
+  ⟨fun {V} _ => FunCat.arr (F := retractCat) (i := V) (j := W₀) (fun _ => ()) (by cases V <;> trivial),
+    fun _ => FunCat.hom_ext (funext fun _ => rfl), fun _ _ => FunCat.hom_ext (funext fun _ => rfl)⟩
 
 end FullActionModels
 

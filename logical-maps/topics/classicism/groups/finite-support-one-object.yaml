@@ -94,6 +94,8 @@ lean:
   settings: {individuals: naturals}
   meets:
     one-object-action-model: Classicism.Meta.Intensional.MonoidModel.oneObject {param}
+    extensionally-full: Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _
+    metatheory-choice: Classicism.Meta.Intensional.Premodel.metatheoryChoice _
 
 # Conditions of the topic (conditions.yaml) that every member meets; members meet others under their
 # own `meets`, and parameter values under theirs.
