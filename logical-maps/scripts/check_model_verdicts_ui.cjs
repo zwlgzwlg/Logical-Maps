@@ -337,3 +337,40 @@ try{
   console.log('PASS: the theory explorer lists a group once, counting the models that fit the assumptions and saying which, inspects a group through them (all hold, all fail, or split), and a list of witnesses gathers a group\'s models into one entry;');
   console.log('PASS: a group\'s member lists its own arguments, then the shared arguments that apply under their group, each saying which condition it relies on and why the member meets it; a group\'s page shows a grid of its members, adds a generated parameter\'s variants and the columns they need on request, says what the parameter changes, shows a cell\'s arguments and a row\'s settings, and lists its definition, parameters, conditions and shared arguments with where each applies.');
 }finally{w3.close();}
+
+// A model whose verdicts are proved in Lean one by one, without a certificate of the whole
+// model: its badge counts them, its page lists them apart from the columns, and each
+// verdict's own page carries its Lean links.
+{
+  const lv={id:'lv',name:'Lean verdict model',status:'proved',satisfies:['a'],violates:['b'],certificate:cert,sources:['Fixture'],source_names:['Fixture'],
+    lean:{model:'Fixture.lv',verdicts:[{holds:'a',ref:'Fixture.lv_a',status:'verified',lean_links:[{label:'certificate',url:'https://lean.example/lv_a'}]},
+      {fails:'d',ref:'Fixture.lv_d',status:'verified'},{fails:'b',ref:'Fixture.lv_b',status:'stated'},
+      {holds:'c',ref:'Fixture.lv_c',status:'verified',via:{argument:'gen'}}]}};
+  // A general argument proved in Lean: every model meeting its condition has its verdict.
+  const gen={id:'gen',requires:['k'],holds:['c'],text:'Why C holds.',by:'Fixture',date:'2026-01-01',file:'topics/t/arguments/gen.yaml',
+    lean:[{holds:'c',ref:'Fixture.gen_c',status:'verified',lean_links:[{label:'certificate',url:'https://lean.example/gen_c'}]}]};
+  const errors4=[],vc4=new VirtualConsole();vc4.on('jsdomError',e=>errors4.push(e));
+  const dom4=new JSDOM(template.replace('/*__PMAP_DATA__*/null',()=>JSON.stringify({...data,models:[lv],general_arguments:[gen],conditions:[{id:'k',text:'Condition K.'}]})),
+    {url:'https://maps.example/',runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:vc4});
+  const w4=dom4.window,d4=w4.document;
+  try{
+    w4.eval('openPage({type:"model", id:"lv"})');
+    const page=d4.getElementById('page');
+    assert.equal(page.querySelector('.badges .badge.lean').textContent,'Lean: 3 verdicts','The badge counts the verified verdicts only');
+    assert.equal(page.querySelector('.badges .badge.lean.verified'),null,'And is not the whole-model mark');
+    assert.equal(page.querySelectorAll('.verdict-columns .badge').length,0,'Still no marks in the columns');
+    const listed=[...page.querySelectorAll('ul.lean-verdicts li')].map(li=>li.textContent.trim());
+    assert.deepEqual(listed,['✓ A','✗ D','✓ C by the argument gen'],'The section lists each verified verdict, derived ones included, and the argument that gives one');
+    w4.eval('openPage({type:"argument", id:"gen"})');
+    assert.ok(page.querySelector('details.argument summary .badge.lean.verified'),'An argument proved in Lean says so');
+    assert.equal(page.querySelector('.lean-argument a').getAttribute('href'),'https://lean.example/gen_c','And links its certificate');
+    w4.eval('openPage({type:"model", id:"lv"})');
+    page.querySelector('ul.lean-verdicts [data-verdict-page="a"]').click();
+    assert.match(page.querySelector('h1').textContent,/: A$/,'Each goes to its verdict page');
+    assert.equal(page.querySelector('.links a[href="https://lean.example/lv_a"]').textContent,'Lean certificate','Which links the Lean');
+    w4.eval('select({type:"model-verdict", id:"lv", principle:"b"})');
+    assert.equal(d4.getElementById('pop').querySelector('.badge.lean.verified'),null,'A verdict only stated is not marked');
+    assert.deepEqual(errors4.map(String),[]);
+    console.log('PASS: a model\'s verdicts proved in Lean one by one are counted on its badge, listed apart from the verdict columns with the argument that gives one, and linked from each verdict\'s page; an argument proved in Lean is marked and links its certificate.');
+  }finally{w4.close();}
+}
