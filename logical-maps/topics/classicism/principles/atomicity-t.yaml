@@ -15,8 +15,13 @@ references:
 notes: ''
 variants:
 - id: dual
+  lean:
+    ref: Classicism.P.AtomicityTDual.schemaIn
+    equivalence_ref: Classicism.Map.atomicity_t.dual
+    status: verified
   name: Dual form
   statement: Whatever is entailed by every atom is necessary.
   formal: $\forall p\, .\,(\forall q\, .\,\operatorname{Atom}_t(q)\to q\le p)\to\Box p$
   equivalence: The argument for the dual form of Atomicity, at type $t$, where $\neg p\le p$ says that
     $p$ is necessary.
+lean_def: Classicism.P.AtomicityT.schemaIn

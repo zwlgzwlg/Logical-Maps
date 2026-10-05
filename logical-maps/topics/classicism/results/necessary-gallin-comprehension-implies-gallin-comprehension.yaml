@@ -9,7 +9,8 @@ certificate:
   recorded_by: Claude Fable 5.1 (Anthropic), 20 September 2026
   checked_by: []
   date: '2026-09-20'
-  lean: none
+  lean: verified
+  lean_ref: Classicism.Map.necessary_gallin_comprehension_implies_gallin_comprehension
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §1.5, T, p. 16.
 source_names:

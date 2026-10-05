@@ -10,7 +10,8 @@ certificate:
   recorded_by: Claude Fable 5.1 (Anthropic), 22 September 2026
   checked_by: []
   date: '2026-09-22'
-  lean: none
+  lean: verified
+  lean_ref: Classicism.Map.modal_freedom_signature_r_implies_no_pure_contingency_r
 sources:
 - Cian Dorr, observation of 22 September 2026; proof as recorded.
 - Andrew Bacon, Logical Combinatorialism, Philosophical Review 129 (2020), §3, pp. 556–557.

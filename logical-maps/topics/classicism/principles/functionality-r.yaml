@@ -15,6 +15,10 @@ references:
 notes: ''
 variants:
 - id: polyadic
+  lean:
+    ref: Classicism.P.Functionality.listSchemaIn
+    equivalence_ref: Classicism.Map.functionality_r.polyadic
+    status: verified
   name: Polyadic form
   statement: Operations of several arguments with the same value on every tuple of arguments are identical.
   formal: $\forall X Y^{\bar\sigma\tau}\, .\,(\forall\bar z^{\bar\sigma}\, .\,X[\bar z]=Y[\bar z])\to
@@ -24,3 +28,4 @@ variants:
     for each $z_1$ the operations $Xz_1$ and $Yz_1$, of type $\sigma_2\cdots\sigma_n\tau$, agree on every
     tuple, so they are identical by the induction hypothesis. Functionality at $\sigma_1$ then gives $X=Y$.
     For the empty tuple the condition is $X=Y$ itself.
+lean_def: Classicism.P.Functionality.schemaIn

@@ -17,6 +17,10 @@ references:
 notes: ''
 variants:
 - id: polyadic
+  lean:
+    ref: Classicism.P.Plenitude.listSchemaIn
+    equivalence_ref: Classicism.Map.plenitude_r.polyadic
+    status: verified
   name: Polyadic form
   statement: Every total single-valued relation from tuples is represented by an operation of several
     arguments.
@@ -28,3 +32,4 @@ variants:
     is functional by injectivity of coding; $\tau$ is relational, so $\bot_\tau$ exists. The original
     form at $\bar\sigma t$ gives $X'$ representing $U'$, and $X:=\lambda\bar y\, .\,X'(H_{\bar y})$ represents
     $U$.
+lean_def: Classicism.P.Plenitude.schemaIn

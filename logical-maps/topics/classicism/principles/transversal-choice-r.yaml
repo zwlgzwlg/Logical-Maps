@@ -27,6 +27,9 @@ notes: >-
   chooses from each property separately.
 variants:
 - id: polyadic
+  lean:
+    ref: Classicism.P.TransversalChoice.listSchemaIn
+    status: stated
   name: Polyadic form
   statement: Every equivalence relation on tuples has a transversal.
   formal: $\forall R^{\bar\sigma\bar\sigma t}\, .\,\operatorname{Equiv}(R)\to\exists F^{\bar\sigma t}\,
@@ -37,3 +40,4 @@ variants:
     x\,\bar y\, .\,A=H_{\bar x}\land B=H_{\bar y}\land(R[\bar x])[\bar y]$, an equivalence on $\bar\sigma
     t$ whose cells are either the codes of one $R$-cell or singletons of non-codes. The original form
     gives a transversal $F'$ of $R'$, and $F:=\lambda\bar y\, .\,F'(H_{\bar y})$ is a transversal of $R$.
+lean_def: Classicism.P.TransversalChoice.schemaIn

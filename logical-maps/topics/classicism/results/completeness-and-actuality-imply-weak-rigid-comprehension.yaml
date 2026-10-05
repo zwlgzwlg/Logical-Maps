@@ -10,7 +10,8 @@ certificate:
   recorded_by: Claude Opus 5 (Anthropic), 19 September 2026
   checked_by: []
   date: '2026-09-19'
-  lean: none
+  lean: verified
+  lean_ref: Classicism.Map.completeness_and_actuality_imply_weak_rigid_comprehension
 sources:
 - Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, Proposition
   1, p. 2.

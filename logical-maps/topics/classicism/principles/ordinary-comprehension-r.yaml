@@ -20,3 +20,4 @@ changes:
   by: Claude Fable 5.1 (Anthropic)
   summary: Displayed the schema’s side conditions inside the math block, at Cian Dorr’s request; the statement
     is unchanged.
+lean_def: (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.ordinaryComprehension)

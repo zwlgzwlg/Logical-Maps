@@ -25,6 +25,10 @@ notes: >-
   Plenitude, which asks only for actual functionality and an actual representation, is not a theorem.
 variants:
 - id: polyadic
+  lean:
+    ref: Classicism.P.ModalizedPlenitude.listSchemaIn
+    equivalence_ref: Classicism.Map.modalized_plenitude_r.polyadic
+    status: verified
   name: Polyadic form
   statement: Modalized Plenitude for relations from tuples.
   formal: $\forall U^{\bar\sigma\tau t}\, .\,\Box\bigl(\forall\bar x^{\bar\sigma}\, .\,\exists y^\tau\,
@@ -33,3 +37,4 @@ variants:
     e)$
   equivalence: Both forms are theorems of C, so they are equivalent there. The polyadic form also follows
     from the original one argument at a time, using each step's instance under the box.
+lean_def: Classicism.P.ModalizedPlenitude.schemaIn

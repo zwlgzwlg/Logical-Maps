@@ -20,6 +20,10 @@ aliases:
 - □SL
 variants:
 - id: dual
+  lean:
+    ref: Classicism.P.NecStrongLeibnizDual.schemaIn
+    equivalence_ref: Classicism.Map.necessary_strong_leibniz_r.dual
+    status: verified
   name: Dual form
   statement: Every closed instance of the dual form of Strong Leibniz Biconditionals is necessary.
   formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of the dual form of Strong Leibniz
@@ -27,3 +31,4 @@ variants:
   equivalence: Each instance of the dual form of Strong Leibniz Biconditionals is derivable in C from
     finitely many instances of the official form, and conversely; the derivation is on the page of Strong
     Leibniz Biconditionals. Necessitating it and applying K carries the equivalence to the boxed forms.
+lean_def: Classicism.P.NecStrongLeibniz.schemaIn

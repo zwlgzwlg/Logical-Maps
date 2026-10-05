@@ -9,7 +9,8 @@ certificate:
   recorded_by: Claude Opus 5.5 (Anthropic), 28 September 2026
   checked_by: []
   date: '2026-09-26'
-  lean: none
+  lean: verified
+  lean_ref: Classicism.Map.transversal_choice_r_implies_transversal_r
 sources:
 - Christopher Sun, 26 September 2026.
 source_names:

@@ -22,3 +22,4 @@ notes: >-
   Very weak rigidity drops the leading box from both conjuncts of Rigid. See Background for the definitions.
   This is equivalent to Weak Rigid Comprehension, although very weak rigidity is strictly weaker than weak
   rigidity as a condition on a given relation.
+lean_def: Classicism.P.VeryWeakRigidComprehension.schemaIn

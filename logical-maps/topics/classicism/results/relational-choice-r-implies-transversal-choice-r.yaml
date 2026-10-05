@@ -10,7 +10,7 @@ certificate:
   recorded_by: Claude Fable 5.1 (Anthropic), 25 September 2026
   checked_by: []
   date: '2026-09-25'
-  lean: none
+  lean: stated
 sources:
 - Christopher Sun, observation communicated by Zachary Goodsell on 25 September 2026, that the transversal
   formulation of choice is claimed in the literature without a proof from Relational Choice.

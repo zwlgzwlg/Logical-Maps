@@ -17,6 +17,10 @@ references:
 notes: ''
 variants:
 - id: polyadic
+  lean:
+    ref: Classicism.P.FunctionalChoice.listSchemaIn
+    equivalence_ref: Classicism.Map.functional_choice_r.polyadic
+    status: verified
   name: Polyadic form
   statement: Every serial relation from tuples admits a selecting operation of several arguments.
   formal: $\forall U^{\bar\sigma\tau t}\, .\,\operatorname{Serial}(U)\to\exists X^{\bar\sigma\tau}\, .\,\forall\bar
@@ -26,3 +30,4 @@ variants:
     x}\land(U[\bar x])y)\lor\neg\exists\bar x\, .\,A=H_{\bar x}$, of type $(\bar\sigma t)\tau t$, which
     is serial. The original form gives $X'$ selecting from $U'$, and $X:=\lambda\bar y\, .\,X'(H_{\bar
     y})$ selects from $U$.
+lean_def: Classicism.P.FunctionalChoice.schemaIn

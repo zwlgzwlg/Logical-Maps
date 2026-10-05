@@ -28,6 +28,9 @@ notes: >-
   The type $\sigma$ may be $e$; the type $(\sigma\to t)\to t$ of $F$ is admitted since its output is $t$.
 variants:
 - id: polyadic
+  lean:
+    ref: Classicism.P.Transversal.listSchemaIn
+    status: stated
   name: Polyadic form
   statement: There is a property of relations that picks out exactly one relation from each coextension
     class.
@@ -42,3 +45,4 @@ variants:
     is coextensive with $X$ iff $Z$ is coextensive with $X''$, since both $Z$ and $X''$ hold only of codes.
     So exactly one such $Y$ is coextensive with $X$, namely the one built from the $Z$ that $F''$ picks
     in the coextension class of $X''$.
+lean_def: Classicism.P.Transversal.schemaIn

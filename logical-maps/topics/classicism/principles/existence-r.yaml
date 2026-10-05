@@ -15,8 +15,13 @@ references:
 notes: ''
 variants:
 - id: polyadic
+  lean:
+    ref: Classicism.P.Existence.listSchemaIn
+    equivalence_ref: Classicism.Map.existence_r.polyadic
+    status: verified
   name: Polyadic form
   statement: Every finite tuple of types is jointly inhabited.
   formal: $\exists\bar x^{\bar\sigma}\, .\,\bar x=\bar x$
   equivalence: Both forms are theorems of C, so they are equivalent there. The polyadic form is the conjunction
     of the original at each $\sigma_i$; for the empty tuple it is $\top$.
+lean_def: Classicism.P.Existence.schemaIn
