@@ -98,8 +98,8 @@ background_presets:
   - distinctness-schema-r
 
 lattice_views:
-- id: pilot
-  name: 'Pilot: necessity and rigidity'
+- id: modality-rigid-comprehension
+  name: Modality and Rigid Comprehension
   default: true
   description: 'The conjunctions of Extensionality and five boxed principles: □ND, □Atomicity, □Actuality,
     □Rigid Comprehension and □BF.'
@@ -110,19 +110,6 @@ lattice_views:
   - necessary-actuality
   - necessary-rigid-comprehension-r
   - necessary-barcan-r
-- id: below-rigid-comprehension
-  name: Below Rigid Comprehension
-  description: 'Boxed principles at and below □Rigid Comprehension: the rigidity and comprehension principles
-    with □Boolean Completeness, □Actuality and □Vicinity.'
-  principles:
-  - necessary-boolean-completeness-r
-  - necessary-rigid-comprehension-r
-  - necessary-weak-rigid-comprehension-r
-  - necessary-inextensible-comprehension-r
-  - necessary-tame-rigidity-r
-  - necessary-actuality
-  - necessary-weakly-inextensible-comprehension-r
-  - necessary-vicinity
 - id: combinatorialism
   name: Combinatorialism
   description: 'Logical Combinatorialism and its relatives for the signature Σ: Logical Necessity, the
