@@ -117,4 +117,41 @@ theorem necessary_weakly_inextensible_comprehension_r_implies_weakly_inextensibl
     NecWeaklyInextensibleComprehension τ → WeaklyInextensibleComprehension τ :=
   fun h => box_elim h
 
+
+/-! ### The boxed comprehension principles, `T`, and boxing the unboxed records -/
+
+/-- `necessary-weak-rigid-comprehension-r-implies-weak-rigid-comprehension-r`: `T`. -/
+theorem necessary_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r {τ : Type} [Rel τ] :
+    NecWeakRigidComprehension τ → WeakRigidComprehension τ := box_elim
+/-- `necessary-persistent-comprehension-r-implies-persistent-comprehension-r`: `T`. -/
+theorem necessary_persistent_comprehension_r_implies_persistent_comprehension_r {τ : Type} [Rel τ] :
+    NecPersistentComprehension τ → PersistentComprehension τ := box_elim
+/-- `necessary-inextensible-comprehension-r-implies-inextensible-comprehension-r`: `T`. -/
+theorem necessary_inextensible_comprehension_r_implies_inextensible_comprehension_r {τ : Type} [Rel τ] :
+    NecInextensibleComprehension τ → InextensibleComprehension τ := box_elim
+/-- `necessary-tame-rigidity-r-implies-tame-rigidity-r`: `T`. -/
+theorem necessary_tame_rigidity_r_implies_tame_rigidity_r {τ : Type} [Rel τ] :
+    NecTameRigidity τ → TameRigidity τ := box_elim
+/-- `necessary-rigid-power-r-implies-rigid-power-r`: `T`. -/
+theorem necessary_rigid_power_r_implies_rigid_power_r {τ : Type} [Rel τ] :
+    NecRigidPower τ → RigidPower τ := box_elim
+
+/-- `necessary-rigid-comprehension-implies-necessary-weak-rigid-comprehension`: the unboxed
+record, necessitated. -/
+theorem necessary_rigid_comprehension_implies_necessary_weak_rigid_comprehension {τ : Type} [Rel τ] :
+    NecRigidComprehension τ → NecWeakRigidComprehension τ :=
+  modal_K _ _ (nec% (rigid_comprehension_r_implies_weak_rigid_comprehension_r (τ := τ)))
+/-- `necessary-rigid-comprehension-implies-necessary-inextensible-comprehension`. -/
+theorem necessary_rigid_comprehension_implies_necessary_inextensible_comprehension {τ : Type} [Rel τ] :
+    NecRigidComprehension τ → NecInextensibleComprehension τ :=
+  modal_K _ _ (nec% (rigid_comprehension_r_implies_inextensible_comprehension_r (τ := τ)))
+/-- `necessary-weak-rigid-comprehension-implies-necessary-persistent-comprehension`. -/
+theorem necessary_weak_rigid_comprehension_implies_necessary_persistent_comprehension {τ : Type} [Rel τ] :
+    NecWeakRigidComprehension τ → NecPersistentComprehension τ :=
+  modal_K _ _ (nec% (weak_rigid_comprehension_r_implies_persistent_comprehension_r (τ := τ)))
+/-- `necessary-inextensible-comprehension-implies-necessary-wic`. -/
+theorem necessary_inextensible_comprehension_implies_necessary_wic {τ : Type} [Rel τ] :
+    NecInextensibleComprehension τ → NecWeaklyInextensibleComprehension τ :=
+  modal_K _ _ (nec% (inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r (τ := τ)))
+
 end Classicism.Proofs

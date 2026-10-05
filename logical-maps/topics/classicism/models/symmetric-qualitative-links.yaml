@@ -6,7 +6,7 @@ certificate:
   recorded_by: Claude Opus 5 (Anthropic), 19 September 2026
   checked_by: []
   date: '2026-09-19'
-  lean: none
+  lean: stated
 sources:
 - Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, §8, pp. 23–26;
   Definition 47 and Lemma 48, p. 24; Proposition 49, p. 25; Proposition 50, p. 26.

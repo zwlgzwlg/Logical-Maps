@@ -22,3 +22,4 @@ variants:
     in C from finitely many instances of the official form, and conversely; the derivation is on the page
     of Boolean Completeness (type t). Necessitating it and applying K carries the equivalence to the boxed
     forms.
+lean_def: Classicism.P.NecBooleanCompletenessT.schemaIn

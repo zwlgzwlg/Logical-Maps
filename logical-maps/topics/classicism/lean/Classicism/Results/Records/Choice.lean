@@ -372,4 +372,9 @@ theorem classicism_implies_modalized_plenitude_r {σ' σ : Type} [Ty σ'] [Ty σ
     ModalizedPlenitude σ (σ' → Prop) := fun U hH =>
   ⟨λ x u ↦ ∀ y : σ' → Prop, U x y → y u, modal_K _ _ (nec% (mp_represents U)) hH⟩
 
+
+/-- `necessary-intensional-choice-r-implies-intensional-choice-r`: `T`. -/
+theorem necessary_intensional_choice_r_implies_intensional_choice_r {σ : Type} [Ty σ] :
+    NecIntensionalChoice σ → IntensionalChoice σ := box_elim
+
 end Classicism.Proofs

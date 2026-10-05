@@ -12,3 +12,4 @@ source_names:
 references: []
 notes: Box each fully closed instance of Inextensible Comprehension. Type quantifiers and formula side conditions remain
   outside the box.
+lean_def: Classicism.P.NecInextensibleComprehension.schemaIn

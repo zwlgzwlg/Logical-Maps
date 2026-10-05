@@ -11,3 +11,4 @@ source_names:
 - Dorr 3 Oct
 references: []
 notes: Box each fully closed instance of Rigid Power. Type quantifiers remain outside the box.
+lean_def: Classicism.P.NecRigidPower.schemaIn

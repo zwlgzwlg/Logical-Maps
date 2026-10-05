@@ -7,7 +7,7 @@ certificate:
   recorded_by: OpenAI Codex (GPT-6), 27 September 2026
   checked_by: []
   date: '2026-09-27'
-  lean: none
+  lean: stated
 sources:
 - Andrew Bacon, Could the truths of mathematics have been different?, draft of 9 October 2025, online
   appendix §B.2, pp. 7–9 (PDF pp. 41–43), especially the construction on p. 7 and the extensional-fullness

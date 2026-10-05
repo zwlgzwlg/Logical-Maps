@@ -16,3 +16,4 @@ references:
   note: Formulation of the unboxed principle.
 notes: Box each fully closed instance of Weak Rigid Comprehension. Type quantifiers remain outside the
   box.
+lean_def: Classicism.P.NecWeakRigidComprehension.schemaIn

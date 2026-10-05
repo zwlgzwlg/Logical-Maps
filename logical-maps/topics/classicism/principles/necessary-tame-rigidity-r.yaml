@@ -13,3 +13,4 @@ references:
 - paper: sun-possible-worlds-without-atomicity
   role: origin
 notes: Box each fully closed instance of Tame Rigidity. Type quantifiers remain outside the box.
+lean_def: Classicism.P.NecTameRigidity.schemaIn

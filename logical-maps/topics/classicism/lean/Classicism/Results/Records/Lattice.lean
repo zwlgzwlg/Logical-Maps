@@ -690,4 +690,30 @@ theorem necessary_strong_leibniz_t_and_necessary_bf_imply_necessary_strong_leibn
     NecStrongLeibnizT → NecBarcan σ → NecStrongLeibniz (σ → Prop) := fun h₁ h₂ =>
   modal_K _ _ (modal_K _ _ (nec% (strong_leibniz_t_and_bf_imply_strong_leibniz (σ := σ))) h₁) h₂
 
+
+/-! ### Atomicity and Boolean Completeness at `t`, boxed -/
+
+/-- `necessary-atomicity-t-implies-atomicity-t`: `T`. -/
+theorem necessary_atomicity_t_implies_atomicity_t : NecAtomicityT → AtomicityT := box_elim
+/-- `necessary-boolean-completeness-t-implies-boolean-completeness-t`: `T`. -/
+theorem necessary_boolean_completeness_t_implies_boolean_completeness_t :
+    NecBooleanCompletenessT → BooleanCompletenessT := box_elim
+/-- `necessary-atomicity-r-implies-necessary-atomicity-t`: the instance at `t`. -/
+theorem necessary_atomicity_r_implies_necessary_atomicity_t :
+    NecAtomicity Prop → NecAtomicityT := fun h => h
+/-- `necessary-boolean-completeness-r-implies-necessary-boolean-completeness-t`: the instance
+at `t`. -/
+theorem necessary_boolean_completeness_r_implies_necessary_boolean_completeness_t :
+    NecBooleanCompleteness Prop → NecBooleanCompletenessT := fun h => h
+/-- `necessary-strong-leibniz-t-implies-necessary-atomicity-t`: the unboxed record,
+necessitated. -/
+theorem necessary_strong_leibniz_t_implies_necessary_atomicity_t :
+    NecStrongLeibnizT → NecAtomicityT :=
+  modal_K _ _ (nec% strong_leibniz_t_implies_atomicity_t)
+/-- `necessary-persistent-comprehension-implies-necessary-actuality`: the unboxed record,
+necessitated. -/
+theorem necessary_persistent_comprehension_implies_necessary_actuality :
+    NecPersistentComprehension (Prop → Prop) → NecActuality :=
+  modal_K _ _ (nec% persistent_comprehension_r_implies_actuality)
+
 end Classicism.Proofs

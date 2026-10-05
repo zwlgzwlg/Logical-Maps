@@ -20,3 +20,4 @@ notes: >-
   persistent, weakly inextensible relation is also inextensible, that is, necessarily weakly inextensible.
   See Background for the definitions. Together with Weak Rigid Comprehension it is equivalent to Rigid
   Comprehension.
+lean_def: Classicism.P.TameRigidity.schemaIn

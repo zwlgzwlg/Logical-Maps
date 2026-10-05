@@ -9,7 +9,7 @@ certificate:
   recorded_by: Claude Fable 5.1 (Anthropic), 20 September 2026
   checked_by: []
   date: '2026-09-20'
-  lean: none
+  lean: stated
 sources:
 - Zachary Goodsell, Arithmetic is Necessary, draft of 5 June 2024, §5, Lemmas 2–8 and Theorem 9, pp. 14–21.
 source_names:

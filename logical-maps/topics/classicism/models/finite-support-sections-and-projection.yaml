@@ -8,7 +8,7 @@ certificate:
   - Cian Dorr, informal review, 2026-09-27
   - Christopher Sun, informal review, 2026-09-27
   date: '2026-09-27'
-  lean: none
+  lean: stated
 sources:
 - Original construction and verification by Claude Opus 5.5 (Anthropic), 27 September 2026; see the write-up.
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, Definitions D.1–D.3, pp. 73–74

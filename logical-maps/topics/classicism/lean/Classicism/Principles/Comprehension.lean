@@ -47,4 +47,24 @@ def GallinExtensionalComprehension (τ : Type) [Rel τ] : Prop :=
 def NecGallinExtensionalComprehension (τ : Type) [Rel τ] : Prop :=
   □ (GallinExtensionalComprehension τ)
 
+/-- `necessary-weak-rigid-comprehension-r` at `τ`: the instance boxed. -/
+def NecWeakRigidComprehension (τ : Type) [Rel τ] : Prop := □ (WeakRigidComprehension τ)
+/-- `necessary-persistent-comprehension-r` at `τ`: the instance boxed. -/
+def NecPersistentComprehension (τ : Type) [Rel τ] : Prop := □ (PersistentComprehension τ)
+/-- `necessary-inextensible-comprehension-r` at `τ`: the instance boxed. -/
+def NecInextensibleComprehension (τ : Type) [Rel τ] : Prop := □ (InextensibleComprehension τ)
+
+/-- `tame-rigidity-r` at `τ`: every weakly rigid relation, including a proposition, is
+rigid. -/
+def TameRigidity (τ : Type) [Rel τ] : Prop := ∀ F : τ, WeaklyRigid F → Rigid F
+/-- `necessary-tame-rigidity-r` at `τ`: the instance boxed. -/
+def NecTameRigidity (τ : Type) [Rel τ] : Prop := □ (TameRigidity τ)
+
+/-- `rigid-power-r` at `τ`: if `F` is rigid, so is the property of being a rigid relation
+entailing it, `λX. Rigid(X) ∧ X ≤ F`. -/
+def RigidPower (τ : Type) [Rel τ] : Prop :=
+  ∀ F : τ, Rigid F → Rigid (fun X : τ => Rigid X ∧ X ≤ F)
+/-- `necessary-rigid-power-r` at `τ`: the instance boxed. -/
+def NecRigidPower (τ : Type) [Rel τ] : Prop := □ (RigidPower τ)
+
 end Classicism.P

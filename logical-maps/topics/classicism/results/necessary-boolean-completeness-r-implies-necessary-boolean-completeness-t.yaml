@@ -9,7 +9,8 @@ certificate:
   recorded_by: Claude Opus 5.5 (Anthropic), 2 October 2026
   checked_by: []
   date: '2026-10-02'
-  lean: none
+  lean: verified
+  lean_ref: Classicism.Map.necessary_boolean_completeness_r_implies_necessary_boolean_completeness_t
 sources:
 - Cian Dorr, suggestion of 2 October 2026.
 source_names:

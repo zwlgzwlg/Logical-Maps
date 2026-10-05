@@ -1357,4 +1357,115 @@ theorem tractarianism_r.dual_polyadic : Statements.tractarianism_r.dual_polyadic
   map_form (Entails.trans P.Tractarianism.schema_entails_listSchema P.Tractarianism.to_dual.listEntails)
     (Entails.trans P.Tractarianism.of_dual.listEntails P.Tractarianism.listSchema_entails_schema)
 
+
+/-! ## Added 6 October 2026: the newly defined principles -/
+
+/-- `necessary-weak-rigid-comprehension-r-implies-weak-rigid-comprehension-r` -/
+theorem necessary_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r : Statements.necessary_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r := by
+  map_cert Proofs.necessary_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r.entails
+
+/-- `necessary-persistent-comprehension-r-implies-persistent-comprehension-r` -/
+theorem necessary_persistent_comprehension_r_implies_persistent_comprehension_r : Statements.necessary_persistent_comprehension_r_implies_persistent_comprehension_r := by
+  map_cert Proofs.necessary_persistent_comprehension_r_implies_persistent_comprehension_r.entails
+
+/-- `necessary-inextensible-comprehension-r-implies-inextensible-comprehension-r` -/
+theorem necessary_inextensible_comprehension_r_implies_inextensible_comprehension_r : Statements.necessary_inextensible_comprehension_r_implies_inextensible_comprehension_r := by
+  map_cert Proofs.necessary_inextensible_comprehension_r_implies_inextensible_comprehension_r.entails
+
+/-- `necessary-tame-rigidity-r-implies-tame-rigidity-r` -/
+theorem necessary_tame_rigidity_r_implies_tame_rigidity_r : Statements.necessary_tame_rigidity_r_implies_tame_rigidity_r := by
+  map_cert Proofs.necessary_tame_rigidity_r_implies_tame_rigidity_r.entails
+
+/-- `necessary-rigid-power-r-implies-rigid-power-r` -/
+theorem necessary_rigid_power_r_implies_rigid_power_r : Statements.necessary_rigid_power_r_implies_rigid_power_r := by
+  map_cert Proofs.necessary_rigid_power_r_implies_rigid_power_r.entails
+
+/-- `necessary-rigid-comprehension-implies-necessary-weak-rigid-comprehension` -/
+theorem necessary_rigid_comprehension_implies_necessary_weak_rigid_comprehension : Statements.necessary_rigid_comprehension_implies_necessary_weak_rigid_comprehension := by
+  map_cert Proofs.necessary_rigid_comprehension_implies_necessary_weak_rigid_comprehension.entails
+
+/-- `necessary-rigid-comprehension-implies-necessary-inextensible-comprehension` -/
+theorem necessary_rigid_comprehension_implies_necessary_inextensible_comprehension : Statements.necessary_rigid_comprehension_implies_necessary_inextensible_comprehension := by
+  map_cert Proofs.necessary_rigid_comprehension_implies_necessary_inextensible_comprehension.entails
+
+/-- `necessary-weak-rigid-comprehension-implies-necessary-persistent-comprehension` -/
+theorem necessary_weak_rigid_comprehension_implies_necessary_persistent_comprehension : Statements.necessary_weak_rigid_comprehension_implies_necessary_persistent_comprehension := by
+  map_cert Proofs.necessary_weak_rigid_comprehension_implies_necessary_persistent_comprehension.entails
+
+/-- `necessary-inextensible-comprehension-implies-necessary-wic` -/
+theorem necessary_inextensible_comprehension_implies_necessary_wic : Statements.necessary_inextensible_comprehension_implies_necessary_wic := by
+  map_cert Proofs.necessary_inextensible_comprehension_implies_necessary_wic.entails
+
+/-- `necessary-atomicity-t-implies-atomicity-t` -/
+theorem necessary_atomicity_t_implies_atomicity_t : Statements.necessary_atomicity_t_implies_atomicity_t := by
+  map_cert Proofs.necessary_atomicity_t_implies_atomicity_t.entails
+
+/-- `necessary-boolean-completeness-t-implies-boolean-completeness-t` -/
+theorem necessary_boolean_completeness_t_implies_boolean_completeness_t : Statements.necessary_boolean_completeness_t_implies_boolean_completeness_t := by
+  map_cert Proofs.necessary_boolean_completeness_t_implies_boolean_completeness_t.entails
+
+/-- `necessary-atomicity-r-implies-necessary-atomicity-t` -/
+theorem necessary_atomicity_r_implies_necessary_atomicity_t : Statements.necessary_atomicity_r_implies_necessary_atomicity_t := by
+  map_cert Proofs.necessary_atomicity_r_implies_necessary_atomicity_t.entails
+
+/-- `necessary-boolean-completeness-r-implies-necessary-boolean-completeness-t` -/
+theorem necessary_boolean_completeness_r_implies_necessary_boolean_completeness_t : Statements.necessary_boolean_completeness_r_implies_necessary_boolean_completeness_t := by
+  map_cert Proofs.necessary_boolean_completeness_r_implies_necessary_boolean_completeness_t.entails
+
+/-- `necessary-strong-leibniz-t-implies-necessary-atomicity-t` -/
+theorem necessary_strong_leibniz_t_implies_necessary_atomicity_t : Statements.necessary_strong_leibniz_t_implies_necessary_atomicity_t := by
+  map_cert Proofs.necessary_strong_leibniz_t_implies_necessary_atomicity_t.entails
+
+/-- `necessary-persistent-comprehension-implies-necessary-actuality` -/
+theorem necessary_persistent_comprehension_implies_necessary_actuality : Statements.necessary_persistent_comprehension_implies_necessary_actuality := by
+  map_cert Proofs.necessary_persistent_comprehension_implies_necessary_actuality.entails
+
+/-- `necessary-intensional-choice-r-implies-intensional-choice-r` -/
+theorem necessary_intensional_choice_r_implies_intensional_choice_r : Statements.necessary_intensional_choice_r_implies_intensional_choice_r := by
+  map_cert Proofs.necessary_intensional_choice_r_implies_intensional_choice_r.entails
+
+/-- `necessary-countable-boolean-completeness-r-implies-countable-boolean-completeness-r` -/
+theorem necessary_countable_boolean_completeness_r_implies_countable_boolean_completeness_r : Statements.necessary_countable_boolean_completeness_r_implies_countable_boolean_completeness_r := by
+  map_cert Proofs.necessary_countable_boolean_completeness_r_implies_countable_boolean_completeness_r.entails
+
+/-- `necessary-boolean-completeness-r-implies-necessary-countable-boolean-completeness-r` -/
+theorem necessary_boolean_completeness_r_implies_necessary_countable_boolean_completeness_r : Statements.necessary_boolean_completeness_r_implies_necessary_countable_boolean_completeness_r := by
+  map_cert Proofs.necessary_boolean_completeness_r_implies_necessary_countable_boolean_completeness_r.entails
+
+/-- `no-pure-contingency-and-atomicity-t-imply-necessary-atomicity-t` -/
+theorem no_pure_contingency_and_atomicity_t_imply_necessary_atomicity_t : Statements.no_pure_contingency_and_atomicity_t_imply_necessary_atomicity_t := by
+  map_cert (Entails.mono_right (Ax₃ := P.NecAtomicityT.schema) (by map_box) (npc_union_entails_box_pure P.AtomicityT.schema_closedTypes))
+
+/-- `no-pure-contingency-and-boolean-completeness-t-imply-necessary-boolean-completeness-t` -/
+theorem no_pure_contingency_and_boolean_completeness_t_imply_necessary_boolean_completeness_t : Statements.no_pure_contingency_and_boolean_completeness_t_imply_necessary_boolean_completeness_t := by
+  map_cert (Entails.mono_right (Ax₃ := P.NecBooleanCompletenessT.schema) (by map_box) (npc_union_entails_box_pure P.BooleanCompletenessT.schema_closedTypes))
+
+/-- `no-pure-contingency-and-countable-boolean-completeness-imply-necessary-countable-boolean-completeness` -/
+theorem no_pure_contingency_and_countable_boolean_completeness_imply_necessary_countable_boolean_completeness : Statements.no_pure_contingency_and_countable_boolean_completeness_imply_necessary_countable_boolean_completeness := by
+  map_cert (Entails.mono_right (Ax₃ := P.NecCountableBooleanCompleteness.schema) (by map_box) (npc_union_entails_box_pure P.CountableBooleanCompleteness.schema_closedTypes))
+
+/-- `no-pure-contingency-and-inextensible-comprehension-imply-necessary-inextensible-comprehension` -/
+theorem no_pure_contingency_and_inextensible_comprehension_imply_necessary_inextensible_comprehension : Statements.no_pure_contingency_and_inextensible_comprehension_imply_necessary_inextensible_comprehension := by
+  map_cert (Entails.mono_right (Ax₃ := P.NecInextensibleComprehension.schema) (by map_box) (npc_union_entails_box_pure P.InextensibleComprehension.schema_closedTypes))
+
+/-- `no-pure-contingency-and-intensional-choice-imply-necessary-intensional-choice` -/
+theorem no_pure_contingency_and_intensional_choice_imply_necessary_intensional_choice : Statements.no_pure_contingency_and_intensional_choice_imply_necessary_intensional_choice := by
+  map_cert (Entails.mono_right (Ax₃ := P.NecIntensionalChoice.schema) (by map_box) (npc_union_entails_box_pure P.IntensionalChoice.schema_closedTypes))
+
+/-- `no-pure-contingency-and-persistent-comprehension-imply-necessary-persistent-comprehension` -/
+theorem no_pure_contingency_and_persistent_comprehension_imply_necessary_persistent_comprehension : Statements.no_pure_contingency_and_persistent_comprehension_imply_necessary_persistent_comprehension := by
+  map_cert (Entails.mono_right (Ax₃ := P.NecPersistentComprehension.schema) (by map_box) (npc_union_entails_box_pure P.PersistentComprehension.schema_closedTypes))
+
+/-- `no-pure-contingency-and-rigid-power-imply-necessary-rigid-power` -/
+theorem no_pure_contingency_and_rigid_power_imply_necessary_rigid_power : Statements.no_pure_contingency_and_rigid_power_imply_necessary_rigid_power := by
+  map_cert (Entails.mono_right (Ax₃ := P.NecRigidPower.schema) (by map_box) (npc_union_entails_box_pure P.RigidPower.schema_closedTypes))
+
+/-- `no-pure-contingency-and-tame-rigidity-imply-necessary-tame-rigidity` -/
+theorem no_pure_contingency_and_tame_rigidity_imply_necessary_tame_rigidity : Statements.no_pure_contingency_and_tame_rigidity_imply_necessary_tame_rigidity := by
+  map_cert (Entails.mono_right (Ax₃ := P.NecTameRigidity.schema) (by map_box) (npc_union_entails_box_pure P.TameRigidity.schema_closedTypes))
+
+/-- `no-pure-contingency-and-weak-rigid-comprehension-imply-necessary-weak-rigid-comprehension` -/
+theorem no_pure_contingency_and_weak_rigid_comprehension_imply_necessary_weak_rigid_comprehension : Statements.no_pure_contingency_and_weak_rigid_comprehension_imply_necessary_weak_rigid_comprehension := by
+  map_cert (Entails.mono_right (Ax₃ := P.NecWeakRigidComprehension.schema) (by map_box) (npc_union_entails_box_pure P.WeakRigidComprehension.schema_closedTypes))
+
 end Classicism.Map

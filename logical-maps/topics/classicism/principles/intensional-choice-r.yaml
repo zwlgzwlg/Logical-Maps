@@ -35,3 +35,4 @@ variants:
     t$ gives $G'\le F'$ necessarily uniquely instantiated. Put $G:=\lambda\bar x\, .\,G'(H_{\bar x})$.
     Then $G\le F$. At each world the unique instance of $G'$ is a code $H_{\bar x}$, since $G'\le F'$,
     and by injectivity of coding $\bar x$ is then the unique instance of $G$.
+lean_def: Classicism.P.IntensionalChoice.schemaIn

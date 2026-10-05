@@ -24,3 +24,4 @@ variants:
   equivalence: Each instance of the polyadic form of Intensional Choice is derivable in C from finitely
     many instances of the original form, and conversely; the derivations are on the page of the unboxed
     principle. Necessitating them and applying K carries the equivalence to the boxed forms.
+lean_def: Classicism.P.NecIntensionalChoice.schemaIn

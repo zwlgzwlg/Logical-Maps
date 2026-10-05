@@ -16,3 +16,4 @@ notes: >-
   of the same type as $F$, so the power property has type $(\bar\sigma\to t)\to t$. That property is
   persistent in C alone, since rigidity and entailment are both necessitated conditions and 4 holds; so
   the principle's content is the boxed weak inextensibility of the power property.
+lean_def: Classicism.P.RigidPower.schemaIn
