@@ -92,10 +92,8 @@ const args=[{holds:['a'],text:'Why A holds.'},{fails:['b'],text:'First reason B 
   {fails:['b'],writeup:'b-writeup',by:'Later author',date:'2026-02-01',revisions:[{date:'2026-02-02',note:'Tidied.'}]},
   {holds:['e'],standing:'conjectured',tier:'bronze',text:'Why E might hold.',companion_id:'n-conj',date:'2026-01-20'},
   {holds:['a'],fails:['b'],text:'One argument for both.',by:'Both author (Lab), later',date:'2026-02-04'},
-  {fails:['b'],text:'Found in a trawl.',by:'Trawl agent, trawl',date:'2026-02-05',provenance:'admission-x'},
-  // D fails by D ⇒ B; the record keeps its own argument for that in reserve.
-  {fails:['d'],reserve:true,text:'Why D fails, kept in reserve.',by:'Old, 15 January 2026',date:'2026-01-15'}];
-const flat={id:'n',name:'Argument model',status:'proved',satisfies:['a'],violates:['b','d'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
+  {fails:['b'],text:'Found in a trawl.',by:'Trawl agent, trawl',date:'2026-02-05',provenance:'admission-x'}];
+const flat={id:'n',name:'Argument model',status:'proved',satisfies:['a'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
   definition:'What the model is.',arguments:args,notes:'Miscellany.',history:[{date:'2026-01-15',by:'Old',summary:'An old change.',satisfies:['a']}]};
 const companion={id:'n-conj',name:'Argument model',status:'conjectured',tier:'bronze',satisfies:['a','e'],violates:['b'],certificate:argCert,sources:['Fixture'],source_names:['Fixture'],
   definition:'What the model is.',arguments:[args[3]],notes:'Why E might hold.',companion_of:'n',model_check:{model:'n',satisfies:['e'],violates:[]}};
@@ -144,14 +142,6 @@ try{
     'A trawl argument is credited to who found, reviewed and admitted it');
   assert.match(trawled.querySelector('details.review').textContent,/Checked\..*Argument check: Every step\..*Source check: The source\./s,'With the review report at hand');
   assert.match(trawled.textContent,/provenance\/admission-x\.yaml/);
-  // An argument kept in reserve comes after the others, under its own heading, and still
-  // takes its verdict's control.
-  const reserveHead=[...page.querySelectorAll('h3.verdict-group')].find(h=>/^In reserve/.test(h.textContent));
-  assert.ok(reserveHead&&/1$/.test(reserveHead.textContent.trim()),'The reserve has its own heading, with a count');
-  assert.ok(page.querySelector('.arguments.reserve #argument-6')&&!page.querySelector('.arguments.reserve #argument-5'),'Only reserve arguments sit under it');
-  assert.equal(summary(6),'✗ D reserve');
-  assert.equal(control('d').dataset.jump,'6','A verdict kept in reserve is recorded, and its control goes to the argument');
-  assert.equal(page.querySelector('#argument-6 .credit').textContent,'Old, 15 January 2026.','A date the name already gives is not repeated');
   assert.ok(h2s.includes('Notes')&&h2s.includes('History'));
   const history=page.querySelector('details.history');
   assert.ok(history&&!history.open&&/An old change\./.test(history.textContent),'The old log waits behind a toggle');
@@ -181,7 +171,6 @@ try{
   assert.ok(changes.some(x=>x.includes('Argument added.')&&x.includes('2026-02-01')),'A later argument is one');
   assert.ok(changes.some(x=>x.includes('Tidied.')),'And so is its revision');
   assert.ok(!changes.some(x=>x.includes('Why A holds')),'An argument as old as the record is not');
-  assert.ok(!changes.some(x=>x.includes('kept in reserve')),'Nor one kept in reserve with the date of a logged change');
   assert.ok(changes.some(x=>x.includes('Conjectured argument added: Why E might hold.')),'A later conjectured argument is a change too');
   companion.arguments[0].revisions=[{date:'2026-03-01',note:'Conjecture restated.'}];
   w2.eval(`byMid.get('n-conj').arguments[0].revisions=[{date:'2026-03-01',note:'Conjecture restated.'}];renderResults()`);
@@ -189,5 +178,5 @@ try{
   assert.ok(rows.some(tr=>tr.dataset.id==='n-conj'&&tr.textContent.includes('Conjecture restated.')),'A companion\'s changes are its arguments\' revisions');
   assert.ok(rows.some(tr=>tr.dataset.id==='n-conj'&&tr.textContent.includes('2026-01-20')&&!tr.classList.contains('revision')),'And it is dated by its latest argument, not by the model');
   assert.deepEqual(errors2.map(String),[]);
-  console.log('PASS: a model page sorts every principle into three columns, satisfied, violated and unsettled, counts each, gives each principle one control to its evidence or derivation, holds the derived verdicts behind a closed toggle, keeps Lean status on the pop-up of a verdict while the explorer list keeps its marks; a model written as arguments shows its definition, then three columns of principles with one control each and no sources, each argument once in record order headed by its verdicts with who supplied it inside (for a trawl argument, who found, reviewed and admitted it), those kept in reserve under their own heading, its history behind a toggle, a write-up that does not replace the definition, and its companion.');
+  console.log('PASS: a model page sorts every principle into three columns, satisfied, violated and unsettled, counts each, gives each principle one control to its evidence or derivation, holds the derived verdicts behind a closed toggle, keeps Lean status on the pop-up of a verdict while the explorer list keeps its marks; a model written as arguments shows its definition, then three columns of principles with one control each and no sources, each argument once in record order headed by its verdicts with who supplied it inside (for a trawl argument, who found, reviewed and admitted it), its history behind a toggle, a write-up that does not replace the definition, and its companion.');
 }finally{w2.close();}

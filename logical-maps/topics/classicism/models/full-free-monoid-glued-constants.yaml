@@ -85,44 +85,18 @@ arguments:
     back to the actual world; under the identity, $p$ holds. So every truth is
     $\Box_{\ne}$-necessary, although ND fails.
 
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [no-pure-contingency-r, necessary-barcan-r, necessary-actuality, necessary-atomicity-r, necessary-rigid-comprehension-r, strong-leibniz-r, necessary-strong-leibniz-r, necessary-relational-choice-r]
-  fails: [distinctness-necessary-r, distinctness-necessary-t, modal-b, possibility-schema-r]
-  reserve: true
-  source: {paper: bacon-2020, locator: "Appendix A.2–A.3, pp. 580–587; n. 15, p. 547; n. 48, p. 566"}
-
-- holds: [transversal-choice-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-25'
-  text: >-
-    Added Transversal Choice, by the argument recorded for Relational Choice: a full model
-    contains every intension, in particular one whose extension at the evaluation point is a
-    transversal, chosen in the metatheory, of the extension there of an equivalence relation;
-    the equivalence and transversal conditions are unboxed. Recorded on a question of Zachary
-    Goodsell, after an observation of Christopher Sun.
-
 # migration: text of the old notes that no argument holds, verbatim. Their sentences on ND and B at
 # type t and on Possibility Maximalism (pure), now derived, are dropped.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
 notes: >-
   Promoted from conjectured on 22 September 2026. The gap in the source was its Theorem A.8,
   stated without proof, and the deferred type-e case; the write-up closes both by choosing a
-  self-similar individual domain and applying the book’s coalesced sums. The signature is
-  assumed countable; for a larger signature use a tree with as many branches. Distinct constants
-  of one type denote distinct entities at the root, since every domain, including the
-  individuals, has more than one element; they are also possibly identical. Everything else
-  follows from the listed principles by the map’s results. Bacon’s interpretation of his
-  predicates Pure and Fun in this model, and the principles stated with them, are not recorded,
-  following Zachary Goodsell’s decision to keep the map to the logical vocabulary and the
-  constants of Σ.
-
-  ND and B fail at type t already. Possibility Maximalism (pure) fails because Actuality is
-  necessary while its negation is consistent with C.
+  self-similar individual domain and applying the book’s coalesced sums. The signature is assumed
+  countable; for a larger signature use a tree with as many branches. Distinct constants of one
+  type denote distinct entities at the root, since every domain, including the individuals, has
+  more than one element; they are also possibly identical. Everything else follows from the listed
+  principles by the map’s results. Bacon’s interpretation of his predicates Pure and Fun in this
+  model, and the principles stated with them, are not recorded, following Zachary Goodsell’s
+  decision to keep the map to the logical vocabulary and the constants of Σ.
 
 was_conjectured: true
 

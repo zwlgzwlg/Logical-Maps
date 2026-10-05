@@ -102,24 +102,9 @@ arguments:
     $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true
     identity that C(Σ) does not prove. Everything that implies these fails with them.
 
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [necessary-actuality]
-  fails: [separated-structure-r, distinctness-signature-r]
-  reserve: true
-  source: {paper: dorr-prop-2-11-counterexample, locator: "§§2–4"}
-
 # migration: text of the old notes that no argument holds, verbatim: their first sentence. The
 # argument for Actuality at every world, now derived, is dropped: "Actuality holds at every world: at
 # the root the proposition true at $o$ alone is a true atom."
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
 notes: >-
-  It is a model: the limit condition commutes with every finite operation, so every term denotes
-  in the domains (write-up, Lemma 2).
-
-  Actuality holds at every world: at the root the proposition true at $o$ alone is a true atom.
-
-  Under the interpretation of Σ, the signature schemata fail.
+  It is a model: the limit condition commutes with every finite operation, so every term denotes in
+  the domains (write-up, Lemma 2).

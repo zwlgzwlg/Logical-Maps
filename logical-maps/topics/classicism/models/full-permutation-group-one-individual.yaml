@@ -85,29 +85,11 @@ arguments:
     Possible Infinity at type $e$ fails, and Possibility Maximalism (pure) fails for the
     C-consistent sentence that there are two individuals.
 
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [distinctness-necessary-r, necessary-distinctness-necessary-r, barcan-r, necessary-barcan-r, modal-five, necessary-modal-five, no-pure-contingency-r, necessary-atomicity-r, necessary-actuality, necessary-boolean-completeness-r, necessary-rigid-comprehension-r, necessary-gallin-extensional-comprehension-r, necessary-functionality-r, necessary-plenitude-r, necessary-relational-choice-r, necessary-functional-choice-r, converse-witnessed-possibility-r]
-  fails: [fregean-axiom, extensionality-r, possibility-schema-r, witnessed-possibility-r, distinctness-preserving-collapse, distinctness-schema-r, axiom-of-infinity-e, possible-infinity-e]
-  reserve: true
-  source: {paper: bacon-dorr-classicism, locator: "§3.5, pp. 58–59; p. 61 and n. 84"}
-
 # migration: the old notes' first and last sentences and the old description's last, verbatim. The
 # notes' sentences on Converse Witnessed Possibility, the Fregean Axiom, Extensionality, the
 # Distinctness-preserving collapse and Distinctness Maximalism (pure), all now derived, are dropped.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
 notes: >-
   Full proofs are in the write-up, which records the differences from the natural-action model.
   The model witnesses the joint consistency of $\Box$ND, the Axiom of Infinity at type $t$ and
-  $\Box$Relational Choice with there being one individual. Suggested by Cian Dorr on 23
-  September 2026.
-
-  Modal Freedom (signature Σ) holds: the two tuples of constants are disjoint, so one of the two
-  sentences contains no designated constant and denotes a fixed point, hence the empty set or
-  the set of all arrows; if it is possible it is the latter, and the conjunction is as possible
-  as the other conjunct. Converse Witnessed Possibility holds as in the natural-action record.
-  Distinctness Maximalism (pure) fails: $(\forall xy\, .\,x=y)=\top$ is a true closed pure
-  identity that C does not prove.
+  $\Box$Relational Choice with there being one individual. Suggested by Cian Dorr on 23 September
+  2026.

@@ -99,7 +99,6 @@ arguments:
     identity that C(Σ) does not prove. The designated constant refutes neither: closed pure terms
     denote entities fixed by every arrow (Classicism, §3.5, p. 58), whereas $a$ is fixed by no
     arrow but the identity, so no closed pure term denotes $\lambda\bar x\, .\,a$.
-    Everything that implies these fails with them.
   revisions:
   - date: '2026-09-23'
     by: Claude Fable 5.1 (Anthropic)
@@ -181,49 +180,13 @@ arguments:
     down by $N\cup\{m\}$, since $h$’s value at a fresh $m$ can be made to coincide with, or to
     differ from, a value on $N$.
 
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [necessary-boolean-completeness-r, necessary-actuality]
-  fails: [distinctness-necessary-r]
-  reserve: true
-  source: {paper: dorr-bc-not-rc, locator: "§7.1, p. 21; Proposition 43 and Proposition 44, p. 22; Lemma 21, p. 10; Remark 38, p. 19"}
-
-- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
-    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
-
-- fails: [no-contingency-signature-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Re-fixed the interpretation of Σ so as to settle No Contingency (signature Σ) and B for
-    sentences of Σ, at Cian Dorr’s request; see the notes.
-
 # migration: text of the old notes that no argument holds, verbatim. Their argument for the failure
 # of ND, now derived, is dropped.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
-# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
 notes: >-
   The first of the draft's two variants in which BF is made to fail. Actuality and the range
   deficiency come from the same finite test here, which is what the next variant prises apart.
-  Atomicity and Rigid Comprehension are not settled in the draft and are left unknown. The
-  source is a work in progress.
-
-  ND fails at type e because the range-deficient arrows include non-injective ones; the draft
-  does not draw that consequence separately. Argument of 23 September 2026, after Cian Dorr’s
-  observation that a choice over the individuals cannot be finitely pinned down; the
-  well-ordering of the individuals that he had in mind is refuted by the same two facts, but the
-  direct route needs no derivation of a well-ordering from Relational Choice in C. Observation
-  of 23 September 2026, answering Cian Dorr’s question whether the failure of BF sharpens to
-  type $t$. Atomicity fails already at type $t$, although Actuality holds.
+  Atomicity and Rigid Comprehension are not settled in the draft and are left unknown. The source
+  is a work in progress. Everything that implies these fails with them.
 
 # The old `changes` log, verbatim and frozen.
 history:

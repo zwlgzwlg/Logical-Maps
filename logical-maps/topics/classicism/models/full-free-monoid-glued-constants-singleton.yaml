@@ -85,26 +85,6 @@ arguments:
     back to the actual world; under the identity, $p$ holds. So every truth is
     $\Box_{\ne}$-necessary, although ND fails.
 
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [no-pure-contingency-r, necessary-barcan-r, necessary-actuality, necessary-atomicity-r, necessary-rigid-comprehension-r, strong-leibniz-r, necessary-strong-leibniz-r, necessary-relational-choice-r]
-  fails: [distinctness-necessary-r, distinctness-necessary-t, modal-b, possibility-schema-r, axiom-of-infinity-e, possible-infinity-e]
-  reserve: true
-  source: {paper: bacon-2020, locator: "Appendix A.2–A.3, pp. 580–587; n. 15, p. 547; n. 48, p. 566"}
-
-- holds: [transversal-choice-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-25'
-  text: >-
-    Added Transversal Choice, by the argument recorded for Relational Choice: a full model
-    contains every intension, in particular one whose extension at the evaluation point is a
-    transversal, chosen in the metatheory, of the extension there of an equivalence relation;
-    the equivalence and transversal conditions are unboxed. Recorded on a question of Zachary
-    Goodsell, after an observation of Christopher Sun.
-
 # migration: text of the old notes that no argument holds, verbatim.
 notes: >-
   Shows that Logical Necessity is consistent with there being exactly one individual, necessarily.

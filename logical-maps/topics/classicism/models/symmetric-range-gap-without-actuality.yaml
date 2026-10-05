@@ -90,7 +90,6 @@ arguments:
     .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what
     the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since
     $c=\top_\tau$ is a true identity that C(Σ) does not prove.
-    Everything that implies these fails with them.
 
 - fails: [relational-choice-r]
   # migration: the closing "Argument of 23 September 2026, after Cian Dorr’s observation that a
@@ -162,64 +161,14 @@ arguments:
     used in the lemma is available only at the worlds in $A$; the conjunct $\alpha$ removes the
     others.
 
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [necessary-boolean-completeness-r]
-  fails: [actuality, atomicity-t, distinctness-necessary-r]
-  reserve: true
-  source: {paper: dorr-bc-not-rc, locator: "§7.2, p. 22; Proposition 45, p. 22; Remark 38, p. 19"}
-
-- holds: [axiom-of-infinity-t]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-20'
-  text: >-
-    Added both Axioms of Infinity at Cian Dorr's direction. The individuals are the natural
-    numbers and identity at the identity arrow is literal, so no numeral counts them. The
-    propositions that a given individual is fixed by the arrow, one for each individual, are
-    pairwise distinct, symmetric and pinned by that individual, so there are infinitely many
-    propositions. The set of numerals at each type is invariant under every arrow, hence
-    symmetric and pinned by the empty set, so finite cardinality is standard and no finite
-    cardinality holds of the universal property at either type.
-
-- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
-    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
-
 # migration: text of the old notes that no argument holds, verbatim.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
-# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
 notes: >-
-  The second of the draft's two variants in which BF fails, arranged so that the range
-  deficiency no longer brings Actuality with it. Since Actuality fails, Weak Rigid Comprehension
-  and Rigid Comprehension fail too, which are recorded as derived verdicts. Atomlessness is the
-  Proposition 45 argument for Atomicity read for an arbitrary nonzero proposition, and the
-  failure of ND at type e follows from the non-injective arrows; neither is displayed separately
-  in the draft. The source is a work in progress.
-
-  Actuality and Atomicity fail because the first class of arrows contains non-injective ones,
-  which restores the arguments used for the all-surjections model: given a true proposition
-  pinned down by a finite set containing the distinguished individual and one other, the
-  proposition that a fresh individual is not collapsed with that set is a strictly stronger
-  truth; and the same splitting applied to an arbitrary nonzero proposition rather than a true
-  one gives Atomlessness.
-
-  Argument of 23 September 2026, after Cian Dorr’s observation that a choice over the
-  individuals cannot be finitely pinned down; the well-ordering of the individuals that he had
-  in mind is refuted by the same two facts, but the direct route needs no derivation of a
-  well-ordering from Relational Choice in C.
-
-  Argument of Claude Opus 5.5 (Anthropic), 27 September 2026, at Cian Dorr's request.
-
-  Observation of 23 September 2026, answering Cian Dorr’s question whether the failure of BF
-  sharpens to type $t$.
+  The second of the draft's two variants in which BF fails, arranged so that the range deficiency
+  no longer brings Actuality with it. Since Actuality fails, Weak Rigid Comprehension and Rigid
+  Comprehension fail too, which are recorded as derived verdicts. Atomlessness is the Proposition
+  45 argument for Atomicity read for an arbitrary nonzero proposition, and the failure of ND at
+  type e follows from the non-injective arrows; neither is displayed separately in the draft. The
+  source is a work in progress. Everything that implies these fails with them.
 
 # The old `changes` log, verbatim and frozen.
 history:

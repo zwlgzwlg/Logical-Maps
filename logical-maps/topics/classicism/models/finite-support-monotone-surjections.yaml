@@ -108,7 +108,6 @@ arguments:
     .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what
     the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since
     $c=\top_\tau$ is a true identity that C(Σ) does not prove.
-    Everything that implies these fails with them.
 
 - fails: [countable-boolean-completeness-r]
   by: Claude Fable 5.1 (Anthropic)
@@ -225,89 +224,13 @@ arguments:
     agreement classes and Definition D.3's extensional-fullness lemma. It replaces the trawl's
     invalid inference from an unavailable intersection to an unavailable greatest lower bound.
 
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [necessary-barcan-r]
-  fails: [atomicity-r, actuality, rigid-comprehension-r]
-  reserve: true
-  source: {paper: bacon-dorr-classicism, locator: "Appendix D, Proposition D.5(2), pp. 74–75; construction pp. 76–77; p. 79 (No Pure Contingency)"}
-
-- holds: [axiom-of-infinity-t]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-20'
-  text: >-
-    Added both Axioms of Infinity at Cian Dorr's direction. The individuals are the natural
-    numbers and identity at the evaluation arrow is literal, so no numeral counts them. The
-    propositions that a given individual is fixed by the arrow, one for each individual, are
-    pairwise distinct and each has that individual as finite support, so there are infinitely
-    many propositions. The set of numerals at each type is invariant under every arrow, hence
-    has empty support and lies in the domain, so finite cardinality is standard and no finite
-    cardinality holds of the universal property at either type.
-
-- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
-    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
-
-- holds: [necessary-relational-choice-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Added Relational Choice and its necessitation at Cian Dorr’s direction: ideally full models
-    are extensionally full at every object, and choice in the metatheory supplies the functional
-    subrelation; see the notes.
-
-- fails: [inextensible-comprehension-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Recorded the failure of Inextensible Comprehension at type e→t for the property of being
-    even, sharpening the failure of Actuality; argument in the notes.
-
-- fails: [vicinity]
-  reserve: true
-  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request
-  date: '2026-09-27'
-  text: >-
-    Recorded the failure of Vicinity; argument in the notes.
-
 # migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
 # the sentence that followed the Σ argument, referring to its failures. The argument for the failure
 # of Vicinity, now derived, is dropped.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
-# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
-  identifies its evaluation point; construction and verification are given at the PDF locations
-  in References.
-
-  ND fails at the non-injective arrows; BF holds by Proposition D.6 since every arrow is a
-  surjection; Atomlessness holds as in part 1; Boolean Completeness fails at type $e\to t$
-  because the haecceities of the even numbers have no least upper bound, the strongest
-  persistent property containing them and pinned down by $\{0,\ldots,n\}$ becoming strictly
-  stronger as $n$ grows.
-
-  Countable Boolean Completeness fails as well, at type $e\to t$: the property $E$ that the
-  source shows to lack a least upper bound has as its extension a countable family of
-  haecceities, and the extensional fullness the source invokes to put $E$ in the domain also
-  puts in the relation pairing the haecceity of the $k$-th member of that family with the
-  numeral $k$, which injects $E$ into the numerals.
-
-  A true $w$ pinned down by a finite set $S$ contains every arrow agreeing with the identity on
-  $S$, among them the monotone surjection equal to the identity up to $M+1$ that sends $M+2$ to
-  $M+1$ and each larger $x$ to $x-1$, for $S\subseteq[0,M]$, one that collapses two individuals
-  $a\ne b$ outside $S$. The proposition that $a$ and $b$ are distinct is true, and it is
-  possible at no arrow that collapses them, since a collapse persists under composition, so
-  $w\not\le\Diamond(a\ne b)$. Observation of Claude Opus 5.5 (Anthropic), 27 September 2026.
+  identifies its evaluation point; construction and verification are given at the PDF locations in
+  References. Everything that implies these fails with them.
 
 was_conjectured: true
 

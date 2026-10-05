@@ -200,103 +200,12 @@ arguments:
     So $F$ has no least upper bound, and, taking pointwise negations, the family of complements
     has no greatest lower bound.
 
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [barcan-r, necessary-distinctness-necessary-r, necessary-barcan-r]
-  fails: [atomicity-r, actuality, rigid-comprehension-r]
-  reserve: true
-  source: {paper: bacon-dorr-classicism, locator: "Appendix D, Proposition D.5(1), pp. 74–75; construction pp. 75–76; p. 79 (No Pure Contingency)"}
-
-- holds: [axiom-of-infinity-t]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-20'
-  text: >-
-    Added both Axioms of Infinity at Cian Dorr's direction. The individuals are the natural
-    numbers and identity at the evaluation arrow is literal, so no numeral counts them. The
-    propositions that a given individual is fixed by the arrow, one for each individual, are
-    pairwise distinct and each has that individual as finite support, so there are infinitely
-    many propositions. The set of numerals at each type is invariant under every arrow, hence
-    has empty support and lies in the domain, so finite cardinality is standard and no finite
-    cardinality holds of the universal property at either type.
-
-- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
-    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
-
-- fails: [distinctness-preserving-collapse]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Expanded the description from Appendix D, naming Proposition D.5 and its part; added the
-    failure of Countable Boolean Completeness at type e→t; settled the Distinctness-preserving
-    collapse.
-
-- holds: [signature-b-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Re-fixed the interpretation of Σ so as to settle No Contingency (signature Σ) and B for
-    sentences of Σ, at Cian Dorr’s request; see the notes.
-
-- holds: [necessary-relational-choice-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Added Relational Choice and its necessitation at Cian Dorr’s direction: ideally full models
-    are extensionally full at every object, and choice in the metatheory supplies the functional
-    subrelation; see the notes.
-
-- fails: [inextensible-comprehension-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Recorded the failure of Inextensible Comprehension at type e→t for the property of being
-    even, sharpening the failure of Actuality; argument in the notes.
-
 # migration: text of the old notes that no argument holds, verbatim: their first two sentences. The
 # argument for the failure of the Distinctness-preserving collapse, now derived, is dropped.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
-  identifies its evaluation point; construction and verification are given at the PDF locations
-  in References.
-
-  Under it the signature schemata that give the constants a special role fail: with $c\in\Sigma$
-  of relational type $\tau$, $c=\top_\tau$ necessarily, so Witnessed Possibility fails for the
-  pure formula $x\ne\top_\tau$, Separated Structure fails since $\lambda x\, .\,x$ and $\lambda
-  x\, .\,\top_\tau$ agree on $c$, Independence (signature Σ) fails since $c$ denotes what a
-  closed pure term denotes, and Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$
-  is true and unprovable. But No Contingency (signature Σ), and with it B for sentences of Σ,
-  hold. Boolean Completeness fails here through C5 and the failure of Actuality (Propositions
-  2.5–2.6), which gives nothing about countable families; but the part 2 argument transfers: the
-  strongest persistent property pinned down by a finite $X$ whose extension contains the even
-  numbers has, at an arrow $h$, the extension $h(X\cap\text{evens})\cup(\mathbb N\setminus hX)$,
-  which strictly shrinks as $X$ grows, so the haecceities of the even numbers have no least
-  upper bound. Countable Boolean Completeness fails as well, at type $e\to t$: the property $E$
-  that the source shows to lack a least upper bound has as its extension a countable family of
-  haecceities, and the extensional fullness the source invokes to put $E$ in the domain also
-  puts in the relation pairing the haecceity of the $k$-th member of that family with the
-  numeral $k$, which injects $E$ into the numerals. Distinctness-preserving collapse fails:
-  every arrow $h$ has an inverse, so for any true $q$ the arrow $q$-member$\circ h^{-1}$ carries
-  $h$ into $q$, making $\Diamond q$ true everywhere; so $\Box(\Diamond q\to p)$ would need
-  $p=\top$, and the true proposition that $0$ is fixed is not $\top$. Observations of 23
-  September 2026, answering Cian Dorr’s question whether the failure of Actuality can be
-  sharpened to a failure of Inextensible Comprehension, in the simpler form and with the
-  type-$(t\to t)$ instance of 25 September 2026. Boolean Completeness fails at type $t$ as well,
-  which the source (n. 92) conjectures but does not show. Observation of Claude Fable 5.1
-  (Anthropic), 25 September 2026; not in the source.
+  identifies its evaluation point; construction and verification are given at the PDF locations in
+  References.
 
 was_conjectured: true
 

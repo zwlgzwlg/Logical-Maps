@@ -72,33 +72,19 @@ arguments:
     preserve the equivalence pattern on S, and is the S-hull of the extension of X elsewhere.
     Details in the write-up.
 
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [necessary-boolean-completeness-r, necessary-barcan-r]
-  fails: [actuality, atomicity-t, distinctness-necessary-r]
-  reserve: true
-  writeup: symmetric-infinite-classes
-
 # migration: the old notes, whole.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
 notes: >-
   The first recorded model refuting Transversal, so Transversal is not a theorem of C. Since the
   coalesced roots make every pure sentence consistent with C possible, □Transversal fails there
-  too. The classes must be infinite: with finite classes, being identical to one of the members
-  of a class is a canonical representative. The mechanism is a failure of weak elimination of
+  too. The classes must be infinite: with finite classes, being identical to one of the members of
+  a class is a canonical representative. The mechanism is a failure of weak elimination of
   imaginaries: the class, as a definable set, has no canonical finite set of parameters.
   Structures with weak elimination of imaginaries, such as a dense linear order or the random
-  graph, give no such failure, and in the binary tree with a parent function the levels are
-  fixed as soon as one node is. Since Inextensible Comprehension holds, it does not imply
-  Transversal. Left unknown: the Axiom of Infinity at type e, and every signature schema, since
-  no interpretation of Σ has been fixed. Vicinity fails by derivation: Weakly Inextensible
+  graph, give no such failure, and in the binary tree with a parent function the levels are fixed
+  as soon as one node is. Since Inextensible Comprehension holds, it does not imply Transversal.
+  Left unknown: the Axiom of Infinity at type e, and every signature schema, since no
+  interpretation of Σ has been fixed. Vicinity fails by derivation: Weakly Inextensible
   Comprehension holds, and with Vicinity it would give Actuality.
-
-  Boolean Completeness, BF and No Pure Contingency hold as in Base 1, and Actuality, Relational
-  Choice, Atomicity at type t and ND fail as there.
 
 # The old `changes` log, verbatim and frozen.
 history:

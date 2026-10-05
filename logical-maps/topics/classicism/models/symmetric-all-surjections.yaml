@@ -227,103 +227,20 @@ arguments:
     $\hat E$ but distinct from it. Since a one-object model has No Pure Contingency and $F$ is
     pinned by $\varnothing$, every instance of Transversal holds at every world.
 
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [necessary-boolean-completeness-r, necessary-barcan-r]
-  fails: [atomicity-t, rigid-comprehension-r, distinctness-necessary-r]
-  reserve: true
-  source: {paper: dorr-bc-not-rc, locator: "§3.1, p. 9; Proposition 22, p. 11; Proposition 23, p. 12; Theorem 36, p. 18; Corollary 37 and Remark 38, p. 19"}
-
-- holds: [axiom-of-infinity-t]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-20'
-  text: >-
-    Added both Axioms of Infinity at Cian Dorr's direction. The individuals are the natural
-    numbers and identity at the identity arrow is literal, so no numeral counts them. The
-    propositions that a given individual is fixed by the arrow, one for each individual, are
-    pairwise distinct, symmetric and pinned by that individual, so there are infinitely many
-    propositions. The set of numerals at each type is invariant under every arrow, hence
-    symmetric and pinned by the empty set, so finite cardinality is standard and no finite
-    cardinality holds of the universal property at either type.
-
-- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
-    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
-
-- holds: [signature-b-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Re-fixed the interpretation of Σ so as to settle No Contingency (signature Σ) and B for
-    sentences of Σ, at Cian Dorr’s request; see the notes.
-
-- holds: [necessary-transversal-r]
-  reserve: true
-  by: Claude Opus 5.5 (Anthropic), checked by Cian Dorr
-  date: '2026-10-01'
-  text: >-
-    Recorded Transversal and its necessitation at every type, verifying GPT-6's proposed
-    least-support witness of 30 September; see the notes. The separate conjectured record
-    symmetric-all-surjections-transversal is retired. Added the open question whether the
-    classifier is denoted by a closed term.
-
 # migration: text of the old notes that no argument holds, verbatim: two sentences of the first
 # paragraph, and the open question added on 1 October 2026. The old last paragraph, which said that
 # Transversal was conjectured in the separate record symmetric-all-surjections-transversal, is dropped,
 # since the change of 1 October retired that record.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
 notes: >-
   This is the draft's headline separation. Boolean Completeness holds while Rigid Comprehension
   fails, and since Actuality fails too, Weak Rigid Comprehension fails here as well, which is
   recorded as a derived verdict. The source is a work in progress.
 
-  Open question: is there a closed term of the language, at each type, that denotes this
-  classifier $F$? Pairwise distinctness over a variable number of individuals is expressible
-  with a plural variable $Y^{e\to t}$, as $\forall y\,y'\,((Yy\land Yy'\land y\ne
-  y')\to\Box(\exists z\, .\,Xz\to y\ne y'))$. What is not obvious is how to say in the object
-  language that $X$ is minimally pinned down by the $Y$s.
 
-  Rigid Comprehension fails already at type e, and concretely rather than only through
-  Actuality: a persistent property with a cofinite extension must be closed under everything an
-  arrow can send an instance to, and no finite pinning set can sustain that short of the top
-  property, so nothing rigid is coextensive with being distinct from a fixed individual.
-
-  Atomlessness is the Proposition 22 argument read for an arbitrary nonzero proposition rather
-  than for a true one, and the failure of ND at type e follows from the presence of a
-  non-injective surjection, since the proposition that two fixed individuals are identical is
-  then a nonzero proposition; neither is displayed separately in the draft.
-
-  Transversal holds at every type, and so does its necessitation. The witness was proposed by
-  GPT-6 on 30 September 2026 and checked on 1 October 2026.
-
-  Under it the signature schemata that give the constants a special role fail: with $c\in\Sigma$
-  of relational type $\tau$, $c=\top_\tau$ necessarily, so Witnessed Possibility fails for the
-  pure formula $x\ne\top_\tau$, Separated Structure fails since $\lambda x\, .\,x$ and $\lambda
-  x\, .\,\top_\tau$ agree on $c$, Independence (signature Σ) fails since $c$ denotes what a
-  closed pure term denotes, and Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$
-  is true and unprovable. But No Contingency (signature Σ), and with it B for sentences of Σ,
-  hold. Argument of 23 September 2026, after Cian Dorr’s observation that a choice over the
-  individuals cannot be finitely pinned down; the well-ordering of the individuals that he had
-  in mind is refuted by the same two facts, but the direct route needs no derivation of a
-  well-ordering from Relational Choice in C.
-
-  Argument of Claude Opus 5.5 (Anthropic), 27 September 2026, checked by Cian Dorr the same day;
-  it extends the earlier observations at types $t$ and $e\to t$ and the case $X=\lambda p\,
-  .\,p$ at type $t\to t$, which are instances.
-
-  Transversal and its boxed form are conjectured to hold here, in the separate bronze-tier
-  record symmetric-all-surjections-transversal (30 September 2026). Its write-up proposes
-  canonical representatives using least permutation supports of extensions. This proposal has
-  not been promoted to a verified property of this model.
+  Open question: is there a closed term of the language, at each type, that denotes this classifier
+  $F$? Pairwise distinctness over a variable number of individuals is expressible with a plural variable
+  $Y^{e\to t}$, as $\forall y\,y'\,((Yy\land Yy'\land y\ne y')\to\Box(\exists z\, .\,Xz\to y\ne y'))$. What is
+  not obvious is how to say in the object language that $X$ is minimally pinned down by the $Y$s.
 
 # The old `changes` log, verbatim and frozen.
 history:

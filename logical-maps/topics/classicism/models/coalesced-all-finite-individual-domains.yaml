@@ -77,7 +77,6 @@ arguments:
     .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what
     the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since
     $c=\top_\tau$ is a true identity that C(Σ) does not prove.
-    Everything that implies these fails with them.
 
 - holds: [barcan-r]
   # migration: the arguments of 22 September before it in the old notes, for Actuality and their
@@ -173,98 +172,13 @@ arguments:
     derive the unboxed and Strong Leibniz consequences. These are additions for this particular
     full-Henkin-component construction; they do not apply to arbitrary coalesced sums.
 
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- fails: [separated-structure-r, distinctness-signature-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
-    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
-
-- holds: [actuality, necessary-barcan-r]
-  fails: [no-pure-contingency-r, possibility-schema-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Added Actuality, BF and □BF, and the failure of No Pure Contingency and Possibility (pure),
-    with the arguments in the notes.
-
-- fails: [possibility-plus-r]
-  reserve: true
-  by: Cian Dorr, recorded by Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Added Atomicity (type t), Boolean Completeness (type t) and Relational Choice, and the
-    failure of Possibility+ (pure), with the arguments in the notes.
-
-- holds: [transversal-choice-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-25'
-  text: >-
-    Added Transversal Choice at the root, by the argument recorded for Relational Choice: a root
-    entity has an arbitrary root component, so take the property whose root component is a
-    transversal, chosen in the metatheory, of the root component of an equivalence relation at
-    the root, with empty component parts; the equivalence and transversal conditions are all
-    evaluated at the root's identity arrow. Recorded on a question of Zachary Goodsell, after an
-    observation of Christopher Sun.
-
-- holds: [necessary-atomicity-r, necessary-boolean-completeness-r]
-  reserve: true
-  by: OpenAI Codex (GPT-6)
-  date: '2026-09-25'
-  provenance: admission-c0a37bbe6b6c45cc985428b174812564
-  text: >-
-    Accepted all-type product-algebra additions from the DeepSeek trawl after correcting the
-    proof: Atomicity, Boolean Completeness and Rigid Comprehension hold at every world. Root
-    atoms remain atoms or bottom in the components, so the Strong Leibniz schemata hold too. The
-    projected-extension RC proof is supplied by this review; boxed claims are checked at every
-    world, not obtained by necessitating a hypothesis.
-
-- holds: [necessary-strong-leibniz-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-25'
-  text: >-
-    Added □Atomicity, □Boolean Completeness, □Rigid Comprehension and □Strong Leibniz
-    Biconditionals at the root, and the failure of B for pure sentences, with the arguments in
-    the notes.
-
 # migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
 # the sentence that followed the Σ argument.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
-# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
 notes: >-
-  Recorded to witness the consistency with C of the sentence through which Possibility
-  Maximalism (pure) reaches the Axiom of Infinity at type $t$, and of that Axiom itself. The
-  construction and its verification are in the write-up; no independent check is claimed.
-
-  Interpretation of Σ, fixed for this record: each relational constant denotes the top element
-  of its type and each individual constant denotes one fixed individual. Further facts: the root
-  proposition, true at the root alone, is an atom entailing every root truth, so Actuality
-  holds. BF holds at the root: an entity of a relational type there is a family of component
-  entities with a free root component, every component entity is the component of some root
-  entity, so if $\forall y\, .\,\Box Xy$ holds at the root then every component of $X$ is
-  universal and so is its root component, whence $\Box\forall y\, .\,Xy$; BF holds at the
-  one-world components trivially, so $\Box$BF holds. No Pure Contingency fails, since the pure
-  sentence that there are at least two individuals is true at the root and false at the first
-  component. Possibility Maximalism (pure) fails, since Atomlessness is consistent with C but
-  false at every world: each component is a one-world model and the root proposition is an atom.
-  The type-t Strong Leibniz Biconditionals hold necessarily: at the root, the singleton of the
-  arrow to component $n$ becomes that component’s identity under it and empty under every other
-  arrow, and the root proposition becomes empty under every non-identity arrow, so every
-  singleton is a strong world; the components are one-world models. Possibility+ (pure) fails:
-  the component with three individuals has three at its only world; take two root individuals
-  that differ at that component and agree everywhere else; the pure formula saying that $x\ne y$
-  and there are exactly two individuals is consistent, but at the root there are infinitely many
-  individuals, under every arrow into another component the two collapse, and under the arrow
-  into that component there are three.
+  Recorded to witness the consistency with C of the sentence through which Possibility Maximalism
+  (pure) reaches the Axiom of Infinity at type $t$, and of that Axiom itself. The construction and
+  its verification are in the write-up; no independent check is claimed. Everything that implies
+  these fails with them.
 
 # The old `changes` log, verbatim and frozen.
 history:

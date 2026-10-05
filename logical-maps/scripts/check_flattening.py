@@ -40,11 +40,7 @@ def load_at(ref: str, topic: str) -> dict:
     archive = subprocess.run(["git", "-C", str(pmap.ROOT), "archive", ref, f"topics/{topic}"],
                              capture_output=True, check=True).stdout
     with tempfile.TemporaryDirectory() as tmp:
-        tar = tarfile.open(fileobj=io.BytesIO(archive))
-        try:
-            tar.extractall(tmp, filter="data")
-        except TypeError:  # Python before 3.10.12 has no extraction filters; the archive is our own
-            tar.extractall(tmp)
+        tarfile.open(fileobj=io.BytesIO(archive)).extractall(tmp, filter="data")
         root = Path(tmp)
         with patch.object(pmap, "ROOT", root), patch.object(pmap, "TOPICS", root / "topics"):
             return pmap.load_topic(topic)

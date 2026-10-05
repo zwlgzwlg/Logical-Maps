@@ -138,74 +138,12 @@ arguments:
     consistent with C, since it holds in symmetric-infinite-classes, so it is possible at the
     root.
 
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [infinity-e]
-  fails: [barcan-r, strong-possibility-r, necessary-relational-choice-r]
-  reserve: true
-  source: {paper: bacon-dorr-classicism, locator: "§2.6, pp. 41–42 and n. 61; Appendix E, pp. 80–83"}
-
-- fails: [boolean-completeness-r, countable-boolean-completeness-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Corrected the Boolean Completeness claim from the type-t instance to the type schema, since
-    no component is known to refute it at type t; added the failure of Countable Boolean
-    Completeness by the same transfer.
-
-- holds: [transversal-choice-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-25'
-  text: >-
-    Added Transversal Choice at the root, by the argument recorded for Relational Choice: a root
-    entity has an arbitrary root component, so take the property whose root component is a
-    transversal, chosen in the metatheory, of the root component of an equivalence relation at
-    the root, with empty component parts; the equivalence and transversal conditions are all
-    evaluated at the root's identity arrow. Recorded on a question of Zachary Goodsell, after an
-    observation of Christopher Sun.
-
 # migration: the sentence of the old notes that no argument holds, verbatim. The arguments for
 # □Relational Choice and the 23 September correction, whose verdicts are now derived, are dropped.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
 notes: >-
   Possibility+ holds here, unlike at the maximalist root, because the root individuals are the
   constants, and two distinct constants stay distinct in every component where the sentence of
   their distinctness is realized, not in one component only.
-
-  Atomicity fails at type t: C is complete for the components, so some component $M$ refutes
-  Atomicity at its root, by a proposition $p_M$ with no atom below it in $M$’s domain; the root
-  proposition that is $p_M$ on $M$, empty on every other component and false at the root has as
-  its root lower bounds exactly the root propositions that are lower bounds of $p_M$ on $M$ and
-  empty elsewhere, so it has no atom below it either. Boolean Completeness fails, at type $e\to
-  t$, for the same reason: a component $M$ refutes it by a property $X_M$ of propositions
-  without a greatest lower bound in $M$’s domain, and the root property holding of a root
-  proposition iff $X_M$ holds of its $M$-component has no greatest lower bound at the root,
-  since such a bound’s $M$-component would be one for $X_M$. Relational Choice holds at the
-  root, contrary to a first guess: the functionality of a subrelation is evaluated at the root’s
-  identity arrow only, while the subrelation condition is boxed; so for a serial root relation
-  take the subrelation whose root component is a functional choice from the root component, by
-  choice in the metatheory, and whose component parts are empty. □Relational Choice fails, as
-  the notes on Relational Choice explain: some component refutes Relational Choice at its root,
-  which is accessible from the root. Correction of 23 September 2026: the components are only
-  known to refute Boolean Completeness at type $e\to t$ (Classicism, n. 92, conjectures failures
-  at type $t$ but has none), so the transfer argument refutes the type schema of Boolean
-  Completeness at the root, not its type-$t$ instance, which is left unknown; the same transfer,
-  applied to the countable family of haecceities that witnesses the component failure, refutes
-  Countable Boolean Completeness. Boolean Completeness fails at type $t$ (restoring the claim
-  corrected earlier in the day): the truncation model of Appendix D, part 6, refutes it at type
-  $t$, as its record now shows, and the components are complete for C, so one of them does; the
-  root propositions false at every arrow except those into that component form a copy of its
-  propositional domain under the root’s entailment order, and a root property of propositions
-  holding exactly of the copies of the members of that component’s counterexample family has no
-  least upper bound at the root. □Transversal fails as well, by the same argument: the negation
-  of the type-$e$ instance of Transversal is a pure sentence consistent with C, since it holds
-  in symmetric-infinite-classes, so it is possible at the root. Observation of Claude Opus 5.5
-  (Anthropic), 28 September 2026.
 
 # The old `changes` log, verbatim and frozen.
 history:

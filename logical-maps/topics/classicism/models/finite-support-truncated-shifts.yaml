@@ -113,7 +113,6 @@ arguments:
     identity that C(Σ) does not prove. The designated constant refutes neither: closed pure terms
     denote entities fixed by every arrow (Classicism, §3.5, p. 58), whereas $a$ is fixed by no
     arrow but the identity, so no closed pure term denotes $\lambda\bar x\, .\,a$.
-    Everything that implies these fails with them.
   revisions:
   - date: '2026-09-23'
     by: Claude Fable 5.1 (Anthropic)
@@ -196,75 +195,12 @@ arguments:
     singleton family. The family is represented by a domain property because this ideally full
     model is extensionally full (Definition D.3, p. 74). See the dated handwritten write-up.
 
-# In reserve: verdicts the record stated directly before it was written as arguments, which
-# the engine also derives from the arguments above. Each comes back with the change-log entry
-# that added it (its summary verbatim, by and date), or with the record's source (5 October 2026).
-
-- holds: [actuality, necessary-atomicity-r, necessary-actuality, necessary-barcan-r]
-  fails: [distinctness-necessary-r, rigid-comprehension-r]
-  reserve: true
-  source: {paper: bacon-dorr-classicism, locator: "Appendix D, Proposition D.5(8), pp. 74–75; construction pp. 78–79, Part 8; p. 79 (No Pure Contingency)"}
-
-- fails: [witnessed-possibility-r, separated-structure-r, distinctness-signature-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-22'
-  text: >-
-    Fixed an interpretation of Σ (relational constants as top, individual constants as one fixed
-    individual) and recorded the signature schemata it refutes, at Cian Dorr’s request.
-
-- fails: [no-contingency-signature-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Re-fixed the interpretation of Σ so as to settle No Contingency (signature Σ) and B for
-    sentences of Σ, at Cian Dorr’s request; see the notes.
-
-- holds: [necessary-relational-choice-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-23'
-  text: >-
-    Added Relational Choice and its necessitation at Cian Dorr’s direction: ideally full models
-    are extensionally full at every object, and choice in the metatheory supplies the functional
-    subrelation; see the notes.
-
-- holds: [transversal-choice-r]
-  reserve: true
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-25'
-  text: >-
-    Added Transversal Choice, by the argument recorded for Relational Choice: the model is
-    extensionally full at every object, so for an equivalence relation at the evaluation point a
-    transversal of its extension there, chosen in the metatheory, is the extension of an element
-    pinned down by the empty set; the equivalence and transversal conditions are unboxed.
-    Recorded on a question of Zachary Goodsell, after an observation of Christopher Sun.
-
 # migration: text of the old notes that no argument holds, verbatim: their first two sentences, and
 # the sentence that followed the Σ argument, referring to its failures.
-# The last paragraphs of the notes restore, verbatim, sentences of the record before it was
-# written as arguments that no argument keeps (5 October 2026).
-# "Everything that implies these fails with them." is back at the end of the argument it followed (5 October 2026).
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
-  identifies its evaluation point; construction and verification are given at the PDF locations
-  in References.
-
-  All arrows are surjective, so BF holds; $\{k_0\}$ and each $\{k_n\}$ are pinned down by finite
-  sets, so Actuality and Atomicity hold; ND fails; Boolean Completeness fails because the
-  strongest persistent property pinned down by $\{0,\ldots,n\}$ whose extension contains the
-  even numbers has, at $k_m$, the evens, the odds with $0$, or all of $\mathbb N$ according as
-  $m<n$ is even, $m<n$ is odd, or $m\ge n$, and so becomes ever stronger.
-
-  Countable Boolean Completeness fails as well, at type $e\to t$: the property $E$ that the
-  source shows to lack a least upper bound has as its extension a countable family of
-  haecceities, and the extensional fullness the source invokes to put $E$ in the domain also
-  puts in the relation pairing the haecceity of the $k$-th member of that family with the
-  numeral $k$, which injects $E$ into the numerals.
-
-  Boolean Completeness already fails at type t: the finite/cofinite algebra of arrow indices has
-  no least upper bound for the even-index singleton family.
+  identifies its evaluation point; construction and verification are given at the PDF locations in
+  References. Everything that implies these fails with them.
 
 was_conjectured: true
 
