@@ -398,6 +398,14 @@ def Models.full_idempotent_monoid.no_pure_contingency_r : Prop :=
 def Models.full_idempotent_monoid.infinity_e : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE)
 
+/-- `full-idempotent-monoid`: Axiom of Infinity (type e) fails. -/
+def Models.full_idempotent_monoid.axiom_of_infinity_e : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.AxiomOfInfinityE.schemaIn
+
+/-- `full-idempotent-monoid`: Possible Infinity (type e) fails. -/
+def Models.full_idempotent_monoid.possible_infinity_e : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.PossibleInfinityE.schemaIn
+
 /-- `full-idempotent-monoid`: □Relational Choice holds. -/
 def Models.full_idempotent_monoid.necessary_relational_choice_r : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem).HoldsAx Classicism.P.NecRelationalChoice.schemaIn
@@ -421,6 +429,14 @@ def Models.full_involution_group.no_pure_contingency_r : Prop :=
 /-- `full-involution-group`: Infinity Schema (type e) fails. -/
 def Models.full_involution_group.infinity_e : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE)
+
+/-- `full-involution-group`: Axiom of Infinity (type e) fails. -/
+def Models.full_involution_group.axiom_of_infinity_e : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.AxiomOfInfinityE.schemaIn
+
+/-- `full-involution-group`: Possible Infinity (type e) fails. -/
+def Models.full_involution_group.possible_infinity_e : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.PossibleInfinityE.schemaIn
 
 /-- `full-involution-group`: □Relational Choice holds. -/
 def Models.full_involution_group.necessary_relational_choice_r : Prop :=
@@ -453,6 +469,14 @@ def Arguments.no_pure_contingency_one_object.no_pure_contingency_r : Prop :=
 /-- argument `one-individual`: Infinity Schema (type e) fails in every model meeting its conditions. -/
 def Arguments.one_individual.infinity_e : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.OneIndividual A → ¬ (A).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE)
+
+/-- argument `one-individual`: Axiom of Infinity (type e) fails in every model meeting its conditions. -/
+def Arguments.one_individual.axiom_of_infinity_e : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.OneIndividual A → ¬ (A).HoldsAx Classicism.P.AxiomOfInfinityE.schemaIn
+
+/-- argument `one-individual`: Possible Infinity (type e) fails in every model meeting its conditions. -/
+def Arguments.one_individual.possible_infinity_e : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.OneIndividual A → ¬ (A).HoldsAx Classicism.P.PossibleInfinityE.schemaIn
 
 /-- argument `relational-choice-full-boxed`: □Relational Choice holds in every model meeting its conditions. -/
 def Arguments.relational_choice_full_boxed.necessary_relational_choice_r : Prop :=

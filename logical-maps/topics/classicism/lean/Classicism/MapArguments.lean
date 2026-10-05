@@ -1,5 +1,6 @@
 import Classicism.MapModels
 import Classicism.Models.Conditions
+import Classicism.Semantics.OneIndividual
 import Mathlib.SetTheory.Cardinal.NatCard
 
 /-!
@@ -110,6 +111,19 @@ theorem infinity_e : Statements.Arguments.one_individual.infinity_e := by
   obtain ⟨f, hf⟩ := (holds_count (A.reduct_isModel M) (𝟙 _) .e 2).1 (H _ ⟨2, by decide, rfl⟩)
   haveI : Subsingleton (A.reduct.Dom A.reduct.W₀ .e) := h1 A.W₀
   exact absurd (hf (Subsingleton.elim (f 0) (f 1))) (by decide)
+
+/-- `Suc_e 𝟎_e` is a finite cardinality holding of the universal property
+(`Premodel.not_holds_axiomOfInfinityE`). -/
+theorem axiom_of_infinity_e : Statements.Arguments.one_individual.axiom_of_infinity_e := by
+  intro Sig C _ A M h1 H
+  rw [holdsAx_ofPure] at H
+  exact not_holds_axiomOfInfinityE (A.reduct_isModel M) (𝟙 _) (h1 A.W₀) (H _ rfl)
+
+/-- And so at every world (`Premodel.not_holds_possibleInfinityE`). -/
+theorem possible_infinity_e : Statements.Arguments.one_individual.possible_infinity_e := by
+  intro Sig C _ A M h1 H
+  rw [holdsAx_ofPure] at H
+  exact not_holds_possibleInfinityE (A.reduct_isModel M) (𝟙 _) h1 (H _ rfl)
 
 end one_individual
 

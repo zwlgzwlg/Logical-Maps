@@ -115,6 +115,14 @@ theorem full_idempotent_monoid.no_pure_contingency_r : Statements.Models.full_id
 theorem full_idempotent_monoid.infinity_e : Statements.Models.full_idempotent_monoid.infinity_e :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.one_individual.infinity_e (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Map.Meets.mset_one_individual Classicism.Meta.Intensional.Idem)⟩
 
+/-- `full-idempotent-monoid`: Axiom of Infinity (type e) fails, by the argument `one-individual`. -/
+theorem full_idempotent_monoid.axiom_of_infinity_e : Statements.Models.full_idempotent_monoid.axiom_of_infinity_e :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.one_individual.axiom_of_infinity_e (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Map.Meets.mset_one_individual Classicism.Meta.Intensional.Idem)⟩
+
+/-- `full-idempotent-monoid`: Possible Infinity (type e) fails, by the argument `one-individual`. -/
+theorem full_idempotent_monoid.possible_infinity_e : Statements.Models.full_idempotent_monoid.possible_infinity_e :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.one_individual.possible_infinity_e (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Map.Meets.mset_one_individual Classicism.Meta.Intensional.Idem)⟩
+
 /-- `full-idempotent-monoid`: □Relational Choice holds, by the argument `relational-choice-full-boxed`. -/
 theorem full_idempotent_monoid.necessary_relational_choice_r : Statements.Models.full_idempotent_monoid.necessary_relational_choice_r :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
@@ -138,6 +146,14 @@ theorem full_involution_group.no_pure_contingency_r : Statements.Models.full_inv
 /-- `full-involution-group`: Infinity Schema (type e) fails, by the argument `one-individual`. -/
 theorem full_involution_group.infinity_e : Statements.Models.full_involution_group.infinity_e :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.one_individual.infinity_e (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Map.Meets.mset_one_individual Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group`: Axiom of Infinity (type e) fails, by the argument `one-individual`. -/
+theorem full_involution_group.axiom_of_infinity_e : Statements.Models.full_involution_group.axiom_of_infinity_e :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.one_individual.axiom_of_infinity_e (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Map.Meets.mset_one_individual Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group`: Possible Infinity (type e) fails, by the argument `one-individual`. -/
+theorem full_involution_group.possible_infinity_e : Statements.Models.full_involution_group.possible_infinity_e :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.one_individual.possible_infinity_e (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Map.Meets.mset_one_individual Classicism.Meta.Intensional.Invol)⟩
 
 /-- `full-involution-group`: □Relational Choice holds, by the argument `relational-choice-full-boxed`. -/
 theorem full_involution_group.necessary_relational_choice_r : Statements.Models.full_involution_group.necessary_relational_choice_r :=

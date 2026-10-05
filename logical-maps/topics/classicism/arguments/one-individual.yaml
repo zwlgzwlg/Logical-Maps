@@ -14,3 +14,7 @@ revisions:
 lean:
 - fails: infinity-e
   ref: Classicism.Map.Arguments.one_individual.infinity_e
+- fails: axiom-of-infinity-e
+  ref: Classicism.Map.Arguments.one_individual.axiom_of_infinity_e
+- fails: possible-infinity-e
+  ref: Classicism.Map.Arguments.one_individual.possible_infinity_e
