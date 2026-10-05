@@ -247,7 +247,11 @@ When you (an AI) add or edit a result or model:
   id. These group graph filters and do not change logical inference.
 - Optional `initial_principles: [id, ...]` in `topic.yaml` names the principles
   the graph and the lattice start with; on the graph the rest start hidden, as do settled principles and
-  `hidden_by_default` categories. The theory explorer's assumptions are kept
+  `hidden_by_default` categories. Without it the graph starts with what the
+  Conjectures tab shows. Optional `views` and `lattice_views` give the graph and
+  the lattice a View menu of named principle lists, one of each marked `default`;
+  a pane with no views has no menu. Optional `default_tab` names the tab the map
+  opens on (Classicism: `lattice`). The theory explorer's assumptions are kept
   apart from the graph's background (URL `theory` / `theory-deny` versus
   `assume` / `deny`).
 - Use `background_presets` for named viewer assumption packages, with `id`,

@@ -30,8 +30,9 @@ From `logical-maps/`:
     python3 scripts/pmap.py validate
     git commit …                                              # the Lean, the records, map/index.json
 
-Build output belongs upstream and is not committed here (the pre-commit hook refuses it);
-a local `pmap build` is for looking. The links are pinned to the commit a build runs at,
+Contributors do not commit build output; the maintainer rebuilds `build/` and commits it,
+since the website imports it, and a contributor's local `pmap build` is for looking. The
+links are pinned to the commit a build runs at,
 so the published map's links point at the published Lean; a local build warns when
 `lean/` has uncommitted changes, whose lines the links would miss. A first build on a new
 machine needs Mathlib's cache (`lake exe cache get`, from this directory), then about
