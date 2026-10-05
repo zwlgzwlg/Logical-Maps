@@ -150,6 +150,13 @@
        },
        "file": {
         "type": "string"
+       },
+       "status": {
+        "enum": [
+         "stated",
+         "verified"
+        ],
+        "description": "Set by `pmap lean-check --update`, never by hand: verified when equivalence_ref proves the generated equivalence within the allowed axioms."
        }
       }
      }
