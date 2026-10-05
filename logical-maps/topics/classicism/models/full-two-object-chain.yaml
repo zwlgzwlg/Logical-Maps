@@ -182,3 +182,37 @@ history:
   violates:
   - possible-infinity-t
   - pure-b-r
+
+# The model in Lean (Models/FullActionModels.lean), and its verdicts proved there (Classicism/MapModels.lean);
+# statuses are written by lean-check --update. The verdicts the map's general arguments give it are certified
+# from the arguments' (MapDerived.lean), with the proofs under `meets` that it meets their conditions.
+lean:
+  model: Classicism.Meta.Intensional.FullActionModels.chain
+  is_model: Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _
+  meets:
+    full-model: Classicism.Meta.Intensional.FullActionModels.unitModel_full _
+    full-action-model: Classicism.Meta.Intensional.FullActionModels.unitModel_full _
+    extensionally-full: Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)
+    metatheory-choice: Classicism.Meta.Intensional.Premodel.metatheoryChoice _
+    one-individual: Classicism.Meta.Intensional.FullActionModels.unitModel_one_individual _
+    finitely-many-propositions: Classicism.Meta.Intensional.FullActionModels.chain_finitely_many_propositions
+    actual-world-isolated: Classicism.Meta.Intensional.FullActionModels.chain_actual_world_isolated
+  verdicts:
+  - fails: distinctness-necessary-r
+    ref: Classicism.Map.Models.full_two_object_chain.distinctness_necessary_r
+    status: verified
+  - fails: necessary-distinctness-necessary-r
+    ref: Classicism.Map.Models.full_two_object_chain.necessary_distinctness_necessary_r
+    status: verified
+  - fails: distinctness-necessary-t
+    ref: Classicism.Map.Models.full_two_object_chain.distinctness_necessary_t
+    status: verified
+  - fails: necessary-distinctness-necessary-t
+    ref: Classicism.Map.Models.full_two_object_chain.necessary_distinctness_necessary_t
+    status: verified
+  - fails: fregean-axiom
+    ref: Classicism.Map.Models.full_two_object_chain.fregean_axiom
+    status: verified
+  - fails: necessary-fregean-axiom
+    ref: Classicism.Map.Models.full_two_object_chain.necessary_fregean_axiom
+    status: verified

@@ -1,6 +1,7 @@
 import Classicism.ModelStatements
 import Classicism.Results.Consistency.Consistency
 import Classicism.Models.Conditions
+import Classicism.Models.FullActionModels
 import Mathlib.Data.Fintype.Powerset
 import Mathlib.Data.Finite.Sigma
 import Mathlib.Data.Finite.Prod
@@ -422,6 +423,150 @@ theorem necessary_fregean_axiom : Statements.Models.full_involution_group.necess
     not_holdsAx_of rfl (fun h => Invol.not_fregean (holdsSentence_of_box _ M h))
 
 end full_involution_group
+
+namespace full_surjection_monoid
+
+local notation "M" => Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj
+
+theorem distinctness_necessary_r : Statements.Models.full_surjection_monoid.distinctness_necessary_r :=
+  verdict_fails M <|
+    not_holdsAx_of ⟨.rel .t, by simp, rfl⟩ (Classicism.Meta.Intensional.FullActionModels.surj_not_nd_t)
+
+theorem necessary_distinctness_necessary_r : Statements.Models.full_surjection_monoid.necessary_distinctness_necessary_r :=
+  verdict_fails M <|
+    not_holdsAx_of ⟨.rel .t, by simp, rfl⟩ (fun h => Classicism.Meta.Intensional.FullActionModels.surj_not_nd_t (holdsSentence_of_box _ M h))
+
+theorem distinctness_necessary_t : Statements.Models.full_surjection_monoid.distinctness_necessary_t :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (Classicism.Meta.Intensional.FullActionModels.surj_not_nd_t)
+
+theorem necessary_distinctness_necessary_t : Statements.Models.full_surjection_monoid.necessary_distinctness_necessary_t :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (fun h => Classicism.Meta.Intensional.FullActionModels.surj_not_nd_t (holdsSentence_of_box _ M h))
+
+theorem fregean_axiom : Statements.Models.full_surjection_monoid.fregean_axiom :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (Classicism.Meta.Intensional.FullActionModels.surj_not_fregean)
+
+theorem necessary_fregean_axiom : Statements.Models.full_surjection_monoid.necessary_fregean_axiom :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (fun h => Classicism.Meta.Intensional.FullActionModels.surj_not_fregean (holdsSentence_of_box _ M h))
+
+end full_surjection_monoid
+
+namespace full_permutation_group_infinite_set
+
+local notation "M" => Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)
+
+theorem distinctness_necessary_r : Statements.Models.full_permutation_group_infinite_set.distinctness_necessary_r :=
+  verdict_holds M <|
+    holdsAx_indexed.2 fun σ _ => holdsSentence_of_box _ M (Classicism.Meta.Intensional.FullActionModels.perm_box_nd σ)
+
+theorem necessary_distinctness_necessary_r : Statements.Models.full_permutation_group_infinite_set.necessary_distinctness_necessary_r :=
+  verdict_holds M <|
+    holdsAx_indexed.2 fun σ _ => Classicism.Meta.Intensional.FullActionModels.perm_box_nd σ
+
+theorem distinctness_necessary_t : Statements.Models.full_permutation_group_infinite_set.distinctness_necessary_t :=
+  verdict_holds M <|
+    holdsAx_eq.2 (holdsSentence_of_box _ M (Classicism.Meta.Intensional.FullActionModels.perm_box_nd (.rel .t)))
+
+theorem necessary_distinctness_necessary_t : Statements.Models.full_permutation_group_infinite_set.necessary_distinctness_necessary_t :=
+  verdict_holds M <|
+    holdsAx_eq.2 (Classicism.Meta.Intensional.FullActionModels.perm_box_nd (.rel .t))
+
+theorem barcan_r : Statements.Models.full_permutation_group_infinite_set.barcan_r :=
+  verdict_holds M <|
+    holdsAx_indexed.2 fun σ _ => holdsSentence_of_box _ M (Classicism.Meta.Intensional.FullActionModels.perm_box_bf σ)
+
+theorem necessary_barcan_r : Statements.Models.full_permutation_group_infinite_set.necessary_barcan_r :=
+  verdict_holds M <|
+    holdsAx_indexed.2 fun σ _ => Classicism.Meta.Intensional.FullActionModels.perm_box_bf σ
+
+theorem barcan_t : Statements.Models.full_permutation_group_infinite_set.barcan_t :=
+  verdict_holds M <|
+    holdsAx_eq.2 (holdsSentence_of_box _ M (Classicism.Meta.Intensional.FullActionModels.perm_box_bf (.rel .t)))
+
+theorem necessary_barcan_t : Statements.Models.full_permutation_group_infinite_set.necessary_barcan_t :=
+  verdict_holds M <|
+    holdsAx_eq.2 (Classicism.Meta.Intensional.FullActionModels.perm_box_bf (.rel .t))
+
+theorem fregean_axiom : Statements.Models.full_permutation_group_infinite_set.fregean_axiom :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (Classicism.Meta.Intensional.FullActionModels.perm_not_fregean)
+
+theorem necessary_fregean_axiom : Statements.Models.full_permutation_group_infinite_set.necessary_fregean_axiom :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (fun h => Classicism.Meta.Intensional.FullActionModels.perm_not_fregean (holdsSentence_of_box _ M h))
+
+end full_permutation_group_infinite_set
+
+namespace full_two_object_chain
+
+local notation "M" => Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _
+
+theorem distinctness_necessary_r : Statements.Models.full_two_object_chain.distinctness_necessary_r :=
+  verdict_fails M <|
+    not_holdsAx_of ⟨.rel .t, by simp, rfl⟩ (Classicism.Meta.Intensional.FullActionModels.chain_not_nd_t)
+
+theorem necessary_distinctness_necessary_r : Statements.Models.full_two_object_chain.necessary_distinctness_necessary_r :=
+  verdict_fails M <|
+    not_holdsAx_of ⟨.rel .t, by simp, rfl⟩ (fun h => Classicism.Meta.Intensional.FullActionModels.chain_not_nd_t (holdsSentence_of_box _ M h))
+
+theorem distinctness_necessary_t : Statements.Models.full_two_object_chain.distinctness_necessary_t :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (Classicism.Meta.Intensional.FullActionModels.chain_not_nd_t)
+
+theorem necessary_distinctness_necessary_t : Statements.Models.full_two_object_chain.necessary_distinctness_necessary_t :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (fun h => Classicism.Meta.Intensional.FullActionModels.chain_not_nd_t (holdsSentence_of_box _ M h))
+
+theorem fregean_axiom : Statements.Models.full_two_object_chain.fregean_axiom :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (Classicism.Meta.Intensional.FullActionModels.chain_not_fregean)
+
+theorem necessary_fregean_axiom : Statements.Models.full_two_object_chain.necessary_fregean_axiom :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (fun h => Classicism.Meta.Intensional.FullActionModels.chain_not_fregean (holdsSentence_of_box _ M h))
+
+end full_two_object_chain
+
+namespace full_two_object_retract
+
+local notation "M" => Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _
+
+theorem distinctness_necessary_r : Statements.Models.full_two_object_retract.distinctness_necessary_r :=
+  verdict_holds M <|
+    holdsAx_indexed.2 fun σ _ => Classicism.Meta.Intensional.FullActionModels.retract_nd σ
+
+theorem distinctness_necessary_t : Statements.Models.full_two_object_retract.distinctness_necessary_t :=
+  verdict_holds M <|
+    holdsAx_eq.2 (Classicism.Meta.Intensional.FullActionModels.retract_nd (.rel .t))
+
+theorem barcan_r : Statements.Models.full_two_object_retract.barcan_r :=
+  verdict_fails M <|
+    not_holdsAx_of ⟨.rel .t, by simp, rfl⟩ (Classicism.Meta.Intensional.FullActionModels.retract_not_bf_t)
+
+theorem necessary_barcan_r : Statements.Models.full_two_object_retract.necessary_barcan_r :=
+  verdict_fails M <|
+    not_holdsAx_of ⟨.rel .t, by simp, rfl⟩ (fun h => Classicism.Meta.Intensional.FullActionModels.retract_not_bf_t (holdsSentence_of_box _ M h))
+
+theorem barcan_t : Statements.Models.full_two_object_retract.barcan_t :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (Classicism.Meta.Intensional.FullActionModels.retract_not_bf_t)
+
+theorem necessary_barcan_t : Statements.Models.full_two_object_retract.necessary_barcan_t :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (fun h => Classicism.Meta.Intensional.FullActionModels.retract_not_bf_t (holdsSentence_of_box _ M h))
+
+theorem fregean_axiom : Statements.Models.full_two_object_retract.fregean_axiom :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (Classicism.Meta.Intensional.FullActionModels.retract_not_fregean)
+
+theorem necessary_fregean_axiom : Statements.Models.full_two_object_retract.necessary_fregean_axiom :=
+  verdict_fails M <|
+    not_holdsAx_of rfl (fun h => Classicism.Meta.Intensional.FullActionModels.retract_not_fregean (holdsSentence_of_box _ M h))
+
+end full_two_object_retract
 
 end Classicism.Map.Models
 

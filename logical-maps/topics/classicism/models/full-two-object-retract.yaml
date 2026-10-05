@@ -165,3 +165,41 @@ history:
   violates:
   - infinity-t
   - possible-infinity-t
+
+# The model in Lean (Models/FullActionModels.lean), and its verdicts proved there (Classicism/MapModels.lean);
+# statuses are written by lean-check --update. The verdicts the map's general arguments give it are certified
+# from the arguments' (MapDerived.lean), with the proofs under `meets` that it meets their conditions.
+lean:
+  model: Classicism.Meta.Intensional.FullActionModels.retract
+  is_model: Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _
+  meets:
+    full-model: Classicism.Meta.Intensional.FullActionModels.unitModel_full _
+    full-action-model: Classicism.Meta.Intensional.FullActionModels.unitModel_full _
+    extensionally-full: Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)
+    metatheory-choice: Classicism.Meta.Intensional.Premodel.metatheoryChoice _
+    one-individual: Classicism.Meta.Intensional.FullActionModels.unitModel_one_individual _
+  verdicts:
+  - holds: distinctness-necessary-r
+    ref: Classicism.Map.Models.full_two_object_retract.distinctness_necessary_r
+    status: verified
+  - holds: distinctness-necessary-t
+    ref: Classicism.Map.Models.full_two_object_retract.distinctness_necessary_t
+    status: verified
+  - fails: barcan-r
+    ref: Classicism.Map.Models.full_two_object_retract.barcan_r
+    status: verified
+  - fails: necessary-barcan-r
+    ref: Classicism.Map.Models.full_two_object_retract.necessary_barcan_r
+    status: verified
+  - fails: barcan-t
+    ref: Classicism.Map.Models.full_two_object_retract.barcan_t
+    status: verified
+  - fails: necessary-barcan-t
+    ref: Classicism.Map.Models.full_two_object_retract.necessary_barcan_t
+    status: verified
+  - fails: fregean-axiom
+    ref: Classicism.Map.Models.full_two_object_retract.fregean_axiom
+    status: verified
+  - fails: necessary-fregean-axiom
+    ref: Classicism.Map.Models.full_two_object_retract.necessary_fregean_axiom
+    status: verified

@@ -175,6 +175,7 @@ lean:
     - Classicism.Models.ContingentBarcan
     - Classicism.Semantics.IntensionalExamples
     - Classicism.Models.Conditions
+    - Classicism.Models.FullActionModels
     holds: ({model}).IsModel ∧ ({model}).HoldsAx {def}
     fails: ({model}).IsModel ∧ ¬ ({model}).HoldsAx {def}
     relative_categories: [signature]

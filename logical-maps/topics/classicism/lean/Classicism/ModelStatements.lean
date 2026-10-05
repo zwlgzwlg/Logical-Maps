@@ -5,6 +5,7 @@ import Classicism.Models.Monoids
 import Classicism.Models.ContingentBarcan
 import Classicism.Semantics.IntensionalExamples
 import Classicism.Models.Conditions
+import Classicism.Models.FullActionModels
 
 /-!
 # Generated statements: models' verdicts
@@ -298,6 +299,126 @@ def Models.full_involution_group.fregean_axiom : Prop :=
 def Models.full_involution_group.necessary_fregean_axiom : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.NecFregeanAxiom.schemaIn
 
+/-- `full-permutation-group-infinite-set`: ND holds. -/
+def Models.full_permutation_group_infinite_set.distinctness_necessary_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.NecessityOfDistinctness.schemaIn
+
+/-- `full-permutation-group-infinite-set`: □ND holds. -/
+def Models.full_permutation_group_infinite_set.necessary_distinctness_necessary_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.NecNecessityOfDistinctness.schemaIn
+
+/-- `full-permutation-group-infinite-set`: ND (type t) holds. -/
+def Models.full_permutation_group_infinite_set.distinctness_necessary_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.NecessityOfDistinctnessT.schemaIn
+
+/-- `full-permutation-group-infinite-set`: □ND (type t) holds. -/
+def Models.full_permutation_group_infinite_set.necessary_distinctness_necessary_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.NecNecessityOfDistinctnessT.schemaIn
+
+/-- `full-permutation-group-infinite-set`: BF holds. -/
+def Models.full_permutation_group_infinite_set.barcan_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.Barcan.schemaIn
+
+/-- `full-permutation-group-infinite-set`: □BF holds. -/
+def Models.full_permutation_group_infinite_set.necessary_barcan_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.NecBarcan.schemaIn
+
+/-- `full-permutation-group-infinite-set`: BF (type t) holds. -/
+def Models.full_permutation_group_infinite_set.barcan_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.BarcanT.schemaIn
+
+/-- `full-permutation-group-infinite-set`: □BF (type t) holds. -/
+def Models.full_permutation_group_infinite_set.necessary_barcan_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.NecBarcanT.schemaIn
+
+/-- `full-permutation-group-infinite-set`: Fregean Axiom fails. -/
+def Models.full_permutation_group_infinite_set.fregean_axiom : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.FregeanAxiom.schemaIn
+
+/-- `full-permutation-group-infinite-set`: □Fregean Axiom fails. -/
+def Models.full_permutation_group_infinite_set.necessary_fregean_axiom : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.NecFregeanAxiom.schemaIn
+
+/-- `full-surjection-monoid`: ND fails. -/
+def Models.full_surjection_monoid.distinctness_necessary_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx Classicism.P.NecessityOfDistinctness.schemaIn
+
+/-- `full-surjection-monoid`: □ND fails. -/
+def Models.full_surjection_monoid.necessary_distinctness_necessary_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx Classicism.P.NecNecessityOfDistinctness.schemaIn
+
+/-- `full-surjection-monoid`: ND (type t) fails. -/
+def Models.full_surjection_monoid.distinctness_necessary_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx Classicism.P.NecessityOfDistinctnessT.schemaIn
+
+/-- `full-surjection-monoid`: □ND (type t) fails. -/
+def Models.full_surjection_monoid.necessary_distinctness_necessary_t : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx Classicism.P.NecNecessityOfDistinctnessT.schemaIn
+
+/-- `full-surjection-monoid`: Fregean Axiom fails. -/
+def Models.full_surjection_monoid.fregean_axiom : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx Classicism.P.FregeanAxiom.schemaIn
+
+/-- `full-surjection-monoid`: □Fregean Axiom fails. -/
+def Models.full_surjection_monoid.necessary_fregean_axiom : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx Classicism.P.NecFregeanAxiom.schemaIn
+
+/-- `full-two-object-chain`: ND fails. -/
+def Models.full_two_object_chain.distinctness_necessary_r : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.NecessityOfDistinctness.schemaIn
+
+/-- `full-two-object-chain`: □ND fails. -/
+def Models.full_two_object_chain.necessary_distinctness_necessary_r : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.NecNecessityOfDistinctness.schemaIn
+
+/-- `full-two-object-chain`: ND (type t) fails. -/
+def Models.full_two_object_chain.distinctness_necessary_t : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.NecessityOfDistinctnessT.schemaIn
+
+/-- `full-two-object-chain`: □ND (type t) fails. -/
+def Models.full_two_object_chain.necessary_distinctness_necessary_t : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.NecNecessityOfDistinctnessT.schemaIn
+
+/-- `full-two-object-chain`: Fregean Axiom fails. -/
+def Models.full_two_object_chain.fregean_axiom : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.FregeanAxiom.schemaIn
+
+/-- `full-two-object-chain`: □Fregean Axiom fails. -/
+def Models.full_two_object_chain.necessary_fregean_axiom : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.NecFregeanAxiom.schemaIn
+
+/-- `full-two-object-retract`: ND holds. -/
+def Models.full_two_object_retract.distinctness_necessary_r : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.NecessityOfDistinctness.schemaIn
+
+/-- `full-two-object-retract`: ND (type t) holds. -/
+def Models.full_two_object_retract.distinctness_necessary_t : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.NecessityOfDistinctnessT.schemaIn
+
+/-- `full-two-object-retract`: BF fails. -/
+def Models.full_two_object_retract.barcan_r : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.Barcan.schemaIn
+
+/-- `full-two-object-retract`: □BF fails. -/
+def Models.full_two_object_retract.necessary_barcan_r : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.NecBarcan.schemaIn
+
+/-- `full-two-object-retract`: BF (type t) fails. -/
+def Models.full_two_object_retract.barcan_t : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.BarcanT.schemaIn
+
+/-- `full-two-object-retract`: □BF (type t) fails. -/
+def Models.full_two_object_retract.necessary_barcan_t : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.NecBarcanT.schemaIn
+
+/-- `full-two-object-retract`: Fregean Axiom fails. -/
+def Models.full_two_object_retract.fregean_axiom : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.FregeanAxiom.schemaIn
+
+/-- `full-two-object-retract`: □Fregean Axiom fails. -/
+def Models.full_two_object_retract.necessary_fregean_axiom : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.NecFregeanAxiom.schemaIn
+
 /-- `finite-support-dyadic-roundings`: Actuality holds. -/
 def Models.finite_support_dyadic_roundings.actuality : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)).HoldsAx Classicism.P.Actuality.schemaIn
@@ -449,6 +570,118 @@ def Models.full_involution_group.relational_choice_r : Prop :=
 /-- `full-involution-group`: Transversal Choice holds. -/
 def Models.full_involution_group.transversal_choice_r : Prop :=
   (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
+/-- `full-permutation-group-infinite-set`: No Pure Contingency holds. -/
+def Models.full_permutation_group_infinite_set.no_pure_contingency_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `full-permutation-group-infinite-set`: Infinity Schema (type e) fails. -/
+def Models.full_permutation_group_infinite_set.infinity_e : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE)
+
+/-- `full-permutation-group-infinite-set`: Axiom of Infinity (type e) fails. -/
+def Models.full_permutation_group_infinite_set.axiom_of_infinity_e : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.AxiomOfInfinityE.schemaIn
+
+/-- `full-permutation-group-infinite-set`: Possible Infinity (type e) fails. -/
+def Models.full_permutation_group_infinite_set.possible_infinity_e : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.PossibleInfinityE.schemaIn
+
+/-- `full-permutation-group-infinite-set`: □Relational Choice holds. -/
+def Models.full_permutation_group_infinite_set.necessary_relational_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.NecRelationalChoice.schemaIn
+
+/-- `full-permutation-group-infinite-set`: Relational Choice holds. -/
+def Models.full_permutation_group_infinite_set.relational_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.RelationalChoice.schemaIn
+
+/-- `full-permutation-group-infinite-set`: Transversal Choice holds. -/
+def Models.full_permutation_group_infinite_set.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).IsModel ∧ (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
+/-- `full-surjection-monoid`: No Pure Contingency holds. -/
+def Models.full_surjection_monoid.no_pure_contingency_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `full-surjection-monoid`: Infinity Schema (type e) fails. -/
+def Models.full_surjection_monoid.infinity_e : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE)
+
+/-- `full-surjection-monoid`: Axiom of Infinity (type e) fails. -/
+def Models.full_surjection_monoid.axiom_of_infinity_e : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx Classicism.P.AxiomOfInfinityE.schemaIn
+
+/-- `full-surjection-monoid`: Possible Infinity (type e) fails. -/
+def Models.full_surjection_monoid.possible_infinity_e : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ ¬ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx Classicism.P.PossibleInfinityE.schemaIn
+
+/-- `full-surjection-monoid`: □Relational Choice holds. -/
+def Models.full_surjection_monoid.necessary_relational_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx Classicism.P.NecRelationalChoice.schemaIn
+
+/-- `full-surjection-monoid`: Relational Choice holds. -/
+def Models.full_surjection_monoid.relational_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx Classicism.P.RelationalChoice.schemaIn
+
+/-- `full-surjection-monoid`: Transversal Choice holds. -/
+def Models.full_surjection_monoid.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).IsModel ∧ (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
+/-- `full-two-object-chain`: Distinctness-preserving collapse holds. -/
+def Models.full_two_object_chain.distinctness_preserving_collapse : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
+
+/-- `full-two-object-chain`: Infinity Schema (type t) fails. -/
+def Models.full_two_object_chain.infinity_t : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT)
+
+/-- `full-two-object-chain`: Infinity Schema (type e) fails. -/
+def Models.full_two_object_chain.infinity_e : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE)
+
+/-- `full-two-object-chain`: Axiom of Infinity (type e) fails. -/
+def Models.full_two_object_chain.axiom_of_infinity_e : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.AxiomOfInfinityE.schemaIn
+
+/-- `full-two-object-chain`: Possible Infinity (type e) fails. -/
+def Models.full_two_object_chain.possible_infinity_e : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.PossibleInfinityE.schemaIn
+
+/-- `full-two-object-chain`: □Relational Choice holds. -/
+def Models.full_two_object_chain.necessary_relational_choice_r : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.NecRelationalChoice.schemaIn
+
+/-- `full-two-object-chain`: Relational Choice holds. -/
+def Models.full_two_object_chain.relational_choice_r : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.RelationalChoice.schemaIn
+
+/-- `full-two-object-chain`: Transversal Choice holds. -/
+def Models.full_two_object_chain.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.chain).IsModel ∧ (Classicism.Meta.Intensional.FullActionModels.chain).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
+/-- `full-two-object-retract`: Infinity Schema (type e) fails. -/
+def Models.full_two_object_retract.infinity_e : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE)
+
+/-- `full-two-object-retract`: Axiom of Infinity (type e) fails. -/
+def Models.full_two_object_retract.axiom_of_infinity_e : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.AxiomOfInfinityE.schemaIn
+
+/-- `full-two-object-retract`: Possible Infinity (type e) fails. -/
+def Models.full_two_object_retract.possible_infinity_e : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ ¬ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.PossibleInfinityE.schemaIn
+
+/-- `full-two-object-retract`: □Relational Choice holds. -/
+def Models.full_two_object_retract.necessary_relational_choice_r : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.NecRelationalChoice.schemaIn
+
+/-- `full-two-object-retract`: Relational Choice holds. -/
+def Models.full_two_object_retract.relational_choice_r : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.RelationalChoice.schemaIn
+
+/-- `full-two-object-retract`: Transversal Choice holds. -/
+def Models.full_two_object_retract.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.FullActionModels.retract).IsModel ∧ (Classicism.Meta.Intensional.FullActionModels.retract).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
 /-- argument `barcan-d6`: BF holds in every model meeting its conditions. -/
 def Arguments.barcan_d6.barcan_r : Prop :=
