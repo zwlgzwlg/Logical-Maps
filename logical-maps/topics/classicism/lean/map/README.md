@@ -29,11 +29,11 @@ From `logical-maps/`:
     python3 scripts/pmap.py lean-check classicism --update   # build, audit, statuses, index
     python3 scripts/pmap.py validate
     git commit …                                              # the Lean, the records, map/index.json
-    python3 scripts/pmap.py build                             # links pinned to that commit
-    git commit …                                              # build/
 
-The Lean must be committed before the build, or the links point at lines that have
-moved; the build warns when `lean/` has uncommitted changes. A first build on a new
+Build output belongs upstream and is not committed here (the pre-commit hook refuses it);
+a local `pmap build` is for looking. The links are pinned to the commit a build runs at,
+so the published map's links point at the published Lean; a local build warns when
+`lean/` has uncommitted changes, whose lines the links would miss. A first build on a new
 machine needs Mathlib's cache (`lake exe cache get`, from this directory), then about
 twenty minutes; the model theory is the only part that imports Mathlib.
 
