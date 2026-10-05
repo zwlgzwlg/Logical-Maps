@@ -26,6 +26,7 @@
    "uniqueItems": true,
    "description": "Principles the record's other arguments must record as holding; the argument builds on them."
   },
+  "lean": {"type": "array", "minItems": 1, "description": "The argument's verdicts proved in Lean: each a theorem that every model meeting the argument's conditions (and holding its `given` principles) has the verdict, stated from the topic's lean.argument templates, or for a group's argument over its lean.binder.", "items": {"type": "object", "additionalProperties": false, "required": ["ref"], "oneOf": [{"required": ["holds"]}, {"required": ["fails"]}], "properties": {"holds": {"type": "string"}, "fails": {"type": "string"}, "ref": {"type": "string", "pattern": "\\S", "description": "The certificate, a declaration whose type is the generated statement."}}}},
   "notes": {
    "type": "string"
   }

@@ -2208,6 +2208,27 @@ def validate_topic(topic_id: str, *, quiet=False) -> bool:
             errors.append(f"CONTRADICTION: {p}" + (f" (arguments: {', '.join(args)})" if args else ""))
         warnings += an["infos"]
         warnings += [f"{c['file']}: {n}" for c in model_coverage(data, an) for n in c["notices"]]
+        # An argument's verdict proved in Lean must be one of its verdicts; a condition proved for a
+        # model or a group must be one it meets.
+        for a in lean_arguments(data):
+            src = next((x for x in data.get("general_arguments", []) if x.get("id") == a["argument"]), None) if not a["group"] \
+                else next((x for g in data["groups"] if g["id"] == a["group"] for x in g.get("arguments") or [] if isinstance(x, dict) and x.get("id") == a["argument"]), None)
+            if a["principle"] not in ((src or {}).get("holds" if a["holds"] else "fails") or []):
+                errors.append(f"{a['_file']}: argument {a['argument']}'s lean entry {'holds' if a['holds'] else 'fails'} "
+                              f"'{a['principle']}', which the argument does not")
+        for g in data.get("groups", []):
+            glean = g.get("lean") or {}
+            for c in glean.get("meets") or {}:
+                if not isinstance((g.get("meets") or {}).get(c), str):
+                    errors.append(f"{g['_file']}: lean.meets '{c}', which the group's every member does not meet")
+            for k in glean.get("settings") or {}:
+                if k not in (g.get("parameters") or {}):
+                    errors.append(f"{g['_file']}: lean.settings names unknown parameter '{k}'")
+        for m in data["models"]:
+            if isinstance(m.get("lean"), dict) and not m.get("variant_of") and not m.get("_companion_of"):
+                for c in m["lean"].get("meets") or {}:
+                    if c not in (m.get("met") or {}):
+                        errors.append(f"{m['_file']}: lean.meets '{c}', which the record does not meet")
         # A verdict proved in Lean must be one the map gives the model: the map's verdicts are
         # its arguments' (and what follows from them), and Lean only certifies them.
         E, seen = an["engine"], set()
@@ -2731,7 +2752,9 @@ def lean_source_links(topic_id: str, data: dict) -> dict | None:
         out = [link(d, "definition") for d in entry.get("definitions", [])[1:]] if definitions else []
         def label(p: dict) -> str:  # a variant's two directions: official ⇒ form, form ⇒ official
             last = p["name"].rsplit(".", 1)[-1]
-            return ("proof ⇒" if last.startswith("to_") else "proof ⇐" if last.startswith("of_")
+            return ("argument" if p["name"].startswith("Classicism.Map.Arguments.")
+                    else "condition met" if p["name"].startswith("Classicism.Map.Meets.")
+                    else "proof ⇒" if last.startswith("to_") else "proof ⇐" if last.startswith("of_")
                     else "proof at every arity" if p["file"].endswith("Arity.lean") else "proof")
         out += [link(p, label(p)) for p in entry.get("proofs", [])]
         out.append(link(entry["certificate"], "certificate"))
@@ -2751,7 +2774,12 @@ def lean_source_links(topic_id: str, data: dict) -> dict | None:
             principles[p["id"]] = [link(definitions[name], "definition")]
     # A model's verdict: where the model is defined, then the proof and the certificate.
     verdict_links = lambda e: [link(d, "model") for d in e.get("definitions", [])] + links(e)
-    return {"results": {rid: links(e) for rid, e in idx.get("results", {}).items()},
+    # Verified: indexed after a successful build, resting on the allowed axioms only.
+    sound = lambda e: set(e["certificate"].get("axioms", [])) <= LEAN_ALLOWED_AXIOMS
+    return {"verified": {f"{mid}/{pid}" for mid, vs in idx.get("models", {}).items() for pid, e in vs.items() if sound(e)}
+                        | {k for k, e in idx.get("arguments", {}).items() if sound(e)},
+            "arguments": {k: links(e) for k, e in idx.get("arguments", {}).items()},
+            "results": {rid: links(e) for rid, e in idx.get("results", {}).items()},
             "principles": principles,
             "variants": {pid: {vid: links(e, True) for vid, e in vs.items()}
                          for pid, vs in idx.get("forms", {}).items()},
@@ -2808,11 +2836,40 @@ def build_topic(topic_id: str, out: Path | None = None, *, fragment: bool = Fals
             for v in p.get("variants") or []:
                 if v["id"] in lean_links["variants"].get(p["id"], {}):
                     v["lean_links"] = lean_links["variants"][p["id"]][v["id"]]
+        # The verdicts the map's arguments give a model in Lean (lean_derived_verdicts) join its
+        # own, verified when indexed; an argument's Lean verdicts carry their status and links
+        # wherever the argument is shown: on its page, its group's, and each model it applies to.
+        derived = {}
+        for d in lean_derived_verdicts(data):
+            derived.setdefault(d["model"], []).append(
+                {"holds" if d["holds"] else "fails": d["principle"], "ref": d["ref"], "via": d["via"],
+                 "status": "verified" if f"{d['model']}/{d['principle']}" in lean_links["verified"] else "stated"})
         for m in payload["models"]:
+            if m["id"] in derived:
+                m["lean"] = {**(m.get("lean") or {}), "verdicts": [*((m.get("lean") or {}).get("verdicts") or []), *derived[m["id"]]]}
             for v in (m.get("lean") or {}).get("verdicts") or []:
                 pid = v.get("holds", v.get("fails"))
                 if pid in lean_links["models"].get(m["id"], {}):
                     v["lean_links"] = lean_links["models"][m["id"]][pid]
+
+        def mark(entries: list, scope: str) -> list:
+            out = []
+            for e in entries or []:
+                key = f"{scope}/{e.get('holds', e.get('fails'))}"
+                out.append({**e, "status": "verified" if key in lean_links["verified"] else "stated",
+                            "lean_links": lean_links["arguments"].get(key, [])})
+            return out
+        for a in payload.get("general_arguments", []):
+            if a.get("lean"):
+                a["lean"] = mark(a["lean"], a["id"])
+        for g in payload.get("groups", []):
+            for a in g.get("arguments") or []:
+                if isinstance(a, dict) and a.get("lean"):
+                    a["lean"] = mark(a["lean"], f"{g['id']}/{a.get('id')}")
+        for m in payload["models"]:
+            for a in m.get("arguments") or []:
+                if isinstance(a, dict) and a.get("lean") and (a.get("general") or a.get("group")):
+                    a["lean"] = mark(a["lean"], a["general"] if a.get("general") else f"{a['group']}/{a.get('id')}")
     # Compact: the website host serves no file over 25 MiB, and indentation alone added half again.
     (outdir / "data.json").write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     bundle_topic(topic_id)
@@ -2869,7 +2926,9 @@ LEAN_DEFAULTS = {"definition_check": "example : Prop := {def}",
                  "result": {"binder": "", "principle": "{def}"},
                  "model": {"binder": "", "principle": "{def}"},
                  "verdict": {"imports": [], "holds": "{model} ⊨ {def}", "fails": "¬ ({model} ⊨ {def})",
-                             "relative_categories": [], "relative": ""}}
+                             "relative_categories": [], "relative": ""},
+                 "argument": {"binder": "∀ M,", "model": "M", "condition": "{cond} {model}",
+                              "holds": "{model} ⊨ {def}", "fails": "¬ ({model} ⊨ {def})"}}
 
 
 def lean_verdicts(data: dict) -> list[dict]:
@@ -2881,12 +2940,158 @@ def lean_verdicts(data: dict) -> list[dict]:
         lean = m.get("lean")
         if not isinstance(lean, dict) or m.get("variant_of") or m.get("_companion_of"):
             continue
+        groups = {g["id"]: g for g in data.get("groups", [])}
+        glean = (groups.get(m.get("group")) or {}).get("lean") or {}
+        term = lean.get("model") or (glean["model"].replace("{param}", f"({lean['param']})")
+                                     if glean and lean.get("param") else "")
         for v in lean.get("verdicts") or []:
             holds = "holds" in v
             pid = v.get("holds" if holds else "fails")
-            out.append({"model": m["id"], "term": lean.get("model", ""), "principle": pid, "holds": holds,
+            out.append({"model": m["id"], "term": term, "principle": pid, "holds": holds,
                         "ref": v.get("ref", ""), "status": v.get("status", "stated"), "_file": m["_file"],
                         "statement": f"Models.{_lean_name(m['id'])}.{_lean_name(pid)}"})
+    return out
+
+
+def lean_arguments(data: dict) -> list[dict]:
+    """The verdicts of general arguments proved in Lean: a topic argument's or a group's shared
+    argument's `lean` entries, each with the conditions and `given` principles it assumes and its
+    generated statement's name, `Arguments.<argument>.<principle>` for the topic's,
+    `Arguments.<group>.<argument>.<principle>` for a group's."""
+    out = []
+    sources = [(None, c) for c in data.get("general_arguments", [])]
+    sources += [(g, a) for g in data.get("groups", []) for a in g.get("arguments") or [] if isinstance(a, dict)]
+    for g, a in sources:
+        for e in a.get("lean") or []:
+            if not isinstance(e, dict):
+                continue
+            holds = "holds" in e
+            pid = e.get("holds" if holds else "fails")
+            scope = f"{_lean_name(g['id'])}." if g else ""
+            out.append({"group": g["id"] if g else None, "argument": a.get("id"), "principle": pid, "holds": holds,
+                        "ref": e.get("ref", ""), "requires": list(a.get("requires") or []),
+                        "given": list(a.get("given") or []), "_file": (g or a)["_file"],
+                        "statement": f"Arguments.{scope}{_lean_name(a.get('id', ''))}.{_lean_name(pid)}"})
+    return out
+
+
+def _group_conditions(group: dict | None) -> dict:
+    return {c.get("id"): c for c in (group or {}).get("conditions") or [] if isinstance(c, dict)}
+
+
+def lean_argument_statement(item: dict, data: dict, cfg: dict | None = None) -> str | None:
+    """The proposition an argument's verdict asserts: for every model meeting its conditions, and
+    holding its `given` principles, the verdict. None while a condition has no Lean predicate or a
+    principle no lean_def."""
+    cfg = cfg or lean_config(data)
+    defs = {p["id"]: p.get("lean_def") for p in data["principles"]}
+    topic_conds = {c.get("id"): c for c in data.get("conditions", [])}
+    shape = cfg["argument"]
+    if item["group"]:
+        group = next(g for g in data["groups"] if g["id"] == item["group"])
+        glean = group.get("lean") or {}
+        if not glean:
+            return None
+        var = glean["var"]
+        model = "(" + glean["model"].replace("{param}", var) + ")"
+        binder = f"∀ {glean['binder']},"
+        own = _group_conditions(group)
+    else:
+        model, binder, own = shape["model"], shape["binder"], {}
+    hyps = []
+    for c in item["requires"]:
+        if c in own:
+            if not own[c].get("lean"):
+                return None
+            hyps.append(f"{own[c]['lean']} {glean['var']}")
+        elif (topic_conds.get(c) or {}).get("lean"):
+            hyps.append(shape["condition"].replace("{cond}", topic_conds[c]["lean"]).replace("{model}", model))
+        else:
+            return None
+    for gp in item["given"]:
+        if not defs.get(gp):
+            return None
+        hyps.append(shape["holds"].replace("{model}", model).replace("{def}", defs[gp]))
+    if not defs.get(item["principle"]):
+        return None
+    verdict = shape["holds" if item["holds"] else "fails"].replace("{model}", model).replace("{def}", defs[item["principle"]])
+    return " ".join([binder, *(h + " →" for h in hyps), verdict])
+
+
+def lean_derived_verdicts(data: dict) -> list[dict]:
+    """The verdicts a model gets in Lean from the map's general arguments: for each argument the
+    map applies to the model (a group's shared argument, or a topic argument whose conditions it
+    meets) with a verdict proved in Lean, when the model's record (or its group) proves in Lean
+    each condition the argument requires. The certificate applies the argument's to the model;
+    `lean_verdicts` gives the model's own verdicts, which take precedence."""
+    groups = {g["id"]: g for g in data.get("groups", [])}
+    general = {c.get("id"): c for c in data.get("general_arguments", [])}
+    defs = {p["id"]: p.get("lean_def") for p in data["principles"]}
+    cfg = lean_config(data)
+    relative = {p["id"] for p in data["principles"] if p.get("category") in cfg["verdict"]["relative_categories"]}
+    by_arg = {(a["group"], a["argument"], a["principle"]): a for a in lean_arguments(data)}
+    own = {(v["model"], v["principle"]): v for v in lean_verdicts(data)}
+    out = []
+    for m in data["models"]:
+        lean = m.get("lean")
+        if not isinstance(lean, dict) or m.get("variant_of") or m.get("_companion_of"):
+            continue
+        group = groups.get(m.get("group"))
+        glean = (group or {}).get("lean") or {}
+        param = lean.get("param")
+        fill = lambda t: t.replace("{param}", f"({param})") if param else None
+        model = lean.get("model") or (fill(glean["model"]) if glean and param else None)
+        is_model = lean.get("is_model") or (fill(glean["is_model"]) if glean and param else None)
+        if not model or not is_model:
+            continue
+        in_family = bool(glean and param and settings_match(glean.get("settings"), m.get("settings") or {}))
+        gconds = _group_conditions(group)
+        meets = dict(lean.get("meets") or {})
+        proofs = {}
+        for c in (m.get("met") or {}):
+            if c in meets:
+                proofs[c] = meets[c]
+            elif c not in gconds and in_family and c in (glean.get("meets") or {}):
+                proofs[c] = fill(glean["meets"][c])
+        holding = {v["principle"]: v["ref"] for k, v in own.items() if k[0] == m["id"] and v["holds"]}
+        done = {k[1] for k in own if k[0] == m["id"]}
+        for a in m.get("arguments") or []:
+            if not isinstance(a, dict) or a.get("standing") == "conjectured" or a.get("withdrawn"):
+                continue
+            gid = a.get("group")
+            if gid:
+                if not in_family:
+                    continue
+                source = next((x for x in groups[gid].get("arguments") or [] if isinstance(x, dict) and x.get("id") == a.get("id")), None)
+            elif a.get("general"):
+                source = general.get(a["general"])
+            else:
+                continue
+            if not source:
+                continue
+            reqs = list(source.get("requires") or [])
+            if any(c not in proofs for c in reqs) or any(gp not in holding for gp in source.get("given") or []):
+                continue
+            for e in source.get("lean") or []:
+                holds = "holds" in e
+                pid = e.get("holds" if holds else "fails")
+                item = by_arg.get((gid, source.get("id"), pid))
+                if not item or pid in done or not defs.get(pid) or pid in relative:
+                    continue
+                args = [f"({proofs[c]})" for c in reqs]
+                if gid:
+                    cert = f"⟨{is_model}, {e['ref']} ({param}) {' '.join(args)}⟩"
+                else:
+                    givens = [f"({holding[gp]}).2" for gp in source.get("given") or []]
+                    cert = f"⟨{is_model}, {e['ref']} ({model}) ({is_model}) {' '.join(args + givens)}⟩"
+                done.add(pid)
+                if holds:
+                    holding[pid] = f"Classicism.Map.Models.{_lean_name(m['id'])}.{_lean_name(pid)}"
+                out.append({"model": m["id"], "term": model, "principle": pid, "holds": holds,
+                            "ref": f"Classicism.Map.Models.{_lean_name(m['id'])}.{_lean_name(pid)}",
+                            "status": "stated", "_file": m["_file"], "cert": cert, "derived": True,
+                            "via": {"group": gid, "argument": source.get("id")} if gid else {"argument": source.get("id")},
+                            "statement": f"Models.{_lean_name(m['id'])}.{_lean_name(pid)}"})
     return out
 
 
@@ -2923,7 +3128,8 @@ def lean_config(data: dict) -> dict:
             "definition_check": cfg.get("definition_check", LEAN_DEFAULTS["definition_check"]),
             "result": {**LEAN_DEFAULTS["result"], **cfg.get("result", {})},
             "model": {**LEAN_DEFAULTS["model"], **cfg.get("model", {})},
-            "verdict": {**LEAN_DEFAULTS["verdict"], **cfg.get("verdict", {})}}
+            "verdict": {**LEAN_DEFAULTS["verdict"], **cfg.get("verdict", {})},
+            "argument": {**LEAN_DEFAULTS["argument"], **cfg.get("argument", {})}}
 
 
 def generate_lean_statements(topic_id: str) -> Path | None:
@@ -3002,8 +3208,9 @@ def generate_lean_statements(topic_id: str) -> Path | None:
     wanted = [f"import {lib}.Statements"]
 
     # A model's verdicts proved one by one, in a file of their own: they import the models.
-    verdicts = lean_verdicts(data)
-    if verdicts:
+    verdicts = lean_verdicts(data) + lean_derived_verdicts(data)
+    arguments = lean_arguments(data)
+    if verdicts or arguments:
         vout = [*(f"import {m}" for m in [*cfg["imports"], *cfg["verdict"]["imports"]]), "",
                 "/-!", "# Generated statements: models' verdicts", "",
                 "Written by `pmap lean " + topic_id + "` from the YAML records. **Do not edit.**", "",
@@ -3017,9 +3224,36 @@ def generate_lean_statements(topic_id: str) -> Path | None:
             vout += [f"/-- `{v['model']}`: {names.get(v['principle'], v['principle'])} "
                      + ("holds" if v["holds"] else "fails") + ". -/",
                      f"def {v['statement']} : Prop :=", f"  {body}", ""]
+        for a in arguments:
+            body = lean_argument_statement(a, data, cfg)
+            if body is None:
+                continue
+            where = f"`{a['group']}`, argument `{a['argument']}`" if a["group"] else f"argument `{a['argument']}`"
+            vout += [f"/-- {where}: {names.get(a['principle'], a['principle'])} "
+                     + ("holds" if a["holds"] else "fails") + " in every model meeting its conditions. -/",
+                     f"def {a['statement']} : Prop :=", f"  {body}", ""]
         vout += [f"end {ns}.Statements", ""]
         (root / lib / "ModelStatements.lean").write_text("\n".join(vout), encoding="utf-8")
         wanted.append(f"import {lib}.ModelStatements")
+        derived = [v for v in verdicts if v.get("derived")]
+        if derived:
+            dout = [f"import {lib}.MapArguments", f"import {lib}.MapModels", "",
+                    "/-!", "# Generated certificates: models' verdicts from the map's arguments", "",
+                    "Written by `pmap lean " + topic_id + "` from the YAML records. **Do not edit.**", "",
+                    "Each verdict a general argument gives a model on the map, certified by applying the",
+                    "argument's certificate (`MapArguments.lean`) to the model: to its proof of being a model,",
+                    "and its proofs of the conditions the argument requires (its record's `lean.meets`, or its",
+                    "group's).", "-/", "", f"namespace {ns}.Map.Models", f"open {ns}", ""]
+            for v in derived:
+                via = v["via"]
+                where = f"`{via['group']}`'s argument `{via['argument']}`" if via.get("group") else f"the argument `{via['argument']}`"
+                dout += [f"/-- `{v['model']}`: {names.get(v['principle'], v['principle'])} "
+                         + ("holds" if v["holds"] else "fails") + f", by {where}. -/",
+                         f"theorem {v['statement'].removeprefix('Models.')} : Statements.{v['statement']} :=",
+                         f"  {v['cert']}", ""]
+            dout += [f"end {ns}.Map.Models", ""]
+            (root / lib / "MapDerived.lean").write_text("\n".join(dout), encoding="utf-8")
+            wanted.append(f"import {lib}.MapDerived")
 
     # keep the library root importing them
     rootfile = root / f"{lib}.lean"
@@ -3100,7 +3334,7 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
         probe += [f"theorem {wrapper} : {ns}.Statements.{_lean_name(p['id'])}.{_lean_name(v['id'])} := {ref}",
                   f"#print axioms {wrapper}"]
     # A model's single verdicts: each ref must inhabit the generated statement of the verdict.
-    model_verdicts = lean_verdicts(data)
+    model_verdicts = lean_verdicts(data) + lean_derived_verdicts(data)
     verdict_wrappers = {}
     for index_, v in enumerate(model_verdicts):
         if not v["ref"] or lean_verdict_statement(v, data) is None:
@@ -3109,9 +3343,19 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
         verdict_wrappers[(v["model"], v["principle"])] = f"PmapAudit.{wrapper}"
         probe += [f"theorem {wrapper} : {ns}.Statements.{v['statement']} := {v['ref']}",
                   f"#print axioms {wrapper}"]
+    # A general argument's verdicts: each ref must inhabit the generated statement of the argument.
+    argument_verdicts = lean_arguments(data)
+    argument_wrappers = {}
+    for index_, a in enumerate(argument_verdicts):
+        if not a["ref"] or lean_argument_statement(a, data) is None:
+            continue
+        wrapper = f"argument_{index_}"
+        argument_wrappers[(a["group"], a["argument"], a["principle"])] = f"PmapAudit.{wrapper}"
+        probe += [f"theorem {wrapper} : {ns}.Statements.{a['statement']} := {a['ref']}",
+                  f"#print axioms {wrapper}"]
     probe += ["end PmapAudit"]
     verdicts, bad = {}, []
-    if references or variant_wrappers or verdict_wrappers:
+    if references or variant_wrappers or verdict_wrappers or argument_wrappers:
         with tempfile.NamedTemporaryFile(mode="w", suffix=".lean", prefix="_pmap_audit_", dir=root, delete=False) as f:
             f.write("\n".join(probe) + "\n")
             pf = Path(f.name)
@@ -3122,7 +3366,7 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
         output = result.stdout + result.stderr
         verdicts = lean_probe_verdicts(result.returncode, output,
                                        list(wrappers.values()) + list(variant_wrappers.values())
-                                       + list(verdict_wrappers.values()))
+                                       + list(verdict_wrappers.values()) + list(argument_wrappers.values()))
         if result.returncode:
             print(output[-10000:])
         for item in references:
@@ -3138,6 +3382,12 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
             bad.append(f"{p['id']}#{v['id']}: has a Lean statement but the principle has no lean_def")
         if v["lean"].get("status") == "verified" and not verdicts.get(variant_wrappers.get((p["id"], v["id"])), False):
             bad.append(f"{p['id']}#{v['id']}: claims verified but has no checked equivalence")
+    for a in argument_verdicts:
+        key, where = (a["group"], a["argument"], a["principle"]), (a["group"] + "#" if a["group"] else "") + str(a["argument"])
+        if key not in argument_wrappers:
+            bad.append(f"{where}: the argument's verdict on {a['principle']} has no statement (a condition needs its lean, or a principle its lean_def)")
+        elif not verdicts.get(argument_wrappers[key], False):
+            bad.append(f"{where}: the argument's verdict on {a['principle']} failed its generated type or axiom audit")
     for v in model_verdicts:
         key = (v["model"], v["principle"])
         if key not in verdict_wrappers:
@@ -3159,7 +3409,11 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
     print(f"  variants: {len(variants)}/{all_variants} stated, {len(verified_variants)} verified")
     verified_verdicts = {key for key, wrapper in verdict_wrappers.items() if verdicts.get(wrapper, False)}
     print(f"  model verdicts: {len(verdict_wrappers)} stated, {len(verified_verdicts)} verified, "
-          f"in {len({v['model'] for v in model_verdicts})} models")
+          f"in {len({v['model'] for v in model_verdicts})} models; "
+          f"{sum(bool(v.get('derived')) for v in model_verdicts)} of them from arguments")
+    verified_arguments = {k for k, w in argument_wrappers.items() if verdicts.get(w, False)}
+    print(f"  argument verdicts: {len(argument_wrappers)} stated, {len(verified_arguments)} verified, "
+          f"in {len({(a['group'], a['argument']) for a in argument_verdicts})} arguments")
     for item in records:
         rid = item["id"]
         print(f"  {rid:58} {'verified' if rid in verified else 'stated / proof pending' if rid in ready else 'definition missing'}")
@@ -3194,6 +3448,8 @@ def lean_check(topic_id: str, update: bool = False) -> bool:
                 raise ValueError(f"{path}: expected exactly one lean block for variant {v['id']}")
             path.write_text(text, encoding="utf-8")
         for v in model_verdicts:
+            if v.get("derived"):  # generated from an argument: its record lists no entry for it
+                continue
             state = "verified" if (v["model"], v["principle"]) in verified_verdicts else "stated"
             path = ROOT / v["_file"]
             text = path.read_text(encoding="utf-8")

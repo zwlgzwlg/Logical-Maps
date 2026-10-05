@@ -48,8 +48,23 @@
     "required": ["id", "text"],
     "properties": {
      "id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
-     "text": {"type": "string", "minLength": 1}
+     "text": {"type": "string", "minLength": 1},
+     "lean": {"type": "string", "pattern": "\\S", "description": "The condition in Lean: a predicate on what the group's lean.binder binds, applied as `<lean> <var>`."}
     }
+   }
+  },
+  "lean": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": ["binder", "var", "model", "is_model"],
+   "description": "The group's construction in Lean, for its shared arguments and its members' verdicts: a member is the Lean model at a value of `var`.",
+   "properties": {
+    "binder": {"type": "string", "description": "What a statement about every member binds, e.g. `(M : Type) [Monoid M]`."},
+    "var": {"type": "string", "description": "The bound variable that a member's lean.param fills."},
+    "model": {"type": "string", "description": "The Lean model, with {param} for the variable."},
+    "is_model": {"type": "string", "description": "A proof that it is a model, with {param}."},
+    "settings": {"type": "object", "additionalProperties": {"type": "string"}, "description": "The parameter values the Lean construction is at: members and shared arguments at other values are not covered."},
+    "meets": {"type": "object", "additionalProperties": {"type": "string"}, "description": "Conditions of the topic every member meets, each with a proof of its predicate for the model, with {param}."}
    }
   },
   "meets": {"type": "object", "additionalProperties": {"oneOf": [
@@ -65,6 +80,7 @@
  "$defs": {
   "applies": {
    "properties": {
+    "lean": {"type": "array", "minItems": 1, "description": "The argument's verdicts proved in Lean: each a theorem that every model meeting the argument's conditions (and holding its `given` principles) has the verdict, stated from the topic's lean.argument templates, or for a group's argument over its lean.binder.", "items": {"type": "object", "additionalProperties": false, "required": ["ref"], "oneOf": [{"required": ["holds"]}, {"required": ["fails"]}], "properties": {"holds": {"type": "string"}, "fails": {"type": "string"}, "ref": {"type": "string", "pattern": "\\S", "description": "The certificate, a declaration whose type is the generated statement."}}}},
     "when": {
      "type": "object",
      "description": "A conjunction over parameters with named values; a list of values within one means any of them.",

@@ -153,6 +153,26 @@ and a `relative` conjunct for principles in `relative_categories`). Validation r
 such verdict to be one the map already gives the model. The record covers that model alone:
 a group's generated variants do not inherit it.
 
+General arguments are formalised the same way, so that a model's verdicts follow in Lean
+along the route the map gives them:
+
+- **A condition** gets `lean:`, a Lean predicate. A topic's condition is a predicate on
+  models, applied by the topic's `lean.argument.condition` template. A group's condition is a
+  predicate on what the group's `lean.binder` binds.
+- **An argument** (in `arguments/` or a group's shared argument) gets `lean:`, a list of its
+  verdicts `{holds|fails, ref}`. Each verdict's statement says that every model meeting the
+  argument's conditions, and holding its `given` principles, has the verdict. For a topic's
+  argument this comes from `lean.argument` in `topic.yaml`; for a group's it comes from the
+  group's `lean` (`binder`, `var`, `model` and `is_model` with `{param}`, the `settings` the
+  construction covers, and `meets` proofs every member shares).
+- **A model** gives `lean.meets`, a proof for each condition it meets. A group member gives
+  `lean.param` in place of `model`. `pmap lean` then writes `MapDerived.lean`, which certifies
+  each verdict an argument gives the model, wherever the model proves the argument's
+  conditions, by applying the argument's certificate. A verdict the record lists itself
+  takes precedence.
+- **Status:** `lean-check` audits the argument and derived certificates with the rest. The
+  build marks them verified when they are in the index on the allowed axioms.
+
 `pmap lean-check` builds the library and audits wrapper proofs at the generated
 statement types. Failed elaboration, `sorryAx`, and nonstandard axioms are rejected. The `lean` certificate field is `none`,
 `stated` (statement elaborates, proof missing), or `verified` (machine-checked, sorry-free);

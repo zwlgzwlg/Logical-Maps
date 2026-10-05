@@ -302,6 +302,18 @@
             "relative": {"type": "string", "description": "A further conjunct for a verdict on a principle in one of those categories."}
           }
         },
+        "argument": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "How a general argument's verdict proved in Lean is stated: for every model (`binder`, binding `model`) meeting each condition the argument requires ({cond} is the condition's lean, applied by `condition`) and holding each principle in its `given`, the verdict (`holds` or `fails`, with {model} and {def}). A group's argument binds the group's lean.binder instead.",
+          "properties": {
+            "binder": {"type": "string"},
+            "model": {"type": "string"},
+            "condition": {"type": "string"},
+            "holds": {"type": "string"},
+            "fails": {"type": "string"}
+          }
+        },
         "index": {
           "type": "object",
           "additionalProperties": false,
