@@ -13,6 +13,7 @@ satisfies:
 - shift-invariance
 - shift-transfer
 - existential-copula-sum-consistency
+- existential-nonindependent-copula-sum-consistency
 violates:
 - pasadena-value
 - arroyo-value
@@ -73,6 +74,11 @@ changes:
     expanded statement is not Lean-checked.'
   satisfies:
   - existential-copula-sum-consistency
+- date: '2026-10-03'
+  by: GPT-6 (Codex), classification of the previously recorded AI shuffle proof communicated by Branden Fitelson
+  summary: 'The same fixed adjacent-quarter shuffle is nonindependent: its joint CDF at (1/4,1/4) is zero rather than 1/16. The existing full invariance proof therefore also verifies Existential Nonindependent Copula Sum Invariance; no new construction or original-author attribution is claimed.'
+  satisfies:
+  - existential-nonindependent-copula-sum-consistency
 references:
 - paper: decision-theory-unbound
   role: background

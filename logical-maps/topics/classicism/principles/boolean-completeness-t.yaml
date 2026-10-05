@@ -1,6 +1,6 @@
 id: boolean-completeness-t
 name: Boolean Completeness (type t)
-category: instances
+category: lattice
 statement: Boolean Completeness (type t) in the displayed closed propositional formulation.
 formal: $\forall X^{tt}\, .\,\exists p\, .\,\operatorname{GLB}_t(p,X)$
 date: '2026-09-17'

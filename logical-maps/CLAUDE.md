@@ -46,7 +46,8 @@ the topic subject in each map's email link.
 
 A topic with `draft: true` in its `topic.yaml` (intuitionisticism) is built and
 validated but nothing derived is computed for it: no rankings, settled share or
-recorded-conjecture list, and `lynchpins` skips it. Leave it out of feature work
+recorded-conjecture list, and `lynchpins` skips it. Its page is built but not
+listed on the homepage. Leave it out of feature work
 and reports unless it is asked for by name.
 
 ## Commands
@@ -163,7 +164,8 @@ When you (an AI) add or edit a result or model:
   topic background and each preset, never persisted as record statuses. The
   Conjectures tab lists each recorded conjecture as the question it asks, in the
   lynchpin format: at its rank with scores while open, with its status and no
-  scores once settled, marked when it has more than two premises. Refuting an
+  scores once settled, marked when it is still open with more than two premises.
+  An implication whose premises are inconsistent is incompatible. Refuting an
   implication requires an actual countermodel; a model witnesses a conjecture's
   required flags, not its proposed construction. The viewer hides settled
   questions unless **Show resolved** is checked.
@@ -230,6 +232,11 @@ When you (an AI) add or edit a result or model:
 - Optional display categories are declared in `topic.yaml` as ordered
   `principle_categories: [{id, name}, ...]`; assign each principle a `category`
   id. These group graph filters and do not change logical inference.
+- Optional `initial_principles: [id, ...]` in `topic.yaml` names the principles
+  the graph and the lattice start with; on the graph the rest start hidden, as do settled principles and
+  `hidden_by_default` categories. The theory explorer's assumptions are kept
+  apart from the graph's background (URL `theory` / `theory-deny` versus
+  `assume` / `deny`).
 - Use `background_presets` for named viewer assumption packages, with `id`,
   `name`, `category`, `principles`, and optional `default: true`. Defaults are
   removable and overridden by explicit URL selections; do not promote them

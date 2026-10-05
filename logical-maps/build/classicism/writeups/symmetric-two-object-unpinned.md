@@ -4,13 +4,13 @@
 
 ## Package
 
-- **□Boolean Completeness.** Every closed instance of Boolean Completeness is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
-- **□Actuality.** Every closed instance of Actuality is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Boolean Completeness.** Necessarily, every property of entities of a relational type has a greatest lower bound in that type.
+- **□Actuality.** Necessarily, there is a true proposition that entails every true proposition.
 - **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
 - **¬ Rigid Comprehension.** Every relation, including a proposition, is coextensive with a rigid one.
-- **¬ □BF.** Every closed instance of BF is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **¬ □BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
 - **¬ No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
 - **¬ ND.** Distinct things of any type are necessarily distinct.
 - **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.

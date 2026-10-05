@@ -1,0 +1,31 @@
+id: st-petersburg-refutes-total-comonotonic-preservation
+premises:
+- rich-outcomes
+- simple-eu
+- stochastic-dominance
+- independence
+- totality
+- comonotonic-sum-preservation
+conclusion: false
+status: proved
+certificate:
+  source_id: misc
+  lean: none
+  produced_by: Unspecified AI (original incompleteness proof communicated by Branden Fitelson); GPT-6 (Codex) (St Petersburg simplification and preservation/cancellation audit)
+  recorded_by: GPT-6 (Codex)
+  checked_by: []
+  date: '2026-10-03'
+proof: |-
+  Let P(S=2^k)=2^(-k), k>=1. Compare X1 with law (1/5)delta_3+(4/5)law(3S) and Y1 with law (2/5)delta_4+(3/5)law(4S). Let X2 have law (1/5)delta_0+(1/5)delta_5+(3/5)law(4S), and Y2 have law (1/5)delta_0+(2/5)delta_6+(2/5)law(6S). For each pair the write-up supplies three increasing backgrounds Zj with sum_j[law(Xs+Zj)-law(Ys+Zj)]=(delta_(4s+1)-delta_(4s+2))/5. Thus weak comonotonic preservation and Mixture Independence exclude Xs>=Ys, since the equal mixture of the Y sums strictly stochastically dominates the equal mixture of the X sums. Totality forces Y1>X1 and Y2>X2. The comonotonic sums satisfy X1+X2=R+A and Y1+Y2=R+B for a nondecreasing R and simple equal-mean A,B. Simple EU and weak preservation make these sums indifferent, whereas strict preservation and transitivity make the Y sum strictly preferred. This is a contradiction. Dominance supplies law invariance. Separately, without Totality, weak preservation plus cancellation forces the original pair incomparable. All constructions, identities, and direction uses are proved in the write-up.
+sources:
+- 'AI-generated report communicated by Branden Fitelson, Comonotonic Sum Invariance Forces Incompleteness, 2 October 2026, §§2–7. The producing AI was not identified.'
+- 'GPT-6 (Codex), project conversation, 2 October 2026: simplified St Petersburg pair and three-background identity; 3 October 2026: exact direction audit and direct contradiction using weak and strict preservation, recorded in writeups/st-petersburg-refutes-total-comonotonic-preservation.md.'
+source_names:
+- AI incompleteness proof via Branden Fitelson
+- GPT-6 simplification and direction audit 2–3 Oct
+notes: |-
+  The original theorem and two-pair mechanism are credited to the AI proof communicated by Fitelson, who is the communicator, not the proof producer or checker. The small-prize witness, three-background certificate, and direction audit are the present simplification. No independent checking or Lean verification is claimed. Rich Outcomes makes all displayed real gambles available; Simple EU supplies the one finite equal-mean indifference. No CDF-area assumption, symmetry, independent-sum principle, or continuity is used. Separate cancellation is unnecessary for the stated totality contradiction because Preservation here includes its strict clause. The write-up does not claim that weak preservation alone, or cancellation alone, is inconsistent with DTU. This result refutes the existing silver total comonotonic extension candidate by closure.
+references:
+- paper: fitelson-ai-comonotonic-incompleteness-2026
+  role: origin
+  locator: §§2–7

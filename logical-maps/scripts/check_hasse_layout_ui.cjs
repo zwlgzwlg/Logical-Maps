@@ -17,7 +17,7 @@ const principles=ids=>ids.map(id=>({id,name:id.toUpperCase(),statement:id}));
 function geometry(dom){
   return JSON.parse(dom.window.eval(`JSON.stringify((()=>{const L=layout;
     const markers=new Map([...document.querySelectorAll('#graph .edge-g')].map(g=>[g.dataset.segment,g.querySelector('.edge').getAttribute('marker-end')||'']));
-    const node=id=>({id,kind:L.byId.get(id).kind,members:L.byId.get(id).members||[],meet:!!L.byId.get(id).meet,parent:L.byId.get(id).parent||null,x:L.x.get(id),y:L.y.get(id),h:L.size.get(id).h,
+    const node=id=>({id,kind:L.byId.get(id).kind,members:L.byId.get(id).members||[],meet:!!L.byId.get(id).meet,parent:L.byId.get(id).parent||null,x:L.x.get(id),y:L.y.get(id),h:L.size.get(id).h,w:L.size.get(id).w,
       fromBackground:!!(L.byId.get(id).members||[]).length&&L.byId.get(id).members.every(literalFollows)});
     return {nodes:L.visible.map(n=>node(n.id)),edges:L.edges.map(e=>({id:e.id,from:e.from,to:e.to,toJunction:!!e.toJunction,fromJunction:!!e.fromJunction,conjectural:!!(e.conjectured||e.r?.status==='conjectured'),marker:e.toJunction?null:markers.get(e.id)})),
       back:[...L.back],bands:L.bands.map(b=>b.label),labels:[...document.querySelectorAll('#graph .layer-label')].map(t=>t.textContent)};})())`));
@@ -39,12 +39,18 @@ function verifyDirections(g,label){
   const core=connected.filter(n=>n.kind!=='truth'||n.members.length>1);
   if(isolated.length&&core.length){
     const top=Math.min(...core.map(n=>n.y-n.h/2));
-    for(const n of isolated) assert.ok(n.y+n.h/2<top,`${label}: isolated ${n.id} sits above the diagram`);
+    const bottom=Math.max(...core.map(n=>n.y+n.h/2)),right=Math.max(...core.map(n=>n.x+n.w/2));
     const background=isolated.filter(n=>n.fromBackground),unconnected=isolated.filter(n=>!n.fromBackground);
-    if(background.length&&unconnected.length) assert.ok(Math.max(...unconnected.map(n=>n.y))<Math.min(...background.map(n=>n.y)),`${label}: background consequences sit nearest the diagram`);
+    for(const n of background) assert.ok(n.y+n.h/2<top,`${label}: background consequence ${n.id} sits above the diagram`);
+    // Principles with no displayed arrows sit beside it, at mid height, unlabelled.
+    if(g.edges.length) for(const n of unconnected) assert.ok(n.x-n.w/2>right,`${label}: unconnected ${n.id} sits beside the diagram`);
+    if(unconnected.length&&g.edges.length){
+      const mid=(Math.min(...unconnected.map(n=>n.y-n.h/2))+Math.max(...unconnected.map(n=>n.y+n.h/2)))/2;
+      assert.ok(mid>top&&mid<bottom,`${label}: unconnected principles sit at the diagram's height`);
+    }
     assert.deepEqual(g.labels,g.bands,`${label}: every band is labelled`);
     if(background.length) assert.ok(g.labels.includes('Follows from the background'));
-    if(unconnected.length&&g.edges.length) assert.ok(g.labels.includes('No displayed arrows'));
+    assert.ok(!g.labels.includes('No displayed arrows'),`${label}: no label for missing arrows`);
   }
   // Principles that collapse into ⊥ sit in the bottom principle row unless
   // another collapsing principle implies them.
@@ -232,5 +238,5 @@ try{
   assert.deepEqual(geometry(flipDom).nodes,upright.nodes,'Flipping twice restores the layout exactly');
 
   assert.deepEqual(errors.map(String),[]);
-  console.log('PASS: floor at the bottom, ascending arrows, conjunctions inside equivalence boxes, grouped collapses, labelled bands, hollow heads, an immobile transitive reduction on fixtures and real topics, and a flip that reflects the whole layout and undoes itself.');
+  console.log('PASS: floor at the bottom, ascending arrows, conjunctions inside equivalence boxes, grouped collapses, a labelled background band, unconnected principles beside the diagram, hollow heads, an immobile transitive reduction on fixtures and real topics, and a flip that reflects the whole layout and undoes itself.');
 }finally{pages.forEach(p=>p.window.close());}

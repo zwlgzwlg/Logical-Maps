@@ -7,15 +7,15 @@
 - **ND.** Distinct things of any type are necessarily distinct.
 - **BF.** The Barcan Formula at every type. The predicate formulation closes the formula schema using lambda abstraction.
 - **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
-- **□ND.** Every closed instance of ND is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
-- **□BF.** Every closed instance of BF is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□ND.** Necessarily, distinct things of any type are necessarily distinct.
+- **□BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
 - **Atomlessness.** Atomlessness in the displayed closed propositional formulation.
 - **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
 - **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
 - **Relational Choice.** Every serial binary relation has a functional subrelation.
-- **□Relational Choice.** Every closed instance of Relational Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
 - **Transversal Choice.** Every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.
 - **¬ Atomicity.** Every non-bottom entity of each relational type has an atom below it.
 - **¬ Actuality.** There is a true proposition that entails every true proposition.

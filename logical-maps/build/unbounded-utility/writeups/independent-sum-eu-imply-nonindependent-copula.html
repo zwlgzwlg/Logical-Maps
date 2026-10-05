@@ -1,0 +1,320 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nonindependent copulas, mixtures, and invariance</title><link rel="icon" type="image/png" href="../favicon.png">
+<style>/* Fixed forest palette, adapted from the supplied style example.
+   Semantic and source hues retain their meaning in both modes. */
+:root {
+  --bg: #f3f1e8;
+  --panel: #f8f7f0;
+  --panel-2: #e9ecdf;
+  --line: #d4d9c9;
+  --line-strong: #a2ae97;
+  --ink: #283c28;
+  --ink-2: #4f604b;
+  --ink-3: #5f6d58;
+  --accent: #356044;
+  --link-hover: #914b30;
+  --human: #3e7052;
+  --assisted: #746044;
+  --ai: #a35b36;
+  --derived: #7b8271;
+  --indep: #a0483a;
+  --open: #e2e5d9;
+  --open-ink: #65705f;
+  --conj: #896b27;
+  --node-fill: #f8f7f0;
+  --node-stroke: #98a68b;
+  --junction: #52634b;
+  --hl: #e0e7cd;
+  --focus: #914b30;
+  --badge-ink: #ffffff;
+  --warning-bg: #f4e6dc;
+  --source-forest: #3e7052;
+  --source-rust: #a25336;
+  --source-ochre: #896b27;
+  --source-slate: #4c7279;
+  --source-berry: #80556d;
+  --source-olive: #69753c;
+  --source-misc: #696d61;
+  --shadow: 0 4px 24px rgb(40 60 40 / 12%);
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --serif: var(--sans);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0e1912;
+  --panel: #142018;
+  --panel-2: #1d2b20;
+  --line: #304332;
+  --line-strong: #596e51;
+  --ink: #d7dfca;
+  --ink-2: #b3c1a7;
+  --ink-3: #96aa8d;
+  --accent: #a6c699;
+  --link-hover: #dfab89;
+  --human: #94bc95;
+  --assisted: #c1ad8d;
+  --ai: #dca17b;
+  --derived: #83937c;
+  --indep: #e09b86;
+  --open: #243327;
+  --open-ink: #a2b398;
+  --conj: #d0b36b;
+  --node-fill: #19261c;
+  --node-stroke: #627957;
+  --junction: #b3c1a7;
+  --hl: #30422a;
+  --focus: #dfab89;
+  --badge-ink: #0e1912;
+  --warning-bg: #32251f;
+  --source-forest: #94bc95;
+  --source-rust: #dca17b;
+  --source-ochre: #d0b36b;
+  --source-slate: #95bcc1;
+  --source-berry: #c5a0b7;
+  --source-olive: #b6c383;
+  --source-misc: #a9b09c;
+  --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); scrollbar-color: var(--line-strong) var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.6 var(--sans); }
+button, input, select { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 3px; }
+input[type="checkbox"] { accent-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+::selection { background: var(--hl); color: var(--ink); }
+.theme-toggle { border: 0; padding: 6px 0; background: transparent; color: var(--ink-2); cursor: pointer; font: 13px var(--sans); white-space: nowrap; }
+.theme-toggle:hover { color: var(--link-hover); }
+.display-toggles { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 16px; }
+.theme-toggle[aria-pressed="true"] { color: var(--accent); }
+
+/* Standalone write-ups use the same quiet, ruled typography as the map. */
+html:has(body.writeup-page) { background: var(--bg); }
+body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; font: 16px/1.7 var(--sans); overflow-wrap: anywhere; }
+.writeup-nav { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 24px; font-size: 13px; }
+.writeup-page h1 { font-size: 1.4em; line-height: 1.4; margin: 0 0 20px; color: var(--ink); }
+.writeup-page h2 { font-size: 1.15em; line-height: 1.4; margin: 1.8em 0 .5em; padding-top: 14px; border-top: 1px solid var(--line); }
+.writeup-page h3 { font-size: 1em; }
+.writeup-page p { margin: 0 0 12px; }
+.writeup-page .cert { color: var(--ink-2); font-size: .85em; }
+.writeup-page code, .writeup-page pre { font: .85em/1.6 var(--mono); color: var(--ink); }
+.writeup-page pre { padding: 14px; background: var(--panel-2); overflow-x: auto; }
+.writeup-page blockquote { color: var(--ink-2); border-left: 2px solid var(--line-strong); margin-left: 0; padding-left: 20px; }
+.writeup-page math[display="block"] { display: block; overflow-x: auto; padding: 8px 0; }
+.writeup-page table { display: block; overflow-x: auto; border-collapse: collapse; }
+.writeup-page th, .writeup-page td { border-bottom: 1px solid var(--line); padding: 8px 12px; }
+@media (max-width: 600px) {
+  body.writeup-page { margin: 1.5em auto; padding: 0 1em 2em; }
+}
+@media print {
+  :root, :root[data-theme="dark"] { --bg: white; --ink: #283c28; --ink-2: #4f604b; --accent: #356044; --line: #d4d9c9; color-scheme: light; }
+  .writeup-nav { display: none; }
+  body.writeup-page { max-width: none; margin: 0; padding: 0; }
+}
+
+/* Shared Okabe–Ito palette: https://jfly.uni-koeln.de/color/#pallet
+   Loaded after topic themes. Sky blue and orange distinguish positive and
+   negative relations; darker inks keep small labels readable in light mode.
+   Neutral surfaces are identical across maps. Print uses the shared theme. */
+@media screen {
+  :root[data-palette="colourblind"] {
+    --bg: #f4f5f6;
+    --panel: #ffffff;
+    --panel-2: #e9edf0;
+    --line: #d0d6da;
+    --line-strong: #87949d;
+    --ink: #202930;
+    --ink-2: #45535d;
+    --ink-3: #586670;
+    --accent: #0072b2;
+    --link-hover: #925f00;
+    --human: #0072b2;
+    --assisted: #80506a;
+    --ai: #a44500;
+    --derived: #687780;
+    --indep: #925f00;
+    --open: #e9edf0;
+    --open-ink: #586670;
+    --conj: #80506a;
+    --node-fill: #ffffff;
+    --node-stroke: #7a8b96;
+    --junction: #45535d;
+    --hl: #dce4ea;
+    --focus: #0072b2;
+    --badge-ink: #ffffff;
+    --warning-bg: #fff0ce;
+    --source-forest: #56b4e9;
+    --source-rust: #e69f00;
+    --source-ochre: #d55e00;
+    --source-slate: #0072b2;
+    --source-berry: #cc79a7;
+    --source-olive: #009e73;
+    --source-misc: #687780;
+    --rel-positive: #56b4e9;
+    --rel-negative: #e69f00;
+    --shadow: 0 4px 24px rgb(32 41 48 / 12%);
+  }
+  :root[data-palette="colourblind"][data-theme="dark"] {
+    --bg: #111820;
+    --panel: #18222b;
+    --panel-2: #23303b;
+    --line: #354550;
+    --line-strong: #718492;
+    --ink: #edf2f5;
+    --ink-2: #c1ced7;
+    --ink-3: #a5b5c1;
+    --accent: #56b4e9;
+    --link-hover: #e69f00;
+    --human: #56b4e9;
+    --assisted: #cc79a7;
+    --ai: #e69f00;
+    --derived: #91a1ad;
+    --indep: #e69f00;
+    --open: #23303b;
+    --open-ink: #a5b5c1;
+    --conj: #cc79a7;
+    --node-fill: #1c2933;
+    --node-stroke: #8094a3;
+    --junction: #c1ced7;
+    --hl: #354654;
+    --focus: #56b4e9;
+    --badge-ink: #111820;
+    --warning-bg: #352b18;
+    --source-misc: #91a1ad;
+    --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  }
+  /* Source swatches use the unmodified palette; outlined badges allow their
+     text to keep the normal contrast on both light and dark surfaces. */
+  :root[data-palette="colourblind"] .badge.source {
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--source-color);
+    border-left-width: 4px;
+  }
+}
+</style>
+<script>/* Apply before paint; share the preference between every map and write-up. */
+(() => {
+  const key = 'pmap-theme';
+  const paletteKey = 'pmap-palette';
+  const system = window.matchMedia?.('(prefers-color-scheme: dark)');
+  let preference;
+  let palette;
+  try { preference = localStorage.getItem(key); } catch (_) {}
+  try { palette = localStorage.getItem(paletteKey); } catch (_) {}
+  if (!['light', 'dark'].includes(preference)) preference = null;
+  if (palette !== 'colourblind') palette = 'default';
+  function apply(theme) {
+    document.documentElement.dataset.theme = theme;
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.textContent = theme === 'dark' ? '[Light mode]' : '[Dark mode]';
+      button.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+    });
+  }
+  function applyPalette() {
+    document.documentElement.dataset.palette = palette;
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.setAttribute('aria-pressed', String(palette === 'colourblind'));
+      button.textContent = `[Colourblind mode: ${palette === 'colourblind' ? 'on' : 'off'}]`;
+    });
+  }
+  const initial = () => preference || (system?.matches ? 'dark' : 'light');
+  apply(initial());
+  applyPalette();
+  document.addEventListener('DOMContentLoaded', () => {
+    apply(initial());
+    applyPalette();
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        preference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        apply(preference);
+        try { localStorage.setItem(key, preference); } catch (_) {}
+      });
+    });
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        palette = palette === 'colourblind' ? 'default' : 'colourblind';
+        applyPalette();
+        try { localStorage.setItem(paletteKey, palette); } catch (_) {}
+      });
+    });
+  });
+  system?.addEventListener('change', () => { if (!preference) apply(initial()); });
+  window.addEventListener('storage', event => {
+    if (event.key === key || event.key === null) {
+      preference = ['light', 'dark'].includes(event.newValue) ? event.newValue : null;
+      apply(initial());
+    }
+    if (event.key === paletteKey || event.key === null) {
+      palette = event.newValue === 'colourblind' ? 'colourblind' : 'default';
+      applyPalette();
+    }
+  });
+})();
+</script>
+<link rel="stylesheet" href="../math/katex.min.css">
+<script defer src="../math/katex.min.js"></script>
+<script defer src="../math/contrib/auto-render.min.js"></script>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Nonindependent copulas, mixtures, and invariance</h1></header><p>The product copula is the unique copula whose sum operation commutes with every mixture of marginal laws. But this identity of <strong>laws</strong> is not necessary for sum invariance of a <strong>preference relation</strong>. There are whole families of nonindependent copulas satisfying invariance in total DU models. Consequently a recipe refuting every nonindependent copula cannot exist in this framework.</p>
+<p>Zachary Goodsell proposed the question on 3 October 2026. The binary commutation test and interior-perturbation theorem below are GPT-6 (Codex)’s arguments from that session. The separate quarter-shuffle witness in §4 was already supplied by the earlier AI report communicated by Branden Fitelson. No independent checker or literature-priority claim is asserted.</p>
+<p>For a copula <span class="math inline">C</span>, let</p>
+<p><span class="math display">T_{C,\nu}(\mu)=\mathcal L(Q_\mu(U)+Q_\nu(V)),\qquad(U,V)\sim C.</span></p>
+<p>Under Stochastic Equivalence, the fixed-copula invariance principle says that every <span class="math inline">T_{C,\nu}</span> preserves and reflects comparisons. This is different from requiring <span class="math inline">T_{C,\nu}</span> to preserve convex combinations as measures.</p>
+<h2 id="a-complete-binary-test-for-mixture-commutation">1. A complete binary test for mixture commutation</h2>
+<p>Suppose for all laws <span class="math inline">\mu_0,\mu_1,\nu</span> and <span class="math inline">0&lt;p&lt;1</span>,</p>
+<p><span class="math display">T_{C,\nu}(p\mu_0+(1-p)\mu_1)
+ =pT_{C,\nu}(\mu_0)+(1-p)T_{C,\nu}(\mu_1).\tag{1}</span></p>
+<p>Choose <span class="math inline">\mu_0=\delta_0</span>, <span class="math inline">\mu_1=\delta_2</span>, and <span class="math inline">\nu=q\delta_0+(1-q)\delta_1</span>. In the left-hand law, the probability of zero is <span class="math inline">H_C(p,q)</span>. In the right-hand law it is <span class="math inline">pq</span>, because a constant summand leaves no dependence choice. Thus (1) implies <span class="math inline">H_C(p,q)=pq</span> for every <span class="math inline">p,q</span>, and <span class="math inline">C=\Pi</span>. Conversely, independent convolution is linear, so the product copula satisfies (1).</p>
+<p>This is an explicit recipe for witnessing <strong>failure of mixture commutation</strong> for any <span class="math inline">C\ne\Pi</span>: select a point where <span class="math inline">H_C(p,q)\ne pq</span> and use those two binary lotteries. Both resulting sum laws nevertheless have the same finite mean, <span class="math inline">2(1-p)+(1-q)</span>. Simple EU makes them indifferent, so this law inequality by itself gives no preference contradiction.</p>
+<p>For example, the quarter shuffle has <span class="math inline">H_C(1/4,1/4)=0\ne1/16</span>. The interior perturbation below has <span class="math inline">H_C(1/2,1/2)=9/32\ne1/4</span>.</p>
+<h2 id="bounded-zero-mean-signed-differences-are-indifferent">2. Bounded zero-mean signed differences are indifferent</h2>
+<p>Assume Expected Utility, Stochastic Equivalence and Mixture Independence. Suppose two probability laws <span class="math inline">\alpha,\beta</span> have difference <span class="math inline">\eta=\alpha-\beta</span> supported in a bounded interval, with</p>
+<p><span class="math display">\eta(\mathbb R)=0,\qquad\int x\,d\eta(x)=0.</span></p>
+<p>Write <span class="math inline">\eta=\eta^+-\eta^-</span> for its Jordan decomposition, with common mass <span class="math inline">m\in[0,1]</span>. If <span class="math inline">m=0</span>, the laws coincide. If <span class="math inline">m&gt;0</span>, the normalized laws <span class="math inline">A=\eta^+/m</span> and <span class="math inline">B=\eta^-/m</span> are bounded, have the same finite mean, and are indifferent by Expected Utility. Moreover</p>
+<p><span class="math display">\rho=\alpha-\eta^+=\beta-\eta^-</span></p>
+<p>is a positive measure of mass <span class="math inline">1-m</span>. If <span class="math inline">m=1</span>, the desired indifference is precisely that of <span class="math inline">A,B</span>. Otherwise both laws are mixtures of <span class="math inline">A,B</span> with the common law <span class="math inline">\rho/(1-m)</span>, so Mixture Independence gives <span class="math inline">\alpha\sim\beta</span>.</p>
+<p>This uses Expected Utility on bounded, possibly nonsimple laws. It does not assume that DU by itself implies that axiom. No expectations of <span class="math inline">\alpha</span> or <span class="math inline">\beta</span> are required to exist.</p>
+<h2 id="a-fixed-nonindependent-copula-equivalent-to-independence-in-preference">3. A fixed nonindependent copula equivalent to independence in preference</h2>
+<p>Put</p>
+<p><span class="math display">f(u)=\mathbf1_{[1/4,1/2)}(u)-\mathbf1_{[1/2,3/4)}(u),\qquad
+c(u,v)=1+\tfrac12 f(u)f(v).</span></p>
+<p>The density <span class="math inline">c</span> lies between <span class="math inline">1/2</span> and <span class="math inline">3/2</span>, and both its marginals are uniform since <span class="math inline">\int f=0</span>. It therefore defines a copula <span class="math inline">C</span>, chosen once for all marginals. It differs from the product on sets of positive measure.</p>
+<p>For arbitrary real laws <span class="math inline">\mu,\nu</span>, the difference</p>
+<p><span class="math display">\eta=T_{C,\nu}(\mu)-T_{\Pi,\nu}(\mu)</span></p>
+<p>is the pushforward of <span class="math inline">\tfrac12 f(u)f(v)\,du\,dv</span> under <span class="math inline">(u,v)\mapsto Q_\mu(u)+Q_\nu(v)</span>. That signed density is supported inside <span class="math inline">[1/4,3/4]^2</span>. Quantiles of real laws are bounded on that square, so <span class="math inline">\eta</span> is supported in a bounded interval. It has mass zero, and</p>
+<p><span class="math display">\begin{aligned}
+\int x\,d\eta(x)
+&amp;=\tfrac12\iint[Q_\mu(u)+Q_\nu(v)]f(u)f(v)\,du\,dv\\
+&amp;=\tfrac12\left(\int Q_\mu f\right)\left(\int f\right)
+ +\tfrac12\left(\int f\right)\left(\int Q_\nu f\right)=0.
+\end{aligned}</span></p>
+<p>All integrals on the right are finite. By §2,</p>
+<p><span class="math display">T_{C,\nu}(\mu)\sim T_{\Pi,\nu}(\mu)\quad\text{for every }\mu,\nu.\tag{2}</span></p>
+<p>With Rich Outcomes, all intermediate real laws are available. Stochastic Equivalence identifies any actual pair admitting a copula with the corresponding quantile sum law. Independent triples can be realized on the standing atomless space. Consequently, under the assumptions of §2, Independent Sum Invariance and <span class="math inline">\operatorname{SC}(C)</span> are equivalent, by applying (2) to each side of a comparison.</p>
+<p>In particular,</p>
+<p><span class="math display">\text{Rich Outcomes + EU + Stochastic Equivalence + Mixture Independence
+ + Independent Sum Invariance}</span></p>
+<p>implies <strong>Existential Nonindependent Copula Sum Invariance</strong>. The proved <a href="conjectured-total-independent-sum-extension.html">total independent-sum extension</a> satisfies these assumptions, so this gives a total DU consistency witness.</p>
+<p>More generally, the same proof works whenever <span class="math inline">C-\Pi</span> is supported in an interior square <span class="math inline">[a,1-a]^2</span>, <span class="math inline">0&lt;a&lt;1/2</span>. Its signed marginals vanish because both measures are copulas, which supplies the zero first moment. For instance, replace <span class="math inline">1/2</span> above by any nonzero coefficient <span class="math inline">\epsilon</span> with <span class="math inline">|\epsilon|\le1</span>. These copulas can be arbitrarily close to independence.</p>
+<h2 id="another-family-already-present-copulas-avoiding-simultaneous-tails">4. Another family already present: copulas avoiding simultaneous tails</h2>
+<p>The earlier report’s adjacent-quarter shuffle sends</p>
+<p><span class="math display">\sigma(u)=\begin{cases}
+u+1/4,&amp;0\le u&lt;1/4,\\
+u-1/4,&amp;1/4\le u&lt;1/2,\\
+u+1/4,&amp;1/2\le u&lt;3/4,\\
+u-1/4,&amp;3/4\le u&lt;1.
+\end{cases}</span></p>
+<p>The copula of <span class="math inline">(U,\sigma(U))</span> is manifestly nonindependent. Its already recorded <a href="calibrated-geometric-continuous-ultrafilter.html#shared-clipping-and-shuffle-copula-proof">full proof</a> shows that continuous clipped-expectation preferences satisfy its invariance.</p>
+<p>The reason generalizes: if a fixed copula is supported where at least one coordinate belongs to <span class="math inline">[a,1-a]</span> for some <span class="math inline">a&gt;0</span>, then for each pair of marginals <span class="math inline">\min(|Q_\mu(U)|,|Q_\nu(V)|)</span> has a finite uniform bound. For clipping <span class="math inline">q_i</span> to any windows expanding to both infinities,</p>
+<p><span class="math display">|q_i(x+z)-q_i(x)-q_i(z)|\le2\min(|x|,|z|).</span></p>
+<p>Dominated convergence therefore gives</p>
+<p><span class="math display">E q_i(X+Z)-E q_i(X)-E q_i(Z)\longrightarrow0.</span></p>
+<p>The continuous ultrafilter comparison ignores this vanishing error in both directions. Thus every such copula gives full invariance in those total DU models. This sufficient support condition is not asserted to be necessary.</p>
+<h2 id="what-remains-of-a-counterexample-recipe">5. What remains of a counterexample recipe</h2>
+<p>There is a general <strong>sufficient certificate</strong>, but no guarantee of finding it for every nonindependent copula. For a proposed comparison <span class="math inline">\mu\succeq\lambda</span>, choose background laws <span class="math inline">\nu_1,\ldots,\nu_n</span> and nonnegative weights summing to one. If</p>
+<p><span class="math display">\sum_j a_j T_{C,\nu_j}(\lambda)</span></p>
+<p>strictly stochastically dominates <span class="math inline">\sum_j a_jT_{C,\nu_j}(\mu)</span>, then fixed-copula weak preservation and Mixture Independence rule out the proposed comparison. A zero background may include the untransformed pair. The St Petersburg proof is an explicit certificate of this kind for the diagonal copula, with an additional equal-mean connection handling the reverse orientation.</p>
+<p>For other copulas, the remaining substantive task is to find such dominance certificates or other inconsistent comparison cycles, respecting any needed cancellation directions. Failure of (1) does not supply them: the binary test in §1 produces equal-mean bounded laws, and §§3–4 give copulas for which a universal impossibility theorem would be false.</p>
+</body></html>

@@ -513,3 +513,48 @@ diagnostics for the analytic witnesses. These support the written proofs;
 neither the diagnostics nor the reported external referee verdicts are Lean
 verification. Question counts and rankings printed in the source are historical
 and are not copied as current map statistics.
+
+### St Petersburg incompleteness and nonindependent copulas — 3 October 2026
+
+Zachary Goodsell requested that the simplified proof from the preceding
+conversation be recorded, with an audit of preservation versus cancellation,
+and proposed existential invariance for a copula other than independence.
+The original incompleteness theorem and two-pair mechanism were communicated
+by Branden Fitelson in *Comonotonic Sum Invariance Forces Incompleteness*,
+2 October 2026; the producing AI was not identified. GPT-6 (Codex) supplied
+the simple St Petersburg witness and three-background identity on 2 October,
+and the direction audit and direct preservation argument on 3 October.
+
+`st-petersburg-refutes-total-comonotonic-preservation` records the full proof.
+Weak preservation suffices for each mixture obstruction. The equal-mean
+connection also uses only weak preservation, via an explicit increasing
+common remainder. Forced incomparability without Totality uses cancellation
+once at the final comparison transfer. Under Totality, weak and strict
+preservation give a direct contradiction with no separate cancellation
+assumption. Three new principles make these directions explicit; Preservation
+includes the strict clause, matching the existing independent-sum convention.
+The silver total comonotonic extension is refuted by derived evidence, with
+its original conjecture and attribution retained as history.
+
+`existential-nonindependent-copula-sum-consistency` quantifies over one fixed
+copula different from the product. The existing quarter-shuffle proof
+verifies it for seven clipped-expectation models. The new result
+`independent-sum-eu-imply-nonindependent-copula` gives a second family:
+copulas differing from independence only inside an interior square change
+sum laws by bounded zero-mean signed measures, invisible under EU and Mixture
+Independence. It applies to the proved total independent-sum extension.
+
+The accompanying write-up proves that the product is nevertheless the unique
+copula whose sum operation commutes with all mixtures: two binary laws
+recover every rectangle mass H_C(p,q). This is a recipe for failure of a
+law identity, not a general preference counterexample. The binary outputs
+have equal finite means, and the consistency witnesses rule out a universal
+impossibility claim for all nonindependent copulas. It also records a general
+sufficient finite-mixture dominance certificate without claiming that such
+certificates exist for every copula.
+
+`checks/st_petersburg_comonotonic.py` verifies the infinite-law identities
+with exact symbolic St Petersburg recursion; `checks/nonindependent_copulas.py`
+checks the concrete copula density and finite-law arithmetic. Neither is a
+Lean certificate or an independent referee report. No private PDF is included
+in public files or downloads.

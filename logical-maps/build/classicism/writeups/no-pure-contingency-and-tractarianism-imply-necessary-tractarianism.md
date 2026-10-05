@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **□Tractarianism.** Every closed instance of Tractarianism is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Tractarianism.** Necessarily, a proposition entailing every instance of a property entails its universal generalization.
 
 ## Proof
 

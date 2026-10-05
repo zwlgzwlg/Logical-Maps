@@ -4,11 +4,11 @@
 
 ## Premises
 
-- **□Actuality.** Every closed instance of Actuality is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Actuality.** Necessarily, there is a true proposition that entails every true proposition.
 
 ## Conclusion
 
-- **□Transversal.** Every closed instance of Transversal is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Transversal.** Necessarily, there is a property of properties that picks out exactly one property from each coextension class, that is, exactly one property coextensive with any given property.
 
 ## Proof
 

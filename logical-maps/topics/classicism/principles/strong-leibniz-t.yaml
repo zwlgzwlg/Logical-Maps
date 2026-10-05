@@ -1,6 +1,6 @@
 id: strong-leibniz-t
 name: Strong Leibniz Biconditionals (type t)
-category: instances
+category: lattice
 statement: 'The type-t instance of the Strong Leibniz Biconditionals: every possible proposition is entailed
   by a strong world proposition, one that is possible and necessarily entails every proposition or its
   negation.'

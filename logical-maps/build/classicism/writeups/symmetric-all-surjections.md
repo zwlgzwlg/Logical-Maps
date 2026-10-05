@@ -5,9 +5,9 @@
 ## Package
 
 - **Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
-- **□Boolean Completeness.** Every closed instance of Boolean Completeness is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Boolean Completeness.** Necessarily, every property of entities of a relational type has a greatest lower bound in that type.
 - **BF.** The Barcan Formula at every type. The predicate formulation closes the formula schema using lambda abstraction.
-- **□BF.** Every closed instance of BF is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
 - **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
 - **Atomlessness.** Atomlessness in the displayed closed propositional formulation.
 - **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
@@ -16,7 +16,7 @@
 - **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
 - **Inextensible Comprehension.** Every relation, including a proposition, is coextensive with a inextensible one.
 - **Transversal.** There is a property of properties that picks out exactly one property from each coextension class, that is, exactly one property coextensive with any given property.
-- **□Transversal.** Every closed instance of Transversal is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Transversal.** Necessarily, there is a property of properties that picks out exactly one property from each coextension class, that is, exactly one property coextensive with any given property.
 - **¬ Actuality.** There is a true proposition that entails every true proposition.
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
 - **¬ Rigid Comprehension.** Every relation, including a proposition, is coextensive with a rigid one.

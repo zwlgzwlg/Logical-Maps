@@ -4,12 +4,12 @@
 
 ## Premises
 
-- **□Strong Leibniz Biconditionals (type t).** Every closed instance of Strong Leibniz Biconditionals (type t) is necessary.
-- **□BF.** Every closed instance of BF is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Strong Leibniz Biconditionals (type t).** Necessarily, every possible proposition is entailed by a strong world proposition, one that is possible and necessarily entails every proposition or its negation.
+- **□BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
 
 ## Conclusion
 
-- **□Strong Leibniz Biconditionals.** Every closed instance of the Strong Leibniz Biconditionals is necessary. Box the entire object-variable closure; retain the type range.
+- **□Strong Leibniz Biconditionals.** Necessarily, at each relational type, every possible entity (one distinct from bottom) is entailed by a strong world: a possible entity that necessarily entails every entity of the type or its negation.
 
 ## Proof
 

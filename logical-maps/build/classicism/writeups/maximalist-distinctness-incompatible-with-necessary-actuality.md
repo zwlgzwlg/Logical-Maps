@@ -5,7 +5,7 @@
 ## Premises
 
 - **Distinctness Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
-- **□Actuality.** Every closed instance of Actuality is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Actuality.** Necessarily, there is a true proposition that entails every true proposition.
 
 ## Conclusion
 

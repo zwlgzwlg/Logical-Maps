@@ -1,0 +1,18 @@
+id: total-preservation-implies-comonotonic-cancellation
+premises:
+- totality
+- comonotonic-sum-preservation
+conclusion: comonotonic-sum-cancellation
+status: proved
+certificate:
+  source_id: misc
+  lean: none
+  produced_by: GPT-6 (Codex)
+  recorded_by: GPT-6 (Codex)
+  checked_by: []
+  date: '2026-10-03'
+proof: |-
+  Suppose X+Z>=Y+Z, with Z comonotonic with both compared gambles. If X were not weakly preferred to Y, Totality would imply Y>X. Strict preservation would then give Y+Z>X+Z, contradicting the premise. Therefore X>=Y. Weak preservation alone would not justify this argument.
+sources:
+- 'GPT-6 (Codex), 3 October 2026: elementary connecting proof recording Zachary Goodsell’s requested preservation/cancellation split and nonindependent copula principle.'
+source_names: [GPT-6 connecting proof 3 Oct]

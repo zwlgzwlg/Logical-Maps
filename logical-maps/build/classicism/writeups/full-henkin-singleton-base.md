@@ -5,34 +5,34 @@
 ## Package
 
 - **Fregean Axiom.** Materially equivalent propositions are identical.
-- **□Fregean Axiom.** Every closed instance of Fregean Axiom is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Fregean Axiom.** Necessarily, materially equivalent propositions are identical.
 - **Modalized Fregean Axiom.** Necessarily equivalent propositions are identical.
 - **Extensionality.** At each relational type, coextensive relations are identical; include the nullary propositional case.
-- **□Extensionality.** Every closed instance of Extensionality is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Extensionality.** Necessarily, at each relational type, coextensive relations are identical, including in the nullary propositional case.
 - **Intensionality.** Necessarily coextensive relations are identical.
 - **Functionality.** Operations with the same value on every argument are identical. The output type is relational.
 - **Modalized Functionality.** Necessarily co-functional operations of function types are identical.
-- **□Functionality.** Every closed instance of Functionality is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Functionality.** Necessarily, operations with the same value on every argument are identical. The output type is relational.
 - **Plenitude.** Every total single-valued binary relation is represented by an operation. Its output type is relational, as required by the type system.
-- **□Plenitude.** Every closed instance of Plenitude is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Plenitude.** Necessarily, every total single-valued binary relation is represented by an operation. Its output type is relational, as required by the type system.
 - **Functional Choice.** Every serial binary relation admits a selecting operation. Its output type is relational, as required by the type system.
 - **Relational Choice.** Every serial binary relation has a functional subrelation.
 - **Tractarianism.** A proposition entailing every instance of a property entails its universal generalization.
-- **□Tractarianism.** Every closed instance of Tractarianism is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
-- **□ND.** Every closed instance of ND is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
-- **□Actuality.** Every closed instance of Actuality is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
-- **□Atomicity.** Every closed instance of Atomicity is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
-- **□Boolean Completeness.** Every closed instance of Boolean Completeness is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
-- **□Rigid Comprehension.** Every closed instance of Rigid Comprehension is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
-- **□Gallin Extensional Comprehension.** Every closed instance of Gallin Extensional Comprehension is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Tractarianism.** Necessarily, a proposition entailing every instance of a property entails its universal generalization.
+- **□ND.** Necessarily, distinct things of any type are necessarily distinct.
+- **□Actuality.** Necessarily, there is a true proposition that entails every true proposition.
+- **□Atomicity.** Necessarily, every non-bottom entity of each relational type has an atom below it.
+- **□Boolean Completeness.** Necessarily, every property of entities of a relational type has a greatest lower bound in that type.
+- **□Rigid Comprehension.** Necessarily, every relation, including a proposition, is coextensive with a rigid one.
+- **□Gallin Extensional Comprehension.** Necessarily, every relation is coextensive with one that is persistent and has a persistent pointwise negation.
 - **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
 - **Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
 - **Strong Leibniz Biconditionals.** At each relational type, every possible entity (one distinct from bottom) is entailed by a strong world: a possible entity that necessarily entails every entity of the type or its negation. The right-to-left direction is a theorem of C; the principle records the substantive direction.
-- **□Strong Leibniz Biconditionals.** Every closed instance of the Strong Leibniz Biconditionals is necessary. Box the entire object-variable closure; retain the type range.
+- **□Strong Leibniz Biconditionals.** Necessarily, at each relational type, every possible entity (one distinct from bottom) is entailed by a strong world: a possible entity that necessarily entails every entity of the type or its negation.
 - **No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
 - **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
-- **□Relational Choice.** Every closed instance of Relational Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
-- **□Functional Choice.** Every closed instance of Functional Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
+- **□Functional Choice.** Necessarily, every serial binary relation admits a selecting operation. Its output type is relational, as required by the type system.
 - **¬ Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
 - **¬ Infinity Schema (type t).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
 - **¬ Atomlessness.** Atomlessness in the displayed closed propositional formulation.

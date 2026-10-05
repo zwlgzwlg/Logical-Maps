@@ -106,11 +106,11 @@ try{
 
   // A closed category still reports the assumptions it holds, or collapsing
   // one would hide a choice the reader made.
-  w.eval('changeBackground("beta0", true)');
+  w.eval('setTheoryAssumption("beta0", "positive")');
   assert.deepEqual(state('explorer'),['one:open','two:closed'],'The category holding the new assumption is still closed');
   assert.equal(summary('explorer','two').querySelector('.pr-category-count').textContent,'1 assumed','And says so');
   assert.equal(summary('explorer','one').querySelector('.pr-category-count').textContent,'','A category with none says nothing');
-  w.eval('changeBackground("beta0", false)');
+  w.eval('setTheoryAssumption("beta0", null)');
 
   // Reaching a row inside a closed category opens it, as find-in-page does.
   click(summary('graph','one'));
@@ -119,6 +119,36 @@ try{
   input.value='Beta 3'; input.dispatchEvent(new w.Event('input',{bubbles:true}));
   assert.ok(d.querySelector('[data-pr-row="beta3"]').classList.contains('search-current'),'The search finds the row');
   assert.deepEqual(state('graph'),['one:closed','two:open'],'And opens the category it is in, leaving the other closed');
+
+  // Each list has one control that opens every category, then closes them all.
+  const expanders={graph:'#pr-heading',lattice:'#lat-pr-heading',explorer:'#models .ex-head'};
+  for (const [view,selector] of Object.entries(expanders))
+    assert.equal(d.querySelectorAll(`${selector} [data-expand-categories]`).length,1,`The ${view} offers expand all`);
+  const expander=view=>d.querySelector(`${expanders[view]} [data-expand-categories]`);
+  assert.equal(expander('graph').textContent,'expand all');
+  click(expander('explorer'));
+  for (const view of Object.keys(lists)) assert.deepEqual(state(view),['one:open','two:open'],`Expand all opens every category in the ${view}`);
+  for (const view of Object.keys(expanders)) assert.equal(expander(view).textContent,'collapse all','Every list offers the reverse');
+  click(expander('graph'));
+  for (const view of Object.keys(lists)) assert.deepEqual(state(view),['one:closed','two:closed'],`Collapse all closes every category in the ${view}`);
+  assert.equal(expander('lattice').textContent,'expand all');
+  assert.equal(page(data(20,[])).window.document.querySelector('[data-expand-categories]'),null,'A single list needs no such control');
+
+  // A topic may name the principles the graph starts with.
+  {
+    const fixture=data(4);fixture.topic.initial_principles=['alpha0','beta1'];
+    const pd=page(fixture).window.document;
+    const on=[...pd.querySelectorAll('#pr-filters [data-show-positive]')].filter(b=>b.getAttribute('aria-pressed')==='true').map(b=>b.dataset.showPositive);
+    assert.deepEqual(on,['alpha0','beta1'],'Only the initial principles start on the graph');
+    assert.equal(pd.querySelectorAll('#pr-filters .pr-row').length,8,'The rest stay in the sidebar');
+    assert.deepEqual(JSON.parse(pd.defaultView.eval('JSON.stringify(lattice.shown)')),['alpha0','beta1'],'The lattice starts from the same principles');
+    pd.getElementById('lat-clear').click();
+    pd.getElementById('lat-reset').click();
+    assert.deepEqual(JSON.parse(pd.defaultView.eval('JSON.stringify(lattice.shown)')),['alpha0','beta1'],'The lattice reset returns to them');
+    const graphPressed=()=>[...pd.querySelectorAll('#pr-filters [data-show-positive]')].filter(b=>b.getAttribute('aria-pressed')==='true').length;
+    pd.getElementById('pr-all').click(); assert.equal(graphPressed(),8);
+    pd.getElementById('pr-reset').click(); assert.equal(graphPressed(),2,'The graph reset returns to them');
+  }
 
   assert.deepEqual(errors.map(String),[]);
   console.log('PASS: categories collapse in the graph sidebar, the lattice sidebar and the theory explorer, from one shared set; a long list starts closed and a short one open; rows sit inside the disclosure while the group\'s controls stay in the summary and work closed; a rebuild keeps the reader\'s choice; a closed category reports its count and its assumptions; and a search opens the category it lands in.');

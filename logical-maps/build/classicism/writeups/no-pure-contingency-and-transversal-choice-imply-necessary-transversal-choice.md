@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **□Transversal Choice.** Every closed instance of Transversal Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Transversal Choice.** Necessarily, every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.
 
 ## Proof
 

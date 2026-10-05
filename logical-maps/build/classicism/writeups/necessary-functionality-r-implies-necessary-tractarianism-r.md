@@ -4,11 +4,11 @@
 
 ## Premises
 
-- **□Functionality.** Every closed instance of Functionality is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Functionality.** Necessarily, operations with the same value on every argument are identical. The output type is relational.
 
 ## Conclusion
 
-- **□Tractarianism.** Every closed instance of Tractarianism is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Tractarianism.** Necessarily, a proposition entailing every instance of a property entails its universal generalization.
 
 ## Proof
 

@@ -1,6 +1,6 @@
 id: atomlessness
 name: Atomlessness
-category: instances
+category: lattice
 statement: Atomlessness in the displayed closed propositional formulation.
 formal: $\forall p\, .\,\Diamond p\to\exists q\, .\,\Diamond q\land q\le p\land q\ne p$
 date: '2026-09-17'

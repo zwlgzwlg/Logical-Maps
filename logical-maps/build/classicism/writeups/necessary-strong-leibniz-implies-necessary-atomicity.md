@@ -4,11 +4,11 @@
 
 ## Premises
 
-- **□Strong Leibniz Biconditionals.** Every closed instance of the Strong Leibniz Biconditionals is necessary. Box the entire object-variable closure; retain the type range.
+- **□Strong Leibniz Biconditionals.** Necessarily, at each relational type, every possible entity (one distinct from bottom) is entailed by a strong world: a possible entity that necessarily entails every entity of the type or its negation.
 
 ## Conclusion
 
-- **□Atomicity.** Every closed instance of Atomicity is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Atomicity.** Necessarily, every non-bottom entity of each relational type has an atom below it.
 
 ## Proof
 

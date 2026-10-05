@@ -82,6 +82,14 @@
         }
       }
     },
+    "initial_principles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true,
+      "description": "Principle ids the graph starts with; the rest start hidden and stay available in the sidebar. Omit to start with every principle shown."
+    },
     "framework": {
       "type": "string",
       "description": "The setting all principles are stated in: the objects, the primitive relation(s), standing conventions. Every result is a claim about this framework."

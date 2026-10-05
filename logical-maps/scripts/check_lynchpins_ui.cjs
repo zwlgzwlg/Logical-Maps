@@ -306,10 +306,18 @@ try {
   assert.equal(fd.getElementById('open-progress').textContent,'40% of 15 questions with up to two premises are settled.');
   negative('r').click();
   show(filtered,'graph');
-  assert.equal(positive('r').getAttribute('aria-pressed'),'false','selection survives switching tabs');
+  assert.equal(positive('r').getAttribute('aria-pressed'),'true','the graph keeps its own shown principles');
   positive('r').click();
   show(filtered,'open');
-  for(const id of sections) assert.deepEqual(keys(filtered,id),original[id],'showing R on the graph restores the lists');
+  assert.equal(positive('r').getAttribute('aria-pressed'),'false','and the conjecture lists theirs');
+  for(const id of sections) assert.deepEqual(keys(filtered,id),withoutR[id],'hiding R on the graph leaves the lists alone');
+  fd.getElementById('pr-reset').click();
+  for(const id of sections) assert.deepEqual(keys(filtered,id),original[id],'reset restores the lists');
+  show(filtered,'graph');
+  assert.equal(positive('r').getAttribute('aria-pressed'),'false','without touching the graph');
+  fd.getElementById('pr-reset').click();
+  assert.equal(positive('r').getAttribute('aria-pressed'),'true','whose own reset restores it');
+  show(filtered,'open');
   assert.equal(fd.getElementById('open-progress').textContent,'18% of 33 questions with up to two premises are settled.');
 
   const category=fd.querySelector('#pr-filters [data-category-select]');

@@ -1,8 +1,7 @@
 id: necessary-transversal-choice-r
 name: □Transversal Choice
 category: choice
-statement: Every closed instance of Transversal Choice is necessary. Box the entire object-variable
-  closure; retain the same type range and other schema side conditions.
+statement: "Necessarily, every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells."
 formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of Transversal Choice}$
 date: '2026-09-26'
 sources:
@@ -14,3 +13,8 @@ notes: >-
   Box each fully closed instance of Transversal Choice. Type quantifiers remain outside the box. Unlike
   Transversal Choice itself, this makes the transversal condition hold at every accessible world, for
   every relation that is an equivalence relation there.
+changes:
+- date: '2026-10-03'
+  by: Claude Opus 5.5 (Anthropic)
+  summary: Restated the statement as the necessitation of the base principle's statement, in place of
+    a generic description of necessitation; the formal statement is unchanged.

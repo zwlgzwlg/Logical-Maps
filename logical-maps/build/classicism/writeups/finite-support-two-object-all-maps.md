@@ -8,14 +8,14 @@
 - **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Relational Choice.** Every serial binary relation has a functional subrelation.
-- **□Relational Choice.** Every closed instance of Relational Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
 - **Transversal Choice.** Every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.
 - **B for pure sentences.** The B instance for every closed sentence in the pure language.
 - **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
 - **Necessity of Arithmetic.** Every arithmetical sentence is either necessarily true or necessarily false, given that possibly zero is not a successor and successor is injective on numbers. One sentence for each arithmetical sentence.
 - **¬ Vicinity.** There is a true proposition that entails the possibility of each true proposition.
 - **¬ Weakly Inextensible Comprehension.** Every relation, including a proposition, is coextensive with a weakly inextensible one.
-- **¬ □BF.** Every closed instance of BF is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **¬ □BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
 - **¬ Atomlessness.** Atomlessness in the displayed closed propositional formulation.
 - **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
 - **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
@@ -26,7 +26,7 @@
 - **¬ Actuality.** There is a true proposition that entails every true proposition.
 - **¬ Boolean Completeness (type t).** Boolean Completeness (type t) in the displayed closed propositional formulation.
 - **¬ Countable Boolean Completeness.** Every countable property of entities of a relational type has a least upper bound in that type, where a property is countable when it injects into the natural numbers.
-- **¬ □BF (type t).** Every closed instance of BF (type t) is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **¬ □BF (type t).** Necessarily, BF (type t) holds, in the displayed closed propositional formulation.
 - **¬ Inextensible Comprehension.** Every relation, including a proposition, is coextensive with a inextensible one.
 
 ## Construction

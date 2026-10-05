@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **□Fregean Axiom.** Every closed instance of Fregean Axiom is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Fregean Axiom.** Necessarily, materially equivalent propositions are identical.
 
 ## Proof
 

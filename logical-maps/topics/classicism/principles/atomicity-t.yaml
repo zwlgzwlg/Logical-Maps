@@ -1,6 +1,6 @@
 id: atomicity-t
 name: Atomicity (type t)
-category: instances
+category: lattice
 statement: Atomicity (type t) in the displayed closed propositional formulation.
 formal: $\forall p\, .\,p\le\neg p\lor\exists q\, .\,\operatorname{Atom}_t(q)\land q\le p$
 date: '2026-09-17'

@@ -9,7 +9,7 @@
 - **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Relational Choice.** Every serial binary relation has a functional subrelation.
-- **□Relational Choice.** Every closed instance of Relational Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
 - **Transversal Choice.** Every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.
 - **¬ Vicinity.** There is a true proposition that entails the possibility of each true proposition.
 - **¬ ND.** Distinct things of any type are necessarily distinct.

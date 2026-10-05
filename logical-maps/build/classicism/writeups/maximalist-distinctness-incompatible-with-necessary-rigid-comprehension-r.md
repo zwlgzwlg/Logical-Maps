@@ -5,7 +5,7 @@
 ## Premises
 
 - **Distinctness Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
-- **□Rigid Comprehension.** Every closed instance of Rigid Comprehension is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Rigid Comprehension.** Necessarily, every relation, including a proposition, is coextensive with a rigid one.
 
 ## Conclusion
 

@@ -1,0 +1,12 @@
+id: comonotonic-sum-preservation
+name: Comonotonic Sum Preservation
+statement: |-
+  If X and Z are comonotonic, and Y and Z are comonotonic, then $X\succeq Y$ implies $X+Z\succeq Y+Z$, and $X\succ Y$ implies $X+Z\succ Y+Z$. A pair is comonotonic when its members admit nondecreasing representations in one common uniform random variable.
+category: invariance-principles
+tags: [background-risk]
+sources:
+- 'Zachary Goodsell, project conversation, 3 October 2026: request to distinguish preservation and cancellation in the St Petersburg incompleteness proof. Precise separation recorded by GPT-6 (Codex).'
+source_names: [Goodsell preservation/cancellation audit 3 Oct]
+notes: |-
+  Includes both weak and strict preservation, following the existing Independent Sum Preservation convention. Numerical scope is the same as Comonotonic Sum Invariance. Under Totality this principle supplies cancellation; weak preservation alone does not justify that order-theoretic argument. The St Petersburg contradiction can also be proved directly with this principle and Totality, without assuming cancellation separately.
+date: '2026-10-03'

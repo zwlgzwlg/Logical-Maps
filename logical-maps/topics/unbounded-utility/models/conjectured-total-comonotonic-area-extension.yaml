@@ -43,6 +43,15 @@ source_names:
 - GPT-6 conjecture 9 Sep
 - Claude killing lemma 23 Sep
 notes: >-
+  Resolution, 3 October 2026: the package is inconsistent by
+  st-petersburg-refutes-total-comonotonic-preservation. Comonotonic Sum
+  Invariance implies weak and strict preservation, already incompatible
+  with DTU by the recorded St Petersburg proof. The original AI theorem
+  was communicated by Branden Fitelson; GPT-6 (Codex) supplied the simpler
+  witness and direction audit. Status and silver tier remain the historical
+  conjecture metadata; the engine derives the refuting verdict. The earlier
+  research notes below are preserved as history.
+
   Original work: precise candidate formulation and comparison of two
   extension problems. The base area construction, its comonotonic
   property, and the broader unresolved consistency question are credited
@@ -69,6 +78,9 @@ changes:
   by: Zachary Goodsell (tier); Claude (Fable 5.1) (notes and write-up)
   summary: >-
     Tier raised to silver by Zachary Goodsell. The write-up section on forced comparisons was expanded with the coordinate reduction, three certificates that a pair is not killed, worked block regions (a prefix-oscillating region that is killed, one that is not, and doubly infinite variants), an accounting heuristic suggesting that no pair is killed in both orientations, a duality caveat, and candidate constructions; the notes summarize them. No status change.
+- date: '2026-10-03'
+  by: GPT-6 (Codex), simplified proof and direction audit; original AI theorem communicated by Branden Fitelson
+  summary: The new St Petersburg incompatibility refutes this candidate without its CDF-area clause. The proof uses weak preservation for the mixture obstruction; forced incomparability also uses cancellation, while the totality contradiction needs only preservation with its strict clause. The original conjecture status, tier, and certificate date are preserved.
 references:
 - paper: unpublished-background-risk
   role: background

@@ -4,7 +4,7 @@
 
 ## Premises
 
-- **□ND (type t).** Every closed instance of ND (type t) is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□ND (type t).** Necessarily, ND (type t) holds, in the displayed closed propositional formulation.
 
 ## Conclusion
 

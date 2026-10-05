@@ -4,7 +4,7 @@
 
 ## Premises
 
-- **□Actuality.** Every closed instance of Actuality is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Actuality.** Necessarily, there is a true proposition that entails every true proposition.
 
 ## Conclusion
 

@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **□Relational Choice.** Every closed instance of Relational Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
 
 ## Proof
 

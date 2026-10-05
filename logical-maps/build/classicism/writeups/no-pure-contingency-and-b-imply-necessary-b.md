@@ -9,7 +9,7 @@
 
 ## Conclusion
 
-- **□B.** Every closed instance of B is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□B.** Necessarily, every true proposition is necessarily possible.
 
 ## Proof
 

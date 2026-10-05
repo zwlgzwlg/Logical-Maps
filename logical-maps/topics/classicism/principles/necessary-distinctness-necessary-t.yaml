@@ -1,8 +1,7 @@
 id: necessary-distinctness-necessary-t
 name: □ND (type t)
-category: instances
-statement: Every closed instance of ND (type t) is necessary. Box the entire object-variable closure;
-  retain the same type range and other schema side conditions.
+category: coarse
+statement: "Necessarily, ND (type t) holds, in the displayed closed propositional formulation."
 formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of ND (type t)}$
 date: '2026-09-17'
 sources:
@@ -15,3 +14,8 @@ references:
   locator: §2.1, pp. 21–23; §§2.2–2.3, pp. 25–34
 notes: Box each fully closed instance of ND (type t). Type quantifiers and formula side conditions remain
   outside the box.
+changes:
+- date: '2026-10-03'
+  by: Claude Opus 5.5 (Anthropic)
+  summary: Restated the statement as the necessitation of the base principle's statement, in place of
+    a generic description of necessitation; the formal statement is unchanged.

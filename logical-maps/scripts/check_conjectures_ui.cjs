@@ -97,7 +97,7 @@ try {
   assert.equal(doc.querySelectorAll('#graph-sidebar').length,1);
   assert.equal(doc.querySelector('[data-source-filter="paper"]'),sourceCheckbox);
   assert.equal(doc.querySelector('#pr-filters [data-show-positive="e"]'),graphCheckbox);
-  assert.equal(graphCheckbox.getAttribute('aria-pressed'),'false');
+  assert.equal(graphCheckbox.getAttribute('aria-pressed'),'true','the conjecture lists keep their own shown principles');
   assert.equal(doc.getElementById('source-filter-heading').textContent,'Evidence sources');
   assert.ok(!visible(dom,doc.getElementById('graph-options')));
   assert.ok(visible(dom,doc.getElementById('conjecture-options')));
@@ -183,8 +183,10 @@ try {
   assert.deepEqual(assumptions(dom),[]);
   assert.deepEqual(keys(dom),['q|b|a','q|a|b','q|b|false']);
 
-  // Actual topic: the preserved DTU conjecture keeps its history, and the recorded list
-  // under DTU carries the silver-ranked open question at its rank.
+  // Actual topic: the preserved DTU conjecture keeps its history. The silver conjecture, a total
+  // comonotonic extension of the CDF-area preorder, was refuted on 3 October 2026 by the St
+  // Petersburg result, so under DU and DTU it is settled: it waits for Show resolved and is then
+  // listed, unranked, as refuted. An open recorded conjecture sits at its rank.
   const data=JSON.parse(fs.readFileSync(path.join(root,'build/unbounded-utility/data.json'),'utf8'));
   const historical=['symmetric-dtu-refutes-independent-sum-candidate','conjectured-total-independent-sum-extension','conjectured-dtu-cancellation-implies-preservation'];
   for(const id of historical) {
@@ -196,19 +198,27 @@ try {
   const du=assumptions(real);
   show(real,'open'); openSection(real,'open-recorded');
   const silver=()=>rd.querySelector('#open-recorded [data-starred="silver"]');
-  // Under DU the silver conjecture keeps Totality among its premises, three in all, so it
-  // is listed unranked; under DTU it is the open two-premise question CDF-Area Extension ∧
-  // Comonotonic Sum Invariance ⊬ ⊥, at its rank.
-  assert.ok(silver(),'listed under DU'); assert.equal(silver().dataset.status,'outside','with more than two premises there');
-  assert.equal(silver().dataset.claim,'not','a model conjectures against the entailment');
+  const refutedSilver=label=>{
+    assert.equal(silver(),null,`settled under ${label}, so it waits for Show resolved`);
+    setResolved(real,true);
+    assert.ok(silver(),`listed under ${label} with Show resolved`);
+    assert.equal(silver().dataset.status,'inconsistent','the package it asks about is inconsistent');
+    assert.equal(silver().dataset.claim,'not','a model conjectures against the entailment');
+    assert.equal(silver().querySelector('.status').textContent,'refuted');
+    assert.equal(silver().querySelector('td.rank').textContent,'—','unranked once settled');
+    assert.match(silver().textContent,/⊬ ⊥/);
+    assert.ok(silver().querySelector('.links button[data-open-model]'),'with a link to the record');
+    setResolved(real,false);
+  };
+  refutedSilver('DU');
   assert.ok(keys(real).every(k=>!rowOf(real,k).dataset.status||rowOf(real,k).dataset.status==='outside'),'settled ones wait for Show resolved');
+  const affine=rowOf(real,'q|comonotonic-sum-consistency|rational-affine-preservation');
+  assert.ok(affine,'an open recorded conjecture is listed under DU');
+  assert.equal(affine.dataset.status,undefined);
+  assert.match(affine.querySelector('td.rank').textContent,/^\d+$/,'at its rank');
   real.window.addBackgroundPreset('dtu');
   assert.deepEqual(assumptions(real),[...du,'totality'].sort());
-  assert.ok(silver(),'open under DTU as a two-premise question');
-  assert.equal(silver().dataset.status,undefined);
-  assert.match(silver().querySelector('td.rank').textContent,/^\d+$/,'at its rank');
-  assert.match(silver().textContent,/⊬ ⊥/);
-  assert.ok(silver().querySelector('.links button[data-open-model]'),'with a link to the record');
+  refutedSilver('DTU');
   assert.ok(visible(real,rd.querySelector('#background-dock [data-background-preset="du"]')));
   assert.ok(visible(real,rd.querySelector('#background-dock [data-background-preset="dtu"]')));
   const shown=keys(real).length;
@@ -218,11 +228,13 @@ try {
 
   // Inconsistent backgrounds have their own warning; no explosion is used to
   // silently settle the remaining questions, and removing the cause restores the list.
+  setResolved(real,true);
   rd.querySelector('#pr-filters [data-add-background="archimedean-gambles"]').click();
   assert.equal(rd.getElementById('open-warning').hidden,false);
   rd.querySelector('#background-list [data-remove-background="archimedean-gambles"]').click();
   assert.equal(rd.getElementById('open-warning').hidden,true);
   assert.ok(silver());
+  setResolved(real,false);
   // Hidden inconsistent evidence cannot turn a question into a genuine open
   // question, nor may inconsistency manufacture a proof by explosion.
   sourceCheckbox.click();

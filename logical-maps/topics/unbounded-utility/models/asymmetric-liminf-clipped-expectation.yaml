@@ -12,6 +12,7 @@ satisfies:
 - l1-continuity
 - shift-invariance
 - existential-copula-sum-consistency
+- existential-nonindependent-copula-sum-consistency
 - positive-affine-invariance
 violates:
 - totality
@@ -61,3 +62,9 @@ references:
 - paper: decision-theory-unbound
   role: background
   locator: Appendix B, Definition 3, Lemma 6 and Remark 3
+changes:
+- date: '2026-10-03'
+  by: GPT-6 (Codex), classification of the previously recorded AI shuffle proof communicated by Branden Fitelson
+  summary: 'The same fixed adjacent-quarter shuffle is nonindependent: its joint CDF at (1/4,1/4) is zero rather than 1/16. The existing full invariance proof therefore also verifies Existential Nonindependent Copula Sum Invariance; no new construction or original-author attribution is claimed.'
+  satisfies:
+  - existential-nonindependent-copula-sum-consistency

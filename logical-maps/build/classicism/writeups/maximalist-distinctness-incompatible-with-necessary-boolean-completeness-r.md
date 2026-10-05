@@ -5,7 +5,7 @@
 ## Premises
 
 - **Distinctness Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
-- **□Boolean Completeness.** Every closed instance of Boolean Completeness is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Boolean Completeness.** Necessarily, every property of entities of a relational type has a greatest lower bound in that type.
 
 ## Conclusion
 
