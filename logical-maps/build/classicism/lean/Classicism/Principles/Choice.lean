@@ -77,4 +77,12 @@ def TransversalChoice (σ : Type) [Ty σ] : Prop :=
 /-- `necessary-transversal-choice-r` at `σ`: the instance boxed. -/
 def NecTransversalChoice (σ : Type) [Ty σ] : Prop := □ (TransversalChoice σ)
 
+open Classicism.Paper in
+/-- `intensional-choice-r` at `σ`: if a property is necessarily instantiated, some property
+entailing it is necessarily uniquely instantiated. -/
+def IntensionalChoice (σ : Type) [Ty σ] : Prop :=
+  ∀ F : σ → Prop, □ (∃ x, F x) → ∃ G : σ → Prop, G ≤ F ∧ □ (∃ x, G x ∧ ∀ y, G y → y = x)
+/-- `necessary-intensional-choice-r` at `σ`: the instance boxed. -/
+def NecIntensionalChoice (σ : Type) [Ty σ] : Prop := □ (IntensionalChoice σ)
+
 end Classicism.P

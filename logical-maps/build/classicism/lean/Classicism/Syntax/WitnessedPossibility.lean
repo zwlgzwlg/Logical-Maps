@@ -219,6 +219,23 @@ def independence : AxiomSet Sig := fun a => a.closedTypes = true ∧
     (c :: ds).Nodup ∧
       a = Term.neg (Term.eq' (h ▸ Term.const c) (Term.appBlock (Term.ofPure A) (Terms.consts ds)))
 
+/-- **General Separated Structure**: `P[c̄/x̄] = Q[c̄/x̄] → λx̄. P = λx̄. Q`, for terms `P`, `Q` of
+`Σ`'s language with their free variables among the block `x̄` and none of the distinct
+constants `c̄` in them.
+
+The map states it as `F a₁ ⋯ aₙ = G b₁ ⋯ bₘ → λx̄. F(πa₁) ⋯ (πaₙ) = λx̄. G(πb₁) ⋯ (πbₘ)`, for
+closed `F`, `G` without the constants, `a`'s and `b`'s constants possibly repeated, and `π` a
+bijection from `x̄` to the distinct ones. Each such instance is one of these, with
+`P := F(πa₁) ⋯ (πaₙ)`, whose `P[c̄/x̄]` is `F a₁ ⋯ aₙ`; and each of these is equivalent in `C`,
+by β, to one of the map's, with `F := λx̄. P` applied to the constants `c̄` in order. -/
+def generalSeparatedStructure : AxiomSet Sig := fun a => a.closedTypes = true ∧
+  ∃ (cs : List Sig.Const) (ρ : RTy) (P Q : Term Sig (Ctx.block (cs.map Sig.typeOf) []) ρ),
+    cs.Nodup ∧ (∀ c ∈ cs, c ∉ P.consts ∧ c ∉ Q.consts) ∧
+      a = Term.imp
+        (Term.eq' (P.subst (Sub.consBlock (Terms.consts cs) Sub.id))
+          (Q.subst (Sub.consBlock (Terms.consts cs) Sub.id)))
+        (Term.eq' (Term.lamBlock _ P) (Term.lamBlock _ Q))
+
 end AxiomSet
 
 end Classicism.Meta

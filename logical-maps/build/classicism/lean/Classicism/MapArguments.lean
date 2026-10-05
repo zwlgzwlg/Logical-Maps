@@ -1,6 +1,7 @@
 import Classicism.MapModels
 import Classicism.Models.Conditions
 import Classicism.Semantics.OneIndividual
+import Classicism.Semantics.Interpretations
 import Mathlib.SetTheory.Cardinal.NatCard
 
 /-!
@@ -329,6 +330,24 @@ theorem pure_b_r : Statements.Arguments.fewer_propositions_after.pure_b_r := by
   exact hn (H _ ⟨Count.closedTypes_b_count (by decide) n, _, rfl⟩)
 
 end fewer_propositions_after
+
+namespace sigma_top
+
+/-- With `Σ` by tops, `c ≠ ⊤_ρ` is an instance of Independence that fails
+(`Premodel.not_holdsAx_independence_of_sigmaTop`). -/
+theorem independence_signature_r : Statements.Arguments.sigma_top.independence_signature_r :=
+  fun _ M hS hT => not_holdsAx_independence_of_sigmaTop M hS hT
+
+end sigma_top
+
+namespace sigma_top_npc
+
+/-- With `Σ` by tops, a sentence of `Σ` denotes what a pure sentence does, so No Pure
+Contingency gives No Contingency relative to `Σ` (`Premodel.holdsAx_nc_of_sigmaTop`). -/
+theorem no_contingency_signature_r : Statements.Arguments.sigma_top_npc.no_contingency_signature_r :=
+  fun _ M _ hT hN => holdsAx_nc_of_sigmaTop M hT hN
+
+end sigma_top_npc
 
 /-! ## Arguments of the finite-support models on one object -/
 

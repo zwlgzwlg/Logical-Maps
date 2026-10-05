@@ -78,4 +78,17 @@ theorem boolean_completeness_r_implies_countable_boolean_completeness_r
     BooleanCompleteness τ → CountableBooleanCompleteness τ := fun bc X _ =>
   (bc (λ z ↦ UB z X)).elim fun y hy => ⟨y, lub_of_glb_ubs X y hy⟩
 
+
+/-- `necessary-countable-boolean-completeness-r-implies-countable-boolean-completeness-r`:
+`T`. -/
+theorem necessary_countable_boolean_completeness_r_implies_countable_boolean_completeness_r
+    {τ : Type} [Rel τ] : NecCountableBooleanCompleteness τ → CountableBooleanCompleteness τ :=
+  box_elim
+/-- `necessary-boolean-completeness-r-implies-necessary-countable-boolean-completeness-r`: the
+unboxed record, necessitated. -/
+theorem necessary_boolean_completeness_r_implies_necessary_countable_boolean_completeness_r
+    {τ : Type} [Rel τ] [Order τ] [Pointwise τ] :
+    NecBooleanCompleteness τ → NecCountableBooleanCompleteness τ :=
+  modal_K _ _ (nec% (boolean_completeness_r_implies_countable_boolean_completeness_r (τ := τ)))
+
 end Classicism.Proofs

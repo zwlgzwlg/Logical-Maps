@@ -19,8 +19,10 @@ The models are those of Appendix D (`Models/`) and the two M-set models of §3
 (`Semantics/IntensionalExamples.lean`), over the pure signature. A principle at every
 signature, `P.X.schemaIn`, holds in such a model iff its pure schema does
 (`Premodel.holdsAx_schemaIn_iff`), so each certificate cites a verdict proved in `Models/`
-about a sentence of the schema. A verdict on a principle relative to a signature would need a
-model of an admitted signature (the statement then also asks `Admitted`); none is here yet.
+about a sentence of the schema. A verdict on a principle relative to a signature is about a
+model of an admitted signature (the statement then also asks `Admitted`): the record's model
+with `Σ` interpreted (`Semantics/Interpretations.lean`), certified through the map's arguments
+(`MapDerived.lean`).
 
 What composes these into a certificate of a whole model, the map's model statement, is
 `Premodel.theory` (`Semantics/IntensionalTheory.lean`): the theory of a model of an admitted

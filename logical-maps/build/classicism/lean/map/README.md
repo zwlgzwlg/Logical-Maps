@@ -57,6 +57,15 @@ Lean a sentence's type records its signature, and `ofPure` is the inclusion. The
 `lean_def`s; Actual Profile's is its list form (`P.ActualProfile.listSchemaIn`), since the
 map states it for tuples.
 
+Since 6 October every principle has one. Two are schemas over syntax written directly:
+General Separated Structure (`generalSeparatedStructure _`, as `P[c̄/x̄] = Q[c̄/x̄] → λx̄. P =
+λx̄. Q`; its docstring says why that is the map's schema up to β), and Necessity of Arithmetic
+(`ofPure necessityOfArithmetic`, over Goodsell's arithmetical sentences `AForm`, in
+`Certified/Arithmetic.lean`). The latter's vocabulary, `𝟎`, `Suc`, `ℕ`, `Sum` and `Prod`, is
+written as shallow definitions and quoted by `#classicism_quote_term`
+(`Tools/QuoteTerm.lean`), which checks each term's reading against its definition as
+`#classicism_quote` does a statement's.
+
 ## The shape of a statement
 
 A result, `A₁, …, Aₙ ⇒ C`:
@@ -196,7 +205,7 @@ usually in a line or two (`Models/FullActionModels.lean`, `MapModels.lean`'s `Me
 verdict the engine derives from others is not proved at all. So the six full action models of
 §3 have no arguments of their own left: everything they get beyond the derivation is a topic
 argument, and their `lean.verdicts`, proved one by one before the arguments existed, are
-superseded but kept. The Σ verdicts and `three-numbers`, `intensional-choice-well-ordering` and
+superseded but kept. `three-numbers`, `intensional-choice-well-ordering` and
 `rigid-power-tight` are the ones without Lean yet. The finite-support models' group meets
 `extensionally-full` (`Premodel.ideal_extFull`: the intension blind to arrows is pinned down by
 `∅`) and `metatheory-choice` in Lean.
@@ -210,10 +219,31 @@ the map's prose:
   where the argument claims it at every relational type.
 
 Not proved yet for other reasons: `three-numbers` (Countable Boolean Completeness with one
-individual: the finite cardinalities are three, and a countable property's join exists),
-`sigma-top` and `sigma-top-npc` (they need models of an admitted signature, with `Σ`
-interpreted), and `intensional-choice-well-ordering` and `rigid-power-tight` (their principles
-have no `lean_def`).
+individual: the finite cardinalities are three, and a countable property's join exists), and
+`intensional-choice-well-ordering` and `rigid-power-tight` (their principles have no
+`lean_def`).
+
+**Models with `Σ` interpreted.** A verdict on a principle relative to the signature is about
+a model of an admitted signature, and the statement also asks `Admitted`. The record's Lean
+model is of the pure language; the topic builds the model with `Σ` interpreted from it by
+the record's setting `sigma` (`topic.yaml`, `lean.verdict.relative_models`), so no record
+names it. For `sigma: top` it is `Premodel.withTop B M`, with `Σ` one constant of type `t`
+denoting `⊤` (`Signature.sigmaTop`), in `Semantics/Interpretations.lean`. What makes it work
+is substitution of definitions for constants: where each constant denotes what a closed pure
+term denotes, a term of `Σ` denotes what the pure term with the definitions substituted
+denotes (`sem_substConsts`). So the reinterpretation of a model is a model
+(`isModel_interp`), its verdicts at every signature are the original model's
+(`holdsAx_interp_ofPure`), and No Pure Contingency gives No Contingency relative to `Σ`.
+
+On 6 October two topic arguments gave 24 Σ verdicts this way: `sigma-top` (Independence
+relative to `Σ` fails, at `c ≠ ⊤_ρ`) and `sigma-top-npc` (No Contingency relative to `Σ`
+holds, given No Pure Contingency). A relative argument's statement has the hypothesis
+`Admitted` after the model's (`lean.argument.relative`). With these the engine settles 11 or 12
+of the 14 Σ verdicts of each one-object model from Lean alone. What it lacks: General Separated
+Structure has no `lean_def`, and the results Separated Structure ⇒ Possibly Witnessed
+Possibility and Strong Possibility (`Σ`) ⇒ Possibility (`Σ`) are stated, not proved. Not
+done yet: the rest of `sigma-top` (Witnessed Possibility, which the two-object chain needs),
+and the true-atom interpretation (`sigma-true-atom`), which no model in Lean uses.
 
 The certificate is the object-language entailment, not the shallow proof. The claim is
 about `C`, and the map's axiom list is harmless elsewhere but not here: `propext` is the

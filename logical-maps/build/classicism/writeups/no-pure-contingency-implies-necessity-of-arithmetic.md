@@ -1,6 +1,6 @@
 # No Pure Contingency ⇒ Necessity of Arithmetic
 
-<p class='cert'>Result — Source: Misc.; produced by Claude Fable 5.1 (Anthropic), 20 September 2026; recorded by Claude Fable 5.1 (Anthropic), 20 September 2026.</p>
+<p class='cert'>Result — Source: Misc., Lean `Classicism.Map.no_pure_contingency_implies_necessity_of_arithmetic`; produced by Claude Fable 5.1 (Anthropic), 20 September 2026; recorded by Claude Fable 5.1 (Anthropic), 20 September 2026.</p>
 
 ## Premises
 

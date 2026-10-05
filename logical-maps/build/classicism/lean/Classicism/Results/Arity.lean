@@ -576,6 +576,34 @@ theorem necessary_strong_leibniz_t_and_necessary_bf_imply_necessary_strong_leibn
         (Entails.trans (Entails.union_right _ _) P.NecBarcan.schema_entails_listSchema))
       Proofs.necessary_strong_leibniz_t_and_necessary_bf_imply_necessary_strong_leibniz.listEntails)
 
+
+/-! ### Boxed forms, at every arity (6 October 2026) -/
+
+/-- `necessary-atomicity-t-and-necessary-bf-imply-necessary-atomicity`, at every arity. -/
+theorem necessary_atomicity_t_and_necessary_bf_imply_necessary_atomicity :
+    P.NecAtomicityT.schema ∪ P.NecBarcan.schema ⟹ P.NecAtomicity.schema :=
+  Entails.mono_right (schema_subset_args _)
+    (Entails.trans (Entails.union (Entails.union_left _ _)
+        (Entails.trans (Entails.union_right _ _) P.NecBarcan.schema_entails_listSchema))
+      Proofs.necessary_atomicity_t_and_necessary_bf_imply_necessary_atomicity.listEntails)
+
+/-- `necessary-actuality-and-necessary-bf-imply-necessary-inextensible-comprehension`, at every
+arity. -/
+theorem necessary_actuality_and_necessary_bf_imply_necessary_inextensible_comprehension :
+    P.NecActuality.schema ∪ P.NecBarcan.schema ⟹ P.NecInextensibleComprehension.schema :=
+  Entails.mono_right (schema_subset_args _)
+    (Entails.trans
+      (Entails.union (Entails.refl _)
+        (Entails.trans (Entails.union_right _ _) P.NecBarcan.schema_entails_listSchema))
+      Proofs.necessary_actuality_and_necessary_bf_imply_necessary_inextensible_comprehension.listEntails)
+
+/-- `necessary-completeness-and-necessary-actuality-imply-necessary-weak-rigid-comprehension`,
+at every arity. -/
+theorem necessary_completeness_and_necessary_actuality_imply_necessary_weak_rigid_comprehension :
+    P.NecBooleanCompleteness.schema ∪ P.NecActuality.schema ⟹ P.NecWeakRigidComprehension.schema :=
+  Entails.mono_right (schema_subset_args _)
+    Proofs.necessary_completeness_and_necessary_actuality_imply_necessary_weak_rigid_comprehension.listEntails
+
 end Meta
 
 end Classicism

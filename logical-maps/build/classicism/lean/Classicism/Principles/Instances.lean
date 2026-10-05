@@ -128,4 +128,9 @@ theorem NecStrongLeibnizT.to_dual : NecStrongLeibnizT → NecStrongLeibnizTDual 
 theorem NecStrongLeibnizT.of_dual : NecStrongLeibnizTDual → NecStrongLeibnizT :=
   modal_K _ _ (nec% StrongLeibnizT.of_dual)
 
+/-- `necessary-atomicity-t`: Atomicity at `t`, boxed. -/
+def NecAtomicityT : Prop := □ AtomicityT
+/-- `necessary-boolean-completeness-t`: Boolean Completeness at `t`, boxed. -/
+def NecBooleanCompletenessT : Prop := □ BooleanCompletenessT
+
 end Classicism.P

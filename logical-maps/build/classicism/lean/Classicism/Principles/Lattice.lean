@@ -114,6 +114,9 @@ type has a least upper bound. -/
 def CountableBooleanCompleteness (τ : Type) [Rel τ] : Prop :=
   ∀ X : τ → Prop, Ctbl X → ∃ y : τ, LUB y X
 
+/-- `necessary-countable-boolean-completeness-r` at `τ`: the instance boxed. -/
+def NecCountableBooleanCompleteness (τ : Type) [Rel τ] : Prop := □ (CountableBooleanCompleteness τ)
+
 /-! ## Actuality, Actual Profile and Vicinity -/
 
 /-- `actuality`: `∃p. p ∧ ∀q. q → p ≤ q`, there is a true proposition that entails every
