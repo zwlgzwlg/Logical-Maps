@@ -144,6 +144,20 @@ views:
   - necessary-actuality
   - necessary-weakly-inextensible-comprehension-r
   - necessary-vicinity
+- id: combinatorialism
+  name: Combinatorialism
+  description: 'Logical Combinatorialism and its relatives for the signature Σ: Logical Necessity, the
+    witnessed-possibility principles, Modal Freedom, Separated Structure, No Contingency and the Possibility
+    schemata.'
+  principles:
+  - strong-possibility-signature-r
+  - logical-necessity-r
+  - possibility-signature-r
+  - modal-freedom-signature-r
+  - no-contingency-signature-r
+  - converse-witnessed-possibility-r
+  - separated-structure-r
+  - witnessed-possibility-r
 lattice_views:
 - id: pilot
   name: 'Pilot: necessity and rigidity'
@@ -170,3 +184,17 @@ lattice_views:
   - necessary-actuality
   - necessary-weakly-inextensible-comprehension-r
   - necessary-vicinity
+- id: combinatorialism
+  name: Combinatorialism
+  description: 'Logical Combinatorialism and its relatives for the signature Σ: Logical Necessity, the
+    witnessed-possibility principles, Modal Freedom, Separated Structure, No Contingency and the Possibility
+    schemata.'
+  principles:
+  - strong-possibility-signature-r
+  - logical-necessity-r
+  - possibility-signature-r
+  - modal-freedom-signature-r
+  - no-contingency-signature-r
+  - converse-witnessed-possibility-r
+  - separated-structure-r
+  - witnessed-possibility-r
