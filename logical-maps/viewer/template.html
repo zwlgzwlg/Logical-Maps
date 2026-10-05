@@ -182,7 +182,9 @@
   .node.dim { opacity: .3; }
   .node.hot rect, .node.selected rect { stroke: var(--accent); stroke-width: 2.2; }
   .node.selected rect { fill: var(--hl); }
-  .node.from-background rect { fill: var(--hl); stroke: var(--accent); }
+  /* What the background settles is shaded as it would be with ⊤ selected:
+     its consequences as entailed, what it rules out as excluded. */
+  .node.from-background rect { fill: var(--rel-entailed); }
   .node text { font: 500 12.5px var(--sans); fill: var(--ink); pointer-events: none; }
   .edge.trivial { stroke: var(--ink-3); opacity: .55; }
   /* Lattice view. A strict cover is a solid line with a filled head; a cover
@@ -202,7 +204,6 @@
   /* The arrow options (conjecture arrows, conjectures only, unpublished only, ...) are
      set aside for now; their defaults still apply and the sidebar starts with the principles. */
   #graph-options { display: none; }
-  #pane-lattice .graph-workspace { grid-template-rows: minmax(0, 1fr) var(--details-height, 230px); }
   #lat-graph { grid-row: 2; width: 100%; height: 100%; touch-action: none; cursor: grab; }
   .lat-edge { fill: none; stroke: var(--ink-2); stroke-width: 1.4; }
   .lat-edge.may-reverse { stroke: var(--conj); stroke-width: 1.6; stroke-dasharray: 6 4; }
@@ -222,7 +223,8 @@
   .lat-node text.equiv { font-size: 10.5px; fill: var(--ink-3); }
   /* The floor reads as the graph's False box does. These come before the
      relation rules, which must win once something is selected. */
-  .lat-node.lat-bottom rect { stroke: var(--indep); stroke-width: 2; }
+  .lat-node.lat-bottom rect { fill: var(--rel-excluded); stroke: var(--indep); stroke-width: 2; }
+  .lat-node.lat-top rect { fill: var(--rel-entailed); }
   .lat-node.lat-bottom text[data-falsity] { fill: var(--indep); font-weight: 700; }
   .lat-node.rel-entailed rect, .lat-node.rel-entailed circle { fill: var(--rel-entailed); }
   .lat-node.rel-excluded rect, .lat-node.rel-excluded circle { fill: var(--rel-excluded); stroke: var(--indep); }
@@ -244,7 +246,6 @@
   .node text.selection-member, .lat-node text.selection-member { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
   .principle-name[aria-pressed="true"] { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
   .node text.equiv { font-size: 10.5px; fill: var(--ink-3); }
-  .node.iso rect { stroke-dasharray: 4 3; }
   .junction { cursor: pointer; }
   .junction circle { fill: var(--node-fill); stroke: var(--junction); stroke-width: 1.4; }
   .junction.source circle { stroke: var(--source-color); }
@@ -462,7 +463,7 @@
   .ex-bad .lnk { color: var(--indep); text-decoration: underline; }
 
   .prose-page { font: 16px/1.65 var(--sans); } .prose-page h2 { margin-top: 20px; } .prose-page p { margin: 0 0 10px; }
-  .node.falsity rect, .node.ruled-out rect { stroke: var(--indep); stroke-width: 2; }
+  .node.falsity rect, .node.ruled-out rect { fill: var(--rel-excluded); stroke: var(--indep); stroke-width: 2; }
   .node.falsity text { fill: var(--indep); font-weight: 700; }
   /* Fine rules and readable prose mirror the supplied reference. */
   .dl { flex-wrap: wrap; gap: 6px 14px; }
@@ -1530,6 +1531,17 @@ function computeLayout(g) {
     L.y.set(n.id, n.kind === 'falsity' ? Math.max(0, ...bounds.map(b => b.bottom)) + 63 + size.h / 2 : Math.min(0, ...bounds.map(b => b.top)) - 63 - size.h / 2);
     L.size.set(n.id, size); L.visible.push(n); L.vis.add(n.id); L.layers.push([n]);
   }
+  // ⊤ sits centred over the rest of the diagram, as the floor does beneath
+  // it, unless that would put it on top of a box in its own row.
+  const truth = L.visible.find(n => n.kind === 'truth');
+  const others = truth && L.visible.filter(n => n !== truth && !n.parent);
+  if (others?.length) {
+    const box = n => ({x: L.x.get(n.id), y: L.y.get(n.id), ...L.size.get(n.id)});
+    const t = box(truth), boxes = others.map(box);
+    const centre = (Math.min(...boxes.map(b => b.x - b.w / 2)) + Math.max(...boxes.map(b => b.x + b.w / 2))) / 2;
+    const clear = boxes.every(b => Math.abs(b.y - t.y) * 2 >= b.h + t.h || Math.abs(b.x - centre) * 2 >= b.w + t.w + 16);
+    if (clear) L.x.set(truth.id, centre);
+  }
   // Turning the diagram over is one reflection of the finished layout. Edge
   // geometry reads the positions, so nothing downstream needs to know; False
   // and True have already taken the ends they belong at and travel with it,
@@ -2233,8 +2245,10 @@ function selectionRelation(base, target) {
   return {kind, positive, negative, limited: positive.limited || negative.limited};
 }
 function applySelection() {
-  const base = shadingBase();
-  const baseMembers = new Set(base == null ? [] : base === TRUE ? [TRUE] : expressionLiterals(base));
+  // With nothing selected the diagram is shaded against the background
+  // alone, as it would be with ⊤ selected, but nothing is marked selected.
+  const selected = shadingBase(), base = selected ?? TRUE, implicit = selected == null;
+  const baseMembers = new Set(implicit ? [] : base === TRUE ? [TRUE] : expressionLiterals(base));
   const legend = document.getElementById('relation-legend');
   const counts = {entailed: 0, excluded: 0, consistent: 0, separated: 0};
   const countRelation = kind => {
@@ -2257,7 +2271,7 @@ function applySelection() {
     const members = (n.dataset.members || '').split(',').filter(Boolean), box = layout.byId.get(n.dataset.class);
     n.classList.remove(...relationClasses);
     const contains = (expression, selected) => members.some(p => selected.has(p)) || !members.length && box.junctions.some(j => sameExpression(expression, j.premises));
-    const inBase = contains(base, baseMembers);
+    const inBase = !implicit && contains(base, baseMembers);
     n.classList.toggle('selected', inBase);
     n.querySelectorAll('text[data-principle]').forEach(label => label.classList.toggle('selection-member', baseMembers.has(label.dataset.principle)));
     let title = n.dataset.title || '';
@@ -2274,7 +2288,7 @@ function applySelection() {
         const relation = n.dataset.falsity ? {kind: 'excluded'} : selectionRelation(base, target), {kind} = relation;
         countRelation(kind);
         n.classList.add('rel-' + kind);
-        title = relationTooltip(relation);
+        if (!implicit) title = relationTooltip(relation);
       }
     }
     const t = n.querySelector('title'); if (t) t.textContent = title;
@@ -2282,7 +2296,7 @@ function applySelection() {
   svg.querySelectorAll('.junction').forEach(n => {
     const j = layout?.byId.get(n.dataset.junction);
     if (!j) return;
-    const inBase = sameExpression(base, j.premises);
+    const inBase = !implicit && sameExpression(base, j.premises);
     n.classList.remove(...relationClasses); n.classList.toggle('selected', inBase);
     let title = expressionName(j.premises);
     if (shading) {
@@ -2290,13 +2304,13 @@ function applySelection() {
       n.classList.add('rel-' + relation.kind);
       // A boxed conjunction is already counted through its equivalence box.
       if (!j.parent) countRelation(relation.kind);
-      title += '\n' + (baseInconsistent ? 'Excluded: selection is inconsistent' : inBase ? 'Selected conjunction. ' + consistencyLine.text : relationTooltip(relation));
+      if (!implicit) title += '\n' + (baseInconsistent ? 'Excluded: selection is inconsistent' : inBase ? 'Selected conjunction. ' + consistencyLine.text : relationTooltip(relation));
     }
     n.querySelector('title').textContent = title;
   });
   document.querySelectorAll('#pr-filters .principle-name').forEach(button => button.setAttribute('aria-pressed', baseMembers.has(button.dataset.principle)));
 
-  if (!base || state.tab !== 'graph' || !layout) { legend.hidden = true; setDetailFoot('graph-details-foot', null); return; }
+  if (implicit || state.tab !== 'graph' || !layout) { legend.hidden = true; setDetailFoot('graph-details-foot', null); return; }
   legend.hidden = false;
   const fullLabel = expressionName(base);
   const label = Array.isArray(base) && fullLabel.length > 100 ? `${base.length} selected principles` : fullLabel;
@@ -3021,6 +3035,9 @@ function showTab(tab) {
     // click slots, scrolling and pane sizes are shared rather than duplicated.
     const pane = document.getElementById('pane-' + tab);
     pane.prepend(document.getElementById('graph-sidebar'), document.getElementById('sidebar-divider'));
+    // The details divider likewise, so the graph and lattice details share one size.
+    const details = pane.querySelector('.graph-details');
+    if (details) { const divider = document.getElementById('details-divider'); details.before(divider); divider.setAttribute('aria-controls', details.id); }
     const heading = document.getElementById('source-filter-heading');
     heading.textContent = tab === 'open' ? 'Evidence sources' : 'Arrow sources';
     refreshPrincipleControls();
@@ -3741,7 +3758,6 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
 (function setupPaneDividers() {
   const panes = ['graph', 'open', 'lattice'].map(tab => document.getElementById('pane-' + tab));
   const sidebar = document.getElementById('graph-sidebar');
-  const workspace = document.querySelector('.graph-workspace');
   const properties = {sidebar: '--sidebar-width', background: '--background-height', details: '--details-height'};
   const storageKey = 'principle-map:pane-sizes:v1';
   let saved = {};
@@ -3755,7 +3771,8 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
   function limits(key) {
     const pane = sidebar.closest('.pane');
     if (key === 'details') {
-      const height = workspace.clientHeight || panes[0].clientHeight || window.innerHeight;
+      const workspace = pane.querySelector('.graph-workspace');
+      const height = workspace?.clientHeight || pane.clientHeight || window.innerHeight;
       return { min: Math.min(160, height * .35), max: Math.max(0, height - Math.min(180, height * .4) - 9), initial: Math.min(260, height * .32) };
     }
     const width = pane.clientWidth || window.innerWidth;
@@ -3769,7 +3786,7 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
     if (pane.dataset.active !== 'true') return;
     const previousWidth = current.sidebar, previousDetails = current.details;
     for (const key of Object.keys(handles)) {
-      if (key === 'details' && pane.id !== 'pane-graph') continue;
+      if (key === 'details' && pane.id === 'pane-open') continue;
       const bounds = limits(key), min = Math.min(bounds.min, bounds.max);
       const value = Math.round(Math.max(min, Math.min(bounds.max, saved[key] ?? bounds.initial)));
       current[key] = value;
@@ -3803,7 +3820,7 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
       document.body.style.setProperty('--resize-cursor', key === 'sidebar' ? 'col-resize' : 'row-resize');
       document.body.classList.add('resizing-panes');
       const details = document.getElementById('pop');
-      if (details.parentElement.id !== 'graph-details') details.hidden = true;
+      if (!['graph-details', 'lat-detail'].includes(details.parentElement.id)) details.hidden = true;
     });
     handle.addEventListener('lostpointercapture', () => finish());
     handle.addEventListener('dblclick', () => { finish(); delete saved[key]; apply(); persist(); });
@@ -4295,16 +4312,17 @@ const latticeRelationClasses = ['rel-base', 'rel-entailed', 'rel-excluded', 'rel
 // shows in places, which does no harm and keeps one reading of the colours
 // across the two views.
 function latticeShade(svg) {
-  const base = shadingBase();
+  // Shaded against the background when nothing is selected, as on the graph.
+  const selected = shadingBase(), implicit = selected == null, base = selected ?? TRUE;
   const baseLiterals = base == null ? [] : expressionLiterals(base);
-  const baseMembers = new Set(base === TRUE ? [TRUE] : baseLiterals);
+  const baseMembers = new Set(implicit ? [] : base === TRUE ? [TRUE] : baseLiterals);
   const baseInconsistent = base != null && consistencyStatus(baseLiterals).status === 'inconsistent';
   // The selected node is the one whose closure the selection generates, so a
   // click on any of the names an equivalence box carries selects that box,
   // as on the graph. A selection made elsewhere from principles this diagram
   // does not show has no closure here, and then only its literal node counts.
   const baseKey = base != null && baseLiterals.every(l => lattice.shown.includes(l)) ? latticeKey(latticeClosure(baseLiterals)) : null;
-  const isBase = n => base != null && (sameExpression(base, latticeExpression(n)) || baseKey != null && baseKey === n.key || n.labels.some(l => l.literal && baseMembers.has(l.literal)));
+  const isBase = n => !implicit && (sameExpression(base, latticeExpression(n)) || baseKey != null && baseKey === n.key || n.labels.some(l => l.literal && baseMembers.has(l.literal)));
   const selectedEdge = lattice.edges.some(e => e.id === lattice.selected) ? lattice.selected : null;
   const focusNode = selectedEdge ? null : lattice.byId.get(lattice.selected) || lattice.nodes.find(isBase) || null;
   // The nodes the selected one rises to, itself included.
@@ -4342,7 +4360,7 @@ function latticeShade(svg) {
     if (lattice.selected === n.id) el.classList.add('sel');
     for (const t of el.querySelectorAll('text[data-principle], text[data-falsity], text[data-truth]')) {
       const literal = t.dataset.principle;
-      const member = literal ? baseMembers.has(literal) : t.dataset.falsity ? base === FALSE : base === TRUE;
+      const member = literal ? baseMembers.has(literal) : t.dataset.falsity ? base === FALSE : !implicit && base === TRUE;
       t.classList.toggle('selection-member', member);
     }
   }
@@ -4357,7 +4375,7 @@ function latticeShade(svg) {
     if (emphasis) el.classList.add(emphasis);
   }
   applyGraphSearch();
-  renderLatticeLegend(lattice.capped ? null : base, baseInconsistent, counts);
+  renderLatticeLegend(lattice.capped || implicit ? null : base, baseInconsistent, counts);
   document.getElementById('lat-hint').hidden = !!state.selected;
   document.getElementById('lat-hint').textContent = 'Click a principle name, an ∧ or an arrow for its details. Shift-click a name to add or remove it from the selection.';
 }

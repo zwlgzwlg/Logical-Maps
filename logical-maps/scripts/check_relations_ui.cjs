@@ -120,7 +120,8 @@ try{
   d.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
   assert.equal(w.eval('state.focus'),null);
   assert.equal(legend().hidden,true);
-  assert.deepEqual(rel('b'),[]);
+  // With nothing selected the graph is shaded against the background alone.
+  assert.deepEqual(rel('b'),[w.eval("`rel-${selectionRelation(TRUE,'b').kind}`")]);
 
   // Open and refuted converses use the same filled arrowhead.
   const marker=key=>d.querySelector(`[data-edge="${key}"] .edge`).getAttribute('marker-end');

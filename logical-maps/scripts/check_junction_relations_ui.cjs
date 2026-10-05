@@ -24,7 +24,9 @@ const title = () => junction().querySelector('title').textContent;
 const select = id => w.select({type: 'principle', id});
 try {
   assert.equal(junction().dataset.parent, undefined, 'The tested conjunction has no equivalent principle box');
-  const normal = fill();
+  // With nothing selected the junction is shaded against the background, so
+  // the unshaded fill is read from the stylesheet rather than the page.
+  const normal = 'var(--node-fill)';
   for (const [id, kind, tooltip, expectedFill] of [
     ['a','entailed','Entailed by selection','var(--rel-entailed)'],
     ['e','excluded','Excluded by selection','var(--rel-excluded)'],
@@ -64,8 +66,10 @@ try {
   select('e'); w.select({type: 'principle', id: 'p'}, true); w.select({type: 'principle', id: 'q'}, true);
   assert.ok(junction().classList.contains('rel-excluded')); assert.equal(fill(), 'var(--rel-excluded)');
   select('x'); assert.equal(fill(), 'url(#split-consistent)', 'Removing an inconsistent selection restores relation shading');
-  w.select(null); assert.equal(fill(), normal); assert.equal(title(), 'P ∧ Q');
-  assert.ok(![...junction().classList].some(c => c.startsWith('rel-')));
+  // Clearing the selection returns to the background shading, without a relation tooltip.
+  const background = w.eval("`rel-${selectionRelation(TRUE, ['p','q']).kind}`");
+  w.select(null); assert.equal(title(), 'P ∧ Q');
+  assert.deepEqual([...junction().classList].filter(c => c.startsWith('rel-')), [background]);
   assert.deepEqual(errors, []);
   console.log('PASS: standalone conjunction proof/consistency/open/conjecture fills, full-premise witnesses, concise tooltips, legend counts, multiselection, inconsistency and clearing.');
 } finally { w.close(); }

@@ -96,6 +96,18 @@ input[type="checkbox"] { accent-color: var(--accent); }
 .display-toggles { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 16px; }
 .theme-toggle[aria-pressed="true"] { color: var(--accent); }
 
+/* A prismatic name: rainbow spokes from a point in the word, spinning;
+   --prism-x and --prism-y move that point off the middle, and a link of
+   several prismatic words gives each its own.
+   Pure spectral stops, turned by a registered angle rather than a hue
+   filter, which would muddy them. */
+@property --prism { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.prismatic { font-weight: 600; color: transparent; background: repeating-conic-gradient(from var(--prism) at var(--prism-x, 50%) var(--prism-y, 50%), #ff1a1a 0.00deg, #ff8a00 17.14deg, #ffd000 34.29deg, #22c33a 51.43deg, #00a8f0 68.57deg, #3d4bff 85.71deg, #b026ff 102.86deg, #ff1a1a 120.00deg); -webkit-background-clip: text; background-clip: text; animation: prism-spin 4s linear infinite; }
+a.prismatic, a.prismatic-link { color: transparent; text-decoration: none; }
+a.prismatic:hover, a.prismatic-link:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+@keyframes prism-spin { to { --prism: 120deg; } }
+@media (prefers-reduced-motion: reduce) { .prismatic { animation: none; } }
+
 /* Standalone write-ups use the same quiet, ruled typography as the map. */
 html:has(body.writeup-page) { background: var(--bg); }
 body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; font: 16px/1.7 var(--sans); overflow-wrap: anywhere; }
@@ -329,6 +341,7 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
     </nav>
     <h1>Logical Maps</h1>
     <section id="introduction" aria-label="Introduction"><p>A good deal of technical philosophy involves identifying logical connections between philosophically interesting principles. A logical map on a topic consists of a database of such principles, along with records of proofs of various connections. This is all presented nicely with the graph of principles and the theory explorer.</p>
+<p>Thanks to <a class="prismatic-link" href="https://ciandorr.github.io/" target="_blank" rel="noopener"><span class="prismatic" style="--prism-x: 37%; --prism-y: 64%">Cian</span> <span class="prismatic" style="--prism-x: 61%; --prism-y: 38%">Dorr</span></a> for major contributions to Logical Maps!</p>
 <!-- ## Motivation
 
 It used to be that interesting connections between philosophically important principles were primarily recorded in academic journals. But this will not be the case in the future, for two reasons. First, many connections will be found autonomously or semi-autonomously with AI, with no obvious publication venue. Second, the number of known connections and interesting principles will grow rapidly, outstripping the publication rate of journals and also the rate of philosophically interesting thought about the relevant principles. -->
