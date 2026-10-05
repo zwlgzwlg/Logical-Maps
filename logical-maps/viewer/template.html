@@ -5042,6 +5042,15 @@ function syncViewPicker(pre, views, choice, modified) {
   const select = document.getElementById(pre + '-view'), v = views.find(x => x.id === choice);
   select.value = choice === null ? '__custom' : choice || '';
   document.getElementById(pre + '-view-desc').textContent = v?.description || '';
+  fitSelect(select);
+}
+// A native menu is as wide as its longest entry, which strands the caret far from
+// a short choice; size it to the entry showing instead.
+function fitSelect(select) {
+  const text = select.options[select.selectedIndex]?.textContent || '';
+  const style = getComputedStyle(select), ctx = (fitSelect.canvas ||= document.createElement('canvas')).getContext('2d');
+  ctx.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+  select.style.width = Math.ceil(ctx.measureText(text).width + 38) + 'px';
 }
 function syncViews() {
   const latticeModified = latticeViewModified();

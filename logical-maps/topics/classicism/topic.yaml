@@ -259,6 +259,50 @@ views:
   - vicinity
   - weak-rigid-comprehension-r
   - weakly-inextensible-comprehension-r
+- id: bacon-dorr-2024
+  name: '''Classicism'' (Bacon and Dorr 2024)'
+  description: Every principle named in Bacon and Dorr, Classicism (2024).
+  principles:
+  - actuality
+  - atomicity-r
+  - barcan-r
+  - boolean-completeness-r
+  - broad-necessitism-r
+  - converse-barcan-r
+  - distinctness-necessary-r
+  - distinctness-schema-r
+  - distinctness-signature-r
+  - existence-r
+  - extensionality-r
+  - functional-choice-r
+  - identity-necessary-r
+  - intensionality-r
+  - modal-four
+  - modal-k
+  - modal-t
+  - modalized-fregean
+  - modalized-functionality-r
+  - necessary-actuality
+  - necessary-atomicity-r
+  - necessary-barcan-r
+  - necessary-boolean-completeness-r
+  - necessary-distinctness-necessary-r
+  - necessary-functional-choice-r
+  - necessary-plenitude-r
+  - necessary-relational-choice-r
+  - necessary-rigid-comprehension-r
+  - no-pure-contingency-r
+  - plenitude-r
+  - possibility-plus-r
+  - possibility-plus-signature-r
+  - possibility-schema-r
+  - possibility-signature-r
+  - relational-choice-r
+  - rigid-comprehension-r
+  - separated-structure-r
+  - strong-possibility-r
+  - strong-possibility-signature-r
+  - witnessed-possibility-r
 lattice_views:
 - id: pilot
   name: 'Pilot: necessity and rigidity'
