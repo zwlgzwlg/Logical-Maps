@@ -184,6 +184,81 @@ views:
   - weak-rigid-comprehension-r
   - rigid-comprehension-r
   - strong-leibniz-r
+- id: consequences-of-extensionalism
+  name: Consequences of Extensionalism
+  description: Extensionality and every principle the recorded results derive from it, leaving out the
+    theorems of C.
+  principles:
+  - actual-profile-r
+  - actuality
+  - atomicity-r
+  - atomicity-t
+  - barcan-r
+  - barcan-t
+  - boolean-completeness-r
+  - boolean-completeness-t
+  - converse-witnessed-possibility-r
+  - countable-boolean-completeness-r
+  - distinctness-necessary-r
+  - distinctness-necessary-t
+  - distinctness-preserving-collapse
+  - extensionality-r
+  - fregean-axiom
+  - functionality-r
+  - gallin-extensional-comprehension-r
+  - inextensible-comprehension-r
+  - intensional-choice-r
+  - modal-b
+  - modal-five
+  - modal-freedom-signature-r
+  - necessary-actuality
+  - necessary-atomicity-r
+  - necessary-atomicity-t
+  - necessary-barcan-r
+  - necessary-barcan-t
+  - necessary-boolean-completeness-r
+  - necessary-boolean-completeness-t
+  - necessary-countable-boolean-completeness-r
+  - necessary-distinctness-necessary-r
+  - necessary-distinctness-necessary-t
+  - necessary-extensionality-r
+  - necessary-fregean-axiom
+  - necessary-functionality-r
+  - necessary-gallin-extensional-comprehension-r
+  - necessary-inextensible-comprehension-r
+  - necessary-intensional-choice-r
+  - necessary-modal-b
+  - necessary-modal-five
+  - necessary-persistent-comprehension-r
+  - necessary-plenitude-r
+  - necessary-rigid-comprehension-r
+  - necessary-rigid-power-r
+  - necessary-strong-leibniz-r
+  - necessary-strong-leibniz-t
+  - necessary-tame-rigidity-r
+  - necessary-tractarianism-r
+  - necessary-transversal-r
+  - necessary-vicinity
+  - necessary-weak-rigid-comprehension-r
+  - necessary-weakly-inextensible-comprehension-r
+  - necessity-of-arithmetic
+  - no-contingency-signature-r
+  - no-pure-contingency-r
+  - persistent-comprehension-r
+  - plenitude-r
+  - pure-b-r
+  - rigid-comprehension-r
+  - rigid-power-r
+  - signature-b-r
+  - strong-leibniz-r
+  - strong-leibniz-t
+  - tame-rigidity-r
+  - tractarianism-r
+  - transversal-r
+  - very-weak-rigid-comprehension-r
+  - vicinity
+  - weak-rigid-comprehension-r
+  - weakly-inextensible-comprehension-r
 lattice_views:
 - id: pilot
   name: 'Pilot: necessity and rigidity'

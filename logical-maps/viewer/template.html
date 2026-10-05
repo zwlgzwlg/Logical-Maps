@@ -744,7 +744,7 @@
         <p class="view-desc" id="lat-view-desc"></p>
       </div>
       <div id="lat-controls">
-        <h2>Lattice <button class="lnk dim" id="lat-from-graph" title="Draw the lattice of whatever the graph is showing.">from the graph</button> <button class="lnk dim" id="lat-clear">hide all</button></h2>
+        <h2>Lattice <button class="lnk dim" id="lat-from-graph" title="Draw the lattice of whatever the graph is showing.">from the graph</button></h2>
         <p id="lat-count" class="lat-count" role="status" aria-live="polite"></p>
       </div>
       <div id="conjecture-options">
@@ -770,11 +770,11 @@
         </div>
       </div>
       <div id="graph-principles">
-        <h2>Principles <span class="heading-note">(all results shown)</span> <button class="lnk dim" id="pr-all">show all positive</button> <button class="lnk dim" id="pr-none">hide all</button></h2>
+        <h2>Principles <span class="heading-note">(all results shown)</span> <button class="lnk dim" id="pr-none">hide all</button></h2>
         <div class="ctl" id="pr-filters"></div>
       </div>
       <div id="lat-principles">
-        <h2>Principles <span class="heading-note">(all conjunctions shown)</span></h2>
+        <h2>Principles <span class="heading-note">(all conjunctions shown)</span> <button class="lnk dim" id="lat-clear">hide all</button></h2>
         <div class="ctl" id="lat-filters"></div>
       </div>
       </div>
@@ -4164,7 +4164,6 @@ document.getElementById('fit').addEventListener('click', fit);
     rows.forEach(row => { const id = row.dataset.prRow; if (inBackground(id)) return; selected ? state.excluded.delete(id) : state.excluded.add(id); if (!selected) state.negativeShown.delete(id); }); repaint();
   };
   el.querySelectorAll('[data-category-select]').forEach(b => b.addEventListener('click', () => setSelection(b.closest('.pr-category').querySelectorAll('.pr-row'), b.dataset.categorySelect === 'all')));
-  document.getElementById('pr-all').addEventListener('click', () => setSelection(el.querySelectorAll('.pr-row'), true));
   document.getElementById('pr-none').addEventListener('click', () => setSelection(el.querySelectorAll('.pr-row'), false));
   el.querySelectorAll('[data-add-background]').forEach(b => b.addEventListener('click', () => changeBackground(b.dataset.addBackground, true)));
   const presets = document.getElementById('background-presets');
@@ -5079,7 +5078,7 @@ function applyLatticeView(id, render = true) {
     document.getElementById(pre + '-view').innerHTML = `<option value="__custom" hidden disabled>Choose a view…</option><option value="">${allLabel}</option>`
       + views.map(v => `<option value="${esc(v.id)}">${esc(v.name)}</option>`).join('');
   };
-  fill('graph', graphViews, 'All principles'); fill('lat', latticeViews, 'None');
+  fill('graph', graphViews, 'All positive principles'); fill('lat', latticeViews, 'None');
   document.getElementById('graph-view').addEventListener('change', e => applyGraphView(e.target.value));
   document.getElementById('lat-view').addEventListener('change', e => applyLatticeView(e.target.value));
   // Edits made through the sidebar or the diagrams pass through these, so they keep the marker current.
