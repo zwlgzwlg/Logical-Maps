@@ -1098,93 +1098,263 @@ theorem witnessed_possibility_and_npc_imply_possibly_witnessed_possibility : Sta
 theorem witnessed_possibility_incompatible_with_nd : Statements.witnessed_possibility_incompatible_with_nd :=
   fun hS _ h₁ h₂ hc => witnessedPossibility_nd_inconsistent hS (Consistent.of_entails (Entails.union h₁ h₂) hc)
 
-/-- `boolean-completeness-r`, form `lub`: Boolean Completeness and its LUB form. -/
+/-- `boolean-completeness-r`, variant `lub`: Boolean Completeness and its LUB form. -/
 theorem boolean_completeness_r.lub : Statements.boolean_completeness_r.lub := by
   map_form P.BooleanCompleteness.to_lub.entails P.BooleanCompleteness.of_lub.entails
 
-/-- `barcan-r`, form `list`: the principle for every list of argument types. -/
-theorem barcan_r.list : Statements.barcan_r.list := by
+/-- `barcan-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem barcan_r.polyadic : Statements.barcan_r.polyadic := by
   map_form P.Barcan.schema_entails_listSchema P.Barcan.listSchema_entails_schema
 
-/-- `necessary-barcan-r`, form `list`: the principle for every list of argument types. -/
-theorem necessary_barcan_r.list : Statements.necessary_barcan_r.list := by
+/-- `necessary-barcan-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem necessary_barcan_r.polyadic : Statements.necessary_barcan_r.polyadic := by
   map_form P.NecBarcan.schema_entails_listSchema P.NecBarcan.listSchema_entails_schema
 
-/-- `tractarianism-r`, form `list`: the principle for every list of argument types. -/
-theorem tractarianism_r.list : Statements.tractarianism_r.list := by
+/-- `tractarianism-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem tractarianism_r.polyadic : Statements.tractarianism_r.polyadic := by
   map_form P.Tractarianism.schema_entails_listSchema P.Tractarianism.listSchema_entails_schema
 
-/-- `necessary-tractarianism-r`, form `list`: the principle for every list of argument types. -/
-theorem necessary_tractarianism_r.list : Statements.necessary_tractarianism_r.list := by
+/-- `necessary-tractarianism-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem necessary_tractarianism_r.polyadic : Statements.necessary_tractarianism_r.polyadic := by
   map_form P.NecTractarianism.schema_entails_listSchema P.NecTractarianism.listSchema_entails_schema
 
-/-- `distinctness-necessary-r`, form `list`: the principle for every list of argument types. -/
-theorem distinctness_necessary_r.list : Statements.distinctness_necessary_r.list := by
+/-- `distinctness-necessary-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem distinctness_necessary_r.polyadic : Statements.distinctness_necessary_r.polyadic := by
   map_form P.NecessityOfDistinctness.schema_entails_listSchema P.NecessityOfDistinctness.listSchema_entails_schema
 
-/-- `necessary-distinctness-necessary-r`, form `list`: the principle for every list of argument types. -/
-theorem necessary_distinctness_necessary_r.list : Statements.necessary_distinctness_necessary_r.list := by
+/-- `necessary-distinctness-necessary-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem necessary_distinctness_necessary_r.polyadic : Statements.necessary_distinctness_necessary_r.polyadic := by
   map_form P.NecNecessityOfDistinctness.schema_entails_listSchema P.NecNecessityOfDistinctness.listSchema_entails_schema
 
-/-- `existence-r`, form `list`: the principle for every list of argument types. -/
-theorem existence_r.list : Statements.existence_r.list := by
+/-- `existence-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem existence_r.polyadic : Statements.existence_r.polyadic := by
   map_form P.Existence.schema_entails_listSchema P.Existence.listSchema_entails_schema
 
-/-- `functionality-r`, form `list`: the principle for every list of argument types. -/
-theorem functionality_r.list : Statements.functionality_r.list := by
+/-- `functionality-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem functionality_r.polyadic : Statements.functionality_r.polyadic := by
   map_form P.Functionality.schema_entails_listSchema P.Functionality.listSchema_entails_schema
 
-/-- `necessary-functionality-r`, form `list`: the principle for every list of argument types. -/
-theorem necessary_functionality_r.list : Statements.necessary_functionality_r.list := by
+/-- `necessary-functionality-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem necessary_functionality_r.polyadic : Statements.necessary_functionality_r.polyadic := by
   map_form P.NecFunctionality.schema_entails_listSchema P.NecFunctionality.listSchema_entails_schema
 
-/-- `functional-choice-r`, form `list`: the principle for every list of argument types. -/
-theorem functional_choice_r.list : Statements.functional_choice_r.list := by
+/-- `functional-choice-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem functional_choice_r.polyadic : Statements.functional_choice_r.polyadic := by
   map_form P.FunctionalChoice.schema_entails_listSchema P.FunctionalChoice.listSchema_entails_schema
 
-/-- `necessary-functional-choice-r`, form `list`: the principle for every list of argument types. -/
-theorem necessary_functional_choice_r.list : Statements.necessary_functional_choice_r.list := by
+/-- `necessary-functional-choice-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem necessary_functional_choice_r.polyadic : Statements.necessary_functional_choice_r.polyadic := by
   map_form P.NecFunctionalChoice.schema_entails_listSchema P.NecFunctionalChoice.listSchema_entails_schema
 
-/-- `relational-choice-r`, form `list`: the principle for every list of argument types. -/
-theorem relational_choice_r.list : Statements.relational_choice_r.list := by
+/-- `relational-choice-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem relational_choice_r.polyadic : Statements.relational_choice_r.polyadic := by
   map_form P.RelationalChoice.schema_entails_listSchema P.RelationalChoice.listSchema_entails_schema
 
-/-- `necessary-relational-choice-r`, form `list`: the principle for every list of argument types. -/
-theorem necessary_relational_choice_r.list : Statements.necessary_relational_choice_r.list := by
+/-- `necessary-relational-choice-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem necessary_relational_choice_r.polyadic : Statements.necessary_relational_choice_r.polyadic := by
   map_form P.NecRelationalChoice.schema_entails_listSchema P.NecRelationalChoice.listSchema_entails_schema
 
-/-- `plenitude-r`, form `list`: the principle for every list of argument types. -/
-theorem plenitude_r.list : Statements.plenitude_r.list := by
+/-- `plenitude-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem plenitude_r.polyadic : Statements.plenitude_r.polyadic := by
   map_form P.Plenitude.schema_entails_listSchema P.Plenitude.listSchema_entails_schema
 
-/-- `necessary-plenitude-r`, form `list`: the principle for every list of argument types. -/
-theorem necessary_plenitude_r.list : Statements.necessary_plenitude_r.list := by
+/-- `necessary-plenitude-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem necessary_plenitude_r.polyadic : Statements.necessary_plenitude_r.polyadic := by
   map_form P.NecPlenitude.schema_entails_listSchema P.NecPlenitude.listSchema_entails_schema
 
-/-- `actual-profile-r`, form `single`: Actual Profile at one argument; the map's official form is
-for every tuple. -/
-theorem actual_profile_r.single : Statements.actual_profile_r.single := by
-  map_form P.ActualProfile.listSchema_entails_schema P.ActualProfile.schema_entails_listSchema
-
-/-- `modalized-functionality-r`, form `list`: the principle for every list of argument types. -/
-theorem modalized_functionality_r.list : Statements.modalized_functionality_r.list := by
+/-- `modalized-functionality-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem modalized_functionality_r.polyadic : Statements.modalized_functionality_r.polyadic := by
   map_form P.ModalizedFunctionality.schema_entails_listSchema P.ModalizedFunctionality.listSchema_entails_schema
 
-/-- `converse-barcan-r`, form `list`: the principle for every list of argument types. -/
-theorem converse_barcan_r.list : Statements.converse_barcan_r.list := by
+/-- `converse-barcan-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem converse_barcan_r.polyadic : Statements.converse_barcan_r.polyadic := by
   map_form P.ConverseBarcan.schema_entails_listSchema P.ConverseBarcan.listSchema_entails_schema
 
-/-- `identity-necessary-r`, form `list`: the principle for every list of argument types. -/
-theorem identity_necessary_r.list : Statements.identity_necessary_r.list := by
+/-- `identity-necessary-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem identity_necessary_r.polyadic : Statements.identity_necessary_r.polyadic := by
   map_form P.NecessityOfIdentity.schema_entails_listSchema P.NecessityOfIdentity.listSchema_entails_schema
 
-/-- `broad-necessitism-r`, form `list`: the principle for every list of argument types. -/
-theorem broad_necessitism_r.list : Statements.broad_necessitism_r.list := by
+/-- `broad-necessitism-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem broad_necessitism_r.polyadic : Statements.broad_necessitism_r.polyadic := by
   map_form P.BroadNecessitism.schema_entails_listSchema P.BroadNecessitism.listSchema_entails_schema
 
-/-- `modalized-plenitude-r`, form `list`: the principle for every list of argument types. -/
-theorem modalized_plenitude_r.list : Statements.modalized_plenitude_r.list := by
+/-- `modalized-plenitude-r`, variant `polyadic`: the principle for every list of argument types. -/
+theorem modalized_plenitude_r.polyadic : Statements.modalized_plenitude_r.polyadic := by
   map_form P.ModalizedPlenitude.schema_entails_listSchema P.ModalizedPlenitude.listSchema_entails_schema
+
+/-- `atomicity-r`, variant `dual`: the dual form. -/
+theorem atomicity_r.dual : Statements.atomicity_r.dual := by
+  map_form P.Atomicity.to_dual.entails
+    P.Atomicity.of_dual.entails
+
+/-- `atomicity-t`, variant `dual`: the dual form. -/
+theorem atomicity_t.dual : Statements.atomicity_t.dual := by
+  map_form P.AtomicityT.to_dual.entails
+    P.AtomicityT.of_dual.entails
+
+/-- `barcan-r`, variant `dual`: the dual form. -/
+theorem barcan_r.dual : Statements.barcan_r.dual := by
+  map_form P.Barcan.to_dual.entails
+    P.Barcan.of_dual.entails
+
+/-- `barcan-r`, variant `dual-polyadic`: the dual form, for every list of argument types. -/
+theorem barcan_r.dual_polyadic : Statements.barcan_r.dual_polyadic := by
+  map_form (Entails.trans P.Barcan.schema_entails_listSchema P.Barcan.to_dual.listEntails)
+    (Entails.trans P.Barcan.of_dual.listEntails P.Barcan.listSchema_entails_schema)
+
+/-- `barcan-t`, variant `dual`: the dual form. -/
+theorem barcan_t.dual : Statements.barcan_t.dual := by
+  map_form P.BarcanT.to_dual.entails
+    P.BarcanT.of_dual.entails
+
+/-- `boolean-completeness-t`, variant `lub`: the least-upper-bound form. -/
+theorem boolean_completeness_t.lub : Statements.boolean_completeness_t.lub := by
+  map_form P.BooleanCompletenessT.to_lub.entails
+    P.BooleanCompletenessT.of_lub.entails
+
+/-- `converse-barcan-r`, variant `dual`: the dual form. -/
+theorem converse_barcan_r.dual : Statements.converse_barcan_r.dual := by
+  map_form P.ConverseBarcan.to_dual.entails
+    P.ConverseBarcan.of_dual.entails
+
+/-- `converse-barcan-r`, variant `dual-polyadic`: the dual form, for every list of argument types. -/
+theorem converse_barcan_r.dual_polyadic : Statements.converse_barcan_r.dual_polyadic := by
+  map_form (Entails.trans P.ConverseBarcan.schema_entails_listSchema P.ConverseBarcan.to_dual.listEntails)
+    (Entails.trans P.ConverseBarcan.of_dual.listEntails P.ConverseBarcan.listSchema_entails_schema)
+
+/-- `distinctness-necessary-r`, variant `dual`: the dual form. -/
+theorem distinctness_necessary_r.dual : Statements.distinctness_necessary_r.dual := by
+  map_form P.NecessityOfDistinctness.to_dual.entails
+    P.NecessityOfDistinctness.of_dual.entails
+
+/-- `distinctness-necessary-r`, variant `dual-polyadic`: the dual form, for every list of argument types. -/
+theorem distinctness_necessary_r.dual_polyadic : Statements.distinctness_necessary_r.dual_polyadic := by
+  map_form (Entails.trans P.NecessityOfDistinctness.schema_entails_listSchema P.NecessityOfDistinctness.to_dual.listEntails)
+    (Entails.trans P.NecessityOfDistinctness.of_dual.listEntails P.NecessityOfDistinctness.listSchema_entails_schema)
+
+/-- `distinctness-necessary-t`, variant `dual`: the dual form. -/
+theorem distinctness_necessary_t.dual : Statements.distinctness_necessary_t.dual := by
+  map_form P.NecessityOfDistinctnessT.to_dual.entails
+    P.NecessityOfDistinctnessT.of_dual.entails
+
+/-- `distinctness-preserving-collapse`, variant `dual`: the dual form. -/
+theorem distinctness_preserving_collapse.dual : Statements.distinctness_preserving_collapse.dual := by
+  map_form P.DistinctnessPreservingCollapse.to_dual.entails
+    P.DistinctnessPreservingCollapse.of_dual.entails
+
+/-- `modal-b`, variant `dual`: the dual form. -/
+theorem modal_b.dual : Statements.modal_b.dual := by
+  map_form P.ModalB.to_dual.entails
+    P.ModalB.of_dual.entails
+
+/-- `modal-five`, variant `dual`: the dual form. -/
+theorem modal_five.dual : Statements.modal_five.dual := by
+  map_form P.ModalFive.to_dual.entails
+    P.ModalFive.of_dual.entails
+
+/-- `modal-four`, variant `dual`: the dual form. -/
+theorem modal_four.dual : Statements.modal_four.dual := by
+  map_form P.ModalFour.to_dual.entails
+    P.ModalFour.of_dual.entails
+
+/-- `modal-k`, variant `dual`: the dual form. -/
+theorem modal_k.dual : Statements.modal_k.dual := by
+  map_form P.ModalK.to_dual.entails
+    P.ModalK.of_dual.entails
+
+/-- `modal-t`, variant `dual`: the dual form. -/
+theorem modal_t.dual : Statements.modal_t.dual := by
+  map_form P.ModalT.to_dual.entails
+    P.ModalT.of_dual.entails
+
+/-- `necessary-atomicity-r`, variant `dual`: the dual form. -/
+theorem necessary_atomicity_r.dual : Statements.necessary_atomicity_r.dual := by
+  map_form P.NecAtomicity.to_dual.entails
+    P.NecAtomicity.of_dual.entails
+
+/-- `necessary-barcan-r`, variant `dual`: the dual form. -/
+theorem necessary_barcan_r.dual : Statements.necessary_barcan_r.dual := by
+  map_form P.NecBarcan.to_dual.entails
+    P.NecBarcan.of_dual.entails
+
+/-- `necessary-barcan-r`, variant `dual-polyadic`: the dual form, for every list of argument types. -/
+theorem necessary_barcan_r.dual_polyadic : Statements.necessary_barcan_r.dual_polyadic := by
+  map_form (Entails.trans P.NecBarcan.schema_entails_listSchema P.NecBarcan.to_dual.listEntails)
+    (Entails.trans P.NecBarcan.of_dual.listEntails P.NecBarcan.listSchema_entails_schema)
+
+/-- `necessary-barcan-t`, variant `dual`: the dual form. -/
+theorem necessary_barcan_t.dual : Statements.necessary_barcan_t.dual := by
+  map_form P.NecBarcanT.to_dual.entails
+    P.NecBarcanT.of_dual.entails
+
+/-- `necessary-boolean-completeness-r`, variant `lub`: the least-upper-bound form. -/
+theorem necessary_boolean_completeness_r.lub : Statements.necessary_boolean_completeness_r.lub := by
+  map_form P.NecBooleanCompleteness.to_lub.entails
+    P.NecBooleanCompleteness.of_lub.entails
+
+/-- `necessary-distinctness-necessary-r`, variant `dual`: the dual form. -/
+theorem necessary_distinctness_necessary_r.dual : Statements.necessary_distinctness_necessary_r.dual := by
+  map_form P.NecNecessityOfDistinctness.to_dual.entails
+    P.NecNecessityOfDistinctness.of_dual.entails
+
+/-- `necessary-distinctness-necessary-r`, variant `dual-polyadic`: the dual form, for every list of argument types. -/
+theorem necessary_distinctness_necessary_r.dual_polyadic : Statements.necessary_distinctness_necessary_r.dual_polyadic := by
+  map_form (Entails.trans P.NecNecessityOfDistinctness.schema_entails_listSchema P.NecNecessityOfDistinctness.to_dual.listEntails)
+    (Entails.trans P.NecNecessityOfDistinctness.of_dual.listEntails P.NecNecessityOfDistinctness.listSchema_entails_schema)
+
+/-- `necessary-distinctness-necessary-t`, variant `dual`: the dual form. -/
+theorem necessary_distinctness_necessary_t.dual : Statements.necessary_distinctness_necessary_t.dual := by
+  map_form P.NecNecessityOfDistinctnessT.to_dual.entails
+    P.NecNecessityOfDistinctnessT.of_dual.entails
+
+/-- `necessary-modal-b`, variant `dual`: the dual form. -/
+theorem necessary_modal_b.dual : Statements.necessary_modal_b.dual := by
+  map_form P.NecModalB.to_dual.entails
+    P.NecModalB.of_dual.entails
+
+/-- `necessary-modal-five`, variant `dual`: the dual form. -/
+theorem necessary_modal_five.dual : Statements.necessary_modal_five.dual := by
+  map_form P.NecModalFive.to_dual.entails
+    P.NecModalFive.of_dual.entails
+
+/-- `necessary-strong-leibniz-r`, variant `dual`: the dual form. -/
+theorem necessary_strong_leibniz_r.dual : Statements.necessary_strong_leibniz_r.dual := by
+  map_form P.NecStrongLeibniz.to_dual.entails
+    P.NecStrongLeibniz.of_dual.entails
+
+/-- `necessary-strong-leibniz-t`, variant `dual`: the dual form. -/
+theorem necessary_strong_leibniz_t.dual : Statements.necessary_strong_leibniz_t.dual := by
+  map_form P.NecStrongLeibnizT.to_dual.entails
+    P.NecStrongLeibnizT.of_dual.entails
+
+/-- `necessary-tractarianism-r`, variant `dual`: the dual form. -/
+theorem necessary_tractarianism_r.dual : Statements.necessary_tractarianism_r.dual := by
+  map_form P.NecTractarianism.to_dual.entails
+    P.NecTractarianism.of_dual.entails
+
+/-- `necessary-tractarianism-r`, variant `dual-polyadic`: the dual form, for every list of argument types. -/
+theorem necessary_tractarianism_r.dual_polyadic : Statements.necessary_tractarianism_r.dual_polyadic := by
+  map_form (Entails.trans P.NecTractarianism.schema_entails_listSchema P.NecTractarianism.to_dual.listEntails)
+    (Entails.trans P.NecTractarianism.of_dual.listEntails P.NecTractarianism.listSchema_entails_schema)
+
+/-- `strong-leibniz-r`, variant `dual`: the dual form. -/
+theorem strong_leibniz_r.dual : Statements.strong_leibniz_r.dual := by
+  map_form P.StrongLeibniz.to_dual.entails
+    P.StrongLeibniz.of_dual.entails
+
+/-- `strong-leibniz-t`, variant `dual`: the dual form. -/
+theorem strong_leibniz_t.dual : Statements.strong_leibniz_t.dual := by
+  map_form P.StrongLeibnizT.to_dual.entails
+    P.StrongLeibnizT.of_dual.entails
+
+/-- `tractarianism-r`, variant `dual`: the dual form. -/
+theorem tractarianism_r.dual : Statements.tractarianism_r.dual := by
+  map_form P.Tractarianism.to_dual.entails
+    P.Tractarianism.of_dual.entails
+
+/-- `tractarianism-r`, variant `dual-polyadic`: the dual form, for every list of argument types. -/
+theorem tractarianism_r.dual_polyadic : Statements.tractarianism_r.dual_polyadic := by
+  map_form (Entails.trans P.Tractarianism.schema_entails_listSchema P.Tractarianism.to_dual.listEntails)
+    (Entails.trans P.Tractarianism.of_dual.listEntails P.Tractarianism.listSchema_entails_schema)
 
 end Classicism.Map

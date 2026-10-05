@@ -69,8 +69,11 @@ def proofsOf (cert : Name) (byName : Bool) : CommandElabM (Array Name) := do
   let named := if byName then [`Classicism.Proofs ++ id.toName, `Classicism ++ id.toName,
     `Classicism.Meta ++ id.toName].filter env.contains else []
   let cited := ((valueOf env cert).map (·.getUsedConstants) |>.getD #[]).toList.map (base env)
+  -- the proofs cited: in `Principles/` (a form's two directions, beside its definition) and
+  -- in `Results/`
   let inResults := cited.filter fun c =>
-    (`Classicism.Results).isPrefixOf (moduleOf env c) && env.contains c
+    ((`Classicism.Principles).isPrefixOf (moduleOf env c) ||
+      (`Classicism.Results).isPrefixOf (moduleOf env c)) && env.contains c
   let mut out : Array Name := #[]
   for c in named ++ inResults do
     unless out.contains c do out := out.push c

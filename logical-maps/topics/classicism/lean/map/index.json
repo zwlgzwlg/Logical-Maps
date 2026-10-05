@@ -2643,7 +2643,7 @@
     "axioms": ["propext", "Quot.sound"]}}},
  "forms":
  {"tractarianism-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.Tractarianism.schema_entails_listSchema",
       "lines": [422, 430],
@@ -2656,12 +2656,97 @@
       "lines": [23, 23],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.tractarianism_r.list",
+    {"name": "Classicism.Map.tractarianism_r.polyadic",
      "lines": [1113, 1115],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}},
+   "dual-polyadic":
+   {"proofs":
+    [{"name": "Classicism.P.Tractarianism.schema_entails_listSchema",
+      "lines": [422, 430],
+      "file": "Classicism/Results/Lists.lean"},
+     {"name": "Classicism.P.Tractarianism.to_dual",
+      "lines": [175, 180],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.Tractarianism.of_dual",
+      "lines": [182, 187],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.Tractarianism",
+      "lines": [168, 170],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.TractarianismDual.listQuoted",
+      "lines": [50, 50],
+      "file": "Classicism/Certified/Schemas.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.tractarianism_r.dual_polyadic",
+     "lines": [1355, 1358],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}},
+   "dual":
+   {"proofs":
+    [{"name": "Classicism.P.Tractarianism.to_dual",
+      "lines": [175, 180],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.Tractarianism.of_dual",
+      "lines": [182, 187],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.Tractarianism",
+      "lines": [168, 170],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.TractarianismDual",
+      "lines": [171, 173],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.tractarianism_r.dual",
+     "lines": [1350, 1353],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "strong-leibniz-t":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.StrongLeibnizT.to_dual",
+      "lines": [112, 114],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.StrongLeibnizT.of_dual",
+      "lines": [115, 117],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.StrongLeibnizT",
+      "lines": [106, 107],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.StrongLeibnizTDual",
+      "lines": [108, 110],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.strong_leibniz_t.dual",
+     "lines": [1345, 1348],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "strong-leibniz-r":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.StrongLeibniz.to_dual",
+      "lines": [154, 160],
+      "file": "Classicism/Principles/Lattice.lean"},
+     {"name": "Classicism.P.StrongLeibniz.of_dual",
+      "lines": [162, 168],
+      "file": "Classicism/Principles/Lattice.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.StrongLeibniz",
+      "lines": [143, 145],
+      "file": "Classicism/Principles/Lattice.lean"},
+     {"name": "Classicism.P.StrongLeibnizDual",
+      "lines": [146, 149],
+      "file": "Classicism/Principles/Lattice.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.strong_leibniz_r.dual",
+     "lines": [1340, 1343],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "relational-choice-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.RelationalChoice.schema_entails_listSchema",
       "lines": [549, 560],
@@ -2674,12 +2759,12 @@
       "lines": [27, 27],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.relational_choice_r.list",
+    {"name": "Classicism.Map.relational_choice_r.polyadic",
      "lines": [1149, 1151],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "plenitude-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.Plenitude.schema_entails_listSchema",
       "lines": [578, 584],
@@ -2692,12 +2777,12 @@
       "lines": [32, 32],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.plenitude_r.list",
+    {"name": "Classicism.Map.plenitude_r.polyadic",
      "lines": [1157, 1159],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "necessary-tractarianism-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.NecTractarianism.schema_entails_listSchema",
       "lines": [432, 440],
@@ -2710,12 +2795,97 @@
       "lines": [35, 35],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.necessary_tractarianism_r.list",
+    {"name": "Classicism.Map.necessary_tractarianism_r.polyadic",
      "lines": [1117, 1119],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}},
+   "dual-polyadic":
+   {"proofs":
+    [{"name": "Classicism.P.NecTractarianism.schema_entails_listSchema",
+      "lines": [432, 440],
+      "file": "Classicism/Results/Lists.lean"},
+     {"name": "Classicism.P.NecTractarianism.to_dual",
+      "lines": [194, 197],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecTractarianism.of_dual",
+      "lines": [198, 201],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecTractarianism",
+      "lines": [189, 190],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecTractarianismDual.listQuoted",
+      "lines": [51, 51],
+      "file": "Classicism/Certified/Schemas.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.necessary_tractarianism_r.dual_polyadic",
+     "lines": [1335, 1338],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}},
+   "dual":
+   {"proofs":
+    [{"name": "Classicism.P.NecTractarianism.to_dual",
+      "lines": [194, 197],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecTractarianism.of_dual",
+      "lines": [198, 201],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecTractarianism",
+      "lines": [189, 190],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecTractarianismDual",
+      "lines": [191, 192],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.necessary_tractarianism_r.dual",
+     "lines": [1330, 1333],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "necessary-strong-leibniz-t":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.NecStrongLeibnizT.to_dual",
+      "lines": [124, 126],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.NecStrongLeibnizT.of_dual",
+      "lines": [127, 129],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecStrongLeibnizT",
+      "lines": [119, 120],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.NecStrongLeibnizTDual",
+      "lines": [121, 122],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.necessary_strong_leibniz_t.dual",
+     "lines": [1325, 1328],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "necessary-strong-leibniz-r":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.NecStrongLeibniz.to_dual",
+      "lines": [180, 182],
+      "file": "Classicism/Principles/Lattice.lean"},
+     {"name": "Classicism.P.NecStrongLeibniz.of_dual",
+      "lines": [183, 185],
+      "file": "Classicism/Principles/Lattice.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecStrongLeibniz",
+      "lines": [172, 173],
+      "file": "Classicism/Principles/Lattice.lean"},
+     {"name": "Classicism.P.NecStrongLeibnizDual",
+      "lines": [174, 175],
+      "file": "Classicism/Principles/Lattice.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.necessary_strong_leibniz_r.dual",
+     "lines": [1320, 1323],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "necessary-relational-choice-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.NecRelationalChoice.schema_entails_listSchema",
       "lines": [562, 574],
@@ -2728,12 +2898,12 @@
       "lines": [36, 36],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.necessary_relational_choice_r.list",
+    {"name": "Classicism.Map.necessary_relational_choice_r.polyadic",
      "lines": [1153, 1155],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "necessary-plenitude-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.NecPlenitude.schema_entails_listSchema",
       "lines": [586, 592],
@@ -2746,12 +2916,54 @@
       "lines": [33, 33],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.necessary_plenitude_r.list",
+    {"name": "Classicism.Map.necessary_plenitude_r.polyadic",
      "lines": [1161, 1163],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
+  "necessary-modal-five":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.NecModalFive.to_dual",
+      "lines": [90, 92],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecModalFive.of_dual",
+      "lines": [93, 95],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecModalFive",
+      "lines": [85, 86],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecModalFiveDual",
+      "lines": [87, 88],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.necessary_modal_five.dual",
+     "lines": [1315, 1318],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "necessary-modal-b":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.NecModalB.to_dual",
+      "lines": [55, 56],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecModalB.of_dual",
+      "lines": [57, 58],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecModalB",
+      "lines": [50, 51],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecModalBDual",
+      "lines": [52, 53],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.necessary_modal_b.dual",
+     "lines": [1310, 1313],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
   "necessary-functionality-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.NecFunctionality.schema_entails_listSchema",
       "lines": [507, 517],
@@ -2764,12 +2976,12 @@
       "lines": [35, 35],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.necessary_functionality_r.list",
+    {"name": "Classicism.Map.necessary_functionality_r.polyadic",
      "lines": [1137, 1139],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "necessary-functional-choice-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.NecFunctionalChoice.schema_entails_listSchema",
       "lines": [531, 542],
@@ -2782,12 +2994,33 @@
       "lines": [36, 36],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.necessary_functional_choice_r.list",
+    {"name": "Classicism.Map.necessary_functional_choice_r.polyadic",
      "lines": [1145, 1147],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
+  "necessary-distinctness-necessary-t":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.NecNecessityOfDistinctnessT.to_dual",
+      "lines": [40, 43],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.NecNecessityOfDistinctnessT.of_dual",
+      "lines": [44, 47],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecNecessityOfDistinctnessT",
+      "lines": [35, 36],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.NecNecessityOfDistinctnessTDual",
+      "lines": [37, 38],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.necessary_distinctness_necessary_t.dual",
+     "lines": [1305, 1308],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
   "necessary-distinctness-necessary-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name":
       "Classicism.P.NecNecessityOfDistinctness.schema_entails_listSchema",
@@ -2801,12 +3034,98 @@
       "lines": [21, 21],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.necessary_distinctness_necessary_r.list",
+    {"name": "Classicism.Map.necessary_distinctness_necessary_r.polyadic",
      "lines": [1125, 1127],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}},
+   "dual-polyadic":
+   {"proofs":
+    [{"name":
+      "Classicism.P.NecNecessityOfDistinctness.schema_entails_listSchema",
+      "lines": [462, 474],
+      "file": "Classicism/Results/Lists.lean"},
+     {"name": "Classicism.P.NecNecessityOfDistinctness.to_dual",
+      "lines": [122, 125],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecNecessityOfDistinctness.of_dual",
+      "lines": [126, 129],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecNecessityOfDistinctness",
+      "lines": [116, 117],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecNecessityOfDistinctnessDual.listQuoted",
+      "lines": [49, 49],
+      "file": "Classicism/Certified/Schemas.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.necessary_distinctness_necessary_r.dual_polyadic",
+     "lines": [1300, 1303],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}},
+   "dual":
+   {"proofs":
+    [{"name": "Classicism.P.NecNecessityOfDistinctness.to_dual",
+      "lines": [122, 125],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecNecessityOfDistinctness.of_dual",
+      "lines": [126, 129],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecNecessityOfDistinctness",
+      "lines": [116, 117],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecNecessityOfDistinctnessDual",
+      "lines": [118, 120],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.necessary_distinctness_necessary_r.dual",
+     "lines": [1295, 1298],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "necessary-boolean-completeness-r":
+  {"lub":
+   {"proofs":
+    [{"name": "Classicism.P.NecBooleanCompleteness.to_lub",
+      "lines": [103, 105],
+      "file": "Classicism/Principles/Lattice.lean"},
+     {"name": "Classicism.P.NecBooleanCompleteness.of_lub",
+      "lines": [106, 108],
+      "file": "Classicism/Principles/Lattice.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecBooleanCompleteness",
+      "lines": [95, 96],
+      "file": "Classicism/Principles/Lattice.lean"},
+     {"name": "Classicism.P.NecBooleanCompletenessLUB",
+      "lines": [97, 98],
+      "file": "Classicism/Principles/Lattice.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.necessary_boolean_completeness_r.lub",
+     "lines": [1290, 1293],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "necessary-barcan-t":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.NecBarcanT.to_dual",
+      "lines": [66, 67],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.NecBarcanT.of_dual",
+      "lines": [68, 69],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecBarcanT",
+      "lines": [61, 62],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.NecBarcanTDual",
+      "lines": [63, 64],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.necessary_barcan_t.dual",
+     "lines": [1285, 1288],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "necessary-barcan-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.NecBarcan.schema_entails_listSchema",
       "lines": [412, 420],
@@ -2819,12 +3138,76 @@
       "lines": [22, 22],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.necessary_barcan_r.list",
+    {"name": "Classicism.Map.necessary_barcan_r.polyadic",
      "lines": [1109, 1111],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}},
+   "dual-polyadic":
+   {"proofs":
+    [{"name": "Classicism.P.NecBarcan.schema_entails_listSchema",
+      "lines": [412, 420],
+      "file": "Classicism/Results/Lists.lean"},
+     {"name": "Classicism.P.NecBarcan.to_dual",
+      "lines": [159, 161],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecBarcan.of_dual",
+      "lines": [162, 164],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecBarcan",
+      "lines": [154, 155],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecBarcanDual.listQuoted",
+      "lines": [50, 50],
+      "file": "Classicism/Certified/Schemas.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.necessary_barcan_r.dual_polyadic",
+     "lines": [1280, 1283],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}},
+   "dual":
+   {"proofs":
+    [{"name": "Classicism.P.NecBarcan.to_dual",
+      "lines": [159, 161],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecBarcan.of_dual",
+      "lines": [162, 164],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecBarcan",
+      "lines": [154, 155],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecBarcanDual",
+      "lines": [156, 157],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.necessary_barcan_r.dual",
+     "lines": [1275, 1278],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "necessary-atomicity-r":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.NecAtomicity.to_dual",
+      "lines": [62, 64],
+      "file": "Classicism/Principles/Lattice.lean"},
+     {"name": "Classicism.P.NecAtomicity.of_dual",
+      "lines": [65, 67],
+      "file": "Classicism/Principles/Lattice.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecAtomicity",
+      "lines": [54, 55],
+      "file": "Classicism/Principles/Lattice.lean"},
+     {"name": "Classicism.P.NecAtomicityDual",
+      "lines": [56, 57],
+      "file": "Classicism/Principles/Lattice.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.necessary_atomicity_r.dual",
+     "lines": [1270, 1273],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "modalized-plenitude-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.ModalizedPlenitude.schema_entails_listSchema",
       "lines": [673, 677],
@@ -2837,12 +3220,12 @@
       "lines": [42, 42],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.modalized_plenitude_r.list",
-     "lines": [1186, 1188],
+    {"name": "Classicism.Map.modalized_plenitude_r.polyadic",
+     "lines": [1181, 1183],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "modalized-functionality-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.ModalizedFunctionality.schema_entails_listSchema",
       "lines": [605, 609],
@@ -2855,12 +3238,117 @@
       "lines": [19, 19],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.modalized_functionality_r.list",
-     "lines": [1170, 1172],
+    {"name": "Classicism.Map.modalized_functionality_r.polyadic",
+     "lines": [1165, 1167],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "modal-t":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.ModalT.to_dual",
+      "lines": [37, 38],
+      "file": "Classicism/Principles/Base.lean"},
+     {"name": "Classicism.P.ModalT.of_dual",
+      "lines": [39, 40],
+      "file": "Classicism/Principles/Base.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.ModalT",
+      "lines": [32, 33],
+      "file": "Classicism/Principles/Base.lean"},
+     {"name": "Classicism.P.ModalTDual",
+      "lines": [34, 35],
+      "file": "Classicism/Principles/Base.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.modal_t.dual",
+     "lines": [1265, 1268],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "modal-k":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.ModalK.to_dual",
+      "lines": [27, 28],
+      "file": "Classicism/Principles/Base.lean"},
+     {"name": "Classicism.P.ModalK.of_dual",
+      "lines": [29, 30],
+      "file": "Classicism/Principles/Base.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.ModalK",
+      "lines": [22, 23],
+      "file": "Classicism/Principles/Base.lean"},
+     {"name": "Classicism.P.ModalKDual",
+      "lines": [24, 25],
+      "file": "Classicism/Principles/Base.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.modal_k.dual",
+     "lines": [1260, 1263],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "modal-four":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.ModalFour.to_dual",
+      "lines": [47, 48],
+      "file": "Classicism/Principles/Base.lean"},
+     {"name": "Classicism.P.ModalFour.of_dual",
+      "lines": [49, 50],
+      "file": "Classicism/Principles/Base.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.ModalFour",
+      "lines": [42, 43],
+      "file": "Classicism/Principles/Base.lean"},
+     {"name": "Classicism.P.ModalFourDual",
+      "lines": [44, 45],
+      "file": "Classicism/Principles/Base.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.modal_four.dual",
+     "lines": [1255, 1258],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "modal-five":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.ModalFive.to_dual",
+      "lines": [67, 74],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.ModalFive.of_dual",
+      "lines": [76, 83],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.ModalFive",
+      "lines": [62, 63],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.ModalFiveDual",
+      "lines": [64, 65],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.modal_five.dual",
+     "lines": [1250, 1253],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "modal-b":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.ModalB.to_dual",
+      "lines": [32, 39],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.ModalB.of_dual",
+      "lines": [41, 48],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.ModalB",
+      "lines": [27, 28],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.ModalBDual",
+      "lines": [29, 30],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.modal_b.dual",
+     "lines": [1245, 1248],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "identity-necessary-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.NecessityOfIdentity.schema_entails_listSchema",
       "lines": [614, 618],
@@ -2873,12 +3361,12 @@
       "lines": [19, 19],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.identity_necessary_r.list",
-     "lines": [1178, 1180],
+    {"name": "Classicism.Map.identity_necessary_r.polyadic",
+     "lines": [1173, 1175],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "functionality-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.Functionality.schema_entails_listSchema",
       "lines": [495, 505],
@@ -2891,12 +3379,12 @@
       "lines": [18, 18],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.functionality_r.list",
+    {"name": "Classicism.Map.functionality_r.polyadic",
      "lines": [1133, 1135],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "functional-choice-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.FunctionalChoice.schema_entails_listSchema",
       "lines": [519, 529],
@@ -2909,12 +3397,12 @@
       "lines": [27, 27],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.functional_choice_r.list",
+    {"name": "Classicism.Map.functional_choice_r.polyadic",
      "lines": [1141, 1143],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "existence-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.Existence.schema_entails_listSchema",
       "lines": [476, 487],
@@ -2927,12 +3415,54 @@
       "lines": [27, 27],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.existence_r.list",
+    {"name": "Classicism.Map.existence_r.polyadic",
      "lines": [1129, 1131],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
+  "distinctness-preserving-collapse":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.DistinctnessPreservingCollapse.to_dual",
+      "lines": [26, 29],
+      "file": "Classicism/Principles/Schematic.lean"},
+     {"name": "Classicism.P.DistinctnessPreservingCollapse.of_dual",
+      "lines": [31, 36],
+      "file": "Classicism/Principles/Schematic.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.DistinctnessPreservingCollapse",
+      "lines": [21, 22],
+      "file": "Classicism/Principles/Schematic.lean"},
+     {"name": "Classicism.P.DistinctnessPreservingCollapseDual",
+      "lines": [23, 24],
+      "file": "Classicism/Principles/Schematic.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.distinctness_preserving_collapse.dual",
+     "lines": [1240, 1243],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "distinctness-necessary-t":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.NecessityOfDistinctnessT.to_dual",
+      "lines": [26, 29],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.NecessityOfDistinctnessT.of_dual",
+      "lines": [30, 33],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecessityOfDistinctnessT",
+      "lines": [21, 22],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.NecessityOfDistinctnessTDual",
+      "lines": [23, 24],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.distinctness_necessary_t.dual",
+     "lines": [1235, 1238],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
   "distinctness-necessary-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.NecessityOfDistinctness.schema_entails_listSchema",
       "lines": [448, 460],
@@ -2945,12 +3475,55 @@
       "lines": [20, 20],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.distinctness_necessary_r.list",
+    {"name": "Classicism.Map.distinctness_necessary_r.polyadic",
      "lines": [1121, 1123],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}},
+   "dual-polyadic":
+   {"proofs":
+    [{"name": "Classicism.P.NecessityOfDistinctness.schema_entails_listSchema",
+      "lines": [448, 460],
+      "file": "Classicism/Results/Lists.lean"},
+     {"name": "Classicism.P.NecessityOfDistinctness.to_dual",
+      "lines": [104, 108],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecessityOfDistinctness.of_dual",
+      "lines": [110, 114],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecessityOfDistinctness",
+      "lines": [99, 100],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecessityOfDistinctnessDual.listQuoted",
+      "lines": [49, 49],
+      "file": "Classicism/Certified/Schemas.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.distinctness_necessary_r.dual_polyadic",
+     "lines": [1230, 1233],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}},
+   "dual":
+   {"proofs":
+    [{"name": "Classicism.P.NecessityOfDistinctness.to_dual",
+      "lines": [104, 108],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecessityOfDistinctness.of_dual",
+      "lines": [110, 114],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.NecessityOfDistinctness",
+      "lines": [99, 100],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.NecessityOfDistinctnessDual",
+      "lines": [101, 102],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.distinctness_necessary_r.dual",
+     "lines": [1225, 1228],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "converse-barcan-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.ConverseBarcan.schema_entails_listSchema",
       "lines": [610, 613],
@@ -2963,12 +3536,55 @@
       "lines": [23, 23],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.converse_barcan_r.list",
-     "lines": [1174, 1176],
+    {"name": "Classicism.Map.converse_barcan_r.polyadic",
+     "lines": [1169, 1171],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}},
+   "dual-polyadic":
+   {"proofs":
+    [{"name": "Classicism.P.ConverseBarcan.schema_entails_listSchema",
+      "lines": [610, 613],
+      "file": "Classicism/Results/Lists.lean"},
+     {"name": "Classicism.P.ConverseBarcan.to_dual",
+      "lines": [73, 77],
+      "file": "Classicism/Principles/Base.lean"},
+     {"name": "Classicism.P.ConverseBarcan.of_dual",
+      "lines": [79, 86],
+      "file": "Classicism/Principles/Base.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.ConverseBarcan",
+      "lines": [67, 68],
+      "file": "Classicism/Principles/Base.lean"},
+     {"name": "Classicism.P.ConverseBarcanDual.listQuoted",
+      "lines": [47, 47],
+      "file": "Classicism/Certified/Schemas.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.converse_barcan_r.dual_polyadic",
+     "lines": [1220, 1223],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}},
+   "dual":
+   {"proofs":
+    [{"name": "Classicism.P.ConverseBarcan.to_dual",
+      "lines": [73, 77],
+      "file": "Classicism/Principles/Base.lean"},
+     {"name": "Classicism.P.ConverseBarcan.of_dual",
+      "lines": [79, 86],
+      "file": "Classicism/Principles/Base.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.ConverseBarcan",
+      "lines": [67, 68],
+      "file": "Classicism/Principles/Base.lean"},
+     {"name": "Classicism.P.ConverseBarcanDual",
+      "lines": [69, 71],
+      "file": "Classicism/Principles/Base.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.converse_barcan_r.dual",
+     "lines": [1215, 1218],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "broad-necessitism-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.BroadNecessitism.schema_entails_listSchema",
       "lines": [619, 623],
@@ -2981,13 +3597,40 @@
       "lines": [39, 39],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.broad_necessitism_r.list",
-     "lines": [1182, 1184],
+    {"name": "Classicism.Map.broad_necessitism_r.polyadic",
+     "lines": [1177, 1179],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "boolean-completeness-t":
+  {"lub":
+   {"proofs":
+    [{"name": "Classicism.P.BooleanCompletenessT.to_lub",
+      "lines": [97, 99],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.BooleanCompletenessT.of_lub",
+      "lines": [100, 102],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.BooleanCompletenessT",
+      "lines": [92, 93],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.BooleanCompletenessTLUB",
+      "lines": [94, 95],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.boolean_completeness_t.lub",
+     "lines": [1210, 1213],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
   "boolean-completeness-r":
   {"lub":
-   {"proofs": [],
+   {"proofs":
+    [{"name": "Classicism.P.BooleanCompleteness.to_lub",
+      "lines": [83, 86],
+      "file": "Classicism/Principles/Lattice.lean"},
+     {"name": "Classicism.P.BooleanCompleteness.of_lub",
+      "lines": [88, 91],
+      "file": "Classicism/Principles/Lattice.lean"}],
     "definitions":
     [{"name": "Classicism.P.BooleanCompleteness",
       "lines": [73, 75],
@@ -3000,8 +3643,29 @@
      "lines": [1101, 1103],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}},
+  "barcan-t":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.BarcanT.to_dual",
+      "lines": [56, 57],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.BarcanT.of_dual",
+      "lines": [58, 59],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.BarcanT",
+      "lines": [51, 52],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.BarcanTDual",
+      "lines": [53, 54],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.barcan_t.dual",
+     "lines": [1205, 1208],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
   "barcan-r":
-  {"list":
+  {"polyadic":
    {"proofs":
     [{"name": "Classicism.P.Barcan.schema_entails_listSchema",
       "lines": [402, 410],
@@ -3014,25 +3678,92 @@
       "lines": [22, 22],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
-    {"name": "Classicism.Map.barcan_r.list",
+    {"name": "Classicism.Map.barcan_r.polyadic",
      "lines": [1105, 1107],
      "file": "Classicism/Map.lean",
-     "axioms": ["propext", "Quot.sound"]}}},
-  "actual-profile-r":
-  {"single":
+     "axioms": ["propext", "Quot.sound"]}},
+   "dual-polyadic":
    {"proofs":
-    [{"name": "Classicism.P.ActualProfile.schema_entails_listSchema",
-      "lines": [594, 599],
-      "file": "Classicism/Results/Lists.lean"}],
+    [{"name": "Classicism.P.Barcan.schema_entails_listSchema",
+      "lines": [402, 410],
+      "file": "Classicism/Results/Lists.lean"},
+     {"name": "Classicism.P.Barcan.to_dual",
+      "lines": [138, 140],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.Barcan.of_dual",
+      "lines": [142, 152],
+      "file": "Classicism/Principles/Coarse.lean"}],
     "definitions":
-    [{"name": "Classicism.P.ActualProfile.listQuoted",
-      "lines": [32, 32],
-      "file": "Classicism/Certified/Schemas.lean"},
-     {"name": "Classicism.P.ActualProfile",
-      "lines": [125, 130],
+    [{"name": "Classicism.P.Barcan",
+      "lines": [133, 134],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.BarcanDual.listQuoted",
+      "lines": [50, 50],
+      "file": "Classicism/Certified/Schemas.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.barcan_r.dual_polyadic",
+     "lines": [1200, 1203],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}},
+   "dual":
+   {"proofs":
+    [{"name": "Classicism.P.Barcan.to_dual",
+      "lines": [138, 140],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.Barcan.of_dual",
+      "lines": [142, 152],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.Barcan",
+      "lines": [133, 134],
+      "file": "Classicism/Principles/Coarse.lean"},
+     {"name": "Classicism.P.BarcanDual",
+      "lines": [135, 136],
+      "file": "Classicism/Principles/Coarse.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.barcan_r.dual",
+     "lines": [1195, 1198],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "atomicity-t":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.AtomicityT.to_dual",
+      "lines": [79, 81],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.AtomicityT.of_dual",
+      "lines": [82, 84],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.AtomicityT",
+      "lines": [73, 74],
+      "file": "Classicism/Principles/Instances.lean"},
+     {"name": "Classicism.P.AtomicityTDual",
+      "lines": [75, 77],
+      "file": "Classicism/Principles/Instances.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.atomicity_t.dual",
+     "lines": [1190, 1193],
+     "file": "Classicism/Map.lean",
+     "axioms": ["propext", "Quot.sound"]}}},
+  "atomicity-r":
+  {"dual":
+   {"proofs":
+    [{"name": "Classicism.P.Atomicity.to_dual",
+      "lines": [36, 42],
+      "file": "Classicism/Principles/Lattice.lean"},
+     {"name": "Classicism.P.Atomicity.of_dual",
+      "lines": [44, 50],
+      "file": "Classicism/Principles/Lattice.lean"}],
+    "definitions":
+    [{"name": "Classicism.P.Atomicity",
+      "lines": [24, 27],
+      "file": "Classicism/Principles/Lattice.lean"},
+     {"name": "Classicism.P.AtomicityDual",
+      "lines": [28, 31],
       "file": "Classicism/Principles/Lattice.lean"}],
     "certificate":
-    {"name": "Classicism.Map.actual_profile_r.single",
-     "lines": [1165, 1168],
+    {"name": "Classicism.Map.atomicity_r.dual",
+     "lines": [1185, 1188],
      "file": "Classicism/Map.lean",
      "axioms": ["propext", "Quot.sound"]}}}}}

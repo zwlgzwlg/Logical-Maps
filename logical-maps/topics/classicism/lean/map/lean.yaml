@@ -1,7 +1,7 @@
 # The Lean side of the map, as the map's own fields would record it.
 #
 # A proposal for topics/classicism in zwlgzwlg/Logical-Maps: `lean_lib` and `lean` go in
-# topic.yaml, each `lean_def` and each principle's `forms` in its principle's YAML, each
+# topic.yaml, each `lean_def` and each variant's `lean` in its principle's YAML, each
 # `lean_ref` in its result's certificate. `generate.py` runs the map's own generator
 # (pmap's generate_lean_statements, with the change in map/pmap.patch) on the map with
 # these fields added, writing Classicism/Statements.lean; `Classicism/Map.lean` proves
@@ -11,8 +11,8 @@
 # statement reads: for every signature of the paper's language (its constants of closed
 # types) and every schema Ax over it, if Ax entails each premise then it entails the
 # conclusion; for an incompatibility, Ax is inconsistent.
-# That is the entailment between the schemas, or their inconsistency. A form's statement:
-# Ax entails the principle iff it entails the form.
+# That is the entailment between the schemas, or their inconsistency. A variant's statement:
+# Ax entails the principle iff it entails the variant.
 
 lean_lib: Classicism
 lean:
@@ -127,143 +127,234 @@ lean_def:
   weakly-inextensible-comprehension-r: "Classicism.P.WeaklyInextensibleComprehension.schemaIn"
   witnessed-possibility-r: "(Classicism.Meta.AxiomSet.witnessedPossibility _)"
 
-# principle id -> its equivalent forms: each with a Lean definition (a schema at every
-# signature) and a certificate of its equivalence with the official form
-forms:
-  actual-profile-r:
-  - id: single
-    name: Single-argument form
-    statement: "Actual Profile for a single argument: every entity has a true property entailing every property it has."
-    lean_def: "Classicism.P.ActualProfile.schemaIn"
-    lean_ref: Classicism.Map.actual_profile_r.single
+# principle id -> its variants (equivalent forms), as the map's reserved `lean` field of each
+# variant would record them: `ref`, the form's schema at every signature, and
+# `equivalence_ref`, the certificate of its equivalence with the official form (absent where
+# the form is stated but its equivalence not yet proved).
+variants:
+  atomicity-r:
+    dual:
+      equivalence_ref: Classicism.Map.atomicity_r.dual
+      ref: Classicism.P.AtomicityDual.schemaIn
+  atomicity-t:
+    dual:
+      equivalence_ref: Classicism.Map.atomicity_t.dual
+      ref: Classicism.P.AtomicityTDual.schemaIn
   barcan-r:
-  - id: list
-    name: List form
-    statement: "BF for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.Barcan.listSchemaIn"
-    lean_ref: Classicism.Map.barcan_r.list
+    dual:
+      equivalence_ref: Classicism.Map.barcan_r.dual
+      ref: Classicism.P.BarcanDual.schemaIn
+    dual-polyadic:
+      equivalence_ref: Classicism.Map.barcan_r.dual_polyadic
+      ref: Classicism.P.BarcanDual.listSchemaIn
+    polyadic:
+      equivalence_ref: Classicism.Map.barcan_r.polyadic
+      ref: Classicism.P.Barcan.listSchemaIn
+  barcan-t:
+    dual:
+      equivalence_ref: Classicism.Map.barcan_t.dual
+      ref: Classicism.P.BarcanTDual.schemaIn
   boolean-completeness-r:
-  - id: lub
-    name: LUB form
-    statement: "Every property of entities of a relational type has a least upper bound in that type."
-    lean_def: "Classicism.P.BooleanCompletenessLUB.schemaIn"
-    lean_ref: Classicism.Map.boolean_completeness_r.lub
+    lub:
+      equivalence_ref: Classicism.Map.boolean_completeness_r.lub
+      ref: Classicism.P.BooleanCompletenessLUB.schemaIn
+  boolean-completeness-t:
+    lub:
+      equivalence_ref: Classicism.Map.boolean_completeness_t.lub
+      ref: Classicism.P.BooleanCompletenessTLUB.schemaIn
   broad-necessitism-r:
-  - id: list
-    name: List form
-    statement: "Broad Necessitism for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.BroadNecessitism.listSchemaIn"
-    lean_ref: Classicism.Map.broad_necessitism_r.list
+    polyadic:
+      equivalence_ref: Classicism.Map.broad_necessitism_r.polyadic
+      ref: Classicism.P.BroadNecessitism.listSchemaIn
   converse-barcan-r:
-  - id: list
-    name: List form
-    statement: "CBF for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.ConverseBarcan.listSchemaIn"
-    lean_ref: Classicism.Map.converse_barcan_r.list
+    dual:
+      equivalence_ref: Classicism.Map.converse_barcan_r.dual
+      ref: Classicism.P.ConverseBarcanDual.schemaIn
+    dual-polyadic:
+      equivalence_ref: Classicism.Map.converse_barcan_r.dual_polyadic
+      ref: Classicism.P.ConverseBarcanDual.listSchemaIn
+    polyadic:
+      equivalence_ref: Classicism.Map.converse_barcan_r.polyadic
+      ref: Classicism.P.ConverseBarcan.listSchemaIn
   distinctness-necessary-r:
-  - id: list
-    name: List form
-    statement: "ND for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.NecessityOfDistinctness.listSchemaIn"
-    lean_ref: Classicism.Map.distinctness_necessary_r.list
+    dual:
+      equivalence_ref: Classicism.Map.distinctness_necessary_r.dual
+      ref: Classicism.P.NecessityOfDistinctnessDual.schemaIn
+    dual-polyadic:
+      equivalence_ref: Classicism.Map.distinctness_necessary_r.dual_polyadic
+      ref: Classicism.P.NecessityOfDistinctnessDual.listSchemaIn
+    polyadic:
+      equivalence_ref: Classicism.Map.distinctness_necessary_r.polyadic
+      ref: Classicism.P.NecessityOfDistinctness.listSchemaIn
+  distinctness-necessary-t:
+    dual:
+      equivalence_ref: Classicism.Map.distinctness_necessary_t.dual
+      ref: Classicism.P.NecessityOfDistinctnessTDual.schemaIn
+  distinctness-preserving-collapse:
+    dual:
+      equivalence_ref: Classicism.Map.distinctness_preserving_collapse.dual
+      ref: Classicism.P.DistinctnessPreservingCollapseDual.schemaIn
   existence-r:
-  - id: list
-    name: List form
-    statement: "Existence for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.Existence.listSchemaIn"
-    lean_ref: Classicism.Map.existence_r.list
+    polyadic:
+      equivalence_ref: Classicism.Map.existence_r.polyadic
+      ref: Classicism.P.Existence.listSchemaIn
   functional-choice-r:
-  - id: list
-    name: List form
-    statement: "Functional Choice for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.FunctionalChoice.listSchemaIn"
-    lean_ref: Classicism.Map.functional_choice_r.list
+    polyadic:
+      equivalence_ref: Classicism.Map.functional_choice_r.polyadic
+      ref: Classicism.P.FunctionalChoice.listSchemaIn
   functionality-r:
-  - id: list
-    name: List form
-    statement: "Functionality for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.Functionality.listSchemaIn"
-    lean_ref: Classicism.Map.functionality_r.list
+    polyadic:
+      equivalence_ref: Classicism.Map.functionality_r.polyadic
+      ref: Classicism.P.Functionality.listSchemaIn
   identity-necessary-r:
-  - id: list
-    name: List form
-    statement: "NI for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.NecessityOfIdentity.listSchemaIn"
-    lean_ref: Classicism.Map.identity_necessary_r.list
+    polyadic:
+      equivalence_ref: Classicism.Map.identity_necessary_r.polyadic
+      ref: Classicism.P.NecessityOfIdentity.listSchemaIn
+  modal-b:
+    dual:
+      equivalence_ref: Classicism.Map.modal_b.dual
+      ref: Classicism.P.ModalBDual.schemaIn
+  modal-five:
+    dual:
+      equivalence_ref: Classicism.Map.modal_five.dual
+      ref: Classicism.P.ModalFiveDual.schemaIn
+  modal-four:
+    dual:
+      equivalence_ref: Classicism.Map.modal_four.dual
+      ref: Classicism.P.ModalFourDual.schemaIn
+  modal-k:
+    dual:
+      equivalence_ref: Classicism.Map.modal_k.dual
+      ref: Classicism.P.ModalKDual.schemaIn
+  modal-t:
+    dual:
+      equivalence_ref: Classicism.Map.modal_t.dual
+      ref: Classicism.P.ModalTDual.schemaIn
   modalized-functionality-r:
-  - id: list
-    name: List form
-    statement: "Modalized Functionality for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.ModalizedFunctionality.listSchemaIn"
-    lean_ref: Classicism.Map.modalized_functionality_r.list
+    polyadic:
+      equivalence_ref: Classicism.Map.modalized_functionality_r.polyadic
+      ref: Classicism.P.ModalizedFunctionality.listSchemaIn
   modalized-plenitude-r:
-  - id: list
-    name: List form
-    statement: "Modalized Plenitude for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.ModalizedPlenitude.listSchemaIn"
-    lean_ref: Classicism.Map.modalized_plenitude_r.list
+    polyadic:
+      equivalence_ref: Classicism.Map.modalized_plenitude_r.polyadic
+      ref: Classicism.P.ModalizedPlenitude.listSchemaIn
+  necessary-atomicity-r:
+    dual:
+      equivalence_ref: Classicism.Map.necessary_atomicity_r.dual
+      ref: Classicism.P.NecAtomicityDual.schemaIn
   necessary-barcan-r:
-  - id: list
-    name: List form
-    statement: "□BF for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.NecBarcan.listSchemaIn"
-    lean_ref: Classicism.Map.necessary_barcan_r.list
+    dual:
+      equivalence_ref: Classicism.Map.necessary_barcan_r.dual
+      ref: Classicism.P.NecBarcanDual.schemaIn
+    dual-polyadic:
+      equivalence_ref: Classicism.Map.necessary_barcan_r.dual_polyadic
+      ref: Classicism.P.NecBarcanDual.listSchemaIn
+    polyadic:
+      equivalence_ref: Classicism.Map.necessary_barcan_r.polyadic
+      ref: Classicism.P.NecBarcan.listSchemaIn
+  necessary-barcan-t:
+    dual:
+      equivalence_ref: Classicism.Map.necessary_barcan_t.dual
+      ref: Classicism.P.NecBarcanTDual.schemaIn
+  necessary-boolean-completeness-r:
+    lub:
+      equivalence_ref: Classicism.Map.necessary_boolean_completeness_r.lub
+      ref: Classicism.P.NecBooleanCompletenessLUB.schemaIn
   necessary-distinctness-necessary-r:
-  - id: list
-    name: List form
-    statement: "□ND for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.NecNecessityOfDistinctness.listSchemaIn"
-    lean_ref: Classicism.Map.necessary_distinctness_necessary_r.list
+    dual:
+      equivalence_ref: Classicism.Map.necessary_distinctness_necessary_r.dual
+      ref: Classicism.P.NecNecessityOfDistinctnessDual.schemaIn
+    dual-polyadic:
+      equivalence_ref: Classicism.Map.necessary_distinctness_necessary_r.dual_polyadic
+      ref: Classicism.P.NecNecessityOfDistinctnessDual.listSchemaIn
+    polyadic:
+      equivalence_ref: Classicism.Map.necessary_distinctness_necessary_r.polyadic
+      ref: Classicism.P.NecNecessityOfDistinctness.listSchemaIn
+  necessary-distinctness-necessary-t:
+    dual:
+      equivalence_ref: Classicism.Map.necessary_distinctness_necessary_t.dual
+      ref: Classicism.P.NecNecessityOfDistinctnessTDual.schemaIn
   necessary-functional-choice-r:
-  - id: list
-    name: List form
-    statement: "□Functional Choice for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.NecFunctionalChoice.listSchemaIn"
-    lean_ref: Classicism.Map.necessary_functional_choice_r.list
+    polyadic:
+      equivalence_ref: Classicism.Map.necessary_functional_choice_r.polyadic
+      ref: Classicism.P.NecFunctionalChoice.listSchemaIn
   necessary-functionality-r:
-  - id: list
-    name: List form
-    statement: "□Functionality for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.NecFunctionality.listSchemaIn"
-    lean_ref: Classicism.Map.necessary_functionality_r.list
+    polyadic:
+      equivalence_ref: Classicism.Map.necessary_functionality_r.polyadic
+      ref: Classicism.P.NecFunctionality.listSchemaIn
+  necessary-modal-b:
+    dual:
+      equivalence_ref: Classicism.Map.necessary_modal_b.dual
+      ref: Classicism.P.NecModalBDual.schemaIn
+  necessary-modal-five:
+    dual:
+      equivalence_ref: Classicism.Map.necessary_modal_five.dual
+      ref: Classicism.P.NecModalFiveDual.schemaIn
   necessary-plenitude-r:
-  - id: list
-    name: List form
-    statement: "□Plenitude for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.NecPlenitude.listSchemaIn"
-    lean_ref: Classicism.Map.necessary_plenitude_r.list
+    polyadic:
+      equivalence_ref: Classicism.Map.necessary_plenitude_r.polyadic
+      ref: Classicism.P.NecPlenitude.listSchemaIn
   necessary-relational-choice-r:
-  - id: list
-    name: List form
-    statement: "□Relational Choice for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.NecRelationalChoice.listSchemaIn"
-    lean_ref: Classicism.Map.necessary_relational_choice_r.list
+    polyadic:
+      equivalence_ref: Classicism.Map.necessary_relational_choice_r.polyadic
+      ref: Classicism.P.NecRelationalChoice.listSchemaIn
+  necessary-strong-leibniz-r:
+    dual:
+      equivalence_ref: Classicism.Map.necessary_strong_leibniz_r.dual
+      ref: Classicism.P.NecStrongLeibnizDual.schemaIn
+  necessary-strong-leibniz-t:
+    dual:
+      equivalence_ref: Classicism.Map.necessary_strong_leibniz_t.dual
+      ref: Classicism.P.NecStrongLeibnizTDual.schemaIn
   necessary-tractarianism-r:
-  - id: list
-    name: List form
-    statement: "□Tractarianism for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.NecTractarianism.listSchemaIn"
-    lean_ref: Classicism.Map.necessary_tractarianism_r.list
+    dual:
+      equivalence_ref: Classicism.Map.necessary_tractarianism_r.dual
+      ref: Classicism.P.NecTractarianismDual.schemaIn
+    dual-polyadic:
+      equivalence_ref: Classicism.Map.necessary_tractarianism_r.dual_polyadic
+      ref: Classicism.P.NecTractarianismDual.listSchemaIn
+    polyadic:
+      equivalence_ref: Classicism.Map.necessary_tractarianism_r.polyadic
+      ref: Classicism.P.NecTractarianism.listSchemaIn
+  necessary-transversal-choice-r:
+    polyadic:
+      ref: Classicism.P.NecTransversalChoice.listSchemaIn
+  necessary-transversal-r:
+    polyadic:
+      ref: Classicism.P.NecTransversal.listSchemaIn
   plenitude-r:
-  - id: list
-    name: List form
-    statement: "Plenitude for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.Plenitude.listSchemaIn"
-    lean_ref: Classicism.Map.plenitude_r.list
+    polyadic:
+      equivalence_ref: Classicism.Map.plenitude_r.polyadic
+      ref: Classicism.P.Plenitude.listSchemaIn
   relational-choice-r:
-  - id: list
-    name: List form
-    statement: "Relational Choice for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.RelationalChoice.listSchemaIn"
-    lean_ref: Classicism.Map.relational_choice_r.list
+    polyadic:
+      equivalence_ref: Classicism.Map.relational_choice_r.polyadic
+      ref: Classicism.P.RelationalChoice.listSchemaIn
+  strong-leibniz-r:
+    dual:
+      equivalence_ref: Classicism.Map.strong_leibniz_r.dual
+      ref: Classicism.P.StrongLeibnizDual.schemaIn
+  strong-leibniz-t:
+    dual:
+      equivalence_ref: Classicism.Map.strong_leibniz_t.dual
+      ref: Classicism.P.StrongLeibnizTDual.schemaIn
   tractarianism-r:
-  - id: list
-    name: List form
-    statement: "Tractarianism for every finite list of argument types, the empty list included: each variable of the type becomes a block of variables."
-    lean_def: "Classicism.P.Tractarianism.listSchemaIn"
-    lean_ref: Classicism.Map.tractarianism_r.list
+    dual:
+      equivalence_ref: Classicism.Map.tractarianism_r.dual
+      ref: Classicism.P.TractarianismDual.schemaIn
+    dual-polyadic:
+      equivalence_ref: Classicism.Map.tractarianism_r.dual_polyadic
+      ref: Classicism.P.TractarianismDual.listSchemaIn
+    polyadic:
+      equivalence_ref: Classicism.Map.tractarianism_r.polyadic
+      ref: Classicism.P.Tractarianism.listSchemaIn
+  transversal-choice-r:
+    polyadic:
+      ref: Classicism.P.TransversalChoice.listSchemaIn
+  transversal-r:
+    polyadic:
+      ref: Classicism.P.Transversal.listSchemaIn
 
-# result id -> its certificate, a theorem of Classicism/Map.lean (written by generate.py)
 lean_ref:
   actual-profile-r-implies-actuality: Classicism.Map.actual_profile_r_implies_actuality
   actuality-and-bf-imply-inextensible-comprehension: Classicism.Map.actuality_and_bf_imply_inextensible_comprehension

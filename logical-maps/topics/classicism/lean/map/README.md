@@ -24,17 +24,17 @@ against a statement the map writes itself.
 
 | file | what it is |
 | --- | --- |
-| `lean.yaml` | The fields the map would carry: `lean_lib` and `lean` (for `topic.yaml`), a `lean_def` for each of the 95 principles formalized here, each principle's `forms`, and a `lean_ref` for each of the 234 results certified. |
+| `lean.yaml` | The fields the map would carry: `lean_lib` and `lean` (for `topic.yaml`), a `lean_def` for each of the 95 principles formalized here, the reserved `lean` field (`ref`, `equivalence_ref`) of 60 of the map's 77 variants, and a `lean_ref` for each of the 234 results certified. |
 | `pmap.patch` | The proposed change to the map's build script and JSON schemas (below). |
 | `generate.py` | Runs the map's own generator, with `pmap.patch` applied in memory, on a checkout of the map with these fields added, writing `Classicism/Statements.lean`; `--refs` fills `lean_ref` from `Classicism/Map.lean`, `--patch` rewrites `pmap.patch`. |
-| `index.json` | For each certified result and form: its certificate (file, lines, axioms) and the declarations a reader wants, the proofs (file, lines), and for a form the definitions of both forms. Written by `scripts/MapIndex.lean`. |
+| `index.json` | For each certified result and variant: its certificate (file, lines, axioms) and the declarations a reader wants, the proofs (file, lines), and for a variant the definitions of both forms. Written by `scripts/MapIndex.lean`. |
 
 and, in the library:
 
 | file | what it is |
 | --- | --- |
 | `Classicism/Certified/Signatures.lean` | Each principle as a schema at every signature: `P.X.schemaIn`, `pureVersion`, `distinctnessC`, `possibilityC`. |
-| `Classicism/Statements.lean` | The generated statements: 265 of the 270 results (those whose principles all have a `lean_def`), 35 models, 22 forms. Not edited by hand. |
+| `Classicism/Statements.lean` | The generated statements, from the map at `2abe6c1` (4 October): 266 of the 316 results (those whose principles all have a `lean_def`), 14 models, 60 variants. Not edited by hand. |
 | `Classicism/Map.lean` | One certificate per result proved, named by its id, and per form, named `<principle>.<form>`, each of the generated type: the `lean_ref`s. Each is one line citing the proof. |
 | `Classicism/Principles/*.lean` | The principles, a file per category of the map, each form defined beside its principle with the shallow proofs of the two directions, `P.X.to_<form>` and `P.X.of_<form>` (the list forms' are in `Results/Lists.lean`). |
 | `Classicism/Tools/MapIndex.lean` | `#classicism_map_index`, which writes `index.json`. |
@@ -93,17 +93,18 @@ entailments use `propext` and `Quot.sound` only as reasoning about syntax.
 
 ## The change to the map's build script (`pmap.patch`)
 
-Two additions to `generate_lean_statements`, and the matching entries in the JSON schemas:
+Two additions to `generate_lean_statements`, and the matching entry in the topic schema:
 
 - **`lean.result.falsum`**: how a result concluding `False` is written (default `False`).
   Classicism sets it to `¬ Consistent Ax`. (The key cannot be `false`: YAML reads that as
   the boolean.)
-- **`forms`** on a principle: equivalent forms, each with an `id`, a `name`, a
-  `statement`, a `lean_def` and a `lean_ref`; each gets the statement above, named
-  `<principle>.<form>`.
+- **variants**: a principle's variant whose reserved `lean` field gives `ref`, the
+  variant's schema, gets the statement above, named `<principle>.<variant>`. Its certificate
+  is `lean.equivalence_ref`. The field is the map's own (`principle.schema.json`), so the
+  principle schema needs no change.
 
-Still to do in the map: `lean-check` to check the forms' `lean_ref`s as it does the
-results', and the viewer to show the forms on a principle's page.
+Still to do in the map: `lean-check` to check the variants' `equivalence_ref`s as it does
+the results' `lean_ref`s, and the viewer to show them on a principle's page.
 
 ## What a map viewer should see
 
@@ -134,21 +135,27 @@ small change to `pmap` and `viewer/template.html` in the map repository.
   `possibility-and-no-pure-contingency-incompatible` and
   `pure-b-and-pure-possibility-incompatible`. `lean-check` would refuse those three until
   the map's list allows the two, or the model is built on a type known to be inhabited.
-- **Coverage.** 2 of the map's 97 principles have no `lean_def` yet, General Separated
-  Structure and the Necessity of Arithmetic, so 5 results have no statement. Of the 265
-  stated, 31 are not yet proved here: Appendix E's incompatibilities, the Gödel results, the
+- **Coverage.** 14 of the map's 109 principles have no `lean_def` yet: General Separated
+  Structure and the Necessity of Arithmetic, and those added to the map since 2 October
+  (Rigid Power, Tame Rigidity, Intensional Choice and others), so 50 results have no
+  statement. Of the 266 stated, 32 are not yet proved here: the newest,
+  `atomicity-t-and-weakly-inextensible-comprehension-imply-actuality`, and Appendix E's incompatibilities, the Gödel results, the
   six conjectured ones, most of those about Separated Structure and Independence, Strong
   Possibility, the Infinity schemas, Bacon's Theorem 8.2, and C5 and Atomicity ⇒ No Pure
   Contingency (see HANDOFF, §5: as stated it is not provable here, No Pure Contingency
   ranging over sentences with type variables).
-- **Forms.** 22: Boolean Completeness's LUB form, and the list forms of the 21 principles
-  with a type parameter whose two directions are proved (`P.X.listSchema_entails_schema`, by
-  inclusion; `P.X.schema_entails_listSchema`, `Results/Lists.lean`). For Actual Profile,
-  whose official form on the map is the list form, the form is the single-argument one.
-  Four principles with a list form lack the second direction: Transversal, Transversal
-  Choice and their boxed forms.
-- **Models.** 35 of the map's models get statements (`∃` a consistent `Ax` entailing what
-  the model satisfies and not what it violates); none is certified yet.
+- **Variants.** 60 of the map's 77 have a Lean statement, and 56 of those a certificate:
+  the 20 polyadic variants whose two directions are proved (`P.X.listSchema_entails_schema`,
+  by inclusion; `P.X.schema_entails_listSchema`, `Results/Lists.lean`); the 26 duals of
+  principles with a shallow statement and the 3 LUB forms (`P.X.to_<variant>`,
+  `P.X.of_<variant>`, beside the principle in `Principles/`); and the 7 dual polyadic
+  variants, composed from both. Stated but not proved: the polyadic variants of Transversal,
+  Transversal Choice and their boxed forms. Not stated: the duals of the sentence schemas,
+  the GLB forms of Countable Boolean Completeness, and the variants of principles without a
+  `lean_def`.
+- **Models.** 14 of the map's 89 models get statements (`∃` a consistent `Ax` entailing
+  what the model satisfies and not what it violates); the others' verdicts mention a
+  principle without a `lean_def`. None is certified yet.
 - **No Pure Contingency defined twice.** `npc Σ` (P → □P for each pure sentence of `Σ`'s
   language) and `pureVersion noContingency` are the same set (`npc_eq_pureVersion`), and so
   are the two Pure B's.

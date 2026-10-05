@@ -10,8 +10,9 @@ of them. pmap is run with the change proposed in map/pmap.patch, applied in memo
 
 - a topic may say how a result concluding `False` is written (`lean.result.falsum`), so
   that an incompatibility reads "every schema entailing the premises is inconsistent";
-- a principle may list equivalent forms (`forms`, each with a `lean_def`), and each form
-  gets a statement: a schema entails the principle iff it entails the form.
+- a principle's variant (equivalent form) whose reserved `lean` field names its schema
+  (`lean.ref`) gets a statement: a schema entails the principle iff it entails the
+  variant. Its certificate is `lean.equivalence_ref`.
 
 With --refs, also fills `lean_ref` in map/lean.yaml from the certificates of results in
 Classicism/Map.lean (a theorem named after a result id, in namespace Classicism.Map).
@@ -39,22 +40,24 @@ PMAP_CHANGES = [
     ),
     (
         '    out += [f"end {ns}.Statements", ""]',
-        '''    # Equivalent forms of a principle: each is stated as equivalent to the official one.
+        '''    # Variants (equivalent forms) of a principle: each is stated as equivalent to the
+    # official form, where its reserved `lean` field names its statement.
     shape = cfg["result"]
     apply = lambda d: shape["principle"].replace("{def}", d)
     for p in data["principles"]:
-        for form in p.get("forms") or []:
-            if p["id"] not in defs or not form.get("lean_def"):
+        for form in p.get("variants") or []:
+            ref = (form.get("lean") or {}).get("ref")
+            if p["id"] not in defs or not ref:
                 continue
             nm = f"{_lean_name(p['id'])}.{_lean_name(form['id'])}"
-            out += [f"/-- `{p['id']}`, form `{form['id']}`", "",
+            out += [f"/-- `{p['id']}`, variant `{form['id']}`", "",
                     f"{names[p['id']]} ⇔ {form.get('name', form['id'])} -/",
                     f"def {nm} : Prop :="]
             pad = "  "
             if shape["binder"]:
                 out.append("  " + shape["binder"])
                 pad = "    "
-            out += [f"{pad}{apply(defs[p['id']])} ↔", f"{pad}  {apply(form['lean_def'])}", ""]
+            out += [f"{pad}{apply(defs[p['id']])} ↔", f"{pad}  {apply(ref)}", ""]
 
     out += [f"end {ns}.Statements", ""]''',
     ),
@@ -62,15 +65,14 @@ PMAP_CHANGES = [
 
 
 def patched_json_schema(text: str, path: str) -> str:
-    """The proposed change to the map's JSON schemas: `falsum` for a topic's result shape,
-    `forms` for a principle."""
-    if path.endswith("topic.schema.json"):
-        old = """              "description": "How a principle applies inside the statement; {def} is its lean_def. Default {def}."
+    """The proposed change to the map's topic schema: `falsum` for a topic's result shape.
+    (A variant's Lean fields are the map's own reserved `lean` field.)"""
+    old = """              "description": "How a principle applies inside the statement; {def} is its lean_def. Default {def}."
             }
           }
         },
         "model": {"""
-        new = """              "description": "How a principle applies inside the statement; {def} is its lean_def. Default {def}."
+    new = """              "description": "How a principle applies inside the statement; {def} is its lean_def. Default {def}."
             },
             "falsum": {
               "type": "string",
@@ -79,37 +81,6 @@ def patched_json_schema(text: str, path: str) -> str:
           }
         },
         "model": {"""
-    else:
-        old = """  "lean_def": {"""
-        new = """  "forms": {
-   "type": "array",
-   "description": "Equivalent forms of the principle, each with a Lean definition and a certificate of its equivalence with the official form.",
-   "items": {
-    "type": "object",
-    "additionalProperties": false,
-    "required": [
-     "id"
-    ],
-    "properties": {
-     "id": {
-      "type": "string"
-     },
-     "name": {
-      "type": "string"
-     },
-     "statement": {
-      "type": "string"
-     },
-     "lean_def": {
-      "type": "string"
-     },
-     "lean_ref": {
-      "type": "string"
-     }
-    }
-   }
-  },
-  "lean_def": {"""
     if text.count(old) != 1:
         sys.exit(f"{path} has changed: cannot apply the proposed change")
     return text.replace(old, new)
@@ -131,7 +102,7 @@ def load_pmap(checkout: Path):
 def write_patch(checkout: Path, patched_pmap: str) -> None:
     chunks = []
     for rel, new in [("scripts/pmap.py", patched_pmap),
-                     ("schema/topic.schema.json", None), ("schema/principle.schema.json", None)]:
+                     ("schema/topic.schema.json", None)]:
         old = (checkout / rel).read_text(encoding="utf-8")
         if new is None:
             new = patched_json_schema(old, rel)
@@ -159,8 +130,10 @@ def main() -> None:
         for p in data["principles"]:
             if p["id"] in cfg["lean_def"]:
                 p["lean_def"] = cfg["lean_def"][p["id"]]
-            if p["id"] in (cfg.get("forms") or {}):
-                p["forms"] = cfg["forms"][p["id"]]
+            for v in p.get("variants") or []:
+                lean = (cfg.get("variants") or {}).get(p["id"], {}).get(v["id"])
+                if lean:
+                    v["lean"] = dict(lean)
         return data
 
     pmap.load_topic = load_topic
@@ -172,9 +145,15 @@ def main() -> None:
     cov = pmap.lean_coverage(data)
     results = {r["id"] for r in data["results"]}
     stated = [i for i in cov["ready"] if i["id"] in results]
-    forms = sum(len(p.get("forms") or []) for p in data["principles"])
+    vs = [v for p in data["principles"] for v in p.get("variants") or []]
+    forms = f"{sum(bool((v.get('lean') or {}).get('ref')) for v in vs)} of {len(vs)} variants stated"
+    known = {(p["id"], v["id"]) for p in data["principles"] for v in p.get("variants") or []}
+    for pid, lv in (cfg.get("variants") or {}).items():
+        for vid in lv:
+            if (pid, vid) not in known:
+                print(f"warning: {pid}#{vid} is in lean.yaml but not on the map")
     print(f"principles with a lean_def: {len(cov['defs'])}/{len(data['principles'])}")
-    print(f"results with a statement: {len(stated)}/{len(results)}; forms: {forms}")
+    print(f"results with a statement: {len(stated)}/{len(results)}; {forms}")
 
     if "--refs" in sys.argv:
         src = (PROJECT / "Classicism" / "Map.lean").read_text(encoding="utf-8")

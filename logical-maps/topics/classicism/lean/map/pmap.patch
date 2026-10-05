@@ -1,6 +1,6 @@
 --- a/scripts/pmap.py
 +++ b/scripts/pmap.py
-@@ -1888,11 +1888,28 @@
+@@ -2797,11 +2797,30 @@
              pad = "    "
          if "premises" in item:
              out += [f"{pad}{fill(shape['principle'], x)} →" for x in item["premises"]]
@@ -11,28 +11,30 @@
                      [f"{pad}¬ {fill(shape['principle'], x)}" for x in item["violates"]]
              out += [" ∧\n".join(lines), ""]
 +
-+    # Equivalent forms of a principle: each is stated as equivalent to the official one.
++    # Variants (equivalent forms) of a principle: each is stated as equivalent to the
++    # official form, where its reserved `lean` field names its statement.
 +    shape = cfg["result"]
 +    apply = lambda d: shape["principle"].replace("{def}", d)
 +    for p in data["principles"]:
-+        for form in p.get("forms") or []:
-+            if p["id"] not in defs or not form.get("lean_def"):
++        for form in p.get("variants") or []:
++            ref = (form.get("lean") or {}).get("ref")
++            if p["id"] not in defs or not ref:
 +                continue
 +            nm = f"{_lean_name(p['id'])}.{_lean_name(form['id'])}"
-+            out += [f"/-- `{p['id']}`, form `{form['id']}`", "",
++            out += [f"/-- `{p['id']}`, variant `{form['id']}`", "",
 +                    f"{names[p['id']]} ⇔ {form.get('name', form['id'])} -/",
 +                    f"def {nm} : Prop :="]
 +            pad = "  "
 +            if shape["binder"]:
 +                out.append("  " + shape["binder"])
 +                pad = "    "
-+            out += [f"{pad}{apply(defs[p['id']])} ↔", f"{pad}  {apply(form['lean_def'])}", ""]
++            out += [f"{pad}{apply(defs[p['id']])} ↔", f"{pad}  {apply(ref)}", ""]
  
      out += [f"end {ns}.Statements", ""]
      path = root / lib / "Statements.lean"
 --- a/schema/topic.schema.json
 +++ b/schema/topic.schema.json
-@@ -171,6 +171,10 @@
+@@ -249,6 +249,10 @@
              "principle": {
                "type": "string",
                "description": "How a principle applies inside the statement; {def} is its lean_def. Default {def}."
@@ -43,40 +45,3 @@
              }
            }
          },
---- a/schema/principle.schema.json
-+++ b/schema/principle.schema.json
-@@ -92,6 +92,34 @@
-    "type": "string",
-    "description": "ISO date added."
-   },
-+  "forms": {
-+   "type": "array",
-+   "description": "Equivalent forms of the principle, each with a Lean definition and a certificate of its equivalence with the official form.",
-+   "items": {
-+    "type": "object",
-+    "additionalProperties": false,
-+    "required": [
-+     "id"
-+    ],
-+    "properties": {
-+     "id": {
-+      "type": "string"
-+     },
-+     "name": {
-+      "type": "string"
-+     },
-+     "statement": {
-+      "type": "string"
-+     },
-+     "lean_def": {
-+      "type": "string"
-+     },
-+     "lean_ref": {
-+      "type": "string"
-+     }
-+    }
-+   }
-+  },
-   "lean_def": {
-    "type": "string",
-    "description": "Fully qualified Lean declaration stating this principle, e.g. UnboundedUtility.RichOutcomes."
