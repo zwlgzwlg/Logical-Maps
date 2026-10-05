@@ -76,10 +76,17 @@ def proofsOf (cert : Name) (byName : Bool) : CommandElabM (Array Name) := do
   let isThm (c : Name) : Bool := match env.find? c, c with
     | some (.thmInfo _), .str _ s => !s.startsWith "inst"  -- not an instance
     | _, _ => false
+  -- in `Semantics/`, the general theorems an argument rests on, not the glue
+  let glue := [`Classicism.Semantics.IntensionalTheory, `Classicism.Semantics.IntensionalFacts,
+    `Classicism.Semantics.IntensionalSoundness]
   let inResults := cited.filter fun c =>
     ((`Classicism.Principles).isPrefixOf (moduleOf env c) ||
       (`Classicism.Results).isPrefixOf (moduleOf env c) ||
-      ((`Classicism.Models).isPrefixOf (moduleOf env c) && isThm c)) && env.contains c
+      ((`Classicism.Models).isPrefixOf (moduleOf env c) && isThm c) ||
+      ((`Classicism.Semantics).isPrefixOf (moduleOf env c) && !glue.contains (moduleOf env c) && isThm c) ||
+      -- a model's verdict from an argument: the argument's certificate, and the proofs it meets
+      -- the argument's conditions
+      (`Classicism.Map.Arguments).isPrefixOf c || (`Classicism.Map.Meets).isPrefixOf c) && env.contains c
   let mut out : Array Name := #[]
   for c in named ++ inResults do
     unless out.contains c do out := out.push c
@@ -127,7 +134,9 @@ def entryOf (c : Name) (byName : Bool) : CommandElabM (Option (Json × Bool)) :=
 /-- `#classicism_map_index "file.json"`: write the index of the certificates in
 `Classicism.Map`: the results' (`Classicism.Map.<id>`) and the forms'
 (`Classicism.Map.<principle id>.<form id>`), a form's entry also giving the definitions of
-the two forms it relates; the models' verdicts (`Classicism.Map.Models.<model id>.<principle
+the two forms it relates; the general arguments' verdicts (`Classicism.Map.Arguments.<argument
+id>.<principle id>`, or with the group's id first), keyed `<argument>/<principle>` or
+`<group>/<argument>/<principle>`; the models' verdicts (`Classicism.Map.Models.<model id>.<principle
 id>`), each entry also giving where the model is defined; and where each principle's
 definition `Classicism.P.X` is. -/
 elab "#classicism_map_index " path:str : command => do
@@ -141,9 +150,18 @@ elab "#classicism_map_index " path:str : command => do
   let mut results : Array (String × Json) := #[]
   let mut forms : Std.HashMap String (Array (String × Json)) := {}
   let mut models : Std.HashMap String (Array (String × Json)) := {}
+  let mut arguments : Array (String × Json) := #[]
   let mut outside : Nat := 0
   for c in thms do
-    if c.getPrefix.getPrefix == `Classicism.Map.Models then
+    if (`Classicism.Map.Arguments).isPrefixOf c then
+      -- `Arguments.<argument>.<principle>`, or `Arguments.<group>.<argument>.<principle>`
+      let some (e, ok) ← entryOf c false | continue
+      unless ok do outside := outside + 1
+      let parts := (c.components.drop 3).map fun n => unhyphen n
+      arguments := arguments.push ("/".intercalate parts, e)
+    else if (`Classicism.Map.Meets).isPrefixOf c then
+      continue
+    else if c.getPrefix.getPrefix == `Classicism.Map.Models then
       let some (e, ok) ← entryOf c false | continue
       unless ok do outside := outside + 1
       let stmt := `Classicism.Statements.Models ++ c.getPrefix.getString!.toName ++ c.getString!.toName
@@ -182,10 +200,12 @@ elab "#classicism_map_index " path:str : command => do
   for n in defNames.qsort (·.toString < ·.toString) do
     if let some l ← location n then defs := defs.push (n.toString, l)
   let json := Json.mkObj [("results", Json.mkObj results.toList), ("forms", formsJson),
-    ("models", modelsJson), ("definitions", Json.mkObj defs.toList)]
+    ("models", modelsJson), ("arguments", Json.mkObj arguments.toList),
+    ("definitions", Json.mkObj defs.toList)]
   IO.FS.writeFile path.getString (json.pretty ++ "\n")
   logInfo m!"{results.size} result certificates, {forms.fold (fun n _ fs => n + fs.size) 0} \
-    form certificates and {models.fold (fun n _ vs => n + vs.size) 0} model verdicts indexed to \
+    form certificates, {models.fold (fun n _ vs => n + vs.size) 0} model verdicts and \
+    {arguments.size} argument verdicts indexed to \
     {path.getString}; {outside} rest on an axiom outside propext, Classical.choice, Quot.sound"
 
 end Classicism.Tools.MapIndex

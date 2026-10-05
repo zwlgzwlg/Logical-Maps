@@ -371,6 +371,9 @@ Classicism/Statements.lean              the map's statements, written by the map
 Classicism/Map.lean                     one certificate per map result proved and per form, of its generated statement: the map's lean_refs
 Classicism/ModelStatements.lean         the map's models' single verdicts, written by the map's generator
 Classicism/MapModels.lean               one certificate per model verdict proved, of its generated statement
+Classicism/MapArguments.lean            one certificate per general argument's verdict proved
+Classicism/MapDerived.lean              the models' verdicts from those arguments, written by the map's generator
+Classicism/Models/Conditions.lean       the map's conditions on models, as predicates
 Classicism/Tools/MapIndex.lean          #classicism_map_index: where each certificate and its proofs are (map/index.json)
 
 Classicism/Strict/                      the strict layer; see its README

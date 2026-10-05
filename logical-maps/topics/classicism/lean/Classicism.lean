@@ -93,3 +93,4 @@ import Classicism.Map
 import Classicism.Tools.MapIndex
 import Classicism.ModelStatements
 import Classicism.MapModels
+import Classicism.MapDerived

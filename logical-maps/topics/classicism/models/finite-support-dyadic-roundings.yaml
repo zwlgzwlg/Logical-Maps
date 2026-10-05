@@ -236,18 +236,16 @@ history:
     follows from Atomicity and the failure of the type-t Strong Leibniz Biconditionals, with a one-line
     direct witness.'
 
-# Verdicts proved in Lean (Classicism/MapModels.lean); statuses are written by lean-check --update.
+# The model in Lean, and its verdicts proved there (Classicism/MapModels.lean); statuses are written by
+# lean-check --update. The verdicts the map's general arguments give it are certified from the
+# arguments' (MapDerived.lean), with the proofs under `meets` that it meets their conditions.
 lean:
-  model: Classicism.Meta.Intensional.MonoidModel.model Classicism.Meta.Intensional.Monoids.pow2
+  param: Classicism.Meta.Intensional.Monoids.pow2
+  meets:
+    actual-world-pinned: Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned _ Classicism.Meta.Intensional.Monoids.Pow2.onePinned
   verdicts:
-  - holds: actuality
-    ref: Classicism.Map.Models.finite_support_dyadic_roundings.actuality
-    status: verified
   - holds: atomicity-t
     ref: Classicism.Map.Models.finite_support_dyadic_roundings.atomicity_t
-    status: verified
-  - holds: no-pure-contingency-r
-    ref: Classicism.Map.Models.finite_support_dyadic_roundings.no_pure_contingency_r
     status: verified
   - fails: distinctness-necessary-r
     ref: Classicism.Map.Models.finite_support_dyadic_roundings.distinctness_necessary_r

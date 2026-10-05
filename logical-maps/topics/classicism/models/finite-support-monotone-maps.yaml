@@ -238,24 +238,22 @@ history:
   violates:
   - vicinity
 
-# Verdicts proved in Lean (Classicism/MapModels.lean); statuses are written by lean-check --update.
+# The model in Lean, and its verdicts proved there (Classicism/MapModels.lean); statuses are written by
+# lean-check --update. The verdicts the map's general arguments give it are certified from the
+# arguments' (MapDerived.lean), with the proofs under `meets` that it meets their conditions.
 lean:
-  model: Classicism.Meta.Intensional.MonoidModel.model Classicism.Meta.Intensional.Monoids.mono
+  param: Classicism.Meta.Intensional.Monoids.mono
+  meets:
+    positive-preserving: Classicism.Map.Meets.finite_support_monotone_maps.positive_preserving
   verdicts:
   - holds: atomlessness
     ref: Classicism.Map.Models.finite_support_monotone_maps.atomlessness
-    status: verified
-  - holds: no-pure-contingency-r
-    ref: Classicism.Map.Models.finite_support_monotone_maps.no_pure_contingency_r
     status: verified
   - fails: distinctness-necessary-r
     ref: Classicism.Map.Models.finite_support_monotone_maps.distinctness_necessary_r
     status: verified
   - fails: necessary-distinctness-necessary-r
     ref: Classicism.Map.Models.finite_support_monotone_maps.necessary_distinctness_necessary_r
-    status: verified
-  - fails: barcan-r
-    ref: Classicism.Map.Models.finite_support_monotone_maps.barcan_r
     status: verified
   - fails: necessary-barcan-r
     ref: Classicism.Map.Models.finite_support_monotone_maps.necessary_barcan_r

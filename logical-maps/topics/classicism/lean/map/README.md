@@ -128,6 +128,46 @@ conjunct `entails_of_holdsAx M h` or `not_entails_of_not_holdsAx M h`. What is m
 model of an admitted signature: the Appendix D models with `Σ` interpreted as the records
 say, and the verdicts on the principles relative to a signature there.
 
+**General arguments, and the verdicts they give.** A general argument on the map says that
+every model meeting some conditions has a verdict. In Lean it is a theorem over models
+(`MapArguments.lean`), and its statement is generated (`ModelStatements.lean`):
+
+- **Topic argument:** `Arguments.<argument>.<principle>` reads: for every intensional action
+  model meeting the argument's conditions, the verdict. Each condition is the Lean predicate
+  named in `conditions.yaml` (`Models/Conditions.lean`).
+- **Group argument:** `Arguments.<group>.<argument>.<principle>` reads: for every value of
+  what the group's construction is built from, meeting the group's conditions, the verdict
+  in the model built from it. For the finite-support group this is a monoid acting faithfully
+  on `ℕ`.
+
+A model meets a condition by a proof named in its record's `lean.meets`, or in its group's
+`lean.meets` for every member; member-specific proofs are in `MapModels.lean` under
+`Map.Meets`. The map then generates `MapDerived.lean`. For each argument the map applies to a
+model, it certifies the model's verdict by applying the argument's certificate to the model's
+proofs. So the Lean follows the map's route: a verdict that rests on an argument is proved
+by that argument, and only the meeting of conditions is particular to the model.
+
+On 5 October six verdicts of five arguments were proved this way:
+
+| Argument | Condition | Verdict |
+| --- | --- | --- |
+| `no-pure-contingency-one-object` | one object | No Pure Contingency holds |
+| `barcan-d6` | Proposition D.6's surjectivity | BF holds |
+| the finite-support group's `actual-world` | actual-world-pinned | Actuality holds |
+| `collapsing-atomless` | collapse-unpinned | Atomicity and Atomicity (`t`) fail |
+| `barcan-positive` | positive-preserving | BF fails |
+
+They give 23 model verdicts. These replace 21 that had been certified model by model, and
+add Atomicity's failure in the two identity-or-collapse models.
+
+Several arguments are not proved yet, because the condition the Lean proves differs from
+the map's prose:
+
+- **`boolean-completeness`:** the Lean lemma `not_bc_of` assumes `BCWitness`, which is not
+  the condition `unbounded-haecceities` as the map states it.
+- **`atomicity`:** the Lean lemma `atomicityT_of_singletons` gives Atomicity at `t` only,
+  where the argument claims it at every relational type.
+
 The certificate is the object-language entailment, not the shallow proof. The claim is
 about `C`, and the map's axiom list is harmless elsewhere but not here: `propext` is the
 Fregean Axiom, so a shallow proof passing that check would show nothing about `C`. The
@@ -158,7 +198,7 @@ entailments use `propext` and `Quot.sound` only as reasoning about syntax.
   `lean_def`.
 - **Models.** 14 of the map's 97 models get statements (`∃` a consistent complete `Ax`
   entailing what the model satisfies and not what it violates, above); the others' verdicts
-  mention a principle without a `lean_def`. None is certified as a whole yet; 91 single
+  mention a principle without a `lean_def`. None is certified as a whole yet; 93 single
   verdicts of eleven models are (above).
 - **No Pure Contingency defined twice.** `npc Σ` (P → □P for each pure sentence of `Σ`'s
   language) and `pureVersion noContingency` are the same set (`npc_eq_pureVersion`), and so

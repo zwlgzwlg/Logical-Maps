@@ -81,6 +81,18 @@ parameters:
         meets:
           sigma-true-atom: This is the interpretation.
 
+# The construction in Lean (Models/MonoidModel.lean): the ideally full model over a monoid acting
+# faithfully on the individuals ℕ, with no constants. A member gives its monoid as lean.param. The
+# shared arguments proved in Lean are theorems over every such monoid meeting their conditions.
+lean:
+  binder: '(M : Type) [Monoid M] [MulAction M ℕ] [FaithfulSMul M ℕ]'
+  var: M
+  model: Classicism.Meta.Intensional.MonoidModel.model {param}
+  is_model: Classicism.Meta.Intensional.MonoidModel.model_isModel {param}
+  settings: {individuals: naturals}
+  meets:
+    one-object-action-model: Classicism.Meta.Intensional.MonoidModel.oneObject {param}
+
 # Conditions of the topic (conditions.yaml) that every member meets; members meet others under their
 # own `meets`, and parameter values under theirs.
 meets:
@@ -128,6 +140,7 @@ conditions:
 - id: actual-world-pinned
   text: >-
     The singleton of the identity arrow is pinned down by a finite set.
+  lean: Classicism.Meta.Intensional.MonoidModel.ActualWorldPinned
 
 - id: non-identity-non-injective
   text: >-
@@ -141,11 +154,13 @@ conditions:
   text: >-
     The arrows other than the identity form a nonempty proposition pinned down by a finite set,
     and none of them has a singleton pinned down by a finite set.
+  lean: Classicism.Meta.Intensional.MonoidModel.CollapseUnpinned
 
 
 - id: positive-preserving
   text: >-
     Every arrow is monotone, and some arrow sends $0$ to a positive number.
+  lean: Classicism.Meta.Intensional.MonoidModel.PositivePreserving
 
 
 - id: unbounded-haecceities
@@ -272,6 +287,9 @@ arguments:
   - date: '2026-10-02'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: Stated once for the group; each member's pinning set moved to the condition actual-world-pinned.
+  lean:
+  - holds: actuality
+    ref: Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality
 
 
 - id: atomicity
@@ -303,6 +321,11 @@ arguments:
   - date: '2026-10-02'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: The identity-or-collapse models' arguments (the source's for Atomicity, part 4 and "as in part 4"; Fable's for type $t$) stated once, with the step from atoms to singletons spelled out.
+  lean:
+  - fails: atomicity-r
+    ref: Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_r
+  - fails: atomicity-t
+    ref: Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_t
 
 
 - id: barcan-positive
@@ -320,6 +343,9 @@ arguments:
   - date: '2026-10-02'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: The monotone maps' argument (part 3), which part 4 invokes with "as in part 3", stated once.
+  lean:
+  - fails: barcan-r
+    ref: Classicism.Map.Arguments.finite_support_one_object.barcan_positive.barcan_r
 
 
 - id: boolean-completeness

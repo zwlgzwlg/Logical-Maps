@@ -1,5 +1,6 @@
 import Classicism.ModelStatements
 import Classicism.Results.Consistency.Consistency
+import Classicism.Models.Conditions
 
 /-!
 # The map's models, certified verdict by verdict
@@ -52,9 +53,6 @@ theorem not_holdsAx_of {Ax : AxiomSet Signature.pure} {a : Sentence Signature.pu
     (h : ¬ B.HoldsSentence a) : ¬ B.HoldsAx Ax :=
   fun H => h (H a ha)
 
-/-- A monoid's one-object category has one object. -/
-instance {M : Type} [Monoid M] : Subsingleton (SingleObj M) := inferInstanceAs (Subsingleton Unit)
-
 /-- No Pure Contingency, in a model on one object: every model on a monoid. -/
 theorem holdsAx_npc_pure [Subsingleton C] (M : B.IsModel) : B.HoldsAx (AxiomSet.noContingency _) := by
   rw [← AxiomSet.npc_pure_eq]
@@ -97,10 +95,6 @@ theorem atomlessness : Statements.Models.finite_support_permutations.atomlessnes
   verdict_holds M <|
     holdsAx_eq.2 Perms.atomlessness
 
-theorem no_pure_contingency_r : Statements.Models.finite_support_permutations.no_pure_contingency_r :=
-  verdict_holds M <|
-    holdsAx_npc_pure M
-
 theorem actuality : Statements.Models.finite_support_permutations.actuality :=
   verdict_fails M <|
     not_holdsAx_of rfl (Perms.not_actuality)
@@ -119,10 +113,6 @@ namespace finite_support_monotone_surjections
 
 local notation "M" => Classicism.Meta.Intensional.MonoidModel.model_isModel Classicism.Meta.Intensional.Monoids.monoSurj
 
-theorem barcan_r : Statements.Models.finite_support_monotone_surjections.barcan_r :=
-  verdict_holds M <|
-    holdsAx_indexed.2 fun σ _ => Monoids.MonoSurj.bf σ
-
 theorem necessary_barcan_r : Statements.Models.finite_support_monotone_surjections.necessary_barcan_r :=
   verdict_holds M <|
     holdsAx_indexed.2 fun σ hσ => holdsSentence_box_of_npc M
@@ -131,10 +121,6 @@ theorem necessary_barcan_r : Statements.Models.finite_support_monotone_surjectio
 theorem atomlessness : Statements.Models.finite_support_monotone_surjections.atomlessness :=
   verdict_holds M <|
     holdsAx_eq.2 Monoids.MonoSurj.atomlessness
-
-theorem no_pure_contingency_r : Statements.Models.finite_support_monotone_surjections.no_pure_contingency_r :=
-  verdict_holds M <|
-    holdsAx_npc_pure M
 
 theorem distinctness_necessary_r : Statements.Models.finite_support_monotone_surjections.distinctness_necessary_r :=
   verdict_fails M <|
@@ -166,10 +152,6 @@ theorem atomlessness : Statements.Models.finite_support_monotone_maps.atomlessne
   verdict_holds M <|
     holdsAx_eq.2 Monoids.Mono.atomlessness
 
-theorem no_pure_contingency_r : Statements.Models.finite_support_monotone_maps.no_pure_contingency_r :=
-  verdict_holds M <|
-    holdsAx_npc_pure M
-
 theorem distinctness_necessary_r : Statements.Models.finite_support_monotone_maps.distinctness_necessary_r :=
   verdict_fails M <|
     not_holdsAx_of ⟨.e, trivial, rfl⟩ (Monoids.Mono.not_nd_e)
@@ -177,10 +159,6 @@ theorem distinctness_necessary_r : Statements.Models.finite_support_monotone_map
 theorem necessary_distinctness_necessary_r : Statements.Models.finite_support_monotone_maps.necessary_distinctness_necessary_r :=
   verdict_fails M <|
     not_holdsAx_of ⟨.e, trivial, rfl⟩ (fun h => Monoids.Mono.not_nd_e (holdsSentence_of_box _ M h))
-
-theorem barcan_r : Statements.Models.finite_support_monotone_maps.barcan_r :=
-  verdict_fails M <|
-    not_holdsAx_of ⟨.e, trivial, rfl⟩ (Monoids.Mono.not_bf_e)
 
 theorem necessary_barcan_r : Statements.Models.finite_support_monotone_maps.necessary_barcan_r :=
   verdict_fails M <|
@@ -204,14 +182,6 @@ namespace finite_support_identity_or_collapse
 
 local notation "M" => Classicism.Meta.Intensional.MonoidModel.model_isModel Classicism.Meta.Intensional.Monoids.mono01
 
-theorem actuality : Statements.Models.finite_support_identity_or_collapse.actuality :=
-  verdict_holds M <|
-    holdsAx_eq.2 Monoids.Mono01.actuality
-
-theorem no_pure_contingency_r : Statements.Models.finite_support_identity_or_collapse.no_pure_contingency_r :=
-  verdict_holds M <|
-    holdsAx_npc_pure M
-
 theorem distinctness_necessary_r : Statements.Models.finite_support_identity_or_collapse.distinctness_necessary_r :=
   verdict_fails M <|
     not_holdsAx_of ⟨.e, trivial, rfl⟩ (Monoids.Mono01.not_nd_e)
@@ -220,17 +190,9 @@ theorem necessary_distinctness_necessary_r : Statements.Models.finite_support_id
   verdict_fails M <|
     not_holdsAx_of ⟨.e, trivial, rfl⟩ (fun h => Monoids.Mono01.not_nd_e (holdsSentence_of_box _ M h))
 
-theorem barcan_r : Statements.Models.finite_support_identity_or_collapse.barcan_r :=
-  verdict_fails M <|
-    not_holdsAx_of ⟨.e, trivial, rfl⟩ (Monoids.Mono01.not_bf_e)
-
 theorem necessary_barcan_r : Statements.Models.finite_support_identity_or_collapse.necessary_barcan_r :=
   verdict_fails M <|
     not_holdsAx_of ⟨.e, trivial, rfl⟩ (fun h => Monoids.Mono01.not_bf_e (holdsSentence_of_box _ M h))
-
-theorem atomicity_t : Statements.Models.finite_support_identity_or_collapse.atomicity_t :=
-  verdict_fails M <|
-    not_holdsAx_of rfl (Monoids.Mono01.not_atomicityT)
 
 theorem boolean_completeness_r : Statements.Models.finite_support_identity_or_collapse.boolean_completeness_r :=
   verdict_fails M <|
@@ -242,22 +204,10 @@ namespace finite_support_identity_or_collapse_surjections
 
 local notation "M" => Classicism.Meta.Intensional.MonoidModel.model_isModel Classicism.Meta.Intensional.Monoids.monoSurj01
 
-theorem barcan_r : Statements.Models.finite_support_identity_or_collapse_surjections.barcan_r :=
-  verdict_holds M <|
-    holdsAx_indexed.2 fun σ _ => Monoids.MonoSurj01.bf σ
-
 theorem necessary_barcan_r : Statements.Models.finite_support_identity_or_collapse_surjections.necessary_barcan_r :=
   verdict_holds M <|
     holdsAx_indexed.2 fun σ hσ => holdsSentence_box_of_npc M
       (P.Barcan.schema_closedTypes _ ⟨σ, hσ, rfl⟩) (Monoids.MonoSurj01.bf σ)
-
-theorem actuality : Statements.Models.finite_support_identity_or_collapse_surjections.actuality :=
-  verdict_holds M <|
-    holdsAx_eq.2 Monoids.MonoSurj01.actuality
-
-theorem no_pure_contingency_r : Statements.Models.finite_support_identity_or_collapse_surjections.no_pure_contingency_r :=
-  verdict_holds M <|
-    holdsAx_npc_pure M
 
 theorem distinctness_necessary_r : Statements.Models.finite_support_identity_or_collapse_surjections.distinctness_necessary_r :=
   verdict_fails M <|
@@ -266,10 +216,6 @@ theorem distinctness_necessary_r : Statements.Models.finite_support_identity_or_
 theorem necessary_distinctness_necessary_r : Statements.Models.finite_support_identity_or_collapse_surjections.necessary_distinctness_necessary_r :=
   verdict_fails M <|
     not_holdsAx_of ⟨.e, trivial, rfl⟩ (fun h => Monoids.MonoSurj01.not_nd_e (holdsSentence_of_box _ M h))
-
-theorem atomicity_t : Statements.Models.finite_support_identity_or_collapse_surjections.atomicity_t :=
-  verdict_fails M <|
-    not_holdsAx_of rfl (Monoids.MonoSurj01.not_atomicityT)
 
 theorem boolean_completeness_r : Statements.Models.finite_support_identity_or_collapse_surjections.boolean_completeness_r :=
   verdict_fails M <|
@@ -284,10 +230,6 @@ local notation "M" => Classicism.Meta.Intensional.MonoidModel.model_isModel Clas
 theorem atomicity_t : Statements.Models.finite_support_truncations.atomicity_t :=
   verdict_holds M <|
     holdsAx_eq.2 Monoids.Truncs.atomicityT
-
-theorem no_pure_contingency_r : Statements.Models.finite_support_truncations.no_pure_contingency_r :=
-  verdict_holds M <|
-    holdsAx_npc_pure M
 
 theorem distinctness_necessary_r : Statements.Models.finite_support_truncations.distinctness_necessary_r :=
   verdict_fails M <|
@@ -319,17 +261,9 @@ namespace finite_support_dyadic_roundings
 
 local notation "M" => Classicism.Meta.Intensional.MonoidModel.model_isModel Classicism.Meta.Intensional.Monoids.pow2
 
-theorem actuality : Statements.Models.finite_support_dyadic_roundings.actuality :=
-  verdict_holds M <|
-    holdsAx_eq.2 Monoids.Pow2.actuality
-
 theorem atomicity_t : Statements.Models.finite_support_dyadic_roundings.atomicity_t :=
   verdict_holds M <|
     holdsAx_eq.2 Monoids.Pow2.atomicityT
-
-theorem no_pure_contingency_r : Statements.Models.finite_support_dyadic_roundings.no_pure_contingency_r :=
-  verdict_holds M <|
-    holdsAx_npc_pure M
 
 theorem distinctness_necessary_r : Statements.Models.finite_support_dyadic_roundings.distinctness_necessary_r :=
   verdict_fails M <|
@@ -357,26 +291,14 @@ namespace finite_support_truncated_shifts
 
 local notation "M" => Classicism.Meta.Intensional.MonoidModel.model_isModel Classicism.Meta.Intensional.Monoids.shifts
 
-theorem barcan_r : Statements.Models.finite_support_truncated_shifts.barcan_r :=
-  verdict_holds M <|
-    holdsAx_indexed.2 fun σ _ => Monoids.Shifts.bf σ
-
 theorem necessary_barcan_r : Statements.Models.finite_support_truncated_shifts.necessary_barcan_r :=
   verdict_holds M <|
     holdsAx_indexed.2 fun σ hσ => holdsSentence_box_of_npc M
       (P.Barcan.schema_closedTypes _ ⟨σ, hσ, rfl⟩) (Monoids.Shifts.bf σ)
 
-theorem actuality : Statements.Models.finite_support_truncated_shifts.actuality :=
-  verdict_holds M <|
-    holdsAx_eq.2 Monoids.Shifts.actuality
-
 theorem atomicity_t : Statements.Models.finite_support_truncated_shifts.atomicity_t :=
   verdict_holds M <|
     holdsAx_eq.2 Monoids.Shifts.atomicityT
-
-theorem no_pure_contingency_r : Statements.Models.finite_support_truncated_shifts.no_pure_contingency_r :=
-  verdict_holds M <|
-    holdsAx_npc_pure M
 
 theorem distinctness_necessary_r : Statements.Models.finite_support_truncated_shifts.distinctness_necessary_r :=
   verdict_fails M <|
@@ -409,10 +331,6 @@ end finite_support_two_object_all_maps
 namespace full_idempotent_monoid
 
 local notation "M" => MSet.model_isModel Idem
-
-theorem no_pure_contingency_r : Statements.Models.full_idempotent_monoid.no_pure_contingency_r :=
-  verdict_holds M <|
-    holdsAx_npc_pure M
 
 theorem distinctness_necessary_r : Statements.Models.full_idempotent_monoid.distinctness_necessary_r :=
   verdict_fails M <|
@@ -492,10 +410,6 @@ theorem necessary_barcan_t : Statements.Models.full_involution_group.necessary_b
   verdict_holds M <|
     holdsAx_eq.2 (Invol.box_bf (.rel .t))
 
-theorem no_pure_contingency_r : Statements.Models.full_involution_group.no_pure_contingency_r :=
-  verdict_holds M <|
-    holdsAx_npc_pure M
-
 theorem fregean_axiom : Statements.Models.full_involution_group.fregean_axiom :=
   verdict_fails M <|
     not_holdsAx_of rfl (Invol.not_fregean)
@@ -507,3 +421,68 @@ theorem necessary_fregean_axiom : Statements.Models.full_involution_group.necess
 end full_involution_group
 
 end Classicism.Map.Models
+
+/-! ## The models' proofs that they meet the map's conditions
+
+What a model's record names under `lean.meets` where no lemma of `Models/` is already the
+proof: the conditions of the finite-support group, for the monoids of Appendix D. -/
+
+namespace Classicism.Map.Meets
+
+open Meta Meta.Intensional Meta.Intensional.MonoidModel Meta.Intensional.Monoids
+
+/-- Among the monotone maps with `h0 = h1`, and the identity, the arrows other than the
+identity are those collapsing `0` and `1`. -/
+theorem ne_one_iff_collapse {S : Submonoid F} (hS : ∀ f ∈ S, f 0 = f 1 ∨ f = id) (g : S) :
+    g ≠ 1 ↔ (g : F) 0 = (g : F) 1 := by
+  constructor
+  · intro h
+    rcases hS g g.2 with h' | h'
+    · exact h'
+    · exact absurd (Subtype.ext h') h
+  · rintro h rfl
+    exact Nat.zero_ne_one h
+
+namespace finite_support_monotone_maps
+
+theorem positive_preserving : PositivePreserving mono :=
+  ⟨fun g => g.2, ⟨fun _ => 1, monotone_const⟩, Nat.one_pos⟩
+
+end finite_support_monotone_maps
+
+namespace finite_support_identity_or_collapse
+
+theorem positive_preserving : PositivePreserving mono01 :=
+  ⟨fun g => g.2.1, ⟨fun _ => 1, monotone_const, Or.inl rfl⟩, Nat.one_pos⟩
+
+theorem collapse_unpinned : CollapseUnpinned mono01 := by
+  have hne := ne_one_iff_collapse (S := mono01) fun f hf => hf.2
+  refine ⟨?_, ⟨Mono01.zero, (hne _).2 rfl⟩, fun g hg =>
+    not_finPinned_of_free _ (Mono01.free_of_collapse g ((hne g).1 hg))⟩
+  have : (ofPred fun g : mono01 => g ≠ 1) = Mono01.collapse := by
+    show ofPred _ = ofPred _
+    congr 1
+    funext g
+    exact propext (hne g)
+  rw [this]
+  exact ⟨{0, 1}, Set.toFinite _, Mono01.collapse_pinned⟩
+
+end finite_support_identity_or_collapse
+
+namespace finite_support_identity_or_collapse_surjections
+
+theorem collapse_unpinned : CollapseUnpinned monoSurj01 := by
+  have hne := ne_one_iff_collapse (S := monoSurj01) fun f hf => hf.2.2
+  refine ⟨?_, ⟨MonoSurj01.half, (hne _).2 rfl⟩, fun g hg =>
+    not_finPinned_of_free _ (MonoSurj01.free_of_collapse g ((hne g).1 hg))⟩
+  have : (ofPred fun g : monoSurj01 => g ≠ 1) = MonoSurj01.collapse := by
+    show ofPred _ = ofPred _
+    congr 1
+    funext g
+    exact propext (hne g)
+  rw [this]
+  exact ⟨{0, 1}, Set.toFinite _, MonoSurj01.collapse_pinned⟩
+
+end finite_support_identity_or_collapse_surjections
+
+end Classicism.Map.Meets

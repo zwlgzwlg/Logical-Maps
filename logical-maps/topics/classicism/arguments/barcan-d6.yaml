@@ -12,3 +12,7 @@ revisions:
   note: >-
     The finite-support members' citations of Proposition D.6 stated once, then moved to the topic;
     each model's reason for meeting D.6's hypothesis is under its `meets`.
+# Proved in Lean (Classicism/MapArguments.lean), for every intensional action model meeting the condition.
+lean:
+- holds: barcan-r
+  ref: Classicism.Map.Arguments.barcan_d6.barcan_r

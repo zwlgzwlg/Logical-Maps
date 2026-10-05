@@ -137,9 +137,14 @@ history:
   summary: 'Corrected the justification of □Strong Leibniz Biconditionals (type t): the 22 September argument
     tacitly used that the monoid is right-cancellative, which holds here; no verdict changes.'
 
-# Verdicts proved in Lean (Classicism/MapModels.lean); statuses are written by lean-check --update.
+# The model in Lean, and its verdicts proved there (Classicism/MapModels.lean); statuses are written by
+# lean-check --update. The verdicts the map's general arguments give it are certified from the
+# arguments' (MapDerived.lean), with the proofs under `meets` that it meets their conditions.
 lean:
   model: Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol
+  is_model: Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol
+  meets:
+    one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
   verdicts:
   - holds: distinctness-necessary-r
     ref: Classicism.Map.Models.full_involution_group.distinctness_necessary_r
@@ -164,9 +169,6 @@ lean:
     status: verified
   - holds: necessary-barcan-t
     ref: Classicism.Map.Models.full_involution_group.necessary_barcan_t
-    status: verified
-  - holds: no-pure-contingency-r
-    ref: Classicism.Map.Models.full_involution_group.no_pure_contingency_r
     status: verified
   - fails: fregean-axiom
     ref: Classicism.Map.Models.full_involution_group.fregean_axiom

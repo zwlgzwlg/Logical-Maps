@@ -174,7 +174,14 @@ lean:
     - Classicism.Models.Monoids
     - Classicism.Models.ContingentBarcan
     - Classicism.Semantics.IntensionalExamples
+    - Classicism.Models.Conditions
     holds: ({model}).IsModel ∧ ({model}).HoldsAx {def}
     fails: ({model}).IsModel ∧ ¬ ({model}).HoldsAx {def}
     relative_categories: [signature]
     relative: ({model}).Admitted
+  argument:
+    binder: '∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel →'
+    model: A
+    condition: '{cond} {model}'
+    holds: ({model}).HoldsAx {def}
+    fails: ¬ ({model}).HoldsAx {def}

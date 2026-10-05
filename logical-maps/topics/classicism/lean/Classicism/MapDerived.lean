@@ -1,0 +1,110 @@
+import Classicism.MapArguments
+import Classicism.MapModels
+
+/-!
+# Generated certificates: models' verdicts from the map's arguments
+
+Written by `pmap lean classicism` from the YAML records. **Do not edit.**
+
+Each verdict a general argument gives a model on the map, certified by applying the
+argument's certificate (`MapArguments.lean`) to the model: to its proof of being a model,
+and its proofs of the conditions the argument requires (its record's `lean.meets`, or its
+group's).
+-/
+
+namespace Classicism.Map.Models
+open Classicism
+
+/-- `finite-support-dyadic-roundings`: Actuality holds, by `finite-support-one-object`'s argument `actual-world`. -/
+theorem finite_support_dyadic_roundings.actuality : Statements.Models.finite_support_dyadic_roundings.actuality :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pow2), Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality (Classicism.Meta.Intensional.Monoids.pow2) (Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned _ Classicism.Meta.Intensional.Monoids.Pow2.onePinned)⟩
+
+/-- `finite-support-dyadic-roundings`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
+theorem finite_support_dyadic_roundings.no_pure_contingency_r : Statements.Models.finite_support_dyadic_roundings.no_pure_contingency_r :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pow2), Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pow2)) (Classicism.Meta.Intensional.MonoidModel.oneObject (Classicism.Meta.Intensional.Monoids.pow2))⟩
+
+/-- `finite-support-identity-or-collapse-surjections`: Actuality holds, by `finite-support-one-object`'s argument `actual-world`. -/
+theorem finite_support_identity_or_collapse_surjections.actuality : Statements.Models.finite_support_identity_or_collapse_surjections.actuality :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01), Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality (Classicism.Meta.Intensional.Monoids.monoSurj01) (Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned _ Classicism.Meta.Intensional.Monoids.MonoSurj01.onePinned)⟩
+
+/-- `finite-support-identity-or-collapse-surjections`: Atomicity fails, by `finite-support-one-object`'s argument `collapsing-atomless`. -/
+theorem finite_support_identity_or_collapse_surjections.atomicity_r : Statements.Models.finite_support_identity_or_collapse_surjections.atomicity_r :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01), Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_r (Classicism.Meta.Intensional.Monoids.monoSurj01) (Classicism.Map.Meets.finite_support_identity_or_collapse_surjections.collapse_unpinned)⟩
+
+/-- `finite-support-identity-or-collapse-surjections`: Atomicity (type t) fails, by `finite-support-one-object`'s argument `collapsing-atomless`. -/
+theorem finite_support_identity_or_collapse_surjections.atomicity_t : Statements.Models.finite_support_identity_or_collapse_surjections.atomicity_t :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01), Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_t (Classicism.Meta.Intensional.Monoids.monoSurj01) (Classicism.Map.Meets.finite_support_identity_or_collapse_surjections.collapse_unpinned)⟩
+
+/-- `finite-support-identity-or-collapse-surjections`: BF holds, by the argument `barcan-d6`. -/
+theorem finite_support_identity_or_collapse_surjections.barcan_r : Statements.Models.finite_support_identity_or_collapse_surjections.barcan_r :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01), Classicism.Map.Arguments.barcan_d6.barcan_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01)) (Classicism.Meta.Intensional.MonoidModel.d6Surjective_of_surjective _ fun k => k.2.2.1)⟩
+
+/-- `finite-support-identity-or-collapse-surjections`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
+theorem finite_support_identity_or_collapse_surjections.no_pure_contingency_r : Statements.Models.finite_support_identity_or_collapse_surjections.no_pure_contingency_r :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01), Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01)) (Classicism.Meta.Intensional.MonoidModel.oneObject (Classicism.Meta.Intensional.Monoids.monoSurj01))⟩
+
+/-- `finite-support-identity-or-collapse`: Actuality holds, by `finite-support-one-object`'s argument `actual-world`. -/
+theorem finite_support_identity_or_collapse.actuality : Statements.Models.finite_support_identity_or_collapse.actuality :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01), Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality (Classicism.Meta.Intensional.Monoids.mono01) (Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned _ Classicism.Meta.Intensional.Monoids.Mono01.onePinned)⟩
+
+/-- `finite-support-identity-or-collapse`: Atomicity fails, by `finite-support-one-object`'s argument `collapsing-atomless`. -/
+theorem finite_support_identity_or_collapse.atomicity_r : Statements.Models.finite_support_identity_or_collapse.atomicity_r :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01), Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_r (Classicism.Meta.Intensional.Monoids.mono01) (Classicism.Map.Meets.finite_support_identity_or_collapse.collapse_unpinned)⟩
+
+/-- `finite-support-identity-or-collapse`: Atomicity (type t) fails, by `finite-support-one-object`'s argument `collapsing-atomless`. -/
+theorem finite_support_identity_or_collapse.atomicity_t : Statements.Models.finite_support_identity_or_collapse.atomicity_t :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01), Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_t (Classicism.Meta.Intensional.Monoids.mono01) (Classicism.Map.Meets.finite_support_identity_or_collapse.collapse_unpinned)⟩
+
+/-- `finite-support-identity-or-collapse`: BF fails, by `finite-support-one-object`'s argument `barcan-positive`. -/
+theorem finite_support_identity_or_collapse.barcan_r : Statements.Models.finite_support_identity_or_collapse.barcan_r :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01), Classicism.Map.Arguments.finite_support_one_object.barcan_positive.barcan_r (Classicism.Meta.Intensional.Monoids.mono01) (Classicism.Map.Meets.finite_support_identity_or_collapse.positive_preserving)⟩
+
+/-- `finite-support-identity-or-collapse`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
+theorem finite_support_identity_or_collapse.no_pure_contingency_r : Statements.Models.finite_support_identity_or_collapse.no_pure_contingency_r :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01), Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01)) (Classicism.Meta.Intensional.MonoidModel.oneObject (Classicism.Meta.Intensional.Monoids.mono01))⟩
+
+/-- `finite-support-monotone-maps`: BF fails, by `finite-support-one-object`'s argument `barcan-positive`. -/
+theorem finite_support_monotone_maps.barcan_r : Statements.Models.finite_support_monotone_maps.barcan_r :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono), Classicism.Map.Arguments.finite_support_one_object.barcan_positive.barcan_r (Classicism.Meta.Intensional.Monoids.mono) (Classicism.Map.Meets.finite_support_monotone_maps.positive_preserving)⟩
+
+/-- `finite-support-monotone-maps`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
+theorem finite_support_monotone_maps.no_pure_contingency_r : Statements.Models.finite_support_monotone_maps.no_pure_contingency_r :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono), Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono)) (Classicism.Meta.Intensional.MonoidModel.oneObject (Classicism.Meta.Intensional.Monoids.mono))⟩
+
+/-- `finite-support-monotone-surjections`: BF holds, by the argument `barcan-d6`. -/
+theorem finite_support_monotone_surjections.barcan_r : Statements.Models.finite_support_monotone_surjections.barcan_r :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj), Classicism.Map.Arguments.barcan_d6.barcan_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.d6Surjective_of_surjective _ fun k => k.2.2)⟩
+
+/-- `finite-support-monotone-surjections`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
+theorem finite_support_monotone_surjections.no_pure_contingency_r : Statements.Models.finite_support_monotone_surjections.no_pure_contingency_r :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj), Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.oneObject (Classicism.Meta.Intensional.Monoids.monoSurj))⟩
+
+/-- `finite-support-permutations`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
+theorem finite_support_permutations.no_pure_contingency_r : Statements.Models.finite_support_permutations.no_pure_contingency_r :=
+  ⟨Classicism.Meta.Intensional.Perms.model_isModel, Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.Perms.model) (Classicism.Meta.Intensional.Perms.model_isModel) (Classicism.Meta.Intensional.MonoidModel.oneObject (Equiv.Perm ℕ))⟩
+
+/-- `finite-support-truncated-shifts`: Actuality holds, by `finite-support-one-object`'s argument `actual-world`. -/
+theorem finite_support_truncated_shifts.actuality : Statements.Models.finite_support_truncated_shifts.actuality :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts), Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality (Classicism.Meta.Intensional.Monoids.shifts) (Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned _ Classicism.Meta.Intensional.Monoids.Shifts.onePinned)⟩
+
+/-- `finite-support-truncated-shifts`: BF holds, by the argument `barcan-d6`. -/
+theorem finite_support_truncated_shifts.barcan_r : Statements.Models.finite_support_truncated_shifts.barcan_r :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts), Classicism.Map.Arguments.barcan_d6.barcan_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts)) (Classicism.Meta.Intensional.MonoidModel.d6Surjective_of_surjective _ Classicism.Meta.Intensional.Monoids.Shifts.surj)⟩
+
+/-- `finite-support-truncated-shifts`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
+theorem finite_support_truncated_shifts.no_pure_contingency_r : Statements.Models.finite_support_truncated_shifts.no_pure_contingency_r :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts), Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts)) (Classicism.Meta.Intensional.MonoidModel.oneObject (Classicism.Meta.Intensional.Monoids.shifts))⟩
+
+/-- `finite-support-truncations`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
+theorem finite_support_truncations.no_pure_contingency_r : Statements.Models.finite_support_truncations.no_pure_contingency_r :=
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.truncs), Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.truncs)) (Classicism.Meta.Intensional.MonoidModel.oneObject (Classicism.Meta.Intensional.Monoids.truncs))⟩
+
+/-- `full-idempotent-monoid`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
+theorem full_idempotent_monoid.no_pure_contingency_r : Statements.Models.full_idempotent_monoid.no_pure_contingency_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _)⟩
+
+/-- `full-involution-group`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
+theorem full_involution_group.no_pure_contingency_r : Statements.Models.full_involution_group.no_pure_contingency_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _)⟩
+
+end Classicism.Map.Models

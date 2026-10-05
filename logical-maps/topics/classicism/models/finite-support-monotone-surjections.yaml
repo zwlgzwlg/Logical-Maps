@@ -190,21 +190,19 @@ history:
   violates:
   - vicinity
 
-# Verdicts proved in Lean (Classicism/MapModels.lean); statuses are written by lean-check --update.
+# The model in Lean, and its verdicts proved there (Classicism/MapModels.lean); statuses are written by
+# lean-check --update. The verdicts the map's general arguments give it are certified from the
+# arguments' (MapDerived.lean), with the proofs under `meets` that it meets their conditions.
 lean:
-  model: Classicism.Meta.Intensional.MonoidModel.model Classicism.Meta.Intensional.Monoids.monoSurj
+  param: Classicism.Meta.Intensional.Monoids.monoSurj
+  meets:
+    d6-surjective: Classicism.Meta.Intensional.MonoidModel.d6Surjective_of_surjective _ fun k => k.2.2
   verdicts:
-  - holds: barcan-r
-    ref: Classicism.Map.Models.finite_support_monotone_surjections.barcan_r
-    status: verified
   - holds: necessary-barcan-r
     ref: Classicism.Map.Models.finite_support_monotone_surjections.necessary_barcan_r
     status: verified
   - holds: atomlessness
     ref: Classicism.Map.Models.finite_support_monotone_surjections.atomlessness
-    status: verified
-  - holds: no-pure-contingency-r
-    ref: Classicism.Map.Models.finite_support_monotone_surjections.no_pure_contingency_r
     status: verified
   - fails: distinctness-necessary-r
     ref: Classicism.Map.Models.finite_support_monotone_surjections.distinctness_necessary_r

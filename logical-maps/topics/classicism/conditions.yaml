@@ -8,6 +8,7 @@ conditions:
     The model is an action model (Classicism, Appendix D), or an intensional action model in the
     sense of Dorr's draft (Boolean Completeness does not imply Rigid Comprehension), with a single
     object.
+  lean: Classicism.Meta.Intensional.Premodel.OneObject
 - id: extensionally-full
   text: >-
     The model is extensionally full at every object: every set of tuples from the domains at an
@@ -18,6 +19,7 @@ conditions:
     The model is an ideally full action model in which every arrow out of the evaluation object
     acts surjectively both on the individuals and on the pinning sets (Proposition D.6's
     hypothesis).
+  lean: Classicism.Meta.Intensional.Premodel.D6Surjective
 - id: sigma-top
   text: >-
     Every constant of Σ is relational, and each denotes the top element of its type.

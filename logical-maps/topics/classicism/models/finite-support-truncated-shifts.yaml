@@ -190,24 +190,20 @@ history:
   violates:
   - boolean-completeness-t
 
-# Verdicts proved in Lean (Classicism/MapModels.lean); statuses are written by lean-check --update.
+# The model in Lean, and its verdicts proved there (Classicism/MapModels.lean); statuses are written by
+# lean-check --update. The verdicts the map's general arguments give it are certified from the
+# arguments' (MapDerived.lean), with the proofs under `meets` that it meets their conditions.
 lean:
-  model: Classicism.Meta.Intensional.MonoidModel.model Classicism.Meta.Intensional.Monoids.shifts
+  param: Classicism.Meta.Intensional.Monoids.shifts
+  meets:
+    actual-world-pinned: Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned _ Classicism.Meta.Intensional.Monoids.Shifts.onePinned
+    d6-surjective: Classicism.Meta.Intensional.MonoidModel.d6Surjective_of_surjective _ Classicism.Meta.Intensional.Monoids.Shifts.surj
   verdicts:
-  - holds: barcan-r
-    ref: Classicism.Map.Models.finite_support_truncated_shifts.barcan_r
-    status: verified
   - holds: necessary-barcan-r
     ref: Classicism.Map.Models.finite_support_truncated_shifts.necessary_barcan_r
     status: verified
-  - holds: actuality
-    ref: Classicism.Map.Models.finite_support_truncated_shifts.actuality
-    status: verified
   - holds: atomicity-t
     ref: Classicism.Map.Models.finite_support_truncated_shifts.atomicity_t
-    status: verified
-  - holds: no-pure-contingency-r
-    ref: Classicism.Map.Models.finite_support_truncated_shifts.no_pure_contingency_r
     status: verified
   - fails: distinctness-necessary-r
     ref: Classicism.Map.Models.finite_support_truncated_shifts.distinctness_necessary_r
