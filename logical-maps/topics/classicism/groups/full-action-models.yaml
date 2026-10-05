@@ -55,6 +55,7 @@ parameters:
         label: infinitely many fixed individuals
         meets:
           fixed-infinite-individuals: This is the choice of individuals.
+          infinitely-many-individuals: The individuals are the natural numbers.
           homogeneous-individuals: >-
             A permutation of the natural numbers commutes with every arrow's action, the identity,
             so it is an automorphism at type $e$ and extends, by conjugation, to the full domains

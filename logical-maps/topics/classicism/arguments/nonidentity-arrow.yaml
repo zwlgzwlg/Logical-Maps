@@ -1,0 +1,13 @@
+id: nonidentity-arrow
+requires: [full-model, nonidentity-arrow]
+fails: [fregean-axiom]
+source: {paper: bacon-dorr-classicism, locator: 'p. 61'}
+by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+date: '2026-10-06'
+text: >-
+  The propositions $\top$ and $\{1\}$ are in the domain, the model being full; they are both true at
+  the evaluation point and differ at the other arrow, so the Fregean Axiom fails.
+# Proved in Lean (Classicism/MapArguments.lean), for every intensional action model meeting the conditions.
+lean:
+- fails: fregean-axiom
+  ref: Classicism.Map.Arguments.nonidentity_arrow.fregean_axiom

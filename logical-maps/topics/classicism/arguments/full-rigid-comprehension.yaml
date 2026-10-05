@@ -1,0 +1,19 @@
+id: full-rigid-comprehension
+requires: [full-action-model]
+holds: [necessary-rigid-comprehension-r]
+source: {paper: bacon-dorr-classicism, locator: 'p. 61'}
+by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+date: '2026-10-06'
+text: >-
+  Given $X$ of type $\tau$ at an object $W$, let $Y$ be the relation whose extension at an arrow
+  $i$ out of $W$ is $X$'s extension at $W$ transported along $i$, which is in the domain since the
+  model is full. It is coextensive with $X$. It is persistent, since its extension at $i\circ j$ is
+  its extension at $i$ transported along $j$. And it is inextensible: if $\Box X'$ holds at $i$ of
+  everything $Y$ holds of there, then at $i\circ j$ everything $Y$ holds of is the transport along
+  $j$ of something $Y$ holds of at $i$, of which $X'$ then holds. Every object being full, the same
+  holds at every arrow, so Rigid Comprehension is necessary. The source notes that full models
+  satisfy it (p. 61); stated once for the topic, in place of the full models' own arguments.
+# Proved in Lean (Classicism/MapArguments.lean), for every intensional action model meeting the conditions.
+lean:
+- holds: necessary-rigid-comprehension-r
+  ref: Classicism.Map.Arguments.full_rigid_comprehension.necessary_rigid_comprehension_r

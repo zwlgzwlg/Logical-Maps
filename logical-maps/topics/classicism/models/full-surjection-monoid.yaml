@@ -37,6 +37,14 @@ settings:
   individuals: singleton
   sigma: top
 meets:
+  nonidentity-arrow: >-
+    Halving.
+  unretracted-arrow: >-
+    Halving is not injective, so no surjection $m$ has $m\circ k=1$ for it.
+  epic-arrows: >-
+    A surjection $k$ is an epimorphism among the surjections, $m\circ k=m^{\prime}\circ k$ giving $m=m^{\prime}$; and on the individuals every arrow is the identity.
+  infinitely-many-propositions: >-
+    The propositions are all the sets of arrows, and there are infinitely many surjections.
   sigma-apart: The construction does not mention Σ.
   one-object-action-model: >-
     It has one object.
@@ -45,34 +53,20 @@ meets:
 
 arguments:
 
+# 6 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): verdicts now given by the topic's
+# general arguments (full-atomicity, full-rigid-comprehension, full-epic-barcan, invertible-arrows,
+# retractions, unretracted-arrow, nonidentity-arrow, infinitely-many-propositions,
+# finitely-many-propositions, finitely-many-propositions-everywhere), through this record's `meets`
+# and its group's, are dropped from its own arguments, and arguments left with none are dropped:
+# no-pure-contingency-r, rigid-comprehension-r, atomicity-r, barcan-r, distinctness-necessary-t, axiom-of-infinity-t.
+
 # Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
 # record shared in substance with another full action model is now one of the topic's general
 # arguments (arguments/), reached through the group full-action-models and this record's `meets`;
 # what follows is this record's own. Only the verdicts the engine needs to derive the rest are
 # recorded, the source's first.
 
-# --- from the source (17 Sep record) ---
-
-- holds: [no-pure-contingency-r, rigid-comprehension-r, atomicity-r, barcan-r]
-  fails: [distinctness-necessary-t]
-  source: {paper: bacon-dorr-classicism, locator: '§3.5, p. 59, third paragraph'}
-  # migration (3 October): the source takes a surjective individual action; one individual and
-  # infinitely many fixed individuals both act surjectively.
-  text: >-
-    The source cites Bacon 2020, Proposition A.3 for the higher-type surjectivity argument.
-
 # --- later additions ---
-
-- holds: [axiom-of-infinity-t]
-  # migration: `by` adds "at Cian Dorr's direction" from the change's summary.
-  # migration (3 October): the type-$e$ half is now the general argument for infinitely many fixed
-  # individuals, which is this argument's; the text keeps the type-$t$ half.
-  by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
-  date: '2026-09-20'
-  text: >-
-    The arrows are an infinite monoid, identity at the identity arrow is literal, and the numeral
-    sets at type t are intensions of a full model, so no finite cardinality holds of the universal
-    property at type t.
 
 - fails: [distinctness-preserving-collapse]
   by: Claude Fable 5.1 (Anthropic)
@@ -90,7 +84,6 @@ notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
   identifies its evaluation point; construction and verification are given at the PDF locations in
   References.
-
 
   The source takes infinitely many individuals with a surjective action, such as the surjections'
   action on the set by evaluation. That action gives, on the map's principles, what the variant
@@ -178,6 +171,10 @@ lean:
   model: Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj
   is_model: Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj
   meets:
+    infinitely-many-propositions: Classicism.Meta.Intensional.FullActionModels.mset_infinitely_many_propositions Classicism.Meta.Intensional.FullActionModels.surj
+    epic-arrows: Classicism.Meta.Intensional.FullActionModels.surj_epic
+    unretracted-arrow: Classicism.Meta.Intensional.FullActionModels.surj_unretracted
+    nonidentity-arrow: Classicism.Meta.Intensional.FullActionModels.surj_nonidentity
     full-model: Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj
     full-action-model: Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj
     extensionally-full: Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj)
@@ -191,14 +188,8 @@ lean:
   - fails: necessary-distinctness-necessary-r
     ref: Classicism.Map.Models.full_surjection_monoid.necessary_distinctness_necessary_r
     status: verified
-  - fails: distinctness-necessary-t
-    ref: Classicism.Map.Models.full_surjection_monoid.distinctness_necessary_t
-    status: verified
   - fails: necessary-distinctness-necessary-t
     ref: Classicism.Map.Models.full_surjection_monoid.necessary_distinctness_necessary_t
-    status: verified
-  - fails: fregean-axiom
-    ref: Classicism.Map.Models.full_surjection_monoid.fregean_axiom
     status: verified
   - fails: necessary-fregean-axiom
     ref: Classicism.Map.Models.full_surjection_monoid.necessary_fregean_axiom

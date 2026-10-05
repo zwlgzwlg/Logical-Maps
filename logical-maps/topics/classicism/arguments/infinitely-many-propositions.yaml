@@ -1,0 +1,16 @@
+id: infinitely-many-propositions
+requires: [extensionally-full, infinitely-many-propositions]
+holds: [axiom-of-infinity-t, infinity-t]
+by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+date: '2026-10-06'
+text: >-
+  As for individuals (the argument infinitely-many-individuals), at type $t$: the Infinity schema
+  holds, and by extensional fullness the property of cardinalities that hold only of properties with
+  finite extensions is in the domain, has every finite cardinality, and excludes those holding of the
+  universal property of propositions, whose extension is infinite.
+# Proved in Lean (Classicism/MapArguments.lean), for every intensional action model meeting the conditions.
+lean:
+- holds: axiom-of-infinity-t
+  ref: Classicism.Map.Arguments.infinitely_many_propositions.axiom_of_infinity_t
+- holds: infinity-t
+  ref: Classicism.Map.Arguments.infinitely_many_propositions.infinity_t

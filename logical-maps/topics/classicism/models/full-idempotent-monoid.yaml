@@ -40,6 +40,12 @@ settings:
   individuals: singleton
   sigma: top
 meets:
+  nonidentity-arrow: >-
+    The idempotent $k$.
+  unretracted-arrow: >-
+    $m\cdot k=k$ for both arrows $m$, so $k$ has no retraction.
+  finitely-many-propositions-everywhere: >-
+    There is one object, with four propositions, the sets of the two arrows.
   sigma-apart: The construction does not mention Σ.
   one-object-action-model: >-
     It has one object.
@@ -54,19 +60,18 @@ meets:
 
 arguments:
 
+# 6 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): verdicts now given by the topic's
+# general arguments (full-atomicity, full-rigid-comprehension, full-epic-barcan, invertible-arrows,
+# retractions, unretracted-arrow, nonidentity-arrow, infinitely-many-propositions,
+# finitely-many-propositions, finitely-many-propositions-everywhere), through this record's `meets`
+# and its group's, are dropped from its own arguments, and arguments left with none are dropped:
+# no-pure-contingency-r, rigid-comprehension-r, atomicity-r, barcan-t.
+
 # Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
 # record shared in substance with another full action model is now one of the topic's general
 # arguments (arguments/), reached through the group full-action-models and this record's `meets`;
 # what follows is this record's own. Only the verdicts the engine needs to derive the rest are
 # recorded, the source's first.
-
-# --- from the source (17 Sep record) ---
-
-- holds: [no-pure-contingency-r, rigid-comprehension-r, atomicity-r]
-  fails: [barcan-t]
-  source: {paper: bacon-dorr-classicism, locator: '§3.5, p. 59, first paragraph'}
-  text: >-
-    Refer to the cited paragraph for the four propositions and the failure witnesses.
 
 # --- later additions ---
 
@@ -191,6 +196,9 @@ lean:
   model: Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem
   is_model: Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem
   meets:
+    finitely-many-propositions-everywhere: Classicism.Meta.Intensional.FullActionModels.mset_finitely_many_everywhere Classicism.Meta.Intensional.Idem
+    unretracted-arrow: Classicism.Map.Meets.full_idempotent_monoid.unretracted
+    nonidentity-arrow: Classicism.Meta.Intensional.FullActionModels.mset_nonidentity Classicism.Meta.Intensional.Idem.k Classicism.Meta.Intensional.Idem.k_ne_one
     one-individual: Classicism.Map.Meets.mset_one_individual Classicism.Meta.Intensional.Idem
     finitely-many-propositions: Classicism.Map.Meets.mset_finitely_many_propositions Classicism.Meta.Intensional.Idem
     full-model: Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem
@@ -206,9 +214,6 @@ lean:
   - fails: necessary-distinctness-necessary-r
     ref: Classicism.Map.Models.full_idempotent_monoid.necessary_distinctness_necessary_r
     status: verified
-  - fails: distinctness-necessary-t
-    ref: Classicism.Map.Models.full_idempotent_monoid.distinctness_necessary_t
-    status: verified
   - fails: necessary-distinctness-necessary-t
     ref: Classicism.Map.Models.full_idempotent_monoid.necessary_distinctness_necessary_t
     status: verified
@@ -223,9 +228,6 @@ lean:
     status: verified
   - fails: necessary-barcan-t
     ref: Classicism.Map.Models.full_idempotent_monoid.necessary_barcan_t
-    status: verified
-  - fails: fregean-axiom
-    ref: Classicism.Map.Models.full_idempotent_monoid.fregean_axiom
     status: verified
   - fails: necessary-fregean-axiom
     ref: Classicism.Map.Models.full_idempotent_monoid.necessary_fregean_axiom

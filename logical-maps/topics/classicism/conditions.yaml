@@ -113,3 +113,40 @@ conditions:
     type are exactly the intensions $k\mapsto k\cdot E$, the disjunctions of the haecceities of the
     members of $E$, for $E$ any set of tuples from the domains there; in particular every such
     intension is in the domain.
+# Added 6 October 2026 (Claude Opus 5.5, at Cian Dorr's direction) for the general arguments
+# full-epic-barcan, infinitely-many-individuals, infinitely-many-propositions and
+# finitely-many-propositions-everywhere.
+- id: epic-arrows
+  text: >-
+    Every arrow out of every object reachable from the evaluation point is an epimorphism (arrows
+    after it that agree after it are equal) and acts surjectively on the individuals.
+  lean: Classicism.Meta.Intensional.Premodel.EpicArrows
+- id: infinitely-many-individuals
+  text: >-
+    There are infinitely many individuals at the evaluation world.
+  lean: Classicism.Meta.Intensional.Premodel.InfinitelyManyIndividuals
+- id: infinitely-many-propositions
+  text: >-
+    There are infinitely many propositions at the evaluation world.
+  lean: Classicism.Meta.Intensional.Premodel.InfinitelyManyPropositions
+- id: finitely-many-propositions-everywhere
+  text: >-
+    There are finitely many propositions at every object reachable from the evaluation point.
+  lean: Classicism.Meta.Intensional.Premodel.FinitelyManyPropositionsEverywhere
+- id: invertible-arrows
+  text: >-
+    Every arrow out of every object reachable from the evaluation point is invertible.
+  lean: Classicism.Meta.Intensional.Premodel.InvertibleArrows
+- id: retractions
+  text: >-
+    Every arrow out of the evaluation object has a retraction: an arrow back after which it composes
+    to the identity.
+  lean: Classicism.Meta.Intensional.Premodel.Retractions
+- id: unretracted-arrow
+  text: >-
+    Some arrow out of the evaluation object has no retraction.
+  lean: Classicism.Meta.Intensional.Premodel.UnretractedArrow
+- id: nonidentity-arrow
+  text: >-
+    Some arrow out of the evaluation object is not its identity.
+  lean: Classicism.Meta.Intensional.Premodel.NonidentityArrow

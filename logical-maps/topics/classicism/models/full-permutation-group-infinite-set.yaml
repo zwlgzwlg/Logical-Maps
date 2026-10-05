@@ -54,31 +54,32 @@ settings:
   individuals: singleton
   sigma: top
 meets:
+  nonidentity-arrow: >-
+    Any permutation other than the identity.
+  invertible-arrows: >-
+    The arrows are permutations.
+  epic-arrows: >-
+    Every arrow is invertible; and on the individuals every arrow is the identity.
+  infinitely-many-propositions: >-
+    The propositions are all the sets of arrows, and there are infinitely many permutations.
   sigma-apart: The construction does not mention Σ.
   one-object-action-model: >-
     It has one object.
 
 arguments:
 
+# 6 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): verdicts now given by the topic's
+# general arguments (full-atomicity, full-rigid-comprehension, full-epic-barcan, invertible-arrows,
+# retractions, unretracted-arrow, nonidentity-arrow, infinitely-many-propositions,
+# finitely-many-propositions, finitely-many-propositions-everywhere), through this record's `meets`
+# and its group's, are dropped from its own arguments, and arguments left with none are dropped:
+# axiom-of-infinity-t, functional-choice-r.
+
 # Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
 # record shared in substance with another full action model is now one of the topic's general
 # arguments (arguments/), reached through the group full-action-models and this record's `meets`;
 # what follows is this record's own. Only the verdicts the engine needs to derive the rest are
 # recorded, the source's first.
-
-- holds: [axiom-of-infinity-t, functional-choice-r]
-  writeup: full-permutation-group-infinite-set
-  # migration (3 October): "the individuals and the propositions are both infinite" becomes "the
-  # propositions are infinite", the Axiom of Infinity at type $e$ being now the general argument
-  # for infinitely many fixed individuals; the one-individual record's argument for the same
-  # verdicts said the same.
-  text: >-
-    Because the arrows form a group, $\Box p$ holds at an arrow exactly when $p$ is the set of all
-    arrows and $\Diamond p$ exactly when $p$ is nonempty, so the propositional modal logic is S5
-    with the arrows as worlds; every arrow acts injectively and surjectively at every type, giving
-    $\Box$ND and $\Box$BF; fullness gives the necessitations of Atomicity, Actuality, Boolean
-    Completeness, Rigid Comprehension, Functionality, Plenitude and the choice principles; and the
-    propositions are infinite.
 
 # migration (3 October): from full-permutation-group-one-individual, verbatim, where it was
 # recorded at its interpretation of Σ, the true atom. The argument uses only that every constant
@@ -104,7 +105,6 @@ notes: >-
   September 2026 to fill a gap: no earlier record settled $\Box$ND, the Axiom of Infinity at type
   $t$ and $\Box$Relational Choice together.
 
-
   The write-up full-permutation-group-infinite-set treats the source's natural action, on the
   individuals $X$ by evaluation; the write-up full-permutation-group-one-individual records what
   changes with one individual, recorded separately until 3 October 2026, when it became this
@@ -119,6 +119,10 @@ lean:
   model: Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)
   is_model: Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)
   meets:
+    infinitely-many-propositions: Classicism.Meta.Intensional.FullActionModels.mset_infinitely_many_propositions (Equiv.Perm ℕ)
+    invertible-arrows: Classicism.Meta.Intensional.FullActionModels.group_invertible (Equiv.Perm ℕ)
+    epic-arrows: Classicism.Meta.Intensional.FullActionModels.group_epic (Equiv.Perm ℕ)
+    nonidentity-arrow: Classicism.Meta.Intensional.FullActionModels.perm_nonidentity
     full-model: Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ)
     full-action-model: Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ)
     extensionally-full: Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ))
@@ -129,9 +133,6 @@ lean:
   - holds: distinctness-necessary-r
     ref: Classicism.Map.Models.full_permutation_group_infinite_set.distinctness_necessary_r
     status: verified
-  - holds: necessary-distinctness-necessary-r
-    ref: Classicism.Map.Models.full_permutation_group_infinite_set.necessary_distinctness_necessary_r
-    status: verified
   - holds: distinctness-necessary-t
     ref: Classicism.Map.Models.full_permutation_group_infinite_set.distinctness_necessary_t
     status: verified
@@ -141,17 +142,11 @@ lean:
   - holds: barcan-r
     ref: Classicism.Map.Models.full_permutation_group_infinite_set.barcan_r
     status: verified
-  - holds: necessary-barcan-r
-    ref: Classicism.Map.Models.full_permutation_group_infinite_set.necessary_barcan_r
-    status: verified
   - holds: barcan-t
     ref: Classicism.Map.Models.full_permutation_group_infinite_set.barcan_t
     status: verified
   - holds: necessary-barcan-t
     ref: Classicism.Map.Models.full_permutation_group_infinite_set.necessary_barcan_t
-    status: verified
-  - fails: fregean-axiom
-    ref: Classicism.Map.Models.full_permutation_group_infinite_set.fregean_axiom
     status: verified
   - fails: necessary-fregean-axiom
     ref: Classicism.Map.Models.full_permutation_group_infinite_set.necessary_fregean_axiom

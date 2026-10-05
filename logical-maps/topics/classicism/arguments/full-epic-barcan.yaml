@@ -1,0 +1,16 @@
+id: full-epic-barcan
+requires: [full-action-model, epic-arrows]
+holds: [necessary-barcan-r]
+source: {paper: bacon-dorr-classicism, locator: '§3.5, Proposition 3.24(ii)'}
+by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+date: '2026-10-06'
+text: >-
+  BF holds at an object whose arrows out all act surjectively at every type (Proposition 3.24(ii)).
+  In a full model the transport of intensions along an epimorphism $k$ is onto: an intension $Y$
+  at its target is the transport of $\{\langle\bar a,k\circ m\rangle : \langle\bar a,m\rangle\in Y\}$,
+  since $k\circ m=k\circ m'$ only if $m=m'$; and on the individuals the arrows are onto by the
+  condition. So BF holds at every object reachable from the evaluation point, and BF is necessary.
+# Proved in Lean (Classicism/MapArguments.lean), for every intensional action model meeting the conditions.
+lean:
+- holds: necessary-barcan-r
+  ref: Classicism.Map.Arguments.full_epic_barcan.necessary_barcan_r

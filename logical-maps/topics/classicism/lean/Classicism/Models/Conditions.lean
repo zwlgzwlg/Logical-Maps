@@ -2,6 +2,8 @@ import Classicism.Models.MonoidModel
 import Classicism.Semantics.IntensionalTheory
 import Classicism.Semantics.FullModels
 import Classicism.Semantics.Counting
+import Classicism.Semantics.Arrows
+import Classicism.Semantics.Numerals
 import Mathlib.Algebra.Group.Action.Faithful
 import Mathlib.Algebra.Group.Submonoid.MulAction
 import Mathlib.Algebra.Group.Action.End
@@ -50,6 +52,18 @@ def OneIndividual (A : Premodel Sig C) : Prop := ∀ W : C, Subsingleton (A.Dom 
 /-- `finitely-many-propositions`: there are finitely many propositions at the evaluation
 world. -/
 def FinitelyManyPropositions (A : Premodel Sig C) : Prop := Finite (A.Dom A.W₀ (.rel .t))
+
+/-- `finitely-many-propositions-everywhere`: there are finitely many propositions at every object
+reachable from the evaluation point. -/
+def FinitelyManyPropositionsEverywhere (A : Premodel Sig C) : Prop :=
+  ∀ {V : C} (_ : A.W₀ ⟶ V), Finite (A.Dom V (.rel .t))
+
+/-- `infinitely-many-individuals`: there are infinitely many individuals at the evaluation world. -/
+def InfinitelyManyIndividuals (A : Premodel Sig C) : Prop := Infinite (A.Dom A.W₀ .e)
+
+/-- `infinitely-many-propositions`: there are infinitely many propositions at the evaluation
+world. -/
+def InfinitelyManyPropositions (A : Premodel Sig C) : Prop := Infinite (A.Dom A.W₀ (.rel .t))
 
 /-! `full-model` and `full-action-model` are `Premodel.Full` (`IntensionalProperties.lean`): in
 the intensional form a full action model is a full model, every intension present at every

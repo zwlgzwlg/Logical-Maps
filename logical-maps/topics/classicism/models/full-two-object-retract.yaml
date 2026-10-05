@@ -30,26 +30,30 @@ settings:
   individuals: singleton
   sigma: top
 meets:
+  nonidentity-arrow: >-
+    The arrow $h:W_0\to W_1$.
+  retractions: >-
+    The arrows out of $W_0$ are its identity and $h$, which $j$ retracts.
+  finitely-many-propositions: >-
+    $W_0$ has four propositions, the sets of its two arrows out.
+  finitely-many-propositions-everywhere: >-
+    $W_0$ has four propositions and $W_1$ eight, the sets of its three arrows out.
   sigma-apart: The construction does not mention Σ.
 
 arguments:
+
+# 6 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): verdicts now given by the topic's
+# general arguments (full-atomicity, full-rigid-comprehension, full-epic-barcan, invertible-arrows,
+# retractions, unretracted-arrow, nonidentity-arrow, infinitely-many-propositions,
+# finitely-many-propositions, finitely-many-propositions-everywhere), through this record's `meets`
+# and its group's, are dropped from its own arguments, and arguments left with none are dropped:
+# necessary-rigid-comprehension-r, necessary-atomicity-r, distinctness-necessary-t, no-pure-contingency-r, infinity-t, possible-infinity-t.
 
 # Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
 # record shared in substance with another full action model is now one of the topic's general
 # arguments (arguments/), reached through the group full-action-models and this record's `meets`;
 # what follows is this record's own. Only the verdicts the engine needs to derive the rest are
 # recorded, the source's first.
-
-# --- from the source (17 Sep record) ---
-
-- holds: [necessary-rigid-comprehension-r, necessary-atomicity-r]
-  source: {paper: bacon-dorr-classicism, locator: '§3.5, p. 59, fifth paragraph and n. 81'}
-
-- holds: [distinctness-necessary-t]
-  fails: [no-pure-contingency-r]
-  source: {paper: bacon-dorr-classicism, locator: '§3.5, p. 59, fifth paragraph and n. 81'}
-  text: >-
-    ND at t holds there and fails at W1.
 
 # --- later additions ---
 
@@ -81,13 +85,6 @@ arguments:
     a\in E$; $Y$ is a natural intension, so in the full model, it is coextensive with $X$ at
     $W_0$, and both $Y$ and its negation take only the values $\top$ and $\bot$, so both are
     persistent. The boxed form fails, as recorded, since ND fails at $W_1$.
-
-- fails: [infinity-t, possible-infinity-t]
-  by: Claude Fable 5.1 (Anthropic)
-  date: '2026-09-25'
-  text: >-
-    $W_0$ has exactly four propositions with literal identity, so there are no five pairwise
-    distinct ones; Possible Infinity (type $t$) fails as well, since $W_1$ has eight.
 
 # migration: the old description's last sentence and the text of the old notes that no argument
 # holds, verbatim. The argument for the failure of the Distinctness-preserving collapse, now
@@ -173,15 +170,16 @@ lean:
   model: Classicism.Meta.Intensional.FullActionModels.retract
   is_model: Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _
   meets:
+    finitely-many-propositions: Classicism.Meta.Intensional.FullActionModels.retract_finitely_many_propositions
+    finitely-many-propositions-everywhere: Classicism.Meta.Intensional.FullActionModels.retract_finitely_many_everywhere
+    retractions: Classicism.Meta.Intensional.FullActionModels.retract_retractions
+    nonidentity-arrow: Classicism.Meta.Intensional.FullActionModels.retract_nonidentity
     full-model: Classicism.Meta.Intensional.FullActionModels.unitModel_full _
     full-action-model: Classicism.Meta.Intensional.FullActionModels.unitModel_full _
     extensionally-full: Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)
     metatheory-choice: Classicism.Meta.Intensional.Premodel.metatheoryChoice _
     one-individual: Classicism.Meta.Intensional.FullActionModels.unitModel_one_individual _
   verdicts:
-  - holds: distinctness-necessary-r
-    ref: Classicism.Map.Models.full_two_object_retract.distinctness_necessary_r
-    status: verified
   - holds: distinctness-necessary-t
     ref: Classicism.Map.Models.full_two_object_retract.distinctness_necessary_t
     status: verified
@@ -196,9 +194,6 @@ lean:
     status: verified
   - fails: necessary-barcan-t
     ref: Classicism.Map.Models.full_two_object_retract.necessary_barcan_t
-    status: verified
-  - fails: fregean-axiom
-    ref: Classicism.Map.Models.full_two_object_retract.fregean_axiom
     status: verified
   - fails: necessary-fregean-axiom
     ref: Classicism.Map.Models.full_two_object_retract.necessary_fregean_axiom

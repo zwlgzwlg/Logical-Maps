@@ -1,6 +1,6 @@
 id: finitely-many-propositions
 requires: [full-model, finitely-many-propositions]
-fails: [infinity-t]
+fails: [infinity-t, axiom-of-infinity-t]
 by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
 date: '2026-09-20'
 text: >-
@@ -13,7 +13,14 @@ revisions:
   by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
   note: >-
     The copies in three full action models (each with four propositions) stated once for the topic; each record's count is its reason for meeting finitely-many-propositions.
+- date: '2026-10-06'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  note: >-
+    The Axiom of Infinity's failure, which the text states, recorded as a verdict of its own, so that
+    it is certified without the result that the Axiom implies the schema.
 # Proved in Lean (Classicism/MapArguments.lean), for every intensional action model meeting the conditions.
 lean:
 - fails: infinity-t
   ref: Classicism.Map.Arguments.finitely_many_propositions.infinity_t
+- fails: axiom-of-infinity-t
+  ref: Classicism.Map.Arguments.finitely_many_propositions.axiom_of_infinity_t

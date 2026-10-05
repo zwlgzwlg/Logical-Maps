@@ -47,6 +47,8 @@ parameters:
       naturals:
         text: The individuals are the natural numbers, acted on by the arrows themselves.
         label: individuals ℕ
+        meets:
+          infinitely-many-individuals: The individuals are the natural numbers.
       singleton:
         text: >-
           There is a single individual, which every arrow fixes; the arrows still act on
@@ -96,6 +98,9 @@ lean:
 # Conditions of the topic (conditions.yaml) that every member meets; members meet others under their
 # own `meets`, and parameter values under theirs.
 meets:
+  infinitely-many-propositions: >-
+    The propositions that a given number is fixed by the arrow, one for each number, are pairwise
+    distinct, each pinned down by that number (the shared argument axiom-of-infinity-t).
   codomain-intensions: >-
     With one object such an intension is constant, so it is pinned down by $\emptyset$, and the
     domain holds every finitely pinned intension.

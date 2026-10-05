@@ -103,13 +103,33 @@ theorem finite_support_truncations.no_pure_contingency_r : Statements.Models.fin
 theorem full_idempotent_monoid.distinctness_preserving_collapse : Statements.Models.full_idempotent_monoid.distinctness_preserving_collapse :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.dpc_isolated_actual_world.distinctness_preserving_collapse (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Map.Meets.full_idempotent_monoid.actual_world_isolated)⟩
 
+/-- `full-idempotent-monoid`: Possible Infinity (type t) fails, by the argument `finitely-many-propositions-everywhere`. -/
+theorem full_idempotent_monoid.possible_infinity_t : Statements.Models.full_idempotent_monoid.possible_infinity_t :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.finitely_many_propositions_everywhere.possible_infinity_t (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.FullActionModels.mset_finitely_many_everywhere Classicism.Meta.Intensional.Idem)⟩
+
 /-- `full-idempotent-monoid`: Infinity Schema (type t) fails, by the argument `finitely-many-propositions`. -/
 theorem full_idempotent_monoid.infinity_t : Statements.Models.full_idempotent_monoid.infinity_t :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.finitely_many_propositions.infinity_t (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem) (Classicism.Map.Meets.mset_finitely_many_propositions Classicism.Meta.Intensional.Idem)⟩
 
+/-- `full-idempotent-monoid`: Axiom of Infinity (type t) fails, by the argument `finitely-many-propositions`. -/
+theorem full_idempotent_monoid.axiom_of_infinity_t : Statements.Models.full_idempotent_monoid.axiom_of_infinity_t :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.finitely_many_propositions.axiom_of_infinity_t (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem) (Classicism.Map.Meets.mset_finitely_many_propositions Classicism.Meta.Intensional.Idem)⟩
+
+/-- `full-idempotent-monoid`: □Atomicity holds, by the argument `full-atomicity`. -/
+theorem full_idempotent_monoid.necessary_atomicity_r : Statements.Models.full_idempotent_monoid.necessary_atomicity_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.full_atomicity.necessary_atomicity_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem)⟩
+
+/-- `full-idempotent-monoid`: □Rigid Comprehension holds, by the argument `full-rigid-comprehension`. -/
+theorem full_idempotent_monoid.necessary_rigid_comprehension_r : Statements.Models.full_idempotent_monoid.necessary_rigid_comprehension_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.full_rigid_comprehension.necessary_rigid_comprehension_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem)⟩
+
 /-- `full-idempotent-monoid`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
 theorem full_idempotent_monoid.no_pure_contingency_r : Statements.Models.full_idempotent_monoid.no_pure_contingency_r :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _)⟩
+
+/-- `full-idempotent-monoid`: Fregean Axiom fails, by the argument `nonidentity-arrow`. -/
+theorem full_idempotent_monoid.fregean_axiom : Statements.Models.full_idempotent_monoid.fregean_axiom :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.nonidentity_arrow.fregean_axiom (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.FullActionModels.mset_nonidentity Classicism.Meta.Intensional.Idem.k Classicism.Meta.Intensional.Idem.k_ne_one)⟩
 
 /-- `full-idempotent-monoid`: Infinity Schema (type e) fails, by the argument `one-individual`. -/
 theorem full_idempotent_monoid.infinity_e : Statements.Models.full_idempotent_monoid.infinity_e :=
@@ -135,13 +155,45 @@ theorem full_idempotent_monoid.relational_choice_r : Statements.Models.full_idem
 theorem full_idempotent_monoid.transversal_choice_r : Statements.Models.full_idempotent_monoid.transversal_choice_r :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
 
+/-- `full-idempotent-monoid`: ND (type t) fails, by the argument `unretracted-arrow`. -/
+theorem full_idempotent_monoid.distinctness_necessary_t : Statements.Models.full_idempotent_monoid.distinctness_necessary_t :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.unretracted_arrow.distinctness_necessary_t (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem) (Classicism.Map.Meets.full_idempotent_monoid.unretracted)⟩
+
+/-- `full-involution-group`: Possible Infinity (type t) fails, by the argument `finitely-many-propositions-everywhere`. -/
+theorem full_involution_group.possible_infinity_t : Statements.Models.full_involution_group.possible_infinity_t :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.finitely_many_propositions_everywhere.possible_infinity_t (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.FullActionModels.mset_finitely_many_everywhere Classicism.Meta.Intensional.Invol)⟩
+
 /-- `full-involution-group`: Infinity Schema (type t) fails, by the argument `finitely-many-propositions`. -/
 theorem full_involution_group.infinity_t : Statements.Models.full_involution_group.infinity_t :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.finitely_many_propositions.infinity_t (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol) (Classicism.Map.Meets.mset_finitely_many_propositions Classicism.Meta.Intensional.Invol)⟩
 
+/-- `full-involution-group`: Axiom of Infinity (type t) fails, by the argument `finitely-many-propositions`. -/
+theorem full_involution_group.axiom_of_infinity_t : Statements.Models.full_involution_group.axiom_of_infinity_t :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.finitely_many_propositions.axiom_of_infinity_t (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol) (Classicism.Map.Meets.mset_finitely_many_propositions Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group`: □Atomicity holds, by the argument `full-atomicity`. -/
+theorem full_involution_group.necessary_atomicity_r : Statements.Models.full_involution_group.necessary_atomicity_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.full_atomicity.necessary_atomicity_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group`: □BF holds, by the argument `full-epic-barcan`. -/
+theorem full_involution_group.necessary_barcan_r : Statements.Models.full_involution_group.necessary_barcan_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.full_epic_barcan.necessary_barcan_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.FullActionModels.group_epic Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group`: □Rigid Comprehension holds, by the argument `full-rigid-comprehension`. -/
+theorem full_involution_group.necessary_rigid_comprehension_r : Statements.Models.full_involution_group.necessary_rigid_comprehension_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.full_rigid_comprehension.necessary_rigid_comprehension_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group`: □ND holds, by the argument `invertible-arrows`. -/
+theorem full_involution_group.necessary_distinctness_necessary_r : Statements.Models.full_involution_group.necessary_distinctness_necessary_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.invertible_arrows.necessary_distinctness_necessary_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.FullActionModels.group_invertible Classicism.Meta.Intensional.Invol)⟩
+
 /-- `full-involution-group`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
 theorem full_involution_group.no_pure_contingency_r : Statements.Models.full_involution_group.no_pure_contingency_r :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _)⟩
+
+/-- `full-involution-group`: Fregean Axiom fails, by the argument `nonidentity-arrow`. -/
+theorem full_involution_group.fregean_axiom : Statements.Models.full_involution_group.fregean_axiom :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.nonidentity_arrow.fregean_axiom (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.FullActionModels.mset_nonidentity Classicism.Meta.Intensional.Invol.k Classicism.Meta.Intensional.Invol.k_ne_one)⟩
 
 /-- `full-involution-group`: Infinity Schema (type e) fails, by the argument `one-individual`. -/
 theorem full_involution_group.infinity_e : Statements.Models.full_involution_group.infinity_e :=
@@ -167,9 +219,37 @@ theorem full_involution_group.relational_choice_r : Statements.Models.full_invol
 theorem full_involution_group.transversal_choice_r : Statements.Models.full_involution_group.transversal_choice_r :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
 
+/-- `full-permutation-group-infinite-set`: □Atomicity holds, by the argument `full-atomicity`. -/
+theorem full_permutation_group_infinite_set.necessary_atomicity_r : Statements.Models.full_permutation_group_infinite_set.necessary_atomicity_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.full_atomicity.necessary_atomicity_r (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ))⟩
+
+/-- `full-permutation-group-infinite-set`: □BF holds, by the argument `full-epic-barcan`. -/
+theorem full_permutation_group_infinite_set.necessary_barcan_r : Statements.Models.full_permutation_group_infinite_set.necessary_barcan_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.full_epic_barcan.necessary_barcan_r (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.FullActionModels.group_epic (Equiv.Perm ℕ))⟩
+
+/-- `full-permutation-group-infinite-set`: □Rigid Comprehension holds, by the argument `full-rigid-comprehension`. -/
+theorem full_permutation_group_infinite_set.necessary_rigid_comprehension_r : Statements.Models.full_permutation_group_infinite_set.necessary_rigid_comprehension_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.full_rigid_comprehension.necessary_rigid_comprehension_r (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ))⟩
+
+/-- `full-permutation-group-infinite-set`: Axiom of Infinity (type t) holds, by the argument `infinitely-many-propositions`. -/
+theorem full_permutation_group_infinite_set.axiom_of_infinity_t : Statements.Models.full_permutation_group_infinite_set.axiom_of_infinity_t :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.infinitely_many_propositions.axiom_of_infinity_t (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ))) (Classicism.Meta.Intensional.FullActionModels.mset_infinitely_many_propositions (Equiv.Perm ℕ))⟩
+
+/-- `full-permutation-group-infinite-set`: Infinity Schema (type t) holds, by the argument `infinitely-many-propositions`. -/
+theorem full_permutation_group_infinite_set.infinity_t : Statements.Models.full_permutation_group_infinite_set.infinity_t :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.infinitely_many_propositions.infinity_t (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ))) (Classicism.Meta.Intensional.FullActionModels.mset_infinitely_many_propositions (Equiv.Perm ℕ))⟩
+
+/-- `full-permutation-group-infinite-set`: □ND holds, by the argument `invertible-arrows`. -/
+theorem full_permutation_group_infinite_set.necessary_distinctness_necessary_r : Statements.Models.full_permutation_group_infinite_set.necessary_distinctness_necessary_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.invertible_arrows.necessary_distinctness_necessary_r (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.FullActionModels.group_invertible (Equiv.Perm ℕ))⟩
+
 /-- `full-permutation-group-infinite-set`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
 theorem full_permutation_group_infinite_set.no_pure_contingency_r : Statements.Models.full_permutation_group_infinite_set.no_pure_contingency_r :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _)⟩
+
+/-- `full-permutation-group-infinite-set`: Fregean Axiom fails, by the argument `nonidentity-arrow`. -/
+theorem full_permutation_group_infinite_set.fregean_axiom : Statements.Models.full_permutation_group_infinite_set.fregean_axiom :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.nonidentity_arrow.fregean_axiom (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.FullActionModels.perm_nonidentity)⟩
 
 /-- `full-permutation-group-infinite-set`: Infinity Schema (type e) fails, by the argument `one-individual`. -/
 theorem full_permutation_group_infinite_set.infinity_e : Statements.Models.full_permutation_group_infinite_set.infinity_e :=
@@ -195,9 +275,33 @@ theorem full_permutation_group_infinite_set.relational_choice_r : Statements.Mod
 theorem full_permutation_group_infinite_set.transversal_choice_r : Statements.Models.full_permutation_group_infinite_set.transversal_choice_r :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ))) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
 
+/-- `full-surjection-monoid`: □Atomicity holds, by the argument `full-atomicity`. -/
+theorem full_surjection_monoid.necessary_atomicity_r : Statements.Models.full_surjection_monoid.necessary_atomicity_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.full_atomicity.necessary_atomicity_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj)⟩
+
+/-- `full-surjection-monoid`: □BF holds, by the argument `full-epic-barcan`. -/
+theorem full_surjection_monoid.necessary_barcan_r : Statements.Models.full_surjection_monoid.necessary_barcan_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.full_epic_barcan.necessary_barcan_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.FullActionModels.surj_epic)⟩
+
+/-- `full-surjection-monoid`: □Rigid Comprehension holds, by the argument `full-rigid-comprehension`. -/
+theorem full_surjection_monoid.necessary_rigid_comprehension_r : Statements.Models.full_surjection_monoid.necessary_rigid_comprehension_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.full_rigid_comprehension.necessary_rigid_comprehension_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj)⟩
+
+/-- `full-surjection-monoid`: Axiom of Infinity (type t) holds, by the argument `infinitely-many-propositions`. -/
+theorem full_surjection_monoid.axiom_of_infinity_t : Statements.Models.full_surjection_monoid.axiom_of_infinity_t :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.infinitely_many_propositions.axiom_of_infinity_t (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj)) (Classicism.Meta.Intensional.FullActionModels.mset_infinitely_many_propositions Classicism.Meta.Intensional.FullActionModels.surj)⟩
+
+/-- `full-surjection-monoid`: Infinity Schema (type t) holds, by the argument `infinitely-many-propositions`. -/
+theorem full_surjection_monoid.infinity_t : Statements.Models.full_surjection_monoid.infinity_t :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.infinitely_many_propositions.infinity_t (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj)) (Classicism.Meta.Intensional.FullActionModels.mset_infinitely_many_propositions Classicism.Meta.Intensional.FullActionModels.surj)⟩
+
 /-- `full-surjection-monoid`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
 theorem full_surjection_monoid.no_pure_contingency_r : Statements.Models.full_surjection_monoid.no_pure_contingency_r :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _)⟩
+
+/-- `full-surjection-monoid`: Fregean Axiom fails, by the argument `nonidentity-arrow`. -/
+theorem full_surjection_monoid.fregean_axiom : Statements.Models.full_surjection_monoid.fregean_axiom :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.nonidentity_arrow.fregean_axiom (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.FullActionModels.surj_nonidentity)⟩
 
 /-- `full-surjection-monoid`: Infinity Schema (type e) fails, by the argument `one-individual`. -/
 theorem full_surjection_monoid.infinity_e : Statements.Models.full_surjection_monoid.infinity_e :=
@@ -223,13 +327,41 @@ theorem full_surjection_monoid.relational_choice_r : Statements.Models.full_surj
 theorem full_surjection_monoid.transversal_choice_r : Statements.Models.full_surjection_monoid.transversal_choice_r :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
 
+/-- `full-surjection-monoid`: ND (type t) fails, by the argument `unretracted-arrow`. -/
+theorem full_surjection_monoid.distinctness_necessary_t : Statements.Models.full_surjection_monoid.distinctness_necessary_t :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.unretracted_arrow.distinctness_necessary_t (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.FullActionModels.surj_unretracted)⟩
+
 /-- `full-two-object-chain`: Distinctness-preserving collapse holds, by the argument `dpc-isolated-actual-world`. -/
 theorem full_two_object_chain.distinctness_preserving_collapse : Statements.Models.full_two_object_chain.distinctness_preserving_collapse :=
   ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.dpc_isolated_actual_world.distinctness_preserving_collapse (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.chain_actual_world_isolated)⟩
 
+/-- `full-two-object-chain`: Possible Infinity (type t) fails, by the argument `finitely-many-propositions-everywhere`. -/
+theorem full_two_object_chain.possible_infinity_t : Statements.Models.full_two_object_chain.possible_infinity_t :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.finitely_many_propositions_everywhere.possible_infinity_t (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.chain_finitely_many_everywhere)⟩
+
 /-- `full-two-object-chain`: Infinity Schema (type t) fails, by the argument `finitely-many-propositions`. -/
 theorem full_two_object_chain.infinity_t : Statements.Models.full_two_object_chain.infinity_t :=
   ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.finitely_many_propositions.infinity_t (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.FullActionModels.chain_finitely_many_propositions)⟩
+
+/-- `full-two-object-chain`: Axiom of Infinity (type t) fails, by the argument `finitely-many-propositions`. -/
+theorem full_two_object_chain.axiom_of_infinity_t : Statements.Models.full_two_object_chain.axiom_of_infinity_t :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.finitely_many_propositions.axiom_of_infinity_t (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.FullActionModels.chain_finitely_many_propositions)⟩
+
+/-- `full-two-object-chain`: □Atomicity holds, by the argument `full-atomicity`. -/
+theorem full_two_object_chain.necessary_atomicity_r : Statements.Models.full_two_object_chain.necessary_atomicity_r :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.full_atomicity.necessary_atomicity_r (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)⟩
+
+/-- `full-two-object-chain`: □BF holds, by the argument `full-epic-barcan`. -/
+theorem full_two_object_chain.necessary_barcan_r : Statements.Models.full_two_object_chain.necessary_barcan_r :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.full_epic_barcan.necessary_barcan_r (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.FullActionModels.chain_epic)⟩
+
+/-- `full-two-object-chain`: □Rigid Comprehension holds, by the argument `full-rigid-comprehension`. -/
+theorem full_two_object_chain.necessary_rigid_comprehension_r : Statements.Models.full_two_object_chain.necessary_rigid_comprehension_r :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.full_rigid_comprehension.necessary_rigid_comprehension_r (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)⟩
+
+/-- `full-two-object-chain`: Fregean Axiom fails, by the argument `nonidentity-arrow`. -/
+theorem full_two_object_chain.fregean_axiom : Statements.Models.full_two_object_chain.fregean_axiom :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.nonidentity_arrow.fregean_axiom (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.FullActionModels.chain_nonidentity)⟩
 
 /-- `full-two-object-chain`: Infinity Schema (type e) fails, by the argument `one-individual`. -/
 theorem full_two_object_chain.infinity_e : Statements.Models.full_two_object_chain.infinity_e :=
@@ -255,6 +387,34 @@ theorem full_two_object_chain.relational_choice_r : Statements.Models.full_two_o
 theorem full_two_object_chain.transversal_choice_r : Statements.Models.full_two_object_chain.transversal_choice_r :=
   ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
 
+/-- `full-two-object-chain`: ND (type t) fails, by the argument `unretracted-arrow`. -/
+theorem full_two_object_chain.distinctness_necessary_t : Statements.Models.full_two_object_chain.distinctness_necessary_t :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.unretracted_arrow.distinctness_necessary_t (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.FullActionModels.chain_unretracted)⟩
+
+/-- `full-two-object-retract`: Possible Infinity (type t) fails, by the argument `finitely-many-propositions-everywhere`. -/
+theorem full_two_object_retract.possible_infinity_t : Statements.Models.full_two_object_retract.possible_infinity_t :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.finitely_many_propositions_everywhere.possible_infinity_t (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.retract_finitely_many_everywhere)⟩
+
+/-- `full-two-object-retract`: Infinity Schema (type t) fails, by the argument `finitely-many-propositions`. -/
+theorem full_two_object_retract.infinity_t : Statements.Models.full_two_object_retract.infinity_t :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.finitely_many_propositions.infinity_t (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.FullActionModels.retract_finitely_many_propositions)⟩
+
+/-- `full-two-object-retract`: Axiom of Infinity (type t) fails, by the argument `finitely-many-propositions`. -/
+theorem full_two_object_retract.axiom_of_infinity_t : Statements.Models.full_two_object_retract.axiom_of_infinity_t :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.finitely_many_propositions.axiom_of_infinity_t (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.FullActionModels.retract_finitely_many_propositions)⟩
+
+/-- `full-two-object-retract`: □Atomicity holds, by the argument `full-atomicity`. -/
+theorem full_two_object_retract.necessary_atomicity_r : Statements.Models.full_two_object_retract.necessary_atomicity_r :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.full_atomicity.necessary_atomicity_r (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)⟩
+
+/-- `full-two-object-retract`: □Rigid Comprehension holds, by the argument `full-rigid-comprehension`. -/
+theorem full_two_object_retract.necessary_rigid_comprehension_r : Statements.Models.full_two_object_retract.necessary_rigid_comprehension_r :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.full_rigid_comprehension.necessary_rigid_comprehension_r (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)⟩
+
+/-- `full-two-object-retract`: Fregean Axiom fails, by the argument `nonidentity-arrow`. -/
+theorem full_two_object_retract.fregean_axiom : Statements.Models.full_two_object_retract.fregean_axiom :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.nonidentity_arrow.fregean_axiom (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.FullActionModels.retract_nonidentity)⟩
+
 /-- `full-two-object-retract`: Infinity Schema (type e) fails, by the argument `one-individual`. -/
 theorem full_two_object_retract.infinity_e : Statements.Models.full_two_object_retract.infinity_e :=
   ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.one_individual.infinity_e (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_one_individual _)⟩
@@ -274,6 +434,10 @@ theorem full_two_object_retract.necessary_relational_choice_r : Statements.Model
 /-- `full-two-object-retract`: Relational Choice holds, by the argument `relational-choice-full`. -/
 theorem full_two_object_retract.relational_choice_r : Statements.Models.full_two_object_retract.relational_choice_r :=
   ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+
+/-- `full-two-object-retract`: ND holds, by the argument `retractions`. -/
+theorem full_two_object_retract.distinctness_necessary_r : Statements.Models.full_two_object_retract.distinctness_necessary_r :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.retractions.distinctness_necessary_r (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.retract_retractions)⟩
 
 /-- `full-two-object-retract`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem full_two_object_retract.transversal_choice_r : Statements.Models.full_two_object_retract.transversal_choice_r :=

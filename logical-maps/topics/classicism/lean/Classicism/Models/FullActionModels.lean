@@ -1,10 +1,12 @@
 import Classicism.Semantics.IntensionalExamples
 import Classicism.Models.Functions
 import Classicism.Models.Conditions
+import Classicism.Semantics.Arrows
 import Mathlib.CategoryTheory.Category.Preorder
 import Mathlib.Data.Fintype.Powerset
 import Mathlib.Data.Finite.Sigma
 import Mathlib.Data.Finite.Prod
+import Mathlib.Data.Fintype.Pi
 
 /-!
 # The full action models of *Classicism* §3
@@ -24,7 +26,7 @@ conditions of the map's general arguments.
 
 General facts about full models used: `ND_t` fails when an arrow out of the base has no
 retraction (`full_not_nd_t`), and `ND` holds at every type when every arrow out of the base
-has one (`holds_nd_of_retractions`).
+has one (`Premodel.holds_nd_of_retractions`, `Semantics/Arrows.lean`).
 -/
 
 namespace Classicism.Meta.Intensional
@@ -33,24 +35,6 @@ open CategoryTheory
 
 /-! ### Full models with one individual, on any category -/
 
-namespace Premodel
-
-variable {Sig : Signature} {C : Type} [SmallCategory C] (A : Premodel Sig C) (M : A.IsModel)
-include M
-
-/-- `ND` at every type holds at the base when every arrow out of it has a retraction: the
-transport along the arrow is undone by the transport along the retraction. -/
-theorem holds_nd_of_retractions (σ : Ty) (hr : ∀ {V : C} (k : A.W₀ ⟶ V), ∃ r : V ⟶ A.W₀, k ≫ r = 𝟙 A.W₀) :
-    A.HoldsSentence (Sentence.nd σ) := by
-  rw [HoldsSentence, A.holds_nd_iff M]
-  intro V k
-  obtain ⟨r, hr⟩ := hr k
-  intro x y e
-  have := congrArg ((A.inner σ).map r) e
-  simp only [← Functor.map_comp_apply, hr, Functor.map_id_apply] at this
-  exact this
-
-end Premodel
 
 /-- In a full model, `ND_t` fails when some arrow out of the base has no retraction: its
 transport identifies `∅` and `{1}`. -/
@@ -229,7 +213,7 @@ theorem retract_retractions : ∀ {V : retractCat.Ob} (i : W₀ ⟶ V), ∃ r : 
 
 /-- `ND` holds at every type: every arrow out of the base has a retraction. -/
 theorem retract_nd (σ : Ty) : retract.HoldsSentence (Sentence.nd σ) :=
-  retract.holds_nd_of_retractions (unitModel_isModel _) σ retract_retractions
+  Premodel.holds_nd_of_retractions (unitModel_isModel _) retract_retractions σ
 
 theorem retract_not_fregean : ¬ retract.HoldsSentence Sentence.fregean :=
   retract.not_fregean_of_propFull (unitModel_isModel _) (unitModel_full _).propFull rh
@@ -252,6 +236,130 @@ theorem retract_not_bf_t : ¬ retract.HoldsSentence (Sentence.bf (.rel .t)) := b
   rw [hX, Set.mem_singleton_iff] at h2
   obtain ⟨_, hh⟩ := Sigma.mk.inj_iff.mp h2
   exact rk_ne_id (Prod.mk.inj (eq_of_heq hh)).2
+
+/-! ### The conditions on arrows each model meets -/
+
+/-- In a monoid of surjections, every arrow is an epimorphism. -/
+theorem surj_epi {V U : SingleObj surj} (k : V ⟶ U) : Epi k := ⟨fun {_} g g' e => by
+  let k' : surj := k
+  let g₁ : surj := g
+  let g₂ : surj := g'
+  have e' : g₁ * k' = g₂ * k' := e
+  show g₁ = g₂
+  apply Subtype.ext
+  funext n
+  obtain ⟨n', rfl⟩ := k'.2 n
+  exact congrFun (congrArg Subtype.val e') n'⟩
+
+theorem surj_epic : (MSet.model surj).EpicArrows :=
+  fun _ k => ⟨surj_epi k, fun y => ⟨y, Subsingleton.elim (α := Unit) _ _⟩⟩
+
+/-- Halving has no retraction among the surjections: `m ∘ half` identifies `0` and `1`. -/
+theorem half_unretracted : ∀ m : SingleObj.star surj ⟶ SingleObj.star surj,
+    (half : SingleObj.star surj ⟶ SingleObj.star surj) ≫ m ≠ 𝟙 _ := fun m' e => by
+  let m : surj := m'
+  have e' : (m * half : surj) = 1 := e
+  have e : ((m * half : surj) : Function.End ℕ) = 1 := congrArg Subtype.val e'
+  have h0 : ((m * half : surj) : Function.End ℕ) 0 = 0 := by rw [e]; rfl
+  have h1 : ((m * half : surj) : Function.End ℕ) 1 = 1 := by rw [e]; rfl
+  have h01 : ((m * half : surj) : Function.End ℕ) 0 = ((m * half : surj) : Function.End ℕ) 1 := rfl
+  exact absurd (h0.symm.trans (h01.trans h1)) (by decide)
+
+theorem surj_unretracted : (MSet.model surj).UnretractedArrow :=
+  ⟨_, half, half_unretracted⟩
+
+/-- An element other than `1` of a monoid is an arrow other than the identity. -/
+theorem mset_nonidentity {M : Type} [Monoid M] (m : M) (hm : m ≠ 1) : (MSet.model M).NonidentityArrow :=
+  ⟨_, (m : SingleObj.star M ⟶ SingleObj.star M), fun e =>
+    hm (MSet.arrow_injective M (e.trans (MSet.arrow_id M)))⟩
+
+theorem surj_nonidentity : (MSet.model surj).NonidentityArrow := mset_nonidentity half half_ne_one
+
+/-- In a group, every arrow is invertible. -/
+theorem group_invertible (G : Type) [Group G] : (MSet.model G).InvertibleArrows := fun _ k =>
+  ⟨⟨(show G from k)⁻¹, by
+    show (show G from k)⁻¹ * (show G from k) = 1
+    exact inv_mul_cancel _, by
+    show (show G from k) * (show G from k)⁻¹ = 1
+    exact mul_inv_cancel _⟩⟩
+
+theorem group_epic (G : Type) [Group G] : (MSet.model G).EpicArrows := fun h k =>
+  ⟨have := group_invertible G h k; inferInstance, fun y => ⟨y, Subsingleton.elim (α := Unit) _ _⟩⟩
+
+theorem perm_nonidentity : (MSet.model (Equiv.Perm ℕ)).NonidentityArrow :=
+  mset_nonidentity (Equiv.swap 0 1) fun e => by
+    have := congrArg (fun f : Equiv.Perm ℕ => f 0) e
+    simp at this
+
+theorem chain_epic : chain.EpicArrows :=
+  fun _ _ => ⟨⟨fun _ _ _ => Subsingleton.elim _ _⟩, fun y => ⟨y, Subsingleton.elim (α := Unit) _ _⟩⟩
+
+theorem chain_unretracted : chain.UnretractedArrow :=
+  ⟨1, chainArrow, fun m => absurd (leOfHom m) (by decide)⟩
+
+theorem chain_nonidentity : chain.NonidentityArrow :=
+  ⟨1, chainArrow, fun e => absurd (congrArg Sigma.fst e) (by decide)⟩
+
+theorem retract_nonidentity : retract.NonidentityArrow :=
+  ⟨W₁, rh, fun e => Bool.false_ne_true (congrArg Sigma.fst e).symm⟩
+
+/-! ### How many propositions -/
+
+/-- A full M-set model on a finite monoid has finitely many propositions at its one object. -/
+theorem mset_finitely_many_everywhere (M : Type) [Monoid M] [Finite M] :
+    (MSet.model M).FinitelyManyPropositionsEverywhere := fun {V} _ => by
+  have : Finite (SingleObj M) := inferInstanceAs (Finite Unit)
+  have : ∀ V W : SingleObj M, Finite (V ⟶ W) := fun _ _ => inferInstanceAs (Finite M)
+  change Finite (Set (Σ U : SingleObj M, PUnit × (V ⟶ U)))
+  infer_instance
+
+/-- A full M-set model on an infinite monoid has infinitely many propositions: the singletons of
+the arrows. -/
+theorem mset_infinitely_many_propositions (M : Type) [Monoid M] [Infinite M] :
+    (MSet.model M).InfinitelyManyPropositions := by
+  change Infinite (Set (Σ U : SingleObj M, PUnit × (SingleObj.star M ⟶ U)))
+  have : Infinite (Σ U : SingleObj M, PUnit × (SingleObj.star M ⟶ U)) :=
+    Infinite.of_injective (fun m : M => (⟨SingleObj.star M, PUnit.unit, m⟩ : Σ U : SingleObj M, PUnit × (SingleObj.star M ⟶ U)))
+      fun m n e => by
+        obtain ⟨_, hh⟩ := Sigma.mk.inj_iff.mp e
+        exact (Prod.mk.inj (eq_of_heq hh)).2
+  exact Infinite.of_injective (fun x => ({x} : Set _)) Set.singleton_injective
+
+/-- The surjections `m ↦ m ∸ n` are infinitely many. -/
+instance : Infinite surj :=
+  Infinite.of_injective (fun n : ℕ => (⟨fun m => m - n, fun y => ⟨y + n, by show y + n - n = y; omega⟩⟩ : surj))
+    fun a b e => by
+      have := congrFun (congrArg Subtype.val e) (a + b + 1)
+      change a + b + 1 - a = a + b + 1 - b at this
+      omega
+
+theorem chain_finitely_many_everywhere : chain.FinitelyManyPropositionsEverywhere := fun {V} _ => by
+  have : ∀ V W : Fin 2, Finite (V ⟶ W) := fun _ _ => inferInstanceAs (Finite (ULift (PLift _)))
+  change Finite (Set (Σ U : Fin 2, PUnit × (V ⟶ U)))
+  infer_instance
+
+theorem retract_homs_finite : ∀ V U : retractCat.Ob, Finite (V ⟶ U)
+  | false, false => by
+    have : Finite (retractCat.X false → retractCat.X false) := inferInstanceAs (Finite (Unit → Unit))
+    exact Subtype.finite
+  | false, true => by
+    have : Finite (retractCat.X false → retractCat.X true) := inferInstanceAs (Finite (Unit → Bool))
+    exact Subtype.finite
+  | true, false => by
+    have : Finite (retractCat.X true → retractCat.X false) := inferInstanceAs (Finite (Bool → Unit))
+    exact Subtype.finite
+  | true, true => by
+    have : Finite (retractCat.X true → retractCat.X true) := inferInstanceAs (Finite (Bool → Bool))
+    exact Subtype.finite
+
+theorem retract_finitely_many_everywhere : retract.FinitelyManyPropositionsEverywhere := fun {V} _ => by
+  have : Finite retractCat.Ob := inferInstanceAs (Finite Bool)
+  have := retract_homs_finite
+  change Finite (Set (Σ U : retractCat.Ob, PUnit × (V ⟶ U)))
+  infer_instance
+
+theorem retract_finitely_many_propositions : retract.FinitelyManyPropositions :=
+  retract_finitely_many_everywhere (𝟙 _)
 
 end FullActionModels
 
