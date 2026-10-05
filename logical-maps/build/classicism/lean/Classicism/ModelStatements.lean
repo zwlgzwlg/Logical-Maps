@@ -8,6 +8,7 @@ import Classicism.Semantics.IntensionalExamples
 import Classicism.Models.Conditions
 import Classicism.Models.FullActionModels
 import Classicism.Semantics.Interpretations
+import Classicism.Models.SymmetricFull
 
 /-!
 # Generated statements: models' verdicts
@@ -960,6 +961,26 @@ def Models.full_two_object_retract.transversal_choice_r : Prop :=
 /-- `full-two-object-retract`: Independence (signature Σ) fails. -/
 def Models.full_two_object_retract.independence_signature_r : Prop :=
   (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `symmetry-constrained-full-all-maps`: Distinctness-preserving collapse holds. -/
+def Models.symmetry_constrained_full_all_maps.distinctness_preserving_collapse : Prop :=
+  (Classicism.Meta.Intensional.SymFull.model).IsModel ∧ (Classicism.Meta.Intensional.SymFull.model).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
+
+/-- `symmetry-constrained-full-all-maps`: No Pure Contingency holds. -/
+def Models.symmetry_constrained_full_all_maps.no_pure_contingency_r : Prop :=
+  (Classicism.Meta.Intensional.SymFull.model).IsModel ∧ (Classicism.Meta.Intensional.SymFull.model).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `symmetry-constrained-full-all-maps`: Transversal Choice holds. -/
+def Models.symmetry_constrained_full_all_maps.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.SymFull.model).IsModel ∧ (Classicism.Meta.Intensional.SymFull.model).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
+/-- `symmetry-constrained-full-all-maps`: Independence (signature Σ) fails. -/
+def Models.symmetry_constrained_full_all_maps.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `symmetry-constrained-full-all-maps`: No Contingency (signature Σ) holds. -/
+def Models.symmetry_constrained_full_all_maps.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel)).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel)).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
 
 /-- argument `barcan-d6`: BF holds in every model meeting its conditions. -/
 def Arguments.barcan_d6.barcan_r : Prop :=
