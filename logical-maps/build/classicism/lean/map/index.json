@@ -2648,6 +2648,45 @@
     "lines": [295, 297],
     "file": "Classicism/Map.lean",
     "axioms": ["propext", "Quot.sound"]}},
+  "c5-implies-tame-rigidity":
+  {"proofs":
+   [{"name": "Classicism.Proofs.c5_implies_tame_rigidity",
+     "lines": [600, 604],
+     "file": "Classicism/Results/Records/C5.lean"},
+    {"name": "Classicism.Meta.c5_implies_tame_rigidity",
+     "lines": [614, 616],
+     "file": "Classicism/Results/Arity.lean"}],
+   "certificate":
+   {"name": "Classicism.Map.c5_implies_tame_rigidity",
+    "lines": [1515, 1517],
+    "file": "Classicism/Map.lean",
+    "axioms": ["propext", "Quot.sound"]}},
+  "c5-implies-necessary-tame-rigidity":
+  {"proofs":
+   [{"name": "Classicism.Proofs.c5_implies_necessary_tame_rigidity",
+     "lines": [606, 609],
+     "file": "Classicism/Results/Records/C5.lean"},
+    {"name": "Classicism.Meta.c5_implies_necessary_tame_rigidity",
+     "lines": [618, 621],
+     "file": "Classicism/Results/Arity.lean"}],
+   "certificate":
+   {"name": "Classicism.Map.c5_implies_necessary_tame_rigidity",
+    "lines": [1519, 1521],
+    "file": "Classicism/Map.lean",
+    "axioms": ["propext", "Quot.sound"]}},
+  "c5-implies-necessary-rigid-power":
+  {"proofs":
+   [{"name": "Classicism.Proofs.c5_implies_necessary_rigid_power",
+     "lines": [594, 597],
+     "file": "Classicism/Results/Records/C5.lean"},
+    {"name": "Classicism.Meta.c5_implies_necessary_rigid_power",
+     "lines": [608, 611],
+     "file": "Classicism/Results/Arity.lean"}],
+   "certificate":
+   {"name": "Classicism.Map.c5_implies_necessary_rigid_power",
+    "lines": [1511, 1513],
+    "file": "Classicism/Map.lean",
+    "axioms": ["propext", "Quot.sound"]}},
   "c5-and-persistent-comprehension-imply-gallin":
   {"proofs":
    [{"name": "Classicism.c5_and_persistent_comprehension_imply_gallin",

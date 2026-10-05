@@ -604,6 +604,22 @@ theorem necessary_completeness_and_necessary_actuality_imply_necessary_weak_rigi
   Entails.mono_right (schema_subset_args _)
     Proofs.necessary_completeness_and_necessary_actuality_imply_necessary_weak_rigid_comprehension.listEntails
 
+
+/-- `c5-implies-necessary-rigid-power`, at every arity: the core at `σ → t`, vectorized. -/
+theorem c5_implies_necessary_rigid_power :
+    P.NecNecessityOfDistinctness.schema ⟹ P.NecRigidPower.schema :=
+  Entails.mono_right (schema_subset_args _) Proofs.c5_implies_necessary_rigid_power.listEntails
+
+
+/-- `c5-implies-tame-rigidity`, at every arity. -/
+theorem c5_implies_tame_rigidity : P.NecNecessityOfDistinctness.schema ⟹ P.TameRigidity.schema :=
+  Entails.mono_right (schema_subset_args _) Proofs.c5_implies_tame_rigidity.listEntails
+
+/-- `c5-implies-necessary-tame-rigidity`, at every arity. -/
+theorem c5_implies_necessary_tame_rigidity :
+    P.NecNecessityOfDistinctness.schema ⟹ P.NecTameRigidity.schema :=
+  Entails.mono_right (schema_subset_args _) Proofs.c5_implies_necessary_tame_rigidity.listEntails
+
 end Meta
 
 end Classicism
