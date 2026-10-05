@@ -716,4 +716,35 @@ theorem necessary_persistent_comprehension_implies_necessary_actuality :
     NecPersistentComprehension (Prop → Prop) → NecActuality :=
   modal_K _ _ (nec% persistent_comprehension_r_implies_actuality)
 
+
+/-! ### Boxed forms of the records above -/
+
+/-- `necessary-atomicity-t-and-necessary-bf-imply-necessary-atomicity`: the unboxed record,
+necessitated. -/
+theorem necessary_atomicity_t_and_necessary_bf_imply_necessary_atomicity {σ : Type} [Ty σ] :
+    NecAtomicityT → NecBarcan σ → NecAtomicity (σ → Prop) := fun h₁ h₂ =>
+  modal_K _ _ (modal_K _ _ (nec% (atomicity_t_and_bf_imply_atomicity (σ := σ))) h₁) h₂
+
+/-- `necessary-atomicity-t-and-necessary-bf-t-imply-necessary-strong-leibniz-t`: the unboxed
+record, necessitated. -/
+theorem necessary_atomicity_t_and_necessary_bf_t_imply_necessary_strong_leibniz_t :
+    NecAtomicityT → NecBarcanT → NecStrongLeibnizT := fun h₁ h₂ =>
+  modal_K _ _ (modal_K _ _ (nec% atomicity_t_and_bf_t_imply_strong_leibniz_t) h₁) h₂
+
+/-- `necessary-actuality-and-necessary-bf-imply-necessary-inextensible-comprehension`: the
+unboxed record, necessitated. -/
+theorem necessary_actuality_and_necessary_bf_imply_necessary_inextensible_comprehension
+    {σ : Type} [Ty σ] :
+    NecActuality → NecBarcan (σ → Prop) → NecBarcan σ → NecInextensibleComprehension (σ → Prop) :=
+  fun h₁ h₂ h₃ => modal_K _ _ (modal_K _ _ (modal_K _ _
+    (nec% (actuality_and_bf_imply_inextensible_comprehension (σ := σ))) h₁) h₂) h₃
+
+/-- `necessary-completeness-and-necessary-actuality-imply-necessary-weak-rigid-comprehension`:
+the unboxed record, necessitated. -/
+theorem necessary_completeness_and_necessary_actuality_imply_necessary_weak_rigid_comprehension
+    {σ : Type} [Ty σ] :
+    NecBooleanCompleteness (σ → Prop) → NecActuality → NecWeakRigidComprehension (σ → Prop) :=
+  fun h₁ h₂ => modal_K _ _ (modal_K _ _
+    (nec% (completeness_and_actuality_imply_weak_rigid_comprehension (σ := σ))) h₁) h₂
+
 end Classicism.Proofs

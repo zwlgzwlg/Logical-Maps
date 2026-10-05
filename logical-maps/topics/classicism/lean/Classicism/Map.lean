@@ -1468,4 +1468,40 @@ theorem no_pure_contingency_and_tame_rigidity_imply_necessary_tame_rigidity : St
 theorem no_pure_contingency_and_weak_rigid_comprehension_imply_necessary_weak_rigid_comprehension : Statements.no_pure_contingency_and_weak_rigid_comprehension_imply_necessary_weak_rigid_comprehension := by
   map_cert (Entails.mono_right (Ax₃ := P.NecWeakRigidComprehension.schema) (by map_box) (npc_union_entails_box_pure P.WeakRigidComprehension.schema_closedTypes))
 
+/-- `tame-rigidity-and-weak-rigid-comprehension-imply-rigid-comprehension` -/
+theorem tame_rigidity_and_weak_rigid_comprehension_imply_rigid_comprehension : Statements.tame_rigidity_and_weak_rigid_comprehension_imply_rigid_comprehension := by
+  map_cert Proofs.tame_rigidity_and_weak_rigid_comprehension_imply_rigid_comprehension.entails
+
+/-- `necessary-tame-rigidity-and-necessary-weak-rigid-comprehension-imply-necessary-rigid-comprehension` -/
+theorem necessary_tame_rigidity_and_necessary_weak_rigid_comprehension_imply_necessary_rigid_comprehension : Statements.necessary_tame_rigidity_and_necessary_weak_rigid_comprehension_imply_necessary_rigid_comprehension := by
+  map_cert Proofs.necessary_tame_rigidity_and_necessary_weak_rigid_comprehension_imply_necessary_rigid_comprehension.entails
+
+/-- `rigid-comprehension-implies-tame-rigidity` -/
+theorem rigid_comprehension_implies_tame_rigidity : Statements.rigid_comprehension_implies_tame_rigidity := by
+  map_cert Proofs.rigid_comprehension_implies_tame_rigidity.entails
+
+/-- `necessary-rigid-comprehension-implies-necessary-tame-rigidity` -/
+theorem necessary_rigid_comprehension_implies_necessary_tame_rigidity : Statements.necessary_rigid_comprehension_implies_necessary_tame_rigidity := by
+  map_cert Proofs.necessary_rigid_comprehension_implies_necessary_tame_rigidity.entails
+
+/-- `necessary-atomicity-t-and-necessary-bf-imply-necessary-atomicity` -/
+theorem necessary_atomicity_t_and_necessary_bf_imply_necessary_atomicity : Statements.necessary_atomicity_t_and_necessary_bf_imply_necessary_atomicity := by
+  map_cert Meta.necessary_atomicity_t_and_necessary_bf_imply_necessary_atomicity
+
+/-- `necessary-atomicity-t-and-necessary-bf-t-imply-necessary-strong-leibniz-t` -/
+theorem necessary_atomicity_t_and_necessary_bf_t_imply_necessary_strong_leibniz_t : Statements.necessary_atomicity_t_and_necessary_bf_t_imply_necessary_strong_leibniz_t := by
+  map_cert Proofs.necessary_atomicity_t_and_necessary_bf_t_imply_necessary_strong_leibniz_t.entails
+
+/-- `necessary-actuality-and-necessary-bf-imply-necessary-inextensible-comprehension` -/
+theorem necessary_actuality_and_necessary_bf_imply_necessary_inextensible_comprehension : Statements.necessary_actuality_and_necessary_bf_imply_necessary_inextensible_comprehension := by
+  map_cert Meta.necessary_actuality_and_necessary_bf_imply_necessary_inextensible_comprehension
+
+/-- `necessary-completeness-and-necessary-actuality-imply-necessary-weak-rigid-comprehension` -/
+theorem necessary_completeness_and_necessary_actuality_imply_necessary_weak_rigid_comprehension : Statements.necessary_completeness_and_necessary_actuality_imply_necessary_weak_rigid_comprehension := by
+  map_cert Meta.necessary_completeness_and_necessary_actuality_imply_necessary_weak_rigid_comprehension
+
+/-- `extensionality-r-implies-intensional-choice-r` -/
+theorem extensionality_r_implies_intensional_choice_r : Statements.extensionality_r_implies_intensional_choice_r := by
+  map_cert Proofs.extensionality_r_implies_intensional_choice_r.entails
+
 end Classicism.Map

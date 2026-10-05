@@ -154,4 +154,43 @@ theorem necessary_inextensible_comprehension_implies_necessary_wic {τ : Type} [
     NecInextensibleComprehension τ → NecWeaklyInextensibleComprehension τ :=
   modal_K _ _ (nec% (inextensible_comprehension_r_implies_weakly_inextensible_comprehension_r (τ := τ)))
 
+
+/-! ### Tame Rigidity -/
+
+/-- `tame-rigidity-and-weak-rigid-comprehension-imply-rigid-comprehension`: the weakly rigid
+coextension that Weak Rigid Comprehension gives is rigid. -/
+theorem tame_rigidity_and_weak_rigid_comprehension_imply_rigid_comprehension {τ : Type} [Rel τ] :
+    TameRigidity τ → WeakRigidComprehension τ → RigidComprehension τ :=
+  fun tr wrc X => (wrc X).elim fun Y hY => ⟨Y, tr Y hY.1, hY.2⟩
+
+/-- `necessary-tame-rigidity-and-necessary-weak-rigid-comprehension-imply-necessary-rigid-comprehension`:
+the unboxed record, necessitated. -/
+theorem necessary_tame_rigidity_and_necessary_weak_rigid_comprehension_imply_necessary_rigid_comprehension
+    {τ : Type} [Rel τ] :
+    NecTameRigidity τ → NecWeakRigidComprehension τ → NecRigidComprehension τ := fun h₁ h₂ =>
+  modal_K _ _ (modal_K _ _
+    (nec% (tame_rigidity_and_weak_rigid_comprehension_imply_rigid_comprehension (τ := τ))) h₁) h₂
+
+/-- Coextensive weakly rigid relations are identical: each is below the other by the other's
+persistence and its own weak inextensibility, and `≤` is antisymmetric. -/
+theorem eq_of_weaklyRigid_coext {τ : Type} [Rel τ] [Order τ] [Pointwise τ] {F G : τ}
+    (hF : WeaklyRigid F) (hG : WeaklyRigid G) (h : F ≡ G) : F = G :=
+  le_antisymm_rel F G
+    (le_of_box_incl (hF.2 G (Pointwise.incl_trans F G (boxAt G) (Pointwise.incl_of_coext F G h)
+      (box_elim hG.1))))
+    (le_of_box_incl (hG.2 F (Pointwise.incl_trans G F (boxAt F) (Pointwise.incl_of_coext' F G h)
+      (box_elim hF.1))))
+
+/-- `rigid-comprehension-implies-tame-rigidity`: a weakly rigid `F` is coextensive with a rigid
+`G`, which is weakly rigid, so `F = G`. -/
+theorem rigid_comprehension_implies_tame_rigidity {τ : Type} [Rel τ] [Order τ] [Pointwise τ] :
+    RigidComprehension τ → TameRigidity τ := fun rc F hF =>
+  (rc F).elim fun G hG => (eq_of_weaklyRigid_coext hF (weaklyRigid_of_rigid hG.1) hG.2) ▸ hG.1
+
+/-- `necessary-rigid-comprehension-implies-necessary-tame-rigidity`: the unboxed record,
+necessitated. -/
+theorem necessary_rigid_comprehension_implies_necessary_tame_rigidity {τ : Type} [Rel τ] [Order τ]
+    [Pointwise τ] : NecRigidComprehension τ → NecTameRigidity τ :=
+  modal_K _ _ (nec% (rigid_comprehension_implies_tame_rigidity (τ := τ)))
+
 end Classicism.Proofs

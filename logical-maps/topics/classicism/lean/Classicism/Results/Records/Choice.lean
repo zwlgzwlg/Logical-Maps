@@ -377,4 +377,16 @@ theorem classicism_implies_modalized_plenitude_r {σ' σ : Type} [Ty σ'] [Ty σ
 theorem necessary_intensional_choice_r_implies_intensional_choice_r {σ : Type} [Ty σ] :
     NecIntensionalChoice σ → IntensionalChoice σ := box_elim
 
+
+/-- `extensionality-r-implies-intensional-choice-r`: Extensionality at `t` makes every truth
+necessary. A necessarily instantiated `F` is instantiated, by `a` say, so `□Fa`; then
+`λx. x = a` entails `F` and is necessarily uniquely instantiated. -/
+theorem extensionality_r_implies_intensional_choice_r {σ : Type} [Ty σ] :
+    Extensionality Prop → IntensionalChoice σ := fun ext F hF =>
+  (box_elim hF).elim fun a ha =>
+    have hb : □ (F a) := (ext (F a) True ⟨fun _ => trivial, fun _ => ha⟩) ▸ box_true
+    ⟨fun x => x = a,
+      le_of_box_incl (modal_K _ _ (nec% (fun (h : F a) (x : σ) (hx : x = a) => hx ▸ h)) hb),
+      nec% ⟨a, rfl, fun _ hy => hy⟩⟩
+
 end Classicism.Proofs
