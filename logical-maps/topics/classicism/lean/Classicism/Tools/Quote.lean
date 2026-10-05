@@ -14,10 +14,16 @@ reading a strict **statement**, a Lean proposition, as a sentence of the object 
   proved by `rfl`, in the interpretation whose domain is the Lean type `e` itself, since
   the statement may mention it.
 
-The second is the check. The quoter is a meta-program and not trusted; if it produced the
-wrong sentence, or an ill-typed one, the reflection equation would fail to elaborate or
-the kernel would reject `rfl`. So a quoted sentence that passes reads back as exactly the
-strict statement, with the type parameters read as any object types.
+The second is the check. The quoter is a meta-program and not trusted; if it produced an
+ill-typed sentence, or one whose reading differs from the statement, the reflection equation
+would fail to elaborate or the kernel would reject `rfl`. What this establishes is the
+sentence's **reading** in this one interpretation, up to definitional equality; it is not a
+check of the syntax as such. The interpretation is not injective on syntax: in particular it
+reads `e` and every type variable as the same Lean type `e`, so a quoted sentence with a type
+variable where `e` belongs would pass. That gap is closed separately: every instance of a
+principle's schema is shown to have only closed types, `P.X.schema_closedTypes`
+(`Certified/Schemas.lean`), so no type variable occurs in a certified sentence. Beyond that,
+the fidelity of the translation rests on the reflection equation and on reading the quoter.
 
 ## What is quoted
 

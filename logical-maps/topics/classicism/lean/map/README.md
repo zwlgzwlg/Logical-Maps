@@ -82,9 +82,30 @@ map's Background admits (`Signature.Admitted`): their constants have closed type
 paper's (a Lean `Signature` may also give a constant a type variable, and then `∃v. v = v`
 at that type is a pure theorem of `C(Σ)` that `C` does not prove, so the results relating
 a schema for a signature to its pure version fail there); and, the Background's standing
-assumption, at least one constant has a type other than `e` (without one, the
-incompatibilities of Witnessed Possibility and Separated Structure fail, the schemas being
-trivial).
+assumption, at least one constant has a type other than `e` (the proofs of the
+incompatibilities of Witnessed Possibility, Separated Structure and No Contingency need a
+constant of relational type).
+
+A model, satisfying `S₁, …, Sₘ` and violating `V₁, …, Vₖ`:
+
+    ∃ (Sig) (_ : Sig.Admitted) (Ax : AxiomSet Sig), Consistent Ax ∧ Complete Ax ∧
+      Entails Ax S₁ ∧ … ∧ ¬ Entails Ax V₁ ∧ …
+
+a consistent **complete** theory (`Syntax/ClosedTypes.lean`: it decides every sentence of the
+paper's language), the syntactic form of a single model. Without completeness the violations
+need not hold together: the empty theory entails neither the Fregean Axiom nor its negation,
+so a merely consistent theory would "violate" both (Astra's audit, 4 October). The statement
+cannot name the model's construction; the certificate's proof is where that construction
+appears.
+
+**The sentence schemas range over the paper's language.** The object language here also has
+type variables, a device of the metalogic; every sentence schema (No Contingency, No Pure
+Contingency, B, Distinctness, Possibility, Witnessed Possibility and its kin, Separated
+Structure, Independence, Possibility+, Strong Possibility, Ordinary Comprehension) requires
+each instance to have only closed types (`Term.closedTypes`), and every principle's schema is
+shown to have only such instances (`P.X.schema_closedTypes`). Before 4 October they did not,
+so that "type variable `0` is empty" was an instance of No Contingency and of Possibility
+(Astra's audit).
 
 The certificate is the object-language entailment, not the shallow proof. The claim is
 about `C`, and the map's axiom list is harmless elsewhere but not here: `propext` is the
@@ -128,13 +149,9 @@ small change to `pmap` and `viewer/template.html` in the map repository.
 
 ## Open points
 
-- **Axioms.** 194 result certificates rest on `propext` and `Quot.sound` only, and six more
-  also on `Classical.choice` (the models), all within the map's list. Three rest also on
-  `Classicism.e` and `e_exists`, through the consistency facts from the model in `Prop`,
-  which needs an individual: `maximalist-distinctness-incompatible-with-nd`,
-  `possibility-and-no-pure-contingency-incompatible` and
-  `pure-b-and-pure-possibility-incompatible`. `lean-check` would refuse those three until
-  the map's list allows the two, or the model is built on a type known to be inhabited.
+- **Axioms.** Every certificate rests on `propext`, `Quot.sound` and `Classical.choice` at
+  most, the map's list. (Until 4 October three rested also on `Classicism.e` and `e_exists`,
+  through the model in `Prop` built on the shallow layer's `e`; it is now built on `Unit`.)
 - **Coverage.** 14 of the map's 109 principles have no `lean_def` yet: General Separated
   Structure and the Necessity of Arithmetic, and those added to the map since 2 October
   (Rigid Power, Tame Rigidity, Intensional Choice and others), so 50 results have no
@@ -142,8 +159,8 @@ small change to `pmap` and `viewer/template.html` in the map repository.
   `atomicity-t-and-weakly-inextensible-comprehension-imply-actuality`, and Appendix E's incompatibilities, the Gödel results, the
   six conjectured ones, most of those about Separated Structure and Independence, Strong
   Possibility, the Infinity schemas, Bacon's Theorem 8.2, and C5 and Atomicity ⇒ No Pure
-  Contingency (see HANDOFF, §5: as stated it is not provable here, No Pure Contingency
-  ranging over sentences with type variables).
+  Contingency (now that No Pure Contingency ranges over the paper's language only, this one
+  is open to the automorphism proof; see HANDOFF, §8).
 - **Variants.** 60 of the map's 77 have a Lean statement, and 56 of those a certificate:
   the 20 polyadic variants whose two directions are proved (`P.X.listSchema_entails_schema`,
   by inclusion; `P.X.schema_entails_listSchema`, `Results/Lists.lean`); the 26 duals of
@@ -153,9 +170,9 @@ small change to `pmap` and `viewer/template.html` in the map repository.
   Transversal Choice and their boxed forms. Not stated: the duals of the sentence schemas,
   the GLB forms of Countable Boolean Completeness, and the variants of principles without a
   `lean_def`.
-- **Models.** 14 of the map's 89 models get statements (`∃` a consistent `Ax` entailing
-  what the model satisfies and not what it violates); the others' verdicts mention a
-  principle without a `lean_def`. None is certified yet.
+- **Models.** 14 of the map's 89 models get statements (`∃` a consistent complete `Ax`
+  entailing what the model satisfies and not what it violates, above); the others' verdicts
+  mention a principle without a `lean_def`. None is certified yet.
 - **No Pure Contingency defined twice.** `npc Σ` (P → □P for each pure sentence of `Σ`'s
   language) and `pureVersion noContingency` are the same set (`npc_eq_pureVersion`), and so
   are the two Pure B's.

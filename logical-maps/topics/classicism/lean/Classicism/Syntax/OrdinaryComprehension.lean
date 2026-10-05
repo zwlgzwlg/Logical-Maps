@@ -58,7 +58,7 @@ variable (Sig)
 
 /-- **Ordinary Comprehension**: its instances at every formula of the signature's
 language; at the pure signature, the map's principle. -/
-def ordinaryComprehension : AxiomSet Sig := fun a =>
+def ordinaryComprehension : AxiomSet Sig := fun a => a.closedTypes = true ∧
   ∃ (zs ys : List Ty) (P : Formula Sig (Ctx.block ys (Ctx.block zs []))),
     a = Term.ordinaryComprehension zs ys P
 
@@ -88,7 +88,7 @@ theorem ordinaryComprehension_theorem (zs ys : List Ty)
 /-- `classicism-implies-ordinary-comprehension-r`: every instance is a theorem of `C`. -/
 theorem AxiomSet.ordinaryComprehension_entails :
     AxiomSet.empty ⟹ AxiomSet.ordinaryComprehension Sig := by
-  rintro a ⟨zs, ys, P, rfl⟩
+  rintro a ⟨_, zs, ys, P, rfl⟩
   exact Theorem.ofC (ordinaryComprehension_theorem zs ys P)
 
 end Classicism.Meta

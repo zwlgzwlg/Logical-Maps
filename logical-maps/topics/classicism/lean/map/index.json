@@ -2,7 +2,7 @@
  {"witnessed-possibility-incompatible-with-nd":
   {"proofs":
    [{"name": "Classicism.Meta.witnessedPossibility_nd_inconsistent",
-     "lines": [155, 168],
+     "lines": [173, 186],
      "file": "Classicism/Results/SentenceSchemas/Constants.lean"}],
    "certificate":
    {"name": "Classicism.Map.witnessed_possibility_incompatible_with_nd",
@@ -13,7 +13,7 @@
   {"proofs":
    [{"name":
      "Classicism.Meta.npc_witnessedPossibility_entails_possiblyWitnessedPossibility",
-     "lines": [150, 160],
+     "lines": [169, 181],
      "file": "Classicism/Results/SentenceSchemas/WitnessedPossibility.lean"}],
    "certificate":
    {"name":
@@ -25,7 +25,7 @@
   {"proofs":
    [{"name":
      "Classicism.Meta.npc_witnessedPossibility_entails_logicalNecessity",
-     "lines": [188, 207],
+     "lines": [211, 232],
      "file": "Classicism/Results/SentenceSchemas/WitnessedPossibility.lean"}],
    "certificate":
    {"name":
@@ -210,7 +210,7 @@
   "signature-b-r-implies-pure-b-r":
   {"proofs":
    [{"name": "Classicism.Meta.signatureB_entails_pureB",
-     "lines": [150, 152],
+     "lines": [153, 155],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name": "Classicism.Map.signature_b_r_implies_pure_b_r",
@@ -220,7 +220,7 @@
   "signature-b-and-witnessed-possibility-incompatible":
   {"proofs":
    [{"name": "Classicism.Meta.signatureB_witnessedPossibility_inconsistent",
-     "lines": [190, 205],
+     "lines": [208, 223],
      "file": "Classicism/Results/SentenceSchemas/Constants.lean"}],
    "certificate":
    {"name": "Classicism.Map.signature_b_and_witnessed_possibility_incompatible",
@@ -230,7 +230,7 @@
   "separated-structure-incompatible-with-nd":
   {"proofs":
    [{"name": "Classicism.Meta.separatedStructure_nd_inconsistent",
-     "lines": [221, 240],
+     "lines": [250, 271],
      "file": "Classicism/Results/SentenceSchemas/Constants.lean"}],
    "certificate":
    {"name": "Classicism.Map.separated_structure_incompatible_with_nd",
@@ -361,23 +361,18 @@
   "pure-b-and-pure-possibility-incompatible":
   {"proofs":
    [{"name": "Classicism.Meta.possibility_pureB_inconsistent",
-     "lines": [274, 285],
+     "lines": [275, 286],
      "file": "Classicism/Results/SentenceSchemas/Incompatibilities.lean"}],
    "certificate":
    {"name": "Classicism.Map.pure_b_and_pure_possibility_incompatible",
     "lines": [970, 972],
     "file": "Classicism/Map.lean",
-    "axioms":
-    ["propext",
-     "Classical.choice",
-     "Classicism.e",
-     "Classicism.e_exists",
-     "Quot.sound"]}},
+    "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
   "possibly-witnessed-possibility-r-implies-witnessed-possibility-r":
   {"proofs":
    [{"name":
      "Classicism.Meta.possiblyWitnessedPossibility_entails_witnessedPossibility",
-     "lines": [162, 169],
+     "lines": [183, 191],
      "file": "Classicism/Results/SentenceSchemas/WitnessedPossibility.lean"}],
    "certificate":
    {"name":
@@ -388,7 +383,7 @@
   "possible-infinity-t-and-no-pure-contingency-imply-axiom-of-infinity-t":
   {"proofs":
    [{"name": "Classicism.Meta.npc_possibleInfinityT_entails_axiomOfInfinityT",
-     "lines": [204, 209],
+     "lines": [207, 212],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -411,7 +406,7 @@
   "possible-infinity-e-and-no-pure-contingency-imply-axiom-of-infinity-e":
   {"proofs":
    [{"name": "Classicism.Meta.npc_possibleInfinityE_entails_axiomOfInfinityE",
-     "lines": [195, 202],
+     "lines": [198, 205],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -477,7 +472,7 @@
   "possibility-plus-signature-r-implies-possibility-signature-r":
   {"proofs":
    [{"name": "Classicism.Meta.possibilityPlusSig_entails_possibility",
-     "lines": [45, 54],
+     "lines": [46, 56],
      "file": "Classicism/Results/SentenceSchemas/PossibilityPlus.lean"}],
    "certificate":
    {"name":
@@ -488,7 +483,7 @@
   "possibility-plus-signature-r-implies-possibility-plus-r":
   {"proofs":
    [{"name": "Classicism.Meta.ofPure_possibilityPlus_subset",
-     "lines": [56, 70],
+     "lines": [58, 72],
      "file": "Classicism/Results/SentenceSchemas/PossibilityPlus.lean"}],
    "certificate":
    {"name":
@@ -499,7 +494,7 @@
   "possibility-plus-r-implies-possibility-schema-r":
   {"proofs":
    [{"name": "Classicism.Meta.possibilityPlus_entails_possibility",
-     "lines": [37, 43],
+     "lines": [37, 44],
      "file": "Classicism/Results/SentenceSchemas/PossibilityPlus.lean"}],
    "certificate":
    {"name": "Classicism.Map.possibility_plus_r_implies_possibility_schema_r",
@@ -509,18 +504,13 @@
   "possibility-and-no-pure-contingency-incompatible":
   {"proofs":
    [{"name": "Classicism.Meta.possibility_schema_npc_inconsistent",
-     "lines": [267, 272],
+     "lines": [268, 273],
      "file": "Classicism/Results/SentenceSchemas/Incompatibilities.lean"}],
    "certificate":
    {"name": "Classicism.Map.possibility_and_no_pure_contingency_incompatible",
     "lines": [918, 920],
     "file": "Classicism/Map.lean",
-    "axioms":
-    ["propext",
-     "Classical.choice",
-     "Classicism.e",
-     "Classicism.e_exists",
-     "Quot.sound"]}},
+    "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
   "possibility-and-necessary-barcan-t-incompatible":
   {"proofs":
    [{"name": "Classicism.Meta.possibility_necBarcanT_inconsistent",
@@ -564,7 +554,7 @@
   "no-pure-contingency-r-implies-pure-b-r":
   {"proofs":
    [{"name": "Classicism.Meta.npc_entails_pureB",
-     "lines": [163, 168],
+     "lines": [166, 171],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name": "Classicism.Map.no_pure_contingency_r_implies_pure_b_r",
@@ -574,7 +564,7 @@
   "no-pure-contingency-r-implies-converse-witnessed-possibility-r":
   {"proofs":
    [{"name": "Classicism.Meta.npc_entails_converseWitnessedPossibility",
-     "lines": [113, 127],
+     "lines": [125, 141],
      "file": "Classicism/Results/SentenceSchemas/WitnessedPossibility.lean"}],
    "certificate":
    {"name":
@@ -585,7 +575,7 @@
   "no-pure-contingency-and-weakly-inextensible-comprehension-imply-necessary-weakly-inextensible-comprehension":
   {"proofs":
    [{"name": "Classicism.Meta.npc_weaklyInextensibleComprehension_entails_box",
-     "lines": [115, 121],
+     "lines": [118, 124],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -596,7 +586,7 @@
   "no-pure-contingency-and-vicinity-imply-necessary-vicinity":
   {"proofs":
    [{"name": "Classicism.Meta.npc_vicinity_entails_necVicinity",
-     "lines": [97, 101],
+     "lines": [100, 104],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -607,7 +597,7 @@
   "no-pure-contingency-and-transversal-imply-necessary-transversal":
   {"proofs":
    [{"name": "Classicism.Meta.npc_transversal_entails_necTransversal",
-     "lines": [103, 107],
+     "lines": [106, 110],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -619,7 +609,7 @@
   {"proofs":
    [{"name":
      "Classicism.Meta.npc_transversalChoice_entails_necTransversalChoice",
-     "lines": [109, 113],
+     "lines": [112, 116],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -630,7 +620,7 @@
   "no-pure-contingency-and-tractarianism-imply-necessary-tractarianism":
   {"proofs":
    [{"name": "Classicism.Meta.npc_union_entails_box_pure",
-     "lines": [71, 74],
+     "lines": [73, 77],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -641,7 +631,7 @@
   "no-pure-contingency-and-strong-leibniz-t-imply-necessary-strong-leibniz-t":
   {"proofs":
    [{"name": "Classicism.Meta.npc_union_entails_box_pure",
-     "lines": [71, 74],
+     "lines": [73, 77],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -652,7 +642,7 @@
   "no-pure-contingency-and-strong-leibniz-imply-necessary-strong-leibniz":
   {"proofs":
    [{"name": "Classicism.Meta.npc_union_entails_box_pure",
-     "lines": [71, 74],
+     "lines": [73, 77],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -663,7 +653,7 @@
   "no-pure-contingency-and-rigid-comprehension-imply-necessary-rigid-comprehension":
   {"proofs":
    [{"name": "Classicism.Meta.npc_union_entails_box_pure",
-     "lines": [71, 74],
+     "lines": [73, 77],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -674,7 +664,7 @@
   "no-pure-contingency-and-relational-choice-imply-necessaryelational-choice":
   {"proofs":
    [{"name": "Classicism.Meta.npc_union_entails_box_pure",
-     "lines": [71, 74],
+     "lines": [73, 77],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -685,7 +675,7 @@
   "no-pure-contingency-and-plenitude-imply-necessary-plenitude":
   {"proofs":
    [{"name": "Classicism.Meta.npc_union_entails_box_pure",
-     "lines": [71, 74],
+     "lines": [73, 77],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -696,7 +686,7 @@
   "no-pure-contingency-and-nd-t-imply-necessary-nd-t":
   {"proofs":
    [{"name": "Classicism.Meta.npc_ndT_entails_necNdT",
-     "lines": [82, 86],
+     "lines": [85, 89],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name": "Classicism.Map.no_pure_contingency_and_nd_t_imply_necessary_nd_t",
@@ -706,7 +696,7 @@
   "no-pure-contingency-and-nd-imply-necessary-nd":
   {"proofs":
    [{"name": "Classicism.Meta.npc_nd_entails_box",
-     "lines": [92, 95],
+     "lines": [95, 98],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name": "Classicism.Map.no_pure_contingency_and_nd_imply_necessary_nd",
@@ -716,7 +706,7 @@
   "no-pure-contingency-and-gallin-comprehension-imply-necessary-gallin-comprehension":
   {"proofs":
    [{"name": "Classicism.Meta.npc_union_entails_box_pure",
-     "lines": [71, 74],
+     "lines": [73, 77],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -727,7 +717,7 @@
   "no-pure-contingency-and-functionality-imply-necessary-functionality":
   {"proofs":
    [{"name": "Classicism.Meta.npc_union_entails_box_pure",
-     "lines": [71, 74],
+     "lines": [73, 77],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -738,7 +728,7 @@
   "no-pure-contingency-and-functional-choice-imply-necessary-functional-choice":
   {"proofs":
    [{"name": "Classicism.Meta.npc_union_entails_box_pure",
-     "lines": [71, 74],
+     "lines": [73, 77],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -749,7 +739,7 @@
   "no-pure-contingency-and-fregean-imply-necessary-fregean":
   {"proofs":
    [{"name": "Classicism.Meta.npc_fregean_entails_box",
-     "lines": [139, 142],
+     "lines": [142, 145],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -760,7 +750,7 @@
   "no-pure-contingency-and-five-imply-necessary-five":
   {"proofs":
    [{"name": "Classicism.Meta.npc_union_entails_box_pure",
-     "lines": [71, 74],
+     "lines": [73, 77],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name": "Classicism.Map.no_pure_contingency_and_five_imply_necessary_five",
@@ -770,7 +760,7 @@
   "no-pure-contingency-and-extensionality-imply-necessary-extensionality":
   {"proofs":
    [{"name": "Classicism.Meta.npc_union_entails_box_pure",
-     "lines": [71, 74],
+     "lines": [73, 77],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -781,7 +771,7 @@
   "no-pure-contingency-and-completeness-imply-necessary-completeness":
   {"proofs":
    [{"name": "Classicism.Meta.npc_booleanCompleteness_entails_box",
-     "lines": [129, 132],
+     "lines": [132, 135],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -792,7 +782,7 @@
   "no-pure-contingency-and-bf-t-imply-necessary-bf-t":
   {"proofs":
    [{"name": "Classicism.Meta.npc_barcanT_entails_necBarcanT",
-     "lines": [76, 80],
+     "lines": [79, 83],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name": "Classicism.Map.no_pure_contingency_and_bf_t_imply_necessary_bf_t",
@@ -802,7 +792,7 @@
   "no-pure-contingency-and-bf-imply-necessary-bf":
   {"proofs":
    [{"name": "Classicism.Meta.npc_barcan_entails_box",
-     "lines": [88, 90],
+     "lines": [91, 93],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name": "Classicism.Map.no_pure_contingency_and_bf_imply_necessary_bf",
@@ -812,7 +802,7 @@
   "no-pure-contingency-and-b-imply-necessary-b":
   {"proofs":
    [{"name": "Classicism.Meta.npc_union_entails_box_pure",
-     "lines": [71, 74],
+     "lines": [73, 77],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name": "Classicism.Map.no_pure_contingency_and_b_imply_necessary_b",
@@ -822,7 +812,7 @@
   "no-pure-contingency-and-atomicity-imply-necessary-atomicity":
   {"proofs":
    [{"name": "Classicism.Meta.npc_atomicity_entails_box",
-     "lines": [134, 137],
+     "lines": [137, 140],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -833,7 +823,7 @@
   "no-pure-contingency-and-actuality-imply-necessary-actuality":
   {"proofs":
    [{"name": "Classicism.Meta.npc_actuality_entails_necActuality",
-     "lines": [123, 127],
+     "lines": [126, 130],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -844,7 +834,7 @@
   "no-contingency-signature-r-implies-signature-b-r":
   {"proofs":
    [{"name": "Classicism.Meta.noContingency_entails_signatureB",
-     "lines": [156, 161],
+     "lines": [159, 164],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name": "Classicism.Map.no_contingency_signature_r_implies_signature_b_r",
@@ -854,7 +844,7 @@
   "no-contingency-signature-r-implies-no-pure-contingency-r":
   {"proofs":
    [{"name": "Classicism.Meta.noContingency_entails_npc",
-     "lines": [146, 148],
+     "lines": [149, 151],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name":
@@ -865,7 +855,7 @@
   "no-contingency-signature-r-implies-modal-freedom-signature-r":
   {"proofs":
    [{"name": "Classicism.Meta.noContingency_entails_modalFreedom",
-     "lines": [142, 148],
+     "lines": [157, 167],
      "file": "Classicism/Results/SentenceSchemas/WitnessedPossibility.lean"}],
    "certificate":
    {"name":
@@ -876,7 +866,7 @@
   "no-contingency-signature-incompatible-with-witnessed-possibility":
   {"proofs":
    [{"name": "Classicism.Meta.noContingency_witnessedPossibility_inconsistent",
-     "lines": [170, 188],
+     "lines": [188, 206],
      "file": "Classicism/Results/SentenceSchemas/Constants.lean"}],
    "certificate":
    {"name":
@@ -1607,7 +1597,7 @@
   "modal-freedom-signature-r-implies-no-pure-contingency-r":
   {"proofs":
    [{"name": "Classicism.Meta.modalFreedom_entails_npc",
-     "lines": [129, 140],
+     "lines": [143, 155],
      "file": "Classicism/Results/SentenceSchemas/WitnessedPossibility.lean"}],
    "certificate":
    {"name":
@@ -1628,7 +1618,7 @@
   "modal-b-implies-signature-b-r":
   {"proofs":
    [{"name": "Classicism.Meta.modalB_entails_signatureB",
-     "lines": [172, 176],
+     "lines": [175, 179],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name": "Classicism.Map.modal_b_implies_signature_b_r",
@@ -1638,7 +1628,7 @@
   "modal-b-implies-pure-b-r":
   {"proofs":
    [{"name": "Classicism.Meta.modalB_entails_pureB",
-     "lines": [211, 214],
+     "lines": [214, 217],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name": "Classicism.Map.modal_b_implies_pure_b_r",
@@ -1741,16 +1731,11 @@
    {"name": "Classicism.Map.maximalist_distinctness_incompatible_with_nd",
     "lines": [475, 477],
     "file": "Classicism/Map.lean",
-    "axioms":
-    ["propext",
-     "Classical.choice",
-     "Classicism.e",
-     "Classicism.e_exists",
-     "Quot.sound"]}},
+    "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
   "logical-necessity-r-implies-witnessed-possibility-r":
   {"proofs":
    [{"name": "Classicism.Meta.logicalNecessity_entails_witnessedPossibility",
-     "lines": [171, 186],
+     "lines": [193, 209],
      "file": "Classicism/Results/SentenceSchemas/WitnessedPossibility.lean"}],
    "certificate":
    {"name":
@@ -1761,7 +1746,7 @@
   "logical-necessity-r-implies-no-pure-contingency-r":
   {"proofs":
    [{"name": "Classicism.Meta.logicalNecessity_entails_npc",
-     "lines": [89, 99],
+     "lines": [98, 109],
      "file": "Classicism/Results/SentenceSchemas/WitnessedPossibility.lean"}],
    "certificate":
    {"name": "Classicism.Map.logical_necessity_r_implies_no_pure_contingency_r",
@@ -1858,7 +1843,7 @@
   "fregean-axiom-implies-no-pure-contingency-r":
   {"proofs":
    [{"name": "Classicism.Meta.fregean_entails_npc_pure",
-     "lines": [189, 193],
+     "lines": [192, 196],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name": "Classicism.Map.fregean_axiom_implies_no_pure_contingency_r",
@@ -1868,7 +1853,7 @@
   "fregean-axiom-implies-no-contingency-signature-r":
   {"proofs":
    [{"name": "Classicism.Meta.fregean_entails_noContingency",
-     "lines": [178, 183],
+     "lines": [181, 186],
      "file": "Classicism/Results/SentenceSchemas/Contingency.lean"}],
    "certificate":
    {"name": "Classicism.Map.fregean_axiom_implies_no_contingency_signature_r",
@@ -2085,7 +2070,7 @@
   "converse-witnessed-possibility-r-implies-no-pure-contingency-r":
   {"proofs":
    [{"name": "Classicism.Meta.converseWitnessedPossibility_entails_npc",
-     "lines": [101, 111],
+     "lines": [111, 123],
      "file": "Classicism/Results/SentenceSchemas/WitnessedPossibility.lean"}],
    "certificate":
    {"name":
@@ -2653,7 +2638,7 @@
       "lines": [168, 170],
       "file": "Classicism/Principles/Coarse.lean"},
      {"name": "Classicism.P.Tractarianism.listQuoted",
-      "lines": [23, 23],
+      "lines": [24, 24],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.tractarianism_r.polyadic",
@@ -2676,7 +2661,7 @@
       "lines": [168, 170],
       "file": "Classicism/Principles/Coarse.lean"},
      {"name": "Classicism.P.TractarianismDual.listQuoted",
-      "lines": [50, 50],
+      "lines": [51, 51],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.tractarianism_r.dual_polyadic",
@@ -2756,7 +2741,7 @@
       "lines": [35, 38],
       "file": "Classicism/Principles/Choice.lean"},
      {"name": "Classicism.P.RelationalChoice.listQuoted",
-      "lines": [27, 27],
+      "lines": [28, 28],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.relational_choice_r.polyadic",
@@ -2774,7 +2759,7 @@
       "lines": [44, 47],
       "file": "Classicism/Principles/Choice.lean"},
      {"name": "Classicism.P.Plenitude.listQuoted",
-      "lines": [32, 32],
+      "lines": [33, 33],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.plenitude_r.polyadic",
@@ -2792,7 +2777,7 @@
       "lines": [189, 190],
       "file": "Classicism/Principles/Coarse.lean"},
      {"name": "Classicism.P.NecTractarianism.listQuoted",
-      "lines": [35, 35],
+      "lines": [36, 36],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.necessary_tractarianism_r.polyadic",
@@ -2815,7 +2800,7 @@
       "lines": [189, 190],
       "file": "Classicism/Principles/Coarse.lean"},
      {"name": "Classicism.P.NecTractarianismDual.listQuoted",
-      "lines": [51, 51],
+      "lines": [52, 52],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.necessary_tractarianism_r.dual_polyadic",
@@ -2895,7 +2880,7 @@
       "lines": [39, 40],
       "file": "Classicism/Principles/Choice.lean"},
      {"name": "Classicism.P.NecRelationalChoice.listQuoted",
-      "lines": [36, 36],
+      "lines": [37, 37],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.necessary_relational_choice_r.polyadic",
@@ -2913,7 +2898,7 @@
       "lines": [48, 49],
       "file": "Classicism/Principles/Choice.lean"},
      {"name": "Classicism.P.NecPlenitude.listQuoted",
-      "lines": [33, 33],
+      "lines": [34, 34],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.necessary_plenitude_r.polyadic",
@@ -2973,7 +2958,7 @@
       "lines": [27, 28],
       "file": "Classicism/Principles/Extensionality.lean"},
      {"name": "Classicism.P.NecFunctionality.listQuoted",
-      "lines": [35, 35],
+      "lines": [36, 36],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.necessary_functionality_r.polyadic",
@@ -2991,7 +2976,7 @@
       "lines": [32, 33],
       "file": "Classicism/Principles/Choice.lean"},
      {"name": "Classicism.P.NecFunctionalChoice.listQuoted",
-      "lines": [36, 36],
+      "lines": [37, 37],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.necessary_functional_choice_r.polyadic",
@@ -3031,7 +3016,7 @@
       "lines": [116, 117],
       "file": "Classicism/Principles/Coarse.lean"},
      {"name": "Classicism.P.NecNecessityOfDistinctness.listQuoted",
-      "lines": [21, 21],
+      "lines": [22, 22],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.necessary_distinctness_necessary_r.polyadic",
@@ -3055,7 +3040,7 @@
       "lines": [116, 117],
       "file": "Classicism/Principles/Coarse.lean"},
      {"name": "Classicism.P.NecNecessityOfDistinctnessDual.listQuoted",
-      "lines": [49, 49],
+      "lines": [50, 50],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.necessary_distinctness_necessary_r.dual_polyadic",
@@ -3135,7 +3120,7 @@
       "lines": [154, 155],
       "file": "Classicism/Principles/Coarse.lean"},
      {"name": "Classicism.P.NecBarcan.listQuoted",
-      "lines": [22, 22],
+      "lines": [23, 23],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.necessary_barcan_r.polyadic",
@@ -3158,7 +3143,7 @@
       "lines": [154, 155],
       "file": "Classicism/Principles/Coarse.lean"},
      {"name": "Classicism.P.NecBarcanDual.listQuoted",
-      "lines": [50, 50],
+      "lines": [51, 51],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.necessary_barcan_r.dual_polyadic",
@@ -3217,7 +3202,7 @@
       "lines": [51, 56],
       "file": "Classicism/Principles/Choice.lean"},
      {"name": "Classicism.P.ModalizedPlenitude.listQuoted",
-      "lines": [42, 42],
+      "lines": [43, 43],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.modalized_plenitude_r.polyadic",
@@ -3235,7 +3220,7 @@
       "lines": [59, 61],
       "file": "Classicism/Principles/Base.lean"},
      {"name": "Classicism.P.ModalizedFunctionality.listQuoted",
-      "lines": [19, 19],
+      "lines": [20, 20],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.modalized_functionality_r.polyadic",
@@ -3358,7 +3343,7 @@
       "lines": [62, 63],
       "file": "Classicism/Principles/Base.lean"},
      {"name": "Classicism.P.NecessityOfIdentity.listQuoted",
-      "lines": [19, 19],
+      "lines": [20, 20],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.identity_necessary_r.polyadic",
@@ -3376,7 +3361,7 @@
       "lines": [24, 26],
       "file": "Classicism/Principles/Extensionality.lean"},
      {"name": "Classicism.P.Functionality.listQuoted",
-      "lines": [18, 18],
+      "lines": [19, 19],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.functionality_r.polyadic",
@@ -3394,7 +3379,7 @@
       "lines": [28, 31],
       "file": "Classicism/Principles/Choice.lean"},
      {"name": "Classicism.P.FunctionalChoice.listQuoted",
-      "lines": [27, 27],
+      "lines": [28, 28],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.functional_choice_r.polyadic",
@@ -3412,7 +3397,7 @@
       "lines": [90, 93],
       "file": "Classicism/Principles/Base.lean"},
      {"name": "Classicism.P.Existence.listQuoted",
-      "lines": [27, 27],
+      "lines": [28, 28],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.existence_r.polyadic",
@@ -3472,7 +3457,7 @@
       "lines": [99, 100],
       "file": "Classicism/Principles/Coarse.lean"},
      {"name": "Classicism.P.NecessityOfDistinctness.listQuoted",
-      "lines": [20, 20],
+      "lines": [21, 21],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.distinctness_necessary_r.polyadic",
@@ -3495,7 +3480,7 @@
       "lines": [99, 100],
       "file": "Classicism/Principles/Coarse.lean"},
      {"name": "Classicism.P.NecessityOfDistinctnessDual.listQuoted",
-      "lines": [49, 49],
+      "lines": [50, 50],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.distinctness_necessary_r.dual_polyadic",
@@ -3533,7 +3518,7 @@
       "lines": [67, 68],
       "file": "Classicism/Principles/Base.lean"},
      {"name": "Classicism.P.ConverseBarcan.listQuoted",
-      "lines": [23, 23],
+      "lines": [24, 24],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.converse_barcan_r.polyadic",
@@ -3556,7 +3541,7 @@
       "lines": [67, 68],
       "file": "Classicism/Principles/Base.lean"},
      {"name": "Classicism.P.ConverseBarcanDual.listQuoted",
-      "lines": [47, 47],
+      "lines": [48, 48],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.converse_barcan_r.dual_polyadic",
@@ -3594,7 +3579,7 @@
       "lines": [94, 95],
       "file": "Classicism/Principles/Base.lean"},
      {"name": "Classicism.P.BroadNecessitism.listQuoted",
-      "lines": [39, 39],
+      "lines": [40, 40],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.broad_necessitism_r.polyadic",
@@ -3675,7 +3660,7 @@
       "lines": [133, 134],
       "file": "Classicism/Principles/Coarse.lean"},
      {"name": "Classicism.P.Barcan.listQuoted",
-      "lines": [22, 22],
+      "lines": [23, 23],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.barcan_r.polyadic",
@@ -3698,7 +3683,7 @@
       "lines": [133, 134],
       "file": "Classicism/Principles/Coarse.lean"},
      {"name": "Classicism.P.BarcanDual.listQuoted",
-      "lines": [50, 50],
+      "lines": [51, 51],
       "file": "Classicism/Certified/Schemas.lean"}],
     "certificate":
     {"name": "Classicism.Map.barcan_r.dual_polyadic",

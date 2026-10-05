@@ -1,3 +1,4 @@
+import Classicism.Syntax.ClosedTypes
 import Classicism.Syntax.Conservativity
 import Classicism.Syntax.Blocks
 import Classicism.Syntax.Constants
@@ -59,6 +60,24 @@ def neConsts {Γ : Ctx} (n : Nat) (xs : Terms Sig Γ (List.replicate n Ty.e)) :
   | [], D => D
   | c :: ds, D => conj (allNe n xs (indConst c)) (neConsts n xs ds D)
 
+/-- An individual constant is in the paper's language: its type is `e`. -/
+theorem closedTypes_indConst {Γ : Ctx} (c : IndConst Sig) :
+    (indConst c : Term Sig Γ Ty.e).closedTypes = true := by
+  obtain ⟨c, h⟩ := c
+  have : ∀ {τ : Ty} (h : Sig.typeOf c = τ), (h ▸ Term.const c : Term Sig Γ τ).closedTypes =
+      decide τ.Closed := by
+    intro τ h; subst h; rfl
+  exact (this h).trans (by simp)
+
+/-- With no variables, the conjunction for the constants is `⊤ ∧ … ∧ ⊤`, in the paper's
+language. -/
+theorem closedTypes_neConsts_zero {Γ : Ctx} :
+    ∀ ds : List (IndConst Sig), (neConsts 0 (.nil : Terms Sig Γ []) ds top).closedTypes = true
+  | [] => rfl
+  | _ :: ds => by
+    simp only [neConsts, allNe, closedTypes_conj, closedTypes_neConsts_zero ds, Bool.and_true]
+    rfl
+
 end Term
 
 /-- A tuple of terms of the pure language, read in a signature. -/
@@ -101,7 +120,7 @@ variable (Sig)
 `∀x₁ … xₙ. (⋀_{i<j} xᵢ ≠ xⱼ) → ◇P`, for `P` pure with its free variables among the
 individual variables `x̄`, and `∃x̄. P` consistent; at the pure signature, the map's
 Possibility+ (pure). -/
-def possibilityPlus : AxiomSet Sig := fun a =>
+def possibilityPlus : AxiomSet Sig := fun a => a.closedTypes = true ∧
   ∃ (n : Nat) (P : Formula Sig (Ctx.block (List.replicate n Ty.e) [])),
     P.pure = true ∧ Consistent (single (Term.existsBlock _ P)) ∧
       a = Term.forallBlock _ (Term.imp (Term.distinct n (Terms.vars _ [])) (Term.dia P))
@@ -110,7 +129,7 @@ def possibilityPlus : AxiomSet Sig := fun a =>
 for `P` in the signature's language with its free variables among the individual
 variables `x̄`, `∃x̄. P` consistent, and `c` over a list of individual constants that
 includes those in `P`. -/
-def possibilityPlusSig : AxiomSet Sig := fun a =>
+def possibilityPlusSig : AxiomSet Sig := fun a => a.closedTypes = true ∧
   ∃ (n : Nat) (P : Formula Sig (Ctx.block (List.replicate n Ty.e) [])) (ds : List (IndConst Sig)),
     (∀ c ∈ P.consts, ∀ h : Sig.typeOf c = Ty.e, ⟨c, h⟩ ∈ ds) ∧
     Consistent (single (Term.existsBlock _ P)) ∧

@@ -79,11 +79,13 @@ signature, read in the signature's language. -/
 /-- At the pure signature every sentence is pure, so No Pure Contingency is No Contingency
 there. -/
 theorem npc_pure_eq : npc Signature.pure = noContingency Signature.pure :=
-  funext fun _ => propext ⟨fun ⟨p, _, h⟩ => ⟨p, h⟩, fun ⟨p, h⟩ => ⟨p, Term.pure_of_pureSig p, h⟩⟩
+  funext fun _ => propext ⟨fun ⟨hc, p, _, h⟩ => ⟨hc, p, h⟩,
+    fun ⟨hc, p, h⟩ => ⟨hc, p, Term.pure_of_pureSig p, h⟩⟩
 
 /-- Likewise B for pure sentences and B for the signature. -/
 theorem pureB_pure_eq : pureB Signature.pure = signatureB Signature.pure :=
-  funext fun _ => propext ⟨fun ⟨p, _, h⟩ => ⟨p, h⟩, fun ⟨p, h⟩ => ⟨p, Term.pure_of_pureSig p, h⟩⟩
+  funext fun _ => propext ⟨fun ⟨hc, p, _, h⟩ => ⟨hc, p, h⟩,
+    fun ⟨hc, p, h⟩ => ⟨hc, p, Term.pure_of_pureSig p, h⟩⟩
 
 /-- No Pure Contingency, as the pure version of No Contingency, is `npc` of the pure
 signature read in the signature: the form in which `Results/SentenceSchemas/` proves it. -/

@@ -804,7 +804,7 @@ theorem no_pure_contingency_and_atomicity_imply_necessary_atomicity : Statements
 
 /-- `no-pure-contingency-and-b-imply-necessary-b` -/
 theorem no_pure_contingency_and_b_imply_necessary_b : Statements.no_pure_contingency_and_b_imply_necessary_b := by
-  map_cert (Entails.mono_right (Ax₃ := P.NecModalB.schema) (by map_box) (npc_union_entails_box_pure P.ModalB.schema))
+  map_cert (Entails.mono_right (Ax₃ := P.NecModalB.schema) (by map_box) (npc_union_entails_box_pure P.ModalB.schema_closedTypes))
 
 /-- `no-pure-contingency-and-bf-imply-necessary-bf` -/
 theorem no_pure_contingency_and_bf_imply_necessary_bf : Statements.no_pure_contingency_and_bf_imply_necessary_bf := by
@@ -820,11 +820,11 @@ theorem no_pure_contingency_and_completeness_imply_necessary_completeness : Stat
 
 /-- `no-pure-contingency-and-extensionality-imply-necessary-extensionality` -/
 theorem no_pure_contingency_and_extensionality_imply_necessary_extensionality : Statements.no_pure_contingency_and_extensionality_imply_necessary_extensionality := by
-  map_cert (Entails.mono_right (Ax₃ := P.NecExtensionality.schema) (by map_box) (npc_union_entails_box_pure P.Extensionality.schema))
+  map_cert (Entails.mono_right (Ax₃ := P.NecExtensionality.schema) (by map_box) (npc_union_entails_box_pure P.Extensionality.schema_closedTypes))
 
 /-- `no-pure-contingency-and-five-imply-necessary-five` -/
 theorem no_pure_contingency_and_five_imply_necessary_five : Statements.no_pure_contingency_and_five_imply_necessary_five := by
-  map_cert (Entails.mono_right (Ax₃ := P.NecModalFive.schema) (by map_box) (npc_union_entails_box_pure P.ModalFive.schema))
+  map_cert (Entails.mono_right (Ax₃ := P.NecModalFive.schema) (by map_box) (npc_union_entails_box_pure P.ModalFive.schema_closedTypes))
 
 /-- `no-pure-contingency-and-fregean-imply-necessary-fregean` -/
 theorem no_pure_contingency_and_fregean_imply_necessary_fregean : Statements.no_pure_contingency_and_fregean_imply_necessary_fregean := by
@@ -832,15 +832,15 @@ theorem no_pure_contingency_and_fregean_imply_necessary_fregean : Statements.no_
 
 /-- `no-pure-contingency-and-functional-choice-imply-necessary-functional-choice` -/
 theorem no_pure_contingency_and_functional_choice_imply_necessary_functional_choice : Statements.no_pure_contingency_and_functional_choice_imply_necessary_functional_choice := by
-  map_cert (Entails.mono_right (Ax₃ := P.NecFunctionalChoice.schema) (by map_box) (npc_union_entails_box_pure P.FunctionalChoice.schema))
+  map_cert (Entails.mono_right (Ax₃ := P.NecFunctionalChoice.schema) (by map_box) (npc_union_entails_box_pure P.FunctionalChoice.schema_closedTypes))
 
 /-- `no-pure-contingency-and-functionality-imply-necessary-functionality` -/
 theorem no_pure_contingency_and_functionality_imply_necessary_functionality : Statements.no_pure_contingency_and_functionality_imply_necessary_functionality := by
-  map_cert (Entails.mono_right (Ax₃ := P.NecFunctionality.schema) (by map_box) (npc_union_entails_box_pure P.Functionality.schema))
+  map_cert (Entails.mono_right (Ax₃ := P.NecFunctionality.schema) (by map_box) (npc_union_entails_box_pure P.Functionality.schema_closedTypes))
 
 /-- `no-pure-contingency-and-gallin-comprehension-imply-necessary-gallin-comprehension` -/
 theorem no_pure_contingency_and_gallin_comprehension_imply_necessary_gallin_comprehension : Statements.no_pure_contingency_and_gallin_comprehension_imply_necessary_gallin_comprehension := by
-  map_cert (Entails.mono_right (Ax₃ := P.NecGallinExtensionalComprehension.schema) (by map_box) (npc_union_entails_box_pure P.GallinExtensionalComprehension.schema))
+  map_cert (Entails.mono_right (Ax₃ := P.NecGallinExtensionalComprehension.schema) (by map_box) (npc_union_entails_box_pure P.GallinExtensionalComprehension.schema_closedTypes))
 
 /-- `no-pure-contingency-and-nd-imply-necessary-nd` -/
 theorem no_pure_contingency_and_nd_imply_necessary_nd : Statements.no_pure_contingency_and_nd_imply_necessary_nd := by
@@ -852,27 +852,27 @@ theorem no_pure_contingency_and_nd_t_imply_necessary_nd_t : Statements.no_pure_c
 
 /-- `no-pure-contingency-and-plenitude-imply-necessary-plenitude` -/
 theorem no_pure_contingency_and_plenitude_imply_necessary_plenitude : Statements.no_pure_contingency_and_plenitude_imply_necessary_plenitude := by
-  map_cert (Entails.mono_right (Ax₃ := P.NecPlenitude.schema) (by map_box) (npc_union_entails_box_pure P.Plenitude.schema))
+  map_cert (Entails.mono_right (Ax₃ := P.NecPlenitude.schema) (by map_box) (npc_union_entails_box_pure P.Plenitude.schema_closedTypes))
 
 /-- `no-pure-contingency-and-relational-choice-imply-necessaryelational-choice` -/
 theorem no_pure_contingency_and_relational_choice_imply_necessaryelational_choice : Statements.no_pure_contingency_and_relational_choice_imply_necessaryelational_choice := by
-  map_cert (Entails.mono_right (Ax₃ := P.NecRelationalChoice.schema) (by map_box) (npc_union_entails_box_pure P.RelationalChoice.schema))
+  map_cert (Entails.mono_right (Ax₃ := P.NecRelationalChoice.schema) (by map_box) (npc_union_entails_box_pure P.RelationalChoice.schema_closedTypes))
 
 /-- `no-pure-contingency-and-rigid-comprehension-imply-necessary-rigid-comprehension` -/
 theorem no_pure_contingency_and_rigid_comprehension_imply_necessary_rigid_comprehension : Statements.no_pure_contingency_and_rigid_comprehension_imply_necessary_rigid_comprehension := by
-  map_cert (Entails.mono_right (Ax₃ := P.NecRigidComprehension.schema) (by map_box) (npc_union_entails_box_pure P.RigidComprehension.schema))
+  map_cert (Entails.mono_right (Ax₃ := P.NecRigidComprehension.schema) (by map_box) (npc_union_entails_box_pure P.RigidComprehension.schema_closedTypes))
 
 /-- `no-pure-contingency-and-strong-leibniz-imply-necessary-strong-leibniz` -/
 theorem no_pure_contingency_and_strong_leibniz_imply_necessary_strong_leibniz : Statements.no_pure_contingency_and_strong_leibniz_imply_necessary_strong_leibniz := by
-  map_cert (Entails.mono_right (Ax₃ := P.NecStrongLeibniz.schema) (by map_box) (npc_union_entails_box_pure P.StrongLeibniz.schema))
+  map_cert (Entails.mono_right (Ax₃ := P.NecStrongLeibniz.schema) (by map_box) (npc_union_entails_box_pure P.StrongLeibniz.schema_closedTypes))
 
 /-- `no-pure-contingency-and-strong-leibniz-t-imply-necessary-strong-leibniz-t` -/
 theorem no_pure_contingency_and_strong_leibniz_t_imply_necessary_strong_leibniz_t : Statements.no_pure_contingency_and_strong_leibniz_t_imply_necessary_strong_leibniz_t := by
-  map_cert (Entails.mono_right (Ax₃ := P.NecStrongLeibnizT.schema) (by map_box) (npc_union_entails_box_pure P.StrongLeibnizT.schema))
+  map_cert (Entails.mono_right (Ax₃ := P.NecStrongLeibnizT.schema) (by map_box) (npc_union_entails_box_pure P.StrongLeibnizT.schema_closedTypes))
 
 /-- `no-pure-contingency-and-tractarianism-imply-necessary-tractarianism` -/
 theorem no_pure_contingency_and_tractarianism_imply_necessary_tractarianism : Statements.no_pure_contingency_and_tractarianism_imply_necessary_tractarianism := by
-  map_cert (Entails.mono_right (Ax₃ := P.NecTractarianism.schema) (by map_box) (npc_union_entails_box_pure P.Tractarianism.schema))
+  map_cert (Entails.mono_right (Ax₃ := P.NecTractarianism.schema) (by map_box) (npc_union_entails_box_pure P.Tractarianism.schema_closedTypes))
 
 /-- `no-pure-contingency-and-transversal-choice-imply-necessary-transversal-choice` -/
 theorem no_pure_contingency_and_transversal_choice_imply_necessary_transversal_choice : Statements.no_pure_contingency_and_transversal_choice_imply_necessary_transversal_choice := by

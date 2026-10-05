@@ -66,7 +66,7 @@ theorem sem_pure : ∀ {Γ : Ctx} {σ : Ty} {W : C} (t : Term Sig Γ σ), t.pure
 /-- **No Pure Contingency holds in every one-object model** (Classicism, §"Exploring
 action models"). -/
 theorem holdsAx_npc [Subsingleton C] (M : A.IsModel) : A.HoldsAx (AxiomSet.npc Sig) := by
-  rintro a ⟨p, hp, rfl⟩
+  rintro a ⟨-, p, hp, rfl⟩
   rw [HoldsSentence, A.holds_imp M, A.holds_box M]
   intro H V k
   obtain rfl : V = A.W₀ := Subsingleton.elim _ _

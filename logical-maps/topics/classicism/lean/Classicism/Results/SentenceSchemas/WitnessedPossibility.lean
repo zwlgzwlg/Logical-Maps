@@ -86,14 +86,24 @@ open AxiomSet
 
 variable {Sig : Signature}
 
+/-- The instances built below are in the paper's language when those they are built from
+are: the side condition of every sentence schema (`Syntax/ClosedTypes.lean`). -/
+local macro "split_closed " h:ident : tactic => `(tactic| simp only [Term.closedTypes_imp,
+  Term.closedTypes_iff, Term.closedTypes_dia, Term.closedTypes_box, Term.closedTypes_conj,
+  Term.closedTypes_neg, Term.closedTypes_ofPure, Term.closedTypes_atConsts,
+  Term.closedTypes_forallBlock_eq_existsBlock, Term.closedTypes_eq', Term.closedTypes_bot,
+  Term.closedTypes_top, Term.closedTypes_forall', Term.closedTypes_var, Ty.closed_rel,
+  RTy.closed_t, decide_true, Bool.and_true, Bool.and_eq_true, and_true] at $h:ident)
+
 /-- `logical-necessity-r-implies-no-pure-contingency-r`: Logical Necessity with no
 constants, at a pure sentence `P`, is `□P ↔ P`. -/
 theorem logicalNecessity_entails_npc :
     logicalNecessity Sig ⟹ AxiomSet.ofPure (npc Signature.pure) := by
-  rintro a ⟨_, ⟨q, -, rfl⟩, rfl⟩
+  rintro a ⟨_, ⟨hq, q, -, rfl⟩, rfl⟩
+  split_closed hq
   have h : Theorem (C.axioms ∪ logicalNecessity Sig)
       (Term.iff (Term.box (Term.atConsts [] q)) (Term.ofPure (Term.forallBlock [] q))) :=
-    Theorem.ax ⟨[], q, List.nodup_nil, rfl⟩
+    Theorem.ax (logicalNecessity_mem List.nodup_nil hq.1)
   rw [Term.atConsts_nil] at h
   exact Theorem.mp (Derivable.allEβ
     (Theorem.ofCMinus (C.TheoremMinus.ofPure iff_box_imp_box.derivable)) _) h
@@ -102,10 +112,12 @@ theorem logicalNecessity_entails_npc :
 constants at `¬P` is `◇¬P → ¬P`. -/
 theorem converseWitnessedPossibility_entails_npc :
     converseWitnessedPossibility Sig ⟹ AxiomSet.ofPure (npc Signature.pure) := by
-  rintro a ⟨_, ⟨q, -, rfl⟩, rfl⟩
+  rintro a ⟨_, ⟨hq, q, -, rfl⟩, rfl⟩
+  split_closed hq
   have h : Theorem (C.axioms ∪ converseWitnessedPossibility Sig)
       (Term.imp (Term.dia (Term.atConsts [] (Term.neg q))) (Term.ofPure (Term.existsBlock [] (Term.neg q)))) :=
-    Theorem.ax ⟨[], Term.neg q, List.nodup_nil, rfl⟩
+    Theorem.ax (converseWitnessedPossibility_mem List.nodup_nil
+      (by rw [closedTypes_existsBlock_neg]; exact hq.1))
   rw [Term.atConsts_nil] at h
   exact Theorem.mp (Derivable.allEβ
     (Theorem.ofCMinus (C.TheoremMinus.ofPure cwp_box.derivable)) _) h
@@ -114,14 +126,16 @@ theorem converseWitnessedPossibility_entails_npc :
 the pure `¬∃x̄. P`, and `P[c̄/x̄] → ∃x̄. P` necessitated. -/
 theorem npc_entails_converseWitnessedPossibility :
     AxiomSet.ofPure (npc Signature.pure) ⟹ converseWitnessedPossibility Sig := by
-  rintro a ⟨cs, P, -, rfl⟩
+  rintro a ⟨hc, cs, P, -, rfl⟩
+  split_closed hc
   have hBA : C.Theorem (Term.imp (Term.atConsts cs P) (Term.ofPure (Term.existsBlock _ P))) := by
     rw [Term.ofPure_existsBlock]
     exact Derivable.impI (Derivable.exIBlock _ (Terms.consts cs) Derivable.hyp₀)
   have hnpc : Theorem (C.axioms ∪ AxiomSet.ofPure (Sig := Sig) (npc Signature.pure))
       (Term.imp (Term.neg (Term.ofPure (Term.existsBlock _ P)))
         (Term.box (Term.neg (Term.ofPure (Term.existsBlock _ P))))) :=
-    Theorem.ax ⟨_, ⟨Term.neg (Term.existsBlock _ P), Term.pure_of_pureSig _, rfl⟩, rfl⟩
+    Theorem.ax ⟨_, npc_mem (p := Term.neg (Term.existsBlock _ P)) (Term.pure_of_pureSig _)
+      (by rw [Term.closedTypes_neg]; exact hc.2), rfl⟩
   exact Theorem.mp₂ (Derivable.allE₂β
     (Theorem.ofCMinus (C.TheoremMinus.ofPure npc_cwp.derivable)) _ _) hnpc
     (Theorem.ofC (C.Theorem.nec hBA))
@@ -130,11 +144,12 @@ theorem npc_entails_converseWitnessedPossibility :
 constants, at a pure sentence `P` and at `¬P`. -/
 theorem modalFreedom_entails_npc :
     modalFreedom Sig ⟹ AxiomSet.ofPure (npc Signature.pure) := by
-  rintro a ⟨_, ⟨q, -, rfl⟩, rfl⟩
+  rintro a ⟨_, ⟨hq, q, -, rfl⟩, rfl⟩
+  split_closed hq
   have h : Theorem (C.axioms ∪ modalFreedom Sig)
       (Term.imp (Term.conj (Term.dia (Term.atConsts [] q)) (Term.dia (Term.atConsts [] (Term.neg q))))
         (Term.dia (Term.conj (Term.atConsts [] q) (Term.atConsts [] (Term.neg q))))) :=
-    Theorem.ax ⟨[], [], q, Term.neg q, List.nodup_nil, rfl⟩
+    Theorem.ax (modalFreedom_mem List.nodup_nil hq.1 (by rw [Term.closedTypes_neg]; exact hq.1))
   rw [Term.atConsts_nil, Term.atConsts_nil] at h
   exact Theorem.mp (Derivable.allEβ
     (Theorem.ofCMinus (C.TheoremMinus.ofPure mf_box.derivable)) _) h
@@ -142,10 +157,14 @@ theorem modalFreedom_entails_npc :
 /-- `no-contingency-signature-r-implies-modal-freedom-signature-r`: No Contingency at
 `¬P[c̄/x̄]` and at `¬Q[d̄/ȳ]`. -/
 theorem noContingency_entails_modalFreedom : noContingency Sig ⟹ modalFreedom Sig := by
-  rintro a ⟨cs, ds, P, Q, -, rfl⟩
+  rintro a ⟨hc, cs, ds, P, Q, -, rfl⟩
+  split_closed hc
   exact Theorem.mp₂ (Derivable.allE₂β
     (Theorem.ofCMinus (C.TheoremMinus.ofPure nc_mf.derivable)) _ _)
-    (Theorem.ax ⟨Term.neg (Term.atConsts cs P), rfl⟩) (Theorem.ax ⟨Term.neg (Term.atConsts ds Q), rfl⟩)
+    (Theorem.ax (noContingency_mem (p := Term.neg (Term.atConsts cs P))
+      (by rw [Term.closedTypes_neg, Term.closedTypes_atConsts]; exact hc.1.1)))
+    (Theorem.ax (noContingency_mem (p := Term.neg (Term.atConsts ds Q))
+      (by rw [Term.closedTypes_neg, Term.closedTypes_atConsts]; exact hc.1.2)))
 
 /-- `witnessed-possibility-and-npc-imply-possibly-witnessed-possibility`: No Pure
 Contingency makes the possible pure sentence `∃x̄. P` true, and Witnessed Possibility
@@ -153,29 +172,33 @@ then gives `◇P[c̄/x̄]`. -/
 theorem npc_witnessedPossibility_entails_possiblyWitnessedPossibility :
     AxiomSet.ofPure (npc Signature.pure) ∪ witnessedPossibility Sig ⟹
       possiblyWitnessedPossibility Sig := by
-  rintro a ⟨cs, P, hcs, rfl⟩
+  rintro a ⟨hc, cs, P, hcs, rfl⟩
+  split_closed hc
   exact Theorem.mp₂ (Derivable.allE₂β
     (Theorem.ofCMinus (C.TheoremMinus.ofPure npc_wp_pwp.derivable)) _ _)
-    (Theorem.ax (Or.inl ⟨_, ⟨Term.neg (Term.existsBlock _ P), Term.pure_of_pureSig _, rfl⟩, rfl⟩))
-    (Theorem.ax (Or.inr ⟨cs, P, hcs, rfl⟩))
+    (Theorem.ax (Or.inl ⟨_, npc_mem (p := Term.neg (Term.existsBlock _ P)) (Term.pure_of_pureSig _)
+      (by rw [Term.closedTypes_neg]; exact hc.1), rfl⟩))
+    (Theorem.ax (Or.inr (witnessedPossibility_mem hcs hc.1)))
 
 /-- `possibly-witnessed-possibility-r-implies-witnessed-possibility-r`: `∃x̄. P` gives
 `◇∃x̄. P`. -/
 theorem possiblyWitnessedPossibility_entails_witnessedPossibility :
     possiblyWitnessedPossibility Sig ⟹ witnessedPossibility Sig := by
-  rintro a ⟨cs, P, hcs, rfl⟩
+  rintro a ⟨hc, cs, P, hcs, rfl⟩
+  split_closed hc
   exact Theorem.mp (Derivable.allE₂β
     (Theorem.ofCMinus (C.TheoremMinus.ofPure pwp_wp.derivable)) _ _)
-    (Theorem.ax ⟨cs, P, hcs, rfl⟩)
+    (Theorem.ax (possiblyWitnessedPossibility_mem hcs hc.1))
 
 /-- `logical-necessity-r-implies-witnessed-possibility-r`: Logical Necessity at `¬P` is
 `□¬P[c̄/x̄] ↔ ∀x̄. ¬P`, and `∃x̄. P` refutes the right side. -/
 theorem logicalNecessity_entails_witnessedPossibility :
     logicalNecessity Sig ⟹ witnessedPossibility Sig := by
-  rintro a ⟨cs, P, hcs, rfl⟩
+  rintro a ⟨hc, cs, P, hcs, rfl⟩
+  split_closed hc
   have hln : Theorem (C.axioms ∪ logicalNecessity Sig)
       (Term.iff (Term.box (Term.atConsts cs (Term.neg P))) (Term.ofPure (Term.forallBlock _ (Term.neg P)))) :=
-    Theorem.ax ⟨cs, Term.neg P, hcs, rfl⟩
+    Theorem.ax (logicalNecessity_mem hcs (by rw [closedTypes_existsBlock_neg]; exact hc.1))
   have hef : C.Theorem (Term.imp (Term.ofPure (Sig := Sig) (Term.existsBlock _ P))
       (Term.neg (Term.ofPure (Term.forallBlock _ (Term.neg P))))) := by
     rw [Term.ofPure_existsBlock, Term.ofPure_forallBlock]
@@ -188,17 +211,19 @@ theorem logicalNecessity_entails_witnessedPossibility :
 /-- `witnessed-possibility-and-no-pure-contingency-imply-logical-necessity`. -/
 theorem npc_witnessedPossibility_entails_logicalNecessity :
     AxiomSet.ofPure (npc Signature.pure) ∪ witnessedPossibility Sig ⟹ logicalNecessity Sig := by
-  rintro a ⟨cs, P, hcs, rfl⟩
+  rintro a ⟨hc, cs, P, hcs, rfl⟩
+  split_closed hc
   have hwp : Theorem (C.axioms ∪ (AxiomSet.ofPure (Sig := Sig) (npc Signature.pure) ∪ witnessedPossibility Sig))
       (Term.imp (Term.ofPure (Term.existsBlock _ (Term.neg P))) (Term.dia (Term.atConsts cs (Term.neg P)))) :=
-    Theorem.ax (Or.inr ⟨cs, Term.neg P, hcs, rfl⟩)
+    Theorem.ax (Or.inr (witnessedPossibility_mem hcs (by rw [closedTypes_existsBlock_neg]; exact hc.2.1)))
   have hae : C.Theorem (Term.imp (Term.neg (Term.ofPure (Sig := Sig) (Term.forallBlock _ P)))
       (Term.ofPure (Term.existsBlock _ (Term.neg P)))) := by
     rw [Term.ofPure_existsBlock, Term.ofPure_forallBlock]
     exact Derivable.impI (Derivable.existsBlock_neg_of_not_forallBlock _ Derivable.hyp₀)
   have hnpc : Theorem (C.axioms ∪ (AxiomSet.ofPure (Sig := Sig) (npc Signature.pure) ∪ witnessedPossibility Sig))
       (Term.imp (Term.ofPure (Term.forallBlock _ P)) (Term.box (Term.ofPure (Term.forallBlock _ P)))) :=
-    Theorem.ax (Or.inl ⟨_, ⟨Term.forallBlock _ P, Term.pure_of_pureSig _, rfl⟩, rfl⟩)
+    Theorem.ax (Or.inl ⟨_, npc_mem (p := Term.forallBlock _ P) (Term.pure_of_pureSig _)
+      (by rw [Term.closedTypes_forallBlock_eq_existsBlock]; exact hc.2.1), rfl⟩)
   have hab : C.Theorem (Term.imp (Term.ofPure (Sig := Sig) (Term.forallBlock _ P)) (Term.atConsts cs P)) := by
     rw [Term.ofPure_forallBlock]
     exact Derivable.impI (Derivable.allEBlock _ Derivable.hyp₀ (Terms.consts cs))

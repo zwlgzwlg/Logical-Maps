@@ -47,14 +47,14 @@ variable {Sig : Signature} (Ax : AxiomSet Sig)
 
 /-- **Distinctness entails Possibility**, relative to any theory. -/
 theorem distinctness_entails_possibility : distinctness Ax ⟹ possibility Ax := by
-  rintro a ⟨p, hp, rfl⟩
-  exact Theorem.ax ⟨Ty.t, p, Term.bot, not_theorem_eq_bot_of_consistent hp, rfl⟩
+  rintro a ⟨hc, p, hp, rfl⟩
+  exact Theorem.ax ⟨hc, Ty.t, p, Term.bot, not_theorem_eq_bot_of_consistent hp, rfl⟩
 
 /-- **Possibility entails Distinctness**, relative to any theory. -/
 theorem possibility_entails_distinctness : possibility Ax ⟹ distinctness Ax := by
-  rintro a ⟨σ, x, y, hxy, rfl⟩
+  rintro a ⟨hc, σ, x, y, hxy, rfl⟩
   have hd : Theorem (C.axioms ∪ possibility Ax) (Term.dia (Term.neg (Term.eq' x y))) :=
-    Theorem.ax ⟨Term.neg (Term.eq' x y), consistent_neg_of_not_theorem hxy, rfl⟩
+    Theorem.ax ⟨by simpa using hc, Term.neg (Term.eq' x y), consistent_neg_of_not_theorem hxy, rfl⟩
   exact Theorem.mp (Derivable.allE₂β
     (Theorem.ofCMinus (C.TheoremMinus.ofPure (dia_ne_imp_ne.derivable σ))) x y) hd
 

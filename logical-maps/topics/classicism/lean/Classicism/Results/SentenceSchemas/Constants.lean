@@ -133,16 +133,34 @@ theorem cast_consts {τ τ' : Ty} {ρ : RTy} (h : τ = τ') (F : Term Sig [] (τ
     (h.symm ▸ F : Term Sig [] (τ ⇒ ρ)).consts = F.consts := by
   subst h; rfl
 
+theorem cast_closedTypes_ctx {τ τ' : Ty} (h : τ = τ') (P₀ : Formula Signature.pure [τ']) :
+    (h.symm ▸ P₀ : Formula Signature.pure [τ]).closedTypes = P₀.closedTypes := by
+  subst h; rfl
+
+theorem cast_closedTypes_fun {τ τ' : Ty} {ρ : RTy} (h : τ = τ') (F : Term Sig [] (τ' ⇒ ρ)) :
+    (h.symm ▸ F : Term Sig [] (τ ⇒ ρ)).closedTypes = F.closedTypes := by
+  subst h; rfl
+
+theorem cast_closedTypes_const {Γ : Ctx} (c : Sig.Const) {τ : Ty} (h : Sig.typeOf c = τ) :
+    (h ▸ Term.const c : Term Sig Γ τ).closedTypes = decide τ.Closed := by
+  subst h; rfl
+
 /-- The instance of Witnessed Possibility at the constant `c`, with the pure formula
 `P₀` read at its type: `(∃x. P₀) → ◇P₀[c]`. -/
 theorem witnessedPossibility_at {c : Sig.Const} {ρ : RTy} (h : Sig.typeOf c = Ty.rel ρ)
-    (P₀ : Formula Signature.pure [Ty.rel ρ]) {Ax : AxiomSet Sig} (hW : witnessedPossibility Sig ⊆ Ax) :
+    (hρ : ρ.Closed) (P₀ : Formula Signature.pure [Ty.rel ρ]) (hP : P₀.closedTypes = true)
+    {Ax : AxiomSet Sig} (hW : witnessedPossibility Sig ⊆ Ax) :
     Theorem (C.axioms ∪ Ax) (Term.imp (Term.exists' (Term.ofPure P₀))
       (Term.dia ((Term.ofPure P₀).subst (Sub.cons (h ▸ Term.const c) Sub.id)))) := by
   have w := Theorem.ax (Ax := Ax)
     (a := Term.imp (Term.ofPure (Term.existsBlock [Sig.typeOf c] (h.symm ▸ P₀)))
       (Term.dia ((Term.ofPure (h.symm ▸ P₀)).subst (Sub.cons (Term.const c) Sub.id))))
-    (hW _ ⟨[c], (h.symm ▸ P₀ : Formula Signature.pure [Sig.typeOf c]), List.nodup_singleton c, rfl⟩)
+    (hW _ (witnessedPossibility_mem (cs := [c]) (P := (h.symm ▸ P₀ : Formula Signature.pure [Sig.typeOf c]))
+      (List.nodup_singleton c) (by
+        have hc : (Sig.typeOf c).Closed := h ▸ hρ
+        show (Term.exists' (h.symm ▸ P₀ : Formula Signature.pure [Sig.typeOf c])).closedTypes = true
+        rw [Term.closedTypes_exists', cast_closedTypes_ctx h P₀, hP]
+        simp [hc])))
   rwa [cast_existsBlock h, cast_subst h] at w
 
 /-- The instance of ND at the closed relational type `ρ`, at `x` and `⊤_ρ`. -/
@@ -159,8 +177,8 @@ theorem witnessedPossibility_nd_inconsistent (hS : Sig.Admitted) :
   obtain ⟨c, ρ, h, hρ⟩ := hS.exists_rel
   let P₁ : Formula Signature.pure [Ty.rel ρ] := Term.eq' (Term.var .zero) (Term.topR ρ)
   let X := witnessedPossibility Sig ∪ AxiomSet.ofPure P.NecessityOfDistinctness.schema
-  have w₁ := witnessedPossibility_at h P₁ (Ax := X) (subset_union_left _ _)
-  have w₂ := witnessedPossibility_at h (Term.neg P₁) (Ax := X) (subset_union_left _ _)
+  have w₁ := witnessedPossibility_at h hρ P₁ (by simp [P₁, Term.closedTypes, hρ]) (Ax := X) (subset_union_left _ _)
+  have w₂ := witnessedPossibility_at h hρ (Term.neg P₁) (by simp [P₁, Term.closedTypes, hρ]) (Ax := X) (subset_union_left _ _)
   have k := Theorem.mp (Theorem.mp (Theorem.mp (Derivable.allEβ
     (Theorem.ofCMinus (C.TheoremMinus.ofPure (wp_nd_contra.derivable ρ)))
       (h ▸ Term.const c : Term Sig [] (Ty.rel ρ))) w₁) w₂)
@@ -174,14 +192,14 @@ theorem noContingency_witnessedPossibility_inconsistent (hS : Sig.Admitted) :
   let X := noContingency Sig ∪ witnessedPossibility Sig
   let P₁ : Formula Signature.pure [Ty.rel ρ] := Term.eq' (Term.var .zero) (Term.topR ρ)
   let cR : Term Sig [] (Ty.rel ρ) := h ▸ Term.const c
-  have w₁ := witnessedPossibility_at h P₁ (Ax := X) (subset_union_right _ _)
-  have w₂ := witnessedPossibility_at h (Term.neg P₁) (Ax := X) (subset_union_right _ _)
+  have w₁ := witnessedPossibility_at h hρ P₁ (by simp [P₁, Term.closedTypes, hρ]) (Ax := X) (subset_union_right _ _)
+  have w₂ := witnessedPossibility_at h hρ (Term.neg P₁) (by simp [P₁, Term.closedTypes, hρ]) (Ax := X) (subset_union_right _ _)
   have n₁ : Theorem (C.axioms ∪ X)
       (Term.imp (Term.eq' cR (Term.topR ρ)) (Term.box (Term.eq' cR (Term.topR ρ)))) :=
-    Theorem.ax (Or.inl ⟨_, rfl⟩)
+    Theorem.ax (Or.inl (noContingency_mem (by simp [cR, cast_closedTypes_const, Term.closedTypes, hρ])))
   have n₂ : Theorem (C.axioms ∪ X) (Term.imp (Term.neg (Term.eq' cR (Term.topR ρ)))
       (Term.box (Term.neg (Term.eq' cR (Term.topR ρ))))) :=
-    Theorem.ax (Or.inl ⟨_, rfl⟩)
+    Theorem.ax (Or.inl (noContingency_mem (by simp [cR, cast_closedTypes_const, Term.closedTypes, hρ])))
   have k := Theorem.mp (Theorem.mp (Theorem.mp (Theorem.mp (Derivable.allEβ
     (Theorem.ofCMinus (C.TheoremMinus.ofPure (nc_wp_contra.derivable ρ))) cR) w₁) w₂)
     (Theorem.ofC (C.topR_ne_botR ρ hρ))) n₁
@@ -194,11 +212,11 @@ theorem signatureB_witnessedPossibility_inconsistent (hS : Sig.Admitted) :
   let X := signatureB Sig ∪ witnessedPossibility Sig
   let P₁ : Formula Signature.pure [Ty.rel ρ] := Term.eq' (Term.var .zero) (Term.topR ρ)
   let cR : Term Sig [] (Ty.rel ρ) := h ▸ Term.const c
-  have w₁ := witnessedPossibility_at h P₁ (Ax := X) (subset_union_right _ _)
-  have w₂ := witnessedPossibility_at h (Term.neg P₁) (Ax := X) (subset_union_right _ _)
+  have w₁ := witnessedPossibility_at h hρ P₁ (by simp [P₁, Term.closedTypes, hρ]) (Ax := X) (subset_union_right _ _)
+  have w₂ := witnessedPossibility_at h hρ (Term.neg P₁) (by simp [P₁, Term.closedTypes, hρ]) (Ax := X) (subset_union_right _ _)
   have b : Theorem (C.axioms ∪ X) (Term.imp (Term.neg (Term.eq' cR (Term.topR ρ)))
       (Term.box (Term.dia (Term.neg (Term.eq' cR (Term.topR ρ)))))) :=
-    Theorem.ax (Or.inl ⟨_, rfl⟩)
+    Theorem.ax (Or.inl (signatureB_mem (by simp [cR, cast_closedTypes_const, Term.closedTypes, hρ])))
   have k := Theorem.mp (Theorem.mp (Theorem.mp (Derivable.allEβ
     (Theorem.ofCMinus (C.TheoremMinus.ofPure (b_wp_contra.derivable ρ))) cR) w₁) w₂)
     (Theorem.ofC (C.topR_ne_botR ρ hρ))
@@ -208,6 +226,7 @@ theorem signatureB_witnessedPossibility_inconsistent (hS : Sig.Admitted) :
 of the type `ρ → ρ'` read at the constant's type. -/
 theorem separatedStructure_at {c : Sig.Const} {ρ : RTy} (h : Sig.typeOf c = Ty.rel ρ) {ρ' : RTy}
     (F₀ G₀ : Term Sig [] (Ty.rel ρ ⇒ ρ')) (hF : c ∉ F₀.consts) (hG : c ∉ G₀.consts)
+    (hFc : F₀.closedTypes = true) (hGc : G₀.closedTypes = true)
     {Ax : AxiomSet Sig} (hW : separatedStructure Sig ⊆ Ax) :
     Theorem (C.axioms ∪ Ax) (Term.imp
       (Term.eq' (Term.app F₀ (h ▸ Term.const c)) (Term.app G₀ (h ▸ Term.const c))) (Term.eq' F₀ G₀)) := by
@@ -215,7 +234,17 @@ theorem separatedStructure_at {c : Sig.Const} {ρ : RTy} (h : Sig.typeOf c = Ty.
     (a := Term.imp (Term.eq' (Term.app (h.symm ▸ F₀ : Term Sig [] (Sig.typeOf c ⇒ ρ')) (Term.const c))
         (Term.app (h.symm ▸ G₀ : Term Sig [] (Sig.typeOf c ⇒ ρ')) (Term.const c)))
       (Term.eq' (h.symm ▸ F₀ : Term Sig [] (Sig.typeOf c ⇒ ρ')) (h.symm ▸ G₀)))
-    (hW _ ⟨c, ρ', _, _, by rw [cast_consts h]; exact hF, by rw [cast_consts h]; exact hG, rfl⟩)
+    (hW _ ⟨by
+        have hc : (Sig.typeOf c).Closed := by
+          have := Term.closed_of_closedTypes hFc; rw [h]; exact this.1
+        have hρ' : ρ'.Closed := (Term.closed_of_closedTypes hFc).2
+        show (Term.imp (Term.eq' (Term.app (h.symm ▸ F₀ : Term Sig [] (Sig.typeOf c ⇒ ρ')) (Term.const c))
+            (Term.app (h.symm ▸ G₀ : Term Sig [] (Sig.typeOf c ⇒ ρ')) (Term.const c)))
+          (Term.eq' (h.symm ▸ F₀ : Term Sig [] (Sig.typeOf c ⇒ ρ')) (h.symm ▸ G₀))).closedTypes = true
+        simp only [Term.closedTypes_eq', Term.closedTypes]
+        rw [cast_closedTypes_fun h F₀, cast_closedTypes_fun h G₀]
+        simp [hFc, hGc, hc, hρ'],
+      c, ρ', _, _, by rw [cast_consts h]; exact hF, by rw [cast_consts h]; exact hG, rfl⟩)
   rwa [cast_app h, cast_app h, cast_eq' h] at w
 
 /-- `separated-structure-incompatible-with-nd`. -/
@@ -226,10 +255,12 @@ theorem separatedStructure_nd_inconsistent (hS : Sig.Admitted) :
   let X := separatedStructure Sig ∪ AxiomSet.ofPure P.NecessityOfDistinctness.schema
   let cR : Term Sig [] (Ty.rel ρ) := h ▸ Term.const c
   have s₁ := separatedStructure_at h (Ax := X) (Term.lam (Term.var .zero)) (Term.lam (Term.topR ρ))
-    (by simp [Term.consts]) (by simp [Term.consts]) (subset_union_left _ _)
+    (by simp [Term.consts]) (by simp [Term.consts]) (by simp [Term.closedTypes, hρ])
+    (by simp [Term.closedTypes, hρ]) (subset_union_left _ _)
   have s₂ := separatedStructure_at h (Ax := X)
     (Term.lam (Term.neg (Term.eq' (Term.var .zero) (Term.topR ρ)))) (Term.lam Term.top)
-    (by simp [Term.consts]) (by simp [Term.consts]) (subset_union_left _ _)
+    (by simp [Term.consts]) (by simp [Term.consts]) (by simp [Term.closedTypes, hρ])
+    (by simp [Term.closedTypes, hρ]) (subset_union_left _ _)
   have s₂' : Theorem (C.axioms ∪ X) (Term.imp (Term.eq' (Term.neg (Term.eq' cR (Term.topR ρ))) Term.top)
       (Term.eq' (Term.lam (Term.neg (Term.eq' (Term.var .zero) (Term.topR ρ)))) (Term.lam Term.top))) :=
     Derivable.conv s₂ (Conv.app_congr (Conv.app_congr (Conv.refl _) (Conv.app_congr (Conv.refl _)

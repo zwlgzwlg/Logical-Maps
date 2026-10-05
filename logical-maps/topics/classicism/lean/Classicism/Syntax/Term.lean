@@ -203,6 +203,44 @@ def pure : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Bool
   | _, _, .constR _ | _, _, .negR _ | _, _, .andR _ | _, _, .orR _ | _, _, .coextR _
   | _, _, .boxR _ | _, _, .inclR _ => true
 
+/-! ### Closed types
+
+A term is in the **paper's language** when every type occurring in it is closed: the type of
+each of its subterms, which covers the type of every bound variable, of every argument, and
+the type subscript of every logical constant. Type variables are a device of the metalogic
+(`Syntax/Types.lean`); the map's sentence schemas range over the sentences of the paper's
+language, so each requires this of its instances (`Syntax/SentenceSchemas.lean`). -/
+
+/-- Is every type occurring in the term closed? Each constructor checks the types it
+introduces: a variable its type, a constant its type, an abstraction its binder, a logical
+constant its subscript. By induction, the type of every subterm is then closed
+(`closed_of_closedTypes`). -/
+def closedTypes : ∀ {Γ : Ctx} {σ : Ty}, Term Sig Γ σ → Bool
+  | _, σ, .var _ => decide σ.Closed
+  | _, _, .const c => decide (Sig.typeOf c).Closed
+  | _, _, .app f a => f.closedTypes && a.closedTypes
+  | _, _, .lam (σ := σ) b => decide σ.Closed && b.closedTypes
+  | _, _, .and | _, _, .or | _, _, .not => true
+  | _, _, .all σ | _, _, .ex σ | _, _, .eq σ => decide σ.Closed
+  | _, _, .constR ρ | _, _, .negR ρ | _, _, .andR ρ | _, _, .orR ρ | _, _, .coextR ρ
+  | _, _, .boxR ρ | _, _, .inclR ρ => decide ρ.Closed
+
+/-- The type of a term in the paper's language is closed. -/
+theorem closed_of_closedTypes : ∀ {Γ : Ctx} {σ : Ty} {t : Term Sig Γ σ},
+    t.closedTypes = true → σ.Closed
+  | _, _, .var _, h | _, _, .const _, h => by simpa [closedTypes] using h
+  | _, _, .app f _, h => by
+    simp only [closedTypes, Bool.and_eq_true] at h; exact (closed_of_closedTypes h.1).2
+  | _, _, .lam b, h => by
+    simp only [closedTypes, Bool.and_eq_true, decide_eq_true_eq] at h
+    exact ⟨h.1, closed_of_closedTypes h.2⟩
+  | _, _, .and, _ | _, _, .or, _ | _, _, .not, _ => by simp
+  | _, _, .all _, h | _, _, .ex _, h | _, _, .eq _, h => by
+    simp only [closedTypes, decide_eq_true_eq] at h; simp [h]
+  | _, _, .constR _, h | _, _, .negR _, h | _, _, .andR _, h | _, _, .orR _, h
+  | _, _, .coextR _, h | _, _, .boxR _, h | _, _, .inclR _, h => by
+    simp only [closedTypes, decide_eq_true_eq] at h; simp [h]
+
 /-! ### Renaming -/
 
 end Term

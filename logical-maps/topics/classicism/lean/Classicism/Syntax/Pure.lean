@@ -92,6 +92,19 @@ variable {Γ : Ctx}
 @[simp] theorem ofPure_inclR (ρ : RTy) : ofPure (Sig := Sig) (Γ := Γ) (.inclR ρ) = .inclR ρ := rfl
 end
 
+/-- Reading a pure term in a signature changes none of its types. -/
+@[simp] theorem closedTypes_ofPure :
+    ∀ {Γ : Ctx} {σ : Ty} (t : Term Signature.pure Γ σ),
+      (ofPure (Sig := Sig) t).closedTypes = t.closedTypes
+  | _, _, .var _ | _, _, .and | _, _, .or | _, _, .not | _, _, .all _ | _, _, .ex _ | _, _, .eq _
+  | _, _, .constR _ | _, _, .negR _ | _, _, .andR _ | _, _, .orR _ | _, _, .coextR _
+  | _, _, .boxR _ | _, _, .inclR _ => rfl
+  | _, _, .const c => nomatch c
+  | _, _, .app f a => by
+    simp [ofPure_app, Term.closedTypes, closedTypes_ofPure f, closedTypes_ofPure a]
+  | _, _, .lam b => by
+    simp [ofPure_lam, Term.closedTypes, closedTypes_ofPure b]
+
 /-- Reading into a signature commutes with renaming. -/
 theorem ofPure_rename : ∀ {Γ Δ : Ctx} (r : Ren Γ Δ) {σ : Ty} (a : Term Signature.pure Γ σ),
     ofPure (Sig := Sig) (a.rename r) = (ofPure a).rename r

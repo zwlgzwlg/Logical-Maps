@@ -16,8 +16,9 @@ from the models the semantics provides, every such fact the results in this fold
 each as `Consistent Ax` or `¬ Theorem (C ∪ Ax) p` for the axiom sets and quoted
 sentences the results are stated in. Two models do all the work:
 
-- **`Prop`, the full Henkin model on `e`** (`Interp.ofDomain e`, the reading that the
-  reflection theorems `P.reflect` are stated for): the Fregean Axiom holds, by `propext`;
+- **`Prop`, the full Henkin model on one individual** (`Interp.ofDomain Unit`, rather than
+  on the shallow layer's `e`, so that nothing here rests on the axioms `e` and `e_exists`):
+  the Fregean Axiom holds, by `propext`;
   and, since there is one world, everything true is necessary, so No Contingency holds —
   for any signature, the constants interpreted anyhow (`Interp.trivial`). The map's
   `full-henkin-singleton-base`.
@@ -67,12 +68,13 @@ open AxiomSet CategoryTheory Intensional
 
 /-! ### `Prop`: the full Henkin model on `e` -/
 
-instance : Nonempty Classicism.e := ⟨Classicism.e_exists.choose⟩
+/-- The full Henkin model on a one-element domain of individuals. Not on the shallow
+layer's `e`, the domain the reflection theorems are stated for: that would make every fact
+below rest on the axioms `e` and `e_exists`, outside the map's list. The facts here are about
+sentences at `t`, whose truth does not depend on the domain. -/
+abbrev henkin : Interp Signature.pure := Interp.ofDomain Unit
 
-/-- The full Henkin model on `e`, the reading the reflection theorems are stated for. -/
-abbrev henkin : Interp Signature.pure := Interp.ofDomain Classicism.e
-
-instance : Nonempty henkin.D := inferInstanceAs (Nonempty Classicism.e)
+instance : Nonempty henkin.D := inferInstanceAs (Nonempty Unit)
 
 /-- In a one-world model what is true is necessary. -/
 theorem Sentence.box_holds_of_holds {Sig : Signature} (I : Interp Sig) {p : Sentence Sig}
@@ -83,7 +85,7 @@ theorem Sentence.box_holds_of_holds {Sig : Signature} (I : Interp Sig) {p : Sent
 constants: the map's note that it "holds in every one-world model whatever the constants
 denote". -/
 theorem noContingency_holds_interp {Sig : Signature} (I : Interp Sig) : (noContingency Sig).holds I := by
-  rintro a ⟨p, rfl⟩
+  rintro a ⟨-, p, rfl⟩
   exact (Classical.em (Sentence.holds I p)).elim (fun h => Or.inr (Sentence.box_holds_of_holds I h)) Or.inl
 
 theorem npc_holds_interp {Sig : Signature} (I : Interp Sig) : (npc Sig).holds I :=
@@ -91,11 +93,16 @@ theorem npc_holds_interp {Sig : Signature} (I : Interp Sig) : (npc Sig).holds I 
 
 /-- No Contingency for any signature is consistent: `no-contingency-signature-r`. -/
 theorem noContingency_consistent (Sig : Signature) : Consistent (noContingency Sig) :=
-  Consistent.of_interp (Interp.trivial Sig Classicism.e) (noContingency_holds_interp _)
+  Consistent.of_interp (Interp.trivial Sig Unit) (noContingency_holds_interp _)
 
 /-- The Fregean Axiom holds in `Prop`: it is `propext`. -/
-theorem fregean_holds_henkin : Sentence.holds henkin P.FregeanAxiom.quoted :=
-  P.FregeanAxiom.reflect.mpr (fun p q (h : p ↔ q) => propext h : ∀ p q : Prop, (p ↔ q) → p = q)
+theorem fregean_holds_henkin : Sentence.holds henkin P.FregeanAxiom.quoted := by
+  intro p q
+  show (¬ ((¬ p ∨ q) ∧ (¬ q ∨ p))) ∨ p = q
+  by_cases h : (¬ p ∨ q) ∧ (¬ q ∨ p)
+  · exact Or.inr (propext ⟨fun hp => h.1.resolve_left (not_not.mpr hp),
+      fun hq => h.2.resolve_left (not_not.mpr hq)⟩)
+  · exact Or.inl h
 
 theorem box_fregean_holds_henkin : Sentence.holds henkin (Term.box P.FregeanAxiom.quoted) :=
   Sentence.box_holds_of_holds henkin fregean_holds_henkin

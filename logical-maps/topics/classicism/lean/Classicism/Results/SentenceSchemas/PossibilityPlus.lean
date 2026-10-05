@@ -37,28 +37,30 @@ theorem Derivable.neConsts_zero {Ax : AxiomSet Sig} {Γ : Ctx} {Δ : List (Formu
 /-- `possibility-plus-r-implies-possibility-schema-r`: the instance with no variables. -/
 theorem possibilityPlus_entails_possibility :
     possibilityPlus Signature.pure ⟹ possibility (empty : AxiomSet Signature.pure) := by
-  rintro a ⟨p, hc, rfl⟩
+  rintro a ⟨hc0, p, hc, rfl⟩
   have h : Theorem (C.axioms ∪ possibilityPlus Signature.pure) (Term.imp Term.top (Term.dia p)) :=
-    Theorem.ax ⟨0, p, Term.pure_of_pureSig p, Consistent.mono (subset_union_right _ _) hc, rfl⟩
+    Theorem.ax ⟨by simpa using hc0, 0, p, Term.pure_of_pureSig p,
+      Consistent.mono (subset_union_right _ _) hc, rfl⟩
   exact Theorem.mp h Derivable.top
 
 /-- `possibility-plus-signature-r-implies-possibility-signature-r`: the instance with no
 variables. -/
 theorem possibilityPlusSig_entails_possibility :
     possibilityPlusSig Sig ⟹ possibility (empty : AxiomSet Sig) := by
-  rintro a ⟨p, hc, rfl⟩
+  rintro a ⟨hc0, p, hc, rfl⟩
   obtain ⟨ds, hds⟩ := Term.exists_indConsts_list p
   have h : Theorem (C.axioms ∪ possibilityPlusSig Sig)
       (Term.imp (Term.neConsts 0 .nil ds Term.top) (Term.dia p)) :=
-    Theorem.ax ⟨0, p, ds, hds, Consistent.mono (subset_union_right _ _) hc, rfl⟩
+    Theorem.ax ⟨by simpa [Term.closedTypes_neConsts_zero] using hc0, 0, p, ds, hds,
+      Consistent.mono (subset_union_right _ _) hc, rfl⟩
   exact Theorem.mp h (Derivable.neConsts_zero ds)
 
 /-- `possibility-plus-signature-r-implies-possibility-plus-r`: Possibility+ (pure), read in
 a closed signature, is part of Possibility+ for the signature. -/
 theorem ofPure_possibilityPlus_subset (hS : Sig.Closed) :
     AxiomSet.ofPure (possibilityPlus Signature.pure) ⊆ possibilityPlusSig Sig := by
-  rintro a ⟨_, ⟨n, P, -, hc, rfl⟩, rfl⟩
-  refine ⟨n, Term.ofPure P, [], ?_, ?_, ?_⟩
+  rintro a ⟨_, ⟨hct, n, P, -, hc, rfl⟩, rfl⟩
+  refine ⟨by rw [Term.closedTypes_ofPure]; exact hct, n, Term.ofPure P, [], ?_, ?_, ?_⟩
   · intro c hc'
     rw [Term.consts_eq_empty_of_pure _ (Term.pure_ofPure P)] at hc'
     exact hc'.elim

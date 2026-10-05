@@ -26,7 +26,7 @@ variable (Sig)
 
 /-- **Strong Possibility**: `◇_≠P` for each sentence `P` consistent with Maximalist
 Classicism. -/
-def strongPossibility : AxiomSet Sig := fun a =>
+def strongPossibility : AxiomSet Sig := fun a => a.closedTypes = true ∧
   ∃ p : Sentence Sig, Consistent (maximalist ∪ single p) ∧ a = Term.diaNe p
 
 end AxiomSet

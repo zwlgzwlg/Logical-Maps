@@ -417,8 +417,9 @@ theorem consistent_ofPure_iff (hS : Sig.Closed) {A : AxiomSet Signature.pure} :
 relative to `C` there: a pure sentence consistent with `C` is consistent with `C(Σ)`. -/
 theorem ofPure_possibility_subset (hS : Sig.Closed) :
     AxiomSet.ofPure (possibility (empty : AxiomSet Signature.pure)) ⊆ possibility (empty : AxiomSet Sig) := by
-  rintro a ⟨_, ⟨p, hc, rfl⟩, rfl⟩
-  refine ⟨Term.ofPure p, Consistent.mono ?_ ((consistent_ofPure_iff hS).2 hc), rfl⟩
+  rintro a ⟨_, ⟨ht, p, hc, rfl⟩, rfl⟩
+  refine ⟨by rw [Term.closedTypes_ofPure]; exact ht, Term.ofPure p,
+    Consistent.mono ?_ ((consistent_ofPure_iff hS).2 hc), rfl⟩
   rintro b (hb | rfl)
   · exact hb.elim
   · exact ⟨p, Or.inr rfl, rfl⟩
@@ -429,8 +430,9 @@ not prove. -/
 theorem ofPure_distinctness_subset (hS : Sig.Closed) :
     AxiomSet.ofPure (distinctness (empty : AxiomSet Signature.pure)) ⊆
       distinctness (empty : AxiomSet Sig) := by
-  rintro a ⟨_, ⟨σ, x, y, hn, rfl⟩, rfl⟩
-  refine ⟨σ, Term.ofPure x, Term.ofPure y, fun h => hn ?_, rfl⟩
+  rintro a ⟨_, ⟨ht, σ, x, y, hn, rfl⟩, rfl⟩
+  refine ⟨by rw [Term.closedTypes_ofPure]; exact ht, σ, Term.ofPure x, Term.ofPure y,
+    fun h => hn ?_, rfl⟩
   refine (theorem_ofPure_iff hS (A := empty) (p := Term.eq' x y)).1 (Derivable.mono ?_ h)
   exact fun _ hb => hb.elim Or.inl (fun h => h.elim)
 
@@ -439,22 +441,26 @@ theorem npc_eq_ofPure : npc Sig = AxiomSet.ofPure (npc Signature.pure) := by
   funext a
   apply propext
   constructor
-  · rintro ⟨p, hp, rfl⟩
+  · rintro ⟨ht, p, hp, rfl⟩
     obtain ⟨q, rfl⟩ := Term.exists_ofPure p hp
-    exact ⟨Term.imp q (Term.box q), ⟨q, q.pure_of_pureSig, rfl⟩, rfl⟩
-  · rintro ⟨_, ⟨p, -, rfl⟩, rfl⟩
-    exact ⟨Term.ofPure p, Term.pure_ofPure p, rfl⟩
+    have ht' : (Term.imp q (Term.box q)).closedTypes = true := by
+      rw [← Term.closedTypes_ofPure (Sig := Sig)]; exact ht
+    exact ⟨Term.imp q (Term.box q), ⟨ht', q, q.pure_of_pureSig, rfl⟩, rfl⟩
+  · rintro ⟨_, ⟨ht, p, -, rfl⟩, rfl⟩
+    exact ⟨by rw [Term.closedTypes_ofPure]; exact ht, Term.ofPure p, Term.pure_ofPure p, rfl⟩
 
 /-- Pure B for a signature is the pure one, read in it. -/
 theorem pureB_eq_ofPure : pureB Sig = AxiomSet.ofPure (pureB Signature.pure) := by
   funext a
   apply propext
   constructor
-  · rintro ⟨p, hp, rfl⟩
+  · rintro ⟨ht, p, hp, rfl⟩
     obtain ⟨q, rfl⟩ := Term.exists_ofPure p hp
-    exact ⟨Term.imp q (Term.box (Term.dia q)), ⟨q, q.pure_of_pureSig, rfl⟩, rfl⟩
-  · rintro ⟨_, ⟨p, -, rfl⟩, rfl⟩
-    exact ⟨Term.ofPure p, Term.pure_ofPure p, rfl⟩
+    have ht' : (Term.imp q (Term.box (Term.dia q))).closedTypes = true := by
+      rw [← Term.closedTypes_ofPure (Sig := Sig)]; exact ht
+    exact ⟨Term.imp q (Term.box (Term.dia q)), ⟨ht', q, q.pure_of_pureSig, rfl⟩, rfl⟩
+  · rintro ⟨_, ⟨ht, p, -, rfl⟩, rfl⟩
+    exact ⟨by rw [Term.closedTypes_ofPure]; exact ht, Term.ofPure p, Term.pure_ofPure p, rfl⟩
 
 end AxiomSet
 
