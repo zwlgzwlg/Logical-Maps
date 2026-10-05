@@ -99,7 +99,7 @@ background_presets:
 
 lattice_views:
 - id: modality-rigid-comprehension
-  name: Modality and Rigid Comprehension
+  name: Modality and rigid comp.
   default: true
   description: 'The conjunctions of Extensionality and five boxed principles: □ND, □Atomicity, □Actuality,
     □Rigid Comprehension and □BF.'
