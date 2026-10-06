@@ -179,6 +179,7 @@ lean:
     - Classicism.Models.FullActionModels
     - Classicism.Semantics.Interpretations
     - Classicism.Models.SymmetricFull
+    - Classicism.Models.SymmetricIdeal
     holds: ({model}).IsModel ∧ ({model}).HoldsAx {def}
     fails: ({model}).IsModel ∧ ¬ ({model}).HoldsAx {def}
     relative_categories: [signature]

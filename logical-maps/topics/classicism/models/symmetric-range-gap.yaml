@@ -164,3 +164,11 @@ history:
     see the notes.
   violates:
   - atomicity-t
+
+# The model in Lean (Classicism/Models/SymmetricIdeal.lean).
+lean:
+  model: Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGap
+  is_model: Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.rangeGap
+  meets:
+    one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
+    actual-world-isolated: Classicism.Meta.Intensional.SymIdeal.rangeGap_actualWorldIsolated

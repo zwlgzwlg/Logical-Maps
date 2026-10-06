@@ -250,3 +250,10 @@ history:
   satisfies:
   - transversal-r
   - necessary-transversal-r
+
+# The model in Lean (Classicism/Models/SymmetricIdeal.lean).
+lean:
+  model: Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.allSurj
+  is_model: Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.allSurj
+  meets:
+    one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _

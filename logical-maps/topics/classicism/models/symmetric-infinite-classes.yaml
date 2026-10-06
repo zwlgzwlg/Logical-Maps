@@ -117,3 +117,10 @@ history:
     others; a finitary old-image criterion shows it inextensible. Argument in the write-up; not yet checked.'
   satisfies:
   - inextensible-comprehension-r
+
+# The model in Lean (Classicism/Models/SymmetricIdeal.lean).
+lean:
+  model: Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.infClasses
+  is_model: Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.infClasses
+  meets:
+    one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _

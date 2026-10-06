@@ -162,3 +162,11 @@ history:
     in the notes.'
   violates:
   - relational-choice-r
+
+# The model in Lean (Classicism/Models/SymmetricIdeal.lean).
+lean:
+  model: Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.collapsePair
+  is_model: Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.collapsePair
+  meets:
+    one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
+    actual-world-isolated: Classicism.Meta.Intensional.SymIdeal.collapsePair_actualWorldIsolated

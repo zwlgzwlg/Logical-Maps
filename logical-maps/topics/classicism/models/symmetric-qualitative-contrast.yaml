@@ -187,3 +187,8 @@ history:
   violates:
   - relational-choice-r
   - functional-choice-r
+
+# The model in Lean (Classicism/Models/SymmetricIdeal.lean).
+lean:
+  model: Classicism.Meta.Intensional.SymIdeal.contrast
+  is_model: Classicism.Meta.Intensional.SymIdeal.contrast_isModel
