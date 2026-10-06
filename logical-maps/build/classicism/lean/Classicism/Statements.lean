@@ -5531,7 +5531,7 @@ def symmetry_constrained_full_all_maps_individuals_singleton_sigma_true_atom : P
 
 /-- `symmetry-constrained-full-collapse`
 
-Symmetry-constrained full model: identity and collapses on three individuals: a witness satisfying 11 principles
+Symmetry-constrained full model: permutations and collapses on three individuals: a witness satisfying 11 principles
 and violating 12. -/
 def symmetry_constrained_full_collapse : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -5561,7 +5561,7 @@ def symmetry_constrained_full_collapse : Prop :=
 
 /-- `symmetry-constrained-full-collapse-sigma-true-atom`
 
-Symmetry-constrained full model: identity and collapses on three individuals [Σ true atom]: a witness satisfying 9 principles
+Symmetry-constrained full model: permutations and collapses on three individuals [Σ true atom]: a witness satisfying 9 principles
 and violating 14. -/
 def symmetry_constrained_full_collapse_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -5591,7 +5591,7 @@ def symmetry_constrained_full_collapse_sigma_true_atom : Prop :=
 
 /-- `symmetry-constrained-full-collapse-individuals-singleton`
 
-Symmetry-constrained full model: identity and collapses on three individuals [one individual]: a witness satisfying 12 principles
+Symmetry-constrained full model: permutations and collapses on three individuals [one individual]: a witness satisfying 12 principles
 and violating 11. -/
 def symmetry_constrained_full_collapse_individuals_singleton : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -5621,7 +5621,7 @@ def symmetry_constrained_full_collapse_individuals_singleton : Prop :=
 
 /-- `symmetry-constrained-full-collapse-individuals-singleton-sigma-true-atom`
 
-Symmetry-constrained full model: identity and collapses on three individuals [one individual; Σ true atom]: a witness satisfying 10 principles
+Symmetry-constrained full model: permutations and collapses on three individuals [one individual; Σ true atom]: a witness satisfying 10 principles
 and violating 13. -/
 def symmetry_constrained_full_collapse_individuals_singleton_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧

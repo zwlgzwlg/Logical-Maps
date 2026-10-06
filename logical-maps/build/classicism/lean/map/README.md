@@ -109,11 +109,11 @@ closed under inverses, and `Premodel.symIdeal`, whose domains are the symmetric 
 pinned intensions. Proposition 20, that it is a model (`symIdeal_isModel`), combines the
 induction of Proposition D.4 with `sem_symmetric`: every logical constant's reading is
 symmetric when the domains are, and an abstraction's value moves along a symmetry as its
-body's does. `Models/SymmetricFull.lean` is `symmetry-constrained-full-all-maps` (all maps on
-three individuals, the permutations as symmetries), with the conditions one object,
-finitely many propositions, extensionally full (orbits) and actual world isolated (the
-permutations). The collapse member, whose permutations are not arrows, relabels by
-conjugation and is not covered by this construction.
+body's does. `Models/SymmetricFull.lean` has the group `symmetry-constrained-full`, for any
+monoid of maps on three individuals containing the permutations (`Maps3`): all maps
+(`allMaps`) and the permutations with the collapses (`permsCollapses`), each with the
+conditions one object, finitely many propositions, extensionally full (orbits) and actual
+world isolated (the permutations).
 
 **The sentence schemas range over the paper's language.** The object language here also has
 type variables, a device of the metalogic; every sentence schema (No Contingency, No Pure
