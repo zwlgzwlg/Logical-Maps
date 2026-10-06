@@ -514,6 +514,19 @@ theorem necessary_fregean_axiom : Statements.Models.full_two_object_retract.nece
 
 end full_two_object_retract
 
+namespace symmetric_two_object_unpinned
+
+/-- Least upper bounds at both objects: at the first by the group's theorem, at the second as
+unions (`SymIdeal.two_hasLUBs`); so Boolean Completeness holds at every world. -/
+theorem necessary_boolean_completeness_r :
+    Statements.Models.symmetric_two_object_unpinned.necessary_boolean_completeness_r :=
+  verdict_holds (SymBase.model_isModel SymIdeal.twoBase) <|
+    SymIdeal.twoBase.model.entails_holds (SymBase.model_isModel SymIdeal.twoBase)
+      P.NecBooleanCompleteness.of_lub.entails
+      (holdsAx_indexed.2 fun ρ _ => SymBase.holds_box_bc_lub (SymIdeal.two_hasLUBs ρ))
+
+end symmetric_two_object_unpinned
+
 end Classicism.Map.Models
 
 /-! ## The models' proofs that they meet the map's conditions

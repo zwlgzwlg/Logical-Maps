@@ -117,6 +117,10 @@ structure SymBase where
   G_inv : SymGroup G
   W₀ : F.Ob
   ne : ∀ i, Nonempty (F.X i)
+  /-- The pinning sets at each object (Appendix D's per-object ideals), the finite sets at the
+  base: the ideal of finite sets everywhere but for the draft's two-object model. -/
+  J : PinIdeal F.De
+  J_base : ∀ N ∈ J.mem W₀, N.Finite
 
 namespace SymBase
 
@@ -124,23 +128,43 @@ variable (S : SymBase)
 
 /-- **The symmetric ideally full model of a base** (Definition 18). -/
 noncomputable abbrev model : Premodel Signature.pure S.F.Ob :=
-  Premodel.symIdeal S.F.De S.G S.W₀ S.ne (fun c => nomatch c)
+  Premodel.symIdeal S.F.De S.G S.J S.W₀ S.ne (fun c => nomatch c)
 
 theorem model_isModel : S.model.IsModel := symIdeal_isModel S.G_inv
 
+variable {S} in
+/-- Every entity at the base is pinned down by a finite set. -/
+theorem finPinned (σ : Ty) (x : S.model.Dom S.W₀ σ) :
+    ∃ N : Set (S.F.X S.W₀), N.Finite ∧ S.model.PinnedO σ N (S.model.Incl σ S.W₀ x) :=
+  let ⟨N, hN, hp⟩ := symIdeal_inner_finPinned (De := S.F.De) (G := S.G) (J := S.J) (W₀ := S.W₀)
+    (nonempty_e := S.ne) (I := S.model.I) σ S.W₀ x
+  ⟨N, S.J_base N hN, hp⟩
+
+variable {S} in
+/-- An intension at the base is in the domain iff it is finitely pinned and symmetric. -/
+theorem mem_range_iff (ρ : RTy) (F : Intension (SymT S.F.De S.G S.J) ρ S.W₀) :
+    F ∈ Set.range (S.model.incl ρ S.W₀) ↔
+      (∃ N : Set (S.F.X S.W₀), N.Finite ∧
+        ∀ (V : S.F.Ob) (h i : S.W₀ ⟶ V), AgreeOn S.F.De N h i →
+          Intension.map (SymT S.F.De S.G S.J) h F = Intension.map (SymT S.F.De S.G S.J) i F) ∧
+        SymCond S.F.De S.G S.J F :=
+  (mem_range_symIncl S.F.De S.G S.J ρ S.W₀ F).trans
+    ⟨fun ⟨⟨N, hN, hp⟩, hs⟩ => ⟨⟨N, S.J_base N hN, hp⟩, hs⟩,
+     fun ⟨⟨N, hN, hp⟩, hs⟩ => ⟨⟨N, S.J.finite hN, hp⟩, hs⟩⟩
+
 /-- The symmetry group at the base object, as a proposition: the tuples of its members. -/
-def groupProp : Intension (SymT S.F.De S.G) .t S.W₀ :=
-  {p | ∃ g ∈ S.G S.W₀, p = (⟨S.W₀, PUnit.unit, g⟩ : Tuple (SymT S.F.De S.G) .t S.W₀)}
+def groupProp : Intension (SymT S.F.De S.G S.J) .t S.W₀ :=
+  {p | ∃ g ∈ S.G S.W₀, p = (⟨S.W₀, PUnit.unit, g⟩ : Tuple (SymT S.F.De S.G S.J) .t S.W₀)}
 
 /-- `symmetry-group-pinned`: the symmetry group, the smallest symmetric set of arrows
 containing the identity, is pinned down by a finite set. -/
 def SymmetryGroupPinned : Prop :=
   ∃ N : Set (S.F.X S.W₀), N.Finite ∧ ∀ (V : S.F.Ob) (h i : S.W₀ ⟶ V), AgreeOn S.F.De N h i →
-    Intension.map (SymT S.F.De S.G) h S.groupProp = Intension.map (SymT S.F.De S.G) i S.groupProp
+    Intension.map (SymT S.F.De S.G S.J) h S.groupProp = Intension.map (SymT S.F.De S.G S.J) i S.groupProp
 
 variable {S}
 
-theorem groupProp_sym : SymCond S.F.De S.G S.groupProp := by
+theorem groupProp_sym : SymCond S.F.De S.G S.J S.groupProp := by
   rintro V a k s hs ⟨g, hg, he⟩
   cases he
   exact ⟨g ≫ s, S.G_comp hg hs, rfl⟩
@@ -148,10 +172,10 @@ theorem groupProp_sym : SymCond S.F.De S.G S.groupProp := by
 /-- **The group's argument `actuality`**: the symmetry group, finitely pinned, is a true
 proposition in the domain entailing every truth. -/
 theorem actuality_of_pinned (h : S.SymmetryGroupPinned) : S.model.HoldsSentence P.Actuality.quoted := by
-  obtain ⟨a, ha⟩ := (mem_range_symIncl S.F.De S.G .t S.W₀ S.groupProp).2 ⟨h, groupProp_sym⟩
+  obtain ⟨a, ha⟩ := (mem_range_iff .t S.groupProp).2 ⟨h, groupProp_sym⟩
   have ha' : S.model.incl .t S.W₀ a = S.groupProp := ha
   refine Premodel.holds_actuality_of S.model_isModel a ?_ fun p hp => ?_
-  · show (⟨S.W₀, PUnit.unit, 𝟙 S.W₀⟩ : Tuple (SymT S.F.De S.G) .t S.W₀) ∈ S.model.incl .t S.W₀ a
+  · show (⟨S.W₀, PUnit.unit, 𝟙 S.W₀⟩ : Tuple (SymT S.F.De S.G S.J) .t S.W₀) ∈ S.model.incl .t S.W₀ a
     rw [ha']; exact ⟨𝟙 _, S.G_id _, rfl⟩
   · show S.model.incl .t S.W₀ a ⊆ S.model.incl .t S.W₀ p
     rw [ha']
@@ -172,13 +196,13 @@ def FixesOrOmits : Prop :=
 
 /-- The property of being other than the distinguished individual unless the world's arrow
 sends the base's distinguished individual to it. -/
-def fixedProp (d : ∀ V : S.F.Ob, S.F.X V) : Intension (SymT S.F.De S.G) (.arr .e .t) S.W₀ :=
+def fixedProp (d : ∀ V : S.F.Ob, S.F.X V) : Intension (SymT S.F.De S.G S.J) (.arr .e .t) S.W₀ :=
   {p | FunCat.fn p.2.2 (d S.W₀) = d p.1 ∨ p.2.1.1 ≠ d p.1}
 
 theorem fixedProp_mem (d : ∀ V : S.F.Ob, S.F.X V)
     (hd : ∀ V (g : V ⟶ V), g ∈ S.G V → FunCat.fn g (d V) = d V) :
     fixedProp d ∈ Set.range (S.model.incl (.arr .e .t) S.W₀) := by
-  refine (mem_range_symIncl S.F.De S.G _ S.W₀ _).2 ⟨⟨{d S.W₀}, Set.finite_singleton _, fun V h i ha => ?_⟩, ?_⟩
+  refine (mem_range_iff _ _).2 ⟨⟨{d S.W₀}, Set.finite_singleton _, fun V h i ha => ?_⟩, ?_⟩
   · have e : FunCat.fn h (d S.W₀) = FunCat.fn i (d S.W₀) := ha _ rfl
     ext ⟨U, ⟨y, ⟨⟩⟩, j⟩
     show FunCat.fn j (FunCat.fn h (d S.W₀)) = d U ∨ y ≠ d U ↔ FunCat.fn j (FunCat.fn i (d S.W₀)) = d U ∨ y ≠ d U
@@ -246,15 +270,15 @@ def Transposable : Prop :=
       ∃ g ∈ S.G S.W₀, AgreeOn S.F.De N g (𝟙 S.W₀) ∧ (S.model.inner _).map g A = A ∧ FunCat.fn g y ≠ y
 
 /-- `U := λX y. X y ∨ ¬∃z. X z`, as an intension: blind to the arrow. -/
-def choiceRel : Intension (SymT S.F.De S.G) (.arr (.rel (.arr .e .t)) (.arr .e .t)) S.W₀ :=
-  {p | (⟨p.1, (p.2.1.2.1, PUnit.unit), 𝟙 p.1⟩ : Tuple (SymT S.F.De S.G) (.arr .e .t) p.1) ∈
-      symIncl S.F.De S.G _ p.1 p.2.1.1 ∨
-    ∀ z, (⟨p.1, (z, PUnit.unit), 𝟙 p.1⟩ : Tuple (SymT S.F.De S.G) (.arr .e .t) p.1) ∉ symIncl S.F.De S.G _ p.1 p.2.1.1}
+def choiceRel : Intension (SymT S.F.De S.G S.J) (.arr (.rel (.arr .e .t)) (.arr .e .t)) S.W₀ :=
+  {p | (⟨p.1, (p.2.1.2.1, PUnit.unit), 𝟙 p.1⟩ : Tuple (SymT S.F.De S.G S.J) (.arr .e .t) p.1) ∈
+      symIncl S.F.De S.G S.J _ p.1 p.2.1.1 ∨
+    ∀ z, (⟨p.1, (z, PUnit.unit), 𝟙 p.1⟩ : Tuple (SymT S.F.De S.G S.J) (.arr .e .t) p.1) ∉ symIncl S.F.De S.G S.J _ p.1 p.2.1.1}
 
 theorem model_domSym : S.model.DomSym S.G := symIdeal_domSym
 
 theorem choiceRel_mem : choiceRel (S := S) ∈ Set.range (S.model.incl _ S.W₀) := by
-  refine (mem_range_symIncl S.F.De S.G _ S.W₀ _).2 ⟨⟨∅, Set.finite_empty, fun V h i _ => ?_⟩, ?_⟩
+  refine (mem_range_iff _ _).2 ⟨⟨∅, Set.finite_empty, fun V h i _ => ?_⟩, ?_⟩
   · ext ⟨U, a, k⟩; exact Iff.rfl
   · rintro V ⟨A, y, ⟨⟩⟩ k g hg hp
     have hA := model_domSym (S := S) (.arr .e .t) V A
@@ -293,8 +317,7 @@ theorem not_rc_of_transposable (hT : S.Transposable) :
       exact ⟨z, by show _ ∈ S.model.incl _ S.W₀ U; rw [hU]; exact Or.inl hz⟩
     · obtain ⟨z⟩ := S.ne S.W₀
       exact ⟨z, by show _ ∈ S.model.incl _ S.W₀ U; rw [hU]; exact Or.inr fun z' hz' => hne ⟨z', hz'⟩⟩
-  obtain ⟨N, hN, hpin⟩ := symIdeal_inner_finPinned (De := S.F.De) (G := S.G) (W₀ := S.W₀)
-    (nonempty_e := S.ne) (I := S.model.I) (.rel _) S.W₀ R
+  obtain ⟨N, hN, hpin⟩ := finPinned (.rel _) R
   obtain ⟨A, ⟨y₀, hy₀⟩, hmove⟩ := hT N hN
   obtain ⟨y, hRy, huniq⟩ := hfun A
   have hyA : (⟨S.W₀, (y, PUnit.unit), 𝟙 S.W₀⟩ : Tuple S.model.inner (.arr .e .t) S.W₀) ∈
@@ -321,12 +344,12 @@ theorem not_rc_of_transposable (hT : S.Transposable) :
 /-! ### The Axiom of Infinity -/
 
 /-- The cardinalities all of whose instances are finite: blind to the arrow. -/
-def finCards (σ : Ty) : Intension (SymT S.F.De S.G) (.arr (tC σ) .t) S.W₀ :=
+def finCards (σ : Ty) : Intension (SymT S.F.De S.G S.J) (.arr (tC σ) .t) S.W₀ :=
   {p | ∀ P : S.model.Dom p.1 (tP σ), Premodel.holdsOf (B := S.model) (W := p.1) p.2.1.1 P →
     (Premodel.pext (B := S.model) P).Finite}
 
 theorem finCards_mem (σ : Ty) : finCards (S := S) σ ∈ Set.range (S.model.incl _ S.W₀) := by
-  refine (mem_range_symIncl S.F.De S.G _ S.W₀ _).2 ⟨⟨∅, Set.finite_empty, fun V h i _ => ?_⟩, ?_⟩
+  refine (mem_range_iff _ _).2 ⟨⟨∅, Set.finite_empty, fun V h i _ => ?_⟩, ?_⟩
   · ext ⟨U, a, k⟩; exact Iff.rfl
   · rintro V ⟨Z, ⟨⟩⟩ k g hg (hZ : ∀ P, _ → _)
     intro P hP
@@ -366,11 +389,11 @@ def SeparableCollapses : Prop :=
     (FunCat.fn k (a j) = FunCat.fn k (b j) ∧ FunCat.fn k (a i) ≠ FunCat.fn k (b i))
 
 /-- That an arrow collapses two individuals. -/
-def collapseProp (x y : S.F.X S.W₀) : Intension (SymT S.F.De S.G) .t S.W₀ :=
+def collapseProp (x y : S.F.X S.W₀) : Intension (SymT S.F.De S.G S.J) .t S.W₀ :=
   {p | FunCat.fn p.2.2 x = FunCat.fn p.2.2 y}
 
 theorem collapseProp_mem (x y : S.F.X S.W₀) : collapseProp (S := S) x y ∈ Set.range (S.model.incl .t S.W₀) := by
-  refine (mem_range_symIncl S.F.De S.G _ S.W₀ _).2 ⟨⟨{x, y}, Set.toFinite _, fun V h i ha => ?_⟩, ?_⟩
+  refine (mem_range_iff _ _).2 ⟨⟨{x, y}, Set.toFinite _, fun V h i ha => ?_⟩, ?_⟩
   · have ex : FunCat.fn h x = FunCat.fn i x := ha x (by simp)
     have ey : FunCat.fn h y = FunCat.fn i y := ha y (by simp)
     ext ⟨U, ⟨⟩, k⟩
@@ -390,7 +413,7 @@ theorem infinite_props_of_separable (h : S.SeparableCollapses) : Infinite (S.mod
   have e' := congrArg (S.model.incl .t S.W₀) e
   rw [hf i, hf j] at e'
   have key : FunCat.fn k (a i) = FunCat.fn k (b i) ↔ FunCat.fn k (a j) = FunCat.fn k (b j) := by
-    have := congrArg (fun A : Intension (SymT S.F.De S.G) .t S.W₀ => (⟨V, PUnit.unit, k⟩ : Tuple _ _ _) ∈ A) e'
+    have := congrArg (fun A : Intension (SymT S.F.De S.G S.J) .t S.W₀ => (⟨V, PUnit.unit, k⟩ : Tuple _ _ _) ∈ A) e'
     exact Iff.of_eq this
   rcases hk with ⟨h1, h2⟩ | ⟨h1, h2⟩
   · exact h2 (key.1 h1)
@@ -402,21 +425,27 @@ variable (S) in
 /-- `surjective-arrows`: every arrow out of the base is surjective. -/
 def SurjectiveArrows : Prop := ∀ V (k : S.W₀ ⟶ V), Function.Surjective (FunCat.fn k)
 
+variable (S) in
+/-- `finite-pinning`: the pinning sets are the finite sets at every object. -/
+def FinitePinning : Prop := ∀ V (N : Set (S.F.X V)), N ∈ S.J.mem V → N.Finite
+
 /-- **A surjective arrow out of the base is surjective on every domain**: an entity at its
 target, pinned down by a finite `Y`, is the image of its pullback along a finite preimage
 of `Y`, which is pinned down and symmetric. -/
-theorem map_surjective_of {V : S.F.Ob} (k : S.W₀ ⟶ V) (hk : Function.Surjective (FunCat.fn k)) :
+theorem map_surjective_of (hfp : S.FinitePinning) {V : S.F.Ob} (k : S.W₀ ⟶ V)
+    (hk : Function.Surjective (FunCat.fn k)) :
     ∀ σ : Ty, Function.Surjective ((S.model.inner σ).map k)
   | .e => hk
   | .var _ => hk
   | .rel ρ => by
     intro b
-    obtain ⟨Y, hY, hb⟩ := symIdeal_inner_finPinned (De := S.F.De) (G := S.G) (W₀ := S.W₀)
+    obtain ⟨Y, hY, hb⟩ := symIdeal_inner_finPinned (De := S.F.De) (G := S.G) (J := S.J) (W₀ := S.W₀)
       (nonempty_e := S.ne) (I := S.model.I) (.rel ρ) V b
+    replace hY := hfp V Y hY
     obtain ⟨X, hX, hXY⟩ := Premodel.exists_finite_image_eq (f := (S.model.inner .e).map k) hk hY
     have hpb := Premodel.pullbackG_sym (G := S.G) (B := S.model) k X (model_domSym (S := S) ρ V b)
     have hpin := Premodel.pullbackG_pinned (B := S.model) k X (S.model.incl ρ V b)
-    obtain ⟨a, ha⟩ := (mem_range_symIncl S.F.De S.G ρ S.W₀ (S.model.pullbackG k X (S.model.incl ρ V b))).2
+    obtain ⟨a, ha⟩ := (mem_range_iff ρ (S.model.pullbackG k X (S.model.incl ρ V b))).2
       ⟨⟨X, hX, fun U h i hag => hpin U h i hag⟩, hpb⟩
     refine ⟨a, S.model.Incl_injective _ V ?_⟩
     have ha' : S.model.incl ρ S.W₀ a = S.model.pullbackG k X (S.model.incl ρ V b) := ha
@@ -424,29 +453,37 @@ theorem map_surjective_of {V : S.F.Ob} (k : S.W₀ ⟶ V) (hk : Function.Surject
     rfl
 
 /-- **The group's argument `barcan-surjective`**: BF at every type, at the base. -/
-theorem bf_of_surjective (hs : S.SurjectiveArrows) (σ : Ty) : S.model.HoldsSentence (Sentence.bf σ) :=
-  S.model.holds_bf_of_surjective S.model_isModel σ (𝟙 _) fun k => map_surjective_of k (hs _ k) σ
+theorem bf_of_surjective (hs : S.SurjectiveArrows) (hfp : S.FinitePinning) (σ : Ty) :
+    S.model.HoldsSentence (Sentence.bf σ) :=
+  S.model.holds_bf_of_surjective S.model_isModel σ (𝟙 _) fun k => map_surjective_of hfp k (hs _ k) σ
 
 /-! ### Boolean Completeness (Dorr's draft, §§4–5) -/
 
 variable (S) in
-/-- A finite `M` **separates** an arrow `h` from the base to itself (Definition 28): every arrow
-agreeing with `h` on `M` is a symmetry. -/
-def Separates (M : Set (S.F.X S.W₀)) (h : S.W₀ ⟶ S.W₀) : Prop :=
-  ∀ h' : S.W₀ ⟶ S.W₀, AgreeOn S.F.De M h h' → h' ∈ S.G S.W₀
+/-- A finite `M` **separates** an arrow `h` out of the base (Definition 28): every arrow
+agreeing with `h` on `M` is a symmetry of the base, so in particular `h` returns to it. -/
+def Separates (M : Set (S.F.X S.W₀)) {V : S.F.Ob} (h : S.W₀ ⟶ V) : Prop :=
+  ∀ h' : S.W₀ ⟶ V, AgreeOn S.F.De M h h' →
+    ∃ g ∈ S.G S.W₀, (⟨S.W₀, g⟩ : Σ U : S.F.Ob, S.W₀ ⟶ U) = ⟨V, h'⟩
+
+/-- For an arrow from the base to itself, separation is that every arrow agreeing on `M` is a
+symmetry. -/
+theorem separates_of_mem {M : Set (S.F.X S.W₀)} {h : S.W₀ ⟶ S.W₀}
+    (H : ∀ h' : S.W₀ ⟶ S.W₀, AgreeOn S.F.De M h h' → h' ∈ S.G S.W₀) : S.Separates M h :=
+  fun h' ha => ⟨h', H h' ha, rfl⟩
 
 variable (S) in
 /-- `hull-conditions`, the hypotheses of the draft's Theorem 36 with the constant closure
 operation `M ↦ M ∪ M₀`: a finite `M₀` such that **(B1)** every finite `M ⊇ M₀` is amalgamable,
-two arrows agreeing on `M`, the first not separated by `M`, being spliced on any finite `P`, `Q`
-with `P ∩ Q ⊆ M`; and **(B2)** for finite `N ⊇ M₀`, `P` and `Q`, some symmetry fixes `N`
-pointwise and moves `P ∖ N` off `Q`. -/
+two arrows out of the base to a common target agreeing on `M`, the first not separated by `M`,
+being spliced on any finite `P`, `Q` with `P ∩ Q ⊆ M`; and **(B2)** for finite `N ⊇ M₀`, `P`
+and `Q`, some symmetry fixes `N` pointwise and moves `P ∖ N` off `Q`. -/
 def HullConditions : Prop :=
   ∃ M₀ : Set (S.F.X S.W₀), M₀.Finite ∧
-    (∀ M : Set (S.F.X S.W₀), M.Finite → M₀ ⊆ M → ∀ h : S.W₀ ⟶ S.W₀, ¬ S.Separates M h →
-      ∀ h' : S.W₀ ⟶ S.W₀, AgreeOn S.F.De M h h' →
+    (∀ M : Set (S.F.X S.W₀), M.Finite → M₀ ⊆ M → ∀ (V : S.F.Ob) (h : S.W₀ ⟶ V), ¬ S.Separates M h →
+      ∀ h' : S.W₀ ⟶ V, AgreeOn S.F.De M h h' →
         ∀ P Q : Set (S.F.X S.W₀), P.Finite → Q.Finite → P ∩ Q ⊆ M →
-          ∃ j : S.W₀ ⟶ S.W₀, AgreeOn S.F.De P j h' ∧ AgreeOn S.F.De Q j h) ∧
+          ∃ j : S.W₀ ⟶ V, AgreeOn S.F.De P j h' ∧ AgreeOn S.F.De Q j h) ∧
     (∀ N P Q : Set (S.F.X S.W₀), N.Finite → P.Finite → Q.Finite → M₀ ⊆ N →
       ∃ g ∈ S.G S.W₀, (∀ x ∈ N, FunCat.fn g x = x) ∧ ∀ x ∈ P, x ∉ N → FunCat.fn g x ∉ Q)
 
@@ -480,10 +517,10 @@ theorem orbit_ext {ρ : RTy} {MF : Set (S.F.X S.W₀)} {F : S.model.Dom S.W₀ (
   have h1 := Premodel.Sym.at_id (model_domSym (S := S) _ S.W₀ F) (A, PUnit.unit) hg hA
   exact mem_of_pinned hpF (h := g) (i := 𝟙 _) (fun x hx => hfix x hx) _ h1
 
-/-- **Theorem 36** (the draft's main result), on one object: every property `F` of entities of a
+/-- **Theorem 36** (the draft's main result): every property `F` of entities of a
 relational type has a least upper bound, `⋃{A↑N | A ∈ ext F}` with `N := M_F ∪ M₀`, the union of
 the hulls of its instances. -/
-theorem lub_of_hull [Subsingleton S.F.Ob] (hH : S.HullConditions) (ρ : RTy)
+theorem lub_of_hull (hH : S.HullConditions) (ρ : RTy)
     (F : S.model.Dom S.W₀ (.rel (.arr (.rel ρ) .t))) :
     ∃ y : S.model.Dom S.W₀ (.rel ρ), ∀ z : S.model.Dom S.W₀ (.rel ρ),
       (∀ u : S.model.Dom S.W₀ (.rel ρ),
@@ -491,15 +528,14 @@ theorem lub_of_hull [Subsingleton S.F.Ob] (hH : S.HullConditions) (ρ : RTy)
           S.model.incl ρ S.W₀ u ⊆ S.model.incl ρ S.W₀ z) ↔
         S.model.incl ρ S.W₀ y ⊆ S.model.incl ρ S.W₀ z := by
   obtain ⟨M₀, hM₀, hB1, hB2⟩ := hH
-  obtain ⟨MF, hMF, hpF⟩ := symIdeal_inner_finPinned (De := S.F.De) (G := S.G) (W₀ := S.W₀)
-    (nonempty_e := S.ne) (I := S.model.I) (.rel _) S.W₀ F
+  obtain ⟨MF, hMF, hpF⟩ := finPinned (.rel _) F
   have hN : (MF ∪ M₀).Finite := hMF.union hM₀
   -- the union of the hulls at `N` of the instances
-  let Y : Intension (SymT S.F.De S.G) ρ S.W₀ := {p | ∃ A : S.model.Dom S.W₀ (.rel ρ),
+  let Y : Intension (SymT S.F.De S.G S.J) ρ S.W₀ := {p | ∃ A : S.model.Dom S.W₀ (.rel ρ),
     (⟨S.W₀, (A, PUnit.unit), 𝟙 S.W₀⟩ : Tuple S.model.inner (.arr (.rel ρ) .t) S.W₀) ∈ S.model.incl _ S.W₀ F ∧
     ∃ h' : S.W₀ ⟶ p.1, AgreeOn S.F.De (MF ∪ M₀) p.2.2 h' ∧
       (⟨p.1, p.2.1, h'⟩ : Tuple S.model.inner ρ S.W₀) ∈ S.model.incl ρ S.W₀ A}
-  obtain ⟨y, hy⟩ := (mem_range_symIncl S.F.De S.G ρ S.W₀ Y).2
+  obtain ⟨y, hy⟩ := (mem_range_iff ρ Y).2
     ⟨⟨MF ∪ M₀, hN, fun V h i ha => by
       ext ⟨U, v, k⟩
       constructor
@@ -513,11 +549,8 @@ theorem lub_of_hull [Subsingleton S.F.Ob] (hH : S.HullConditions) (ρ : RTy)
   refine ⟨y, fun z => ⟨fun hub => ?_, fun hle u hu => ?_⟩⟩
   · rw [hy']
     rintro ⟨V, v, h⟩ ⟨A, hA, h', hag, hm⟩
-    obtain rfl : V = S.W₀ := Subsingleton.elim _ _
-    obtain ⟨MU, hMU, hpU⟩ := symIdeal_inner_finPinned (De := S.F.De) (G := S.G) (W₀ := S.W₀)
-      (nonempty_e := S.ne) (I := S.model.I) (.rel ρ) S.W₀ z
-    obtain ⟨MA, hMA, hpA⟩ := symIdeal_inner_finPinned (De := S.F.De) (G := S.G) (W₀ := S.W₀)
-      (nonempty_e := S.ne) (I := S.model.I) (.rel ρ) S.W₀ A
+    obtain ⟨MU, hMU, hpU⟩ := finPinned (.rel ρ) z
+    obtain ⟨MA, hMA, hpA⟩ := finPinned (.rel ρ) A
     -- move `A`'s support off `z`'s outside `N` (B2)
     obtain ⟨g, hg, hgfix, hgmove⟩ := hB2 (MF ∪ M₀) (MA ∪ (MF ∪ M₀)) (MU ∪ (MF ∪ M₀)) hN (hMA.union hN)
       (hMU.union hN) Set.subset_union_right
@@ -528,7 +561,7 @@ theorem lub_of_hull [Subsingleton S.F.Ob] (hH : S.HullConditions) (ρ : RTy)
       have h0 : FunCat.fn g' (FunCat.fn g x) = x := congrFun (congrArg FunCat.fn e₁) x
       rwa [hgfix x hx] at h0
     let h'' := g' ≫ h'
-    have hm'' : (⟨S.W₀, v, h''⟩ : Tuple S.model.inner ρ S.W₀) ∈ S.model.incl ρ S.W₀ A' := by
+    have hm'' : (⟨V, v, h''⟩ : Tuple S.model.inner ρ S.W₀) ∈ S.model.incl ρ S.W₀ A' := by
       erw [S.model.incl_map, Intension.mem_map, ← Category.assoc, e₁, Category.id_comp]
       exact hm
     have hag'' : AgreeOn S.F.De (MF ∪ M₀) h h'' := fun x hx => by
@@ -543,9 +576,12 @@ theorem lub_of_hull [Subsingleton S.F.Ob] (hH : S.HullConditions) (ρ : RTy)
         · exact absurd hx2 (hgmove a (Or.inl ha) haN)
       · exact hx1
     by_cases hsep : S.Separates (MF ∪ M₀) h
-    · -- Case 1: `N` separates `h`; conjugate by `h⁻¹`
-      have hhG := hsep h (AgreeOn.refl _ _ _)
-      have hh''G := hsep h'' hag''
+    · -- Case 1: `N` separates `h`, which returns to the base; conjugate by `h⁻¹`
+      obtain ⟨g₁, hg₁, e₁'⟩ := hsep h (AgreeOn.refl _ _ _)
+      obtain ⟨rfl, e₁''⟩ := Sigma.mk.inj_iff.1 e₁'
+      have hhG : h ∈ S.G S.W₀ := eq_of_heq e₁'' ▸ hg₁
+      obtain ⟨g₂, hg₂, e₂'⟩ := hsep h'' hag''
+      have hh''G : h'' ∈ S.G S.W₀ := (eq_of_heq (Sigma.mk.inj_iff.1 e₂').2) ▸ hg₂
       obtain ⟨hi, hiG, eh₁, eh₂⟩ := S.G_inv _ h hhG
       let m := h'' ≫ hi
       have hmG : m ∈ S.G S.W₀ := S.G_comp hh''G hiG
@@ -563,9 +599,9 @@ theorem lub_of_hull [Subsingleton S.F.Ob] (hH : S.HullConditions) (ρ : RTy)
       have h4 := (model_domSym (S := S) ρ S.W₀ z) S.W₀ _ (𝟙 _) h hhG h3
       rwa [S.model.args_map_map_inv eh₂, Category.id_comp] at h4
     · -- Case 2: splice (B1)
-      obtain ⟨j, hj₁, hj₂⟩ := hB1 (MF ∪ M₀) hN Set.subset_union_right h hsep h'' hag''
+      obtain ⟨j, hj₁, hj₂⟩ := hB1 (MF ∪ M₀) hN Set.subset_union_right V h hsep h'' hag''
         (FunCat.fn g '' MA ∪ (MF ∪ M₀)) (MU ∪ (MF ∪ M₀)) ((hMA.image _).union hN) (hMU.union hN) hdisj
-      have h1 : (⟨S.W₀, v, j⟩ : Tuple S.model.inner ρ S.W₀) ∈ S.model.incl ρ S.W₀ A' :=
+      have h1 : (⟨V, v, j⟩ : Tuple S.model.inner ρ S.W₀) ∈ S.model.incl ρ S.W₀ A' :=
         mem_of_pinned hpA' (fun x hx => (hj₁ x (Or.inl hx)).symm) v hm''
       have h2 := hub _ hA' h1
       exact mem_of_pinned hpU (fun x hx => hj₂ x (Or.inl hx)) v h2
@@ -574,17 +610,38 @@ theorem lub_of_hull [Subsingleton S.F.Ob] (hH : S.HullConditions) (ρ : RTy)
     rw [hy']
     exact ⟨u, hu, k, AgreeOn.refl _ _ _, hm⟩
 
-/-- The least upper bounds give the LUB form of Boolean Completeness at every type. -/
-theorem holds_bc_lub [Subsingleton S.F.Ob] (hH : S.HullConditions) (ρ : RTy) :
-    S.model.HoldsSentence (P.BooleanCompletenessLUB.quoted ρ) := by
+variable (S) in
+/-- Every property of entities of type `ρ` at the object `V` has a least upper bound there. -/
+def HasLUBs (V : S.F.Ob) (ρ : RTy) : Prop :=
+  ∀ F : S.model.Dom V (.rel (.arr (.rel ρ) .t)), ∃ y : S.model.Dom V (.rel ρ), ∀ z : S.model.Dom V (.rel ρ),
+    (∀ u : S.model.Dom V (.rel ρ),
+      (⟨V, (u, PUnit.unit), 𝟙 V⟩ : Tuple S.model.inner (.arr (.rel ρ) .t) V) ∈ S.model.incl _ V F →
+        S.model.incl ρ V u ⊆ S.model.incl ρ V z) ↔
+      S.model.incl ρ V y ⊆ S.model.incl ρ V z
+
+/-- Least upper bounds at an object give the LUB form of Boolean Completeness at every world
+there. -/
+theorem holds_bc_lub_at {V : S.F.Ob} (k : S.model.W₀ ⟶ V) {ρ : RTy} (hl : S.HasLUBs V ρ) :
+    S.model.Holds k (P.BooleanCompletenessLUB.quoted ρ) .nil := by
   have M : S.model.IsModel := S.model_isModel
-  simp only [Premodel.HoldsSentence, P.BooleanCompletenessLUB.quoted, S.model.holds_forall M,
+  simp only [P.BooleanCompletenessLUB.quoted, S.model.holds_forall M,
     S.model.holds_exists M, S.model.holds_iff M, S.model.holds_imp M, S.model.holds_leR M]
   intro X
-  obtain ⟨y, hy⟩ := lub_of_hull hH ρ X
+  obtain ⟨y, hy⟩ := hl X
   refine ⟨y, fun z => Iff.trans (forall_congr' fun u => imp_congr ?_ Iff.rfl) (hy z)⟩
   rw [S.model.holds_app (a' := u) _ _ _ _ rfl]
   rfl
+
+/-- The least upper bounds give the LUB form of Boolean Completeness at every type. -/
+theorem holds_bc_lub (hH : S.HullConditions) (ρ : RTy) :
+    S.model.HoldsSentence (P.BooleanCompletenessLUB.quoted ρ) :=
+  holds_bc_lub_at (𝟙 _) (lub_of_hull hH ρ)
+
+/-- Least upper bounds at every object give the boxed LUB form. -/
+theorem holds_box_bc_lub {ρ : RTy} (hl : ∀ V, S.HasLUBs V ρ) :
+    S.model.HoldsSentence (Term.box (P.BooleanCompletenessLUB.quoted ρ)) := by
+  rw [Premodel.HoldsSentence, S.model.holds_box S.model_isModel]
+  exact fun k => holds_bc_lub_at _ (hl _)
 
 end SymBase
 

@@ -4,10 +4,10 @@
 
 ## Package
 
-- **Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
 - **Atomlessness.** Atomlessness in the displayed closed propositional formulation.
 - **Inextensible Comprehension.** Every relation, including a proposition, is coextensive with a inextensible one.
 - **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
+- **Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
 - **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
 - **No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
 - **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
@@ -31,12 +31,6 @@ Interpretation of Σ, fixed for this record: every constant of Σ is relational,
 *A member of the group Symmetric ideally-full models, which supplies this definition with the record's settings, and the arguments marked as shared.*
 
 ## Arguments
-
-### Holds Boolean Completeness.
-
-By the draft's main theorem with the distinguished individual as the distinguished set. Two arrows agreeing there lie in the same one of the two classes, and a prescription taken from the two of them extends within that class, by nonzero values in the second case and by surjective nonzero values in the first.
-
-*By Cian Dorr, 2026-09-19.*
 
 ### Holds Atomlessness.
 
@@ -76,6 +70,16 @@ At type e. Take the property of being positive unless things are as they actuall
 *Source: Boolean Completeness does not imply Rigid Comprehension, §7.1, p. 21; §7.2, p. 22. From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#barcan-fixes-or-omits`. It requires that There is a distinguished individual that every arrow either fixes or omits from its range, and some arrow moves it. Here: The arrows are the surjections for which $0$ is its own only preimage, which fix it, and the functions omitting $0$ from their range. By Cian Dorr, 2026-09-19.*
 
 *Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The range-gap model's argument, which its variant without Actuality invoked ("by the argument of the previous variant, which goes through verbatim"), stated once.
+
+### Holds Boolean Completeness.
+
+At every relational type: a property $F$ of type-$\tau$ entities has a least upper bound, the union of the hulls of its instances. Let $F$ be pinned down by $N\supseteq M_0$. For each instance $u$ of $F$ at the identity, its hull is the closure of $u$ under the arrows that $N$ does not separate from the identity, transported along the arrows agreeing with the identity on $N$; it is symmetric, pinned down by $N$ (by (B1), which splices an arrow agreeing with $h'$ on the instance's pinning set with $h$ on $N$), and an upper bound of $u$. Every upper bound $z$ of all the instances, pinned down by $N'$, contains every hull: given a member of a hull, (B2) supplies a symmetry fixing $N$ and moving the instance's pinning set off $N'$, whose image is again an instance (by the orbit lemma, Lemma 35), lying under $z$; and $z$, pinned down by $N'$, cannot tell the moved instance's tuple from the original. The union of the hulls is pinned down by $N$ and symmetric, so it is in the domain, and it is the least upper bound.
+
+*Source: Boolean Completeness does not imply Rigid Comprehension, Theorem 36, p. 18; Corollary 37, p. 19. From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#boolean-completeness`. It requires that There is a finite set $M_0$ of individuals at the evaluation object such that: (B1) for every finite $M\supseteq M_0$ and every arrow $h$ from the evaluation object to itself that $M$ does not separate (some arrow $k\notin G$ agrees with $h$ on $M$, or $h\in G$), every arrow $h'$ agreeing with $h$ on $M$, and finite $P,Q$ with $P\cap Q\subseteq M$, some arrow agrees with $h'$ on $P$ and with $h$ on $Q$; and (B2) for finite $N\supseteq M_0$ and finite $P,Q$, some member of the symmetry group fixes $N$ pointwise and moves every member of $P$ outside $N$ off $Q$. The arrows in (B1) go from the evaluation object to any one object, and $M$ separates $h$ when every arrow agreeing with $h$ on $M$ is a member of the symmetry group of the evaluation object. These are the hypotheses of Dorr's main theorem (draft, Definitions 28–30, Theorem 36). Here: With $M_0=\{0\}$, the distinguished individual (the draft's argument for this model). Two arrows agreeing there lie in the same one of the two classes, and a prescription taken from the two of them extends within that class, by nonzero values in the second case and by surjective nonzero values in the first; points are moved off a finite set by a permutation fixing $0$. By Cian Dorr, 2026-09-19.*
+
+*Revised 2026-10-06 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The draft's main theorem, which the all-surjections and collapse-pair models each applied in an argument of their own, stated once; what each member does to meet its hypotheses is its reason for meeting hull-conditions. Proved in Lean (SymBase.lub_of_hull).
+
+*Revised 2026-10-06 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* No longer requires one-object-action-model: as the draft notes (proof of Proposition 40), nothing in the theorem uses a single object, pinning, separation, amalgamability and hulls all quantifying over arrows with a fixed target; the condition hull-conditions now says so.
 
 ### Fails BF (type t).
 

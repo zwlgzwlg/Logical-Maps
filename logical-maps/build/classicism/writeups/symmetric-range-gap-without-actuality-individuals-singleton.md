@@ -4,9 +4,9 @@
 
 ## Package
 
-- **Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
 - **Atomlessness.** Atomlessness in the displayed closed propositional formulation.
 - **Inextensible Comprehension.** Every relation, including a proposition, is coextensive with a inextensible one.
+- **Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
 - **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
 - **No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
 - **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
@@ -31,12 +31,6 @@ Interpretation of Σ, fixed for this record: every constant of Σ is relational,
 
 ## Arguments
 
-### Holds Boolean Completeness.
-
-By the draft's main theorem with the distinguished individual as the distinguished set. Two arrows agreeing there lie in the same one of the two classes, and a prescription taken from the two of them extends within that class, by nonzero values in the second case and by surjective nonzero values in the first.
-
-*By Cian Dorr, 2026-09-19.*
-
 ### Holds Atomlessness.
 
 The first class of arrows contains non-injective ones, which restores the arguments used for the all-surjections model: given a true proposition pinned down by a finite set containing the distinguished individual and one other, the proposition that a fresh individual is not collapsed with that set is a strictly stronger truth; and the same splitting applied to an arbitrary nonzero proposition rather than a true one gives Atomlessness.
@@ -49,6 +43,16 @@ At every relational type, by an adaptation of the argument recorded for the all-
 Given $X$ pinned down by $S_X$, put $S:=S_X\cup\{0\}$ and $Y:=\lambda\bar z\, .\,\alpha\land\delta_S\land X\bar z$, with $\delta_S$ the proposition that no two members of $S$ are collapsed. $Y$ is symmetric, pinned down by $S$ and coextensive with $X$. At a world in $B$, or one collapsing $S$, $Y$ is empty there and at every world it sees. A world $i\in A$ injective on $S$ can be relabelled by a permutation fixing $0$, hence in the symmetry group, so that it fixes $S$ pointwise. For such $i$ the transversal lemma holds: $i$ is surjective, preimages of points outside $S$ lie outside $S$, the permutation $\tau$ of $\mathbb N\setminus S$ fixes $0$ and so lies in the symmetry group, which keeps the extension of $X$ at $1$ closed under $\tau\cdot$, and $i\circ\tau\in A$ fixes the pinning set of $r$. The rest of the argument, including the leading box, goes through verbatim. BF fails here, so the surjectivity used in the lemma is available only at the worlds in $A$; the conjunct $\alpha$ removes the others.
 
 *By Claude Opus 5.5 (Anthropic), at Cian Dorr's request, 2026-09-27.*
+
+### Holds Boolean Completeness.
+
+At every relational type: a property $F$ of type-$\tau$ entities has a least upper bound, the union of the hulls of its instances. Let $F$ be pinned down by $N\supseteq M_0$. For each instance $u$ of $F$ at the identity, its hull is the closure of $u$ under the arrows that $N$ does not separate from the identity, transported along the arrows agreeing with the identity on $N$; it is symmetric, pinned down by $N$ (by (B1), which splices an arrow agreeing with $h'$ on the instance's pinning set with $h$ on $N$), and an upper bound of $u$. Every upper bound $z$ of all the instances, pinned down by $N'$, contains every hull: given a member of a hull, (B2) supplies a symmetry fixing $N$ and moving the instance's pinning set off $N'$, whose image is again an instance (by the orbit lemma, Lemma 35), lying under $z$; and $z$, pinned down by $N'$, cannot tell the moved instance's tuple from the original. The union of the hulls is pinned down by $N$ and symmetric, so it is in the domain, and it is the least upper bound.
+
+*Source: Boolean Completeness does not imply Rigid Comprehension, Theorem 36, p. 18; Corollary 37, p. 19. From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#boolean-completeness`. It requires that There is a finite set $M_0$ of individuals at the evaluation object such that: (B1) for every finite $M\supseteq M_0$ and every arrow $h$ from the evaluation object to itself that $M$ does not separate (some arrow $k\notin G$ agrees with $h$ on $M$, or $h\in G$), every arrow $h'$ agreeing with $h$ on $M$, and finite $P,Q$ with $P\cap Q\subseteq M$, some arrow agrees with $h'$ on $P$ and with $h$ on $Q$; and (B2) for finite $N\supseteq M_0$ and finite $P,Q$, some member of the symmetry group fixes $N$ pointwise and moves every member of $P$ outside $N$ off $Q$. The arrows in (B1) go from the evaluation object to any one object, and $M$ separates $h$ when every arrow agreeing with $h$ on $M$ is a member of the symmetry group of the evaluation object. These are the hypotheses of Dorr's main theorem (draft, Definitions 28–30, Theorem 36). Here: With $M_0=\{0\}$, the distinguished individual (the draft's argument for this model). Two arrows agreeing there lie in the same one of the two classes, and a prescription taken from the two of them extends within that class, by nonzero values in the second case and by surjective nonzero values in the first; points are moved off a finite set by a permutation fixing $0$. By Cian Dorr, 2026-09-19.*
+
+*Revised 2026-10-06 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The draft's main theorem, which the all-surjections and collapse-pair models each applied in an argument of their own, stated once; what each member does to meet its hypotheses is its reason for meeting hull-conditions. Proved in Lean (SymBase.lub_of_hull).
+
+*Revised 2026-10-06 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* No longer requires one-object-action-model: as the draft notes (proof of Proposition 40), nothing in the theorem uses a single object, pinning, separation, amalgamability and hulls all quantifying over arrows with a fixed target; the condition hull-conditions now says so.
 
 ### Fails BF (type t).
 

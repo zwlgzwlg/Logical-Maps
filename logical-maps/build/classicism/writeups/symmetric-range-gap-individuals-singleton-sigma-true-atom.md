@@ -4,9 +4,9 @@
 
 ## Package
 
-- **Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
 - **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Actuality.** There is a true proposition that entails every true proposition.
+- **Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
 - **Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
 - **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
@@ -33,12 +33,6 @@ Interpretation of Σ, fixed for this record: one designated relational constant 
 
 ## Arguments
 
-### Holds Boolean Completeness.
-
-By the draft's main theorem with the distinguished individual as the distinguished set. Moving points off a finite set can be done by a permutation fixing that individual, and two arrows agreeing there are either both permutations or both range-deficient, so a prescription taken from the two of them extends by nonzero values to an arrow of the same kind.
-
-*By Cian Dorr, 2026-09-19.*
-
 ### Fails Atomicity (type t).
 
 The symmetry group is an atom, but no atom lies inside the nonempty proposition $T$ of arrows omitting $0$ from their range, which is symmetric and pinned down by $\{0\}$: a nonempty symmetric $p\subseteq T$ pinned down by $N\ni0$ and containing $h$ contains every arrow in $T$ whose restriction to $N$ has the same fibres as $h$’s, and those whose restriction to $N\cup\{m\}$ has the same fibres as $h$’s form a smaller nonempty symmetric proposition pinned down by $N\cup\{m\}$, since $h$’s value at a fresh $m$ can be made to coincide with, or to differ from, a value on $N$.
@@ -60,6 +54,16 @@ The symmetry group is the smallest symmetric set of arrows containing the identi
 *Source: Boolean Completeness does not imply Rigid Comprehension, Proposition 24, p. 13; §7.1, p. 21; §8, pp. 23–26. From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#actuality`. It requires that The symmetry group, the smallest symmetric set of arrows containing the identity, is pinned down by a finite set. Here: The two classes of arrows are told apart by an arrow's value at the distinguished individual. By Cian Dorr, 2026-09-19.*
 
 *Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The three members' versions stated once; what pins the group down is each member's reason for meeting symmetry-group-pinned.
+
+### Holds Boolean Completeness.
+
+At every relational type: a property $F$ of type-$\tau$ entities has a least upper bound, the union of the hulls of its instances. Let $F$ be pinned down by $N\supseteq M_0$. For each instance $u$ of $F$ at the identity, its hull is the closure of $u$ under the arrows that $N$ does not separate from the identity, transported along the arrows agreeing with the identity on $N$; it is symmetric, pinned down by $N$ (by (B1), which splices an arrow agreeing with $h'$ on the instance's pinning set with $h$ on $N$), and an upper bound of $u$. Every upper bound $z$ of all the instances, pinned down by $N'$, contains every hull: given a member of a hull, (B2) supplies a symmetry fixing $N$ and moving the instance's pinning set off $N'$, whose image is again an instance (by the orbit lemma, Lemma 35), lying under $z$; and $z$, pinned down by $N'$, cannot tell the moved instance's tuple from the original. The union of the hulls is pinned down by $N$ and symmetric, so it is in the domain, and it is the least upper bound.
+
+*Source: Boolean Completeness does not imply Rigid Comprehension, Theorem 36, p. 18; Corollary 37, p. 19. From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#boolean-completeness`. It requires that There is a finite set $M_0$ of individuals at the evaluation object such that: (B1) for every finite $M\supseteq M_0$ and every arrow $h$ from the evaluation object to itself that $M$ does not separate (some arrow $k\notin G$ agrees with $h$ on $M$, or $h\in G$), every arrow $h'$ agreeing with $h$ on $M$, and finite $P,Q$ with $P\cap Q\subseteq M$, some arrow agrees with $h'$ on $P$ and with $h$ on $Q$; and (B2) for finite $N\supseteq M_0$ and finite $P,Q$, some member of the symmetry group fixes $N$ pointwise and moves every member of $P$ outside $N$ off $Q$. The arrows in (B1) go from the evaluation object to any one object, and $M$ separates $h$ when every arrow agreeing with $h$ on $M$ is a member of the symmetry group of the evaluation object. These are the hypotheses of Dorr's main theorem (draft, Definitions 28–30, Theorem 36). Here: With $M_0=\{0\}$, the distinguished individual (the draft's argument for this model). Moving points off a finite set can be done by a permutation fixing that individual; an arrow that $M_0$ does not separate omits $0$ from its range, as does any arrow agreeing with it at $0$, so a prescription taken from the two of them extends by nonzero values to an arrow of that kind. By Cian Dorr, 2026-09-19.*
+
+*Revised 2026-10-06 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The draft's main theorem, which the all-surjections and collapse-pair models each applied in an argument of their own, stated once; what each member does to meet its hypotheses is its reason for meeting hull-conditions. Proved in Lean (SymBase.lub_of_hull).
+
+*Revised 2026-10-06 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* No longer requires one-object-action-model: as the draft notes (proof of Proposition 40), nothing in the theorem uses a single object, pinning, separation, amalgamability and hulls all quantifying over arrows with a fixed target; the condition hull-conditions now says so.
 
 ### Fails BF (type t).
 

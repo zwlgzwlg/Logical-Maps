@@ -404,21 +404,19 @@ namespace barcan_surjective
 /-- BF at every type (`SymBase.bf_of_surjective`): a surjective arrow is surjective on every
 domain, by pulling back. -/
 theorem barcan_r : Statements.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r :=
-  fun S h => verdict_holds S.model_isModel
-    (holdsAx_indexed.2 fun σ _ => SymBase.bf_of_surjective h σ) |>.2
+  fun S h hfp => verdict_holds S.model_isModel
+    (holdsAx_indexed.2 fun σ _ => SymBase.bf_of_surjective h hfp σ) |>.2
 
 end barcan_surjective
 
 namespace boolean_completeness
 
 /-- Dorr's main theorem: a property's least upper bound is the union of its instances' hulls
-(`SymBase.lub_of_hull`). -/
+(`SymBase.lub_of_hull`), for a base with any number of objects. -/
 theorem boolean_completeness_r : Statements.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r :=
-  fun S hone hH => by
-    have : Subsingleton S.F.Ob := hone
-    exact verdict_holds S.model_isModel (S.model.entails_holds S.model_isModel
-      P.BooleanCompleteness.of_lub.entails
-      (holdsAx_indexed.2 fun ρ _ => SymBase.holds_bc_lub hH ρ)) |>.2
+  fun S hH => verdict_holds S.model_isModel (S.model.entails_holds S.model_isModel
+    P.BooleanCompleteness.of_lub.entails
+    (holdsAx_indexed.2 fun ρ _ => SymBase.holds_bc_lub hH ρ)) |>.2
 
 end boolean_completeness
 

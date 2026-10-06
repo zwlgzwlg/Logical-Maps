@@ -118,8 +118,8 @@ five on one object, `ℕ` (`Base`: a monoid of maps with symmetries among them, 
 inverse), and the two-object qualitative contrast. The actual world is the set of symmetries,
 and isolated, when a composite is a symmetry exactly when both factors are and the
 symmetries are told apart from the other arrows on a finite set (`actualWorldIsolated_of`):
-the collapse pair (on `{0, 1}`) and the range gap (on `{0}`). Not yet: the two-object model
-with the improper ideal at its second object, and Base 3.
+the collapse pair (on `{0, 1}`) and the range gap (on `{0}`). The two-object model with the
+improper ideal at its second object is below; not yet: Base 3.
 
 The group's own arguments are proved for every base (`Models/SymBase.lean`, the group's Lean
 parameter `SymBase`, Dorr's Definition 15): `actuality` (the symmetry group, finitely pinned,
@@ -136,8 +136,19 @@ one object that meets `hull-conditions` (`SymBase.HullConditions`, the draft's s
 moving hypotheses with a fixed finite `M₀`): the least upper bound of a property is the union of
 its instances' hulls (`SymBase.lub_of_hull`, with the orbit lemma, Lemma 35, as `orbit_ext`). The
 all-surjections model meets the conditions with `M₀ = ∅` and the collapse pair with the pair
-(`allSurj_hullConditions`, `collapsePair_hullConditions`). Not yet: infinite classes and the range
-gaps.
+(`allSurj_hullConditions`, `collapsePair_hullConditions`); infinite classes with `M₀ = ∅` and
+the two range gaps with `M₀ = {0}` (`infClasses_hullConditions`, `rangeGap_hullConditions`,
+`rangeGapNoAct_hullConditions`). The theorem is for any number of objects: separation asks that
+every arrow agreeing on `M` be a symmetry of the base, and splicing is into any one object.
+
+A base carries a per-object ideal of pinning sets (`SymBase.J`, a `PinIdeal`: finite sets, binary
+unions, images along arrows), required to be the finite sets at the base; the symmetric ideally
+full premodel admits at each object the symmetric intensions pinned down by a member of its ideal
+(Proposition 20 for any such ideal). Every member but one carries the finite sets everywhere, the
+group condition `finite-pinning`, which `barcan-surjective` uses. The exception is the two-object
+model with its second object unpinned (`SymIdeal.twoBase`, `symmetric-two-object-unpinned`): it
+meets `hull-conditions` (`two_hullConditions`), and its own `□BC` holds because the least upper
+bound at the second object is the union of the instances (`two_hasLUBs`, `SymBase.holds_box_bc_lub`).
 
 **The sentence schemas range over the paper's language.** The object language here also has
 type variables, a device of the metalogic; every sentence schema (No Contingency, No Pure
