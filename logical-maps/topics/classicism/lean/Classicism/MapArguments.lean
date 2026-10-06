@@ -379,6 +379,26 @@ theorem barcan_r : Statements.Arguments.symmetric_ideally_full.barcan_fixes_or_o
     (not_holdsAx_of ⟨.e, trivial, rfl⟩ (SymBase.not_bf_e_of_fixesOrOmits h)) |>.2
 
 end barcan_fixes_or_omits
+namespace axiom_of_infinity_e
+
+/-- The finite cardinalities' property is in the domain (`SymBase.holds_axInf`). -/
+theorem axiom_of_infinity_e : Statements.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e :=
+  fun S h => by
+    have : Infinite (S.model.Dom S.W₀ .e) := h
+    exact verdict_holds S.model_isModel (holdsAx_eq.2 (SymBase.holds_axInf .e)) |>.2
+
+end axiom_of_infinity_e
+
+namespace axiom_of_infinity_t
+
+/-- Separable collapses give infinitely many propositions
+(`SymBase.infinite_props_of_separable`). -/
+theorem axiom_of_infinity_t : Statements.Arguments.symmetric_ideally_full.axiom_of_infinity_t.axiom_of_infinity_t :=
+  fun S h => by
+    have := SymBase.infinite_props_of_separable h
+    exact verdict_holds S.model_isModel (holdsAx_eq.2 (SymBase.holds_axInf (.rel .t))) |>.2
+
+end axiom_of_infinity_t
 
 end symmetric_ideally_full
 

@@ -168,6 +168,7 @@ history:
 lean:
   param: Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct
   meets:
+    infinitely-many-individuals: Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct
     one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
     transposable: Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct_transposable
     fixes-or-omits: Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct_fixesOrOmits

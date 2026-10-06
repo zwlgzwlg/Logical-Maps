@@ -615,6 +615,10 @@ theorem full_two_object_retract.independence_signature_r : Statements.Models.ful
 theorem symmetric_all_surjections.relational_choice_r : Statements.Models.symmetric_all_surjections.relational_choice_r :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj), Classicism.Map.Arguments.symmetric_ideally_full.relational_choice.relational_choice_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj) (Classicism.Meta.Intensional.SymIdeal.allSurj_transposable)⟩
 
+/-- `symmetric-all-surjections`: Axiom of Infinity (type e) holds, by `symmetric-ideally-full`'s argument `axiom-of-infinity-e`. -/
+theorem symmetric_all_surjections.axiom_of_infinity_e : Statements.Models.symmetric_all_surjections.axiom_of_infinity_e :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj), Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj) (Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.allSurj)⟩
+
 /-- `symmetric-all-surjections`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
 theorem symmetric_all_surjections.no_pure_contingency_r : Statements.Models.symmetric_all_surjections.no_pure_contingency_r :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj), Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)) (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)) (Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _)⟩
@@ -630,6 +634,14 @@ theorem symmetric_all_surjections.no_contingency_signature_r : Statements.Models
 /-- `symmetric-collapse-pair`: Relational Choice fails, by `symmetric-ideally-full`'s argument `relational-choice`. -/
 theorem symmetric_collapse_pair.relational_choice_r : Statements.Models.symmetric_collapse_pair.relational_choice_r :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair), Classicism.Map.Arguments.symmetric_ideally_full.relational_choice.relational_choice_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.SymIdeal.collapsePair_transposable)⟩
+
+/-- `symmetric-collapse-pair`: Axiom of Infinity (type e) holds, by `symmetric-ideally-full`'s argument `axiom-of-infinity-e`. -/
+theorem symmetric_collapse_pair.axiom_of_infinity_e : Statements.Models.symmetric_collapse_pair.axiom_of_infinity_e :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair), Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.collapsePair)⟩
+
+/-- `symmetric-collapse-pair`: Axiom of Infinity (type t) holds, by `symmetric-ideally-full`'s argument `axiom-of-infinity-t`. -/
+theorem symmetric_collapse_pair.axiom_of_infinity_t : Statements.Models.symmetric_collapse_pair.axiom_of_infinity_t :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair), Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_t.axiom_of_infinity_t (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.SymIdeal.collapsePair_separable)⟩
 
 /-- `symmetric-collapse-pair`: Actuality holds, by `symmetric-ideally-full`'s argument `actuality`. -/
 theorem symmetric_collapse_pair.actuality : Statements.Models.symmetric_collapse_pair.actuality :=
@@ -655,6 +667,10 @@ theorem symmetric_collapse_pair.no_contingency_signature_r : Statements.Models.s
 theorem symmetric_infinite_classes.relational_choice_r : Statements.Models.symmetric_infinite_classes.relational_choice_r :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses), Classicism.Map.Arguments.symmetric_ideally_full.relational_choice.relational_choice_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses) (Classicism.Meta.Intensional.SymIdeal.infClasses_transposable)⟩
 
+/-- `symmetric-infinite-classes`: Axiom of Infinity (type e) holds, by `symmetric-ideally-full`'s argument `axiom-of-infinity-e`. -/
+theorem symmetric_infinite_classes.axiom_of_infinity_e : Statements.Models.symmetric_infinite_classes.axiom_of_infinity_e :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses), Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses) (Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.infClasses)⟩
+
 /-- `symmetric-infinite-classes`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
 theorem symmetric_infinite_classes.no_pure_contingency_r : Statements.Models.symmetric_infinite_classes.no_pure_contingency_r :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses), Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses)) (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses)) (Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _)⟩
@@ -667,6 +683,10 @@ theorem symmetric_infinite_classes.independence_signature_r : Statements.Models.
 theorem symmetric_infinite_classes.no_contingency_signature_r : Statements.Models.symmetric_infinite_classes.no_contingency_signature_r :=
   ⟨Classicism.Meta.Signature.sigmaTop_admitted, Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses)), Classicism.Map.Arguments.sigma_top_npc.no_contingency_signature_r (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses)) (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses))) (Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses))) (Classicism.Meta.Signature.sigmaTop_admitted) (Classicism.Meta.Intensional.Premodel.withTop_sigmaTop (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses))) (Classicism.Meta.Intensional.Premodel.holdsAx_interp_ofPure.2 ((Classicism.Map.Models.symmetric_infinite_classes.no_pure_contingency_r).2))⟩
 
+/-- `symmetric-qualitative-contrast`: Axiom of Infinity (type e) holds, by `symmetric-ideally-full`'s argument `axiom-of-infinity-e`. -/
+theorem symmetric_qualitative_contrast.axiom_of_infinity_e : Statements.Models.symmetric_qualitative_contrast.axiom_of_infinity_e :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.contrastBase), Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e (Classicism.Meta.Intensional.SymIdeal.contrastBase) (Classicism.Meta.Intensional.SymIdeal.contrast_infinitelyManyIndividuals)⟩
+
 /-- `symmetric-qualitative-contrast`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem symmetric_qualitative_contrast.independence_signature_r : Statements.Models.symmetric_qualitative_contrast.independence_signature_r :=
   ⟨Classicism.Meta.Signature.sigmaTop_admitted, Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.contrastBase)), Classicism.Map.Arguments.sigma_top.independence_signature_r (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.contrastBase)) (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.contrastBase))) (Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.contrastBase))) (Classicism.Meta.Signature.sigmaTop_admitted) (Classicism.Meta.Intensional.Premodel.withTop_sigmaTop (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.contrastBase)))⟩
@@ -674,6 +694,10 @@ theorem symmetric_qualitative_contrast.independence_signature_r : Statements.Mod
 /-- `symmetric-range-gap-without-actuality`: Relational Choice fails, by `symmetric-ideally-full`'s argument `relational-choice`. -/
 theorem symmetric_range_gap_without_actuality.relational_choice_r : Statements.Models.symmetric_range_gap_without_actuality.relational_choice_r :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct), Classicism.Map.Arguments.symmetric_ideally_full.relational_choice.relational_choice_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct) (Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct_transposable)⟩
+
+/-- `symmetric-range-gap-without-actuality`: Axiom of Infinity (type e) holds, by `symmetric-ideally-full`'s argument `axiom-of-infinity-e`. -/
+theorem symmetric_range_gap_without_actuality.axiom_of_infinity_e : Statements.Models.symmetric_range_gap_without_actuality.axiom_of_infinity_e :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct), Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct) (Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct)⟩
 
 /-- `symmetric-range-gap-without-actuality`: BF fails, by `symmetric-ideally-full`'s argument `barcan-fixes-or-omits`. -/
 theorem symmetric_range_gap_without_actuality.barcan_r : Statements.Models.symmetric_range_gap_without_actuality.barcan_r :=
@@ -694,6 +718,14 @@ theorem symmetric_range_gap_without_actuality.no_contingency_signature_r : State
 /-- `symmetric-range-gap`: Relational Choice fails, by `symmetric-ideally-full`'s argument `relational-choice`. -/
 theorem symmetric_range_gap.relational_choice_r : Statements.Models.symmetric_range_gap.relational_choice_r :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap), Classicism.Map.Arguments.symmetric_ideally_full.relational_choice.relational_choice_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap) (Classicism.Meta.Intensional.SymIdeal.rangeGap_transposable)⟩
+
+/-- `symmetric-range-gap`: Axiom of Infinity (type e) holds, by `symmetric-ideally-full`'s argument `axiom-of-infinity-e`. -/
+theorem symmetric_range_gap.axiom_of_infinity_e : Statements.Models.symmetric_range_gap.axiom_of_infinity_e :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap), Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap) (Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.rangeGap)⟩
+
+/-- `symmetric-range-gap`: Axiom of Infinity (type t) holds, by `symmetric-ideally-full`'s argument `axiom-of-infinity-t`. -/
+theorem symmetric_range_gap.axiom_of_infinity_t : Statements.Models.symmetric_range_gap.axiom_of_infinity_t :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap), Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_t.axiom_of_infinity_t (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap) (Classicism.Meta.Intensional.SymIdeal.rangeGap_separable)⟩
 
 /-- `symmetric-range-gap`: Actuality holds, by `symmetric-ideally-full`'s argument `actuality`. -/
 theorem symmetric_range_gap.actuality : Statements.Models.symmetric_range_gap.actuality :=

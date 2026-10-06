@@ -169,6 +169,8 @@ history:
 lean:
   param: Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap
   meets:
+    infinitely-many-individuals: Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.rangeGap
+    separable-collapses: Classicism.Meta.Intensional.SymIdeal.rangeGap_separable
     one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
     actual-world-isolated: Classicism.Meta.Intensional.SymIdeal.rangeGap_actualWorldIsolated
     transposable: Classicism.Meta.Intensional.SymIdeal.rangeGap_transposable

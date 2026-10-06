@@ -47,6 +47,7 @@ parameters:
           construction describes, and the arrows act on them as on the base.
         label: individuals the base
         meets:
+          infinitely-many-individuals: The base is infinite.
           construction-individuals: The individuals are the base, acted on as the construction says.
       singleton:
         text: >-
@@ -111,6 +112,7 @@ conditions:
   text: >-
     There are infinitely many pairs of individuals such that, for any two of these pairs, some
     arrow collapses the one and not the other.
+  lean: Classicism.Meta.Intensional.SymBase.SeparableCollapses
 - id: surjective-arrows
   text: >-
     Every arrow is surjective.
@@ -166,6 +168,7 @@ arguments:
 
 
 - id: axiom-of-infinity-e
+  requires: [infinitely-many-individuals]
   when: {individuals: base}
   holds: [axiom-of-infinity-e]
   by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
@@ -182,6 +185,10 @@ arguments:
       The type-$e$ half of the members' argument, stated once; "the individuals are the natural
       numbers" became "there are infinitely many individuals", which also covers the qualitative
       links model. The type-$t$ half is axiom-of-infinity-t.
+  lean:
+  - holds: axiom-of-infinity-e
+    ref: Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e
+
 
 - id: axiom-of-infinity-t
   requires: [separable-collapses]
@@ -203,6 +210,10 @@ arguments:
       propositions $\{h : hn=n\}$ that an arrow fixes a given individual. Those are not symmetric
       when the symmetry group moves $n$: symmetry asks that $h\in p$ imply $g\circ h\in p$, and
       $(g\circ h)n=gn$.
+  lean:
+  - holds: axiom-of-infinity-t
+    ref: Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_t.axiom_of_infinity_t
+
 
 - id: barcan-surjective
   requires: [surjective-arrows]

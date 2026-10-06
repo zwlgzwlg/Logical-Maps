@@ -191,3 +191,5 @@ history:
 # The model in Lean (Classicism/Models/SymmetricIdeal.lean): the base, the group's parameter.
 lean:
   param: Classicism.Meta.Intensional.SymIdeal.contrastBase
+  meets:
+    infinitely-many-individuals: Classicism.Meta.Intensional.SymIdeal.contrast_infinitelyManyIndividuals

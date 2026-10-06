@@ -504,6 +504,47 @@ theorem rangeGapNoAct_fixesOrOmits : rangeGapNoAct.toSym.FixesOrOmits :=
     ⟨star rangeGapNoAct, FunCat.arr (F := rangeGapNoAct.cat) (i := star rangeGapNoAct) (j := star rangeGapNoAct)
       Nat.succ (Or.inr Nat.succ_ne_zero), Nat.succ_ne_zero 0⟩⟩
 
+/-! ### Infinitely many individuals, and separable collapses -/
+
+theorem infinitelyManyIndividuals (B : Base) : (B.toSym).model.InfinitelyManyIndividuals :=
+  inferInstanceAs (Infinite ℕ)
+
+theorem contrast_infinitelyManyIndividuals : contrastBase.model.InfinitelyManyIndividuals :=
+  inferInstanceAs (Infinite ℕ)
+
+/-- Halving up to `2i + 3`, then shifting down: a surjection collapsing `0` with `1` and each pair
+`2j + 2, 2j + 3` with `j ≤ i`, and nothing beyond. -/
+def halfThen (i : ℕ) (x : ℕ) : ℕ := if x ≤ 2 * i + 3 then x / 2 else x - (i + 2)
+
+theorem halfThen_surjective (i : ℕ) : Function.Surjective (halfThen i) := fun y => by
+  by_cases hy : y ≤ i + 1
+  · exact ⟨2 * y, by simp only [halfThen]; rw [if_pos (by omega)]; omega⟩
+  · exact ⟨y + (i + 2), by simp only [halfThen]; rw [if_neg (by omega)]; omega⟩
+
+theorem halfThen_sep {i j : ℕ} (h : i < j) :
+    halfThen i (2 * i + 2) = halfThen i (2 * i + 3) ∧ halfThen i (2 * j + 2) ≠ halfThen i (2 * j + 3) := by
+  simp only [halfThen]
+  refine ⟨by rw [if_pos (by omega), if_pos (by omega)]; omega, ?_⟩
+  rw [if_neg (by omega), if_neg (by omega)]; omega
+
+/-- Separation of the pairs `2i + 2, 2i + 3` by maps `f i` that collapse pair `i` but not later ones. -/
+theorem separable_of (B : Base) (f : ℕ → ℕ → ℕ) (hf : ∀ i, B.Arr (f i))
+    (hsep : ∀ {i j}, i < j → f i (2 * i + 2) = f i (2 * i + 3) ∧ f i (2 * j + 2) ≠ f i (2 * j + 3)) :
+    (B.toSym).SeparableCollapses := by
+  refine ⟨fun i => 2 * i + 2, fun i => 2 * i + 3, fun i j hij => ?_⟩
+  rcases Nat.lt_or_gt_of_ne hij with h | h
+  · exact ⟨star B, FunCat.arr (F := B.cat) (i := star B) (j := star B) (f i) (hf i), Or.inl (hsep h)⟩
+  · exact ⟨star B, FunCat.arr (F := B.cat) (i := star B) (j := star B) (f j) (hf j), Or.inr (hsep h)⟩
+
+theorem collapsePair_separable : collapsePair.toSym.SeparableCollapses :=
+  separable_of collapsePair halfThen
+    (fun i => Or.inr ⟨halfThen_surjective i, by simp only [halfThen]; rw [if_pos (by omega), if_pos (by omega)]⟩)
+    halfThen_sep
+
+theorem rangeGap_separable : rangeGap.toSym.SeparableCollapses :=
+  separable_of rangeGap (fun i x => halfThen i x + 1) (fun i => Or.inr fun x => Nat.succ_ne_zero _)
+    fun h => ⟨by rw [(halfThen_sep h).1], fun e => (halfThen_sep h).2 (by omega)⟩
+
 end SymIdeal
 
 end Classicism.Meta.Intensional
