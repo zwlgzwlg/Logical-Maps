@@ -9,6 +9,7 @@ import Classicism.Models.Conditions
 import Classicism.Models.FullActionModels
 import Classicism.Semantics.Interpretations
 import Classicism.Models.SymmetricFull
+import Classicism.Models.SymmetricIdeal
 
 /-!
 # Generated statements: models' verdicts
@@ -961,6 +962,78 @@ def Models.full_two_object_retract.transversal_choice_r : Prop :=
 /-- `full-two-object-retract`: Independence (signature Σ) fails. -/
 def Models.full_two_object_retract.independence_signature_r : Prop :=
   (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `symmetric-all-surjections`: No Pure Contingency holds. -/
+def Models.symmetric_all_surjections.no_pure_contingency_r : Prop :=
+  (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.allSurj).IsModel ∧ (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.allSurj).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `symmetric-all-surjections`: Independence (signature Σ) fails. -/
+def Models.symmetric_all_surjections.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.allSurj) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.allSurj)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.allSurj) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.allSurj)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.allSurj) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.allSurj)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `symmetric-all-surjections`: No Contingency (signature Σ) holds. -/
+def Models.symmetric_all_surjections.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.allSurj) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.allSurj)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.allSurj) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.allSurj)).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.allSurj) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.allSurj)).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
+
+/-- `symmetric-collapse-pair`: Distinctness-preserving collapse holds. -/
+def Models.symmetric_collapse_pair.distinctness_preserving_collapse : Prop :=
+  (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.collapsePair).IsModel ∧ (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.collapsePair).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
+
+/-- `symmetric-collapse-pair`: No Pure Contingency holds. -/
+def Models.symmetric_collapse_pair.no_pure_contingency_r : Prop :=
+  (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.collapsePair).IsModel ∧ (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.collapsePair).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `symmetric-collapse-pair`: Independence (signature Σ) fails. -/
+def Models.symmetric_collapse_pair.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.collapsePair)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.collapsePair)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.collapsePair)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `symmetric-collapse-pair`: No Contingency (signature Σ) holds. -/
+def Models.symmetric_collapse_pair.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.collapsePair)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.collapsePair)).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.collapsePair)).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
+
+/-- `symmetric-infinite-classes`: No Pure Contingency holds. -/
+def Models.symmetric_infinite_classes.no_pure_contingency_r : Prop :=
+  (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.infClasses).IsModel ∧ (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.infClasses).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `symmetric-infinite-classes`: Independence (signature Σ) fails. -/
+def Models.symmetric_infinite_classes.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.infClasses) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.infClasses)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.infClasses) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.infClasses)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.infClasses) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.infClasses)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `symmetric-infinite-classes`: No Contingency (signature Σ) holds. -/
+def Models.symmetric_infinite_classes.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.infClasses) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.infClasses)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.infClasses) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.infClasses)).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.infClasses) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.infClasses)).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
+
+/-- `symmetric-qualitative-contrast`: Independence (signature Σ) fails. -/
+def Models.symmetric_qualitative_contrast.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.contrast) (Classicism.Meta.Intensional.SymIdeal.contrast_isModel)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.contrast) (Classicism.Meta.Intensional.SymIdeal.contrast_isModel)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.contrast) (Classicism.Meta.Intensional.SymIdeal.contrast_isModel)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `symmetric-range-gap-without-actuality`: No Pure Contingency holds. -/
+def Models.symmetric_range_gap_without_actuality.no_pure_contingency_r : Prop :=
+  (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct).IsModel ∧ (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `symmetric-range-gap-without-actuality`: Independence (signature Σ) fails. -/
+def Models.symmetric_range_gap_without_actuality.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `symmetric-range-gap-without-actuality`: No Contingency (signature Σ) holds. -/
+def Models.symmetric_range_gap_without_actuality.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct)).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct)).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
+
+/-- `symmetric-range-gap`: Distinctness-preserving collapse holds. -/
+def Models.symmetric_range_gap.distinctness_preserving_collapse : Prop :=
+  (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGap).IsModel ∧ (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGap).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
+
+/-- `symmetric-range-gap`: No Pure Contingency holds. -/
+def Models.symmetric_range_gap.no_pure_contingency_r : Prop :=
+  (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGap).IsModel ∧ (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGap).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `symmetric-range-gap`: Independence (signature Σ) fails. -/
+def Models.symmetric_range_gap.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGap) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.rangeGap)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGap) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.rangeGap)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGap) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.rangeGap)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `symmetric-range-gap`: No Contingency (signature Σ) holds. -/
+def Models.symmetric_range_gap.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGap) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.rangeGap)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGap) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.rangeGap)).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.rangeGap) (Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.rangeGap)).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
 
 /-- `symmetry-constrained-full-all-maps`: Distinctness-preserving collapse holds. -/
 def Models.symmetry_constrained_full_all_maps.distinctness_preserving_collapse : Prop :=

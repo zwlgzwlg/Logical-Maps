@@ -113,7 +113,13 @@ body's does. `Models/SymmetricFull.lean` has the group `symmetry-constrained-ful
 monoid of maps on three individuals containing the permutations (`Maps3`): all maps
 (`allMaps`) and the permutations with the collapses (`permsCollapses`), each with the
 conditions one object, finitely many propositions, extensionally full (orbits) and actual
-world isolated (the permutations).
+world isolated (the permutations). `Models/SymmetricIdeal.lean` has six members of `symmetric-ideally-full`:
+five on one object, `ℕ` (`Base`: a monoid of maps with symmetries among them, each with its
+inverse), and the two-object qualitative contrast. The actual world is the set of symmetries,
+and isolated, when a composite is a symmetry exactly when both factors are and the
+symmetries are told apart from the other arrows on a finite set (`actualWorldIsolated_of`):
+the collapse pair (on `{0, 1}`) and the range gap (on `{0}`). Not yet: the two-object model
+with the improper ideal at its second object, and Base 3.
 
 **The sentence schemas range over the paper's language.** The object language here also has
 type variables, a device of the metalogic; every sentence schema (No Contingency, No Pure
