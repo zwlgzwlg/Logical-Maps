@@ -122,6 +122,7 @@ history:
 lean:
   param: Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses
   meets:
+    surjective-arrows: Classicism.Meta.Intensional.SymIdeal.infClasses_surjectiveArrows
     infinitely-many-individuals: Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.infClasses
     one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
     transposable: Classicism.Meta.Intensional.SymIdeal.infClasses_transposable

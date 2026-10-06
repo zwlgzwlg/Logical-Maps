@@ -116,6 +116,7 @@ conditions:
 - id: surjective-arrows
   text: >-
     Every arrow is surjective.
+  lean: Classicism.Meta.Intensional.SymBase.SurjectiveArrows
 - id: symmetry-group-pinned
   text: >-
     The symmetry group, the smallest symmetric set of arrows containing the identity, is pinned
@@ -239,6 +240,10 @@ arguments:
       all-surjections model ("at every type because every arrow is surjective and a finitely
       pinned symmetric intension can be pulled back along an arrow"), stated once for every member
       whose arrows are surjective.
+  lean:
+  - holds: barcan-r
+    ref: Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r
+
 
 - id: actuality
   requires: [symmetry-group-pinned]

@@ -545,6 +545,13 @@ theorem rangeGap_separable : rangeGap.toSym.SeparableCollapses :=
   separable_of rangeGap (fun i x => halfThen i x + 1) (fun i => Or.inr fun x => Nat.succ_ne_zero _)
     fun h => ⟨by rw [(halfThen_sep h).1], fun e => (halfThen_sep h).2 (by omega)⟩
 
+/-! ### Surjective arrows -/
+
+theorem allSurj_surjectiveArrows : allSurj.toSym.SurjectiveArrows := fun _ k => k.2
+theorem infClasses_surjectiveArrows : infClasses.toSym.SurjectiveArrows := fun _ k => k.2
+theorem collapsePair_surjectiveArrows : collapsePair.toSym.SurjectiveArrows := fun _ k =>
+  k.2.elim (fun h => h.1.2) (fun h => h.1)
+
 end SymIdeal
 
 end Classicism.Meta.Intensional

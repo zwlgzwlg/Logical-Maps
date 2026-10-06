@@ -121,6 +121,16 @@ symmetries are told apart from the other arrows on a finite set (`actualWorldIso
 the collapse pair (on `{0, 1}`) and the range gap (on `{0}`). Not yet: the two-object model
 with the improper ideal at its second object, and Base 3.
 
+The group's own arguments are proved for every base (`Models/SymBase.lean`, the group's Lean
+parameter `SymBase`, Dorr's Definition 15): `actuality` (the symmetry group, finitely pinned,
+is a true atom), `barcan-fixes-or-omits` (BF at `e` fails), `relational-choice` (Lemma 21 and a
+transposition fixing the pinning set and the property), `axiom-of-infinity-e` and `-t` (the
+finite cardinalities' property is arrow-blind and symmetric; separable collapses give infinitely
+many propositions), and `barcan-surjective` (a surjective arrow is surjective on every domain,
+by a pullback, which stays symmetric). The members meet the conditions in
+`Models/SymmetricIdeal.lean`; transposability for all five one-object members comes from one
+lemma (`transposable_of`).
+
 **The sentence schemas range over the paper's language.** The object language here also has
 type variables, a device of the metalogic; every sentence schema (No Contingency, No Pure
 Contingency, B, Distinctness, Possibility, Witnessed Possibility and its kin, Separated

@@ -167,6 +167,7 @@ history:
 lean:
   param: Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair
   meets:
+    surjective-arrows: Classicism.Meta.Intensional.SymIdeal.collapsePair_surjectiveArrows
     infinitely-many-individuals: Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.collapsePair
     separable-collapses: Classicism.Meta.Intensional.SymIdeal.collapsePair_separable
     one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _

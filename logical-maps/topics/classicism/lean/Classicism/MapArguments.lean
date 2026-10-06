@@ -399,6 +399,15 @@ theorem axiom_of_infinity_t : Statements.Arguments.symmetric_ideally_full.axiom_
     exact verdict_holds S.model_isModel (holdsAx_eq.2 (SymBase.holds_axInf (.rel .t))) |>.2
 
 end axiom_of_infinity_t
+namespace barcan_surjective
+
+/-- BF at every type (`SymBase.bf_of_surjective`): a surjective arrow is surjective on every
+domain, by pulling back. -/
+theorem barcan_r : Statements.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r :=
+  fun S h => verdict_holds S.model_isModel
+    (holdsAx_indexed.2 fun σ _ => SymBase.bf_of_surjective h σ) |>.2
+
+end barcan_surjective
 
 end symmetric_ideally_full
 

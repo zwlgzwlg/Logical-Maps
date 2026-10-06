@@ -49,6 +49,62 @@ theorem holds_actuality_of {B : Premodel Signature.pure C} (M : B.IsModel) (a : 
 
 end Premodel
 
+
+/-! ### Pullbacks along an arrow out of the base -/
+
+namespace Premodel
+
+variable {C : Type} [SmallCategory C] {Sig : Signature} (B : Premodel Sig C)
+
+/-- The tuples at arrows out of the base agreeing on `X` with `k` followed by an arrow `j` for
+which the tuple, at `j`, is in `b` (the ideally full models' `pullback`, for any premodel). -/
+def pullbackG {ρ : RTy} {V : C} (k : B.W₀ ⟶ V) (X : Set (B.Dom B.W₀ .e)) (b : Intension B.inner ρ V) :
+    Intension B.inner ρ B.W₀ :=
+  {p | ∃ j : V ⟶ p.1, AgreeOn (B.inner .e) X p.2.2 (k ≫ j) ∧ (⟨p.1, p.2.1, j⟩ : Tuple B.inner ρ V) ∈ b}
+
+variable {B}
+
+theorem pullbackG_pinned {ρ : RTy} {V : C} (k : B.W₀ ⟶ V) (X : Set (B.Dom B.W₀ .e))
+    (b : Intension B.inner ρ V) : B.PinnedO (.rel ρ) X (B.pullbackG k X b) := by
+  intro U h i ha
+  simp only [Outer.map_rel]
+  ext ⟨T, a, l⟩
+  simp only [Intension.mem_map, pullbackG, Set.mem_ofPred_eq]
+  constructor
+  · rintro ⟨j, hj, hb⟩
+    exact ⟨j, ((ha.comp_right _ l).symm _).trans _ hj, hb⟩
+  · rintro ⟨j, hj, hb⟩
+    exact ⟨j, (ha.comp_right _ l).trans _ hj, hb⟩
+
+theorem map_pullbackG {ρ : RTy} {V : C} (k : B.W₀ ⟶ V) {X : Set (B.Dom B.W₀ .e)} {Y : Set (B.Dom V .e)}
+    (hXY : (B.inner .e).map k '' X = Y) {b : Intension B.inner ρ V} (hb : B.PinnedO (.rel ρ) Y b) :
+    Intension.map B.inner k (B.pullbackG k X b) = b := by
+  subst hXY
+  ext ⟨T, a, l⟩
+  simp only [Intension.mem_map, pullbackG, Set.mem_ofPred_eq]
+  constructor
+  · rintro ⟨j, hj, hb'⟩
+    have e := hb T l j (by
+      rintro y ⟨x, hx, rfl⟩
+      have := hj x hx
+      simpa [Functor.map_comp, types_comp_apply] using this)
+    simp only [Outer.map_rel] at e
+    have := congrArg (fun S : Intension B.inner ρ T => (⟨T, a, 𝟙 T⟩ : Tuple B.inner ρ T) ∈ S) e
+    simp only [Intension.mem_map, Category.comp_id] at this
+    exact this.mpr hb'
+  · intro hb'
+    exact ⟨l, AgreeOn.refl _ _ _, hb'⟩
+
+/-- The pullback of a symmetric intension is symmetric: a symmetry moves the witness along. -/
+theorem pullbackG_sym {G : ∀ V : C, Set (V ⟶ V)} {ρ : RTy} {V : C} (k : B.W₀ ⟶ V) (X : Set (B.Dom B.W₀ .e))
+    {b : Intension B.inner ρ V} (hb : B.Sym G b) : B.Sym G (B.pullbackG k X b) := by
+  rintro U a i g hg ⟨j, hj, hjb⟩
+  refine ⟨j ≫ g, ?_, hb U a j g hg hjb⟩
+  have := hj.comp_right _ g
+  simpa [Category.assoc] using this
+
+end Premodel
+
 /-! ### Bases -/
 
 /-- **A base** (Definition 15): a category of sets and functions, a base object with every
@@ -339,6 +395,37 @@ theorem infinite_props_of_separable (h : S.SeparableCollapses) : Infinite (S.mod
   rcases hk with ⟨h1, h2⟩ | ⟨h1, h2⟩
   · exact h2 (key.1 h1)
   · exact h2 (key.2 h1)
+
+/-! ### `barcan-surjective` -/
+
+variable (S) in
+/-- `surjective-arrows`: every arrow out of the base is surjective. -/
+def SurjectiveArrows : Prop := ∀ V (k : S.W₀ ⟶ V), Function.Surjective (FunCat.fn k)
+
+/-- **A surjective arrow out of the base is surjective on every domain**: an entity at its
+target, pinned down by a finite `Y`, is the image of its pullback along a finite preimage
+of `Y`, which is pinned down and symmetric. -/
+theorem map_surjective_of {V : S.F.Ob} (k : S.W₀ ⟶ V) (hk : Function.Surjective (FunCat.fn k)) :
+    ∀ σ : Ty, Function.Surjective ((S.model.inner σ).map k)
+  | .e => hk
+  | .var _ => hk
+  | .rel ρ => by
+    intro b
+    obtain ⟨Y, hY, hb⟩ := symIdeal_inner_finPinned (De := S.F.De) (G := S.G) (W₀ := S.W₀)
+      (nonempty_e := S.ne) (I := S.model.I) (.rel ρ) V b
+    obtain ⟨X, hX, hXY⟩ := Premodel.exists_finite_image_eq (f := (S.model.inner .e).map k) hk hY
+    have hpb := Premodel.pullbackG_sym (G := S.G) (B := S.model) k X (model_domSym (S := S) ρ V b)
+    have hpin := Premodel.pullbackG_pinned (B := S.model) k X (S.model.incl ρ V b)
+    obtain ⟨a, ha⟩ := (mem_range_symIncl S.F.De S.G ρ S.W₀ (S.model.pullbackG k X (S.model.incl ρ V b))).2
+      ⟨⟨X, hX, fun U h i hag => hpin U h i hag⟩, hpb⟩
+    refine ⟨a, S.model.Incl_injective _ V ?_⟩
+    have ha' : S.model.incl ρ S.W₀ a = S.model.pullbackG k X (S.model.incl ρ V b) := ha
+    erw [S.model.Incl_map, Outer.map_rel, S.model.Incl_rel ρ S.W₀ a, ha', Premodel.map_pullbackG k hXY hb]
+    rfl
+
+/-- **The group's argument `barcan-surjective`**: BF at every type, at the base. -/
+theorem bf_of_surjective (hs : S.SurjectiveArrows) (σ : Ty) : S.model.HoldsSentence (Sentence.bf σ) :=
+  S.model.holds_bf_of_surjective S.model_isModel σ (𝟙 _) fun k => map_surjective_of k (hs _ k) σ
 
 end SymBase
 

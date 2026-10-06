@@ -619,6 +619,10 @@ theorem symmetric_all_surjections.relational_choice_r : Statements.Models.symmet
 theorem symmetric_all_surjections.axiom_of_infinity_e : Statements.Models.symmetric_all_surjections.axiom_of_infinity_e :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj), Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj) (Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.allSurj)⟩
 
+/-- `symmetric-all-surjections`: BF holds, by `symmetric-ideally-full`'s argument `barcan-surjective`. -/
+theorem symmetric_all_surjections.barcan_r : Statements.Models.symmetric_all_surjections.barcan_r :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj), Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj) (Classicism.Meta.Intensional.SymIdeal.allSurj_surjectiveArrows)⟩
+
 /-- `symmetric-all-surjections`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
 theorem symmetric_all_surjections.no_pure_contingency_r : Statements.Models.symmetric_all_surjections.no_pure_contingency_r :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj), Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)) (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)) (Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _)⟩
@@ -642,6 +646,10 @@ theorem symmetric_collapse_pair.axiom_of_infinity_e : Statements.Models.symmetri
 /-- `symmetric-collapse-pair`: Axiom of Infinity (type t) holds, by `symmetric-ideally-full`'s argument `axiom-of-infinity-t`. -/
 theorem symmetric_collapse_pair.axiom_of_infinity_t : Statements.Models.symmetric_collapse_pair.axiom_of_infinity_t :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair), Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_t.axiom_of_infinity_t (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.SymIdeal.collapsePair_separable)⟩
+
+/-- `symmetric-collapse-pair`: BF holds, by `symmetric-ideally-full`'s argument `barcan-surjective`. -/
+theorem symmetric_collapse_pair.barcan_r : Statements.Models.symmetric_collapse_pair.barcan_r :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair), Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.SymIdeal.collapsePair_surjectiveArrows)⟩
 
 /-- `symmetric-collapse-pair`: Actuality holds, by `symmetric-ideally-full`'s argument `actuality`. -/
 theorem symmetric_collapse_pair.actuality : Statements.Models.symmetric_collapse_pair.actuality :=
@@ -670,6 +678,10 @@ theorem symmetric_infinite_classes.relational_choice_r : Statements.Models.symme
 /-- `symmetric-infinite-classes`: Axiom of Infinity (type e) holds, by `symmetric-ideally-full`'s argument `axiom-of-infinity-e`. -/
 theorem symmetric_infinite_classes.axiom_of_infinity_e : Statements.Models.symmetric_infinite_classes.axiom_of_infinity_e :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses), Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses) (Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.infClasses)⟩
+
+/-- `symmetric-infinite-classes`: BF holds, by `symmetric-ideally-full`'s argument `barcan-surjective`. -/
+theorem symmetric_infinite_classes.barcan_r : Statements.Models.symmetric_infinite_classes.barcan_r :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses), Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses) (Classicism.Meta.Intensional.SymIdeal.infClasses_surjectiveArrows)⟩
 
 /-- `symmetric-infinite-classes`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
 theorem symmetric_infinite_classes.no_pure_contingency_r : Statements.Models.symmetric_infinite_classes.no_pure_contingency_r :=

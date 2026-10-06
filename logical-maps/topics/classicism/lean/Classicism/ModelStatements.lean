@@ -971,6 +971,10 @@ def Models.symmetric_all_surjections.relational_choice_r : Prop :=
 def Models.symmetric_all_surjections.axiom_of_infinity_e : Prop :=
   (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)).IsModel ∧ (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)).HoldsAx Classicism.P.AxiomOfInfinityE.schemaIn
 
+/-- `symmetric-all-surjections`: BF holds. -/
+def Models.symmetric_all_surjections.barcan_r : Prop :=
+  (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)).IsModel ∧ (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)).HoldsAx Classicism.P.Barcan.schemaIn
+
 /-- `symmetric-all-surjections`: No Pure Contingency holds. -/
 def Models.symmetric_all_surjections.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)).IsModel ∧ (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
@@ -994,6 +998,10 @@ def Models.symmetric_collapse_pair.axiom_of_infinity_e : Prop :=
 /-- `symmetric-collapse-pair`: Axiom of Infinity (type t) holds. -/
 def Models.symmetric_collapse_pair.axiom_of_infinity_t : Prop :=
   (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair)).IsModel ∧ (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair)).HoldsAx Classicism.P.AxiomOfInfinityT.schemaIn
+
+/-- `symmetric-collapse-pair`: BF holds. -/
+def Models.symmetric_collapse_pair.barcan_r : Prop :=
+  (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair)).IsModel ∧ (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair)).HoldsAx Classicism.P.Barcan.schemaIn
 
 /-- `symmetric-collapse-pair`: Actuality holds. -/
 def Models.symmetric_collapse_pair.actuality : Prop :=
@@ -1022,6 +1030,10 @@ def Models.symmetric_infinite_classes.relational_choice_r : Prop :=
 /-- `symmetric-infinite-classes`: Axiom of Infinity (type e) holds. -/
 def Models.symmetric_infinite_classes.axiom_of_infinity_e : Prop :=
   (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses)).IsModel ∧ (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses)).HoldsAx Classicism.P.AxiomOfInfinityE.schemaIn
+
+/-- `symmetric-infinite-classes`: BF holds. -/
+def Models.symmetric_infinite_classes.barcan_r : Prop :=
+  (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses)).IsModel ∧ (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses)).HoldsAx Classicism.P.Barcan.schemaIn
 
 /-- `symmetric-infinite-classes`: No Pure Contingency holds. -/
 def Models.symmetric_infinite_classes.no_pure_contingency_r : Prop :=
@@ -1290,6 +1302,10 @@ def Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e : P
 /-- `symmetric-ideally-full`, argument `axiom-of-infinity-t`: Axiom of Infinity (type t) holds in every model meeting its conditions. -/
 def Arguments.symmetric_ideally_full.axiom_of_infinity_t.axiom_of_infinity_t : Prop :=
   ∀ (S : Classicism.Meta.Intensional.SymBase), Classicism.Meta.Intensional.SymBase.SeparableCollapses S → ((Classicism.Meta.Intensional.SymBase.model S)).HoldsAx Classicism.P.AxiomOfInfinityT.schemaIn
+
+/-- `symmetric-ideally-full`, argument `barcan-surjective`: BF holds in every model meeting its conditions. -/
+def Arguments.symmetric_ideally_full.barcan_surjective.barcan_r : Prop :=
+  ∀ (S : Classicism.Meta.Intensional.SymBase), Classicism.Meta.Intensional.SymBase.SurjectiveArrows S → ((Classicism.Meta.Intensional.SymBase.model S)).HoldsAx Classicism.P.Barcan.schemaIn
 
 /-- `symmetric-ideally-full`, argument `actuality`: Actuality holds in every model meeting its conditions. -/
 def Arguments.symmetric_ideally_full.actuality.actuality : Prop :=
