@@ -202,17 +202,18 @@ theorem not_holds_axInf_of_finite {W : C} (h : B.W₀ ⟶ W) (σ : Ty) [Finite (
     show holdsOf (numeral M h σ (Nat.card (B.Dom W σ))) u
     rw [holdsOf_numeral M h σ _ u, pext_top M h _ u hu, Set.encard_univ, ENat.card_eq_coe_natCard _]
 
-/-- **In an extensionally full model with infinitely many entities of type `σ` at a world, the
-Axiom of Infinity holds there**: the property of holding only of properties with finitely many
-instances is in the domain, `𝟎` has it, `Suc` keeps it, and no cardinality with it holds of
-the universal property. -/
-theorem holds_axInf_of_infinite (hE : B.ExtFull) {W : C} (h : B.W₀ ⟶ W) (σ : Ty)
-    [Infinite (B.Dom W σ)] : B.Holds h (axInf σ) .nil := by
+/-- **The Axiom of Infinity holds at a world with infinitely many entities of type `σ`** where
+the property of holding only of properties with finitely many instances is in the domain: `𝟎`
+has it, `Suc` keeps it, and no cardinality with it holds of the universal property. -/
+theorem holds_axInf_of_finiteCards {W : C} (h : B.W₀ ⟶ W) (σ : Ty) [Infinite (B.Dom W σ)]
+    (hX : ∃ X : B.Dom W (.rel (.arr (tC σ) .t)),
+      (B.incl _ W X).ext' B.inner = {a | ∀ P, holdsOf a.1 P → (pext P).Finite}) :
+    B.Holds h (axInf σ) .nil := by
   rw [axInf, B.holds_neg M, B.holds_exists M]
   rintro ⟨Z, hZ⟩
   rw [B.holds_conj M] at hZ
   obtain ⟨hFC, hZtop⟩ := hZ
-  obtain ⟨X, hX⟩ := hE (.arr (tC σ) .t) W {a | ∀ P, holdsOf a.1 P → (pext P).Finite}
+  obtain ⟨X, hX⟩ := hX
   rw [B.holds_forall M] at hFC
   have hXZ := (B.holds_imp M _ _ _ _).1 (hFC X) ?_
   · rw [B.holds_app h _ (Term.var .zero) (Term.var Var.zero.succ) (a' := Z) rfl] at hXZ
@@ -249,6 +250,15 @@ theorem holds_axInf_of_infinite (hE : B.ExtFull) {W : C} (h : B.W₀ ⟶ W) (σ 
         by_cases e : y = x
         · exact Or.inl e
         · exact Or.inr ⟨hy, e⟩
+
+/-- **In an extensionally full model with infinitely many entities of type `σ` at a world, the
+Axiom of Infinity holds there**: the property of holding only of properties with finitely many
+instances is in the domain, `𝟎` has it, `Suc` keeps it, and no cardinality with it holds of
+the universal property. -/
+theorem holds_axInf_of_infinite (hE : B.ExtFull) {W : C} (h : B.W₀ ⟶ W) (σ : Ty)
+    [Infinite (B.Dom W σ)] : B.Holds h (axInf σ) .nil :=
+  holds_axInf_of_finiteCards M h σ (hE (.arr (tC σ) .t) W _)
+
 
 /-- **Possible Infinity at `σ` fails where every world has finitely many entities of type `σ`.** -/
 theorem not_holds_dia_axInf_of_finite {W : C} (h : B.W₀ ⟶ W) (σ : Ty)

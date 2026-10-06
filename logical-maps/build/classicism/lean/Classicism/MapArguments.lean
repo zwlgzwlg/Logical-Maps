@@ -2,6 +2,7 @@ import Classicism.MapModels
 import Classicism.Models.Conditions
 import Classicism.Semantics.OneIndividual
 import Classicism.Semantics.Interpretations
+import Classicism.Models.SymBase
 import Mathlib.SetTheory.Cardinal.NatCard
 
 /-!
@@ -348,6 +349,67 @@ theorem no_contingency_signature_r : Statements.Arguments.sigma_top_npc.no_conti
   fun _ M _ hT hN => holdsAx_nc_of_sigmaTop M hT hN
 
 end sigma_top_npc
+
+/-! ## Arguments of the symmetric ideally full models -/
+
+namespace symmetric_ideally_full
+
+namespace relational_choice
+
+/-- Relational Choice fails at `(e → t)` and `e` (`SymBase.not_rc_of_transposable`). -/
+theorem relational_choice_r : Statements.Arguments.symmetric_ideally_full.relational_choice.relational_choice_r :=
+  fun S h => verdict_fails S.model_isModel
+    (not_holdsAx_of ⟨.rel (.arr .e .t), .e, ⟨trivial, trivial⟩, trivial, rfl⟩ (SymBase.not_rc_of_transposable h)) |>.2
+
+end relational_choice
+
+namespace actuality
+
+/-- The symmetry group, finitely pinned, witnesses Actuality (`SymBase.actuality_of_pinned`). -/
+theorem actuality : Statements.Arguments.symmetric_ideally_full.actuality.actuality :=
+  fun S h => verdict_holds S.model_isModel (holdsAx_eq.2 (SymBase.actuality_of_pinned h)) |>.2
+
+end actuality
+
+namespace barcan_fixes_or_omits
+
+/-- BF at `e` fails (`SymBase.not_bf_e_of_fixesOrOmits`). -/
+theorem barcan_r : Statements.Arguments.symmetric_ideally_full.barcan_fixes_or_omits.barcan_r :=
+  fun S h => verdict_fails S.model_isModel
+    (not_holdsAx_of ⟨.e, trivial, rfl⟩ (SymBase.not_bf_e_of_fixesOrOmits h)) |>.2
+
+end barcan_fixes_or_omits
+namespace axiom_of_infinity_e
+
+/-- The finite cardinalities' property is in the domain (`SymBase.holds_axInf`). -/
+theorem axiom_of_infinity_e : Statements.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e :=
+  fun S h => by
+    have : Infinite (S.model.Dom S.W₀ .e) := h
+    exact verdict_holds S.model_isModel (holdsAx_eq.2 (SymBase.holds_axInf .e)) |>.2
+
+end axiom_of_infinity_e
+
+namespace axiom_of_infinity_t
+
+/-- Separable collapses give infinitely many propositions
+(`SymBase.infinite_props_of_separable`). -/
+theorem axiom_of_infinity_t : Statements.Arguments.symmetric_ideally_full.axiom_of_infinity_t.axiom_of_infinity_t :=
+  fun S h => by
+    have := SymBase.infinite_props_of_separable h
+    exact verdict_holds S.model_isModel (holdsAx_eq.2 (SymBase.holds_axInf (.rel .t))) |>.2
+
+end axiom_of_infinity_t
+namespace barcan_surjective
+
+/-- BF at every type (`SymBase.bf_of_surjective`): a surjective arrow is surjective on every
+domain, by pulling back. -/
+theorem barcan_r : Statements.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r :=
+  fun S h => verdict_holds S.model_isModel
+    (holdsAx_indexed.2 fun σ _ => SymBase.bf_of_surjective h σ) |>.2
+
+end barcan_surjective
+
+end symmetric_ideally_full
 
 /-! ## Arguments of the finite-support models on one object -/
 
