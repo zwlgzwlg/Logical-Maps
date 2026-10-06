@@ -1,5 +1,5 @@
 id: symmetry-constrained-full-collapse
-name: 'Symmetry-constrained full model: identity and collapses on three individuals'
+name: 'Symmetry-constrained full model: permutations and collapses on three individuals'
 certificate:
   source_id: misc
   produced_by: Cian Dorr (the construction and the failure of Intensional Choice, 3 and 4 October
@@ -17,9 +17,15 @@ sources:
   have been identified and Intensional Choice fails; transcript in .private.
 - Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026,
   Definitions 15–18, p. 8 (the symmetry condition).
+- >-
+  Cian Dorr, revision of 6 October 2026, in conversation with Claude Opus 5.5 (Anthropic): the
+  six permutations made arrows alongside the three collapses, so that the member is a
+  symmetry-constrained full model under Dorr's condition as it stands, the strongest true
+  proposition being the set of permutations.
 source_names:
 - Dorr 3–4 Oct
 - BC does not imply RC
+- Dorr 6 Oct
 references:
 - paper: dorr-bc-not-rc
   role: background
@@ -28,14 +34,17 @@ references:
 - paper: bacon-dorr-classicism
   role: background
   locator: §3.5, p. 59
-  note: Full action models; the two-arrow idempotent monoid is this monoid with one individual and
-    no symmetry.
+  note: Full action models; the two-arrow idempotent monoid is the quotient of this monoid by the
+    symmetries.
 
 group: symmetry-constrained-full
 settings:
+  # revision (6 October 2026, Cian Dorr): until then the arrows were the identity and the three
+  # collapses, with the symmetry condition imposed only where composing with a permutation gives an
+  # arrow; the permutations are now arrows, and the condition is Dorr's.
   construction: >-
-    The arrows are the identity of $X$ and the three collapses $c_i$, the constant maps with value
-    $i\in X$; they compose by $c_i\circ h=c_i$ and $h\circ c_i=h$ for $h\ne1$.
+    The arrows are the six permutations of $X$ and the three collapses $c_i$, the constant maps
+    with value $i\in X$; they compose as maps, so $c_i\circ h=c_i$ and $g\circ c_i=c_{g(i)}$.
   individuals: three
   sigma: top
 meets:
@@ -44,14 +53,26 @@ meets:
 arguments: []
 
 notes: >-
-  The propositions are $\bot$, $\{1\}$, the set of the three collapses, and $\top$: the symmetry
-  condition is vacuous at the identity, since no permutation is an arrow, and at a collapse it
-  identifies the three collapses. So the propositional structure is that of the full model on the
-  two-arrow idempotent monoid, and the relabellings act trivially on it; Intensional Choice fails
-  only at type $e$, by the shared argument, and holds at type $t$, where any singleton is fixed. The
-  variant with one individual therefore refutes nothing that the two-arrow full model does not. BF
-  also fails at type $e$ when there are three individuals: the intension with extension $X$ at the
-  identity and $\{i\}$ at $c_i$ is symmetric, holds necessarily of every individual, yet is not
-  necessarily universal. That failure, and the failure of ND at type $e$ from two individuals that
-  a collapse identifies, are derived from the group's arguments at type $t$ and are not recorded
-  separately.
+  The propositions are $\bot$, the set $P$ of the six permutations, the set of the three collapses,
+  and $\top$: the symmetry condition makes a proposition contain all the permutations or none, and
+  all the collapses or none. $P$ is the strongest true proposition, the true atom. So the
+  propositional structure is that of the full model on the two-arrow idempotent monoid, the
+  quotient of this one by the symmetries, and the relabellings act trivially on it; Intensional
+  Choice fails only at type $e$, by the shared argument, and holds at type $t$, where every
+  proposition is fixed by the relabellings. The variant with one individual therefore refutes
+  nothing that the two-arrow full model does not. BF also fails at type $e$ when there are three
+  individuals: the image intension $h\mapsto h(X)$, $X$ at a permutation and $\{i\}$ at $c_i$, is
+  symmetric, holds necessarily of every individual, yet is not necessarily universal. That
+  failure, and the failure of ND at type $e$ from two individuals that a collapse identifies, are
+  derived from the group's arguments at type $t$ and are not recorded separately.
+# The model in Lean (Classicism/Models/SymmetricFull.lean): the symmetric ideally full premodel
+# over the permutations and collapses of a three-element set, with the permutations as the symmetries.
+lean:
+  model: Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses
+  is_model: Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.permsCollapses
+  meets:
+    one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
+    metatheory-choice: Classicism.Meta.Intensional.Premodel.metatheoryChoice _
+    finitely-many-propositions: Classicism.Meta.Intensional.SymFull.finitely_many_propositions (M := Classicism.Meta.Intensional.SymFull.permsCollapses)
+    extensionally-full: Classicism.Meta.Intensional.SymFull.extFull (M := Classicism.Meta.Intensional.SymFull.permsCollapses)
+    actual-world-isolated: Classicism.Meta.Intensional.SymFull.actualWorldIsolated (M := Classicism.Meta.Intensional.SymFull.permsCollapses)

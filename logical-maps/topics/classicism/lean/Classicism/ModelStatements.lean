@@ -964,23 +964,43 @@ def Models.full_two_object_retract.independence_signature_r : Prop :=
 
 /-- `symmetry-constrained-full-all-maps`: Distinctness-preserving collapse holds. -/
 def Models.symmetry_constrained_full_all_maps.distinctness_preserving_collapse : Prop :=
-  (Classicism.Meta.Intensional.SymFull.model).IsModel ∧ (Classicism.Meta.Intensional.SymFull.model).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
+  (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps).IsModel ∧ (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
 
 /-- `symmetry-constrained-full-all-maps`: No Pure Contingency holds. -/
 def Models.symmetry_constrained_full_all_maps.no_pure_contingency_r : Prop :=
-  (Classicism.Meta.Intensional.SymFull.model).IsModel ∧ (Classicism.Meta.Intensional.SymFull.model).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+  (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps).IsModel ∧ (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
 
 /-- `symmetry-constrained-full-all-maps`: Transversal Choice holds. -/
 def Models.symmetry_constrained_full_all_maps.transversal_choice_r : Prop :=
-  (Classicism.Meta.Intensional.SymFull.model).IsModel ∧ (Classicism.Meta.Intensional.SymFull.model).HoldsAx Classicism.P.TransversalChoice.schemaIn
+  (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps).IsModel ∧ (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
 /-- `symmetry-constrained-full-all-maps`: Independence (signature Σ) fails. -/
 def Models.symmetry_constrained_full_all_maps.independence_signature_r : Prop :=
-  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.allMaps)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.allMaps)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.allMaps)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
 
 /-- `symmetry-constrained-full-all-maps`: No Contingency (signature Σ) holds. -/
 def Models.symmetry_constrained_full_all_maps.no_contingency_signature_r : Prop :=
-  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel)).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model) (Classicism.Meta.Intensional.SymFull.model_isModel)).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.allMaps)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.allMaps)).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.allMaps)).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
+
+/-- `symmetry-constrained-full-collapse`: Distinctness-preserving collapse holds. -/
+def Models.symmetry_constrained_full_collapse.distinctness_preserving_collapse : Prop :=
+  (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses).IsModel ∧ (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses).HoldsAx Classicism.P.DistinctnessPreservingCollapse.schemaIn
+
+/-- `symmetry-constrained-full-collapse`: No Pure Contingency holds. -/
+def Models.symmetry_constrained_full_collapse.no_pure_contingency_r : Prop :=
+  (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses).IsModel ∧ (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `symmetry-constrained-full-collapse`: Transversal Choice holds. -/
+def Models.symmetry_constrained_full_collapse.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses).IsModel ∧ (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
+/-- `symmetry-constrained-full-collapse`: Independence (signature Σ) fails. -/
+def Models.symmetry_constrained_full_collapse.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.permsCollapses)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.permsCollapses)).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.permsCollapses)).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `symmetry-constrained-full-collapse`: No Contingency (signature Σ) holds. -/
+def Models.symmetry_constrained_full_collapse.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.permsCollapses)).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.permsCollapses)).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.permsCollapses)).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
 
 /-- argument `barcan-d6`: BF holds in every model meeting its conditions. -/
 def Arguments.barcan_d6.barcan_r : Prop :=

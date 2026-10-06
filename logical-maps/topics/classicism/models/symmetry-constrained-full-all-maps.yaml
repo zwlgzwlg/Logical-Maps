@@ -79,11 +79,11 @@ notes: >-
 # The model in Lean (Classicism/Models/SymmetricFull.lean): the symmetric ideally full premodel
 # over all maps of a three-element set, with the permutations as the symmetries.
 lean:
-  model: Classicism.Meta.Intensional.SymFull.model
-  is_model: Classicism.Meta.Intensional.SymFull.model_isModel
+  model: Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps
+  is_model: Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.allMaps
   meets:
     one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
     metatheory-choice: Classicism.Meta.Intensional.Premodel.metatheoryChoice _
-    finitely-many-propositions: Classicism.Meta.Intensional.SymFull.finitely_many_propositions
-    extensionally-full: Classicism.Meta.Intensional.SymFull.extFull
-    actual-world-isolated: Classicism.Meta.Intensional.SymFull.actualWorldIsolated
+    finitely-many-propositions: Classicism.Meta.Intensional.SymFull.finitely_many_propositions (M := Classicism.Meta.Intensional.SymFull.allMaps)
+    extensionally-full: Classicism.Meta.Intensional.SymFull.extFull (M := Classicism.Meta.Intensional.SymFull.allMaps)
+    actual-world-isolated: Classicism.Meta.Intensional.SymFull.actualWorldIsolated (M := Classicism.Meta.Intensional.SymFull.allMaps)

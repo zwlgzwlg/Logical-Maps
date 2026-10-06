@@ -12,8 +12,8 @@ references:
   note: Full action models.
 
 # Full action models over finitely many individuals, cut down to the intensions that respect a group
-# of permutations of the individuals: Dorr's symmetry condition, imposed wherever composing with a
-# permutation gives an arrow. The members are finite, and the symmetry bites only at the arrows that
+# of permutations of the individuals: Dorr's symmetry condition, the permutations being arrows in
+# every member (since 6 October 2026, when the collapse member gained them). The members are finite, and the symmetry bites only at the arrows that
 # collapse individuals, where it leaves nothing to tell the collapsed individuals apart, so that
 # Intensional Choice fails while Actuality, Atomicity, Boolean Completeness, Rigid Comprehension
 # and the choice principles witnessed at the identity all hold. Proposed by Cian Dorr, 3 and 4
@@ -24,12 +24,11 @@ references:
 
 definition: >-
   {{construction}} The individuals are a three-element set $X$ and $G$ is the group of all its
-  permutations. An intension $D$ of a relational type is admitted exactly when it is symmetric:
-  $\langle\bar x,h\rangle\in D$ implies $\langle g\cdot\bar x,g\circ h\rangle\in D$ for every
-  $g\in G$ such that $g\circ h$ is an arrow, where $g$ acts on individuals as itself and on
-  entities of higher types by relabelling. At the identity the condition is vacuous unless the
-  permutations are arrows; at a collapse $c_i$, the constant map with value $i$, it says that
-  $D(c_{g(i)})=g\cdot D(c_i)$. Every such domain is finite and closed under the operations of C:
+  permutations, which are arrows in every member. An intension $D$ of a relational type is
+  admitted exactly when it is symmetric: $\langle\bar x,h\rangle\in D$ implies
+  $\langle g\cdot\bar x,g\circ h\rangle\in D$ for every $g\in G$, where $g$ acts on individuals
+  as itself and on entities of higher types by relabelling (Dorr's Definition 17). At a collapse
+  $c_i$, the constant map with value $i$, it says that $D(c_{g(i)})=g\cdot D(c_i)$. Every such domain is finite and closed under the operations of C:
   each $g$ is an automorphism of the whole structure, and every parameter transported along a
   collapse is fixed by $G$, so the extension at a collapse of any definable intension is
   invariant. Evaluation point: the sole object, at the identity arrow.
@@ -112,7 +111,7 @@ meets:
     set $X$ of all individuals.
   extensionally-full: >-
     Any set $S$ of tuples at the identity is the extension there of a symmetric intension: put
-    $S$ at the identity, $g\cdot S$ at each permutation $g$ that is an arrow, and the empty set
+    $S$ at the identity, $g\cdot S$ at each permutation $g$, and the empty set
     at every other arrow.
   metatheory-choice: The construction is carried out in ZFC; everything in it is finite.
   finitely-many-propositions: >-
@@ -120,7 +119,7 @@ meets:
     arrows.
   actuality-contingent: >-
     The actual-world proposition $a$ is the orbit of the identity under the symmetry group, the
-    identity alone when no permutation is an arrow and the permutations when they are; it is in the
+    set of permutations; it is in the
     domain, true, and entails every truth, since a symmetric true proposition contains the identity
     and so its orbit. It is necessary at no world, since every world sees a collapse, which lies
     outside $a$; and a collapse $c$ does not fix it, since $l\circ c$ is a collapse for every $l$,
