@@ -4975,9 +4975,9 @@ def symmetric_infinite_classes : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.InextensibleComprehension.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Barcan.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
@@ -4997,8 +4997,8 @@ def symmetric_infinite_classes_individuals_singleton : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.InextensibleComprehension.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Barcan.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
@@ -5186,10 +5186,10 @@ Symmetric ideally-full model: arrows omitting or reserving a fixed individual: a
 and violating 8. -/
 def symmetric_range_gap_without_actuality : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.InextensibleComprehension.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
@@ -5208,9 +5208,9 @@ Symmetric ideally-full model: arrows omitting or reserving a fixed individual [o
 and violating 8. -/
 def symmetric_range_gap_without_actuality_individuals_singleton : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.InextensibleComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
@@ -5229,10 +5229,10 @@ Symmetric ideally-full model: arrows omitting a fixed individual: a witness sati
 and violating 9. -/
 def symmetric_range_gap : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Actuality.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
@@ -5253,10 +5253,10 @@ Symmetric ideally-full model: arrows omitting a fixed individual [Σ true atom]:
 and violating 11. -/
 def symmetric_range_gap_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Actuality.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AtomicityT.schemaIn ∧
@@ -5277,9 +5277,9 @@ Symmetric ideally-full model: arrows omitting a fixed individual [one individual
 and violating 9. -/
 def symmetric_range_gap_individuals_singleton : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Actuality.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
@@ -5300,9 +5300,9 @@ Symmetric ideally-full model: arrows omitting a fixed individual [one individual
 and violating 11. -/
 def symmetric_range_gap_individuals_singleton_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Actuality.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AtomicityT.schemaIn ∧
@@ -5319,7 +5319,7 @@ def symmetric_range_gap_individuals_singleton_sigma_true_atom : Prop :=
 
 /-- `symmetric-two-object-unpinned`
 
-Symmetric ideally-full model: two objects, the second unpinned: a witness satisfying 5 principles
+Symmetric ideally-full model: two objects, the second unpinned: a witness satisfying 6 principles
 and violating 12. -/
 def symmetric_two_object_unpinned : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -5327,6 +5327,7 @@ def symmetric_two_object_unpinned : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidComprehension.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
@@ -5343,7 +5344,7 @@ def symmetric_two_object_unpinned : Prop :=
 
 /-- `symmetric-two-object-unpinned-sigma-true-atom`
 
-Symmetric ideally-full model: two objects, the second unpinned [Σ true atom]: a witness satisfying 5 principles
+Symmetric ideally-full model: two objects, the second unpinned [Σ true atom]: a witness satisfying 6 principles
 and violating 14. -/
 def symmetric_two_object_unpinned_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -5351,6 +5352,7 @@ def symmetric_two_object_unpinned_sigma_true_atom : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidComprehension.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
@@ -5369,13 +5371,14 @@ def symmetric_two_object_unpinned_sigma_true_atom : Prop :=
 
 /-- `symmetric-two-object-unpinned-individuals-singleton`
 
-Symmetric ideally-full model: two objects, the second unpinned [one individual]: a witness satisfying 4 principles
+Symmetric ideally-full model: two objects, the second unpinned [one individual]: a witness satisfying 5 principles
 and violating 8. -/
 def symmetric_two_object_unpinned_individuals_singleton : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecActuality.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AtomicityT.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
@@ -5388,13 +5391,14 @@ def symmetric_two_object_unpinned_individuals_singleton : Prop :=
 
 /-- `symmetric-two-object-unpinned-individuals-singleton-sigma-true-atom`
 
-Symmetric ideally-full model: two objects, the second unpinned [one individual; Σ true atom]: a witness satisfying 4 principles
+Symmetric ideally-full model: two objects, the second unpinned [one individual; Σ true atom]: a witness satisfying 5 principles
 and violating 10. -/
 def symmetric_two_object_unpinned_individuals_singleton_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecActuality.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AtomicityT.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧

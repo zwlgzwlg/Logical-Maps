@@ -9,7 +9,9 @@ automorphisms of each object (Definition 15). An intension `A` at `W` is **symme
 when `⟨x̄, h⟩ ∈ A` gives `⟨g x̄, g ∘ h⟩ ∈ A` for every `g ∈ G_{trg h}` (Definition 17):
 relabelling the world `h` by `g` turns it into `g ∘ h` and the arguments into `g x̄`, and `A`
 is indifferent to that. The **symmetric ideally full premodel** has as its relational
-domains the intensions that are symmetric and finitely pinned (Definition 18).
+domains the intensions that are symmetric and finitely pinned (Definition 18), or, with the
+per-object ideals of Appendix D, pinned down by a member of the ideal at their object
+(`PinIdeal`; the draft's §6 puts the improper ideal at an object).
 
 Here `G` is any family of sets of arrows `G V ⊆ (V ⟶ V)` closed under inverses
 (`SymGroup.inv`), which is all the proofs use; in `Lean`, `h ≫ g` is `g ∘ h`.
@@ -36,6 +38,37 @@ variable {C : Type} [SmallCategory C]
 symmetry condition a biconditional (Dorr's draft, after Definition 17). -/
 def SymGroup (G : ∀ V : C, Set (V ⟶ V)) : Prop :=
   ∀ (V : C) (g : V ⟶ V), g ∈ G V → ∃ g' ∈ G V, g ≫ g' = 𝟙 V ∧ g' ≫ g = 𝟙 V
+
+/-- **An ideal of pinning sets** at each object, as in Appendix D's per-object ideals: it holds
+the finite sets and is closed under binary unions and under images along arrows. The domains of
+a symmetric ideally full premodel hold the symmetric intensions pinned down by a member of the
+ideal at their object; the improper ideal, every set, admits every symmetric intension. -/
+structure PinIdeal (De : C ⥤ Type) where
+  mem : ∀ W : C, Set (Set (De.obj W))
+  finite : ∀ {W : C} {N : Set (De.obj W)}, N.Finite → N ∈ mem W
+  union : ∀ {W : C} {N M : Set (De.obj W)}, N ∈ mem W → M ∈ mem W → N ∪ M ∈ mem W
+  image : ∀ {W V : C} (h : W ⟶ V) {N : Set (De.obj W)}, N ∈ mem W → De.map h '' N ∈ mem V
+
+/-- The ideal of finite sets at every object. -/
+def PinIdeal.fin (De : C ⥤ Type) : PinIdeal De where
+  mem _ := {N | N.Finite}
+  finite h := h
+  union h₁ h₂ := Set.Finite.union h₁ h₂
+  image _ _ h := h.image _
+
+/-- The ideal is closed under finite unions. -/
+theorem PinIdeal.biUnion {De : C ⥤ Type} (J : PinIdeal De) {ι : Type*} {s : Set ι} (hs : s.Finite)
+    {W : C} {f : ι → Set (De.obj W)} (hf : ∀ i ∈ s, f i ∈ J.mem W) : (⋃ i ∈ s, f i) ∈ J.mem W := by
+  classical
+  have key : ∀ T : Finset ι, (∀ i ∈ T, f i ∈ J.mem W) → (⋃ i ∈ (T : Set ι), f i) ∈ J.mem W := by
+    intro T
+    induction T using Finset.induction_on with
+    | empty => intro _; simpa using J.finite Set.finite_empty
+    | insert a T _ ih =>
+      intro h
+      rw [Finset.coe_insert, Set.biUnion_insert]
+      exact J.union (h a (Finset.mem_insert_self _ _)) (ih fun i hi => h i (Finset.mem_insert_of_mem hi))
+  simpa using key hs.toFinset fun i hi => hf i (hs.mem_toFinset.1 hi)
 
 namespace Premodel
 
@@ -242,23 +275,49 @@ theorem sem_symmetric (hG : SymGroup G) (hD : B.DomSym G) :
   | _, _, W, _, .boxR _, _ => sym_boxRead _ W
   | _, _, W, _, .inclR _, _ => sym_inclRead hG hD _ W
 
-/-- **Proposition 20, abstractly.** A premodel whose inner elements are finitely pinned and
-symmetric, and whose domains hold every symmetric finitely pinned intension, is a model. -/
-theorem isModel_of_pinned_sym (hG : SymGroup G) (hD : B.DomSym G)
-    (hfin : ∀ (σ : Ty) (W : C) (x : B.Dom W σ), ∃ N : Set (B.Dom W .e), N.Finite ∧ B.PinnedO σ N (B.Incl σ W x))
+/-- The values of an assignment are pinned by one member of the ideal. -/
+theorem env_idealPinned (J : PinIdeal (B.inner .e))
+    (hfin : ∀ (σ : Ty) (W : C) (x : B.Dom W σ), ∃ N, N ∈ J.mem W ∧ B.PinnedO σ N (B.Incl σ W x)) :
+    ∀ {Γ : Ctx} {W : C} (g : IEnv (B.Dom W) Γ),
+      ∃ N, N ∈ J.mem W ∧ ∀ τ (v : Var Γ τ), B.PinnedO τ N (B.Incl τ W (g.get v))
+  | _, _, .nil => ⟨∅, J.finite Set.finite_empty, fun _ v => nomatch v⟩
+  | _, _, .cons x g => by
+    obtain ⟨N, hN, hg⟩ := env_idealPinned J hfin g
+    obtain ⟨M, hM, hx⟩ := hfin _ _ x
+    refine ⟨N ∪ M, J.union hN hM, fun τ v => ?_⟩
+    cases v with
+    | zero => exact PinnedO.mono B Set.subset_union_right hx
+    | succ v => exact PinnedO.mono B Set.subset_union_left (hg _ v)
+
+/-- The constants a term mentions, moved along an arrow, are pinned by one member of the ideal. -/
+theorem consts_idealPinned (J : PinIdeal (B.inner .e))
+    (hfin : ∀ (σ : Ty) (W : C) (x : B.Dom W σ), ∃ N, N ∈ J.mem W ∧ B.PinnedO σ N (B.Incl σ W x))
+    {Γ : Ctx} {σ : Ty} {W : C} (h : B.W₀ ⟶ W) (t : Term Sig Γ σ) :
+    ∃ N, N ∈ J.mem W ∧
+      ∀ c ∈ t.consts, B.PinnedO _ N (B.Incl _ W ((B.inner _).map h (B.I c))) := by
+  classical
+  choose N hN using fun c : Sig.Const => hfin (Sig.typeOf c) W ((B.inner _).map h (B.I c))
+  refine ⟨⋃ c ∈ t.consts, N c, J.biUnion (Term.consts_finite t) fun c _ => (hN c).1, fun c hc => ?_⟩
+  exact PinnedO.mono B (Set.subset_biUnion_of_mem (u := N) hc) (hN c).2
+
+/-- **Proposition 20, abstractly.** A premodel whose inner elements are pinned down by members
+of an ideal and symmetric, and whose domains hold every symmetric intension so pinned, is a
+model. -/
+theorem isModel_of_pinned_sym (J : PinIdeal (B.inner .e)) (hG : SymGroup G) (hD : B.DomSym G)
+    (hfin : ∀ (σ : Ty) (W : C) (x : B.Dom W σ), ∃ N, N ∈ J.mem W ∧ B.PinnedO σ N (B.Incl σ W x))
     (hinner : ∀ (ρ : RTy) (W : C) (F : Intension B.inner ρ W),
-      (∃ N : Set (B.Dom W .e), N.Finite ∧ B.PinnedO (.rel ρ) N F) → B.Sym G F →
+      (∃ N, N ∈ J.mem W ∧ B.PinnedO (.rel ρ) N F) → B.Sym G F →
         F ∈ Set.range (B.incl ρ W)) :
     B.IsModel := fun {_ σ W} h t g => by
-  obtain ⟨N, hN, hg⟩ := B.env_finPinned hfin g
-  obtain ⟨M, hM, hc⟩ := B.consts_finPinned hfin h t
+  obtain ⟨N, hN, hg⟩ := B.env_idealPinned J hfin g
+  obtain ⟨M, hM, hc⟩ := B.consts_idealPinned J hfin h t
   have hp := B.sem_pinned h t g (N ∪ M)
     (fun τ v => PinnedO.mono B Set.subset_union_left (hg τ v))
     (fun c hc' => PinnedO.mono B Set.subset_union_right (hc c hc'))
   have hs := sem_symmetric hG hD h t g
   cases σ with
   | e => exact ⟨_, rfl⟩
-  | rel ρ => exact hinner ρ W _ ⟨N ∪ M, hN.union hM, hp⟩ hs
+  | rel ρ => exact hinner ρ W _ ⟨N ∪ M, J.union hN hM, hp⟩ hs
   | var _ => exact ⟨_, rfl⟩
 
 end Premodel
@@ -268,7 +327,16 @@ end Premodel
 
 section construction
 
-variable (De : C ⥤ Type) (G : ∀ V : C, Set (V ⟶ V))
+variable (De : C ⥤ Type) (G : ∀ V : C, Set (V ⟶ V)) (J : PinIdeal De)
+
+/-- Pinned down by a member of the ideal. -/
+def IdealPinned (F : C ⥤ Type) {W : C} (x : F.obj W) : Prop :=
+  ∃ N, N ∈ J.mem W ∧ PinnedBy De F N x
+
+theorem IdealPinned.map {F : C ⥤ Type} {W V : C} {x : F.obj W} (hx : IdealPinned De J F x) (h : W ⟶ V) :
+    IdealPinned De J F (F.map h x) :=
+  let ⟨N, hN, hp⟩ := hx
+  ⟨De.map h '' N, J.image h hN, hp.map De h⟩
 
 /-- Symmetry of a raw intension over an action of arguments. -/
 def RawSym (F : C ⥤ Type) {W : C} (A : (intensionAction F).obj W) : Prop :=
@@ -285,8 +353,8 @@ theorem RawSym.map {F : C ⥤ Type} {W V : C} (h : W ⟶ V) {A : (intensionActio
 
 /-- The subaction of the symmetric finitely pinned intensions over an action of arguments. -/
 abbrev symPinnedAction (F : C ⥤ Type) : C ⥤ Type where
-  obj W := {A : (intensionAction F).obj W // FinPinned De (intensionAction F) A ∧ RawSym G F A}
-  map {W V} h := TypeCat.ofHom fun A => ⟨(intensionAction F).map h A.1, A.2.1.map De h, RawSym.map G h A.2.2⟩
+  obj W := {A : (intensionAction F).obj W // IdealPinned De J (intensionAction F) A ∧ RawSym G F A}
+  map {W V} h := TypeCat.ofHom fun A => ⟨(intensionAction F).map h A.1, A.2.1.map De J h, RawSym.map G h A.2.2⟩
   map_id W := by
     ext ⟨x, hx⟩ : 3
     simp
@@ -298,165 +366,165 @@ abbrev symPinnedAction (F : C ⥤ Type) : C ⥤ Type where
 the symmetric finitely pinned intensions over its arguments. -/
 noncomputable abbrev SymT (σ : Ty) : C ⥤ Type :=
   @Ty.rec (fun _ => C ⥤ Type) (fun _ => C ⥤ Type) De
-    (fun _ ih => symPinnedAction De G ih) (fun _ => De)
+    (fun _ ih => symPinnedAction De G J ih) (fun _ => De)
     pointAction (fun _ _ ihσ ihρ => prodAction ihσ ihρ) σ
 
 /-- The arguments of a relational type, as an action. -/
 noncomputable abbrev SymArgs (ρ : RTy) : C ⥤ Type :=
   @RTy.rec (fun _ => C ⥤ Type) (fun _ => C ⥤ Type) De
-    (fun _ ih => symPinnedAction De G ih) (fun _ => De)
+    (fun _ ih => symPinnedAction De G J ih) (fun _ => De)
     pointAction (fun _ _ ihσ ihρ => prodAction ihσ ihρ) ρ
 
 /-- The symmetric ideally full inner action at a relational type. -/
-noncomputable abbrev SymR (ρ : RTy) : C ⥤ Type := symPinnedAction De G (SymArgs De G ρ)
+noncomputable abbrev SymR (ρ : RTy) : C ⥤ Type := symPinnedAction De G J (SymArgs De G J ρ)
 
-example (ρ : RTy) : SymT De G (.rel ρ) = SymR De G ρ := rfl
+example (ρ : RTy) : SymT De G J (.rel ρ) = SymR De G J ρ := rfl
 
 /-- The raw intensions over the arguments. -/
-abbrev SymRaw (ρ : RTy) (W : C) : Type := Set (Σ V : C, (SymArgs De G ρ).obj V × (W ⟶ V))
+abbrev SymRaw (ρ : RTy) (W : C) : Type := Set (Σ V : C, (SymArgs De G J ρ).obj V × (W ⟶ V))
 
 /-- The two spellings of the arguments, related. -/
-def symArgs : ∀ (ρ : RTy) (V : C), Args (SymT De G) ρ V → (SymArgs De G ρ).obj V
+def symArgs : ∀ (ρ : RTy) (V : C), Args (SymT De G J) ρ V → (SymArgs De G J ρ).obj V
   | .t, _, _ => PUnit.unit
   | .arr _ ρ, V, a => (a.1, symArgs ρ V a.2)
 
-def symArgs' : ∀ (ρ : RTy) (V : C), (SymArgs De G ρ).obj V → Args (SymT De G) ρ V
+def symArgs' : ∀ (ρ : RTy) (V : C), (SymArgs De G J ρ).obj V → Args (SymT De G J) ρ V
   | .t, _, _ => PUnit.unit
   | .arr _ ρ, V, a => (a.1, symArgs' ρ V a.2)
 
-theorem symArgs_symArgs' : ∀ (ρ : RTy) (V : C) (a : (SymArgs De G ρ).obj V),
-    symArgs De G ρ V (symArgs' De G ρ V a) = a
+theorem symArgs_symArgs' : ∀ (ρ : RTy) (V : C) (a : (SymArgs De G J ρ).obj V),
+    symArgs De G J ρ V (symArgs' De G J ρ V a) = a
   | .t, _, _ => rfl
   | .arr _ ρ, V, a => by
-    show (a.1, symArgs De G ρ V (symArgs' De G ρ V a.2)) = a
+    show (a.1, symArgs De G J ρ V (symArgs' De G J ρ V a.2)) = a
     exact Prod.ext rfl (symArgs_symArgs' ρ V a.2)
 
-theorem symArgs'_symArgs : ∀ (ρ : RTy) (V : C) (a : Args (SymT De G) ρ V),
-    symArgs' De G ρ V (symArgs De G ρ V a) = a
+theorem symArgs'_symArgs : ∀ (ρ : RTy) (V : C) (a : Args (SymT De G J) ρ V),
+    symArgs' De G J ρ V (symArgs De G J ρ V a) = a
   | .t, _, _ => rfl
   | .arr _ ρ, V, a => by
-    show (a.1, symArgs' De G ρ V (symArgs De G ρ V a.2)) = a
+    show (a.1, symArgs' De G J ρ V (symArgs De G J ρ V a.2)) = a
     exact Prod.ext rfl (symArgs'_symArgs ρ V a.2)
 
 /-- The arrows act alike on the two spellings. -/
-theorem symArgs_map : ∀ (ρ : RTy) {V V' : C} (j : V ⟶ V') (a : Args (SymT De G) ρ V),
-    symArgs De G ρ V' (Args.map (SymT De G) ρ j a) = (SymArgs De G ρ).map j (symArgs De G ρ V a)
+theorem symArgs_map : ∀ (ρ : RTy) {V V' : C} (j : V ⟶ V') (a : Args (SymT De G J) ρ V),
+    symArgs De G J ρ V' (Args.map (SymT De G J) ρ j a) = (SymArgs De G J ρ).map j (symArgs De G J ρ V a)
   | .t, _, _, _, _ => rfl
   | .arr σ ρ, V, V', j, a => by
-    show ((SymT De G σ).map j a.1, symArgs De G ρ V' (Args.map (SymT De G) ρ j a.2)) =
-      ((SymT De G σ).map j a.1, (SymArgs De G ρ).map j (symArgs De G ρ V a.2))
+    show ((SymT De G J σ).map j a.1, symArgs De G J ρ V' (Args.map (SymT De G J) ρ j a.2)) =
+      ((SymT De G J σ).map j a.1, (SymArgs De G J ρ).map j (symArgs De G J ρ V a.2))
     rw [symArgs_map ρ j a.2]
 
-theorem symArgs'_map (ρ : RTy) {V V' : C} (j : V ⟶ V') (b : (SymArgs De G ρ).obj V) :
-    symArgs' De G ρ V' ((SymArgs De G ρ).map j b) = Args.map (SymT De G) ρ j (symArgs' De G ρ V b) := by
-  rw [← symArgs_symArgs' De G ρ V b, ← symArgs_map, symArgs'_symArgs, symArgs'_symArgs]
+theorem symArgs'_map (ρ : RTy) {V V' : C} (j : V ⟶ V') (b : (SymArgs De G J ρ).obj V) :
+    symArgs' De G J ρ V' ((SymArgs De G J ρ).map j b) = Args.map (SymT De G J) ρ j (symArgs' De G J ρ V b) := by
+  rw [← symArgs_symArgs' De G J ρ V b, ← symArgs_map, symArgs'_symArgs, symArgs'_symArgs]
 
 /-- A raw intension read as an intension, and back. -/
-def symRead (ρ : RTy) (W : C) (A : SymRaw De G ρ W) : Intension (SymT De G) ρ W :=
-  {p | (⟨p.1, symArgs De G ρ p.1 p.2.1, p.2.2⟩ : Σ V : C, (SymArgs De G ρ).obj V × (W ⟶ V)) ∈ A}
+def symRead (ρ : RTy) (W : C) (A : SymRaw De G J ρ W) : Intension (SymT De G J) ρ W :=
+  {p | (⟨p.1, symArgs De G J ρ p.1 p.2.1, p.2.2⟩ : Σ V : C, (SymArgs De G J ρ).obj V × (W ⟶ V)) ∈ A}
 
-def symRead' (ρ : RTy) (W : C) (F : Intension (SymT De G) ρ W) : SymRaw De G ρ W :=
-  {p | (⟨p.1, symArgs' De G ρ p.1 p.2.1, p.2.2⟩ : Tuple (SymT De G) ρ W) ∈ F}
+def symRead' (ρ : RTy) (W : C) (F : Intension (SymT De G J) ρ W) : SymRaw De G J ρ W :=
+  {p | (⟨p.1, symArgs' De G J ρ p.1 p.2.1, p.2.2⟩ : Tuple (SymT De G J) ρ W) ∈ F}
 
-theorem symRead_symRead' (ρ : RTy) (W : C) (F : Intension (SymT De G) ρ W) :
-    symRead De G ρ W (symRead' De G ρ W F) = F := by
+theorem symRead_symRead' (ρ : RTy) (W : C) (F : Intension (SymT De G J) ρ W) :
+    symRead De G J ρ W (symRead' De G J ρ W F) = F := by
   ext ⟨V, a, i⟩
   simp [symRead, symRead', symArgs'_symArgs]
 
-theorem symRead'_symRead (ρ : RTy) (W : C) (A : SymRaw De G ρ W) :
-    symRead' De G ρ W (symRead De G ρ W A) = A := by
+theorem symRead'_symRead (ρ : RTy) (W : C) (A : SymRaw De G J ρ W) :
+    symRead' De G J ρ W (symRead De G J ρ W A) = A := by
   ext ⟨V, a, i⟩
   simp [symRead, symRead', symArgs_symArgs']
 
-theorem symRead_map (ρ : RTy) {W V : C} (h : W ⟶ V) (A : SymRaw De G ρ W) :
-    symRead De G ρ V ((intensionAction (SymArgs De G ρ)).map h A) =
-      Intension.map (SymT De G) h (symRead De G ρ W A) := by
+theorem symRead_map (ρ : RTy) {W V : C} (h : W ⟶ V) (A : SymRaw De G J ρ W) :
+    symRead De G J ρ V ((intensionAction (SymArgs De G J ρ)).map h A) =
+      Intension.map (SymT De G J) h (symRead De G J ρ W A) := by
   ext ⟨U, a, i⟩
   exact Iff.rfl
 
-theorem symRead'_map (ρ : RTy) {W V : C} (h : W ⟶ V) (F : Intension (SymT De G) ρ W) :
-    symRead' De G ρ V (Intension.map (SymT De G) h F) =
-      (intensionAction (SymArgs De G ρ)).map h (symRead' De G ρ W F) := by
+theorem symRead'_map (ρ : RTy) {W V : C} (h : W ⟶ V) (F : Intension (SymT De G J) ρ W) :
+    symRead' De G J ρ V (Intension.map (SymT De G J) h F) =
+      (intensionAction (SymArgs De G J ρ)).map h (symRead' De G J ρ W F) := by
   ext ⟨U, a, i⟩
   exact Iff.rfl
 
 /-- The inclusion of the domain into the intensions. -/
-def symIncl (ρ : RTy) (W : C) (A : (SymR De G ρ).obj W) : Intension (SymT De G) ρ W :=
-  symRead De G ρ W A.1
+def symIncl (ρ : RTy) (W : C) (A : (SymR De G J ρ).obj W) : Intension (SymT De G J) ρ W :=
+  symRead De G J ρ W A.1
 
-theorem symIncl_map (ρ : RTy) {W V : C} (h : W ⟶ V) (A : (SymR De G ρ).obj W) :
-    symIncl De G ρ V ((SymR De G ρ).map h A) = Intension.map (SymT De G) h (symIncl De G ρ W A) :=
-  symRead_map De G ρ h A.1
+theorem symIncl_map (ρ : RTy) {W V : C} (h : W ⟶ V) (A : (SymR De G J ρ).obj W) :
+    symIncl De G J ρ V ((SymR De G J ρ).map h A) = Intension.map (SymT De G J) h (symIncl De G J ρ W A) :=
+  symRead_map De G J ρ h A.1
 
-theorem symIncl_injective (ρ : RTy) (W : C) : Function.Injective (symIncl De G ρ W) := by
+theorem symIncl_injective (ρ : RTy) (W : C) : Function.Injective (symIncl De G J ρ W) := by
   intro A B e
   apply Subtype.ext
-  have := congrArg (symRead' De G ρ W) e
+  have := congrArg (symRead' De G J ρ W) e
   rwa [symIncl, symIncl, symRead'_symRead, symRead'_symRead] at this
 
 /-- Symmetry of an intension over the symmetric actions (`Premodel.Sym` for this premodel). -/
-def SymCond {ρ : RTy} {W : C} (F : Intension (SymT De G) ρ W) : Prop :=
-  ∀ (V : C) (a : Args (SymT De G) ρ V) (k : W ⟶ V) (g : V ⟶ V), g ∈ G V →
-    (⟨V, a, k⟩ : Tuple (SymT De G) ρ W) ∈ F → (⟨V, Args.map (SymT De G) ρ g a, k ≫ g⟩ : Tuple (SymT De G) ρ W) ∈ F
+def SymCond {ρ : RTy} {W : C} (F : Intension (SymT De G J) ρ W) : Prop :=
+  ∀ (V : C) (a : Args (SymT De G J) ρ V) (k : W ⟶ V) (g : V ⟶ V), g ∈ G V →
+    (⟨V, a, k⟩ : Tuple (SymT De G J) ρ W) ∈ F → (⟨V, Args.map (SymT De G J) ρ g a, k ≫ g⟩ : Tuple (SymT De G J) ρ W) ∈ F
 
 /-- An intension over the symmetric actions is in the domain iff it is finitely pinned and
 symmetric. -/
-theorem mem_range_symIncl (ρ : RTy) (W : C) (F : Intension (SymT De G) ρ W) :
-    F ∈ Set.range (symIncl De G ρ W) ↔
-      (∃ N : Set (De.obj W), N.Finite ∧
+theorem mem_range_symIncl (ρ : RTy) (W : C) (F : Intension (SymT De G J) ρ W) :
+    F ∈ Set.range (symIncl De G J ρ W) ↔
+      (∃ N : Set (De.obj W), N ∈ J.mem W ∧
         ∀ (V : C) (h i : W ⟶ V), AgreeOn De N h i →
-          Intension.map (SymT De G) h F = Intension.map (SymT De G) i F) ∧ SymCond De G F := by
+          Intension.map (SymT De G J) h F = Intension.map (SymT De G J) i F) ∧ SymCond De G J F := by
   constructor
   · rintro ⟨⟨A, ⟨N, hN, hA⟩, hS⟩, rfl⟩
     refine ⟨⟨N, hN, fun V h i ha => ?_⟩, ?_⟩
-    · show Intension.map (SymT De G) h (symRead De G ρ W A) = Intension.map (SymT De G) i (symRead De G ρ W A)
+    · show Intension.map (SymT De G J) h (symRead De G J ρ W A) = Intension.map (SymT De G J) i (symRead De G J ρ W A)
       rw [← symRead_map, ← symRead_map, hA V h i ha]
     · intro V a k g hg ha
-      show (⟨V, symArgs De G ρ V (Args.map (SymT De G) ρ g a), k ≫ g⟩ : Σ V : C, (SymArgs De G ρ).obj V × (W ⟶ V)) ∈ A
+      show (⟨V, symArgs De G J ρ V (Args.map (SymT De G J) ρ g a), k ≫ g⟩ : Σ V : C, (SymArgs De G J ρ).obj V × (W ⟶ V)) ∈ A
       rw [symArgs_map]
       exact hS V _ k g hg ha
   · rintro ⟨⟨N, hN, hF⟩, hS⟩
-    refine ⟨⟨symRead' De G ρ W F, ⟨N, hN, fun V h i ha => ?_⟩, ?_⟩, ?_⟩
-    · show (intensionAction (SymArgs De G ρ)).map h (symRead' De G ρ W F)
-        = (intensionAction (SymArgs De G ρ)).map i (symRead' De G ρ W F)
+    refine ⟨⟨symRead' De G J ρ W F, ⟨N, hN, fun V h i ha => ?_⟩, ?_⟩, ?_⟩
+    · show (intensionAction (SymArgs De G J ρ)).map h (symRead' De G J ρ W F)
+        = (intensionAction (SymArgs De G J ρ)).map i (symRead' De G J ρ W F)
       rw [← symRead'_map, ← symRead'_map, hF V h i ha]
     · intro V b k g hg hb
-      show (⟨V, symArgs' De G ρ V ((SymArgs De G ρ).map g b), k ≫ g⟩ : Tuple (SymT De G) ρ W) ∈ F
+      show (⟨V, symArgs' De G J ρ V ((SymArgs De G J ρ).map g b), k ≫ g⟩ : Tuple (SymT De G J) ρ W) ∈ F
       rw [symArgs'_map]
       exact hS V _ k g hg hb
-    · exact symRead_symRead' De G ρ W F
+    · exact symRead_symRead' De G J ρ W F
 
 /-- **The symmetric ideally full premodel** (Definition 18): its relational domains are the
 symmetric finitely pinned intensions. -/
 noncomputable def _root_.Classicism.Meta.Intensional.Premodel.symIdeal {Sig : Signature} (W₀ : C)
     (nonempty_e : ∀ W : C, Nonempty (De.obj W))
-    (I : ∀ c : Sig.Const, (SymT De G (Sig.typeOf c)).obj W₀) : Premodel Sig C where
+    (I : ∀ c : Sig.Const, (SymT De G J (Sig.typeOf c)).obj W₀) : Premodel Sig C where
   W₀ := W₀
-  inner := SymT De G
+  inner := SymT De G J
   nonempty_e := nonempty_e
-  incl := symIncl De G
-  incl_map := symIncl_map De G
-  incl_injective := symIncl_injective De G
+  incl := symIncl De G J
+  incl_map := symIncl_map De G J
+  incl_injective := symIncl_injective De G J
   I := I
 
-variable {De G} {Sig : Signature} {W₀ : C} {nonempty_e : ∀ W : C, Nonempty (De.obj W)}
-  {I : ∀ c : Sig.Const, (SymT De G (Sig.typeOf c)).obj W₀}
+variable {De G J} {Sig : Signature} {W₀ : C} {nonempty_e : ∀ W : C, Nonempty (De.obj W)}
+  {I : ∀ c : Sig.Const, (SymT De G J (Sig.typeOf c)).obj W₀}
 
-local notation "A" => Premodel.symIdeal De G W₀ nonempty_e I
+local notation "A" => Premodel.symIdeal De G J W₀ nonempty_e I
 
 theorem symIdeal_domSym : (A).DomSym G := fun ρ W x =>
-  ((mem_range_symIncl De G ρ W _).1 ⟨x, rfl⟩).2
+  ((mem_range_symIncl De G J ρ W _).1 ⟨x, rfl⟩).2
 
 theorem symIdeal_inner_finPinned : ∀ (σ : Ty) (W : C) (x : (A).Dom W σ),
-    ∃ N : Set ((A).Dom W .e), N.Finite ∧ (A).PinnedO σ N ((A).Incl σ W x)
-  | .e, W, x => ⟨{x}, Set.finite_singleton x, fun _ _ _ ha => ha x rfl⟩
-  | .rel ρ, W, x => ((mem_range_symIncl De G ρ W _).1 ⟨x, rfl⟩).1
-  | .var _, W, x => ⟨{x}, Set.finite_singleton x, fun _ _ _ ha => ha x rfl⟩
+    ∃ N : Set ((A).Dom W .e), N ∈ J.mem W ∧ (A).PinnedO σ N ((A).Incl σ W x)
+  | .e, W, x => ⟨{x}, J.finite (Set.finite_singleton x), fun _ _ _ ha => ha x rfl⟩
+  | .rel ρ, W, x => ((mem_range_symIncl De G J ρ W _).1 ⟨x, rfl⟩).1
+  | .var _, W, x => ⟨{x}, J.finite (Set.finite_singleton x), fun _ _ _ ha => ha x rfl⟩
 
 /-- **Proposition 20: a symmetric ideally full premodel is an intensional action model.** -/
 theorem symIdeal_isModel (hG : SymGroup G) : (A).IsModel :=
-  (A).isModel_of_pinned_sym hG symIdeal_domSym symIdeal_inner_finPinned
-    fun ρ W F hp hs => (mem_range_symIncl De G ρ W F).2 ⟨hp, hs⟩
+  (A).isModel_of_pinned_sym J hG symIdeal_domSym symIdeal_inner_finPinned
+    fun ρ W F hp hs => (mem_range_symIncl De G J ρ W F).2 ⟨hp, hs⟩
 
 end construction
 

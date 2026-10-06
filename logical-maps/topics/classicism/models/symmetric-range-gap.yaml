@@ -64,6 +64,11 @@ meets:
     omitting $0$ leads outside it, and such an arrow carries it to the empty set.
   irreversible-arrow: >-
     An arrow omitting $0$ from its range: no composite with it restores $0$ to the range.
+  hull-conditions: >-
+    With $M_0=\{0\}$, the distinguished individual (the draft's argument for this model). Moving
+    points off a finite set can be done by a permutation fixing that individual; an arrow that
+    $M_0$ does not separate omits $0$ from its range, as does any arrow agreeing with it at $0$, so
+    a prescription taken from the two of them extends by nonzero values to an arrow of that kind.
 
 arguments:
 
@@ -74,13 +79,6 @@ arguments:
 # derive the rest are recorded, the source's first.
 
 # --- from the source (19 Sep record) ---
-
-- holds: [boolean-completeness-r]
-  text: >-
-    By the draft's main theorem with the distinguished individual as the distinguished set. Moving
-    points off a finite set can be done by a permutation fixing that individual, and two arrows
-    agreeing there are either both permutations or both range-deficient, so a prescription taken
-    from the two of them extends by nonzero values to an arrow of the same kind.
 
 # --- later additions ---
 
@@ -169,6 +167,7 @@ history:
 lean:
   param: Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap
   meets:
+    hull-conditions: Classicism.Meta.Intensional.SymIdeal.rangeGap_hullConditions
     infinitely-many-individuals: Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.rangeGap
     separable-collapses: Classicism.Meta.Intensional.SymIdeal.rangeGap_separable
     one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _

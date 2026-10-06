@@ -621,11 +621,11 @@ theorem symmetric_all_surjections.axiom_of_infinity_e : Statements.Models.symmet
 
 /-- `symmetric-all-surjections`: BF holds, by `symmetric-ideally-full`'s argument `barcan-surjective`. -/
 theorem symmetric_all_surjections.barcan_r : Statements.Models.symmetric_all_surjections.barcan_r :=
-  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj), Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj) (Classicism.Meta.Intensional.SymIdeal.allSurj_surjectiveArrows)⟩
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj), Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj) (Classicism.Meta.Intensional.SymIdeal.allSurj_surjectiveArrows) (fun _ _ h => h)⟩
 
 /-- `symmetric-all-surjections`: Boolean Completeness holds, by `symmetric-ideally-full`'s argument `boolean-completeness`. -/
 theorem symmetric_all_surjections.boolean_completeness_r : Statements.Models.symmetric_all_surjections.boolean_completeness_r :=
-  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj), Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj) (Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _) (Classicism.Meta.Intensional.SymIdeal.allSurj_hullConditions)⟩
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj), Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj) (Classicism.Meta.Intensional.SymIdeal.allSurj_hullConditions)⟩
 
 /-- `symmetric-all-surjections`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
 theorem symmetric_all_surjections.no_pure_contingency_r : Statements.Models.symmetric_all_surjections.no_pure_contingency_r :=
@@ -653,7 +653,7 @@ theorem symmetric_collapse_pair.axiom_of_infinity_t : Statements.Models.symmetri
 
 /-- `symmetric-collapse-pair`: BF holds, by `symmetric-ideally-full`'s argument `barcan-surjective`. -/
 theorem symmetric_collapse_pair.barcan_r : Statements.Models.symmetric_collapse_pair.barcan_r :=
-  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair), Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.SymIdeal.collapsePair_surjectiveArrows)⟩
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair), Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.SymIdeal.collapsePair_surjectiveArrows) (fun _ _ h => h)⟩
 
 /-- `symmetric-collapse-pair`: Actuality holds, by `symmetric-ideally-full`'s argument `actuality`. -/
 theorem symmetric_collapse_pair.actuality : Statements.Models.symmetric_collapse_pair.actuality :=
@@ -661,7 +661,7 @@ theorem symmetric_collapse_pair.actuality : Statements.Models.symmetric_collapse
 
 /-- `symmetric-collapse-pair`: Boolean Completeness holds, by `symmetric-ideally-full`'s argument `boolean-completeness`. -/
 theorem symmetric_collapse_pair.boolean_completeness_r : Statements.Models.symmetric_collapse_pair.boolean_completeness_r :=
-  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair), Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _) (Classicism.Meta.Intensional.SymIdeal.collapsePair_hullConditions)⟩
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair), Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair) (Classicism.Meta.Intensional.SymIdeal.collapsePair_hullConditions)⟩
 
 /-- `symmetric-collapse-pair`: Distinctness-preserving collapse holds, by the argument `dpc-isolated-actual-world`. -/
 theorem symmetric_collapse_pair.distinctness_preserving_collapse : Statements.Models.symmetric_collapse_pair.distinctness_preserving_collapse :=
@@ -689,7 +689,11 @@ theorem symmetric_infinite_classes.axiom_of_infinity_e : Statements.Models.symme
 
 /-- `symmetric-infinite-classes`: BF holds, by `symmetric-ideally-full`'s argument `barcan-surjective`. -/
 theorem symmetric_infinite_classes.barcan_r : Statements.Models.symmetric_infinite_classes.barcan_r :=
-  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses), Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses) (Classicism.Meta.Intensional.SymIdeal.infClasses_surjectiveArrows)⟩
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses), Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses) (Classicism.Meta.Intensional.SymIdeal.infClasses_surjectiveArrows) (fun _ _ h => h)⟩
+
+/-- `symmetric-infinite-classes`: Boolean Completeness holds, by `symmetric-ideally-full`'s argument `boolean-completeness`. -/
+theorem symmetric_infinite_classes.boolean_completeness_r : Statements.Models.symmetric_infinite_classes.boolean_completeness_r :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses), Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses) (Classicism.Meta.Intensional.SymIdeal.infClasses_hullConditions)⟩
 
 /-- `symmetric-infinite-classes`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
 theorem symmetric_infinite_classes.no_pure_contingency_r : Statements.Models.symmetric_infinite_classes.no_pure_contingency_r :=
@@ -723,6 +727,10 @@ theorem symmetric_range_gap_without_actuality.axiom_of_infinity_e : Statements.M
 theorem symmetric_range_gap_without_actuality.barcan_r : Statements.Models.symmetric_range_gap_without_actuality.barcan_r :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct), Classicism.Map.Arguments.symmetric_ideally_full.barcan_fixes_or_omits.barcan_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct) (Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct_fixesOrOmits)⟩
 
+/-- `symmetric-range-gap-without-actuality`: Boolean Completeness holds, by `symmetric-ideally-full`'s argument `boolean-completeness`. -/
+theorem symmetric_range_gap_without_actuality.boolean_completeness_r : Statements.Models.symmetric_range_gap_without_actuality.boolean_completeness_r :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct), Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct) (Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct_hullConditions)⟩
+
 /-- `symmetric-range-gap-without-actuality`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
 theorem symmetric_range_gap_without_actuality.no_pure_contingency_r : Statements.Models.symmetric_range_gap_without_actuality.no_pure_contingency_r :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct), Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct)) (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct)) (Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _)⟩
@@ -755,6 +763,10 @@ theorem symmetric_range_gap.actuality : Statements.Models.symmetric_range_gap.ac
 theorem symmetric_range_gap.barcan_r : Statements.Models.symmetric_range_gap.barcan_r :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap), Classicism.Map.Arguments.symmetric_ideally_full.barcan_fixes_or_omits.barcan_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap) (Classicism.Meta.Intensional.SymIdeal.rangeGap_fixesOrOmits)⟩
 
+/-- `symmetric-range-gap`: Boolean Completeness holds, by `symmetric-ideally-full`'s argument `boolean-completeness`. -/
+theorem symmetric_range_gap.boolean_completeness_r : Statements.Models.symmetric_range_gap.boolean_completeness_r :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap), Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap) (Classicism.Meta.Intensional.SymIdeal.rangeGap_hullConditions)⟩
+
 /-- `symmetric-range-gap`: Distinctness-preserving collapse holds, by the argument `dpc-isolated-actual-world`. -/
 theorem symmetric_range_gap.distinctness_preserving_collapse : Statements.Models.symmetric_range_gap.distinctness_preserving_collapse :=
   ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap), Classicism.Map.Arguments.dpc_isolated_actual_world.distinctness_preserving_collapse (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap)) (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap)) (Classicism.Meta.Intensional.SymIdeal.rangeGap_actualWorldIsolated)⟩
@@ -770,6 +782,14 @@ theorem symmetric_range_gap.independence_signature_r : Statements.Models.symmetr
 /-- `symmetric-range-gap`: No Contingency (signature Σ) holds, by the argument `sigma-top-npc`. -/
 theorem symmetric_range_gap.no_contingency_signature_r : Statements.Models.symmetric_range_gap.no_contingency_signature_r :=
   ⟨Classicism.Meta.Signature.sigmaTop_admitted, Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap)), Classicism.Map.Arguments.sigma_top_npc.no_contingency_signature_r (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap)) (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap))) (Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap))) (Classicism.Meta.Signature.sigmaTop_admitted) (Classicism.Meta.Intensional.Premodel.withTop_sigmaTop (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGap))) (Classicism.Meta.Intensional.Premodel.holdsAx_interp_ofPure.2 ((Classicism.Map.Models.symmetric_range_gap.no_pure_contingency_r).2))⟩
+
+/-- `symmetric-two-object-unpinned`: Boolean Completeness holds, by `symmetric-ideally-full`'s argument `boolean-completeness`. -/
+theorem symmetric_two_object_unpinned.boolean_completeness_r : Statements.Models.symmetric_two_object_unpinned.boolean_completeness_r :=
+  ⟨Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.twoBase), Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r (Classicism.Meta.Intensional.SymIdeal.twoBase) (Classicism.Meta.Intensional.SymIdeal.two_hullConditions)⟩
+
+/-- `symmetric-two-object-unpinned`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
+theorem symmetric_two_object_unpinned.independence_signature_r : Statements.Models.symmetric_two_object_unpinned.independence_signature_r :=
+  ⟨Classicism.Meta.Signature.sigmaTop_admitted, Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.twoBase)), Classicism.Map.Arguments.sigma_top.independence_signature_r (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.twoBase)) (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.twoBase))) (Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.twoBase))) (Classicism.Meta.Signature.sigmaTop_admitted) (Classicism.Meta.Intensional.Premodel.withTop_sigmaTop (Classicism.Meta.Intensional.SymBase.model_isModel (Classicism.Meta.Intensional.SymIdeal.twoBase)))⟩
 
 /-- `symmetry-constrained-full-all-maps`: Distinctness-preserving collapse holds, by the argument `dpc-isolated-actual-world`. -/
 theorem symmetry_constrained_full_all_maps.distinctness_preserving_collapse : Statements.Models.symmetry_constrained_full_all_maps.distinctness_preserving_collapse :=

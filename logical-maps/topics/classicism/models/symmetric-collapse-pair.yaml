@@ -70,6 +70,7 @@ meets:
     With $M_0$ the fixed pair (the draft's argument for this model): splicing fails at that pair,
     but the pair is exactly what certifies invertibility, and the separated arrows are handled by
     symmetry instead; a symmetry may move points freely outside the pair.
+  finite-pinning: Every object carries the ideal of finite sets.
 
 arguments:
 
@@ -163,6 +164,7 @@ history:
 lean:
   param: Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair
   meets:
+    finite-pinning: fun _ _ h => h
     hull-conditions: Classicism.Meta.Intensional.SymIdeal.collapsePair_hullConditions
     surjective-arrows: Classicism.Meta.Intensional.SymIdeal.collapsePair_surjectiveArrows
     infinitely-many-individuals: Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.collapsePair

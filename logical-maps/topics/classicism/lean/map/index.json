@@ -3135,7 +3135,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetry_constrained_full_collapse.transversal_choice_r",
-     "lines": [802, 804],
+     "lines": [822, 824],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "no-pure-contingency-r":
@@ -3169,7 +3169,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetry_constrained_full_collapse.no_pure_contingency_r",
-     "lines": [798, 800],
+     "lines": [818, 820],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "no-contingency-signature-r":
@@ -3212,7 +3212,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetry_constrained_full_collapse.no_contingency_signature_r",
-     "lines": [810, 812],
+     "lines": [830, 832],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "independence-signature-r":
@@ -3251,7 +3251,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetry_constrained_full_collapse.independence_signature_r",
-     "lines": [806, 808],
+     "lines": [826, 828],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "distinctness-preserving-collapse":
@@ -3285,7 +3285,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetry_constrained_full_collapse.distinctness_preserving_collapse",
-     "lines": [794, 796],
+     "lines": [814, 816],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
   "symmetry-constrained-full-all-maps":
@@ -3323,7 +3323,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetry_constrained_full_all_maps.transversal_choice_r",
-     "lines": [782, 784],
+     "lines": [802, 804],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "no-pure-contingency-r":
@@ -3357,7 +3357,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetry_constrained_full_all_maps.no_pure_contingency_r",
-     "lines": [778, 780],
+     "lines": [798, 800],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "no-contingency-signature-r":
@@ -3400,7 +3400,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetry_constrained_full_all_maps.no_contingency_signature_r",
-     "lines": [790, 792],
+     "lines": [810, 812],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "independence-signature-r":
@@ -3439,7 +3439,7 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetry_constrained_full_all_maps.independence_signature_r",
-     "lines": [786, 788],
+     "lines": [806, 808],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "distinctness-preserving-collapse":
@@ -3473,21 +3473,131 @@
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetry_constrained_full_all_maps.distinctness_preserving_collapse",
-     "lines": [774, 776],
+     "lines": [794, 796],
+     "file": "Classicism/MapDerived.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
+  "symmetric-two-object-unpinned":
+  {"necessary-boolean-completeness-r":
+   {"proofs":
+    [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
+      "lines": [133, 133],
+      "file": "Classicism/Models/SymBase.lean"},
+     {"name": "Classicism.P.NecBooleanCompleteness.of_lub",
+      "lines": [106, 108],
+      "file": "Classicism/Principles/Lattice.lean"},
+     {"name": "Classicism.Meta.Intensional.SymBase.holds_box_bc_lub",
+      "lines": [640, 644],
+      "file": "Classicism/Models/SymBase.lean"},
+     {"name": "Classicism.Meta.Intensional.SymIdeal.two_hasLUBs",
+      "lines": [942, 945],
+      "file": "Classicism/Models/SymmetricIdeal.lean"}],
+    "definitions":
+    [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
+      "lines": [40, 41],
+      "file": "Classicism/Models/Functions.lean"},
+     {"name": "Classicism.Meta.Intensional.SymBase.F",
+      "lines": [113, 113],
+      "file": "Classicism/Models/SymBase.lean"},
+     {"name": "Classicism.Meta.Intensional.SymIdeal.twoBase",
+      "lines": [879, 889],
+      "file": "Classicism/Models/SymmetricIdeal.lean"},
+     {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
+      "lines": [43, 46],
+      "file": "Classicism/Models/Functions.lean"},
+     {"name": "Classicism.Meta.Intensional.SymBase.model",
+      "lines": [129, 131],
+      "file": "Classicism/Models/SymBase.lean"}],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.symmetric_two_object_unpinned.necessary_boolean_completeness_r",
+     "lines": [519, 526],
+     "file": "Classicism/MapModels.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "independence-signature-r":
+   {"proofs":
+    [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
+      "lines": [133, 133],
+      "file": "Classicism/Models/SymBase.lean"},
+     {"name": "Classicism.Meta.Signature.sigmaTop_admitted",
+      "lines": [215, 216],
+      "file": "Classicism/Semantics/Interpretations.lean"},
+     {"name": "Classicism.Meta.Intensional.Premodel.withTop_isModel",
+      "lines": [238, 239],
+      "file": "Classicism/Semantics/Interpretations.lean"},
+     {"name": "Classicism.Map.Arguments.sigma_top.independence_signature_r",
+      "lines": [337, 340],
+      "file": "Classicism/MapArguments.lean"},
+     {"name": "Classicism.Meta.Intensional.Premodel.withTop_sigmaTop",
+      "lines": [241, 246],
+      "file": "Classicism/Semantics/Interpretations.lean"}],
+    "definitions":
+    [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
+      "lines": [40, 41],
+      "file": "Classicism/Models/Functions.lean"},
+     {"name": "Classicism.Meta.Intensional.SymBase.F",
+      "lines": [113, 113],
+      "file": "Classicism/Models/SymBase.lean"},
+     {"name": "Classicism.Meta.Intensional.SymIdeal.twoBase",
+      "lines": [879, 889],
+      "file": "Classicism/Models/SymmetricIdeal.lean"},
+     {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
+      "lines": [43, 46],
+      "file": "Classicism/Models/Functions.lean"},
+     {"name": "Classicism.Meta.Intensional.SymBase.model",
+      "lines": [129, 131],
+      "file": "Classicism/Models/SymBase.lean"}],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.symmetric_two_object_unpinned.independence_signature_r",
+     "lines": [790, 792],
+     "file": "Classicism/MapDerived.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "boolean-completeness-r":
+   {"proofs":
+    [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
+      "lines": [133, 133],
+      "file": "Classicism/Models/SymBase.lean"},
+     {"name":
+      "Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r",
+      "lines": [414, 419],
+      "file": "Classicism/MapArguments.lean"},
+     {"name": "Classicism.Meta.Intensional.SymIdeal.two_hullConditions",
+      "lines": [894, 918],
+      "file": "Classicism/Models/SymmetricIdeal.lean"}],
+    "definitions":
+    [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
+      "lines": [40, 41],
+      "file": "Classicism/Models/Functions.lean"},
+     {"name": "Classicism.Meta.Intensional.SymBase.F",
+      "lines": [113, 113],
+      "file": "Classicism/Models/SymBase.lean"},
+     {"name": "Classicism.Meta.Intensional.SymIdeal.twoBase",
+      "lines": [879, 889],
+      "file": "Classicism/Models/SymmetricIdeal.lean"},
+     {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
+      "lines": [43, 46],
+      "file": "Classicism/Models/Functions.lean"},
+     {"name": "Classicism.Meta.Intensional.SymBase.model",
+      "lines": [129, 131],
+      "file": "Classicism/Models/SymBase.lean"}],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.symmetric_two_object_unpinned.boolean_completeness_r",
+     "lines": [786, 788],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
   "symmetric-range-gap-without-actuality":
   {"relational-choice-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.relational_choice.relational_choice_r",
       "lines": [359, 362],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct_transposable",
-      "lines": [465, 468],
+      "lines": [469, 472],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -3497,27 +3607,27 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct",
-      "lines": [185, 201],
+      "lines": [187, 203],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetric_range_gap_without_actuality.relational_choice_r",
-     "lines": [714, 716],
+     "lines": [718, 720],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "no-pure-contingency-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r",
@@ -3534,21 +3644,21 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct",
-      "lines": [185, 201],
+      "lines": [187, 203],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetric_range_gap_without_actuality.no_pure_contingency_r",
-     "lines": [726, 728],
+     "lines": [734, 736],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "no-contingency-signature-r":
@@ -3560,7 +3670,7 @@
       "lines": [238, 239],
       "file": "Classicism/Semantics/Interpretations.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.sigma_top_npc.no_contingency_signature_r",
@@ -3580,21 +3690,21 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct",
-      "lines": [185, 201],
+      "lines": [187, 203],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetric_range_gap_without_actuality.no_contingency_signature_r",
-     "lines": [734, 736],
+     "lines": [742, 744],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "independence-signature-r":
@@ -3606,7 +3716,7 @@
       "lines": [238, 239],
       "file": "Classicism/Semantics/Interpretations.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Map.Arguments.sigma_top.independence_signature_r",
       "lines": [337, 340],
@@ -3622,34 +3732,72 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct",
-      "lines": [185, 201],
+      "lines": [187, 203],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetric_range_gap_without_actuality.independence_signature_r",
+     "lines": [738, 740],
+     "file": "Classicism/MapDerived.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "boolean-completeness-r":
+   {"proofs":
+    [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
+      "lines": [133, 133],
+      "file": "Classicism/Models/SymBase.lean"},
+     {"name":
+      "Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r",
+      "lines": [414, 419],
+      "file": "Classicism/MapArguments.lean"},
+     {"name":
+      "Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct_hullConditions",
+      "lines": [757, 820],
+      "file": "Classicism/Models/SymmetricIdeal.lean"}],
+    "definitions":
+    [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
+      "lines": [40, 41],
+      "file": "Classicism/Models/Functions.lean"},
+     {"name": "Classicism.Meta.Intensional.SymBase.F",
+      "lines": [113, 113],
+      "file": "Classicism/Models/SymBase.lean"},
+     {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
+      "lines": [81, 91],
+      "file": "Classicism/Models/SymmetricIdeal.lean"},
+     {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct",
+      "lines": [187, 203],
+      "file": "Classicism/Models/SymmetricIdeal.lean"},
+     {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
+      "lines": [43, 46],
+      "file": "Classicism/Models/Functions.lean"},
+     {"name": "Classicism.Meta.Intensional.SymBase.model",
+      "lines": [129, 131],
+      "file": "Classicism/Models/SymBase.lean"}],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.symmetric_range_gap_without_actuality.boolean_completeness_r",
      "lines": [730, 732],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "barcan-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.barcan_fixes_or_omits.barcan_r",
       "lines": [376, 379],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct_fixesOrOmits",
-      "lines": [502, 505],
+      "lines": [506, 509],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -3659,34 +3807,34 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct",
-      "lines": [185, 201],
+      "lines": [187, 203],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetric_range_gap_without_actuality.barcan_r",
-     "lines": [722, 724],
+     "lines": [726, 728],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "axiom-of-infinity-e":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e",
       "lines": [384, 388],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals",
-      "lines": [509, 510],
+      "lines": [513, 514],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -3696,35 +3844,35 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct",
-      "lines": [185, 201],
+      "lines": [187, 203],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetric_range_gap_without_actuality.axiom_of_infinity_e",
-     "lines": [718, 720],
+     "lines": [722, 724],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
   "symmetric-range-gap":
   {"relational-choice-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.relational_choice.relational_choice_r",
       "lines": [359, 362],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGap_transposable",
-      "lines": [460, 463],
+      "lines": [464, 467],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -3734,26 +3882,26 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGap",
-      "lines": [168, 183],
+      "lines": [170, 185],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.symmetric_range_gap.relational_choice_r",
-     "lines": [738, 740],
+     "lines": [746, 748],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "no-pure-contingency-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r",
@@ -3770,20 +3918,20 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGap",
-      "lines": [168, 183],
+      "lines": [170, 185],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.symmetric_range_gap.no_pure_contingency_r",
-     "lines": [762, 764],
+     "lines": [774, 776],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "no-contingency-signature-r":
@@ -3795,7 +3943,7 @@
       "lines": [238, 239],
       "file": "Classicism/Semantics/Interpretations.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.sigma_top_npc.no_contingency_signature_r",
@@ -3815,21 +3963,21 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGap",
-      "lines": [168, 183],
+      "lines": [170, 185],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetric_range_gap.no_contingency_signature_r",
-     "lines": [770, 772],
+     "lines": [782, 784],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "independence-signature-r":
@@ -3841,7 +3989,7 @@
       "lines": [238, 239],
       "file": "Classicism/Semantics/Interpretations.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Map.Arguments.sigma_top.independence_signature_r",
       "lines": [337, 340],
@@ -3857,27 +4005,27 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGap",
-      "lines": [168, 183],
+      "lines": [170, 185],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetric_range_gap.independence_signature_r",
-     "lines": [766, 768],
+     "lines": [778, 780],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "distinctness-preserving-collapse":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.dpc_isolated_actual_world.distinctness_preserving_collapse",
@@ -3885,7 +4033,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.SymIdeal.rangeGap_actualWorldIsolated",
-      "lines": [348, 349],
+      "lines": [352, 353],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -3895,34 +4043,70 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGap",
-      "lines": [168, 183],
+      "lines": [170, 185],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetric_range_gap.distinctness_preserving_collapse",
-     "lines": [758, 760],
+     "lines": [770, 772],
+     "file": "Classicism/MapDerived.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "boolean-completeness-r":
+   {"proofs":
+    [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
+      "lines": [133, 133],
+      "file": "Classicism/Models/SymBase.lean"},
+     {"name":
+      "Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r",
+      "lines": [414, 419],
+      "file": "Classicism/MapArguments.lean"},
+     {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGap_hullConditions",
+      "lines": [728, 755],
+      "file": "Classicism/Models/SymmetricIdeal.lean"}],
+    "definitions":
+    [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
+      "lines": [40, 41],
+      "file": "Classicism/Models/Functions.lean"},
+     {"name": "Classicism.Meta.Intensional.SymBase.F",
+      "lines": [113, 113],
+      "file": "Classicism/Models/SymBase.lean"},
+     {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
+      "lines": [81, 91],
+      "file": "Classicism/Models/SymmetricIdeal.lean"},
+     {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGap",
+      "lines": [170, 185],
+      "file": "Classicism/Models/SymmetricIdeal.lean"},
+     {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
+      "lines": [43, 46],
+      "file": "Classicism/Models/Functions.lean"},
+     {"name": "Classicism.Meta.Intensional.SymBase.model",
+      "lines": [129, 131],
+      "file": "Classicism/Models/SymBase.lean"}],
+    "certificate":
+    {"name": "Classicism.Map.Models.symmetric_range_gap.boolean_completeness_r",
+     "lines": [766, 768],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "barcan-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.barcan_fixes_or_omits.barcan_r",
       "lines": [376, 379],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGap_fixesOrOmits",
-      "lines": [495, 500],
+      "lines": [499, 504],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -3932,33 +4116,33 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGap",
-      "lines": [168, 183],
+      "lines": [170, 185],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.symmetric_range_gap.barcan_r",
-     "lines": [754, 756],
+     "lines": [762, 764],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "axiom-of-infinity-t":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_t.axiom_of_infinity_t",
       "lines": [394, 399],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGap_separable",
-      "lines": [544, 546],
+      "lines": [548, 550],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -3968,33 +4152,33 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGap",
-      "lines": [168, 183],
+      "lines": [170, 185],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.symmetric_range_gap.axiom_of_infinity_t",
-     "lines": [746, 748],
+     "lines": [754, 756],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "axiom-of-infinity-e":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e",
       "lines": [384, 388],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals",
-      "lines": [509, 510],
+      "lines": [513, 514],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4004,26 +4188,26 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGap",
-      "lines": [168, 183],
+      "lines": [170, 185],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.symmetric_range_gap.axiom_of_infinity_e",
-     "lines": [742, 744],
+     "lines": [750, 752],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "actuality":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.actuality.actuality",
@@ -4031,7 +4215,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.SymIdeal.rangeGap_symmetryGroupPinned",
-      "lines": [492, 493],
+      "lines": [496, 497],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4041,27 +4225,27 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.rangeGap",
-      "lines": [168, 183],
+      "lines": [170, 185],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.symmetric_range_gap.actuality",
-     "lines": [750, 752],
+     "lines": [758, 760],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
   "symmetric-qualitative-contrast":
   {"independence-signature-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Signature.sigmaTop_admitted",
       "lines": [215, 216],
@@ -4083,24 +4267,24 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.contrastBase",
-      "lines": [236, 250],
+      "lines": [238, 254],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetric_qualitative_contrast.independence_signature_r",
-     "lines": [710, 712],
+     "lines": [714, 716],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "axiom-of-infinity-e":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e",
@@ -4108,7 +4292,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.SymIdeal.contrast_infinitelyManyIndividuals",
-      "lines": [512, 513],
+      "lines": [516, 517],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4118,32 +4302,32 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.contrastBase",
-      "lines": [236, 250],
+      "lines": [238, 254],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetric_qualitative_contrast.axiom_of_infinity_e",
-     "lines": [706, 708],
+     "lines": [710, 712],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}}},
   "symmetric-infinite-classes":
   {"relational-choice-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.relational_choice.relational_choice_r",
       "lines": [359, 362],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.infClasses_transposable",
-      "lines": [478, 487],
+      "lines": [482, 491],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4153,16 +4337,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.infClasses",
-      "lines": [118, 132],
+      "lines": [120, 134],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4173,7 +4357,7 @@
    "no-pure-contingency-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r",
@@ -4190,21 +4374,21 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.infClasses",
-      "lines": [118, 132],
+      "lines": [120, 134],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetric_infinite_classes.no_pure_contingency_r",
-     "lines": [694, 696],
+     "lines": [698, 700],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "no-contingency-signature-r":
@@ -4216,7 +4400,7 @@
       "lines": [238, 239],
       "file": "Classicism/Semantics/Interpretations.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.sigma_top_npc.no_contingency_signature_r",
@@ -4236,21 +4420,21 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.infClasses",
-      "lines": [118, 132],
+      "lines": [120, 134],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetric_infinite_classes.no_contingency_signature_r",
-     "lines": [702, 704],
+     "lines": [706, 708],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
    "independence-signature-r":
@@ -4262,7 +4446,7 @@
       "lines": [238, 239],
       "file": "Classicism/Semantics/Interpretations.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Map.Arguments.sigma_top.independence_signature_r",
       "lines": [337, 340],
@@ -4278,35 +4462,34 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.infClasses",
-      "lines": [118, 132],
+      "lines": [120, 134],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
      "Classicism.Map.Models.symmetric_infinite_classes.independence_signature_r",
-     "lines": [698, 700],
+     "lines": [702, 704],
      "file": "Classicism/MapDerived.lean",
      "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
-   "barcan-r":
+   "boolean-completeness-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
-      "Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r",
-      "lines": [404, 408],
+      "Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r",
+      "lines": [414, 419],
       "file": "Classicism/MapArguments.lean"},
-     {"name":
-      "Classicism.Meta.Intensional.SymIdeal.infClasses_surjectiveArrows",
-      "lines": [551, 551],
+     {"name": "Classicism.Meta.Intensional.SymIdeal.infClasses_hullConditions",
+      "lines": [688, 715],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4316,16 +4499,54 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.infClasses",
-      "lines": [118, 132],
+      "lines": [120, 134],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
+      "file": "Classicism/Models/SymBase.lean"}],
+    "certificate":
+    {"name":
+     "Classicism.Map.Models.symmetric_infinite_classes.boolean_completeness_r",
+     "lines": [694, 696],
+     "file": "Classicism/MapDerived.lean",
+     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+   "barcan-r":
+   {"proofs":
+    [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
+      "lines": [133, 133],
+      "file": "Classicism/Models/SymBase.lean"},
+     {"name":
+      "Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r",
+      "lines": [404, 408],
+      "file": "Classicism/MapArguments.lean"},
+     {"name":
+      "Classicism.Meta.Intensional.SymIdeal.infClasses_surjectiveArrows",
+      "lines": [555, 555],
+      "file": "Classicism/Models/SymmetricIdeal.lean"}],
+    "definitions":
+    [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
+      "lines": [40, 41],
+      "file": "Classicism/Models/Functions.lean"},
+     {"name": "Classicism.Meta.Intensional.SymBase.F",
+      "lines": [113, 113],
+      "file": "Classicism/Models/SymBase.lean"},
+     {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
+      "lines": [81, 91],
+      "file": "Classicism/Models/SymmetricIdeal.lean"},
+     {"name": "Classicism.Meta.Intensional.SymIdeal.infClasses",
+      "lines": [120, 134],
+      "file": "Classicism/Models/SymmetricIdeal.lean"},
+     {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
+      "lines": [43, 46],
+      "file": "Classicism/Models/Functions.lean"},
+     {"name": "Classicism.Meta.Intensional.SymBase.model",
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.symmetric_infinite_classes.barcan_r",
@@ -4335,14 +4556,14 @@
    "axiom-of-infinity-e":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e",
       "lines": [384, 388],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals",
-      "lines": [509, 510],
+      "lines": [513, 514],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4352,16 +4573,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.infClasses",
-      "lines": [118, 132],
+      "lines": [120, 134],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4373,14 +4594,14 @@
   {"relational-choice-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.relational_choice.relational_choice_r",
       "lines": [359, 362],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.collapsePair_transposable",
-      "lines": [454, 458],
+      "lines": [458, 462],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4390,16 +4611,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.collapsePair",
-      "lines": [137, 166],
+      "lines": [139, 168],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4410,7 +4631,7 @@
    "no-pure-contingency-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r",
@@ -4427,16 +4648,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.collapsePair",
-      "lines": [137, 166],
+      "lines": [139, 168],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4453,7 +4674,7 @@
       "lines": [238, 239],
       "file": "Classicism/Semantics/Interpretations.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.sigma_top_npc.no_contingency_signature_r",
@@ -4473,16 +4694,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.collapsePair",
-      "lines": [137, 166],
+      "lines": [139, 168],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4499,7 +4720,7 @@
       "lines": [238, 239],
       "file": "Classicism/Semantics/Interpretations.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Map.Arguments.sigma_top.independence_signature_r",
       "lines": [337, 340],
@@ -4515,16 +4736,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.collapsePair",
-      "lines": [137, 166],
+      "lines": [139, 168],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4535,7 +4756,7 @@
    "distinctness-preserving-collapse":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.dpc_isolated_actual_world.distinctness_preserving_collapse",
@@ -4543,7 +4764,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.SymIdeal.collapsePair_actualWorldIsolated",
-      "lines": [325, 327],
+      "lines": [329, 331],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4553,16 +4774,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.collapsePair",
-      "lines": [137, 166],
+      "lines": [139, 168],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4573,18 +4794,15 @@
    "boolean-completeness-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r",
-      "lines": [414, 421],
+      "lines": [414, 419],
       "file": "Classicism/MapArguments.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton",
-      "lines": [39, 40],
-      "file": "Classicism/Models/Conditions.lean"},
      {"name":
       "Classicism.Meta.Intensional.SymIdeal.collapsePair_hullConditions",
-      "lines": [629, 680],
+      "lines": [634, 686],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4594,16 +4812,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.collapsePair",
-      "lines": [137, 166],
+      "lines": [139, 168],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4614,7 +4832,7 @@
    "barcan-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r",
@@ -4622,7 +4840,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.SymIdeal.collapsePair_surjectiveArrows",
-      "lines": [552, 553],
+      "lines": [556, 557],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4632,16 +4850,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.collapsePair",
-      "lines": [137, 166],
+      "lines": [139, 168],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.symmetric_collapse_pair.barcan_r",
@@ -4651,14 +4869,14 @@
    "axiom-of-infinity-t":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_t.axiom_of_infinity_t",
       "lines": [394, 399],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.collapsePair_separable",
-      "lines": [539, 542],
+      "lines": [543, 546],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4668,16 +4886,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.collapsePair",
-      "lines": [137, 166],
+      "lines": [139, 168],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4688,14 +4906,14 @@
    "axiom-of-infinity-e":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e",
       "lines": [384, 388],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals",
-      "lines": [509, 510],
+      "lines": [513, 514],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4705,16 +4923,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.collapsePair",
-      "lines": [137, 166],
+      "lines": [139, 168],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4725,7 +4943,7 @@
    "actuality":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.actuality.actuality",
@@ -4733,7 +4951,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.SymIdeal.collapsePair_symmetryGroupPinned",
-      "lines": [489, 490],
+      "lines": [493, 494],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4743,16 +4961,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.collapsePair",
-      "lines": [137, 166],
+      "lines": [139, 168],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.symmetric_collapse_pair.actuality",
@@ -4763,14 +4981,14 @@
   {"relational-choice-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.relational_choice.relational_choice_r",
       "lines": [359, 362],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.allSurj_transposable",
-      "lines": [449, 452],
+      "lines": [453, 456],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4780,16 +4998,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.allSurj",
-      "lines": [103, 113],
+      "lines": [105, 115],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4800,7 +5018,7 @@
    "no-pure-contingency-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r",
@@ -4817,16 +5035,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.allSurj",
-      "lines": [103, 113],
+      "lines": [105, 115],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4843,7 +5061,7 @@
       "lines": [238, 239],
       "file": "Classicism/Semantics/Interpretations.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.sigma_top_npc.no_contingency_signature_r",
@@ -4863,16 +5081,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.allSurj",
-      "lines": [103, 113],
+      "lines": [105, 115],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4889,7 +5107,7 @@
       "lines": [238, 239],
       "file": "Classicism/Semantics/Interpretations.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Map.Arguments.sigma_top.independence_signature_r",
       "lines": [337, 340],
@@ -4905,16 +5123,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.allSurj",
-      "lines": [103, 113],
+      "lines": [105, 115],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4925,17 +5143,14 @@
    "boolean-completeness-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r",
-      "lines": [414, 421],
+      "lines": [414, 419],
       "file": "Classicism/MapArguments.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton",
-      "lines": [39, 40],
-      "file": "Classicism/Models/Conditions.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.allSurj_hullConditions",
-      "lines": [607, 627],
+      "lines": [611, 632],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4945,16 +5160,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.allSurj",
-      "lines": [103, 113],
+      "lines": [105, 115],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -4965,14 +5180,14 @@
    "barcan-r":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r",
       "lines": [404, 408],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.allSurj_surjectiveArrows",
-      "lines": [550, 550],
+      "lines": [554, 554],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -4982,16 +5197,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.allSurj",
-      "lines": [103, 113],
+      "lines": [105, 115],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name": "Classicism.Map.Models.symmetric_all_surjections.barcan_r",
@@ -5001,14 +5216,14 @@
    "axiom-of-infinity-e":
    {"proofs":
     [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-      "lines": [129, 129],
+      "lines": [133, 133],
       "file": "Classicism/Models/SymBase.lean"},
      {"name":
       "Classicism.Map.Arguments.symmetric_ideally_full.axiom_of_infinity_e.axiom_of_infinity_e",
       "lines": [384, 388],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals",
-      "lines": [509, 510],
+      "lines": [513, 514],
       "file": "Classicism/Models/SymmetricIdeal.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
@@ -5018,16 +5233,16 @@
       "lines": [113, 113],
       "file": "Classicism/Models/SymBase.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.Base.toSym",
-      "lines": [81, 89],
+      "lines": [81, 91],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.SymIdeal.allSurj",
-      "lines": [103, 113],
+      "lines": [105, 115],
       "file": "Classicism/Models/SymmetricIdeal.lean"},
      {"name": "Classicism.Meta.Intensional.FunCat.instSmallCategoryOb",
       "lines": [43, 46],
       "file": "Classicism/Models/Functions.lean"},
      {"name": "Classicism.Meta.Intensional.SymBase.model",
-      "lines": [125, 127],
+      "lines": [129, 131],
       "file": "Classicism/Models/SymBase.lean"}],
     "certificate":
     {"name":
@@ -6284,7 +6499,7 @@
       "lines": [124, 128],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Map.Meets.mset_one_individual",
-      "lines": [582, 584],
+      "lines": [595, 597],
       "file": "Classicism/MapModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FullActionModels.surj",
@@ -6530,7 +6745,7 @@
       "lines": [108, 115],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Map.Meets.mset_one_individual",
-      "lines": [582, 584],
+      "lines": [595, 597],
       "file": "Classicism/MapModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FullActionModels.surj",
@@ -6696,7 +6911,7 @@
       "lines": [117, 122],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Map.Meets.mset_one_individual",
-      "lines": [582, 584],
+      "lines": [595, 597],
       "file": "Classicism/MapModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FullActionModels.surj",
@@ -6764,7 +6979,7 @@
       "lines": [124, 128],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Map.Meets.mset_one_individual",
-      "lines": [582, 584],
+      "lines": [595, 597],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -6999,7 +7214,7 @@
       "lines": [108, 115],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Map.Meets.mset_one_individual",
-      "lines": [582, 584],
+      "lines": [595, 597],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -7192,7 +7407,7 @@
       "lines": [117, 122],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Map.Meets.mset_one_individual",
-      "lines": [582, 584],
+      "lines": [595, 597],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -7261,7 +7476,7 @@
       "lines": [310, 316],
       "file": "Classicism/Models/FullActionModels.lean"},
      {"name": "Classicism.Map.Meets.instFintypeInvol",
-      "lines": [595, 595],
+      "lines": [608, 608],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -7278,7 +7493,7 @@
       "lines": [124, 128],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Map.Meets.mset_one_individual",
-      "lines": [582, 584],
+      "lines": [595, 597],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -7487,10 +7702,10 @@
       "lines": [84, 84],
       "file": "Classicism/Semantics/IntensionalExamples.lean"},
      {"name": "Classicism.Map.Meets.mset_finitely_many_propositions",
-      "lines": [586, 592],
+      "lines": [599, 605],
       "file": "Classicism/MapModels.lean"},
      {"name": "Classicism.Map.Meets.instFintypeInvol",
-      "lines": [595, 595],
+      "lines": [608, 608],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -7507,7 +7722,7 @@
       "lines": [108, 115],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Map.Meets.mset_one_individual",
-      "lines": [582, 584],
+      "lines": [595, 597],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -7680,10 +7895,10 @@
       "lines": [84, 84],
       "file": "Classicism/Semantics/IntensionalExamples.lean"},
      {"name": "Classicism.Map.Meets.mset_finitely_many_propositions",
-      "lines": [586, 592],
+      "lines": [599, 605],
       "file": "Classicism/MapModels.lean"},
      {"name": "Classicism.Map.Meets.instFintypeInvol",
-      "lines": [595, 595],
+      "lines": [608, 608],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -7700,7 +7915,7 @@
       "lines": [117, 122],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Map.Meets.mset_one_individual",
-      "lines": [582, 584],
+      "lines": [595, 597],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -7790,7 +8005,7 @@
       "lines": [310, 316],
       "file": "Classicism/Models/FullActionModels.lean"},
      {"name": "Classicism.Map.Meets.instFintypeIdem",
-      "lines": [594, 594],
+      "lines": [607, 607],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -7807,7 +8022,7 @@
       "lines": [124, 128],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Map.Meets.mset_one_individual",
-      "lines": [582, 584],
+      "lines": [595, 597],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -8006,10 +8221,10 @@
       "lines": [84, 84],
       "file": "Classicism/Semantics/IntensionalExamples.lean"},
      {"name": "Classicism.Map.Meets.mset_finitely_many_propositions",
-      "lines": [586, 592],
+      "lines": [599, 605],
       "file": "Classicism/MapModels.lean"},
      {"name": "Classicism.Map.Meets.instFintypeIdem",
-      "lines": [594, 594],
+      "lines": [607, 607],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -8026,7 +8241,7 @@
       "lines": [108, 115],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Map.Meets.mset_one_individual",
-      "lines": [582, 584],
+      "lines": [595, 597],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -8092,7 +8307,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Map.Meets.full_idempotent_monoid.actual_world_isolated",
-      "lines": [606, 635],
+      "lines": [619, 648],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -8114,7 +8329,7 @@
       "lines": [84, 84],
       "file": "Classicism/Semantics/IntensionalExamples.lean"},
      {"name": "Classicism.Map.Meets.full_idempotent_monoid.unretracted",
-      "lines": [599, 604],
+      "lines": [612, 617],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -8179,10 +8394,10 @@
       "lines": [84, 84],
       "file": "Classicism/Semantics/IntensionalExamples.lean"},
      {"name": "Classicism.Map.Meets.mset_finitely_many_propositions",
-      "lines": [586, 592],
+      "lines": [599, 605],
       "file": "Classicism/MapModels.lean"},
      {"name": "Classicism.Map.Meets.instFintypeIdem",
-      "lines": [594, 594],
+      "lines": [607, 607],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -8199,7 +8414,7 @@
       "lines": [117, 122],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Map.Meets.mset_one_individual",
-      "lines": [582, 584],
+      "lines": [595, 597],
       "file": "Classicism/MapModels.lean"}],
     "definitions": [],
     "certificate":
@@ -8781,7 +8996,7 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality",
-      "lines": [433, 435],
+      "lines": [431, 433],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned",
@@ -9483,11 +9698,11 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.barcan_positive.barcan_r",
-      "lines": [454, 461],
+      "lines": [452, 459],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Map.Meets.finite_support_monotone_maps.positive_preserving",
-      "lines": [542, 543],
+      "lines": [555, 556],
       "file": "Classicism/MapModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.mono",
@@ -9795,11 +10010,11 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_t",
-      "lines": [441, 443],
+      "lines": [439, 441],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Map.Meets.finite_support_identity_or_collapse_surjections.collapse_unpinned",
-      "lines": [568, 578],
+      "lines": [581, 591],
       "file": "Classicism/MapModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.monoSurj01",
@@ -9821,11 +10036,11 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_r",
-      "lines": [445, 448],
+      "lines": [443, 446],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Map.Meets.finite_support_identity_or_collapse_surjections.collapse_unpinned",
-      "lines": [568, 578],
+      "lines": [581, 591],
       "file": "Classicism/MapModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.monoSurj01",
@@ -9847,7 +10062,7 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality",
-      "lines": [433, 435],
+      "lines": [431, 433],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned",
@@ -10078,11 +10293,11 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.barcan_positive.barcan_r",
-      "lines": [454, 461],
+      "lines": [452, 459],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Map.Meets.finite_support_identity_or_collapse.positive_preserving",
-      "lines": [549, 550],
+      "lines": [562, 563],
       "file": "Classicism/MapModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.mono01",
@@ -10104,11 +10319,11 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_t",
-      "lines": [441, 443],
+      "lines": [439, 441],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Map.Meets.finite_support_identity_or_collapse.collapse_unpinned",
-      "lines": [552, 562],
+      "lines": [565, 575],
       "file": "Classicism/MapModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.mono01",
@@ -10130,11 +10345,11 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_r",
-      "lines": [445, 448],
+      "lines": [443, 446],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Map.Meets.finite_support_identity_or_collapse.collapse_unpinned",
-      "lines": [552, 562],
+      "lines": [565, 575],
       "file": "Classicism/MapModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.mono01",
@@ -10156,7 +10371,7 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality",
-      "lines": [433, 435],
+      "lines": [431, 433],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned",
@@ -10428,7 +10643,7 @@
       "file": "Classicism/Models/MonoidModel.lean"},
      {"name":
       "Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality",
-      "lines": [433, 435],
+      "lines": [431, 433],
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned",
@@ -12155,10 +12370,10 @@
   "symmetric-ideally-full/relational-choice/relational-choice-r":
   {"proofs":
    [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-     "lines": [129, 129],
+     "lines": [133, 133],
      "file": "Classicism/Models/SymBase.lean"},
     {"name": "Classicism.Meta.Intensional.SymBase.not_rc_of_transposable",
-     "lines": [278, 319],
+     "lines": [302, 342],
      "file": "Classicism/Models/SymBase.lean"}],
    "certificate":
    {"name":
@@ -12169,27 +12384,27 @@
   "symmetric-ideally-full/boolean-completeness/boolean-completeness-r":
   {"proofs":
    [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-     "lines": [129, 129],
+     "lines": [133, 133],
      "file": "Classicism/Models/SymBase.lean"},
     {"name": "Classicism.P.BooleanCompleteness.of_lub",
      "lines": [88, 91],
      "file": "Classicism/Principles/Lattice.lean"},
     {"name": "Classicism.Meta.Intensional.SymBase.holds_bc_lub",
-     "lines": [577, 587],
+     "lines": [635, 638],
      "file": "Classicism/Models/SymBase.lean"}],
    "certificate":
    {"name":
     "Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r",
-    "lines": [414, 421],
+    "lines": [414, 419],
     "file": "Classicism/MapArguments.lean",
     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
   "symmetric-ideally-full/barcan-surjective/barcan-r":
   {"proofs":
    [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-     "lines": [129, 129],
+     "lines": [133, 133],
      "file": "Classicism/Models/SymBase.lean"},
     {"name": "Classicism.Meta.Intensional.SymBase.bf_of_surjective",
-     "lines": [426, 428],
+     "lines": [455, 458],
      "file": "Classicism/Models/SymBase.lean"}],
    "certificate":
    {"name":
@@ -12200,10 +12415,10 @@
   "symmetric-ideally-full/barcan-fixes-or-omits/barcan-r":
   {"proofs":
    [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-     "lines": [129, 129],
+     "lines": [133, 133],
      "file": "Classicism/Models/SymBase.lean"},
     {"name": "Classicism.Meta.Intensional.SymBase.not_bf_e_of_fixesOrOmits",
-     "lines": [197, 234],
+     "lines": [221, 258],
      "file": "Classicism/Models/SymBase.lean"}],
    "certificate":
    {"name":
@@ -12214,13 +12429,13 @@
   "symmetric-ideally-full/axiom-of-infinity-t/axiom-of-infinity-t":
   {"proofs":
    [{"name": "Classicism.Meta.Intensional.SymBase.infinite_props_of_separable",
-     "lines": [383, 397],
+     "lines": [406, 420],
      "file": "Classicism/Models/SymBase.lean"},
     {"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-     "lines": [129, 129],
+     "lines": [133, 133],
      "file": "Classicism/Models/SymBase.lean"},
     {"name": "Classicism.Meta.Intensional.SymBase.holds_axInf",
-     "lines": [352, 358],
+     "lines": [375, 381],
      "file": "Classicism/Models/SymBase.lean"}],
    "certificate":
    {"name":
@@ -12231,10 +12446,10 @@
   "symmetric-ideally-full/axiom-of-infinity-e/axiom-of-infinity-e":
   {"proofs":
    [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-     "lines": [129, 129],
+     "lines": [133, 133],
      "file": "Classicism/Models/SymBase.lean"},
     {"name": "Classicism.Meta.Intensional.SymBase.holds_axInf",
-     "lines": [352, 358],
+     "lines": [375, 381],
      "file": "Classicism/Models/SymBase.lean"}],
    "certificate":
    {"name":
@@ -12245,10 +12460,10 @@
   "symmetric-ideally-full/actuality/actuality":
   {"proofs":
    [{"name": "Classicism.Meta.Intensional.SymBase.model_isModel",
-     "lines": [129, 129],
+     "lines": [133, 133],
      "file": "Classicism/Models/SymBase.lean"},
     {"name": "Classicism.Meta.Intensional.SymBase.actuality_of_pinned",
-     "lines": [148, 159],
+     "lines": [172, 183],
      "file": "Classicism/Models/SymBase.lean"}],
    "certificate":
    {"name":
@@ -12520,7 +12735,7 @@
    "certificate":
    {"name":
     "Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_t",
-    "lines": [441, 443],
+    "lines": [439, 441],
     "file": "Classicism/MapArguments.lean",
     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
   "finite-support-one-object/collapsing-atomless/atomicity-r":
@@ -12535,7 +12750,7 @@
    "certificate":
    {"name":
     "Classicism.Map.Arguments.finite_support_one_object.collapsing_atomless.atomicity_r",
-    "lines": [445, 448],
+    "lines": [443, 446],
     "file": "Classicism/MapArguments.lean",
     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
   "finite-support-one-object/barcan-positive/barcan-r":
@@ -12549,7 +12764,7 @@
    "certificate":
    {"name":
     "Classicism.Map.Arguments.finite_support_one_object.barcan_positive.barcan_r",
-    "lines": [454, 461],
+    "lines": [452, 459],
     "file": "Classicism/MapArguments.lean",
     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
   "finite-support-one-object/actual-world/actuality":
@@ -12563,7 +12778,7 @@
    "certificate":
    {"name":
     "Classicism.Map.Arguments.finite_support_one_object.actual_world.actuality",
-    "lines": [433, 435],
+    "lines": [431, 433],
     "file": "Classicism/MapArguments.lean",
     "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
   "fewer-propositions-after/pure-b-r":

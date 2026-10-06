@@ -26,10 +26,13 @@ The members here, each over `ℕ`:
 - `rangeGapNoAct`: the surjections for which `0` is its own only preimage, and the functions
   omitting `0`; the symmetries the permutations fixing `0`;
 - `contrast`: two objects, each `ℕ`, the permutations as all the arrows, the symmetries all
-  permutations at the first and the identity at the second (Appendix D, p. 79).
+  permutations at the first and the identity at the second (Appendix D, p. 79);
+- `twoBase`: two objects, each `ℕ`, the permutations from the first to itself and all functions
+  from the first to the second and from the second to itself, the symmetries all permutations,
+  the second object carrying the improper ideal (the draft's Definition 39).
 
-Not here: the two-object model whose second object carries the improper ideal, and the
-model on the qualitative link structure (Base 3).
+Each but `twoBase` carries the ideal of finite sets at every object. Not here: the model on the
+qualitative link structure (Base 3).
 -/
 
 namespace Classicism.Meta.Intensional
@@ -87,6 +90,8 @@ abbrev Base.toSym : SymBase where
   G_inv := syms_symGroup B
   W₀ := star B
   ne _ := ⟨(0 : ℕ)⟩
+  J := PinIdeal.fin _
+  J_base _ h := h
 
 /-- **The symmetric ideally full model of a base.** -/
 noncomputable abbrev model : Premodel Signature.pure B.cat.Ob := (B.toSym).model
@@ -248,6 +253,8 @@ def contrastBase : SymBase where
   G_inv := contrastSyms_symGroup
   W₀ := W₀
   ne _ := ⟨(0 : ℕ)⟩
+  J := PinIdeal.fin _
+  J_base _ h := h
 
 /-- **The qualitative-contrast model**, based at `W₀`. -/
 noncomputable abbrev contrast : Premodel Signature.pure contrastCat.Ob := contrastBase.model
@@ -261,7 +268,7 @@ section actual
 variable {B}
 
 /-- The proposition true at exactly the symmetries. -/
-def symProp : Intension (SymT B.cat.De (syms B)) .t (star B) := {p | B.Sym (FunCat.fn p.2.2)}
+def symProp : Intension (SymT B.cat.De (syms B) (PinIdeal.fin _)) .t (star B) := {p | B.Sym (FunCat.fn p.2.2)}
 
 /-- **The actual world is the set of symmetries, and is isolated**, when the identity is a
 symmetry, a composite of arrows is one exactly when both are, and whether an arrow is one is
@@ -271,7 +278,7 @@ theorem actualWorldIsolated_of (hid : B.Sym id)
     (N : Set ℕ) (hN : N.Finite)
     (hpin : ∀ {h i : ℕ → ℕ}, B.Arr h → B.Arr i → (∀ x ∈ N, h x = i x) → (B.Sym h ↔ B.Sym i)) :
     (model B).ActualWorldIsolated := by
-  obtain ⟨a, ha⟩ := (mem_range_symIncl B.cat.De (syms B) .t (star B) symProp).2
+  obtain ⟨a, ha⟩ := (mem_range_symIncl B.cat.De (syms B) (PinIdeal.fin _) .t (star B) symProp).2
     ⟨⟨N, hN, fun V h i hag => by
       ext ⟨U, ⟨⟩, k⟩
       exact (hcomp h.2 k.2).trans ((and_congr_left' (hpin h.2 i.2 fun x hx => hag x hx)).trans
@@ -279,7 +286,7 @@ theorem actualWorldIsolated_of (hid : B.Sym id)
     fun V a k s hs hk => (hcomp k.2 s.2).2 ⟨hk, hs⟩⟩
   have ha' : (model B).incl .t (star B) a = symProp := ha
   refine ⟨a, ?_, fun p hp => ?_, fun {V U} i j hi => ?_⟩
-  · show (⟨star B, PUnit.unit, 𝟙 (star B)⟩ : Tuple (SymT B.cat.De (syms B)) .t (star B)) ∈
+  · show (⟨star B, PUnit.unit, 𝟙 (star B)⟩ : Tuple (SymT B.cat.De (syms B) (PinIdeal.fin _)) .t (star B)) ∈
       (model B).incl .t (star B) a
     rw [ha']; exact hid
   · show (model B).incl .t (star B) a ⊆ (model B).incl .t (star B) p
@@ -287,8 +294,8 @@ theorem actualWorldIsolated_of (hid : B.Sym id)
     rintro ⟨V, ⟨⟩, k⟩ hk
     cases V
     exact Premodel.Sym.at_id (symIdeal_domSym .t (star B) p) PUnit.unit hk hp
-  · change (⟨V, PUnit.unit, i⟩ : Tuple (SymT B.cat.De (syms B)) .t (star B)) ∉ (model B).incl .t (star B) a at hi
-    show (⟨U, PUnit.unit, i ≫ j⟩ : Tuple (SymT B.cat.De (syms B)) .t (star B)) ∉ (model B).incl .t (star B) a
+  · change (⟨V, PUnit.unit, i⟩ : Tuple (SymT B.cat.De (syms B) (PinIdeal.fin _)) .t (star B)) ∉ (model B).incl .t (star B) a at hi
+    show (⟨U, PUnit.unit, i ≫ j⟩ : Tuple (SymT B.cat.De (syms B) (PinIdeal.fin _)) .t (star B)) ∉ (model B).incl .t (star B) a
     rw [ha'] at hi ⊢
     exact fun h => hi ((hcomp i.2 j.2).1 h).1
 
@@ -355,14 +362,14 @@ section conditions
 variable {B}
 
 /-- Not being one of the members of `K`: `x ∉ k[K]` at the arrow `k`. -/
-def avoid (K : Set ℕ) : Intension (SymT B.cat.De (syms B)) (.arr .e .t) (star B) :=
+def avoid (K : Set ℕ) : Intension (SymT B.cat.De (syms B) (PinIdeal.fin _)) (.arr .e .t) (star B) :=
   {p | p.2.1.1 ∉ FunCat.fn p.2.2 '' K}
 
 theorem sym_injective {g : star B ⟶ star B} (hg : g ∈ syms B (star B)) : Function.Injective (FunCat.fn g) :=
   (B.sym_bij hg).1
 
 theorem avoid_mem (K : Set ℕ) (hK : K.Finite) : avoid K ∈ Set.range ((model B).incl (.arr .e .t) (star B)) := by
-  refine (mem_range_symIncl B.cat.De (syms B) _ (star B) _).2 ⟨⟨K, hK, fun V h i ha => ?_⟩, ?_⟩
+  refine (mem_range_symIncl B.cat.De (syms B) (PinIdeal.fin _) _ (star B) _).2 ⟨⟨K, hK, fun V h i ha => ?_⟩, ?_⟩
   · ext ⟨U, ⟨x, ⟨⟩⟩, j⟩
     have e : (FunCat.fn j ∘ FunCat.fn h) '' K = (FunCat.fn j ∘ FunCat.fn i) '' K :=
       Set.image_congr fun a ha' => by
@@ -422,7 +429,7 @@ theorem symmetryGroupPinned_of
     (N : Set ℕ) (hN : N.Finite)
     (hpin : ∀ {h i : ℕ → ℕ}, B.Arr h → B.Arr i → (∀ x ∈ N, h x = i x) → (B.Sym h ↔ B.Sym i)) :
     (B.toSym).SymmetryGroupPinned := by
-  have mem : ∀ k : star B ⟶ star B, (⟨star B, PUnit.unit, k⟩ : Tuple (SymT B.cat.De (syms B)) .t (star B)) ∈
+  have mem : ∀ k : star B ⟶ star B, (⟨star B, PUnit.unit, k⟩ : Tuple (SymT B.cat.De (syms B) (PinIdeal.fin _)) .t (star B)) ∈
       (B.toSym).groupProp ↔ B.Sym (FunCat.fn k) := fun k => by
     constructor
     · rintro ⟨g, hg, he⟩
@@ -433,8 +440,8 @@ theorem symmetryGroupPinned_of
   cases V
   ext ⟨U, ⟨⟩, k⟩
   cases U
-  show (⟨star B, PUnit.unit, h ≫ k⟩ : Tuple (SymT B.cat.De (syms B)) .t (star B)) ∈ (B.toSym).groupProp ↔
-    (⟨star B, PUnit.unit, i ≫ k⟩ : Tuple (SymT B.cat.De (syms B)) .t (star B)) ∈ (B.toSym).groupProp
+  show (⟨star B, PUnit.unit, h ≫ k⟩ : Tuple (SymT B.cat.De (syms B) (PinIdeal.fin _)) .t (star B)) ∈ (B.toSym).groupProp ↔
+    (⟨star B, PUnit.unit, i ≫ k⟩ : Tuple (SymT B.cat.De (syms B) (PinIdeal.fin _)) .t (star B)) ∈ (B.toSym).groupProp
   rw [mem, mem]
   show B.Sym (FunCat.fn k ∘ FunCat.fn h) ↔ B.Sym (FunCat.fn k ∘ FunCat.fn i)
   exact (hcomp h.2 k.2).trans ((and_congr_left' (hpin h.2 i.2 fun x hx => ha x hx)).trans (hcomp i.2 k.2).symm)
@@ -606,10 +613,11 @@ end hull
 
 theorem allSurj_hullConditions : allSurj.toSym.HullConditions := by
   classical
-  refine ⟨∅, Set.finite_empty, fun (M : Set ℕ) _ _ h _ h' hag (P Q : Set ℕ) hP hQ hPQ => ?_,
+  refine ⟨∅, Set.finite_empty, fun (M : Set ℕ) _ _ V h _ h' hag (P Q : Set ℕ) hP hQ hPQ => ?_,
     b2_of ∅ fun K hK y _ => by
       obtain ⟨z, hz, -⟩ := exists_fresh hK y
       exact ⟨z, hz, (Equiv.swap y z).bijective⟩⟩
+  cases V
   obtain ⟨K, -, hK⟩ := exists_bound (hP.union hQ)
   let f : ℕ → ℕ := FunCat.fn h
   let f' : ℕ → ℕ := FunCat.fn h'
@@ -629,7 +637,7 @@ theorem allSurj_hullConditions : allSurj.toSym.HullConditions := by
 theorem collapsePair_hullConditions : collapsePair.toSym.HullConditions := by
   classical
   refine ⟨({0, 1} : Set ℕ), (Set.finite_singleton (1 : ℕ)).insert 0,
-    fun (M : Set ℕ) _ hM₀ h hsep h' hag (P Q : Set ℕ) hP hQ hPQ => ?_,
+    fun (M : Set ℕ) _ hM₀ V h hsep h' hag (P Q : Set ℕ) hP hQ hPQ => ?_,
     b2_of {0, 1} fun K hK y hy => by
       obtain ⟨z, hz, -⟩ := exists_fresh (hK.union ((Set.finite_singleton (1 : ℕ)).insert 0)) y
       have hy0 : y ≠ 0 := fun e => hy (Or.inl e)
@@ -638,6 +646,7 @@ theorem collapsePair_hullConditions : collapsePair.toSym.HullConditions := by
       have hz1 : z ≠ 1 := fun e => hz (Or.inr (Or.inr e))
       exact ⟨z, fun h => hz (Or.inl h), (Equiv.swap y z).bijective,
         Or.inl ⟨Equiv.swap_apply_of_ne_of_ne hy0.symm hz0.symm, Equiv.swap_apply_of_ne_of_ne hy1.symm hz1.symm⟩⟩⟩
+  cases V
   let f : ℕ → ℕ := FunCat.fn h
   let f' : ℕ → ℕ := FunCat.fn h'
   have h0M : (0 : ℕ) ∈ M := hM₀ (Or.inl rfl)
@@ -645,7 +654,7 @@ theorem collapsePair_hullConditions : collapsePair.toSym.HullConditions := by
   -- an unseparated arrow collapses the pair
   have hc : f 0 = f 1 := by
     by_contra hne
-    refine hsep fun k hk => (k.2.resolve_right fun hk' => hne ?_)
+    refine hsep (SymBase.separates_of_mem fun k hk => (k.2.resolve_right fun hk' => hne ?_))
     have e0 : f 0 = FunCat.fn k (0 : ℕ) := hk (0 : ℕ) h0M
     have e1 : f 1 = FunCat.fn k (1 : ℕ) := hk (1 : ℕ) h1M
     rw [e0, e1]; exact hk'.2
@@ -678,6 +687,265 @@ theorem collapsePair_hullConditions : collapsePair.toSym.HullConditions := by
       · exact hc
     · exact (hagx hxP).symm
     all_goals first | rfl | contradiction
+
+/-- Infinite classes, with `M₀ = ∅`, as for all surjections: splicing is free among
+surjections, and a point is transposed with a fresh point of its own class. -/
+theorem infClasses_hullConditions : infClasses.toSym.HullConditions := by
+  classical
+  refine ⟨∅, Set.finite_empty, fun (M : Set ℕ) _ _ V h _ h' hag (P Q : Set ℕ) hP hQ hPQ => ?_,
+    b2_of ∅ fun K hK y _ => ?_⟩
+  · cases V
+    obtain ⟨K, -, hK⟩ := exists_bound (hP.union hQ)
+    let f : ℕ → ℕ := FunCat.fn h
+    let f' : ℕ → ℕ := FunCat.fn h'
+    let j : ℕ → ℕ := fun x => if x ∈ P then f' x else if x ∈ Q then f x else x - K
+    have hj : Function.Surjective j := fun y => ⟨y + K, by
+      have h1 : y + K ∉ P := fun h => by have := hK _ (Or.inl h); omega
+      have h2 : y + K ∉ Q := fun h => by have := hK _ (Or.inr h); omega
+      simp only [j]; split_ifs <;> omega⟩
+    refine ⟨FunCat.arr (F := infClasses.cat) (i := star infClasses) (j := star infClasses) j hj,
+      fun (x : ℕ) hx => ?_, fun (x : ℕ) hx => ?_⟩
+    · show j x = f' x
+      simp only [j]; split_ifs <;> first | rfl | contradiction
+    · show j x = f x
+      have hagx : x ∈ P → f x = f' x := fun hxP => hag x (hPQ ⟨hxP, hx⟩)
+      simp only [j]; split_ifs with hxP <;> first | rfl | contradiction | exact (hagx hxP).symm
+  · have hfin : {m | Nat.pair (cls y) m ∈ K}.Finite :=
+      hK.preimage (fun a _ b _ e => (Nat.pair_eq_pair.1 e).2)
+    obtain ⟨m, hm⟩ := hfin.exists_notMem
+    have hc : cls y = cls (Nat.pair (cls y) m) := by simp [cls, Nat.unpair_pair]
+    refine ⟨Nat.pair (cls y) m, hm, (Equiv.swap _ _).bijective, fun a b => ?_⟩
+    rw [cls_swap hc, cls_swap hc]
+
+/-- (B2) with `M₀ = {0}`, for the symmetries the permutations fixing `0`. -/
+theorem b2_fix0 {B : Base} (hS : ∀ {f : ℕ → ℕ}, B.Sym f ↔ Function.Bijective f ∧ f 0 = 0) :
+    ∀ N P Q : Set (B.toSym.F.X B.toSym.W₀), N.Finite → P.Finite → Q.Finite → ({0} : Set ℕ) ⊆ N →
+      ∃ g ∈ B.toSym.G B.toSym.W₀, (∀ x ∈ N, FunCat.fn g x = x) ∧ ∀ x ∈ P, x ∉ N → FunCat.fn g x ∉ Q :=
+  b2_of {0} fun K hK y hy => by
+    obtain ⟨z, hz, -⟩ := exists_fresh (hK.union (Set.finite_singleton (0 : ℕ))) y
+    have hy0 : y ≠ 0 := fun e => hy e
+    have hz0 : z ≠ 0 := fun e => hz (Or.inr e)
+    exact ⟨z, fun h => hz (Or.inl h), hS.2 ⟨(Equiv.swap y z).bijective,
+      Equiv.swap_apply_of_ne_of_ne hy0.symm hz0.symm⟩⟩
+
+/-- The range gap, with `M₀ = {0}`: an unseparated arrow omits `0`, and so does any arrow
+agreeing with it at `0`; a prescription from the two extends by nonzero values. -/
+theorem rangeGap_hullConditions : rangeGap.toSym.HullConditions := by
+  classical
+  refine ⟨({0} : Set ℕ), Set.finite_singleton _,
+    fun (M : Set ℕ) _ hM₀ V h hsep h' hag (P Q : Set ℕ) _ _ hPQ => ?_, b2_fix0 Iff.rfl⟩
+  cases V
+  let f : ℕ → ℕ := FunCat.fn h
+  let f' : ℕ → ℕ := FunCat.fn h'
+  have h0M : (0 : ℕ) ∈ M := hM₀ rfl
+  have hf0 : f 0 ≠ 0 := fun h0 => hsep <| SymBase.separates_of_mem fun k hk => by
+    have e : (FunCat.fn k (0 : ℕ) : ℕ) = (0 : ℕ) := (hk (0 : ℕ) h0M).symm.trans h0
+    exact k.2.resolve_right fun hk' => hk' 0 e
+  have homit : ∀ x, f x ≠ 0 := (h.2.resolve_left fun hb => hf0 hb.2)
+  have homit' : ∀ x, f' x ≠ 0 := h'.2.resolve_left fun hb => hf0 ((hag (0 : ℕ) h0M).trans hb.2)
+  let j : ℕ → ℕ := fun x => if x ∈ P then f' x else if x ∈ Q then f x else 1
+  have hj : ∀ x, j x ≠ 0 := fun x => by
+    simp only [j]; split_ifs
+    · exact homit' x
+    · exact homit x
+    · exact one_ne_zero
+  refine ⟨FunCat.arr (F := rangeGap.cat) (i := star rangeGap) (j := star rangeGap) j (Or.inr hj),
+    fun (x : ℕ) hx => ?_, fun (x : ℕ) hx => ?_⟩
+  · show j x = f' x
+    simp only [j]; split_ifs <;> first | rfl | contradiction
+  · show j x = f x
+    have hagx : x ∈ P → f x = f' x := fun hxP => hag x (hPQ ⟨hxP, hx⟩)
+    simp only [j]; split_ifs with hxP <;> first | rfl | contradiction | exact (hagx hxP).symm
+
+/-- The range gap without Actuality, with `M₀ = {0}`: two arrows agreeing at `0` are in the same
+class, and a prescription from the two extends within it, by nonzero values for the arrows
+omitting `0` and surjectively, `0` its own only preimage, for the others. -/
+theorem rangeGapNoAct_hullConditions : rangeGapNoAct.toSym.HullConditions := by
+  classical
+  refine ⟨({0} : Set ℕ), Set.finite_singleton _,
+    fun (M : Set ℕ) _ hM₀ V h _ h' hag (P Q : Set ℕ) hP hQ hPQ => ?_, b2_fix0 Iff.rfl⟩
+  cases V
+  let f : ℕ → ℕ := FunCat.fn h
+  let f' : ℕ → ℕ := FunCat.fn h'
+  have h0M : (0 : ℕ) ∈ M := hM₀ rfl
+  have e0 : f 0 = f' 0 := hag (0 : ℕ) h0M
+  have hagx : ∀ x ∈ Q, x ∈ P → f x = f' x := fun x hx hxP => hag x (hPQ ⟨hxP, hx⟩)
+  by_cases hf0 : f 0 = 0
+  · -- both surjective, `0` its own only preimage
+    have hh : ∀ x, f x = 0 ↔ x = 0 := (h.2.resolve_right fun ho => ho 0 hf0).2
+    have hh' : ∀ x, f' x = 0 ↔ x = 0 :=
+      (h'.2.resolve_right fun ho => ho 0 (e0.symm.trans hf0)).2
+    obtain ⟨K, hK2, hK⟩ := exists_bound (hP.union hQ)
+    let j : ℕ → ℕ := fun x => if x = 0 then 0 else if x ∈ P then f' x else if x ∈ Q then f x else x - K + 1
+    have hjs : Function.Surjective j := fun y => by
+      rcases Nat.eq_zero_or_pos y with rfl | hy
+      · exact ⟨0, by simp [j]⟩
+      · refine ⟨y - 1 + K, ?_⟩
+        have h0 : y - 1 + K ≠ 0 := by omega
+        have h1 : y - 1 + K ∉ P := fun h => by have := hK _ (Or.inl h); omega
+        have h2 : y - 1 + K ∉ Q := fun h => by have := hK _ (Or.inr h); omega
+        simp only [j]; split_ifs <;> omega
+    have hj0 : ∀ x, j x = 0 ↔ x = 0 := fun x => by
+      by_cases hx : x = 0
+      · subst hx; simp [j]
+      · simp only [j, hx, if_false, iff_false]
+        split_ifs
+        · exact fun e => hx ((hh' x).1 e)
+        · exact fun e => hx ((hh x).1 e)
+        · exact not_false
+    refine ⟨FunCat.arr (F := rangeGapNoAct.cat) (i := star rangeGapNoAct) (j := star rangeGapNoAct) j
+      (Or.inl ⟨hjs, hj0⟩), fun (x : ℕ) hx => ?_, fun (x : ℕ) hx => ?_⟩
+    · show j x = f' x
+      simp only [j]
+      split_ifs with hx0
+      · subst hx0; exact ((hh' 0).2 rfl).symm
+      all_goals first | rfl | contradiction
+    · show j x = f x
+      simp only [j]
+      split_ifs with hx0 hxP
+      · subst hx0; exact hf0.symm
+      · exact (hagx x hx hxP).symm
+      all_goals first | rfl | contradiction
+  · -- both omit `0`
+    have homit : ∀ x, f x ≠ 0 := h.2.resolve_left fun hb => hf0 ((hb.2 0).2 rfl)
+    have homit' : ∀ x, f' x ≠ 0 := h'.2.resolve_left fun hb => hf0 (e0.trans ((hb.2 0).2 rfl))
+    let j : ℕ → ℕ := fun x => if x ∈ P then f' x else if x ∈ Q then f x else 1
+    have hj : ∀ x, j x ≠ 0 := fun x => by
+      simp only [j]; split_ifs
+      · exact homit' x
+      · exact homit x
+      · exact one_ne_zero
+    refine ⟨FunCat.arr (F := rangeGapNoAct.cat) (i := star rangeGapNoAct) (j := star rangeGapNoAct) j
+      (Or.inr hj), fun (x : ℕ) hx => ?_, fun (x : ℕ) hx => ?_⟩
+    · show j x = f' x
+      simp only [j]; split_ifs <;> first | rfl | contradiction
+    · show j x = f x
+      simp only [j]; split_ifs with hxP <;> first | rfl | contradiction | exact (hagx x hx hxP).symm
+
+/-! ### Two objects, the second unpinned (the draft's Definition 39) -/
+
+/-- Two copies of `ℕ`: the permutations from the first to itself, all functions from the first
+to the second and from the second to itself, and none back. -/
+def twoCat : FunCat where
+  Obj := Bool
+  X _ := ℕ
+  Arr := fun {i j} f => match i, j with
+    | false, false => Function.Bijective f
+    | false, true => True
+    | true, true => True
+    | true, false => False
+  arr_id i := match i with
+    | false => Function.bijective_id
+    | true => trivial
+  arr_comp {i j k} {f g} hf hg := match i, j, k, hf, hg with
+    | false, false, false, hf, hg => hg.comp hf
+    | false, false, true, _, _ => trivial
+    | false, true, true, _, _ => trivial
+    | true, true, true, _, _ => trivial
+    | _, true, false, _, hg => hg.elim
+    | true, false, _, hf, _ => hf.elim
+
+/-- The symmetries: all permutations, at both objects. -/
+def twoSyms (V : twoCat.Ob) : Set (V ⟶ V) := {g | Function.Bijective (FunCat.fn g)}
+
+theorem twoSyms_symGroup : SymGroup twoSyms := by
+  intro V g hg
+  let e := Equiv.ofBijective _ hg
+  have harr : twoCat.Arr (i := V) (j := V) e.symm := by
+    cases V
+    · exact e.symm.bijective
+    · trivial
+  refine ⟨FunCat.arr (F := twoCat) (i := V) (j := V) e.symm harr, e.symm.bijective, ?_, ?_⟩
+  · exact FunCat.hom_ext (funext fun x => e.symm_apply_apply x)
+  · exact FunCat.hom_ext (funext fun x => e.apply_symm_apply x)
+
+/-- The ideal of finite sets at the first object, and the improper ideal at the second. -/
+def twoIdeal : PinIdeal twoCat.De where
+  mem W := match W with
+    | false => {N | N.Finite}
+    | true => Set.univ
+  finite {W} {_} h := by
+    cases W
+    · exact h
+    · trivial
+  union {W} {_ _} h₁ h₂ := by
+    cases W
+    · exact Set.Finite.union h₁ h₂
+    · trivial
+  image {W V} k {_} h := by
+    cases W <;> cases V
+    · exact Set.Finite.image _ h
+    · trivial
+    · exact k.2.elim
+    · trivial
+
+/-- The base, at the first object. -/
+def twoBase : SymBase where
+  F := twoCat
+  G := twoSyms
+  G_id _ := Function.bijective_id
+  G_comp hg hs := hs.comp hg
+  G_inv := twoSyms_symGroup
+  W₀ := (false : Bool)
+  ne _ := ⟨(0 : ℕ)⟩
+  J := twoIdeal
+  J_base _ h := h
+
+/-- **The two-object model, the second object unpinned.** -/
+noncomputable abbrev twoObj : Premodel Signature.pure twoCat.Ob := twoBase.model
+
+/-- The hull conditions with `M₀ = ∅`: an arrow back to the first object is a permutation, so
+separated by any set; into the second, splicing is free, every function being an arrow; and the
+permutations move points. -/
+theorem two_hullConditions : twoBase.HullConditions := by
+  classical
+  refine ⟨∅, Set.finite_empty, fun M _ _ V h hsep h' hag (P Q : Set ℕ) _ _ hPQ => ?_,
+    fun N (P Q : Set ℕ) hN hP hQ _ => ?_⟩
+  · cases V
+    · exact absurd (SymBase.separates_of_mem fun k _ => k.2) hsep
+    · let f : ℕ → ℕ := FunCat.fn h
+      let f' : ℕ → ℕ := FunCat.fn h'
+      let j : ℕ → ℕ := fun x => if x ∈ P then f' x else if x ∈ Q then f x else 0
+      refine ⟨FunCat.arr (F := twoCat) (i := false) (j := true) j trivial, fun (x : ℕ) hx => ?_,
+        fun (x : ℕ) hx => ?_⟩
+      · show j x = f' x
+        simp only [j]; split_ifs <;> first | rfl | contradiction
+      · show j x = f x
+        have hagx : x ∈ P → f x = f' x := fun hxP => hag x (hPQ ⟨hxP, hx⟩)
+        simp only [j]; split_ifs with hxP <;> first | rfl | contradiction | exact (hagx hxP).symm
+  · obtain ⟨g, hg, hfix, hmove⟩ := move_points (B := allSurj) ∅
+      (fun K hK y _ => let ⟨z, hz, _⟩ := exists_fresh hK y; ⟨z, hz, (Equiv.swap y z).bijective⟩)
+      ((hP.diff (t := N)).toFinset) N Q hN hQ (Set.empty_subset _)
+      fun s hs => ((Set.Finite.mem_toFinset _).1 hs).2
+    exact ⟨FunCat.arr (F := twoCat) (i := false) (j := false) g hg, hg, hfix,
+      fun x hx hxN => hmove x ((Set.Finite.mem_toFinset _).2 ⟨hx, hxN⟩)⟩
+
+/-- At the second object every symmetric intension is in the domain, so the least upper bound of
+a property is the union of its instances. -/
+theorem two_hasLUBs_W₁ (ρ : RTy) : twoBase.HasLUBs (true : Bool) ρ := by
+  intro F
+  let Y : Intension (SymT twoCat.De twoSyms twoIdeal) ρ (true : Bool) :=
+    {p | ∃ u : twoObj.Dom (true : Bool) (.rel ρ),
+      (⟨(true : Bool), (u, PUnit.unit), 𝟙 _⟩ : Tuple twoObj.inner (.arr (.rel ρ) .t) (true : Bool)) ∈
+        twoObj.incl _ (true : Bool) F ∧ p ∈ twoObj.incl ρ (true : Bool) u}
+  obtain ⟨y, hy⟩ := (mem_range_symIncl twoCat.De twoSyms twoIdeal ρ (true : Bool) Y).2
+    ⟨⟨Set.univ, trivial, fun V h i ha => by
+        rw [(FunCat.hom_ext (funext fun x => (ha x (Set.mem_univ x) : FunCat.fn h x = FunCat.fn i x)) : h = i)]⟩,
+      fun V a k g hg ⟨u, hu, hm⟩ => ⟨u, hu, SymBase.model_domSym (S := twoBase) ρ (true : Bool) u V a k g hg hm⟩⟩
+  have hy' : twoObj.incl ρ (true : Bool) y = Y := hy
+  refine ⟨y, fun z => ⟨fun hub => ?_, fun hle u hu => ?_⟩⟩
+  · rw [hy']
+    rintro p ⟨u, hu, hm⟩
+    exact hub u hu hm
+  · intro p hp
+    apply hle
+    rw [hy']
+    exact ⟨u, hu, hp⟩
+
+/-- Least upper bounds at both objects. -/
+theorem two_hasLUBs (ρ : RTy) : ∀ V, twoBase.HasLUBs V ρ
+  | false => SymBase.lub_of_hull two_hullConditions ρ
+  | true => two_hasLUBs_W₁ ρ
 
 end SymIdeal
 

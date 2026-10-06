@@ -59,6 +59,7 @@ meets:
     With $M_0=\emptyset$ (the draft's argument for this model): every finite set is amalgamable,
     since an arrow is prescribed only on a finite set and extends freely to a surjection, and
     points can always be moved off a given finite set by a permutation fixing another.
+  finite-pinning: Every object carries the ideal of finite sets.
 
 arguments:
 
@@ -251,6 +252,7 @@ history:
 lean:
   param: Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj
   meets:
+    finite-pinning: fun _ _ h => h
     hull-conditions: Classicism.Meta.Intensional.SymIdeal.allSurj_hullConditions
     surjective-arrows: Classicism.Meta.Intensional.SymIdeal.allSurj_surjectiveArrows
     infinitely-many-individuals: Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.allSurj

@@ -60,7 +60,7 @@ theorem perms_symGroup : SymGroup (perms M) := by
 
 /-- **The symmetry-constrained full model on the monoid.** -/
 noncomputable abbrev model : Premodel Signature.pure M.cat.Ob :=
-  Premodel.symIdeal M.cat.De (perms M) (star M) (fun _ => ⟨(0 : Fin 3)⟩) (fun c => nomatch c)
+  Premodel.symIdeal M.cat.De (perms M) (PinIdeal.fin _) (star M) (fun _ => ⟨(0 : Fin 3)⟩) (fun c => nomatch c)
 
 theorem model_isModel : (model M).IsModel := symIdeal_isModel (perms_symGroup M)
 
@@ -97,34 +97,34 @@ instance (i : M.cat.Ob) : Finite (M.cat.De.obj i) := inferInstanceAs (Finite (Fi
 
 /-- Two arrows agreeing on every individual are equal, so everything is pinned down by the
 finite set of all individuals. -/
-theorem pinned_univ {ρ : RTy} (F : Intension (SymT M.cat.De (perms M)) ρ (star M)) :
+theorem pinned_univ {ρ : RTy} (F : Intension (SymT M.cat.De (perms M) (PinIdeal.fin _)) ρ (star M)) :
     ∃ N : Set (M.cat.De.obj (star M)), N.Finite ∧
       ∀ (V : M.cat.Ob) (h i : (star M) ⟶ V), AgreeOn M.cat.De N h i →
-        Intension.map (SymT M.cat.De (perms M)) h F = Intension.map (SymT M.cat.De (perms M)) i F :=
+        Intension.map (SymT M.cat.De (perms M) (PinIdeal.fin _)) h F = Intension.map (SymT M.cat.De (perms M) (PinIdeal.fin _)) i F :=
   ⟨Set.univ, Set.toFinite _, fun _ h i ha => by
     rw [(FunCat.hom_ext (funext fun x => (ha x (Set.mem_univ x) : FunCat.fn h x = FunCat.fn i x)) : h = i)]⟩
 
 /-- The orbit of a set of argument tuples: `g ȳ` at each permutation `g`, for `ȳ` in the set. -/
-def orbit {ρ : RTy} (E : Set (Args (SymT M.cat.De (perms M)) ρ (star M))) : Intension (SymT M.cat.De (perms M)) ρ (star M) :=
+def orbit {ρ : RTy} (E : Set (Args (SymT M.cat.De (perms M) (PinIdeal.fin _)) ρ (star M))) : Intension (SymT M.cat.De (perms M) (PinIdeal.fin _)) ρ (star M) :=
   {p | ∃ (g : (star M) ⟶ (star M)), g ∈ perms M (star M) ∧ ∃ b ∈ E,
-    p = (⟨(star M), Args.map (SymT M.cat.De (perms M)) ρ g b, g⟩ : Tuple (SymT M.cat.De (perms M)) ρ (star M))}
+    p = (⟨(star M), Args.map (SymT M.cat.De (perms M) (PinIdeal.fin _)) ρ g b, g⟩ : Tuple (SymT M.cat.De (perms M) (PinIdeal.fin _)) ρ (star M))}
 
 theorem perms_comp {g s : (star M) ⟶ (star M)} (hg : g ∈ perms M (star M)) (hs : s ∈ perms M (star M)) :
     g ≫ s ∈ perms M (star M) := hs.comp hg
 
-theorem orbit_sym {ρ : RTy} (E : Set (Args (SymT M.cat.De (perms M)) ρ (star M))) :
-    SymCond M.cat.De (perms M) (orbit E) := by
+theorem orbit_sym {ρ : RTy} (E : Set (Args (SymT M.cat.De (perms M) (PinIdeal.fin _)) ρ (star M))) :
+    SymCond M.cat.De (perms M) (PinIdeal.fin _) (orbit E) := by
   rintro V a k s hs ⟨g, hg, b, hb, he⟩
   cases he
   exact ⟨g ≫ s, perms_comp hg hs, b, hb, by rw [Args.map_comp]⟩
 
-theorem orbit_mem {ρ : RTy} (E : Set (Args (SymT M.cat.De (perms M)) ρ (star M))) :
+theorem orbit_mem {ρ : RTy} (E : Set (Args (SymT M.cat.De (perms M) (PinIdeal.fin _)) ρ (star M))) :
     orbit E ∈ Set.range ((model M).incl ρ (star M)) :=
-  (mem_range_symIncl M.cat.De (perms M) ρ (star M) _).2 ⟨pinned_univ _, orbit_sym E⟩
+  (mem_range_symIncl M.cat.De (perms M) (PinIdeal.fin _) ρ (star M) _).2 ⟨pinned_univ _, orbit_sym E⟩
 
 /-- The identity is the only permutation that is the identity tuple's arrow. -/
-theorem mem_orbit_id {ρ : RTy} (E : Set (Args (SymT M.cat.De (perms M)) ρ (star M))) (a : Args (SymT M.cat.De (perms M)) ρ (star M)) :
-    (⟨(star M), a, 𝟙 (star M)⟩ : Tuple (SymT M.cat.De (perms M)) ρ (star M)) ∈ orbit E ↔ a ∈ E := by
+theorem mem_orbit_id {ρ : RTy} (E : Set (Args (SymT M.cat.De (perms M) (PinIdeal.fin _)) ρ (star M))) (a : Args (SymT M.cat.De (perms M) (PinIdeal.fin _)) ρ (star M)) :
+    (⟨(star M), a, 𝟙 (star M)⟩ : Tuple (SymT M.cat.De (perms M) (PinIdeal.fin _)) ρ (star M)) ∈ orbit E ↔ a ∈ E := by
   constructor
   · rintro ⟨g, -, b, hb, he⟩
     obtain ⟨-, he⟩ := Sigma.mk.inj_iff.1 he
@@ -143,7 +143,7 @@ theorem extFull : (model M).ExtFull := by
   obtain ⟨x, hx⟩ := orbit_mem E
   refine ⟨x, ?_⟩
   ext a
-  show (⟨(star M), a, 𝟙 (star M)⟩ : Tuple (SymT M.cat.De (perms M)) ρ (star M)) ∈ (model M).incl ρ (star M) x ↔ a ∈ E
+  show (⟨(star M), a, 𝟙 (star M)⟩ : Tuple (SymT M.cat.De (perms M) (PinIdeal.fin _)) ρ (star M)) ∈ (model M).incl ρ (star M) x ↔ a ∈ E
   rw [hx]
   exact mem_orbit_id E a
 
@@ -159,7 +159,7 @@ permutations; no arrow from a non-permutation leads back to one. -/
 theorem actualWorldIsolated : (model M).ActualWorldIsolated := by
   obtain ⟨a, ha⟩ := orbit_mem (ρ := .t) Set.univ
   refine ⟨a, ?_, fun p hp => ?_, fun {V U} i j hi => ?_⟩
-  · show (⟨(star M), PUnit.unit, 𝟙 (star M)⟩ : Tuple (SymT M.cat.De (perms M)) .t (star M)) ∈ (model M).incl .t (star M) a
+  · show (⟨(star M), PUnit.unit, 𝟙 (star M)⟩ : Tuple (SymT M.cat.De (perms M) (PinIdeal.fin _)) .t (star M)) ∈ (model M).incl .t (star M) a
     rw [ha, mem_orbit_id]; trivial
   · show (model M).incl .t (star M) a ⊆ (model M).incl .t (star M) p
     rw [ha]
@@ -167,8 +167,8 @@ theorem actualWorldIsolated : (model M).ActualWorldIsolated := by
     have := Premodel.Sym.at_id (symIdeal_domSym .t (star M) p) PUnit.unit hg hp
     exact this
   · cases V; cases U
-    change (⟨(star M), PUnit.unit, i⟩ : Tuple (SymT M.cat.De (perms M)) .t (star M)) ∉ (model M).incl .t (star M) a at hi
-    show (⟨(star M), PUnit.unit, i ≫ j⟩ : Tuple (SymT M.cat.De (perms M)) .t (star M)) ∉ (model M).incl .t (star M) a
+    change (⟨(star M), PUnit.unit, i⟩ : Tuple (SymT M.cat.De (perms M) (PinIdeal.fin _)) .t (star M)) ∉ (model M).incl .t (star M) a at hi
+    show (⟨(star M), PUnit.unit, i ≫ j⟩ : Tuple (SymT M.cat.De (perms M) (PinIdeal.fin _)) .t (star M)) ∉ (model M).incl .t (star M) a
     rw [ha] at hi ⊢
     rintro ⟨g, hg, ⟨⟩, -, he⟩
     obtain ⟨-, he⟩ := Sigma.mk.inj_iff.1 he

@@ -52,6 +52,12 @@ meets:
     sending $0$ elsewhere, which omits $0$ from its range since $0$ is $k$’s only preimage of $0$,
     are separated by $q$. The intension the argument uses is pinned down by $N$, and symmetric,
     since $g\cdot q=q$ for $g$ fixing $0$ and $(g\circ j)0=0$ iff $j0=0$, so it lies in the domain.
+  hull-conditions: >-
+    With $M_0=\{0\}$, the distinguished individual (the draft's argument for this model). Two
+    arrows agreeing there lie in the same one of the two classes, and a prescription taken from
+    the two of them extends within that class, by nonzero values in the second case and by
+    surjective nonzero values in the first; points are moved off a finite set by a permutation
+    fixing $0$.
 
 arguments:
 
@@ -62,13 +68,6 @@ arguments:
 # derive the rest are recorded, the source's first.
 
 # --- from the source (19 Sep record) ---
-
-- holds: [boolean-completeness-r]
-  text: >-
-    By the draft's main theorem with the distinguished individual as the distinguished set. Two
-    arrows agreeing there lie in the same one of the two classes, and a prescription taken from
-    the two of them extends within that class, by nonzero values in the second case and by
-    surjective nonzero values in the first.
 
 - holds: [atomlessness]
   text: >-
@@ -168,6 +167,7 @@ history:
 lean:
   param: Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct
   meets:
+    hull-conditions: Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct_hullConditions
     infinitely-many-individuals: Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct
     one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
     transposable: Classicism.Meta.Intensional.SymIdeal.rangeGapNoAct_transposable

@@ -49,6 +49,12 @@ meets:
     another individual of its class outside $N$, which exists since the classes are infinite, maps
     classes onto classes, so lies in the symmetry group.
   surjective-arrows: The arrows are all the surjections of $\mathbb N$, as in Base 1.
+  hull-conditions: >-
+    With $M_0=\emptyset$, as in Base 1: an arrow is prescribed only on a finite set and extends
+    freely to a surjection; and a point outside $N$ can be transposed with a member of its own
+    class outside $N\cup Q$, the classes being infinite, by a class-preserving permutation fixing
+    $N$ pointwise.
+  finite-pinning: Every object carries the ideal of finite sets.
 
 arguments:
 
@@ -83,10 +89,12 @@ arguments:
     preserve the equivalence pattern on S, and is the S-hull of the extension of X elsewhere.
     Details in the write-up.
 
-- holds: [atomlessness, boolean-completeness-r]
+- holds: [atomlessness]
   # migration (2 October): what is left of the clause "Boolean Completeness, BF and No Pure
   # Contingency hold as in Base 1, and Actuality, Relational Choice, Atomicity at type t and ND fail
   # as there" once No Pure Contingency, BF and Relational Choice come from the group and the topic.
+  # 6 October (Claude Opus 5.5, at Cian Dorr's direction): Boolean Completeness, the other half of
+  # "as in Base 1", now comes from the group argument boolean-completeness, by hull-conditions.
   text: >-
     As in Base 1.
 
@@ -122,6 +130,8 @@ history:
 lean:
   param: Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.infClasses
   meets:
+    finite-pinning: fun _ _ h => h
+    hull-conditions: Classicism.Meta.Intensional.SymIdeal.infClasses_hullConditions
     surjective-arrows: Classicism.Meta.Intensional.SymIdeal.infClasses_surjectiveArrows
     infinitely-many-individuals: Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.infClasses
     one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _

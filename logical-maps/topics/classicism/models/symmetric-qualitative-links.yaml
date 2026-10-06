@@ -65,6 +65,7 @@ meets:
     arrow leads outside it, and a collapsing arrow carries it to the empty set.
   irreversible-arrow: >-
     A collapsing arrow: no composite with it is injective.
+  finite-pinning: Every object carries the ideal of finite sets.
 
 arguments:
 

@@ -117,6 +117,11 @@ conditions:
   text: >-
     Every arrow is surjective.
   lean: Classicism.Meta.Intensional.SymBase.SurjectiveArrows
+- id: finite-pinning
+  text: >-
+    At every object, the domains hold the symmetric intensions pinned down by a finite set: every
+    object carries the ideal of finite sets.
+  lean: Classicism.Meta.Intensional.SymBase.FinitePinning
 - id: symmetry-group-pinned
   text: >-
     The symmetry group, the smallest symmetric set of arrows containing the identity, is pinned
@@ -130,8 +135,10 @@ conditions:
     $h'$ agreeing with $h$ on $M$, and finite $P,Q$ with $P\cap Q\subseteq M$, some arrow agrees
     with $h'$ on $P$ and with $h$ on $Q$; and (B2) for finite $N\supseteq M_0$ and finite $P,Q$,
     some member of the symmetry group fixes $N$ pointwise and moves every member of $P$ outside
-    $N$ off $Q$. These are the hypotheses of Dorr's main theorem (draft, Definitions 28–30,
-    Theorem 36), for a model with one object.
+    $N$ off $Q$. The arrows in (B1) go from the evaluation object to any one object, and $M$
+    separates $h$ when every arrow agreeing with $h$ on $M$ is a member of the symmetry group of
+    the evaluation object. These are the hypotheses of Dorr's main theorem (draft, Definitions
+    28–30, Theorem 36).
   lean: Classicism.Meta.Intensional.SymBase.HullConditions
 - id: fixes-or-omits
   text: >-
@@ -228,7 +235,7 @@ arguments:
 
 
 - id: barcan-surjective
-  requires: [surjective-arrows]
+  requires: [surjective-arrows, finite-pinning]
   holds: [barcan-r]
   source: {paper: dorr-bc-not-rc, locator: '§3.1, p. 9; Proposition 22, p. 11'}
   by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request
@@ -251,6 +258,12 @@ arguments:
       all-surjections model ("at every type because every arrow is surjective and a finitely
       pinned symmetric intension can be pulled back along an arrow"), stated once for every member
       whose arrows are surjective.
+  - date: '2026-10-06'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      Requires finite-pinning as well, which the argument uses (a finite preimage of the pinning
+      set): stated when the group's Lean parameter admitted a per-object ideal, for the two-object
+      model whose second object is unpinned. Every member meeting surjective-arrows meets it.
   lean:
   - holds: barcan-r
     ref: Classicism.Map.Arguments.symmetric_ideally_full.barcan_surjective.barcan_r
@@ -298,7 +311,7 @@ arguments:
 
 
 - id: boolean-completeness
-  requires: [one-object-action-model, hull-conditions]
+  requires: [hull-conditions]
   holds: [boolean-completeness-r]
   source: {paper: dorr-bc-not-rc, locator: 'Theorem 36, p. 18; Corollary 37, p. 19'}
   by: Cian Dorr
@@ -323,6 +336,12 @@ arguments:
       The draft's main theorem, which the all-surjections and collapse-pair models each applied
       in an argument of their own, stated once; what each member does to meet its hypotheses is
       its reason for meeting hull-conditions. Proved in Lean (SymBase.lub_of_hull).
+  - date: '2026-10-06'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      No longer requires one-object-action-model: as the draft notes (proof of Proposition 40),
+      nothing in the theorem uses a single object, pinning, separation, amalgamability and hulls
+      all quantifying over arrows with a fixed target; the condition hull-conditions now says so.
   lean:
   - holds: boolean-completeness-r
     ref: Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r

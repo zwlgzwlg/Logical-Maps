@@ -57,6 +57,11 @@ meets:
     empty set.
   irreversible-arrow: >-
     An arrow into the second object: no arrow returns from there to the first.
+  hull-conditions: >-
+    With $M_0=\emptyset$ (the draft's argument for this model, Proposition 40): an arrow to the
+    first object is a permutation and so separated by any set, while for arrows to the second,
+    splicing is unconstrained, every function being an arrow; points are moved off a finite set by
+    a permutation of the first object.
 
 arguments:
 
@@ -81,6 +86,12 @@ arguments:
     distinguished set, since an arrow to the first object is automatically a permutation and so
     separated, while for arrows to the second splicing is unconstrained; at the second trivially,
     since its domains are closed under arbitrary unions.
+  revisions:
+  - date: '2026-10-06'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      Boolean Completeness at the first object is now the group argument boolean-completeness,
+      by hull-conditions; this argument still gives its necessitation, through the second object.
 
 - fails: [rigid-comprehension-r]
   when: {individuals: base}  # proved at type $e$ (3 October: the one-individual variant leaves it open)
@@ -183,3 +194,14 @@ history:
   summary: Added the failure of B for pure sentences; see the notes.
   violates:
   - pure-b-r
+
+# The model in Lean (Classicism/Models/SymmetricIdeal.lean): the base, the group's parameter, its
+# second object carrying the improper ideal.
+lean:
+  param: Classicism.Meta.Intensional.SymIdeal.twoBase
+  meets:
+    hull-conditions: Classicism.Meta.Intensional.SymIdeal.two_hullConditions
+  verdicts:
+  - holds: necessary-boolean-completeness-r
+    ref: Classicism.Map.Models.symmetric_two_object_unpinned.necessary_boolean_completeness_r
+    status: verified
