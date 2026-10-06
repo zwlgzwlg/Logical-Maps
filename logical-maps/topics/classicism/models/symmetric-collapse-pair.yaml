@@ -66,6 +66,10 @@ meets:
     arrow leads outside it, and a collapsing arrow carries it to the empty set.
   irreversible-arrow: >-
     A collapsing arrow: no composite with it is a permutation.
+  hull-conditions: >-
+    With $M_0$ the fixed pair (the draft's argument for this model): splicing fails at that pair,
+    but the pair is exactly what certifies invertibility, and the separated arrows are handled by
+    symmetry instead; a symmetry may move points freely outside the pair.
 
 arguments:
 
@@ -76,14 +80,6 @@ arguments:
 # derive the rest are recorded, the source's first.
 
 # --- from the source (19 Sep record) ---
-
-- holds: [boolean-completeness-r]
-  # Recorded although the other verdicts give it: the Rigid Comprehension argument takes the least
-  # upper bounds this one provides.
-  text: >-
-    By the draft's main theorem with the fixed pair as the distinguished set; splicing fails at
-    that pair, but the pair is exactly what certifies invertibility, and the separated arrows are
-    handled by symmetry instead.
 
 - holds: [rigid-comprehension-r]
   text: >-
@@ -167,6 +163,7 @@ history:
 lean:
   param: Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair
   meets:
+    hull-conditions: Classicism.Meta.Intensional.SymIdeal.collapsePair_hullConditions
     surjective-arrows: Classicism.Meta.Intensional.SymIdeal.collapsePair_surjectiveArrows
     infinitely-many-individuals: Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.collapsePair
     separable-collapses: Classicism.Meta.Intensional.SymIdeal.collapsePair_separable

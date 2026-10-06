@@ -975,6 +975,10 @@ def Models.symmetric_all_surjections.axiom_of_infinity_e : Prop :=
 def Models.symmetric_all_surjections.barcan_r : Prop :=
   (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)).IsModel ∧ (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)).HoldsAx Classicism.P.Barcan.schemaIn
 
+/-- `symmetric-all-surjections`: Boolean Completeness holds. -/
+def Models.symmetric_all_surjections.boolean_completeness_r : Prop :=
+  (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)).IsModel ∧ (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)).HoldsAx Classicism.P.BooleanCompleteness.schemaIn
+
 /-- `symmetric-all-surjections`: No Pure Contingency holds. -/
 def Models.symmetric_all_surjections.no_pure_contingency_r : Prop :=
   (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)).IsModel ∧ (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj)).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
@@ -1006,6 +1010,10 @@ def Models.symmetric_collapse_pair.barcan_r : Prop :=
 /-- `symmetric-collapse-pair`: Actuality holds. -/
 def Models.symmetric_collapse_pair.actuality : Prop :=
   (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair)).IsModel ∧ (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair)).HoldsAx Classicism.P.Actuality.schemaIn
+
+/-- `symmetric-collapse-pair`: Boolean Completeness holds. -/
+def Models.symmetric_collapse_pair.boolean_completeness_r : Prop :=
+  (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair)).IsModel ∧ (Classicism.Meta.Intensional.SymBase.model (Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.collapsePair)).HoldsAx Classicism.P.BooleanCompleteness.schemaIn
 
 /-- `symmetric-collapse-pair`: Distinctness-preserving collapse holds. -/
 def Models.symmetric_collapse_pair.distinctness_preserving_collapse : Prop :=
@@ -1314,5 +1322,9 @@ def Arguments.symmetric_ideally_full.actuality.actuality : Prop :=
 /-- `symmetric-ideally-full`, argument `barcan-fixes-or-omits`: BF fails in every model meeting its conditions. -/
 def Arguments.symmetric_ideally_full.barcan_fixes_or_omits.barcan_r : Prop :=
   ∀ (S : Classicism.Meta.Intensional.SymBase), Classicism.Meta.Intensional.SymBase.FixesOrOmits S → ¬ ((Classicism.Meta.Intensional.SymBase.model S)).HoldsAx Classicism.P.Barcan.schemaIn
+
+/-- `symmetric-ideally-full`, argument `boolean-completeness`: Boolean Completeness holds in every model meeting its conditions. -/
+def Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r : Prop :=
+  ∀ (S : Classicism.Meta.Intensional.SymBase), Classicism.Meta.Intensional.Premodel.OneObject (Classicism.Meta.Intensional.SymBase.model S) → Classicism.Meta.Intensional.SymBase.HullConditions S → ((Classicism.Meta.Intensional.SymBase.model S)).HoldsAx Classicism.P.BooleanCompleteness.schemaIn
 
 end Classicism.Statements

@@ -55,6 +55,10 @@ meets:
   homogeneous-individuals: >-
     Every permutation of $\mathbb N$ is in the symmetry group, and relabelling by it is an
     automorphism of the model, carrying each individual to its image.
+  hull-conditions: >-
+    With $M_0=\emptyset$ (the draft's argument for this model): every finite set is amalgamable,
+    since an arrow is prescribed only on a finite set and extends freely to a surjection, and
+    points can always be moved off a given finite set by a permutation fixing another.
 
 arguments:
 
@@ -65,14 +69,6 @@ arguments:
 # derive the rest are recorded, the source's first.
 
 # --- from the source (19 Sep record) ---
-
-- holds: [boolean-completeness-r]
-  text: >-
-    By the draft's main theorem, whose two hypotheses are verified here with the empty
-    distinguished set: every finite set is amalgamable, since an arrow is prescribed only on a
-    finite set and extends freely, and points can always be moved off a given finite set by a
-    permutation. The least upper bound of a property of type-tau entities is the union of the
-    hulls of its instances.
 
 - fails: [actuality]
   # Recorded although the other verdicts give it: the Atomlessness argument builds on this one.
@@ -255,6 +251,7 @@ history:
 lean:
   param: Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj
   meets:
+    hull-conditions: Classicism.Meta.Intensional.SymIdeal.allSurj_hullConditions
     surjective-arrows: Classicism.Meta.Intensional.SymIdeal.allSurj_surjectiveArrows
     infinitely-many-individuals: Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.allSurj
     one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _

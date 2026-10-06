@@ -122,6 +122,17 @@ conditions:
     The symmetry group, the smallest symmetric set of arrows containing the identity, is pinned
     down by a finite set.
   lean: Classicism.Meta.Intensional.SymBase.SymmetryGroupPinned
+- id: hull-conditions
+  text: >-
+    There is a finite set $M_0$ of individuals at the evaluation object such that: (B1) for every
+    finite $M\supseteq M_0$ and every arrow $h$ from the evaluation object to itself that $M$
+    does not separate (some arrow $k\notin G$ agrees with $h$ on $M$, or $h\in G$), every arrow
+    $h'$ agreeing with $h$ on $M$, and finite $P,Q$ with $P\cap Q\subseteq M$, some arrow agrees
+    with $h'$ on $P$ and with $h$ on $Q$; and (B2) for finite $N\supseteq M_0$ and finite $P,Q$,
+    some member of the symmetry group fixes $N$ pointwise and moves every member of $P$ outside
+    $N$ off $Q$. These are the hypotheses of Dorr's main theorem (draft, Definitions 28–30,
+    Theorem 36), for a model with one object.
+  lean: Classicism.Meta.Intensional.SymBase.HullConditions
 - id: fixes-or-omits
   text: >-
     There is a distinguished individual that every arrow either fixes or omits from its range, and
@@ -141,7 +152,7 @@ arguments:
     At the types $(e\to t)$ and $e$. Let $U:=\lambda Xy\, .\,Xy\lor\neg\exists z\, .\,Xz$, a closed
     term, hence in the domain, and serial. A functional subrelation $S$ of $U$ would lie in the
     domain at the evaluation object, so it is symmetric and pinned down by a finite set $N$. Two
-    facts about such an $S$ (Dorr, draft, Lemma 21): every $g\in G$ fixing $N$ pointwise satisfies
+    facts about such an $S$ (Dorr, draft, Lemma 19(iv)): every $g\in G$ fixing $N$ pointwise satisfies
     $g^{[\sigma]}S=S$, and symmetry gives $\langle gA,gy,g\rangle\in S$ whenever $\langle
     A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$. Now let $A$ be the property the
     condition gives for $N$. Its extension is nonempty, so $S$ relates $A$ at the identity to some
@@ -284,3 +295,34 @@ arguments:
   lean:
   - fails: barcan-r
     ref: Classicism.Map.Arguments.symmetric_ideally_full.barcan_fixes_or_omits.barcan_r
+
+
+- id: boolean-completeness
+  requires: [one-object-action-model, hull-conditions]
+  holds: [boolean-completeness-r]
+  source: {paper: dorr-bc-not-rc, locator: 'Theorem 36, p. 18; Corollary 37, p. 19'}
+  by: Cian Dorr
+  date: '2026-09-19'
+  text: >-
+    At every relational type: a property $F$ of type-$\tau$ entities has a least upper bound,
+    the union of the hulls of its instances. Let $F$ be pinned down by $N\supseteq M_0$. For
+    each instance $u$ of $F$ at the identity, its hull is the closure of $u$ under the arrows
+    that $N$ does not separate from the identity, transported along the arrows agreeing with
+    the identity on $N$; it is symmetric, pinned down by $N$ (by (B1), which splices an arrow
+    agreeing with $h'$ on the instance's pinning set with $h$ on $N$), and an upper bound of $u$.
+    Every upper bound $z$ of all the instances, pinned down by $N'$, contains every hull: given a
+    member of a hull, (B2) supplies a symmetry fixing $N$ and moving the instance's pinning set
+    off $N'$, whose image is again an instance (by the orbit lemma, Lemma 35), lying under $z$;
+    and $z$, pinned down by $N'$, cannot tell the moved instance's tuple from the original. The
+    union of the hulls is pinned down by $N$ and symmetric, so it is in the domain, and it is the
+    least upper bound.
+  revisions:
+  - date: '2026-10-06'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      The draft's main theorem, which the all-surjections and collapse-pair models each applied
+      in an argument of their own, stated once; what each member does to meet its hypotheses is
+      its reason for meeting hull-conditions. Proved in Lean (SymBase.lub_of_hull).
+  lean:
+  - holds: boolean-completeness-r
+    ref: Classicism.Map.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r

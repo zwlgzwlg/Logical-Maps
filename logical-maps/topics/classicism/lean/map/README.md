@@ -123,13 +123,21 @@ with the improper ideal at its second object, and Base 3.
 
 The group's own arguments are proved for every base (`Models/SymBase.lean`, the group's Lean
 parameter `SymBase`, Dorr's Definition 15): `actuality` (the symmetry group, finitely pinned,
-is a true atom), `barcan-fixes-or-omits` (BF at `e` fails), `relational-choice` (Lemma 21 and a
+is a true atom), `barcan-fixes-or-omits` (BF at `e` fails), `relational-choice` (Lemma 19(iv) and a
 transposition fixing the pinning set and the property), `axiom-of-infinity-e` and `-t` (the
 finite cardinalities' property is arrow-blind and symmetric; separable collapses give infinitely
 many propositions), and `barcan-surjective` (a surjective arrow is surjective on every domain,
 by a pullback, which stays symmetric). The members meet the conditions in
 `Models/SymmetricIdeal.lean`; transposability for all five one-object members comes from one
 lemma (`transposable_of`).
+
+`boolean-completeness`, the draft's main theorem (Theorem 36), is proved for every base with
+one object that meets `hull-conditions` (`SymBase.HullConditions`, the draft's splicing and
+moving hypotheses with a fixed finite `M₀`): the least upper bound of a property is the union of
+its instances' hulls (`SymBase.lub_of_hull`, with the orbit lemma, Lemma 35, as `orbit_ext`). The
+all-surjections model meets the conditions with `M₀ = ∅` and the collapse pair with the pair
+(`allSurj_hullConditions`, `collapsePair_hullConditions`). Not yet: infinite classes and the range
+gaps.
 
 **The sentence schemas range over the paper's language.** The object language here also has
 type variables, a device of the metalogic; every sentence schema (No Contingency, No Pure

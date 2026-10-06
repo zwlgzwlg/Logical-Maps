@@ -552,6 +552,133 @@ theorem infClasses_surjectiveArrows : infClasses.toSym.SurjectiveArrows := fun _
 theorem collapsePair_surjectiveArrows : collapsePair.toSym.SurjectiveArrows := fun _ k =>
   k.2.elim (fun h => h.1.2) (fun h => h.1)
 
+/-! ### Boolean Completeness: the hull conditions (the draft's Corollary 37) -/
+
+section hull
+
+variable {B}
+
+/-- **Moving points**: if every point outside `M₀` can be transposed with a point outside any
+given finite set, by a symmetry, then a symmetry fixes any finite `N ⊇ M₀` pointwise and moves
+any finite set outside `N` off any finite set. -/
+theorem move_points (M₀ : Set ℕ)
+    (hfresh : ∀ K : Set ℕ, K.Finite → ∀ y ∉ M₀, ∃ z ∉ K, B.Sym (Equiv.swap y z)) :
+    ∀ (T : Finset ℕ) (N A : Set ℕ), N.Finite → A.Finite → M₀ ⊆ N → (∀ s ∈ T, s ∉ N) →
+      ∃ g, B.Sym g ∧ (∀ x ∈ N, g x = x) ∧ ∀ s ∈ T, g s ∉ A := by
+  intro T
+  induction T using Finset.induction_on with
+  | empty => exact fun N A _ _ _ _ => ⟨id, B.sym_id, fun _ _ => rfl, fun _ h => absurd h (Finset.notMem_empty _)⟩
+  | insert a T ha ih =>
+    intro N A hN hA hM₀ hT
+    obtain ⟨g', hg', hfix', hmove'⟩ := ih N A hN hA hM₀ fun s hs => hT s (Finset.mem_insert_of_mem hs)
+    have hinj := (B.sym_bij hg').1
+    have haN : g' a ∉ N := fun h => hT a (Finset.mem_insert_self a T) (hinj ((hfix' _ h).trans rfl) ▸ h)
+    obtain ⟨z, hz, hsz⟩ := hfresh (A ∪ N ∪ g' '' ↑T ∪ {g' a}) (((hA.union hN).union (T.finite_toSet.image _)).union
+      (Set.finite_singleton _)) (g' a) fun h => haN (hM₀ h)
+    refine ⟨Equiv.swap (g' a) z ∘ g', B.sym_comp hg' hsz, fun x hx => ?_, fun s hs => ?_⟩
+    · rw [Function.comp_apply, hfix' x hx]
+      exact Equiv.swap_apply_of_ne_of_ne (fun e => haN (e ▸ hx)) (fun e => hz (Or.inl (Or.inl (Or.inr (e ▸ hx)))))
+    · rcases Finset.mem_insert.1 hs with rfl | hs
+      · rw [Function.comp_apply, Equiv.swap_apply_left]
+        exact fun h => hz (Or.inl (Or.inl (Or.inl h)))
+      · have hne : g' s ≠ g' a := fun e => ha (hinj e ▸ hs)
+        have hnz : g' s ≠ z := fun e => hz (Or.inl (Or.inr ⟨s, hs, e⟩))
+        rw [Function.comp_apply, Equiv.swap_apply_of_ne_of_ne hne hnz]
+        exact hmove' s hs
+
+/-- (B2) for a base with fresh transpositions outside `M₀`. -/
+theorem b2_of (M₀ : Set ℕ)
+    (hfresh : ∀ K : Set ℕ, K.Finite → ∀ y ∉ M₀, ∃ z ∉ K, B.Sym (Equiv.swap y z)) :
+    ∀ N P Q : Set (B.toSym.F.X B.toSym.W₀), N.Finite → P.Finite → Q.Finite → M₀ ⊆ N →
+      ∃ g ∈ B.toSym.G B.toSym.W₀, (∀ x ∈ N, FunCat.fn g x = x) ∧ ∀ x ∈ P, x ∉ N → FunCat.fn g x ∉ Q := by
+  intro N P Q hN hP hQ hM₀
+  obtain ⟨g, hg, hfix, hmove⟩ := move_points M₀ hfresh ((hP.diff (t := N)).toFinset) N Q hN hQ hM₀
+    fun s hs => ((Set.Finite.mem_toFinset _).1 hs).2
+  exact ⟨FunCat.arr (F := B.cat) (i := star B) (j := star B) g (B.sym_arr hg), hg, hfix,
+    fun x hx hxN => hmove x ((Set.Finite.mem_toFinset _).2 ⟨hx, hxN⟩)⟩
+
+/-- A bound beyond a finite set of naturals. -/
+theorem exists_bound {P : Set ℕ} (hP : P.Finite) : ∃ K, 2 ≤ K ∧ ∀ x ∈ P, x < K := by
+  obtain ⟨b, hb⟩ := hP.bddAbove
+  exact ⟨b + 2, by omega, fun x hx => by have := hb hx; omega⟩
+
+end hull
+
+theorem allSurj_hullConditions : allSurj.toSym.HullConditions := by
+  classical
+  refine ⟨∅, Set.finite_empty, fun (M : Set ℕ) _ _ h _ h' hag (P Q : Set ℕ) hP hQ hPQ => ?_,
+    b2_of ∅ fun K hK y _ => by
+      obtain ⟨z, hz, -⟩ := exists_fresh hK y
+      exact ⟨z, hz, (Equiv.swap y z).bijective⟩⟩
+  obtain ⟨K, -, hK⟩ := exists_bound (hP.union hQ)
+  let f : ℕ → ℕ := FunCat.fn h
+  let f' : ℕ → ℕ := FunCat.fn h'
+  let j : ℕ → ℕ := fun x => if x ∈ P then f' x else if x ∈ Q then f x else x - K
+  have hj : Function.Surjective j := fun y => ⟨y + K, by
+    have h1 : y + K ∉ P := fun h => by have := hK _ (Or.inl h); omega
+    have h2 : y + K ∉ Q := fun h => by have := hK _ (Or.inr h); omega
+    simp only [j]; split_ifs <;> omega⟩
+  refine ⟨FunCat.arr (F := allSurj.cat) (i := star allSurj) (j := star allSurj) j hj, fun (x : ℕ) hx => ?_,
+    fun (x : ℕ) hx => ?_⟩
+  · show j x = f' x
+    simp only [j]; split_ifs <;> first | rfl | contradiction
+  · show j x = f x
+    have hagx : x ∈ P → f x = f' x := fun hxP => hag x (hPQ ⟨hxP, hx⟩)
+    simp only [j]; split_ifs with hxP <;> first | rfl | contradiction | exact (hagx hxP).symm
+
+theorem collapsePair_hullConditions : collapsePair.toSym.HullConditions := by
+  classical
+  refine ⟨({0, 1} : Set ℕ), (Set.finite_singleton (1 : ℕ)).insert 0,
+    fun (M : Set ℕ) _ hM₀ h hsep h' hag (P Q : Set ℕ) hP hQ hPQ => ?_,
+    b2_of {0, 1} fun K hK y hy => by
+      obtain ⟨z, hz, -⟩ := exists_fresh (hK.union ((Set.finite_singleton (1 : ℕ)).insert 0)) y
+      have hy0 : y ≠ 0 := fun e => hy (Or.inl e)
+      have hy1 : y ≠ 1 := fun e => hy (Or.inr e)
+      have hz0 : z ≠ 0 := fun e => hz (Or.inr (Or.inl e))
+      have hz1 : z ≠ 1 := fun e => hz (Or.inr (Or.inr e))
+      exact ⟨z, fun h => hz (Or.inl h), (Equiv.swap y z).bijective,
+        Or.inl ⟨Equiv.swap_apply_of_ne_of_ne hy0.symm hz0.symm, Equiv.swap_apply_of_ne_of_ne hy1.symm hz1.symm⟩⟩⟩
+  let f : ℕ → ℕ := FunCat.fn h
+  let f' : ℕ → ℕ := FunCat.fn h'
+  have h0M : (0 : ℕ) ∈ M := hM₀ (Or.inl rfl)
+  have h1M : (1 : ℕ) ∈ M := hM₀ (Or.inr rfl)
+  -- an unseparated arrow collapses the pair
+  have hc : f 0 = f 1 := by
+    by_contra hne
+    refine hsep fun k hk => (k.2.resolve_right fun hk' => hne ?_)
+    have e0 : f 0 = FunCat.fn k (0 : ℕ) := hk (0 : ℕ) h0M
+    have e1 : f 1 = FunCat.fn k (1 : ℕ) := hk (1 : ℕ) h1M
+    rw [e0, e1]; exact hk'.2
+  have e0 : f 0 = f' 0 := hag (0 : ℕ) h0M
+  have e1 : f 1 = f' 1 := hag (1 : ℕ) h1M
+  obtain ⟨K, hK2, hK⟩ := exists_bound (hP.union hQ)
+  let j : ℕ → ℕ := fun x => if x = 0 ∨ x = 1 then f 0 else
+    if x ∈ P then f' x else if x ∈ Q then f x else x - K
+  have hj : Function.Surjective j := fun y => ⟨y + K, by
+    have h0 : ¬ (y + K = 0 ∨ y + K = 1) := by omega
+    have h1 : y + K ∉ P := fun h => by have := hK _ (Or.inl h); omega
+    have h2 : y + K ∉ Q := fun h => by have := hK _ (Or.inr h); omega
+    simp only [j]; split_ifs <;> omega⟩
+  have hj01 : j 0 = j 1 := by simp [j]
+  refine ⟨FunCat.arr (F := collapsePair.cat) (i := star collapsePair) (j := star collapsePair) j
+    (Or.inr ⟨hj, hj01⟩), fun (x : ℕ) hx => ?_, fun (x : ℕ) hx => ?_⟩
+  · show j x = f' x
+    simp only [j]
+    split_ifs with hx01
+    · rcases hx01 with rfl | rfl
+      · exact e0
+      · exact hc.trans e1
+    all_goals first | rfl | contradiction
+  · show j x = f x
+    have hagx : x ∈ P → f x = f' x := fun hxP => hag x (hPQ ⟨hxP, hx⟩)
+    simp only [j]
+    split_ifs with hx01 hxP
+    · rcases hx01 with rfl | rfl
+      · rfl
+      · exact hc
+    · exact (hagx hxP).symm
+    all_goals first | rfl | contradiction
+
 end SymIdeal
 
 end Classicism.Meta.Intensional
