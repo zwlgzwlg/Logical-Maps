@@ -251,9 +251,9 @@ history:
   - transversal-r
   - necessary-transversal-r
 
-# The model in Lean (Classicism/Models/SymmetricIdeal.lean).
+# The model in Lean (Classicism/Models/SymmetricIdeal.lean): the base, the group's parameter.
 lean:
-  model: Classicism.Meta.Intensional.SymIdeal.model Classicism.Meta.Intensional.SymIdeal.allSurj
-  is_model: Classicism.Meta.Intensional.SymIdeal.model_isModel Classicism.Meta.Intensional.SymIdeal.allSurj
+  param: Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.allSurj
   meets:
     one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
+    transposable: Classicism.Meta.Intensional.SymIdeal.allSurj_transposable

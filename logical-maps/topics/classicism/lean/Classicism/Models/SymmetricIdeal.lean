@@ -1,4 +1,4 @@
-import Classicism.Semantics.Symmetric
+import Classicism.Models.SymBase
 import Classicism.Models.Functions
 import Classicism.Models.Conditions
 import Mathlib.Logic.Equiv.Basic
@@ -50,6 +50,8 @@ structure Base where
   sym_arr : ∀ {f}, Sym f → Arr f
   sym_bij : ∀ {f}, Sym f → Function.Bijective f
   sym_inv : ∀ {f} (h : Sym f), Sym (Equiv.ofBijective f (sym_bij h)).symm
+  sym_id : Sym id
+  sym_comp : ∀ {f g}, Sym f → Sym g → Sym (g ∘ f)
 
 /-- The category of a base. -/
 def Base.cat (B : Base) : FunCat where
@@ -76,11 +78,20 @@ theorem syms_symGroup : SymGroup (syms B) := by
   · exact FunCat.hom_ext (funext fun x => e.symm_apply_apply x)
   · exact FunCat.hom_ext (funext fun x => e.apply_symm_apply x)
 
-/-- **The symmetric ideally full model of a base.** -/
-noncomputable abbrev model : Premodel Signature.pure B.cat.Ob :=
-  Premodel.symIdeal B.cat.De (syms B) (star B) (fun _ => ⟨(0 : ℕ)⟩) (fun c => nomatch c)
+/-- The base, for the map's group. -/
+abbrev Base.toSym : SymBase where
+  F := B.cat
+  G := syms B
+  G_id _ := B.sym_id
+  G_comp {_ g s} hg hs := B.sym_comp (f := FunCat.fn g) (g := FunCat.fn s) hg hs
+  G_inv := syms_symGroup B
+  W₀ := star B
+  ne _ := ⟨(0 : ℕ)⟩
 
-theorem model_isModel : (model B).IsModel := symIdeal_isModel (syms_symGroup B)
+/-- **The symmetric ideally full model of a base.** -/
+noncomputable abbrev model : Premodel Signature.pure B.cat.Ob := (B.toSym).model
+
+theorem model_isModel : (model B).IsModel := (B.toSym).model_isModel
 
 /-! ### The members on one object -/
 
@@ -98,6 +109,8 @@ def allSurj : Base where
   sym_arr h := h.2
   sym_bij h := h
   sym_inv h := (Equiv.ofBijective _ h).symm.bijective
+  sym_id := Function.bijective_id
+  sym_comp hf hg := hg.comp hf
 
 /-- The class of a natural number: infinitely many classes, each infinite. -/
 def cls (n : ℕ) : ℕ := (Nat.unpair n).1
@@ -115,6 +128,8 @@ def infClasses : Base where
     have := h.2 ((Equiv.ofBijective f h.1).symm x) ((Equiv.ofBijective f h.1).symm y)
     rw [Equiv.ofBijective_apply_symm_apply f h.1 x, Equiv.ofBijective_apply_symm_apply f h.1 y] at this
     exact this.symm
+  sym_id := ⟨Function.bijective_id, fun _ _ => Iff.rfl⟩
+  sym_comp hf hg := ⟨hg.1.comp hf.1, fun x y => (hg.2 _ _).trans (hf.2 x y)⟩
 
 /-- `f` preserves the pair `{0, 1}`. -/
 def PairPres (f : ℕ → ℕ) : Prop := (f 0 = 0 ∧ f 1 = 1) ∨ (f 0 = 1 ∧ f 1 = 0)
@@ -144,6 +159,11 @@ def collapsePair : Base where
     · refine Or.inr ⟨?_, ?_⟩
       · exact (Equiv.ofBijective f h.1).symm_apply_eq.2 h1.symm
       · exact (Equiv.ofBijective f h.1).symm_apply_eq.2 h0.symm
+  sym_id := ⟨Function.bijective_id, Or.inl ⟨rfl, rfl⟩⟩
+  sym_comp {f g} hf hg := by
+    refine ⟨hg.1.comp hf.1, ?_⟩
+    rcases hf.2 with ⟨h0, h1⟩ | ⟨h0, h1⟩ <;> rcases hg.2 with ⟨g0, g1⟩ | ⟨g0, g1⟩ <;>
+      simp [PairPres, Function.comp, h0, h1, g0, g1]
 
 /-- The permutations fixing `0`, which are the symmetries, and the functions omitting `0`. -/
 def rangeGap : Base where
@@ -159,6 +179,8 @@ def rangeGap : Base where
   sym_arr h := Or.inl h
   sym_bij h := h.1
   sym_inv {f} h := ⟨(Equiv.ofBijective f h.1).symm.bijective, symm_fix h.1 h.2⟩
+  sym_id := ⟨Function.bijective_id, rfl⟩
+  sym_comp hf hg := ⟨hg.1.comp hf.1, by simp [Function.comp, hf.2, hg.2]⟩
 
 /-- The surjections for which `0` is its own only preimage, and the functions omitting `0`;
 the symmetries the permutations fixing `0`. -/
@@ -175,6 +197,8 @@ def rangeGapNoAct : Base where
   sym_arr {f} h := Or.inl ⟨h.1.2, fun x => ⟨fun e => h.1.1 (e.trans h.2.symm), fun e => e ▸ h.2⟩⟩
   sym_bij h := h.1
   sym_inv {f} h := ⟨(Equiv.ofBijective f h.1).symm.bijective, symm_fix h.1 h.2⟩
+  sym_id := ⟨Function.bijective_id, rfl⟩
+  sym_comp hf hg := ⟨hg.1.comp hf.1, by simp [Function.comp, hf.2, hg.2]⟩
 
 /-! ### Two objects: qualitative contrast (Appendix D, p. 79) -/
 
@@ -209,11 +233,26 @@ theorem contrastSyms_symGroup : SymGroup contrastSyms := by
     rw [Set.mem_singleton_iff.1 hg]
     exact ⟨𝟙 _, rfl, Category.id_comp _, Category.id_comp _⟩
 
-/-- **The qualitative-contrast model**, based at `W₀`. -/
-noncomputable abbrev contrast : Premodel Signature.pure contrastCat.Ob :=
-  Premodel.symIdeal contrastCat.De contrastSyms W₀ (fun _ => ⟨(0 : ℕ)⟩) (fun c => nomatch c)
+/-- The base. -/
+def contrastBase : SymBase where
+  F := contrastCat
+  G := contrastSyms
+  G_id V := match V with
+    | false => trivial
+    | true => rfl
+  G_comp {V} {g s} hg hs := match V, hg, hs with
+    | false, _, _ => trivial
+    | true, hg, hs => by
+      rw [Set.mem_singleton_iff.1 hg, Set.mem_singleton_iff.1 hs]
+      exact Set.mem_singleton_iff.2 (Category.id_comp _)
+  G_inv := contrastSyms_symGroup
+  W₀ := W₀
+  ne _ := ⟨(0 : ℕ)⟩
 
-theorem contrast_isModel : contrast.IsModel := symIdeal_isModel contrastSyms_symGroup
+/-- **The qualitative-contrast model**, based at `W₀`. -/
+noncomputable abbrev contrast : Premodel Signature.pure contrastCat.Ob := contrastBase.model
+
+theorem contrast_isModel : contrast.IsModel := contrastBase.model_isModel
 
 /-! ### The actual world: the symmetries -/
 
@@ -308,6 +347,162 @@ theorem rangeGap_pin {h i : ℕ → ℕ} (hh : rangeGap.Arr h) (hi : rangeGap.Ar
 
 theorem rangeGap_actualWorldIsolated : (model rangeGap).ActualWorldIsolated :=
   actualWorldIsolated_of ⟨Function.bijective_id, rfl⟩ rangeGap_comp {0} (Set.toFinite _) rangeGap_pin
+
+/-! ### The group's conditions -/
+
+section conditions
+
+variable {B}
+
+/-- Not being one of the members of `K`: `x ∉ k[K]` at the arrow `k`. -/
+def avoid (K : Set ℕ) : Intension (SymT B.cat.De (syms B)) (.arr .e .t) (star B) :=
+  {p | p.2.1.1 ∉ FunCat.fn p.2.2 '' K}
+
+theorem sym_injective {g : star B ⟶ star B} (hg : g ∈ syms B (star B)) : Function.Injective (FunCat.fn g) :=
+  (B.sym_bij hg).1
+
+theorem avoid_mem (K : Set ℕ) (hK : K.Finite) : avoid K ∈ Set.range ((model B).incl (.arr .e .t) (star B)) := by
+  refine (mem_range_symIncl B.cat.De (syms B) _ (star B) _).2 ⟨⟨K, hK, fun V h i ha => ?_⟩, ?_⟩
+  · ext ⟨U, ⟨x, ⟨⟩⟩, j⟩
+    have e : (FunCat.fn j ∘ FunCat.fn h) '' K = (FunCat.fn j ∘ FunCat.fn i) '' K :=
+      Set.image_congr fun a ha' => by
+        show FunCat.fn j (FunCat.fn h a) = FunCat.fn j (FunCat.fn i a)
+        have e' : FunCat.fn h a = FunCat.fn i a := ha a ha'
+        rw [e']
+    show x ∉ (FunCat.fn j ∘ FunCat.fn h) '' K ↔ x ∉ (FunCat.fn j ∘ FunCat.fn i) '' K
+    rw [e]
+  · rintro V ⟨x, ⟨⟩⟩ k g hg (hx : x ∉ FunCat.fn k '' K)
+    cases V
+    rintro ⟨a, ha, e⟩
+    exact hx ⟨a, ha, sym_injective hg e⟩
+
+/-- **`transposable`**, for a base whose symmetries include, for every finite `K` containing
+the base's special points `K₀` and every `y` outside `K`, the transposition of `y` with some
+other point outside `K`: the property of not being in `K` has extension `ℕ ∖ K`, and the
+transposition fixes `K`, so fixes the property, and moves `y`. -/
+theorem transposable_of (K₀ : Set ℕ) (hK₀ : K₀.Finite)
+    (hmove : ∀ K : Set ℕ, K.Finite → K₀ ⊆ K → ∀ y ∉ K, ∃ z ∉ K, z ≠ y ∧ B.Sym (Equiv.swap y z)) :
+    (B.toSym).Transposable := by
+  intro N hN
+  have hK : (N ∪ K₀).Finite := hN.union hK₀
+  obtain ⟨a, ha⟩ := avoid_mem (B := B) _ hK
+  have ha' : (model B).incl (.arr .e .t) (star B) a = avoid (N ∪ K₀) := ha
+  have hext : ∀ y : ℕ, (⟨star B, (y, PUnit.unit), 𝟙 (star B)⟩ : Tuple (model B).inner (.arr .e .t) (star B)) ∈
+      (model B).incl _ (star B) a ↔ y ∉ N ∪ K₀ := fun y => by
+    rw [ha']
+    show y ∉ id '' (N ∪ K₀) ↔ _
+    rw [Set.image_id]
+  obtain ⟨y₀, hy₀⟩ := Set.Finite.exists_notMem (α := ℕ) hK
+  refine ⟨a, ⟨y₀, (hext y₀).2 hy₀⟩, fun (y : ℕ) hy => ?_⟩
+  have hy := (hext y).1 hy
+  obtain ⟨z, hz, hzy, hs⟩ := hmove _ hK Set.subset_union_right y hy
+  have hfix : ∀ x : ℕ, x ∈ N ∪ K₀ → Equiv.swap y z x = x := fun x hx =>
+    Equiv.swap_apply_of_ne_of_ne (fun e => hy (by rw [← e]; exact hx)) (fun e => hz (by rw [← e]; exact hx))
+  refine ⟨FunCat.arr (F := B.cat) (i := star B) (j := star B) (Equiv.swap y z) (B.sym_arr hs), hs,
+    fun x hx => hfix x (Or.inl hx), ?_, ?_⟩
+  · apply (model B).incl_injective
+    erw [(model B).incl_map, ha']
+    ext ⟨U, ⟨x, ⟨⟩⟩, j⟩
+    show x ∉ (FunCat.fn j ∘ Equiv.swap y z) '' (N ∪ K₀) ↔ x ∉ FunCat.fn j '' (N ∪ K₀)
+    refine not_congr ⟨fun ⟨b, hb, e⟩ => ⟨b, hb, ?_⟩, fun ⟨b, hb, e⟩ => ⟨b, hb, ?_⟩⟩
+    · rw [← e]; show FunCat.fn j b = FunCat.fn j (Equiv.swap y z b); rw [hfix b hb]
+    · rw [← e]; show FunCat.fn j (Equiv.swap y z b) = FunCat.fn j b; rw [hfix b hb]
+  · show Equiv.swap y z y ≠ y
+    rw [Equiv.swap_apply_left]; exact hzy
+
+/-- A finite set of naturals has a point outside it and outside another given point. -/
+theorem exists_fresh {K : Set ℕ} (hK : K.Finite) (y : ℕ) : ∃ z ∉ K, z ≠ y := by
+  obtain ⟨z, hz⟩ := (hK.union (Set.finite_singleton y)).exists_notMem
+  exact ⟨z, fun h => hz (Or.inl h), fun h => hz (Or.inr h)⟩
+
+/-- When the symmetry group's members are told apart by a finite set and composites behave,
+it is pinned down. -/
+theorem symmetryGroupPinned_of
+    (hcomp : ∀ {h j : ℕ → ℕ}, B.Arr h → B.Arr j → (B.Sym (j ∘ h) ↔ B.Sym h ∧ B.Sym j))
+    (N : Set ℕ) (hN : N.Finite)
+    (hpin : ∀ {h i : ℕ → ℕ}, B.Arr h → B.Arr i → (∀ x ∈ N, h x = i x) → (B.Sym h ↔ B.Sym i)) :
+    (B.toSym).SymmetryGroupPinned := by
+  have mem : ∀ k : star B ⟶ star B, (⟨star B, PUnit.unit, k⟩ : Tuple (SymT B.cat.De (syms B)) .t (star B)) ∈
+      (B.toSym).groupProp ↔ B.Sym (FunCat.fn k) := fun k => by
+    constructor
+    · rintro ⟨g, hg, he⟩
+      obtain ⟨-, he⟩ := Sigma.mk.inj_iff.1 he
+      rw [(Prod.mk.inj (eq_of_heq he)).2]; exact hg
+    · exact fun hk => ⟨k, hk, rfl⟩
+  refine ⟨N, hN, fun V h i ha => ?_⟩
+  cases V
+  ext ⟨U, ⟨⟩, k⟩
+  cases U
+  show (⟨star B, PUnit.unit, h ≫ k⟩ : Tuple (SymT B.cat.De (syms B)) .t (star B)) ∈ (B.toSym).groupProp ↔
+    (⟨star B, PUnit.unit, i ≫ k⟩ : Tuple (SymT B.cat.De (syms B)) .t (star B)) ∈ (B.toSym).groupProp
+  rw [mem, mem]
+  show B.Sym (FunCat.fn k ∘ FunCat.fn h) ↔ B.Sym (FunCat.fn k ∘ FunCat.fn i)
+  exact (hcomp h.2 k.2).trans ((and_congr_left' (hpin h.2 i.2 fun x hx => ha x hx)).trans (hcomp i.2 k.2).symm)
+
+end conditions
+
+/-! ### The members' conditions -/
+
+theorem swap_fix {y z a : ℕ} {K : Set ℕ} (hy : y ∉ K) (hz : z ∉ K) (ha : a ∈ K) : Equiv.swap y z a = a :=
+  Equiv.swap_apply_of_ne_of_ne (fun e => hy (e ▸ ha)) (fun e => hz (e ▸ ha))
+
+theorem allSurj_transposable : allSurj.toSym.Transposable :=
+  transposable_of ∅ Set.finite_empty fun K hK _ y _ => by
+    obtain ⟨z, hz, hzy⟩ := exists_fresh hK y
+    exact ⟨z, hz, hzy, (Equiv.swap y z).bijective⟩
+
+theorem collapsePair_transposable : collapsePair.toSym.Transposable :=
+  transposable_of {0, 1} (Set.toFinite _) fun K hK hK₀ y hy => by
+    obtain ⟨z, hz, hzy⟩ := exists_fresh hK y
+    exact ⟨z, hz, hzy, (Equiv.swap y z).bijective,
+      Or.inl ⟨swap_fix hy hz (hK₀ (by simp)), swap_fix hy hz (hK₀ (by simp))⟩⟩
+
+theorem rangeGap_transposable : rangeGap.toSym.Transposable :=
+  transposable_of {0} (Set.toFinite _) fun K hK hK₀ y hy => by
+    obtain ⟨z, hz, hzy⟩ := exists_fresh hK y
+    exact ⟨z, hz, hzy, (Equiv.swap y z).bijective, swap_fix hy hz (hK₀ rfl)⟩
+
+theorem rangeGapNoAct_transposable : rangeGapNoAct.toSym.Transposable :=
+  transposable_of {0} (Set.toFinite _) fun K hK hK₀ y hy => by
+    obtain ⟨z, hz, hzy⟩ := exists_fresh hK y
+    exact ⟨z, hz, hzy, (Equiv.swap y z).bijective, swap_fix hy hz (hK₀ rfl)⟩
+
+/-- A transposition within a class preserves every number's class. -/
+theorem cls_swap {y z : ℕ} (h : cls y = cls z) (x : ℕ) : cls (Equiv.swap y z x) = cls x := by
+  rcases eq_or_ne x y with rfl | hxy
+  · rw [Equiv.swap_apply_left, h]
+  rcases eq_or_ne x z with rfl | hxz
+  · rw [Equiv.swap_apply_right, h]
+  rw [Equiv.swap_apply_of_ne_of_ne hxy hxz]
+
+theorem infClasses_transposable : infClasses.toSym.Transposable :=
+  transposable_of ∅ Set.finite_empty fun K hK _ y _ => by
+    have hfin : {m | Nat.pair (cls y) m ∈ K ∪ {y}}.Finite :=
+      (hK.union (Set.finite_singleton y)).preimage
+        (fun a _ b _ e => (Nat.pair_eq_pair.1 e).2)
+    obtain ⟨m, hm⟩ := hfin.exists_notMem
+    have hc : cls y = cls (Nat.pair (cls y) m) := by simp [cls, Nat.unpair_pair]
+    refine ⟨Nat.pair (cls y) m, fun h => hm (Or.inl h), fun h => hm (Or.inr h), (Equiv.swap _ _).bijective,
+      fun a b => ?_⟩
+    rw [cls_swap hc, cls_swap hc]
+
+theorem collapsePair_symmetryGroupPinned : collapsePair.toSym.SymmetryGroupPinned :=
+  symmetryGroupPinned_of collapsePair_comp {0, 1} (Set.toFinite _) collapsePair_pin
+
+theorem rangeGap_symmetryGroupPinned : rangeGap.toSym.SymmetryGroupPinned :=
+  symmetryGroupPinned_of rangeGap_comp {0} (Set.toFinite _) rangeGap_pin
+
+/-- `fixes-or-omits`, with `0` the distinguished individual: the symmetries fix it, every
+arrow fixes or omits it, and the successor function omits it. -/
+theorem rangeGap_fixesOrOmits : rangeGap.toSym.FixesOrOmits :=
+  ⟨fun _ => (0 : ℕ), fun _ _ hg => hg.2, fun _ k => k.2.imp (fun h => h.2) id,
+    ⟨star rangeGap, FunCat.arr (F := rangeGap.cat) (i := star rangeGap) (j := star rangeGap) Nat.succ
+      (Or.inr Nat.succ_ne_zero), Nat.succ_ne_zero 0⟩⟩
+
+theorem rangeGapNoAct_fixesOrOmits : rangeGapNoAct.toSym.FixesOrOmits :=
+  ⟨fun _ => (0 : ℕ), fun _ _ hg => hg.2, fun _ k => k.2.imp (fun h => (h.2 0).2 rfl) id,
+    ⟨star rangeGapNoAct, FunCat.arr (F := rangeGapNoAct.cat) (i := star rangeGapNoAct) (j := star rangeGapNoAct)
+      Nat.succ (Or.inr Nat.succ_ne_zero), Nat.succ_ne_zero 0⟩⟩
 
 end SymIdeal
 

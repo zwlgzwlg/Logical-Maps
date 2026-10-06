@@ -91,13 +91,22 @@ meets:
     The relational domains hold exactly the symmetric intensions pinned down by a finite set
     (Dorr, draft, Definitions 15–18).
 
+
+# The group in Lean (Classicism/Models/SymBase.lean): its parameter is a base, Dorr's Definition 15.
+lean:
+  binder: '(S : Classicism.Meta.Intensional.SymBase)'
+  var: S
+  model: Classicism.Meta.Intensional.SymBase.model {param}
+  is_model: Classicism.Meta.Intensional.SymBase.model_isModel {param}
+  settings: {individuals: base}
+
 conditions:
 - id: transposable
   text: >-
-    There is a finite set $M$ of individuals at the evaluation object such that, for each finite set
-    $N$, some property $A$ in the domain, symmetric and pinned down by $N\cup M$, has a nonempty
-    extension, and each individual $y$ in that extension is moved by a member of the symmetry group
-    that fixes $N\cup M$ pointwise and fixes $A$.
+    For each finite set $N$ of individuals at the evaluation object, some property $A$ in the
+    domain has a nonempty extension there, and each individual $y$ in that extension is moved by
+    a member of the symmetry group that fixes $N$ pointwise and fixes $A$.
+  lean: Classicism.Meta.Intensional.SymBase.Transposable
 - id: separable-collapses
   text: >-
     There are infinitely many pairs of individuals such that, for any two of these pairs, some
@@ -109,10 +118,12 @@ conditions:
   text: >-
     The symmetry group, the smallest symmetric set of arrows containing the identity, is pinned
     down by a finite set.
+  lean: Classicism.Meta.Intensional.SymBase.SymmetryGroupPinned
 - id: fixes-or-omits
   text: >-
     There is a distinguished individual that every arrow either fixes or omits from its range, and
     some arrow moves it.
+  lean: Classicism.Meta.Intensional.SymBase.FixesOrOmits
 
 arguments:
 
@@ -132,7 +143,7 @@ arguments:
     A,y,1\rangle\in S$; together, $\langle gA,gy,1\rangle\in S$. Now let $A$ be the property the
     condition gives for $N$. Its extension is nonempty, so $S$ relates $A$ at the identity to some
     $y$ in its extension. The condition gives a member $g$ of the symmetry group that fixes
-    $N\cup M$ pointwise, fixes $A$ and moves $y$ to some $gy\ne y$, so $S$ relates $A$ to $gy$ as
+    $N$ pointwise, fixes $A$ and moves $y$ to some $gy\ne y$, so $S$ relates $A$ to $gy$ as
     well, and $S$ is not functional at the identity arrow. The well-ordering of the individuals
     that Cian Dorr had in mind is refuted by the same two facts, but the direct route needs no
     derivation of a well-ordering from Relational Choice in C.
@@ -143,6 +154,16 @@ arguments:
       The members' seven copies, which differed in the property $A$ and the transposition, stated
       once; each member's $A$ and transposition moved to the condition transposable. The
       qualitative-contrast model's second argument (OpenAI Codex, 24 September) was dropped.
+  - date: '2026-10-06'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      The condition transposable no longer mentions the finite set $M$ or the pinning of $A$ by
+      $N\cup M$: the argument uses only that $g$ fixes $N$, the set pinning down $S$, and that
+      $A$ is in the domain. So $g$ is now said to fix $N$ pointwise. Proved in Lean.
+  lean:
+  - fails: relational-choice-r
+    ref: Classicism.Map.Arguments.symmetric_ideally_full.relational_choice.relational_choice_r
+
 
 - id: axiom-of-infinity-e
   when: {individuals: base}
@@ -222,6 +243,10 @@ arguments:
   - date: '2026-10-02'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: The three members' versions stated once; what pins the group down is each member's reason for meeting symmetry-group-pinned.
+  lean:
+  - holds: actuality
+    ref: Classicism.Map.Arguments.symmetric_ideally_full.actuality.actuality
+
 
 - id: barcan-fixes-or-omits
   when: {individuals: base}
@@ -240,3 +265,6 @@ arguments:
   - date: '2026-10-02'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: The range-gap model's argument, which its variant without Actuality invoked ("by the argument of the previous variant, which goes through verbatim"), stated once.
+  lean:
+  - fails: barcan-r
+    ref: Classicism.Map.Arguments.symmetric_ideally_full.barcan_fixes_or_omits.barcan_r

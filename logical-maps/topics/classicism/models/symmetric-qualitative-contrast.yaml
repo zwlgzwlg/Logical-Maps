@@ -188,7 +188,6 @@ history:
   - relational-choice-r
   - functional-choice-r
 
-# The model in Lean (Classicism/Models/SymmetricIdeal.lean).
+# The model in Lean (Classicism/Models/SymmetricIdeal.lean): the base, the group's parameter.
 lean:
-  model: Classicism.Meta.Intensional.SymIdeal.contrast
-  is_model: Classicism.Meta.Intensional.SymIdeal.contrast_isModel
+  param: Classicism.Meta.Intensional.SymIdeal.contrastBase
