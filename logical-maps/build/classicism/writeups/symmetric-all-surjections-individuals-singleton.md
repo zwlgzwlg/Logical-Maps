@@ -4,11 +4,11 @@
 
 ## Package
 
-- **Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
 - **Atomlessness.** Atomlessness in the displayed closed propositional formulation.
 - **Inextensible Comprehension.** Every relation, including a proposition, is coextensive with a inextensible one.
 - **Transversal.** There is a property of properties that picks out exactly one property from each coextension class, that is, exactly one property coextensive with any given property.
 - **BF.** The Barcan Formula at every type. The predicate formulation closes the formula schema using lambda abstraction.
+- **Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
 - **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
 - **No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
 - **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
@@ -32,12 +32,6 @@ Interpretation of Σ, fixed for this record: every constant of Σ is relational,
 *A member of the group Symmetric ideally-full models, which supplies this definition with the record's settings, and the arguments marked as shared.*
 
 ## Arguments
-
-### Holds Boolean Completeness.
-
-By the draft's main theorem, whose two hypotheses are verified here with the empty distinguished set: every finite set is amalgamable, since an arrow is prescribed only on a finite set and extends freely, and points can always be moved off a given finite set by a permutation. The least upper bound of a property of type-tau entities is the union of the hulls of its instances.
-
-*By Cian Dorr, 2026-09-19.*
 
 ### Fails Actuality.
 
@@ -74,6 +68,14 @@ At every type. Let $B$ be an entity at the target of an arrow $i$, pinned down b
 *Source: Boolean Completeness does not imply Rigid Comprehension, §3.1, p. 9; Proposition 22, p. 11. From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#barcan-surjective`. It requires that Every arrow is surjective. Here: The arrows are all the surjections of $\mathbb N$. By Claude Opus 5.5 (Anthropic), at Cian Dorr's request, 2026-09-27.*
 
 *Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The qualitative links model's argument, which proves the draft's claim for the all-surjections model ("at every type because every arrow is surjective and a finitely pinned symmetric intension can be pulled back along an arrow"), stated once for every member whose arrows are surjective.
+
+### Holds Boolean Completeness.
+
+At every relational type: a property $F$ of type-$\tau$ entities has a least upper bound, the union of the hulls of its instances. Let $F$ be pinned down by $N\supseteq M_0$. For each instance $u$ of $F$ at the identity, its hull is the closure of $u$ under the arrows that $N$ does not separate from the identity, transported along the arrows agreeing with the identity on $N$; it is symmetric, pinned down by $N$ (by (B1), which splices an arrow agreeing with $h'$ on the instance's pinning set with $h$ on $N$), and an upper bound of $u$. Every upper bound $z$ of all the instances, pinned down by $N'$, contains every hull: given a member of a hull, (B2) supplies a symmetry fixing $N$ and moving the instance's pinning set off $N'$, whose image is again an instance (by the orbit lemma, Lemma 35), lying under $z$; and $z$, pinned down by $N'$, cannot tell the moved instance's tuple from the original. The union of the hulls is pinned down by $N$ and symmetric, so it is in the domain, and it is the least upper bound.
+
+*Source: Boolean Completeness does not imply Rigid Comprehension, Theorem 36, p. 18; Corollary 37, p. 19. From the group *Symmetric ideally-full models*, shared argument `symmetric-ideally-full#boolean-completeness`. It requires that The model is an action model (Classicism, Appendix D), or an intensional action model in the sense of Dorr's draft (Boolean Completeness does not imply Rigid Comprehension), with a single object. Here: It has one object (Dorr, draft, §3.1: closed pure terms denote entities fixed by every arrow). It requires that There is a finite set $M_0$ of individuals at the evaluation object such that: (B1) for every finite $M\supseteq M_0$ and every arrow $h$ from the evaluation object to itself that $M$ does not separate (some arrow $k\notin G$ agrees with $h$ on $M$, or $h\in G$), every arrow $h'$ agreeing with $h$ on $M$, and finite $P,Q$ with $P\cap Q\subseteq M$, some arrow agrees with $h'$ on $P$ and with $h$ on $Q$; and (B2) for finite $N\supseteq M_0$ and finite $P,Q$, some member of the symmetry group fixes $N$ pointwise and moves every member of $P$ outside $N$ off $Q$. These are the hypotheses of Dorr's main theorem (draft, Definitions 28–30, Theorem 36), for a model with one object. Here: With $M_0=\emptyset$ (the draft's argument for this model): every finite set is amalgamable, since an arrow is prescribed only on a finite set and extends freely to a surjection, and points can always be moved off a given finite set by a permutation fixing another. By Cian Dorr, 2026-09-19.*
+
+*Revised 2026-10-06 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The draft's main theorem, which the all-surjections and collapse-pair models each applied in an argument of their own, stated once; what each member does to meet its hypotheses is its reason for meeting hull-conditions. Proved in Lean (SymBase.lub_of_hull).
 
 ### Holds No Pure Contingency.
 

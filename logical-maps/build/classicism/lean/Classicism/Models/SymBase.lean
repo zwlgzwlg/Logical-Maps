@@ -277,7 +277,7 @@ theorem choiceRel_mem : choiceRel (S := S) ∈ Set.range (S.model.incl _ S.W₀)
 
 /-- **The group's argument `relational-choice`**: Relational Choice fails at `(e → t)` and `e`.
 `U := λX y. X y ∨ ¬∃z. X z` is serial; a functional subrelation `R` of it is pinned down by a
-finite `N`, so a symmetry fixing `N` pointwise fixes `R` (Lemma 21), and symmetry carries
+finite `N`, so a symmetry fixing `N` pointwise fixes `R` (Lemma 19(iv)), and symmetry carries
 `R A y` to `R (g A) (g y)`; for the `A` and `g` the condition gives, `g A = A` and `g y ≠ y`. -/
 theorem not_rc_of_transposable (hT : S.Transposable) :
     ¬ S.model.HoldsSentence (P.RelationalChoice.quoted (.rel (.arr .e .t)) .e) := by
@@ -426,6 +426,165 @@ theorem map_surjective_of {V : S.F.Ob} (k : S.W₀ ⟶ V) (hk : Function.Surject
 /-- **The group's argument `barcan-surjective`**: BF at every type, at the base. -/
 theorem bf_of_surjective (hs : S.SurjectiveArrows) (σ : Ty) : S.model.HoldsSentence (Sentence.bf σ) :=
   S.model.holds_bf_of_surjective S.model_isModel σ (𝟙 _) fun k => map_surjective_of k (hs _ k) σ
+
+/-! ### Boolean Completeness (Dorr's draft, §§4–5) -/
+
+variable (S) in
+/-- A finite `M` **separates** an arrow `h` from the base to itself (Definition 28): every arrow
+agreeing with `h` on `M` is a symmetry. -/
+def Separates (M : Set (S.F.X S.W₀)) (h : S.W₀ ⟶ S.W₀) : Prop :=
+  ∀ h' : S.W₀ ⟶ S.W₀, AgreeOn S.F.De M h h' → h' ∈ S.G S.W₀
+
+variable (S) in
+/-- `hull-conditions`, the hypotheses of the draft's Theorem 36 with the constant closure
+operation `M ↦ M ∪ M₀`: a finite `M₀` such that **(B1)** every finite `M ⊇ M₀` is amalgamable,
+two arrows agreeing on `M`, the first not separated by `M`, being spliced on any finite `P`, `Q`
+with `P ∩ Q ⊆ M`; and **(B2)** for finite `N ⊇ M₀`, `P` and `Q`, some symmetry fixes `N`
+pointwise and moves `P ∖ N` off `Q`. -/
+def HullConditions : Prop :=
+  ∃ M₀ : Set (S.F.X S.W₀), M₀.Finite ∧
+    (∀ M : Set (S.F.X S.W₀), M.Finite → M₀ ⊆ M → ∀ h : S.W₀ ⟶ S.W₀, ¬ S.Separates M h →
+      ∀ h' : S.W₀ ⟶ S.W₀, AgreeOn S.F.De M h h' →
+        ∀ P Q : Set (S.F.X S.W₀), P.Finite → Q.Finite → P ∩ Q ⊆ M →
+          ∃ j : S.W₀ ⟶ S.W₀, AgreeOn S.F.De P j h' ∧ AgreeOn S.F.De Q j h) ∧
+    (∀ N P Q : Set (S.F.X S.W₀), N.Finite → P.Finite → Q.Finite → M₀ ⊆ N →
+      ∃ g ∈ S.G S.W₀, (∀ x ∈ N, FunCat.fn g x = x) ∧ ∀ x ∈ P, x ∉ N → FunCat.fn g x ∉ Q)
+
+/-- Membership in an intension pinned down by `M` depends on the arrow only through `M`. -/
+theorem mem_of_pinned {ρ : RTy} {M : Set (S.F.X S.W₀)} {X : Intension S.model.inner ρ S.W₀}
+    (hp : S.model.PinnedO (.rel ρ) M X) {V : S.F.Ob} {h i : S.W₀ ⟶ V} (ha : AgreeOn S.F.De M h i)
+    (a : Args S.model.inner ρ V) (hm : (⟨V, a, h⟩ : Tuple S.model.inner ρ S.W₀) ∈ X) :
+    (⟨V, a, i⟩ : Tuple S.model.inner ρ S.W₀) ∈ X := by
+  have e := hp V h i ha
+  have := congrArg (fun A : Intension S.model.inner ρ V => (⟨V, a, 𝟙 V⟩ : Tuple S.model.inner ρ V) ∈ A) e
+  simp only [Outer.map_rel, Intension.mem_map, Category.comp_id] at this
+  exact this.mp hm
+
+/-- The transport of an entity pinned down by `M` along `g` is pinned down by `g[M]`. -/
+theorem pinned_map {ρ : RTy} {M : Set (S.F.X S.W₀)} {A : S.model.Dom S.W₀ (.rel ρ)}
+    (hp : S.model.PinnedO (.rel ρ) M (S.model.incl ρ S.W₀ A)) (g : S.W₀ ⟶ S.W₀) :
+    S.model.PinnedO (.rel ρ) (FunCat.fn g '' M) (S.model.incl ρ S.W₀ ((S.model.inner (.rel ρ)).map g A)) := by
+  intro V h i ha
+  simp only [Outer.map_rel]
+  erw [S.model.incl_map, ← Intension.map_comp, ← Intension.map_comp]
+  exact hp V (g ≫ h) (g ≫ i) (AgreeOn.comp S.F.De g ha)
+
+/-- **Lemma 35**: the extension of `F`, pinned down by `M_F`, is closed under the symmetries
+fixing `M_F` pointwise. -/
+theorem orbit_ext {ρ : RTy} {MF : Set (S.F.X S.W₀)} {F : S.model.Dom S.W₀ (.rel (.arr (.rel ρ) .t))}
+    (hpF : S.model.PinnedO (.rel _) MF (S.model.incl _ S.W₀ F)) {g : S.W₀ ⟶ S.W₀} (hg : g ∈ S.G S.W₀)
+    (hfix : ∀ x ∈ MF, FunCat.fn g x = x) {A : S.model.Dom S.W₀ (.rel ρ)}
+    (hA : (⟨S.W₀, (A, PUnit.unit), 𝟙 S.W₀⟩ : Tuple S.model.inner (.arr (.rel ρ) .t) S.W₀) ∈ S.model.incl _ S.W₀ F) :
+    (⟨S.W₀, ((S.model.inner (.rel ρ)).map g A, PUnit.unit), 𝟙 S.W₀⟩ : Tuple S.model.inner (.arr (.rel ρ) .t) S.W₀) ∈
+      S.model.incl _ S.W₀ F := by
+  have h1 := Premodel.Sym.at_id (model_domSym (S := S) _ S.W₀ F) (A, PUnit.unit) hg hA
+  exact mem_of_pinned hpF (h := g) (i := 𝟙 _) (fun x hx => hfix x hx) _ h1
+
+/-- **Theorem 36** (the draft's main result), on one object: every property `F` of entities of a
+relational type has a least upper bound, `⋃{A↑N | A ∈ ext F}` with `N := M_F ∪ M₀`, the union of
+the hulls of its instances. -/
+theorem lub_of_hull [Subsingleton S.F.Ob] (hH : S.HullConditions) (ρ : RTy)
+    (F : S.model.Dom S.W₀ (.rel (.arr (.rel ρ) .t))) :
+    ∃ y : S.model.Dom S.W₀ (.rel ρ), ∀ z : S.model.Dom S.W₀ (.rel ρ),
+      (∀ u : S.model.Dom S.W₀ (.rel ρ),
+        (⟨S.W₀, (u, PUnit.unit), 𝟙 S.W₀⟩ : Tuple S.model.inner (.arr (.rel ρ) .t) S.W₀) ∈ S.model.incl _ S.W₀ F →
+          S.model.incl ρ S.W₀ u ⊆ S.model.incl ρ S.W₀ z) ↔
+        S.model.incl ρ S.W₀ y ⊆ S.model.incl ρ S.W₀ z := by
+  obtain ⟨M₀, hM₀, hB1, hB2⟩ := hH
+  obtain ⟨MF, hMF, hpF⟩ := symIdeal_inner_finPinned (De := S.F.De) (G := S.G) (W₀ := S.W₀)
+    (nonempty_e := S.ne) (I := S.model.I) (.rel _) S.W₀ F
+  have hN : (MF ∪ M₀).Finite := hMF.union hM₀
+  -- the union of the hulls at `N` of the instances
+  let Y : Intension (SymT S.F.De S.G) ρ S.W₀ := {p | ∃ A : S.model.Dom S.W₀ (.rel ρ),
+    (⟨S.W₀, (A, PUnit.unit), 𝟙 S.W₀⟩ : Tuple S.model.inner (.arr (.rel ρ) .t) S.W₀) ∈ S.model.incl _ S.W₀ F ∧
+    ∃ h' : S.W₀ ⟶ p.1, AgreeOn S.F.De (MF ∪ M₀) p.2.2 h' ∧
+      (⟨p.1, p.2.1, h'⟩ : Tuple S.model.inner ρ S.W₀) ∈ S.model.incl ρ S.W₀ A}
+  obtain ⟨y, hy⟩ := (mem_range_symIncl S.F.De S.G ρ S.W₀ Y).2
+    ⟨⟨MF ∪ M₀, hN, fun V h i ha => by
+      ext ⟨U, v, k⟩
+      constructor
+      · rintro ⟨A, hA, h', hag, hm⟩
+        exact ⟨A, hA, h', ((ha.comp_right S.F.De k).symm).trans S.F.De hag, hm⟩
+      · rintro ⟨A, hA, h', hag, hm⟩
+        exact ⟨A, hA, h', (ha.comp_right S.F.De k).trans S.F.De hag, hm⟩⟩,
+    fun V v k g hg ⟨A, hA, h', hag, hm⟩ =>
+      ⟨A, hA, h' ≫ g, hag.comp_right S.F.De g, (model_domSym (S := S) ρ S.W₀ A) V v h' g hg hm⟩⟩
+  have hy' : S.model.incl ρ S.W₀ y = Y := hy
+  refine ⟨y, fun z => ⟨fun hub => ?_, fun hle u hu => ?_⟩⟩
+  · rw [hy']
+    rintro ⟨V, v, h⟩ ⟨A, hA, h', hag, hm⟩
+    obtain rfl : V = S.W₀ := Subsingleton.elim _ _
+    obtain ⟨MU, hMU, hpU⟩ := symIdeal_inner_finPinned (De := S.F.De) (G := S.G) (W₀ := S.W₀)
+      (nonempty_e := S.ne) (I := S.model.I) (.rel ρ) S.W₀ z
+    obtain ⟨MA, hMA, hpA⟩ := symIdeal_inner_finPinned (De := S.F.De) (G := S.G) (W₀ := S.W₀)
+      (nonempty_e := S.ne) (I := S.model.I) (.rel ρ) S.W₀ A
+    -- move `A`'s support off `z`'s outside `N` (B2)
+    obtain ⟨g, hg, hgfix, hgmove⟩ := hB2 (MF ∪ M₀) (MA ∪ (MF ∪ M₀)) (MU ∪ (MF ∪ M₀)) hN (hMA.union hN)
+      (hMU.union hN) Set.subset_union_right
+    obtain ⟨g', hg', e₁, e₂⟩ := S.G_inv _ g hg
+    let A' := (S.model.inner (.rel ρ)).map g A
+    have hA' := orbit_ext hpF hg (fun x hx => hgfix x (Or.inl hx)) hA
+    have hg'fix : ∀ x ∈ MF ∪ M₀, FunCat.fn g' x = x := fun x hx => by
+      have h0 : FunCat.fn g' (FunCat.fn g x) = x := congrFun (congrArg FunCat.fn e₁) x
+      rwa [hgfix x hx] at h0
+    let h'' := g' ≫ h'
+    have hm'' : (⟨S.W₀, v, h''⟩ : Tuple S.model.inner ρ S.W₀) ∈ S.model.incl ρ S.W₀ A' := by
+      erw [S.model.incl_map, Intension.mem_map, ← Category.assoc, e₁, Category.id_comp]
+      exact hm
+    have hag'' : AgreeOn S.F.De (MF ∪ M₀) h h'' := fun x hx => by
+      show FunCat.fn h x = FunCat.fn h' (FunCat.fn g' x)
+      rw [hg'fix x hx]; exact hag x hx
+    have hpA' := pinned_map hpA g
+    have hdisj : (FunCat.fn g '' MA ∪ (MF ∪ M₀)) ∩ (MU ∪ (MF ∪ M₀)) ⊆ MF ∪ M₀ := by
+      rintro x ⟨hx1 | hx1, hx2⟩
+      · obtain ⟨a, ha, rfl⟩ := hx1
+        by_cases haN : a ∈ MF ∪ M₀
+        · rw [hgfix a haN]; exact haN
+        · exact absurd hx2 (hgmove a (Or.inl ha) haN)
+      · exact hx1
+    by_cases hsep : S.Separates (MF ∪ M₀) h
+    · -- Case 1: `N` separates `h`; conjugate by `h⁻¹`
+      have hhG := hsep h (AgreeOn.refl _ _ _)
+      have hh''G := hsep h'' hag''
+      obtain ⟨hi, hiG, eh₁, eh₂⟩ := S.G_inv _ h hhG
+      let m := h'' ≫ hi
+      have hmG : m ∈ S.G S.W₀ := S.G_comp hh''G hiG
+      have hmfix : ∀ x ∈ MF ∪ M₀, FunCat.fn m x = x := fun x hx => by
+        show FunCat.fn hi (FunCat.fn h'' x) = x
+        have e : FunCat.fn h x = FunCat.fn h'' x := hag'' x hx
+        rw [← e]
+        exact congrFun (congrArg FunCat.fn eh₁) x
+      have h1 := (model_domSym (S := S) ρ S.W₀ A') S.W₀ v h'' hi hiG hm''
+      have h2 : (⟨S.W₀, Args.map S.model.inner ρ hi v, 𝟙 S.W₀⟩ : Tuple S.model.inner ρ S.W₀) ∈
+          S.model.incl ρ S.W₀ ((S.model.inner (.rel ρ)).map m A') := by
+        erw [S.model.incl_map, Intension.mem_map, Category.comp_id]
+        exact h1
+      have h3 := hub _ (orbit_ext hpF hmG (fun x hx => hmfix x (Or.inl hx)) hA') h2
+      have h4 := (model_domSym (S := S) ρ S.W₀ z) S.W₀ _ (𝟙 _) h hhG h3
+      rwa [S.model.args_map_map_inv eh₂, Category.id_comp] at h4
+    · -- Case 2: splice (B1)
+      obtain ⟨j, hj₁, hj₂⟩ := hB1 (MF ∪ M₀) hN Set.subset_union_right h hsep h'' hag''
+        (FunCat.fn g '' MA ∪ (MF ∪ M₀)) (MU ∪ (MF ∪ M₀)) ((hMA.image _).union hN) (hMU.union hN) hdisj
+      have h1 : (⟨S.W₀, v, j⟩ : Tuple S.model.inner ρ S.W₀) ∈ S.model.incl ρ S.W₀ A' :=
+        mem_of_pinned hpA' (fun x hx => (hj₁ x (Or.inl hx)).symm) v hm''
+      have h2 := hub _ hA' h1
+      exact mem_of_pinned hpU (fun x hx => hj₂ x (Or.inl hx)) v h2
+  · rintro ⟨V, v, k⟩ hm
+    apply hle
+    rw [hy']
+    exact ⟨u, hu, k, AgreeOn.refl _ _ _, hm⟩
+
+/-- The least upper bounds give the LUB form of Boolean Completeness at every type. -/
+theorem holds_bc_lub [Subsingleton S.F.Ob] (hH : S.HullConditions) (ρ : RTy) :
+    S.model.HoldsSentence (P.BooleanCompletenessLUB.quoted ρ) := by
+  have M : S.model.IsModel := S.model_isModel
+  simp only [Premodel.HoldsSentence, P.BooleanCompletenessLUB.quoted, S.model.holds_forall M,
+    S.model.holds_exists M, S.model.holds_iff M, S.model.holds_imp M, S.model.holds_leR M]
+  intro X
+  obtain ⟨y, hy⟩ := lub_of_hull hH ρ X
+  refine ⟨y, fun z => Iff.trans (forall_congr' fun u => imp_congr ?_ Iff.rfl) (hy z)⟩
+  rw [S.model.holds_app (a' := u) _ _ _ _ rfl]
+  rfl
 
 end SymBase
 

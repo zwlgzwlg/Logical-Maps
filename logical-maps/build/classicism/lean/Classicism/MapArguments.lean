@@ -409,6 +409,19 @@ theorem barcan_r : Statements.Arguments.symmetric_ideally_full.barcan_surjective
 
 end barcan_surjective
 
+namespace boolean_completeness
+
+/-- Dorr's main theorem: a property's least upper bound is the union of its instances' hulls
+(`SymBase.lub_of_hull`). -/
+theorem boolean_completeness_r : Statements.Arguments.symmetric_ideally_full.boolean_completeness.boolean_completeness_r :=
+  fun S hone hH => by
+    have : Subsingleton S.F.Ob := hone
+    exact verdict_holds S.model_isModel (S.model.entails_holds S.model_isModel
+      P.BooleanCompleteness.of_lub.entails
+      (holdsAx_indexed.2 fun ρ _ => SymBase.holds_bc_lub hH ρ)) |>.2
+
+end boolean_completeness
+
 end symmetric_ideally_full
 
 /-! ## Arguments of the finite-support models on one object -/
