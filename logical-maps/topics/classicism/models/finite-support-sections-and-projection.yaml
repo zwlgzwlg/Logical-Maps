@@ -48,6 +48,8 @@ meets:
     the one arrow back. Out of $W_1$, the identity has only itself; $\pi$ has none, since
     $f_T\circ\pi=e_T\ne1$; and no $e_T$ has one, since $e_T$ is not injective.
   metatheory-choice: The construction is carried out in ZFC (Appendix D).
+  retractions: >-
+    The arrows out of $W_0$ are its identity and the sections $f_T$, each retracted by $\pi$.
 
 arguments:
 
@@ -70,6 +72,15 @@ arguments:
     individuals pins that down. See the write-up.
 
 # migration: the old notes without their sentence on BF, now derived.
+- fails: [atomicity-t]
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-06'
+  text: >-
+    The proposition $\{f_T : T(0)=0\}$, pinned down by $\{0\}$, has no atom below it. A nonempty
+    proposition below it pinned down by a finite $N$ contains every section agreeing on $N$ with
+    one of its members, and the propositions pinned down by $N\cup\{m\}$, for $m\notin N$, split
+    that set by the value $T(m)$.
+
 notes: >-
   Found on 27 September 2026 in answer to Cian Dorr's question whether Actuality implies
   Inextensible Comprehension, after the observation that Christopher Sun's witness $\lambda\bar

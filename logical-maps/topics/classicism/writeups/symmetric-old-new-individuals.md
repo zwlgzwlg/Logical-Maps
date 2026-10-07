@@ -1,0 +1,367 @@
+# Symmetric ideally-full model: old and new individuals
+
+This model was found by Claude Fable 5.1 (Anthropic) on 6 October 2026, in
+a session with Cian Dorr, as a countermodel to a principle from another
+context. It satisfies □Strong Actuality and refutes Inextensible
+Comprehension. Claude Opus 5.5 (Anthropic) added the remaining verdicts the
+same day, and corrected the argument for the failure of Inextensible
+Comprehension. No Lean verification is claimed.
+
+The verdicts that matter most for the map are these. Atomicity holds at every
+type, and so does ND, while Inextensible Comprehension fails. So Atomicity +
+Actuality, with ND and □Strong Actuality added, does not imply Inextensible
+Comprehension.
+
+## The model
+
+It is a symmetric ideally-full intensional action model in the sense of
+Dorr's draft *Boolean Completeness does not imply Rigid Comprehension*
+(Definitions 15–18, p. 8). By that draft's Proposition 20 it is a model of C.
+
+There are two objects:
+
+- $E$, whose individuals are $\mathbb N$;
+- $O$, whose individuals are $\mathbb N\sqcup\mathbb N'$, where $\mathbb N'$
+  is a disjoint copy of $\mathbb N$.
+
+At $O$, members of $\mathbb N$ are called *old* and members of $\mathbb N'$
+are called *new*.
+
+The arrows are functions, and the action on individuals is the identity
+action.
+
+| From | To | Arrows |
+| --- | --- | --- |
+| $E$ | $E$ | all injections $\mathbb N\to\mathbb N$ |
+| $E$ | $O$ | the injections with range among the old individuals |
+| $O$ | $E$ | all injections $\mathbb N\sqcup\mathbb N'\to\mathbb N$ |
+| $O$ | $O$ | $G_O$, the permutations preserving old and new; and $K$, the injections with range among the old |
+
+These arrows are closed under composition. A composite that passes through
+$E$ and ends at $O$ lands among the old individuals, and so does any composite
+with a member of $K$.
+
+The symmetry groups are $G_E=\mathrm{Sym}(\mathbb N)$ and $G_O$. Both objects
+carry the ideal of finite sets.
+
+An intension $D$ at an object $W$ is a set of tuples $\langle\bar a,h\rangle$,
+where $h$ is an arrow out of $W$ and $\bar a$ are entities at the target of
+$h$. The domain at $W$ consists of the intensions that satisfy two conditions:
+
+- **Symmetric.** If $\langle\bar a,h\rangle\in D$, then
+  $\langle g\cdot\bar a,g\circ h\rangle\in D$ for every $g$ in the symmetry
+  group of $h$'s target. Here $g$ acts on entities by transport.
+- **Finitely pinned.** For some finite $N\subseteq W^e$, whenever two arrows
+  $h,h'$ with a common target agree on $N$, we have
+  $\langle\bar a,h\rangle\in D\iff\langle\bar a,h'\rangle\in D$. This is
+  Definition D.2.
+
+The evaluation point is $1_E$. Call an arrow out of $E$ with target $O$
+"an arrow to $O$", and so on.
+
+**Single classes.** Two facts drive most of what follows:
+
+- Any finite partial injection of $\mathbb N$ extends to a member of $G_E$.
+- Any finite partial injection of $\mathbb N\sqcup\mathbb N'$ that preserves
+  old and new extends to a member of $G_O$.
+
+Let $D$ be a symmetric proposition pinned down by $N$ that contains an arrow
+$h$. Then $D$ contains every arrow $h'$ of the same kind. To see this, choose
+a symmetry $g$ with $g(h(n))=h'(n)$ for $n\in N$. Then $g\circ h\in D$, and
+$g\circ h$ agrees with $h'$ on $N$.
+
+Here "kind" means one of the following:
+
+- into $E$;
+- from $E$ into $O$;
+- in $G_O$;
+- in $K$.
+
+Arrows of different kinds differ in target. The one exception is $G_O$ versus
+$K$, which are separated by the proposition "the arrow sends $0'$ to a new
+individual", pinned down by $\{0'\}$.
+
+So the propositions are as follows:
+
+- **At $E$:** the four unions of $\mathrm{Hom}(E,E)$ and $\mathrm{Hom}(E,O)$.
+- **At $O$:** the eight unions of $\mathrm{Hom}(O,E)$, $G_O$ and $K$.
+
+The model therefore meets the conditions finitely-many-propositions and
+finitely-many-propositions-everywhere.
+
+## □Strong Actuality (Fable)
+
+Write $f^*p:=\{k: k\circ f\in p\}$ for the transport of a proposition $p$
+along an arrow $f$.
+
+**At $E$.** Let $w_E:=\mathrm{Hom}(E,E)$. It is true at $1_E$.
+
+- Along an arrow $f$ to $E$, $f^*w_E=\mathrm{Hom}(E,E)$, since every arrow
+  from $E$ to $E$ composed with $f$ is again an arrow from $E$ to $E$.
+- Along an arrow $f$ to $O$, $f^*w_E=\mathrm{Hom}(O,E)$.
+
+Both transports are atoms at their targets. So every proposition there
+contains or excludes each transport, and $w_E$ is a true strong world.
+
+**At $O$.** The proposition $G_O$ is true at $1_O$.
+
+- Along a member of $G_O$, its transport is $G_O$ again.
+- Along a member of $K$, its transport is empty: a composite with a member of
+  $K$ misses every new individual, so it is not in $G_O$.
+- Along an arrow to $E$, its transport is empty, since a composite of an
+  arrow to $E$ with an arrow back to $O$ lands in $K$.
+
+So $G_O$ is a true strong world.
+
+Every world sees only $E$ and $O$. Strong Actuality is a closed sentence, so
+its truth at an arrow depends only on the arrow's target. Hence □Strong
+Actuality holds.
+
+The actual world at $E$ is $\mathrm{Hom}(E,E)$, which properly contains
+$\{1_E\}$, so the arrows from $E$ to $E$ that are not surjective are
+actual-world arrows. The singleton of the identity is not pinned, and neither
+is the symmetry group $G_E$ as a set of arrows. So the model does not meet
+the group's condition symmetry-group-pinned. That condition's argument is
+not needed here, since Actuality follows from Strong Actuality.
+
+## ND at every type at $E$
+
+Call an arrow $f:E\to V$ *finitely invertible* if it satisfies the following:
+for every arrow $h:E\to U$ and every finite $N\subseteq\mathbb N$, there is an
+arrow $k:V\to U$ with $k\circ f$ agreeing with $h$ on $N$.
+
+Every arrow out of $E$ is finitely invertible. In each case we define $k$ on
+$f(N)$ by $k(f(n)):=h(n)$ and extend it to an arrow of the right kind:
+
+- If $f$ and $h$ both go to $E$, extend to an injection.
+- If $f$ goes to $E$ and $h$ to $O$, extend to an injection into the old
+  individuals; this works because $h(N)$ is old.
+- If $f$ goes to $O$ and $h$ to $E$, extend to an injection
+  $O^e\to\mathbb N$.
+- If $f$ and $h$ both go to $O$, extend to a member of $K$. Both $f(N)$ and
+  $h(N)$ are old.
+
+Now let $X\ne Y$ be entities of a relational type at $E$, both pinned down by
+$N$. They differ at some tuple $\langle\bar a,h\rangle$. Take $k$ as above.
+The transport $f\cdot X$ contains $\langle\bar a,k\rangle$ iff $X$ contains
+$\langle\bar a,k\circ f\rangle$. By pinning, that holds iff $X$ contains
+$\langle\bar a,h\rangle$, and likewise for $Y$. So $f\cdot X\ne f\cdot Y$.
+
+At type $e$, every arrow is injective. So transport along every arrow out of
+$E$ is injective at every type, and ND holds at $E$. The map derives ND at
+$t$, B, 5 and the pure B schema from this.
+
+ND at $t$ fails at $O$, and so □ND at $t$ fails at $E$. A member $f$ of $K$
+gives $f^*G_O=\emptyset=f^*\emptyset$.
+
+## Atomicity at every type, at both objects
+
+Fix an object $W$ (either $E$ or $O$), a relational type, and a finite
+$M\subseteq W^e$. Let $D_M$ be the set of entities pinned down by $M$. It is
+closed under arbitrary unions and under complement, so it is a complete
+atomic Boolean algebra. Its atoms are the classes of an equivalence relation
+on tuples, which is generated by two kinds of step:
+
+- the symmetry steps
+  $\langle\bar a,h\rangle\sim\langle g\cdot\bar a,g\circ h\rangle$;
+- the pinning steps $\langle\bar a,h\rangle\sim\langle\bar a,h'\rangle$, for
+  $h,h'$ agreeing on $M$.
+
+A symmetry step after a pinning step can be traded for a pinning step after a
+symmetry step. So the class of $\langle\bar a,h\rangle$ is
+
+$$
+c_M(\bar a,h)=\{\langle g\cdot\bar a,h'\rangle : g\in G_V,\ h'\text{ agrees with }g\circ h\text{ on }M\},
+$$
+
+where $V$ is the target of $h$.
+
+A class $c_M$ is an atom of the whole domain if it is *stable*, meaning that
+$c_{M'}(\bar a,h)=c_M(\bar a,h)$ for every finite $M'\supseteq M$. Indeed,
+suppose a nonzero $Z\subseteq c_M$ in the domain is pinned down by $M''$.
+Then $Z$ is a union of $(M\cup M'')$-classes, and the only one inside $c_M$
+is $c_M$ itself.
+
+Let $P\subseteq V^e$ be the union of finite pinning sets of the arguments
+$\bar a$, where an individual argument pins itself. Let $\mathrm{Reach}(h)$
+be the set of individuals that some arrow of $h$'s kind can take as a value:
+
+- all of $V^e$ for arrows into $E$ and for $G_O$;
+- the old individuals for arrows from $E$ into $O$ and for $K$.
+
+**Claim.** The class $c_M(\bar a,h)$ is stable provided three conditions
+hold:
+
+1. $h(M)\supseteq P\cap\mathrm{Reach}(h)$;
+2. when $W=O$, $M$ contains a new individual;
+3. $h$ is injective, which it always is.
+
+*Proof.* Let $M'\supseteq M$, and let $h'$ agree with $h$ on $M$. We need a
+symmetry $s$ satisfying three conditions:
+
+- $s\cdot\bar a=\bar a$;
+- $s$ fixes $h(M)$ pointwise;
+- $s(h(m'))=h'(m')$ for $m'\in M'\setminus M$.
+
+By condition 2, $h$ and $h'$ are of the same kind. Indeed, if $W=O$, a new
+individual in $M$ goes to a new one under members of $G_O$ and to an old one
+under members of $K$.
+
+Now take $m'\in M'\setminus M$. The values $h(m')$ and $h'(m')$ lie in
+$\mathrm{Reach}(h)$ outside $h(M)$, by injectivity. By condition 1 they lie
+outside $P$. They also have the same status. For members of $G_O$ this is the
+status of $m'$; otherwise every value in $O$ is old, and $E$ has no statuses.
+
+So the finite partial injection that fixes $P\cup h(M)$ and sends each
+$h(m')$ to $h'(m')$ preserves status. It therefore extends to a symmetry $s$.
+A symmetry fixing $P$ pointwise fixes each argument, since transport along
+an arrow that agrees with the identity on a pinning set is the identity.
+So $\langle\bar a,h'\rangle\in c_{M'}(\bar a,h)$.
+
+In general, an element of $c_M$ has the form $\langle g\cdot\bar a,h''\rangle$
+with $h''$ agreeing with $g\circ h$ on $M$. Applying $g^{-1}$ reduces this to
+the case just treated. $\square$
+
+**Every nonzero entity has a stable class below it.** Let $X\ne\emptyset$ be
+pinned down by $N$, and let $\langle\bar a,h\rangle\in X$. Choose finitely
+many fresh points of $W^e\setminus N$, including a new one when $W=O$. Choose
+an arrow $h'$ of $h$'s kind that agrees with $h$ on $N$ and sends the fresh
+points onto $P\cap\mathrm{Reach}(h)\setminus h(N)$, with each status going to
+the same status. This is possible for each kind, since an injection, an
+injection into the old individuals, or a status-preserving permutation can be
+prescribed on finitely many points.
+
+Then $\langle\bar a,h'\rangle\in X$ by pinning. Let $M$ be $N$ together with
+the fresh points. The class $c_M(\bar a,h')$ is stable. It lies inside $X$,
+because $X$ is symmetric and pinned down by $N\subseteq M$, so it is a union
+of $M$-classes. Hence $c_M(\bar a,h')$ is an atom below $X$.
+
+So Atomicity holds at every relational type at $E$ and at $O$. Atomicity is
+closed, so □Atomicity holds as well. The argument does not depend on what the
+individuals are, so it holds in the variant with one individual too.
+
+## Inextensible Comprehension fails (corrected)
+
+Fable's summary named the property of being old. That property does not by
+itself refute Inextensible Comprehension: it is weakly inextensible at $E$.
+The failure is the following.
+
+Let $X$ be the universal property of individuals at $E$, and suppose $Y$ is
+coextensive with $X$ and inextensible. Let $Y$ be pinned down by $N$.
+
+1. **$Y(f)=\mathbb N$ for every arrow $f$ to $E$.** Take a permutation $g$
+   agreeing with $f$ on $N$. Then $Y(g)=g\,Y(1_E)=\mathbb N$, and by pinning
+   $Y(f)=Y(g)$.
+2. **$Y(\iota)$ is old, for $\iota$ the inclusion of $\mathbb N$ into $O$.**
+   Being old is pinned down by $\emptyset$, and every individual of $E$
+   necessarily has it, since arrows into $O$ from worlds over $E$ land among
+   the old. By weak inextensibility at $E$, $Y\le$ old there. So $0'\notin
+   Y(\iota)$.
+3. **$Y$ is not weakly inextensible at $\iota$.** Let $Z:=\lambda y\,.\,y\ne
+   0'$, in the domain at $O$, since it is symmetric under $G_O$ and pinned
+   down by $\{0'\}$. Every $Y$-thing at $\iota$ is distinct from $0'$, and
+   necessarily so, since all arrows are injective. Now take any $m:O\to E$.
+   At the world $m\circ\iota$, which is an arrow to $E$, $Y$ holds of
+   $m(0')$, by step 1. But $Z$ fails of $m(0')$ there.
+
+So no coextensive $Y$ is inextensible. This argument uses the individuals,
+so it is recorded for the base individuals only.
+
+## BF at $t$ and the Strong Leibniz Biconditionals fail
+
+**BF at $t$.** Every transport from $E$ to $O$ lies among $\emptyset$,
+$\mathrm{Hom}(O,E)$, $\mathrm{Hom}(O,O)$ and $\top$, and never equals $G_O$.
+Let $X$ be the property of propositions that holds of every proposition at an
+arrow to $E$, and of every proposition other than $G_O$ at an arrow to $O$.
+It is symmetric, because $G_O$ is invariant under $G_O$, and it is pinned down
+by $\emptyset$. Then $\forall p\,.\,\Box Xp$ holds at $E$, while at $\iota$
+the proposition $G_O$ lacks $X$.
+
+**Strong Leibniz at $t$.** The proposition $\mathrm{Hom}(E,O)$ is possible,
+and its only nonzero part is itself. Along $\iota$ it becomes $G_O\cup K$,
+which $G_O$ neither contains nor excludes. So it is not a strong world.
+
+## Boolean Completeness fails at $e\to t$
+
+For $n\in\mathbb N$, let $\eta_n:=\{\langle k(n),k\rangle\}$ be the haecceity
+of $n$. Suppose $L$, pinned down by $N$, were the least upper bound of the
+$\eta_n$ for even $n$.
+
+Take an odd $m\notin N$ and an even $n\notin N$, and a permutation $g$ that
+fixes $N$ pointwise and sends $m$ to $n$. We have $\langle n,1_E\rangle\in L$.
+By symmetry, $\langle m,g^{-1}\rangle\in L$, and by pinning,
+$\langle m,1_E\rangle\in L$.
+
+But $\{\langle x,k\rangle : x\ne k(m)\}$ is an upper bound of the $\eta_n$ for
+even $n$, pinned down by $\{m\}$, and it omits $\langle m,1_E\rangle$. This
+contradicts the leastness of $L$.
+
+So Boolean Completeness fails at $e\to t$ (base individuals). It still holds
+at $t$, where the algebras are finite.
+
+## With one individual: □BC and □Rigid Comprehension
+
+In the variant with a single individual, the failures of Inextensible
+Comprehension and of Boolean Completeness above disappear. Both used
+individuals: the parameter $0'$, and haecceities of infinitely many numbers.
+
+Call the following four classes of arrows the *kinds*:
+
+- the arrows into $E$;
+- the arrows from $E$ into $O$;
+- $G_O$;
+- $K$.
+
+The kind of a composite is fixed by the kinds of its factors.
+
+**Claim.** At each object, every entity of each type is a union of classes,
+one class for each kind of arrow and each tuple of arguments. Every entity is
+fixed by every symmetry, and each domain is finite.
+
+*Proof, by induction on types.* The single individual is fixed by every
+symmetry. Suppose the arguments at every object are fixed by every symmetry,
+and there are finitely many of them.
+
+1. **Classes are determined by kind.** The class of a tuple
+   $\langle\bar a,h\rangle$ under pinning by $M$ is the orbit of
+   $(\bar a,h\restriction M)$. Since $\bar a$ is fixed, the orbit is
+   determined by the kind of $h$. At $O$ this needs $M$ to contain a new
+   individual, which separates $G_O$ from $K$. Larger $M$ split nothing
+   further.
+2. **The domain is finite.** An entity is a union of such classes, and there
+   are finitely many of them.
+3. **Entities are fixed by symmetries.** Precomposing with a symmetry
+   preserves kinds, so every entity is fixed by every symmetry. This carries
+   the induction to the next type. $\square$
+
+So every domain is a finite Boolean algebra, hence complete. BC holds at $E$
+and at $O$, and so does □BC.
+
+**Transport depends only on kind.** The transport of an entity along an arrow
+depends only on the arrow's kind, since kinds of composites are determined by
+the kinds of their factors.
+
+**Rigid Comprehension.** Given $X$ at an object, let $Y$ be the intension
+whose extension at $h$ is the transport along $h$ of $X$'s extension at the
+identity. This is the witness used for full action models.
+
+- $Y$ is a union of classes, so it is in the domain.
+- $Y$ is coextensive with $X$.
+- $Y$ is persistent, since its extension at $h\circ j$ is its extension at
+  $h$ transported along $j$.
+- $Y$ is inextensible. Suppose every $Y$-thing at a world is necessarily
+  $Z$. Then at every later world, each $Y$-thing is the transport of one of
+  them, so it is $Z$ there.
+
+This works at both objects, so □Rigid Comprehension holds.
+
+## Other verdicts
+
+- The group's shared arguments give the failure of Relational Choice
+  (transposable) and the Axiom of Infinity at $e$.
+- The topic's general arguments for finitely many propositions give the
+  failure of the Infinity schema, the Axiom of Infinity and Possible Infinity
+  at $t$.
+- The map derives the rest, including the failure of No Pure Contingency
+  (ND holds at $t$ and □ND at $t$ fails) and of the Distinctness-preserving
+  collapse (Actuality holds and Inextensible Comprehension fails).
