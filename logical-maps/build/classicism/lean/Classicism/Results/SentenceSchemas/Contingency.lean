@@ -103,6 +103,12 @@ theorem npc_vicinity_entails_necVicinity :
   rintro a rfl
   exact npc_union_entails_box_pure P.Vicinity.schema_closedTypes _ (AxiomSet.mem_box rfl)
 
+/-- `no-pure-contingency-and-strong-actuality-imply-necessary-strong-actuality`. -/
+theorem npc_strongActuality_entails_necStrongActuality :
+    npc Signature.pure ∪ P.StrongActuality.schema ⟹ P.NecStrongActuality.schema := by
+  rintro a rfl
+  exact npc_union_entails_box_pure P.StrongActuality.schema_closedTypes _ (AxiomSet.mem_box rfl)
+
 /-- `no-pure-contingency-and-transversal-imply-necessary-transversal`. -/
 theorem npc_transversal_entails_necTransversal :
     npc Signature.pure ∪ P.Transversal.schema ⟹ P.NecTransversal.schema := by

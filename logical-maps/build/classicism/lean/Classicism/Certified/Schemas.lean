@@ -41,6 +41,7 @@ Ty-parameter, also its list form: `P.listQuoted`, the instance at a list of type
   Classicism.P.TransversalChoice Classicism.P.NecTransversalChoice
   Classicism.P.WeaklyInextensibleComprehension Classicism.P.NecWeaklyInextensibleComprehension
   Classicism.P.Vicinity Classicism.P.NecVicinity Classicism.P.ModalizedPlenitude
+  Classicism.P.StrongActuality Classicism.P.NecStrongActuality
   Classicism.P.AxiomOfInfinityE Classicism.P.AxiomOfInfinityT Classicism.P.PossibleInfinityE
   Classicism.P.PossibleInfinityT Classicism.P.CountableBooleanCompleteness
   Classicism.P.NecCountableBooleanCompleteness Classicism.P.NecAtomicityT

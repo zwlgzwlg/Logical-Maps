@@ -21,6 +21,9 @@ the full intensional action model with the constant action `Unit` for `e`, on
 - the two-object chain `W₀ → W₁` (`full-two-object-chain`), the category `Fin 2` ordered,
 - the retract: `h : W₀ → W₁`, `j : W₁ → W₀` with `j ∘ h = 1`, and `k = h ∘ j`
   (`full-two-object-retract`), as a category of sets and functions;
+- the retract with two retractions: `h : W₀ → W₁` and `j₀, j₁ : W₁ → W₀` with `j_b ∘ h = 1`
+  (`full-two-object-double-retraction`), its arrows in normal form, where Strong Actuality
+  fails while every full model has □Rigid Comprehension;
 
 besides the two M-set models on two-element monoids (`Semantics/IntensionalExamples.lean`).
 Here are the models, the verdicts particular to them, and their proofs that they meet the
@@ -238,6 +241,149 @@ theorem retract_not_bf_t : ¬ retract.HoldsSentence (Sentence.bf (.rel .t)) := b
   rw [hX, Set.mem_singleton_iff] at h2
   obtain ⟨_, hh⟩ := Sigma.mk.inj_iff.mp h2
   exact rk_ne_id (Prod.mk.inj (eq_of_heq hh)).2
+
+/-! ### The retract with two retractions -/
+
+/-- The objects of the retract with two retractions (`full-two-object-double-retraction`). -/
+inductive DRObj
+  | w0
+  | w1
+  deriving DecidableEq
+
+/-- Its arrows, in normal form: `W₀ → W₀` the identity; `W₀ → W₁` the arrow `h`; `W₁ → W₀` the
+two retractions `j_b` of `h`, for `b : Bool`; `W₁ → W₁` the identity (`none`) and the
+idempotents `e_b := h ∘ j_b` (`some b`). -/
+def DRHom : DRObj → DRObj → Type
+  | .w0, .w0 => Unit
+  | .w0, .w1 => Unit
+  | .w1, .w0 => Bool
+  | .w1, .w1 => Option Bool
+
+/-- The identities. -/
+def DRHom.id : ∀ X : DRObj, DRHom X X
+  | .w0 => ()
+  | .w1 => none
+
+/-- Composition `f ≫ g`, first `f`, from the one relation `j_b ∘ h = 1`: `h ∘ j_b = e_b`,
+`j_c ∘ e_b = j_b`, `e_c ∘ e_b = e_b` and `e_b ∘ h = h`. -/
+def DRHom.comp : ∀ {X Y Z : DRObj}, DRHom X Y → DRHom Y Z → DRHom X Z
+  | .w0, .w0, .w0, _, _ => ()
+  | .w0, .w0, .w1, _, _ => ()
+  | .w0, .w1, .w0, _, _ => ()
+  | .w0, .w1, .w1, _, _ => ()
+  | .w1, .w0, .w0, b, _ => b
+  | .w1, .w0, .w1, b, _ => some b
+  | .w1, .w1, .w0, none, c => c
+  | .w1, .w1, .w0, some b, _ => b
+  | .w1, .w1, .w1, none, g => g
+  | .w1, .w1, .w1, some b, _ => some b
+
+instance : SmallCategory DRObj where
+  Hom := DRHom
+  id := DRHom.id
+  comp := DRHom.comp
+  id_comp := by
+    intro X Y f
+    cases X <;> cases Y <;> first | rfl | (cases (f : DRHom _ _) <;> rfl)
+  comp_id := by
+    intro X Y f
+    cases X <;> cases Y <;> first | rfl | (cases (f : DRHom _ _) <;> rfl)
+  assoc := by
+    intro W X Y Z f g k
+    cases W <;> cases X <;> cases Y <;> cases Z <;>
+      first
+        | rfl
+        | (cases (f : DRHom _ _) <;> rfl)
+        | (cases (f : DRHom _ _) <;> cases (g : DRHom _ _) <;> rfl)
+        | (cases (f : DRHom _ _) <;> cases (g : DRHom _ _) <;> cases (k : DRHom _ _) <;> rfl)
+
+/-- `h : W₀ → W₁`. -/
+def drh : DRObj.w0 ⟶ DRObj.w1 := (() : DRHom .w0 .w1)
+/-- The retraction `j_b : W₁ → W₀`. -/
+def drj (b : Bool) : DRObj.w1 ⟶ DRObj.w0 := (b : DRHom .w1 .w0)
+
+theorem drh_drj (b : Bool) : drh ≫ drj b = 𝟙 DRObj.w0 := rfl
+
+theorem drj_ne : drj false ≠ drj true := Bool.false_ne_true
+
+/-- The retract with two retractions, based at `W₀`. -/
+noncomputable abbrev doubleRetraction : Premodel Signature.pure DRObj := unitModel DRObj.w0
+
+/-- `j_0 ∘ h = j_1 ∘ h` with `j_0 ≠ j_1`. -/
+theorem doubleRetraction_nonepic : doubleRetraction.NonepicArrow :=
+  ⟨DRObj.w1, DRObj.w0, drh, drj false, drj true, drj_ne, rfl⟩
+
+/-- `h`, undone by `j_0`. -/
+theorem doubleRetraction_returning : doubleRetraction.ReturningArrow :=
+  ⟨DRObj.w1, drh, drj false, rfl, fun e => absurd (congrArg Sigma.fst e) (by decide)⟩
+
+/-- Every arrow out of `W₀` has a retraction: the identity, or `h`, undone by `j_0`. -/
+theorem doubleRetraction_retractions : doubleRetraction.Retractions
+  | .w0, _ => ⟨𝟙 _, rfl⟩
+  | .w1, _ => ⟨drj false, rfl⟩
+
+theorem doubleRetraction_nonidentity : doubleRetraction.NonidentityArrow :=
+  ⟨DRObj.w1, drh, fun e => absurd (congrArg Sigma.fst e) (by decide)⟩
+
+/-- `h`'s two retractions, separated by the singleton of one, the model being full. -/
+theorem doubleRetraction_separated : doubleRetraction.SeparatedRetractions :=
+  Premodel.Full.separatedRetractions _ (unitModel_full _) drh (drj false) (drj true) rfl rfl drj_ne
+
+/-- Strong Actuality fails: `h`'s retractions are separated. -/
+theorem doubleRetraction_not_strongActuality :
+    ¬ doubleRetraction.HoldsSentence P.StrongActuality.quoted :=
+  Premodel.not_holds_strongActuality_of_separated (unitModel_isModel _) doubleRetraction_separated
+
+instance : Finite DRObj := Finite.of_injective (fun X : DRObj => match X with | .w0 => false | .w1 => true)
+  fun X Y => by cases X <;> cases Y <;> simp
+
+theorem doubleRetraction_homs_finite : ∀ V U : DRObj, Finite (V ⟶ U)
+  | .w0, .w0 => inferInstanceAs (Finite Unit)
+  | .w0, .w1 => inferInstanceAs (Finite Unit)
+  | .w1, .w0 => inferInstanceAs (Finite Bool)
+  | .w1, .w1 => inferInstanceAs (Finite (Option Bool))
+
+theorem doubleRetraction_finitely_many_everywhere :
+    doubleRetraction.FinitelyManyPropositionsEverywhere := fun {V} _ => by
+  have := doubleRetraction_homs_finite
+  change Finite (Set (Σ U : DRObj, PUnit × (V ⟶ U)))
+  infer_instance
+
+theorem doubleRetraction_finitely_many_propositions : doubleRetraction.FinitelyManyPropositions :=
+  doubleRetraction_finitely_many_everywhere (𝟙 _)
+
+/-! ### Strong Actuality in the retract -/
+
+/-- In the retract, every arrow out of `W₀` or `W₁` has at most one retraction: into `W₀` there
+is one function from each object, and out of `W₁` only the identity has a retraction, since
+`h ∘ j` and `k` are constant. -/
+theorem retract_unique_retractions : retract.UniqueRetractionsEverywhere := by
+  intro V U _ k r r' hr hr'
+  have e : ∀ x, FunCat.fn r (FunCat.fn k x) = x := fun x => congrFun (congrArg FunCat.fn hr) x
+  have e' : ∀ x, FunCat.fn r' (FunCat.fn k x) = x := fun x => congrFun (congrArg FunCat.fn hr') x
+  cases V with
+  | false => exact FunCat.hom_ext (funext fun _ => rfl)
+  | true =>
+    cases U with
+    | false =>
+      have hk : FunCat.fn k true = FunCat.fn k false := rfl
+      exact absurd ((e true).symm.trans ((congrArg (FunCat.fn r) hk).trans (e false)))
+        (by decide : true ≠ false)
+    | true =>
+      have hk : FunCat.fn k = id ∨ FunCat.fn k = fun _ => false := k.2
+      rcases hk with hk | hk
+      · exact FunCat.hom_ext (funext fun x => by
+          have h1 := e x; have h2 := e' x; rw [hk] at h1 h2; exact h1.trans h2.symm)
+      · have h1 := e true; have h2 := e false
+        rw [hk] at h1 h2
+        exact absurd (h1.symm.trans h2) (by decide : true ≠ false)
+
+/-- Strong Actuality and □Strong Actuality hold in the retract. -/
+theorem retract_strongActuality :
+    retract.HoldsSentence P.StrongActuality.quoted ∧
+      retract.HoldsSentence (Term.box P.StrongActuality.quoted) :=
+  Premodel.holds_box_strongActuality_of_unique (unitModel_isModel _)
+    (Premodel.Full.identitySingletons _ (unitModel_full _)) retract_unique_retractions
 
 /-! ### The conditions on arrows each model meets -/
 

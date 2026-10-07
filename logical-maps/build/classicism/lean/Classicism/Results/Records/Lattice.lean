@@ -747,4 +747,74 @@ theorem necessary_completeness_and_necessary_actuality_imply_necessary_weak_rigi
   fun h₁ h₂ => modal_K _ _ (modal_K _ _
     (nec% (completeness_and_actuality_imply_weak_rigid_comprehension (σ := σ))) h₁) h₂
 
+/-! ### Strong Actuality (6 October) -/
+
+/-- `strong-actuality-implies-actuality`: a true strong world decides every proposition,
+by `T`, so it is an actual world. -/
+theorem strong_actuality_implies_actuality : StrongActuality → Actuality := fun h =>
+  h.elim fun w hw => actuality_of_decides w (box_elim hw.2) hw.1
+
+/-- `necessary-strong-actuality-implies-necessary-actuality`: necessitated, and `K`. -/
+theorem necessary_strong_actuality_implies_necessary_actuality :
+    NecStrongActuality → NecActuality :=
+  modal_K _ _ (nec% strong_actuality_implies_actuality)
+
+/-- `necessary-strong-actuality-implies-strong-actuality`: `T`. -/
+theorem necessary_strong_actuality_implies_strong_actuality :
+    NecStrongActuality → StrongActuality := fun h => box_elim h
+
+/-- `strong-leibniz-t-implies-strong-actuality`: with `a` the actual world (Actuality from
+the Strong Leibniz Biconditionals), a strong world `w ≤ a` is true, since otherwise
+`a ≤ ¬w` and `w ≤ ¬w`, making `w` bottom. -/
+theorem strong_leibniz_t_implies_strong_actuality : StrongLeibnizT → StrongActuality := fun sl =>
+  (box_elim (strong_leibniz_t_implies_necessary_actuality sl)).elim fun a ha =>
+    (sl a (dia_intro a ha.1)).elim fun w hw =>
+      ⟨w, (em w).elim id fun hnw => (hw.1.1 (eq_false_of_le_neg w
+        (le_trans_prop w a (¬ w) hw.2 (ha.2 (¬ w) hnw)))).elim, hw.1.2⟩
+
+/-- `necessary-strong-leibniz-t-implies-necessary-strong-actuality`: necessitated, and `K`. -/
+theorem necessary_strong_leibniz_t_implies_necessary_strong_actuality :
+    NecStrongLeibnizT → NecStrongActuality :=
+  modal_K _ _ (nec% strong_leibniz_t_implies_strong_actuality)
+
+/-- `actuality-and-bf-t-imply-strong-actuality`: the actual world decides each
+proposition, each decision is necessary, and BF at `t` boxes the quantifier (Bacon's
+Exercise 8.12, at the actual world). -/
+theorem actuality_and_bf_t_imply_strong_actuality : Actuality → BarcanT → StrongActuality :=
+  fun act bf => act.elim fun a ha => ⟨a, ha.1, bf (λ q ↦ a ≤ q ∨ a ≤ ¬ q) fun q =>
+    box_le_or_le a q ((em q).elim (fun hq => Or.inl (ha.2 q hq))
+      (fun hnq => Or.inr (ha.2 (¬ q) hnq)))⟩
+
+/-- `necessary-actuality-and-necessary-bf-t-imply-necessary-strong-actuality`: the unboxed
+record, necessitated. -/
+theorem necessary_actuality_and_necessary_bf_t_imply_necessary_strong_actuality :
+    NecActuality → NecBarcanT → NecStrongActuality := fun h₁ h₂ =>
+  modal_K _ _ (modal_K _ _ (nec% actuality_and_bf_t_imply_strong_actuality) h₁) h₂
+
+/-- `□¬a → a ≤ q`. -/
+theorem le_of_box_not (a q : Prop) : □ (¬ a) → a ≤ q := fun h => (le_iff_prop _ _).2
+  (modal_K _ _ (nec% (fun (hna : ¬ a) (ha : a) => (hna ha).elim : ¬ a → a → q)) h)
+
+/-- `(◇a → ActualWorld a) → ∀q. a ≤ q ∨ a ≤ ¬q`: where `◇a`, the actual world decides
+every proposition; where not, `□¬a` puts `a` below everything. -/
+theorem decides_of_dia_actual (a : Prop) :
+    (◇ a → ActualWorld a) → ∀ q : Prop, a ≤ q ∨ a ≤ ¬ q := fun h q =>
+  (em (◇ a)).elim
+    (fun hd => (em q).elim (fun hq => Or.inl ((h hd).2 q hq))
+      (fun hnq => Or.inr ((h hd).2 (¬ q) hnq)))
+    (fun hnd => Or.inl (le_of_box_not a q (box_not_of_not_dia a hnd)))
+
+/-- `actuality-and-distinctness-preserving-collapse-imply-strong-actuality`: with `a` the
+actual world, the collapse makes `◇a → ActualWorld a` necessary (as for Inextensible
+Comprehension), and that decides every proposition, so `a` is a strong world. -/
+theorem actuality_and_distinctness_preserving_collapse_imply_strong_actuality :
+    Actuality → DistinctnessPreservingCollapse → StrongActuality :=
+  fun act col => act.elim fun a (ha : ActualWorld a) => (col (ActualWorld a) ha).elim
+    fun q hq =>
+      have h₁ : □ (◇ a → ◇ q) := modal_K _ _ (nec% (dia_mono a q))
+        (modal_four _ ((le_iff_prop _ _).1 (ha.2 q hq.1)))
+      have h₂ : □ (◇ a → ActualWorld a) := modal_K _ _ (modal_K _ _
+        (nec% (fun (f : ◇ a → ◇ q) (g : ◇ q → ActualWorld a) (h : ◇ a) => g (f h))) h₁) hq.2
+      ⟨a, ha.1, modal_K _ _ (nec% (decides_of_dia_actual a)) h₂⟩
+
 end Classicism.Proofs

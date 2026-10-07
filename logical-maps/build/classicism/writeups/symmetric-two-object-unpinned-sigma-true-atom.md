@@ -16,6 +16,7 @@
 - **¬ ND.** Distinct things of any type are necessarily distinct.
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
 - **¬ B for pure sentences.** The B instance for every closed sentence in the pure language.
+- **¬ □Strong Actuality.** Necessarily, there is a true strong world proposition: a true proposition that necessarily entails every proposition or its negation.
 - **¬ Relational Choice.** Every serial binary relation has a functional subrelation.
 - **¬ Intensional Choice.** If a property is necessarily instantiated, then some property entailing it is necessarily uniquely instantiated.
 - **¬ B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
@@ -80,6 +81,12 @@ The symmetry group of $W_0$ is an atom, but no atom lies inside the nonempty pro
 The type-$e$ instance of BF is a closed pure sentence true at the base world and false at the second object, and no arrow leads back from the second object, so at that world the sentence is not even possible.
 
 *By Claude Fable 5.1 (Anthropic), 2026-09-25.*
+
+### Fails □Strong Actuality.
+
+Strong Actuality fails at the second object, which an arrow from the first reaches. There a true proposition contains the identity and, being symmetric, every permutation. Let $s$ be the successor map, an arrow from the second object to itself, and $k_0,k_1$ its retractions sending $n+1$ to $n$ and $0$ to $0$ and to $1$ respectively. Under $s$ the true proposition becomes one containing $k_0$ and $k_1$. The proposition that the arrow sends $0$ and $1$ to the same individual is closed under composition with permutations, so in the domain at the second object, where every symmetric intension is; it contains $k_0$ and not $k_1$. So no true proposition at the second object is a strong world. (Strong Actuality holds at the first object, by Actuality and the Distinctness-preserving collapse.)
+
+*By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
 
 ### Fails Relational Choice.
 

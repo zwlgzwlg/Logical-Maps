@@ -7,7 +7,7 @@ import Classicism.Cardinality
 # Principles of the map's category `lattice`
 
 Atomicity, Boolean Completeness and Countable Boolean Completeness, Actuality, Actual
-Profile, Vicinity and the Strong Leibniz Biconditionals, with their boxed forms: what the
+Profile, Vicinity, Strong Actuality and the Strong Leibniz Biconditionals, with their boxed forms: what the
 order `≤_τ` at a relational type is like. See `Classicism/Principles.lean` for how a
 principle is stated and where its forms go.
 
@@ -117,7 +117,7 @@ def CountableBooleanCompleteness (τ : Type) [Rel τ] : Prop :=
 /-- `necessary-countable-boolean-completeness-r` at `τ`: the instance boxed. -/
 def NecCountableBooleanCompleteness (τ : Type) [Rel τ] : Prop := □ (CountableBooleanCompleteness τ)
 
-/-! ## Actuality, Actual Profile and Vicinity -/
+/-! ## Actuality, Actual Profile, Vicinity and Strong Actuality -/
 
 /-- `actuality`: `∃p. p ∧ ∀q. q → p ≤ q`, there is a true proposition that entails every
 truth — a true atom, an actual world. -/
@@ -137,6 +137,12 @@ each truth. -/
 def Vicinity : Prop := ∃ p : Prop, p ∧ ∀ q : Prop, q → p ≤ ◇ q
 /-- `necessary-vicinity`: Vicinity boxed. -/
 def NecVicinity : Prop := □ Vicinity
+
+/-- `strong-actuality`: `∃p. p ∧ □∀q. p ≤ q ∨ p ≤ ¬q`, there is a true strong world at
+type `t`: a truth that necessarily decides every proposition. -/
+def StrongActuality : Prop := ∃ p : Prop, p ∧ □ (∀ q : Prop, p ≤ q ∨ p ≤ ¬ q)
+/-- `necessary-strong-actuality`: Strong Actuality boxed. -/
+def NecStrongActuality : Prop := □ StrongActuality
 
 /-! ## The Strong Leibniz Biconditionals -/
 
