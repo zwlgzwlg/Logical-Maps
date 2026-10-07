@@ -1,0 +1,27 @@
+id: actuality-and-bf-t-imply-strong-actuality
+premises:
+- actuality
+- barcan-t
+conclusion: strong-actuality
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Cian Dorr, 6 October 2026 (statement); proof written out by Claude Opus 5.5 (Anthropic)
+  recorded_by: Claude Opus 5.5 (Anthropic), 6 October 2026
+  checked_by: []
+  date: '2026-10-06'
+  lean: verified
+  lean_ref: Classicism.Map.actuality_and_bf_t_imply_strong_actuality
+sources:
+- Cian Dorr, suggestion of 6 October 2026, introducing Strong Actuality.
+- Andrew Bacon, A Philosophical Introduction to Higher-Order Logics, Routledge, 2024, §8.2, Exercise 8.12, p. 166.
+source_names:
+- Dorr 6 Oct
+- Philosophical Introduction to HOL
+proof: 'Let $a$ witness Actuality. For each $q$, $a\le q\lor a\le\neg q$: if $q$ is true, $a\le q$; if not, $\neg q$ is true and $a\le\neg q$. Each disjunct is necessary by 4, so the disjunction is necessary: $\forall q\, .\,\Box(a\le q\lor a\le\neg q)$. BF (type t), for the property $\lambda q\, .\,a\le q\lor a\le\neg q$, gives $\Box\forall q\, .\,a\le q\lor a\le\neg q$. With $a$ true, $a$ witnesses Strong Actuality. (The argument of Bacon''s Exercise 8.12 for the Strong Leibniz Biconditionals, applied to the actual-world proposition.)'
+references:
+- paper: bacon-2024-book
+  role: proof
+  locator: §8.2, Exercise 8.12, p. 166
+  note: The same argument, for an atom below a possible proposition.
+notes: ''

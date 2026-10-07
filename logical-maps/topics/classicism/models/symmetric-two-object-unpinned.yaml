@@ -139,6 +139,20 @@ arguments:
     is not even possible.
 
 # migration: text of the old notes that no argument holds, verbatim.
+- fails: [necessary-strong-actuality]
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-06'
+  text: >-
+    Strong Actuality fails at the second object, which an arrow from the first reaches. There a
+    true proposition contains the identity and, being symmetric, every permutation. Let $s$ be the
+    successor map, an arrow from the second object to itself, and $k_0,k_1$ its retractions sending
+    $n+1$ to $n$ and $0$ to $0$ and to $1$ respectively. Under $s$ the true proposition becomes one
+    containing $k_0$ and $k_1$. The proposition that the arrow sends $0$ and $1$ to the same
+    individual is closed under composition with permutations, so in the domain at the second
+    object, where every symmetric intension is; it contains $k_0$ and not $k_1$. So no true
+    proposition at the second object is a strong world. (Strong Actuality holds at the first
+    object, by Actuality and the Distinctness-preserving collapse.)
+
 notes: >-
   The point of the model is that boxed Boolean Completeness and boxed Actuality, and so Weak Rigid
   Comprehension, do not yield Rigid Comprehension. The gap is exactly the leading box of the

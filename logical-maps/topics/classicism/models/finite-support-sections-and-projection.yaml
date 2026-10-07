@@ -39,6 +39,14 @@ meets:
     The model is ideally full at both objects, and an intension whose value at an arrow depends
     only on the arrow's codomain is pinned down by $\emptyset$ (Appendix D, the remark after
     Definition D.3).
+  identity-singletons: >-
+    $\{1_{W_0}\}$ is pinned down by $\emptyset$, the identity being the only arrow from $W_0$ to
+    $W_0$, and $\{1_{W_1}\}$ by $\{(0,0),(0,1)\}$, which no $e_T$ fixes pointwise (see the
+    write-up, on Actuality).
+  unique-retractions-everywhere: >-
+    Out of $W_0$, the identity has only itself as retraction and each section $f_T$ only $\pi$,
+    the one arrow back. Out of $W_1$, the identity has only itself; $\pi$ has none, since
+    $f_T\circ\pi=e_T\ne1$; and no $e_T$ has one, since $e_T$ is not injective.
   metatheory-choice: The construction is carried out in ZFC (Appendix D).
 
 arguments:

@@ -1,0 +1,18 @@
+id: strong-actuality-unique-retractions
+requires: [identity-singletons, unique-retractions-everywhere]
+holds: [strong-actuality, necessary-strong-actuality]
+by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+date: '2026-10-06'
+text: >-
+  Let $V$ be the evaluation object or the target of an arrow out of it, and $w:=\{1_V\}$, in the
+  domain at $V$. It is true at $1_V$. Under an arrow $f$ out of $V$ it becomes $\{k : k\circ
+  f=1_V\}$, the set of retractions of $f$, which has at most one member and so lies below $q$ or
+  below $\neg q$ for every proposition $q$ at $f$'s target. So Strong Actuality holds at $1_V$. A
+  closed sentence holds at an arrow iff it holds at the identity of the arrow's target, so Strong
+  Actuality holds at every world after the evaluation point, and □Strong Actuality holds there.
+# Proved in Lean (Classicism/MapArguments.lean), for every intensional action model meeting the conditions.
+lean:
+- holds: strong-actuality
+  ref: Classicism.Map.Arguments.strong_actuality_unique_retractions.strong_actuality
+- holds: necessary-strong-actuality
+  ref: Classicism.Map.Arguments.strong_actuality_unique_retractions.necessary_strong_actuality

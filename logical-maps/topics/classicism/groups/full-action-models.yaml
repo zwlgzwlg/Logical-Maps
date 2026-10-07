@@ -107,6 +107,8 @@ meets:
     A full model contains every intension, so in particular one with any given extension at the
     identity.
   metatheory-choice: The constructions are carried out in ZFC.
+  identity-singletons: >-
+    The singleton of the identity arrow at any object is in the domain, the model being full.
   actuality-contingent: >-
     The singleton $a$ of the identity arrow is in the domain, the model being full. It is necessary
     at no world: a world other than the identity sees itself, which lies outside $a$, and the

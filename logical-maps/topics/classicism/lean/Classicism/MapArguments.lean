@@ -296,6 +296,39 @@ theorem strong_leibniz_t : Statements.Arguments.nonepic_strong_leibniz.strong_le
 
 end nonepic_strong_leibniz
 
+namespace strong_actuality_unique_retractions
+
+/-- Strong Actuality holds where the identity singletons are in the domain and the retractions
+are unique, at the evaluation object and after it (`Premodel.holds_box_strongActuality_of_unique`). -/
+theorem strong_actuality :
+    Statements.Arguments.strong_actuality_unique_retractions.strong_actuality := by
+  intro Sig C _ A M hI hU
+  rw [holdsAx_ofPure]
+  rintro _ rfl
+  exact (holds_box_strongActuality_of_unique (A.reduct_isModel M) hI hU).1
+
+/-- And its necessitation. -/
+theorem necessary_strong_actuality :
+    Statements.Arguments.strong_actuality_unique_retractions.necessary_strong_actuality := by
+  intro Sig C _ A M hI hU
+  rw [holdsAx_ofPure]
+  rintro _ rfl
+  exact (holds_box_strongActuality_of_unique (A.reduct_isModel M) hI hU).2
+
+end strong_actuality_unique_retractions
+
+namespace separated_retractions_strong_actuality
+
+/-- Strong Actuality fails where an arrow out of the evaluation object has two retractions that
+a proposition separates (`Premodel.not_holds_strongActuality_of_separated`). -/
+theorem strong_actuality :
+    Statements.Arguments.separated_retractions_strong_actuality.strong_actuality := by
+  intro Sig C _ A M hS H
+  rw [holdsAx_ofPure] at H
+  exact not_holds_strongActuality_of_separated (A.reduct_isModel M) hS (H _ rfl)
+
+end separated_retractions_strong_actuality
+
 namespace dpc_returning_arrow
 
 /-- Distinctness-Preserving Collapse fails in a full model where some arrow other than the

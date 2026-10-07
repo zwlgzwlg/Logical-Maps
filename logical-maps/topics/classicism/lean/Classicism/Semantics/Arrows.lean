@@ -19,6 +19,13 @@ non-injectivity):
   retraction transports `⊥` and `{1}` alike, so `ND_t` fails (`not_holds_nd_t_of_unretracted`).
 - **`nonidentity-arrow`**: in a full model, `⊤` and `{1}` differ, so the Fregean Axiom fails
   (`Premodel.not_fregean_of_propFull`).
+- **`identity-singletons`** and **`unique-retractions-everywhere`**: at each world, the
+  singleton of the identity becomes, along an arrow, the set of that arrow's retractions, at
+  most one, so it is a true strong world: Strong Actuality and its necessitation
+  (`holds_box_strongActuality_of_unique`): `strong-actuality-unique-retractions`.
+- **`separated-retractions`**: a true proposition becomes, along an arrow with two
+  retractions, a set containing both, which a proposition there separates, so Strong Actuality
+  fails (`not_holds_strongActuality_of_separated`): `separated-retractions-strong-actuality`.
 -/
 
 namespace Classicism.Meta.Intensional
@@ -63,6 +70,38 @@ chosen so that `x ≫ r (g ≫ x) = r g` for every arrow `x` after `g`. -/
 def CoherentRetractions : Prop :=
   ∃ r : ∀ {V : C}, (A.W₀ ⟶ V) → (V ⟶ A.W₀), (∀ {V : C} (g : A.W₀ ⟶ V), g ≫ r g = 𝟙 A.W₀) ∧
     ∀ {V U : C} (g : A.W₀ ⟶ V) (x : V ⟶ U), x ≫ r (g ≫ x) = r g
+
+/-- `identity-singletons`: at the evaluation object, and at the target of every arrow out of it,
+the singleton of the identity arrow is in the domain. -/
+def IdentitySingletons : Prop :=
+  ∀ {V : C} (_ : A.W₀ ⟶ V), ∃ x : A.Dom V (.rel .t),
+    A.incl .t V x = {(⟨V, PUnit.unit, 𝟙 V⟩ : Tuple A.inner .t V)}
+
+/-- `unique-retractions-everywhere`: at the evaluation object, and at the target of every arrow
+out of it, every arrow out of that object has at most one retraction. -/
+def UniqueRetractionsEverywhere : Prop :=
+  ∀ {V U : C} (_ : A.W₀ ⟶ V) (k : V ⟶ U) (r r' : U ⟶ V), k ≫ r = 𝟙 V → k ≫ r' = 𝟙 V → r = r'
+
+/-- `separated-retractions`: some arrow out of the evaluation object has two retractions that
+some proposition in the domain at its target separates. -/
+def SeparatedRetractions : Prop :=
+  ∃ (V : C) (h : A.W₀ ⟶ V) (j j' : V ⟶ A.W₀) (y : A.Dom V (.rel .t)),
+    h ≫ j = 𝟙 A.W₀ ∧ h ≫ j' = 𝟙 A.W₀ ∧
+    (⟨A.W₀, PUnit.unit, j⟩ : Tuple A.inner .t V) ∈ A.incl .t V y ∧
+    (⟨A.W₀, PUnit.unit, j'⟩ : Tuple A.inner .t V) ∉ A.incl .t V y
+
+/-- A full model has the singleton of every identity arrow. -/
+theorem Full.identitySingletons (hF : A.Full) : A.IdentitySingletons := fun {V} _ => hF .t V _
+
+/-- In a full model, two distinct retractions of an arrow out of the evaluation object are
+separated, by the singleton of one of them. -/
+theorem Full.separatedRetractions (hF : A.Full) {V : C} (h : A.W₀ ⟶ V) (j j' : V ⟶ A.W₀)
+    (hj : h ≫ j = 𝟙 A.W₀) (hj' : h ≫ j' = 𝟙 A.W₀) (hne : j ≠ j') : A.SeparatedRetractions := by
+  obtain ⟨y, hy⟩ := hF .t V {(⟨A.W₀, PUnit.unit, j⟩ : Tuple A.inner .t V)}
+  refine ⟨V, h, j, j', y, hj, hj', by rw [hy]; rfl, fun hm => hne ?_⟩
+  rw [hy, Set.mem_singleton_iff] at hm
+  obtain ⟨_, hh⟩ := Sigma.mk.inj_iff.mp hm
+  exact (Prod.mk.inj (eq_of_heq hh)).2.symm
 
 variable {A} (M : A.IsModel)
 include M
@@ -237,6 +276,69 @@ theorem holds_gallin_of_coherent {B : Premodel Signature.pure C} (M : B.IsModel)
   · rw [hY]
     show _ ↔ (⟨B.W₀, Args.map B.inner ρ (r (𝟙 B.W₀)) x, 𝟙 B.W₀⟩ : Tuple B.inner ρ B.W₀) ∈ B.incl ρ B.W₀ X
     rw [hr1, Args.map_id]
+
+
+omit M in
+/-- **Strong Actuality at a world** `h`, when the singleton of the identity at its object `V` is
+in the domain and every arrow out of `V` has at most one retraction: along an arrow `k` the
+singleton becomes the set of `k`'s retractions, which every proposition there contains or
+excludes. -/
+theorem holds_strongActuality_at {B : Premodel Signature.pure C} (M : B.IsModel) {V : C}
+    (h : B.W₀ ⟶ V) (x : B.Dom V (.rel .t))
+    (hx : B.incl .t V x = {(⟨V, PUnit.unit, 𝟙 V⟩ : Tuple B.inner .t V)})
+    (hu : ∀ {U : C} (k : V ⟶ U) (r r' : U ⟶ V), k ≫ r = 𝟙 V → k ≫ r' = 𝟙 V → r = r') :
+    B.Holds h P.StrongActuality.quoted .nil := by
+  simp only [P.StrongActuality.quoted, B.holds_exists M, B.holds_conj M, B.holds_box M,
+    B.holds_forall M, B.holds_disj M, holds_var]
+  simp only [B.holds_eq M, sem_var, B.sem_disj M, B.sem_neg M, IEnv.get, IEnv.get_map, B.incl_map]
+  refine ⟨x, by rw [hx]; rfl, fun {U} k y => ?_⟩
+  have key : ∀ t t' : Tuple B.inner .t U, t ∈ Intension.map B.inner k (B.incl .t V x) →
+      t' ∈ Intension.map B.inner k (B.incl .t V x) → t = t' := by
+    rintro ⟨Z, ⟨⟩, m⟩ ⟨Z', ⟨⟩, m'⟩ hm hm'
+    rw [Intension.mem_map, hx, Set.mem_singleton_iff] at hm hm'
+    obtain ⟨rfl, hh⟩ := Sigma.mk.inj_iff.mp hm
+    obtain ⟨rfl, hh'⟩ := Sigma.mk.inj_iff.mp hm'
+    rw [hu k m m' (Prod.mk.inj (eq_of_heq hh)).2 (Prod.mk.inj (eq_of_heq hh')).2]
+  by_cases hex : ∃ t ∈ Intension.map B.inner k (B.incl .t V x), t ∈ B.incl .t U y
+  · obtain ⟨t, ht, hty⟩ := hex
+    exact Or.inl (Set.union_eq_right.2 fun t' ht' => key t t' ht ht' ▸ hty).symm
+  · exact Or.inr (Set.union_eq_right.2 fun t ht hty => hex ⟨t, ht, hty⟩).symm
+
+omit M in
+/-- **Strong Actuality and its necessitation** where the identity singletons are in the domain
+and the retractions unique, at the evaluation object and after it. -/
+theorem holds_box_strongActuality_of_unique {B : Premodel Signature.pure C} (M : B.IsModel)
+    (hI : B.IdentitySingletons) (hU : B.UniqueRetractionsEverywhere) :
+    B.HoldsSentence P.StrongActuality.quoted ∧ B.HoldsSentence (Term.box P.StrongActuality.quoted) := by
+  have at_ : ∀ {V : C} (h : B.W₀ ⟶ V), B.Holds h P.StrongActuality.quoted .nil := fun {V} h =>
+    (hI h).elim fun x hx => holds_strongActuality_at M h x hx (hU h)
+  refine ⟨at_ (𝟙 _), ?_⟩
+  rw [HoldsSentence, B.holds_box M]
+  intro V k
+  exact at_ _
+
+omit M in
+/-- **Strong Actuality fails** where an arrow `h` out of the evaluation object has retractions
+`j`, `j'` separated by a proposition `y`: a true proposition contains the identity, so after `h`
+it holds at `j` and at `j'`, and lies neither below `y` nor below its negation. -/
+theorem not_holds_strongActuality_of_separated {B : Premodel Signature.pure C} (M : B.IsModel)
+    (hS : B.SeparatedRetractions) : ¬ B.HoldsSentence P.StrongActuality.quoted := by
+  obtain ⟨V, h, j, j', y, hj, hj', hy, hy'⟩ := hS
+  simp only [Premodel.HoldsSentence, P.StrongActuality.quoted, B.holds_exists M, B.holds_conj M,
+    B.holds_box M, B.holds_forall M, B.holds_disj M, holds_var]
+  simp only [B.holds_eq M, sem_var, B.sem_disj M, B.sem_neg M, IEnv.get, IEnv.get_map, B.incl_map]
+  rintro ⟨w, hw, hbox⟩
+  have mem : ∀ r : V ⟶ B.W₀, h ≫ r = 𝟙 B.W₀ →
+      (⟨B.W₀, PUnit.unit, r⟩ : Tuple B.inner .t V) ∈ Intension.map B.inner h (B.incl .t B.W₀ w) := by
+    intro r hr
+    rw [Intension.mem_map]
+    show (⟨B.W₀, PUnit.unit, h ≫ r⟩ : Tuple B.inner .t B.W₀) ∈ _
+    rw [hr]
+    exact hw
+  rcases @hbox V h y with e | e
+  · exact hy' (e ▸ Or.inl (mem j' hj'))
+  · have : (⟨B.W₀, PUnit.unit, j⟩ : Tuple B.inner .t V) ∈ (B.incl .t V y)ᶜ := e ▸ Or.inl (mem j hj)
+    exact this hy
 
 end Premodel
 

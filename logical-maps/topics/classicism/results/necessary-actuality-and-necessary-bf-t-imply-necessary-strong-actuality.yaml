@@ -1,0 +1,20 @@
+id: necessary-actuality-and-necessary-bf-t-imply-necessary-strong-actuality
+premises:
+- necessary-actuality
+- necessary-barcan-t
+conclusion: necessary-strong-actuality
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Cian Dorr, 6 October 2026 (statement); proof written out by Claude Opus 5.5 (Anthropic)
+  recorded_by: Claude Opus 5.5 (Anthropic), 6 October 2026
+  checked_by: []
+  date: '2026-10-06'
+  lean: verified
+  lean_ref: Classicism.Map.necessary_actuality_and_necessary_bf_t_imply_necessary_strong_actuality
+sources:
+- Cian Dorr, suggestion of 6 October 2026, introducing Strong Actuality.
+source_names:
+- Dorr 6 Oct
+proof: 'Necessitate the implication from Actuality and BF (type t) to Strong Actuality, a theorem of C; □Actuality and □BF (type t) supply the boxed antecedents, and K distributes.'
+notes: ''

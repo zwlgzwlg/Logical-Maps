@@ -543,6 +543,74 @@ theorem full_two_object_chain.distinctness_necessary_t : Statements.Models.full_
 theorem full_two_object_chain.independence_signature_r : Statements.Models.full_two_object_chain.independence_signature_r :=
   ⟨Classicism.Meta.Signature.sigmaTop_admitted, Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _), Classicism.Map.Arguments.sigma_top.independence_signature_r (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)) (Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)) (Classicism.Meta.Signature.sigmaTop_admitted) (Classicism.Meta.Intensional.Premodel.withTop_sigmaTop (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _))⟩
 
+/-- `full-two-object-double-retraction`: Distinctness-preserving collapse fails, by the argument `dpc-returning-arrow`. -/
+theorem full_two_object_double_retraction.distinctness_preserving_collapse : Statements.Models.full_two_object_double_retraction.distinctness_preserving_collapse :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.dpc_returning_arrow.distinctness_preserving_collapse (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.FullActionModels.doubleRetraction_returning)⟩
+
+/-- `full-two-object-double-retraction`: Possible Infinity (type t) fails, by the argument `finitely-many-propositions-everywhere`. -/
+theorem full_two_object_double_retraction.possible_infinity_t : Statements.Models.full_two_object_double_retraction.possible_infinity_t :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.finitely_many_propositions_everywhere.possible_infinity_t (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.doubleRetraction_finitely_many_everywhere)⟩
+
+/-- `full-two-object-double-retraction`: Infinity Schema (type t) fails, by the argument `finitely-many-propositions`. -/
+theorem full_two_object_double_retraction.infinity_t : Statements.Models.full_two_object_double_retraction.infinity_t :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.finitely_many_propositions.infinity_t (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.FullActionModels.doubleRetraction_finitely_many_propositions)⟩
+
+/-- `full-two-object-double-retraction`: Axiom of Infinity (type t) fails, by the argument `finitely-many-propositions`. -/
+theorem full_two_object_double_retraction.axiom_of_infinity_t : Statements.Models.full_two_object_double_retraction.axiom_of_infinity_t :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.finitely_many_propositions.axiom_of_infinity_t (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.FullActionModels.doubleRetraction_finitely_many_propositions)⟩
+
+/-- `full-two-object-double-retraction`: □Atomicity holds, by the argument `full-atomicity`. -/
+theorem full_two_object_double_retraction.necessary_atomicity_r : Statements.Models.full_two_object_double_retraction.necessary_atomicity_r :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.full_atomicity.necessary_atomicity_r (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)⟩
+
+/-- `full-two-object-double-retraction`: □Rigid Comprehension holds, by the argument `full-rigid-comprehension`. -/
+theorem full_two_object_double_retraction.necessary_rigid_comprehension_r : Statements.Models.full_two_object_double_retraction.necessary_rigid_comprehension_r :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.full_rigid_comprehension.necessary_rigid_comprehension_r (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)⟩
+
+/-- `full-two-object-double-retraction`: Strong Leibniz Biconditionals (type t) fails, by the argument `nonepic-strong-leibniz`. -/
+theorem full_two_object_double_retraction.strong_leibniz_t : Statements.Models.full_two_object_double_retraction.strong_leibniz_t :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.nonepic_strong_leibniz.strong_leibniz_t (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.FullActionModels.doubleRetraction_nonepic)⟩
+
+/-- `full-two-object-double-retraction`: Fregean Axiom fails, by the argument `nonidentity-arrow`. -/
+theorem full_two_object_double_retraction.fregean_axiom : Statements.Models.full_two_object_double_retraction.fregean_axiom :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.nonidentity_arrow.fregean_axiom (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.FullActionModels.doubleRetraction_nonidentity)⟩
+
+/-- `full-two-object-double-retraction`: Infinity Schema (type e) fails, by the argument `one-individual`. -/
+theorem full_two_object_double_retraction.infinity_e : Statements.Models.full_two_object_double_retraction.infinity_e :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.one_individual.infinity_e (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_one_individual _)⟩
+
+/-- `full-two-object-double-retraction`: Axiom of Infinity (type e) fails, by the argument `one-individual`. -/
+theorem full_two_object_double_retraction.axiom_of_infinity_e : Statements.Models.full_two_object_double_retraction.axiom_of_infinity_e :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.one_individual.axiom_of_infinity_e (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_one_individual _)⟩
+
+/-- `full-two-object-double-retraction`: Possible Infinity (type e) fails, by the argument `one-individual`. -/
+theorem full_two_object_double_retraction.possible_infinity_e : Statements.Models.full_two_object_double_retraction.possible_infinity_e :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.one_individual.possible_infinity_e (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_one_individual _)⟩
+
+/-- `full-two-object-double-retraction`: □Relational Choice holds, by the argument `relational-choice-full-boxed`. -/
+theorem full_two_object_double_retraction.necessary_relational_choice_r : Statements.Models.full_two_object_double_retraction.necessary_relational_choice_r :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+
+/-- `full-two-object-double-retraction`: Relational Choice holds, by the argument `relational-choice-full`. -/
+theorem full_two_object_double_retraction.relational_choice_r : Statements.Models.full_two_object_double_retraction.relational_choice_r :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+
+/-- `full-two-object-double-retraction`: ND holds, by the argument `retractions`. -/
+theorem full_two_object_double_retraction.distinctness_necessary_r : Statements.Models.full_two_object_double_retraction.distinctness_necessary_r :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.retractions.distinctness_necessary_r (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.doubleRetraction_retractions)⟩
+
+/-- `full-two-object-double-retraction`: Strong Actuality fails, by the argument `separated-retractions-strong-actuality`. -/
+theorem full_two_object_double_retraction.strong_actuality : Statements.Models.full_two_object_double_retraction.strong_actuality :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.separated_retractions_strong_actuality.strong_actuality (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.doubleRetraction_separated)⟩
+
+/-- `full-two-object-double-retraction`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
+theorem full_two_object_double_retraction.transversal_choice_r : Statements.Models.full_two_object_double_retraction.transversal_choice_r :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+
+/-- `full-two-object-double-retraction`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
+theorem full_two_object_double_retraction.independence_signature_r : Statements.Models.full_two_object_double_retraction.independence_signature_r :=
+  ⟨Classicism.Meta.Signature.sigmaTop_admitted, Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _), Classicism.Map.Arguments.sigma_top.independence_signature_r (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)) (Classicism.Meta.Intensional.Premodel.withTop_isModel (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _)) (Classicism.Meta.Signature.sigmaTop_admitted) (Classicism.Meta.Intensional.Premodel.withTop_sigmaTop (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _))⟩
+
 /-- `full-two-object-retract`: Gallin Extensional Comprehension holds, by the argument `coherent-retractions`. -/
 theorem full_two_object_retract.gallin_extensional_comprehension_r : Statements.Models.full_two_object_retract.gallin_extensional_comprehension_r :=
   ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.coherent_retractions.gallin_extensional_comprehension_r (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.FullActionModels.retract_coherent)⟩
@@ -602,6 +670,14 @@ theorem full_two_object_retract.relational_choice_r : Statements.Models.full_two
 /-- `full-two-object-retract`: ND holds, by the argument `retractions`. -/
 theorem full_two_object_retract.distinctness_necessary_r : Statements.Models.full_two_object_retract.distinctness_necessary_r :=
   ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.retractions.distinctness_necessary_r (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.retract_retractions)⟩
+
+/-- `full-two-object-retract`: Strong Actuality holds, by the argument `strong-actuality-unique-retractions`. -/
+theorem full_two_object_retract.strong_actuality : Statements.Models.full_two_object_retract.strong_actuality :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.strong_actuality_unique_retractions.strong_actuality (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.Premodel.Full.identitySingletons _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)) (Classicism.Meta.Intensional.FullActionModels.retract_unique_retractions)⟩
+
+/-- `full-two-object-retract`: □Strong Actuality holds, by the argument `strong-actuality-unique-retractions`. -/
+theorem full_two_object_retract.necessary_strong_actuality : Statements.Models.full_two_object_retract.necessary_strong_actuality :=
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.strong_actuality_unique_retractions.necessary_strong_actuality (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.Premodel.Full.identitySingletons _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)) (Classicism.Meta.Intensional.FullActionModels.retract_unique_retractions)⟩
 
 /-- `full-two-object-retract`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem full_two_object_retract.transversal_choice_r : Statements.Models.full_two_object_retract.transversal_choice_r :=

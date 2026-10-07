@@ -34,6 +34,10 @@ meets:
     $1\circ h=k\circ h$, with $1\ne k$.
   returning-arrow: >-
     $h$, which $j$ retracts.
+  unique-retractions-everywhere: >-
+    Out of $W_0$, the identity has only itself as retraction and $h$ only $j$, the one arrow back.
+    Out of $W_1$, the identity has only itself; $j$ has none, since $h\circ j=k\ne1$; and $k$ has
+    none, since $1\circ k=k\circ k=k$.
   coherent-retractions: >-
     Every arrow into $W_0$ is the one function to its single member, so any choice is coherent.
   nonidentity-arrow: >-
@@ -156,6 +160,8 @@ lean:
     finitely-many-propositions: Classicism.Meta.Intensional.FullActionModels.retract_finitely_many_propositions
     finitely-many-propositions-everywhere: Classicism.Meta.Intensional.FullActionModels.retract_finitely_many_everywhere
     retractions: Classicism.Meta.Intensional.FullActionModels.retract_retractions
+    unique-retractions-everywhere: Classicism.Meta.Intensional.FullActionModels.retract_unique_retractions
+    identity-singletons: Classicism.Meta.Intensional.Premodel.Full.identitySingletons _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)
     nonidentity-arrow: Classicism.Meta.Intensional.FullActionModels.retract_nonidentity
     full-model: Classicism.Meta.Intensional.FullActionModels.unitModel_full _
     full-action-model: Classicism.Meta.Intensional.FullActionModels.unitModel_full _

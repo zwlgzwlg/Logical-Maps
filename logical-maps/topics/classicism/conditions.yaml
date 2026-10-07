@@ -171,3 +171,19 @@ conditions:
     For some $n$, the evaluation object has $n$ distinct propositions, while some world after it,
     and every world after that one, has fewer.
   lean: Classicism.Meta.Intensional.Premodel.FewerPropositionsAfter
+# Added 6 October 2026 (Claude Opus 5.5, at Cian Dorr's direction), for Strong Actuality.
+- id: identity-singletons
+  text: >-
+    At the evaluation object, and at the target of every arrow out of it, the singleton of the
+    identity arrow is in the domain.
+  lean: Classicism.Meta.Intensional.Premodel.IdentitySingletons
+- id: unique-retractions-everywhere
+  text: >-
+    At the evaluation object, and at the target of every arrow out of it, every arrow out of that
+    object has at most one retraction.
+  lean: Classicism.Meta.Intensional.Premodel.UniqueRetractionsEverywhere
+- id: separated-retractions
+  text: >-
+    Some arrow out of the evaluation object has two retractions that some proposition in the
+    domain at its target separates.
+  lean: Classicism.Meta.Intensional.Premodel.SeparatedRetractions

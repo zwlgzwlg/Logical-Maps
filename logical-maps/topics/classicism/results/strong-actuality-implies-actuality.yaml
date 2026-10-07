@@ -1,0 +1,19 @@
+id: strong-actuality-implies-actuality
+premises:
+- strong-actuality
+conclusion: actuality
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Cian Dorr, 6 October 2026 (statement); proof written out by Claude Opus 5.5 (Anthropic)
+  recorded_by: Claude Opus 5.5 (Anthropic), 6 October 2026
+  checked_by: []
+  date: '2026-10-06'
+  lean: verified
+  lean_ref: Classicism.Map.strong_actuality_implies_actuality
+sources:
+- Cian Dorr, suggestion of 6 October 2026, introducing Strong Actuality.
+source_names:
+- Dorr 6 Oct
+proof: 'Let $w$ be true with $\Box\forall q\, .\,w\le q\lor w\le\neg q$. By T, $w\le q\lor w\le\neg q$ for every $q$. If $q$ is true, $w\le\neg q$ would give $\neg q$ by T, since $w$ is true; so $w\le q$. Thus $w$ is a true proposition entailing every truth, a witness for Actuality.'
+notes: ''
