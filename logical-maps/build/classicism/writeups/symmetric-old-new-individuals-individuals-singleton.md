@@ -1,0 +1,109 @@
+# Symmetric ideally-full model: old and new individuals [one individual]
+
+<p class='cert'>Model — Source: Misc.; produced by Claude Fable 5.1 (Anthropic), 6 October 2026, in a session with Cian Dorr; further verdicts by Claude Opus 5.5 (Anthropic), the same day; recorded by Claude Opus 5.5 (Anthropic), 6 October 2026.</p>
+
+## Package
+
+- **□Strong Actuality.** Necessarily, there is a true strong world proposition: a true proposition that necessarily entails every proposition or its negation.
+- **ND.** Distinct things of any type are necessarily distinct.
+- **□Atomicity.** Necessarily, every non-bottom entity of each relational type has an atom below it.
+- **□Boolean Completeness (type t).** Every closed instance of Boolean Completeness (type t) is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **□Boolean Completeness.** Necessarily, every property of entities of a relational type has a greatest lower bound in that type.
+- **□Rigid Comprehension.** Necessarily, every relation, including a proposition, is coextensive with a rigid one.
+- **¬ Strong Leibniz Biconditionals (type t).** The type-t instance of the Strong Leibniz Biconditionals: every possible proposition is entailed by a strong world proposition, one that is possible and necessarily entails every proposition or its negation.
+- **¬ Infinity Schema (type t).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
+- **¬ Possible Infinity (type t).** Possibly there are not finitely many propositions: the Axiom of Infinity at this type, under a diamond.
+- **¬ Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
+- **¬ Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
+- **¬ Possible Infinity (type e).** Possibly there are not finitely many individuals: the Axiom of Infinity at this type, under a diamond.
+- **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
+- **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
+- **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
+- **¬ Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
+
+## Definition
+
+A symmetric ideally-full intensional action model over two objects, $E$ and $O$, with individuals $\mathbb N$ at $E$ and $\mathbb N\sqcup\mathbb N'$ at $O$, $\mathbb N'$ a disjoint copy of $\mathbb N$; members of $\mathbb N$ at $O$ are old, members of $\mathbb N'$ new. The arrows are injections: from $E$ to $E$ all injections of $\mathbb N$; from $E$ to $O$ the injections with range among the old individuals; from $O$ to $E$ all injections into $\mathbb N$; from $O$ to $O$ the permutations preserving old and new ($G_O$) and the injections with range among the old ($K$). The symmetry groups are all permutations of $\mathbb N$ at $E$ and $G_O$ at $O$, and both objects carry the ideal of finite sets. The evaluation point is the identity arrow on $E$.
+
+Individuals, fixed for this record: there is a single individual at every object. The arrows still act on the base as the construction says, and the base still supplies the pinning sets and the symmetry groups.
+
+Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each denotes the top element of its type.
+
+*A member of the group Symmetric ideally-full models, which supplies this definition with the record's settings, and the arguments marked as shared.*
+
+## Arguments
+
+### Holds □Strong Actuality.
+
+At $E$ the arrows to $E$ form a true strong world: along an arrow to $E$ it becomes itself, along an arrow to $O$ the set of arrows from $O$ to $E$, an atom. At $O$, $G_O$ is one: along a member of $G_O$ it becomes itself, along a member of $K$ or an arrow to $E$ the empty set. Both objects are reachable from $E$.
+
+*Write-up: [symmetric-old-new-individuals](symmetric-old-new-individuals.html). By Claude Fable 5.1 (Anthropic), 2026-10-06.*
+
+### Holds ND.
+
+Every arrow $f$ out of $E$ is finitely invertible: for any arrow $h$ out of $E$ and finite $N$, some arrow $k$ after $f$ has $k\circ f$ agreeing with $h$ on $N$. So entities that differ at a tuple $\langle\bar a,h\rangle$ differ, after $f$, at $\langle\bar a,k\rangle$, by pinning; and arrows are injective on individuals.
+
+*Write-up: [symmetric-old-new-individuals](symmetric-old-new-individuals.html). By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Holds □Atomicity.
+
+At both objects every relational type is atomic. The entities pinned down by a finite $M$ form the complete atomic algebra whose atoms are the orbits of the tuples $\langle\bar a,h\rangle$ with $h$ restricted to $M$; such an orbit stays an atom for every larger $M$ once $h(M)$ contains every individual in the arguments' pinning sets that an arrow of $h$'s kind can reach. Any nonzero entity contains such a tuple, after moving $h$ on fresh points. See the write-up.
+
+*Write-up: [symmetric-old-new-individuals](symmetric-old-new-individuals.html). By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Fails Strong Leibniz Biconditionals (type t).
+
+The arrows from $E$ to $O$ form a possible proposition whose only nonzero part is itself, and along the inclusion $\iota$ it becomes $G_O\cup K$, which $G_O$ splits; so no strong world lies below it. (The map derives the failures of BF and of □ND at $t$; the write-up also gives them directly.)
+
+*Write-up: [symmetric-old-new-individuals](symmetric-old-new-individuals.html). By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Holds □Boolean Completeness (type t). Fails Infinity Schema (type t).
+
+The propositions at $E$ are four and those at $O$ eight, finite Boolean algebras, so complete; and there are not five pairwise distinct propositions at $E$.
+
+*By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Holds □Boolean Completeness, □Rigid Comprehension.
+
+With one individual every entity is fixed by every symmetry, and is a union of finitely many classes, one for each kind of arrow (to $E$, from $E$ to $O$, in $G_O$, in $K$) and tuple of arguments; by induction on types, so every domain is finite and complete. Transport along an arrow then depends only on its kind, and the kind of a composite on the kinds of its factors, so the intension whose extension at $h$ is $X$'s extension at the identity transported along $h$ is a union of classes, in the domain; it is persistent and inextensible, at both objects.
+
+*Write-up: [symmetric-old-new-individuals](symmetric-old-new-individuals.html). By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-07.*
+
+### Fails Possible Infinity (type t).
+
+At a world with $n$ propositions, the numeral $\operatorname{Suc}^n_t\mathbf{0}_t$, a finite cardinality, holds of the universal property of propositions, so the Axiom of Infinity at type $t$ fails there. It fails at every world, so Possible Infinity at type $t$ fails.
+
+*General argument `arguments/finitely-many-propositions-everywhere`. It requires that There are finitely many propositions at every object reachable from the evaluation point. Here: $E$ has four propositions and $O$ eight, generated by the arrows into $E$, $G_O$ and $K$, the last two separated by whether the arrow sends a given new individual to a new one. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Fails Axiom of Infinity (type e), Infinity Schema (type e), Possible Infinity (type e).
+
+No two individuals are distinct, and the numeral $\operatorname{Suc}_e\mathbf{0}_e$ holds of the universal property at type $e$ at every world.
+
+*General argument `arguments/one-individual`. It requires that There is exactly one individual, at every world. Here: There is a single individual at every object. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-02.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic.
+
+### Fails Witnessed Possibility, Separated Structure, Independence (signature Σ), Distinctness Maximalism (signature Σ).
+
+Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true identity that C(Σ) does not prove.
+
+*General argument `arguments/sigma-top`. It requires that Every constant of Σ is relational, and each denotes the top element of its type. Here: This is the interpretation. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic; it uses nothing about the model.
+
+
+## Notes
+
+Found by Claude Fable 5.1 as a countermodel to a principle from another context, and recorded at Cian Dorr's request on 6 October 2026. Like the sections-and-projection model it has □Actuality without Inextensible Comprehension; unlike it, it has Atomicity at every type, and so separates Atomicity and Actuality, even with ND and □Strong Actuality, from Inextensible Comprehension. Its actual world at $E$ is the set of all arrows from $E$ to $E$, which properly contains the identity, so it does not meet the group's condition symmetry-group-pinned. No Lean verification is claimed.
+
+## Sources
+
+- **Fable 5.1, 6 Oct** — Claude Fable 5.1 (Anthropic), 6 October 2026, in a session with Cian Dorr, as a countermodel to a principle (“Frex*”) from another context; it satisfies □Strong Actuality and refutes Inextensible Comprehension.
+- **Opus 5.5, 6 Oct** — Claude Opus 5.5 (Anthropic), 6 October 2026, at Cian Dorr's direction; the corrected argument for the failure of Inextensible Comprehension, and the verdicts on ND, Atomicity, Boolean Completeness, BF and the Strong Leibniz Biconditionals; see the write-up.
+- **BC does not imply RC** — Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, Definitions 15–18, p. 8; Proposition 20 (symmetric ideally-full models are models of C).
+
+<p class='cert'>Record: <code>topics/classicism/models/symmetric-old-new-individuals.yaml</code></p>
+
+## Paper references
+
+- **Background: Boolean Completeness does not imply Rigid Comprehension.** Dorr, Cian. Boolean Completeness does not imply Rigid Comprehension. Unpublished draft in progress, 30 July 2026, 27 pages. All page, proposition and lemma locators for this source refer to that draft. Parts of the draft were drafted with AI assistance; its mathematical claims are attributed to the author. — Definitions 15–18, p. 8; Proposition 20. The symmetric ideally-full models, of which this is one, on a new two-object category.
