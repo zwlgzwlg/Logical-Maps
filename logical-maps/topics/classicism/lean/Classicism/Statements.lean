@@ -119,10 +119,6 @@ example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.GallinExtensionalComprehension.schemaIn
 
-/-- Principle definition check: `general-separated-structure-r`. -/
-example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
-  (Classicism.Meta.AxiomSet.generalSeparatedStructure _)
-
 /-- Principle definition check: `identity-necessary-r`. -/
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.NecessityOfIdentity.schemaIn
@@ -1205,14 +1201,6 @@ def gallin_comprehension_implies_nd : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.schemaIn
-
-/-- `general-separated-structure-r-implies-separated-structure-r`
-
-General Separated Structure ⇒ Separated Structure -/
-def general_separated_structure_r_implies_separated_structure_r : Prop :=
-  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.generalSeparatedStructure _) →
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.separatedStructure _)
 
 /-- `inextensible-comprehension-r-implies-weakly-inextensible-comprehension-r`
 
@@ -2874,14 +2862,6 @@ def separated_structure_incompatible_with_nd : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.separatedStructure _) →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.schemaIn →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
-
-/-- `separated-structure-r-implies-general-separated-structure-r`
-
-Separated Structure ⇒ General Separated Structure -/
-def separated_structure_r_implies_general_separated_structure_r : Prop :=
-  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.separatedStructure _) →
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.generalSeparatedStructure _)
 
 /-- `separated-structure-r-implies-independence-signature-r`
 
@@ -6902,6 +6882,14 @@ def relational_choice_r.polyadic : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RelationalChoice.schemaIn ↔
       Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RelationalChoice.listSchemaIn
+
+/-- `separated-structure-r`, variant `general`
+
+Separated Structure ⇔ General form -/
+def separated_structure_r.general : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.separatedStructure _) ↔
+      Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.generalSeparatedStructure _)
 
 /-- `strong-leibniz-r`, variant `dual`
 

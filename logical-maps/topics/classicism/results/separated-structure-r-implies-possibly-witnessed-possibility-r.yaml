@@ -17,7 +17,7 @@ sources:
 source_names:
 - Dorr 22 Sep
 - Classicism
-proof: Iterating Separated Structure, as in the recorded proof of General Separated Structure, gives $F\bar
+proof: Iterating Separated Structure, as in the proof of the general form of Separated Structure (on its page), gives $F\bar
   c=G\bar c\to F=G$ for closed pure $F,G$ and distinct constants $\bar c$. Let $P$ be pure with free variables
   among $\bar x$ and put $F:=\lambda\bar x\, .\,\neg P$, $G:=\lambda\bar x\, .\,\top$, both closed and
   pure. Suppose $\Box\neg P[\bar c/\bar x]$, that is $\neg P[\bar c/\bar x]=\top$. By $\beta$, $F\bar
@@ -32,3 +32,8 @@ references:
   role: background
   locator: §4, pp. 561–562
 notes: ''
+changes:
+- date: '2026-10-08'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  summary: General Separated Structure became a form of Separated Structure; the proof's cross-reference
+    is updated.

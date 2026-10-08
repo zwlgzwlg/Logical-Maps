@@ -21,7 +21,11 @@ references:
   locator: §4, pp. 561–562 and n. 40
   note: Derived from Quantified Separated Structure and the assumptions Purity and Fundamentality; General
     Separated Structure on p. 565.
-notes: ''
+notes: >-
+  Until 8 October 2026 the general form below was a separate principle, General Separated Structure,
+  equivalent in C by two recorded results; it became a form of this principle at Cian Dorr's direction.
+  Bacon's instances of it: Rab = Sba implies R and S are converses; Rab = Fb implies R forgets its first
+  argument; Raa = Fa implies F is the reflexivization of R.
 changes:
 - date: '2026-09-22'
   by: Claude Fable 5.1 (Anthropic)
@@ -30,4 +34,35 @@ changes:
   by: Claude Fable 5.1 (Anthropic)
   summary: Displayed the schema’s side conditions inside the math block, at Cian Dorr’s request; the statement
     is unchanged.
+variants:
+- id: general
+  lean:
+    ref: (Classicism.Meta.AxiomSet.generalSeparatedStructure _)
+    status: stated
+  name: General form
+  statement: >-
+    Let a_1…a_n and b_1…b_m be constants of Sigma, possibly with repetitions, none occurring in the
+    closed terms F and G, and let pi be a bijection from variables x_1…x_k to the distinct constants
+    among them. If F applied to the a’s equals G applied to the b’s, then abstracting the constants
+    yields identical pure-position operations.
+  formal: >-
+    $F a_1\cdots a_n=G b_1\cdots b_m\to\lambda\bar x\, .\,F(\pi a_1)\cdots(\pi a_n)=\lambda\bar x\,
+    .\,G(\pi b_1)\cdots(\pi b_m)\quad(a_i,b_j\text{ constants of }\Sigma,\text{ none in the closed }F,G;\
+    \pi\text{ a bijection from }\bar x\text{ to the distinct ones})$
+  references:
+  - paper: bacon-2020
+    role: formulation
+    locator: §4, p. 565
+  equivalence: >-
+    General to official: take $n=m=1$ with $a_1=b_1=c$, so $k=1$; the instance reads
+    $Fc=Gc\to\lambda x\, .\,Fx=\lambda x\, .\,Gx$, and $\eta$ turns the consequent into $F=G$. Official
+    to general: let $c_1,\ldots,c_k$ be the distinct constants among $a_1\ldots a_n,b_1\ldots b_m$, with
+    $\pi x_j=c_j$, and put $F^{\prime}:=\lambda x_1\ldots x_k\, .\,F(\pi a_1)\cdots(\pi a_n)$ and
+    $G^{\prime}:=\lambda x_1\ldots x_k\, .\,G(\pi b_1)\cdots(\pi b_m)$. Neither contains any $c_j$, and
+    by $\beta$, $F^{\prime}c_1\cdots c_k=Fa_1\cdots a_n$ and $G^{\prime}c_1\cdots c_k=Gb_1\cdots b_m$.
+    Given the antecedent, $(F^{\prime}c_1\cdots c_{k-1})c_k=(G^{\prime}c_1\cdots c_{k-1})c_k$ with $c_k$
+    in neither applied term, so the official form gives $F^{\prime}c_1\cdots c_{k-1}=G^{\prime}c_1\cdots
+    c_{k-1}$; after $k$ such steps $F^{\prime}=G^{\prime}$. Bacon derives the general form from Logical
+    Necessity; the official form alone suffices (Claude Fable 5.1, 22 September 2026). If $k=0$ the
+    schema is trivial.
 lean_def: (Classicism.Meta.AxiomSet.separatedStructure _)
