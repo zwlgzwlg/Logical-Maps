@@ -21,6 +21,7 @@
 - **¬ ND (type t).** ND (type t) in the displayed closed propositional formulation.
 - **¬ Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **¬ Infinity Schema (type t).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
+- **¬ Strong Leibniz Biconditionals (type t).** The type-t instance of the Strong Leibniz Biconditionals: every possible proposition is entailed by a strong world proposition, one that is possible and necessarily entails every proposition or its negation.
 - **¬ Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **¬ Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
 - **¬ Possible Infinity (type e).** Possibly there are not finitely many individuals: the Axiom of Infinity at this type, under a diamond.
@@ -88,6 +89,12 @@ The actual-world proposition $a$ and $\bot$ are distinct, and a collapse $c$ tra
 There are finitely many propositions, $n$ say, with literal identity. The numerals are closed terms, so in the domain, and the numeral $n$ holds of the universal property of propositions, so the Axiom of Infinity at type $t$ fails, as does the instance of the schema asking for $n+1$ pairwise distinct propositions.
 
 *From the group *Symmetry-constrained full models*, shared argument `symmetry-constrained-full#axiom-of-infinity-t`. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-10-04.*
+
+### Fails Strong Leibniz Biconditionals (type t).
+
+The constant maps form one orbit of the symmetry group, so the proposition $C$ that the arrow is constant (for individuals $a,b,c$, the proposition that $a=b=c$) is an atom: it is possible, and a symmetric proposition contains all the constant maps or none. It is not a strong world. At a constant map $c_i$, every composite $l\circ c_i$ is constant, so $C$ transported there is $\top$; and $\top$ there lies neither below the proposition $P$ that the arrow is a permutation nor below its negation, both being possible. As an atom, $C$ has no possible proposition below it but itself, so no strong world lies below it, and the type-$t$ Strong Leibniz Biconditionals fail.
+
+*From the group *Symmetry-constrained full models*, shared argument `symmetry-constrained-full#strong-leibniz-t`. By Claude Opus 5.5 (Anthropic), from Cian Dorr's observation, 2026-10-08.*
 
 ### Holds Distinctness-preserving collapse.
 
