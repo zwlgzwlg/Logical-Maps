@@ -1,0 +1,18 @@
+id: well-ordering-r
+name: Well-Ordering
+category: choice
+statement: Every type, including e, is well-ordered by some relation.
+formal: $\exists R^{\sigma\sigma t}\, .\,\operatorname{WO}(R)$
+date: '2026-10-08'
+sources:
+- Cian Dorr, suggestion of 8 October 2026.
+source_names:
+- Dorr 8 Oct
+references: []
+notes: >-
+  WO is defined in Background: $R$ is transitive, antisymmetric and total, and every instantiated
+  property has an $R$-minimal instance. The condition is unboxed, so it concerns the evaluation point
+  only, and the well-order need not remain one at other worlds, since its field may contract there by
+  contingent identities. Modal Well-Ordering asks for a relation that is necessarily a well-order.
+  Cian Dorr conjectures that Well-Ordering is equivalent to Transversal Choice, as the well-ordering
+  theorem is to the axiom of choice in set theory; this is not recorded.

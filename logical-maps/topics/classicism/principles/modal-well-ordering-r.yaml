@@ -1,0 +1,17 @@
+id: modal-well-ordering-r
+name: Modal Well-Ordering
+category: choice
+statement: Every type, including e, has a relation that is necessarily a well-order of it.
+formal: $\exists R^{\sigma\sigma t}\, .\,\Box\operatorname{WO}(R)$
+date: '2026-10-08'
+sources:
+- Cian Dorr, suggestion of 8 October 2026.
+source_names:
+- Dorr 8 Oct
+references: []
+notes: >-
+  WO is defined in Background. The relation exists at the evaluation point, and at each world it
+  well-orders what there is there; the order it induces may differ from world to world. A well-order
+  need not be necessarily one, since distinct relata can be identical at other worlds, so this is
+  stronger than Well-Ordering. It gives Intensional Choice at once (select the least instance), and it
+  follows from Well-Ordering with Weak Rigid Comprehension and BF.

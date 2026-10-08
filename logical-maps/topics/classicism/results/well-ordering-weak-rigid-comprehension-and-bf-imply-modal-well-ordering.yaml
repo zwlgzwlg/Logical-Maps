@@ -1,0 +1,37 @@
+id: well-ordering-weak-rigid-comprehension-and-bf-imply-modal-well-ordering
+premises:
+- well-ordering-r
+- weak-rigid-comprehension-r
+- barcan-r
+conclusion: modal-well-ordering-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 7 October 2026, filling in an argument sketched by Cian Dorr (the rigid family of initial segments, and the conjecture that it is necessarily well-ordered by inclusion)
+  recorded_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  checked_by: []
+  date: '2026-10-07'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 7 October 2026, in conversation with Claude Opus 5.5 (Anthropic); proof as recorded.
+source_names:
+- Dorr 7 Oct
+proof: >-
+  See the write-up. Given a well-order $R$, take weakly rigid properties coextensive with the initial
+  segments of $R$, and a weakly rigid property $R^*$ coextensive with being one of them. Weak
+  inextensibility of $R^*$ carries facts that hold necessarily of each actual segment to every
+  instance of $R^*$ at every world. In this way $R^*$ is necessarily a chain under $\le$ that is
+  well-ordered by $\le$; BF at $\sigma$ makes its instances necessarily cover $\sigma$; and an
+  induction using weak inextensibility of the strict segments shows that its instances necessarily
+  separate any two distinct individuals. Then $\lambda x\,y\, .\,\forall M\, .\,R^*M\land My\to Mx$ is
+  necessarily a well-order.
+references: []
+notes: >-
+  Well-Ordering is used only at the evaluation point, Weak Rigid Comprehension only at the types
+  $\sigma t$ and $(\sigma t)t$, and BF only at $\sigma$, once. Modal Well-Ordering implies its own
+  necessitation and Intensional Choice, so the premises give boxed Intensional Choice; this improves on
+  bf-weak-rigid-comprehension-atomicity-and-relational-choice-imply-intensional-choice by trading
+  Atomicity and Relational Choice for Well-Ordering. Cian Dorr's sketch used Rigid Comprehension and
+  asked whether the family of rigid initial segments is necessarily well-ordered; the step needing a
+  new idea turned out to be separation, handled by applying weak inextensibility to the strict
+  segments.

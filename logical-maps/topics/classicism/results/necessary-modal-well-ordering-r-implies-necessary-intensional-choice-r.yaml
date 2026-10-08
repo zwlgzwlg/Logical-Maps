@@ -1,0 +1,22 @@
+id: necessary-modal-well-ordering-r-implies-necessary-intensional-choice-r
+premises:
+- necessary-modal-well-ordering-r
+conclusion: necessary-intensional-choice-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 8 October 2026 (necessitating the unboxed argument)
+  recorded_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  checked_by: []
+  date: '2026-10-08'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 7 October 2026; unboxed proof as recorded in modal-well-ordering-r-implies-intensional-choice-r.
+source_names:
+- Dorr 7 Oct
+proof: >-
+  The argument of modal-well-ordering-r-implies-intensional-choice-r derives the conclusion from the
+  premise in C, with no optional hypothesis, so the corresponding implication between closed instances
+  is a theorem of C. Necessitate it and apply K to the boxed premise. Type ranges stay outside the box.
+references: []
+notes: ''

@@ -204,6 +204,32 @@ conditions and the transversal condition are unboxed, so they concern the
 evaluation point only. Two members of one cell have coextensive cells, but
 in C properties are identical only when necessarily coextensive.
 
+For $R^{\sigma\sigma t}$, at any type $\sigma$ including $e$, the order
+predicates are
+
+$$
+\begin{aligned}
+\operatorname{Trans}(R)&:=\forall x^\sigma y^\sigma z^\sigma\, .\,
+  (Rx)y\land(Ry)z\to(Rx)z,\\
+\operatorname{Antisymm}(R)&:=\forall x^\sigma y^\sigma\, .\,
+  (Rx)y\land(Ry)x\to x=y,\\
+\operatorname{Total}(R)&:=\forall x^\sigma y^\sigma\, .\,(Rx)y\lor(Ry)x,\\
+\operatorname{WellFounded}(R)&:=\forall X^{\sigma t}\, .\,
+  (\exists x^\sigma\, .\,Xx)\to\exists x^\sigma\, .\,Xx\land
+  \forall y^\sigma\, .\,Xy\land(Ry)x\to y=x,\\
+\operatorname{WO}(R)&:=\operatorname{Trans}(R)\land\operatorname{Antisymm}(R)
+  \land\operatorname{Total}(R)\land\operatorname{WellFounded}(R).
+\end{aligned}
+$$
+
+$R$ is a non-strict order: Total includes reflexivity, and in a total
+relation an $R$-minimal instance of $X$ is its $R$-least instance. Like
+Equiv, these are unboxed, so they concern the evaluation point, and each
+depends only on the extension of $R$ there: coextensive relations satisfy
+them together. A relation can be a well-order without necessarily being
+one, because instances that are distinct here may be identical elsewhere,
+where antisymmetry then fails.
+
 Strong and weak worlds follow Bacon, *A Philosophical Introduction to
 Higher-Order Logics*, §8.2, pp. 165–166. At a relational type $\sigma$, with
 $\Diamond_\sigma X:=X\ne\bot_\sigma$,

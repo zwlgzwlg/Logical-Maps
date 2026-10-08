@@ -1,0 +1,25 @@
+id: modal-well-ordering-r-implies-intensional-choice-r
+premises:
+- modal-well-ordering-r
+conclusion: intensional-choice-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 7 October 2026, in an argument sketched by Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  checked_by: []
+  date: '2026-10-07'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 7 October 2026, in conversation with Claude Opus 5.5 (Anthropic).
+source_names:
+- Dorr 7 Oct
+proof: >-
+  Let $\Box\operatorname{WO}(R)$, and let $F$ be necessarily instantiated. Put $G:=\lambda x\,
+  .\,Fx\land\forall y\, .\,Fy\to(Rx)y$, so that $G\le F$. At any world, $F$ is instantiated and $R$ is
+  a well-order, so $F$ has an $R$-minimal instance $x$. For any instance $y$ of $F$, Total gives
+  $(Rx)y$ or $(Ry)x$, and in the second case minimality gives $y=x$, whence $(Rx)y$ by Total again;
+  so $Gx$. If also $Gy$, then $(Rx)y$ and $(Ry)x$, and Antisymm gives $y=x$. Hence
+  $\Box\exists x\, .\,Gx\land\forall y\, .\,Gy\to y=x$.
+references: []
+notes: The selected property is the least instance of $F$ in the necessary well-order, which may be a different individual at different worlds.

@@ -1,0 +1,26 @@
+id: necessary-well-ordering-and-intensional-choice-imply-modal-well-ordering
+premises:
+- necessary-well-ordering-r
+- intensional-choice-r
+conclusion: modal-well-ordering-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Cian Dorr, 8 October 2026
+  recorded_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  checked_by: []
+  date: '2026-10-08'
+  lean: none
+sources:
+- Cian Dorr, 8 October 2026.
+source_names:
+- Dorr 8 Oct
+proof: >-
+  Apply Intensional Choice at the type $\sigma\sigma t$ to $F:=\lambda R\, .\,\operatorname{WO}(R)$,
+  which is necessarily instantiated by $\Box$Well-Ordering. This gives $G\le F$ that is necessarily
+  uniquely instantiated. Put $R':=\lambda x\,y\, .\,\exists R\, .\,GR\land(Rx)y$. At any world the
+  unique instance $R_0$ of $G$ there is a well-order, since $G\le F$, and $R'$ is coextensive with
+  $R_0$ there. WO depends only on the extension of its argument at the evaluation point (Background),
+  so $\operatorname{WO}(R')$ holds there. Hence $\Box\operatorname{WO}(R')$.
+references: []
+notes: Intensional Choice is used at the type $\sigma\sigma t$ to obtain Modal Well-Ordering at $\sigma$.

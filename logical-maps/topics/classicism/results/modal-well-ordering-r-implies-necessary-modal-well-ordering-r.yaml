@@ -1,0 +1,27 @@
+id: modal-well-ordering-r-implies-necessary-modal-well-ordering-r
+premises:
+- modal-well-ordering-r
+conclusion: necessary-modal-well-ordering-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  recorded_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  checked_by: []
+  date: '2026-10-08'
+  lean: none
+sources:
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §1.5, p. 17 (4).
+source_names:
+- Classicism
+proof: >-
+  If $\Box\operatorname{WO}(R)$, then $\Box\Box\operatorname{WO}(R)$ by 4, and so $\Box\exists R'\,
+  .\,\Box\operatorname{WO}(R')$, by necessitating the theorem $\Box\operatorname{WO}(R)\to\exists R'\,
+  .\,\Box\operatorname{WO}(R')$ and applying K.
+references:
+- paper: bacon-dorr-classicism
+  role: proof
+  locator: §1.5, p. 17
+  note: The axiom 4.
+notes: >-
+  With T, Modal Well-Ordering and its necessitation are equivalent in C.

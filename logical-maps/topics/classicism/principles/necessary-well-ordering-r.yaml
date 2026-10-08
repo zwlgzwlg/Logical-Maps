@@ -1,0 +1,15 @@
+id: necessary-well-ordering-r
+name: □Well-Ordering
+category: choice
+statement: Necessarily, every type, including e, is well-ordered by some relation.
+formal: $\Box\exists R^{\sigma\sigma t}\, .\,\operatorname{WO}(R)$
+date: '2026-10-08'
+sources:
+- Cian Dorr, suggestion of 8 October 2026.
+source_names:
+- Dorr 8 Oct
+references: []
+notes: >-
+  The necessitation of Well-Ordering; the instances are closed, and type quantifiers remain outside the
+  box. The well-order may differ from world to world. Modal Well-Ordering, which asks for one relation
+  that is necessarily a well-order, implies it.

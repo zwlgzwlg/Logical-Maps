@@ -1,0 +1,27 @@
+id: no-pure-contingency-and-well-ordering-imply-necessary-well-ordering
+premises:
+- no-pure-contingency-r
+- well-ordering-r
+conclusion: necessary-well-ordering-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  recorded_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  checked_by: []
+  date: '2026-10-08'
+  lean: none
+sources:
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §2.2, p. 27 (No Pure Contingency).
+source_names:
+- Classicism
+proof: >-
+  Each instance $\exists R\, .\,\operatorname{WO}(R)$ of Well-Ordering is a closed sentence of the pure
+  language. Given Well-Ordering it is true, and No Pure Contingency makes a true closed pure sentence
+  necessary.
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.2, p. 27
+  note: Formulation of No Pure Contingency.
+notes: One of the uniform family by which No Pure Contingency carries a pure principle to its boxed form.
