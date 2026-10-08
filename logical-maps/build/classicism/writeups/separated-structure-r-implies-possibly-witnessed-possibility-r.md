@@ -12,7 +12,11 @@
 
 ## Proof
 
-Iterating Separated Structure, as in the recorded proof of General Separated Structure, gives $F\bar c=G\bar c\to F=G$ for closed pure $F,G$ and distinct constants $\bar c$. Let $P$ be pure with free variables among $\bar x$ and put $F:=\lambda\bar x\, .\,\neg P$, $G:=\lambda\bar x\, .\,\top$, both closed and pure. Suppose $\Box\neg P[\bar c/\bar x]$, that is $\neg P[\bar c/\bar x]=\top$. By $\beta$, $F\bar c=\top=G\bar c$, so $F=G$. By NI, $\Box(F=\lambda\bar x\, .\,\top)$, and $F=\lambda\bar x\, .\,\top\to\forall\bar x\, .\,F\bar x$ is a theorem, so K gives $\Box\forall\bar x\, .\,\neg P$. Contraposing, $\Diamond\exists\bar x\, .\,P\to\Diamond P[\bar c/\bar x]$.
+Iterating Separated Structure, as in the proof of the general form of Separated Structure (on its page), gives $F\bar c=G\bar c\to F=G$ for closed pure $F,G$ and distinct constants $\bar c$. Let $P$ be pure with free variables among $\bar x$ and put $F:=\lambda\bar x\, .\,\neg P$, $G:=\lambda\bar x\, .\,\top$, both closed and pure. Suppose $\Box\neg P[\bar c/\bar x]$, that is $\neg P[\bar c/\bar x]=\top$. By $\beta$, $F\bar c=\top=G\bar c$, so $F=G$. By NI, $\Box(F=\lambda\bar x\, .\,\top)$, and $F=\lambda\bar x\, .\,\top\to\forall\bar x\, .\,F\bar x$ is a theorem, so K gives $\Box\forall\bar x\, .\,\neg P$. Contraposing, $\Diamond\exists\bar x\, .\,P\to\Diamond P[\bar c/\bar x]$.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — General Separated Structure became a form of Separated Structure; the proof's cross-reference is updated.
 
 ## Sources
 
