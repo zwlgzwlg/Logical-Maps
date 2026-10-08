@@ -40,6 +40,7 @@ lemma of the shallow layer is carried into a signature by `Term.ofPure`
 | `fregean-axiom-implies-no-pure-contingency-r` | `fregean_entails_npc` |
 | `possibility-and-necessary-barcan-t-incompatible` | `possibility_necBarcanT_inconsistent` |
 | `possibility-and-no-pure-contingency-incompatible` | `possibility_schema_npc_inconsistent` |
+| `possibility-and-necessary-rigid-power-incompatible` | `possibility_necRigidPower_inconsistent` (`RigidPower.lean`; the model of pair-preserving injections and collapses) |
 | `pure-b-and-pure-possibility-incompatible` | `possibility_pureB_inconsistent` |
 | `maximalist-distinctness-incompatible-with-nd` | `maximalist_nd_inconsistent` (through `ND_t`) |
 | `maximalist-distinctness-incompatible-with-necessary-barcan-r` | `maximalist_necBarcan_inconsistent` (through `□BF_t`) |
