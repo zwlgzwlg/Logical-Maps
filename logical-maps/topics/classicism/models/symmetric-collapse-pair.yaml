@@ -99,6 +99,64 @@ arguments:
 
 # --- later additions ---
 
+- id: rigid-power
+  fails: [rigid-power-r]
+  when: {individuals: base}
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-08'
+  text: >-
+    At type $e\to t$, with $F:=\top$: the argument of finite-support-pair-injections-or-collapses,
+    whose witnesses are all symmetric, with the collapses kept surjective. Write $Z_k$ for the
+    extension of a property $Z$ at the arrow $k$, so that $(h\cdot Z)_k=Z_{k\circ h}$. The step that
+    needs care changes an arrow $j$ to hit a value $y$ at a point $x$ outside a finite $N\supseteq\{0,1\}$:
+    for a collapse, put $j':=j\circ\tau$, where $\tau$ fixes $N$ pointwise, sends $x$ to a
+    $j$-preimage $p$ of $y$, and maps the rest of $\mathbb N\setminus N$ onto $\mathbb N\setminus N$
+    (possible even if $p\in N$, $\tau$ not being required to be injective); then $j'$ is a surjective
+    collapse agreeing with $j$ on $N$, with $j'x=y$. For a permutation and $y\notin j[N]$, put
+    $j':=(y\ jx)\circ j$, a permutation preserving $\{0,1\}$ since $y,jx\notin\{0,1\}$.
+
+
+    (1) $\top$ is rigid: its inextensibility is $\Box$BF at type $e$, which holds.
+
+
+    (2) $Y$, with $Y_k:=\mathbb N\setminus\{k2\}$ at a permutation and $\mathbb N$ at a collapse, is in
+    the domain (pinned down by $\{0,1,2\}$; symmetric, since $y\ne k2$ gives $gy\ne(g\circ k)2$) and
+    rigid. It is persistent, every composite with a collapse being a collapse. It is inextensible at
+    every world $w$: let $X$, pinned down by $N\supseteq\{0,1\}$, contain $\langle jx,j\rangle$ for
+    every $x\in Y_w$ and arrow $j$, and let $y\in Y_{j\circ w}$. If $y=jn$ with $n\in N\cap Y_w$, then
+    $\langle y,j\rangle\in X$. If $y=jn$ with $n\in N\setminus Y_w$, then $w$ is a permutation, $n=w2$,
+    and $j\circ w$ is a collapse, so $j$ identifies $w0$ with $w1$ and is a collapse; if $y\notin
+    j[N]$, $j$ is either. In both cases change $j$ as above at a fresh $x\notin N\cup\{w2\}$, so that
+    $x\in Y_w$, $\langle y,j'\rangle\in X$, and by pinning $\langle y,j\rangle\in X$.
+
+
+    (3) Along a collapse a weakly rigid property $Z$, with extension $S$ and pinned down by
+    $N\supseteq\{0,1\}$, has extension $\mathbb N$ or a finite one. If $S$ is infinite, then for any $b$
+    change the collapse $m$ as above at some $x\in S\setminus N$ to $m'x=b$; persistence gives
+    $b\in Z_{m'}=Z_m$. If $S$ is finite, the symmetric property $k\mapsto k[S]$, pinned down by $S$,
+    necessarily holds of each member of $S$, so $Z_m\subseteq m[S]$.
+
+
+    Let $R:=\lambda X\, .\,\operatorname{Rigid}(X)\land X\le\top$, the value of a closed pure term, so
+    that its extension at every arrow is the set of rigid properties. Let $\mathbf X$ hold of $W$ at
+    $k$ iff $W=k'\cdot Z$ for some rigid $Z$ and some arrow $k'$ agreeing with $k$ on $\{0,1\}$:
+    pinned down by $\{0,1\}$, and symmetric, since $g\cdot(k'\cdot Z)=(g\circ k')\cdot Z$ and the
+    rigid properties are closed under transport along symmetries. It necessarily holds of every
+    instance of $R$. At a collapse $c$, every $k'$ agreeing with $c$ on $\{0,1\}$ is a collapse, so by
+    (3) every member of $\mathbf X$'s extension has extension $\mathbb N$ or a finite one, while $Y$,
+    in $R$'s extension there by (2), has extension $\mathbb N\setminus\{2\}$. So $R\not\le\mathbf X$:
+    $R$ is not even weakly inextensible, though $\top$ is rigid. With Rigid Comprehension holding,
+    Rigid Comprehension (boxed, and with Actuality, BF and Boolean Completeness) does not imply
+    Rigid Power.
+  revisions:
+  - date: '2026-10-08'
+    by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+    note: >-
+      First given on 8 October for symmetric-pair-injections-or-collapses, Cian Dorr's symmetric
+      analogue of finite-support-pair-injections-or-collapses, which differs from this model only in
+      not requiring the collapses to be surjective; that record was removed the same day, having the
+      same verdicts as this one once this argument was recorded.
+
 # migration: text of the old notes that no argument holds, verbatim. Their argument for the failure
 # of ND, now derived, is dropped.
 notes: >-
