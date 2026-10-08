@@ -9,6 +9,7 @@ M-set models on the two-element monoids are in `Semantics/IntensionalExamples.le
 | `Permutations.lean` | Part 1: the ideally full model over the permutations of `ℕ`. |
 | `MonoidModel.lean` | The model over any monoid acting on `ℕ`, and the verdict lemmas, each parametrized by the one fact about the monoid that decides it. |
 | `Monoids.lean` | Parts 2 to 8: the seven submonoids of the functions on `ℕ`, and the verdicts as instances. |
+| `PairInjCollapse.lean` | Dorr's monoid of 7 October 2026, the pair-preserving injections and the collapses of `0` with `1`: Vicinity, BF (by approximation by surjections), Atomlessness, and the failure of **Rigid Power** at `e → t` with `F := ⊤`, through `SRig`, the quoted rigidity unfolded. |
 | `Functions.lean` | A category of sets and some functions between them (`FunCat`), the ideally full model on it, and `BF` from approximation by surjections. |
 | `ContingentBarcan.lean` | The two-object model after Part 8 with `BF` but not `□BF`: `ℕ` and a point, all functions as arrows. |
 | `Pointed.lean` | Any monoid model with a point adjoined (one arrow in, none back): the verdicts at the point and at `ℕ`, each from the same fact about the monoid as in `MonoidModel`, and `□P`, `◇P` from the two. |
