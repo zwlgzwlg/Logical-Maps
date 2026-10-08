@@ -527,6 +527,27 @@ theorem necessary_boolean_completeness_r :
 
 end symmetric_two_object_unpinned
 
+namespace finite_support_pair_injections_or_collapses
+
+local notation "M" => Classicism.Meta.Intensional.MonoidModel.model_isModel Classicism.Meta.Intensional.Monoids.pairInjCol
+
+/-- Vicinity, with witness the proposition `0 ≠ 1` (`Monoids.pairInjCol_vicinity`). -/
+theorem vicinity : Statements.Models.finite_support_pair_injections_or_collapses.vicinity :=
+  verdict_holds M <| holdsAx_eq.2 Monoids.pairInjCol_vicinity
+
+/-- BF at every type, every arrow agreeing on a finite set with a surjective one. -/
+theorem barcan_r : Statements.Models.finite_support_pair_injections_or_collapses.barcan_r :=
+  verdict_holds M <| holdsAx_indexed.2 fun σ _ => Monoids.pairInjCol_bf σ
+
+theorem atomlessness : Statements.Models.finite_support_pair_injections_or_collapses.atomlessness :=
+  verdict_holds M <| holdsAx_eq.2 Monoids.pairInjCol_atomlessness
+
+/-- **Rigid Power fails** at `e → t`, with `F := ⊤` (`Monoids.PairInjCol.not_rigidPower`). -/
+theorem rigid_power_r : Statements.Models.finite_support_pair_injections_or_collapses.rigid_power_r :=
+  verdict_fails M <| not_holdsAx_of ⟨.arr .e .t, by simp, rfl⟩ Monoids.PairInjCol.not_rigidPower
+
+end finite_support_pair_injections_or_collapses
+
 end Classicism.Map.Models
 
 /-! ## The models' proofs that they meet the map's conditions

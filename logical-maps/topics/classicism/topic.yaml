@@ -180,6 +180,7 @@ lean:
     - Classicism.Semantics.Interpretations
     - Classicism.Models.SymmetricFull
     - Classicism.Models.SymmetricIdeal
+    - Classicism.Models.PairInjCollapse
     holds: ({model}).IsModel ∧ ({model}).HoldsAx {def}
     fails: ({model}).IsModel ∧ ¬ ({model}).HoldsAx {def}
     relative_categories: [signature]

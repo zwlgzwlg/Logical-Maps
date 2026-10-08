@@ -10,6 +10,7 @@ import Classicism.Models.FullActionModels
 import Classicism.Semantics.Interpretations
 import Classicism.Models.SymmetricFull
 import Classicism.Models.SymmetricIdeal
+import Classicism.Models.PairInjCollapse
 
 /-!
 # Generated statements: models' verdicts
@@ -134,6 +135,22 @@ def Models.finite_support_monotone_surjections.atomicity_t : Prop :=
 /-- `finite-support-monotone-surjections`: Boolean Completeness fails. -/
 def Models.finite_support_monotone_surjections.boolean_completeness_r : Prop :=
   (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)).IsModel ∧ ¬ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)).HoldsAx Classicism.P.BooleanCompleteness.schemaIn
+
+/-- `finite-support-pair-injections-or-collapses`: Vicinity holds. -/
+def Models.finite_support_pair_injections_or_collapses.vicinity : Prop :=
+  (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)).HoldsAx Classicism.P.Vicinity.schemaIn
+
+/-- `finite-support-pair-injections-or-collapses`: BF holds. -/
+def Models.finite_support_pair_injections_or_collapses.barcan_r : Prop :=
+  (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)).HoldsAx Classicism.P.Barcan.schemaIn
+
+/-- `finite-support-pair-injections-or-collapses`: Atomlessness holds. -/
+def Models.finite_support_pair_injections_or_collapses.atomlessness : Prop :=
+  (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)).HoldsAx Classicism.P.Atomlessness.schemaIn
+
+/-- `finite-support-pair-injections-or-collapses`: Rigid Power fails. -/
+def Models.finite_support_pair_injections_or_collapses.rigid_power_r : Prop :=
+  (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)).IsModel ∧ ¬ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)).HoldsAx Classicism.P.RigidPower.schemaIn
 
 /-- `finite-support-permutations`: ND holds. -/
 def Models.finite_support_permutations.distinctness_necessary_r : Prop :=
@@ -486,6 +503,22 @@ def Models.finite_support_monotone_surjections.independence_signature_r : Prop :
 /-- `finite-support-monotone-surjections`: No Contingency (signature Σ) holds. -/
 def Models.finite_support_monotone_surjections.no_contingency_signature_r : Prop :=
   (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj))).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj))).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
+
+/-- `finite-support-pair-injections-or-collapses`: No Pure Contingency holds. -/
+def Models.finite_support_pair_injections_or_collapses.no_pure_contingency_r : Prop :=
+  (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)).HoldsAx (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency)
+
+/-- `finite-support-pair-injections-or-collapses`: Transversal Choice holds. -/
+def Models.finite_support_pair_injections_or_collapses.transversal_choice_r : Prop :=
+  (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)).IsModel ∧ (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)).HoldsAx Classicism.P.TransversalChoice.schemaIn
+
+/-- `finite-support-pair-injections-or-collapses`: Independence (signature Σ) fails. -/
+def Models.finite_support_pair_injections_or_collapses.independence_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pairInjCol))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pairInjCol))).IsModel ∧ ¬ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pairInjCol))).HoldsAx (Classicism.Meta.AxiomSet.independence _)
+
+/-- `finite-support-pair-injections-or-collapses`: No Contingency (signature Σ) holds. -/
+def Models.finite_support_pair_injections_or_collapses.no_contingency_signature_r : Prop :=
+  (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pairInjCol))).Admitted ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pairInjCol))).IsModel ∧ (Classicism.Meta.Intensional.Premodel.withTop (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pairInjCol))).HoldsAx (Classicism.Meta.AxiomSet.noContingency _)
 
 /-- `finite-support-permutations`: No Pure Contingency holds. -/
 def Models.finite_support_permutations.no_pure_contingency_r : Prop :=

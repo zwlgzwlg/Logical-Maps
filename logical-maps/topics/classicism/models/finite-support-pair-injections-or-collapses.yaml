@@ -1,0 +1,164 @@
+id: finite-support-pair-injections-or-collapses
+name: 'Finite-support action model: pair-preserving injections and pair collapses of N'
+certificate:
+  source_id: misc
+  produced_by: Cian Dorr (the construction, and the expectation that Vicinity holds and Actuality
+    fails, 7 October 2026); Claude Opus 5.5 (Anthropic) (closure under composition, the other
+    verdicts, and the failure of Rigid Power, 7 October 2026)
+  recorded_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  checked_by: []
+  date: '2026-10-07'
+  lean: stated
+sources:
+- >-
+  Cian Dorr, suggestion of 7 October 2026, in conversation with Claude Opus 5.5 (Anthropic): the
+  monoid of the functions on $\mathbb N$ that are injective or identify $0$ with $1$, for a model
+  with Vicinity but not Actuality outside C5. As stated the set is not closed under composition;
+  the monoid here is its largest submonoid containing every function that identifies $0$ with $1$.
+  Transcript in .private.
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, Definitions D.1–D.3,
+  pp. 73–74 (the ideally full construction).
+source_names:
+- Dorr 7 Oct
+- Classicism
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, Definitions D.1–D.3 and Proposition D.5, pp. 73–79
+  note: The finite-support construction, here over a new monoid; the analogue in this setting of
+    Dorr's Base 2 (symmetric-collapse-pair) without the symmetry condition.
+
+group: finite-support-one-object
+settings:
+  monoid: >-
+    The arrows are the functions $f$ on $\mathbb N$ that either identify $0$ with $1$ ($f0=f1$, the
+    collapses) or are injective and map $\{0,1\}$ onto itself (the pair-preserving injections). These
+    compose: two pair-preserving injections compose to one, and a composite with a collapse applied
+    after a pair-preserving injection, or with a collapse applied first, identifies $0$ with $1$.
+  sigma: top
+
+meets:
+  unbounded-haecceities: >-
+    With $A$ the even numbers, as for the permutations: at a pair-preserving injection $h$, the
+    strongest persistent property pinned down by a finite $X\supseteq\{0,1\}$ whose extension
+    contains the even numbers has the extension $h(X\cap\text{evens})\cup(\mathbb N\setminus(hX))$,
+    a member of $A$ outside $X$ being sent anywhere outside $hX$ by some pair-preserving injection
+    agreeing with $h$ on $X$; at the identity this strictly shrinks as $X$ grows.
+  no-least-pinned-cover: >-
+    As for the permutations, with $2$ in place of $0$: let $F$ be the family of propositions
+    $\{h : h2=m,\ hm=2\}$ ($m\ge3$), each pinned down by $\{2,m\}$. A pair-preserving injection $h$
+    belongs to the least superset of $\bigcup F$ pinned down by $S=\{0,\ldots,N\}$ iff either
+    $h2\in S\setminus\{0,1,2\}$ and $h(h2)=2$, or $h2\notin S$ and $2\notin h(S)$; the $3$-cycle
+    $(2\ N{+}1\ N{+}2)$, which fixes $0$ and $1$, satisfies the second clause for $S$ but neither
+    for $\{0,\ldots,N+1\}$, so these supersets strictly shrink.
+
+arguments:
+
+- holds: [vicinity]
+  by: Claude Opus 5.5 (Anthropic), confirming Cian Dorr's expectation
+  date: '2026-10-07'
+  text: >-
+    The witness is the proposition $p:=\{h : h0\ne h1\}$, the pair-preserving injections, pinned
+    down by $\{0,1\}$ and true. Let $q$ be true, pinned down by a finite $N$, and let $k$ be a
+    pair-preserving injection. The inverse of $k$ on $k[N\cup\{0,1\}]$ maps $\{0,1\}$ onto itself
+    and every other point outside $\{0,1\}$, so it extends to a pair-preserving injection $j$.
+    Then $j\circ k$ agrees with the identity on $N$, so $j\circ k\in q$. Hence every $p$-world can
+    reach a $q$-world: $p\le\Diamond q$.
+
+- holds: [barcan-r]
+  by: Claude Opus 5.5 (Anthropic)
+  date: '2026-10-07'
+  text: >-
+    At every type. Every arrow agrees on any finite set with a surjective arrow: a pair-preserving
+    injection with a permutation preserving $\{0,1\}$, a collapse with a surjective collapse. So,
+    as for the monoid of all functions (Appendix D, Part 3), if $\forall y\,\Box Xy$ holds while
+    $X$, pinned down by $N$, omits $\langle a,k\rangle$, take $j$ surjective agreeing with $k$ on
+    $N$, so that $a=j\cdot b$ for some $b$ by pulling back along $j$; then $\langle a,j\rangle\in X$,
+    and so, by pinning, $\langle a,k\rangle\in X$.
+
+- holds: [atomlessness]
+  by: Claude Opus 5.5 (Anthropic)
+  date: '2026-10-07'
+  text: >-
+    Every arrow can be changed at a point outside any finite set without leaving its class (a
+    collapse anywhere outside $\{0,1\}$; a pair-preserving injection by sending a fresh point to a
+    value outside its range), so no singleton is finitely pinned, and every nonempty proposition
+    pinned down by $S$ is split by the value of its arrows at a point outside $S$.
+
+- fails: [rigid-power-r]
+  when: {individuals: naturals}
+  by: Claude Opus 5.5 (Anthropic)
+  date: '2026-10-07'
+  text: >-
+    At type $e\to t$, with $F:=\top$. Write $Z_k$ for the extension of a property $Z$ at the arrow
+    $k$, so that $Z$ holds of $b$ at $k$ iff $b\in Z_k$, and $(h\cdot Z)_k=Z_{k\circ h}$. Call an
+    arrow a collapse if it identifies $0$ with $1$.
+
+
+    (1) $\top$ is rigid: it is persistent, and its inextensibility is $\Box$BF at type $e$, which
+    holds (BF holds, and with No Pure Contingency so does $\Box$BF).
+
+
+    (2) A rigid property that is not a disjunction of haecceities. Let $Y_k:=\mathbb N$ if $k$ is a
+    collapse and $Y_k:=\mathbb N\setminus\{k2\}$ otherwise; $Y$ is pinned down by $\{0,1,2\}$. It is
+    persistent: if $b\ne k2$ for a pair-preserving injection $k$, then $jb\ne jk2$ for a
+    pair-preserving injection $j$, and every other composite is a collapse. It is inextensible at
+    every world $w$: let $X$ be pinned down by $N\supseteq\{0,1\}$ and contain $\langle jx,j\rangle$
+    for every $x\in Y_w$ and arrow $j$; given $y\in Y_{j\circ w}$, there are an arrow $j'$ agreeing
+    with $j$ on $N$ and an $x\in Y_w$ with $j'x=y$, so $\langle y,j\rangle\in X$ by pinning.
+    For if $y=jn$ with $n\in N$ and $n\in Y_w$, take $j'=j$; if $n\notin Y_w$, then $w$ is a
+    pair-preserving injection, $n=w2$, and $y=jw2\in Y_{j\circ w}$ makes $j\circ w$ a collapse, so $j$
+    identifies $w0$ with $w1$, that is $0$ with $1$, and $j$ changed at a fresh $x$ to $j'x=y$ is still
+    a collapse; and if $y\notin jN$, change $j$ at a fresh $x\notin N\cup\{w2\}$ to $j'x=y$, after
+    $j$ composed with the transposition of $y$ and $jx$ when $j$ is injective. So $Y$ is rigid,
+    with the infinite, coinfinite extension $\mathbb N\setminus\{2\}$.
+
+
+    (3) Along a collapse, a rigid property moves to one whose extension is everything or finite.
+    Let $Z$ be weakly rigid with extension $S$, pinned down by $N\supseteq\{0,1\}$, and let $m$ be a
+    collapse. If $S$ is infinite, then for any $b$ change $m$ at some $x\in S\setminus N$ to
+    $m'x=b$: $m'$ is a collapse agreeing with $m$ on $N$, and persistence gives $b\in Z_{m'}=Z_m$;
+    so $Z_m=\mathbb N$. If $S$ is finite, the property $k\mapsto k[S]$ is pinned down by $S$ and
+    necessarily holds of each member of $S$, so weak inextensibility gives $Z_m\subseteq m[S]$.
+
+
+    Now let $R:=\lambda X\, .\,\operatorname{Rigid}(X)\land X\le\top$, the value of a closed pure
+    term, so that in a one-object model its extension at every arrow is the set of rigid
+    properties. Let $\mathbf X$ hold of $W$ at $k$ iff $W=k'\cdot Z$ for some rigid $Z$ and some
+    arrow $k'$ agreeing with $k$ on $\{0,1\}$. It is pinned down by $\{0,1\}$, so it is in the
+    domain, and it necessarily holds of every instance of $R$ (take $k'=k$). But at a collapse $c$,
+    every $k'$ agreeing with $c$ on $\{0,1\}$ is a collapse, so by (3) every property in the
+    extension of $\mathbf X$ there has extension $\mathbb N$ or a finite one, while $Y$, in the
+    extension of $R$ there by (2), has extension $\mathbb N\setminus\{2\}$. So $R\not\le\mathbf X$:
+    $R$ is not even weakly inextensible, though $\top$ is rigid.
+
+notes: >-
+  Cian Dorr proposed the functions that are injective or identify $0$ with $1$; that set is not
+  closed under composition (the injection swapping $0$ with $2$ and $1$ with $3$, followed by the
+  collapse of $0$ with $1$, identifies $2$ with $3$ but not $0$ with $1$), and the monoid recorded
+  is its largest submonoid containing all the collapses, since a collapse applied after an
+  injection $f$ must identify $f0$ with $f1$. It is the first model on the map with Vicinity
+  without Actuality outside C5 (ND fails at type $e$ by a collapse, at type $t$ for the
+  proposition $0\ne1$, which is impossible at a collapse, refuting 5 and B as well), and the first
+  model refuting Rigid Power. Tame Rigidity holds at type $e$: the weakly rigid properties of
+  individuals are the finite disjunctions of haecceities $k\mapsto k[E]$, the properties $Y_F$
+  ($\mathbb N\setminus k[F]$ at a pair-preserving injection $k$, $\mathbb N$ at a collapse) for
+  finite $F$, and $\top=Y_\emptyset$, all rigid; at higher types it is open.
+
+# The model in Lean (Classicism/Models/PairInjCollapse.lean): the ideally full model over the
+# monoid, the group's parameter.
+lean:
+  param: Classicism.Meta.Intensional.Monoids.pairInjCol
+  verdicts:
+  - holds: vicinity
+    ref: Classicism.Map.Models.finite_support_pair_injections_or_collapses.vicinity
+    status: verified
+  - holds: barcan-r
+    ref: Classicism.Map.Models.finite_support_pair_injections_or_collapses.barcan_r
+    status: verified
+  - holds: atomlessness
+    ref: Classicism.Map.Models.finite_support_pair_injections_or_collapses.atomlessness
+    status: verified
+  - fails: rigid-power-r
+    ref: Classicism.Map.Models.finite_support_pair_injections_or_collapses.rigid_power_r
+    status: verified

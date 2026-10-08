@@ -177,6 +177,11 @@ of §3, on the idempotent monoid and the two-element group (`full-idempotent-mon
 four full action models of §3 followed (`Models/FullActionModels.lean`): the monoid of
 surjections and the group of permutations of `ℕ`, the two-object chain, and the retract, each
 with one individual.
+On 8 October a new member of the finite-support group, Dorr's pair-preserving injections and
+collapses (`finite-support-pair-injections-or-collapses`, `Models/PairInjCollapse.lean`), with
+its four own verdicts: Vicinity, BF, Atomlessness, and the failure of Rigid Power, the map's
+first. The last unfolds the quoted sentence by `simp` into the semantics of rigidity (`SRig`,
+persistence along every arrow and inextensibility at every world) and refutes it with `F := ⊤`.
 
 The verdicts compose into the whole model's statement once the model is of an admitted
 signature: `Premodel.theory`, the sentences holding in a model, is consistent
