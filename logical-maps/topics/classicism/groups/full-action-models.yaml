@@ -30,6 +30,9 @@ definition: >-
 
   {{sigma}}
 
+
+  {{metatheory}}
+
 parameters:
   construction:
     text: The category, its action on the individuals, and the evaluation point, as the member's
@@ -88,6 +91,32 @@ parameters:
         requires: [sigma-apart, actuality-contingent]
         meets:
           sigma-true-atom: This is the interpretation.
+  metatheory:
+    text: The metatheory in which the construction is carried out. Each member is recorded with
+      the axiom of choice; its variants under the other values are generated where their
+      conditions are met. A value without choice gives a model only the arguments reviewed as
+      choice-free.
+    generate: true
+    default: choice
+    values:
+      choice:
+        text: >-
+          Metatheory, fixed for this record: the axiom of choice is used freely, as in ordinary
+          mathematics in ZFC, or in Lean's classical type theory for the verdicts certified there.
+        label: with choice
+      no-countable-choice-reals:
+        text: >-
+          Metatheory, fixed for this record: the construction is carried out in ZF together with
+          the hypothesis that some countable family $(A_n)_{n\in\omega}$ of nonempty sets of sets of
+          natural numbers has no choice function ($\neg\mathrm{AC}_\omega(\mathbb R)$), which holds in
+          Cohen's basic model. An infinite set the construction leaves unspecified is $\mathbb N$.
+          ZF with this hypothesis is consistent if ZF is, so the verdicts of this record are
+          relative-consistency claims of the same standing as those of a record in ZFC.
+        label: ZF + ¬AC_ω(ℝ)
+        choiceless: true
+        requires: [numbered-returning-arrows]
+        meets:
+          countable-choice-reals-fails: This is the hypothesis.
 
 # Conditions of the topic that every member meets.
 meets:
@@ -106,7 +135,6 @@ meets:
   extensionally-full: >-
     A full model contains every intension, so in particular one with any given extension at the
     identity.
-  metatheory-choice: The constructions are carried out in ZFC.
   identity-singletons: >-
     The singleton of the identity arrow at any object is in the domain, the model being full.
   actuality-contingent: >-

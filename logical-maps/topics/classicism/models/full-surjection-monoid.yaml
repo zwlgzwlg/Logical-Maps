@@ -37,6 +37,9 @@ settings:
   individuals: singleton
   sigma: top
 meets:
+  numbered-returning-arrows: >-
+    Where it matters (the variant without countable choice) the infinite set is $\mathbb N$: $h_0$ the
+    identity and $h_n$ the transposition of $0$ and $n$, a surjection that is its own retraction.
   returning-arrow: >-
     A bijection other than the identity, which its inverse retracts.
   nonidentity-arrow: >-
@@ -175,7 +178,6 @@ lean:
     full-model: Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj
     full-action-model: Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj
     extensionally-full: Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj)
-    metatheory-choice: Classicism.Meta.Intensional.Premodel.metatheoryChoice _
     one-individual: Classicism.Map.Meets.mset_one_individual Classicism.Meta.Intensional.FullActionModels.surj
     one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
   verdicts:

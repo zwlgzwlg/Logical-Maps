@@ -1,5 +1,6 @@
 id: unretracted-arrow
 requires: [full-model, unretracted-arrow]
+choice: free
 fails: [distinctness-necessary-t]
 source: {paper: bacon-dorr-classicism, locator: '§3.5, Proposition 3.24(i)'}
 by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction

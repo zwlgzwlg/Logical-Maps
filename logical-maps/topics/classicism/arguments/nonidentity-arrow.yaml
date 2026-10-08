@@ -1,5 +1,6 @@
 id: nonidentity-arrow
 requires: [full-model, nonidentity-arrow]
+choice: free
 fails: [fregean-axiom]
 source: {paper: bacon-dorr-classicism, locator: 'p. 61'}
 by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction

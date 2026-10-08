@@ -1,5 +1,6 @@
 id: sigma-true-atom-b
 requires: [sigma-true-atom, actuality-contingent, irreversible-arrow]
+choice: free
 fails: [signature-b-r]
 by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
 date: '2026-09-22'

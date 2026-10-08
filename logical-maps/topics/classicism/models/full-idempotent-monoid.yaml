@@ -198,7 +198,6 @@ lean:
     full-model: Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem
     full-action-model: Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem
     extensionally-full: Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem)
-    metatheory-choice: Classicism.Meta.Intensional.Premodel.metatheoryChoice _
     actual-world-isolated: Classicism.Map.Meets.full_idempotent_monoid.actual_world_isolated
     one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
   verdicts:

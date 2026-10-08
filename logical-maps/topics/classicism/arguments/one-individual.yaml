@@ -1,5 +1,6 @@
 id: one-individual
 requires: [one-individual]
+choice: free
 fails: [axiom-of-infinity-e, infinity-e, possible-infinity-e]
 by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
 date: '2026-10-02'

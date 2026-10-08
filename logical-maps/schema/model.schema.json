@@ -321,7 +321,8 @@
     },
     "withdrawn": {"$ref": "#/$defs/withdrawal"},
     "provenance": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "A sidecar provenance/<id>.yaml holding provenance moved out of the record verbatim."},
-    "companion_id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Conjectured arguments only: the id of the generated conjectured companion, kept from a folded record. Default <model>-conjectured."}
+    "companion_id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Conjectured arguments only: the id of the generated conjectured companion, kept from a folded record. Default <model>-conjectured."},
+    "choice": {"enum": ["free", "uses"], "description": "Whether the argument uses the axiom of choice in the metatheory: free (reviewed: it does not) or uses. Unmarked means unreviewed. A model or variant at a choiceless value of a group parameter gets only the arguments marked free."}
    }
   },
   "withdrawal": {

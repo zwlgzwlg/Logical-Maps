@@ -18,8 +18,8 @@ topic), as theorems about intensional action models:
   singleton of one of its tuples; and the relation whose extension at an arrow is `X`'s
   extension transported along it is rigid and coextensive with `X`.
 
-Lean's metatheory has choice, so the map's condition `metatheory-choice` is met by every
-model here; the choice is `Classical.choose`.
+Lean's metatheory has choice, and the choice is `Classical.choose`; the map's arguments for these
+verdicts are marked `choice: uses`, so its variants read without choice do not get them.
 -/
 
 namespace Classicism.Meta.Intensional

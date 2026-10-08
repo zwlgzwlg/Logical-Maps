@@ -1,5 +1,6 @@
 id: dpc-isolated-actual-world
 requires: [actual-world-isolated]
+choice: free
 holds: [distinctness-preserving-collapse]
 by: Claude Fable 5.1 (Anthropic)
 date: '2026-09-23'

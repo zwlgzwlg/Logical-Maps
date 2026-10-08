@@ -43,7 +43,6 @@ meets:
   extensionally-full: >-
     The model is ideally full, hence extensionally full at every object (Appendix D, the remark
     after Definition D.3).
-  metatheory-choice: The construction is carried out in ZFC (Appendix D).
 
 arguments:
 

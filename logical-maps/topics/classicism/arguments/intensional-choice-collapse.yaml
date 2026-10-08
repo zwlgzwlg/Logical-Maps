@@ -1,5 +1,6 @@
 id: intensional-choice-collapse
 requires: [symmetric-domains, construction-individuals, collapse-onto-point]
+choice: free
 fails: [intensional-choice-r]
 by: Claude Opus 5.5 (Anthropic)
 date: '2026-10-03'

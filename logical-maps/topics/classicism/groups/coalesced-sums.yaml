@@ -35,7 +35,6 @@ parameters:
 
 # Conditions of the topic that every member meets.
 meets:
-  metatheory-choice: The constructions are carried out in ZFC.
   actual-world-isolated: >-
     The singleton root proposition, true at the root's identity arrow and nowhere in a component, is
     in the domain and entails every truth; the components have no arrows back to the root
@@ -98,7 +97,8 @@ arguments:
 
 
 - id: relational-choice-free-root
-  requires: [free-root-component, metatheory-choice]
+  requires: [free-root-component]
+  choice: uses
   holds: [relational-choice-r]
   by: Cian Dorr, recorded by Claude Fable 5.1 (Anthropic)
   date: '2026-09-22'

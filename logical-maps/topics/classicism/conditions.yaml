@@ -29,10 +29,6 @@ conditions:
   text: >-
     There is exactly one individual, at every world.
   lean: Classicism.Meta.Intensional.Premodel.OneIndividual
-- id: metatheory-choice
-  text: >-
-    The model is constructed in a metatheory with the axiom of choice.
-  lean: Classicism.Meta.Intensional.Premodel.MetatheoryChoice
 - id: full-model
   text: >-
     The model is full: at each object, the domain of each relational type contains every intension
@@ -187,3 +183,12 @@ conditions:
     Some arrow out of the evaluation object has two retractions that some proposition in the
     domain at its target separates.
   lean: Classicism.Meta.Intensional.Premodel.SeparatedRetractions
+# Added 8 October 2026 (Claude Opus 5.5, at Cian Dorr's direction), for the metatheory variants.
+- id: numbered-returning-arrows
+  text: >-
+    There are pairwise distinct arrows $h_n$ out of the evaluation object, one for each natural
+    number $n$, each with a retraction $r_n$, all given by the construction without choice.
+- id: countable-choice-reals-fails
+  text: >-
+    The construction is carried out in ZF together with a countable family $(A_n)_{n\in\omega}$ of
+    nonempty sets of sets of natural numbers that has no choice function ($\neg\mathrm{AC}_\omega(\mathbb R)$).

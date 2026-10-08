@@ -1,5 +1,6 @@
 id: barcan-t-transport
 requires: [transport-gap]
+choice: free
 fails: [barcan-t]
 by: Claude Fable 5.1 (Anthropic), answering Cian Dorr’s question whether the failure of BF
   sharpens to type $t$

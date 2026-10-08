@@ -1,5 +1,6 @@
 id: no-pure-contingency-one-object
 requires: [one-object-action-model]
+choice: free
 holds: [no-pure-contingency-r]
 source: {paper: bacon-dorr-classicism, locator: '§3.5, p. 58; p. 79'}
 by: Andrew Bacon and Cian Dorr

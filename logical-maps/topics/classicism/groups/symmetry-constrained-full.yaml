@@ -113,7 +113,6 @@ meets:
     Any set $S$ of tuples at the identity is the extension there of a symmetric intension: put
     $S$ at the identity, $g\cdot S$ at each permutation $g$, and the empty set
     at every other arrow.
-  metatheory-choice: The construction is carried out in ZFC; everything in it is finite.
   finitely-many-propositions: >-
     The propositions are the symmetric sets of arrows, finitely many since there are finitely many
     arrows.

@@ -1,5 +1,6 @@
 id: relational-choice-full
-requires: [full-model, metatheory-choice]
+requires: [full-model]
+choice: uses
 holds: [relational-choice-r]
 by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
 date: '2026-09-20'

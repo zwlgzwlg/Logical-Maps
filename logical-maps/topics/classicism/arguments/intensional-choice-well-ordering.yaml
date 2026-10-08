@@ -1,5 +1,6 @@
 id: intensional-choice-well-ordering
-requires: [codomain-intensions, metatheory-choice]
+requires: [codomain-intensions]
+choice: uses
 holds: [necessary-intensional-choice-r]
 by: Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion
 date: '2026-10-03'

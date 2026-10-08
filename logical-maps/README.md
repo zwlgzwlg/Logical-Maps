@@ -443,6 +443,19 @@ tints each principle by whether it holds in all of those models, fails in all, o
 them. Lists of witnesses gather a group's models into one entry the same way, and the
 group page dims the rows that do not fit the explorer's assumptions.
 
+**The metatheory as a parameter.** A value marked `choiceless: true` reads the construction
+in ZF with a named hypothesis instead of with the axiom of choice (`metatheory` in
+`full-action-models`, whose values are `choice` and `no-countable-choice-reals`: ZF with a
+countable family of nonempty sets of reals that has no choice function). The value's text
+states the hypothesis, which holds in some model of ZF, so its verdicts are relative-consistency
+claims of the same standing as the rest. Inheritance at such a value is opt-in: a model at it
+gets only the arguments, its own, its group's and the topic's, marked `choice: free`, reviewed
+as not using the axiom of choice; an argument marked `choice: uses`, or not marked (unreviewed),
+does not apply there. The engine's derivations, being theorems of C, apply as everywhere. Such
+a model gets no Lean certificates, Lean's metatheory having choice. Mark an argument
+`choice: free` only after reading it for uses of choice, and `choice: uses` when it chooses
+(from a serial relation, an equivalence relation, an ultrafilter, a well-ordering).
+
 ### General arguments
 
 Some arguments hold far beyond one group: No Pure Contingency in every one-object action

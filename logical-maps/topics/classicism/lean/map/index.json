@@ -3213,10 +3213,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymFull.extFull",
       "lines": [138, 148],
-      "file": "Classicism/Models/SymmetricFull.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Models/SymmetricFull.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
       "lines": [40, 41],
@@ -3401,10 +3398,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.SymFull.extFull",
       "lines": [138, 148],
-      "file": "Classicism/Models/SymmetricFull.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Models/SymmetricFull.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
       "lines": [40, 41],
@@ -5366,10 +5360,7 @@
       "file": "Classicism/Semantics/FullModels.lean"},
      {"name": "Classicism.Meta.Intensional.FullActionModels.unitModel_full",
       "lines": [78, 78],
-      "file": "Classicism/Models/FullActionModels.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Models/FullActionModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
       "lines": [40, 41],
@@ -5470,10 +5461,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.FullActionModels.unitModel_full",
       "lines": [78, 78],
-      "file": "Classicism/Models/FullActionModels.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Models/FullActionModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
       "lines": [40, 41],
@@ -5636,10 +5624,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.FullActionModels.unitModel_full",
       "lines": [78, 78],
-      "file": "Classicism/Models/FullActionModels.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Models/FullActionModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FunCat.Ob",
       "lines": [40, 41],
@@ -6160,10 +6145,7 @@
       "file": "Classicism/Semantics/FullModels.lean"},
      {"name": "Classicism.Meta.Intensional.FullActionModels.unitModel_full",
       "lines": [78, 78],
-      "file": "Classicism/Models/FullActionModels.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Models/FullActionModels.lean"}],
     "definitions":
     [{"name":
       "Classicism.Meta.Intensional.FullActionModels.instSmallCategoryDRObj",
@@ -6246,10 +6228,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.FullActionModels.unitModel_full",
       "lines": [78, 78],
-      "file": "Classicism/Models/FullActionModels.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Models/FullActionModels.lean"}],
     "definitions":
     [{"name":
       "Classicism.Meta.Intensional.FullActionModels.instSmallCategoryDRObj",
@@ -6354,10 +6333,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.FullActionModels.unitModel_full",
       "lines": [78, 78],
-      "file": "Classicism/Models/FullActionModels.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Models/FullActionModels.lean"}],
     "definitions":
     [{"name":
       "Classicism.Meta.Intensional.FullActionModels.instSmallCategoryDRObj",
@@ -6639,10 +6615,7 @@
       "file": "Classicism/Semantics/FullModels.lean"},
      {"name": "Classicism.Meta.Intensional.FullActionModels.unitModel_full",
       "lines": [78, 78],
-      "file": "Classicism/Models/FullActionModels.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Models/FullActionModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FullActionModels.chain",
       "lines": [129, 130],
@@ -6663,10 +6636,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.FullActionModels.unitModel_full",
       "lines": [78, 78],
-      "file": "Classicism/Models/FullActionModels.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Models/FullActionModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FullActionModels.chain",
       "lines": [129, 130],
@@ -6773,10 +6743,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.FullActionModels.unitModel_full",
       "lines": [78, 78],
-      "file": "Classicism/Models/FullActionModels.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Models/FullActionModels.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FullActionModels.chain",
       "lines": [129, 130],
@@ -7107,10 +7074,7 @@
       "file": "Classicism/Semantics/FullModels.lean"},
      {"name": "Classicism.Meta.Intensional.MSet.model_full",
       "lines": [84, 84],
-      "file": "Classicism/Semantics/IntensionalExamples.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FullActionModels.surj",
       "lines": [85, 89],
@@ -7132,10 +7096,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MSet.model_full",
       "lines": [84, 84],
-      "file": "Classicism/Semantics/IntensionalExamples.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FullActionModels.surj",
       "lines": [85, 89],
@@ -7251,10 +7212,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MSet.model_full",
       "lines": [84, 84],
-      "file": "Classicism/Semantics/IntensionalExamples.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.FullActionModels.surj",
       "lines": [85, 89],
@@ -7592,10 +7550,7 @@
       "file": "Classicism/Semantics/FullModels.lean"},
      {"name": "Classicism.Meta.Intensional.MSet.model_full",
       "lines": [84, 84],
-      "file": "Classicism/Semantics/IntensionalExamples.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"}],
     "definitions": [],
     "certificate":
     {"name":
@@ -7614,10 +7569,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MSet.model_full",
       "lines": [84, 84],
-      "file": "Classicism/Semantics/IntensionalExamples.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"}],
     "definitions": [],
     "certificate":
     {"name":
@@ -7720,10 +7672,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MSet.model_full",
       "lines": [84, 84],
-      "file": "Classicism/Semantics/IntensionalExamples.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"}],
     "definitions": [],
     "certificate":
     {"name":
@@ -8086,10 +8035,7 @@
       "file": "Classicism/Semantics/FullModels.lean"},
      {"name": "Classicism.Meta.Intensional.MSet.model_full",
       "lines": [84, 84],
-      "file": "Classicism/Semantics/IntensionalExamples.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"}],
     "definitions": [],
     "certificate":
     {"name": "Classicism.Map.Models.full_involution_group.transversal_choice_r",
@@ -8107,10 +8053,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MSet.model_full",
       "lines": [84, 84],
-      "file": "Classicism/Semantics/IntensionalExamples.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"}],
     "definitions": [],
     "certificate":
     {"name": "Classicism.Map.Models.full_involution_group.relational_choice_r",
@@ -8233,10 +8176,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MSet.model_full",
       "lines": [84, 84],
-      "file": "Classicism/Semantics/IntensionalExamples.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"}],
     "definitions": [],
     "certificate":
     {"name":
@@ -8593,10 +8533,7 @@
       "file": "Classicism/Semantics/FullModels.lean"},
      {"name": "Classicism.Meta.Intensional.MSet.model_full",
       "lines": [84, 84],
-      "file": "Classicism/Semantics/IntensionalExamples.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"}],
     "definitions": [],
     "certificate":
     {"name":
@@ -8636,10 +8573,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MSet.model_full",
       "lines": [84, 84],
-      "file": "Classicism/Semantics/IntensionalExamples.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"}],
     "definitions": [],
     "certificate":
     {"name": "Classicism.Map.Models.full_idempotent_monoid.relational_choice_r",
@@ -8762,10 +8696,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MSet.model_full",
       "lines": [84, 84],
-      "file": "Classicism/Semantics/IntensionalExamples.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
-      "file": "Classicism/Models/Conditions.lean"}],
+      "file": "Classicism/Semantics/IntensionalExamples.lean"}],
     "definitions": [],
     "certificate":
     {"name":
@@ -9143,10 +9074,7 @@
       "lines": [83, 89],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.Premodel.ideal_extFull",
-      "lines": [89, 107],
-      "file": "Classicism/Models/Conditions.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
+      "lines": [83, 101],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.truncs",
@@ -9171,7 +9099,7 @@
       "lines": [35, 40],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [139, 139],
+      "lines": [133, 133],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.truncs",
@@ -9405,10 +9333,7 @@
       "lines": [83, 89],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.Premodel.ideal_extFull",
-      "lines": [89, 107],
-      "file": "Classicism/Models/Conditions.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
+      "lines": [83, 101],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.shifts",
@@ -9433,7 +9358,7 @@
       "lines": [35, 40],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [139, 139],
+      "lines": [133, 133],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.shifts",
@@ -9606,7 +9531,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.d6Surjective_of_surjective",
-      "lines": [145, 147],
+      "lines": [139, 141],
       "file": "Classicism/Models/Conditions.lean"},
      {"name": "Classicism.Meta.Intensional.Monoids.Shifts.surj",
       "lines": [764, 769],
@@ -9655,7 +9580,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned",
-      "lines": [141, 143],
+      "lines": [135, 137],
       "file": "Classicism/Models/Conditions.lean"},
      {"name": "Classicism.Meta.Intensional.Monoids.Shifts.onePinned",
       "lines": [792, 794],
@@ -9683,10 +9608,7 @@
       "lines": [83, 89],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.Premodel.ideal_extFull",
-      "lines": [89, 107],
-      "file": "Classicism/Models/Conditions.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
+      "lines": [83, 101],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Perms.model",
@@ -9708,7 +9630,7 @@
       "lines": [35, 40],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [139, 139],
+      "lines": [133, 133],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Perms.model",
@@ -9950,10 +9872,7 @@
       "lines": [83, 89],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.Premodel.ideal_extFull",
-      "lines": [89, 107],
-      "file": "Classicism/Models/Conditions.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
+      "lines": [83, 101],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.pairInjCol",
@@ -9999,7 +9918,7 @@
       "lines": [35, 40],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [139, 139],
+      "lines": [133, 133],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.pairInjCol",
@@ -10131,10 +10050,7 @@
       "lines": [83, 89],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.Premodel.ideal_extFull",
-      "lines": [89, 107],
-      "file": "Classicism/Models/Conditions.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
+      "lines": [83, 101],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.monoSurj",
@@ -10159,7 +10075,7 @@
       "lines": [35, 40],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [139, 139],
+      "lines": [133, 133],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.monoSurj",
@@ -10332,7 +10248,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.d6Surjective_of_surjective",
-      "lines": [145, 147],
+      "lines": [139, 141],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.monoSurj",
@@ -10421,10 +10337,7 @@
       "lines": [83, 89],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.Premodel.ideal_extFull",
-      "lines": [89, 107],
-      "file": "Classicism/Models/Conditions.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
+      "lines": [83, 101],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.mono",
@@ -10449,7 +10362,7 @@
       "lines": [35, 40],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [139, 139],
+      "lines": [133, 133],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.mono",
@@ -10644,10 +10557,7 @@
       "lines": [83, 89],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.Premodel.ideal_extFull",
-      "lines": [89, 107],
-      "file": "Classicism/Models/Conditions.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
+      "lines": [83, 101],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.monoSurj01",
@@ -10672,7 +10582,7 @@
       "lines": [35, 40],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [139, 139],
+      "lines": [133, 133],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.monoSurj01",
@@ -10845,7 +10755,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.d6Surjective_of_surjective",
-      "lines": [145, 147],
+      "lines": [139, 141],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.monoSurj01",
@@ -10923,7 +10833,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned",
-      "lines": [141, 143],
+      "lines": [135, 137],
       "file": "Classicism/Models/Conditions.lean"},
      {"name": "Classicism.Meta.Intensional.Monoids.MonoSurj01.onePinned",
       "lines": [424, 425],
@@ -10952,10 +10862,7 @@
       "lines": [83, 89],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.Premodel.ideal_extFull",
-      "lines": [89, 107],
-      "file": "Classicism/Models/Conditions.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
+      "lines": [83, 101],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.mono01",
@@ -10980,7 +10887,7 @@
       "lines": [35, 40],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [139, 139],
+      "lines": [133, 133],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.mono01",
@@ -11232,7 +11139,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned",
-      "lines": [141, 143],
+      "lines": [135, 137],
       "file": "Classicism/Models/Conditions.lean"},
      {"name": "Classicism.Meta.Intensional.Monoids.Mono01.onePinned",
       "lines": [346, 348],
@@ -11261,10 +11168,7 @@
       "lines": [83, 89],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.Premodel.ideal_extFull",
-      "lines": [89, 107],
-      "file": "Classicism/Models/Conditions.lean"},
-     {"name": "Classicism.Meta.Intensional.Premodel.metatheoryChoice",
-      "lines": [46, 46],
+      "lines": [83, 101],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.pow2",
@@ -11289,7 +11193,7 @@
       "lines": [35, 40],
       "file": "Classicism/MapArguments.lean"},
      {"name": "Classicism.Meta.Intensional.MonoidModel.oneObject",
-      "lines": [139, 139],
+      "lines": [133, 133],
       "file": "Classicism/Models/Conditions.lean"}],
     "definitions":
     [{"name": "Classicism.Meta.Intensional.Monoids.pow2",
@@ -11504,7 +11408,7 @@
       "file": "Classicism/MapArguments.lean"},
      {"name":
       "Classicism.Meta.Intensional.MonoidModel.actualWorldPinned_of_onePinned",
-      "lines": [141, 143],
+      "lines": [135, 137],
       "file": "Classicism/Models/Conditions.lean"},
      {"name": "Classicism.Meta.Intensional.Monoids.Pow2.onePinned",
       "lines": [682, 684],
@@ -13631,7 +13535,7 @@
      "file": "Classicism/Models/MonoidModel.lean"},
     {"name":
      "Classicism.Meta.Intensional.MonoidModel.not_atomicityT_of_collapseUnpinned",
-     "lines": [167, 173],
+     "lines": [161, 167],
      "file": "Classicism/Models/Conditions.lean"}],
    "certificate":
    {"name":
@@ -13646,7 +13550,7 @@
      "file": "Classicism/Models/MonoidModel.lean"},
     {"name":
      "Classicism.Meta.Intensional.MonoidModel.not_atomicityT_of_collapseUnpinned",
-     "lines": [167, 173],
+     "lines": [161, 167],
      "file": "Classicism/Models/Conditions.lean"}],
    "certificate":
    {"name":
@@ -13731,7 +13635,7 @@
   "barcan-d6/barcan-r":
   {"proofs":
    [{"name": "Classicism.Meta.Intensional.Premodel.reduct_ideal",
-     "lines": [81, 87],
+     "lines": [75, 81],
      "file": "Classicism/Models/Conditions.lean"},
     {"name": "Classicism.Meta.Intensional.Premodel.ideal_bf_of_surjective",
      "lines": [533, 537],

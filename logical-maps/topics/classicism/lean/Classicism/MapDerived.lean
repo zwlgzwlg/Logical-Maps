@@ -25,7 +25,7 @@ theorem finite_support_dyadic_roundings.no_pure_contingency_r : Statements.Model
 
 /-- `finite-support-dyadic-roundings`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem finite_support_dyadic_roundings.transversal_choice_r : Statements.Models.finite_support_dyadic_roundings.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pow2), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pow2)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pow2), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pow2)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pow2)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _)⟩
 
 /-- `finite-support-dyadic-roundings`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem finite_support_dyadic_roundings.independence_signature_r : Statements.Models.finite_support_dyadic_roundings.independence_signature_r :=
@@ -57,7 +57,7 @@ theorem finite_support_identity_or_collapse_surjections.no_pure_contingency_r : 
 
 /-- `finite-support-identity-or-collapse-surjections`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem finite_support_identity_or_collapse_surjections.transversal_choice_r : Statements.Models.finite_support_identity_or_collapse_surjections.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj01)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _)⟩
 
 /-- `finite-support-identity-or-collapse-surjections`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem finite_support_identity_or_collapse_surjections.independence_signature_r : Statements.Models.finite_support_identity_or_collapse_surjections.independence_signature_r :=
@@ -89,7 +89,7 @@ theorem finite_support_identity_or_collapse.no_pure_contingency_r : Statements.M
 
 /-- `finite-support-identity-or-collapse`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem finite_support_identity_or_collapse.transversal_choice_r : Statements.Models.finite_support_identity_or_collapse.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono01)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono01)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _)⟩
 
 /-- `finite-support-identity-or-collapse`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem finite_support_identity_or_collapse.independence_signature_r : Statements.Models.finite_support_identity_or_collapse.independence_signature_r :=
@@ -109,7 +109,7 @@ theorem finite_support_monotone_maps.no_pure_contingency_r : Statements.Models.f
 
 /-- `finite-support-monotone-maps`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem finite_support_monotone_maps.transversal_choice_r : Statements.Models.finite_support_monotone_maps.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.mono)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.mono)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _)⟩
 
 /-- `finite-support-monotone-surjections`: BF holds, by the argument `barcan-d6`. -/
 theorem finite_support_monotone_surjections.barcan_r : Statements.Models.finite_support_monotone_surjections.barcan_r :=
@@ -121,7 +121,7 @@ theorem finite_support_monotone_surjections.no_pure_contingency_r : Statements.M
 
 /-- `finite-support-monotone-surjections`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem finite_support_monotone_surjections.transversal_choice_r : Statements.Models.finite_support_monotone_surjections.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.monoSurj)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _)⟩
 
 /-- `finite-support-monotone-surjections`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem finite_support_monotone_surjections.independence_signature_r : Statements.Models.finite_support_monotone_surjections.independence_signature_r :=
@@ -137,7 +137,7 @@ theorem finite_support_pair_injections_or_collapses.no_pure_contingency_r : Stat
 
 /-- `finite-support-pair-injections-or-collapses`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem finite_support_pair_injections_or_collapses.transversal_choice_r : Statements.Models.finite_support_pair_injections_or_collapses.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pairInjCol), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pairInjCol)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pairInjCol), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.pairInjCol)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.pairInjCol)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _)⟩
 
 /-- `finite-support-pair-injections-or-collapses`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem finite_support_pair_injections_or_collapses.independence_signature_r : Statements.Models.finite_support_pair_injections_or_collapses.independence_signature_r :=
@@ -153,7 +153,7 @@ theorem finite_support_permutations.no_pure_contingency_r : Statements.Models.fi
 
 /-- `finite-support-permutations`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem finite_support_permutations.transversal_choice_r : Statements.Models.finite_support_permutations.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.Perms.model_isModel, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.Perms.model) (Classicism.Meta.Intensional.Perms.model_isModel) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.Perms.model_isModel, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.Perms.model) (Classicism.Meta.Intensional.Perms.model_isModel) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _)⟩
 
 /-- `finite-support-permutations`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem finite_support_permutations.independence_signature_r : Statements.Models.finite_support_permutations.independence_signature_r :=
@@ -177,7 +177,7 @@ theorem finite_support_truncated_shifts.no_pure_contingency_r : Statements.Model
 
 /-- `finite-support-truncated-shifts`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem finite_support_truncated_shifts.transversal_choice_r : Statements.Models.finite_support_truncated_shifts.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.shifts)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.shifts)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _)⟩
 
 /-- `finite-support-truncated-shifts`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem finite_support_truncated_shifts.independence_signature_r : Statements.Models.finite_support_truncated_shifts.independence_signature_r :=
@@ -193,7 +193,7 @@ theorem finite_support_truncations.no_pure_contingency_r : Statements.Models.fin
 
 /-- `finite-support-truncations`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem finite_support_truncations.transversal_choice_r : Statements.Models.finite_support_truncations.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.truncs), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.truncs)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.truncs), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MonoidModel.model (Classicism.Meta.Intensional.Monoids.truncs)) (Classicism.Meta.Intensional.MonoidModel.model_isModel (Classicism.Meta.Intensional.Monoids.truncs)) (Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _)⟩
 
 /-- `finite-support-truncations`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem finite_support_truncations.independence_signature_r : Statements.Models.finite_support_truncations.independence_signature_r :=
@@ -253,15 +253,15 @@ theorem full_idempotent_monoid.possible_infinity_e : Statements.Models.full_idem
 
 /-- `full-idempotent-monoid`: □Relational Choice holds, by the argument `relational-choice-full-boxed`. -/
 theorem full_idempotent_monoid.necessary_relational_choice_r : Statements.Models.full_idempotent_monoid.necessary_relational_choice_r :=
-  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem)⟩
 
 /-- `full-idempotent-monoid`: Relational Choice holds, by the argument `relational-choice-full`. -/
 theorem full_idempotent_monoid.relational_choice_r : Statements.Models.full_idempotent_monoid.relational_choice_r :=
-  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem)⟩
 
 /-- `full-idempotent-monoid`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem full_idempotent_monoid.transversal_choice_r : Statements.Models.full_idempotent_monoid.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Idem) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Idem))⟩
 
 /-- `full-idempotent-monoid`: ND (type t) fails, by the argument `unretracted-arrow`. -/
 theorem full_idempotent_monoid.distinctness_necessary_t : Statements.Models.full_idempotent_monoid.distinctness_necessary_t :=
@@ -333,15 +333,15 @@ theorem full_involution_group.possible_infinity_e : Statements.Models.full_invol
 
 /-- `full-involution-group`: □Relational Choice holds, by the argument `relational-choice-full-boxed`. -/
 theorem full_involution_group.necessary_relational_choice_r : Statements.Models.full_involution_group.necessary_relational_choice_r :=
-  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol)⟩
 
 /-- `full-involution-group`: Relational Choice holds, by the argument `relational-choice-full`. -/
 theorem full_involution_group.relational_choice_r : Statements.Models.full_involution_group.relational_choice_r :=
-  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol)⟩
 
 /-- `full-involution-group`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem full_involution_group.transversal_choice_r : Statements.Models.full_involution_group.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol))⟩
 
 /-- `full-involution-group`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem full_involution_group.independence_signature_r : Statements.Models.full_involution_group.independence_signature_r :=
@@ -405,15 +405,15 @@ theorem full_permutation_group_infinite_set.possible_infinity_e : Statements.Mod
 
 /-- `full-permutation-group-infinite-set`: □Relational Choice holds, by the argument `relational-choice-full-boxed`. -/
 theorem full_permutation_group_infinite_set.necessary_relational_choice_r : Statements.Models.full_permutation_group_infinite_set.necessary_relational_choice_r :=
-  ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ))⟩
 
 /-- `full-permutation-group-infinite-set`: Relational Choice holds, by the argument `relational-choice-full`. -/
 theorem full_permutation_group_infinite_set.relational_choice_r : Statements.Models.full_permutation_group_infinite_set.relational_choice_r :=
-  ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ))⟩
 
 /-- `full-permutation-group-infinite-set`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem full_permutation_group_infinite_set.transversal_choice_r : Statements.Models.full_permutation_group_infinite_set.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ))) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ)))⟩
 
 /-- `full-permutation-group-infinite-set`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem full_permutation_group_infinite_set.independence_signature_r : Statements.Models.full_permutation_group_infinite_set.independence_signature_r :=
@@ -469,15 +469,15 @@ theorem full_surjection_monoid.possible_infinity_e : Statements.Models.full_surj
 
 /-- `full-surjection-monoid`: □Relational Choice holds, by the argument `relational-choice-full-boxed`. -/
 theorem full_surjection_monoid.necessary_relational_choice_r : Statements.Models.full_surjection_monoid.necessary_relational_choice_r :=
-  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj)⟩
 
 /-- `full-surjection-monoid`: Relational Choice holds, by the argument `relational-choice-full`. -/
 theorem full_surjection_monoid.relational_choice_r : Statements.Models.full_surjection_monoid.relational_choice_r :=
-  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj)⟩
 
 /-- `full-surjection-monoid`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem full_surjection_monoid.transversal_choice_r : Statements.Models.full_surjection_monoid.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.FullActionModels.surj) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.FullActionModels.surj))⟩
 
 /-- `full-surjection-monoid`: ND (type t) fails, by the argument `unretracted-arrow`. -/
 theorem full_surjection_monoid.distinctness_necessary_t : Statements.Models.full_surjection_monoid.distinctness_necessary_t :=
@@ -541,15 +541,15 @@ theorem full_two_object_chain.possible_infinity_e : Statements.Models.full_two_o
 
 /-- `full-two-object-chain`: □Relational Choice holds, by the argument `relational-choice-full-boxed`. -/
 theorem full_two_object_chain.necessary_relational_choice_r : Statements.Models.full_two_object_chain.necessary_relational_choice_r :=
-  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)⟩
 
 /-- `full-two-object-chain`: Relational Choice holds, by the argument `relational-choice-full`. -/
 theorem full_two_object_chain.relational_choice_r : Statements.Models.full_two_object_chain.relational_choice_r :=
-  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)⟩
 
 /-- `full-two-object-chain`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem full_two_object_chain.transversal_choice_r : Statements.Models.full_two_object_chain.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.FullActionModels.chain) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _))⟩
 
 /-- `full-two-object-chain`: ND (type t) fails, by the argument `unretracted-arrow`. -/
 theorem full_two_object_chain.distinctness_necessary_t : Statements.Models.full_two_object_chain.distinctness_necessary_t :=
@@ -605,11 +605,11 @@ theorem full_two_object_double_retraction.possible_infinity_e : Statements.Model
 
 /-- `full-two-object-double-retraction`: □Relational Choice holds, by the argument `relational-choice-full-boxed`. -/
 theorem full_two_object_double_retraction.necessary_relational_choice_r : Statements.Models.full_two_object_double_retraction.necessary_relational_choice_r :=
-  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)⟩
 
 /-- `full-two-object-double-retraction`: Relational Choice holds, by the argument `relational-choice-full`. -/
 theorem full_two_object_double_retraction.relational_choice_r : Statements.Models.full_two_object_double_retraction.relational_choice_r :=
-  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)⟩
 
 /-- `full-two-object-double-retraction`: ND holds, by the argument `retractions`. -/
 theorem full_two_object_double_retraction.distinctness_necessary_r : Statements.Models.full_two_object_double_retraction.distinctness_necessary_r :=
@@ -621,7 +621,7 @@ theorem full_two_object_double_retraction.strong_actuality : Statements.Models.f
 
 /-- `full-two-object-double-retraction`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem full_two_object_double_retraction.transversal_choice_r : Statements.Models.full_two_object_double_retraction.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.FullActionModels.doubleRetraction) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _))⟩
 
 /-- `full-two-object-double-retraction`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem full_two_object_double_retraction.independence_signature_r : Statements.Models.full_two_object_double_retraction.independence_signature_r :=
@@ -677,11 +677,11 @@ theorem full_two_object_retract.possible_infinity_e : Statements.Models.full_two
 
 /-- `full-two-object-retract`: □Relational Choice holds, by the argument `relational-choice-full-boxed`. -/
 theorem full_two_object_retract.necessary_relational_choice_r : Statements.Models.full_two_object_retract.necessary_relational_choice_r :=
-  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)⟩
 
 /-- `full-two-object-retract`: Relational Choice holds, by the argument `relational-choice-full`. -/
 theorem full_two_object_retract.relational_choice_r : Statements.Models.full_two_object_retract.relational_choice_r :=
-  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)⟩
 
 /-- `full-two-object-retract`: ND holds, by the argument `retractions`. -/
 theorem full_two_object_retract.distinctness_necessary_r : Statements.Models.full_two_object_retract.distinctness_necessary_r :=
@@ -697,7 +697,7 @@ theorem full_two_object_retract.necessary_strong_actuality : Statements.Models.f
 
 /-- `full-two-object-retract`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem full_two_object_retract.transversal_choice_r : Statements.Models.full_two_object_retract.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.FullActionModels.retract) (Classicism.Meta.Intensional.FullActionModels.unitModel_isModel _) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _))⟩
 
 /-- `full-two-object-retract`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem full_two_object_retract.independence_signature_r : Statements.Models.full_two_object_retract.independence_signature_r :=
@@ -893,7 +893,7 @@ theorem symmetry_constrained_full_all_maps.no_pure_contingency_r : Statements.Mo
 
 /-- `symmetry-constrained-full-all-maps`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem symmetry_constrained_full_all_maps.transversal_choice_r : Statements.Models.symmetry_constrained_full_all_maps.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.allMaps, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.allMaps) (Classicism.Meta.Intensional.SymFull.extFull (M := Classicism.Meta.Intensional.SymFull.allMaps)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.allMaps, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.allMaps) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.allMaps) (Classicism.Meta.Intensional.SymFull.extFull (M := Classicism.Meta.Intensional.SymFull.allMaps))⟩
 
 /-- `symmetry-constrained-full-all-maps`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem symmetry_constrained_full_all_maps.independence_signature_r : Statements.Models.symmetry_constrained_full_all_maps.independence_signature_r :=
@@ -913,7 +913,7 @@ theorem symmetry_constrained_full_collapse.no_pure_contingency_r : Statements.Mo
 
 /-- `symmetry-constrained-full-collapse`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
 theorem symmetry_constrained_full_collapse.transversal_choice_r : Statements.Models.symmetry_constrained_full_collapse.transversal_choice_r :=
-  ⟨Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.permsCollapses, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.permsCollapses) (Classicism.Meta.Intensional.SymFull.extFull (M := Classicism.Meta.Intensional.SymFull.permsCollapses)) (Classicism.Meta.Intensional.Premodel.metatheoryChoice _)⟩
+  ⟨Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.permsCollapses, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.SymFull.model Classicism.Meta.Intensional.SymFull.permsCollapses) (Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.permsCollapses) (Classicism.Meta.Intensional.SymFull.extFull (M := Classicism.Meta.Intensional.SymFull.permsCollapses))⟩
 
 /-- `symmetry-constrained-full-collapse`: Independence (signature Σ) fails, by the argument `sigma-top`. -/
 theorem symmetry_constrained_full_collapse.independence_signature_r : Statements.Models.symmetry_constrained_full_collapse.independence_signature_r :=

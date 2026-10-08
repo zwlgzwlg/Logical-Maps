@@ -1,5 +1,6 @@
 id: finitely-many-propositions
 requires: [full-model, finitely-many-propositions]
+choice: free
 fails: [infinity-t, axiom-of-infinity-t]
 by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
 date: '2026-09-20'

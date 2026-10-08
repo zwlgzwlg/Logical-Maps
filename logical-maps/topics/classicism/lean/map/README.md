@@ -247,7 +247,8 @@ isolated actual world), `Semantics/Counting.lean` (the `n`-th instance of the In
 holds iff there are `n` distinct entities, and the sentences counting them are pure and in the
 paper's language), `Semantics/OneIndividual.lean` (`Suc 𝟎` counts the universal property),
 `Semantics/Numerals.lean` (the numerals, and the Axiom of Infinity from infinitely many
-entities) and `Semantics/Arrows.lean` (the conditions on arrows). Lean's metatheory has choice, so `metatheory-choice` is `True`.
+entities) and `Semantics/Arrows.lean` (the conditions on arrows). Lean's metatheory has choice: the arguments that use it are marked
+`choice: uses` on the map, and its variants read without choice (README, "Model groups") have no Lean.
 
 On 6 October they gave 66 of the 166 model verdicts certified. The first 23 replaced 21
 that had been certified model by model and added Atomicity's failure in the two
@@ -262,7 +263,7 @@ argument, and their `lean.verdicts`, proved one by one before the arguments exis
 superseded but kept. `three-numbers`, `intensional-choice-well-ordering` and
 `rigid-power-tight` are the ones without Lean yet. The finite-support models' group meets
 `extensionally-full` (`Premodel.ideal_extFull`: the intension blind to arrows is pinned down by
-`∅`) and `metatheory-choice` in Lean.
+`∅`) in Lean.
 
 Several arguments are not proved yet, because the condition the Lean proves differs from
 the map's prose:

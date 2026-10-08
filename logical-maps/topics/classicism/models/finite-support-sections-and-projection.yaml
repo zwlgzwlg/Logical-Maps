@@ -47,7 +47,6 @@ meets:
     Out of $W_0$, the identity has only itself as retraction and each section $f_T$ only $\pi$,
     the one arrow back. Out of $W_1$, the identity has only itself; $\pi$ has none, since
     $f_T\circ\pi=e_T\ne1$; and no $e_T$ has one, since $e_T$ is not injective.
-  metatheory-choice: The construction is carried out in ZFC (Appendix D).
   retractions: >-
     The arrows out of $W_0$ are its identity and the sections $f_T$, each retracted by $\pi$.
 

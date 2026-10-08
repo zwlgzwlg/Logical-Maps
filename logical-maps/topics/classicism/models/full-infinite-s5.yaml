@@ -28,6 +28,8 @@ settings:
   individuals: singleton
   sigma: top
 meets:
+  numbered-returning-arrows: >-
+    Where it matters (the variant without countable choice), $W$ is $\mathbb N$: $h_n$ is the arrow to world $n$ and $r_n$ the arrow back.
   invertible-arrows: >-
     The unique arrow from $u$ to $v$ is inverted by the unique arrow from $v$ to $u$.
   epic-arrows: >-
@@ -48,7 +50,18 @@ meets:
     of $W$.
   sigma-apart: The construction does not mention Σ.
 
-arguments: []
+arguments:
+
+- holds: [no-pure-contingency-r]
+  choice: free
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-07'
+  text: >-
+    Any two objects are isomorphic, by the unique arrow between them, and composing with it carries
+    the model based at one to the model based at the other. So a closed sentence has the same truth
+    value at every object, and a true one is necessary. (The engine also derives this verdict, but
+    the general argument for the Σ-schemata needs it recorded.)
+
 
 notes: >-
   A basic reference model, recorded at Cian Dorr's request: the full S5 model with infinitely many

@@ -95,7 +95,6 @@ lean:
   meets:
     one-object-action-model: Classicism.Meta.Intensional.MonoidModel.oneObject {param}
     extensionally-full: Classicism.Meta.Intensional.Premodel.ideal_extFull _ _ _ _
-    metatheory-choice: Classicism.Meta.Intensional.Premodel.metatheoryChoice _
 
 # Conditions of the topic (conditions.yaml) that every member meets; members meet others under their
 # own `meets`, and parameter values under theirs.
@@ -115,7 +114,6 @@ meets:
     intension that assigns to every arrow out of $V$ into an object $U$ a fixed set $R_U$ of tuples
     from $U$’s domains, with $R_V=R$, is pinned down by $\emptyset$, so it is the intension of an
     element of $V^{\bar\sigma\to t}$ with extension $R$ at $1_V$.
-  metatheory-choice: The construction is carried out in ZFC (Appendix D).
   # The members meeting both actual-world-pinned and non-identity-non-injective meet these.
   actual-world-isolated:
     requires: [actual-world-pinned, non-identity-non-injective]

@@ -1,5 +1,6 @@
 id: sigma-true-atom
 requires: [sigma-true-atom, actuality-contingent]
+choice: free
 fails: [no-contingency-signature-r, witnessed-possibility-r, separated-structure-r, independence-signature-r,
   distinctness-signature-r]
 by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request

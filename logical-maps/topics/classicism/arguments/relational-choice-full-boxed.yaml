@@ -1,5 +1,6 @@
 id: relational-choice-full-boxed
-requires: [full-action-model, metatheory-choice]
+requires: [full-action-model]
+choice: uses
 holds: [necessary-relational-choice-r]
 by: Claude Fable 5.1 (Anthropic)
 date: '2026-09-22'

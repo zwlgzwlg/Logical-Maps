@@ -1,0 +1,19 @@
+id: countable-choice-reals-full
+requires: [full-model, numbered-returning-arrows, countable-choice-reals-fails]
+choice: free
+fails: [intensional-choice-r, relational-choice-r]
+by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+date: '2026-10-08'
+text: >-
+  Let $(A_n)$ be the family with no choice function. For a set $C$ of natural numbers let
+  $p_C:=\{h_m : m\in C\}$, a proposition at the evaluation object since the model is full; along
+  $h_n$ it becomes $h_n\cdot p_C$, from which $C$ is recovered as $\{m : h_m\circ r_n\in h_n\cdot
+  p_C\}$, since $h_m\circ r_n\circ h_n=h_m$. Intensional Choice at type $t$: let $F$ hold at $h_n$ of
+  the propositions $h_n\cdot p_C$ with $C\in A_n$, and at every other arrow of every proposition. It
+  is in the domain, the model being full, and necessarily instantiated. A $G\le F$ necessarily
+  uniquely instantiated holds at $h_n$ of a single $h_n\cdot p_{C_n}$ with $C_n\in A_n$, and
+  $n\mapsto C_n$ would be a choice function. Relational Choice at types $t$ and $t$: let $U$ relate
+  $p_{\{n\}}$ to each $p_C$ with $C\in A_n$, and every other proposition to every proposition. It
+  is serial, and a functional subrelation would relate each $p_{\{n\}}$ to a single $p_{C_n}$ with
+  $C_n\in A_n$, again a choice function. Both principles therefore fail. (The analysis of 3 October
+  2026: Intensional Choice is choice over worlds, Relational Choice over the elements of a domain.)

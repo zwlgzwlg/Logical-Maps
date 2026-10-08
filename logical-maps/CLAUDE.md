@@ -191,6 +191,11 @@ When you (an AI) add or edit a result or model:
   When a group generates variants, every argument (own or shared) applies to
   every variant unless its `when` limits it: give `when` to any argument that
   relies on a particular setting, and check the variants' verdicts.
+- Mark a model argument (own, shared or general) `choice: free` once you have
+  checked that it does not use the axiom of choice, and `choice: uses` when it
+  does. Variants at a `choiceless` parameter value (README, "Model groups")
+  get only the `free` ones; unmarked means unreviewed. There is no
+  `metatheory-choice` condition; the metatheory is a group parameter.
 - When you add content to an existing record after its certificate date (a
   newly verified property of a model, an added proof, a corrected statement),
   append an entry to its `changes` list: `date`, `by`, `summary`, and for models

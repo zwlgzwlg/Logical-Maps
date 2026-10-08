@@ -1,5 +1,6 @@
 id: fixed-infinite-individuals
 requires: [fixed-infinite-individuals, full-model]
+choice: free
 holds: [axiom-of-infinity-e]
 by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
 date: '2026-10-03'

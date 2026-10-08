@@ -1,5 +1,6 @@
 id: three-numbers
 requires: [one-individual, extensionally-full]
+choice: free
 holds: [countable-boolean-completeness-r]
 by: Claude Opus 5.5 (Anthropic), on Cian Dorr's question whether the failure of Boolean
   Completeness at type $t$ refutes its countable form here

@@ -1,5 +1,6 @@
 id: full-epic-barcan
 requires: [full-action-model, epic-arrows]
+choice: free
 holds: [necessary-barcan-r]
 source: {paper: bacon-dorr-classicism, locator: '§3.5, Proposition 3.24(ii)'}
 by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction

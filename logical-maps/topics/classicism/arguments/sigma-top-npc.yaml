@@ -1,5 +1,6 @@
 id: sigma-top-npc
 requires: [sigma-top]
+choice: free
 given: [no-pure-contingency-r]
 holds: [no-contingency-signature-r, signature-b-r]
 by: Cian Dorr (observation); recorded by Claude Opus 5.5 (Anthropic)

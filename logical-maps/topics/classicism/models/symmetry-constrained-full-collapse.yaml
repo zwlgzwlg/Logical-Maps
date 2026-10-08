@@ -72,7 +72,6 @@ lean:
   is_model: Classicism.Meta.Intensional.SymFull.model_isModel Classicism.Meta.Intensional.SymFull.permsCollapses
   meets:
     one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
-    metatheory-choice: Classicism.Meta.Intensional.Premodel.metatheoryChoice _
     finitely-many-propositions: Classicism.Meta.Intensional.SymFull.finitely_many_propositions (M := Classicism.Meta.Intensional.SymFull.permsCollapses)
     extensionally-full: Classicism.Meta.Intensional.SymFull.extFull (M := Classicism.Meta.Intensional.SymFull.permsCollapses)
     actual-world-isolated: Classicism.Meta.Intensional.SymFull.actualWorldIsolated (M := Classicism.Meta.Intensional.SymFull.permsCollapses)

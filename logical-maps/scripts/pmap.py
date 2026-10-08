@@ -208,6 +208,11 @@ TIERS = ("bronze", "silver", "gold")
 # variant: a model of its own, with an id and name derived from the member's, the same file, and
 # the arguments that apply at its settings. A member's own argument applies at every setting unless
 # its `when` says otherwise; `own` in a `when` matches a setting given as the member's own prose.
+#
+# A value marked `choiceless` reads the construction in a metatheory without the axiom of choice. A
+# model at such a value (a member or a variant) gets only the arguments, its own, its group's and the
+# topic's, that are marked `choice: free`, reviewed as not using choice: an unmarked argument is
+# unreviewed and does not apply. Its verdicts are relative-consistency claims, and it has no Lean.
 
 import re as _re
 SLOT = _re.compile(r"\{\{\s*([a-z0-9]+(?:-[a-z0-9]+)*)\s*\}\}")
@@ -252,6 +257,15 @@ def settings_match(when, settings: dict) -> bool:
         if not ((isinstance(v, str) and v in want) or (isinstance(v, dict) and "own" in want)):
             return False
     return True
+
+
+def choiceless(group: dict | None, settings: dict) -> bool:
+    """Whether these settings read the construction without the axiom of choice: some parameter is
+    set to a value marked `choiceless`. Such a model gets only the arguments marked `choice: free`."""
+    for name, param in ((group or {}).get("parameters") or {}).items():
+        if isinstance(param, dict) and isinstance(settings.get(name), str) and value_entry(param, settings[name]).get("choiceless"):
+            return True
+    return False
 
 
 def member_variants(rec: dict, group: dict) -> list[dict]:
@@ -349,6 +363,9 @@ def expand_member(rec: dict, groups: dict, settings: dict | None = None, library
               if isinstance(c, dict) and settings_match(c.get("when"), settings) and all(k in met for k in c.get("requires") or [])]
     args = own + shared
     pending = [c for c in library.get("arguments") or [] if isinstance(c, dict) and all(k in met for k in c.get("requires") or [])]
+    if choiceless(group, settings):  # without choice, only the arguments reviewed as choice-free
+        args = [a for a in args if not isinstance(a, dict) or a.get("choice") == "free"]
+        pending = [c for c in pending if c.get("choice") == "free"]
     while True:  # a general argument with `given` waits until the arguments applied record those verdicts
         holds = {p for a in args if isinstance(a, dict) and not a.get("withdrawn") for p in a.get("holds") or []}
         ready = [c for c in pending if set(c.get("given") or []) <= holds]
@@ -2955,9 +2972,10 @@ def lean_verdicts(data: dict) -> list[dict]:
     out = []
     for m in data["models"]:
         lean = m.get("lean")
-        if not isinstance(lean, dict) or m.get("variant_of") or m.get("_companion_of"):
-            continue
         groups = {g["id"]: g for g in data.get("groups", [])}
+        if not isinstance(lean, dict) or m.get("variant_of") or m.get("_companion_of") \
+                or choiceless(groups.get(m.get("group")), m.get("settings") or {}):  # Lean's metatheory has choice
+            continue
         glean = (groups.get(m.get("group")) or {}).get("lean") or {}
         term = lean.get("model") or (glean["model"].replace("{param}", f"({lean['param']})")
                                      if glean and lean.get("param") else "")
@@ -3058,7 +3076,8 @@ def lean_derived_verdicts(data: dict) -> list[dict]:
     out = []
     for m in data["models"]:
         lean = m.get("lean")
-        if not isinstance(lean, dict) or m.get("variant_of") or m.get("_companion_of"):
+        if not isinstance(lean, dict) or m.get("variant_of") or m.get("_companion_of") \
+                or choiceless(groups.get(m.get("group")), m.get("settings") or {}):  # Lean's metatheory has choice
             continue
         group = groups.get(m.get("group"))
         glean = (group or {}).get("lean") or {}
@@ -4665,6 +4684,20 @@ def _selftest_groups():
     GA = jsonschema.Draft202012Validator(_schema("general-argument"))
     assert GA.is_valid(lib["arguments"][1]), list(GA.iter_errors(lib["arguments"][1]))
     assert not GA.is_valid({**lib["arguments"][0], "requires": []}) and not GA.is_valid({**lib["arguments"][0], "when": {"x": "y"}})
+    # A choiceless value: a model at it gets only the arguments marked `choice: free`, its own, its
+    # group's and the topic's; a `given` waits for verdicts of the arguments that survive.
+    zg = {"id": "z", "definition": "{{meta}}", "arguments": [{"id": "s-free", "holds": ["s1"], "text": "t", "by": "Z", "date": "2026-04-01", "choice": "free"},
+                                                          {"id": "s-uses", "holds": ["s2"], "text": "t", "by": "Z", "date": "2026-04-01", "choice": "uses"}],
+          "meets": {"one-object": "One.", "single": "One."},
+          "parameters": {"meta": {"text": "Metatheory.", "generate": True, "default": "zfc",
+                                  "values": {"zfc": "ZFC.", "zf": {"text": "ZF.", "choiceless": True}}}}}
+    zlib = {"conditions": lib["conditions"], "arguments": [{**lib["arguments"][0], "choice": "free"}, {**lib["arguments"][1], "choice": "free"},
+                                                           {"id": "chooses", "requires": ["one-object"], "holds": ["f"], "text": "t", "by": "Z", "date": "2026-04-01", "choice": "uses"}]}
+    zm = {"id": "zm", "group": "z", "arguments": [{"holds": ["o1"], "text": "free", "choice": "free"}, {"holds": ["o2"], "text": "unreviewed"}]}
+    held = lambda settings: sorted(p for a in expand_member(zm, {"z": zg}, settings, zlib)["arguments"] for p in a.get("holds") or [])
+    assert held(None) == ["a", "c", "f", "o1", "o2", "s1", "s2"], held(None)
+    assert held({"meta": "zf"}) == ["a", "c", "o1", "s1"], held({"meta": "zf"})
+    assert choiceless(zg, {"meta": "zf"}) and not choiceless(zg, {"meta": "zfc"})
 
     # A credit does not repeat a date its author string already gives.
     assert _with_date("C, 20 September 2026", "2026-09-20") == "C, 20 September 2026" and _with_date("C", "2026-09-20") == "C, 2026-09-20"

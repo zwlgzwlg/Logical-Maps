@@ -1,5 +1,6 @@
 id: invertible-arrows
 requires: [invertible-arrows]
+choice: free
 holds: [necessary-distinctness-necessary-r, necessary-barcan-r]
 source: {paper: bacon-dorr-classicism, locator: '§3.5, Proposition 3.24'}
 by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction

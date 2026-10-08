@@ -67,9 +67,6 @@ meets:
   infinitely-many-propositions: >-
     A root proposition is any choice of truth values at $o$, $s$ and the $n$s, so there are
     infinitely many.
-  metatheory-choice: >-
-    The construction uses a non-principal ultrafilter, and so the axiom of choice, in the
-    metatheory.
   fewer-propositions-after: >-
     The root has at least three distinct propositions, while each world $n$, which sees only itself,
     has two.

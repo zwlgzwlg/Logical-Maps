@@ -39,12 +39,6 @@ abbrev OneObject (_A : Premodel Sig C) : Prop := Subsingleton C
 theorem oneObject_of_subsingleton (A : Premodel Sig C) [Subsingleton C] : A.OneObject :=
   inferInstance
 
-/-- `metatheory-choice`: the model is constructed in a metatheory with the axiom of choice.
-Lean's is one, so every model meets it. -/
-def MetatheoryChoice (_A : Premodel Sig C) : Prop := True
-
-theorem metatheoryChoice (A : Premodel Sig C) : A.MetatheoryChoice := trivial
-
 /-- `one-individual`: there is exactly one individual at every world. (There is at least one:
 the domains at `e` are nonempty.) -/
 def OneIndividual (A : Premodel Sig C) : Prop := ∀ W : C, Subsingleton (A.Dom W .e)

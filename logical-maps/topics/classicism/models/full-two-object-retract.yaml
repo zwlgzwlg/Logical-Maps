@@ -166,7 +166,6 @@ lean:
     full-model: Classicism.Meta.Intensional.FullActionModels.unitModel_full _
     full-action-model: Classicism.Meta.Intensional.FullActionModels.unitModel_full _
     extensionally-full: Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.FullActionModels.unitModel_full _)
-    metatheory-choice: Classicism.Meta.Intensional.Premodel.metatheoryChoice _
     one-individual: Classicism.Meta.Intensional.FullActionModels.unitModel_one_individual _
   verdicts:
   - holds: distinctness-necessary-t

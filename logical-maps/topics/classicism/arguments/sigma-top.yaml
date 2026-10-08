@@ -1,5 +1,6 @@
 id: sigma-top
 requires: [sigma-top]
+choice: free
 fails: [witnessed-possibility-r, separated-structure-r, independence-signature-r, distinctness-signature-r]
 by: Claude Fable 5.1 (Anthropic), at Cian Dorr’s request
 date: '2026-09-22'
