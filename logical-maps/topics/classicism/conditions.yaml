@@ -192,3 +192,11 @@ conditions:
   text: >-
     The construction is carried out in ZF together with a countable family $(A_n)_{n\in\omega}$ of
     nonempty sets of sets of natural numbers that has no choice function ($\neg\mathrm{AC}_\omega(\mathbb R)$).
+- id: socks-sets
+  text: >-
+    The construction is carried out in ZF with a countable family $(P_n)_{n\in\omega}$ of pairwise
+    disjoint two-element sets that has no choice function, and every infinite set the construction
+    leaves unspecified is their union.
+- id: arbitrary-infinite-set
+  text: >-
+    The construction uses an infinite set that it leaves unspecified: any infinite set will do.

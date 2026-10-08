@@ -28,8 +28,13 @@ settings:
   individuals: singleton
   sigma: top
 meets:
-  numbered-returning-arrows: >-
-    Where it matters (the variant without countable choice), $W$ is $\mathbb N$: $h_n$ is the arrow to world $n$ and $r_n$ the arrow back.
+  arbitrary-infinite-set: $W$ is any infinite set.
+  numbered-returning-arrows:
+    when: {metatheory: [choice, no-countable-choice-reals]}
+    text: >-
+      $h_n$ is the arrow to world $n$, and $r_n$ the arrow back, once $W$ contains the natural
+      numbers: by choice, or because $W$ is $\mathbb N$ in the variant without countable choice.
+      With socks $W$ is their union, and no such arrows need be given.
   invertible-arrows: >-
     The unique arrow from $u$ to $v$ is inverted by the unique arrow from $v$ to $u$.
   epic-arrows: >-
@@ -62,6 +67,23 @@ arguments:
     value at every object, and a true one is necessary. (The engine also derives this verdict, but
     the general argument for the Σ-schemata needs it recorded.)
 
+- fails: [intensional-choice-r, relational-choice-r]
+  when: {metatheory: socks}
+  choice: free
+  by: Claude Opus 5.5 (Anthropic), after Cian Dorr's construction of 7 October 2026
+  date: '2026-10-08'
+  text: >-
+    At type $t$, with the worlds the union $W$ of the socks. The propositions at a world are the
+    sets of arrows out of it, one for each set of worlds; write $[v]$ for the one true at world $v$
+    alone. Intensional Choice: let $F$ hold at (the arrow to) each world $w$ of the propositions
+    $[v]$ with $v$ in the pair after $w$'s. It is in the domain, the model being full, and
+    necessarily instantiated. A $G\le F$ necessarily uniquely instantiated holds at each $w$ of a
+    single $[v]$, so $w\mapsto v$ sends each sock to a sock of the next pair, and iterated from one
+    member of $P_0$ it would choose a sock from every pair. Relational Choice: let $U$ relate, at the
+    evaluation world, each $[w]$ to the $[v]$ with $v$ in the pair after $w$'s, and every other
+    proposition to every proposition; a functional subrelation gives the same function. So both
+    fail, with one individual as with the socks as individuals. (Cian Dorr's construction of the
+    choiceless S5 model, with the relation "lies in the next pair" for $F$.)
 
 notes: >-
   A basic reference model, recorded at Cian Dorr's request: the full S5 model with infinitely many

@@ -445,8 +445,12 @@ group page dims the rows that do not fit the explorer's assumptions.
 
 **The metatheory as a parameter.** A value marked `choiceless: true` reads the construction
 in ZF with a named hypothesis instead of with the axiom of choice (`metatheory` in
-`full-action-models`, whose values are `choice` and `no-countable-choice-reals`: ZF with a
-countable family of nonempty sets of reals that has no choice function). The value's text
+`full-action-models`, whose values are `choice`, `no-countable-choice-reals`, ZF with a
+countable family of nonempty sets of reals that has no choice function, and `socks`, ZF with a
+countable family of pairs that has none, whose union is every infinite set the construction
+leaves unspecified). A value's `requires` is checked at each combination of settings, so it may
+require a condition another parameter's value meets; and a member may meet a condition at some
+settings only, giving the reason as `{text, when}`. The value's text
 states the hypothesis, which holds in some model of ZF, so its verdicts are relative-consistency
 claims of the same standing as the rest. Inheritance at such a value is opt-in: a model at it
 gets only the arguments, its own, its group's and the topic's, marked `choice: free`, reviewed

@@ -270,24 +270,32 @@ def choiceless(group: dict | None, settings: dict) -> bool:
 
 def member_variants(rec: dict, group: dict) -> list[dict]:
     """The settings of each variant of a member: every combination of the generated parameters'
-    values other than the member's own, each value's `requires` met by the member."""
+    values other than the member's own, each value's `requires` met by the member at those settings,
+    so that a value may require a condition another parameter's value meets."""
     import itertools
     base = member_settings(group, rec)
-    meets = conditions_met(rec, group, {})
     axes = []
     for name, param in (group.get("parameters") or {}).items():
         if not (isinstance(param, dict) and param.get("generate") and isinstance(param.get("values"), dict)):
             continue
-        vals = [v for v in param["values"] if all(c in meets for c in value_entry(param, v).get("requires") or [])]
-        if not isinstance(base.get(name), str):  # the member's own prose stays one of its choices
-            vals = [base.get(name)] + vals
-        elif base.get(name) not in vals:
+        vals = list(param["values"])
+        if not isinstance(base.get(name), str) or base.get(name) not in vals:  # the member's own prose stays one of its choices
             vals = [base.get(name)] + vals
         axes.append((name, vals))
     out = []
     for combo in itertools.product(*[vals for _, vals in axes]):
         s = {**base, **{name: v for (name, _), v in zip(axes, combo)}}
-        if any(s[name] != base.get(name) for name, _ in axes):
+        if not any(s[name] != base.get(name) for name, _ in axes):
+            continue
+        params = group.get("parameters") or {}
+        ok = True
+        for name, _ in axes:
+            if s[name] == base.get(name) or not isinstance(s[name], str):
+                continue
+            met = conditions_met(rec, group, s, skip=name)
+            if not all(c in met for c in value_entry(params[name], s[name]).get("requires") or []):
+                ok = False
+        if ok:
             out.append(s)
     return out
 
@@ -305,10 +313,11 @@ def variant_label(group: dict, rec: dict, settings: dict) -> tuple[str, str]:
     return "-".join(slugs), "; ".join(tags)
 
 
-def conditions_met(rec: dict, group: dict | None, settings: dict) -> dict:
+def conditions_met(rec: dict, group: dict | None, settings: dict, skip: str | None = None) -> dict:
     """Each condition a record meets, with its reason: from its group (for every member), from the
     values of the group's parameters at these settings, and from the record itself, in that order,
-    a later reason replacing an earlier one."""
+    a later reason replacing an earlier one. `skip` names a parameter whose value's own `meets` are
+    left out (a value's `requires` cannot be met by the value itself)."""
     met, conditional = {}, {}
     if isinstance(group, dict):
         for k, v in (group.get("meets") or {}).items():
@@ -317,9 +326,14 @@ def conditions_met(rec: dict, group: dict | None, settings: dict) -> dict:
             else:
                 met[k] = v
         for name, param in (group.get("parameters") or {}).items():
-            if isinstance(param, dict) and isinstance(settings.get(name), str):
+            if name != skip and isinstance(param, dict) and isinstance(settings.get(name), str):
                 met.update(value_entry(param, settings[name]).get("meets") or {})
-    met.update(rec.get("meets") if isinstance(rec.get("meets"), dict) else {})
+    for k, v in (rec.get("meets") if isinstance(rec.get("meets"), dict) else {}).items():
+        if isinstance(v, dict):  # met only at the settings its `when` names
+            if settings_match(v.get("when"), settings):
+                met[k] = v.get("text", "")
+        else:
+            met[k] = v
     while True:
         ready = [k for k, v in conditional.items() if k not in met and all(c in met for c in v.get("requires") or [])]
         if not ready:
@@ -4698,6 +4712,19 @@ def _selftest_groups():
     assert held(None) == ["a", "c", "f", "o1", "o2", "s1", "s2"], held(None)
     assert held({"meta": "zf"}) == ["a", "c", "o1", "s1"], held({"meta": "zf"})
     assert choiceless(zg, {"meta": "zf"}) and not choiceless(zg, {"meta": "zfc"})
+    # A value may require a condition another parameter's value meets, and a member may meet a
+    # condition only at some settings ({text, when}); a value's own meets never satisfy its requires.
+    xg = {"id": "x", "definition": "{{ind}} {{meta}}", "parameters": {
+        "ind": {"text": "I.", "generate": True, "default": "one", "values": {"one": "One.", "many": {"text": "Many.", "meets": {"infinite": "D."}}}},
+        "meta": {"text": "M.", "generate": True, "default": "choice", "values": {
+            "choice": "C.", "reals": {"text": "R.", "requires": ["numbered"]},
+            "socks": {"text": "S.", "requires": ["infinite"], "meets": {"socks": "S."}},
+            "self": {"text": "X.", "requires": ["selfmet"], "meets": {"selfmet": "X."}}}}}}
+    xm = {"id": "xm", "group": "x", "meets": {"numbered": {"text": "Arrows to n.", "when": {"meta": ["choice", "reals"]}}}}
+    got = sorted(tuple(sorted(v.items())) for v in member_variants(xm, xg))
+    assert got == sorted(tuple(sorted(d.items())) for d in [{"ind": "many", "meta": "choice"}, {"ind": "one", "meta": "reals"},
+                                                            {"ind": "many", "meta": "reals"}, {"ind": "many", "meta": "socks"}]), got
+    assert "numbered" in conditions_met(xm, xg, {"ind": "one", "meta": "reals"}) and "numbered" not in conditions_met(xm, xg, {"ind": "many", "meta": "socks"})
 
     # A credit does not repeat a date its author string already gives.
     assert _with_date("C, 20 September 2026", "2026-09-20") == "C, 20 September 2026" and _with_date("C", "2026-09-20") == "C, 2026-09-20"

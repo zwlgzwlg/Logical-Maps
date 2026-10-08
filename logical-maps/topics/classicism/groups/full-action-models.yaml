@@ -39,7 +39,9 @@ parameters:
       source gives them.
   individuals:
     text: What the individuals are. Each member is recorded with one individual; its variant with
-      infinitely many individuals, which every arrow fixes, is generated.
+      infinitely many individuals, which every arrow fixes, is generated. The infinite set of
+      individuals is any infinite set, except under the metatheory `socks`, which takes every
+      unspecified infinite set to be a union of pairs with no choice function.
     generate: true
     default: singleton
     values:
@@ -53,14 +55,15 @@ parameters:
           homogeneous-individuals: There is only one individual.
       fixed-infinite:
         text: >-
-          Individuals, fixed for this record: at every object the individuals are the natural
-          numbers, and every arrow acts on them as the identity.
+          Individuals, fixed for this record: at every object the individuals are the members of an
+          infinite set $D$, the same at every object, and every arrow acts on them as the identity.
         label: infinitely many fixed individuals
         meets:
           fixed-infinite-individuals: This is the choice of individuals.
-          infinitely-many-individuals: The individuals are the natural numbers.
+          arbitrary-infinite-set: $D$ is any infinite set.
+          infinitely-many-individuals: $D$ is infinite.
           homogeneous-individuals: >-
-            A permutation of the natural numbers commutes with every arrow's action, the identity,
+            A permutation of $D$ commutes with every arrow's action, the identity,
             so it is an automorphism at type $e$ and extends, by conjugation, to the full domains
             of the other types, carrying each individual to its image.
   sigma:
@@ -117,6 +120,20 @@ parameters:
         requires: [numbered-returning-arrows]
         meets:
           countable-choice-reals-fails: This is the hypothesis.
+      socks:
+        text: >-
+          Metatheory, fixed for this record: the construction is carried out in ZF together with
+          a countable family $(P_n)_{n\in\omega}$ of pairwise disjoint two-element sets that has no
+          choice function (Russell's socks), which is consistent with ZF (Fraenkel's second
+          permutation model, transferred to ZF by the Jech–Sochor theorem). Every infinite set the
+          construction leaves unspecified (the individuals, the worlds, a carrier) is their union.
+          The verdicts of this record are relative-consistency claims of the same
+          standing as those of a record with choice.
+        label: ZF + socks
+        choiceless: true
+        requires: [arbitrary-infinite-set]
+        meets:
+          socks-sets: This is the hypothesis.
 
 # Conditions of the topic that every member meets.
 meets:

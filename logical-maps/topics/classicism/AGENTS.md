@@ -45,10 +45,12 @@ Read a matching `writeups/<id>.md` when it exists.
   use `models/full-free-monoid-glued-constants*.yaml` and matching write-ups.
   For signature claims, check the specified interpretation of constants and
   any pending expansion obligation, even when the pure-language model is proved.
-- Choice-free variants: `full-action-models` has a `metatheory` parameter whose value
-  `no-countable-choice-reals` reads a member in ZF + ¬AC_ω(ℝ); it applies to members
-  meeting `numbered-returning-arrows` and gives them only arguments marked `choice: free`.
-  Intensional and Relational Choice fail there by `arguments/countable-choice-reals-full.yaml`.
+- Choice-free variants: `full-action-models` has a `metatheory` parameter (`choice`,
+  `no-countable-choice-reals`, `socks`); a choiceless value gives a model only arguments marked
+  `choice: free`. ZF + ¬AC_ω(ℝ) applies to members meeting `numbered-returning-arrows`
+  (`arguments/countable-choice-reals-full.yaml`); socks applies wherever an infinite set is left
+  unspecified (`socks-full`, `socks-relational-choice`, the S5 model's own argument), and
+  `intensional-choice-finitely-many-arrows` keeps □Intensional Choice in the finite ones.
 - `CANDIDATES.md` lists candidate principles not yet recorded, with notes on what
   each would need; check it before adding a principle.
 - `extraction.md` indexes Classicism by proposition/section, followed by

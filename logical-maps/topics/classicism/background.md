@@ -259,6 +259,15 @@ $\Box\neg A_\sigma$ for some $\sigma$, is stronger and different from failure of
 boxed schema. Negated principle nodes are not added by this positive import.
 Incompatibilities conclude False; model `violates` entries record schema failure.
 
+**Infinite sets in model descriptions.** A model described with "an infinite set"
+works for any infinite set; where a construction needs a particular one, its
+description says so. "Infinite" means not finite, that is, in bijection with no
+natural number. This is the notion the Axioms of Infinity express, the finite
+cardinalities being defined inductively. Without the axiom of choice it is weaker than
+Dedekind-infinity, but it is all that the arguments for the Infinity principles use, so
+they hold in the choiceless variants of a model too. Those variants say which
+hypothesis replaces choice.
+
 **Pure and signature schemata.** In Maximalism, in its distinctness form and its possibility
 form alike, $C$ denotes the fixed background logic. Its theoremhood and consistency
 side conditions are retained literally. “Pure” means free of nonlogical

@@ -1,0 +1,14 @@
+id: intensional-choice-finitely-many-arrows
+requires: [full-model, finitely-many-propositions-everywhere]
+choice: free
+holds: [necessary-intensional-choice-r]
+by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+date: '2026-10-08'
+text: >-
+  At an object reachable from the evaluation point the propositions are all the sets of arrows out
+  of it, so there are finitely many arrows out. A necessarily instantiated $F$ there assigns to each
+  of them a nonempty set, and a finite family of nonempty sets has a choice function without the
+  axiom of choice; the intension holding at each arrow of the chosen member alone is in the domain,
+  the model being full, lies below $F$ and is necessarily uniquely instantiated. So Intensional
+  Choice holds at every reachable object, at every type. (The finite-germ argument of the 3 October
+  2026 analysis, for full models; with choice the well-ordering argument gives the same.)

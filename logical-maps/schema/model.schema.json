@@ -46,8 +46,11 @@
   },
   "meets": {
    "type": "object",
-   "additionalProperties": {"type": "string", "minLength": 1},
-   "description": "Each condition it meets, with the reason: a condition of its group's, or of the topic's (conditions.yaml), which brings the topic's general arguments that require it."
+   "additionalProperties": {"oneOf": [{"type": "string", "minLength": 1},
+     {"type": "object", "additionalProperties": false, "required": ["text", "when"], "properties": {
+      "text": {"type": "string", "minLength": 1},
+      "when": {"$ref": "#/$defs/argument/properties/when"}}}]},
+   "description": "Each condition it meets, with the reason: a condition of its group's, or of the topic's (conditions.yaml), which brings the topic's general arguments that require it. A reason given as {text, when} holds only at the group settings its `when` names."
   },
   "construction": {
    "type": "object",

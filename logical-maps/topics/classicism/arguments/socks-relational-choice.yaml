@@ -1,0 +1,12 @@
+id: socks-relational-choice
+requires: [full-model, fixed-infinite-individuals, socks-sets]
+choice: free
+fails: [relational-choice-r]
+by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+date: '2026-10-08'
+text: >-
+  At type $e$. The individuals, which every arrow fixes, are an unspecified infinite set, so here
+  the union $D=\bigcup_n P_n$. Let $U$ relate each member of $P_n$ to the members of $P_{n+1}$; it is
+  in the domain, the model being full, and serial. A functional subrelation would send each sock to
+  a sock of the next pair, and iterated from one member of $P_0$ it would choose a sock from every
+  pair.

@@ -37,9 +37,11 @@ settings:
   individuals: singleton
   sigma: top
 meets:
+  arbitrary-infinite-set: The monoid is that of the surjections of any infinite set.
   numbered-returning-arrows: >-
-    Where it matters (the variant without countable choice) the infinite set is $\mathbb N$: $h_0$ the
-    identity and $h_n$ the transposition of $0$ and $n$, a surjection that is its own retraction.
+    $h_0$ the identity and $h_n$ a transposition, a surjection that is its own retraction: of $0$ and
+    $n$ when the infinite set is $\mathbb N$ (with choice, or in the variant without countable
+    choice), and of the two members of $P_n$ when it is the union of the socks.
   returning-arrow: >-
     A bijection other than the identity, which its inverse retracts.
   nonidentity-arrow: >-

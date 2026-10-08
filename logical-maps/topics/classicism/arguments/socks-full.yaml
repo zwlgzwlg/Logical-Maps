@@ -1,0 +1,13 @@
+id: socks-full
+requires: [full-model, numbered-returning-arrows, fixed-infinite-individuals, socks-sets]
+choice: free
+fails: [intensional-choice-r]
+by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+date: '2026-10-08'
+text: >-
+  At type $e$. The individuals, which every arrow fixes, are an unspecified infinite set, so here
+  the union $D=\bigcup_n P_n$. Let $F$ hold at $h_n$ of the members of $P_n$, and at every other
+  arrow of every individual. It is in the domain, the model being full, and necessarily
+  instantiated. A $G\le F$ necessarily uniquely instantiated holds at $h_n$ of a single member of
+  $P_n$, and $n\mapsto$ that member would be a choice function for the socks. (The witness of the
+  3 October 2026 analysis, with the numbered arrows in place of the transpositions of the pairs.)
