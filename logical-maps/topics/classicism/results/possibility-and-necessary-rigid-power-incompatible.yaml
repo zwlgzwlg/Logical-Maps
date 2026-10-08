@@ -1,0 +1,29 @@
+id: possibility-and-necessary-rigid-power-incompatible
+premises:
+- possibility-schema-r
+- necessary-rigid-power-r
+conclusion: 'false'
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Cian Dorr, 8 October 2026
+  recorded_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  checked_by: []
+  date: '2026-10-08'
+  lean: verified
+  lean_ref: Classicism.Map.possibility_and_necessary_rigid_power_incompatible
+sources:
+- Cian Dorr, observation of 8 October 2026, in conversation with Claude Opus 5.5 (Anthropic), using the
+  model finite-support-pair-injections-or-collapses.
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §3.4, Theorem 3.23, p. 58 (soundness of
+  action models).
+source_names:
+- Dorr 8 Oct
+- Classicism
+proof: >-
+  Rigid Power fails at type $e\to t$ in finite-support-pair-injections-or-collapses, a model of C, so the
+  negation of that closed pure instance is consistent with C. Possibility Maximalism (pure) makes the
+  negation possible, while □Rigid Power says the instance is necessary.
+notes: >-
+  Instance of the pattern recorded for possibility-and-necessary-relational-choice-incompatible and
+  possibility-and-necessary-intensional-choice-incompatible.

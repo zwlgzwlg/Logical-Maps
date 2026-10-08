@@ -1,6 +1,7 @@
 import Classicism.Statements
 import Classicism.Results.Arity
 import Classicism.Results.SentenceSchemas.Incompatibilities
+import Classicism.Results.SentenceSchemas.RigidPower
 import Classicism.Results.SentenceSchemas.WitnessedPossibility
 import Classicism.Results.SentenceSchemas.PossibilityPlus
 import Classicism.Results.SentenceSchemas.Infinity
@@ -942,6 +943,10 @@ theorem plenitude_r_implies_distinctness_necessary_r : Statements.plenitude_r_im
 /-- `possibility-and-necessary-barcan-t-incompatible` -/
 theorem possibility_and_necessary_barcan_t_incompatible : Statements.possibility_and_necessary_barcan_t_incompatible := by
   map_cert_incompatible possibility_necBarcanT_inconsistent
+
+/-- `possibility-and-necessary-rigid-power-incompatible` -/
+theorem possibility_and_necessary_rigid_power_incompatible : Statements.possibility_and_necessary_rigid_power_incompatible := by
+  map_cert_incompatible possibility_necRigidPower_inconsistent
 
 /-- `possibility-and-no-pure-contingency-incompatible` -/
 theorem possibility_and_no_pure_contingency_incompatible : Statements.possibility_and_no_pure_contingency_incompatible := by

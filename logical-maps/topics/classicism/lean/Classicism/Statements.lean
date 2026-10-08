@@ -2598,6 +2598,15 @@ def possibility_and_necessary_relational_choice_incompatible : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRelationalChoice.schemaIn →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
+/-- `possibility-and-necessary-rigid-power-incompatible`
+
+Possibility Maximalism (pure) ∧ □Rigid Power ⇒ ⊥ -/
+def possibility_and_necessary_rigid_power_incompatible : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidPower.schemaIn →
+    ¬ Classicism.Meta.AxiomSet.Consistent Ax
+
 /-- `possibility-and-necessary-strong-leibniz-t-incompatible`
 
 Possibility Maximalism (pure) ∧ □Strong Leibniz Biconditionals (type t) ⇒ ⊥ -/
