@@ -1390,11 +1390,11 @@ def Arguments.one_individual.possible_infinity_e : Prop :=
 
 /-- argument `relational-choice-full-boxed`: □Relational Choice holds in every model meeting its conditions. -/
 def Arguments.relational_choice_full_boxed.necessary_relational_choice_r : Prop :=
-  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.Full A → Classicism.Meta.Intensional.Premodel.MetatheoryChoice A → (A).HoldsAx Classicism.P.NecRelationalChoice.schemaIn
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.Full A → (A).HoldsAx Classicism.P.NecRelationalChoice.schemaIn
 
 /-- argument `relational-choice-full`: Relational Choice holds in every model meeting its conditions. -/
 def Arguments.relational_choice_full.relational_choice_r : Prop :=
-  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.Full A → Classicism.Meta.Intensional.Premodel.MetatheoryChoice A → (A).HoldsAx Classicism.P.RelationalChoice.schemaIn
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.Full A → (A).HoldsAx Classicism.P.RelationalChoice.schemaIn
 
 /-- argument `retractions`: ND holds in every model meeting its conditions. -/
 def Arguments.retractions.distinctness_necessary_r : Prop :=
@@ -1422,7 +1422,7 @@ def Arguments.strong_actuality_unique_retractions.necessary_strong_actuality : P
 
 /-- argument `transversal-choice-extensionally-full`: Transversal Choice holds in every model meeting its conditions. -/
 def Arguments.transversal_choice_extensionally_full.transversal_choice_r : Prop :=
-  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.ExtFull A → Classicism.Meta.Intensional.Premodel.MetatheoryChoice A → (A).HoldsAx Classicism.P.TransversalChoice.schemaIn
+  ∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel → Classicism.Meta.Intensional.Premodel.ExtFull A → (A).HoldsAx Classicism.P.TransversalChoice.schemaIn
 
 /-- argument `unretracted-arrow`: ND (type t) fails in every model meeting its conditions. -/
 def Arguments.unretracted_arrow.distinctness_necessary_t : Prop :=

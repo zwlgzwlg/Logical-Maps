@@ -59,7 +59,7 @@ namespace relational_choice_full
 /-- Relational Choice holds in every extensionally full model (`Premodel.holds_rc`), so in every
 full one. -/
 theorem relational_choice_r : Statements.Arguments.relational_choice_full.relational_choice_r := by
-  intro Sig C _ A M hF _
+  intro Sig C _ A M hF
   rw [holdsAx_ofPure]
   rintro _ ⟨σ, τ, -, -, rfl⟩
   exact holds_rc (A.reduct_isModel M) (Full.extFull A hF) (𝟙 _) σ τ
@@ -71,7 +71,7 @@ namespace relational_choice_full_boxed
 /-- And at every arrow of a full model (`Premodel.holds_box_rc`). -/
 theorem necessary_relational_choice_r :
     Statements.Arguments.relational_choice_full_boxed.necessary_relational_choice_r := by
-  intro Sig C _ A M hF _
+  intro Sig C _ A M hF
   rw [holdsAx_ofPure]
   rintro _ ⟨σ, τ, -, -, rfl⟩
   exact holds_box_rc (A.reduct_isModel M) (Full.extFull A hF) (𝟙 _) σ τ
@@ -83,7 +83,7 @@ namespace transversal_choice_extensionally_full
 /-- Transversal Choice holds in every extensionally full model (`Premodel.holds_tc`). -/
 theorem transversal_choice_r :
     Statements.Arguments.transversal_choice_extensionally_full.transversal_choice_r := by
-  intro Sig C _ A M hE _
+  intro Sig C _ A M hE
   rw [holdsAx_ofPure]
   rintro _ ⟨σ, -, rfl⟩
   exact holds_tc (A.reduct_isModel M) hE (𝟙 _) σ

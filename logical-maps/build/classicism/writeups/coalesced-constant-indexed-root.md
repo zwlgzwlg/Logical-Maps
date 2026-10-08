@@ -58,7 +58,7 @@ The type-$e$ instance of Intensional Choice fails in a model of C (symmetric-all
 
 The functionality of a subrelation is evaluated at the root’s identity arrow only, while the subrelation condition is boxed; so for a serial root relation take the subrelation whose root component is a functional choice from the root component, by choice in the metatheory, and whose component parts are empty. Where some component refutes Relational Choice at its root, as when the components are complete for C, its necessitation fails.
 
-*From the group *Coalesced sums at a new root*, shared argument `coalesced-sums#relational-choice-free-root`. It requires that A root entity of a relational type has a root component that is an arbitrary function of the root arguments. Here: The root domains are as full as compatibility allows. It requires that The model is constructed in a metatheory with the axiom of choice. Here: The constructions are carried out in ZFC. By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-22.*
+*From the group *Coalesced sums at a new root*, shared argument `coalesced-sums#relational-choice-free-root`. It requires that A root entity of a relational type has a root component that is an arbitrary function of the root arguments. Here: The root domains are as full as compatibility allows. By Cian Dorr, recorded by Claude Fable 5.1 (Anthropic), 2026-09-22.*
 
 *Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The three complete members' copies stated once; "Its necessitation fails, since some component refutes Relational Choice at its root" became conditional on that, since in the all-finite-domains member every component satisfies Relational Choice.
 

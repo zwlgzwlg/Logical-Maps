@@ -4,6 +4,7 @@
 
 ## Package
 
+- **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
 - **Gallin Extensional Comprehension.** Every relation is coextensive with one that is persistent and has a persistent pointwise negation. This is the source’s comparison with Gallin’s different rigidity convention.
 - **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **□Atomicity.** Necessarily, every non-bottom entity of each relational type has an atom below it.
@@ -38,9 +39,17 @@ Individuals, fixed for this record: at every object the individuals are the natu
 
 Interpretation of Σ, fixed for this record: one designated relational constant $c$ of type $\tau=\bar\sigma t$ denotes $\lambda\bar x\, .\,a$, where $a$ is the unique true atom of the model, the actual-world proposition $\{1\}$; every other constant of Σ, of which there is at least one, is relational and denotes the top element of its type.
 
+Metatheory, fixed for this record: the axiom of choice is used freely, as in ordinary mathematics in ZFC, or in Lean's classical type theory for the verdicts certified there.
+
 *A member of the group Full action models, which supplies this definition with the record's settings, and the arguments marked as shared.*
 
 ## Arguments
+
+### Holds No Pure Contingency.
+
+Any two objects are isomorphic, by the unique arrow between them, and composing with it carries the model based at one to the model based at the other. So a closed sentence has the same truth value at every object, and a true one is necessary. (The engine also derives this verdict, but the general argument for the Σ-schemata needs it recorded.)
+
+*By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-07.*
 
 ### Holds Gallin Extensional Comprehension.
 
@@ -94,7 +103,7 @@ As for individuals (the argument infinitely-many-individuals), at type $t$: the 
 
 For each object $U$ and type $\sigma$ fix a well-ordering $<_U$ of the domain $D^\sigma_U$, and let $W$ be the intension of type $\sigma\to\sigma\to t$ with $W(h):={<_{\operatorname{cod}h}}$. Its value depends only on the arrow's codomain, so by the condition it is in the domain, and at every world its extension well-orders that world's type-$\sigma$ domain. Given $F$ with $\Box\exists x\, .\,Fx$, put $G:=\lambda x\, .\,Fx\land\forall y\, .\,(Fy\to\neg Wyx)$, the $W$-least $F$. It is definable from $F$ and $W$, so in the domain; $G\le F$, and its extension at every arrow is the singleton of the least element of $F$'s. So Intensional Choice holds, and the same at every reachable object gives $\Box$Intensional Choice. Cian Dorr's observation that such models are qualitatively full, made precise.
 
-*General argument `arguments/intensional-choice-well-ordering`. It requires that At every object reachable from the evaluation point, the domain contains every intension whose value at an arrow depends only on the arrow's codomain. Here: The domains are full at every object. It requires that The model is constructed in a metatheory with the axiom of choice. Here: The constructions are carried out in ZFC. By Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion, 2026-10-03.*
+*General argument `arguments/intensional-choice-well-ordering`. It requires that At every object reachable from the evaluation point, the domain contains every intension whose value at an arrow depends only on the arrow's codomain. Here: The domains are full at every object. By Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion, 2026-10-03.*
 
 ### Holds □ND, □BF.
 
@@ -112,7 +121,7 @@ The propositions $\top$ and $\{1\}$ are in the domain, the model being full; the
 
 The truncation of a full action model at any arrow is again a full action model, its domains at the reachable objects being unchanged, and Relational Choice holds in every full model given choice in the metatheory (Classicism, p. 61).
 
-*General argument `arguments/relational-choice-full-boxed`. It requires that The model is a full action model: an action model (Classicism, Appendix D) that is full at every object. Here: An action model, full at every object (Classicism, §3.5, p. 59; Appendix D). It requires that The model is constructed in a metatheory with the axiom of choice. Here: The constructions are carried out in ZFC. By Claude Fable 5.1 (Anthropic), 2026-09-22.*
+*General argument `arguments/relational-choice-full-boxed`. It requires that The model is a full action model: an action model (Classicism, Appendix D) that is full at every object. Here: An action model, full at every object (Classicism, §3.5, p. 59; Appendix D). By Claude Fable 5.1 (Anthropic), 2026-09-22.*
 
 *Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The two-object full action models' copies stated once for the topic, for every full action model.
 
@@ -120,7 +129,7 @@ The truncation of a full action model at any arrow is again a full action model,
 
 With choice in the metatheory a serial relation has a functional subrelation, and a full model contains every intension, so that subrelation is in the domain; see Classicism, p. 61, on the principles common to full models.
 
-*General argument `arguments/relational-choice-full`. It requires that The model is full: at each object, the domain of each relational type contains every intension of that type. Here: Every intension of every relational type is present at every object (Classicism, §3.5, p. 59). It requires that The model is constructed in a metatheory with the axiom of choice. Here: The constructions are carried out in ZFC. By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-09-20.*
+*General argument `arguments/relational-choice-full`. It requires that The model is full: at each object, the domain of each relational type contains every intension of that type. Here: Every intension of every relational type is present at every object (Classicism, §3.5, p. 59). By Claude Fable 5.1 (Anthropic), at Cian Dorr's direction, 2026-09-20.*
 
 *Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The full action models' copies stated once for the topic.
 
@@ -156,7 +165,7 @@ Let $V$ be the evaluation object or the target of an arrow out of it, and $w:=\{
 
 For an equivalence relation at the evaluation point, a transversal of its extension there, chosen in the metatheory, is by extensional fullness the extension of an element of the domain; the equivalence and transversal conditions are unboxed.
 
-*General argument `arguments/transversal-choice-extensionally-full`. It requires that The model is extensionally full at every object: every set of tuples from the domains at an object is the extension, at the identity arrow, of an element of the domain of the matching relational type there. Here: A full model contains every intension, so in particular one with any given extension at the identity. It requires that The model is constructed in a metatheory with the axiom of choice. Here: The constructions are carried out in ZFC. By Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic), on a question of Zachary Goodsell, after an observation of Christopher Sun, 2026-09-25.*
+*General argument `arguments/transversal-choice-extensionally-full`. It requires that The model is extensionally full at every object: every set of tuples from the domains at an object is the extension, at the identity arrow, of an element of the domain of the matching relational type there. Here: A full model contains every intension, so in particular one with any given extension at the identity. By Cian Dorr (observation); recorded by Claude Fable 5.1 (Anthropic), on a question of Zachary Goodsell, after an observation of Christopher Sun, 2026-09-25.*
 
 *Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The Relational Choice and Transversal Choice arguments merged into one, stated for every extensionally full model.
 

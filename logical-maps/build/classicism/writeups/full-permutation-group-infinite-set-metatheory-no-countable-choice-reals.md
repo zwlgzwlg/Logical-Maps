@@ -1,0 +1,165 @@
+# Full action model: permutations of an infinite set [ZF + ¬AC_ω(ℝ)]
+
+<p class='cert'>Model — Source: Misc.; produced by Claude Fable 5.1 (Anthropic), 23 September 2026; recorded by Claude Fable 5.1 (Anthropic), 23 September 2026.</p>
+
+## Package
+
+- **Gallin Extensional Comprehension.** Every relation is coextensive with one that is persistent and has a persistent pointwise negation. This is the source’s comparison with Gallin’s different rigidity convention.
+- **□Atomicity.** Necessarily, every non-bottom entity of each relational type has an atom below it.
+- **□BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
+- **□Rigid Comprehension.** Necessarily, every relation, including a proposition, is coextensive with a rigid one.
+- **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
+- **Infinity Schema (type t).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
+- **□ND.** Necessarily, distinct things of any type are necessarily distinct.
+- **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
+- **Rigid Power.** If a relation is rigid, so is the property of being a rigid relation that entails it.
+- **□Rigid Power.** Every closed instance of Rigid Power is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+- **Countable Boolean Completeness.** Every countable property of entities of a relational type has a least upper bound in that type, where a property is countable when it injects into the natural numbers.
+- **No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
+- **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
+- **¬ Intensional Choice.** If a property is necessarily instantiated, then some property entailing it is necessarily uniquely instantiated.
+- **¬ Relational Choice.** Every serial binary relation has a functional subrelation.
+- **¬ Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
+- **¬ Fregean Axiom.** Materially equivalent propositions are identical.
+- **¬ Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
+- **¬ Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
+- **¬ Possible Infinity (type e).** Possibly there are not finitely many individuals: the Axiom of Infinity at this type, under a diamond.
+- **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
+- **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
+- **¬ Independence (signature Σ).** No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.
+- **¬ Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
+
+## Definition
+
+The full one-object action model whose arrows are all the permutations of a countably infinite set $X$, composed as functions. Propositions are all sets of arrows with the division action $i\cdot p=\{j : j\circ i\in p\}$, and every function type carries the full function-space M-set, which here is the set of all functions since every arrow acts bijectively. Evaluate at the identity arrow.
+
+Individuals, fixed for this record: there is a single individual at every object, and every arrow sends it to the single individual at its target.
+
+Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each denotes the top element of its type.
+
+Metatheory, fixed for this record: the construction is carried out in ZF together with the hypothesis that some countable family $(A_n)_{n\in\omega}$ of nonempty sets of sets of natural numbers has no choice function ($\neg\mathrm{AC}_\omega(\mathbb R)$), which holds in Cohen's basic model. An infinite set the construction leaves unspecified is $\mathbb N$. ZF with this hypothesis is consistent if ZF is, so the verdicts of this record are relative-consistency claims of the same standing as those of a record in ZFC.
+
+*A member of the group Full action models, which supplies this definition with the record's settings, and the arguments marked as shared.*
+
+## Arguments
+
+### Holds Gallin Extensional Comprehension.
+
+Given $X$ with extension $E$ at the evaluation object, let $Y$ hold at an arrow $g$ of a tuple $\bar b$ at $g$'s target iff $r_g\cdot\bar b\in E$; it is in the domain since the model is full. It is coextensive with $X$, since $r_1=1$. And whether it holds is unchanged along every arrow: at $x\circ g$, of $x\cdot\bar b$, it holds iff $r_{x\circ g}\cdot x\cdot\bar b=r_g\cdot\bar b\in E$. So $Y$ and its negation are persistent. (The retract's own argument of 25 September, generalized.)
+
+*General argument `arguments/coherent-retractions`. It requires that The model is full: at each object, the domain of each relational type contains every intension of that type. Here: Every intension of every relational type is present at every object (Classicism, §3.5, p. 59). It requires that Every arrow $g$ out of the evaluation object has a retraction $r_g$, chosen so that $r_{x\circ g}\circ x=r_g$ for every arrow $x$ after $g$. Here: $r_g:=g^{-1}$: then $r_{x\circ g}\circ x=g^{-1}\circ x^{-1}\circ x=g^{-1}$. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Fails Intensional Choice, Relational Choice.
+
+Let $(A_n)$ be the family with no choice function. For a set $C$ of natural numbers let $p_C:=\{h_m : m\in C\}$, a proposition at the evaluation object since the model is full; along $h_n$ it becomes $h_n\cdot p_C$, from which $C$ is recovered as $\{m : h_m\circ r_n\in h_n\cdot p_C\}$, since $h_m\circ r_n\circ h_n=h_m$. Intensional Choice at type $t$: let $F$ hold at $h_n$ of the propositions $h_n\cdot p_C$ with $C\in A_n$, and at every other arrow of every proposition. It is in the domain, the model being full, and necessarily instantiated. A $G\le F$ necessarily uniquely instantiated holds at $h_n$ of a single $h_n\cdot p_{C_n}$ with $C_n\in A_n$, and $n\mapsto C_n$ would be a choice function. Relational Choice at types $t$ and $t$: let $U$ relate $p_{\{n\}}$ to each $p_C$ with $C\in A_n$, and every other proposition to every proposition. It is serial, and a functional subrelation would relate each $p_{\{n\}}$ to a single $p_{C_n}$ with $C_n\in A_n$, again a choice function. Both principles therefore fail. (The analysis of 3 October 2026: Intensional Choice is choice over worlds, Relational Choice over the elements of a domain.)
+
+*General argument `arguments/countable-choice-reals-full`. It requires that The model is full: at each object, the domain of each relational type contains every intension of that type. Here: Every intension of every relational type is present at every object (Classicism, §3.5, p. 59). It requires that There are pairwise distinct arrows $h_n$ out of the evaluation object, one for each natural number $n$, each with a retraction $r_n$, all given by the construction without choice. Here: With $X$ enumerated as $x_0,x_1,\ldots$, $h_0$ the identity and $h_n$ the transposition of $x_0$ and $x_n$, its own retraction. It requires that The construction is carried out in ZF together with a countable family $(A_n)_{n\in\omega}$ of nonempty sets of sets of natural numbers that has no choice function ($\neg\mathrm{AC}_\omega(\mathbb R)$). Here: This is the hypothesis. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-08.*
+
+### Fails Distinctness-preserving collapse.
+
+Let $p:=\{1\}$, in the domain since the model is full, and true. Any witness $q$ for $\Box_{\ne}p$ is true, so contains the identity; under an arrow $i\ne 1$ with a retraction $r$, the arrow $r\circ i=1$ makes $\Diamond q$ true, while $p$ is false. So no true $q$ has $\Box(\Diamond q\to p)$. (The surjection monoid's own argument of 23 September, stated once.)
+
+*General argument `arguments/dpc-returning-arrow`. It requires that The model is full: at each object, the domain of each relational type contains every intension of that type. Here: Every intension of every relational type is present at every object (Classicism, §3.5, p. 59). It requires that Some arrow out of the evaluation object other than its identity has a retraction: an arrow back after which it composes to the identity. Here: Any permutation other than the identity, which its inverse retracts. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Holds □Atomicity.
+
+Entailment is inclusion of intensions. Below a relation $Y\ne\bot_\tau$ lies the relation whose intension is the singleton of one of $Y$'s tuples, which is in the domain since the model is full, and is an atom: its only proper part is $\bot_\tau$. Every object being full, the same holds at every arrow, so Atomicity is necessary. The source notes that full models are atomic (p. 61); stated once for the topic, in place of the full models' own arguments.
+
+*Source: Classicism, p. 61. General argument `arguments/full-atomicity`. It requires that The model is a full action model: an action model (Classicism, Appendix D) that is full at every object. Here: An action model, full at every object (Classicism, §3.5, p. 59; Appendix D). By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Holds □BF.
+
+BF holds at an object whose arrows out all act surjectively at every type (Proposition 3.24(ii)). In a full model the transport of intensions along an epimorphism $k$ is onto: an intension $Y$ at its target is the transport of $\{\langle\bar a,k\circ m\rangle : \langle\bar a,m\rangle\in Y\}$, since $k\circ m=k\circ m'$ only if $m=m'$; and on the individuals the arrows are onto by the condition. So BF holds at every object reachable from the evaluation point, and BF is necessary.
+
+*Source: Classicism, §3.5, Proposition 3.24(ii). General argument `arguments/full-epic-barcan`. It requires that The model is a full action model: an action model (Classicism, Appendix D) that is full at every object. Here: An action model, full at every object (Classicism, §3.5, p. 59; Appendix D). It requires that Every arrow out of every object reachable from the evaluation point is an epimorphism (arrows after it that agree after it are equal) and acts surjectively on the individuals. Here: Every arrow is invertible; and on the individuals every arrow is the identity. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Holds □Rigid Comprehension.
+
+Given $X$ of type $\tau$ at an object $W$, let $Y$ be the relation whose extension at an arrow $i$ out of $W$ is $X$'s extension at $W$ transported along $i$, which is in the domain since the model is full. It is coextensive with $X$. It is persistent, since its extension at $i\circ j$ is its extension at $i$ transported along $j$. And it is inextensible: if $\Box X'$ holds at $i$ of everything $Y$ holds of there, then at $i\circ j$ everything $Y$ holds of is the transport along $j$ of something $Y$ holds of at $i$, of which $X'$ then holds. Every object being full, the same holds at every arrow, so Rigid Comprehension is necessary. The source notes that full models satisfy it (p. 61); stated once for the topic, in place of the full models' own arguments.
+
+*Source: Classicism, p. 61. General argument `arguments/full-rigid-comprehension`. It requires that The model is a full action model: an action model (Classicism, Appendix D) that is full at every object. Here: An action model, full at every object (Classicism, §3.5, p. 59; Appendix D). By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Holds Axiom of Infinity (type t), Infinity Schema (type t).
+
+As for individuals (the argument infinitely-many-individuals), at type $t$: the Infinity schema holds, and by extensional fullness the property of cardinalities that hold only of properties with finite extensions is in the domain, has every finite cardinality, and excludes those holding of the universal property of propositions, whose extension is infinite.
+
+*General argument `arguments/infinitely-many-propositions`. It requires that The model is extensionally full at every object: every set of tuples from the domains at an object is the extension, at the identity arrow, of an element of the domain of the matching relational type there. Here: A full model contains every intension, so in particular one with any given extension at the identity. It requires that There are infinitely many propositions at the evaluation world. Here: The propositions are all the sets of arrows, and there are infinitely many permutations. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Holds □ND, □BF.
+
+Every arrow's action is a bijection at every type, so ND and BF hold at every object reachable from the evaluation point (Proposition 3.24(i) and (ii)), and are necessary.
+
+*Source: Classicism, §3.5, Proposition 3.24. General argument `arguments/invertible-arrows`. It requires that Every arrow out of every object reachable from the evaluation point is invertible. Here: The arrows are permutations. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Holds No Pure Contingency.
+
+Closed pure terms denote entities fixed by every arrow (§3.5, p. 58). With a single object, a proposition fixed by every arrow contains every arrow if it contains the identity and no arrow otherwise, so a true closed pure sentence is necessary: the source's one-object No Pure Contingency observation (p. 79), applied to each closed instance.
+
+*Source: Classicism, §3.5, p. 58; p. 79. General argument `arguments/no-pure-contingency-one-object`. It requires that The model is an action model (Classicism, Appendix D), or an intensional action model in the sense of Dorr's draft (Boolean Completeness does not imply Rigid Comprehension), with a single object. Here: It has one object. By Andrew Bacon and Cian Dorr, 2026-09-17.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic, for every one-object action model; the reason the source's observation holds is spelled out in place of "Boxed positive flags use the source’s explicit one-object No Pure Contingency observation, applied separately to each closed instance."
+
+### Fails Fregean Axiom.
+
+The propositions $\top$ and $\{1\}$ are in the domain, the model being full; they are both true at the evaluation point and differ at the other arrow, so the Fregean Axiom fails.
+
+*Source: Classicism, p. 61. General argument `arguments/nonidentity-arrow`. It requires that The model is full: at each object, the domain of each relational type contains every intension of that type. Here: Every intension of every relational type is present at every object (Classicism, §3.5, p. 59). It requires that Some arrow out of the evaluation object is not its identity. Here: Any permutation other than the identity. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Fails Axiom of Infinity (type e), Infinity Schema (type e), Possible Infinity (type e).
+
+No two individuals are distinct, and the numeral $\operatorname{Suc}_e\mathbf{0}_e$ holds of the universal property at type $e$ at every world.
+
+*General argument `arguments/one-individual`. It requires that There is exactly one individual, at every world. Here: There is a single individual at every object. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-02.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic.
+
+### Holds Rigid Power, □Rigid Power.
+
+Write $X_0(E)$ for the intension $k\mapsto k\cdot E$. The extension at an arrow $h$ of the power property $\lambda X\, .\,\operatorname{Rigid}(X)\land X\le F$ is the set of rigid $X$ with $X\le h\cdot F$, the bound variable ranging over the domain untransported and the parameter transported. By the condition the rigid relations are the $X_0(E)$, and $X_0(T)\le X_0(S)$ iff $T\subseteq S$; so for rigid $F=X_0(S)$ the power property has extension $\{X_0(T'):T'\subseteq k\cdot S\}$ at $k$, while transporting its extension at the identity along $k$ gives $\{X_0(k\cdot T):T\subseteq S\}$. These coincide, since every $T'\subseteq k\cdot S$ is $k\cdot T$ for $T:=\{s\in S:k\cdot s\in T'\}$. So the power property is itself $X_0$ of its extension, hence rigid, and the same at every reachable object gives the boxed form.
+
+*General argument `arguments/rigid-power-tight`. It requires that At every object reachable from the evaluation point, the rigid relations of each relational type are exactly the intensions $k\mapsto k\cdot E$, the disjunctions of the haecceities of the members of $E$, for $E$ any set of tuples from the domains there; in particular every such intension is in the domain. Here: Every intension is present, so for any set $E$ the intension $k\mapsto k\cdot E$ is in the domain, and a relation is weakly inextensible at a world iff it lies below that intension over its extension there, since that is the smallest intension satisfying the hypothesis; with persistence, a rigid relation equals it (the argument deferred in extraction.md, 3 October 2026). By Claude Opus 5.5 (Anthropic), 3 October 2026 (full action models); extended by Claude Fable 5.1 (Anthropic), 4 October 2026, at Cian Dorr's direction.*
+
+*Revised 2026-10-04 by Claude Fable 5.1 (Anthropic), at Cian Dorr's direction:* The argument deferred in extraction.md on 3 October for the full action models, where every intension is present, stated under the condition it actually uses, which the symmetry-constrained full models also meet.
+
+### Fails Witnessed Possibility, Separated Structure, Independence (signature Σ), Distinctness Maximalism (signature Σ).
+
+Let $c\in\Sigma$ have relational type $\tau$, so $c=\top_\tau$ necessarily. Witnessed Possibility fails for the pure formula $x\ne\top_\tau$, witnessed by $\bot_\tau$ but impossible of $c$; Separated Structure fails since $\lambda x\, .\,x$ and $\lambda x\, .\,\top_\tau$ agree on $c$ and differ; Independence (signature Σ) fails since $c$ denotes what the closed pure term $\top_\tau$ denotes; Distinctness Maximalism (signature Σ) fails since $c=\top_\tau$ is a true identity that C(Σ) does not prove.
+
+*General argument `arguments/sigma-top`. It requires that Every constant of Σ is relational, and each denotes the top element of its type. Here: This is the interpretation. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic; it uses nothing about the model.
+
+### Holds Countable Boolean Completeness.
+
+The natural numbers are the finite cardinalities at type $e$ (Background, after Goodsell), and with a single individual there are three: $\mathbf{0}_e$, true of the empty property; $\operatorname{Suc}_e\mathbf{0}_e$, true of the universal one; and the empty cardinality, which is $\operatorname{Suc}_e$ of the second and of itself. By extensional fullness the property of being one of these three is in the domain, so it bounds natural numberhood. A countable property therefore has at most three members in its extension, and their join is its least upper bound.
+
+*General argument `arguments/three-numbers`. It requires that There is exactly one individual, at every world. Here: There is a single individual at every object. It requires that The model is extensionally full at every object: every set of tuples from the domains at an object is the extension, at the identity arrow, of an element of the domain of the matching relational type there. Here: A full model contains every intension, so in particular one with any given extension at the identity. By Claude Opus 5.5 (Anthropic), on Cian Dorr's question whether the failure of Boolean Completeness at type $t$ refutes its countable form here, 2026-10-02.*
+
+*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* Moved from the group finite-support-one-object to the topic.
+
+### Holds No Contingency (signature Σ), B for sentences of Σ.
+
+Each constant of Σ denotes what the closed pure term $\top_\tau$ of its type denotes, so a closed sentence of the language of Σ denotes what the pure sentence with $\top_\tau$ in place of each constant denotes; if true it is necessary by No Pure Contingency, which holds here. So No Contingency (signature Σ) holds, and B for sentences of Σ with it: a true Σ-sentence is necessary, hence necessarily possible.
+
+*General argument `arguments/sigma-top-npc`. It requires that Every constant of Σ is relational, and each denotes the top element of its type. Here: This is the interpretation. By Cian Dorr (observation); recorded by Claude Opus 5.5 (Anthropic), 2026-10-02.*
+
+*Revised 2026-10-03 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The argument sigma-single-top, for Σ a single constant of type $t$ denoting $\top$, stated for every interpretation of Σ by top elements, now that such interpretations have no individual constants. It replaces that argument and nc-sigma-homogeneous, which reached the same verdicts through an individual constant when the model's automorphisms carry every individual to every other. With an individual constant and no such automorphisms the verdicts were unknown in 19 models, and nowhere did the individual constants settle a verdict differently.
+
+
+## Notes
+
+Full proofs are in the write-up. The model witnesses the joint consistency of $\Box$ND, the Axiom of Infinity at type $t$ and $\Box$Relational Choice. Suggested by Cian Dorr on 23 September 2026 to fill a gap: no earlier record settled $\Box$ND, the Axiom of Infinity at type $t$ and $\Box$Relational Choice together.
+The write-up full-permutation-group-infinite-set treats the source's natural action, on the individuals $X$ by evaluation; the write-up full-permutation-group-one-individual records what changes with one individual, recorded separately until 3 October 2026, when it became this member at the group's default. The natural action, like the identity action on infinitely many individuals, is bijective and has the Axiom of Infinity at type $e$, which is all the map's principles see of the individuals here.
+
+## Sources
+
+- **Fable 23 Sep** — Claude Fable 5.1 (Anthropic), construction and verification of 23 September 2026, at Cian Dorr’s suggestion (see the write-up).
+- **Classicism** — Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §3.5, pp. 58–59 (full M-set models, Proposition 3.24, No Pure Contingency); p. 61 and n. 84 (principles of full models).
+- **Logical Combinatorialism** — Andrew Bacon, Logical Combinatorialism, Philosophical Review 129 (2020), Appendix A.2, Definitions A.1–A.4 and Proposition A.5, pp. 581–583 (M-set models).
+
+<p class='cert'>Record: <code>topics/classicism/models/full-permutation-group-infinite-set.yaml</code></p>
+
+## Paper references
+
+- **Proof: Classicism.** Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds), Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated 16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition and footnote locators in this map refer to that draft's numbering. — §3.5, pp. 58–59; p. 61 and n. 84. The source describes full M-set models and proves the facts used: Proposition 3.24 on ND and BF, the one-object No Pure Contingency observation, and the principles common to full models. The specific group and the verification are in the write-up.
+- **Background: Logical Combinatorialism.** Bacon, Andrew (2020). Logical Combinatorialism. Philosophical Review 129(4), 537–589. As cited in Classicism, §§2.5 and 3.5. Read directly for the import of 22 September 2026; section, footnote and page locators refer to the published pagination. — Appendix A.2, Definitions A.1–A.4 and Proposition A.5, pp. 581–583. The M-set presentation of one-object action models: the division action on propositions and the function-space M-set.
