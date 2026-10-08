@@ -58,6 +58,25 @@ definition: >-
 # 2 October 2026: the topic's general argument sigma-top replaces this record's copy of it.
 meets:
   sigma-top: This is the interpretation the definition fixes.
+  # 8 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): conditions of the topic's general
+  # arguments that the model meets.
+  one-individual: The definition fixes one individual, at every world.
+  extensionally-full: >-
+    At the root an element's extension at $o$ is unconstrained, so every set of tuples is the
+    extension there of an element of the domain; the domains at $s$, $u$ and each $n$ are full.
+  infinitely-many-propositions: >-
+    A root proposition is any choice of truth values at $o$, $s$ and the $n$s, so there are
+    infinitely many.
+  metatheory-choice: >-
+    The construction uses a non-principal ultrafilter, and so the axiom of choice, in the
+    metatheory.
+  fewer-propositions-after: >-
+    The root has at least three distinct propositions, while each world $n$, which sees only itself,
+    has two.
+  actual-world-isolated: >-
+    The proposition true at $o$ alone (false at $s$, at every $n$, and so in the limit at $u$) is in
+    the root domain and entails every truth, every true proposition being true at $o$; no world other
+    than $o$ sees $o$.
 
 arguments:
 
@@ -114,6 +133,56 @@ arguments:
     and every extension a singleton. At $s$, $u$ and the $n$ the domains are full, and the
     well-ordering argument (arguments/intensional-choice-well-ordering) applies there, so the
     boxed form holds too.
+
+
+# --- later additions ---
+
+- id: rigid-power
+  holds: [necessary-rigid-power-r]
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-08'
+  text: >-
+    At every relational type and every world. Write $k\cdot E$ for the transport of a set $E$ of tuples
+    along an arrow $k$, and $X_0(E)$ for the relation $k\mapsto k\cdot E$, the disjunction of the
+    haecceities of the members of $E$. At $s$, $u$ and each $n$ the model is full, and Rigid Power
+    holds there as in every full model (arguments/rigid-power-tight). At the root, call a set $E$ of
+    root tuples admissible when $X_0(E)$ is in the domain, that is, when $h_u\cdot E$ is the
+    $\mathcal U$-limit of the sets $h_n\cdot E$ (subsets of a finite set, so the limit is the set
+    taken at $\mathcal U$-many $n$). Since each member of $E$ has its value at $u$ as the limit of its
+    values at the $n$, $h_u\cdot E$ is always included in that limit; and every finite $E$ is
+    admissible, the finitely many limits being attained together at $\mathcal U$-many $n$.
+
+
+    (1) The rigid relations at the root are exactly the $X_0(E)$ with $E$ admissible. Such an
+    $X_0(E)$, being in the domain, is rigid: it is persistent, and at every world $w$ it is
+    $X_0(w\cdot E)$ there, included in every $X$ that necessarily holds of the members of $w\cdot E$.
+    Conversely let $Y$ be rigid with extension $E$. Persistence gives $Y_k\supseteq k\cdot E$ at
+    every arrow $k$. The root element $X$ with extensions $E$ at $o$, $h_s\cdot E$ at $s$, $h_n\cdot
+    E$ at each $n$, and the limit at $u$, necessarily holds of every member of $E$ (its extension at
+    $u$ includes $h_u\cdot E$, by the above), so inextensibility at the root gives $Y\le X$: $Y$ has
+    extension $h_s\cdot E$ at $s$ and $h_n\cdot E$ at each $n$. Rigidity at $s$, in the full model
+    on $s$ and $u$, makes the extension of $Y$ at $u$ the transport $j\cdot(h_s\cdot E)=h_u\cdot E$,
+    and since $Y$ is in the domain that is also the limit of the $h_n\cdot E$. So $E$ is admissible
+    and $Y=X_0(E)$.
+
+
+    (2) Let $F=X_0(S)$ be rigid at the root, and $P:=\lambda X\, .\,\operatorname{Rigid}(X)\land
+    X\le F$, in the domain since it is definable from $F$. By (1) its extension at the root is
+    $E_P:=\{X_0(T) : T\subseteq S\text{ admissible}\}$, and at a world $k$ among $s$, $u$ and the $n$
+    it is the set of rigid relations there below $k\cdot F$, which in those full models are the
+    $X_0(T')$ with $T'\subseteq k\cdot S$. Each such $T'$ is finite, the domains there being finite,
+    so it is $k\cdot T$ for a finite, hence admissible, $T\subseteq S$ (one preimage for each member),
+    and $X_0(T')=k\cdot X_0(T)$. So the extension of $P$ at every $k$ is $k\cdot E_P$: $P=X_0(E_P)$, a
+    rigid relation. Hence Rigid Power holds at the root, and so at every world.
+
+- id: transversal-choice-everywhere
+  holds: [necessary-transversal-choice-r]
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-08'
+  text: >-
+    At the root by the general argument transversal-choice-extensionally-full, the model being
+    extensionally full there; at $s$, $u$ and each $n$ by the same argument, those worlds' domains
+    being full and so extensionally full.
 
 notes: >-
   It is a model: the limit condition commutes with every finite operation, so every term denotes in
