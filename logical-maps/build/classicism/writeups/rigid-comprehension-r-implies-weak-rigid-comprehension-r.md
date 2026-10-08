@@ -8,11 +8,15 @@
 
 ## Conclusion
 
-- **Weak Rigid Comprehension.** Every relation, including a proposition, is coextensive with a weakly rigid one, that is, with one that is persistent and weakly inextensible.
+- **Weak Rigid Comprehension.** Every relation, including a proposition, is coextensive with a weakly rigid one, that is, with one that is weakly persistent and weakly inextensible.
 
 ## Proof
 
-A rigid $Y$ is persistent by definition. Its other conjunct, $\operatorname{Inextensible}(Y)$, is a necessitated conditional, so T strips the leading box and yields $\operatorname{WeaklyInextensible}(Y)$. Hence every rigid relation is weakly rigid, and the rigid coextension supplied by Rigid Comprehension already witnesses Weak Rigid Comprehension at the same type.
+A rigid $Y$ is persistent by definition, and so, by T, weakly persistent. Its other conjunct, $\operatorname{Inextensible}(Y)$, is a necessitated conditional, so T strips the leading box and yields $\operatorname{WeaklyInextensible}(Y)$. Hence every rigid relation is weakly rigid, and the rigid coextension supplied by Rigid Comprehension already witnesses Weak Rigid Comprehension at the same type.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — "Weakly rigid" now means weakly persistent and weakly inextensible (until then, persistent and weakly inextensible; Very Weak Rigid Comprehension retired); the proof's wording is adjusted to match. A weakly rigid relation is still persistent, so the mathematical content is unchanged.
 
 ## Sources
 

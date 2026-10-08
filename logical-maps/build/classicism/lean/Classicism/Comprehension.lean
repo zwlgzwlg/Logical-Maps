@@ -1,5 +1,6 @@
 import Classicism.Paper
 import Classicism.Order
+import Classicism.Pointwise
 
 /-!
 # Rigidity and the comprehension predicates
@@ -43,12 +44,9 @@ def Inextensible (Y : τ) : Prop := □ (WeaklyInextensible Y)
 /-- Persistent and inextensible. -/
 def Rigid (Y : τ) : Prop := Persistent Y ∧ Inextensible Y
 
-/-- Persistent and weakly inextensible. This is the map's "weakly rigid"; the draft's
-unqualified "weakly rigid" is `VeryWeaklyRigid` here. -/
-def WeaklyRigid (Y : τ) : Prop := Persistent Y ∧ WeaklyInextensible Y
-
-/-- Weakly persistent and weakly inextensible. -/
-def VeryWeaklyRigid (Y : τ) : Prop := WeaklyPersistent Y ∧ WeaklyInextensible Y
+/-- Weakly persistent and weakly inextensible: rigidity without its leading boxes. A weakly
+rigid relation is persistent too (`persistent_of_weaklyRigid`). -/
+def WeaklyRigid (Y : τ) : Prop := WeaklyPersistent Y ∧ WeaklyInextensible Y
 
 /-! ### Stripping boxes, by `T` -/
 
@@ -59,20 +57,23 @@ theorem weaklyInextensible_of_inextensible {Y : τ} :
     Inextensible Y → WeaklyInextensible Y := box_elim
 
 theorem weaklyRigid_of_rigid {Y : τ} (h : Rigid Y) : WeaklyRigid Y :=
-  ⟨h.1, weaklyInextensible_of_inextensible h.2⟩
+  ⟨weaklyPersistent_of_persistent h.1, weaklyInextensible_of_inextensible h.2⟩
 
-theorem veryWeaklyRigid_of_weaklyRigid {Y : τ} (h : WeaklyRigid Y) : VeryWeaklyRigid Y :=
-  ⟨weaklyPersistent_of_persistent h.1, h.2⟩
-
-/-- The Background's remark that rigidity is *necessary* very weak rigidity, confirmed:
-both conjuncts of `Rigid` carry a leading box, and the box distributes over `∧`. -/
-theorem rigid_iff_box_veryWeaklyRigid (Y : τ) : Rigid Y ↔ □ (VeryWeaklyRigid Y) :=
-  ⟨fun h => by rw [show VeryWeaklyRigid Y = (WeaklyPersistent Y ∧ WeaklyInextensible Y) from rfl,
+/-- The Background's remark that rigidity is *necessary* weak rigidity, confirmed: both
+conjuncts of `Rigid` carry a leading box, and the box distributes over `∧`. -/
+theorem rigid_iff_box_weaklyRigid (Y : τ) : Rigid Y ↔ □ (WeaklyRigid Y) :=
+  ⟨fun h => by rw [show WeaklyRigid Y = (WeaklyPersistent Y ∧ WeaklyInextensible Y) from rfl,
                    box_and_eq]; exact h,
    fun h => by
-     rw [show VeryWeaklyRigid Y = (WeaklyPersistent Y ∧ WeaklyInextensible Y) from rfl,
+     rw [show WeaklyRigid Y = (WeaklyPersistent Y ∧ WeaklyInextensible Y) from rfl,
          box_and_eq] at h
      exact h⟩
+
+/-- **A weakly rigid relation is persistent.** Weak inextensibility, applied to `λx̄. □Y[x̄]`:
+every instance of `Y` is necessarily one of it, by weak persistence and `4`, so
+`Y ≤ λx̄. □Y[x̄]`, which is persistence. -/
+theorem persistent_of_weaklyRigid [Pointwise τ] {Y : τ} (h : WeaklyRigid Y) : Persistent Y :=
+  h.2 (boxAt Y) (Pointwise.incl_trans Y (boxAt Y) (boxAt (boxAt Y)) h.1 (Pointwise.boxAt_four Y))
 
 /-! ### Agreement with the map's algebraic definitions
 

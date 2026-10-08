@@ -17,7 +17,7 @@ Let $R^{\sigma\sigma t}$ be an equivalence relation and write $[x]$ for the cell
 
 ## Notes
 
-The only use of Extensionality is to identify the coextensive cells $[x_1]$ and $[x_2]$. In C alone properties are identical only when necessarily coextensive, which the hypothesis does not supply; see the recorded question relational-choice-r-implies-transversal-choice-r. The arrow is also derivable through Extensionality implies Rigid Comprehension and the arrow from Relational Choice with Very Weak Rigid Comprehension; it is recorded directly because it is the argument usually given.
+The only use of Extensionality is to identify the coextensive cells $[x_1]$ and $[x_2]$. In C alone properties are identical only when necessarily coextensive, which the hypothesis does not supply; see the recorded question relational-choice-r-implies-transversal-choice-r. The arrow is also derivable through Extensionality implies Rigid Comprehension and the arrow from Relational Choice with Weak Rigid Comprehension; it is recorded directly because it is the argument usually given.
 
 ## Sources
 

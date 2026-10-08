@@ -4,7 +4,7 @@
 
 ## Premises
 
-- **Weak Rigid Comprehension.** Every relation, including a proposition, is coextensive with a weakly rigid one, that is, with one that is persistent and weakly inextensible.
+- **Weak Rigid Comprehension.** Every relation, including a proposition, is coextensive with a weakly rigid one, that is, with one that is weakly persistent and weakly inextensible.
 
 ## Conclusion
 
@@ -12,11 +12,15 @@
 
 ## Proof
 
-Weak rigidity has persistence as a conjunct, so a weakly rigid coextension is already a persistent coextension.
+A weakly rigid relation $Y$ is persistent: apply its weak inextensibility to $\lambda\bar x\, .\,\Box Y[\bar x]$, whose hypothesis $Y[\bar x]\to\Box\Box Y[\bar x]$ holds by weak persistence and 4; this gives $Y\le\lambda\bar x\, .\,\Box Y[\bar x]$, which is $\operatorname{Persistent}(Y)$. So a weakly rigid coextension is already a persistent coextension.
 
 ## Notes
 
 With the recorded implication from Persistent Comprehension to Actuality, this completes the converse of the implication from Boolean Completeness and Actuality, so Weak Rigid Comprehension is equivalent to their conjunction.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — "Weakly rigid" now means weakly persistent and weakly inextensible (until then, persistent and weakly inextensible; Very Weak Rigid Comprehension retired); the proof's wording is adjusted to match. A weakly rigid relation is still persistent, so the mathematical content is unchanged.
 
 ## Sources
 

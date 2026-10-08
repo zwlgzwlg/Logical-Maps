@@ -9,15 +9,19 @@
 
 ## Conclusion
 
-- **Weak Rigid Comprehension.** Every relation, including a proposition, is coextensive with a weakly rigid one, that is, with one that is persistent and weakly inextensible.
+- **Weak Rigid Comprehension.** Every relation, including a proposition, is coextensive with a weakly rigid one, that is, with one that is weakly persistent and weakly inextensible.
 
 ## Proof
 
-Let $X$ be given and let $Y$ be the coextension that Gallin Extensional Comprehension supplies, with $Y$ and $\neg Y$ persistent. Persistence of $Y$ is the first conjunct of weak rigidity. For weak inextensibility, let $Z$ satisfy $\forall\bar x\, .\,Y[\bar x]\to\Box Z[\bar x]$. For any $\bar x$, either $Y[\bar x]$, and then $\Box Z[\bar x]$, or $\neg Y[\bar x]$, and then $\Box\neg Y[\bar x]$ by persistence of $\neg Y$ (with T); in both cases $\Box(Y[\bar x]\to Z[\bar x])$ by K. So $\forall\bar x\, .\,\Box(Y[\bar x]\to Z[\bar x])$, and BF, applied to the abstract $\lambda\bar x\, .\,Y[\bar x]\to Z[\bar x]$ one argument at a time, gives $\Box\forall\bar x\, .\,Y[\bar x]\to Z[\bar x]$, which is $Y\le Z$. Hence $Y$ is weakly rigid and coextensive with $X$.
+Let $X$ be given and let $Y$ be the coextension that Gallin Extensional Comprehension supplies, with $Y$ and $\neg Y$ persistent. Persistence of $Y$ gives, by T, its weak persistence, the first conjunct of weak rigidity. For weak inextensibility, let $Z$ satisfy $\forall\bar x\, .\,Y[\bar x]\to\Box Z[\bar x]$. For any $\bar x$, either $Y[\bar x]$, and then $\Box Z[\bar x]$, or $\neg Y[\bar x]$, and then $\Box\neg Y[\bar x]$ by persistence of $\neg Y$ (with T); in both cases $\Box(Y[\bar x]\to Z[\bar x])$ by K. So $\forall\bar x\, .\,\Box(Y[\bar x]\to Z[\bar x])$, and BF, applied to the abstract $\lambda\bar x\, .\,Y[\bar x]\to Z[\bar x]$ one argument at a time, gives $\Box\forall\bar x\, .\,Y[\bar x]\to Z[\bar x]$, which is $Y\le Z$. Hence $Y$ is weakly rigid and coextensive with $X$.
 
 ## Notes
 
 The direct argument, using BF once and at the world of evaluation. The claim strengthens: the same witness is fully rigid, since Gallin Extensional Comprehension gives ND, ND with BF gives □ND, □ND gives □BF, and with BF at every world the same argument runs inside the box of inextensibility; that is the recorded gallin-comprehension-and-bf-imply-rigid-comprehension, of which this record is therefore a consequence. It is kept because it isolates what BF at the evaluation world alone buys.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — "Weakly rigid" now means weakly persistent and weakly inextensible (until then, persistent and weakly inextensible; Very Weak Rigid Comprehension retired); the proof's wording is adjusted to match. A weakly rigid relation is still persistent, so the mathematical content is unchanged.
 
 ## Sources
 

@@ -477,7 +477,7 @@ Comprehension and choice, added 21 September:
 `rigid-comprehension-r-implies-inextensible-comprehension-r`,
 `rigid-comprehension-r-implies-weak-rigid-comprehension-r`,
 `weak-rigid-comprehension-r-implies-persistent-comprehension-r`,
-`weak-rigid-comprehension-r-implies-very-weak-rigid-comprehension-r`,
+`weak-rigid-comprehension-r-implies-very-weak-rigid-comprehension-r` (retired 8 October 2026, with Very Weak Rigid Comprehension),
 `gallin-comprehension-implies-nd`, `functional-choice-r-implies-relational-choice-r`.
 
 ## What the second batch tested
@@ -510,8 +510,9 @@ written with `incl` and `boxAt`, so they need only `Rel τ`, and `persistent_iff
 `weaklyInextensible_iff_le` and `inextensible_iff_le` then *prove* that they agree with
 the Background's algebraic wording. Had they been defined algebraically, every
 comprehension principle would have had to carry an `[Order τ]` binder, which would be
-noise and would formally narrow each schema. `rigid_iff_box_veryWeaklyRigid` confirms the
-Background's remark that rigidity is necessary very weak rigidity.
+noise and would formally narrow each schema. `rigid_iff_box_weaklyRigid` confirms the
+Background's remark that rigidity is necessary weak rigidity (called very weak rigidity until 8 October
+2026, when "weakly rigid" took that meaning).
 
 Otherwise the ergonomics held up. The three definitional-projection records are one line
 each, and `gallin-comprehension-implies-nd` is six lines that read like the record's own

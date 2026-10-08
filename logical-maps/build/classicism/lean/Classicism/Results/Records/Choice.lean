@@ -246,26 +246,26 @@ theorem relational_choice_and_extensionality_imply_transversal_choice {σ : Type
   rw [e] at hS₂
   exact hSu z hS₂
 
-/-- Two coextensive very weakly rigid properties are identical: each is below the other by
+/-- Two coextensive weakly rigid properties are identical: each is below the other by
 weak persistence and weak inextensibility, and Intensionality. -/
-theorem eq_of_veryWeaklyRigid {σ : Type} [Ty σ] (C C' : σ → Prop) (hC : VeryWeaklyRigid C)
-    (hC' : VeryWeaklyRigid C') (hco : ∀ z, C z ↔ C' z) : C = C' :=
+theorem eq_of_weaklyRigid {σ : Type} [Ty σ] (C C' : σ → Prop) (hC : WeaklyRigid C)
+    (hC' : WeaklyRigid C') (hco : ∀ z, C z ↔ C' z) : C = C' :=
   le_antisymm_arrow C C'
     ((le_iff _ _).2 (hC.2 C' fun z hz => weaklyPersistent_apply hC'.1 z ((hco z).1 hz)))
     ((le_iff _ _).2 (hC'.2 C fun z hz => weaklyPersistent_apply hC.1 z ((hco z).2 hz)))
 
-/-- `relational-choice-and-very-weak-rigid-comprehension-imply-transversal-choice`: as above,
-with each cell represented by a very weakly rigid coextension, which is unique. -/
-theorem relational_choice_and_very_weak_rigid_comprehension_imply_transversal_choice
+/-- `relational-choice-and-weak-rigid-comprehension-imply-transversal-choice`: as above,
+with each cell represented by a weakly rigid coextension, which is unique. -/
+theorem relational_choice_and_weak_rigid_comprehension_imply_transversal_choice
     {σ : Type} [Ty σ] :
-    RelationalChoice (σ → Prop) σ → VeryWeakRigidComprehension (σ → Prop) →
+    RelationalChoice (σ → Prop) σ → WeakRigidComprehension (σ → Prop) →
       TransversalChoice σ := by
   intro rc vw R hR
   refine (em (∃ x₀ : σ, x₀ = x₀)).elim (fun hx₀ => ?_)
     (fun hn => ⟨λ _ ↦ True, fun x => (hn ⟨x, rfl⟩).elim⟩)
   obtain ⟨x₀, -⟩ := hx₀
   obtain ⟨S, hSf, hSU⟩ := rc (λ C y ↦ C y ∨ ¬ ∃ z, C z) (serial_cell x₀)
-  refine ⟨λ y ↦ ∃ C : σ → Prop, VeryWeaklyRigid C ∧ (∀ z, C z ↔ R y z) ∧ S C y, fun x => ?_⟩
+  refine ⟨λ y ↦ ∃ C : σ → Prop, WeaklyRigid C ∧ (∀ z, C z ↔ R y z) ∧ S C y, fun x => ?_⟩
   obtain ⟨C, hC, hco⟩ := vw (R x)
   obtain ⟨y, hSy, hSu⟩ := hSf C
   have hCy : C y := (hSU C y hSy).elim id (fun hn => (hn ⟨x, (hco x).1 (hR.1 x)⟩).elim)
@@ -273,7 +273,7 @@ theorem relational_choice_and_very_weak_rigid_comprehension_imply_transversal_ch
   refine ⟨y, hRxy, ⟨C, hC, fun z => ⟨fun hz => hR.2.2 y x z (hR.2.1 x y hRxy) ((hco z).2 hz),
     fun hz => (hco z).1 (hR.2.2 x y z hRxy hz)⟩, hSy⟩, ?_⟩
   rintro z ⟨hRxz, C', hC', hco', hSC'⟩
-  have e : C' = C := eq_of_veryWeaklyRigid C' C hC' hC fun u =>
+  have e : C' = C := eq_of_weaklyRigid C' C hC' hC fun u =>
     ⟨fun hu => (hco u).1 (hR.2.2 x z u hRxz ((hco' u).1 hu)),
      fun hu => (hco' u).2 (hR.2.2 z x u (hR.2.1 x z hRxz) ((hco u).2 hu))⟩
   rw [e] at hSC'

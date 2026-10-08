@@ -28,31 +28,22 @@ theorem rigid_comprehension_r_implies_inextensible_comprehension_r {τ : Type} [
   obtain ⟨Y, hY, hco⟩ := rc X
   exact ⟨Y, hY.2, hco⟩
 
-/-- `rigid-comprehension-r-implies-weak-rigid-comprehension-r`: a rigid relation is
-persistent by definition, and `T` strips the leading box from its inextensibility
-conjunct. So the rigid coextension already witnesses the weaker principle. -/
+/-- `rigid-comprehension-r-implies-weak-rigid-comprehension-r`: `T` strips the leading
+boxes from both conjuncts of rigidity. So the rigid coextension already witnesses the
+weaker principle. -/
 theorem rigid_comprehension_r_implies_weak_rigid_comprehension_r {τ : Type} [Rel τ] :
     RigidComprehension τ → WeakRigidComprehension τ := by
   intro rc X
   obtain ⟨Y, hY, hco⟩ := rc X
   exact ⟨Y, weaklyRigid_of_rigid hY, hco⟩
 
-/-- `weak-rigid-comprehension-r-implies-very-weak-rigid-comprehension-r`: `Persistent(Y)`
-unpacks as `□∀x̄. Y[x̄] → □Y[x̄]`, and `T` gives weak persistence. The inextensibility
-conjunct is the same in both conditions. -/
-theorem weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r {τ : Type} [Rel τ] :
-    WeakRigidComprehension τ → VeryWeakRigidComprehension τ := by
+/-- `weak-rigid-comprehension-r-implies-persistent-comprehension-r`: a weakly rigid
+relation is persistent (`persistent_of_weaklyRigid`). -/
+theorem weak_rigid_comprehension_r_implies_persistent_comprehension_r {τ : Type} [Rel τ]
+    [Pointwise τ] : WeakRigidComprehension τ → PersistentComprehension τ := by
   intro wrc X
   obtain ⟨Y, hY, hco⟩ := wrc X
-  exact ⟨Y, veryWeaklyRigid_of_weaklyRigid hY, hco⟩
-
-/-- `weak-rigid-comprehension-r-implies-persistent-comprehension-r`: the first conjunct
-of weak rigidity is persistence itself. -/
-theorem weak_rigid_comprehension_r_implies_persistent_comprehension_r {τ : Type} [Rel τ] :
-    WeakRigidComprehension τ → PersistentComprehension τ := by
-  intro wrc X
-  obtain ⟨Y, hY, hco⟩ := wrc X
-  exact ⟨Y, hY.1, hco⟩
+  exact ⟨Y, persistent_of_weaklyRigid hY, hco⟩
 
 /-- Closed lemma for the Gallin argument: a relation holding of `a` and failing of `b`
 distinguishes them, by Leibniz's Law. Being closed, it may be necessitated. -/
@@ -146,7 +137,8 @@ theorem necessary_rigid_comprehension_implies_necessary_inextensible_comprehensi
     NecRigidComprehension τ → NecInextensibleComprehension τ :=
   modal_K _ _ (nec% (rigid_comprehension_r_implies_inextensible_comprehension_r (τ := τ)))
 /-- `necessary-weak-rigid-comprehension-implies-necessary-persistent-comprehension`. -/
-theorem necessary_weak_rigid_comprehension_implies_necessary_persistent_comprehension {τ : Type} [Rel τ] :
+theorem necessary_weak_rigid_comprehension_implies_necessary_persistent_comprehension {τ : Type} [Rel τ]
+    [Pointwise τ] :
     NecWeakRigidComprehension τ → NecPersistentComprehension τ :=
   modal_K _ _ (nec% (weak_rigid_comprehension_r_implies_persistent_comprehension_r (τ := τ)))
 /-- `necessary-inextensible-comprehension-implies-necessary-wic`. -/
@@ -172,14 +164,14 @@ theorem necessary_tame_rigidity_and_necessary_weak_rigid_comprehension_imply_nec
     (nec% (tame_rigidity_and_weak_rigid_comprehension_imply_rigid_comprehension (τ := τ))) h₁) h₂
 
 /-- Coextensive weakly rigid relations are identical: each is below the other by the other's
-persistence and its own weak inextensibility, and `≤` is antisymmetric. -/
+weak persistence and its own weak inextensibility, and `≤` is antisymmetric. -/
 theorem eq_of_weaklyRigid_coext {τ : Type} [Rel τ] [Order τ] [Pointwise τ] {F G : τ}
     (hF : WeaklyRigid F) (hG : WeaklyRigid G) (h : F ≡ G) : F = G :=
   le_antisymm_rel F G
     (le_of_box_incl (hF.2 G (Pointwise.incl_trans F G (boxAt G) (Pointwise.incl_of_coext F G h)
-      (box_elim hG.1))))
+      hG.1)))
     (le_of_box_incl (hG.2 F (Pointwise.incl_trans G F (boxAt F) (Pointwise.incl_of_coext' F G h)
-      (box_elim hF.1))))
+      hF.1)))
 
 /-- `rigid-comprehension-implies-tame-rigidity`: a weakly rigid `F` is coextensive with a rigid
 `G`, which is weakly rigid, so `F = G`. -/

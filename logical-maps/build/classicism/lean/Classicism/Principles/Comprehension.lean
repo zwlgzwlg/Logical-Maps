@@ -19,12 +19,14 @@ def RigidComprehension (τ : Type) [Rel τ] : Prop :=
   ∀ X : τ, ∃ Y : τ, Rigid Y ∧ coext X Y
 /-- `necessary-rigid-comprehension-r` at `τ`: the instance boxed. -/
 def NecRigidComprehension (τ : Type) [Rel τ] : Prop := □ (RigidComprehension τ)
-/-- `weak-rigid-comprehension-r` at `τ`. -/
+/-- `weak-rigid-comprehension-r` at `τ`: every relation is coextensive with a weakly
+persistent and weakly inextensible one. -/
 def WeakRigidComprehension (τ : Type) [Rel τ] : Prop :=
   ∀ X : τ, ∃ Y : τ, WeaklyRigid Y ∧ coext X Y
-/-- `very-weak-rigid-comprehension-r` at `τ`. -/
-def VeryWeakRigidComprehension (τ : Type) [Rel τ] : Prop :=
-  ∀ X : τ, ∃ Y : τ, VeryWeaklyRigid Y ∧ coext X Y
+/-- `weak-rigid-comprehension-r`, form `persistent`, at `τ`: every relation is coextensive
+with a persistent and weakly inextensible one. -/
+def WeakRigidComprehensionPersistent (τ : Type) [Rel τ] : Prop :=
+  ∀ X : τ, ∃ Y : τ, (Persistent Y ∧ WeaklyInextensible Y) ∧ coext X Y
 /-- `persistent-comprehension-r` at `τ`. -/
 def PersistentComprehension (τ : Type) [Rel τ] : Prop :=
   ∀ X : τ, ∃ Y : τ, Persistent Y ∧ coext X Y
@@ -49,6 +51,35 @@ def NecGallinExtensionalComprehension (τ : Type) [Rel τ] : Prop :=
 
 /-- `necessary-weak-rigid-comprehension-r` at `τ`: the instance boxed. -/
 def NecWeakRigidComprehension (τ : Type) [Rel τ] : Prop := □ (WeakRigidComprehension τ)
+/-- `necessary-weak-rigid-comprehension-r`, form `persistent`, at `τ`: that form, boxed. -/
+def NecWeakRigidComprehensionPersistent (τ : Type) [Rel τ] : Prop :=
+  □ (WeakRigidComprehensionPersistent τ)
+
+section
+variable {τ : Type} [Rel τ] [Pointwise τ]
+
+/-- `weak-rigid-comprehension-r` to its persistent form: a weakly rigid relation is persistent
+(`persistent_of_weaklyRigid`). -/
+theorem WeakRigidComprehension.to_persistent :
+    WeakRigidComprehension τ → WeakRigidComprehensionPersistent τ :=
+  fun wrc X => (wrc X).elim fun Y hY => ⟨Y, ⟨persistent_of_weaklyRigid hY.1, hY.1.2⟩, hY.2⟩
+
+/-- `weak-rigid-comprehension-r` from its persistent form: `T` strips persistence to weak
+persistence. -/
+theorem WeakRigidComprehension.of_persistent :
+    WeakRigidComprehensionPersistent τ → WeakRigidComprehension τ :=
+  fun wrc X => (wrc X).elim fun Y hY => ⟨Y, ⟨weaklyPersistent_of_persistent hY.1.1, hY.1.2⟩, hY.2⟩
+
+/-- `necessary-weak-rigid-comprehension-r` to its persistent form. -/
+theorem NecWeakRigidComprehension.to_persistent :
+    NecWeakRigidComprehension τ → NecWeakRigidComprehensionPersistent τ :=
+  modal_K _ _ (nec% (WeakRigidComprehension.to_persistent (τ := τ)))
+/-- `necessary-weak-rigid-comprehension-r` from its persistent form. -/
+theorem NecWeakRigidComprehension.of_persistent :
+    NecWeakRigidComprehensionPersistent τ → NecWeakRigidComprehension τ :=
+  modal_K _ _ (nec% (WeakRigidComprehension.of_persistent (τ := τ)))
+
+end
 /-- `necessary-persistent-comprehension-r` at `τ`: the instance boxed. -/
 def NecPersistentComprehension (τ : Type) [Rel τ] : Prop := □ (PersistentComprehension τ)
 /-- `necessary-inextensible-comprehension-r` at `τ`: the instance boxed. -/

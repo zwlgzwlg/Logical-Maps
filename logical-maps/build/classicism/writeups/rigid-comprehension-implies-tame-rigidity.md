@@ -12,11 +12,15 @@
 
 ## Proof
 
-Lemma: coextensive weakly rigid relations are identical. Let $F$ and $G$ be weakly rigid with $\forall\bar x\, .\,F[\bar x]\leftrightarrow G[\bar x]$. If $F[\bar x]$ then $G[\bar x]$, and T applied to $\operatorname{Persistent}(G)$ gives $\Box G[\bar x]$. So $\forall\bar x\, .\,F[\bar x]\to\Box G[\bar x]$, and the weak inextensibility of $F$, instantiated at $G$, gives $F\le G$. Symmetrically $G\le F$. Together these say $\Box\forall\bar x\, .\,F[\bar x]\leftrightarrow G[\bar x]$, and necessarily coextensive relations are identical in C (Intensionality), so $F=G$. Now let $F$ be weakly rigid. Rigid Comprehension at the same type supplies a rigid $G$ coextensive with $F$. A rigid relation is weakly rigid, since T strips the leading box from $\operatorname{Inextensible}(G)$. By the lemma $F=G$, so $F$ is rigid.
+Lemma: coextensive weakly rigid relations are identical. Let $F$ and $G$ be weakly rigid with $\forall\bar x\, .\,F[\bar x]\leftrightarrow G[\bar x]$. If $F[\bar x]$ then $G[\bar x]$, and the weak persistence of $G$ gives $\Box G[\bar x]$. So $\forall\bar x\, .\,F[\bar x]\to\Box G[\bar x]$, and the weak inextensibility of $F$, instantiated at $G$, gives $F\le G$. Symmetrically $G\le F$. Together these say $\Box\forall\bar x\, .\,F[\bar x]\leftrightarrow G[\bar x]$, and necessarily coextensive relations are identical in C (Intensionality), so $F=G$. Now let $F$ be weakly rigid. Rigid Comprehension at the same type supplies a rigid $G$ coextensive with $F$. A rigid relation is weakly rigid, since T strips the leading boxes from both its conjuncts. By the lemma $F=G$, so $F$ is rigid.
 
 ## Notes
 
 The lemma uses only the unboxed persistence of $F$ and $G$, so Rigid Comprehension makes every very weakly rigid relation rigid as well. With Rigid Comprehension ⇒ Weak Rigid Comprehension, this gives Sun's equivalence of Rigid Comprehension with Tame Rigidity plus Weak Rigid Comprehension.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — "Weakly rigid" now means weakly persistent and weakly inextensible (until then, persistent and weakly inextensible; Very Weak Rigid Comprehension retired); the proof's wording is adjusted to match. A weakly rigid relation is still persistent, so the mathematical content is unchanged.
 
 ## Sources
 
