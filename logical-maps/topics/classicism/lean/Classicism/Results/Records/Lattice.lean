@@ -106,7 +106,7 @@ theorem actuality_implies_actual_profile_r {σ : Type} [Ty σ] : Actuality → A
       (le_iff _ _).2 (modal_K _ _ (nec% (profile_of_w_imp w Z x))
         ((le_iff_prop _ _).1 (hw.2 (Z x) hZ)))⟩
 
-/-! The greatest lower bound of a property `X` of propositions, from a very weakly rigid
+/-! The greatest lower bound of a property `X` of propositions, from a weakly rigid
 `X*` coextensive with it: `U := ∀p. X*p → p` (Classicism, n. 40, at type `t`). -/
 
 /-- `V → ∀q. X*q → q` and `X*p` give `V → p`. -/
@@ -117,29 +117,21 @@ theorem meet_imp (T : Prop → Prop) (V p : Prop) : (V → ∀ q, T q → q) →
 theorem meet_of_forall_imp (T : Prop → Prop) (V : Prop) : (∀ q, T q → V → q) → V → ∀ q, T q → q :=
   fun h hV q hT => h q hT hV
 
-/-- `∀p. X*p → p` is a greatest lower bound of `X`, for `X*` very weakly rigid and
+/-- `∀p. X*p → p` is a greatest lower bound of `X`, for `X*` weakly rigid and
 coextensive with `X`. A lower bound `V` of `X` is one of `X*`, so `∀q. X*q → □(V → q)`;
 weak inextensibility boxes the universal, `□∀q. X*q → V → q`, which is `V ≤ U`.
 Conversely from `V ≤ U` and `X*p`, `□X*p` by weak persistence, and `K` gives `V ≤ p`. -/
-theorem glb_of_veryWeaklyRigid (X T : Prop → Prop) (hT : VeryWeaklyRigid T) (hco : X ≡ T) :
+theorem glb_of_weaklyRigid (X T : Prop → Prop) (hT : WeaklyRigid T) (hco : X ≡ T) :
     GLB (∀ p, T p → p) X := fun V =>
   ⟨fun hlb => (le_iff_prop _ _).2 (modal_K _ _ (nec% (meet_of_forall_imp T V))
       (hT.2 (λ q ↦ V → q) (fun q hTq => (le_iff_prop _ _).1 (hlb q ((hco q).2 hTq))))),
    fun hle p hXp => (le_iff_prop _ _).2 (modal_K _ _ (modal_K _ _ (nec% (meet_imp T V p))
       ((le_iff_prop _ _).1 hle)) (weaklyPersistent_apply hT.1 p ((hco p).1 hXp)))⟩
 
-/-- Very Weak Rigid Comprehension at `t → t` already gives Boolean Completeness at `t`:
-the proof of `glb_of_veryWeaklyRigid` uses only weak persistence and weak
-inextensibility. Not a record of the map. -/
-theorem very_weak_rigid_comprehension_implies_boolean_completeness_t :
-    VeryWeakRigidComprehension (Prop → Prop) → BooleanCompleteness Prop := fun vrc X =>
-  (vrc X).elim fun T hT => ⟨∀ p, T p → p, glb_of_veryWeaklyRigid X T hT.1 hT.2⟩
-
 /-- `weak-rigid-comprehension-r-implies-boolean-completeness-r`, at `t`. -/
 theorem weak_rigid_comprehension_r_implies_boolean_completeness_r_at_t :
-    WeakRigidComprehension (Prop → Prop) → BooleanCompleteness Prop := fun wrc =>
-  very_weak_rigid_comprehension_implies_boolean_completeness_t
-    (weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r wrc)
+    WeakRigidComprehension (Prop → Prop) → BooleanCompleteness Prop := fun wrc X =>
+  (wrc X).elim fun T hT => ⟨∀ p, T p → p, glb_of_weaklyRigid X T hT.1 hT.2⟩
 
 /-- `rigid-comprehension-r-implies-boolean-completeness-r` (Proposition 2.8), at `t`. -/
 theorem rigid_comprehension_r_implies_boolean_completeness_r_at_t :
@@ -148,7 +140,7 @@ theorem rigid_comprehension_r_implies_boolean_completeness_r_at_t :
     (rigid_comprehension_r_implies_weak_rigid_comprehension_r rc)
 
 /-! At `σ → t` the greatest lower bound of a property `X` of properties is the pointwise
-meet `λz. ∀Y. X*Y → Yz` of a very weakly rigid coextension `X*`, an ordinary term, and the
+meet `λz. ∀Y. X*Y → Yz` of a weakly rigid coextension `X*`, an ordinary term, and the
 argument is the one at `t`, pointwise. Vectorized in `σ` it is the record at every
 relational type `σs ⇒* t`, `t` itself the empty list (`Results/Arity.lean`). The records
 at `t` above stay for the proofs at `t` that cite them. -/
@@ -163,10 +155,10 @@ theorem meet_imp_arrow {σ : Type} [Ty σ] (T : (σ → Prop) → Prop) (V Y : �
     (∀ z, V z → ∀ Y' : σ → Prop, T Y' → Y' z) → T Y → ∀ z, V z → Y z :=
   fun h hT z hV => h z hV Y hT
 
-/-- `λz. ∀Y. X*Y → Yz` is a greatest lower bound of `X`, for `X*` very weakly rigid and
-coextensive with `X`: `glb_of_veryWeaklyRigid` at `σ → t`. -/
-theorem glb_of_veryWeaklyRigid_arrow {σ : Type} [Ty σ] (X T : (σ → Prop) → Prop)
-    (hT : VeryWeaklyRigid T) (hco : X ≡ T) : GLB (λ z ↦ ∀ Y : σ → Prop, T Y → Y z) X := fun V =>
+/-- `λz. ∀Y. X*Y → Yz` is a greatest lower bound of `X`, for `X*` weakly rigid and
+coextensive with `X`: `glb_of_weaklyRigid` at `σ → t`. -/
+theorem glb_of_weaklyRigid_arrow {σ : Type} [Ty σ] (X T : (σ → Prop) → Prop)
+    (hT : WeaklyRigid T) (hco : X ≡ T) : GLB (λ z ↦ ∀ Y : σ → Prop, T Y → Y z) X := fun V =>
   ⟨fun hlb => (le_iff _ _).2 (modal_K _ _ (nec% (meet_of_forall_imp_arrow T V))
       (hT.2 (λ Y ↦ ∀ z, V z → Y z) (fun Y hTY => (le_iff _ _).1 (hlb Y ((hco Y).2 hTY))))),
    fun hle Y hXY => (le_iff _ _).2 (modal_K _ _ (modal_K _ _ (nec% (meet_imp_arrow T V Y))
@@ -176,8 +168,8 @@ theorem glb_of_veryWeaklyRigid_arrow {σ : Type} [Ty σ] (X T : (σ → Prop) �
 being the map's record. -/
 theorem weak_rigid_comprehension_r_implies_boolean_completeness_r {σ : Type} [Ty σ] :
     WeakRigidComprehension ((σ → Prop) → Prop) → BooleanCompleteness (σ → Prop) := fun wrc X =>
-  (weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r wrc X).elim fun T hT =>
-    ⟨λ z ↦ ∀ Y : σ → Prop, T Y → Y z, glb_of_veryWeaklyRigid_arrow X T hT.1 hT.2⟩
+  (wrc X).elim fun T hT =>
+    ⟨λ z ↦ ∀ Y : σ → Prop, T Y → Y z, glb_of_weaklyRigid_arrow X T hT.1 hT.2⟩
 
 /-- `rigid-comprehension-r-implies-boolean-completeness-r` (Proposition 2.8), at `σ → t`,
 its list form being the map's record. -/
@@ -306,8 +298,8 @@ theorem completeness_and_actuality_imply_weak_rigid_comprehension {σ : Type} [T
     (bc (λ W ↦ UB W (λ Y ↦ ∃ u, X u ∧ Y = λ x ↦ u = x))).elim fun G hG =>
       have hco : X ≡ G := fun u =>
         ⟨fun hu => box_elim (box_lub_haec_of X G hG u hu), lub_haec_imp act X G hG u⟩
-      ⟨G, ⟨(le_iff _ _).1 (lub_haec_le X G hG (boxAt G)
-            fun u hu => modal_four _ (box_lub_haec_of X G hG u hu)),
+      ⟨G, ⟨box_elim ((le_iff _ _).1 (lub_haec_le X G hG (boxAt G)
+            fun u hu => modal_four _ (box_lub_haec_of X G hG u hu))),
           fun Z hZ => (le_iff _ _).1 (lub_haec_le X G hG Z
             fun u hu => hZ u ((hco u).1 hu))⟩, hco⟩
 

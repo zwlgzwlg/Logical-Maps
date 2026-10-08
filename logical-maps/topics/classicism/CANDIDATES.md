@@ -55,7 +55,7 @@ point, from unboxed premises, it gives:
   in two places. One is the atom lemma for $F$: below an atom, every instance of
   $F$ is identified with an actual instance. It uses only the unboxed weak
   inextensibility of $F$. The other is $X'\le F$, which uses only the persistence
-  of $F$. Very weak rigidity of $F$ would also do.
+  of $F$. Weak rigidity of $F$ (weakly persistent, which with weak inextensibility already gives persistence) would also do.
 - *Inside R is needed.* The conclusion's persistence clause is free for $I=R$.
   For $I=W$ it would need □Tame Rigidity, but unboxed Rigid Comprehension gives
   Tame Rigidity only at the evaluation point.

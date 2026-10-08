@@ -597,11 +597,11 @@ theorem c5_implies_necessary_rigid_power {σ : Type} [Ty σ] :
   modal_K _ _ (nec% (c5_implies_rigid_power (σ := σ))) (modal_four _ hnd)
 
 
-/-- `c5-implies-tame-rigidity`, at `σ → t`: a weakly rigid property is persistent, and in
-`C5` a persistent property is inextensible (n. 41). -/
+/-- `c5-implies-tame-rigidity`, at `σ → t`: a weakly rigid property is persistent
+(`persistent_of_weaklyRigid`), and in `C5` a persistent property is inextensible (n. 41). -/
 theorem c5_implies_tame_rigidity {σ : Type} [Ty σ] :
     NecNecessityOfDistinctness Prop → TameRigidity (σ → Prop) := fun hnd F hF =>
-  ⟨hF.1, inextensible_of_persistent_c5 hnd F hF.1⟩
+  ⟨persistent_of_weaklyRigid hF, inextensible_of_persistent_c5 hnd F (persistent_of_weaklyRigid hF)⟩
 
 /-- `c5-implies-necessary-tame-rigidity`: the last theorem necessitated, with `4`. -/
 theorem c5_implies_necessary_tame_rigidity {σ : Type} [Ty σ] :

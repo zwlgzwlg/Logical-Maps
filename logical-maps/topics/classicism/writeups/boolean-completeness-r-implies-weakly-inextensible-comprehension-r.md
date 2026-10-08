@@ -41,11 +41,11 @@ same equivalence that $Y$ is itself an upper bound of
 $\operatorname{Haecs}(Y)$. Hence
 
 $$
-\operatorname{VeryWeaklyRigid}(Y)\quad\text{iff}\quad
+\operatorname{WeaklyRigid}(Y)\quad\text{iff}\quad
 Y\text{ is a least upper bound of }\operatorname{Haecs}(Y),
 $$
 
-and Very Weak Rigid Comprehension, equivalently Weak Rigid Comprehension,
+and Weak Rigid Comprehension
 says that for every $X$ the haecceities of the $X$-instances have a least
 upper bound and that it is coextensive with $X$. Weak inextensibility keeps
 only the "least" half of this. Two further sanity checks: at type $t$ the

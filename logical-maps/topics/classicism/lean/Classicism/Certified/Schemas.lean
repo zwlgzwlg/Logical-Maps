@@ -23,7 +23,7 @@ Ty-parameter, also its list form: `P.listQuoted`, the instance at a list of type
   Classicism.P.Barcan Classicism.P.BarcanT Classicism.P.NecBarcan
   Classicism.P.NecBarcanT Classicism.P.ConverseBarcan Classicism.P.Tractarianism
   Classicism.P.RigidComprehension Classicism.P.WeakRigidComprehension
-  Classicism.P.VeryWeakRigidComprehension Classicism.P.PersistentComprehension
+  Classicism.P.WeakRigidComprehensionPersistent Classicism.P.PersistentComprehension
   Classicism.P.InextensibleComprehension Classicism.P.GallinExtensionalComprehension
   Classicism.P.FunctionalChoice Classicism.P.RelationalChoice Classicism.P.Existence
   Classicism.P.Atomicity Classicism.P.AtomicityT Classicism.P.NecAtomicity
@@ -46,6 +46,7 @@ Ty-parameter, also its list form: `P.listQuoted`, the instance at a list of type
   Classicism.P.PossibleInfinityT Classicism.P.CountableBooleanCompleteness
   Classicism.P.NecCountableBooleanCompleteness Classicism.P.NecAtomicityT
   Classicism.P.NecBooleanCompletenessT Classicism.P.NecWeakRigidComprehension
+  Classicism.P.NecWeakRigidComprehensionPersistent
   Classicism.P.NecPersistentComprehension Classicism.P.NecInextensibleComprehension
   Classicism.P.TameRigidity Classicism.P.NecTameRigidity Classicism.P.RigidPower
   Classicism.P.NecRigidPower Classicism.P.IntensionalChoice Classicism.P.NecIntensionalChoice

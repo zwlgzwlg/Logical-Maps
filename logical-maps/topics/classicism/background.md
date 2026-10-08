@@ -161,18 +161,19 @@ $$
   Y[\bar x]\to\Box Y[\bar x],\\
 \operatorname{WeaklyInextensible}(Y)&:=\forall X\, .\,
   (\forall\bar x\, .\,Y[\bar x]\to\Box X[\bar x])\to Y\le X,\\
-\operatorname{WeaklyRigid}(Y)&:=\operatorname{Persistent}(Y)\land
-  \operatorname{WeaklyInextensible}(Y),\\
-\operatorname{VeryWeaklyRigid}(Y)&:=\operatorname{WeaklyPersistent}(Y)\land
+\operatorname{WeaklyRigid}(Y)&:=\operatorname{WeaklyPersistent}(Y)\land
   \operatorname{WeaklyInextensible}(Y).
 \end{aligned}
 $$
 
-$\operatorname{Rigid}$ is thus necessary very weak rigidity. These are the
+$\operatorname{Rigid}$ is thus necessary weak rigidity. These are the
 conventions of Dorr, *Boolean Completeness does not imply Rigid
-Comprehension*, pp. 2 and 12; that draft's unqualified “weakly rigid” is
-$\operatorname{VeryWeaklyRigid}$ here, and the map reserves “weakly rigid”
-for the stronger combination used in its Proposition 1.
+Comprehension*, pp. 2 and 12. A weakly rigid relation is persistent: weak
+inextensibility applied to $\lambda\bar x\, .\,\Box Y[\bar x]$, whose
+hypothesis $Y[\bar x]\to\Box\Box Y[\bar x]$ holds by weak persistence and 4,
+gives $Y\le\lambda\bar x\, .\,\Box Y[\bar x]$. So weak rigidity is equivalently
+persistence together with weak inextensibility, the combination used in the
+draft's Proposition 1.
 
 For $U^{\sigma\tau t}$, set
 

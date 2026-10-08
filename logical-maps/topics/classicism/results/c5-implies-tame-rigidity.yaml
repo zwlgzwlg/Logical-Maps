@@ -20,7 +20,7 @@ proof: >-
   $X$, weak inextensibility of $F$ is equivalent to
   $\forall X\, .\,\Diamond\exists\bar x\, .\,(F[\bar x]\land X[\bar x])\to\exists\bar x\, .\,(F[\bar
   x]\land\Diamond X[\bar x])$, and inextensibility to its necessitation. Suppose for contradiction that
-  $F$ is weakly rigid but not rigid. Weak rigidity includes persistence, so $F$ is not inextensible:
+  $F$ is weakly rigid but not rigid. A weakly rigid relation is persistent (see Weak Rigid Comprehension), so $F$ is not inextensible:
   $\Diamond\exists X\, .\,\bigl(\Diamond\exists\bar x\, .\,(F[\bar x]\land X[\bar x])\land\neg\exists\bar
   x\, .\,(F[\bar x]\land\Diamond X[\bar x])\bigr)$. By BF at the type of $X$ there is an $X$ such that
   $\Diamond\Diamond\exists\bar x\, .\,(F[\bar x]\land X[\bar x])$, hence by 4
@@ -40,3 +40,10 @@ references:
   note: 4 in C; ND, B, 5 and BF.
 notes: >-
   The argument uses BF and 5 only at the evaluation point, together with T and 4.
+changes:
+- date: '2026-10-08'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  summary: >-
+    "Weakly rigid" now means weakly persistent and weakly inextensible (until then, persistent and
+    weakly inextensible; Very Weak Rigid Comprehension retired); the proof's wording is adjusted to match.
+    A weakly rigid relation is still persistent, so the mathematical content is unchanged.

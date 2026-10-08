@@ -17,8 +17,8 @@ references:
   role: related
   locator: §2.3, pp. 31–33
   note: The source's choice principles are Relational and Functional Choice. Transversal Choice is the
-    selector form. It implies Relational Choice, and follows from it under Extensionality or Very Weak
-    Rigid Comprehension, by the recorded results.
+    selector form. It implies Relational Choice, and follows from it under Extensionality or Weak Rigid
+    Comprehension, by the recorded results.
 notes: >-
   Equiv is defined in Background. The relation is required to be an equivalence relation only actually,
   and the transversal condition is unboxed, so both concern the evaluation point. The cell of $x$ is

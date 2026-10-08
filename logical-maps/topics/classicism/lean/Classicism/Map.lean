@@ -1012,9 +1012,9 @@ theorem relational_choice_and_extensionality_imply_transversal_choice : Statemen
 theorem relational_choice_and_plenitude_imply_functional_choice_r : Statements.relational_choice_and_plenitude_imply_functional_choice_r := by
   map_cert Proofs.relational_choice_and_plenitude_imply_functional_choice_r.entails
 
-/-- `relational-choice-and-very-weak-rigid-comprehension-imply-transversal-choice` -/
-theorem relational_choice_and_very_weak_rigid_comprehension_imply_transversal_choice : Statements.relational_choice_and_very_weak_rigid_comprehension_imply_transversal_choice := by
-  map_cert Proofs.relational_choice_and_very_weak_rigid_comprehension_imply_transversal_choice.entails
+/-- `relational-choice-and-weak-rigid-comprehension-imply-transversal-choice` -/
+theorem relational_choice_and_weak_rigid_comprehension_imply_transversal_choice : Statements.relational_choice_and_weak_rigid_comprehension_imply_transversal_choice := by
+  map_cert Proofs.relational_choice_and_weak_rigid_comprehension_imply_transversal_choice.entails
 
 /-- `rigid-comprehension-and-bf-imply-necessary-bf` -/
 theorem rigid_comprehension_and_bf_imply_necessary_bf : Statements.rigid_comprehension_and_bf_imply_necessary_bf := by
@@ -1097,10 +1097,6 @@ theorem transversal_choice_r_implies_relational_choice_r : Statements.transversa
 theorem transversal_choice_r_implies_transversal_r : Statements.transversal_choice_r_implies_transversal_r := by
   map_cert Proofs.transversal_choice_r_implies_transversal_r.entails
 
-/-- `very-weak-rigid-comprehension-r-implies-weak-rigid-comprehension-r` -/
-theorem very_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r : Statements.very_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r := by
-  map_cert _root_.Classicism.very_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r.entails
-
 /-- `vicinity-and-distinctness-preserving-collapse-imply-actuality` -/
 theorem vicinity_and_distinctness_preserving_collapse_imply_actuality : Statements.vicinity_and_distinctness_preserving_collapse_imply_actuality := by
   map_cert Proofs.vicinity_and_distinctness_preserving_collapse_imply_actuality.entails
@@ -1116,10 +1112,6 @@ theorem weak_rigid_comprehension_r_implies_boolean_completeness_r : Statements.w
 /-- `weak-rigid-comprehension-r-implies-persistent-comprehension-r` -/
 theorem weak_rigid_comprehension_r_implies_persistent_comprehension_r : Statements.weak_rigid_comprehension_r_implies_persistent_comprehension_r := by
   map_cert Proofs.weak_rigid_comprehension_r_implies_persistent_comprehension_r.entails
-
-/-- `weak-rigid-comprehension-r-implies-very-weak-rigid-comprehension-r` -/
-theorem weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r : Statements.weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r := by
-  map_cert Proofs.weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r.entails
 
 /-- `weak-rigid-comprehension-r-implies-weakly-inextensible-comprehension-r` -/
 theorem weak_rigid_comprehension_r_implies_weakly_inextensible_comprehension_r : Statements.weak_rigid_comprehension_r_implies_weakly_inextensible_comprehension_r := by
@@ -1327,6 +1319,15 @@ theorem necessary_barcan_r.dual_polyadic : Statements.necessary_barcan_r.dual_po
 theorem necessary_barcan_t.dual : Statements.necessary_barcan_t.dual := by
   map_form P.NecBarcanT.to_dual.entails
     P.NecBarcanT.of_dual.entails
+
+/-- `weak-rigid-comprehension-r`, variant `persistent`: a weakly rigid relation is persistent. -/
+theorem weak_rigid_comprehension_r.persistent : Statements.weak_rigid_comprehension_r.persistent := by
+  map_form P.WeakRigidComprehension.to_persistent.entails P.WeakRigidComprehension.of_persistent.entails
+
+/-- `necessary-weak-rigid-comprehension-r`, variant `persistent`. -/
+theorem necessary_weak_rigid_comprehension_r.persistent :
+    Statements.necessary_weak_rigid_comprehension_r.persistent := by
+  map_form P.NecWeakRigidComprehension.to_persistent.entails P.NecWeakRigidComprehension.of_persistent.entails
 
 /-- `necessary-boolean-completeness-r`, variant `lub`: the least-upper-bound form. -/
 theorem necessary_boolean_completeness_r.lub : Statements.necessary_boolean_completeness_r.lub := by

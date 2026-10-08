@@ -43,12 +43,12 @@ the stages are not linearly ordered by inclusion.
 
 - **Extensionality** identifies $[x_1]$ with $[x_2]$ directly
   (`relational-choice-and-extensionality-imply-transversal-choice`).
-- **Very Weak Rigid Comprehension** gives, for each cell, a very weakly rigid
-  coextensive property. Two very weakly rigid coextensive properties are
+- **Weak Rigid Comprehension** gives, for each cell, a weakly rigid
+  coextensive property. Two weakly rigid coextensive properties are
   identical: weak inextensibility of one against weak persistence of the other
   gives necessary coextension, and Intensionality gives identity. Choosing from
   those canonical properties gives the transversal
-  (`relational-choice-and-very-weak-rigid-comprehension-imply-transversal-choice`).
+  (`relational-choice-and-weak-rigid-comprehension-imply-transversal-choice`).
 - Through recorded arrows, therefore also Gallin comprehension with BF, C5
   with Actuality, and boxed
   Functional Choice.
@@ -68,10 +68,10 @@ argument on the $F$-representative of each cell
 (`transversal-and-relational-choice-imply-transversal-choice`). The question
 above is therefore equivalent to whether Relational Choice implies
 Transversal. Actuality implies Transversal (Sun, `actuality-implies-transversal`),
-and hence so does everything on the map that implies Actuality, including Very
-Weak Rigid Comprehension; there very weak rigidity itself also serves as $F$,
+and hence so does everything on the map that implies Actuality, including Weak
+Rigid Comprehension; there weak rigidity itself also serves as $F$,
 by the first paragraph of the proof of
-`relational-choice-and-very-weak-rigid-comprehension-imply-transversal-choice`.
+`relational-choice-and-weak-rigid-comprehension-imply-transversal-choice`.
 
 ## Models
 

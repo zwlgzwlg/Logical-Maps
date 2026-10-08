@@ -28,7 +28,7 @@ notes: >-
   $\lambda\bar z\, .\,\bigwedge_i z_i=y_i$ of its instances: $Y$ may lose instances at other worlds, but
   it cannot gain any beyond those its actual instances necessitate. Adding weak persistence, which says
   that $Y$ is itself such an upper bound, turns this into $Y$ being the least upper bound of those
-  haecceities, which is very weak rigidity. The type-$t$ instances are trivial, since $\top$ and $\bot$
+  haecceities, which is weak rigidity. The type-$t$ instances are trivial, since $\top$ and $\bot$
   witness them; haecceities and their finite joins are rigid; and the instance at $X=\top$ is a
   relativised Barcan Formula, $\top$ itself being weakly inextensible exactly when BF holds at the
   argument types. The principle follows from Actuality and separately from Boolean Completeness, which

@@ -149,7 +149,7 @@ law of the mirror instance. -/
 
 #classicism_transform Classicism.intensionality Classicism.modalized_fregean
 #classicism_transform Classicism.modalized_functionality Classicism.le_iff_arrow
-#classicism_transform Classicism.persistent_iff_le Classicism.rigid_iff_box_veryWeaklyRigid
+#classicism_transform Classicism.persistent_iff_le Classicism.rigid_iff_box_weaklyRigid
 
 #classicism_strict Classicism.intensionality.nec Classicism.modalized_functionality.nec
 #classicism_strict Classicism.le_iff_arrow.nec Classicism.persistent_iff_le.nec

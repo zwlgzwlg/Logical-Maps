@@ -439,10 +439,6 @@ example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.Transversal.schemaIn
 
-/-- Principle definition check: `very-weak-rigid-comprehension-r`. -/
-example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
-  Classicism.P.VeryWeakRigidComprehension.schemaIn
-
 /-- Principle definition check: `vicinity`. -/
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.Vicinity.schemaIn
@@ -2835,13 +2831,13 @@ def relational_choice_and_plenitude_imply_functional_choice_r : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Plenitude.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.FunctionalChoice.schemaIn
 
-/-- `relational-choice-and-very-weak-rigid-comprehension-imply-transversal-choice`
+/-- `relational-choice-and-weak-rigid-comprehension-imply-transversal-choice`
 
-Relational Choice ∧ Very Weak Rigid Comprehension ⇒ Transversal Choice -/
-def relational_choice_and_very_weak_rigid_comprehension_imply_transversal_choice : Prop :=
+Relational Choice ∧ Weak Rigid Comprehension ⇒ Transversal Choice -/
+def relational_choice_and_weak_rigid_comprehension_imply_transversal_choice : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RelationalChoice.schemaIn →
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.VeryWeakRigidComprehension.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeakRigidComprehension.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TransversalChoice.schemaIn
 
 /-- `relational-choice-r-implies-transversal-choice-r`  (conjectured)
@@ -3109,14 +3105,6 @@ def transversal_choice_r_implies_transversal_r : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TransversalChoice.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Transversal.schemaIn
 
-/-- `very-weak-rigid-comprehension-r-implies-weak-rigid-comprehension-r`
-
-Very Weak Rigid Comprehension ⇒ Weak Rigid Comprehension -/
-def very_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r : Prop :=
-  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.VeryWeakRigidComprehension.schemaIn →
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeakRigidComprehension.schemaIn
-
 /-- `vicinity-and-distinctness-preserving-collapse-imply-actuality`
 
 Vicinity ∧ Distinctness-preserving collapse ⇒ Actuality -/
@@ -3150,14 +3138,6 @@ def weak_rigid_comprehension_r_implies_persistent_comprehension_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeakRigidComprehension.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PersistentComprehension.schemaIn
-
-/-- `weak-rigid-comprehension-r-implies-very-weak-rigid-comprehension-r`
-
-Weak Rigid Comprehension ⇒ Very Weak Rigid Comprehension -/
-def weak_rigid_comprehension_r_implies_very_weak_rigid_comprehension_r : Prop :=
-  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeakRigidComprehension.schemaIn →
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.VeryWeakRigidComprehension.schemaIn
 
 /-- `weak-rigid-comprehension-r-implies-weakly-inextensible-comprehension-r`
 
@@ -6931,6 +6911,14 @@ def necessary_transversal_r.polyadic : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecTransversal.schemaIn ↔
       Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecTransversal.listSchemaIn
 
+/-- `necessary-weak-rigid-comprehension-r`, variant `persistent`
+
+□Weak Rigid Comprehension ⇔ Persistent form -/
+def necessary_weak_rigid_comprehension_r.persistent : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecWeakRigidComprehension.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecWeakRigidComprehensionPersistent.schemaIn
+
 /-- `plenitude-r`, variant `polyadic`
 
 Plenitude ⇔ Polyadic form -/
@@ -7002,5 +6990,13 @@ def transversal_r.polyadic : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Transversal.schemaIn ↔
       Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Transversal.listSchemaIn
+
+/-- `weak-rigid-comprehension-r`, variant `persistent`
+
+Weak Rigid Comprehension ⇔ Persistent form -/
+def weak_rigid_comprehension_r.persistent : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeakRigidComprehension.schemaIn ↔
+      Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeakRigidComprehensionPersistent.schemaIn
 
 end Classicism.Statements

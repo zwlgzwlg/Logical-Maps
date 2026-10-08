@@ -63,19 +63,6 @@ theorem actuality_implies_persistent_comprehension_r :
     P.Actuality → P.PersistentComprehension τ := fun act X =>
   act.elim fun w (hw : ActualWorld w) => ⟨_, persistent_coext_of_actual X w hw⟩
 
-/-- `very-weak-rigid-comprehension-r-implies-weak-rigid-comprehension-r`, at every
-arity: for `Y` very weakly rigid, `λz̄. □Y[z̄]` is a weakly rigid coextension. -/
-theorem very_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r :
-    P.VeryWeakRigidComprehension τ → P.WeakRigidComprehension τ := fun vw X =>
-  (vw X).elim fun Y hY =>
-    ⟨boxAt Y,
-      ⟨nec% (boxAt_four Y), fun Z hZ =>
-        modal_K _ _ (nec% (incl_trans (boxAt Y) Y Z (boxAt_T Y)))
-          (hY.1.2 Z (incl_trans Y (boxAt Y) (boxAt Z) hY.1.1 hZ))⟩,
-      coext_of_incl X (boxAt Y)
-        (incl_trans X Y (boxAt Y) (incl_of_coext X Y hY.2) hY.1.1)
-        (incl_trans (boxAt Y) Y X (boxAt_T Y) (incl_of_coext' X Y hY.2))⟩
-
 /-- If every truth is necessary, every relation is weakly inextensible. -/
 theorem weaklyInextensible_of_all (X : τ) : (∀ p : Prop, p → □ p) → WeaklyInextensible X :=
   fun h Z hZ => h _ (incl_trans X (boxAt Z) Z hZ (boxAt_T Z))
@@ -137,7 +124,7 @@ theorem gallin_bf_weak_rigid_comprehension :
     P.GallinExtensionalComprehension (σ → Prop) → P.Barcan σ →
       P.WeakRigidComprehension (σ → Prop) :=
   fun g bf X => (g X).elim fun Y hY =>
-    ⟨Y, ⟨hY.1, weaklyInextensible_of_neg_bf Y bf (box_elim hY.2.1)⟩, hY.2.2⟩
+    ⟨Y, ⟨box_elim hY.1, weaklyInextensible_of_neg_bf Y bf (box_elim hY.2.1)⟩, hY.2.2⟩
 
 /-- And in `C5`, Rigid Comprehension: the argument above under the box, with `□`BF at `σ`
 from `□ND` at `t` (Proposition 2.3), the persistence of the negation being boxed
@@ -195,7 +182,6 @@ theorem fregean_actuality_necessary_actuality : P.FregeanAxiom → P.Actuality �
   Classicism.nec_gallin_c5_nec_rigid_comprehension
   Classicism.necAtomicity_step Classicism.atomicityT_of_atomicity_at_t
   Classicism.c5_necessary_atomicity_t Classicism.fregean_actuality_necessary_actuality
-  Classicism.very_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r
   Classicism.extensionality_r_implies_rigid_comprehension_r
   Classicism.c5_and_persistent_comprehension_imply_gallin
   Classicism.c5_and_necessary_rigid_comprehension_imply_necessary_gallin_comprehension
@@ -205,7 +191,6 @@ theorem fregean_actuality_necessary_actuality : P.FregeanAxiom → P.Actuality �
   Classicism.gallin_bf_weak_rigid_comprehension Classicism.gallin_c5_rigid_comprehension
   Classicism.nec_gallin_c5_nec_rigid_comprehension
   Classicism.c5_necessary_atomicity_t Classicism.fregean_actuality_necessary_actuality
-  Classicism.very_weak_rigid_comprehension_r_implies_weak_rigid_comprehension_r
   Classicism.extensionality_r_implies_rigid_comprehension_r
   Classicism.c5_and_persistent_comprehension_imply_gallin
   Classicism.c5_and_necessary_rigid_comprehension_imply_necessary_gallin_comprehension
