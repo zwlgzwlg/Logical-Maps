@@ -58,7 +58,28 @@ meets:
   irreversible-arrow: >-
     A surjection that is not injective: no composite with it is the identity.
 
-arguments: []
+arguments:
+
+- fails: [intensional-choice-r, relational-choice-r]
+  when: {metatheory: socks}
+  choice: free
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  date: '2026-10-08'
+  text: >-
+    At type $t$, with the monoid that of the surjections of the union $X=\bigcup_n P_n$ of the
+    socks. For $x\in X$ let $q_x:=\{k : k(x)=x\}$, a proposition since the model is full; $x$ is the
+    one point fixed by every member of $q_x$, since for $y\ne x$ the transposition of $y$ with a third
+    point is a surjection fixing $x$ and moving $y$. Relational Choice: let $U$ relate $q_x$ to each
+    $q_y$ with $y$ in the pair after $x$'s, and every other proposition to every proposition. It is
+    serial, and a functional subrelation would give $f$ with $f(x)$ in the pair after $x$'s;
+    iterated from a member $s_0$ of $P_0$ it would choose a sock from every pair. Intensional Choice:
+    let $F$ hold at each arrow $h$ of the $q_y$ with $y$ in the pair after $h(s_0)$'s. It is
+    necessarily instantiated. A $G\le F$ necessarily uniquely instantiated holds at the
+    transposition of $s_0$ and $x$ (the identity if $x=s_0$), an arrow given by $x$ without choice,
+    of a single $q_y$ with $y$ in the pair after $x$'s, which gives the same $f$. Both fail, with one
+    individual or many. The next pair is needed: with $h(s_0)$'s own pair, $G$ could hold at $h$ of
+    $q_{h(s_0)}$. (The witness sketched in the analysis of 4 October 2026, for this model.)
+
 
 # 6 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): verdicts now given by the topic's
 # general arguments (full-atomicity, full-rigid-comprehension, full-epic-barcan, invertible-arrows,
