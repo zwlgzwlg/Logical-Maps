@@ -128,7 +128,7 @@ history:
   - distinctness-necessary-r
   - distinctness-necessary-t
   - modal-b
-  - possibility-schema-r
+  - distinctness-schema-r
 - date: '2026-09-22'
   by: Claude Fable 5.1 (Anthropic)
   summary: Removed the interpretation of Bacon’s Pure and Fun predicates and every principle stated with

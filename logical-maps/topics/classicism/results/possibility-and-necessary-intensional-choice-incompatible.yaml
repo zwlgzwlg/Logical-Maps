@@ -1,6 +1,6 @@
 id: possibility-and-necessary-intensional-choice-incompatible
 premises:
-- possibility-schema-r
+- distinctness-schema-r
 - necessary-intensional-choice-r
 conclusion: 'false'
 status: proved
@@ -36,3 +36,10 @@ notes: >-
   Instance of the pattern recorded for possibility-and-necessary-relational-choice-incompatible. The same
   argument refutes Intensional Choice in several other symmetric models; see the deferred verdicts in
   extraction.md.
+changes:
+- date: '2026-10-08'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  summary: >-
+    Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the
+    official form and Possibility a variant form; this record's premise changed from the Possibility
+    principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.

@@ -1,6 +1,6 @@
 id: pure-possibility-implies-axiom-of-infinity-t
 premises:
-- possibility-schema-r
+- distinctness-schema-r
 conclusion: axiom-of-infinity-t
 status: proved
 certificate:
@@ -50,3 +50,10 @@ notes: >-
   never used. The sentence $\Pi$ is not implied by the Axiom of Infinity at type $e$, by the model
   full-henkin-infinite-base. The argument can also be run entirely at type $t$, using the powers of two as
   the possible numbers of propositions; the write-up sketches this variant without carrying it out.
+changes:
+- date: '2026-10-08'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  summary: >-
+    Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the
+    official form and Possibility a variant form; this record's premise changed from the Possibility
+    principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.

@@ -113,12 +113,12 @@ lattice_views:
 - id: combinatorialism
   name: Combinatorialism
   description: 'Logical Combinatorialism and its relatives for the signature Σ: Logical Necessity, the
-    witnessed-possibility principles, Modal Freedom, Separated Structure, No Contingency and the Possibility
-    schemata.'
+    witnessed-possibility principles, Modal Freedom, Separated Structure, No Contingency, Maximalism and the
+    Possibility schemata.'
   principles:
   - strong-possibility-signature-r
   - logical-necessity-r
-  - possibility-signature-r
+  - distinctness-signature-r
   - modal-freedom-signature-r
   - no-contingency-signature-r
   - converse-witnessed-possibility-r

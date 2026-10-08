@@ -1,5 +1,5 @@
 id: distinctness-schema-r
-name: Distinctness Maximalism (pure)
+name: Maximalism (pure)
 category: schematic
 statement: Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 formal: $A\ne B\quad(A=B\text{ closed and pure; }C\nvdash A=B)$
@@ -12,7 +12,19 @@ references:
 - paper: bacon-dorr-classicism
   role: formulation
   locator: §2.4, pp. 35–36
-notes: The reference theory in the side condition is the fixed background C.
+notes: >-
+  The reference theory in the side condition is the fixed background C. Until 8 October 2026 this was Distinctness Maximalism (pure), with Possibility Maximalism (pure) a separate principle, provably equivalent; they were unified at Cian Dorr's direction, the distinctness form official since it remains the interesting one over logics weaker than Classicism.
 aliases:
 - Pure Maximalist Classicism
+variants:
+- id: possibility
+  lean:
+    ref: (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC)
+    equivalence_ref: Classicism.Map.distinctness_schema_r.possibility
+    status: verified
+  name: Possibility form
+  statement: Every closed pure sentence consistent with C is possible.
+  formal: $\Diamond P\quad(P\text{ closed and pure; }C+P\text{ consistent})$
+  equivalence: >-
+    Possibility to Distinctness: if a closed identity $A=B$ is not a theorem of C, its negation is consistent with C, so the possibility form gives $\Diamond(A\ne B)$; by NI, $A=B$ would make this impossible, so $A\ne B$. Distinctness to Possibility: if $P$ is consistent with C, the closed identity $\neg P=\top$ is not a theorem of C, so the distinctness form gives $\neg P\ne\top$, equivalently $\Diamond P$.
 lean_def: (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC)

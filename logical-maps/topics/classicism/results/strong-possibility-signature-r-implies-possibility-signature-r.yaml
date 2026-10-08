@@ -1,7 +1,7 @@
 id: strong-possibility-signature-r-implies-possibility-signature-r
 premises:
 - strong-possibility-signature-r
-conclusion: possibility-signature-r
+conclusion: distinctness-signature-r
 status: proved
 certificate:
   source_id: bacon-dorr-classicism
@@ -24,3 +24,10 @@ references:
   role: proof
   locator: §2.6, p. 42, following the signature convention of §2.5
 notes: ''
+changes:
+- date: '2026-10-08'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  summary: >-
+    Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the
+    official form and Possibility a variant form; this record's conclusion changed from the Possibility
+    principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.

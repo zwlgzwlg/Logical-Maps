@@ -200,7 +200,7 @@ history:
   - necessary-barcan-r
   violates:
   - no-pure-contingency-r
-  - possibility-schema-r
+  - distinctness-schema-r
 - date: '2026-09-22'
   by: Claude Fable 5.1 (Anthropic)
   summary: Added □Strong Leibniz Biconditionals (type t); see the notes.

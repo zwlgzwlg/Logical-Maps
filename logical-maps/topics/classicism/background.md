@@ -259,8 +259,8 @@ $\Box\neg A_\sigma$ for some $\sigma$, is stronger and different from failure of
 boxed schema. Negated principle nodes are not added by this positive import.
 Incompatibilities conclude False; model `violates` entries record schema failure.
 
-**Pure and signature schemata.** In Distinctness Maximalism and Possibility Maximalism,
-$C$ denotes the fixed background logic. Its theoremhood and consistency
+**Pure and signature schemata.** In Maximalism, in its distinctness form and its possibility
+form alike, $C$ denotes the fixed background logic. Its theoremhood and consistency
 side conditions are retained literally. “Pure” means free of nonlogical
 constants. The principles in the Signature schemata group give a special
 role to nonlogical constants: they concern an arbitrary fixed signature

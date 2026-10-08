@@ -1,6 +1,6 @@
 id: possibility-and-necessity-of-arithmetic-incompatible
 premises:
-- possibility-schema-r
+- distinctness-schema-r
 - necessity-of-arithmetic
 conclusion: false
 status: proved
@@ -37,3 +37,10 @@ notes: >-
   directly; the equivalent Distinctness Maximalism form gives the same through the recorded equivalence. The
   argument is metatheoretic in two places, the recursive enumerability of C and Gödel's theorem, like the
   consistency side condition of Possibility Maximalism itself.
+changes:
+- date: '2026-10-08'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  summary: >-
+    Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the
+    official form and Possibility a variant form; this record's premise changed from the Possibility
+    principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.

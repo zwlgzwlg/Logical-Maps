@@ -103,6 +103,9 @@ macro_rules
       | (rw [← AxiomSet.pureVersion_signatureB]; assumption)
       | exact AxiomSet.Entails.ofPure_empty
       | exact AxiomSet.Entails.to_empty
+      | exact AxiomSet.Entails.trans (by assumption)
+          (AxiomSet.Entails.ofPure Meta.distinctness_schema_r_implies_possibility_schema_r)
+      | exact AxiomSet.Entails.trans (by assumption) Meta.distinctness_signature_r_implies_possibility_signature_r
       | (apply AxiomSet.Entails.ofPure_union <;> map_premises)
       | (apply AxiomSet.Entails.union <;> map_premises))
 
@@ -124,6 +127,11 @@ macro "map_cert_incompatible " h:term : tactic => `(tactic| (
   intros
   intro hc
   exact AxiomSet.not_consistent_ofPure $h (AxiomSet.Consistent.of_entails (by map_premises) hc)))
+
+/-- A certificate for an equivalent form, from two entailments at every signature. -/
+macro "map_form_sig " h₁:term:max h₂:term:max : tactic => `(tactic| (
+  intro _ _ _
+  exact ⟨fun h => AxiomSet.Entails.trans h $h₁, fun h => AxiomSet.Entails.trans h $h₂⟩))
 
 /-- A certificate for an equivalent form, from the two pure entailments between the
 official form and it. -/
@@ -373,17 +381,9 @@ theorem distinctness_necessary_t_implies_vicinity : Statements.distinctness_nece
 theorem distinctness_preserving_collapse_and_nd_imply_fregean_axiom : Statements.distinctness_preserving_collapse_and_nd_imply_fregean_axiom := by
   map_cert Proofs.distinctness_preserving_collapse_and_nd_imply_fregean_axiom.entails
 
-/-- `distinctness-schema-r-implies-possibility-schema-r` -/
-theorem distinctness_schema_r_implies_possibility_schema_r : Statements.distinctness_schema_r_implies_possibility_schema_r := by
-  map_cert Meta.distinctness_schema_r_implies_possibility_schema_r
-
 /-- `distinctness-signature-r-implies-distinctness-schema-r` -/
 theorem distinctness_signature_r_implies_distinctness_schema_r : Statements.distinctness_signature_r_implies_distinctness_schema_r :=
   fun hS _ h => Entails.trans h (Entails.of_subset (pureVersion_distinctnessC_subset hS.1))
-
-/-- `distinctness-signature-r-implies-possibility-signature-r` -/
-theorem distinctness_signature_r_implies_possibility_signature_r : Statements.distinctness_signature_r_implies_possibility_signature_r := by
-  map_cert_sig Meta.distinctness_signature_r_implies_possibility_signature_r
 
 /-- `extensionality-r-implies-actuality` -/
 theorem extensionality_r_implies_actuality : Statements.extensionality_r_implies_actuality := by
@@ -954,7 +954,7 @@ theorem possibility_and_no_pure_contingency_incompatible : Statements.possibilit
 
 /-- `possibility-plus-r-implies-possibility-schema-r` -/
 theorem possibility_plus_r_implies_possibility_schema_r : Statements.possibility_plus_r_implies_possibility_schema_r := by
-  map_cert possibilityPlus_entails_possibility
+  map_cert (Entails.trans possibilityPlus_entails_possibility Meta.possibility_schema_r_implies_distinctness_schema_r)
 
 /-- `possibility-plus-signature-r-implies-possibility-plus-r` -/
 theorem possibility_plus_signature_r_implies_possibility_plus_r : Statements.possibility_plus_signature_r_implies_possibility_plus_r :=
@@ -962,23 +962,12 @@ theorem possibility_plus_signature_r_implies_possibility_plus_r : Statements.pos
 
 /-- `possibility-plus-signature-r-implies-possibility-signature-r` -/
 theorem possibility_plus_signature_r_implies_possibility_signature_r : Statements.possibility_plus_signature_r_implies_possibility_signature_r := by
-  map_cert_sig possibilityPlusSig_entails_possibility
-
-/-- `possibility-schema-r-implies-distinctness-schema-r` -/
-theorem possibility_schema_r_implies_distinctness_schema_r : Statements.possibility_schema_r_implies_distinctness_schema_r := by
-  map_cert Meta.possibility_schema_r_implies_distinctness_schema_r
+  map_cert_sig (Entails.trans possibilityPlusSig_entails_possibility
+    Meta.possibility_signature_r_implies_distinctness_signature_r)
 
 /-- `possibility-schema-r-implies-possible-infinity-e` -/
 theorem possibility_schema_r_implies_possible_infinity_e : Statements.possibility_schema_r_implies_possible_infinity_e := by
   map_cert possibility_entails_possibleInfinityE
-
-/-- `possibility-signature-r-implies-distinctness-signature-r` -/
-theorem possibility_signature_r_implies_distinctness_signature_r : Statements.possibility_signature_r_implies_distinctness_signature_r := by
-  map_cert_sig Meta.possibility_signature_r_implies_distinctness_signature_r
-
-/-- `possibility-signature-r-implies-possibility-schema-r` -/
-theorem possibility_signature_r_implies_possibility_schema_r : Statements.possibility_signature_r_implies_possibility_schema_r :=
-  fun hS _ h => Entails.trans h (Entails.of_subset (pureVersion_possibilityC_subset hS.1))
 
 /-- `possible-infinity-e-and-bf-imply-axiom-of-infinity-e` -/
 theorem possible_infinity_e_and_bf_imply_axiom_of_infinity_e : Statements.possible_infinity_e_and_bf_imply_axiom_of_infinity_e := by
@@ -1328,6 +1317,16 @@ theorem weak_rigid_comprehension_r.persistent : Statements.weak_rigid_comprehens
 theorem necessary_weak_rigid_comprehension_r.persistent :
     Statements.necessary_weak_rigid_comprehension_r.persistent := by
   map_form P.NecWeakRigidComprehension.to_persistent.entails P.NecWeakRigidComprehension.of_persistent.entails
+
+/-- `distinctness-schema-r`, variant `possibility`: Maximalism's possibility form. -/
+theorem distinctness_schema_r.possibility : Statements.distinctness_schema_r.possibility := by
+  map_form Meta.distinctness_schema_r_implies_possibility_schema_r
+    Meta.possibility_schema_r_implies_distinctness_schema_r
+
+/-- `distinctness-signature-r`, variant `possibility`: likewise in the signature. -/
+theorem distinctness_signature_r.possibility : Statements.distinctness_signature_r.possibility := by
+  map_form_sig Meta.distinctness_signature_r_implies_possibility_signature_r
+    Meta.possibility_signature_r_implies_distinctness_signature_r
 
 /-- `necessary-boolean-completeness-r`, variant `lub`: the least-upper-bound form. -/
 theorem necessary_boolean_completeness_r.lub : Statements.necessary_boolean_completeness_r.lub := by

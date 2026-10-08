@@ -1,7 +1,7 @@
 id: pure-b-and-pure-possibility-incompatible
 premises:
 - pure-b-r
-- possibility-schema-r
+- distinctness-schema-r
 conclusion: 'false'
 status: proved
 certificate:
@@ -37,3 +37,10 @@ references:
   locator: §3.5, n. 81, p. 59
 notes: 'Sharpens the recorded incompatibility of Possibility Maximalism (pure) with No Pure Contingency and with
   ND: even B restricted to pure sentences is excluded.'
+changes:
+- date: '2026-10-08'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  summary: >-
+    Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the
+    official form and Possibility a variant form; this record's premise changed from the Possibility
+    principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.
