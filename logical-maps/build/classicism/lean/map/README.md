@@ -182,8 +182,8 @@ collapses (`finite-support-pair-injections-or-collapses`, `Models/PairInjCollaps
 its four own verdicts: Vicinity, BF, Atomlessness, and the failure of Rigid Power, the map's
 first. The last unfolds the quoted sentence by `simp` into the semantics of rigidity (`SRig`,
 persistence along every arrow and inextensibility at every world) and refutes it with `F := ⊤`.
-Its symmetric analogue (`symmetric-pair-injections-or-collapses`, `SymIdeal.pairInjCol`) is a member
-of the symmetric group, with the group's conditions proved; its own verdicts are not yet in Lean.
+Its symmetric analogue is Base 2 (`symmetric-collapse-pair`), where Rigid Power fails by the same
+argument; that verdict is not yet in Lean.
 
 The verdicts compose into the whole model's statement once the model is of an admitted
 signature: `Premodel.theory`, the sentences holding in a model, is consistent
