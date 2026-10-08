@@ -1,0 +1,157 @@
+id: symmetric-pair-injections-or-collapses
+name: 'Symmetric ideally-full model: pair-preserving injections and pair collapses'
+certificate:
+  source_id: misc
+  produced_by: Cian Dorr (the construction, 8 October 2026, as the symmetric analogue of
+    finite-support-pair-injections-or-collapses); Claude Opus 5.5 (Anthropic) (the verdicts, 8
+    October 2026)
+  recorded_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  checked_by: []
+  date: '2026-10-08'
+  lean: stated
+sources:
+- >-
+  Cian Dorr, suggestion of 8 October 2026, in conversation with Claude Opus 5.5 (Anthropic): the
+  model finite-support-pair-injections-or-collapses with the symmetry condition for the
+  permutations fixing $\{0,1\}$, asking whether Rigid Power still fails. Transcript in .private.
+- Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026,
+  Definitions 15–18, p. 8 (the symmetric ideally-full construction).
+source_names:
+- Dorr 8 Oct
+- BC does not imply RC
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Definitions 15–18, p. 8
+  note: The symmetric ideally-full construction, over the monoid of the finite-support model
+    finite-support-pair-injections-or-collapses; Base 2 (symmetric-collapse-pair) with the
+    permutations replaced by all the pair-preserving injections and the surjective collapses by
+    all the collapses.
+
+group: symmetric-ideally-full
+settings:
+  construction: >-
+    A symmetric ideally-full intensional action model over one object, the set of natural numbers.
+    Its arrows are the functions that identify $0$ with $1$ (the collapses) and the injections that
+    map $\{0,1\}$ onto itself (the pair-preserving injections); its symmetry group is the
+    permutations that preserve $\{0,1\}$ setwise. The evaluation point is the identity arrow.
+  individuals: base
+  sigma: top
+meets:
+  one-object-action-model: >-
+    It has one object (Dorr, draft, §3.1: closed pure terms denote entities fixed by every arrow).
+  transposable: >-
+    For $N$ the property of not belonging to $N\cup\{0,1\}$: the transposition of $y$ with another
+    individual outside $N\cup\{0,1\}$ fixes $\{0,1\}$, so lies in the symmetry group.
+  separable-collapses: >-
+    The pairs $\{n,m\}$ with $n,m\ge2$: a function that identifies $0$ with $1$ and $n$ with $m$, and
+    nothing else, is an arrow.
+  finite-pinning: Every object carries the ideal of finite sets.
+  collapse-onto-point: >-
+    Take $F:=\lambda x\, .\,x\ne a$, so $p\notin F_h$. $h$ is a collapse sending $N\cup\{a,0,1\}$ to
+    one $p\notin\{0,1\}$. Swapping $0$ with $1$, or transposing $y$ with a point outside
+    $\{0,1,p,y\}$, fixes $p$, and composes with $h$ to a collapse.
+  actual-world-isolated: >-
+    The actual-world proposition is the set of pair-preserving injections: it is symmetric and
+    pinned down by $\{0,1\}$, and a symmetric proposition pinned down by a finite $T\supseteq\{0,1\}$
+    that contains the identity contains every pair-preserving injection $h$, since $h$ agrees on $T$
+    with a permutation preserving $\{0,1\}$. Every other arrow is a collapse, and every composite
+    with a collapse is one.
+  actuality-contingent: >-
+    The actual-world proposition, the pair-preserving injections, is in the domain; at every world a
+    collapse leads outside it, and a collapse carries it to the empty set.
+  irreversible-arrow: >-
+    A collapse: every composite with it is a collapse.
+
+arguments:
+
+- holds: [barcan-r]
+  by: Claude Opus 5.5 (Anthropic)
+  date: '2026-10-08'
+  text: >-
+    At every type, as in finite-support-pair-injections-or-collapses: every arrow agrees on any
+    finite set with a surjective arrow (a permutation preserving $\{0,1\}$, or a surjective collapse),
+    and the pullback of a symmetric entity along it is symmetric, as in the group's argument
+    barcan-surjective; so if $\forall y\,\Box Xy$ holds while $X$, pinned down by $N$, omits
+    $\langle a,k\rangle$, take $j$ surjective agreeing with $k$ on $N$ and $a=j\cdot b$, so that
+    $\langle a,j\rangle\in X$, and by pinning $\langle a,k\rangle\in X$.
+
+- fails: [atomicity-t]
+  # Derivable at the base from the other verdicts, but not in the variant with one individual,
+  # which this argument, about propositions only, also covers.
+  by: Claude Opus 5.5 (Anthropic)
+  date: '2026-10-08'
+  text: >-
+    The collapses form a nonempty proposition, pinned down by $\{0,1\}$ and symmetric, with no atom
+    below it. A nonempty symmetric proposition $p$ of collapses pinned down by a finite
+    $T\supseteq\{0,1\}$ contains a collapse $h$; for $m\notin T$, the collapses agreeing with $h$ on
+    $T$ and sending $m$ into $h[T]$, and those sending $m$ outside $h[T]\cup\{0,1\}$, are both in
+    $p$, and the propositions $\{k : km\in k[T]\}$ and its complement, symmetric and pinned down by
+    $T\cup\{m\}$, split $p$.
+
+- fails: [rigid-power-r]
+  when: {individuals: base}
+  by: Claude Opus 5.5 (Anthropic)
+  date: '2026-10-08'
+  text: >-
+    The argument of finite-support-pair-injections-or-collapses, whose witnesses are all symmetric.
+    $Y$, with $Y_k=\mathbb N\setminus\{k2\}$ at a pair-preserving injection and $\mathbb N$ at a
+    collapse: a symmetry $g$ keeps $y\ne k2$ as $gy\ne(g\circ k)2$, and $g\circ k$ is in the class of
+    $k$. $\top$ is rigid by $\Box$BF. Along a collapse a weakly rigid property has extension
+    $\mathbb N$ or a finite one: the infinite case uses persistence and pinning only, the finite one
+    the property $k\mapsto k[S]$, which is symmetric. And $\mathbf X$, holding at $k$ of the
+    transports $k'\cdot Z$ of the rigid $Z$ along arrows $k'$ agreeing with $k$ on $\{0,1\}$, is
+    symmetric, since $g\cdot(k'\cdot Z)=(g\circ k')\cdot Z$ and $g\circ k'$ agrees with $g\circ k$ on
+    $\{0,1\}$ (the rigid properties being closed under transport along symmetries). So the property
+    of being a rigid property of individuals is not weakly inextensible, though $\top$ is rigid.
+
+- holds: [rigid-comprehension-r]
+  by: Claude Opus 5.5 (Anthropic)
+  date: '2026-10-08'
+  text: >-
+    At every relational type. Let $X$ have extension $S$ at the identity and be pinned down by
+    $N\supseteq\{0,1\}$; by symmetry and pinning, $g\cdot s\in S$ for $s\in S$ and $g$ a symmetry
+    fixing $N$ pointwise. Put $L:=\{\langle k'\cdot s,k\rangle : s\in S,\ k'\text{ agreeing with
+    }k\text{ on }N\}$: it is pinned down by $N$, and symmetric, since $g\cdot(k'\cdot s)=(g\circ
+    k')\cdot s$. Its extension is $S$: an arrow $k'$ agreeing with the identity on $N$ is an injection
+    fixing $N$, and agrees on $N\cup M_s$ ($M_s$ pinning $s$) with a symmetry $g$ fixing $N$, so
+    $k'\cdot s=g\cdot s\in S$. It is persistent: $j\cdot(k'\cdot s)=(j\circ k')\cdot s$ with $j\circ
+    k'$ agreeing with $j\circ k$ on $N$. It is inextensible at every world $w$: let $X'$, pinned down
+    by $N'$, contain $\langle j\cdot x,j\rangle$ for every $x\in L_w$ and arrow $j$, and let $k'\cdot
+    s\in L_{j\circ w}$, with $k'$ agreeing with $j\circ w$ on $N$. Choose an arrow $k''$ agreeing with
+    $w$ on $N$ and an arrow $j'$ agreeing with $j$ on $N'\cup\{0,1\}\cup w[N]$ with $j'\circ k''$
+    agreeing with $k'$ on $M_s$: for $a\in M_s\setminus N$, if $k'a=jd$ for some $d$ put $k''a:=d$ and
+    keep $j'=j$ at $d$; otherwise send $a$ to a fresh point $z$ and put $j'z:=k'a$. When $j$ is an
+    injection, $k'a$ outside the range of $j$ is outside $\{0,1\}$, so $j'$ stays a pair-preserving
+    injection; when $w$ is an injection, so is $k'$, and the $d$ so chosen lie outside $w[N]$ and
+    $\{0,1\}$ and are distinct, so $k''$ stays a pair-preserving injection; collapses take any values.
+    Then $k''\cdot s\in L_w$, so $\langle(j'\circ k'')\cdot s,j'\rangle=\langle k'\cdot
+    s,j'\rangle\in X'$, and by pinning $\langle k'\cdot s,j\rangle\in X'$. So $L$ is rigid and
+    coextensive with $X$.
+
+notes: >-
+  Recorded with only the verdicts the engine needs (Atomicity at type $t$ for the one-individual
+  variant); Actuality and Boolean Completeness follow. For the record, Boolean Completeness also has
+  a direct proof: Dorr's Theorem 36 with the moving symmetry chosen so that injections splice, no
+  arrow being separated here (if $h'a=hq$ for $a$ in the instance's pinning set and $q$ in the upper
+  bound's, move $a$ to $q$).
+
+  The symmetric analogue, proposed by Cian Dorr, of finite-support-pair-injections-or-collapses, whose
+  failure of Rigid Power survives the symmetry condition with the same witnesses. Unlike the
+  finite-support model it has Actuality: a symmetric proposition pinned down by a finite set and
+  containing one pair-preserving injection contains them all, so they form a true atom entailing
+  every truth. With Rigid Comprehension, Boolean Completeness and BF holding, the model shows that
+  Rigid Comprehension, even boxed and with Actuality and BF, does not imply Rigid Power. The
+  symmetries are taken to preserve $\{0,1\}$ setwise; with those fixing $0$ and $1$ the arguments
+  are the same.
+
+# The model in Lean (Classicism/Models/SymmetricIdeal.lean): the base, the group's parameter. The
+# group's arguments are certified from its conditions; this record's own arguments are not yet in Lean.
+lean:
+  param: Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.pairInjCol
+  meets:
+    one-object-action-model: Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _
+    transposable: Classicism.Meta.Intensional.SymIdeal.pairInjCol_transposable
+    separable-collapses: Classicism.Meta.Intensional.SymIdeal.pairInjCol_separable
+    finite-pinning: fun _ _ h => h
+    infinitely-many-individuals: Classicism.Meta.Intensional.SymIdeal.infinitelyManyIndividuals Classicism.Meta.Intensional.SymIdeal.pairInjCol

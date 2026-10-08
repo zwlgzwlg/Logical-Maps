@@ -947,6 +947,49 @@ theorem two_hasLUBs (ρ : RTy) : ∀ V, twoBase.HasLUBs V ρ
   | false => SymBase.lub_of_hull two_hullConditions ρ
   | true => two_hasLUBs_W₁ ρ
 
+/-! ### Pair-preserving injections and collapses -/
+
+/-- The injections preserving `{0, 1}` and the functions collapsing it; the symmetries the
+permutations preserving `{0, 1}` (`symmetric-pair-injections-or-collapses`). -/
+def pairInjCol : Base where
+  Arr f := (Function.Injective f ∧ PairPres f) ∨ f 0 = f 1
+  arr_id := Or.inl ⟨Function.injective_id, Or.inl ⟨rfl, rfl⟩⟩
+  arr_comp {f g} hf hg := by
+    rcases hf with ⟨hfi, hfp⟩ | hf
+    · rcases hg with ⟨hgi, hgp⟩ | hg
+      · refine Or.inl ⟨hgi.comp hfi, ?_⟩
+        rcases hfp with ⟨h0, h1⟩ | ⟨h0, h1⟩ <;> rcases hgp with ⟨g0, g1⟩ | ⟨g0, g1⟩ <;>
+          simp [PairPres, Function.comp, h0, h1, g0, g1]
+      · right
+        rcases hfp with ⟨h0, h1⟩ | ⟨h0, h1⟩ <;> simp [Function.comp, h0, h1, hg]
+    · right; simp [Function.comp, hf]
+  Sym f := Function.Bijective f ∧ PairPres f
+  sym_arr h := Or.inl ⟨h.1.1, h.2⟩
+  sym_bij h := h.1
+  sym_inv {f} h := by
+    refine ⟨(Equiv.ofBijective f h.1).symm.bijective, ?_⟩
+    rcases h.2 with ⟨h0, h1⟩ | ⟨h0, h1⟩
+    · exact Or.inl ⟨symm_fix h.1 h0, symm_fix h.1 h1⟩
+    · refine Or.inr ⟨?_, ?_⟩
+      · exact (Equiv.ofBijective f h.1).symm_apply_eq.2 h1.symm
+      · exact (Equiv.ofBijective f h.1).symm_apply_eq.2 h0.symm
+  sym_id := ⟨Function.bijective_id, Or.inl ⟨rfl, rfl⟩⟩
+  sym_comp {f g} hf hg := by
+    refine ⟨hg.1.comp hf.1, ?_⟩
+    rcases hf.2 with ⟨h0, h1⟩ | ⟨h0, h1⟩ <;> rcases hg.2 with ⟨g0, g1⟩ | ⟨g0, g1⟩ <;>
+      simp [PairPres, Function.comp, h0, h1, g0, g1]
+
+theorem pairInjCol_transposable : pairInjCol.toSym.Transposable :=
+  transposable_of {0, 1} (Set.toFinite _) fun K hK hK₀ y hy => by
+    obtain ⟨z, hz, hzy⟩ := exists_fresh hK y
+    exact ⟨z, hz, hzy, (Equiv.swap y z).bijective,
+      Or.inl ⟨swap_fix hy hz (hK₀ (by simp)), swap_fix hy hz (hK₀ (by simp))⟩⟩
+
+theorem pairInjCol_separable : pairInjCol.toSym.SeparableCollapses :=
+  separable_of pairInjCol halfThen
+    (fun i => Or.inr (by simp only [halfThen]; rw [if_pos (by omega), if_pos (by omega)]))
+    halfThen_sep
+
 end SymIdeal
 
 end Classicism.Meta.Intensional
