@@ -1,10 +1,10 @@
-# Possibility Maximalism (pure) ⇒ Possible Infinity (type t)
+# Maximalism (pure) ⇒ Possible Infinity (type t)
 
 <p class='cert'>Result — Source: Misc.; produced by Cian Dorr, suggestion of 20 September 2026; recorded by Claude Fable 5.1 (Anthropic), 20 September 2026.</p>
 
 ## Premises
 
-- **Possibility Maximalism (pure).** Every closed pure sentence consistent with C is possible.
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 
 ## Conclusion
 
@@ -17,6 +17,10 @@ The Axiom of Infinity at type $t$ is a closed pure sentence. It is consistent wi
 ## Notes
 
 Possibility Maximalism (pure) also gives the Axiom of Infinity at type $t$ itself, through pure-possibility-implies-axiom-of-infinity-t; this record is the short route to the weaker diamond form.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the official form and Possibility a variant form; this record's premise changed from the Possibility principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.
 
 ## Sources
 

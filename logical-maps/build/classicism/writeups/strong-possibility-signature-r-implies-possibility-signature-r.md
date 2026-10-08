@@ -1,4 +1,4 @@
-# Strong Possibility (signature Σ) ⇒ Possibility Maximalism (signature Σ)
+# Strong Possibility (signature Σ) ⇒ Maximalism (signature Σ)
 
 <p class='cert'>Result — Source: Classicism (2024); produced by Andrew Bacon and Cian Dorr; recorded by OpenAI Codex (GPT-6), 17 September 2026.</p>
 
@@ -8,11 +8,15 @@
 
 ## Conclusion
 
-- **Possibility Maximalism (signature Σ).** The Possibility Maximalism schema for the fixed nonlogical signature Sigma.
+- **Maximalism (signature Σ).** The Maximalism schema for the fixed nonlogical signature Σ: every closed identity of its language not provable in C(Σ) is false.
 
 ## Proof
 
 If the closed Sigma-sentence P is consistent with C(Sigma), Max(C(Sigma)) proves $\Diamond P$. The source consistency theorem for that maximalization therefore makes $\Diamond P$ consistent with it. Strong Possibility yields $\Diamond_{\ne}\Diamond P$, hence $\Diamond\Diamond P$ and $\Diamond P$ by 4. The signature and reference theory remain fixed throughout.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the official form and Possibility a variant form; this record's conclusion changed from the Possibility principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.
 
 ## Sources
 

@@ -1,10 +1,10 @@
-# Possibility Maximalism (pure) ∧ □Intensional Choice ⇒ ⊥
+# Maximalism (pure) ∧ □Intensional Choice ⇒ ⊥
 
 <p class='cert'>Result — Source: Misc.; produced by Claude Opus 5.5 (Anthropic), 3 October 2026; recorded by Claude Opus 5.5 (Anthropic), 3 October 2026.</p>
 
 ## Premises
 
-- **Possibility Maximalism (pure).** Every closed pure sentence consistent with C is possible.
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 - **□Intensional Choice.** Every closed instance of Intensional Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
 
 ## Conclusion
@@ -18,6 +18,10 @@ The type-$e$ instance of Intensional Choice fails in symmetric-all-surjections, 
 ## Notes
 
 Instance of the pattern recorded for possibility-and-necessary-relational-choice-incompatible. The same argument refutes Intensional Choice in several other symmetric models; see the deferred verdicts in extraction.md.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the official form and Possibility a variant form; this record's premise changed from the Possibility principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.
 
 ## Sources
 

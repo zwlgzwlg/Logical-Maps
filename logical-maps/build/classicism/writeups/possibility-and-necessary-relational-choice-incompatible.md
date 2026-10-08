@@ -1,10 +1,10 @@
-# Possibility Maximalism (pure) ∧ □Relational Choice ⇒ ⊥
+# Maximalism (pure) ∧ □Relational Choice ⇒ ⊥
 
 <p class='cert'>Result — Source: Misc.; produced by Cian Dorr, observation of 23 September 2026 (whatever is consistent with Maximalist Classicism is made possible by Strong Possibility); proof written out by Claude Fable 5.1 (Anthropic), 23 September 2026; recorded by Claude Fable 5.1 (Anthropic), 23 September 2026.</p>
 
 ## Premises
 
-- **Possibility Maximalism (pure).** Every closed pure sentence consistent with C is possible.
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 - **□Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
 
 ## Conclusion
@@ -18,6 +18,10 @@ Relational Choice fails, at some pair of types, in the Henkin model recorded as 
 ## Notes
 
 Instance of a general pattern: Possibility Maximalism (pure) yields $\Diamond\neg Y$ for every closed pure $Y$ whose negation is consistent with C, so it refutes $\Box Y$ whenever a model of C refutes $Y$. For the other boxed principles on the map the incompatibility with Possibility Maximalism (pure) is already derivable, through the recorded equivalence of Possibility Maximalism (pure) with Distinctness Maximalism (pure) and the Distinctness Maximalism incompatibilities; this record covers a case that was not. Both Strong Possibility principles inherit it, the pure one through Possibility Maximalism (pure) and the Σ one through Possibility Maximalism (signature Σ). Cian Dorr observed on 23 September 2026 that anything consistent with Maximalist Classicism is made possible by Strong Possibility; since it is already made possible by Possibility Maximalism itself, the arrows are recorded here, at the weaker premise. Relational Choice itself holds at the recorded coalesced roots, which satisfy Possibility Maximalism (pure) and refute its necessitation, as the record requires.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the official form and Possibility a variant form; this record's premise changed from the Possibility principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.
 
 ## Sources
 

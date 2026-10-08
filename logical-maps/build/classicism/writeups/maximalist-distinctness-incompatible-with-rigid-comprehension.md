@@ -1,10 +1,10 @@
-# Distinctness Maximalism (pure) ∧ Rigid Comprehension ⇒ ⊥
+# Maximalism (pure) ∧ Rigid Comprehension ⇒ ⊥
 
 <p class='cert'>Result — Source: Arithmetic is Necessary (2024 draft); produced by Zachary Goodsell; recorded by OpenAI Codex (GPT-6), 17 September 2026; proof supplied by Claude Fable 5.1 (Anthropic), 20 September 2026, from Goodsell's draft.</p>
 
 ## Premises
 
-- **Distinctness Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 - **Rigid Comprehension.** Every relation, including a proposition, is coextensive with a rigid one.
 
 ## Conclusion

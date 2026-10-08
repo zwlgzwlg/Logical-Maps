@@ -1,10 +1,10 @@
-# Possibility Maximalism (pure) ∧ Countable Boolean Completeness ⇒ ⊥
+# Maximalism (pure) ∧ Countable Boolean Completeness ⇒ ⊥
 
 <p class='cert'>Result — Source: Arithmetic is Necessary (2024 draft); produced by Zachary Goodsell; recorded by Claude Fable 5.1 (Anthropic), 20 September 2026.</p>
 
 ## Premises
 
-- **Possibility Maximalism (pure).** Every closed pure sentence consistent with C is possible.
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 - **Countable Boolean Completeness.** Every countable property of entities of a relational type has a least upper bound in that type, where a property is countable when it injects into the natural numbers.
 
 ## Conclusion
@@ -18,6 +18,10 @@ Countable Boolean Completeness gives the Necessity of Arithmetic in C, by Theore
 ## Notes
 
 The source's answer to the question of Classicism, §2.6. It is derivable from the two records it combines and is kept as the stated theorem. Since Boolean Completeness restricts to Countable Boolean Completeness and Rigid Comprehension implies Boolean Completeness, the unboxed forms of both are incompatible with Maximalist Classicism; the map had recorded only the boxed Boolean Completeness case from Classicism and the Rigid Comprehension case as a report awaiting proof.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the official form and Possibility a variant form; this record's premise changed from the Possibility principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.
 
 ## Sources
 

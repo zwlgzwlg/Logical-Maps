@@ -1,4 +1,4 @@
-# Strong Possibility (pure) ⇒ Possibility Maximalism (pure)
+# Strong Possibility (pure) ⇒ Maximalism (pure)
 
 <p class='cert'>Result — Source: Classicism (2024); produced by Andrew Bacon and Cian Dorr; recorded by OpenAI Codex (GPT-6), 17 September 2026.</p>
 
@@ -8,11 +8,15 @@
 
 ## Conclusion
 
-- **Possibility Maximalism (pure).** Every closed pure sentence consistent with C is possible.
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 
 ## Proof
 
 If P is C-consistent, then $\Diamond P$ is a theorem of Max(C). The source’s consistency theorem for Max(C) therefore makes $\Diamond P$ consistent with that theory. Strong Possibility gives $\Diamond_{\ne}\Diamond P$, which implies $\Diamond\Diamond P$ and hence $\Diamond P$ by 4.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the official form and Possibility a variant form; this record's conclusion changed from the Possibility principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.
 
 ## Sources
 

@@ -1,4 +1,4 @@
-# Possibility+ (pure) ⇒ Possibility Maximalism (pure)
+# Possibility+ (pure) ⇒ Maximalism (pure)
 
 <p class='cert'>Result — Source: Classicism (2024), Lean `Classicism.Map.possibility_plus_r_implies_possibility_schema_r`; produced by Andrew Bacon and Cian Dorr; recorded by OpenAI Codex (GPT-6), 17 September 2026.</p>
 
@@ -8,11 +8,15 @@
 
 ## Conclusion
 
-- **Possibility Maximalism (pure).** Every closed pure sentence consistent with C is possible.
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 
 ## Proof
 
 Take the empty tuple of individual variables. Its distinctness condition is vacuous; the instances are pure Possibility Maximalism.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the official form and Possibility a variant form; this record's conclusion changed from the Possibility principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.
 
 ## Sources
 

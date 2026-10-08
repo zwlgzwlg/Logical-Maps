@@ -1,10 +1,10 @@
-# Distinctness Maximalism (pure) ∧ □BF ⇒ ⊥
+# Maximalism (pure) ∧ □BF ⇒ ⊥
 
 <p class='cert'>Result — Source: Classicism (2024), Lean `Classicism.Map.maximalist_distinctness_incompatible_with_necessary_barcan_r`; produced by Andrew Bacon and Cian Dorr; recorded by OpenAI Codex (GPT-6), 17 September 2026.</p>
 
 ## Premises
 
-- **Distinctness Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 - **□BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
 
 ## Conclusion

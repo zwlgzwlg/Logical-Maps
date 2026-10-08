@@ -1,10 +1,10 @@
-# Distinctness Maximalism (pure) ∧ ND ⇒ ⊥
+# Maximalism (pure) ∧ ND ⇒ ⊥
 
 <p class='cert'>Result — Source: Classicism (2024), Lean `Classicism.Map.maximalist_distinctness_incompatible_with_nd`; produced by Andrew Bacon and Cian Dorr; recorded by OpenAI Codex (GPT-6), 17 September 2026.</p>
 
 ## Premises
 
-- **Distinctness Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 - **ND.** Distinct things of any type are necessarily distinct.
 
 ## Conclusion

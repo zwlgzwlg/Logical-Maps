@@ -1,10 +1,10 @@
-# Possibility Maximalism (pure) ∧ □Rigid Power ⇒ ⊥
+# Maximalism (pure) ∧ □Rigid Power ⇒ ⊥
 
 <p class='cert'>Result — Source: Misc., Lean `Classicism.Map.possibility_and_necessary_rigid_power_incompatible`; produced by Cian Dorr, 8 October 2026; recorded by Claude Opus 5.5 (Anthropic), 8 October 2026.</p>
 
 ## Premises
 
-- **Possibility Maximalism (pure).** Every closed pure sentence consistent with C is possible.
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 - **□Rigid Power.** Every closed instance of Rigid Power is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
 
 ## Conclusion
@@ -18,6 +18,10 @@ Rigid Power fails at type $e\to t$ in finite-support-pair-injections-or-collapse
 ## Notes
 
 Instance of the pattern recorded for possibility-and-necessary-relational-choice-incompatible and possibility-and-necessary-intensional-choice-incompatible.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the official form and Possibility a variant form; this record's premise changed from the Possibility principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.
 
 ## Sources
 

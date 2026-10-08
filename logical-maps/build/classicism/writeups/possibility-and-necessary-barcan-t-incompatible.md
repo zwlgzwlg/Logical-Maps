@@ -1,10 +1,10 @@
-# Possibility Maximalism (pure) ∧ □BF (type t) ⇒ ⊥
+# Maximalism (pure) ∧ □BF (type t) ⇒ ⊥
 
 <p class='cert'>Result — Source: Misc., Lean `Classicism.Map.possibility_and_necessary_barcan_t_incompatible`; produced by Cian Dorr, observation of 23 September 2026 (whatever is consistent with Maximalist Classicism is made possible by Strong Possibility); proof written out by Claude Fable 5.1 (Anthropic), 23 September 2026; recorded by Claude Fable 5.1 (Anthropic), 23 September 2026.</p>
 
 ## Premises
 
-- **Possibility Maximalism (pure).** Every closed pure sentence consistent with C is possible.
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 - **□BF (type t).** Necessarily, BF (type t) holds, in the displayed closed propositional formulation.
 
 ## Conclusion
@@ -18,6 +18,10 @@ BF (type t) is the closed pure sentence $\forall X^{tt}\, .\,(\forall p\, .\,\Bo
 ## Notes
 
 Instance of a general pattern: Possibility Maximalism (pure) yields $\Diamond\neg Y$ for every closed pure $Y$ whose negation is consistent with C, so it refutes $\Box Y$ whenever a model of C refutes $Y$. For the other boxed principles on the map the incompatibility with Possibility Maximalism (pure) is already derivable, through the recorded equivalence of Possibility Maximalism (pure) with Distinctness Maximalism (pure) and the Distinctness Maximalism incompatibilities; this record covers a case that was not. Both Strong Possibility principles inherit it, the pure one through Possibility Maximalism (pure) and the Σ one through Possibility Maximalism (signature Σ). Cian Dorr observed on 23 September 2026 that anything consistent with Maximalist Classicism is made possible by Strong Possibility; since it is already made possible by Possibility Maximalism itself, the arrows are recorded here, at the weaker premise. Whether the unboxed BF (type t) is consistent with Possibility Maximalism (pure) is not settled by this record.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the official form and Possibility a variant form; this record's premise changed from the Possibility principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.
 
 ## Sources
 

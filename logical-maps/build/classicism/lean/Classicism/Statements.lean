@@ -359,14 +359,6 @@ example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   (Classicism.Meta.AxiomSet.possibilityPlusSig _)
 
-/-- Principle definition check: `possibility-schema-r`. -/
-example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
-  (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC)
-
-/-- Principle definition check: `possibility-signature-r`. -/
-example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
-  (Classicism.Meta.AxiomSet.possibilityC _)
-
 /-- Principle definition check: `possible-infinity-e`. -/
 example {Sig : Classicism.Meta.Signature} : Classicism.Meta.AxiomSet Sig :=
   Classicism.P.PossibleInfinityE.schemaIn
@@ -1019,33 +1011,17 @@ def distinctness_preserving_collapse_and_nd_imply_fregean_axiom : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.FregeanAxiom.schemaIn
 
-/-- `distinctness-schema-r-implies-possibility-schema-r`
-
-Distinctness Maximalism (pure) ⇒ Possibility Maximalism (pure) -/
-def distinctness_schema_r_implies_possibility_schema_r : Prop :=
-  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC)
-
 /-- `distinctness-signature-r-implies-distinctness-schema-r`
 
-Distinctness Maximalism (signature Σ) ⇒ Distinctness Maximalism (pure) -/
+Maximalism (signature Σ) ⇒ Maximalism (pure) -/
 def distinctness_signature_r_implies_distinctness_schema_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.distinctnessC _) →
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC)
 
-/-- `distinctness-signature-r-implies-possibility-signature-r`
-
-Distinctness Maximalism (signature Σ) ⇒ Possibility Maximalism (signature Σ) -/
-def distinctness_signature_r_implies_possibility_signature_r : Prop :=
-  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.distinctnessC _) →
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possibilityC _)
-
 /-- `distinctness-signature-r-implies-separated-structure-r`
 
-Distinctness Maximalism (signature Σ) ⇒ Separated Structure -/
+Maximalism (signature Σ) ⇒ Separated Structure -/
 def distinctness_signature_r_implies_separated_structure_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.distinctnessC _) →
@@ -1280,7 +1256,7 @@ def logical_necessity_r_implies_witnessed_possibility_r : Prop :=
 
 /-- `maximalist-distinctness-incompatible-with-nd`
 
-Distinctness Maximalism (pure) ∧ ND ⇒ ⊥ -/
+Maximalism (pure) ∧ ND ⇒ ⊥ -/
 def maximalist_distinctness_incompatible_with_nd : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
@@ -1289,7 +1265,7 @@ def maximalist_distinctness_incompatible_with_nd : Prop :=
 
 /-- `maximalist-distinctness-incompatible-with-necessary-actuality`
 
-Distinctness Maximalism (pure) ∧ □Actuality ⇒ ⊥ -/
+Maximalism (pure) ∧ □Actuality ⇒ ⊥ -/
 def maximalist_distinctness_incompatible_with_necessary_actuality : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
@@ -1298,7 +1274,7 @@ def maximalist_distinctness_incompatible_with_necessary_actuality : Prop :=
 
 /-- `maximalist-distinctness-incompatible-with-necessary-atomicity-r`
 
-Distinctness Maximalism (pure) ∧ □Atomicity ⇒ ⊥ -/
+Maximalism (pure) ∧ □Atomicity ⇒ ⊥ -/
 def maximalist_distinctness_incompatible_with_necessary_atomicity_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
@@ -1307,7 +1283,7 @@ def maximalist_distinctness_incompatible_with_necessary_atomicity_r : Prop :=
 
 /-- `maximalist-distinctness-incompatible-with-necessary-barcan-r`
 
-Distinctness Maximalism (pure) ∧ □BF ⇒ ⊥ -/
+Maximalism (pure) ∧ □BF ⇒ ⊥ -/
 def maximalist_distinctness_incompatible_with_necessary_barcan_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
@@ -1316,7 +1292,7 @@ def maximalist_distinctness_incompatible_with_necessary_barcan_r : Prop :=
 
 /-- `maximalist-distinctness-incompatible-with-necessary-boolean-completeness-r`
 
-Distinctness Maximalism (pure) ∧ □Boolean Completeness ⇒ ⊥ -/
+Maximalism (pure) ∧ □Boolean Completeness ⇒ ⊥ -/
 def maximalist_distinctness_incompatible_with_necessary_boolean_completeness_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
@@ -1325,7 +1301,7 @@ def maximalist_distinctness_incompatible_with_necessary_boolean_completeness_r :
 
 /-- `maximalist-distinctness-incompatible-with-necessary-functionality-r`
 
-Distinctness Maximalism (pure) ∧ □Functionality ⇒ ⊥ -/
+Maximalism (pure) ∧ □Functionality ⇒ ⊥ -/
 def maximalist_distinctness_incompatible_with_necessary_functionality_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
@@ -1334,7 +1310,7 @@ def maximalist_distinctness_incompatible_with_necessary_functionality_r : Prop :
 
 /-- `maximalist-distinctness-incompatible-with-necessary-rigid-comprehension-r`
 
-Distinctness Maximalism (pure) ∧ □Rigid Comprehension ⇒ ⊥ -/
+Maximalism (pure) ∧ □Rigid Comprehension ⇒ ⊥ -/
 def maximalist_distinctness_incompatible_with_necessary_rigid_comprehension_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
@@ -1343,7 +1319,7 @@ def maximalist_distinctness_incompatible_with_necessary_rigid_comprehension_r : 
 
 /-- `maximalist-distinctness-incompatible-with-necessary-tractarianism-r`
 
-Distinctness Maximalism (pure) ∧ □Tractarianism ⇒ ⊥ -/
+Maximalism (pure) ∧ □Tractarianism ⇒ ⊥ -/
 def maximalist_distinctness_incompatible_with_necessary_tractarianism_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
@@ -1352,7 +1328,7 @@ def maximalist_distinctness_incompatible_with_necessary_tractarianism_r : Prop :
 
 /-- `maximalist-distinctness-incompatible-with-rigid-comprehension`
 
-Distinctness Maximalism (pure) ∧ Rigid Comprehension ⇒ ⊥ -/
+Maximalism (pure) ∧ Rigid Comprehension ⇒ ⊥ -/
 def maximalist_distinctness_incompatible_with_rigid_comprehension : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
@@ -2560,83 +2536,83 @@ def plenitude_r_implies_distinctness_necessary_r : Prop :=
 
 /-- `possibility-and-countable-boolean-completeness-incompatible`
 
-Possibility Maximalism (pure) ∧ Countable Boolean Completeness ⇒ ⊥ -/
+Maximalism (pure) ∧ Countable Boolean Completeness ⇒ ⊥ -/
 def possibility_and_countable_boolean_completeness_incompatible : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.CountableBooleanCompleteness.schemaIn →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
 /-- `possibility-and-necessary-barcan-t-incompatible`
 
-Possibility Maximalism (pure) ∧ □BF (type t) ⇒ ⊥ -/
+Maximalism (pure) ∧ □BF (type t) ⇒ ⊥ -/
 def possibility_and_necessary_barcan_t_incompatible : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcanT.schemaIn →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
 /-- `possibility-and-necessary-intensional-choice-incompatible`
 
-Possibility Maximalism (pure) ∧ □Intensional Choice ⇒ ⊥ -/
+Maximalism (pure) ∧ □Intensional Choice ⇒ ⊥ -/
 def possibility_and_necessary_intensional_choice_incompatible : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
 /-- `possibility-and-necessary-relational-choice-incompatible`
 
-Possibility Maximalism (pure) ∧ □Relational Choice ⇒ ⊥ -/
+Maximalism (pure) ∧ □Relational Choice ⇒ ⊥ -/
 def possibility_and_necessary_relational_choice_incompatible : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRelationalChoice.schemaIn →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
 /-- `possibility-and-necessary-rigid-power-incompatible`
 
-Possibility Maximalism (pure) ∧ □Rigid Power ⇒ ⊥ -/
+Maximalism (pure) ∧ □Rigid Power ⇒ ⊥ -/
 def possibility_and_necessary_rigid_power_incompatible : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidPower.schemaIn →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
 /-- `possibility-and-necessary-strong-leibniz-t-incompatible`
 
-Possibility Maximalism (pure) ∧ □Strong Leibniz Biconditionals (type t) ⇒ ⊥ -/
+Maximalism (pure) ∧ □Strong Leibniz Biconditionals (type t) ⇒ ⊥ -/
 def possibility_and_necessary_strong_leibniz_t_incompatible : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecStrongLeibnizT.schemaIn →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
 /-- `possibility-and-necessity-of-arithmetic-incompatible`
 
-Possibility Maximalism (pure) ∧ Necessity of Arithmetic ⇒ ⊥ -/
+Maximalism (pure) ∧ Necessity of Arithmetic ⇒ ⊥ -/
 def possibility_and_necessity_of_arithmetic_incompatible : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.ofPure Classicism.Meta.AxiomSet.necessityOfArithmetic) →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
 /-- `possibility-and-no-pure-contingency-incompatible`
 
-Possibility Maximalism (pure) ∧ No Pure Contingency ⇒ ⊥ -/
+Maximalism (pure) ∧ No Pure Contingency ⇒ ⊥ -/
 def possibility_and_no_pure_contingency_incompatible : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
 /-- `possibility-plus-r-implies-possibility-schema-r`
 
-Possibility+ (pure) ⇒ Possibility Maximalism (pure) -/
+Possibility+ (pure) ⇒ Maximalism (pure) -/
 def possibility_plus_r_implies_possibility_schema_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityPlus) →
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC)
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC)
 
 /-- `possibility-plus-signature-r-implies-possibility-plus-r`
 
@@ -2648,58 +2624,34 @@ def possibility_plus_signature_r_implies_possibility_plus_r : Prop :=
 
 /-- `possibility-plus-signature-r-implies-possibility-signature-r`
 
-Possibility+ (signature Σ) ⇒ Possibility Maximalism (signature Σ) -/
+Possibility+ (signature Σ) ⇒ Maximalism (signature Σ) -/
 def possibility_plus_signature_r_implies_possibility_signature_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possibilityPlusSig _) →
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possibilityC _)
-
-/-- `possibility-schema-r-implies-distinctness-schema-r`
-
-Possibility Maximalism (pure) ⇒ Distinctness Maximalism (pure) -/
-def possibility_schema_r_implies_distinctness_schema_r : Prop :=
-  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC)
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.distinctnessC _)
 
 /-- `possibility-schema-r-implies-possible-infinity-e`
 
-Possibility Maximalism (pure) ⇒ Possible Infinity (type e) -/
+Maximalism (pure) ⇒ Possible Infinity (type e) -/
 def possibility_schema_r_implies_possible_infinity_e : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PossibleInfinityE.schemaIn
 
 /-- `possibility-schema-r-implies-possible-infinity-t`
 
-Possibility Maximalism (pure) ⇒ Possible Infinity (type t) -/
+Maximalism (pure) ⇒ Possible Infinity (type t) -/
 def possibility_schema_r_implies_possible_infinity_t : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PossibleInfinityT.schemaIn
-
-/-- `possibility-signature-r-implies-distinctness-signature-r`
-
-Possibility Maximalism (signature Σ) ⇒ Distinctness Maximalism (signature Σ) -/
-def possibility_signature_r_implies_distinctness_signature_r : Prop :=
-  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possibilityC _) →
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.distinctnessC _)
-
-/-- `possibility-signature-r-implies-possibility-schema-r`
-
-Possibility Maximalism (signature Σ) ⇒ Possibility Maximalism (pure) -/
-def possibility_signature_r_implies_possibility_schema_r : Prop :=
-  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possibilityC _) →
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC)
 
 /-- `possibility-signature-r-implies-witnessed-possibility-r`
 
-Possibility Maximalism (signature Σ) ⇒ Witnessed Possibility -/
+Maximalism (signature Σ) ⇒ Witnessed Possibility -/
 def possibility_signature_r_implies_witnessed_possibility_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possibilityC _) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.distinctnessC _) →
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.witnessedPossibility _)
 
 /-- `possible-infinity-e-and-bf-imply-axiom-of-infinity-e`
@@ -2772,16 +2724,16 @@ def possibly_witnessed_possibility_r_implies_witnessed_possibility_r : Prop :=
 
 /-- `pure-b-and-pure-possibility-incompatible`
 
-B for pure sentences ∧ Possibility Maximalism (pure) ⇒ ⊥ -/
+B for pure sentences ∧ Maximalism (pure) ⇒ ⊥ -/
 def pure_b_and_pure_possibility_incompatible : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.signatureB) →
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
 /-- `pure-distinctness-and-separated-structure-imply-signature-distinctness`
 
-Distinctness Maximalism (pure) ∧ Separated Structure ⇒ Distinctness Maximalism (signature Σ) -/
+Maximalism (pure) ∧ Separated Structure ⇒ Maximalism (signature Σ) -/
 def pure_distinctness_and_separated_structure_imply_signature_distinctness : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
@@ -2790,7 +2742,7 @@ def pure_distinctness_and_separated_structure_imply_signature_distinctness : Pro
 
 /-- `pure-distinctness-implies-infinity-t`
 
-Distinctness Maximalism (pure) ⇒ Infinity Schema (type t) -/
+Maximalism (pure) ⇒ Infinity Schema (type t) -/
 def pure_distinctness_implies_infinity_t : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
@@ -2798,10 +2750,10 @@ def pure_distinctness_implies_infinity_t : Prop :=
 
 /-- `pure-possibility-implies-axiom-of-infinity-t`
 
-Possibility Maximalism (pure) ⇒ Axiom of Infinity (type t) -/
+Maximalism (pure) ⇒ Axiom of Infinity (type t) -/
 def pure_possibility_implies_axiom_of_infinity_t : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC) →
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn
 
 /-- `relational-choice-and-boolean-completeness-imply-transversal-choice`  (conjectured)
@@ -3023,11 +2975,11 @@ def strong_possibility_and_distinctness_preserving_collapse_incompatible : Prop 
 
 /-- `strong-possibility-r-implies-possibility-schema-r`
 
-Strong Possibility (pure) ⇒ Possibility Maximalism (pure) -/
+Strong Possibility (pure) ⇒ Maximalism (pure) -/
 def strong_possibility_r_implies_possibility_schema_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.strongPossibility) →
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC)
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC)
 
 /-- `strong-possibility-signature-and-distinctness-preserving-collapse-incompatible`
 
@@ -3040,11 +2992,11 @@ def strong_possibility_signature_and_distinctness_preserving_collapse_incompatib
 
 /-- `strong-possibility-signature-r-implies-possibility-signature-r`
 
-Strong Possibility (signature Σ) ⇒ Possibility Maximalism (signature Σ) -/
+Strong Possibility (signature Σ) ⇒ Maximalism (signature Σ) -/
 def strong_possibility_signature_r_implies_possibility_signature_r : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.strongPossibility _) →
-    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possibilityC _)
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.distinctnessC _)
 
 /-- `strong-possibility-signature-r-implies-strong-possibility-r`  (conjectured)
 
@@ -6638,6 +6590,22 @@ def distinctness_preserving_collapse.dual : Prop :=
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ↔
       Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapseDual.schemaIn
+
+/-- `distinctness-schema-r`, variant `possibility`
+
+Maximalism (pure) ⇔ Possibility form -/
+def distinctness_schema_r.possibility : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) ↔
+      Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.possibilityC)
+
+/-- `distinctness-signature-r`, variant `possibility`
+
+Maximalism (signature Σ) ⇔ Possibility form -/
+def distinctness_signature_r.possibility : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.distinctnessC _) ↔
+      Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possibilityC _)
 
 /-- `existence-r`, variant `polyadic`
 

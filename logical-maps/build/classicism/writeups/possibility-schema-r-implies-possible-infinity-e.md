@@ -1,10 +1,10 @@
-# Possibility Maximalism (pure) ⇒ Possible Infinity (type e)
+# Maximalism (pure) ⇒ Possible Infinity (type e)
 
 <p class='cert'>Result — Source: Misc., Lean `Classicism.Map.possibility_schema_r_implies_possible_infinity_e`; produced by Cian Dorr, suggestion of 20 September 2026; recorded by Claude Fable 5.1 (Anthropic), 20 September 2026.</p>
 
 ## Premises
 
-- **Possibility Maximalism (pure).** Every closed pure sentence consistent with C is possible.
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 
 ## Conclusion
 
@@ -13,6 +13,10 @@
 ## Proof
 
 The Axiom of Infinity at type $e$ is a closed pure sentence. It is consistent with C, since it holds in the full Henkin model with a countably infinite individual domain (see the model record). Possibility Maximalism (pure) therefore gives its diamond, which is Possible Infinity at type $e$.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the official form and Possibility a variant form; this record's premise changed from the Possibility principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.
 
 ## Sources
 

@@ -1,4 +1,4 @@
-# Possibility+ (signature Σ) ⇒ Possibility Maximalism (signature Σ)
+# Possibility+ (signature Σ) ⇒ Maximalism (signature Σ)
 
 <p class='cert'>Result — Source: Classicism (2024), Lean `Classicism.Map.possibility_plus_signature_r_implies_possibility_signature_r`; produced by Andrew Bacon and Cian Dorr; recorded by Claude Fable 5.1 (Anthropic), 22 September 2026.</p>
 
@@ -8,11 +8,15 @@
 
 ## Conclusion
 
-- **Possibility Maximalism (signature Σ).** The Possibility Maximalism schema for the fixed nonlogical signature Sigma.
+- **Maximalism (signature Σ).** The Maximalism schema for the fixed nonlogical signature Σ: every closed identity of its language not provable in C(Σ) is false.
 
 ## Proof
 
 Take $n=0$. The antecedent is vacuous and the instances are exactly those of Possibility Maximalism (signature Σ).
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the official form and Possibility a variant form; this record's conclusion changed from the Possibility principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.
 
 ## Sources
 

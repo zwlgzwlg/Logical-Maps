@@ -1,10 +1,10 @@
-# Distinctness Maximalism (pure) ⇒ Infinity Schema (type t)
+# Maximalism (pure) ⇒ Infinity Schema (type t)
 
 <p class='cert'>Result — Source: Misc.; produced by Cian Dorr, suggestion of 19 September 2026; recorded by Claude Opus 5 (Anthropic), 19 September 2026.</p>
 
 ## Premises
 
-- **Distinctness Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 
 ## Conclusion
 

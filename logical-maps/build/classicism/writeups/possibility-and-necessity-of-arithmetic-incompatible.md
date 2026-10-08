@@ -1,10 +1,10 @@
-# Possibility Maximalism (pure) ∧ Necessity of Arithmetic ⇒ ⊥
+# Maximalism (pure) ∧ Necessity of Arithmetic ⇒ ⊥
 
 <p class='cert'>Result — Source: Arithmetic is Necessary (2024 draft); produced by Zachary Goodsell; recorded by Claude Fable 5.1 (Anthropic), 20 September 2026.</p>
 
 ## Premises
 
-- **Possibility Maximalism (pure).** Every closed pure sentence consistent with C is possible.
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
 - **Necessity of Arithmetic.** Every arithmetical sentence is either necessarily true or necessarily false, given that possibly zero is not a successor and successor is injective on numbers. One sentence for each arithmetical sentence.
 
 ## Conclusion
@@ -18,6 +18,10 @@ Theorem 11 of the source, applied to C. The theorems of C are recursively enumer
 ## Notes
 
 The source's theorem is general: the maximalization of any recursively enumerable extension of HK consistent with $I$ refutes some instance of the necessity schema. The record uses Possibility Maximalism (pure) directly; the equivalent Distinctness Maximalism form gives the same through the recorded equivalence. The argument is metatheoretic in two places, the recursive enumerability of C and Gödel's theorem, like the consistency side condition of Possibility Maximalism itself.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the official form and Possibility a variant form; this record's premise changed from the Possibility principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.
 
 ## Sources
 

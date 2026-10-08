@@ -4,7 +4,7 @@
 
 ## Package
 
-- **Distinctness Maximalism (signature Σ).** The Distinctness Maximalism schema for the fixed nonlogical signature Sigma.
+- **Maximalism (signature Σ).** The Maximalism schema for the fixed nonlogical signature Σ: every closed identity of its language not provable in C(Σ) is false.
 - **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Relational Choice.** Every serial binary relation has a functional subrelation.
 - **Actuality.** There is a true proposition that entails every true proposition.
@@ -29,7 +29,7 @@ Root domains are as full as compatibility allows: a root proposition is a choice
 
 ## Arguments
 
-### Holds Distinctness Maximalism (signature Σ).
+### Holds Maximalism (signature Σ).
 
 *Source: Classicism, Theorem 3.26, §3.6, pp. 62–64. By Andrew Bacon and Cian Dorr, 2026-09-17.*
 
@@ -140,7 +140,7 @@ The record's revision log before it was written as arguments.
 - **2026-09-22** (Cian Dorr, recorded by Claude Fable 5.1 (Anthropic)) — Added the failure of BF and of BF (type t) at the root, by transporting a component’s counterexample to BF along the distinguished arrow; see the notes. Now violates: BF, BF (type t).
 - **2026-09-22** (Cian Dorr, recorded by Claude Fable 5.1 (Anthropic)) — Settled Atomicity (type t), Boolean Completeness (type t) and Possibility+ (pure) as failing and the Axiom of Infinity (type e) and Relational Choice as holding, with the arguments in the notes; Cian Dorr’s observations, with Relational Choice corrected in direction. Now satisfies: Axiom of Infinity (type e), Relational Choice. Now violates: Atomicity (type t), Possibility+ (pure).
 - **2026-09-22** (Claude Fable 5.1 (Anthropic)) — Recorded the failure of □Relational Choice, already argued in the notes. Now violates: □Relational Choice.
-- **2026-09-17** (OpenAI Codex (GPT-6)) — Adopted the source’s relational type system at the user’s request. The cited construction now directly supplies the recorded model; the former type-extension obligation is removed. Now satisfies: Distinctness Maximalism (signature Σ), Actuality, Distinctness-preserving collapse. Now violates: Strong Possibility (pure), ND.
+- **2026-09-17** (OpenAI Codex (GPT-6)) — Adopted the source’s relational type system at the user’s request. The cited construction now directly supplies the recorded model; the former type-extension obligation is removed. Now satisfies: Maximalism (signature Σ), Actuality, Distinctness-preserving collapse. Now violates: Strong Possibility (pure), ND.
 
 ## Sources
 

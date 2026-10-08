@@ -1,10 +1,10 @@
-# Possibility Maximalism (signature Σ) ⇒ Witnessed Possibility
+# Maximalism (signature Σ) ⇒ Witnessed Possibility
 
 <p class='cert'>Result — Source: Logical Combinatorialism; produced by Andrew Bacon; recorded by OpenAI Codex (GPT-6), 17 September 2026.</p>
 
 ## Premises
 
-- **Possibility Maximalism (signature Σ).** The Possibility Maximalism schema for the fixed nonlogical signature Sigma.
+- **Maximalism (signature Σ).** The Maximalism schema for the fixed nonlogical signature Σ: every closed identity of its language not provable in C(Σ) is false.
 
 ## Conclusion
 
@@ -13,6 +13,10 @@
 ## Proof
 
 For a fixed pure formula P, either P has a witness consistently with the reference C theory or it does not. In the first case interpreting the fresh constants as witnesses makes P[c/x] consistent, and signature Possibility Maximalism supplies its possibility. In the second case the reference theory proves there is no witness, so the required conditional has a false antecedent.
+
+## Revisions
+
+- **2026-10-08** (Claude Opus 5.5 (Anthropic), at Cian Dorr's direction) — Distinctness Maximalism and Possibility Maximalism unified as Maximalism, with Distinctness the official form and Possibility a variant form; this record's premise changed from the Possibility principle to Maximalism. The proof is unchanged, the two forms being equivalent in C.
 
 ## Sources
 
