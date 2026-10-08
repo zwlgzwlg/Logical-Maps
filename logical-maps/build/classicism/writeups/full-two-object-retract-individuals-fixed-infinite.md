@@ -33,7 +33,7 @@
 
 Use the source’s category with h:W0→W1, j:W1→W0 and k:W1→W1, evaluated at W0.
 
-Individuals, fixed for this record: at every object the individuals are the natural numbers, and every arrow acts on them as the identity.
+Individuals, fixed for this record: at every object the individuals are the members of an infinite set $D$, the same at every object, and every arrow acts on them as the identity.
 
 Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each denotes the top element of its type.
 
@@ -93,7 +93,13 @@ Given $X$ of type $\tau$ at an object $W$, let $Y$ be the relation whose extensi
 
 The Infinity schema holds, there being $n$ distinct individuals for every $n$. For the Axiom: by extensional fullness the domain has a property of cardinalities true of $Z$ exactly when every property $Z$ holds of has a finite extension. It holds of $\mathbf{0}_e$, which holds only of empty properties, and passes from $Y$ to $\operatorname{Suc}_e Y$, which holds of $F$ only if $Y$ holds of $F$ less one of its instances. So every finite cardinality has it, and none holds of the universal property, whose extension is infinite.
 
-*General argument `arguments/infinitely-many-individuals`. It requires that The model is extensionally full at every object: every set of tuples from the domains at an object is the extension, at the identity arrow, of an element of the domain of the matching relational type there. Here: A full model contains every intension, so in particular one with any given extension at the identity. It requires that There are infinitely many individuals at the evaluation world. Here: The individuals are the natural numbers. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+*General argument `arguments/infinitely-many-individuals`. It requires that The model is extensionally full at every object: every set of tuples from the domains at an object is the extension, at the identity arrow, of an element of the domain of the matching relational type there. Here: A full model contains every intension, so in particular one with any given extension at the identity. It requires that There are infinitely many individuals at the evaluation world. Here: $D$ is infinite. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Holds □Intensional Choice.
+
+At an object reachable from the evaluation point the propositions are all the sets of arrows out of it, so there are finitely many arrows out. A necessarily instantiated $F$ there assigns to each of them a nonempty set, and a finite family of nonempty sets has a choice function without the axiom of choice; the intension holding at each arrow of the chosen member alone is in the domain, the model being full, lies below $F$ and is necessarily uniquely instantiated. So Intensional Choice holds at every reachable object, at every type. (The finite-germ argument of the 3 October 2026 analysis, for full models; with choice the well-ordering argument gives the same.)
+
+*General argument `arguments/intensional-choice-finitely-many-arrows`. It requires that The model is full: at each object, the domain of each relational type contains every intension of that type. Here: Every intension of every relational type is present at every object (Classicism, §3.5, p. 59). It requires that There are finitely many propositions at every object reachable from the evaluation point. Here: $W_0$ has four propositions and $W_1$ eight, the sets of its three arrows out. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-08.*
 
 ### Holds □Intensional Choice.
 

@@ -33,7 +33,7 @@
 
 The full one-object action model whose arrows are all the permutations of a countably infinite set $X$, composed as functions. Propositions are all sets of arrows with the division action $i\cdot p=\{j : j\circ i\in p\}$, and every function type carries the full function-space M-set, which here is the set of all functions since every arrow acts bijectively. Evaluate at the identity arrow.
 
-Individuals, fixed for this record: at every object the individuals are the natural numbers, and every arrow acts on them as the identity.
+Individuals, fixed for this record: at every object the individuals are the members of an infinite set $D$, the same at every object, and every arrow acts on them as the identity.
 
 Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each denotes the top element of its type.
 
@@ -83,7 +83,7 @@ Given $X$ of type $\tau$ at an object $W$, let $Y$ be the relation whose extensi
 
 The Infinity schema holds, there being $n$ distinct individuals for every $n$. For the Axiom: by extensional fullness the domain has a property of cardinalities true of $Z$ exactly when every property $Z$ holds of has a finite extension. It holds of $\mathbf{0}_e$, which holds only of empty properties, and passes from $Y$ to $\operatorname{Suc}_e Y$, which holds of $F$ only if $Y$ holds of $F$ less one of its instances. So every finite cardinality has it, and none holds of the universal property, whose extension is infinite.
 
-*General argument `arguments/infinitely-many-individuals`. It requires that The model is extensionally full at every object: every set of tuples from the domains at an object is the extension, at the identity arrow, of an element of the domain of the matching relational type there. Here: A full model contains every intension, so in particular one with any given extension at the identity. It requires that There are infinitely many individuals at the evaluation world. Here: The individuals are the natural numbers. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+*General argument `arguments/infinitely-many-individuals`. It requires that The model is extensionally full at every object: every set of tuples from the domains at an object is the extension, at the identity arrow, of an element of the domain of the matching relational type there. Here: A full model contains every intension, so in particular one with any given extension at the identity. It requires that There are infinitely many individuals at the evaluation world. Here: $D$ is infinite. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
 
 ### Holds Axiom of Infinity (type t), Infinity Schema (type t).
 
