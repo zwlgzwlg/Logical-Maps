@@ -1,0 +1,16 @@
+id: separated-retractions-gallin
+requires: [separated-retractions]
+choice: free
+fails: [gallin-extensional-comprehension-r]
+by: Claude Opus 5.5 (Anthropic), answering Cian Dorr's question whether ND and Weak Rigid Comprehension give Gallin Extensional Comprehension
+date: '2026-10-08'
+text: >-
+  Let $h$ out of the evaluation object have retractions $j\ne j^{\prime}$, and let $q$ at $h$'s
+  target contain $j$ but not $j^{\prime}$. Transported along $j$ and $j^{\prime}$, $q$ becomes
+  propositions at the evaluation object, since $j\circ h=j^{\prime}\circ h=1$: the first contains
+  the identity and the second does not, so the first is true and the second false. If $Y$ of type
+  $t\to t$ and its pointwise negation are both persistent, then at $h$, $Yq$ holds iff $Y$ holds of
+  the transport of $q$ along $j$, and iff it holds of its transport along $j^{\prime}$; and at
+  $j\circ h$ and $j^{\prime}\circ h$, which are the evaluation object itself, $Y$ has its actual
+  extension. So $Y$ holds of both transports or of neither, and is not coextensive with $\lambda
+  p\, .\,p$. Gallin Extensional Comprehension fails at type $t\to t$.

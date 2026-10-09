@@ -54,7 +54,8 @@ notes: >-
   □Rigid Comprehension and hence □Actuality, while $h$'s two retractions keep every true
   proposition from being a strong world. Unlike the two-object retract it does not meet
   coherent-retractions: with $r_h=j_i$, the arrow $x=e_k$ after $h$ for $k\ne i$ gives
-  $r_{x\circ h}\circ x=r_h\circ e_k=j_k\ne r_h$. Gallin Extensional Comprehension is not checked.
+  $r_{x\circ h}\circ x=r_h\circ e_k=j_k\ne r_h$. Gallin Extensional Comprehension fails, by the general
+  argument separated-retractions-gallin, though ND and □Rigid Comprehension hold.
 
 # The model in Lean (Models/FullActionModels.lean). The verdicts the map's general arguments give it are
 # certified from the arguments' (MapDerived.lean), with the proofs under `meets` that it meets their conditions.
