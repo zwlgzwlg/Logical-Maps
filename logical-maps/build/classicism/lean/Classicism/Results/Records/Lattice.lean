@@ -627,6 +627,44 @@ theorem strong_leibniz_t_implies_necessary_actuality : StrongLeibnizT → NecAct
         (modal_K _ _ (nec% (actuality_of_decides w)) hw.1.2))
         ((le_iff_prop _ _).1 hw.2)))).elim
 
+/-- A strong world is possible. -/
+theorem dia_of_sworld (w : Prop) : SWorld w → ◇ w := fun h => h.1
+
+/-- Under 5, a strong world is necessarily one: 5 boxes its possibility, 4 its decisions. -/
+theorem box_sworld_of_five (five : ModalFive) (w : Prop) (h : SWorld w) : □ (SWorld w) :=
+  (box_and_eq (◇ w) (□ (∀ Y : Prop, w ≤ Y ∨ w ≤ ¬ Y))).mpr ⟨five w h.1, modal_four _ h.2⟩
+
+/-- A necessarily strong world, where it holds, makes some necessarily strong world true. -/
+theorem not_of_box_sworld (w : Prop) :
+    □ (SWorld w) → (w → ¬ ∃ v : Prop, □ (SWorld v) ∧ v) → ¬ w :=
+  fun hs hi hw => hi hw ⟨w, hs, hw⟩
+
+/-- A true, necessarily strong world entails each truth and is necessarily possible, so
+every truth is necessarily possible: B. -/
+theorem modal_b_of_true_box_sworld : (∃ v : Prop, □ (SWorld v) ∧ v) → ModalB := fun h p hp =>
+  h.elim fun v hv =>
+    ((box_elim (box_elim hv.1).2) p).elim
+      (fun hle => modal_K _ _ (modal_K _ _ (nec% (dia_mono v p))
+          (modal_four _ ((le_iff_prop _ _).1 hle)))
+        (modal_K _ _ (nec% (dia_of_sworld v)) hv.1))
+      (fun hle => (imp_of_le_prop v (¬ p) hle hv.2 hp).elim)
+
+/-- Under 5 and the Strong Leibniz Biconditionals at `t`, necessarily some necessarily strong
+world is true: were that possibly false, a strong world would entail its falsity, though
+wherever that world holds it is itself such a world. -/
+theorem box_true_box_sworld (five : ModalFive) (sl : StrongLeibnizT) :
+    □ (∃ v : Prop, □ (SWorld v) ∧ v) :=
+  (em (□ (∃ v : Prop, □ (SWorld v) ∧ v))).elim id fun hn =>
+    (sl _ (dia_not_of_not_box _ hn)).elim fun w hw =>
+      (hw.1.1 ((box_not_eq w).mp (modal_K _ _ (modal_K _ _ (nec% (not_of_box_sworld w))
+        (modal_four _ (box_sworld_of_five five w hw.1)))
+        ((le_iff_prop _ _).1 hw.2)))).elim
+
+/-- `five-and-strong-leibniz-t-imply-necessary-b`: necessitate the passage from a true
+necessarily strong world to B, and apply `K`. -/
+theorem five_and_strong_leibniz_t_imply_necessary_b : ModalFive → StrongLeibnizT → NecModalB :=
+  fun five sl => modal_K _ _ (nec% modal_b_of_true_box_sworld) (box_true_box_sworld five sl)
+
 /-- `(w ∧ x = x) = w`. -/
 theorem and_rfl_eq {σ : Type} [Ty σ] (w : Prop) (x : σ) : (w ∧ x = x) = w :=
   propext ⟨fun h => h.1, fun h => ⟨h, rfl⟩⟩

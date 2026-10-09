@@ -417,6 +417,10 @@ theorem extensionality_r_implies_plenitude_r : Statements.extensionality_r_impli
 theorem extensionality_r_implies_rigid_comprehension_r : Statements.extensionality_r_implies_rigid_comprehension_r := by
   map_cert _root_.Classicism.extensionality_r_implies_rigid_comprehension_r.entails
 
+/-- `five-and-strong-leibniz-t-imply-necessary-b` -/
+theorem five_and_strong_leibniz_t_imply_necessary_b : Statements.five_and_strong_leibniz_t_imply_necessary_b := by
+  map_cert Proofs.five_and_strong_leibniz_t_imply_necessary_b.entails
+
 /-- `fregean-axiom-implies-distinctness-preserving-collapse` -/
 theorem fregean_axiom_implies_distinctness_preserving_collapse : Statements.fregean_axiom_implies_distinctness_preserving_collapse := by
   map_cert Proofs.fregean_axiom_implies_distinctness_preserving_collapse.entails
