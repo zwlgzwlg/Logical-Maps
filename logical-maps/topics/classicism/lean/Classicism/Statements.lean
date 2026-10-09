@@ -1095,6 +1095,15 @@ def extensionality_r_implies_rigid_comprehension_r : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Extensionality.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidComprehension.schemaIn
 
+/-- `five-and-strong-leibniz-t-imply-necessary-b`
+
+5 ∧ Strong Leibniz Biconditionals (type t) ⇒ □B -/
+def five_and_strong_leibniz_t_imply_necessary_b : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.ModalFive.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.StrongLeibnizT.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecModalB.schemaIn
+
 /-- `fregean-axiom-implies-distinctness-preserving-collapse`
 
 Fregean Axiom ⇒ Distinctness-preserving collapse -/
