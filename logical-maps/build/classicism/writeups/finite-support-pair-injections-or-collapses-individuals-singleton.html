@@ -350,6 +350,8 @@ retain the same type range and other schema side conditions.</li>
 <li><strong>No Pure Contingency.</strong> Each closed sentence of the
 pure language, if true, is necessary. This is a sentence schema, not a
 quantifier over propositions.</li>
+<li><strong>Tame Rigidity.</strong> Every weakly rigid relation,
+including a proposition, is rigid.</li>
 <li><strong>Countable Boolean Completeness.</strong> Every countable
 property of entities of a relational type has a least upper bound in
 that type, where a property is countable when it injects into the
@@ -656,6 +658,140 @@ of its type. Here: This is the interpretation. By Claude Fable 5.1
 <p><em>Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr’s
 direction:</em> Moved from the group finite-support-one-object to the
 topic; it uses nothing about the model.</p>
+<h3 id="holds-tame-rigidity.">Holds Tame Rigidity.</h3>
+<p>Write <span class="math inline">B_N(E)</span> for the intension <span
+class="math inline">k\mapsto\bigcup\{k^{\prime}\cdot E:k^{\prime}\text{
+agrees with }k \text{ on }N\}</span>; it is pinned down by <span
+class="math inline">N</span>, and symmetric when the model is, since the
+symmetry group consists of arrows and <span
+class="math inline">(gk)\cdot E=g\cdot(k\cdot E)</span>, so it is in the
+domain. (1) A relation <span class="math inline">Y</span> pinned down by
+<span class="math inline">S</span>, with extension <span
+class="math inline">E</span> at the identity, is weakly rigid iff <span
+class="math inline">Y=B_S(E)=B_N(E)</span> for every finite <span
+class="math inline">N\supseteq S</span>: weak persistence gives <span
+class="math inline">k\cdot E\subseteq Y_k</span>, and with pinning <span
+class="math inline">B_S(E)\subseteq Y</span>; a domain element <span
+class="math inline">X</span> with <span class="math inline">\Box
+X</span> true of each member of <span class="math inline">E</span>,
+pinned down by <span class="math inline">N</span>, contains <span
+class="math inline">B_N(E)</span>, so weak inextensibility says exactly
+that <span class="math inline">Y\subseteq B_N(E)</span> for every finite
+<span class="math inline">N</span>, and <span
+class="math inline">B_N(E)\subseteq B_S(E)</span> for <span
+class="math inline">N\supseteq S</span>. (2) Rigidity is (1) at every
+world: for each arrow <span class="math inline">h</span>, <span
+class="math inline">h\cdot Y</span>, with <span
+class="math inline">(h\cdot Y)_k=Y_{kh}</span>, must satisfy <span
+class="math inline">k\cdot Y_h\subseteq Y_{kh}\subseteq
+B_N(Y_h)_k</span> for all <span class="math inline">k</span> and finite
+<span class="math inline">N</span>. (3) Let <span
+class="math inline">Y</span> be weakly rigid. Persistence at <span
+class="math inline">h</span>: <span class="math inline">k\cdot
+Y_h=\bigcup\{(kk^{\prime\prime})\cdot E:k^{\prime\prime}\text{ agrees
+with }h\text{ on }S\}\subseteq B_S(E)_{kh}=Y_{kh}</span>.
+Inextensibility at <span class="math inline">h</span>: given <span
+class="math inline">N</span>, take <span
+class="math inline">N^{\prime\prime}</span> from the condition. By (1),
+<span class="math inline">Y_{kh}=B_{N^{\prime\prime}}(E)_{kh}</span>, so
+a member of it is <span class="math inline">k^{\prime}\cdot e</span>
+with <span class="math inline">e\in E</span>, pinned down by some finite
+<span class="math inline">M</span>, and <span
+class="math inline">k^{\prime}</span> agreeing with <span
+class="math inline">kh</span> on <span
+class="math inline">N^{\prime\prime}</span>. The condition gives <span
+class="math inline">k^{\prime\prime}</span> agreeing with <span
+class="math inline">h</span> on <span
+class="math inline">N^{\prime\prime}</span> and <span
+class="math inline">j</span> agreeing with <span
+class="math inline">k</span> on <span class="math inline">N</span> with
+<span class="math inline">jk^{\prime\prime}</span> agreeing with <span
+class="math inline">k^{\prime}</span> on <span
+class="math inline">M</span>, so <span
+class="math inline">k^{\prime}\cdot e=j\cdot(k^{\prime\prime}\cdot
+e)</span>, where <span class="math inline">k^{\prime\prime}\cdot e\in
+B_{N^{\prime\prime}}(E)_h=Y_h</span>; hence <span
+class="math inline">k^{\prime}\cdot e\in B_N(Y_h)_k</span>. So every
+weakly rigid relation, at every type, is rigid. With No Pure
+Contingency, which holds in one-object models, the map’s results give
+<span class="math inline">\Box</span>Tame Rigidity.</p>
+<p><em>General argument
+<code>arguments/tame-rigidity-factorizable</code>. It requires that The
+model is an action model (Classicism, Appendix D), or an intensional
+action model in the sense of Dorr’s draft (Boolean Completeness does not
+imply Rigid Comprehension), with a single object. Here: Each part of
+Proposition D.5 is a one-object category acting on <span
+class="math inline">\mathbb N</span> (Appendix D, Definitions D.1–D.3).
+It requires that Write an entity of relational type at the evaluation
+object as its intension <span class="math inline">k\mapsto Y_k</span>
+over the arrows <span class="math inline">k</span> out of it, so that
+<span class="math inline">Y\bar a</span> holds at <span
+class="math inline">k</span> iff <span class="math inline">k\cdot\bar
+a\in Y_k</span>; <span class="math inline">Y</span> is pinned down by a
+finite set <span class="math inline">N</span> of the points the arrows
+act on when <span class="math inline">Y_k=Y_{k^{\prime}}</span> for any
+arrows <span class="math inline">k,k^{\prime}</span> agreeing on <span
+class="math inline">N</span>. Every entity in a domain is pinned down by
+a finite set, in the sense that <span class="math inline">k\cdot
+x=k^{\prime}\cdot x</span> for arrows agreeing on it, and the domain of
+each relational type at the evaluation object holds every intension
+pinned down by a finite set (in a symmetric model, every symmetric one).
+Here: The model is ideally full: every entity is pinned down by a finite
+set of numbers, and every intension pinned down by one is in the domain
+(Definitions D.1–D.3). It requires that For every arrow <span
+class="math inline">h</span> out of the evaluation object and finite
+sets <span class="math inline">N,S</span> there is a finite <span
+class="math inline">N^{\prime\prime}\supseteq S</span> such that,
+whenever <span class="math inline">k^{\prime}</span> agrees with <span
+class="math inline">k\circ h</span> on <span
+class="math inline">N^{\prime\prime}</span>, for every finite <span
+class="math inline">M</span> some arrows <span
+class="math inline">k^{\prime\prime}</span> agreeing with <span
+class="math inline">h</span> on <span
+class="math inline">N^{\prime\prime}</span> and <span
+class="math inline">j</span> agreeing with <span
+class="math inline">k</span> on <span class="math inline">N</span> have
+<span class="math inline">j\circ k^{\prime\prime}</span> agreeing with
+<span class="math inline">k^{\prime}</span> on <span
+class="math inline">M</span>. Here: Take <span
+class="math inline">N^{\prime\prime}:=S\cup\{0,1\}</span> and, enlarging
+<span class="math inline">N</span>, assume <span
+class="math inline">\{0,1\}\cup h(N^{\prime\prime})\subseteq N</span>;
+then <span class="math inline">k^{\prime}</span>, <span
+class="math inline">k^{\prime\prime}</span> and <span
+class="math inline">j</span> below are collapses iff <span
+class="math inline">kh</span>, <span class="math inline">h</span> and
+<span class="math inline">k</span> are. Let <span
+class="math inline">k^{\prime\prime}</span> agree with <span
+class="math inline">h</span> on <span
+class="math inline">N^{\prime\prime}</span>; for <span
+class="math inline">m\in M\setminus N^{\prime\prime}</span> let <span
+class="math inline">k^{\prime\prime}m:=k^{-1}(k^{\prime}m)</span> if
+<span class="math inline">k</span> is injective and <span
+class="math inline">k^{\prime}m\in k(N)</span>, and otherwise a fresh
+point outside <span class="math inline">N</span>, one for each <span
+class="math inline">m</span> if <span class="math inline">h</span> is
+injective and one for each value of <span
+class="math inline">k^{\prime}</span> if not. Let <span
+class="math inline">j</span> agree with <span
+class="math inline">k</span> on <span class="math inline">N</span> and
+send each fresh point to its value. Where <span
+class="math inline">h</span> is injective, <span
+class="math inline">k^{\prime}</span> is injective or <span
+class="math inline">k</span> a collapse, so <span
+class="math inline">k^{\prime\prime}</span> is injective on <span
+class="math inline">M</span>, its values <span
+class="math inline">k^{-1}(k^{\prime}m)</span> avoiding <span
+class="math inline">h(N^{\prime\prime})</span>; where <span
+class="math inline">k</span> is injective, the new values of <span
+class="math inline">j</span> lie outside <span
+class="math inline">k(N)</span> and are distinct. So both extend to
+arrows of their kinds, and <span
+class="math inline">jk^{\prime\prime}</span> agrees with <span
+class="math inline">k^{\prime}</span> on <span
+class="math inline">M</span>. By Claude Opus 5.5 (Anthropic), on Cian
+Dorr’s request to settle Tame Rigidity where it was open,
+2026-10-09.</em></p>
 <h3 id="holds-countable-boolean-completeness.">Holds Countable Boolean
 Completeness.</h3>
 <p>The natural numbers are the finite cardinalities at type <span
