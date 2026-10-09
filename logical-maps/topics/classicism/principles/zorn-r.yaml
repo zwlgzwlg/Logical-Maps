@@ -1,0 +1,32 @@
+id: zorn-r
+name: Zorn's Lemma
+category: choice
+statement: >-
+  If a preorder is such that every chain, that is, every property it totally orders, has an upper
+  bound, then something is maximal: everything above it is also below it.
+formal: $\forall R^{\sigma\sigma t}\, .\,\operatorname{Preorder}(R)\land(\forall X^{\sigma t}\,
+  .\,\operatorname{TotalOrder}(R,X)\to\exists u^\sigma\, .\,\forall x^\sigma\, .\,Xx\to(Rx)u)\to\exists
+  m^\sigma\, .\,\forall y^\sigma\, .\,(Rm)y\to(Ry)m$
+date: '2026-10-08'
+sources:
+- Cian Dorr, suggestion of 8 October 2026, to add Zorn's Lemma in preorder form with a proof from
+  Transversal Choice of the shape of Lewin's.
+- Jonathan Lewin, A Simple Proof of Zorn's Lemma, American Mathematical Monthly 98 (1991), pp. 353–354.
+source_names:
+- Dorr 8 Oct
+- Lewin 1991
+references:
+- paper: lewin-1991
+  role: background
+  locator: pp. 353–354
+  note: Zorn's Lemma for partial orders on sets, with a proof from the axiom of choice by conforming
+    subsets.
+notes: >-
+  Preorder and TotalOrder are as in Background; everything is unboxed. The preorder form is
+  used because the orders to which Zorn's Lemma is applied at higher types, such as extension of
+  relations, are antisymmetric only up to coextension. Chains are required to be totally ordered, and
+  so antisymmetric, so the hypothesis concerns fewer properties than comparability alone would; this
+  makes the principle stronger. For a partial order the conclusion says that $m$ is maximal in the
+  usual sense. Zorn's Lemma is equivalent to Transversal Choice and to Well-Ordering, by the recorded
+  results; the proof from Transversal Choice follows Lewin and uses Transversal Choice only to make
+  the choice relation give coextensive chains the same value.

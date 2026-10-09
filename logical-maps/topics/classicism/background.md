@@ -204,31 +204,48 @@ conditions and the transversal condition are unboxed, so they concern the
 evaluation point only. Two members of one cell have coextensive cells, but
 in C properties are identical only when necessarily coextensive.
 
-For $R^{\sigma\sigma t}$, at any type $\sigma$ including $e$, the order
-predicates are
+For $R^{\sigma\sigma t}$ and $X^{\sigma t}$, at any type $\sigma$ including
+$e$, the order predicates relativized to $X$ are
 
 $$
 \begin{aligned}
-\operatorname{Trans}(R)&:=\forall x^\sigma y^\sigma z^\sigma\, .\,
-  (Rx)y\land(Ry)z\to(Rx)z,\\
-\operatorname{Antisymm}(R)&:=\forall x^\sigma y^\sigma\, .\,
-  (Rx)y\land(Ry)x\to x=y,\\
-\operatorname{Total}(R)&:=\forall x^\sigma y^\sigma\, .\,(Rx)y\lor(Ry)x,\\
-\operatorname{WellFounded}(R)&:=\forall X^{\sigma t}\, .\,
-  (\exists x^\sigma\, .\,Xx)\to\exists x^\sigma\, .\,Xx\land
-  \forall y^\sigma\, .\,Xy\land(Ry)x\to y=x,\\
-\operatorname{WO}(R)&:=\operatorname{Trans}(R)\land\operatorname{Antisymm}(R)
-  \land\operatorname{Total}(R)\land\operatorname{WellFounded}(R).
+\operatorname{Trans}(R,X)&:=\forall x^\sigma y^\sigma z^\sigma\, .\,
+  Xx\land Xy\land Xz\land(Rx)y\land(Ry)z\to(Rx)z,\\
+\operatorname{Antisymm}(R,X)&:=\forall x^\sigma y^\sigma\, .\,
+  Xx\land Xy\land(Rx)y\land(Ry)x\to x=y,\\
+\operatorname{Total}(R,X)&:=\forall x^\sigma y^\sigma\, .\,
+  Xx\land Xy\to(Rx)y\lor(Ry)x,\\
+\operatorname{WellFounded}(R,X)&:=\forall Y^{\sigma t}\, .\,
+  (\forall y^\sigma\, .\,Yy\to Xy)\land(\exists y^\sigma\, .\,Yy)\to
+  \exists x^\sigma\, .\,Yx\land\forall y^\sigma\, .\,Yy\land(Ry)x\to y=x,\\
+\operatorname{TotalOrder}(R,X)&:=\operatorname{Trans}(R,X)\land
+  \operatorname{Antisymm}(R,X)\land\operatorname{Total}(R,X),\\
+\operatorname{WO}(R,X)&:=\operatorname{TotalOrder}(R,X)\land
+  \operatorname{WellFounded}(R,X).
 \end{aligned}
 $$
 
-$R$ is a non-strict order: Total includes reflexivity, and in a total
-relation an $R$-minimal instance of $X$ is its $R$-least instance. Like
-Equiv, these are unboxed, so they concern the evaluation point, and each
-depends only on the extension of $R$ there: coextensive relations satisfy
-them together. A relation can be a well-order without necessarily being
-one, because instances that are distinct here may be identical elsewhere,
-where antisymmetry then fails.
+$\operatorname{TotalOrder}(R,X)$ says that $R$ totally orders $X$, or that
+$X$ is an $R$-chain; $\operatorname{WO}(R,X)$ says that $R$ well-orders $X$.
+Omitting $X$ means $X:=\lambda x\, .\,\top$, so that
+$\operatorname{WO}(R)$ says that $R$ well-orders the whole type. Further,
+
+$$
+\begin{aligned}
+\operatorname{Refl}(R)&:=\forall x^\sigma\, .\,(Rx)x,\\
+\operatorname{Preorder}(R)&:=\operatorname{Refl}(R)\land\operatorname{Trans}(R).
+\end{aligned}
+$$
+
+These orders are non-strict: Total includes reflexivity on $X$, and when
+$R$ totally orders $X$, an $R$-minimal instance of a property included in
+$X$ is its $R$-least instance. Like Equiv, all of these are unboxed, so they
+concern the evaluation point, and each depends only on the extensions of $R$
+and $X$ there: coextensive arguments satisfy them together. A relation can
+be a well-order without necessarily being one, because instances that are
+distinct here may be identical elsewhere, where antisymmetry then fails.
+Orders on properties and relations defined by inclusion are typically only
+preorders: coextensive but distinct relations each include the other.
 
 Strong and weak worlds follow Bacon, *A Philosophical Introduction to
 Higher-Order Logics*, §8.2, pp. 165–166. At a relational type $\sigma$, with

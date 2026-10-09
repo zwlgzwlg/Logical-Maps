@@ -1,0 +1,23 @@
+id: necessary-well-ordering-r-implies-necessary-transversal-choice-r
+premises:
+- necessary-well-ordering-r
+conclusion: necessary-transversal-choice-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 8 October 2026, necessitating the unboxed argument
+  recorded_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  checked_by: []
+  date: '2026-10-08'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 8 October 2026, to connect Transversal Choice, Zorn's Lemma and Well-Ordering;
+  unboxed proof as recorded in well-ordering-r-implies-transversal-choice-r.
+source_names:
+- Dorr 8 Oct
+proof: >-
+  The argument of well-ordering-r-implies-transversal-choice-r derives the conclusion from the premises in C, with no optional hypothesis,
+  so the corresponding implication between closed instances is a theorem of C. Necessitate it and
+  apply K to the boxed premises. Type ranges stay outside the box.
+references: []
+notes: ''

@@ -1,0 +1,42 @@
+id: transversal-choice-r-implies-zorn-r
+premises:
+- transversal-choice-r
+conclusion: zorn-r
+status: proved
+certificate:
+  source_id: lewin-1991
+  produced_by: Jonathan Lewin (the proof from the axiom of choice, for partial orders on sets); translated into C, adapted to preorders and to Transversal Choice by Claude Opus 5.5 (Anthropic), 8 October 2026, at Cian Dorr's suggestion
+  recorded_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  checked_by: []
+  date: '2026-10-08'
+  lean: none
+sources:
+- Jonathan Lewin, A Simple Proof of Zorn's Lemma, American Mathematical Monthly 98 (1991), pp. 353–354.
+- Cian Dorr, suggestion of 8 October 2026, to translate Lewin's proof into C and to ask whether it needs
+  Transversal Choice rather than Relational Choice; translation as recorded.
+source_names:
+- Lewin 1991
+- Dorr 8 Oct
+proof: >-
+  See the write-up. Suppose a preorder $R$ has upper bounds for all its chains and no maximal
+  element. Relational Choice, which follows from Transversal Choice, gives a functional relation
+  choosing, for each chain $C$, something strictly above all of $C$. Composing it with a transversal
+  of coextensiveness at $\sigma t$, which Transversal Choice also gives, makes it extensional:
+  coextensive chains receive the same value. Lewin's argument then translates step by step, with
+  properties for sets and existential quantification for unions: the union of the conforming
+  properties is conforming, and extending it by its chosen value gives a conforming property not
+  included in it, a contradiction.
+references:
+- paper: lewin-1991
+  role: proof
+  locator: pp. 353–354
+  note: >-
+    Lewin proves Zorn's Lemma for partial orders on sets from a choice function. The translation
+    replaces sets by properties and the choice function by a functional relation, adapts the
+    argument to preorders, and uses Transversal Choice to make the relation extensional, which Lewin
+    uses at four steps without comment.
+notes: >-
+  Only extensionality of the choice relation goes beyond Relational Choice: at four steps two
+  properties are shown to be coextensive and must receive the same value. Since Zorn's Lemma
+  implies Well-Ordering and so Transversal Choice, proving it from Relational Choice alone would
+  settle whether Relational Choice implies Transversal Choice, which is open.

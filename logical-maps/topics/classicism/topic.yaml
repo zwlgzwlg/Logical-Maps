@@ -14,6 +14,9 @@ source_catalog:
 - id: dorr-bc-not-rc
   name: BC does not imply RC (draft)
   kind: misc
+- id: lewin-1991
+  name: Lewin, A Simple Proof of Zorn's Lemma
+  kind: published-paper
 - id: prior-1963
   name: Prior, Formal Logic
   kind: published-paper

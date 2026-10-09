@@ -92,3 +92,8 @@ papers:
     that Rigid Comprehension for properties of propositions is not derivable from Classicism with □Atomicity,
     Boolean Completeness and BF; theorem proposition_2_11_refuted. Commit 4042cc0, 1 October 2026.
   url: https://github.com/fitelson/hom-isabelle/tree/4042cc0/Applications/2.11
+- id: lewin-1991
+  title: A Simple Proof of Zorn's Lemma
+  citation: Lewin, Jonathan W. (1991). A Simple Proof of Zorn's Lemma. American Mathematical Monthly 98(4),
+    pp. 353–354.
+  url: https://digitalcommons.kennesaw.edu/facpubs/1158/

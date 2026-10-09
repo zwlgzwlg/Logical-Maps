@@ -14,5 +14,6 @@ notes: >-
   property has an $R$-minimal instance. The condition is unboxed, so it concerns the evaluation point
   only, and the well-order need not remain one at other worlds, since its field may contract there by
   contingent identities. Modal Well-Ordering asks for a relation that is necessarily a well-order.
-  Cian Dorr conjectures that Well-Ordering is equivalent to Transversal Choice, as the well-ordering
-  theorem is to the axiom of choice in set theory; this is not recorded.
+  Well-Ordering is equivalent to Transversal Choice and to Zorn's Lemma, by the recorded results, as
+  the well-ordering theorem is to the axiom of choice in set theory (Cian Dorr's conjecture of 7 October
+  2026). Relational Choice is enough only if it implies Transversal Choice, which is open.
