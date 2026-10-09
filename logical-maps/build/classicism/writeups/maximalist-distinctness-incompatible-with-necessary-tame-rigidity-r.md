@@ -1,0 +1,26 @@
+# Maximalism (pure) ∧ □Tame Rigidity ⇒ ⊥
+
+<p class='cert'>Result — Source: Misc.; produced by Claude Opus 5.5 (Anthropic), 8 October 2026, at Cian Dorr's suggestion; recorded by Claude Opus 5.5 (Anthropic), 8 October 2026.</p>
+
+## Premises
+
+- **Maximalism (pure).** Every closed pure identity not provable in C is false. The non-theorem condition is metalinguistic.
+- **□Tame Rigidity.** Every closed instance of Tame Rigidity is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
+
+## Conclusion
+
+- **⊥.** These premises cannot all hold together.
+
+## Proof
+
+Tame Rigidity fails in finite-support-two-object-all-maps, a model of C, so some closed pure instance of it is not a theorem of C and its negation is consistent with C. The possibility form of Maximalism (pure) makes that negation possible, and the boxed principle makes the instance necessary.
+
+## Notes
+
+Instance of the pattern of maximalist-distinctness-incompatible-with-necessary-boolean-completeness-r.
+
+## Sources
+
+- **Dorr 8 Oct** — Cian Dorr, observation of 8 October 2026 that Maximalism (pure) excludes the necessitation of any pure principle that is not a theorem of C; the refuting model as recorded in finite-support-two-object-all-maps.
+
+<p class='cert'>Record: <code>topics/classicism/results/maximalist-distinctness-incompatible-with-necessary-tame-rigidity-r.yaml</code></p>

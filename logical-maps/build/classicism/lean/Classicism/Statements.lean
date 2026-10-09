@@ -1269,6 +1269,15 @@ def maximalist_distinctness_incompatible_with_necessary_atomicity_r : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
+/-- `maximalist-distinctness-incompatible-with-necessary-atomicity-t`
+
+Maximalism (pure) ∧ □Atomicity (type t) ⇒ ⊥ -/
+def maximalist_distinctness_incompatible_with_necessary_atomicity_t : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicityT.schemaIn →
+    ¬ Classicism.Meta.AxiomSet.Consistent Ax
+
 /-- `maximalist-distinctness-incompatible-with-necessary-barcan-r`
 
 Maximalism (pure) ∧ □BF ⇒ ⊥ -/
@@ -1285,6 +1294,15 @@ def maximalist_distinctness_incompatible_with_necessary_boolean_completeness_r :
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBooleanCompleteness.schemaIn →
+    ¬ Classicism.Meta.AxiomSet.Consistent Ax
+
+/-- `maximalist-distinctness-incompatible-with-necessary-boolean-completeness-t`
+
+Maximalism (pure) ∧ □Boolean Completeness (type t) ⇒ ⊥ -/
+def maximalist_distinctness_incompatible_with_necessary_boolean_completeness_t : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBooleanCompletenessT.schemaIn →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
 /-- `maximalist-distinctness-incompatible-with-necessary-functionality-r`
@@ -1305,6 +1323,15 @@ def maximalist_distinctness_incompatible_with_necessary_rigid_comprehension_r : 
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
+/-- `maximalist-distinctness-incompatible-with-necessary-tame-rigidity-r`
+
+Maximalism (pure) ∧ □Tame Rigidity ⇒ ⊥ -/
+def maximalist_distinctness_incompatible_with_necessary_tame_rigidity_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecTameRigidity.schemaIn →
+    ¬ Classicism.Meta.AxiomSet.Consistent Ax
+
 /-- `maximalist-distinctness-incompatible-with-necessary-tractarianism-r`
 
 Maximalism (pure) ∧ □Tractarianism ⇒ ⊥ -/
@@ -1312,6 +1339,33 @@ def maximalist_distinctness_incompatible_with_necessary_tractarianism_r : Prop :
   ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecTractarianism.schemaIn →
+    ¬ Classicism.Meta.AxiomSet.Consistent Ax
+
+/-- `maximalist-distinctness-incompatible-with-necessary-transversal-r`
+
+Maximalism (pure) ∧ □Transversal ⇒ ⊥ -/
+def maximalist_distinctness_incompatible_with_necessary_transversal_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecTransversal.schemaIn →
+    ¬ Classicism.Meta.AxiomSet.Consistent Ax
+
+/-- `maximalist-distinctness-incompatible-with-necessary-vicinity`
+
+Maximalism (pure) ∧ □Vicinity ⇒ ⊥ -/
+def maximalist_distinctness_incompatible_with_necessary_vicinity : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecVicinity.schemaIn →
+    ¬ Classicism.Meta.AxiomSet.Consistent Ax
+
+/-- `maximalist-distinctness-incompatible-with-necessary-weakly-inextensible-comprehension-r`
+
+Maximalism (pure) ∧ □Weakly Inextensible Comprehension ⇒ ⊥ -/
+def maximalist_distinctness_incompatible_with_necessary_weakly_inextensible_comprehension_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.distinctnessC) →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecWeaklyInextensibleComprehension.schemaIn →
     ¬ Classicism.Meta.AxiomSet.Consistent Ax
 
 /-- `maximalist-distinctness-incompatible-with-rigid-comprehension`

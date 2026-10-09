@@ -496,6 +496,10 @@ theorem maximalist_distinctness_incompatible_with_necessary_atomicity_r : Statem
       (union_subset_union_right (A := maximalist) (B := AxiomSet.box P.Atomicity.schema)
         (B' := P.NecAtomicity.schema) (by map_box)) maximalist_necAtomicity_inconsistent)
 
+/-- `maximalist-distinctness-incompatible-with-necessary-atomicity-t` -/
+theorem maximalist_distinctness_incompatible_with_necessary_atomicity_t : Statements.maximalist_distinctness_incompatible_with_necessary_atomicity_t := by
+  map_cert_incompatible maximalist_necAtomicityT_inconsistent
+
 /-- `maximalist-distinctness-incompatible-with-necessary-barcan-r` -/
 theorem maximalist_distinctness_incompatible_with_necessary_barcan_r : Statements.maximalist_distinctness_incompatible_with_necessary_barcan_r := by
   map_cert_incompatible
