@@ -1,0 +1,25 @@
+id: maximalist-distinctness-incompatible-with-necessary-vicinity
+premises:
+- distinctness-schema-r
+- necessary-vicinity
+conclusion: false
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 8 October 2026, at Cian Dorr's suggestion
+  recorded_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  checked_by: []
+  date: '2026-10-08'
+  lean: stated
+sources:
+- Cian Dorr, observation of 8 October 2026 that Maximalism (pure) excludes the necessitation of any pure
+  principle that is not a theorem of C; the refuting model as recorded in finite-support-two-object-all-maps.
+source_names:
+- Dorr 8 Oct
+proof: >-
+  Vicinity fails in finite-support-two-object-all-maps, a model of C, so some closed pure instance of it is not a theorem of C
+  and its negation is consistent with C. The possibility form of Maximalism (pure) makes that
+  negation possible, and the boxed principle makes the instance necessary.
+references: []
+notes: >-
+  Instance of the pattern of maximalist-distinctness-incompatible-with-necessary-boolean-completeness-r.
