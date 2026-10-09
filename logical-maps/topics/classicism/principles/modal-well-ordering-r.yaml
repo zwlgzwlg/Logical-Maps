@@ -14,4 +14,11 @@ notes: >-
   well-orders what there is there; the order it induces may differ from world to world. A well-order
   need not be necessarily one, since distinct relata can be identical at other worlds, so this is
   stronger than Well-Ordering. It gives Intensional Choice at once (select the least instance), and it
-  follows from Well-Ordering with Weak Rigid Comprehension and BF.
+  follows from Well-Ordering with Weak Rigid Comprehension and BF. It implies its own necessitation by
+  4, since $\Box\operatorname{WO}(R)$ gives $\Box\Box\operatorname{WO}(R)$, so no boxed form is recorded.
+changes:
+- date: '2026-10-08'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  summary: >-
+    □Modal Well-Ordering retired, since Modal Well-Ordering implies it by 4; its result giving □Intensional
+    Choice now starts from Modal Well-Ordering.

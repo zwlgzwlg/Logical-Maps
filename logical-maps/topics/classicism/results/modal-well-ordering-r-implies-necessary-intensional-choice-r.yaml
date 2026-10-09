@@ -1,0 +1,30 @@
+id: modal-well-ordering-r-implies-necessary-intensional-choice-r
+premises:
+- modal-well-ordering-r
+conclusion: necessary-intensional-choice-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 8 October 2026 (necessitating the unboxed argument)
+  recorded_by: Claude Opus 5.5 (Anthropic), 8 October 2026
+  checked_by: []
+  date: '2026-10-08'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 7 October 2026; unboxed proof as recorded in modal-well-ordering-r-implies-intensional-choice-r.
+source_names:
+- Dorr 7 Oct
+proof: >-
+  If $\Box\operatorname{WO}(R)$, then $\Box\Box\operatorname{WO}(R)$ by 4, so necessarily some relation
+  is necessarily a well-order: Modal Well-Ordering implies its own necessitation. The argument of
+  modal-well-ordering-r-implies-intensional-choice-r derives Intensional Choice from Modal
+  Well-Ordering in C, with no optional hypothesis, so the corresponding implication between closed
+  instances is a theorem of C. Necessitate it and apply K. Type ranges stay outside the box.
+references:
+- paper: bacon-dorr-classicism
+  role: proof
+  locator: §1.5, p. 17
+  note: The axiom 4.
+notes: >-
+  Replaces the result from the retired □Modal Well-Ordering, whose step from Modal Well-Ordering by 4
+  is now part of the proof.
