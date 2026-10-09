@@ -23,7 +23,6 @@
 - **¬ Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **¬ Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
 - **¬ Possible Infinity (type e).** Possibly there are not finitely many individuals: the Axiom of Infinity at this type, under a diamond.
-- **¬ Gallin Extensional Comprehension.** Every relation is coextensive with one that is persistent and has a persistent pointwise negation. This is the source’s comparison with Gallin’s different rigidity convention.
 - **¬ Strong Actuality.** There is a true strong world proposition: a true proposition that necessarily entails every proposition or its negation.
 - **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
 - **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
@@ -140,12 +139,6 @@ Write $X_0(E)$ for the intension $k\mapsto k\cdot E$. The extension at an arrow 
 
 *Revised 2026-10-04 by Claude Fable 5.1 (Anthropic), at Cian Dorr's direction:* The argument deferred in extraction.md on 3 October for the full action models, where every intension is present, stated under the condition it actually uses, which the symmetry-constrained full models also meet.
 
-### Fails Gallin Extensional Comprehension.
-
-Let $h$ out of the evaluation object have retractions $j\ne j^{\prime}$, and let $q$ at $h$'s target contain $j$ but not $j^{\prime}$. Transported along $j$ and $j^{\prime}$, $q$ becomes propositions at the evaluation object, since $j\circ h=j^{\prime}\circ h=1$: the first contains the identity and the second does not, so the first is true and the second false. If $Y$ of type $t\to t$ and its pointwise negation are both persistent, then at $h$, $Yq$ holds iff $Y$ holds of the transport of $q$ along $j$, and iff it holds of its transport along $j^{\prime}$; and at $j\circ h$ and $j^{\prime}\circ h$, which are the evaluation object itself, $Y$ has its actual extension. So $Y$ holds of both transports or of neither, and is not coextensive with $\lambda p\, .\,p$. Gallin Extensional Comprehension fails at type $t\to t$.
-
-*General argument `arguments/separated-retractions-gallin`. It requires that Some arrow out of the evaluation object has two retractions that some proposition in the domain at its target separates. Here: $h$ has the retractions $j_1\ne j_2$, and $\{j_1\}$, in the domain at $W_1$ since the model is full, separates them. By Claude Opus 5.5 (Anthropic), answering Cian Dorr's question whether ND and Weak Rigid Comprehension give Gallin Extensional Comprehension, 2026-10-08.*
-
 ### Fails Strong Actuality.
 
 Let $h$ out of the evaluation object have retractions $j\ne j^{\prime}$, and let $q$ at $h$'s target contain $j$ but not $j^{\prime}$. A true proposition $p$ contains the identity, so under $h$ it becomes a proposition containing $j$ and $j^{\prime}$, since $j\circ h=j^{\prime}\circ h=1$. That proposition lies neither below $q$ nor below $\neg q$, so $p$ is not a strong world. No true proposition is.
@@ -181,7 +174,7 @@ For an equivalence relation at the evaluation point, a transversal of its extens
 
 ## Notes
 
-Proposed by Cian Dorr to separate Strong Actuality from Actuality: the model is full, so it has □Rigid Comprehension and hence □Actuality, while $h$'s two retractions keep every true proposition from being a strong world. Unlike the two-object retract it does not meet coherent-retractions: with $r_h=j_i$, the arrow $x=e_k$ after $h$ for $k\ne i$ gives $r_{x\circ h}\circ x=r_h\circ e_k=j_k\ne r_h$. Gallin Extensional Comprehension fails, by the general argument separated-retractions-gallin, though ND and □Rigid Comprehension hold.
+Proposed by Cian Dorr to separate Strong Actuality from Actuality: the model is full, so it has □Rigid Comprehension and hence □Actuality, while $h$'s two retractions keep every true proposition from being a strong world. Unlike the two-object retract it does not meet coherent-retractions: with $r_h=j_i$, the arrow $x=e_k$ after $h$ for $k\ne i$ gives $r_{x\circ h}\circ x=r_h\circ e_k=j_k\ne r_h$. Gallin Extensional Comprehension fails, since it implies Strong Actuality (gallin-comprehension-implies-strong-actuality), though ND and □Rigid Comprehension hold.
 
 ## Sources
 

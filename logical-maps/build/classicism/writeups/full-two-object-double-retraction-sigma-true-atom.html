@@ -381,10 +381,6 @@ each positive integer n.</li>
 <li><strong>¬ Possible Infinity (type e).</strong> Possibly there are
 not finitely many individuals: the Axiom of Infinity at this type, under
 a diamond.</li>
-<li><strong>¬ Gallin Extensional Comprehension.</strong> Every relation
-is coextensive with one that is persistent and has a persistent
-pointwise negation. This is the source’s comparison with Gallin’s
-different rigidity convention.</li>
 <li><strong>¬ Strong Actuality.</strong> There is a true strong world
 proposition: a true proposition that necessarily entails every
 proposition or its negation.</li>
@@ -744,45 +740,6 @@ Dorr’s direction:</em> The argument deferred in extraction.md on 3
 October for the full action models, where every intension is present,
 stated under the condition it actually uses, which the
 symmetry-constrained full models also meet.</p>
-<h3 id="fails-gallin-extensional-comprehension.">Fails Gallin
-Extensional Comprehension.</h3>
-<p>Let <span class="math inline">h</span> out of the evaluation object
-have retractions <span class="math inline">j\ne j^{\prime}</span>, and
-let <span class="math inline">q</span> at <span
-class="math inline">h</span>’s target contain <span
-class="math inline">j</span> but not <span
-class="math inline">j^{\prime}</span>. Transported along <span
-class="math inline">j</span> and <span
-class="math inline">j^{\prime}</span>, <span
-class="math inline">q</span> becomes propositions at the evaluation
-object, since <span class="math inline">j\circ h=j^{\prime}\circ
-h=1</span>: the first contains the identity and the second does not, so
-the first is true and the second false. If <span
-class="math inline">Y</span> of type <span class="math inline">t\to
-t</span> and its pointwise negation are both persistent, then at <span
-class="math inline">h</span>, <span class="math inline">Yq</span> holds
-iff <span class="math inline">Y</span> holds of the transport of <span
-class="math inline">q</span> along <span class="math inline">j</span>,
-and iff it holds of its transport along <span
-class="math inline">j^{\prime}</span>; and at <span
-class="math inline">j\circ h</span> and <span
-class="math inline">j^{\prime}\circ h</span>, which are the evaluation
-object itself, <span class="math inline">Y</span> has its actual
-extension. So <span class="math inline">Y</span> holds of both
-transports or of neither, and is not coextensive with <span
-class="math inline">\lambda p\, .\,p</span>. Gallin Extensional
-Comprehension fails at type <span class="math inline">t\to t</span>.</p>
-<p><em>General argument
-<code>arguments/separated-retractions-gallin</code>. It requires that
-Some arrow out of the evaluation object has two retractions that some
-proposition in the domain at its target separates. Here: <span
-class="math inline">h</span> has the retractions <span
-class="math inline">j_1\ne j_2</span>, and <span
-class="math inline">\{j_1\}</span>, in the domain at <span
-class="math inline">W_1</span> since the model is full, separates them.
-By Claude Opus 5.5 (Anthropic), answering Cian Dorr’s question whether
-ND and Weak Rigid Comprehension give Gallin Extensional Comprehension,
-2026-10-08.</em></p>
 <h3 id="fails-strong-actuality.">Fails Strong Actuality.</h3>
 <p>Let <span class="math inline">h</span> out of the evaluation object
 have retractions <span class="math inline">j\ne j^{\prime}</span>, and
@@ -920,9 +877,9 @@ class="math inline">r_h=j_i</span>, the arrow <span
 class="math inline">x=e_k</span> after <span
 class="math inline">h</span> for <span class="math inline">k\ne i</span>
 gives <span class="math inline">r_{x\circ h}\circ x=r_h\circ e_k=j_k\ne
-r_h</span>. Gallin Extensional Comprehension fails, by the general
-argument separated-retractions-gallin, though ND and □Rigid
-Comprehension hold.</p>
+r_h</span>. Gallin Extensional Comprehension fails, since it implies
+Strong Actuality (gallin-comprehension-implies-strong-actuality), though
+ND and □Rigid Comprehension hold.</p>
 <h2 id="sources">Sources</h2>
 <ul>
 <li><strong>Dorr 6 Oct</strong> — Cian Dorr, suggestion of 6 October
