@@ -159,6 +159,22 @@ arguments:
 
 # migration: text of the old notes that no argument holds, verbatim. Their argument for the failure
 # of ND, now derived, is dropped.
+- fails: [rigid-power-r]
+  when: {individuals: singleton}
+  choice: free
+  by: Claude Opus 5.5 (Anthropic), on Cian Dorr's request to settle Rigid Power where it was open
+  date: '2026-10-09'
+  text: >-
+    The type $(t\to t)\to t$ argument of finite-support-pair-injections-or-collapses (for its
+    variant with one individual), with $\{a,b\}$ for $\{0,1\}$ and the collapses kept surjective:
+    $F:=\top$ of type $t\to t$, rigid since BF and $\Box$BF hold at type $t$; $p_n:=\{g:gn\in\{ga,
+    gb\}\}$, which is symmetric, with $m\cdot p_n=p_{mn}$ for the permutations $m$ preserving
+    $\{a,b\}$; $Y$ built from $E:=\{p_n:n\notin\{a,b,2\}\}$ with $S:=\{a,b,2\}$, symmetric since
+    the symmetry group consists of arrows; in step (2), $\tau$ sends $x$ to $2$, some fresh $y$ to
+    $x$, and fixes every other number, so that $\tau g$ is still a surjection; and $\mathbf X$,
+    pinned down by $\{a,b\}$, is symmetric because $g^{-1}k^{\prime}$ agrees with $k$ on $\{a,b\}$
+    when $k^{\prime}$ agrees with $gk$ there.
+
 notes: >-
   This model is not a second witness to the draft's main result but a counterweight to it. Rigid
   Comprehension holds, so the failure of Actuality in the all-surjections model is no accident.
