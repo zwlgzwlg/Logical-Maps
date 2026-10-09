@@ -1,0 +1,30 @@
+# 5 ∧ Strong Leibniz Biconditionals (type t) ⇒ □B
+
+<p class='cert'>Result — Source: Misc.; produced by Claude Opus 5.5 (Anthropic), 8 October 2026, from Cian Dorr's sketch (the true strong world entails each truth and is necessarily possible); recorded by Claude Opus 5.5 (Anthropic), 8 October 2026.</p>
+
+## Premises
+
+- **5.** Every possible proposition is necessarily possible.
+- **Strong Leibniz Biconditionals (type t).** The type-t instance of the Strong Leibniz Biconditionals: every possible proposition is entailed by a strong world proposition, one that is possible and necessarily entails every proposition or its negation.
+
+## Conclusion
+
+- **□B.** Necessarily, every true proposition is necessarily possible.
+
+## Proof
+
+Strong worlds are necessarily strong: if $\operatorname{SWorld}(w)$, then 5 gives $\Box\Diamond w$ and 4 gives $\Box\Box\forall Y\,(w\le Y\lor w\le\neg Y)$, so $\Box\operatorname{SWorld}(w)$. Let $q:=\exists w\, .\,\Box\operatorname{SWorld}(w)\land w$. Then $\Box q$: if $\Diamond\neg q$, the Strong Leibniz Biconditionals give a strong world $w\le\neg q$, and $\Box\Box\operatorname{SWorld}(w)$ by the above and 4, so at a world where $w$ holds, as one does since $\Diamond w$, $q$ holds too, contradicting $w\le\neg q$. Next, $q\to\forall p\, .\,p\to\Box\Diamond p$ is a theorem of C: given $\Box\operatorname{SWorld}(w_0)\land w_0$ and a true $p$, T twice gives $w_0\le p$ or $w_0\le\neg p$, and the second contradicts $w_0\land p$; and $\Box\operatorname{SWorld}(w_0)$ gives $\Box\Diamond w_0$, so $w_0\le p$ gives $\Box\Diamond p$. Necessitating this theorem and applying K to $\Box q$ gives $\Box\forall p\, .\,p\to\Box\Diamond p$, which yields each closed instance of $\Box$B.
+
+## Notes
+
+5 is equivalent to ND in C, by the recorded results, so this gives □ND from ND and the Strong Leibniz Biconditionals (type t). 5 is used only to make the strong worlds necessarily possible. Weak worlds do not suffice: ND with □Atomicity (type t) does not give □ND, by the recorded models.
+
+## Sources
+
+- **Dorr 8 Oct** — Cian Dorr, suggestion of 8 October 2026, that ND and the Strong Leibniz Biconditionals (type t) give □ND; proof as recorded.
+
+<p class='cert'>Record: <code>topics/classicism/results/five-and-strong-leibniz-t-imply-necessary-b.yaml</code></p>
+
+## Paper references
+
+- **Background: A Philosophical Introduction to Higher-Order Logics.** Bacon, Andrew (2024). A Philosophical Introduction to Higher-Order Logics. Routledge. DOI 10.4324/9781003039181. Chapter 8, Application: Consequences and strengthenings of Classicism, pp. 155–182, and Chapter 18, The model theory of classicism, pp. 389–413, were read directly on 22 September 2026; locators give the book's own page numbers. The book works in the full simple type hierarchy with Modalized Functionality at all types; its results are taken in the map's relational type system, of which its models are models. — §8.2, pp. 165–170. Strong worlds and the Strong Leibniz Biconditionals.
