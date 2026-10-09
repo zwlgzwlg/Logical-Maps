@@ -155,7 +155,8 @@ notes: >-
   model refuting Rigid Power. Tame Rigidity holds at type $e$: the weakly rigid properties of
   individuals are the finite disjunctions of haecceities $k\mapsto k[E]$, the properties $Y_F$
   ($\mathbb N\setminus k[F]$ at a pair-preserving injection $k$, $\mathbb N$ at a collapse) for
-  finite $F$, and $\top=Y_\emptyset$, all rigid; at higher types it is open.
+  finite $F$, and $\top=Y_\emptyset$, all rigid; at every type it holds by the general argument
+  tame-rigidity-factorizable (9 October 2026), so this model separates Tame Rigidity from Rigid Power.
 
 # The model in Lean (Classicism/Models/PairInjCollapse.lean): the ideally full model over the
 # monoid, the group's parameter.
