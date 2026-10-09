@@ -14,6 +14,7 @@
 - **No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
 - **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
+- **¬ Rigid Power.** If a relation is rigid, so is the property of being a rigid relation that entails it.
 - **¬ Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **¬ Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
 - **¬ Possible Infinity (type e).** Possibly there are not finitely many individuals: the Axiom of Infinity at this type, under a diamond.
@@ -45,6 +46,12 @@ At every relational type. Given a relation with extension S pinned down by a fin
 With the proposition that the two members of the fixed pair are identical as a nonzero proposition having no atom below it.
 
 *By Cian Dorr, 2026-09-19.*
+
+### Fails Rigid Power.
+
+The type $(t\to t)\to t$ argument of finite-support-pair-injections-or-collapses (for its variant with one individual), with $\{a,b\}$ for $\{0,1\}$ and the collapses kept surjective: $F:=\top$ of type $t\to t$, rigid since BF and $\Box$BF hold at type $t$; $p_n:=\{g:gn\in\{ga, gb\}\}$, which is symmetric, with $m\cdot p_n=p_{mn}$ for the permutations $m$ preserving $\{a,b\}$; $Y$ built from $E:=\{p_n:n\notin\{a,b,2\}\}$ with $S:=\{a,b,2\}$, symmetric since the symmetry group consists of arrows; in step (2), $\tau$ sends $x$ to $2$, some fresh $y$ to $x$, and fixes every other number, so that $\tau g$ is still a surjection; and $\mathbf X$, pinned down by $\{a,b\}$, is symmetric because $g^{-1}k^{\prime}$ agrees with $k$ on $\{a,b\}$ when $k^{\prime}$ agrees with $gk$ there.
+
+*By Claude Opus 5.5 (Anthropic), on Cian Dorr's request to settle Rigid Power where it was open, 2026-10-09.*
 
 ### Holds Axiom of Infinity (type t).
 

@@ -365,6 +365,8 @@ sentence schema, standing to No Pure Contingency as Possibility
 Maximalism (signature Σ) stands to Possibility Maximalism (pure).</li>
 <li><strong>B for sentences of Σ.</strong> The B instance for every
 closed sentence of the language of the fixed signature Sigma.</li>
+<li><strong>¬ Rigid Power.</strong> If a relation is rigid, so is the
+property of being a rigid relation that entails it.</li>
 <li><strong>¬ Boolean Completeness (type t).</strong> Boolean
 Completeness (type t) in the displayed closed propositional
 formulation.</li>
@@ -465,6 +467,79 @@ finitely pinned, and every nonempty proposition pinned down by <span
 class="math inline">S</span> is split by the value of its arrows at a
 point outside <span class="math inline">S</span>.</p>
 <p><em>By Claude Opus 5.5 (Anthropic), 2026-10-07.</em></p>
+<h3 id="fails-rigid-power.">Fails Rigid Power.</h3>
+<p>The argument above with propositions in place of individuals, at type
+<span class="math inline">(t\to t)\to t</span> with <span
+class="math inline">F:=\top</span> of type <span
+class="math inline">t\to t</span>, which is rigid since BF and <span
+class="math inline">\Box</span>BF hold at type <span
+class="math inline">t</span>. Write <span class="math inline">Z_k</span>
+for the extension of a relation <span class="math inline">Z</span> at
+the arrow <span class="math inline">k</span>, so that <span
+class="math inline">(h\cdot Z)_k=Z_{k\circ h}</span>, and let <span
+class="math inline">p_n:=\{g:gn\in\{g0,g1\}\}</span>, pinned down by
+<span class="math inline">\{0,1,n\}</span>; a pair-preserving injection
+<span class="math inline">m</span> has <span class="math inline">m\cdot
+p_n=p_{mn}</span>, and <span class="math inline">p_x\ne p_2</span> for
+<span class="math inline">x\ne2</span>, <span
+class="math inline">x\notin\{0,1\}</span>. (1) Let <span
+class="math inline">S:=\{0,1,2\}</span>, <span
+class="math inline">E:=\{p_n:n\notin S\}</span> and <span
+class="math inline">Y_k:=\bigcup\{k^{\prime}\cdot E:k^{\prime}\text{
+agrees with }k\text{ on }S\}</span>, pinned down by <span
+class="math inline">S</span>. For each finite <span
+class="math inline">N\supseteq S</span> the same union over the <span
+class="math inline">k^{\prime}</span> agreeing with <span
+class="math inline">k</span> on <span class="math inline">N</span> is
+the same set: at a pair-preserving injection it is <span
+class="math inline">\{p_x:x\notin kS\}</span>, and at a collapse <span
+class="math inline">\{k^{\prime}\cdot p_n\}</span> ranges over every
+value of <span class="math inline">k^{\prime}n</span> either way. So
+<span class="math inline">Y</span> is weakly rigid (argument
+tame-rigidity-factorizable, part (1)), hence rigid by Tame Rigidity,
+with extension <span class="math inline">E</span>, which omits <span
+class="math inline">p_2</span>. (2) No rigid <span
+class="math inline">Z</span> has extension <span
+class="math inline">E</span> at a collapse <span
+class="math inline">c</span>. Let <span class="math inline">Z</span> be
+pinned down by <span class="math inline">T\supseteq\{0,1\}</span>; by
+the same part (1), <span class="math inline">Z_c</span> is the union of
+<span class="math inline">g\cdot E_Z</span> over the arrows <span
+class="math inline">g</span> agreeing with <span
+class="math inline">c</span> on <span class="math inline">T</span>. If
+<span class="math inline">Z_c=E</span>, take <span
+class="math inline">x\notin cT\cup S</span>, so <span
+class="math inline">p_x=g\cdot e</span> for such a <span
+class="math inline">g</span> and some <span class="math inline">e\in
+E_Z</span>, and let <span class="math inline">\tau</span> send <span
+class="math inline">x</span> to <span class="math inline">2</span> and
+fix every other number. Then <span class="math inline">\tau g</span> is
+a collapse agreeing with <span class="math inline">c</span> on <span
+class="math inline">T</span>, so <span class="math inline">(\tau g)\cdot
+e=\tau\cdot p_x=p_2</span> is in <span class="math inline">Z_c</span>,
+which is not <span class="math inline">E</span>. (3) Let <span
+class="math inline">R:=\lambda X\, .\,\operatorname{Rigid}(X)\land
+X\le\top</span>; in a one-object model its extension at every arrow is
+the set of rigid relations of type <span class="math inline">t\to
+t</span>. Let <span class="math inline">\mathbf X</span> hold of <span
+class="math inline">W</span> at <span class="math inline">k</span> iff
+<span class="math inline">W=k^{\prime}\cdot Z</span> for some rigid
+<span class="math inline">Z</span> and some <span
+class="math inline">k^{\prime}</span> agreeing with <span
+class="math inline">k</span> on <span
+class="math inline">\{0,1\}</span>; it is pinned down by <span
+class="math inline">\{0,1\}</span>, so in the domain, and necessarily
+holds of every instance of <span class="math inline">R</span>. At a
+collapse <span class="math inline">c</span>, every such <span
+class="math inline">k^{\prime}</span> is a collapse, and <span
+class="math inline">(k^{\prime}\cdot Z)_1=Z_{k^{\prime}}</span>, so by
+(2) <span class="math inline">Y</span>, which is in the extension of
+<span class="math inline">R</span> there, is not in that of <span
+class="math inline">\mathbf X</span>. So <span
+class="math inline">R</span> is not weakly inextensible, though <span
+class="math inline">\top</span> is rigid.</p>
+<p><em>By Claude Opus 5.5 (Anthropic), on Cian Dorr’s request to settle
+Rigid Power where it was open, 2026-10-09.</em></p>
 <h3 id="holds-axiom-of-infinity-type-t.">Holds Axiom of Infinity (type
 t).</h3>
 <p>The propositions that a given number is fixed by the arrow, one for
@@ -915,8 +990,9 @@ class="math inline">\mathbb N\setminus k[F]</span> at a pair-preserving
 injection <span class="math inline">k</span>, <span
 class="math inline">\mathbb N</span> at a collapse) for finite <span
 class="math inline">F</span>, and <span
-class="math inline">\top=Y_\emptyset</span>, all rigid; at higher types
-it is open.</p>
+class="math inline">\top=Y_\emptyset</span>, all rigid; at every type it
+holds by the general argument tame-rigidity-factorizable (9 October
+2026), so this model separates Tame Rigidity from Rigid Power.</p>
 <h2 id="sources">Sources</h2>
 <ul>
 <li><strong>Dorr 7 Oct</strong> — Cian Dorr, suggestion of 7 October
