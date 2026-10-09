@@ -5,10 +5,10 @@
 ## Package
 
 - **Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
-- **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **□Atomicity.** Necessarily, every non-bottom entity of each relational type has an atom below it.
 - **□BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
 - **□Rigid Comprehension.** Necessarily, every relation, including a proposition, is coextensive with a rigid one.
+- **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
 - **□Intensional Choice.** Every closed instance of Intensional Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
 - **□Relational Choice.** Necessarily, every serial binary relation has a functional subrelation.
@@ -21,7 +21,6 @@
 - **¬ Infinity Schema (type t).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
 - **¬ Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **¬ Fregean Axiom.** Materially equivalent propositions are identical.
-- **¬ B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
 - **¬ No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
 - **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
 - **¬ Separated Structure.** For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.
@@ -72,12 +71,6 @@ The propositions at the evaluation world are finitely many, and every intension 
 *Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The copies in three full action models (each with four propositions) stated once for the topic; each record's count is its reason for meeting finitely-many-propositions.
 
 *Revised 2026-10-06 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The Axiom of Infinity's failure, which the text states, recorded as a verdict of its own, so that it is certified without the result that the Axiom implies the schema.
-
-### Holds Axiom of Infinity (type e).
-
-The individuals at the evaluation object are an infinite set and identity there is literal. The numerals at type $e$ are intensions of a full model, so they are the finite cardinalities, and none of them holds of the universal property: no finite cardinality holds of an infinite set. This is the argument the full surjection-monoid record gave for its own infinite individuals.
-
-*General argument `arguments/fixed-infinite-individuals`. It requires that At every object the individuals are the same infinite set, and every arrow acts on them as the identity. Here: This is the choice of individuals. It requires that The model is full: at each object, the domain of each relational type contains every intension of that type. Here: Every intension of every relational type is present at every object (Classicism, §3.5, p. 59). By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-03.*
 
 ### Holds □Atomicity.
 
@@ -144,14 +137,6 @@ Write $X_0(E)$ for the intension $k\mapsto k\cdot E$. The extension at an arrow 
 *General argument `arguments/rigid-power-tight`. It requires that At every object reachable from the evaluation point, the rigid relations of each relational type are exactly the intensions $k\mapsto k\cdot E$, the disjunctions of the haecceities of the members of $E$, for $E$ any set of tuples from the domains there; in particular every such intension is in the domain. Here: Every intension is present, so for any set $E$ the intension $k\mapsto k\cdot E$ is in the domain, and a relation is weakly inextensible at a world iff it lies below that intension over its extension there, since that is the smallest intension satisfying the hypothesis; with persistence, a rigid relation equals it (the argument deferred in extraction.md, 3 October 2026). By Claude Opus 5.5 (Anthropic), 3 October 2026 (full action models); extended by Claude Fable 5.1 (Anthropic), 4 October 2026, at Cian Dorr's direction.*
 
 *Revised 2026-10-04 by Claude Fable 5.1 (Anthropic), at Cian Dorr's direction:* The argument deferred in extraction.md on 3 October for the full action models, where every intension is present, stated under the condition it actually uses, which the symmetry-constrained full models also meet.
-
-### Fails B for sentences of Σ.
-
-B for sentences of Σ fails: the Σ-sentence $\forall\bar x\, .\,c\bar x$ denotes $a$, which is true, and under an arrow from which no world in $a$ is accessible $\Diamond a$ is false, so $\Box\Diamond a$ fails.
-
-*General argument `arguments/sigma-true-atom-b`. It requires that Σ has a designated relational constant $c$ of type $\tau=\bar\sigma t$ denoting $\lambda\bar x\, .\,a$, where $a$ is the actual-world proposition, the unique true atom; every other constant, of which there is at least one, is relational and denotes the top element of its type. Here: This is the interpretation. It requires that The actual-world proposition $a$, the strongest truth, is in the domain; it is necessary at no world, and some arrow does not fix it. Here: The singleton $a$ of the identity arrow is in the domain, the model being full. It is necessary at no world: a world other than the identity sees itself, which lies outside $a$, and the identity sees an arrow other than itself. And a non-identity arrow $k$ does not fix it, since $1\in k\cdot a$ would need $1\circ k=1$. It requires that Some world sees no world at which the actual-world proposition is true. Here: The arrow $k$ to $W_1$, from which no arrow leads back. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.*
-
-*Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The B clause of the records' Σ-as-true-atom argument, stated once for the topic.
 
 ### Fails No Contingency (signature Σ), Witnessed Possibility, Separated Structure, Independence (signature Σ), Maximalism (signature Σ).
 

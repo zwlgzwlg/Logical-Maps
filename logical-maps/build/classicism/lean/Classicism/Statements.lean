@@ -4269,9 +4269,9 @@ and violating 10. -/
 def full_idempotent_monoid_individuals_fixed_infinite : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
@@ -4300,9 +4300,9 @@ and violating 11. -/
 def full_idempotent_monoid_individuals_fixed_infinite_metatheory_socks : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
@@ -4329,9 +4329,9 @@ and violating 12. -/
 def full_idempotent_monoid_individuals_fixed_infinite_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
@@ -4360,9 +4360,9 @@ and violating 13. -/
 def full_idempotent_monoid_individuals_fixed_infinite_sigma_true_atom_metatheory_socks : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
@@ -4595,10 +4595,10 @@ def full_infinite_s5_individuals_fixed_infinite : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -4629,10 +4629,10 @@ def full_infinite_s5_individuals_fixed_infinite_metatheory_no_countable_choice_r
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -4661,10 +4661,10 @@ def full_infinite_s5_individuals_fixed_infinite_metatheory_socks : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -4693,10 +4693,10 @@ def full_infinite_s5_individuals_fixed_infinite_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -4726,10 +4726,10 @@ def full_infinite_s5_individuals_fixed_infinite_sigma_true_atom_metatheory_no_co
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -4757,10 +4757,10 @@ def full_infinite_s5_individuals_fixed_infinite_sigma_true_atom_metatheory_socks
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -4854,10 +4854,10 @@ and violating 9. -/
 def full_involution_group_individuals_fixed_infinite : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecNecessityOfDistinctness.schemaIn ∧
@@ -4886,10 +4886,10 @@ and violating 10. -/
 def full_involution_group_individuals_fixed_infinite_metatheory_socks : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecNecessityOfDistinctness.schemaIn ∧
@@ -4916,10 +4916,10 @@ and violating 10. -/
 def full_involution_group_individuals_fixed_infinite_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecNecessityOfDistinctness.schemaIn ∧
@@ -4947,10 +4947,10 @@ and violating 11. -/
 def full_involution_group_individuals_fixed_infinite_sigma_true_atom_metatheory_socks : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecNecessityOfDistinctness.schemaIn ∧
@@ -5104,10 +5104,10 @@ and violating 6. -/
 def full_permutation_group_infinite_set_individuals_fixed_infinite : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -5135,10 +5135,10 @@ and violating 8. -/
 def full_permutation_group_infinite_set_individuals_fixed_infinite_metatheory_no_countable_choice_reals : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -5164,10 +5164,10 @@ and violating 8. -/
 def full_permutation_group_infinite_set_individuals_fixed_infinite_metatheory_socks : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -5194,10 +5194,10 @@ def full_permutation_group_infinite_set_individuals_fixed_infinite_sigma_true_at
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.modalFreedom _) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -5225,10 +5225,10 @@ def full_permutation_group_infinite_set_individuals_fixed_infinite_sigma_true_at
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.modalFreedom _) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -5254,10 +5254,10 @@ def full_permutation_group_infinite_set_individuals_fixed_infinite_sigma_true_at
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.modalFreedom _) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -5465,10 +5465,10 @@ Full action model: surjections of an infinite set [infinitely many fixed individ
 and violating 7. -/
 def full_surjection_monoid_individuals_fixed_infinite : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -5495,10 +5495,10 @@ Full action model: surjections of an infinite set [infinitely many fixed individ
 and violating 9. -/
 def full_surjection_monoid_individuals_fixed_infinite_metatheory_no_countable_choice_reals : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -5523,10 +5523,10 @@ Full action model: surjections of an infinite set [infinitely many fixed individ
 and violating 9. -/
 def full_surjection_monoid_individuals_fixed_infinite_metatheory_socks : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -5551,10 +5551,10 @@ Full action model: surjections of an infinite set [infinitely many fixed individ
 and violating 9. -/
 def full_surjection_monoid_individuals_fixed_infinite_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -5581,10 +5581,10 @@ Full action model: surjections of an infinite set [infinitely many fixed individ
 and violating 11. -/
 def full_surjection_monoid_individuals_fixed_infinite_sigma_true_atom_metatheory_no_countable_choice_reals : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -5609,10 +5609,10 @@ Full action model: surjections of an infinite set [infinitely many fixed individ
 and violating 11. -/
 def full_surjection_monoid_individuals_fixed_infinite_sigma_true_atom_metatheory_socks : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
@@ -5665,7 +5665,7 @@ def full_two_object_chain : Prop :=
 /-- `full-two-object-chain-sigma-true-atom`
 
 Full action model: two-object chain [Σ true atom]: a witness satisfying 11 principles
-and violating 15. -/
+and violating 14. -/
 def full_two_object_chain_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
@@ -5687,7 +5687,6 @@ def full_two_object_chain_sigma_true_atom : Prop :=
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.PossibleInfinityE.schemaIn ∧
-    ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.witnessedPossibility _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.separatedStructure _) ∧
@@ -5702,10 +5701,10 @@ and violating 10. -/
 def full_two_object_chain_individuals_fixed_infinite : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRelationalChoice.schemaIn ∧
@@ -5731,10 +5730,10 @@ and violating 11. -/
 def full_two_object_chain_individuals_fixed_infinite_metatheory_socks : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidPower.schemaIn ∧
@@ -5754,14 +5753,14 @@ def full_two_object_chain_individuals_fixed_infinite_metatheory_socks : Prop :=
 /-- `full-two-object-chain-individuals-fixed-infinite-sigma-true-atom`
 
 Full action model: two-object chain [infinitely many fixed individuals; Σ true atom]: a witness satisfying 12 principles
-and violating 12. -/
+and violating 11. -/
 def full_two_object_chain_individuals_fixed_infinite_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRelationalChoice.schemaIn ∧
@@ -5774,7 +5773,6 @@ def full_two_object_chain_individuals_fixed_infinite_sigma_true_atom : Prop :=
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.FregeanAxiom.schemaIn ∧
-    ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.witnessedPossibility _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.separatedStructure _) ∧
@@ -5785,14 +5783,14 @@ def full_two_object_chain_individuals_fixed_infinite_sigma_true_atom : Prop :=
 /-- `full-two-object-chain-individuals-fixed-infinite-sigma-true-atom-metatheory-socks`
 
 Full action model: two-object chain [infinitely many fixed individuals; Σ true atom; ZF + socks]: a witness satisfying 9 principles
-and violating 13. -/
+and violating 12. -/
 def full_two_object_chain_individuals_fixed_infinite_sigma_true_atom_metatheory_socks : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidPower.schemaIn ∧
@@ -5802,7 +5800,6 @@ def full_two_object_chain_individuals_fixed_infinite_sigma_true_atom_metatheory_
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.FregeanAxiom.schemaIn ∧
-    ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.witnessedPossibility _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.separatedStructure _) ∧
@@ -5880,9 +5877,9 @@ Full action model: two-object retract with two retractions [infinitely many fixe
 and violating 11. -/
 def full_two_object_double_retraction_individuals_fixed_infinite : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRelationalChoice.schemaIn ∧
@@ -5909,9 +5906,9 @@ Full action model: two-object retract with two retractions [infinitely many fixe
 and violating 12. -/
 def full_two_object_double_retraction_individuals_fixed_infinite_metatheory_socks : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.schemaIn ∧
@@ -5936,9 +5933,9 @@ Full action model: two-object retract with two retractions [infinitely many fixe
 and violating 12. -/
 def full_two_object_double_retraction_individuals_fixed_infinite_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRelationalChoice.schemaIn ∧
@@ -5966,9 +5963,9 @@ Full action model: two-object retract with two retractions [infinitely many fixe
 and violating 13. -/
 def full_two_object_double_retraction_individuals_fixed_infinite_sigma_true_atom_metatheory_socks : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.schemaIn ∧
@@ -6062,9 +6059,9 @@ and violating 10. -/
 def full_two_object_retract_individuals_fixed_infinite : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRelationalChoice.schemaIn ∧
@@ -6093,9 +6090,9 @@ and violating 11. -/
 def full_two_object_retract_individuals_fixed_infinite_metatheory_socks : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.schemaIn ∧
@@ -6122,9 +6119,9 @@ and violating 11. -/
 def full_two_object_retract_individuals_fixed_infinite_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRelationalChoice.schemaIn ∧
@@ -6154,9 +6151,9 @@ and violating 12. -/
 def full_two_object_retract_individuals_fixed_infinite_sigma_true_atom_metatheory_socks : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn ∧
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.schemaIn ∧

@@ -5,9 +5,9 @@
 ## Package
 
 - **Gallin Extensional Comprehension.** Every relation is coextensive with one that is persistent and has a persistent pointwise negation. This is the source’s comparison with Gallin’s different rigidity convention.
-- **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **□Atomicity.** Necessarily, every non-bottom entity of each relational type has an atom below it.
 - **□Rigid Comprehension.** Necessarily, every relation, including a proposition, is coextensive with a rigid one.
+- **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
 - **□Intensional Choice.** Every closed instance of Intensional Choice is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
 - **ND.** Distinct things of any type are necessarily distinct.
@@ -68,12 +68,6 @@ The propositions at the evaluation world are finitely many, and every intension 
 *Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The copies in three full action models (each with four propositions) stated once for the topic; each record's count is its reason for meeting finitely-many-propositions.
 
 *Revised 2026-10-06 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* The Axiom of Infinity's failure, which the text states, recorded as a verdict of its own, so that it is certified without the result that the Axiom implies the schema.
-
-### Holds Axiom of Infinity (type e).
-
-The individuals at the evaluation object are an infinite set and identity there is literal. The numerals at type $e$ are intensions of a full model, so they are the finite cardinalities, and none of them holds of the universal property: no finite cardinality holds of an infinite set. This is the argument the full surjection-monoid record gave for its own infinite individuals.
-
-*General argument `arguments/fixed-infinite-individuals`. It requires that At every object the individuals are the same infinite set, and every arrow acts on them as the identity. Here: This is the choice of individuals. It requires that The model is full: at each object, the domain of each relational type contains every intension of that type. Here: Every intension of every relational type is present at every object (Classicism, §3.5, p. 59). By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-03.*
 
 ### Holds □Atomicity.
 
