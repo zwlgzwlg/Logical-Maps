@@ -200,3 +200,20 @@ conditions:
 - id: arbitrary-infinite-set
   text: >-
     The construction uses an infinite set that it leaves unspecified: any infinite set will do.
+# Added 9 October 2026 (Claude Opus 5.5, on Cian Dorr's request to settle Tame Rigidity where open).
+- id: finitely-pinned-domains
+  text: >-
+    Write an entity of relational type at the evaluation object as its intension $k\mapsto Y_k$
+    over the arrows $k$ out of it, so that $Y\bar a$ holds at $k$ iff $k\cdot\bar a\in Y_k$; $Y$ is
+    pinned down by a finite set $N$ of the points the arrows act on when $Y_k=Y_{k^{\prime}}$ for any
+    arrows $k,k^{\prime}$ agreeing on $N$. Every entity in a domain is pinned down by a finite set, in
+    the sense that $k\cdot x=k^{\prime}\cdot x$ for arrows agreeing on it, and the domain of each
+    relational type at the evaluation object holds every intension pinned down by a finite set (in a
+    symmetric model, every symmetric one).
+- id: factorizable-arrows
+  text: >-
+    For every arrow $h$ out of the evaluation object and finite sets $N,S$ there is a finite
+    $N^{\prime\prime}\supseteq S$ such that, whenever $k^{\prime}$ agrees with $k\circ h$ on
+    $N^{\prime\prime}$, for every finite $M$ some arrows $k^{\prime\prime}$ agreeing with $h$ on
+    $N^{\prime\prime}$ and $j$ agreeing with $k$ on $N$ have $j\circ k^{\prime\prime}$ agreeing with
+    $k^{\prime}$ on $M$.

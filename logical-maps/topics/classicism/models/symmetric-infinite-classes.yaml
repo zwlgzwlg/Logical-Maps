@@ -40,6 +40,16 @@ settings:
   individuals: base
   sigma: top
 meets:
+  factorizable-arrows: >-
+    Take $N^{\prime\prime}:=S$ and, enlarging $N$, assume $h(N^{\prime\prime})\subseteq N$. Let
+    $k^{\prime\prime}$ agree with $h$ on $N^{\prime\prime}$; for $m\in M\setminus N^{\prime\prime}$ let
+    $k^{\prime\prime}m$ be some $n\in N$ with $kn=k^{\prime}m$ if there is one, and otherwise a fresh
+    point outside $N$, one for each value of $k^{\prime}$. Let $j$ agree with $k$ on $N$ and send each
+    fresh point to its value. Both extend to surjections, infinitely many points being left free,
+    and $jk^{\prime\prime}$ agrees with $k^{\prime}$ on $M$.
+  finitely-pinned-domains: >-
+    A relational domain holds exactly the symmetric intensions pinned down by a finite set, and
+    every individual $n$ is pinned down by $\{n\}$.
   collapse-onto-point: >-
     Take $F:=\lambda x\, .\,x\ne a$, so $p\notin F_h$. $h$ is any surjection constant on $N\cup\{a\}$; a transposition inside $y$'s class that fixes $p$ is an automorphism of the equivalence relation, and moves $y$.
   one-object-action-model: >-

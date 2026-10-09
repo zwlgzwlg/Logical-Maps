@@ -40,6 +40,15 @@ settings:
   sigma: top
 
 meets:
+  factorizable-arrows: >-
+    Given $h$, $N\subseteq[0,n]$ and $S\subseteq[0,s]$, take $N^{\prime\prime}:=[0,n^{\prime\prime}]$ with
+    $n^{\prime\prime}\ge s$ and $h(n^{\prime\prime})\ge n$. For $k^{\prime}$ agreeing with $kh$ there and
+    $M\subseteq[0,m]$, $m\ge n^{\prime\prime}$: let $k^{\prime\prime}$ be $h$ on $[0,n^{\prime\prime}]$ and then
+    rise by one at each step, and let $j$ be $k$ on $[0,h(n^{\prime\prime})]$, send
+    $h(n^{\prime\prime})+i$ to $k^{\prime}(n^{\prime\prime}+i)$ for $0<i\le m-n^{\prime\prime}$, and then rise
+    by one. Both are monotone surjections, since the steps of $k^{\prime}$ are $0$ or $1$; $j$ agrees
+    with $k$ on $N$; and $jk^{\prime\prime}$ agrees with $k^{\prime}$ on $[0,m]$, on $[0,n^{\prime\prime}]$
+    because $k^{\prime}$ agrees with $kh$ there.
   evens-avoidable: >-
     With $N_0\subseteq[0,M_0]$: $i$ the monotone surjection that is the identity on $[0,M_0+1]$,
     sends $M_0+2$ to $M_0+1$ and $x$ to $x-1$ for $x\ge M_0+2$; an even $b\ge M_0+2$, whose only

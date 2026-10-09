@@ -42,6 +42,13 @@ settings:
   sigma: top
 
 meets:
+  factorizable-arrows: >-
+    If $h$ is the identity, take $N^{\prime\prime}:=N\cup S$, $k^{\prime\prime}:=1$ and $j:=k^{\prime}$.
+    Otherwise $h$ collapses $0$ and $1$; take $N^{\prime\prime}$ as for the monotone surjections, with
+    $0,1\in N$. If $k$ is the identity, $k^{\prime}$ agrees with $h$ on $\{0,1\}$, so it is a collapse;
+    take $k^{\prime\prime}:=k^{\prime}$ and $j:=1$. If $k$ is a collapse, the construction for the
+    monotone surjections gives $k^{\prime\prime}$ and $j$ that collapse $0$ and $1$, as $h$ and $k$
+    do.
   actual-world-pinned: >-
     As in part 4: the identity is the only arrow that does not collapse $0$ and $1$, so
     $\{1_{\mathbb N}\}$ is pinned down by $\{0,1\}$.

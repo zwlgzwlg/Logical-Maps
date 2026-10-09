@@ -1,0 +1,27 @@
+id: tame-rigidity-factorizable
+requires: [one-object-action-model, finitely-pinned-domains, factorizable-arrows]
+choice: free
+holds: [tame-rigidity-r]
+by: Claude Opus 5.5 (Anthropic), on Cian Dorr's request to settle Tame Rigidity where it was open
+date: '2026-10-09'
+text: >-
+  Write $B_N(E)$ for the intension $k\mapsto\bigcup\{k^{\prime}\cdot E:k^{\prime}\text{ agrees with }k
+  \text{ on }N\}$; it is pinned down by $N$, and symmetric when the model is, since the symmetry
+  group consists of arrows and $(gk)\cdot E=g\cdot(k\cdot E)$, so it is in the domain. (1) A relation
+  $Y$ pinned down by $S$, with extension $E$ at the identity, is weakly rigid iff $Y=B_S(E)=B_N(E)$
+  for every finite $N\supseteq S$: weak persistence gives $k\cdot E\subseteq Y_k$, and with pinning
+  $B_S(E)\subseteq Y$; a domain element $X$ with $\Box X$ true of each member of $E$, pinned down by
+  $N$, contains $B_N(E)$, so weak inextensibility says exactly that $Y\subseteq B_N(E)$ for every
+  finite $N$, and $B_N(E)\subseteq B_S(E)$ for $N\supseteq S$. (2) Rigidity is (1) at every world:
+  for each arrow $h$, $h\cdot Y$, with $(h\cdot Y)_k=Y_{kh}$, must satisfy $k\cdot Y_h\subseteq
+  Y_{kh}\subseteq B_N(Y_h)_k$ for all $k$ and finite $N$. (3) Let $Y$ be weakly rigid. Persistence at
+  $h$: $k\cdot Y_h=\bigcup\{(kk^{\prime\prime})\cdot E:k^{\prime\prime}\text{ agrees with }h\text{ on
+  }S\}\subseteq B_S(E)_{kh}=Y_{kh}$. Inextensibility at $h$: given $N$, take $N^{\prime\prime}$ from
+  the condition. By (1), $Y_{kh}=B_{N^{\prime\prime}}(E)_{kh}$, so a member of it is $k^{\prime}\cdot
+  e$ with $e\in E$, pinned down by some finite $M$, and $k^{\prime}$ agreeing with $kh$ on
+  $N^{\prime\prime}$. The condition gives $k^{\prime\prime}$ agreeing with $h$ on $N^{\prime\prime}$
+  and $j$ agreeing with $k$ on $N$ with $jk^{\prime\prime}$ agreeing with $k^{\prime}$ on $M$, so
+  $k^{\prime}\cdot e=j\cdot(k^{\prime\prime}\cdot e)$, where $k^{\prime\prime}\cdot e\in
+  B_{N^{\prime\prime}}(E)_h=Y_h$; hence $k^{\prime}\cdot e\in B_N(Y_h)_k$. So every weakly rigid
+  relation, at every type, is rigid. With No Pure Contingency, which holds in one-object models, the
+  map's results give $\Box$Tame Rigidity.

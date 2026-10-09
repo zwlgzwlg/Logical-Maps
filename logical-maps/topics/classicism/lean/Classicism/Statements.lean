@@ -3391,7 +3391,7 @@ def finite_support_dyadic_roundings_individuals_singleton_sigma_true_atom : Prop
 
 /-- `finite-support-identity-or-collapse-surjections`
 
-Finite-support action model: identity-or-collapse monotone surjections: a witness satisfying 12 principles
+Finite-support action model: identity-or-collapse monotone surjections: a witness satisfying 13 principles
 and violating 9. -/
 def finite_support_identity_or_collapse_surjections : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -3404,6 +3404,7 @@ def finite_support_identity_or_collapse_surjections : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TransversalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
@@ -3419,7 +3420,7 @@ def finite_support_identity_or_collapse_surjections : Prop :=
 
 /-- `finite-support-identity-or-collapse-surjections-sigma-true-atom`
 
-Finite-support action model: identity-or-collapse monotone surjections [Σ true atom]: a witness satisfying 10 principles
+Finite-support action model: identity-or-collapse monotone surjections [Σ true atom]: a witness satisfying 11 principles
 and violating 11. -/
 def finite_support_identity_or_collapse_surjections_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -3432,6 +3433,7 @@ def finite_support_identity_or_collapse_surjections_sigma_true_atom : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TransversalChoice.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomicity.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AtomicityT.schemaIn ∧
@@ -3447,7 +3449,7 @@ def finite_support_identity_or_collapse_surjections_sigma_true_atom : Prop :=
 
 /-- `finite-support-identity-or-collapse-surjections-individuals-singleton`
 
-Finite-support action model: identity-or-collapse monotone surjections [one individual]: a witness satisfying 11 principles
+Finite-support action model: identity-or-collapse monotone surjections [one individual]: a witness satisfying 12 principles
 and violating 10. -/
 def finite_support_identity_or_collapse_surjections_individuals_singleton : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -3458,6 +3460,7 @@ def finite_support_identity_or_collapse_surjections_individuals_singleton : Prop
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.CountableBooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TransversalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
@@ -3475,7 +3478,7 @@ def finite_support_identity_or_collapse_surjections_individuals_singleton : Prop
 
 /-- `finite-support-identity-or-collapse-surjections-individuals-singleton-sigma-true-atom`
 
-Finite-support action model: identity-or-collapse monotone surjections [one individual; Σ true atom]: a witness satisfying 9 principles
+Finite-support action model: identity-or-collapse monotone surjections [one individual; Σ true atom]: a witness satisfying 10 principles
 and violating 12. -/
 def finite_support_identity_or_collapse_surjections_individuals_singleton_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -3486,6 +3489,7 @@ def finite_support_identity_or_collapse_surjections_individuals_singleton_sigma_
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.CountableBooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TransversalChoice.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomicity.schemaIn ∧
@@ -3503,11 +3507,12 @@ def finite_support_identity_or_collapse_surjections_individuals_singleton_sigma_
 
 /-- `finite-support-identity-or-collapse`
 
-Finite-support action model: identity-or-collapse monotone maps: a witness satisfying 12 principles
+Finite-support action model: identity-or-collapse monotone maps: a witness satisfying 13 principles
 and violating 11. -/
 def finite_support_identity_or_collapse : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidPower.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Actuality.schemaIn ∧
@@ -3533,11 +3538,12 @@ def finite_support_identity_or_collapse : Prop :=
 
 /-- `finite-support-identity-or-collapse-sigma-true-atom`
 
-Finite-support action model: identity-or-collapse monotone maps [Σ true atom]: a witness satisfying 10 principles
+Finite-support action model: identity-or-collapse monotone maps [Σ true atom]: a witness satisfying 11 principles
 and violating 13. -/
 def finite_support_identity_or_collapse_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidPower.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Actuality.schemaIn ∧
@@ -3563,11 +3569,12 @@ def finite_support_identity_or_collapse_sigma_true_atom : Prop :=
 
 /-- `finite-support-identity-or-collapse-individuals-singleton`
 
-Finite-support action model: identity-or-collapse monotone maps [one individual]: a witness satisfying 11 principles
+Finite-support action model: identity-or-collapse monotone maps [one individual]: a witness satisfying 12 principles
 and violating 11. -/
 def finite_support_identity_or_collapse_individuals_singleton : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidPower.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Actuality.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
@@ -3592,11 +3599,12 @@ def finite_support_identity_or_collapse_individuals_singleton : Prop :=
 
 /-- `finite-support-identity-or-collapse-individuals-singleton-sigma-true-atom`
 
-Finite-support action model: identity-or-collapse monotone maps [one individual; Σ true atom]: a witness satisfying 9 principles
+Finite-support action model: identity-or-collapse monotone maps [one individual; Σ true atom]: a witness satisfying 10 principles
 and violating 13. -/
 def finite_support_identity_or_collapse_individuals_singleton_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidPower.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Actuality.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
@@ -3621,12 +3629,13 @@ def finite_support_identity_or_collapse_individuals_singleton_sigma_true_atom : 
 
 /-- `finite-support-monotone-maps`
 
-Finite-support action model: monotone maps of N: a witness satisfying 9 principles
+Finite-support action model: monotone maps of N: a witness satisfying 10 principles
 and violating 10. -/
 def finite_support_monotone_maps : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidPower.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
@@ -3647,12 +3656,13 @@ def finite_support_monotone_maps : Prop :=
 
 /-- `finite-support-monotone-maps-sigma-top`
 
-Finite-support action model: monotone maps of N [Σ top]: a witness satisfying 11 principles
+Finite-support action model: monotone maps of N [Σ top]: a witness satisfying 12 principles
 and violating 12. -/
 def finite_support_monotone_maps_sigma_top : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidPower.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityE) ∧
@@ -3677,12 +3687,13 @@ def finite_support_monotone_maps_sigma_top : Prop :=
 
 /-- `finite-support-monotone-maps-individuals-singleton`
 
-Finite-support action model: monotone maps of N [one individual]: a witness satisfying 8 principles
+Finite-support action model: monotone maps of N [one individual]: a witness satisfying 9 principles
 and violating 9. -/
 def finite_support_monotone_maps_individuals_singleton : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidPower.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
@@ -3701,12 +3712,13 @@ def finite_support_monotone_maps_individuals_singleton : Prop :=
 
 /-- `finite-support-monotone-maps-individuals-singleton-sigma-top`
 
-Finite-support action model: monotone maps of N [one individual; Σ top]: a witness satisfying 10 principles
+Finite-support action model: monotone maps of N [one individual; Σ top]: a witness satisfying 11 principles
 and violating 11. -/
 def finite_support_monotone_maps_individuals_singleton_sigma_top : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidPower.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityT.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
@@ -3729,7 +3741,7 @@ def finite_support_monotone_maps_individuals_singleton_sigma_top : Prop :=
 
 /-- `finite-support-monotone-surjections`
 
-Finite-support action model: monotone surjections of N: a witness satisfying 12 principles
+Finite-support action model: monotone surjections of N: a witness satisfying 13 principles
 and violating 9. -/
 def finite_support_monotone_surjections : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -3742,6 +3754,7 @@ def finite_support_monotone_surjections : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TransversalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
@@ -3757,7 +3770,7 @@ def finite_support_monotone_surjections : Prop :=
 
 /-- `finite-support-monotone-surjections-individuals-singleton`
 
-Finite-support action model: monotone surjections of N [one individual]: a witness satisfying 11 principles
+Finite-support action model: monotone surjections of N [one individual]: a witness satisfying 12 principles
 and violating 8. -/
 def finite_support_monotone_surjections_individuals_singleton : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -3768,6 +3781,7 @@ def finite_support_monotone_surjections_individuals_singleton : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.CountableBooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TransversalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
@@ -3783,7 +3797,7 @@ def finite_support_monotone_surjections_individuals_singleton : Prop :=
 
 /-- `finite-support-pair-injections-or-collapses`
 
-Finite-support action model: pair-preserving injections and pair collapses of N: a witness satisfying 12 principles
+Finite-support action model: pair-preserving injections and pair collapses of N: a witness satisfying 13 principles
 and violating 8. -/
 def finite_support_pair_injections_or_collapses : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -3796,6 +3810,7 @@ def finite_support_pair_injections_or_collapses : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TransversalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
@@ -3810,7 +3825,7 @@ def finite_support_pair_injections_or_collapses : Prop :=
 
 /-- `finite-support-pair-injections-or-collapses-individuals-singleton`
 
-Finite-support action model: pair-preserving injections and pair collapses of N [one individual]: a witness satisfying 11 principles
+Finite-support action model: pair-preserving injections and pair collapses of N [one individual]: a witness satisfying 12 principles
 and violating 8. -/
 def finite_support_pair_injections_or_collapses_individuals_singleton : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -3821,6 +3836,7 @@ def finite_support_pair_injections_or_collapses_individuals_singleton : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.infinityT) ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecIntensionalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.CountableBooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TransversalChoice.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
@@ -6190,7 +6206,7 @@ def henkin_without_relational_choice : Prop :=
 
 /-- `symmetric-all-surjections`
 
-Symmetric ideally-full model: all surjections of N (Base 1): a witness satisfying 9 principles
+Symmetric ideally-full model: all surjections of N (Base 1): a witness satisfying 10 principles
 and violating 7. -/
 def symmetric_all_surjections : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -6201,6 +6217,7 @@ def symmetric_all_surjections : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Barcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Actuality.schemaIn ∧
@@ -6213,7 +6230,7 @@ def symmetric_all_surjections : Prop :=
 
 /-- `symmetric-all-surjections-individuals-singleton`
 
-Symmetric ideally-full model: all surjections of N (Base 1) [one individual]: a witness satisfying 8 principles
+Symmetric ideally-full model: all surjections of N (Base 1) [one individual]: a witness satisfying 9 principles
 and violating 8. -/
 def symmetric_all_surjections_individuals_singleton : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -6223,6 +6240,7 @@ def symmetric_all_surjections_individuals_singleton : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Barcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Actuality.schemaIn ∧
@@ -6334,7 +6352,7 @@ def symmetric_collapse_pair_individuals_singleton_sigma_true_atom : Prop :=
 
 /-- `symmetric-infinite-classes`
 
-Symmetric ideally-full model: automorphisms of infinitely many infinite classes: a witness satisfying 8 principles
+Symmetric ideally-full model: automorphisms of infinitely many infinite classes: a witness satisfying 9 principles
 and violating 7. -/
 def symmetric_infinite_classes : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -6344,6 +6362,7 @@ def symmetric_infinite_classes : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Barcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Transversal.schemaIn ∧
@@ -6356,7 +6375,7 @@ def symmetric_infinite_classes : Prop :=
 
 /-- `symmetric-infinite-classes-individuals-singleton`
 
-Symmetric ideally-full model: automorphisms of infinitely many infinite classes [one individual]: a witness satisfying 7 principles
+Symmetric ideally-full model: automorphisms of infinitely many infinite classes [one individual]: a witness satisfying 8 principles
 and violating 7. -/
 def symmetric_infinite_classes_individuals_singleton : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -6365,6 +6384,7 @@ def symmetric_infinite_classes_individuals_singleton : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Barcan.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
@@ -6592,7 +6612,7 @@ def symmetric_qualitative_links_individuals_singleton_sigma_true_atom : Prop :=
 
 /-- `symmetric-range-gap-without-actuality`
 
-Symmetric ideally-full model: arrows omitting or reserving a fixed individual: a witness satisfying 7 principles
+Symmetric ideally-full model: arrows omitting or reserving a fixed individual: a witness satisfying 8 principles
 and violating 8. -/
 def symmetric_range_gap_without_actuality : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -6601,6 +6621,7 @@ def symmetric_range_gap_without_actuality : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RelationalChoice.schemaIn ∧
@@ -6614,7 +6635,7 @@ def symmetric_range_gap_without_actuality : Prop :=
 
 /-- `symmetric-range-gap-without-actuality-individuals-singleton`
 
-Symmetric ideally-full model: arrows omitting or reserving a fixed individual [one individual]: a witness satisfying 6 principles
+Symmetric ideally-full model: arrows omitting or reserving a fixed individual [one individual]: a witness satisfying 7 principles
 and violating 8. -/
 def symmetric_range_gap_without_actuality_individuals_singleton : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -6622,6 +6643,7 @@ def symmetric_range_gap_without_actuality_individuals_singleton : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.InextensibleComprehension.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BarcanT.schemaIn ∧
@@ -6635,7 +6657,7 @@ def symmetric_range_gap_without_actuality_individuals_singleton : Prop :=
 
 /-- `symmetric-range-gap`
 
-Symmetric ideally-full model: arrows omitting a fixed individual: a witness satisfying 8 principles
+Symmetric ideally-full model: arrows omitting a fixed individual: a witness satisfying 9 principles
 and violating 9. -/
 def symmetric_range_gap : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -6645,6 +6667,7 @@ def symmetric_range_gap : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AtomicityT.schemaIn ∧
@@ -6659,7 +6682,7 @@ def symmetric_range_gap : Prop :=
 
 /-- `symmetric-range-gap-sigma-true-atom`
 
-Symmetric ideally-full model: arrows omitting a fixed individual [Σ true atom]: a witness satisfying 6 principles
+Symmetric ideally-full model: arrows omitting a fixed individual [Σ true atom]: a witness satisfying 7 principles
 and violating 11. -/
 def symmetric_range_gap_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -6669,6 +6692,7 @@ def symmetric_range_gap_sigma_true_atom : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AtomicityT.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RelationalChoice.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Barcan.schemaIn ∧
@@ -6683,7 +6707,7 @@ def symmetric_range_gap_sigma_true_atom : Prop :=
 
 /-- `symmetric-range-gap-individuals-singleton`
 
-Symmetric ideally-full model: arrows omitting a fixed individual [one individual]: a witness satisfying 7 principles
+Symmetric ideally-full model: arrows omitting a fixed individual [one individual]: a witness satisfying 8 principles
 and violating 9. -/
 def symmetric_range_gap_individuals_singleton : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -6692,6 +6716,7 @@ def symmetric_range_gap_individuals_singleton : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.noContingency _) ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.signatureB _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AtomicityT.schemaIn ∧
@@ -6706,7 +6731,7 @@ def symmetric_range_gap_individuals_singleton : Prop :=
 
 /-- `symmetric-range-gap-individuals-singleton-sigma-true-atom`
 
-Symmetric ideally-full model: arrows omitting a fixed individual [one individual; Σ true atom]: a witness satisfying 5 principles
+Symmetric ideally-full model: arrows omitting a fixed individual [one individual; Σ true atom]: a witness satisfying 6 principles
 and violating 11. -/
 def symmetric_range_gap_individuals_singleton_sigma_true_atom : Prop :=
   ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
@@ -6715,6 +6740,7 @@ def symmetric_range_gap_individuals_singleton_sigma_true_atom : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
     Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.noContingency) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TameRigidity.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AtomicityT.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BarcanT.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧

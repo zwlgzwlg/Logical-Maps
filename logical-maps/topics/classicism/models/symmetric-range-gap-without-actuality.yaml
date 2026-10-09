@@ -34,6 +34,18 @@ settings:
   individuals: base
   sigma: top
 meets:
+  factorizable-arrows: >-
+    As in symmetric-range-gap, with $d$ in $S$ and $N$ and the kinds told apart by the value at
+    $d$, the first kind now being the surjections for which $d$ is its own only preimage. For
+    $m\in M\setminus N^{\prime\prime}$ let $k^{\prime\prime}m$ be some $n\in N$ with $kn=k^{\prime}m$ when
+    $k$ is of the first kind and there is one (then $n\ne d$, as $k^{\prime}m\ne d$), and otherwise a
+    fresh point outside $N\cup\{d\}$, one for each value of $k^{\prime}$; let $j$ agree with $k$ on $N$
+    and send each fresh point to its value, never $d$. Arrows of the first kind need only be
+    surjective with $d$ the only preimage of $d$, so $k^{\prime\prime}$ and $j$ extend to arrows of the
+    kinds of $h$ and $k$, and $jk^{\prime\prime}$ agrees with $k^{\prime}$ on $M$.
+  finitely-pinned-domains: >-
+    A relational domain holds exactly the symmetric intensions pinned down by a finite set, and
+    every individual $n$ is pinned down by $\{n\}$.
   collapse-onto-point: >-
     As for the range-gap model: $F:=\lambda x\, .\,x\ne a\land\neg Ex$ with $E$ the constant intension $\{d\}$ of the distinguished individual, and $h$ a range-deficient function constant with value $p\ne d$ on $N\cup\{a\}$; $F_h$ omits $p$ and $d$, and permutations fixing $p$ and $d$ move every other point.
   one-object-action-model: >-

@@ -35,13 +35,18 @@ settings:
       denotes the top element of its type.
 
 meets:
+  # uniformly-pinned-rigidity revised 9 October 2026 (Claude Opus 5.5, at Cian Dorr's direction):
+  # stated for weakly rigid relations, which the argument only uses, and the comparison union taken
+  # over $[0,s'+1]$, where every agreeing arrow jumps.
   uniformly-pinned-rigidity: >-
-    Let $Y$ be rigid, pinned down by $S=[0,s]$, with extension $E$ at the identity; rigidity makes
-    $\bigcup\{k_2\cdot E:k_2\text{ agrees with }k\text{ on }S\}$ independent of $S$ among the sets
-    pinning down $Y$. If some $p\in E$ were pinned minimally at $T$ with $t:=\max T>s$, take
+    Let $Y$ be weakly rigid, pinned down by $S=[0,s]$, with extension $E$ at the identity. Pinning
+    and weak persistence give $Y(k)\supseteq k_2\cdot E$ for every $k_2$ agreeing with $k$ on $S$,
+    and weak inextensibility, tested on the intension $k\mapsto\bigcup\{k_2\cdot E:k_2\text{ agrees
+    with }k\text{ on }N\}$, pinned down by $N$, gives the reverse inclusion; so
+    $\bigcup\{k_2\cdot E:k_2\text{ agrees with }k\text{ on }N\}=Y(k)$ for every finite $N\supseteq S$. If some $p\in E$ were pinned minimally at $T$ with $t:=\max T>s$, take
     $s'\ge t$ and the jump map $k$, the identity on $[0,s']$ and adding
     $100$ beyond: an arrow agreeing with $k$ on $S$ and sending $t$ to $s'+1$ puts into the
-    $S$-union an element pinned at $s'+1$, while every element of the $[0,s']$-union is pinned
+    $S$-union an element pinned at $s'+1$, while every element of the $[0,s'+1]$-union is pinned
     inside $k([0,s'])\cup[s'+100,\infty)$. So $E\subseteq\operatorname{Pin}(S)$, and then
     $k_2\cdot p=k\cdot p$ whenever $k_2$ agrees with $k$ on $S$, so $Y(k)=k\cdot E$.
   evens-avoidable: >-

@@ -99,6 +99,9 @@ lean:
 # Conditions of the topic (conditions.yaml) that every member meets; members meet others under their
 # own `meets`, and parameter values under theirs.
 meets:
+  finitely-pinned-domains: >-
+    The model is ideally full: every entity is pinned down by a finite set of numbers, and every
+    intension pinned down by one is in the domain (Definitions D.1–D.3).
   infinitely-many-propositions: >-
     The propositions that a given number is fixed by the arrow, one for each number, are pairwise
     distinct, each pinned down by that number (the shared argument axiom-of-infinity-t).
@@ -175,10 +178,13 @@ conditions:
 
 - id: uniformly-pinned-rigidity
   # Claude Fable 5.1, 4 October 2026: the hypothesis of the shared argument rigid-power.
+  # Revised 9 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): strengthened from rigid to
+  # weakly rigid relations, which the members' justifications already covered, so that it also
+  # gives Tame Rigidity (shared argument tame-rigidity-uniformly-pinned).
   text: >-
-    Every rigid relation is the intension $k\mapsto k\cdot E$, the disjunction of the haecceities
-    of the members of its extension $E$ at the identity, and $E$ is pinned down uniformly: some
-    finite set pins down every member of $E$.
+    Every weakly rigid relation is the intension $k\mapsto k\cdot E$, the disjunction of the
+    haecceities of the members of its extension $E$ at the identity, and $E$ is pinned down
+    uniformly: some finite set pins down every member of $E$.
 
 - id: no-least-pinned-cover
   text: >-
@@ -213,6 +219,18 @@ arguments:
     finite or infinite, of haecceities of entities pinned down by one finite set; the boxed form
     follows from No Pure Contingency.
 
+
+- id: tame-rigidity-uniformly-pinned
+  requires: [uniformly-pinned-rigidity]
+  choice: free
+  holds: [tame-rigidity-r]
+  by: Claude Opus 5.5 (Anthropic), on Cian Dorr's request to settle Tame Rigidity where it was open
+  date: '2026-10-09'
+  text: >-
+    By the condition a weakly rigid relation is $k\mapsto k\cdot E$, and it is in the domain; such
+    an intension is rigid in any one-object model, by part (1) of the argument tame-rigidity. So
+    every weakly rigid relation is rigid, and with No Pure Contingency the map's results give
+    $\Box$Tame Rigidity.
 
 - id: tame-rigidity
   requires: [arrows-finitely-determined]

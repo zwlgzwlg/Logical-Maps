@@ -38,6 +38,18 @@ settings:
   sigma: top
 
 meets:
+  factorizable-arrows: >-
+    Take $N^{\prime\prime}:=S\cup\{0,1\}$ and, enlarging $N$, assume $\{0,1\}\cup
+    h(N^{\prime\prime})\subseteq N$; then $k^{\prime}$, $k^{\prime\prime}$ and $j$ below are collapses iff
+    $kh$, $h$ and $k$ are. Let $k^{\prime\prime}$ agree with $h$ on $N^{\prime\prime}$; for $m\in
+    M\setminus N^{\prime\prime}$ let $k^{\prime\prime}m:=k^{-1}(k^{\prime}m)$ if $k$ is injective and
+    $k^{\prime}m\in k(N)$, and otherwise a fresh point outside $N$, one for each $m$ if $h$ is injective
+    and one for each value of $k^{\prime}$ if not. Let $j$ agree with $k$ on $N$ and send each fresh
+    point to its value. Where $h$ is injective, $k^{\prime}$ is injective or $k$ a collapse, so
+    $k^{\prime\prime}$ is injective on $M$, its values $k^{-1}(k^{\prime}m)$ avoiding
+    $h(N^{\prime\prime})$; where $k$ is injective, the new values of $j$ lie outside $k(N)$ and are
+    distinct. So both extend to arrows of their kinds, and $jk^{\prime\prime}$ agrees with $k^{\prime}$
+    on $M$.
   unbounded-haecceities: >-
     With $A$ the even numbers, as for the permutations: at a pair-preserving injection $h$, the
     strongest persistent property pinned down by a finite $X\supseteq\{0,1\}$ whose extension
