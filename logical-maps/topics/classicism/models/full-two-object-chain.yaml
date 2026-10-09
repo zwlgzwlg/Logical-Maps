@@ -46,8 +46,6 @@ meets:
   actual-world-isolated: >-
     The actual-world proposition, the singleton of the identity, is in the domain, the model being
     full; no arrow leads back from $W_1$ to $W_0$.
-  irreversible-arrow: >-
-    The arrow $k$ to $W_1$, from which no arrow leads back.
 
 arguments: []
 
