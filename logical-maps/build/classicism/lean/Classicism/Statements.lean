@@ -2092,15 +2092,6 @@ def necessary_strong_actuality_implies_strong_actuality : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecStrongActuality.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.StrongActuality.schemaIn
 
-/-- `necessary-strong-leibniz-and-rigid-comprehension-imply-necessary-bf-t`
-
-□Strong Leibniz Biconditionals ∧ Rigid Comprehension ⇒ □BF (type t) -/
-def necessary_strong_leibniz_and_rigid_comprehension_imply_necessary_bf_t : Prop :=
-  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecStrongLeibniz.schemaIn →
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidComprehension.schemaIn →
-    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcanT.schemaIn
-
 /-- `necessary-strong-leibniz-implies-necessary-atomicity`
 
 □Strong Leibniz Biconditionals ⇒ □Atomicity -/

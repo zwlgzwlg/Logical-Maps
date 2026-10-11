@@ -1,0 +1,21 @@
+# □BF ⇒ □BF (relational types)
+
+<p class='cert'>Result — Source: Misc.; produced by Claude Opus 5.5 (Anthropic), 11 October 2026, from a suggestion of Cian Dorr; recorded by Claude Opus 5.5 (Anthropic), 11 October 2026.</p>
+
+## Premises
+
+- **□BF.** Necessarily, the Barcan Formula holds at every type. The predicate formulation closes the formula schema using lambda abstraction.
+
+## Conclusion
+
+- **□BF (relational types).** Necessarily, BF holds at every relational type.
+
+## Proof
+
+Every boxed instance of BF (relational types) is a boxed instance of BF.
+
+## Sources
+
+- **Dorr 11 Oct** — Cian Dorr, suggestion of 11 October 2026.
+
+<p class='cert'>Record: <code>topics/classicism/results/necessary-barcan-r-implies-necessary-barcan-relational.yaml</code></p>
