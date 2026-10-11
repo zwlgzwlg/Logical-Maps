@@ -1569,4 +1569,80 @@ theorem c5_implies_tame_rigidity : Statements.c5_implies_tame_rigidity := by
 theorem c5_implies_necessary_tame_rigidity : Statements.c5_implies_necessary_tame_rigidity := by
   map_cert Meta.c5_implies_necessary_tame_rigidity
 
+/-- `weakly-rigid-power-implies-tame-rigidity` -/
+theorem weakly_rigid_power_implies_tame_rigidity : Statements.weakly_rigid_power_implies_tame_rigidity := by
+  map_cert Proofs.weakly_rigid_power_implies_tame_rigidity.entails
+
+/-- `weakly-rigid-power-implies-rigid-power` -/
+theorem weakly_rigid_power_implies_rigid_power : Statements.weakly_rigid_power_implies_rigid_power := by
+  map_cert Proofs.weakly_rigid_power_implies_rigid_power.entails
+
+/-- `necessary-tame-rigidity-and-rigid-power-imply-weakly-rigid-power` -/
+theorem necessary_tame_rigidity_and_rigid_power_imply_weakly_rigid_power : Statements.necessary_tame_rigidity_and_rigid_power_imply_weakly_rigid_power := by
+  map_cert Proofs.necessary_tame_rigidity_and_rigid_power_imply_weakly_rigid_power.entails
+
+/-- `necessary-weakly-rigid-power-r-implies-weakly-rigid-power-r` -/
+theorem necessary_weakly_rigid_power_r_implies_weakly_rigid_power_r : Statements.necessary_weakly_rigid_power_r_implies_weakly_rigid_power_r := by
+  map_cert Proofs.necessary_weakly_rigid_power_r_implies_weakly_rigid_power_r.entails
+
+/-- `necessary-weakly-rigid-power-implies-necessary-tame-rigidity` -/
+theorem necessary_weakly_rigid_power_implies_necessary_tame_rigidity : Statements.necessary_weakly_rigid_power_implies_necessary_tame_rigidity := by
+  map_cert Proofs.necessary_weakly_rigid_power_implies_necessary_tame_rigidity.entails
+
+/-- `necessary-weakly-rigid-power-implies-necessary-rigid-power` -/
+theorem necessary_weakly_rigid_power_implies_necessary_rigid_power : Statements.necessary_weakly_rigid_power_implies_necessary_rigid_power := by
+  map_cert Proofs.necessary_weakly_rigid_power_implies_necessary_rigid_power.entails
+
+/-- `necessary-tame-rigidity-and-necessary-rigid-power-imply-necessary-weakly-rigid-power` -/
+theorem necessary_tame_rigidity_and_necessary_rigid_power_imply_necessary_weakly_rigid_power : Statements.necessary_tame_rigidity_and_necessary_rigid_power_imply_necessary_weakly_rigid_power := by
+  map_cert Proofs.necessary_tame_rigidity_and_necessary_rigid_power_imply_necessary_weakly_rigid_power.entails
+
+/-- `no-pure-contingency-and-weakly-rigid-power-imply-necessary-weakly-rigid-power` -/
+theorem no_pure_contingency_and_weakly_rigid_power_imply_necessary_weakly_rigid_power : Statements.no_pure_contingency_and_weakly_rigid_power_imply_necessary_weakly_rigid_power := by
+  map_cert (Entails.mono_right (Ax₃ := P.NecWeaklyRigidPower.schema) (by map_box) (npc_union_entails_box_pure P.WeaklyRigidPower.schema_closedTypes))
+
+/-- `rigid-rigidity-implies-necessary-rigid-rigidity` -/
+theorem rigid_rigidity_implies_necessary_rigid_rigidity : Statements.rigid_rigidity_implies_necessary_rigid_rigidity := by
+  map_cert Proofs.rigid_rigidity_implies_necessary_rigid_rigidity.entails
+
+/-- `necessary-rigid-rigidity-r-implies-rigid-rigidity-r` -/
+theorem necessary_rigid_rigidity_r_implies_rigid_rigidity_r : Statements.necessary_rigid_rigidity_r_implies_rigid_rigidity_r := by
+  map_cert Proofs.necessary_rigid_rigidity_r_implies_rigid_rigidity_r.entails
+
+/-- `weakly-rigid-weak-rigidity-implies-necessary-tame-rigidity` -/
+theorem weakly_rigid_weak_rigidity_implies_necessary_tame_rigidity : Statements.weakly_rigid_weak_rigidity_implies_necessary_tame_rigidity := by
+  map_cert Proofs.weakly_rigid_weak_rigidity_implies_necessary_tame_rigidity.entails
+
+/-- `weakly-rigid-weak-rigidity-implies-rigid-rigidity` -/
+theorem weakly_rigid_weak_rigidity_implies_rigid_rigidity : Statements.weakly_rigid_weak_rigidity_implies_rigid_rigidity := by
+  map_cert Proofs.weakly_rigid_weak_rigidity_implies_rigid_rigidity.entails
+
+/-- `rigid-rigidity-and-necessary-tame-rigidity-imply-weakly-rigid-weak-rigidity` -/
+theorem rigid_rigidity_and_necessary_tame_rigidity_imply_weakly_rigid_weak_rigidity : Statements.rigid_rigidity_and_necessary_tame_rigidity_imply_weakly_rigid_weak_rigidity := by
+  map_cert Proofs.rigid_rigidity_and_necessary_tame_rigidity_imply_weakly_rigid_weak_rigidity.entails
+
+/-- `weakly-rigid-weak-rigidity-implies-necessary-weakly-rigid-weak-rigidity` -/
+theorem weakly_rigid_weak_rigidity_implies_necessary_weakly_rigid_weak_rigidity : Statements.weakly_rigid_weak_rigidity_implies_necessary_weakly_rigid_weak_rigidity := by
+  map_cert Proofs.weakly_rigid_weak_rigidity_implies_necessary_weakly_rigid_weak_rigidity.entails
+
+/-- `necessary-weakly-rigid-weak-rigidity-r-implies-weakly-rigid-weak-rigidity-r` -/
+theorem necessary_weakly_rigid_weak_rigidity_r_implies_weakly_rigid_weak_rigidity_r : Statements.necessary_weakly_rigid_weak_rigidity_r_implies_weakly_rigid_weak_rigidity_r := by
+  map_cert Proofs.necessary_weakly_rigid_weak_rigidity_r_implies_weakly_rigid_weak_rigidity_r.entails
+
+/-- `barcan-and-weakly-rigid-power-imply-weakly-rigid-weak-rigidity` -/
+theorem barcan_and_weakly_rigid_power_imply_weakly_rigid_weak_rigidity : Statements.barcan_and_weakly_rigid_power_imply_weakly_rigid_weak_rigidity := by
+  map_cert Meta.barcan_and_weakly_rigid_power_imply_weakly_rigid_weak_rigidity
+
+/-- `barcan-and-weakly-rigid-power-imply-necessary-tame-rigidity` -/
+theorem barcan_and_weakly_rigid_power_imply_necessary_tame_rigidity : Statements.barcan_and_weakly_rigid_power_imply_necessary_tame_rigidity := by
+  map_cert Meta.barcan_and_weakly_rigid_power_imply_necessary_tame_rigidity
+
+/-- `rigid-rigidity-implies-necessary-barcan` -/
+theorem rigid_rigidity_implies_necessary_barcan : Statements.rigid_rigidity_implies_necessary_barcan := by
+  map_cert Meta.rigid_rigidity_implies_necessary_barcan
+
+/-- `necessary-barcan-and-rigid-power-imply-rigid-rigidity` -/
+theorem necessary_barcan_and_rigid_power_imply_rigid_rigidity : Statements.necessary_barcan_and_rigid_power_imply_rigid_rigidity := by
+  map_cert Meta.necessary_barcan_and_rigid_power_imply_rigid_rigidity
+
 end Classicism.Map

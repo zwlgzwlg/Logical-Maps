@@ -145,6 +145,71 @@ theorem nec_gallin_c5_nec_rigid_comprehension :
   modal_K _ _ (modal_K _ _ (nec% (gallin_c5_rigid_comprehension (σ := σ))) hg)
     (modal_four _ hnd)
 
+/-! ### Rigid Rigidity and Weakly Rigid Weak Rigidity, with BF (10 October 2026) -/
+
+/-- Every relation entails `λz. ⊤`. -/
+theorem le_top_unary (F : σ → Prop) : F ≤ (fun _ : σ => True) :=
+  le_of_box_incl (nec% (fun (z : σ) (_ : F z) => trivial))
+
+/-- With BF at `σ`, `λz. ⊤` is weakly rigid. -/
+theorem weaklyRigid_top_of_bf : P.Barcan σ → WeaklyRigid (fun _ : σ => True) := fun bf =>
+  ⟨fun _ _ => box_true, fun Z hZ =>
+    bf (λ z ↦ True → Z z) fun z => box_imp_of_box True (Z z) (hZ z trivial)⟩
+
+/-- The haecceity `λz. z = y` is rigid: persistent by the Necessity of Identity, and
+inextensible since `□Zy` gives `□∀z. z = y → Zz`. -/
+theorem rigid_haecceity (y : σ) : Rigid (fun z : σ => z = y) :=
+  ⟨nec% (fun (z : σ) (h : z = y) => necessity_of_identity z y h),
+   nec% (fun (Z : σ → Prop) (hZ : ∀ z : σ, z = y → □ (Z z)) =>
+     modal_K _ _ (nec% (fun (h : Z y) (z : σ) (hz : z = y) => hz ▸ h)) (hZ y rfl))⟩
+
+/-- `barcan-and-weakly-rigid-power-imply-weakly-rigid-weak-rigidity`, at `σ → t`: the power
+property of the weakly rigid `λz. ⊤` is weak rigidity itself. -/
+theorem bf_wrp_weakly_rigid_weak_rigidity :
+    P.Barcan σ → P.WeaklyRigidPower (σ → Prop) → P.WeaklyRigidWeakRigidity (σ → Prop) :=
+  fun bf wrp =>
+  have heq : (fun X : σ → Prop => WeaklyRigid X ∧ X ≤ (fun _ : σ => True)) =
+      (fun X : σ → Prop => WeaklyRigid X) :=
+    le_antisymm_rel _ _
+      (le_of_box_incl (nec% (fun (X : σ → Prop) (h : WeaklyRigid X ∧ X ≤ (fun _ : σ => True)) =>
+        h.1)))
+      (le_of_box_incl (nec% (fun (X : σ → Prop) (h : WeaklyRigid X) =>
+        (⟨h, le_top_unary X⟩ : WeaklyRigid X ∧ X ≤ (fun _ : σ => True)))))
+  show WeaklyRigid (fun X : σ → Prop => WeaklyRigid X) from
+    heq ▸ wrp _ (weaklyRigid_top_of_bf bf)
+
+/-- `rigid-rigidity-implies-necessary-barcan`, at `σ → t`: at every world, a property
+necessary of everything is entailed by every rigid property, by the latter's weak
+inextensibility; the weak inextensibility of rigidity carries this under the box, and every
+individual has a rigid haecceity. -/
+theorem rr_necessary_barcan : P.RigidRigidity (σ → Prop) → P.NecBarcan σ := fun h =>
+  modal_K _ _
+    (nec% (fun (wi : WeaklyInextensible (fun Z : σ → Prop => Rigid Z)) (X : σ → Prop)
+        (hX : ∀ x : σ, □ (X x)) =>
+      modal_K _ _
+        (nec% (fun (hq : ∀ Z : σ → Prop, Rigid Z → ∀ y : σ, Z y → X y) (y : σ) =>
+          hq (fun z : σ => z = y) (rigid_haecceity y) y rfl))
+        (wi (fun Z : σ → Prop => ∀ y : σ, Z y → X y)
+          (fun (Z : σ → Prop) (hZ : Rigid Z) =>
+            weaklyInextensible_of_inextensible hZ.2 X (fun y _ => hX y)))))
+    h.2
+
+/-- `necessary-barcan-and-rigid-power-imply-rigid-rigidity`, at `σ → t`: □BF makes `λz. ⊤`
+rigid, and its rigid power property is rigidity itself. -/
+theorem nbf_rp_rigid_rigidity :
+    P.NecBarcan σ → P.RigidPower (σ → Prop) → P.RigidRigidity (σ → Prop) := fun nbf rp =>
+  have htop : Rigid (fun _ : σ => True) :=
+    ⟨nec% (fun (_ : σ) (_ : True) => box_true),
+     modal_K _ _ (nec% (fun (bf : P.Barcan σ) => (weaklyRigid_top_of_bf bf).2)) nbf⟩
+  have heq : (fun X : σ → Prop => Rigid X ∧ X ≤ (fun _ : σ => True)) =
+      (fun X : σ → Prop => Rigid X) :=
+    le_antisymm_rel _ _
+      (le_of_box_incl (nec% (fun (X : σ → Prop) (h : Rigid X ∧ X ≤ (fun _ : σ => True)) =>
+        h.1)))
+      (le_of_box_incl (nec% (fun (X : σ → Prop) (h : Rigid X) =>
+        (⟨h, le_top_unary X⟩ : Rigid X ∧ X ≤ (fun _ : σ => True)))))
+  show Rigid (fun X : σ → Prop => Rigid X) from heq ▸ rp _ htop
+
 end unary
 
 /-- In `C5`, `□`Boolean Completeness gives `□`Plenitude, for relations `σ → (σ' → t) → t`:
@@ -178,6 +243,8 @@ theorem fregean_actuality_necessary_actuality : P.FregeanAxiom → P.Actuality �
 /-! ## 2. Certification -/
 
 #classicism_certify Classicism.actuality_implies_persistent_comprehension_r
+  Classicism.bf_wrp_weakly_rigid_weak_rigidity Classicism.rr_necessary_barcan
+  Classicism.nbf_rp_rigid_rigidity
   Classicism.gallin_bf_weak_rigid_comprehension Classicism.gallin_c5_rigid_comprehension
   Classicism.nec_gallin_c5_nec_rigid_comprehension
   Classicism.necAtomicity_step Classicism.atomicityT_of_atomicity_at_t
@@ -188,6 +255,8 @@ theorem fregean_actuality_necessary_actuality : P.FregeanAxiom → P.Actuality �
   Classicism.necessary_completeness_c5_necessary_plenitude
 
 #classicism_entails Classicism.actuality_implies_persistent_comprehension_r
+  Classicism.bf_wrp_weakly_rigid_weak_rigidity Classicism.rr_necessary_barcan
+  Classicism.nbf_rp_rigid_rigidity
   Classicism.gallin_bf_weak_rigid_comprehension Classicism.gallin_c5_rigid_comprehension
   Classicism.nec_gallin_c5_nec_rigid_comprehension
   Classicism.c5_necessary_atomicity_t Classicism.fregean_actuality_necessary_actuality
@@ -604,6 +673,43 @@ theorem c5_implies_tame_rigidity : P.NecNecessityOfDistinctness.schema ⟹ P.Tam
 theorem c5_implies_necessary_tame_rigidity :
     P.NecNecessityOfDistinctness.schema ⟹ P.NecTameRigidity.schema :=
   Entails.mono_right (schema_subset_args _) Proofs.c5_implies_necessary_tame_rigidity.listEntails
+
+
+/-! ### Rigid Rigidity and Weakly Rigid Weak Rigidity, at every arity (10 October 2026) -/
+
+/-- `barcan-and-weakly-rigid-power-imply-weakly-rigid-weak-rigidity`, at every arity: the core
+at `σ → t`, vectorized, with BF over every list from BF. -/
+theorem barcan_and_weakly_rigid_power_imply_weakly_rigid_weak_rigidity :
+    P.Barcan.schema ∪ P.WeaklyRigidPower.schema ⟹ P.WeaklyRigidWeakRigidity.schema :=
+  Entails.mono_right (schema_subset_args _)
+    (Entails.trans
+      (Entails.union
+        (Entails.trans (Entails.union_left _ _) P.Barcan.schema_entails_listSchema)
+        (Entails.union_right _ _))
+      bf_wrp_weakly_rigid_weak_rigidity.listEntails)
+
+/-- `barcan-and-weakly-rigid-power-imply-necessary-tame-rigidity`, at every arity: through
+Weakly Rigid Weak Rigidity. -/
+theorem barcan_and_weakly_rigid_power_imply_necessary_tame_rigidity :
+    P.Barcan.schema ∪ P.WeaklyRigidPower.schema ⟹ P.NecTameRigidity.schema :=
+  Entails.trans barcan_and_weakly_rigid_power_imply_weakly_rigid_weak_rigidity
+    Proofs.weakly_rigid_weak_rigidity_implies_necessary_tame_rigidity.entails
+
+/-- `rigid-rigidity-implies-necessary-barcan`: Rigid Rigidity at `σ → t` gives □BF at `σ`. -/
+theorem rigid_rigidity_implies_necessary_barcan :
+    P.RigidRigidity.schema ⟹ P.NecBarcan.schema :=
+  rr_necessary_barcan.entails
+
+/-- `necessary-barcan-and-rigid-power-imply-rigid-rigidity`, at every arity: the core at
+`σ → t`, vectorized, with □BF over every list from □BF. -/
+theorem necessary_barcan_and_rigid_power_imply_rigid_rigidity :
+    P.NecBarcan.schema ∪ P.RigidPower.schema ⟹ P.RigidRigidity.schema :=
+  Entails.mono_right (schema_subset_args _)
+    (Entails.trans
+      (Entails.union
+        (Entails.trans (Entails.union_left _ _) P.NecBarcan.schema_entails_listSchema)
+        (Entails.union_right _ _))
+      nbf_rp_rigid_rigidity.listEntails)
 
 end Meta
 
