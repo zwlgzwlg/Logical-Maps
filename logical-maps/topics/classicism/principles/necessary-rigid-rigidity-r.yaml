@@ -11,3 +11,4 @@ source_names:
 references: []
 notes: >-
   Type quantifiers remain outside the box. Equivalent to Rigid Rigidity, by T and 4.
+lean_def: Classicism.P.NecRigidRigidity.schemaIn

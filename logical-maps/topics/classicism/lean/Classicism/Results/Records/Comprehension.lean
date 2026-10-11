@@ -185,4 +185,140 @@ theorem necessary_rigid_comprehension_implies_necessary_tame_rigidity {τ : Type
     [Pointwise τ] : NecRigidComprehension τ → NecTameRigidity τ :=
   modal_K _ _ (nec% (rigid_comprehension_implies_tame_rigidity (τ := τ)))
 
+/-! ### Weakly Rigid Power, Rigid Rigidity, Weakly Rigid Weak Rigidity (10 October 2026) -/
+
+/-- `weakly-rigid-power-implies-tame-rigidity`: a weakly rigid `X` falls under its own weakly
+rigid power property, which is persistent, so `X` is necessarily weakly rigid. -/
+theorem weakly_rigid_power_implies_tame_rigidity {τ : Type} [Rel τ] [Order τ] [Pointwise τ] :
+    WeaklyRigidPower τ → TameRigidity τ := fun wrp X hX =>
+  (rigid_iff_box_weaklyRigid X).2
+    (modal_K _ _ (nec% (fun h : WeaklyRigid X ∧ X ≤ X => h.1))
+      ((wrp X hX).1 X ⟨hX, le_refl_rel X⟩))
+
+/-- The weakly rigid power property of `F` is identical to the rigid one when it is rigid:
+its persistence puts each instance under `□`, so rigid. -/
+theorem weaklyRigidPower_eq_of_rigid {τ : Type} [Rel τ] [Order τ] [Pointwise τ] (F : τ)
+    (h : Rigid (fun X : τ => WeaklyRigid X ∧ X ≤ F)) :
+    (fun X : τ => WeaklyRigid X ∧ X ≤ F) = (fun X : τ => Rigid X ∧ X ≤ F) :=
+  le_antisymm_rel _ _
+    (le_of_box_incl (modal_K _ _
+      (nec% (fun (hp : ∀ X : τ, WeaklyRigid X ∧ X ≤ F → □ (WeaklyRigid X ∧ X ≤ F)) (X : τ)
+          (hX : WeaklyRigid X ∧ X ≤ F) =>
+        (⟨(rigid_iff_box_weaklyRigid X).2
+            (modal_K _ _ (nec% (fun h : WeaklyRigid X ∧ X ≤ F => h.1)) (hp X hX)), hX.2⟩ :
+          Rigid X ∧ X ≤ F)))
+      h.1))
+    (le_of_box_incl (nec% (fun (X : τ) (hX : Rigid X ∧ X ≤ F) =>
+      (⟨weaklyRigid_of_rigid hX.1, hX.2⟩ : WeaklyRigid X ∧ X ≤ F))))
+
+/-- `weakly-rigid-power-implies-rigid-power`: Weakly Rigid Power at `τ` makes the weakly rigid
+power property of a rigid `F` weakly rigid, and at `τ → t` (as Tame Rigidity) rigid; it is
+then the rigid power property. -/
+theorem weakly_rigid_power_implies_rigid_power {τ : Type} [Rel τ] [Order τ] [Pointwise τ] :
+    WeaklyRigidPower τ → WeaklyRigidPower (τ → Prop) → RigidPower τ := fun wrp wrp' F hF =>
+  have hPr : Rigid (fun X : τ => WeaklyRigid X ∧ X ≤ F) :=
+    weakly_rigid_power_implies_tame_rigidity wrp' _ (wrp F (weaklyRigid_of_rigid hF))
+  weaklyRigidPower_eq_of_rigid F hPr ▸ hPr
+
+/-- Under □Tame Rigidity the two power properties of `F` are identical. -/
+theorem weaklyRigidPower_eq_of_nec_tame {τ : Type} [Rel τ] [Order τ] [Pointwise τ]
+    (ntr : NecTameRigidity τ) (F : τ) :
+    (fun X : τ => WeaklyRigid X ∧ X ≤ F) = (fun X : τ => Rigid X ∧ X ≤ F) :=
+  le_antisymm_rel _ _
+    (le_of_box_incl (modal_K _ _
+      (nec% (fun (tr : TameRigidity τ) (X : τ) (hX : WeaklyRigid X ∧ X ≤ F) =>
+        (⟨tr X hX.1, hX.2⟩ : Rigid X ∧ X ≤ F))) ntr))
+    (le_of_box_incl (nec% (fun (X : τ) (hX : Rigid X ∧ X ≤ F) =>
+      (⟨weaklyRigid_of_rigid hX.1, hX.2⟩ : WeaklyRigid X ∧ X ≤ F))))
+
+/-- `necessary-tame-rigidity-and-rigid-power-imply-weakly-rigid-power`. -/
+theorem necessary_tame_rigidity_and_rigid_power_imply_weakly_rigid_power {τ : Type} [Rel τ]
+    [Order τ] [Pointwise τ] :
+    NecTameRigidity τ → RigidPower τ → WeaklyRigidPower τ := fun ntr rp F hF =>
+  (weaklyRigidPower_eq_of_nec_tame ntr F).symm ▸
+    weaklyRigid_of_rigid (rp F (box_elim ntr F hF))
+
+/-- `necessary-weakly-rigid-power-r-implies-weakly-rigid-power-r`: `T`. -/
+theorem necessary_weakly_rigid_power_r_implies_weakly_rigid_power_r {τ : Type} [Rel τ] :
+    NecWeaklyRigidPower τ → WeaklyRigidPower τ := box_elim
+
+/-- `necessary-weakly-rigid-power-implies-necessary-tame-rigidity`. -/
+theorem necessary_weakly_rigid_power_implies_necessary_tame_rigidity {τ : Type} [Rel τ]
+    [Order τ] [Pointwise τ] : NecWeaklyRigidPower τ → NecTameRigidity τ :=
+  modal_K _ _ (nec% (weakly_rigid_power_implies_tame_rigidity (τ := τ)))
+
+/-- `necessary-weakly-rigid-power-implies-necessary-rigid-power`. -/
+theorem necessary_weakly_rigid_power_implies_necessary_rigid_power {τ : Type} [Rel τ]
+    [Order τ] [Pointwise τ] :
+    NecWeaklyRigidPower τ → NecWeaklyRigidPower (τ → Prop) → NecRigidPower τ := fun h₁ h₂ =>
+  modal_K _ _ (modal_K _ _ (nec% (weakly_rigid_power_implies_rigid_power (τ := τ))) h₁) h₂
+
+/-- `necessary-tame-rigidity-and-necessary-rigid-power-imply-necessary-weakly-rigid-power`:
+`4` boxes □Tame Rigidity again. -/
+theorem necessary_tame_rigidity_and_necessary_rigid_power_imply_necessary_weakly_rigid_power
+    {τ : Type} [Rel τ] [Order τ] [Pointwise τ] :
+    NecTameRigidity τ → NecRigidPower τ → NecWeaklyRigidPower τ := fun h₁ h₂ =>
+  modal_K _ _ (modal_K _ _
+    (nec% (necessary_tame_rigidity_and_rigid_power_imply_weakly_rigid_power (τ := τ)))
+    (modal_four _ h₁)) h₂
+
+/-- `rigid-rigidity-implies-necessary-rigid-rigidity`: rigidity is necessary weak rigidity,
+and `4`. -/
+theorem rigid_rigidity_implies_necessary_rigid_rigidity {τ : Type} [Rel τ] :
+    RigidRigidity τ → NecRigidRigidity τ := fun h =>
+  modal_K _ _ (nec% (rigid_iff_box_weaklyRigid (fun X : τ => Rigid X)).2)
+    (modal_four _ ((rigid_iff_box_weaklyRigid _).1 h))
+
+/-- `necessary-rigid-rigidity-r-implies-rigid-rigidity-r`: `T`. -/
+theorem necessary_rigid_rigidity_r_implies_rigid_rigidity_r {τ : Type} [Rel τ] :
+    NecRigidRigidity τ → RigidRigidity τ := box_elim
+
+/-- `weakly-rigid-weak-rigidity-implies-necessary-tame-rigidity`: a weakly rigid relation is
+persistent, and the persistence of weak rigidity is □Tame Rigidity. -/
+theorem weakly_rigid_weak_rigidity_implies_necessary_tame_rigidity {τ : Type} [Rel τ] :
+    WeaklyRigidWeakRigidity τ → NecTameRigidity τ := fun h =>
+  modal_K _ _
+    (nec% (fun (hp : ∀ X : τ, WeaklyRigid X → □ (WeaklyRigid X)) (X : τ) (hX : WeaklyRigid X) =>
+      (rigid_iff_box_weaklyRigid X).2 (hp X hX)))
+    (persistent_of_weaklyRigid h)
+
+/-- Under □Tame Rigidity weak rigidity and rigidity are identical properties. -/
+theorem weaklyRigid_eq_rigid_of_nec_tame {τ : Type} [Rel τ] (ntr : NecTameRigidity τ) :
+    (fun X : τ => WeaklyRigid X) = (fun X : τ => Rigid X) :=
+  le_antisymm_rel _ _
+    (le_of_box_incl (modal_K _ _
+      (nec% (fun (tr : TameRigidity τ) (X : τ) (hX : WeaklyRigid X) => tr X hX)) ntr))
+    (le_of_box_incl (nec% (fun (X : τ) (hX : Rigid X) => weaklyRigid_of_rigid hX)))
+
+/-- `weakly-rigid-weak-rigidity-implies-rigid-rigidity`: at `τ` weak rigidity is rigidity,
+and at `τ → t` Tame Rigidity makes it rigid. -/
+theorem weakly_rigid_weak_rigidity_implies_rigid_rigidity {τ : Type} [Rel τ] :
+    WeaklyRigidWeakRigidity τ → WeaklyRigidWeakRigidity (τ → Prop) → RigidRigidity τ :=
+  fun h h' =>
+  have heq := weaklyRigid_eq_rigid_of_nec_tame
+    (weakly_rigid_weak_rigidity_implies_necessary_tame_rigidity h)
+  box_elim (weakly_rigid_weak_rigidity_implies_necessary_tame_rigidity h') _ (heq ▸ h)
+
+/-- `rigid-rigidity-and-necessary-tame-rigidity-imply-weakly-rigid-weak-rigidity`. -/
+theorem rigid_rigidity_and_necessary_tame_rigidity_imply_weakly_rigid_weak_rigidity {τ : Type}
+    [Rel τ] : RigidRigidity τ → NecTameRigidity τ → WeaklyRigidWeakRigidity τ := fun h ntr =>
+  show WeaklyRigid (fun X : τ => WeaklyRigid X) from
+    (weaklyRigid_eq_rigid_of_nec_tame ntr).symm ▸ weaklyRigid_of_rigid h
+
+/-- `weakly-rigid-weak-rigidity-implies-necessary-weakly-rigid-weak-rigidity`: both conjuncts
+of the equivalent `RR ∧ □TR` are necessary by `4`. -/
+theorem weakly_rigid_weak_rigidity_implies_necessary_weakly_rigid_weak_rigidity {τ : Type}
+    [Rel τ] :
+    WeaklyRigidWeakRigidity τ → WeaklyRigidWeakRigidity (τ → Prop) →
+      NecWeaklyRigidWeakRigidity τ := fun h h' =>
+  modal_K _ _ (modal_K _ _
+    (nec% (rigid_rigidity_and_necessary_tame_rigidity_imply_weakly_rigid_weak_rigidity (τ := τ)))
+    (rigid_rigidity_implies_necessary_rigid_rigidity
+      (weakly_rigid_weak_rigidity_implies_rigid_rigidity h h')))
+    (modal_four _ (weakly_rigid_weak_rigidity_implies_necessary_tame_rigidity h))
+
+/-- `necessary-weakly-rigid-weak-rigidity-r-implies-weakly-rigid-weak-rigidity-r`: `T`. -/
+theorem necessary_weakly_rigid_weak_rigidity_r_implies_weakly_rigid_weak_rigidity_r {τ : Type}
+    [Rel τ] : NecWeaklyRigidWeakRigidity τ → WeaklyRigidWeakRigidity τ := box_elim
+
 end Classicism.Proofs

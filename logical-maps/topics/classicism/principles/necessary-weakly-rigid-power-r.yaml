@@ -12,3 +12,4 @@ source_names:
 references: []
 notes: Box each fully closed instance of Weakly Rigid Power. Type quantifiers remain outside the box. It
   is equivalent to the conjunction of □Tame Rigidity and □Rigid Power.
+lean_def: Classicism.P.NecWeaklyRigidPower.schemaIn

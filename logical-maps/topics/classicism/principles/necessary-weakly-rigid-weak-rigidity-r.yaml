@@ -11,3 +11,4 @@ source_names:
 references: []
 notes: >-
   Type quantifiers remain outside the box. Equivalent to Weakly Rigid Weak Rigidity.
+lean_def: Classicism.P.NecWeaklyRigidWeakRigidity.schemaIn

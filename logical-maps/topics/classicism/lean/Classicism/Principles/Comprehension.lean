@@ -98,4 +98,22 @@ def RigidPower (τ : Type) [Rel τ] : Prop :=
 /-- `necessary-rigid-power-r` at `τ`: the instance boxed. -/
 def NecRigidPower (τ : Type) [Rel τ] : Prop := □ (RigidPower τ)
 
+/-- `weakly-rigid-power-r` at `τ`: if `F` is weakly rigid, so is the property of being a
+weakly rigid relation entailing it, `λX. WeaklyRigid(X) ∧ X ≤ F`. -/
+def WeaklyRigidPower (τ : Type) [Rel τ] : Prop :=
+  ∀ F : τ, WeaklyRigid F → WeaklyRigid (fun X : τ => WeaklyRigid X ∧ X ≤ F)
+/-- `necessary-weakly-rigid-power-r` at `τ`: the instance boxed. -/
+def NecWeaklyRigidPower (τ : Type) [Rel τ] : Prop := □ (WeaklyRigidPower τ)
+
+/-- `rigid-rigidity-r` at `τ`: being rigid is a rigid property of relations of type `τ`. -/
+def RigidRigidity (τ : Type) [Rel τ] : Prop := Rigid (fun X : τ => Rigid X)
+/-- `necessary-rigid-rigidity-r` at `τ`: the instance boxed. -/
+def NecRigidRigidity (τ : Type) [Rel τ] : Prop := □ (RigidRigidity τ)
+
+/-- `weakly-rigid-weak-rigidity-r` at `τ`: being weakly rigid is a weakly rigid property of
+relations of type `τ`. -/
+def WeaklyRigidWeakRigidity (τ : Type) [Rel τ] : Prop := WeaklyRigid (fun X : τ => WeaklyRigid X)
+/-- `necessary-weakly-rigid-weak-rigidity-r` at `τ`: the instance boxed. -/
+def NecWeaklyRigidWeakRigidity (τ : Type) [Rel τ] : Prop := □ (WeaklyRigidWeakRigidity τ)
+
 end Classicism.P

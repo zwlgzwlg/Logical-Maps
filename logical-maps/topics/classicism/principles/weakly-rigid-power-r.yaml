@@ -17,3 +17,4 @@ notes: >-
   property has type $(\bar\sigma t)t$. It implies Tame Rigidity and Rigid Power, and □Tame Rigidity
   with Rigid Power implies it; with BF it implies □Tame Rigidity, so under BF it is equivalent to □Tame
   Rigidity and Rigid Power. Whether Tame Rigidity and Rigid Power imply it is open.
+lean_def: Classicism.P.WeaklyRigidPower.schemaIn
