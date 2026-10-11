@@ -17,6 +17,7 @@
 - **No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
 - **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
 - **¬ Rigid Power.** If a relation is rigid, so is the property of being a rigid relation that entails it.
+- **¬ Rigid Rigidity.** Being rigid is a rigid property of relations, including propositions.
 - **¬ Boolean Completeness (type t).** Boolean Completeness (type t) in the displayed closed propositional formulation.
 - **¬ Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **¬ Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
@@ -59,6 +60,12 @@ Every arrow can be changed at a point outside any finite set without leaving its
 The argument above with propositions in place of individuals, at type $(t\to t)\to t$ with $F:=\top$ of type $t\to t$, which is rigid since BF and $\Box$BF hold at type $t$. Write $Z_k$ for the extension of a relation $Z$ at the arrow $k$, so that $(h\cdot Z)_k=Z_{k\circ h}$, and let $p_n:=\{g:gn\in\{g0,g1\}\}$, pinned down by $\{0,1,n\}$; a pair-preserving injection $m$ has $m\cdot p_n=p_{mn}$, and $p_x\ne p_2$ for $x\ne2$, $x\notin\{0,1\}$. (1) Let $S:=\{0,1,2\}$, $E:=\{p_n:n\notin S\}$ and $Y_k:=\bigcup\{k^{\prime}\cdot E:k^{\prime}\text{ agrees with }k\text{ on }S\}$, pinned down by $S$. For each finite $N\supseteq S$ the same union over the $k^{\prime}$ agreeing with $k$ on $N$ is the same set: at a pair-preserving injection it is $\{p_x:x\notin kS\}$, and at a collapse $\{k^{\prime}\cdot p_n\}$ ranges over every value of $k^{\prime}n$ either way. So $Y$ is weakly rigid (argument tame-rigidity-factorizable, part (1)), hence rigid by Tame Rigidity, with extension $E$, which omits $p_2$. (2) No rigid $Z$ has extension $E$ at a collapse $c$. Let $Z$ be pinned down by $T\supseteq\{0,1\}$; by the same part (1), $Z_c$ is the union of $g\cdot E_Z$ over the arrows $g$ agreeing with $c$ on $T$. If $Z_c=E$, take $x\notin cT\cup S$, so $p_x=g\cdot e$ for such a $g$ and some $e\in E_Z$, and let $\tau$ send $x$ to $2$ and fix every other number. Then $\tau g$ is a collapse agreeing with $c$ on $T$, so $(\tau g)\cdot e=\tau\cdot p_x=p_2$ is in $Z_c$, which is not $E$. (3) Let $R:=\lambda X\, .\,\operatorname{Rigid}(X)\land X\le\top$; in a one-object model its extension at every arrow is the set of rigid relations of type $t\to t$. Let $\mathbf X$ hold of $W$ at $k$ iff $W=k^{\prime}\cdot Z$ for some rigid $Z$ and some $k^{\prime}$ agreeing with $k$ on $\{0,1\}$; it is pinned down by $\{0,1\}$, so in the domain, and necessarily holds of every instance of $R$. At a collapse $c$, every such $k^{\prime}$ is a collapse, and $(k^{\prime}\cdot Z)_1=Z_{k^{\prime}}$, so by (2) $Y$, which is in the extension of $R$ there, is not in that of $\mathbf X$. So $R$ is not weakly inextensible, though $\top$ is rigid.
 
 *By Claude Opus 5.5 (Anthropic), on Cian Dorr's request to settle Rigid Power where it was open, 2026-10-09.*
+
+### Fails Rigid Rigidity.
+
+Both arguments for the failure of Rigid Power (at type $e\to t$ when the individuals are the natural numbers, at type $(t\to t)\to t$ when there is one individual) take $F:=\top$. Their power property $\lambda X\, .\,\operatorname{Rigid}(X)\land X\le\top$ is $\lambda X\, .\,\operatorname{Rigid}(X)$, since $X\le\top$ is a theorem of C, and they show that it is not weakly inextensible. So Rigid Rigidity fails at the same type.
+
+*Address: `finite-support-pair-injections-or-collapses-individuals-singleton#rigid-rigidity`. By Claude Opus 5.5 (Anthropic), on Cian Dorr's request to settle Rigid Rigidity where it was open, 2026-10-10.*
 
 ### Holds Axiom of Infinity (type t).
 

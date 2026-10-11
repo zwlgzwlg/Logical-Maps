@@ -344,6 +344,8 @@ a relational type has a greatest lower bound in that type.</li>
 <li><strong>No Pure Contingency.</strong> Each closed sentence of the
 pure language, if true, is necessary. This is a sentence schema, not a
 quantifier over propositions.</li>
+<li><strong>Rigid Rigidity.</strong> Being rigid is a rigid property of
+relations, including propositions.</li>
 <li><strong>Tame Rigidity.</strong> Every weakly rigid relation,
 including a proposition, is rigid.</li>
 <li><strong>No Contingency (signature Σ).</strong> Each closed sentence
@@ -570,6 +572,90 @@ There is a single individual at every object. By Claude Opus 5.5
 <p><em>Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr’s
 direction:</em> Moved from the group finite-support-one-object to the
 topic.</p>
+<h3 id="holds-rigid-rigidity.">Holds Rigid Rigidity.</h3>
+<p>Fix the type tuple <span class="math inline">\bar\sigma</span>, let
+<span class="math inline">\mathcal R</span> be the set of rigid
+relations of type <span class="math inline">\bar\sigma t</span>, and let
+<span class="math inline">R:=\lambda X\,
+.\,\operatorname{Rigid}(X)</span>, the value of a closed pure term, so
+fixed by every arrow; in a one-object model its extension at every arrow
+is <span class="math inline">\mathcal R</span>, and it is pinned down by
+<span class="math inline">\emptyset</span>. Write <span
+class="math inline">B_N(E)</span> as in tame-rigidity-factorizable. By
+part (1) of that argument at type <span class="math inline">(\bar\sigma
+t)t</span>, <span class="math inline">R</span> is weakly rigid iff <span
+class="math inline">\mathcal R=B_N(\mathcal R)_k</span> for every arrow
+<span class="math inline">k</span> and finite <span
+class="math inline">N</span>; and since <span class="math inline">h\cdot
+R=R</span> for every arrow <span class="math inline">h</span>, part (2)
+then makes <span class="math inline">R</span> rigid. The inclusion <span
+class="math inline">B_N(\mathcal R)_k\subseteq\mathcal R</span> holds
+because a transport of a rigid relation is rigid, rigidity being a
+necessitated condition. For the converse let <span
+class="math inline">Z\in\mathcal R</span> be pinned down by <span
+class="math inline">T</span>, and let <span class="math inline">k</span>
+and <span class="math inline">N</span> be given. The condition gives
+<span class="math inline">k^{\prime}</span> agreeing with <span
+class="math inline">k</span> on <span class="math inline">N</span> and
+<span class="math inline">\sigma</span> with <span
+class="math inline">k^{\prime}\circ\sigma</span> the identity on <span
+class="math inline">T</span>. Then <span
+class="math inline">Z^{\prime}:=\sigma\cdot Z</span> is rigid, and <span
+class="math inline">k^{\prime}\cdot Z^{\prime}=(k^{\prime}\circ\sigma)
+\cdot Z=Z</span>, since <span
+class="math inline">k^{\prime}\circ\sigma</span> agrees with the
+identity on <span class="math inline">T</span>. So <span
+class="math inline">Z\in B_N(\mathcal R)_k</span>. Hence Rigid Rigidity
+holds at every type. This is the lifting of Rigid Power at <span
+class="math inline">F:=\top</span> by a section of <span
+class="math inline">k</span>, noted for the symmetric all-surjections
+model on 9 October; without the condition the lift can still hold
+through rigid relations that are not transports of <span
+class="math inline">Z</span> (for instance the haecceity of any <span
+class="math inline">x</span> with <span
+class="math inline">k^{\prime}x=1</span> lifts that of <span
+class="math inline">1</span>), so the condition is sufficient, not
+necessary.</p>
+<p><em>General argument <code>arguments/rigid-rigidity-sections</code>.
+It requires that The model is an action model (Classicism, Appendix D),
+or an intensional action model in the sense of Dorr’s draft (Boolean
+Completeness does not imply Rigid Comprehension), with a single object.
+Here: It has one object (Dorr, draft, §3.1: closed pure terms denote
+entities fixed by every arrow). It requires that Write an entity of
+relational type at the evaluation object as its intension <span
+class="math inline">k\mapsto Y_k</span> over the arrows <span
+class="math inline">k</span> out of it, so that <span
+class="math inline">Y\bar a</span> holds at <span
+class="math inline">k</span> iff <span class="math inline">k\cdot\bar
+a\in Y_k</span>; <span class="math inline">Y</span> is pinned down by a
+finite set <span class="math inline">N</span> of the points the arrows
+act on when <span class="math inline">Y_k=Y_{k^{\prime}}</span> for any
+arrows <span class="math inline">k,k^{\prime}</span> agreeing on <span
+class="math inline">N</span>. Every entity in a domain is pinned down by
+a finite set, in the sense that <span class="math inline">k\cdot
+x=k^{\prime}\cdot x</span> for arrows agreeing on it, and the domain of
+each relational type at the evaluation object holds every intension
+pinned down by a finite set (in a symmetric model, every symmetric one).
+Here: A relational domain holds exactly the symmetric intensions pinned
+down by a finite set, and every individual <span
+class="math inline">n</span> is pinned down by <span
+class="math inline">\{n\}</span>. It requires that For every arrow <span
+class="math inline">k</span> out of the evaluation object and finite
+sets <span class="math inline">N,T</span> of the points the arrows act
+on, there are arrows <span class="math inline">k^{\prime}</span>
+agreeing with <span class="math inline">k</span> on <span
+class="math inline">N</span> and <span class="math inline">\sigma</span>
+such that <span class="math inline">k^{\prime}\circ\sigma</span> is the
+identity on <span class="math inline">T</span>. Here: As in
+symmetric-all-surjections, the arrows being all the surjections: let
+<span class="math inline">k^{\prime}</span> agree with <span
+class="math inline">k</span> on <span class="math inline">N</span> and
+send distinct fresh points <span class="math inline">x_t\notin N</span>
+to <span class="math inline">t\in T</span>, and let <span
+class="math inline">\sigma</span> be a surjection with <span
+class="math inline">\sigma t=x_t</span>. By Claude Opus 5.5 (Anthropic),
+on Cian Dorr’s request to settle Rigid Rigidity where it was open,
+2026-10-10.</em></p>
 <h3
 id="fails-witnessed-possibility-separated-structure-independence-signature-σ-maximalism-signature-σ.">Fails
 Witnessed Possibility, Separated Structure, Independence (signature Σ),

@@ -18,6 +18,7 @@
 - **No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
 - **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
 - **¬ Rigid Power.** If a relation is rigid, so is the property of being a rigid relation that entails it.
+- **¬ Rigid Rigidity.** Being rigid is a rigid property of relations, including propositions.
 - **¬ Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
 - **¬ Countable Boolean Completeness.** Every countable property of entities of a relational type has a least upper bound in that type, where a property is countable when it injects into the natural numbers.
 - **¬ Boolean Completeness (type t).** Boolean Completeness (type t) in the displayed closed propositional formulation.
@@ -67,6 +68,12 @@ At type $e\to t$, with $F:=\top$. Write $Z_k$ for the extension of a property $Z
 Now let $R:=\lambda X\, .\,\operatorname{Rigid}(X)\land X\le\top$, the value of a closed pure term, so that in a one-object model its extension at every arrow is the set of rigid properties. Let $\mathbf X$ hold of $W$ at $k$ iff $W=k'\cdot Z$ for some rigid $Z$ and some arrow $k'$ agreeing with $k$ on $\{0,1\}$. It is pinned down by $\{0,1\}$, so it is in the domain, and it necessarily holds of every instance of $R$ (take $k'=k$). But at a collapse $c$, every $k'$ agreeing with $c$ on $\{0,1\}$ is a collapse, so by (3) every property in the extension of $\mathbf X$ there has extension $\mathbb N$ or a finite one, while $Y$, in the extension of $R$ there by (2), has extension $\mathbb N\setminus\{2\}$. So $R\not\le\mathbf X$: $R$ is not even weakly inextensible, though $\top$ is rigid.
 
 *By Claude Opus 5.5 (Anthropic), 2026-10-07.*
+
+### Fails Rigid Rigidity.
+
+Both arguments for the failure of Rigid Power (at type $e\to t$ when the individuals are the natural numbers, at type $(t\to t)\to t$ when there is one individual) take $F:=\top$. Their power property $\lambda X\, .\,\operatorname{Rigid}(X)\land X\le\top$ is $\lambda X\, .\,\operatorname{Rigid}(X)$, since $X\le\top$ is a theorem of C, and they show that it is not weakly inextensible. So Rigid Rigidity fails at the same type.
+
+*Address: `finite-support-pair-injections-or-collapses#rigid-rigidity`. By Claude Opus 5.5 (Anthropic), on Cian Dorr's request to settle Rigid Rigidity where it was open, 2026-10-10.*
 
 ### Holds Axiom of Infinity (type e).
 

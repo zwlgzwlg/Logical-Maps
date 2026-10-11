@@ -16,6 +16,7 @@
 - **B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
 - **¬ Rigid Power.** If a relation is rigid, so is the property of being a rigid relation that entails it.
+- **¬ Rigid Rigidity.** Being rigid is a rigid property of relations, including propositions.
 - **¬ Relational Choice.** Every serial binary relation has a functional subrelation.
 - **¬ Intensional Choice.** If a property is necessarily instantiated, then some property entailing it is necessarily uniquely instantiated.
 - **¬ Witnessed Possibility.** For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.
@@ -62,6 +63,12 @@ Let $R:=\lambda X\, .\,\operatorname{Rigid}(X)\land X\le\top$, the value of a cl
 *Address: `symmetric-collapse-pair#rigid-power`. By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-08.*
 
 *Revised 2026-10-08 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* First given on 8 October for symmetric-pair-injections-or-collapses, Cian Dorr's symmetric analogue of finite-support-pair-injections-or-collapses, which differs from this model only in not requiring the collapses to be surjective; that record was removed the same day, having the same verdicts as this one once this argument was recorded.
+
+### Fails Rigid Rigidity.
+
+Both arguments for the failure of Rigid Power (at type $e\to t$ when the individuals are the natural numbers, at type $(t\to t)\to t$ when there is one individual) take $F:=\top$. Their power property $\lambda X\, .\,\operatorname{Rigid}(X)\land X\le\top$ is $\lambda X\, .\,\operatorname{Rigid}(X)$, since $X\le\top$ is a theorem of C, and they show that it is not weakly inextensible. So Rigid Rigidity fails at the same type.
+
+*Address: `symmetric-collapse-pair#rigid-rigidity`. By Claude Opus 5.5 (Anthropic), on Cian Dorr's request to settle Rigid Rigidity where it was open, 2026-10-10.*
 
 ### Fails Relational Choice.
 
