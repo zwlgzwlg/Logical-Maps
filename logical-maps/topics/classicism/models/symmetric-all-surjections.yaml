@@ -44,6 +44,9 @@ settings:
   individuals: base
   sigma: top
 meets:
+  section-arrows: >-
+    Given $k$, $N$ and $T$, let $k^{\prime}$ agree with $k$ on $N$, send distinct fresh points $x_t\notin N$
+    to $t$ for $t\in T$, and extend it to a surjection; let $\sigma$ be any surjection with $\sigma t=x_t$.
   factorizable-arrows: >-
     Take $N^{\prime\prime}:=S$ and, enlarging $N$, assume $h(N^{\prime\prime})\subseteq N$. Let
     $k^{\prime\prime}$ agree with $h$ on $N^{\prime\prime}$; for $m\in M\setminus N^{\prime\prime}$ let

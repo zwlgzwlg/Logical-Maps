@@ -1,0 +1,24 @@
+id: rigid-rigidity-sections
+requires: [one-object-action-model, finitely-pinned-domains, section-arrows]
+choice: free
+holds: [rigid-rigidity-r]
+by: Claude Opus 5.5 (Anthropic), on Cian Dorr's request to settle Rigid Rigidity where it was open
+date: '2026-10-10'
+text: >-
+  Fix the type tuple $\bar\sigma$, let $\mathcal R$ be the set of rigid relations of type
+  $\bar\sigma t$, and let $R:=\lambda X\, .\,\operatorname{Rigid}(X)$, the value of a closed pure
+  term, so fixed by every arrow; in a one-object model its extension at every arrow is $\mathcal R$,
+  and it is pinned down by $\emptyset$. Write $B_N(E)$ as in tame-rigidity-factorizable. By part (1)
+  of that argument at type $(\bar\sigma t)t$, $R$ is weakly rigid iff $\mathcal R=B_N(\mathcal R)_k$
+  for every arrow $k$ and finite $N$; and since $h\cdot R=R$ for every arrow $h$, part (2) then makes
+  $R$ rigid. The inclusion $B_N(\mathcal R)_k\subseteq\mathcal R$ holds because a transport of a
+  rigid relation is rigid, rigidity being a necessitated condition. For the converse let
+  $Z\in\mathcal R$ be pinned down by $T$, and let $k$ and $N$ be given. The condition gives
+  $k^{\prime}$ agreeing with $k$ on $N$ and $\sigma$ with $k^{\prime}\circ\sigma$ the identity on $T$.
+  Then $Z^{\prime}:=\sigma\cdot Z$ is rigid, and $k^{\prime}\cdot Z^{\prime}=(k^{\prime}\circ\sigma)
+  \cdot Z=Z$, since $k^{\prime}\circ\sigma$ agrees with the identity on $T$. So $Z\in
+  B_N(\mathcal R)_k$. Hence Rigid Rigidity holds at every type. This is the lifting of Rigid Power
+  at $F:=\top$ by a section of $k$, noted for the symmetric all-surjections model on 9 October;
+  without the condition the lift can still hold through rigid relations that are not transports of
+  $Z$ (for instance the haecceity of any $x$ with $k^{\prime}x=1$ lifts that of $1$), so the
+  condition is sufficient, not necessary.

@@ -40,6 +40,10 @@ settings:
   individuals: base
   sigma: top
 meets:
+  section-arrows: >-
+    As in symmetric-all-surjections, the arrows being all the surjections: let $k^{\prime}$ agree with
+    $k$ on $N$ and send distinct fresh points $x_t\notin N$ to $t\in T$, and let $\sigma$ be a surjection
+    with $\sigma t=x_t$.
   factorizable-arrows: >-
     Take $N^{\prime\prime}:=S$ and, enlarging $N$, assume $h(N^{\prime\prime})\subseteq N$. Let
     $k^{\prime\prime}$ agree with $h$ on $N^{\prime\prime}$; for $m\in M\setminus N^{\prime\prime}$ let

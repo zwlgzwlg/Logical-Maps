@@ -174,6 +174,17 @@ arguments:
     $(k^{\prime}\cdot Z)_1=Z_{k^{\prime}}$, so by (2) $Y$, which is in the extension of $R$ there, is
     not in that of $\mathbf X$. So $R$ is not weakly inextensible, though $\top$ is rigid.
 
+- id: rigid-rigidity
+  fails: [rigid-rigidity-r]
+  by: Claude Opus 5.5 (Anthropic), on Cian Dorr's request to settle Rigid Rigidity where it was open
+  date: '2026-10-10'
+  text: >-
+    Both arguments for the failure of Rigid Power (at type $e\to t$ when the individuals are the
+    natural numbers, at type $(t\to t)\to t$ when there is one individual) take $F:=\top$. Their
+    power property $\lambda X\, .\,\operatorname{Rigid}(X)\land X\le\top$ is
+    $\lambda X\, .\,\operatorname{Rigid}(X)$, since $X\le\top$ is a theorem of C, and they show
+    that it is not weakly inextensible. So Rigid Rigidity fails at the same type.
+
 notes: >-
   Cian Dorr proposed the functions that are injective or identify $0$ with $1$; that set is not
   closed under composition (the injection swapping $0$ with $2$ and $1$ with $3$, followed by the

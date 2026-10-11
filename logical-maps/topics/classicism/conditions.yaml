@@ -217,3 +217,9 @@ conditions:
     $N^{\prime\prime}$, for every finite $M$ some arrows $k^{\prime\prime}$ agreeing with $h$ on
     $N^{\prime\prime}$ and $j$ agreeing with $k$ on $N$ have $j\circ k^{\prime\prime}$ agreeing with
     $k^{\prime}$ on $M$.
+# Added 10 October 2026 (Claude Opus 5.5, on Cian Dorr's request to settle Rigid Rigidity where open).
+- id: section-arrows
+  text: >-
+    For every arrow $k$ out of the evaluation object and finite sets $N,T$ of the points the arrows
+    act on, there are arrows $k^{\prime}$ agreeing with $k$ on $N$ and $\sigma$ such that
+    $k^{\prime}\circ\sigma$ is the identity on $T$.
