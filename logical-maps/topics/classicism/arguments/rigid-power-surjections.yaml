@@ -1,0 +1,40 @@
+id: rigid-power-surjections
+requires: [one-object-action-model, finitely-pinned-domains, factorizable-arrows, all-surjection-arrows]
+holds: [rigid-power-r]
+by: GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic)
+date: '2026-10-11'
+text: >-
+  Write $F_h$ for the extension of $F$ at the arrow $h$, so $(h\cdot F)_k=F_{kh}$, and $B_N(E)$ as in
+  tame-rigidity-factorizable, whose part (1) is the criterion used throughout: a relation pinned down
+  by $S$ with extension $E$ is weakly rigid iff it equals $B_N(E)$ for every finite $N\supseteq S$;
+  Tame Rigidity holds at every type by that argument. Fix a type tuple.
+
+  (a) Stable sets. If a set $A$ of argument tuples is closed under the surjections fixing a finite $P$
+  pointwise, then $B_P(A)$ has extension $A$ and is weakly rigid, hence rigid. Given $Q\supseteq P$
+  and $l^{\prime}a$ with $l^{\prime}$ agreeing with $l$ on $P$ and $a\in A$ pinned down by $M$, take a
+  surjection $u$ fixing $P$ that sends $M\setminus P$ to distinct fresh points outside $Q$, and a
+  surjection $r$ agreeing with $l$ on $Q$ with $ru=l^{\prime}$ on $M$ (compatible finite
+  prescriptions); then $ua\in A$ and $l^{\prime}a=r(ua)\in B_Q(A)_l$, so $B_P(A)=B_Q(A)$.
+
+  (b) Exact images. Let $F$ be weakly rigid, pinned down by $S$, with extension $E$. By weak
+  persistence $uE\subseteq E$ for every surjection $u$ fixing $S$. For any surjection $j$, $F_j=jE$: a
+  member $la$ of $B_S(E)_j$, with $l$ agreeing with $j$ on $S$ and $a\in E$ pinned down by $M$, is
+  $j(ua)$ for a surjection $u$ fixing $S$ with $ju=l$ on $M$, preimages being supplied by the
+  surjectivity of $j$.
+
+  (c) Lifting. Let $F$ be rigid, pinned down by $S$, $k$ an arrow, $N\supseteq S$ finite, and $X\le
+  k\cdot F$ rigid, pinned down by $T$, with extension $D$. Extend $k|_N$ to a surjection $j$ whose
+  non-singleton fibres are finitely many and finite (send the points outside $N$ bijectively onto the
+  values not yet taken); then $j\cdot F=k\cdot F$ and $D\subseteq F_j=jE$. Let $P$ be finite,
+  containing $N$, every non-singleton fibre of $j$, and a preimage of each point of $T$, and put
+  $A:=\{a\in E:ja\in D\}$. For a surjection $u$ fixing $P$, $ju$ is constant on the fibres of $j$, so
+  $ju=vj$ for a surjection $v$, which fixes $T$; so $vD\subseteq D$ by the weak persistence and
+  pinning of $X$, and $uE\subseteq E$ by (b); hence $uA\subseteq A$. By (a), $Y:=B_P(A)$ is rigid,
+  $Y\le F$ since $A\subseteq E$ and $P\supseteq S$, and by (b) $(j\cdot Y)_1=jA=D$. Weakly rigid
+  relations with the same extension are identical, so $X=j\cdot Y$ with $j$ agreeing with $k$ on $N$.
+
+  (d) The power property of $F$ is persistent, and by (c) its extension at $k$ is contained in $B_N$
+  of its extension at the identity for every $N\supseteq S$; so it is weakly rigid by the criterion,
+  and rigid by Tame Rigidity. So Rigid Power holds at every type. Nothing about the symmetry group is
+  used beyond its being a group of permutations, and the individuals play no role, so the argument
+  covers every member and variant meeting the conditions.

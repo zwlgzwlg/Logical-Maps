@@ -119,6 +119,34 @@ arguments:
     others.
 
 # migration: text of the old notes that no argument holds, verbatim.
+
+- id: rigid-power
+  holds: [rigid-power-r]
+  by: GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic)
+  date: '2026-10-11'
+  text: >-
+    The argument rigid-power-surjections, adapted. Let $d$ be the distinguished individual and $B$ the
+    others; the kind-$A$ arrows are the surjections with $d$ its own only preimage, the kind-$K$ arrows
+    the maps into $B$; an arrow's kind is its value at $d$. Put $d$ in every pinning set below; Tame
+    Rigidity holds at every type (tame-rigidity-factorizable).
+
+    Stable sets: if a set of tuples is closed under the kind-$A$ arrows fixing $P$, its $B_P$ is weakly
+    rigid. In the proof take $u$ of kind $A$ fixing $P$, sending $M\setminus P$ to fresh points of $B$
+    outside $Q$, and $r$ of the kind of $l$; every prescribed value other than at $d$ lies in $B$, so
+    $r$ extends to an arrow of that kind.
+
+    Exact images: call $j$ regular when it maps $B$ onto $B$; every kind-$A$ arrow is regular. For
+    weakly rigid $F$ with extension $E$, $F_j=jE$ for every regular $j$, taking the $u$ of the
+    exact-image step of kind $A$ fixing $S$; the values prescribed off $S$ lie in $B$ and regularity
+    supplies preimages in $B$.
+
+    Lifting: extend $k|_N$ to a regular $j$ of $k$'s kind with finitely many non-singleton fibres, all
+    finite, put them inside $P$, and take $T\setminus\{d\}\subseteq jP$. For $u$ of kind $A$ fixing $P$,
+    define $v$ by $vj=ju$ on the range of $j$, and, when $j$ has kind $K$ (range $B$), $v(d):=d$. Then
+    $v$ maps $B$ onto $B$, has no preimage of $d$ in $B$, and fixes $T$: it is a kind-$A$ arrow fixing
+    $T$. So $\{a\in E:ja\in D\}$ is closed under the kind-$A$ arrows fixing $P$, and the rest is as
+    before: Rigid Power at every type, for either choice of individuals.
+
 notes: >-
   The second of the draft's two variants in which BF fails, arranged so that the range deficiency
   no longer brings Actuality with it. Since Actuality fails, Weak Rigid Comprehension and Rigid

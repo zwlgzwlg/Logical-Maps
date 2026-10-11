@@ -111,6 +111,38 @@ arguments:
 
 # migration: text of the old notes that no argument holds, verbatim. Their argument for the failure
 # of ND, now derived, is dropped.
+
+- id: rigid-power
+  fails: [rigid-power-r]
+  by: GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic)
+  date: '2026-10-11'
+  text: >-
+    At type $t\to t$, with propositions as arguments, so for either choice of individuals. For points
+    $u,v$ let $q_{uv}:=\{h:hu=hv\}$, a symmetric proposition pinned down by $\{u,v\}$, with $h\cdot
+    q_{uv}=q_{hu,hv}$; let $Q(A):=\{q_{uv}:u,v\in A\}$. The arrows into $B$ (the points other than the
+    distinguished $d$) are arbitrary, so $q_{uv}=q_{xy}$ for distinct $u,v$ only if $\{u,v\}=\{x,y\}$
+    (an arrow merging just $u$ and $v$).
+
+    Let $F$ have extension $Q(B)$ at every arrow, and, for a fixed $c\in B$, let $Y_k:=Q(B\setminus
+    \{kc\})$ at a symmetry $k$ (a permutation fixing $d$) and $Y_k:=Q(B)$ at an arrow omitting $d$. Both
+    are symmetric, pinned down by $\emptyset$ and $\{d,c\}$, and equal to their $B_N$ for every finite
+    $N$ (at an arrow omitting $d$, two fresh points can be sent anywhere in $B$), so they are weakly
+    rigid (tame-rigidity-factorizable, part (1)) and rigid by Tame Rigidity; $Y\le F$, and $h\cdot F=F$
+    for every arrow $h$.
+
+    No rigid $Z\le F$ has $Z_h=Y_1=Q(B\setminus\{c\})$ at an arrow $h$ omitting $d$. Let
+    $T\supseteq\{d,c\}$ pin $Z$ down and take distinct $x,y\in B$ outside $hT\cup\{c\}$. Then $q_{xy}\in
+    Z_h$, so by part (1) $q_{xy}=g\cdot q_{uv}$ with $q_{uv}\in Z_1$ and $g$ agreeing with $h$ on $T$;
+    so $gu=x$, $gv=y$ (after swapping), and $u,v\notin T$. Changing $g$ at $u$ to $c$ gives an arrow
+    $g^{\prime}$ omitting $d$ and agreeing with $h$ on $T$, and weak persistence and pinning put
+    $q_{cy}=g^{\prime}\cdot q_{uv}$ in $Z_{g^{\prime}}=Z_h$, which is not in $Q(B\setminus\{c\})$.
+
+    The power property $R$ of $F$ has the set of rigid $Z\le F$ as its extension at every arrow. The
+    test $B_{\{d\}}$ of that extension necessarily holds of each of its instances, but at an arrow
+    omitting $d$ it would contain $Y$ only as $h^{\prime}\cdot Z$ with $Z_{h^{\prime}}=Y_1$ and
+    $h^{\prime}$ omitting $d$, which was just excluded. So $R$ is not weakly inextensible, though $F$ is
+    rigid: Rigid Power fails.
+
 notes: >-
   The first of the draft's two variants in which BF is made to fail. Actuality and the range
   deficiency come from the same finite test here, which is what the next variant prises apart.

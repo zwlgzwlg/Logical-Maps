@@ -153,6 +153,38 @@ arguments:
     proposition at the second object is a strong world. (Strong Actuality holds at the first
     object, by Actuality and the Distinctness-preserving collapse.)
 
+- id: rigid-power
+  holds: [necessary-rigid-power-r]
+  by: GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic)
+  date: '2026-10-11'
+  text: >-
+    Boxed Rigid Power, for either choice of individuals. At $W_1$ every symmetric intension is in the
+    domain, so every $X_0(A)$ ($k\mapsto kA$) is, and a weakly rigid relation is $X_0$ of its extension;
+    a rigid $X\le h\cdot F$ is $h\cdot X_0(A)$ for the inverse image $A$ of its extension, so Rigid
+    Power holds there. At $W_0$ let $F$ be rigid, pinned down by a nonempty finite $S$, with extension
+    $E_0$. For $h:W_0\to W_1$, $h\cdot F=X_0(F_h)$ is pinned down by $hS$; for an idempotent retraction
+    $r$ onto $hS$, $F_h=F_{rh}=rF_h$, so $r$ fixes every tuple of $F_h$, and for $k,k^{\prime}$ agreeing
+    on $hS$, $kz=krz=k^{\prime}rz=k^{\prime}z$. Through a bijection $W_0\to W_1$, every $h:W_0\to W_1$
+    acts on the tuples of $E_0$ through $h|_S$; with the invariance of $E_0$ under the permutations
+    fixing $S$, $X_0(E_0)$ is in the domain, so $F=X_0(E_0)$. For a rigid $X\le h\cdot F$, $X=X_0(D)$
+    and $X=h\cdot X_0(A)$ with $A:=\{z\in E_0:hz\in D\}$, in the domain for the same reason;
+    permutations are lifted by their inverses. So the power property is $X_0$ of its extension and
+    rigid, at both objects.
+
+- id: tame-rigidity
+  fails: [tame-rigidity-r]
+  when: {individuals: singleton}
+  by: GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic)
+  date: '2026-10-11'
+  text: >-
+    At type $t\to t$. With $q_{uv}:=\{h:hu=hv\}$ on the points at each object, fix a point $a$ at $W_0$
+    and let $U$ have extension $gE_a$, $E_a:=\{q_{na}:n\}$, at a permutation $g$, and $\{q_{y,ha}:y\}$
+    at $h:W_0\to W_1$. It is symmetric, pinned down by $\{a\}$, and equal to its $B_N$ for every finite
+    $N\ni a$ (a fresh $n$ can be sent to any $y$), so weakly rigid. At $W_1$, where every symmetric
+    intension is in the domain, a weakly rigid relation is $X_0$ of its extension; but for $j$ constant
+    with value $c$, $j(U_h)=\{\top\}$ while $U_{jh}=\{q_{y,c}:y\}$ has non-top members. So $h\cdot U$ is
+    not weakly rigid, $U$ is not rigid, and Tame Rigidity fails, even with one individual.
+
 notes: >-
   The point of the model is that boxed Boolean Completeness and boxed Actuality, and so Weak Rigid
   Comprehension, do not yield Rigid Comprehension. The gap is exactly the leading box of the

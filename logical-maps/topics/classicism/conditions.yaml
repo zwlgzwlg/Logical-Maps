@@ -223,3 +223,8 @@ conditions:
     For every arrow $k$ out of the evaluation object and finite sets $N,T$ of the points the arrows
     act on, there are arrows $k^{\prime}$ agreeing with $k$ on $N$ and $\sigma$ such that
     $k^{\prime}\circ\sigma$ is the identity on $T$.
+# Added 11 October 2026 (Claude Opus 5.5, recording GPT-6 Astra's Rigid Power arguments).
+- id: all-surjection-arrows
+  text: >-
+    The arrows out of the evaluation object are exactly the surjections of the set of points it
+    acts on.

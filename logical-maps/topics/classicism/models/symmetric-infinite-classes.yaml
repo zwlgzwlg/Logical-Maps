@@ -40,6 +40,7 @@ settings:
   individuals: base
   sigma: top
 meets:
+  all-surjection-arrows: The arrows are all the surjections of $\mathbb N$, as in Base 1.
   section-arrows: >-
     As in symmetric-all-surjections, the arrows being all the surjections: let $k^{\prime}$ agree with
     $k$ on $N$ and send distinct fresh points $x_t\notin N$ to $t\in T$, and let $\sigma$ be a surjection

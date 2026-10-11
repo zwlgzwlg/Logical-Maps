@@ -80,6 +80,33 @@ arguments:
       relational type holds iff it holds at the root of every component. The other direction is
       not recorded, the engine deriving the positive verdict in the one model where it applies.
 
+
+- id: rigid-power-component
+  requires: [complete-components, free-root-component]
+  fails: [rigid-power-r]
+  by: GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic)
+  date: '2026-10-11'
+  text: >-
+    The transfer of tame-rigidity-component, applied to a rigid relation whose power property is not
+    rigid. The pure sentence $\exists A^{tt}\, .\,\operatorname{Rigid}(A)\land\neg\operatorname{Rigid}
+    (\lambda X\, .\,\operatorname{Rigid}(X)\land X\le A)$ is consistent with C (it holds in the
+    one-individual variants of finite-support-pair-injections-or-collapses and symmetric-collapse-pair,
+    with $A:=\top$), so some component $m$ satisfies it at its root, with witness $A$. Its extension $D$
+    there is nonempty: otherwise weak inextensibility tested on $\bot$ makes $A=\bot$, whose power
+    property is the haecceity of $\bot$, which is rigid.
+
+    For $p\in D$ let $\widehat p$ be the root proposition false at the root, with $m$-component $p$ and
+    $\bot$ in every other component; let $F$ have root extension $\{\widehat p:p\in D\}$, $m$-component
+    $A$, and in each other component $i$ the haecceity of $\bot$. Both are in the domain, the root
+    domains being fullest. $F$ is weakly persistent at the root, $A$ and the haecceities being
+    persistent. It is weakly inextensible there: if $H$ necessarily holds of every $\widehat p$, its
+    root extension contains them, $A\le H_m$ by the weak inextensibility of $A$, and the haecceity of
+    $\bot$ entails $H_i$; entailment in the sum is componentwise. Every other accessible world lies in a
+    component, where $F$'s components are rigid; so $F$ is rigid. The $m$-component of its power
+    property is that of $A$, transport respecting abstraction, rigidity and entailment, and every arrow
+    into $m$ factors through the distinguished one; so it is not rigid. Rigid Power fails at the root,
+    at type $t\to t$.
+
 - id: intensional-choice-component
   requires: [complete-components]
   fails: [intensional-choice-r]
