@@ -19,31 +19,58 @@ Write a variant as a triple over $\{R,W\}$, so that Rigid Power is
 $(R,R,R)$. Cian Dorr's "natural" reading of "Weak Rigid Power" is $(W,W,W)$.
 
 *Recorded 10 October 2026:* $(W,W,W)$ is now `weakly-rigid-power-r` (Weakly Rigid
-Power), with its necessitation. It implies Tame Rigidity and Rigid Power, and
-□Tame Rigidity with Rigid Power implies it; whether unboxed Tame Rigidity and
-Rigid Power do is a recorded conjecture. The other six variants remain candidates.
+Power), with its necessitation. The instances at $F:=\lambda\bar x\, .\,\top$ are also
+recorded: $(R,R,R)$ there is Rigid Rigidity (`rigid-rigidity-r`), and $(W,W,W)$ there
+is Weakly Rigid Weak Rigidity (`weakly-rigid-weak-rigidity-r`). The other six
+variants remain candidates.
 
 ### Logical relationships
 
-- *H and C.* Weakening the hypothesis or strengthening the conclusion gives a
-  stronger principle. With I fixed, $(W,I,R)$ is the strongest variant and
-  $(R,I,W)$ the weakest; $(R,I,R)$ and $(W,I,W)$ lie between them.
-- *I.* Changing I changes the property concerned, so there is no direct
-  ordering. The two properties are necessarily coextensive, and hence
-  identical, wherever weak rigidity and rigidity necessarily coincide, that is,
-  under □Tame Rigidity.
-- *Persistence.* Every variant's conclusion includes the persistence of the
-  power property. With $I=R$ this is a theorem of C: rigidity and entailment are
-  necessitated conditions, and 4 holds. With $I=W$ it is not, because
-  $\operatorname{WeaklyRigid}(X)$ has an unboxed weak-inextensibility conjunct.
-  Persistence then needs $\operatorname{WeaklyRigid}(X)\to\Box
-  \operatorname{WeaklyRigid}(X)$ at every world, which □Tame Rigidity supplies.
-- *Collapse.* Under □Tame Rigidity all eight variants are equivalent. A weakly
-  rigid $F$ is then rigid, and the two power properties are identical. □Rigid
-  Comprehension gives □Tame Rigidity, and so does C5 (both recorded). So all eight follow from □BF + □Atomicity + □RC, and from C5,
-  by the recorded results for Rigid Power. Under unboxed Rigid Comprehension
-  alone, Tame Rigidity holds at the evaluation point, so the hypotheses R and W
-  are equivalent there.
+Write $P^R_F$ and $P^W_F$ for the two power properties, with "rigid" and "weakly
+rigid" inside.
+
+- *Monotonicity.* With I fixed, weakening the hypothesis or strengthening the
+  conclusion strengthens the principle. So $(W,I,R)$ is the strongest variant with
+  that I, and $(R,I,W)$ the weakest.
+- *Weakly Rigid Power is the strongest of the eight.* Take any variant with
+  $H=I=W$. A weakly rigid $F$ falls under $P^W_F$, so the weak persistence of
+  $P^W_F$ gives $\Box\operatorname{WeaklyRigid}(F)$; this is
+  `weakly-rigid-power-implies-tame-rigidity`, and it uses only weak persistence.
+  As a schema, such a variant therefore gives Tame Rigidity at every type. Under
+  Tame Rigidity, H no longer matters, and C no longer matters either (by Tame
+  Rigidity at the type of the power property). So $(W,W,W)\Leftrightarrow(W,W,R)$.
+  - The two $I=W$ variants with $H=R$ follow by monotonicity.
+  - It also gives Rigid Power (recorded), and with Tame Rigidity that gives
+    $(W,R,R)$, the strongest of the $I=R$ variants. So Weakly Rigid Power implies
+    all eight.
+- *Inside W carries □Tame Rigidity.* A weakly rigid relation is persistent
+  (Background). So in any variant with $I=W$, the conclusion makes $P^W_F$
+  persistent: necessarily, every weakly rigid $X\le F$ is rigid. Conversely, given
+  that, $P^W_F$ and $P^R_F$ are necessarily coextensive, hence identical. So
+  $(R,W,C)$ is equivalent to $(R,R,C)$ together with □Tame Rigidity below every
+  rigid relation.
+  - $\lambda\bar x\, .\,\top$ is rigid in C at type $t$, and is rigid at the other
+    types given □BF. So at $t$ the $I=W$ variants give □Tame Rigidity outright.
+    Under □BF, $(R,W,C)\Leftrightarrow(R,R,C)+{}$□Tame Rigidity.
+  - With $H=W$, BF suffices, since $\lambda\bar x\, .\,\top$ then only needs to be
+    weakly rigid (`barcan-and-weakly-rigid-power-imply-necessary-tame-rigidity`).
+- *Collapse.* Under Tame Rigidity at every type, H and C drop out and two classes
+  remain: the $I=R$ variants, all equivalent to Rigid Power, and the $I=W$
+  variants, all equivalent to Weakly Rigid Power. Under □Tame Rigidity all eight
+  are equivalent to Rigid Power, by `necessary-tame-rigidity-and-rigid-power-imply-weakly-rigid-power`.
+  □Rigid Comprehension and C5 both give □Tame Rigidity (recorded), and C5 gives
+  □Rigid Power, so all eight hold in C5.
+- *The weakest, $(R,R,W)$.* It is the weak inextensibility of $P^R_F$ at the
+  evaluation point only, since persistence is free for $I=R$. Its necessitation
+  gives Rigid Power (rigidity of $F$ is necessary), so with No Pure Contingency,
+  as in one-object models, the two coincide.
+- *Open.* Do Tame Rigidity and Rigid Power give Weakly Rigid Power? This is the
+  recorded conjecture `tame-rigidity-and-rigid-power-imply-weakly-rigid-power`; a
+  countermodel needs Tame Rigidity and Rigid Power without □Tame Rigidity at type
+  $t$. Does $(W,R,R)$ give Tame Rigidity? Does Rigid Rigidity give Rigid Power?
+  That is the recorded conjecture `rigid-rigidity-implies-rigid-power`; the
+  argument offered for it assumed that rigidity is closed under conjunction,
+  which fails when identity is contingent.
 
 ### What the unboxed premises give
 
