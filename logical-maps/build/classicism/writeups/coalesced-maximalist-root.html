@@ -347,6 +347,8 @@ variables are the displayed individual variables; include the empty
 tuple.</li>
 <li><strong>¬ Tame Rigidity.</strong> Every weakly rigid relation,
 including a proposition, is rigid.</li>
+<li><strong>¬ Rigid Power.</strong> If a relation is rigid, so is the
+property of being a rigid relation that entails it.</li>
 <li><strong>¬ Intensional Choice.</strong> If a property is necessarily
 instantiated, then some property entailing it is necessarily uniquely
 instantiated.</li>
@@ -463,6 +465,59 @@ coalesced root, Tame Rigidity at a relational type holds iff it holds at
 the root of every component. The other direction is not recorded, the
 engine deriving the positive verdict in the one model where it
 applies.</p>
+<h3 id="fails-rigid-power.">Fails Rigid Power.</h3>
+<p>The transfer of tame-rigidity-component, applied to a rigid relation
+whose power property is not rigid. The pure sentence <span
+class="math inline">\exists A^{tt}\,
+.\,\operatorname{Rigid}(A)\land\neg\operatorname{Rigid} (\lambda X\,
+.\,\operatorname{Rigid}(X)\land X\le A)</span> is consistent with C (it
+holds in the one-individual variants of
+finite-support-pair-injections-or-collapses and symmetric-collapse-pair,
+with <span class="math inline">A:=\top</span>), so some component <span
+class="math inline">m</span> satisfies it at its root, with witness
+<span class="math inline">A</span>. Its extension <span
+class="math inline">D</span> there is nonempty: otherwise weak
+inextensibility tested on <span class="math inline">\bot</span> makes
+<span class="math inline">A=\bot</span>, whose power property is the
+haecceity of <span class="math inline">\bot</span>, which is rigid. For
+<span class="math inline">p\in D</span> let <span
+class="math inline">\widehat p</span> be the root proposition false at
+the root, with <span class="math inline">m</span>-component <span
+class="math inline">p</span> and <span class="math inline">\bot</span>
+in every other component; let <span class="math inline">F</span> have
+root extension <span class="math inline">\{\widehat p:p\in D\}</span>,
+<span class="math inline">m</span>-component <span
+class="math inline">A</span>, and in each other component <span
+class="math inline">i</span> the haecceity of <span
+class="math inline">\bot</span>. Both are in the domain, the root
+domains being fullest. <span class="math inline">F</span> is weakly
+persistent at the root, <span class="math inline">A</span> and the
+haecceities being persistent. It is weakly inextensible there: if <span
+class="math inline">H</span> necessarily holds of every <span
+class="math inline">\widehat p</span>, its root extension contains them,
+<span class="math inline">A\le H_m</span> by the weak inextensibility of
+<span class="math inline">A</span>, and the haecceity of <span
+class="math inline">\bot</span> entails <span
+class="math inline">H_i</span>; entailment in the sum is componentwise.
+Every other accessible world lies in a component, where <span
+class="math inline">F</span>’s components are rigid; so <span
+class="math inline">F</span> is rigid. The <span
+class="math inline">m</span>-component of its power property is that of
+<span class="math inline">A</span>, transport respecting abstraction,
+rigidity and entailment, and every arrow into <span
+class="math inline">m</span> factors through the distinguished one; so
+it is not rigid. Rigid Power fails at the root, at type <span
+class="math inline">t\to t</span>.</p>
+<p><em>From the group </em>Coalesced sums at a new root<em>, shared
+argument <code>coalesced-sums#rigid-power-component</code>. It requires
+that The components are a family of action models complete for C: every
+sentence consistent with C is true at the root of some component. Here:
+The source action models are a set complete for C. It requires that A
+root entity of a relational type has a root component that is an
+arbitrary function of the root arguments. Here: The root domains are as
+full as compatibility allows. By GPT-6 Astra (OpenAI), at Cian Dorr’s
+request; checked and recorded by Claude Opus 5.5 (Anthropic),
+2026-10-11.</em></p>
 <h3 id="fails-intensional-choice.">Fails Intensional Choice.</h3>
 <p>The type-<span class="math inline">e</span> instance of Intensional
 Choice fails in a model of C (symmetric-all-surjections), so its

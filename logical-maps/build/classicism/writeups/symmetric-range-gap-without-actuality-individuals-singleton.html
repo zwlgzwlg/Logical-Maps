@@ -332,6 +332,8 @@ recorded by Claude Opus 5 (Anthropic), 19 September 2026.
 propositional formulation.</li>
 <li><strong>Inextensible Comprehension.</strong> Every relation,
 including a proposition, is coextensive with a inextensible one.</li>
+<li><strong>Rigid Power.</strong> If a relation is rigid, so is the
+property of being a rigid relation that entails it.</li>
 <li><strong>Boolean Completeness.</strong> Every property of entities of
 a relational type has a greatest lower bound in that type.</li>
 <li><strong>No Pure Contingency.</strong> Each closed sentence of the
@@ -454,6 +456,66 @@ class="math inline">A</span>; the conjunct <span
 class="math inline">\alpha</span> removes the others.</p>
 <p><em>By Claude Opus 5.5 (Anthropic), at Cian Dorr’s request,
 2026-09-27.</em></p>
+<h3 id="holds-rigid-power.">Holds Rigid Power.</h3>
+<p>The argument rigid-power-surjections, adapted. Let <span
+class="math inline">d</span> be the distinguished individual and <span
+class="math inline">B</span> the others; the kind-<span
+class="math inline">A</span> arrows are the surjections with <span
+class="math inline">d</span> its own only preimage, the kind-<span
+class="math inline">K</span> arrows the maps into <span
+class="math inline">B</span>; an arrow’s kind is its value at <span
+class="math inline">d</span>. Put <span class="math inline">d</span> in
+every pinning set below; Tame Rigidity holds at every type
+(tame-rigidity-factorizable). Stable sets: if a set of tuples is closed
+under the kind-<span class="math inline">A</span> arrows fixing <span
+class="math inline">P</span>, its <span class="math inline">B_P</span>
+is weakly rigid. In the proof take <span class="math inline">u</span> of
+kind <span class="math inline">A</span> fixing <span
+class="math inline">P</span>, sending <span
+class="math inline">M\setminus P</span> to fresh points of <span
+class="math inline">B</span> outside <span class="math inline">Q</span>,
+and <span class="math inline">r</span> of the kind of <span
+class="math inline">l</span>; every prescribed value other than at <span
+class="math inline">d</span> lies in <span class="math inline">B</span>,
+so <span class="math inline">r</span> extends to an arrow of that kind.
+Exact images: call <span class="math inline">j</span> regular when it
+maps <span class="math inline">B</span> onto <span
+class="math inline">B</span>; every kind-<span
+class="math inline">A</span> arrow is regular. For weakly rigid <span
+class="math inline">F</span> with extension <span
+class="math inline">E</span>, <span class="math inline">F_j=jE</span>
+for every regular <span class="math inline">j</span>, taking the <span
+class="math inline">u</span> of the exact-image step of kind <span
+class="math inline">A</span> fixing <span class="math inline">S</span>;
+the values prescribed off <span class="math inline">S</span> lie in
+<span class="math inline">B</span> and regularity supplies preimages in
+<span class="math inline">B</span>. Lifting: extend <span
+class="math inline">k|_N</span> to a regular <span
+class="math inline">j</span> of <span class="math inline">k</span>’s
+kind with finitely many non-singleton fibres, all finite, put them
+inside <span class="math inline">P</span>, and take <span
+class="math inline">T\setminus\{d\}\subseteq jP</span>. For <span
+class="math inline">u</span> of kind <span class="math inline">A</span>
+fixing <span class="math inline">P</span>, define <span
+class="math inline">v</span> by <span class="math inline">vj=ju</span>
+on the range of <span class="math inline">j</span>, and, when <span
+class="math inline">j</span> has kind <span class="math inline">K</span>
+(range <span class="math inline">B</span>), <span
+class="math inline">v(d):=d</span>. Then <span
+class="math inline">v</span> maps <span class="math inline">B</span>
+onto <span class="math inline">B</span>, has no preimage of <span
+class="math inline">d</span> in <span class="math inline">B</span>, and
+fixes <span class="math inline">T</span>: it is a kind-<span
+class="math inline">A</span> arrow fixing <span
+class="math inline">T</span>. So <span class="math inline">\{a\in
+E:ja\in D\}</span> is closed under the kind-<span
+class="math inline">A</span> arrows fixing <span
+class="math inline">P</span>, and the rest is as before: Rigid Power at
+every type, for either choice of individuals.</p>
+<p><em>Address:
+<code>symmetric-range-gap-without-actuality-individuals-singleton#rigid-power</code>.
+By GPT-6 Astra (OpenAI), at Cian Dorr’s request; checked and recorded by
+Claude Opus 5.5 (Anthropic), 2026-10-11.</em></p>
 <h3 id="holds-boolean-completeness.">Holds Boolean Completeness.</h3>
 <p>At every relational type: a property <span
 class="math inline">F</span> of type-<span

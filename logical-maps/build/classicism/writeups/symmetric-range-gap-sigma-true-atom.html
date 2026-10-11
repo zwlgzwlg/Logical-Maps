@@ -349,6 +349,8 @@ quantifier over propositions.</li>
 including a proposition, is rigid.</li>
 <li><strong>¬ Atomicity (type t).</strong> Atomicity (type t) in the
 displayed closed propositional formulation.</li>
+<li><strong>¬ Rigid Power.</strong> If a relation is rigid, so is the
+property of being a rigid relation that entails it.</li>
 <li><strong>¬ Relational Choice.</strong> Every serial binary relation
 has a functional subrelation.</li>
 <li><strong>¬ BF.</strong> The Barcan Formula at every type. The
@@ -420,6 +422,79 @@ since <span class="math inline">h</span>’s value at a fresh <span
 class="math inline">m</span> can be made to coincide with, or to differ
 from, a value on <span class="math inline">N</span>.</p>
 <p><em>By Claude Fable 5.1 (Anthropic), 2026-09-23.</em></p>
+<h3 id="fails-rigid-power.">Fails Rigid Power.</h3>
+<p>At type <span class="math inline">t\to t</span>, with propositions as
+arguments, so for either choice of individuals. For points <span
+class="math inline">u,v</span> let <span
+class="math inline">q_{uv}:=\{h:hu=hv\}</span>, a symmetric proposition
+pinned down by <span class="math inline">\{u,v\}</span>, with <span
+class="math inline">h\cdot q_{uv}=q_{hu,hv}</span>; let <span
+class="math inline">Q(A):=\{q_{uv}:u,v\in A\}</span>. The arrows into
+<span class="math inline">B</span> (the points other than the
+distinguished <span class="math inline">d</span>) are arbitrary, so
+<span class="math inline">q_{uv}=q_{xy}</span> for distinct <span
+class="math inline">u,v</span> only if <span
+class="math inline">\{u,v\}=\{x,y\}</span> (an arrow merging just <span
+class="math inline">u</span> and <span class="math inline">v</span>).
+Let <span class="math inline">F</span> have extension <span
+class="math inline">Q(B)</span> at every arrow, and, for a fixed <span
+class="math inline">c\in B</span>, let <span
+class="math inline">Y_k:=Q(B\setminus \{kc\})</span> at a symmetry <span
+class="math inline">k</span> (a permutation fixing <span
+class="math inline">d</span>) and <span
+class="math inline">Y_k:=Q(B)</span> at an arrow omitting <span
+class="math inline">d</span>. Both are symmetric, pinned down by <span
+class="math inline">\emptyset</span> and <span
+class="math inline">\{d,c\}</span>, and equal to their <span
+class="math inline">B_N</span> for every finite <span
+class="math inline">N</span> (at an arrow omitting <span
+class="math inline">d</span>, two fresh points can be sent anywhere in
+<span class="math inline">B</span>), so they are weakly rigid
+(tame-rigidity-factorizable, part (1)) and rigid by Tame Rigidity; <span
+class="math inline">Y\le F</span>, and <span class="math inline">h\cdot
+F=F</span> for every arrow <span class="math inline">h</span>. No rigid
+<span class="math inline">Z\le F</span> has <span
+class="math inline">Z_h=Y_1=Q(B\setminus\{c\})</span> at an arrow <span
+class="math inline">h</span> omitting <span
+class="math inline">d</span>. Let <span
+class="math inline">T\supseteq\{d,c\}</span> pin <span
+class="math inline">Z</span> down and take distinct <span
+class="math inline">x,y\in B</span> outside <span
+class="math inline">hT\cup\{c\}</span>. Then <span
+class="math inline">q_{xy}\in Z_h</span>, so by part (1) <span
+class="math inline">q_{xy}=g\cdot q_{uv}</span> with <span
+class="math inline">q_{uv}\in Z_1</span> and <span
+class="math inline">g</span> agreeing with <span
+class="math inline">h</span> on <span class="math inline">T</span>; so
+<span class="math inline">gu=x</span>, <span
+class="math inline">gv=y</span> (after swapping), and <span
+class="math inline">u,v\notin T</span>. Changing <span
+class="math inline">g</span> at <span class="math inline">u</span> to
+<span class="math inline">c</span> gives an arrow <span
+class="math inline">g^{\prime}</span> omitting <span
+class="math inline">d</span> and agreeing with <span
+class="math inline">h</span> on <span class="math inline">T</span>, and
+weak persistence and pinning put <span
+class="math inline">q_{cy}=g^{\prime}\cdot q_{uv}</span> in <span
+class="math inline">Z_{g^{\prime}}=Z_h</span>, which is not in <span
+class="math inline">Q(B\setminus\{c\})</span>. The power property <span
+class="math inline">R</span> of <span class="math inline">F</span> has
+the set of rigid <span class="math inline">Z\le F</span> as its
+extension at every arrow. The test <span
+class="math inline">B_{\{d\}}</span> of that extension necessarily holds
+of each of its instances, but at an arrow omitting <span
+class="math inline">d</span> it would contain <span
+class="math inline">Y</span> only as <span
+class="math inline">h^{\prime}\cdot Z</span> with <span
+class="math inline">Z_{h^{\prime}}=Y_1</span> and <span
+class="math inline">h^{\prime}</span> omitting <span
+class="math inline">d</span>, which was just excluded. So <span
+class="math inline">R</span> is not weakly inextensible, though <span
+class="math inline">F</span> is rigid: Rigid Power fails.</p>
+<p><em>Address:
+<code>symmetric-range-gap-sigma-true-atom#rigid-power</code>. By GPT-6
+Astra (OpenAI), at Cian Dorr’s request; checked and recorded by Claude
+Opus 5.5 (Anthropic), 2026-10-11.</em></p>
 <h3 id="fails-relational-choice.">Fails Relational Choice.</h3>
 <p>At the types <span class="math inline">(e\to t)</span> and <span
 class="math inline">e</span>. Let <span class="math inline">U:=\lambda

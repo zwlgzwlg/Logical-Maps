@@ -11,6 +11,7 @@
 - **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
 - **Tame Rigidity.** Every weakly rigid relation, including a proposition, is rigid.
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
+- **¬ Rigid Power.** If a relation is rigid, so is the property of being a rigid relation that entails it.
 - **¬ BF (type t).** BF (type t) in the displayed closed propositional formulation.
 - **¬ Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **¬ Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
@@ -39,6 +40,15 @@ Interpretation of Σ, fixed for this record: one designated relational constant 
 The symmetry group is an atom, but no atom lies inside the nonempty proposition $T$ of arrows omitting $0$ from their range, which is symmetric and pinned down by $\{0\}$: a nonempty symmetric $p\subseteq T$ pinned down by $N\ni0$ and containing $h$ contains every arrow in $T$ whose restriction to $N$ has the same fibres as $h$’s, and those whose restriction to $N\cup\{m\}$ has the same fibres as $h$’s form a smaller nonempty symmetric proposition pinned down by $N\cup\{m\}$, since $h$’s value at a fresh $m$ can be made to coincide with, or to differ from, a value on $N$.
 
 *By Claude Fable 5.1 (Anthropic), 2026-09-23.*
+
+### Fails Rigid Power.
+
+At type $t\to t$, with propositions as arguments, so for either choice of individuals. For points $u,v$ let $q_{uv}:=\{h:hu=hv\}$, a symmetric proposition pinned down by $\{u,v\}$, with $h\cdot q_{uv}=q_{hu,hv}$; let $Q(A):=\{q_{uv}:u,v\in A\}$. The arrows into $B$ (the points other than the distinguished $d$) are arbitrary, so $q_{uv}=q_{xy}$ for distinct $u,v$ only if $\{u,v\}=\{x,y\}$ (an arrow merging just $u$ and $v$).
+Let $F$ have extension $Q(B)$ at every arrow, and, for a fixed $c\in B$, let $Y_k:=Q(B\setminus \{kc\})$ at a symmetry $k$ (a permutation fixing $d$) and $Y_k:=Q(B)$ at an arrow omitting $d$. Both are symmetric, pinned down by $\emptyset$ and $\{d,c\}$, and equal to their $B_N$ for every finite $N$ (at an arrow omitting $d$, two fresh points can be sent anywhere in $B$), so they are weakly rigid (tame-rigidity-factorizable, part (1)) and rigid by Tame Rigidity; $Y\le F$, and $h\cdot F=F$ for every arrow $h$.
+No rigid $Z\le F$ has $Z_h=Y_1=Q(B\setminus\{c\})$ at an arrow $h$ omitting $d$. Let $T\supseteq\{d,c\}$ pin $Z$ down and take distinct $x,y\in B$ outside $hT\cup\{c\}$. Then $q_{xy}\in Z_h$, so by part (1) $q_{xy}=g\cdot q_{uv}$ with $q_{uv}\in Z_1$ and $g$ agreeing with $h$ on $T$; so $gu=x$, $gv=y$ (after swapping), and $u,v\notin T$. Changing $g$ at $u$ to $c$ gives an arrow $g^{\prime}$ omitting $d$ and agreeing with $h$ on $T$, and weak persistence and pinning put $q_{cy}=g^{\prime}\cdot q_{uv}$ in $Z_{g^{\prime}}=Z_h$, which is not in $Q(B\setminus\{c\})$.
+The power property $R$ of $F$ has the set of rigid $Z\le F$ as its extension at every arrow. The test $B_{\{d\}}$ of that extension necessarily holds of each of its instances, but at an arrow omitting $d$ it would contain $Y$ only as $h^{\prime}\cdot Z$ with $Z_{h^{\prime}}=Y_1$ and $h^{\prime}$ omitting $d$, which was just excluded. So $R$ is not weakly inextensible, though $F$ is rigid: Rigid Power fails.
+
+*Address: `symmetric-range-gap-individuals-singleton-sigma-true-atom#rigid-power`. By GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic), 2026-10-11.*
 
 ### Holds Axiom of Infinity (type t).
 

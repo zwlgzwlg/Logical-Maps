@@ -333,6 +333,9 @@ proposition that entails every true proposition.</li>
 <li><strong>□Boolean Completeness.</strong> Necessarily, every property
 of entities of a relational type has a greatest lower bound in that
 type.</li>
+<li><strong>□Rigid Power.</strong> Every closed instance of Rigid Power
+is necessary. Box the entire object-variable closure; retain the same
+type range and other schema side conditions.</li>
 <li><strong>Axiom of Infinity (type t).</strong> There are not finitely
 many propositions. No finite cardinality holds of the universal
 property, so the domain of the type cannot be exhausted by finitely many
@@ -346,6 +349,8 @@ displayed closed propositional formulation.</li>
 <li><strong>¬ □Strong Actuality.</strong> Necessarily, there is a true
 strong world proposition: a true proposition that necessarily entails
 every proposition or its negation.</li>
+<li><strong>¬ Tame Rigidity.</strong> Every weakly rigid relation,
+including a proposition, is rigid.</li>
 <li><strong>¬ Axiom of Infinity (type e).</strong> There are not
 finitely many individuals. No finite cardinality holds of the universal
 property, so the domain of the type cannot be exhausted by finitely many
@@ -445,6 +450,77 @@ object is a strong world. (Strong Actuality holds at the first object,
 by Actuality and the Distinctness-preserving collapse.)</p>
 <p><em>By Claude Opus 5.5 (Anthropic), at Cian Dorr’s direction,
 2026-10-06.</em></p>
+<h3 id="holds-rigid-power.">Holds □Rigid Power.</h3>
+<p>Boxed Rigid Power, for either choice of individuals. At <span
+class="math inline">W_1</span> every symmetric intension is in the
+domain, so every <span class="math inline">X_0(A)</span> (<span
+class="math inline">k\mapsto kA</span>) is, and a weakly rigid relation
+is <span class="math inline">X_0</span> of its extension; a rigid <span
+class="math inline">X\le h\cdot F</span> is <span
+class="math inline">h\cdot X_0(A)</span> for the inverse image <span
+class="math inline">A</span> of its extension, so Rigid Power holds
+there. At <span class="math inline">W_0</span> let <span
+class="math inline">F</span> be rigid, pinned down by a nonempty finite
+<span class="math inline">S</span>, with extension <span
+class="math inline">E_0</span>. For <span class="math inline">h:W_0\to
+W_1</span>, <span class="math inline">h\cdot F=X_0(F_h)</span> is pinned
+down by <span class="math inline">hS</span>; for an idempotent
+retraction <span class="math inline">r</span> onto <span
+class="math inline">hS</span>, <span
+class="math inline">F_h=F_{rh}=rF_h</span>, so <span
+class="math inline">r</span> fixes every tuple of <span
+class="math inline">F_h</span>, and for <span
+class="math inline">k,k^{\prime}</span> agreeing on <span
+class="math inline">hS</span>, <span
+class="math inline">kz=krz=k^{\prime}rz=k^{\prime}z</span>. Through a
+bijection <span class="math inline">W_0\to W_1</span>, every <span
+class="math inline">h:W_0\to W_1</span> acts on the tuples of <span
+class="math inline">E_0</span> through <span
+class="math inline">h|_S</span>; with the invariance of <span
+class="math inline">E_0</span> under the permutations fixing <span
+class="math inline">S</span>, <span class="math inline">X_0(E_0)</span>
+is in the domain, so <span class="math inline">F=X_0(E_0)</span>. For a
+rigid <span class="math inline">X\le h\cdot F</span>, <span
+class="math inline">X=X_0(D)</span> and <span
+class="math inline">X=h\cdot X_0(A)</span> with <span
+class="math inline">A:=\{z\in E_0:hz\in D\}</span>, in the domain for
+the same reason; permutations are lifted by their inverses. So the power
+property is <span class="math inline">X_0</span> of its extension and
+rigid, at both objects.</p>
+<p><em>Address:
+<code>symmetric-two-object-unpinned-individuals-singleton#rigid-power</code>.
+By GPT-6 Astra (OpenAI), at Cian Dorr’s request; checked and recorded by
+Claude Opus 5.5 (Anthropic), 2026-10-11.</em></p>
+<h3 id="fails-tame-rigidity.">Fails Tame Rigidity.</h3>
+<p>At type <span class="math inline">t\to t</span>. With <span
+class="math inline">q_{uv}:=\{h:hu=hv\}</span> on the points at each
+object, fix a point <span class="math inline">a</span> at <span
+class="math inline">W_0</span> and let <span
+class="math inline">U</span> have extension <span
+class="math inline">gE_a</span>, <span
+class="math inline">E_a:=\{q_{na}:n\}</span>, at a permutation <span
+class="math inline">g</span>, and <span
+class="math inline">\{q_{y,ha}:y\}</span> at <span
+class="math inline">h:W_0\to W_1</span>. It is symmetric, pinned down by
+<span class="math inline">\{a\}</span>, and equal to its <span
+class="math inline">B_N</span> for every finite <span
+class="math inline">N\ni a</span> (a fresh <span
+class="math inline">n</span> can be sent to any <span
+class="math inline">y</span>), so weakly rigid. At <span
+class="math inline">W_1</span>, where every symmetric intension is in
+the domain, a weakly rigid relation is <span
+class="math inline">X_0</span> of its extension; but for <span
+class="math inline">j</span> constant with value <span
+class="math inline">c</span>, <span
+class="math inline">j(U_h)=\{\top\}</span> while <span
+class="math inline">U_{jh}=\{q_{y,c}:y\}</span> has non-top members. So
+<span class="math inline">h\cdot U</span> is not weakly rigid, <span
+class="math inline">U</span> is not rigid, and Tame Rigidity fails, even
+with one individual.</p>
+<p><em>Address:
+<code>symmetric-two-object-unpinned-individuals-singleton#tame-rigidity</code>.
+By GPT-6 Astra (OpenAI), at Cian Dorr’s request; checked and recorded by
+Claude Opus 5.5 (Anthropic), 2026-10-11.</em></p>
 <h3 id="holds-axiom-of-infinity-type-t.">Holds Axiom of Infinity (type
 t).</h3>
 <p>The propositions <span class="math inline">C_{n,m}:=\{h :

@@ -14,6 +14,7 @@
 - **¬ Rigid Comprehension.** Every relation, including a proposition, is coextensive with a rigid one.
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
 - **¬ Intensional Choice.** If a property is necessarily instantiated, then some property entailing it is necessarily uniquely instantiated.
+- **¬ Rigid Power.** If a relation is rigid, so is the property of being a rigid relation that entails it.
 - **¬ Relational Choice.** Every serial binary relation has a functional subrelation.
 - **¬ B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
 - **¬ No Contingency (signature Σ).** Each closed sentence of the language of the fixed signature Sigma, if true, is necessary. A sentence schema, standing to No Pure Contingency as Possibility Maximalism (signature Σ) stands to Possibility Maximalism (pure).
@@ -57,6 +58,15 @@ Confirming the draft's unwritten claim, by the splitting argument it indicates. 
 At type $e$. Let $F$ be the constant property whose extension at every world is the distinguished pair $\{0,1\}$: symmetric, since the symmetry group preserves the pair setwise, pinned down by $\varnothing$, and necessarily instantiated. Suppose $G\le F$ is pinned down by a finite $N$ with every extension a singleton, so $G(h)\in\{\{0\},\{1\}\}$. Choose a surjective relation-preserving arrow $h$ that sends $0$ and $1$ to a point $p\notin\{0,1\}$ and whose preimages of $0$, $1$, their companions and the links at $0$ or $1$ avoid $N$ (take as preimages of $0$ and $1$ two points outside $N$ that are endpoints of no link in $N$; the pair's links go to companions of $p$, and surjectivity is arranged on the infinite fibres). Let $\sigma$ be the relation automorphism swapping $0$ and $1$ with their companions and links and fixing every other point. It is in the symmetry group, fixes $h(N)$ pointwise, and $\sigma\circ h$ is again an arrow. Pinning gives $G(\sigma\circ h)=G(h)$, while symmetry gives $G(\sigma\circ h)=\sigma(G(h))\ne G(h)$. The collapse argument of the group cannot reach this model, its arrows preserving sorts; the pair property sidesteps that.
 
 *By Claude Fable 5.1 (Anthropic), at Cian Dorr's suggestion, 2026-10-03.*
+
+### Fails Rigid Power.
+
+At type $t\to t$, with propositions as arguments, so for either choice of individuals; the argument for symmetric-range-gap with the link structure. Let $L$ be the points, $a,b$ the distinguished pair, $c\in L\setminus\{a,b\}$, and $q_{uv}:=\{h:hu=hv\}$, $Q(A):=\{q_{uv}:u,v\in A\}$. Every arrow fixes $\{a,b\}$ setwise or collapses it, so $q_{ax}=q_{bx}$; codes of pairs of points outside $\{a,b\}$ determine their pairs, by the draft's extension step (proof of its Proposition 50), which extends an $R$-coherent prescription on a closed finite set to a collapsing arrow.
+Let $F_k:=Q(L)$ at every arrow: every arrow is surjective on points, so $F=X_0(Q(L))$, which is rigid. Let $Y_k:=Q(L\setminus\{kc\})$ at a symmetry $k$ and $Q(L)$ at a collapse. It is symmetric, pinned down by $\{a,b,c\}$, and equal to its $B_N$ for every finite $N$ (at a collapse, two point coordinates outside the closure of $N$ under point coordinates and companions can be sent to any two points, by the extension step), so weakly rigid. It is rigid without appeal to Tame Rigidity (which fails here): its transport along a symmetry has the same form, and along a collapse it is $F$, every later composite being a collapse.
+No rigid $Z\le F$ has $Z_h=Y_1$ at a collapse $h$. Close a finite pinning set $T$ of $Z$ under point coordinates and companions, with $a,b,c\in T$, and take distinct points $x,y$ outside $hT\cup\{a,b,c\}$. Part (1) of tame-rigidity-factorizable gives $q_{uv}\in Z_1$ and a collapse $g$ agreeing with $h$ on $T$ with $g\cdot q_{uv}=q_{xy}$; so $\{gu,gv\}=\{x,y\}$ and $u,v\notin T$. No member of $T$ is a link at $u$ or $v$, $T$ being closed, so the prescription agreeing with $h$ on $T$ and sending $u$ to $c$ and $v$ to $y$, with their companions, extends to a collapse $g^{\prime}$; then $q_{cy}=g^{\prime}\cdot q_{uv}\in Z_{g^{\prime}}=Z_h$, which is not in $Q(L\setminus\{c\})$.
+So the test $B_{\{a,b\}}$ of the extension of $F$'s power property (constant, since $h\cdot F=F$) necessarily holds of its instances but omits $Y$ at a collapse, every arrow agreeing with a collapse on $\{a,b\}$ being one. The power property is not weakly inextensible: Rigid Power fails.
+
+*Address: `symmetric-qualitative-links-sigma-true-atom#rigid-power`. By GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic), 2026-10-11.*
 
 ### Fails Relational Choice.
 

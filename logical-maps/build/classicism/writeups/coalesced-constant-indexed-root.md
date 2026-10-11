@@ -10,6 +10,7 @@
 - **Actuality.** There is a true proposition that entails every true proposition.
 - **Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
 - **¬ Tame Rigidity.** Every weakly rigid relation, including a proposition, is rigid.
+- **¬ Rigid Power.** If a relation is rigid, so is the property of being a rigid relation that entails it.
 - **¬ Intensional Choice.** If a property is necessarily instantiated, then some property entailing it is necessarily uniquely instantiated.
 - **¬ BF (type t).** BF (type t) in the displayed closed propositional formulation.
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
@@ -47,6 +48,13 @@ Tame Rigidity fails at a relational argument type in models of C (ultralimit-for
 *From the group *Coalesced sums at a new root*, shared argument `coalesced-sums#tame-rigidity-component`. It requires that The components are a family of action models complete for C: every sentence consistent with C is true at the root of some component. Here: The action models for L(Σ) are a set complete for C(Σ), so in particular for C. It requires that A root entity of a relational type has a root component that is an arbitrary function of the root arguments. Here: The root domains are as full as compatibility allows. By Claude Fable 5.1 (Anthropic), answering Cian Dorr's conjecture, 2026-10-03.*
 
 *Revised 2026-10-03 by Claude Opus 5.5 (Anthropic), at Cian Dorr's direction:* One direction of Fable's transfer theorem: at a coalesced root, Tame Rigidity at a relational type holds iff it holds at the root of every component. The other direction is not recorded, the engine deriving the positive verdict in the one model where it applies.
+
+### Fails Rigid Power.
+
+The transfer of tame-rigidity-component, applied to a rigid relation whose power property is not rigid. The pure sentence $\exists A^{tt}\, .\,\operatorname{Rigid}(A)\land\neg\operatorname{Rigid} (\lambda X\, .\,\operatorname{Rigid}(X)\land X\le A)$ is consistent with C (it holds in the one-individual variants of finite-support-pair-injections-or-collapses and symmetric-collapse-pair, with $A:=\top$), so some component $m$ satisfies it at its root, with witness $A$. Its extension $D$ there is nonempty: otherwise weak inextensibility tested on $\bot$ makes $A=\bot$, whose power property is the haecceity of $\bot$, which is rigid.
+For $p\in D$ let $\widehat p$ be the root proposition false at the root, with $m$-component $p$ and $\bot$ in every other component; let $F$ have root extension $\{\widehat p:p\in D\}$, $m$-component $A$, and in each other component $i$ the haecceity of $\bot$. Both are in the domain, the root domains being fullest. $F$ is weakly persistent at the root, $A$ and the haecceities being persistent. It is weakly inextensible there: if $H$ necessarily holds of every $\widehat p$, its root extension contains them, $A\le H_m$ by the weak inextensibility of $A$, and the haecceity of $\bot$ entails $H_i$; entailment in the sum is componentwise. Every other accessible world lies in a component, where $F$'s components are rigid; so $F$ is rigid. The $m$-component of its power property is that of $A$, transport respecting abstraction, rigidity and entailment, and every arrow into $m$ factors through the distinguished one; so it is not rigid. Rigid Power fails at the root, at type $t\to t$.
+
+*From the group *Coalesced sums at a new root*, shared argument `coalesced-sums#rigid-power-component`. It requires that The components are a family of action models complete for C: every sentence consistent with C is true at the root of some component. Here: The action models for L(Σ) are a set complete for C(Σ), so in particular for C. It requires that A root entity of a relational type has a root component that is an arbitrary function of the root arguments. Here: The root domains are as full as compatibility allows. By GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic), 2026-10-11.*
 
 ### Fails Intensional Choice.
 

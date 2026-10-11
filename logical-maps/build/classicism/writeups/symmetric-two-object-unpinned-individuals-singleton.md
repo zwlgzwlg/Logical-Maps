@@ -6,11 +6,13 @@
 
 - **□Actuality.** Necessarily, there is a true proposition that entails every true proposition.
 - **□Boolean Completeness.** Necessarily, every property of entities of a relational type has a greatest lower bound in that type.
+- **□Rigid Power.** Every closed instance of Rigid Power is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
 - **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
 - **Distinctness-preserving collapse.** Every truth is necessary under the distinctness-preserving modality.
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
 - **¬ □Strong Actuality.** Necessarily, there is a true strong world proposition: a true proposition that necessarily entails every proposition or its negation.
+- **¬ Tame Rigidity.** Every weakly rigid relation, including a proposition, is rigid.
 - **¬ Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **¬ Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
 - **¬ Possible Infinity (type e).** Possibly there are not finitely many individuals: the Axiom of Infinity at this type, under a diamond.
@@ -56,6 +58,18 @@ The symmetry group of $W_0$ is an atom, but no atom lies inside the nonempty pro
 Strong Actuality fails at the second object, which an arrow from the first reaches. There a true proposition contains the identity and, being symmetric, every permutation. Let $s$ be the successor map, an arrow from the second object to itself, and $k_0,k_1$ its retractions sending $n+1$ to $n$ and $0$ to $0$ and to $1$ respectively. Under $s$ the true proposition becomes one containing $k_0$ and $k_1$. The proposition that the arrow sends $0$ and $1$ to the same individual is closed under composition with permutations, so in the domain at the second object, where every symmetric intension is; it contains $k_0$ and not $k_1$. So no true proposition at the second object is a strong world. (Strong Actuality holds at the first object, by Actuality and the Distinctness-preserving collapse.)
 
 *By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Holds □Rigid Power.
+
+Boxed Rigid Power, for either choice of individuals. At $W_1$ every symmetric intension is in the domain, so every $X_0(A)$ ($k\mapsto kA$) is, and a weakly rigid relation is $X_0$ of its extension; a rigid $X\le h\cdot F$ is $h\cdot X_0(A)$ for the inverse image $A$ of its extension, so Rigid Power holds there. At $W_0$ let $F$ be rigid, pinned down by a nonempty finite $S$, with extension $E_0$. For $h:W_0\to W_1$, $h\cdot F=X_0(F_h)$ is pinned down by $hS$; for an idempotent retraction $r$ onto $hS$, $F_h=F_{rh}=rF_h$, so $r$ fixes every tuple of $F_h$, and for $k,k^{\prime}$ agreeing on $hS$, $kz=krz=k^{\prime}rz=k^{\prime}z$. Through a bijection $W_0\to W_1$, every $h:W_0\to W_1$ acts on the tuples of $E_0$ through $h|_S$; with the invariance of $E_0$ under the permutations fixing $S$, $X_0(E_0)$ is in the domain, so $F=X_0(E_0)$. For a rigid $X\le h\cdot F$, $X=X_0(D)$ and $X=h\cdot X_0(A)$ with $A:=\{z\in E_0:hz\in D\}$, in the domain for the same reason; permutations are lifted by their inverses. So the power property is $X_0$ of its extension and rigid, at both objects.
+
+*Address: `symmetric-two-object-unpinned-individuals-singleton#rigid-power`. By GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic), 2026-10-11.*
+
+### Fails Tame Rigidity.
+
+At type $t\to t$. With $q_{uv}:=\{h:hu=hv\}$ on the points at each object, fix a point $a$ at $W_0$ and let $U$ have extension $gE_a$, $E_a:=\{q_{na}:n\}$, at a permutation $g$, and $\{q_{y,ha}:y\}$ at $h:W_0\to W_1$. It is symmetric, pinned down by $\{a\}$, and equal to its $B_N$ for every finite $N\ni a$ (a fresh $n$ can be sent to any $y$), so weakly rigid. At $W_1$, where every symmetric intension is in the domain, a weakly rigid relation is $X_0$ of its extension; but for $j$ constant with value $c$, $j(U_h)=\{\top\}$ while $U_{jh}=\{q_{y,c}:y\}$ has non-top members. So $h\cdot U$ is not weakly rigid, $U$ is not rigid, and Tame Rigidity fails, even with one individual.
+
+*Address: `symmetric-two-object-unpinned-individuals-singleton#tame-rigidity`. By GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic), 2026-10-11.*
 
 ### Holds Axiom of Infinity (type t).
 

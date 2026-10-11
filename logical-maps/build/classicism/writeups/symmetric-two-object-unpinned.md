@@ -6,6 +6,7 @@
 
 - **□Actuality.** Necessarily, there is a true proposition that entails every true proposition.
 - **□Boolean Completeness.** Necessarily, every property of entities of a relational type has a greatest lower bound in that type.
+- **□Rigid Power.** Every closed instance of Rigid Power is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
 - **Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Axiom of Infinity (type t).** There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
@@ -85,6 +86,12 @@ The type-$e$ instance of BF is a closed pure sentence true at the base world and
 Strong Actuality fails at the second object, which an arrow from the first reaches. There a true proposition contains the identity and, being symmetric, every permutation. Let $s$ be the successor map, an arrow from the second object to itself, and $k_0,k_1$ its retractions sending $n+1$ to $n$ and $0$ to $0$ and to $1$ respectively. Under $s$ the true proposition becomes one containing $k_0$ and $k_1$. The proposition that the arrow sends $0$ and $1$ to the same individual is closed under composition with permutations, so in the domain at the second object, where every symmetric intension is; it contains $k_0$ and not $k_1$. So no true proposition at the second object is a strong world. (Strong Actuality holds at the first object, by Actuality and the Distinctness-preserving collapse.)
 
 *By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-06.*
+
+### Holds □Rigid Power.
+
+Boxed Rigid Power, for either choice of individuals. At $W_1$ every symmetric intension is in the domain, so every $X_0(A)$ ($k\mapsto kA$) is, and a weakly rigid relation is $X_0$ of its extension; a rigid $X\le h\cdot F$ is $h\cdot X_0(A)$ for the inverse image $A$ of its extension, so Rigid Power holds there. At $W_0$ let $F$ be rigid, pinned down by a nonempty finite $S$, with extension $E_0$. For $h:W_0\to W_1$, $h\cdot F=X_0(F_h)$ is pinned down by $hS$; for an idempotent retraction $r$ onto $hS$, $F_h=F_{rh}=rF_h$, so $r$ fixes every tuple of $F_h$, and for $k,k^{\prime}$ agreeing on $hS$, $kz=krz=k^{\prime}rz=k^{\prime}z$. Through a bijection $W_0\to W_1$, every $h:W_0\to W_1$ acts on the tuples of $E_0$ through $h|_S$; with the invariance of $E_0$ under the permutations fixing $S$, $X_0(E_0)$ is in the domain, so $F=X_0(E_0)$. For a rigid $X\le h\cdot F$, $X=X_0(D)$ and $X=h\cdot X_0(A)$ with $A:=\{z\in E_0:hz\in D\}$, in the domain for the same reason; permutations are lifted by their inverses. So the power property is $X_0$ of its extension and rigid, at both objects.
+
+*Address: `symmetric-two-object-unpinned#rigid-power`. By GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic), 2026-10-11.*
 
 ### Fails Relational Choice.
 

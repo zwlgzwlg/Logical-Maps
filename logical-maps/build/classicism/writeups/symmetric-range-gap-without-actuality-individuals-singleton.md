@@ -6,6 +6,7 @@
 
 - **Atomlessness.** Atomlessness in the displayed closed propositional formulation.
 - **Inextensible Comprehension.** Every relation, including a proposition, is coextensive with a inextensible one.
+- **Rigid Power.** If a relation is rigid, so is the property of being a rigid relation that entails it.
 - **Boolean Completeness.** Every property of entities of a relational type has a greatest lower bound in that type.
 - **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
 - **Tame Rigidity.** Every weakly rigid relation, including a proposition, is rigid.
@@ -44,6 +45,15 @@ At every relational type, by an adaptation of the argument recorded for the all-
 Given $X$ pinned down by $S_X$, put $S:=S_X\cup\{0\}$ and $Y:=\lambda\bar z\, .\,\alpha\land\delta_S\land X\bar z$, with $\delta_S$ the proposition that no two members of $S$ are collapsed. $Y$ is symmetric, pinned down by $S$ and coextensive with $X$. At a world in $B$, or one collapsing $S$, $Y$ is empty there and at every world it sees. A world $i\in A$ injective on $S$ can be relabelled by a permutation fixing $0$, hence in the symmetry group, so that it fixes $S$ pointwise. For such $i$ the transversal lemma holds: $i$ is surjective, preimages of points outside $S$ lie outside $S$, the permutation $\tau$ of $\mathbb N\setminus S$ fixes $0$ and so lies in the symmetry group, which keeps the extension of $X$ at $1$ closed under $\tau\cdot$, and $i\circ\tau\in A$ fixes the pinning set of $r$. The rest of the argument, including the leading box, goes through verbatim. BF fails here, so the surjectivity used in the lemma is available only at the worlds in $A$; the conjunct $\alpha$ removes the others.
 
 *By Claude Opus 5.5 (Anthropic), at Cian Dorr's request, 2026-09-27.*
+
+### Holds Rigid Power.
+
+The argument rigid-power-surjections, adapted. Let $d$ be the distinguished individual and $B$ the others; the kind-$A$ arrows are the surjections with $d$ its own only preimage, the kind-$K$ arrows the maps into $B$; an arrow's kind is its value at $d$. Put $d$ in every pinning set below; Tame Rigidity holds at every type (tame-rigidity-factorizable).
+Stable sets: if a set of tuples is closed under the kind-$A$ arrows fixing $P$, its $B_P$ is weakly rigid. In the proof take $u$ of kind $A$ fixing $P$, sending $M\setminus P$ to fresh points of $B$ outside $Q$, and $r$ of the kind of $l$; every prescribed value other than at $d$ lies in $B$, so $r$ extends to an arrow of that kind.
+Exact images: call $j$ regular when it maps $B$ onto $B$; every kind-$A$ arrow is regular. For weakly rigid $F$ with extension $E$, $F_j=jE$ for every regular $j$, taking the $u$ of the exact-image step of kind $A$ fixing $S$; the values prescribed off $S$ lie in $B$ and regularity supplies preimages in $B$.
+Lifting: extend $k|_N$ to a regular $j$ of $k$'s kind with finitely many non-singleton fibres, all finite, put them inside $P$, and take $T\setminus\{d\}\subseteq jP$. For $u$ of kind $A$ fixing $P$, define $v$ by $vj=ju$ on the range of $j$, and, when $j$ has kind $K$ (range $B$), $v(d):=d$. Then $v$ maps $B$ onto $B$, has no preimage of $d$ in $B$, and fixes $T$: it is a kind-$A$ arrow fixing $T$. So $\{a\in E:ja\in D\}$ is closed under the kind-$A$ arrows fixing $P$, and the rest is as before: Rigid Power at every type, for either choice of individuals.
+
+*Address: `symmetric-range-gap-without-actuality-individuals-singleton#rigid-power`. By GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic), 2026-10-11.*
 
 ### Holds Boolean Completeness.
 

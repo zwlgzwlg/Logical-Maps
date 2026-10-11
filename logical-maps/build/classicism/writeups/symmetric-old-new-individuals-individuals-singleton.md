@@ -10,6 +10,7 @@
 - **□Boolean Completeness (type t).** Every closed instance of Boolean Completeness (type t) is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
 - **□Boolean Completeness.** Necessarily, every property of entities of a relational type has a greatest lower bound in that type.
 - **□Rigid Comprehension.** Necessarily, every relation, including a proposition, is coextensive with a rigid one.
+- **□Rigid Power.** Every closed instance of Rigid Power is necessary. Box the entire object-variable closure; retain the same type range and other schema side conditions.
 - **¬ Strong Leibniz Biconditionals (type t).** The type-t instance of the Strong Leibniz Biconditionals: every possible proposition is entailed by a strong world proposition, one that is possible and necessarily entails every proposition or its negation.
 - **¬ Infinity Schema (type t).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
 - **¬ Possible Infinity (type t).** Possibly there are not finitely many propositions: the Axiom of Infinity at this type, under a diamond.
@@ -68,6 +69,15 @@ The propositions at $E$ are four and those at $O$ eight, finite Boolean algebras
 With one individual every entity is fixed by every symmetry, and is a union of finitely many classes, one for each kind of arrow (to $E$, from $E$ to $O$, in $G_O$, in $K$) and tuple of arguments; by induction on types, so every domain is finite and complete. Transport along an arrow then depends only on its kind, and the kind of a composite on the kinds of its factors, so the intension whose extension at $h$ is $X$'s extension at the identity transported along $h$ is a union of classes, in the domain; it is persistent and inextensible, at both objects.
 
 *Write-up: [symmetric-old-new-individuals](symmetric-old-new-individuals.html). By Claude Opus 5.5 (Anthropic), at Cian Dorr's direction, 2026-10-07.*
+
+### Holds □Rigid Power.
+
+Boxed Rigid Power, for either choice of individuals. Arrows are injective; at $E$ the symmetry group is all permutations, at $O$ those preserving old and new; the arrows out of $O$ other than symmetries (exiting arrows) go to $E$ or have old range.
+(a) At $E$, a rigid $F$ pinned down by $S$ has every tuple of its extension pinned down by $S$. Each tuple has a least finite support under the permutations. Suppose $z\in F_1$ has a point $n\notin S$ in it. Let $i:E\to O$ be the inclusion into the old individuals, $b$ a new point, and $r:O\to E$ an injection with $rb=n$ and $ri$ fixing $S$; so $z\in F_{ri}$. Every tuple of $F_i$ is pinned down by old points (it is $lz^{\prime}$ for an arrow $l:E\to O$, of old range). By the weak inextensibility of $i\cdot F$ at $O$, tested on $B_Q(F_i)$ with $Q\ni b$ containing $iS$ (part (1) of tame-rigidity-factorizable, which holds with several objects), $z=r^{\prime}z^{\prime\prime}$ for an $r^{\prime}$ agreeing with $r$ on $Q$ and $z^{\prime\prime}\in F_i$ pinned down by old points $M$; then $z$ is pinned down by $r^{\prime}M$, which omits $n=r^{\prime}b$ by injectivity, contradicting the least support. Support by $S$ then gives pinning by $S$, through injections agreeing on $S$ factored through permutations fixing $S$.
+(b) So $X_0(A)$ ($k\mapsto kA$) is in the domain and rigid for every $A\subseteq F_1$, and $F=X_0(F_1)$. For an arrow $h$ and rigid $X\le h\cdot F$ with extension $D$, the tuples of $D\subseteq hF_1$ are pinned down by $hS$, so $X=X_0(D)$, and $X=h\cdot X_0(A)$ for $A:=\{z\in F_1:hz\in D\}$. So the power property is $X_0$ of its extension, and rigid.
+(c) At $O$: let $F$ be rigid, pinned down by $S$ containing a new point. Composing with a bijection $O\to E$ and (a), each exiting arrow $h$ acts on the tuples of $F_1$ through $h|_S$, and $F_1$ is invariant under the symmetries fixing $S$; a symmetry and an exiting arrow cannot agree on $S$. So $F=X_0(F_1)$, and (b) goes through for exiting arrows, symmetries being lifted by their inverses. Rigid Power holds at both objects, hence at every world.
+
+*Address: `symmetric-old-new-individuals-individuals-singleton#rigid-power`. By GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic), 2026-10-11.*
 
 ### Fails Possible Infinity (type t).
 

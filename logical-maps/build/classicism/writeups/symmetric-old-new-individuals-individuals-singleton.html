@@ -346,6 +346,9 @@ of entities of a relational type has a greatest lower bound in that
 type.</li>
 <li><strong>□Rigid Comprehension.</strong> Necessarily, every relation,
 including a proposition, is coextensive with a rigid one.</li>
+<li><strong>□Rigid Power.</strong> Every closed instance of Rigid Power
+is necessary. Box the entire object-variable closure; retain the same
+type range and other schema side conditions.</li>
 <li><strong>¬ Strong Leibniz Biconditionals (type t).</strong> The
 type-t instance of the Strong Leibniz Biconditionals: every possible
 proposition is entailed by a strong world proposition, one that is
@@ -509,6 +512,74 @@ domain; it is persistent and inextensible, at both objects.</p>
 href="symmetric-old-new-individuals.html">symmetric-old-new-individuals</a>.
 By Claude Opus 5.5 (Anthropic), at Cian Dorr’s direction,
 2026-10-07.</em></p>
+<h3 id="holds-rigid-power.">Holds □Rigid Power.</h3>
+<p>Boxed Rigid Power, for either choice of individuals. Arrows are
+injective; at <span class="math inline">E</span> the symmetry group is
+all permutations, at <span class="math inline">O</span> those preserving
+old and new; the arrows out of <span class="math inline">O</span> other
+than symmetries (exiting arrows) go to <span
+class="math inline">E</span> or have old range. (a) At <span
+class="math inline">E</span>, a rigid <span class="math inline">F</span>
+pinned down by <span class="math inline">S</span> has every tuple of its
+extension pinned down by <span class="math inline">S</span>. Each tuple
+has a least finite support under the permutations. Suppose <span
+class="math inline">z\in F_1</span> has a point <span
+class="math inline">n\notin S</span> in it. Let <span
+class="math inline">i:E\to O</span> be the inclusion into the old
+individuals, <span class="math inline">b</span> a new point, and <span
+class="math inline">r:O\to E</span> an injection with <span
+class="math inline">rb=n</span> and <span class="math inline">ri</span>
+fixing <span class="math inline">S</span>; so <span
+class="math inline">z\in F_{ri}</span>. Every tuple of <span
+class="math inline">F_i</span> is pinned down by old points (it is <span
+class="math inline">lz^{\prime}</span> for an arrow <span
+class="math inline">l:E\to O</span>, of old range). By the weak
+inextensibility of <span class="math inline">i\cdot F</span> at <span
+class="math inline">O</span>, tested on <span
+class="math inline">B_Q(F_i)</span> with <span class="math inline">Q\ni
+b</span> containing <span class="math inline">iS</span> (part (1) of
+tame-rigidity-factorizable, which holds with several objects), <span
+class="math inline">z=r^{\prime}z^{\prime\prime}</span> for an <span
+class="math inline">r^{\prime}</span> agreeing with <span
+class="math inline">r</span> on <span class="math inline">Q</span> and
+<span class="math inline">z^{\prime\prime}\in F_i</span> pinned down by
+old points <span class="math inline">M</span>; then <span
+class="math inline">z</span> is pinned down by <span
+class="math inline">r^{\prime}M</span>, which omits <span
+class="math inline">n=r^{\prime}b</span> by injectivity, contradicting
+the least support. Support by <span class="math inline">S</span> then
+gives pinning by <span class="math inline">S</span>, through injections
+agreeing on <span class="math inline">S</span> factored through
+permutations fixing <span class="math inline">S</span>. (b) So <span
+class="math inline">X_0(A)</span> (<span class="math inline">k\mapsto
+kA</span>) is in the domain and rigid for every <span
+class="math inline">A\subseteq F_1</span>, and <span
+class="math inline">F=X_0(F_1)</span>. For an arrow <span
+class="math inline">h</span> and rigid <span class="math inline">X\le
+h\cdot F</span> with extension <span class="math inline">D</span>, the
+tuples of <span class="math inline">D\subseteq hF_1</span> are pinned
+down by <span class="math inline">hS</span>, so <span
+class="math inline">X=X_0(D)</span>, and <span
+class="math inline">X=h\cdot X_0(A)</span> for <span
+class="math inline">A:=\{z\in F_1:hz\in D\}</span>. So the power
+property is <span class="math inline">X_0</span> of its extension, and
+rigid. (c) At <span class="math inline">O</span>: let <span
+class="math inline">F</span> be rigid, pinned down by <span
+class="math inline">S</span> containing a new point. Composing with a
+bijection <span class="math inline">O\to E</span> and (a), each exiting
+arrow <span class="math inline">h</span> acts on the tuples of <span
+class="math inline">F_1</span> through <span
+class="math inline">h|_S</span>, and <span
+class="math inline">F_1</span> is invariant under the symmetries fixing
+<span class="math inline">S</span>; a symmetry and an exiting arrow
+cannot agree on <span class="math inline">S</span>. So <span
+class="math inline">F=X_0(F_1)</span>, and (b) goes through for exiting
+arrows, symmetries being lifted by their inverses. Rigid Power holds at
+both objects, hence at every world.</p>
+<p><em>Address:
+<code>symmetric-old-new-individuals-individuals-singleton#rigid-power</code>.
+By GPT-6 Astra (OpenAI), at Cian Dorr’s request; checked and recorded by
+Claude Opus 5.5 (Anthropic), 2026-10-11.</em></p>
 <h3 id="fails-possible-infinity-type-t.">Fails Possible Infinity (type
 t).</h3>
 <p>At a world with <span class="math inline">n</span> propositions, the

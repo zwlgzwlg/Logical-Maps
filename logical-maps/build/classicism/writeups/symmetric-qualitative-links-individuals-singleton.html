@@ -351,6 +351,8 @@ Maximalism (signature Σ) stands to Possibility Maximalism (pure).</li>
 closed sentence of the language of the fixed signature Sigma.</li>
 <li><strong>¬ Atomicity (type t).</strong> Atomicity (type t) in the
 displayed closed propositional formulation.</li>
+<li><strong>¬ Rigid Power.</strong> If a relation is rigid, so is the
+property of being a rigid relation that entails it.</li>
 <li><strong>¬ Axiom of Infinity (type e).</strong> There are not
 finitely many individuals. No finite cardinality holds of the universal
 property, so the domain of the type cannot be exhausted by finitely many
@@ -441,6 +443,74 @@ implication from □Atomicity, Boolean Completeness and BF to Rigid
 Comprehension requires, BF being now established.</p>
 <p><em>By Claude Opus 5.5 (Anthropic), at Cian Dorr’s request,
 2026-09-27.</em></p>
+<h3 id="fails-rigid-power.">Fails Rigid Power.</h3>
+<p>At type <span class="math inline">t\to t</span>, with propositions as
+arguments, so for either choice of individuals; the argument for
+symmetric-range-gap with the link structure. Let <span
+class="math inline">L</span> be the points, <span
+class="math inline">a,b</span> the distinguished pair, <span
+class="math inline">c\in L\setminus\{a,b\}</span>, and <span
+class="math inline">q_{uv}:=\{h:hu=hv\}</span>, <span
+class="math inline">Q(A):=\{q_{uv}:u,v\in A\}</span>. Every arrow fixes
+<span class="math inline">\{a,b\}</span> setwise or collapses it, so
+<span class="math inline">q_{ax}=q_{bx}</span>; codes of pairs of points
+outside <span class="math inline">\{a,b\}</span> determine their pairs,
+by the draft’s extension step (proof of its Proposition 50), which
+extends an <span class="math inline">R</span>-coherent prescription on a
+closed finite set to a collapsing arrow. Let <span
+class="math inline">F_k:=Q(L)</span> at every arrow: every arrow is
+surjective on points, so <span class="math inline">F=X_0(Q(L))</span>,
+which is rigid. Let <span
+class="math inline">Y_k:=Q(L\setminus\{kc\})</span> at a symmetry <span
+class="math inline">k</span> and <span class="math inline">Q(L)</span>
+at a collapse. It is symmetric, pinned down by <span
+class="math inline">\{a,b,c\}</span>, and equal to its <span
+class="math inline">B_N</span> for every finite <span
+class="math inline">N</span> (at a collapse, two point coordinates
+outside the closure of <span class="math inline">N</span> under point
+coordinates and companions can be sent to any two points, by the
+extension step), so weakly rigid. It is rigid without appeal to Tame
+Rigidity (which fails here): its transport along a symmetry has the same
+form, and along a collapse it is <span class="math inline">F</span>,
+every later composite being a collapse. No rigid <span
+class="math inline">Z\le F</span> has <span
+class="math inline">Z_h=Y_1</span> at a collapse <span
+class="math inline">h</span>. Close a finite pinning set <span
+class="math inline">T</span> of <span class="math inline">Z</span> under
+point coordinates and companions, with <span
+class="math inline">a,b,c\in T</span>, and take distinct points <span
+class="math inline">x,y</span> outside <span
+class="math inline">hT\cup\{a,b,c\}</span>. Part (1) of
+tame-rigidity-factorizable gives <span class="math inline">q_{uv}\in
+Z_1</span> and a collapse <span class="math inline">g</span> agreeing
+with <span class="math inline">h</span> on <span
+class="math inline">T</span> with <span class="math inline">g\cdot
+q_{uv}=q_{xy}</span>; so <span
+class="math inline">\{gu,gv\}=\{x,y\}</span> and <span
+class="math inline">u,v\notin T</span>. No member of <span
+class="math inline">T</span> is a link at <span
+class="math inline">u</span> or <span class="math inline">v</span>,
+<span class="math inline">T</span> being closed, so the prescription
+agreeing with <span class="math inline">h</span> on <span
+class="math inline">T</span> and sending <span
+class="math inline">u</span> to <span class="math inline">c</span> and
+<span class="math inline">v</span> to <span
+class="math inline">y</span>, with their companions, extends to a
+collapse <span class="math inline">g^{\prime}</span>; then <span
+class="math inline">q_{cy}=g^{\prime}\cdot q_{uv}\in
+Z_{g^{\prime}}=Z_h</span>, which is not in <span
+class="math inline">Q(L\setminus\{c\})</span>. So the test <span
+class="math inline">B_{\{a,b\}}</span> of the extension of <span
+class="math inline">F</span>’s power property (constant, since <span
+class="math inline">h\cdot F=F</span>) necessarily holds of its
+instances but omits <span class="math inline">Y</span> at a collapse,
+every arrow agreeing with a collapse on <span
+class="math inline">\{a,b\}</span> being one. The power property is not
+weakly inextensible: Rigid Power fails.</p>
+<p><em>Address:
+<code>symmetric-qualitative-links-individuals-singleton#rigid-power</code>.
+By GPT-6 Astra (OpenAI), at Cian Dorr’s request; checked and recorded by
+Claude Opus 5.5 (Anthropic), 2026-10-11.</em></p>
 <h3 id="holds-axiom-of-infinity-type-t.">Holds Axiom of Infinity (type
 t).</h3>
 <p>The propositions <span class="math inline">C_{n,m}:=\{h :
