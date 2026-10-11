@@ -351,6 +351,8 @@ strong world proposition: a true proposition that necessarily entails
 every proposition or its negation.</li>
 <li><strong>¬ Tame Rigidity.</strong> Every weakly rigid relation,
 including a proposition, is rigid.</li>
+<li><strong>¬ BF (type t).</strong> BF (type t) in the displayed closed
+propositional formulation.</li>
 <li><strong>¬ Axiom of Infinity (type e).</strong> There are not
 finitely many individuals. No finite cardinality holds of the universal
 property, so the domain of the type cannot be exhausted by finitely many
@@ -534,6 +536,33 @@ with one individual.</p>
 <code>symmetric-two-object-unpinned-individuals-singleton-sigma-true-atom#tame-rigidity</code>.
 By GPT-6 Astra (OpenAI), at Cian Dorr’s request; checked and recorded by
 Claude Opus 5.5 (Anthropic), 2026-10-11.</em></p>
+<h3 id="fails-bf-type-t.">Fails BF (type t).</h3>
+<p>At the base world. Every transport of a proposition <span
+class="math inline">p</span> of the first object along an arrow <span
+class="math inline">h</span> into the second is pinned down by <span
+class="math inline">h(N)</span>, for <span class="math inline">N</span>
+a finite set pinning <span class="math inline">p</span> down, since
+<span class="math inline">k\circ h</span> and <span
+class="math inline">k^{\prime}\circ h</span> agree on <span
+class="math inline">N</span> when <span
+class="math inline">k,k^{\prime}</span> agree on <span
+class="math inline">h(N)</span>. Let <span class="math inline">X</span>
+hold, at an arrow into the first object, of every proposition, and at an
+arrow into the second, of the finitely pinned ones; it depends only on
+the codomain, so is pinned down by <span
+class="math inline">\emptyset</span>, and it is symmetric, a permutation
+carrying finitely pinned propositions to finitely pinned ones. Then
+<span class="math inline">\forall p\, .\,\Box Xp</span> holds at the
+base world. But the second object’s domain is unrestricted and contains
+<span class="math inline">q:=\{k:k\text{ injective}\}</span>, symmetric
+and pinned down by no finite set, so after any arrow into the second
+object <span class="math inline">X</span> fails of <span
+class="math inline">q</span> and <span class="math inline">\Box\forall
+p\, .\,Xp</span> fails. This does not involve the individuals.</p>
+<p><em>Address:
+<code>symmetric-two-object-unpinned-individuals-singleton-sigma-true-atom#barcan-t</code>.
+By Claude Opus 5.5 (Anthropic), at Cian Dorr’s request to settle BF at
+the relational types, 2026-10-11.</em></p>
 <h3 id="holds-axiom-of-infinity-type-t.">Holds Axiom of Infinity (type
 t).</h3>
 <p>The propositions <span class="math inline">C_{n,m}:=\{h :

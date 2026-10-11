@@ -18,6 +18,7 @@
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
 - **¬ B for pure sentences.** The B instance for every closed sentence in the pure language.
 - **¬ □Strong Actuality.** Necessarily, there is a true strong world proposition: a true proposition that necessarily entails every proposition or its negation.
+- **¬ BF (type t).** BF (type t) in the displayed closed propositional formulation.
 - **¬ Relational Choice.** Every serial binary relation has a functional subrelation.
 - **¬ Intensional Choice.** If a property is necessarily instantiated, then some property entailing it is necessarily uniquely instantiated.
 - **¬ B for sentences of Σ.** The B instance for every closed sentence of the language of the fixed signature Sigma.
@@ -94,6 +95,12 @@ Strong Actuality fails at the second object, which an arrow from the first reach
 Boxed Rigid Power, for either choice of individuals. At $W_1$ every symmetric intension is in the domain, so every $X_0(A)$ ($k\mapsto kA$) is, and a weakly rigid relation is $X_0$ of its extension; a rigid $X\le h\cdot F$ is $h\cdot X_0(A)$ for the inverse image $A$ of its extension, so Rigid Power holds there. At $W_0$ let $F$ be rigid, pinned down by a nonempty finite $S$, with extension $E_0$. For $h:W_0\to W_1$, $h\cdot F=X_0(F_h)$ is pinned down by $hS$; for an idempotent retraction $r$ onto $hS$, $F_h=F_{rh}=rF_h$, so $r$ fixes every tuple of $F_h$, and for $k,k^{\prime}$ agreeing on $hS$, $kz=krz=k^{\prime}rz=k^{\prime}z$. Through a bijection $W_0\to W_1$, every $h:W_0\to W_1$ acts on the tuples of $E_0$ through $h|_S$; with the invariance of $E_0$ under the permutations fixing $S$, $X_0(E_0)$ is in the domain, so $F=X_0(E_0)$. For a rigid $X\le h\cdot F$, $X=X_0(D)$ and $X=h\cdot X_0(A)$ with $A:=\{z\in E_0:hz\in D\}$, in the domain for the same reason; permutations are lifted by their inverses. So the power property is $X_0$ of its extension and rigid, at both objects.
 
 *Address: `symmetric-two-object-unpinned-sigma-true-atom#rigid-power`. By GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic), 2026-10-11.*
+
+### Fails BF (type t).
+
+At the base world. Every transport of a proposition $p$ of the first object along an arrow $h$ into the second is pinned down by $h(N)$, for $N$ a finite set pinning $p$ down, since $k\circ h$ and $k^{\prime}\circ h$ agree on $N$ when $k,k^{\prime}$ agree on $h(N)$. Let $X$ hold, at an arrow into the first object, of every proposition, and at an arrow into the second, of the finitely pinned ones; it depends only on the codomain, so is pinned down by $\emptyset$, and it is symmetric, a permutation carrying finitely pinned propositions to finitely pinned ones. Then $\forall p\, .\,\Box Xp$ holds at the base world. But the second object's domain is unrestricted and contains $q:=\{k:k\text{ injective}\}$, symmetric and pinned down by no finite set, so after any arrow into the second object $X$ fails of $q$ and $\Box\forall p\, .\,Xp$ fails. This does not involve the individuals.
+
+*Address: `symmetric-two-object-unpinned-sigma-true-atom#barcan-t`. By Claude Opus 5.5 (Anthropic), at Cian Dorr's request to settle BF at the relational types, 2026-10-11.*
 
 ### Fails Relational Choice.
 

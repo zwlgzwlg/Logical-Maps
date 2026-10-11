@@ -13,6 +13,7 @@
 - **¬ Atomicity (type t).** Atomicity (type t) in the displayed closed propositional formulation.
 - **¬ □Strong Actuality.** Necessarily, there is a true strong world proposition: a true proposition that necessarily entails every proposition or its negation.
 - **¬ Tame Rigidity.** Every weakly rigid relation, including a proposition, is rigid.
+- **¬ BF (type t).** BF (type t) in the displayed closed propositional formulation.
 - **¬ Axiom of Infinity (type e).** There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.
 - **¬ Infinity Schema (type e).** There are arbitrarily many pairwise distinct entities of this fixed type; one sentence for each positive integer n.
 - **¬ Possible Infinity (type e).** Possibly there are not finitely many individuals: the Axiom of Infinity at this type, under a diamond.
@@ -72,6 +73,12 @@ Boxed Rigid Power, for either choice of individuals. At $W_1$ every symmetric in
 At type $t\to t$. With $q_{uv}:=\{h:hu=hv\}$ on the points at each object, fix a point $a$ at $W_0$ and let $U$ have extension $gE_a$, $E_a:=\{q_{na}:n\}$, at a permutation $g$, and $\{q_{y,ha}:y\}$ at $h:W_0\to W_1$. It is symmetric, pinned down by $\{a\}$, and equal to its $B_N$ for every finite $N\ni a$ (a fresh $n$ can be sent to any $y$), so weakly rigid. At $W_1$, where every symmetric intension is in the domain, a weakly rigid relation is $X_0$ of its extension; but for $j$ constant with value $c$, $j(U_h)=\{\top\}$ while $U_{jh}=\{q_{y,c}:y\}$ has non-top members. So $h\cdot U$ is not weakly rigid, $U$ is not rigid, and Tame Rigidity fails, even with one individual.
 
 *Address: `symmetric-two-object-unpinned-individuals-singleton-sigma-true-atom#tame-rigidity`. By GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic), 2026-10-11.*
+
+### Fails BF (type t).
+
+At the base world. Every transport of a proposition $p$ of the first object along an arrow $h$ into the second is pinned down by $h(N)$, for $N$ a finite set pinning $p$ down, since $k\circ h$ and $k^{\prime}\circ h$ agree on $N$ when $k,k^{\prime}$ agree on $h(N)$. Let $X$ hold, at an arrow into the first object, of every proposition, and at an arrow into the second, of the finitely pinned ones; it depends only on the codomain, so is pinned down by $\emptyset$, and it is symmetric, a permutation carrying finitely pinned propositions to finitely pinned ones. Then $\forall p\, .\,\Box Xp$ holds at the base world. But the second object's domain is unrestricted and contains $q:=\{k:k\text{ injective}\}$, symmetric and pinned down by no finite set, so after any arrow into the second object $X$ fails of $q$ and $\Box\forall p\, .\,Xp$ fails. This does not involve the individuals.
+
+*Address: `symmetric-two-object-unpinned-individuals-singleton-sigma-true-atom#barcan-t`. By Claude Opus 5.5 (Anthropic), at Cian Dorr's request to settle BF at the relational types, 2026-10-11.*
 
 ### Holds Axiom of Infinity (type t).
 
