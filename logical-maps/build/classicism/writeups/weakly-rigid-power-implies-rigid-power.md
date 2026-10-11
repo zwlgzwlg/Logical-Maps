@@ -1,0 +1,21 @@
+# Weakly Rigid Power ⇒ Rigid Power
+
+<p class='cert'>Result — Source: Misc.; produced by Claude Opus 5.5 (Anthropic), 10 October 2026, checking a suggestion of Cian Dorr; recorded by Claude Opus 5.5 (Anthropic), 10 October 2026.</p>
+
+## Premises
+
+- **Weakly Rigid Power.** If a relation is weakly rigid, so is the property of being a weakly rigid relation that entails it.
+
+## Conclusion
+
+- **Rigid Power.** If a relation is rigid, so is the property of being a rigid relation that entails it.
+
+## Proof
+
+Fix the type tuple, and for $F$ of type $\bar\sigma t$ write $P_F:=\lambda X\, .\,\operatorname{WeaklyRigid}(X)\land X\le F$ and $R_F:=\lambda X\, .\,\operatorname{Rigid}(X)\land X\le F$. Suppose $\operatorname{Rigid}(F)$. By T, $F$ is weakly rigid, so Weakly Rigid Power makes $P_F$ weakly rigid. Weakly Rigid Power implies Tame Rigidity (recorded) at every type, in particular at $(\bar\sigma t)t$, so $P_F$ is rigid. Its persistence is $\Box\forall X\, .\,P_FX\to\Box P_FX$, and $\Box P_FX$ gives $\Box\operatorname{WeaklyRigid}(X)$, that is $\operatorname{Rigid}(X)$, and $\Box(X\le F)$; so $P_F\le R_F$. Conversely $R_F\le P_F$, since rigidity implies weak rigidity by T, at every world. Mutual entailment is identity in C, so $R_F=P_F$, and $R_F$ is rigid. Tame Rigidity at the evaluation point alone does not identify the two properties, since they can differ at other worlds; the identity comes from the boxed persistence of $P_F$.
+
+## Sources
+
+- **Dorr 10 Oct** — Cian Dorr, suggestion of 10 October 2026.
+
+<p class='cert'>Record: <code>topics/classicism/results/weakly-rigid-power-implies-rigid-power.yaml</code></p>
