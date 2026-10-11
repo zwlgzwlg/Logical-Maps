@@ -1,0 +1,13 @@
+id: necessary-rigid-rigidity-r
+name: □Rigid Rigidity
+category: comprehension
+statement: Every closed instance of Rigid Rigidity is necessary. Retain the same type range.
+formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of Rigid Rigidity}$
+date: '2026-10-10'
+sources:
+- Cian Dorr, suggestion of 10 October 2026.
+source_names:
+- Dorr 10 Oct
+references: []
+notes: >-
+  Type quantifiers remain outside the box. Equivalent to Rigid Rigidity, by T and 4.

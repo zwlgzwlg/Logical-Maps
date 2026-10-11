@@ -1,0 +1,28 @@
+id: rigid-rigidity-implies-necessary-barcan
+premises:
+- rigid-rigidity-r
+conclusion: necessary-barcan-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Cian Dorr, 10 October 2026 (unboxed form); boxed by Claude Opus 5.5 (Anthropic), 10 October 2026
+  recorded_by: Claude Opus 5.5 (Anthropic), 10 October 2026
+  checked_by: []
+  date: '2026-10-10'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 10 October 2026.
+source_names:
+- Dorr 10 Oct
+proof: >-
+  Fix $\sigma$ and let $R:=\lambda Z^{\sigma t}\, .\,\operatorname{Rigid}(Z)$. Rigid Rigidity at $\sigma
+  t$ makes $R$ weakly inextensible at every accessible world. Work at any such world, and suppose $\forall
+  y\, .\,\Box Xy$. For each rigid $Z$, weak inextensibility of $Z$ applied to $X$ gives $Z\le X$, that is
+  $\Box\forall y\, .\,Zy\to Xy$. So $\forall Z\, .\,RZ\to\Box QZ$ for $Q:=\lambda Z\, .\,\forall y\,
+  .\,Zy\to Xy$, and the weak inextensibility of $R$ gives $\Box\forall Z\,
+  .\,\operatorname{Rigid}(Z)\to\forall y\, .\,Zy\to Xy$. Necessarily every $y$ has a rigid haecceity
+  $\lambda z\, .\,z=y$: it is persistent by the necessity of identity (a theorem of C), and inextensible,
+  since $\Box Zy$ gives $\Box\forall z\, .\,z=y\to Zz$. So $\Box\forall y\, .\,Xy$. This is BF at $\sigma$
+  at an arbitrary accessible world, so □BF.
+references: []
+notes: ''

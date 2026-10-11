@@ -1,0 +1,28 @@
+id: weakly-rigid-weak-rigidity-implies-necessary-weakly-rigid-weak-rigidity
+premises:
+- weakly-rigid-weak-rigidity-r
+conclusion: necessary-weakly-rigid-weak-rigidity-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 10 October 2026, from a suggestion of Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 10 October 2026
+  checked_by: []
+  date: '2026-10-10'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 10 October 2026.
+source_names:
+- Dorr 10 Oct
+proof: >-
+  Fix the type tuple. The principle gives Rigid Rigidity and □Tame Rigidity at that tuple (recorded
+  results, the first using the principle also at the next type). Both are necessary by 4, since Rigid
+  Rigidity and □Tame Rigidity have the form $\Box\phi$. The argument of
+  rigid-rigidity-and-necessary-tame-rigidity-imply-weakly-rigid-weak-rigidity is a C-proof from those
+  instances to the instance of the principle; necessitate it and apply K.
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §1.5, p. 16
+  note: T and 4 for the fixed background modality.
+notes: ''

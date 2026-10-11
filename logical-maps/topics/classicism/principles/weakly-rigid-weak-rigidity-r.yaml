@@ -1,0 +1,16 @@
+id: weakly-rigid-weak-rigidity-r
+name: Weakly Rigid Weak Rigidity
+category: comprehension
+statement: Being weakly rigid is a weakly rigid property of relations, including propositions.
+formal: $\operatorname{WeaklyRigid}(\lambda X^{\bar\sigma t}\, .\,\operatorname{WeaklyRigid}(X))$
+date: '2026-10-10'
+sources:
+- Cian Dorr, suggestion of 10 October 2026.
+source_names:
+- Dorr 10 Oct
+references: []
+notes: >-
+  Due to Cian Dorr. The property has type $(\bar\sigma t)t$. Since a weakly rigid relation is persistent
+  (Background), it implies □Tame Rigidity, so weak rigidity and rigidity are then identical; it is
+  equivalent to the conjunction of Rigid Rigidity and □Tame Rigidity, and hence to its own necessitation.
+  It follows from BF with Weakly Rigid Power.

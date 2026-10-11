@@ -1,0 +1,27 @@
+id: necessary-barcan-and-rigid-power-imply-rigid-rigidity
+premises:
+- necessary-barcan-r
+- rigid-power-r
+conclusion: rigid-rigidity-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 10 October 2026, checking a suggestion of Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 10 October 2026
+  checked_by: []
+  date: '2026-10-10'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 10 October 2026.
+source_names:
+- Dorr 10 Oct
+proof: >-
+  Fix the type tuple $\bar\sigma$ and put $T:=\lambda\bar x\, .\,\top$. $T$ is persistent trivially, and
+  inextensible: necessarily, if $\forall\bar x\, .\,\Box Z\bar x$ then $\Box\forall\bar x\, .\,Z\bar x$,
+  by BF at each type in the tuple, which □BF gives at every accessible world. For the empty tuple $T=\top$
+  is rigid in C. Rigid Power makes $\lambda Y\, .\,\operatorname{Rigid}(Y)\land Y\le T$ rigid. Since $Y\le
+  T$ is a theorem of C, that property is necessarily coextensive with $\lambda Y\,
+  .\,\operatorname{Rigid}(Y)$, hence identical to it. Unboxed BF does not suffice for this argument: it
+  makes $T$ only weakly rigid.
+references: []
+notes: ''

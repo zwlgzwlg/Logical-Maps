@@ -1,0 +1,27 @@
+id: barcan-and-weakly-rigid-power-imply-weakly-rigid-weak-rigidity
+premises:
+- barcan-r
+- weakly-rigid-power-r
+conclusion: weakly-rigid-weak-rigidity-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Cian Dorr, 10 October 2026
+  recorded_by: Claude Opus 5.5 (Anthropic), 10 October 2026
+  checked_by: []
+  date: '2026-10-10'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 10 October 2026.
+source_names:
+- Dorr 10 Oct
+proof: >-
+  Fix the type tuple $\bar\sigma$ and put $T:=\lambda\bar x\, .\,\top$. $T$ is weakly persistent
+  trivially, and weakly inextensible by BF at each type in the tuple: if $\forall\bar x\, .\,\Box Z\bar x$
+  then $\Box\forall\bar x\, .\,Z\bar x$, that is $T\le Z$. For the empty tuple no BF is needed. Weakly
+  Rigid Power makes $\lambda Y\, .\,\operatorname{WeaklyRigid}(Y)\land Y\le T$ weakly rigid, and since
+  $Y\le T$ is a theorem of C that property is identical to $\lambda Y\, .\,\operatorname{WeaklyRigid}(Y)$.
+references: []
+notes: >-
+  It makes barcan-and-weakly-rigid-power-imply-necessary-tame-rigidity derivable, through
+  weakly-rigid-weak-rigidity-implies-necessary-tame-rigidity.

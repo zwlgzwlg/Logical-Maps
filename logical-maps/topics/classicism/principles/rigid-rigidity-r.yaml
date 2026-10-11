@@ -1,0 +1,19 @@
+id: rigid-rigidity-r
+name: Rigid Rigidity
+category: comprehension
+statement: Being rigid is a rigid property of relations, including propositions.
+formal: $\operatorname{Rigid}(\lambda X^{\bar\sigma t}\, .\,\operatorname{Rigid}(X))$
+date: '2026-10-10'
+sources:
+- Cian Dorr, suggestion of 10 October 2026.
+source_names:
+- Dorr 10 Oct
+references: []
+notes: >-
+  Due to Cian Dorr. The property has type $(\bar\sigma t)t$. Its persistence is a theorem of C, so the
+  content is that rigidity is inextensible. It is the instance of Rigid Power at $\lambda\bar x\,
+  .\,\top$, whose power property is rigidity itself; so it follows from Rigid Power wherever $\lambda\bar
+  x\, .\,\top$ is rigid, that is, given □BF (and at type $t$ outright). It implies □BF, and its own
+  necessitation by 4. Whether it implies Rigid Power is open: the argument would need rigidity to be
+  closed under conjunction, which fails in C when identity is contingent (the conjunction of the
+  haecceities of distinct but possibly identical $x,y$ is persistent but not weakly inextensible).

@@ -1,0 +1,24 @@
+id: necessary-rigid-rigidity-r-implies-rigid-rigidity-r
+premises:
+- necessary-rigid-rigidity-r
+conclusion: rigid-rigidity-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 10 October 2026, from a suggestion of Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 10 October 2026
+  checked_by: []
+  date: '2026-10-10'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 10 October 2026.
+source_names:
+- Dorr 10 Oct
+proof: >-
+  At each admitted closed instance $\phi$, T gives $\Box\phi\to\phi$.
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §1.5, p. 16
+  note: T and 4 for the fixed background modality.
+notes: ''
