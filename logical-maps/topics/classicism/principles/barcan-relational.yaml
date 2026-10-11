@@ -1,0 +1,21 @@
+id: barcan-relational
+name: BF (relational types)
+category: coarse
+statement: The Barcan Formula at every relational type, that is, at every type other than e.
+formal: $\forall X^{\sigma t}\, .\,(\forall x^\sigma\, .\,\Box Xx)\to\Box(\forall x^\sigma\, .\,Xx)\qquad(\sigma\ne e)$
+date: '2026-10-11'
+sources:
+- Cian Dorr, suggestion of 11 October 2026.
+source_names:
+- Dorr 11 Oct
+references:
+- paper: bacon-2024-book
+  role: related
+  locator: §8.2, Theorem 8.2, pp. 169–171
+  note: Bacon's theorem concludes □BF at every relational type.
+notes: >-
+  BF with its type variable restricted to the relational types, between BF and BF (type t). Bacon's
+  Theorem 8.2 derives its necessitation from □Strong Leibniz and Rigid Comprehension. It does not
+  imply BF: in full-two-object-chain-new-individual it holds, necessarily, while BF fails at type e.
+  Whether BF (type t) implies it is open; every model on the map that satisfies BF (type t) satisfies
+  BF.

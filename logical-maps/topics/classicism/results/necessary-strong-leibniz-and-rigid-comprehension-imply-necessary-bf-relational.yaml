@@ -1,8 +1,8 @@
-id: necessary-strong-leibniz-and-rigid-comprehension-imply-necessary-bf-t
+id: necessary-strong-leibniz-and-rigid-comprehension-imply-necessary-bf-relational
 premises:
 - necessary-strong-leibniz-r
 - rigid-comprehension-r
-conclusion: necessary-barcan-t
+conclusion: necessary-barcan-relational
 status: proved
 certificate:
   source_id: bacon-2024-book
@@ -24,12 +24,21 @@ proof: 'Theorem 8.2 of the book: given Rigid Comprehension, $\Box\mathrm{SL}_\si
   Bacon shows $\Box\forall p\, .\,Wp\to p=r$, using $\Box\mathrm{SL}_t$ for the step that every world
   proposition entails $\exists V\, .\,HV\land Vp$ and the rigidity of $H$ for the converse; since $W$
   entails $X$, $\Diamond Xr$, which gives $\exists p\, .\,\Diamond Xp$, the contrapositive of $\mathrm{BF}_t$.
-  The argument is carried out under necessary assumptions, so it yields $\Box\mathrm{BF}_t$. The map records
-  the type-$t$ instance; the book proves the same for every relational type other than $e$.'
+  The argument is carried out under necessary assumptions, so it yields $\Box\mathrm{BF}_t$. The book proves the same
+  for every relational type other than $e$, and the map records it at all of them.'
 references:
 - paper: bacon-2024-book
   role: proof
   locator: §8.2, Theorem 8.2, pp. 169–171
-notes: The map has no node for BF restricted to relational types, so the conclusion is recorded at type
-  t, the case the book proves in full. The right-to-left half of Theorem 8.2 is the recorded implication
-  from □Atomicity and □BF to □SL, which needs no Rigid Comprehension.
+notes: >-
+  The right-to-left half of Theorem 8.2 is the recorded implication from □Atomicity and □BF
+  (relational types) to □SL, which needs no Rigid Comprehension. The type-$t$ case, which the book proves in full, is derived
+  through □BF (relational types) ⇒ □BF (type t).
+changes:
+- date: '2026-10-11'
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+  summary: >-
+    The conclusion is now □BF (relational types), as Theorem 8.2 states it, in place of □BF (type t),
+    recorded until then for want of a node; the record's id changed with it (formerly
+    necessary-strong-leibniz-and-rigid-comprehension-imply-necessary-bf-t). The proof text is
+    unchanged except for its last sentence.

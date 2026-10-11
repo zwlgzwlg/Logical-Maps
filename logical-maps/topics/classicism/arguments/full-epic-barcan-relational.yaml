@@ -1,0 +1,16 @@
+id: full-epic-barcan-relational
+requires: [full-action-model, relationally-epic-arrows]
+choice: free
+holds: [necessary-barcan-relational]
+by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
+date: '2026-10-11'
+text: >-
+  The relational half of full-epic-barcan. In an action model BF at a type $\sigma$ holds at a world
+  iff transport along every arrow out of it is onto the entities of type $\sigma$ at its target: if
+  some $z$ there is no transport, the property of being one is necessary of everything at the world
+  and fails of $z$ after the arrow; and if transport is onto, a property necessary of everything holds
+  of every transport. In a full model the transport of intensions along an epimorphism $k$ is onto at
+  every relational type: an intension $Y$ at its target is the transport of $\{\langle\bar a,k\circ
+  m\rangle:\langle\bar a,m\rangle\in Y\}$, since $k\circ m=k\circ m'$ only if $m=m'$. Nothing here
+  concerns the individuals. So BF holds at every relational type at every object reachable from the
+  evaluation point.

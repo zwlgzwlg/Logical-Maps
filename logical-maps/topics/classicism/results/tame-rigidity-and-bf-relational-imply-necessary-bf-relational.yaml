@@ -1,0 +1,23 @@
+id: tame-rigidity-and-bf-relational-imply-necessary-bf-relational
+premises:
+- tame-rigidity-r
+- barcan-relational
+conclusion: necessary-barcan-relational
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 11 October 2026, from a suggestion of Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 11 October 2026
+  checked_by: []
+  date: '2026-10-11'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 11 October 2026.
+source_names:
+- Dorr 11 Oct
+proof: >-
+  The argument of tame-rigidity-and-barcan-imply-necessary-barcan, one relational type at a time: for
+  relational $\sigma$, BF at $\sigma$ makes $\lambda x^\sigma\, .\,\top$ weakly rigid, Tame Rigidity
+  at $\sigma\to t$ makes it rigid, and its inextensibility is $\Box$BF at $\sigma$.
+references: []
+notes: ''

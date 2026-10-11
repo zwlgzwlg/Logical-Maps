@@ -1,0 +1,26 @@
+id: no-pure-contingency-and-bf-relational-imply-necessary-bf-relational
+premises:
+- no-pure-contingency-r
+- barcan-relational
+conclusion: necessary-barcan-relational
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 11 October 2026, from a suggestion of Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 11 October 2026
+  checked_by: []
+  date: '2026-10-11'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 11 October 2026.
+source_names:
+- Dorr 11 Oct
+proof: >-
+  Every closed instance of BF (relational types) is a closed sentence of the pure language. Given the
+  principle, each is true, and No Pure Contingency makes a true closed pure sentence necessary.
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.2, p. 27
+  note: Formulation of No Pure Contingency.
+notes: One of the uniform family by which No Pure Contingency carries a pure principle to its boxed form.

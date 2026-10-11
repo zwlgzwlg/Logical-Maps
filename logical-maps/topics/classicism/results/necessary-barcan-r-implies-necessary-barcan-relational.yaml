@@ -1,0 +1,20 @@
+id: necessary-barcan-r-implies-necessary-barcan-relational
+premises:
+- necessary-barcan-r
+conclusion: necessary-barcan-relational
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 11 October 2026, from a suggestion of Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 11 October 2026
+  checked_by: []
+  date: '2026-10-11'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 11 October 2026.
+source_names:
+- Dorr 11 Oct
+proof: >-
+  Every boxed instance of BF (relational types) is a boxed instance of BF.
+references: []
+notes: ''

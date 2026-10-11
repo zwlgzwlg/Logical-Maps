@@ -228,3 +228,9 @@ conditions:
   text: >-
     The arrows out of the evaluation object are exactly the surjections of the set of points it
     acts on.
+# Added 11 October 2026 (Claude Opus 5.5, at Cian Dorr's direction), for BF at relational types.
+- id: relationally-epic-arrows
+  text: >-
+    Every arrow out of every object reachable from the evaluation point is an epimorphism: arrows
+    after it that agree after it are equal. (Unlike epic-arrows, nothing is required of its action on
+    the individuals.)
