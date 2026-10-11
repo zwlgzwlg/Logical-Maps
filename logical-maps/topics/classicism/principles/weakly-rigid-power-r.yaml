@@ -1,0 +1,19 @@
+id: weakly-rigid-power-r
+name: Weakly Rigid Power
+category: comprehension
+statement: If a relation is weakly rigid, so is the property of being a weakly rigid relation that entails
+  it.
+formal: $\forall F^{\bar\sigma t}\, .\,\operatorname{WeaklyRigid}(F)\to\operatorname{WeaklyRigid}(\lambda
+  X^{\bar\sigma t}\, .\,\operatorname{WeaklyRigid}(X)\land X\le F)$
+date: '2026-10-10'
+sources:
+- Cian Dorr, suggestion of 10 October 2026.
+source_names:
+- Dorr 10 Oct
+references: []
+notes: >-
+  Due to Cian Dorr. The variant of Rigid Power with "weakly rigid" in all three places (the $(W,W,W)$
+  variant in the candidate list). Here $X$ ranges over relations of the same type as $F$, so the power
+  property has type $(\bar\sigma t)t$. It implies Tame Rigidity and Rigid Power, and □Tame Rigidity
+  with Rigid Power implies it; with BF it implies □Tame Rigidity, so under BF it is equivalent to □Tame
+  Rigidity and Rigid Power. Whether Tame Rigidity and Rigid Power imply it is open.

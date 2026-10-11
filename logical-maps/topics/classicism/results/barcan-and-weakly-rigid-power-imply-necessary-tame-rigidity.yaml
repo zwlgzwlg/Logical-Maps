@@ -1,0 +1,29 @@
+id: barcan-and-weakly-rigid-power-imply-necessary-tame-rigidity
+premises:
+- barcan-r
+- weakly-rigid-power-r
+conclusion: necessary-tame-rigidity-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 10 October 2026, checking a suggestion of Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 10 October 2026
+  checked_by: []
+  date: '2026-10-10'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 10 October 2026.
+source_names:
+- Dorr 10 Oct
+proof: >-
+  Fix the type tuple $\bar\sigma$ and put $T:=\lambda\bar x\, .\,\top$. $T$ is weakly persistent
+  trivially. It is weakly inextensible: if $\forall\bar x\, .\,\Box Z\bar x$, then BF (iterated over the
+  tuple) gives $\Box\forall\bar x\, .\,Z\bar x$, that is $T\le Z$; for the empty tuple ($T=\top$) no BF is
+  needed. By Weakly Rigid Power, $P_T:=\lambda Y\, .\,\operatorname{WeaklyRigid}(Y)\land Y\le T$ is weakly
+  rigid, and Tame Rigidity at type $(\bar\sigma t)t$, which Weakly Rigid Power implies (recorded), makes
+  it rigid, hence persistent: $\Box\forall Y\, .\,P_TY\to\Box P_TY$. Since $Y\le T$ holds necessarily for
+  every $Y$, this is $\Box\forall Y\,
+  .\,\operatorname{WeaklyRigid}(Y)\to\Box\operatorname{WeaklyRigid}(Y)$, the instance of □Tame Rigidity at
+  $\bar\sigma$.
+references: []
+notes: 'At type $t$ (the empty tuple) the argument needs no BF, so Weakly Rigid Power alone gives □Tame Rigidity for propositions.'

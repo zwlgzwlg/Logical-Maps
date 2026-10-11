@@ -1,0 +1,27 @@
+id: necessary-weakly-rigid-power-implies-necessary-rigid-power
+premises:
+- necessary-weakly-rigid-power-r
+conclusion: necessary-rigid-power-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 10 October 2026, from a suggestion of Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 10 October 2026
+  checked_by: []
+  date: '2026-10-10'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 10 October 2026.
+source_names:
+- Dorr 10 Oct
+proof: >-
+  The argument of weakly-rigid-power-implies-rigid-power is a C-proof of each instance of Rigid Power at
+  $\bar\sigma t$ from the instances of Weakly Rigid Power at $\bar\sigma t$ and $(\bar\sigma t)t$.
+  Necessitate the conditional and apply K with the boxed premise instances. Generalization over the
+  admitted types is metalinguistic; no type quantifier is placed inside the box.
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §1.5, pp. 16–17
+  note: Necessitation of theorems, K and 4.
+notes: ''

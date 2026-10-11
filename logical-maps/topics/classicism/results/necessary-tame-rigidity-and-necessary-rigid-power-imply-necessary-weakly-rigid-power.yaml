@@ -1,0 +1,29 @@
+id: necessary-tame-rigidity-and-necessary-rigid-power-imply-necessary-weakly-rigid-power
+premises:
+- necessary-tame-rigidity-r
+- necessary-rigid-power-r
+conclusion: necessary-weakly-rigid-power-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Claude Opus 5.5 (Anthropic), 10 October 2026, from a suggestion of Cian Dorr
+  recorded_by: Claude Opus 5.5 (Anthropic), 10 October 2026
+  checked_by: []
+  date: '2026-10-10'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 10 October 2026.
+source_names:
+- Dorr 10 Oct
+proof: >-
+  The argument of necessary-tame-rigidity-and-rigid-power-imply-weakly-rigid-power is a C-proof of each
+  instance of Weakly Rigid Power from the corresponding instances of □Tame Rigidity and Rigid Power.
+  Necessitate that conditional. By 4, each instance of □Tame Rigidity gives its own necessitation, so K
+  with the boxed premise instances gives the boxed conclusion instance. No type quantifier is placed
+  inside the box.
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §1.5, pp. 16–17
+  note: Necessitation of theorems, K and 4.
+notes: ''

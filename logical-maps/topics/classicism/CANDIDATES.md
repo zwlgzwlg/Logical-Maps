@@ -18,6 +18,11 @@ if $F$ is rigid, so is $P_F:=\lambda X\, .\,\operatorname{Rigid}(X)\land X\le F$
 Write a variant as a triple over $\{R,W\}$, so that Rigid Power is
 $(R,R,R)$. Cian Dorr's "natural" reading of "Weak Rigid Power" is $(W,W,W)$.
 
+*Recorded 10 October 2026:* $(W,W,W)$ is now `weakly-rigid-power-r` (Weakly Rigid
+Power), with its necessitation. It implies Tame Rigidity and Rigid Power, and
+□Tame Rigidity with Rigid Power implies it; whether unboxed Tame Rigidity and
+Rigid Power do is a recorded conjecture. The other six variants remain candidates.
+
 ### Logical relationships
 
 - *H and C.* Weakening the hypothesis or strengthening the conclusion gives a

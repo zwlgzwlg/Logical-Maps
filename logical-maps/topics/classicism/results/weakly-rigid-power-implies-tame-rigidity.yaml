@@ -1,0 +1,23 @@
+id: weakly-rigid-power-implies-tame-rigidity
+premises:
+- weakly-rigid-power-r
+conclusion: tame-rigidity-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Cian Dorr, 10 October 2026
+  recorded_by: Claude Opus 5.5 (Anthropic), 10 October 2026
+  checked_by: []
+  date: '2026-10-10'
+  lean: none
+sources:
+- Cian Dorr, suggestion of 10 October 2026.
+source_names:
+- Dorr 10 Oct
+proof: >-
+  Fix the type tuple, and write $P_X:=\lambda Y\, .\,\operatorname{WeaklyRigid}(Y)\land Y\le X$. Suppose
+  $\operatorname{WeaklyRigid}(X)$. Since $X\le X$, $P_XX$. Weakly Rigid Power at the same type makes $P_X$
+  weakly rigid, so in particular weakly persistent, so $\Box P_XX$ and hence
+  $\Box\operatorname{WeaklyRigid}(X)$. Rigidity is necessary weak rigidity (Background), so $X$ is rigid.
+references: []
+notes: ''

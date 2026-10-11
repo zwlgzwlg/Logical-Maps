@@ -1,0 +1,14 @@
+id: necessary-weakly-rigid-power-r
+name: □Weakly Rigid Power
+category: comprehension
+statement: Every closed instance of Weakly Rigid Power is necessary. Box the entire object-variable closure;
+  retain the same type range and other schema side conditions.
+formal: $\Box\phi\quad\text{for each closed instance }\phi\text{ of Weakly Rigid Power}$
+date: '2026-10-10'
+sources:
+- Cian Dorr, suggestion of 10 October 2026.
+source_names:
+- Dorr 10 Oct
+references: []
+notes: Box each fully closed instance of Weakly Rigid Power. Type quantifiers remain outside the box. It
+  is equivalent to the conjunction of □Tame Rigidity and □Rigid Power.
