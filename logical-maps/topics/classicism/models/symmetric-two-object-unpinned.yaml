@@ -185,6 +185,23 @@ arguments:
     with value $c$, $j(U_h)=\{\top\}$ while $U_{jh}=\{q_{y,c}:y\}$ has non-top members. So $h\cdot U$ is
     not weakly rigid, $U$ is not rigid, and Tame Rigidity fails, even with one individual.
 
+- id: barcan-t
+  fails: [barcan-t]
+  choice: free
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request to settle BF at the relational types
+  date: '2026-10-11'
+  text: >-
+    At the base world. Every transport of a proposition $p$ of the first object along an arrow $h$ into
+    the second is pinned down by $h(N)$, for $N$ a finite set pinning $p$ down, since $k\circ h$ and
+    $k^{\prime}\circ h$ agree on $N$ when $k,k^{\prime}$ agree on $h(N)$. Let $X$ hold, at an arrow into
+    the first object, of every proposition, and at an arrow into the second, of the finitely pinned
+    ones; it depends only on the codomain, so is pinned down by $\emptyset$, and it is symmetric, a
+    permutation carrying finitely pinned propositions to finitely pinned ones. Then $\forall p\, .\,\Box
+    Xp$ holds at the base world. But the second object's domain is unrestricted and contains
+    $q:=\{k:k\text{ injective}\}$, symmetric and pinned down by no finite set, so after any arrow into
+    the second object $X$ fails of $q$ and $\Box\forall p\, .\,Xp$ fails. This does not involve the
+    individuals.
+
 notes: >-
   The point of the model is that boxed Boolean Completeness and boxed Actuality, and so Weak Rigid
   Comprehension, do not yield Rigid Comprehension. The gap is exactly the leading box of the

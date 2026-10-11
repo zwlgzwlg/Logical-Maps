@@ -107,6 +107,21 @@ arguments:
     Y_{e_U}\subseteq Y_{e_V}$ give persistence. So Tame Rigidity holds at $W_1$ as well, hence at
     every world.
 
+- id: barcan-t
+  fails: [barcan-t]
+  choice: free
+  by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request to settle BF at the relational types
+  date: '2026-10-11'
+  text: >-
+    At $W_0$. The proposition $q:=\{1_{W_1}\}$ is in the domain at $W_1$ (it is pinned down by
+    $\{(0,0),(0,1)\}$, as for identity-singletons). It is the transport $f_T\cdot p=\{k:k\circ f_T\in
+    p\}$ of no proposition $p$ at $W_0$: since $1\circ f_T=f_T$, $\pi\circ f_T=1_{W_0}$ and $e_U\circ
+    f_T=f_U$, that would need $p$ to contain $f_T$ and no other $f_U$, and no finite set of points pins
+    such a $p$ down, infinitely many $f_U$ agreeing with $f_T$ on any finite set. So the property $X$
+    that holds of every proposition at arrows into $W_0$ and of every proposition other than $q$ at
+    arrows into $W_1$, pinned down by $\emptyset$ since it depends only on the codomain, satisfies
+    $\forall p\, .\,\Box Xp$ at $W_0$, while after any $f_T$ it fails of $q$.
+
 notes: >-
   Found on 27 September 2026 in answer to Cian Dorr's question whether Actuality implies
   Inextensible Comprehension, after the observation that Christopher Sun's witness $\lambda\bar
