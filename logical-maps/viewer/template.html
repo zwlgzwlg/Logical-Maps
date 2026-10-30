@@ -975,6 +975,45 @@
 <div id="floating-details"><div id="pop" class="pop" hidden></div></div>
 
 <script>
+// PMAP_LOSSLESS_TABLE_CODEC_V1 -- synchronous, with no network or library dependency.
+function unpackPmapTable(value) {
+  if (!value || value.encoding !== 'pmap-lzw16le-v1') return value;
+  if (!Number.isSafeInteger(value.bytes) || value.bytes < 0 || typeof value.data !== 'string') {
+    throw new Error('Invalid compressed map-table header');
+  }
+  const input = atob(value.data);
+  if (input.length % 2 || input.charCodeAt(0) !== 0 || input.charCodeAt(1) !== 1) {
+    throw new Error('Invalid compressed map-table stream');
+  }
+  const output = new Uint8Array(value.bytes);
+  let table, previous, position = 0, ended = false;
+  const reset = () => {
+    table = Array.from({length: 256}, (_, i) => String.fromCharCode(i));
+    table.push(null, null);
+    previous = null;
+  };
+  reset();
+  for (let offset = 0; offset < input.length; offset += 2) {
+    const code = input.charCodeAt(offset) | (input.charCodeAt(offset + 1) << 8);
+    if (code === 256) { reset(); continue; }
+    if (code === 257) {
+      if (offset + 2 !== input.length) throw new Error('Trailing compressed map-table data');
+      ended = true;
+      break;
+    }
+    let entry;
+    if (code < table.length && table[code] !== null) entry = table[code];
+    else if (code === table.length && previous !== null) entry = previous + previous[0];
+    else throw new Error('Invalid compressed map-table dictionary reference');
+    if (position + entry.length > output.length) throw new Error('Map table exceeds declared size');
+    for (let i = 0; i < entry.length; ++i) output[position++] = entry.charCodeAt(i);
+    if (previous !== null && table.length < 65536) table.push(previous + entry[0]);
+    previous = entry;
+  }
+  if (!ended || position !== output.length) throw new Error('Incomplete compressed map table');
+  return JSON.parse(new TextDecoder('utf-8', {fatal: true}).decode(output));
+}
+
 const DATA = /*__PMAP_DATA__*/null;
 // Undo the build's size encoding (compact_viewer_payload in scripts/pmap.py), restoring the
 // payload exactly: lynchpin rows stored as tables with dictionary-encoded ids, the automatic
@@ -982,6 +1021,9 @@ const DATA = /*__PMAP_DATA__*/null;
 // A payload without the encoding (the UI checks' fixtures) passes through unchanged.
 (function decodePayload(D) {
   if (!D) return;
+  for (const field of ['lynchpins', 'progress']) {
+    if (Object.prototype.hasOwnProperty.call(D, field)) D[field] = unpackPmapTable(D[field]);
+  }
   const LP = D.lynchpins, S = (LP && LP.strings) || [];
   const ID_FIELDS = new Set(['premises', 'premise_sets', 'conclusion', 'conclusions', 'principle', 'model']);
   const dec = v => Array.isArray(v) ? v.map(dec) : typeof v === 'number' ? S[v] : v;

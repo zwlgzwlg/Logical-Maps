@@ -322,49 +322,194 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <link rel="stylesheet" href="../math/katex.min.css">
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
-<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Absorbing entrance to an integer action, with finitely supported swappable pairs</h1></header><p>Construction and proofs by GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, research note of 26 October 2026. Checked and rewritten for the map by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 28 October 2026.</p>
-<p>At the entrance <span class="math inline">r</span> this model satisfies Intensional Choice at every type, together with □Boolean Completeness, □Atomicity and □Actuality, while □Intensional Choice fails (at type <span class="math inline">e</span>). The Barcan Formula and Distinctness-Necessity fail at <span class="math inline">t</span>.</p>
-<p>The idea is that Intensional Choice at an object is choice over the arrows out of it. Only two arrows leave <span class="math inline">r</span>, so two picks suffice. The object <span class="math inline">s</span> reached from <span class="math inline">r</span> has infinitely many arrows out of it, and the finite-support restriction leaves it without a selector.</p>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Absorbing entrance to an integer action, with finitely supported swappable pairs</h1></header><p>Construction and proofs by GPT-6 Astra (OpenAI), prompted by Daniel
+Kodsi, research note of 26 October 2026. Checked and rewritten for the
+map by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 28 October
+2026.</p>
+<p>At the entrance <span class="math inline">r</span> this model
+satisfies Intensional Choice at every type, together with □Boolean
+Completeness, □Atomicity and □Actuality, while □Intensional Choice fails
+(at type <span class="math inline">e</span>). The Barcan Formula and
+Distinctness-Necessity fail at <span class="math inline">t</span>.</p>
+<p>The idea is that Intensional Choice at an object is choice over the
+arrows out of it. Only two arrows leave <span
+class="math inline">r</span>, so two picks suffice. The object <span
+class="math inline">s</span> reached from <span
+class="math inline">r</span> has infinitely many arrows out of it, and
+the finite-support restriction leaves it without a selector.</p>
 <h2 id="the-model">The model</h2>
-<p><strong>The category.</strong> Two objects <span class="math inline">r</span> and <span class="math inline">s</span>, with:</p>
+<p><strong>The category.</strong> Two objects <span
+class="math inline">r</span> and <span class="math inline">s</span>,
+with:</p>
 <ul>
 <li>one arrow <span class="math inline">a:r\to s</span>;</li>
-<li>the integers as the arrows <span class="math inline">s\to s</span>, composed by addition;</li>
-<li>no arrows <span class="math inline">s\to r</span>, and only the identity <span class="math inline">r\to r</span>;</li>
-<li><span class="math inline">k\circ a=a</span> for every integer <span class="math inline">k</span>.</li>
+<li>the integers as the arrows <span class="math inline">s\to s</span>,
+composed by addition;</li>
+<li>no arrows <span class="math inline">s\to r</span>, and only the
+identity <span class="math inline">r\to r</span>;</li>
+<li><span class="math inline">k\circ a=a</span> for every integer <span
+class="math inline">k</span>.</li>
 </ul>
-<p>So exactly two arrows leave <span class="math inline">r</span>, namely <span class="math inline">1_r</span> and <span class="math inline">a</span>. Associativity is immediate.</p>
-<p><strong>Individuals and swaps.</strong> The individuals at both objects are <span class="math inline">A_n^0</span> and <span class="math inline">A_n^1</span> for <span class="math inline">n\in\mathbb N</span>, and every arrow acts on them as the identity. Separately, the group <span class="math inline">\Gamma=\{0,1\}^{\mathbb N}</span> acts on the individuals by <span class="math inline">\gamma\cdot A_n^i:=A_n^{i+\gamma(n)}</span> (mod 2), and on everything else through them. It is an external symmetry, not part of the category. For finite <span class="math inline">N\subseteq\mathbb N</span>, let <span class="math inline">\Gamma_N</span> be the set of <span class="math inline">\gamma</span> that vanish on <span class="math inline">N</span>. An entity has <em>support</em> <span class="math inline">N</span> if <span class="math inline">\Gamma_N</span> fixes it.</p>
-<p><strong>Domains.</strong> At a relational type <span class="math inline">\tau=\sigma_1\cdots\sigma_mt</span> and an object <span class="math inline">v</span>, start from the full action-model intensions: sets of tuples tagged by the arrows <span class="math inline">h</span> out of <span class="math inline">v</span>, the tuple at <span class="math inline">h</span> coming from the domains at the codomain of <span class="math inline">h</span>. The domain <span class="math inline">D_\tau(v)</span> holds those that have finite support.</p>
+<p>So exactly two arrows leave <span class="math inline">r</span>,
+namely <span class="math inline">1_r</span> and <span
+class="math inline">a</span>. Associativity is immediate.</p>
+<p><strong>Individuals and swaps.</strong> The individuals at both
+objects are <span class="math inline">A_n^0</span> and <span
+class="math inline">A_n^1</span> for <span
+class="math inline">n\in\mathbb N</span>, and every arrow acts on them
+as the identity. Separately, the group <span
+class="math inline">\Gamma=\{0,1\}^{\mathbb N}</span> acts on the
+individuals by <span class="math inline">\gamma\cdot
+A_n^i:=A_n^{i+\gamma(n)}</span> (mod 2), and on everything else through
+them. It is an external symmetry, not part of the category. For finite
+<span class="math inline">N\subseteq\mathbb N</span>, let <span
+class="math inline">\Gamma_N</span> be the set of <span
+class="math inline">\gamma</span> that vanish on <span
+class="math inline">N</span>. An entity has <em>support</em> <span
+class="math inline">N</span> if <span
+class="math inline">\Gamma_N</span> fixes it.</p>
+<p><strong>Domains.</strong> At a relational type <span
+class="math inline">\tau=\sigma_1\cdots\sigma_mt</span> and an object
+<span class="math inline">v</span>, start from the full action-model
+intensions: sets of tuples tagged by the arrows <span
+class="math inline">h</span> out of <span class="math inline">v</span>,
+the tuple at <span class="math inline">h</span> coming from the domains
+at the codomain of <span class="math inline">h</span>. The domain <span
+class="math inline">D_\tau(v)</span> holds those that have finite
+support.</p>
 <ul>
-<li>At <span class="math inline">t</span> the swaps act trivially, so every set of arrows out of <span class="math inline">v</span> is a proposition.</li>
-<li>Transport is precomposition: <span class="math inline">(k_*Y)(h;\bar x)=Y(h\circ k;\bar x)</span>. It commutes with <span class="math inline">\Gamma</span> and preserves supports.</li>
-<li>The truth clauses are those of full action models, with quantifiers at <span class="math inline">h</span> ranging over the whole domain at the codomain of <span class="math inline">h</span>.</li>
+<li>At <span class="math inline">t</span> the swaps act trivially, so
+every set of arrows out of <span class="math inline">v</span> is a
+proposition.</li>
+<li>Transport is precomposition: <span class="math inline">(k_*Y)(h;\bar
+x)=Y(h\circ k;\bar x)</span>. It commutes with <span
+class="math inline">\Gamma</span> and preserves supports.</li>
+<li>The truth clauses are those of full action models, with quantifiers
+at <span class="math inline">h</span> ranging over the whole domain at
+the codomain of <span class="math inline">h</span>.</li>
 </ul>
-<p><strong>This is a model of C.</strong> Every logical operation is <span class="math inline">\Gamma</span>-equivariant, since <span class="math inline">\Gamma</span> permutes each domain. So the intension of a <span class="math inline">\lambda</span>-abstract is supported by the union of its parameters’ supports, and the domains are closed under the terms of C. An H-provable equivalence holds at every arrow under every assignment, so the two abstractions are the same intension. Evaluation point: <span class="math inline">1_r</span>. The constants of Σ denote top elements, which every swap fixes.</p>
-<h2 id="intensional-choice-holds-at-r">Intensional Choice holds at <span class="math inline">r</span></h2>
-<p>Let <span class="math inline">F</span>, of type <span class="math inline">\sigma t</span>, be necessarily instantiated at <span class="math inline">r</span>. Then its rows at <span class="math inline">1_r</span> and at <span class="math inline">a</span> are nonempty. Pick <span class="math inline">x</span> in the first and <span class="math inline">y</span> in the second, and let <span class="math inline">G</span> hold of <span class="math inline">x</span> at <span class="math inline">1_r</span> and of <span class="math inline">y</span> at <span class="math inline">a</span>.</p>
+<p><strong>This is a model of C.</strong> Every logical operation is
+<span class="math inline">\Gamma</span>-equivariant, since <span
+class="math inline">\Gamma</span> permutes each domain. So the intension
+of a <span class="math inline">\lambda</span>-abstract is supported by
+the union of its parameters’ supports, and the domains are closed under
+the terms of C. An H-provable equivalence holds at every arrow under
+every assignment, so the two abstractions are the same intension.
+Evaluation point: <span class="math inline">1_r</span>. The constants of
+Σ denote top elements, which every swap fixes.</p>
+<h2 id="intensional-choice-holds-at-r">Intensional Choice holds at <span
+class="math inline">r</span></h2>
+<p>Let <span class="math inline">F</span>, of type <span
+class="math inline">\sigma t</span>, be necessarily instantiated at
+<span class="math inline">r</span>. Then its rows at <span
+class="math inline">1_r</span> and at <span class="math inline">a</span>
+are nonempty. Pick <span class="math inline">x</span> in the first and
+<span class="math inline">y</span> in the second, and let <span
+class="math inline">G</span> hold of <span class="math inline">x</span>
+at <span class="math inline">1_r</span> and of <span
+class="math inline">y</span> at <span class="math inline">a</span>.</p>
 <ul>
-<li><span class="math inline">G</span> is supported by the union of the supports of <span class="math inline">x</span> and <span class="math inline">y</span>, so it is admitted.</li>
+<li><span class="math inline">G</span> is supported by the union of the
+supports of <span class="math inline">x</span> and <span
+class="math inline">y</span>, so it is admitted.</li>
 <li><span class="math inline">G\le F</span>.</li>
-<li><span class="math inline">G</span> has exactly one instance at each of the two arrows out of <span class="math inline">r</span>.</li>
+<li><span class="math inline">G</span> has exactly one instance at each
+of the two arrows out of <span class="math inline">r</span>.</li>
 </ul>
-<p>So <span class="math inline">\Box\exists!z\,.\,Gz</span> holds at <span class="math inline">r</span>, and Intensional Choice holds there at every type, including <span class="math inline">e</span>. This uses two picks, not choice.</p>
-<h2 id="intensional-choice-fails-at-s-at-type-e">Intensional Choice fails at <span class="math inline">s</span>, at type <span class="math inline">e</span></h2>
-<p>Fix a bijection <span class="math inline">\nu:\mathbb N\to\mathbb Z</span>, and let <span class="math inline">F</span>, of type <span class="math inline">et</span> at <span class="math inline">s</span>, hold at the arrow <span class="math inline">\nu(n)</span> of <span class="math inline">A_n^0</span> and <span class="math inline">A_n^1</span>. Each pair is invariant under the swaps, so <span class="math inline">F</span> has empty support and is admitted. Every row is nonempty, so <span class="math inline">\Box\exists x\,.\,Fx</span> holds at <span class="math inline">s</span>.</p>
-<p>Suppose <span class="math inline">G\le F</span> is admitted and necessarily uniquely instantiated, with support <span class="math inline">N</span>. Take <span class="math inline">n\notin N</span>. The row of <span class="math inline">G</span> at <span class="math inline">\nu(n)</span> is a singleton inside the <span class="math inline">n</span>th pair. The swap of exactly the <span class="math inline">n</span>th pair lies in <span class="math inline">\Gamma_N</span>, so it fixes <span class="math inline">G</span>. It also fixes the arrow <span class="math inline">\nu(n)</span>. So it fixes that singleton row, but it exchanges the pair’s two members, which is impossible.</p>
-<p>Hence Intensional Choice at <span class="math inline">e</span> fails at <span class="math inline">s</span>. Since <span class="math inline">a</span> leads from <span class="math inline">r</span> to <span class="math inline">s</span>, □Intensional Choice fails at <span class="math inline">r</span>.</p>
+<p>So <span class="math inline">\Box\exists!z\,.\,Gz</span> holds at
+<span class="math inline">r</span>, and Intensional Choice holds there
+at every type, including <span class="math inline">e</span>. This uses
+two picks, not choice.</p>
+<h2 id="intensional-choice-fails-at-s-at-type-e">Intensional Choice
+fails at <span class="math inline">s</span>, at type <span
+class="math inline">e</span></h2>
+<p>Fix a bijection <span class="math inline">\nu:\mathbb N\to\mathbb
+Z</span>, and let <span class="math inline">F</span>, of type <span
+class="math inline">et</span> at <span class="math inline">s</span>,
+hold at the arrow <span class="math inline">\nu(n)</span> of <span
+class="math inline">A_n^0</span> and <span
+class="math inline">A_n^1</span>. Each pair is invariant under the
+swaps, so <span class="math inline">F</span> has empty support and is
+admitted. Every row is nonempty, so <span
+class="math inline">\Box\exists x\,.\,Fx</span> holds at <span
+class="math inline">s</span>.</p>
+<p>Suppose <span class="math inline">G\le F</span> is admitted and
+necessarily uniquely instantiated, with support <span
+class="math inline">N</span>. Take <span class="math inline">n\notin
+N</span>. The row of <span class="math inline">G</span> at <span
+class="math inline">\nu(n)</span> is a singleton inside the <span
+class="math inline">n</span>th pair. The swap of exactly the <span
+class="math inline">n</span>th pair lies in <span
+class="math inline">\Gamma_N</span>, so it fixes <span
+class="math inline">G</span>. It also fixes the arrow <span
+class="math inline">\nu(n)</span>. So it fixes that singleton row, but
+it exchanges the pair’s two members, which is impossible.</p>
+<p>Hence Intensional Choice at <span class="math inline">e</span> fails
+at <span class="math inline">s</span>. Since <span
+class="math inline">a</span> leads from <span
+class="math inline">r</span> to <span class="math inline">s</span>,
+□Intensional Choice fails at <span class="math inline">r</span>.</p>
 <h2 id="the-other-verdicts">The other verdicts</h2>
-<p><strong>□Boolean Completeness.</strong> At every object and relational type, the order is inclusion of tagged sets. The actual instances of a property with support <span class="math inline">N</span> form a family invariant under <span class="math inline">\Gamma_N</span>, so their union is supported by <span class="math inline">N</span>. It is admitted, and it is their least upper bound.</p>
-<p><strong>□Atomicity.</strong> A singleton tagged tuple is supported by the union of its entries’ supports. So it is admitted, and it is an atom below any relation that contains it.</p>
-<p><strong>□Actuality.</strong> At each object the singleton of its identity arrow is a proposition. It is a true atom that entails every truth.</p>
-<p><strong>The Barcan Formula fails at <span class="math inline">t</span>.</strong> Since <span class="math inline">k\circ a=a</span>, a proposition at <span class="math inline">r</span> transports along <span class="math inline">a</span> to <span class="math inline">\varnothing</span> or <span class="math inline">\mathbb Z</span>. Let <span class="math inline">Q</span>, of type <span class="math inline">tt</span> at <span class="math inline">r</span>, hold at <span class="math inline">1_r</span> of every proposition, and at <span class="math inline">a</span> of <span class="math inline">\varnothing</span> and <span class="math inline">\mathbb Z</span>. It has empty support. Every proposition at <span class="math inline">r</span> necessarily has <span class="math inline">Q</span>, but at <span class="math inline">a</span> the proposition <span class="math inline">\{0\}</span> of <span class="math inline">s</span> lacks it. In the same way, with constant-extension properties in place of the two propositions, the Barcan Formula fails at <span class="math inline">et</span>.</p>
-<p><strong>Distinctness-Necessity fails at <span class="math inline">t</span>.</strong> <span class="math inline">\{1_r\}</span> and <span class="math inline">\bot</span> are distinct at <span class="math inline">r</span>, but both transport to <span class="math inline">\bot</span> along <span class="math inline">a</span>.</p>
-<p><strong>Also.</strong> The Barcan Formula and Distinctness-Necessity hold necessarily at <span class="math inline">e</span>, since every arrow is the identity on the same individuals. Neither is a principle of the map at <span class="math inline">e</span> alone.</p>
+<p><strong>□Boolean Completeness.</strong> At every object and
+relational type, the order is inclusion of tagged sets. The actual
+instances of a property with support <span class="math inline">N</span>
+form a family invariant under <span class="math inline">\Gamma_N</span>,
+so their union is supported by <span class="math inline">N</span>. It is
+admitted, and it is their least upper bound.</p>
+<p><strong>□Atomicity.</strong> A singleton tagged tuple is supported by
+the union of its entries’ supports. So it is admitted, and it is an atom
+below any relation that contains it.</p>
+<p><strong>□Actuality.</strong> At each object the singleton of its
+identity arrow is a proposition. It is a true atom that entails every
+truth.</p>
+<p><strong>The Barcan Formula fails at <span
+class="math inline">t</span>.</strong> Since <span
+class="math inline">k\circ a=a</span>, a proposition at <span
+class="math inline">r</span> transports along <span
+class="math inline">a</span> to <span
+class="math inline">\varnothing</span> or <span
+class="math inline">\mathbb Z</span>. Let <span
+class="math inline">Q</span>, of type <span
+class="math inline">tt</span> at <span class="math inline">r</span>,
+hold at <span class="math inline">1_r</span> of every proposition, and
+at <span class="math inline">a</span> of <span
+class="math inline">\varnothing</span> and <span
+class="math inline">\mathbb Z</span>. It has empty support. Every
+proposition at <span class="math inline">r</span> necessarily has <span
+class="math inline">Q</span>, but at <span class="math inline">a</span>
+the proposition <span class="math inline">\{0\}</span> of <span
+class="math inline">s</span> lacks it. In the same way, with
+constant-extension properties in place of the two propositions, the
+Barcan Formula fails at <span class="math inline">et</span>.</p>
+<p><strong>Distinctness-Necessity fails at <span
+class="math inline">t</span>.</strong> <span
+class="math inline">\{1_r\}</span> and <span
+class="math inline">\bot</span> are distinct at <span
+class="math inline">r</span>, but both transport to <span
+class="math inline">\bot</span> along <span
+class="math inline">a</span>.</p>
+<p><strong>Also.</strong> The Barcan Formula and Distinctness-Necessity
+hold necessarily at <span class="math inline">e</span>, since every
+arrow is the identity on the same individuals. Neither is a principle of
+the map at <span class="math inline">e</span> alone.</p>
 <h2 id="remark">Remark</h2>
-<p>Astra’s earlier note gives a full action model on the same category, in ZF with a sequence of nonempty sets of reals that has no choice function. It satisfies Intensional Choice at <span class="math inline">r</span> but not □Intensional Choice at <span class="math inline">t</span>, with one individual. The model above gets the same separation in ZFC, the missing selector coming from the finite-support restriction rather than from the metatheory. The choiceless model is not recorded.</p>
+<p>Astra’s earlier note gives a full action model on the same category,
+in ZF with a sequence of nonempty sets of reals that has no choice
+function. It satisfies Intensional Choice at <span
+class="math inline">r</span> but not □Intensional Choice at <span
+class="math inline">t</span>, with one individual. The model above gets
+the same separation in ZFC, the missing selector coming from the
+finite-support restriction rather than from the metatheory. The
+choiceless model is not recorded.</p>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds), Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated 16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition and footnote locators in this map refer to that draft’s numbering. — §3.5, pp. 58–61; Appendix D, pp. 73–74. Action models; the domains here are the finitely supported part of a full action model.</li>
+<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian
+Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds),
+Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map
+was built from the draft dated 16 May 2023, 87 pages, which does not
+differ materially from the published version; all page, proposition and
+footnote locators in this map refer to that draft’s numbering. — §3.5,
+pp. 58–61; Appendix D, pp. 73–74. Action models; the domains here are
+the finitely supported part of a full action model.</li>
 </ul>
 </body></html>

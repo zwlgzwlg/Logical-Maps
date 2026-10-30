@@ -1,310 +1,282 @@
 id: coalesced-sums
-name: 'Coalesced sums at a new root'
+name: Coalesced sums at a new root
 references:
 - paper: bacon-dorr-classicism
   role: proof
   locator: Appendix E, Definition E.2, pp. 80–83; Theorem 3.26, §3.6, pp. 62–64
-
-# Models evaluated at a new root added to a family of component models (Classicism, Appendix E).
-# Three members coalesce a family of action models complete for C, so every pure sentence
-# consistent with C is possible at the root and every component's failures transfer to it; the
-# fourth coalesces the full Henkin models on finite individual domains. Each member keeps its own
-# file, id and the arguments that are its alone. Built on 2 October 2026 by Claude Opus 5.5 at
-# Cian Dorr's direction; texts are the members' unless a revision says otherwise. The
-# interpretation of Σ is part of these constructions, so nothing is generated.
-#
-# Revised 19 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): the parameter `root-arrows`
-# added for coalesced-pinned-interpretations-root, whose root has an arrow into every object of every
-# component for every interpretation of a signature, and whose root domains are finitely pinned. The
-# shared arguments that carry a component's counterexample to the root through the distinguished
-# arrow now apply only at `root-arrows: distinguished`.
-
-definition: >-
-  {{construction}}
+definition: '{{construction}}
 
 
   {{root-arrows}}
 
 
-  {{domains}}
-
+  {{domains}}'
 parameters:
   root-arrows:
     text: How the root's arrows reach the components.
     values:
       distinguished:
-        text: >-
-          The root has one distinguished arrow to the root of each component, and every arrow from
+        text: The root has one distinguished arrow to the root of each component, and every arrow from
           the root into a component factors through it.
         label: distinguished arrows
         meets:
           distinguished-arrows: This is the construction.
-          actual-world-isolated: >-
-            The singleton root proposition, true at the root's identity arrow and nowhere in a
-            component, is in the domain and entails every truth; the components have no arrows back
-            to the root (Classicism, Appendix E, p. 83, on the distinctness-preserving collapse).
+          actual-world-isolated: The singleton root proposition, true at the root's identity arrow and
+            nowhere in a component, is in the domain and entails every truth; the components have no arrows
+            back to the root (Classicism, Appendix E, p. 83, on the distinctness-preserving collapse).
       interpretations:
-        text: >-
-          The root has an arrow to every object of every component, one for each interpretation there
+        text: The root has an arrow to every object of every component, one for each interpretation there
           of a fixed signature, and the root's individuals are that signature's individual constants.
         label: interpretation arrows
         meets:
-          actual-world-isolated: >-
-            The singleton root proposition, true at the root's identity arrow and nowhere in a
-            component, is in the domain and entails every truth; the components have no arrows back
-            to the root (Classicism, Appendix E, p. 83, on the distinctness-preserving collapse).
+          actual-world-isolated: The singleton root proposition, true at the root's identity arrow and
+            nowhere in a component, is in the domain and entails every truth; the components have no arrows
+            back to the root (Classicism, Appendix E, p. 83, on the distinctness-preserving collapse).
       interpretations-and-substitutions:
-        text: >-
-          As for interpretation arrows, and the root has besides an arrow to itself for every
-          type-preserving map of the signature's constants to themselves, acting on the root's
-          individuals and composing with the interpretation arrows by precomposition.
+        text: As for interpretation arrows, and the root has besides an arrow to itself for every type-preserving
+          map of the signature's constants to themselves, acting on the root's individuals and composing
+          with the interpretation arrows by precomposition.
         label: interpretation and substitution arrows
   construction:
-    text: The components, how their individuals and constants meet at the root, and the evaluation
-      point, as the member's source gives them.
+    text: The components, how their individuals and constants meet at the root, and the evaluation point,
+      as the member's source gives them.
   domains:
     text: What the root's domains contain.
     values:
-      fullest: >-
-        Root domains are as full as compatibility allows: a root proposition is a choice, for each
-        component, of a proposition of that component’s root domain, together with a truth value at
-        the root’s identity arrow, and a root entity of a relational type is likewise a family of
-        component entities with a root component that is an arbitrary function of the root
-        arguments.
-
-# Conditions of the topic that every member meets.
-
+      fullest: 'Root domains are as full as compatibility allows: a root proposition is a choice, for
+        each component, of a proposition of that component’s root domain, together with a truth value
+        at the root’s identity arrow, and a root entity of a relational type is likewise a family of component
+        entities with a root component that is an arbitrary function of the root arguments.'
 conditions:
 - id: complete-components
-  text: >-
-    The components are a family of action models complete for C: every sentence consistent with C
-    is true at the root of some component.
+  text: 'The components are a family of action models complete for C: every sentence consistent with C
+    is true at the root of some component.'
 - id: distinguished-arrows
-  text: >-
-    Every arrow from the root into a component factors through a single distinguished arrow to
-    that component's root.
+  text: Every arrow from the root into a component factors through a single distinguished arrow to that
+    component's root.
 - id: free-root-component
-  text: >-
-    A root entity of a relational type has a root component that is an arbitrary function of the
-    root arguments.
-
+  text: A root entity of a relational type has a root component that is an arbitrary function of the root
+    arguments.
 arguments:
 - id: tame-rigidity-component
-  requires: [complete-components, free-root-component, distinguished-arrows]
-  fails: [tame-rigidity-r]
+  requires:
+  - complete-components
+  - free-root-component
+  - distinguished-arrows
+  fails:
+  - tame-rigidity-r
   by: Claude Fable 5.1 (Anthropic), answering Cian Dorr's conjecture
   date: '2026-10-03'
-  text: >-
-    Tame Rigidity fails at a relational argument type in models of C (ultralimit-fork,
-    symmetric-qualitative-links), so some component $M$ refutes it at its root $M_0$: some $F_M$
-    of type $\sigma\to t$, $\sigma$ relational, is weakly rigid there but not rigid. A root entity
-    $F$ of that type is a root extension $F_o$ together with a component $F_N$ in each component
-    $N$, and a formula about $F$ at a world of $N$ is the same formula about $F_N$ in $N$. Since
-    the components of root entities are arbitrary, $F$ is weakly inextensible at the root exactly
-    when, for every $N$, every $X_N$ that necessarily holds of the $N$-components of the members of
-    $F_o$ has $F_N\le X_N$. For each other component $N$ fix $z_N$, and for each $y$ in the
-    extension of $F_M$ at $M_0$ let $x_y$ be the root entity with $M$-component $y$ and
-    $N$-components $z_N$, free at the root by the condition. Put $F_o:=\{x_y\}$, $F_N:=\lambda
-    y\, .\,y=z_N$, a haecceity, rigid in every model of C, and keep $F_M$. Then $F$ is persistent
-    and weakly inextensible at the root, each component's condition being the weak
-    inextensibility of its own component, but not inextensible, since $F_M$ is not inextensible in
-    $M$ and every arrow from the root into $M$ factors through the distinguished one. So Tame
-    Rigidity fails at the root.
+  text: 'Tame Rigidity fails at a relational argument type in models of C (ultralimit-fork, symmetric-qualitative-links),
+    so some component $M$ refutes it at its root $M_0$: some $F_M$ of type $\sigma\to t$, $\sigma$ relational,
+    is weakly rigid there but not rigid. A root entity $F$ of that type is a root extension $F_o$ together
+    with a component $F_N$ in each component $N$, and a formula about $F$ at a world of $N$ is the same
+    formula about $F_N$ in $N$. Since the components of root entities are arbitrary, $F$ is weakly inextensible
+    at the root exactly when, for every $N$, every $X_N$ that necessarily holds of the $N$-components
+    of the members of $F_o$ has $F_N\le X_N$. For each other component $N$ fix $z_N$, and for each $y$
+    in the extension of $F_M$ at $M_0$ let $x_y$ be the root entity with $M$-component $y$ and $N$-components
+    $z_N$, free at the root by the condition. Put $F_o:=\{x_y\}$, $F_N:=\lambda y\, .\,y=z_N$, a haecceity,
+    rigid in every model of C, and keep $F_M$. Then $F$ is persistent and weakly inextensible at the root,
+    each component''s condition being the weak inextensibility of its own component, but not inextensible,
+    since $F_M$ is not inextensible in $M$ and every arrow from the root into $M$ factors through the
+    distinguished one. So Tame Rigidity fails at the root.'
   revisions:
   - date: '2026-10-03'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
-    note: >-
-      One direction of Fable's transfer theorem: at a coalesced root, Tame Rigidity at a
-      relational type holds iff it holds at the root of every component. The other direction is
-      not recorded, the engine deriving the positive verdict in the one model where it applies.
-
-
+    note: 'One direction of Fable''s transfer theorem: at a coalesced root, Tame Rigidity at a relational
+      type holds iff it holds at the root of every component. The other direction is not recorded, the
+      engine deriving the positive verdict in the one model where it applies.'
 - id: rigid-power-component
-  requires: [complete-components, free-root-component, distinguished-arrows]
-  fails: [rigid-power-r]
+  requires:
+  - complete-components
+  - free-root-component
+  - distinguished-arrows
+  fails:
+  - rigid-power-r
   by: GPT-6 Astra (OpenAI), at Cian Dorr's request; checked and recorded by Claude Opus 5.5 (Anthropic)
   date: '2026-10-11'
-  text: >-
-    The transfer of tame-rigidity-component, applied to a rigid relation whose power property is not
-    rigid. The pure sentence $\exists A^{tt}\, .\,\operatorname{Rigid}(A)\land\neg\operatorname{Rigid}
-    (\lambda X\, .\,\operatorname{Rigid}(X)\land X\le A)$ is consistent with C (it holds in the
-    one-individual variants of finite-support-pair-injections-or-collapses and symmetric-collapse-pair,
-    with $A:=\top$), so some component $m$ satisfies it at its root, with witness $A$. Its extension $D$
-    there is nonempty: otherwise weak inextensibility tested on $\bot$ makes $A=\bot$, whose power
-    property is the haecceity of $\bot$, which is rigid.
+  text: 'The transfer of tame-rigidity-component, applied to a rigid relation whose power property is
+    not rigid. The pure sentence $\exists A^{tt}\, .\,\operatorname{Rigid}(A)\land\neg\operatorname{Rigid}
+    (\lambda X\, .\,\operatorname{Rigid}(X)\land X\le A)$ is consistent with C (it holds in the one-individual
+    variants of finite-support-pair-injections-or-collapses and symmetric-collapse-pair, with $A:=\top$),
+    so some component $m$ satisfies it at its root, with witness $A$. Its extension $D$ there is nonempty:
+    otherwise weak inextensibility tested on $\bot$ makes $A=\bot$, whose power property is the haecceity
+    of $\bot$, which is rigid.
 
     For $p\in D$ let $\widehat p$ be the root proposition false at the root, with $m$-component $p$ and
     $\bot$ in every other component; let $F$ have root extension $\{\widehat p:p\in D\}$, $m$-component
-    $A$, and in each other component $i$ the haecceity of $\bot$. Both are in the domain, the root
-    domains being fullest. $F$ is weakly persistent at the root, $A$ and the haecceities being
-    persistent. It is weakly inextensible there: if $H$ necessarily holds of every $\widehat p$, its
-    root extension contains them, $A\le H_m$ by the weak inextensibility of $A$, and the haecceity of
-    $\bot$ entails $H_i$; entailment in the sum is componentwise. Every other accessible world lies in a
-    component, where $F$'s components are rigid; so $F$ is rigid. The $m$-component of its power
-    property is that of $A$, transport respecting abstraction, rigidity and entailment, and every arrow
-    into $m$ factors through the distinguished one; so it is not rigid. Rigid Power fails at the root,
-    at type $t\to t$.
-
+    $A$, and in each other component $i$ the haecceity of $\bot$. Both are in the domain, the root domains
+    being fullest. $F$ is weakly persistent at the root, $A$ and the haecceities being persistent. It
+    is weakly inextensible there: if $H$ necessarily holds of every $\widehat p$, its root extension contains
+    them, $A\le H_m$ by the weak inextensibility of $A$, and the haecceity of $\bot$ entails $H_i$; entailment
+    in the sum is componentwise. Every other accessible world lies in a component, where $F$''s components
+    are rigid; so $F$ is rigid. The $m$-component of its power property is that of $A$, transport respecting
+    abstraction, rigidity and entailment, and every arrow into $m$ factors through the distinguished one;
+    so it is not rigid. Rigid Power fails at the root, at type $t\to t$.'
 - id: intensional-choice-component
-  requires: [complete-components, distinguished-arrows]
-  fails: [intensional-choice-r]
+  requires:
+  - complete-components
+  - distinguished-arrows
+  fails:
+  - intensional-choice-r
   by: Claude Fable 5.1 (Anthropic), prompted by Cian Dorr, at Cian Dorr's suggestion
   date: '2026-10-03'
-  text: >-
-    The type-$e$ instance of Intensional Choice fails in a model of C (symmetric-all-surjections),
-    so its negation is consistent with C and some component $M$ refutes it at its root $M_0$: some
-    $F$ in $M_0$'s domain is necessarily instantiated and no $G\le F$ there is necessarily uniquely
-    instantiated. As in barcan-t-component, the thread $F^{\prime}$ that is universal at the root and in
-    every other component and is carried onto $F$ by the distinguished arrow to $M_0$ is in the root
-    domain, and it is necessarily instantiated. A root $G\le F^{\prime}$ that is necessarily uniquely
-    instantiated would be carried onto such a $G$ for $F$ at $M_0$, every arrow from the root into $M$
-    factoring through the distinguished one. So the unboxed principle fails at the root.
-
-
+  text: 'The type-$e$ instance of Intensional Choice fails in a model of C (symmetric-all-surjections),
+    so its negation is consistent with C and some component $M$ refutes it at its root $M_0$: some $F$
+    in $M_0$''s domain is necessarily instantiated and no $G\le F$ there is necessarily uniquely instantiated.
+    As in barcan-t-component, the thread $F^{\prime}$ that is universal at the root and in every other
+    component and is carried onto $F$ by the distinguished arrow to $M_0$ is in the root domain, and it
+    is necessarily instantiated. A root $G\le F^{\prime}$ that is necessarily uniquely instantiated would
+    be carried onto such a $G$ for $F$ at $M_0$, every arrow from the root into $M$ factoring through
+    the distinguished one. So the unboxed principle fails at the root.'
 - id: relational-choice-free-root
-  requires: [free-root-component]
+  requires:
+  - free-root-component
   choice: uses
-  holds: [relational-choice-r]
+  holds:
+  - relational-choice-r
   by: Cian Dorr, recorded by Claude Fable 5.1 (Anthropic)
   date: '2026-09-22'
-  text: >-
-    The functionality of a subrelation is evaluated at the root’s identity arrow only, while the
-    subrelation condition is boxed; so for a serial root relation take the subrelation whose root
-    component is a functional choice from the root component, by choice in the metatheory, and whose
-    component parts are empty. Where some component refutes Relational Choice at its root, as when
-    the components are complete for C, its necessitation fails.
+  text: The functionality of a subrelation is evaluated at the root’s identity arrow only, while the subrelation
+    condition is boxed; so for a serial root relation take the subrelation whose root component is a functional
+    choice from the root component, by choice in the metatheory, and whose component parts are empty.
+    Where some component refutes Relational Choice at its root, as when the components are complete for
+    C, its necessitation fails.
   revisions:
   - date: '2026-10-02'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
-    note: >-
-      The three complete members' copies stated once; "Its necessitation fails, since some
-      component refutes Relational Choice at its root" became conditional on that, since in the
-      all-finite-domains member every component satisfies Relational Choice.
-
+    note: The three complete members' copies stated once; "Its necessitation fails, since some component
+      refutes Relational Choice at its root" became conditional on that, since in the all-finite-domains
+      member every component satisfies Relational Choice.
 - id: actuality-singleton-root
-  requires: [actual-world-isolated]
-  holds: [actuality]
-  source: {paper: bacon-dorr-classicism, locator: 'Appendix E, p. 83'}
+  requires:
+  - actual-world-isolated
+  holds:
+  - actuality
+  source:
+    paper: bacon-dorr-classicism
+    locator: Appendix E, p. 83
   by: Andrew Bacon and Cian Dorr
   date: '2026-09-17'
-  text: >-
-    The singleton root proposition witnesses Actuality.
+  text: The singleton root proposition witnesses Actuality.
   revisions:
   - date: '2026-10-02'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: The three members' versions stated once.
-
 - id: barcan-t-component
-  requires: [complete-components, distinguished-arrows]
-  fails: [barcan-t]
+  requires:
+  - complete-components
+  - distinguished-arrows
+  fails:
+  - barcan-t
   by: Cian Dorr, recorded by Claude Fable 5.1 (Anthropic)
   date: '2026-09-22'
-  text: >-
-    C is complete for the component set, so some component $M$ refutes BF at its root $M_0$, at type
-    $t$ say: some $F$ in $M_0$’s domain has $\forall y\, .\,\Box Fy$ true and $\Diamond\exists y\,
-    .\,\neg Fy$ true at $M_0$. Because the root’s domains are as full as possible, the thread
-    $F^{\prime}$ that is universal at the root and in every other component and is carried onto $F$
-    by the distinguished arrow to $M_0$ is in the root domain. Every arrow from the root into $M$
-    factors through that distinguished arrow, so $\forall y\, .\,\Box F^{\prime}y$ at the root
-    reduces to $\forall y\, .\,\Box Fy$ at $M_0$ together with trivial checks elsewhere, and
-    $\Diamond\exists y\, .\,\neg F^{\prime}y$ at the root follows from $\Diamond\exists y\, .\,\neg
-    Fy$ at $M_0$ through the same factorization.
+  text: 'C is complete for the component set, so some component $M$ refutes BF at its root $M_0$, at type
+    $t$ say: some $F$ in $M_0$’s domain has $\forall y\, .\,\Box Fy$ true and $\Diamond\exists y\, .\,\neg
+    Fy$ true at $M_0$. Because the root’s domains are as full as possible, the thread $F^{\prime}$ that
+    is universal at the root and in every other component and is carried onto $F$ by the distinguished
+    arrow to $M_0$ is in the root domain. Every arrow from the root into $M$ factors through that distinguished
+    arrow, so $\forall y\, .\,\Box F^{\prime}y$ at the root reduces to $\forall y\, .\,\Box Fy$ at $M_0$
+    together with trivial checks elsewhere, and $\Diamond\exists y\, .\,\neg F^{\prime}y$ at the root
+    follows from $\Diamond\exists y\, .\,\neg Fy$ at $M_0$ through the same factorization.'
   revisions:
   - date: '2026-10-02'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: The three members' verbatim copies stated once.
-
 - id: atomicity-t-component
-  requires: [complete-components, distinguished-arrows]
-  fails: [atomicity-t]
+  requires:
+  - complete-components
+  - distinguished-arrows
+  fails:
+  - atomicity-t
   by: Cian Dorr, recorded by Claude Fable 5.1 (Anthropic)
   date: '2026-09-22'
-  text: >-
-    C is complete for the components, so some component $M$ refutes Atomicity at its root, by a
-    proposition $p_M$ with no atom below it in $M$’s domain; the root proposition that is $p_M$ on
-    $M$, empty on every other component and false at the root has as its root lower bounds exactly
-    the root propositions that are lower bounds of $p_M$ on $M$ and empty elsewhere, so it has no
-    atom below it either.
+  text: C is complete for the components, so some component $M$ refutes Atomicity at its root, by a proposition
+    $p_M$ with no atom below it in $M$’s domain; the root proposition that is $p_M$ on $M$, empty on every
+    other component and false at the root has as its root lower bounds exactly the root propositions that
+    are lower bounds of $p_M$ on $M$ and empty elsewhere, so it has no atom below it either.
   revisions:
   - date: '2026-10-02'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: The three members' verbatim copies stated once.
-
 - id: boolean-completeness-t-component
-  requires: [complete-components, distinguished-arrows]
-  fails: [boolean-completeness-t]
+  requires:
+  - complete-components
+  - distinguished-arrows
+  fails:
+  - boolean-completeness-t
   by: Cian Dorr, recorded by Claude Fable 5.1 (Anthropic)
   date: '2026-09-23'
-  text: >-
-    The truncation model of Appendix D, part 6, refutes it at type $t$, as its record now shows,
-    and the components are complete for C, so one of them does; the root propositions false at
-    every arrow except those into that component form a copy of its propositional domain under the
-    root’s entailment order, and a root property of propositions holding exactly of the copies of
-    the members of that component’s counterexample family has no least upper bound at the root.
+  text: The truncation model of Appendix D, part 6, refutes it at type $t$, as its record now shows, and
+    the components are complete for C, so one of them does; the root propositions false at every arrow
+    except those into that component form a copy of its propositional domain under the root’s entailment
+    order, and a root property of propositions holding exactly of the copies of the members of that component’s
+    counterexample family has no least upper bound at the root.
   revisions:
   - date: '2026-10-02'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: The three members' verbatim copies stated once.
-
 - id: pure-sentences-possible
-  requires: [complete-components]
-  fails: [necessary-vicinity, necessary-weakly-inextensible-comprehension-r]
+  requires:
+  - complete-components
+  fails:
+  - necessary-vicinity
+  - necessary-weakly-inextensible-comprehension-r
   by: Claude Opus 5.5 (Anthropic), at Cian Dorr's request
   date: '2026-09-27'
-  text: >-
-    The components are complete for C and a closed pure sentence at the distinguished arrow into a
-    component has its truth value at that component root, so every pure sentence consistent with C
-    is possible at the root; the negation of Vicinity is consistent (the truncation model) and so is
-    the negation of a closed instance of Weakly Inextensible Comprehension at type $t\to t$ (the
-    permutation model). Since □Actuality fails here while Vicinity and Weakly Inextensible
-    Comprehension hold, the boxed results show that at least one of the boxed principles had to
-    fail.
+  text: The components are complete for C and a closed pure sentence at the distinguished arrow into a
+    component has its truth value at that component root, so every pure sentence consistent with C is
+    possible at the root; the negation of Vicinity is consistent (the truncation model) and so is the
+    negation of a closed instance of Weakly Inextensible Comprehension at type $t\to t$ (the permutation
+    model). Since □Actuality fails here while Vicinity and Weakly Inextensible Comprehension hold, the
+    boxed results show that at least one of the boxed principles had to fail.
   revisions:
   - date: '2026-10-02'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
     note: The three members' verbatim copies stated once.
-
 - id: transversal-boxed
-  requires: [complete-components]
-  fails: [necessary-transversal-r]
+  requires:
+  - complete-components
+  fails:
+  - necessary-transversal-r
   by: Claude Opus 5.5 (Anthropic), prompted by Cian Dorr
   date: '2026-09-28'
-  text: >-
-    Every pure sentence consistent with C is possible at the root (pure-sentences-possible): the
-    negation of the type-$e$ instance of Transversal is a pure sentence consistent with C, since it
-    holds in symmetric-infinite-classes, so it is possible at the root.
+  text: 'Every pure sentence consistent with C is possible at the root (pure-sentences-possible): the
+    negation of the type-$e$ instance of Transversal is a pure sentence consistent with C, since it holds
+    in symmetric-infinite-classes, so it is possible at the root.'
   revisions:
   - date: '2026-10-02'
     by: Claude Opus 5.5 (Anthropic), at Cian Dorr's direction
-    note: The three members' verbatim copies stated once; "By the same argument" became a reference to pure-sentences-possible.
+    note: The three members' verbatim copies stated once; "By the same argument" became a reference to
+      pure-sentences-possible.
 - id: arithmetic-necessitism-complete-components
-  requires: [complete-components]
-  holds: [arithmetic-necessitism]
+  requires:
+  - complete-components
+  holds:
+  - arithmetic-necessitism
   by: Claude Fable 5.1 (Anthropic), prompted by Zachary Goodsell
   date: '2026-10-23'
   choice: free
-  text: >-
-    Vacuously, at every type $\sigma$. The negation of $I^*_\sigma$, that zero is a successor or
-    successor is not injective on the numbers at $\sigma$, is a pure sentence consistent with C: it
-    holds in the full model with one world, one individual and two propositions, where every type is
-    finite and the finite cardinalities beyond the size of the type coincide. So it is possible at
-    the root (pure-sentences-possible), the antecedent $\Box I^*_\sigma$ fails there, and the
-    instance of Arithmetic Necessitism at $\sigma$ is true.
+  text: 'Vacuously, at every type $\sigma$. The negation of $I^*_\sigma$, that zero is a successor or
+    successor is not injective on the numbers at $\sigma$, is a pure sentence consistent with C: it holds
+    in the full model with one world, one individual and two propositions, where every type is finite
+    and the finite cardinalities beyond the size of the type coincide. So it is possible at the root (pure-sentences-possible),
+    the antecedent $\Box I^*_\sigma$ fails there, and the instance of Arithmetic Necessitism at $\sigma$
+    is true.'
 - id: necessity-of-analysis-complete-components
-  requires: [complete-components]
-  fails: [necessity-of-analysis]
+  requires:
+  - complete-components
+  fails:
+  - necessity-of-analysis
   by: Claude Fable 5.1 (Anthropic), prompted by Zachary Goodsell
   date: '2026-10-23'
   choice: uses
-  text: >-
-    The negation of an instance of the Necessity of Analysis is a closed pure sentence consistent
-    with C: at the root of coalesced-two-extensional-arithmetics-root, with $\sigma$ and $A$ as in
-    that model's argument, both $\Diamond\exists\mathfrak
-    R\,.\,(\operatorname{Real}_\sigma(\mathfrak R)\land A(\mathfrak R))$ and
-    $\Diamond\exists\mathfrak R\,.\,(\operatorname{Real}_\sigma(\mathfrak R)\land\neg A(\mathfrak
-    R))$ hold. So it is possible at the root (pure-sentences-possible), and since arrows compose,
-    what is possibly possible is possible: both conjuncts hold at the root, and the instance fails.
-
+  text: 'The negation of an instance of the Necessity of Analysis is a closed pure sentence consistent
+    with C: at the root of coalesced-two-extensional-arithmetics-root, with $\sigma$ and $A$ as in that
+    model''s argument, both $\Diamond\exists\mathfrak R\,.\,(\operatorname{Real}_\sigma(\mathfrak R)\land
+    A(\mathfrak R))$ and $\Diamond\exists\mathfrak R\,.\,(\operatorname{Real}_\sigma(\mathfrak R)\land\neg
+    A(\mathfrak R))$ hold. So it is possible at the root (pure-sentences-possible), and since arrows compose,
+    what is possibly possible is possible: both conjuncts hold at the root, and the instance fails.'
 - id: self-atom-of-two-actual-components
   requires:
   - two-actual-components
@@ -321,7 +293,6 @@ arguments:
     it entails every truth; likewise at $M$; and at the root it is false. It is not an atom, since the
     root proposition with component $a_N$ alone lies strictly below it. So Self-atoms are atoms (type
     t) fails at the root, and with it Self-atoms are strong atoms (type t).'
-
 - id: self-atomicity-component
   requires:
   - complete-components

@@ -139,3 +139,8 @@ entity.
   - A nonzero $W\le F$ with a single instance at $s$ would have that instance invariantly named, and so it would be an image. That is a contradiction.
   - So $W$ has two instances, and a ground coordinate test at $s$ splits it.
 - **No ND at type $t$.** $\{1_r\}$ and $\bot$ are distinct at $r$, but both become $\bot$ at $s$.
+
+
+## Type clarification
+
+OpenAI Codex, prompted by Daniel Kodsi, 30 October 2026. In the Boolean Completeness failure argument above, the represented family has type $(et)t$, while its members and the hypothetical join $J$ have type $et$. Thus the displayed witness refutes Boolean Completeness at $et$, as the model record states. The heading's $(et)t$ identifies the family type, not the type of the Boolean algebra. The original argument and its verdicts are unchanged.

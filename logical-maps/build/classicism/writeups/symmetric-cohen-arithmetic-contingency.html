@@ -1,0 +1,628 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Symmetric Cohen model: Rosser-selected component</title><link rel="icon" type="image/png" href="../favicon.png">
+<style>/* Fixed forest palette, adapted from the supplied style example.
+   Semantic and source hues retain their meaning in both modes. */
+:root {
+  --bg: #f3f1e8;
+  --panel: #f8f7f0;
+  --panel-2: #e9ecdf;
+  --line: #d4d9c9;
+  --line-strong: #a2ae97;
+  --ink: #283c28;
+  --ink-2: #4f604b;
+  --ink-3: #5f6d58;
+  --accent: #356044;
+  --link-hover: #914b30;
+  --human: #3e7052;
+  --assisted: #746044;
+  --ai: #a35b36;
+  --derived: #7b8271;
+  --indep: #a0483a;
+  --open: #e2e5d9;
+  --open-ink: #65705f;
+  --conj: #896b27;
+  --node-fill: #f8f7f0;
+  --node-stroke: #98a68b;
+  --junction: #52634b;
+  --hl: #e0e7cd;
+  --focus: #914b30;
+  --badge-ink: #ffffff;
+  --warning-bg: #f4e6dc;
+  --source-forest: #3e7052;
+  --source-rust: #a25336;
+  --source-ochre: #896b27;
+  --source-slate: #4c7279;
+  --source-berry: #80556d;
+  --source-olive: #69753c;
+  --source-misc: #696d61;
+  --shadow: 0 4px 24px rgb(40 60 40 / 12%);
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --serif: var(--sans);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0e1912;
+  --panel: #142018;
+  --panel-2: #1d2b20;
+  --line: #304332;
+  --line-strong: #596e51;
+  --ink: #d7dfca;
+  --ink-2: #b3c1a7;
+  --ink-3: #96aa8d;
+  --accent: #a6c699;
+  --link-hover: #dfab89;
+  --human: #94bc95;
+  --assisted: #c1ad8d;
+  --ai: #dca17b;
+  --derived: #83937c;
+  --indep: #e09b86;
+  --open: #243327;
+  --open-ink: #a2b398;
+  --conj: #d0b36b;
+  --node-fill: #19261c;
+  --node-stroke: #627957;
+  --junction: #b3c1a7;
+  --hl: #30422a;
+  --focus: #dfab89;
+  --badge-ink: #0e1912;
+  --warning-bg: #32251f;
+  --source-forest: #94bc95;
+  --source-rust: #dca17b;
+  --source-ochre: #d0b36b;
+  --source-slate: #95bcc1;
+  --source-berry: #c5a0b7;
+  --source-olive: #b6c383;
+  --source-misc: #a9b09c;
+  --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); scrollbar-color: var(--line-strong) var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.6 var(--sans); }
+button, input, select { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 3px; }
+input[type="checkbox"] { accent-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+::selection { background: var(--hl); color: var(--ink); }
+.theme-toggle { border: 0; padding: 6px 0; background: transparent; color: var(--ink-2); cursor: pointer; font: 13px var(--sans); white-space: nowrap; }
+.theme-toggle:hover { color: var(--link-hover); }
+.display-toggles { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 16px; }
+.theme-toggle[aria-pressed="true"] { color: var(--accent); }
+
+/* A prismatic name: one rainbow wheel around a point in the word, spinning;
+   --prism-x and --prism-y move that point off the middle.
+   Pure spectral stops, turned by a registered angle rather than a hue
+   filter, which would muddy them. */
+@property --prism { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.prismatic { font-weight: 600; color: transparent; background: conic-gradient(from var(--prism) at var(--prism-x, 50%) var(--prism-y, 50%), #ff1a1a, #ff8a00, #ffd000, #22c33a, #00a8f0, #3d4bff, #b026ff, #ff1a1a); -webkit-background-clip: text; background-clip: text; animation: prism-spin 6s linear infinite; }
+/* As a link it keeps the gradient on hover, under an accent underline. */
+a.prismatic, a.prismatic:hover { color: transparent; }
+a.prismatic:hover { text-decoration-color: var(--accent); }
+@keyframes prism-spin { to { --prism: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .prismatic { animation: none; } }
+
+/* Standalone write-ups use the same quiet, ruled typography as the map. */
+html:has(body.writeup-page) { background: var(--bg); }
+body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; font: 16px/1.7 var(--sans); overflow-wrap: anywhere; }
+.writeup-nav { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 24px; font-size: 13px; }
+.writeup-page h1 { font-size: 1.4em; line-height: 1.4; margin: 0 0 20px; color: var(--ink); }
+.writeup-page h2 { font-size: 1.15em; line-height: 1.4; margin: 1.8em 0 .5em; padding-top: 14px; border-top: 1px solid var(--line); }
+.writeup-page h3 { font-size: 1em; }
+.writeup-page p { margin: 0 0 12px; }
+.writeup-page .cert { color: var(--ink-2); font-size: .85em; }
+.writeup-page code, .writeup-page pre { font: .85em/1.6 var(--mono); color: var(--ink); }
+.writeup-page pre { padding: 14px; background: var(--panel-2); overflow-x: auto; }
+.writeup-page blockquote { color: var(--ink-2); border-left: 2px solid var(--line-strong); margin-left: 0; padding-left: 20px; }
+.writeup-page math[display="block"] { display: block; overflow-x: auto; padding: 8px 0; }
+.writeup-page table { display: block; overflow-x: auto; border-collapse: collapse; }
+.writeup-page th, .writeup-page td { border-bottom: 1px solid var(--line); padding: 8px 12px; }
+@media (max-width: 600px) {
+  body.writeup-page { margin: 1.5em auto; padding: 0 1em 2em; }
+}
+@media print {
+  :root, :root[data-theme="dark"] { --bg: white; --ink: #283c28; --ink-2: #4f604b; --accent: #356044; --line: #d4d9c9; color-scheme: light; }
+  .writeup-nav { display: none; }
+  body.writeup-page { max-width: none; margin: 0; padding: 0; }
+}
+
+/* Teal-grey, muted rust, deep teal and warm stone. Screen-only overrides
+   preserve print styling. */
+@media screen {
+  :root {
+    --bg: #ebf1f1;
+    --panel: #e1eae9;
+    --panel-2: #d0dfde;
+    --line: #c0cecd;
+    --line-strong: #849997;
+    --ink: #303b3a;
+    --ink-2: #4a5a59;
+    --ink-3: #526160;
+    --accent: #884932;
+    --link-hover: #6f3827;
+    --derived: #6f8180;
+    --open: #d6e2e1;
+    --open-ink: #526160;
+    --node-fill: #f1f6f6;
+    --node-stroke: #7f9391;
+    --junction: #596b6a;
+    --human: #2f6b66;
+    --source-forest: #2f6b66;
+    --hl: #e6ddd0;
+    --focus: #884932;
+    --shadow: 0 4px 24px rgb(48 59 58 / 10%);
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #171e1d;
+    --panel: #202a29;
+    --panel-2: #2b3736;
+    --line: #3d4b4a;
+    --line-strong: #6b817f;
+    --ink: #dbe8e7;
+    --ink-2: #b9cbca;
+    --ink-3: #a6bdbb;
+    --accent: #e2ad92;
+    --link-hover: #f0c3aa;
+    --derived: #87a09e;
+    --open: #303d3c;
+    --open-ink: #aec6c4;
+    --node-fill: #263130;
+    --node-stroke: #738d8b;
+    --junction: #b3cbc9;
+    --human: #86c0b6;
+    --source-forest: #86c0b6;
+    --hl: #463f37;
+    --focus: #e2ad92;
+    --badge-ink: #171e1a;
+    --shadow: 0 4px 24px rgb(0 0 0 / 24%);
+  }
+}
+
+/* Shared Okabe–Ito palette: https://jfly.uni-koeln.de/color/#pallet
+   Loaded after topic themes. Sky blue and orange distinguish positive and
+   negative relations; darker inks keep small labels readable in light mode.
+   Neutral surfaces are identical across maps. Print uses the shared theme. */
+@media screen {
+  :root[data-palette="colourblind"] {
+    --bg: #f4f5f6;
+    --panel: #ffffff;
+    --panel-2: #e9edf0;
+    --line: #d0d6da;
+    --line-strong: #87949d;
+    --ink: #202930;
+    --ink-2: #45535d;
+    --ink-3: #586670;
+    --accent: #0072b2;
+    --link-hover: #925f00;
+    --human: #0072b2;
+    --assisted: #80506a;
+    --ai: #a44500;
+    --derived: #687780;
+    --indep: #925f00;
+    --open: #e9edf0;
+    --open-ink: #586670;
+    --conj: #80506a;
+    --node-fill: #ffffff;
+    --node-stroke: #7a8b96;
+    --junction: #45535d;
+    --hl: #dce4ea;
+    --focus: #0072b2;
+    --badge-ink: #ffffff;
+    --warning-bg: #fff0ce;
+    --source-forest: #56b4e9;
+    --source-rust: #e69f00;
+    --source-ochre: #d55e00;
+    --source-slate: #0072b2;
+    --source-berry: #cc79a7;
+    --source-olive: #009e73;
+    --source-misc: #687780;
+    --rel-positive: #56b4e9;
+    --rel-negative: #e69f00;
+    --shadow: 0 4px 24px rgb(32 41 48 / 12%);
+  }
+  :root[data-palette="colourblind"][data-theme="dark"] {
+    --bg: #111820;
+    --panel: #18222b;
+    --panel-2: #23303b;
+    --line: #354550;
+    --line-strong: #718492;
+    --ink: #edf2f5;
+    --ink-2: #c1ced7;
+    --ink-3: #a5b5c1;
+    --accent: #56b4e9;
+    --link-hover: #e69f00;
+    --human: #56b4e9;
+    --assisted: #cc79a7;
+    --ai: #e69f00;
+    --derived: #91a1ad;
+    --indep: #e69f00;
+    --open: #23303b;
+    --open-ink: #a5b5c1;
+    --conj: #cc79a7;
+    --node-fill: #1c2933;
+    --node-stroke: #8094a3;
+    --junction: #c1ced7;
+    --hl: #354654;
+    --focus: #56b4e9;
+    --badge-ink: #111820;
+    --warning-bg: #352b18;
+    --source-misc: #91a1ad;
+    --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  }
+  /* Source swatches use the unmodified palette; outlined badges allow their
+     text to keep the normal contrast on both light and dark surfaces. */
+  :root[data-palette="colourblind"] .badge.source {
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--source-color);
+    border-left-width: 4px;
+  }
+}
+</style>
+<script>/* Apply before paint; share the preference between every map and write-up. */
+(() => {
+  const key = 'pmap-theme';
+  const paletteKey = 'pmap-palette';
+  const system = window.matchMedia?.('(prefers-color-scheme: dark)');
+  let preference;
+  let palette;
+  try { preference = localStorage.getItem(key); } catch (_) {}
+  try { palette = localStorage.getItem(paletteKey); } catch (_) {}
+  if (!['light', 'dark'].includes(preference)) preference = null;
+  if (palette !== 'colourblind') palette = 'default';
+  function apply(theme) {
+    document.documentElement.dataset.theme = theme;
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.textContent = theme === 'dark' ? '[Light mode]' : '[Dark mode]';
+      button.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+    });
+  }
+  function applyPalette() {
+    document.documentElement.dataset.palette = palette;
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.setAttribute('aria-pressed', String(palette === 'colourblind'));
+      button.textContent = `[Colourblind mode: ${palette === 'colourblind' ? 'on' : 'off'}]`;
+    });
+  }
+  const initial = () => preference || (system?.matches ? 'dark' : 'light');
+  apply(initial());
+  applyPalette();
+  document.addEventListener('DOMContentLoaded', () => {
+    apply(initial());
+    applyPalette();
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        preference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        apply(preference);
+        try { localStorage.setItem(key, preference); } catch (_) {}
+      });
+    });
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        palette = palette === 'colourblind' ? 'default' : 'colourblind';
+        applyPalette();
+        try { localStorage.setItem(paletteKey, palette); } catch (_) {}
+      });
+    });
+  });
+  system?.addEventListener('change', () => { if (!preference) apply(initial()); });
+  window.addEventListener('storage', event => {
+    if (event.key === key || event.key === null) {
+      preference = ['light', 'dark'].includes(event.newValue) ? event.newValue : null;
+      apply(initial());
+    }
+    if (event.key === paletteKey || event.key === null) {
+      palette = event.newValue === 'colourblind' ? 'colourblind' : 'default';
+      applyPalette();
+    }
+  });
+})();
+</script>
+<link rel="stylesheet" href="../math/katex.min.css">
+<script defer src="../math/katex.min.js"></script>
+<script defer src="../math/contrib/auto-render.min.js"></script>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Symmetric Cohen model: Rosser-selected component</h1></header><p>GPT-6 Astra, prompted by Daniel Kodsi. 30 October 2026.</p>
+<p>There is a countable classical Henkin model of <span
+class="math inline">C</span> satisfying <strong>Second-Order Analytic
+Necessitism but failing Necessity of Arithmetic</strong>. The arithmetic
+guard <span class="math inline">\Box I^*_e</span> holds. All analytic
+possible-real antecedents are false.</p>
+<p>This changes the ground component of the <a
+href="symmetric-cohen-arithmetic-growth.md">arithmetic-growth Cohen
+construction</a>. An elementary extension of its standard-arithmetic
+component preserves every first-order arithmetic truth. Here an
+effective theory preserving NoReal lets Rosser incompleteness select a
+component that disagrees with standard arithmetic. The root still has
+standard current arithmetic. The new combination is this arithmetic
+<strong>truth</strong> disagreement with the all-host NoReal
+construction. The old named-number-above-all-numerals package is not
+imposed on the new component.</p>
+<h2 id="the-effective-component-theory">1. The effective component
+theory</h2>
+<p>The base construction in <a
+href="symmetric-cohen-arithmetic-growth.md">Symmetric Cohen model:
+arithmetic growth, §§2–5</a> gives a countable ground classical Henkin
+model <span class="math inline">A_0</span> of</p>
+<p><span class="math display">C5+\Box I^*_e+
+\{\Box\neg\exists\mathfrak R\,\operatorname{Real}_\tau(\mathfrak R):
+\tau\text{ an admitted type}\}.</span></p>
+<p>Its current canonical numbers and arithmetic graphs are standard. It
+also supplies the exact whole-object equations <span
+class="math inline">I^*_e=\top</span> and <span
+class="math inline">\exists\mathfrak R\operatorname{Real}_\tau(\mathfrak
+R)=\bot</span>. The NoReal theorem and Boolean-Henkin reduction in that
+proof are essential inputs. Compactness or incompleteness alone would
+not establish them.</p>
+<p>Fix a countable many-sorted first-order language containing a sort
+for each admitted type; application, Boolean proposition operations,
+typed equality and quantifier operations; a current-truth predicate
+<span class="math inline">T</span>; and an operation for every finite
+lambda template with its finite typed parameter list. The effective
+value translation of a typed term <span class="math inline">a</span> is
+written <span class="math inline">\operatorname{val}(a)</span>. Let
+<span class="math inline">T_H</span> contain the following effective
+schemes, universally closed over their finite parameter contexts:</p>
+<ul>
+<li>The proposition Boolean-algebra equations, <span
+class="math inline">T(\top)</span>, <span class="math inline">\neg
+T(\bot)</span>, <span class="math inline">\top\ne\bot</span>, and the
+Boolean truth clauses.</li>
+<li><span
+class="math inline">T(\operatorname{Eq}_\sigma(x,y))\leftrightarrow
+x=y</span> and <span class="math inline">T(Q_\sigma
+F)\leftrightarrow\forall x^\sigma\,T(Fx)</span>.</li>
+<li>The original H axioms and the beta, eta, substitution, renaming and
+logical-constant compatibility equations for all parameterized
+templates.</li>
+<li>The literal equality of the two abstraction values for every
+<strong>certified H-proof</strong> of the equivalence of their bodies.
+The proof certificate selects precisely an instance of C’s Logical
+Equivalence; equivalence under <span class="math inline">T_H</span> or
+under any optional hypothesis is not an admissible substitute.</li>
+<li>The truth translations of C5, <span class="math inline">\Box
+I^*_e</span>, and each boxed NoReal instance.</li>
+</ul>
+<p>Finite syntax, conversion certificates and H-proof certificates can
+be enumerated. Include finite enumeration-stage certificates when
+checking an axiom occurrence, so ordinary finite proofs are effectively
+recognizable. Thus <span class="math inline">T_H</span> is computably
+enumerable. It contains neither <span class="math inline">A_0</span>’s
+elementary diagram nor its full true arithmetic theory.</p>
+<p>Expanding <span class="math inline">A_0</span> by its actual term
+operations and truth predicate gives a model of <span
+class="math inline">T_H</span>. Conversely the displayed truth,
+equality, quantifier and lambda clauses make every first-order model of
+<span class="math inline">T_H</span> an eligible classical C5 Henkin
+component with the required boxed infinity and NoReal statements. This
+uses all parameterized lambda operations, not just an application
+reduct. No current-extensionality quotient is taken. These two semantic
+facts suffice; no equivalence between two different proof calculi is
+required.</p>
+<h2 id="selecting-an-arithmetically-disagreeing-component">2. Selecting
+an arithmetically disagreeing component</h2>
+<p>For an ordinary arithmetic sentence <span
+class="math inline">\varphi</span>, let <span
+class="math inline">\varphi^e</span> be its canonical
+individual-counting translation. Variables range over <span
+class="math inline">\mathbb N_e</span> at <span
+class="math inline">\nu=(et)t</span>; identity, zero and successor are
+the native terms; eliminate function symbols for addition and
+multiplication through the native <span
+class="math inline">\operatorname{Sum}</span> and <span
+class="math inline">\operatorname{Prod}</span> graphs.</p>
+<p>Under <span class="math inline">I^*_e</span> this is a recursive
+interpretation of PA. Zero is not a successor and successor is injective
+by the guard. The impredicative least-inductive property of canonical
+numbers gives every first-order induction instance by applying it to the
+lambda predicate of the translated formula, with parameters. The native
+recursion definitions give total unique Sum and Prod graphs, so
+function-term elimination and first-order logical proof translation are
+valid. These are the current relational arithmetic arguments; they
+require no choice of an operation from its graph. Consequently <span
+class="math inline">T_H</span> proves <span
+class="math inline">T(\operatorname{val}(\varphi^e))</span> for every PA
+theorem <span class="math inline">\varphi</span>, and translation
+commutes with Boolean operations and negation.</p>
+<p>Let <span class="math inline">U</span> be the arithmetic theory with
+axioms</p>
+<p><span class="math display">\{\varphi:T_H\vdash
+T(\operatorname{val}(\varphi^e))\}.</span></p>
+<p>Dovetail over arithmetic sentences and finite <span
+class="math inline">T_H</span> proofs to enumerate it. A finite
+arithmetic proof from these axioms translates back into <span
+class="math inline">T_H</span>, using the interpretation and truth
+clauses. Hence</p>
+<p><span
+class="math display">U\vdash\varphi\quad\Longleftrightarrow\quad
+T_H\vdash T(\operatorname{val}(\varphi^e)).</span></p>
+<p>The standard arithmetic of <span class="math inline">A_0</span> makes
+every <span class="math inline">U</span> axiom true in <span
+class="math inline">\mathbb N</span>. In particular <span
+class="math inline">U</span> is a consistent computably enumerable
+extension of PA. Rosser’s first incompleteness theorem gives an ordinary
+sentence <span class="math inline">G</span> neither proved nor refuted
+by <span class="math inline">U</span>. Its usual proof-comparison fixed
+point is standard-true: there is no actual proof of <span
+class="math inline">G</span>, so the antecedent of each standard
+comparison is false. Finite axiom-enumeration certificates permit this
+use of Rosser for the computably enumerable theory. No internal
+consistency statement, omega-consistency assumption or
+second-incompleteness argument is needed.</p>
+<p>Thus <span class="math inline">T_H+\neg
+T(\operatorname{val}(G^e))</span> is consistent. First-order
+completeness and countable downward Löwenheim–Skolem yield a countable
+ground model <span class="math inline">A</span> of it. Construct its
+domains and operations before any auxiliary Cohen evaluation and give
+them the trivial symmetry action.</p>
+<p>The boxed hypotheses give the whole-object equations</p>
+<p><span class="math display"> (I^*_e)_A=\top_A,\qquad
+(\exists\mathfrak R\operatorname{Real}_\tau(\mathfrak
+R))_A=\bot_A.</span></p>
+<p>C5 makes equality propositions crisp: identity gives necessary
+identity, and inequality gives necessary inequality. If <span
+class="math inline">g=\operatorname{val}_A(G^e)</span>, current falsity
+gives <span class="math inline">g\ne\top_A</span>. We do not need or
+infer <span class="math inline">g=\bot_A</span>. The NoReal bottom
+equations come from their separate boxed hypotheses.</p>
+<h2 id="the-hybrid-and-its-c-interpretation">3. The hybrid and its C
+interpretation</h2>
+<p>Use the same Boolean hierarchy and symmetry group as the original
+construction:</p>
+<p><span
+class="math display">B=\operatorname{RO}((2^\omega)^\omega),\qquad
+B_{\rm fs}=\bigcup_{J\subseteq\omega\text{ finite}}B_J,</span></p>
+<p>with finite products of finite-prefix permutations, and trivial
+action on <span class="math inline">A</span>. The hybrid has</p>
+<p><span class="math display">D_e^r=\omega\times D_e^A,\qquad
+D_t^r=B_{\rm fs}\times B_A.</span></p>
+<p>At a relational type, an entity is a finitely supported current
+Boolean profile paired with an admitted <span
+class="math inline">A</span>-component. Application, equality,
+quantifiers and lambda use exactly <a
+href="symmetric-cohen-arithmetic-growth.md">the hybrid clauses in
+§7</a>. Projection <span class="math inline">\pi_\tau</span> to <span
+class="math inline">A</span> is onto and commutes with all term
+operations. The component’s admitted quantifiers and lambda operations
+are kept intact; its nonstandard domains are not replaced by external
+full function spaces.</p>
+<p>For propositions, native necessity has the whole value</p>
+<p><span class="math display">\Box(b,a)=
+\bigl(\delta_{b=1\land a=\top_A},\ \delta_{a=\top_A}\bigr),</span></p>
+<p>where the second delta is <span class="math inline">\top_A</span> or
+<span class="math inline">\bot_A</span>. In particular its current
+Boolean coordinate tests whether both coordinates of the original
+proposition are top. The original closure, support and C proofs require
+ground component data and the component’s C operations. They do not
+require that the component be elementary over <span
+class="math inline">A_0</span>, so they apply to this <span
+class="math inline">A</span>.</p>
+<h2 id="noreal-survives-the-component-change">4. NoReal survives the
+component change</h2>
+<p>For a field supported on finitely many Cohen coordinates <span
+class="math inline">J</span>, the original moving-object lemma supplies
+a generic-truth-filter-fixing prefix-transposition involution whenever
+an element has essential support outside <span
+class="math inline">J</span>. At the classical evaluation this is an
+actual order automorphism of order two. An order automorphism of finite
+order must fix every element: otherwise repeated application to a strict
+inequality contradicts its finite order. Thus all field elements descend
+to the intermediate universe using only the coordinates <span
+class="math inline">J</span>. Every subproperty in that universe is
+represented by an admitted <span class="math inline">J</span>-supported
+predicate. A fresh Cohen coordinate supplies an admitted bounded
+rational cut whose supremum cannot belong to that intermediate field.
+This refutes completeness.</p>
+<p>Sections 3–4 and 7.2 of the original construction prove the required
+moving-object and finite-coordinate descent statements for the whole
+typed hierarchy. Their component assumptions are only groundness,
+trivial symmetry action and the unchanged admitted operations. The new
+<span class="math inline">A</span> satisfies these assumptions. Hence
+the current Boolean value of existential Real is zero at every host. Its
+component is bottom by §2, so the <strong>entire</strong> proposition
+is</p>
+<p><span class="math display">(\exists\mathfrak
+R\operatorname{Real}_\tau(\mathfrak R))_r
+=(0,\bot_A).</span></p>
+<p>Therefore necessarily no real structure exists at any admitted type.
+Every SOAN and AN possible-real antecedent is false. This is analytic
+vacuity at all hosts, not a nonvacuous real-field witness.</p>
+<h2 id="current-arithmetic-including-its-recursion-graphs">5. Current
+arithmetic, including its recursion graphs</h2>
+<p>Let <span class="math inline">K=\{\bar n^r:n\in\mathbb N\}</span> be
+the set of whole standard root numeral objects. Its support-empty
+characteristic predicate is admitted with the appropriate arbitrary
+component. Boolean finite induction through each admitted inductive
+predicate, and this characteristic test in the opposite direction, give
+the exact identity</p>
+<p><span class="math display">\mathbb N_r=(\chi_K,\mathbb
+N_A).</span></p>
+<p>Crisp finite individual subsets distinguish all standard numerals.
+Successor is injective on them and omits zero. Together with the
+component equation, this gives <span
+class="math inline">I^*_e=(1,\top_A)</span> and hence current <span
+class="math inline">\Box I^*_e</span>.</p>
+<p>Standard number objects alone do not prove standard arithmetic truth;
+verify Sum and Prod. Fix standard <span class="math inline">m</span>.
+The support-empty current graph</p>
+<p><span class="math display">\{(\bar i^r,\overline{m+i}^r):i\in\mathbb
+N\}</span></p>
+<p>is admitted, paired with any <span
+class="math inline">A</span>-component. It satisfies the initial and
+successor-closure premises of native Sum with Boolean value 1, and makes
+each incorrect standard output have value 0. Conversely take any
+admitted, possibly noncrisp recursion test <span
+class="math inline">R</span>. Let <span class="math inline">b</span> be
+the conjunction of the Boolean values of its initial and closure
+premises. Then <span class="math inline">b\le R(\bar0,\bar m)</span>;
+finite induction gives <span class="math inline">b\le R(\bar
+i,\overline{m+i})</span> for every standard <span
+class="math inline">i</span>. Thus every correct Sum instance has
+defining implication value 1 for every test; their meet is 1. Incorrect
+outputs have value 0 by the displayed characteristic graph.</p>
+<p>The same argument for <span class="math inline">\{(\bar
+i^r,\overline{mi}^r):i\in\mathbb N\}</span>, using the verified Sum
+graph, proves standard Prod. The recursion quantifiers are guarded by
+the crisp <span class="math inline">\mathbb N</span> predicate. These
+definitions are nonmodal in their current coordinate, so arbitrary
+component coordinates do not change the calculation. The identical
+argument works in the source base <span class="math inline">A_0</span>
+and supplies the standard arithmetic graphs used in §2’s soundness
+argument.</p>
+<p>Induction on the native first-order arithmetic grammar now yields
+current value 1 exactly for the standard-true sentences, and 0 for the
+standard-false ones. Projection to <span class="math inline">A</span>
+preserves the component value of every formula. In particular</p>
+<p><span class="math display">(G^e)_r=(1,g),\qquad
+g\ne\top_A.</span></p>
+<h2 id="failure-of-the-exact-guarded-necessity-schema">6. Failure of the
+exact guarded necessity schema</h2>
+<p>Since <span class="math inline">I^*_e</span> is the entire top
+object, <span class="math inline">I_e=\Diamond I^*_e</span> is also the
+entire top object. The native instance is</p>
+<p><span class="math display">\Box(I_e\to G^e)\ \lor\ \Box(I_e\to\neg
+G^e).</span></p>
+<p>The first alternative has current value 0 because the component <span
+class="math inline">g</span> differs from <span
+class="math inline">\top_A</span>. The second has current value 0
+because the first coordinate of <span class="math inline">\neg
+G^e</span> is 0. Both alternatives therefore fail while <span
+class="math inline">\Box I^*_e</span> holds. This is the exact Necessity
+of Arithmetic failure. It uses equality-defined necessity on whole
+objects; it does not infer modal disagreement from mere nonstandardness
+or append an unverified accessible point.</p>
+<h2 id="a-classical-ground-model">7. A classical ground model</h2>
+<p>Apply the Boolean-Henkin reduction of <a
+href="symmetric-cohen-arithmetic-growth.md">the original proof, §5</a>
+to this hybrid. Choose a countable elementary substructure of the
+semantic algebra retaining the value map and all syntactic lambda
+operations. Meet the countably many dense witness requirements for its
+retained predicates. The resulting ground ultrafilter defines classical
+current truth with literal identity and the full Henkin quantifier truth
+lemma at every retained type. Whole propositions are not quotiented by
+present agreement.</p>
+<p>The C axioms, boxed NoReal, analytic schemas and <span
+class="math inline">\Box I^*_e</span> have Boolean value 1, whereas the
+displayed necessity instance has value 0. These endpoint values survive
+both restriction and the witness-filter evaluation. The final model is
+an actual countable classical Henkin model in ZFC, without assuming a
+countable transitive model of ZFC or an actual generic over the
+universe.</p>
+<h2 id="sources-and-attribution">Sources and attribution</h2>
+<p>The component-selection extension is GPT-6 Astra, prompted by Daniel
+Kodsi, <em>Symmetric Cohen hybrid with first-order arithmetic
+contingency</em>, 30 October 2026, §§1–8 (unpaginated). Its
+finite-support hierarchy, NoReal theorem and hybrid reduction are the
+same author’s <em>Symmetric Cohen model: arithmetic growth</em>, 29
+October 2026, §§2–5 and 7.1–7.2, linked above.</p>
+<p>The prior arithmetic-disagreement method is credited to Cian Dorr’s
+<code>coalesced-two-extensional-arithmetics-root</code>, 19 October
+2026, with verification by Claude Opus 5.5 (Anthropic), prompted by Cian
+Dorr, and to that model’s
+<code>coalesced-pinned-substitutions-nonstandard-root</code> development
+by Claude Opus 5.5, prompted by Cian Dorr, 29 October 2026. The present
+extension preserves the additional all-host NoReal requirements while
+selecting its disagreeing component. It does not replace the proof of
+the original arithmetic-growth model or pool that model’s separately
+chosen component constraints.</p>
+</body></html>

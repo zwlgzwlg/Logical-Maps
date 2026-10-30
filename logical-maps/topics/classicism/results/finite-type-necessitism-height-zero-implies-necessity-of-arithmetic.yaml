@@ -1,0 +1,27 @@
+id: finite-type-necessitism-height-zero-implies-necessity-of-arithmetic
+premises:
+- finite-type-necessitism-height-zero
+conclusion: necessity-of-arithmetic
+status: proved
+certificate:
+  source_id: kodsi-finite-type-necessitism-2026
+  produced_by: Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI)
+  recorded_by: ChatGPT, at Daniel Kodsi’s request
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- 'Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI), Finite-Type Necessitism: Arithmetic, analysis,
+  and mathematical non-contingency, 30 October 2026, 12-page revision. Theorem 3.1'
+source_names:
+- Kodsi, Finite-Type Necessitism (30 Oct 2026)
+references:
+- paper: kodsi-finite-type-necessitism-2026
+  role: proof
+  locator: Theorem 3.1
+  note: Supplied 12-page paper; the PDF and LaTeX source are included with this contribution.
+proof: The possible canonical-arithmetic guard activates F0. Rigid recursion supplies addition and multiplication
+  on its reference. Goodsell’s arithmetic interpretation lemma, Peano matching and the reference argument
+  fix arithmetic truth; when the possibility guard fails it fails necessarily. [Paper (PDF)](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.pdf);
+  [source](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.tex).
+notes: No use of the stronger full FTN schema is needed.

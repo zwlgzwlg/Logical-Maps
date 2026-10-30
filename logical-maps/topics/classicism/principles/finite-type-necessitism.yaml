@@ -1,0 +1,36 @@
+id: finite-type-necessitism
+name: Finite-Type Necessitism
+category: mathematical-contingency
+statement: Every possibly realizable finite arithmetic hierarchy has a rigid realization at the same carrier
+  type, with a full rigid represented power of its last stage.
+formal: $\Diamond\exists\mathcal A\,\operatorname{Arith}^{\tau}_n(\mathcal A)\ \to\ \exists\mathcal A\,[\operatorname{Arith}^{\tau}_n(\mathcal
+  A)\land\operatorname{RigidStr}(\mathcal A)\land\operatorname{RepPower}_1(\mathsf P(X_n),X_n)]\qquad(n\ge0)$
+definitions: $\operatorname{Arith}^{\tau}_n(\mathcal A):=\operatorname{Peano}(X_0,z,S)\land\bigwedge_{i<n}\operatorname{Pow}(X_i,X_{i+1},E_i)$.
+  All $X_i$ have type $\tau t$, $z$ has type $\tau$, and $S,E_i$ have type $\tau\tau t$. $\operatorname{Pow}(X,Y,E)$
+  says that $E$ is supported on $X\times Y$ and $\forall F^{\tau t}\exists!y\in Y\,\forall x\in X\,(E(x,y)\leftrightarrow
+  Fx)$. The levels may overlap. $\operatorname{RigidStr}$ requires rigid carriers and relations, and necessary
+  distinctness of carrier members. $\mathsf P(X):=\lambda B\,(\operatorname{Rigid}(B)\land B\le X)$, with
+  necessary inclusion. $\operatorname{RepPower}_1(Q,X)$ is the existing full rigid represented-power formula.
+  The extra power has its native predicate type and need not fit into $\tau$. Types and finite heights
+  are metalinguistic schema indices. Necessary correctness of the hierarchy is a consequence (Lemma 2.3),
+  not an added hypothesis or conjunct.
+date: '2026-10-30'
+sources:
+- 'Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI), Finite-Type Necessitism: Arithmetic, analysis,
+  and mathematical non-contingency, 30 October 2026, 12-page revision. Definition
+  1.1; Lemma 2.3; Theorems 3.1, 4.3–4.4 and 6.1; Corollary 6.2'
+source_names:
+- Kodsi, Finite-Type Necessitism (30 Oct 2026)
+references:
+- paper: kodsi-finite-type-necessitism-2026
+  role: proof
+  locator: Definition 1.1; Lemma 2.3; Theorems 3.1, 4.3–4.4 and 6.1; Corollary 6.2
+  note: Supplied 12-page paper; the PDF and LaTeX source are included with this contribution.
+about: '[Read the paper (PDF)](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.pdf)
+  · [LaTeX source](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.tex).
+  Daniel Kodsi suggestion, with assistance from GPT-6 Astra (OpenAI).'
+notes: The full schema is $\{F_n:n\in\mathbb N\}$. Its height-zero fragment entails Arithmetic Necessitism,
+  Necessity of Arithmetic and Necessity of Analysis; its height-one fragment is equivalent to Second-Order
+  Analytic Necessitism. Each exact height is independent of all the others, so the full schema is strictly
+  stronger than every finite collection of heights. No separate existence assumption is imposed. See [the
+  finite-type guide](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/writeups/finite-type-non-contingency-guide.md).

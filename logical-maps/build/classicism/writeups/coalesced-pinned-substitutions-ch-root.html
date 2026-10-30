@@ -323,34 +323,126 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
 <script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Coalesced sum: substitution arrows over two atomless components disagreeing about CH</h1></header><p class="cert">
-Model — Source: Misc.; produced by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for cheaply settled verdicts, 29 October 2026 (a variant of Cian Dorr’s coalesced-pinned-substitutions-root with chosen components); recorded by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 29 October 2026.
+Model — Source: Misc.; produced by Claude Opus 5.5 (Anthropic), prompted
+by Cian Dorr, in a trawl for cheaply settled verdicts, 29 October 2026
+(a variant of Cian Dorr’s coalesced-pinned-substitutions-root with
+chosen components); recorded by Claude Opus 5.5 (Anthropic), prompted by
+Cian Dorr, 29 October 2026.
 </p>
 <h2 id="package">Package</h2>
 <ul>
-<li><strong>□Atomlessness.</strong> Necessarily, every possible proposition has a possible proposition strictly below it.</li>
-<li><strong>¬ Non-contingency of the Continuum Hypothesis.</strong> Either necessarily every real number structure satisfies the continuum hypothesis, or necessarily every real number structure falsifies it: that every subproperty of the continuum either injects into the natural numbers or is in bijection with the continuum. One sentence for each type <span class="math inline">\sigma</span>.</li>
+<li><strong>□Atomlessness.</strong> Necessarily, every possible
+proposition has a possible proposition strictly below it.</li>
+<li><strong>¬ Non-contingency of the Continuum Hypothesis.</strong>
+Either necessarily every real number structure satisfies the continuum
+hypothesis, or necessarily every real number structure falsifies it:
+that every subproperty of the continuum either injects into the natural
+numbers or is in bijection with the continuum. One sentence for each
+type <span class="math inline">\sigma</span>.</li>
 </ul>
 <h2 id="definition">Definition</h2>
-<p>Assume <span class="math inline">\operatorname{Con}(\mathrm{ZFC})</span> in the metatheory, as for coalesced-two-extensional-ch-models-root, so that there are models <span class="math inline">N_+\models\mathrm{ZFC}+\mathrm{CH}</span> and <span class="math inline">N_-\models\mathrm{ZFC}+\neg\mathrm{CH}</span>. In each <span class="math inline">N\in\{N_+,N_-\}</span>, carry out the construction of coalesced-pinned-substitutions-root with a single component, finite-support-monotone-maps as built in <span class="math inline">N</span>, giving an action model <span class="math inline">M_N</span> with root object <span class="math inline">R_N</span>. Being an action model, and the truth of a formula at a world, are computed by recursion inside <span class="math inline">N</span>, so <span class="math inline">M_N</span> is an action model of C in the metatheory, with the same truths. The components are <span class="math inline">M_{N_+}</span> and <span class="math inline">M_{N_-}</span>, and the root <span class="math inline">W_0</span> is built over them as in coalesced-pinned-substitutions-root. Evaluation point: <span class="math inline">W_0</span>, at its identity arrow. Interpretation of Σ as there.</p>
-<p>As for interpretation arrows, and the root has besides an arrow to itself for every type-preserving map of the signature’s constants to themselves, acting on the root’s individuals and composing with the interpretation arrows by precomposition.</p>
-<p>As in coalesced-pinned-substitutions-root, intensions over the arrows out of <span class="math inline">W_0</span> pinned down by a finite set of constants of <span class="math inline">\Sigma^+</span>, whose transports along the arrows into a component land in its domains.</p>
-<p><em>A member of the group Coalesced sums at a new root, which supplies this definition with the record’s settings, and the arguments marked as shared.</em></p>
+<p>Assume <span
+class="math inline">\operatorname{Con}(\mathrm{ZFC})</span> in the
+metatheory, as for coalesced-two-extensional-ch-models-root, so that
+there are models <span
+class="math inline">N_+\models\mathrm{ZFC}+\mathrm{CH}</span> and <span
+class="math inline">N_-\models\mathrm{ZFC}+\neg\mathrm{CH}</span>. In
+each <span class="math inline">N\in\{N_+,N_-\}</span>, carry out the
+construction of coalesced-pinned-substitutions-root with a single
+component, finite-support-monotone-maps as built in <span
+class="math inline">N</span>, giving an action model <span
+class="math inline">M_N</span> with root object <span
+class="math inline">R_N</span>. Being an action model, and the truth of
+a formula at a world, are computed by recursion inside <span
+class="math inline">N</span>, so <span class="math inline">M_N</span> is
+an action model of C in the metatheory, with the same truths. The
+components are <span class="math inline">M_{N_+}</span> and <span
+class="math inline">M_{N_-}</span>, and the root <span
+class="math inline">W_0</span> is built over them as in
+coalesced-pinned-substitutions-root. Evaluation point: <span
+class="math inline">W_0</span>, at its identity arrow. Interpretation of
+Σ as there.</p>
+<p>As for interpretation arrows, and the root has besides an arrow to
+itself for every type-preserving map of the signature’s constants to
+themselves, acting on the root’s individuals and composing with the
+interpretation arrows by precomposition.</p>
+<p>As in coalesced-pinned-substitutions-root, intensions over the arrows
+out of <span class="math inline">W_0</span> pinned down by a finite set
+of constants of <span class="math inline">\Sigma^+</span>, whose
+transports along the arrows into a component land in its domains.</p>
+<p><em>A member of the group Coalesced sums at a new root, which
+supplies this definition with the record’s settings, and the arguments
+marked as shared.</em></p>
 <h2 id="arguments">Arguments</h2>
-<h3 id="holds-atomlessness.-fails-non-contingency-of-the-continuum-hypothesis.">Holds □Atomlessness. Fails Non-contingency of the Continuum Hypothesis.</h3>
-<p>□Atomlessness: <span class="math inline">W_0</span> is atomless by the argument atomlessness of coalesced-pinned-substitutions-root, which needs of the components only that <span class="math inline">\top\ne\bot</span> in them; each <span class="math inline">R_N</span> is atomless by the same argument, carried out in <span class="math inline">N</span>; and finite-support-monotone-maps is atomless. So Atomlessness holds at every world. CH, at type <span class="math inline">et</span>: at <span class="math inline">R_N</span> the entity with value <span class="math inline">E</span> at every map of the constants and empty at the arrows into the component is pinned down by <span class="math inline">\varnothing</span> and lands, with extension <span class="math inline">E</span> at the identity, for any set <span class="math inline">E</span> of tuples in <span class="math inline">N</span>. So quantifiers over relations at <span class="math inline">R_N</span> range over all such sets, there are continuum many (in <span class="math inline">N</span>) entities of type <span class="math inline">et</span> there, and the real number structures at <span class="math inline">et</span> there are <span class="math inline">N</span>’s complete ordered fields on sets of them, CH holding of them iff <span class="math inline">N\models\mathrm{CH}</span>. A closed pure sentence holds at an arrow <span class="math inline">\langle R_N,I\rangle</span> iff it holds at <span class="math inline">R_N</span>, so at <span class="math inline">W_0</span> the arrows into <span class="math inline">R_{N_-}</span> refute <span class="math inline">\Box\forall\mathfrak R\,.\,\operatorname{Real}_{et}(\mathfrak R)\to\operatorname{CH}(\mathfrak R)</span> and those into <span class="math inline">R_{N_+}</span> its counterpart with <span class="math inline">\neg\operatorname{CH}</span>.</p>
-<p><em>Address: <code>coalesced-pinned-substitutions-ch-root#atomlessness-and-ch</code>. By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for cheaply settled verdicts; checked by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-29.</em></p>
+<h3
+id="holds-atomlessness.-fails-non-contingency-of-the-continuum-hypothesis.">Holds
+□Atomlessness. Fails Non-contingency of the Continuum Hypothesis.</h3>
+<p>□Atomlessness: <span class="math inline">W_0</span> is atomless by
+the argument atomlessness of coalesced-pinned-substitutions-root, which
+needs of the components only that <span
+class="math inline">\top\ne\bot</span> in them; each <span
+class="math inline">R_N</span> is atomless by the same argument, carried
+out in <span class="math inline">N</span>; and
+finite-support-monotone-maps is atomless. So Atomlessness holds at every
+world. CH, at type <span class="math inline">et</span>: at <span
+class="math inline">R_N</span> the entity with value <span
+class="math inline">E</span> at every map of the constants and empty at
+the arrows into the component is pinned down by <span
+class="math inline">\varnothing</span> and lands, with extension <span
+class="math inline">E</span> at the identity, for any set <span
+class="math inline">E</span> of tuples in <span
+class="math inline">N</span>. So quantifiers over relations at <span
+class="math inline">R_N</span> range over all such sets, there are
+continuum many (in <span class="math inline">N</span>) entities of type
+<span class="math inline">et</span> there, and the real number
+structures at <span class="math inline">et</span> there are <span
+class="math inline">N</span>’s complete ordered fields on sets of them,
+CH holding of them iff <span
+class="math inline">N\models\mathrm{CH}</span>. A closed pure sentence
+holds at an arrow <span class="math inline">\langle R_N,I\rangle</span>
+iff it holds at <span class="math inline">R_N</span>, so at <span
+class="math inline">W_0</span> the arrows into <span
+class="math inline">R_{N_-}</span> refute <span
+class="math inline">\Box\forall\mathfrak
+R\,.\,\operatorname{Real}_{et}(\mathfrak
+R)\to\operatorname{CH}(\mathfrak R)</span> and those into <span
+class="math inline">R_{N_+}</span> its counterpart with <span
+class="math inline">\neg\operatorname{CH}</span>.</p>
+<p><em>Address:
+<code>coalesced-pinned-substitutions-ch-root#atomlessness-and-ch</code>.
+By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for
+cheaply settled verdicts; checked by Claude Opus 5.5 (Anthropic),
+prompted by Cian Dorr, 2026-10-29.</em></p>
 <h2 id="notes">Notes</h2>
-<p>Proposed on 29 October 2026 in a trawl for the open questions created by □Atomlessness: □Atomlessness does not give Non-contingency of CH. It assumes Con(ZFC) in the metatheory. Checked by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr; it inherits the model-of-C argument of coalesced-pinned-substitutions-root, which has not had a second reader. No Lean verification is claimed.</p>
+<p>Proposed on 29 October 2026 in a trawl for the open questions created
+by □Atomlessness: □Atomlessness does not give Non-contingency of CH. It
+assumes Con(ZFC) in the metatheory. Checked by Claude Opus 5.5
+(Anthropic), prompted by Cian Dorr; it inherits the model-of-C argument
+of coalesced-pinned-substitutions-root, which has not had a second
+reader. No Lean verification is claimed.</p>
 <h2 id="sources">Sources</h2>
 <ul>
-<li><strong>Dorr 19 Oct</strong> — Cian Dorr, construction of 19 October 2026 (coalesced-pinned-substitutions-root), with Claude Opus 5.5 (Anthropic); the choice of components here by Claude Opus 5.5 (Anthropic), 29 October 2026, following coalesced-two-extensional-ch-models-root.</li>
-<li><strong>Classicism</strong> — Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, pp. 73–77; Appendix E, Definition E.2, pp. 80–83.</li>
+<li><strong>Dorr 19 Oct</strong> — Cian Dorr, construction of 19 October
+2026 (coalesced-pinned-substitutions-root), with Claude Opus 5.5
+(Anthropic); the choice of components here by Claude Opus 5.5
+(Anthropic), 29 October 2026, following
+coalesced-two-extensional-ch-models-root.</li>
+<li><strong>Classicism</strong> — Andrew Bacon and Cian Dorr,
+Classicism, draft of 16 May 2023, Appendix D, pp. 73–77; Appendix E,
+Definition E.2, pp. 80–83.</li>
 </ul>
 <p class="cert">
-Record: <code>topics/classicism/models/coalesced-pinned-substitutions-ch-root.yaml</code>
+Record:
+<code>topics/classicism/models/coalesced-pinned-substitutions-ch-root.yaml</code>
 </p>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds), Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated 16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition and footnote locators in this map refer to that draft’s numbering. — Appendix D, pp. 73–77; Appendix E, pp. 80–83</li>
+<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian
+Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds),
+Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map
+was built from the draft dated 16 May 2023, 87 pages, which does not
+differ materially from the published version; all page, proposition and
+footnote locators in this map refer to that draft’s numbering. —
+Appendix D, pp. 73–77; Appendix E, pp. 80–83</li>
 </ul>
 </body></html>

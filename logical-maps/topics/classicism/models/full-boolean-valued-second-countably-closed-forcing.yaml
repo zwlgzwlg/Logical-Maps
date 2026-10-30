@@ -1,0 +1,96 @@
+id: full-boolean-valued-second-countably-closed-forcing
+name: Full Boolean-valued model with a second countably closed forcing
+definition: >-
+  Choose a countable model N of ZFC+CH, with no external well-foundedness assumption.
+  Let Q=Fn(omega_1,2,<omega_1), the countable partial binary functions, take an N-generic
+  G, and put M=N[G]. Inside M form the fresh regular-open completion A=RO^M(Q) of a
+  second application of this forcing, and B=2 times A. Use D_e=omega^M, D_t=B and the
+  internally full function domains at every admitted relational type. Externalize standard
+  finite types and evaluate at the isolated first coordinate. Quantifiers are internal
+  meets and joins; necessity is the global top test. All countability assertions about
+  the forcing and its conditions are internal to the indicated ground.
+certificate:
+  source_id: misc
+  produced_by: Daniel Kodsi, with ChatGPT assistance, using Andrew Bacon's Boolean-valued construction and the earlier no-new-reals and represented-power arguments
+  recorded_by: GPT-6 Astra (OpenAI), prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- Daniel Kodsi, with ChatGPT assistance, Fixed analytical theory with changing analytical objects, 29 October 2026, repeated countably closed forcing argument; proof reproduced in the companion write-up, Sections 1–4 and 6–7.
+- Andrew Bacon, Could the truths of mathematics have been different?, draft of 9 October 2025, online Appendix B.2, pp. 7–9 (PDF pp. 41–43), Boolean-valued construction and Lemmas B.1–B.4.
+- OpenAI Codex, prompted by Daniel Kodsi, Full Boolean-valued carrier and premise audit, 25 October 2026, Sections 5 and 7; Generic-point Boolean models, 25 October 2026, Sections 2–3, 6 and 7.2, internal soundness, endpoint rigidity and extensional forcing transfer.
+- Daniel Kodsi, with ChatGPT assistance, Analytic Necessitism and no-new-reals forcing, and represented powers in an internally full Boolean hierarchy, 29 October 2026; the all-carrier and uniform unary-power proofs are reproduced in the companion write-up, Sections 4 and 6.
+source_names:
+- Repeated forcing 29 Oct
+- Bacon Boolean hierarchy
+- Kodsi Boolean transfer
+- AN and represented powers
+references:
+- paper: bacon-mathematical-contingency
+  role: background
+  locator: Online Appendix B.2, pp. 7–9 (PDF pp. 41–43), Lemmas B.1–B.4
+arguments:
+- id: boolean-core
+  holds: [necessary-distinctness-necessary-r, necessary-relational-choice-r]
+  by: Daniel Kodsi, with ChatGPT assistance, applying the Bacon and Kodsi Boolean construction
+  date: '2026-10-30'
+  choice: uses
+  writeup: full-boolean-valued-repeated-forcing
+  text: >-
+    Crisp identity and top-test necessity give C5. Internal well-orders disjointify
+    arbitrary relation rows into selecting graphs with the same totality values;
+    Relational Choice and its box hold at all admitted input/output types. The direct
+    top-test calculation also gives necessary BF, which the map derives from C5.
+- id: fixed-second-order-analytical-theory
+  holds: [necessity-of-second-order-analysis]
+  by: Daniel Kodsi, with ChatGPT assistance
+  date: '2026-10-29'
+  choice: uses
+  writeup: full-boolean-valued-repeated-forcing
+  text: >-
+    Countable closure preserves all countable sequences of ordinals and omega_1, so
+    after the first forcing every countable partial binary condition is old: the
+    recomputed Q has exactly the old set and order. It is weakly homogeneous and
+    Q times Q is isomorphic to Q. The product/iteration calculation makes the second
+    forcing preserve every standard finite parameter-free set-theoretic sentence over
+    M. Extensional transfer and complete-field categoricity give the full native
+    second-order analytical schema at every carrier, including vacuous instances.
+- id: no-new-reals-give-all-carrier-an
+  holds: [analytic-necessitism]
+  by: Daniel Kodsi, with ChatGPT assistance
+  date: '2026-10-29'
+  choice: uses
+  writeup: full-boolean-valued-repeated-forcing
+  text: >-
+    The second forcing adds no reals. The old complete real field stays complete for
+    every new bounded subset because its supremum is determined by an old rational cut.
+    Conditions with domain omega give a ground-continuum antichain in A, so every
+    nonindividual type admits an endpoint-valued copy of the field. Endpoint rigidity
+    and full extensional transfer make it a rigid necessarily-real witness. At e,
+    a complete field on a subset of omega is impossible in either coordinate, making
+    the antecedent false. This proves every current AN instance with its native guard.
+- id: new-subset-refutes-every-unary-power
+  fails: [second-order-analytic-necessitism]
+  by: Daniel Kodsi, with ChatGPT assistance
+  date: '2026-10-29'
+  choice: uses
+  writeup: full-boolean-valued-repeated-forcing
+  text: >-
+    A fresh-coordinate dense argument makes the second generic subset of omega_1
+    unequal to every old subset with Boolean equality value zero. CH survives the
+    first forcing, so transfer this name to every prospective ground real carrier.
+    Rigid supported relations are old endpoint-valued subsets. The join of their
+    agreement values with the new subset has forcing coordinate zero, so no rigid
+    family can satisfy the boxed representation clause. This defeats every field
+    tuple and every unary represented power, not just a chosen canonical one.
+    The et, arity-one SOAN antecedent is true and its consequent is bottom.
+notes: >-
+  Relative existence follows from Con(ZFC), using the relative consistency of CH and
+  arbitrary countable models. This strengthens the analytical truth profile of the
+  one-stage countably closed subset model by a different prescribed ground; it does
+  not change that earlier record. Necessary BF is derived. AN and SOAN use their
+  existing unboxed nodes; no additional outer-box or finite-type necessitism verdict
+  is asserted. The Boolean completion must be taken freshly inside M. Mathematical
+  review was carried out with ChatGPT assistance; no independent human check or Lean
+  proof is recorded.

@@ -322,7 +322,11 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <link rel="stylesheet" href="../math/katex.min.css">
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
-<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Cofinite entrance to the full idempotent action</h1></header><p>Construction and proofs by GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, in the research note <em>Strong worlds do not control modal domains</em> of 26 October 2026, §§2 and 4–5. Checked and rewritten for the map by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 28 October 2026.</p>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Cofinite entrance to the full idempotent action</h1></header><p>Construction and proofs by GPT-6 Astra (OpenAI), prompted by Daniel
+Kodsi, in the research note <em>Strong worlds do not control modal
+domains</em> of 26 October 2026, §§2 and 4–5. Checked and rewritten for
+the map by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 28
+October 2026.</p>
 <p>At the entrance <span class="math inline">r</span> these hold:</p>
 <ul>
 <li>Strong Atomicity at every relational type;</li>
@@ -334,56 +338,164 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <li>□Strong Atomicity at <span class="math inline">t</span>;</li>
 <li>□BF at <span class="math inline">t</span>.</li>
 </ul>
-<p>So the Barcan Formula, even at every type, does not make Strong Atomicity necessary.</p>
+<p>So the Barcan Formula, even at every type, does not make Strong
+Atomicity necessary.</p>
 <h2 id="the-model">The model</h2>
-<p><strong>The target <span class="math inline">s</span>.</strong> Its arrows <span class="math inline">s\to s</span> are <span class="math inline">1</span> and an idempotent <span class="math inline">k\ne1</span>. It carries the full action-model domains over one individual. An entity of relational type is a pair of extensions <span class="math inline">(U,V)</span>, at <span class="math inline">1</span> and at <span class="math inline">k</span>, and <span class="math inline">k\cdot(U,V)=(V,V)</span>.</p>
-<p><strong>The entrance <span class="math inline">r</span>.</strong> It has only its identity, and arrows <span class="math inline">h_n:r\to s</span> (<span class="math inline">n\in\mathbb N</span>) and <span class="math inline">b:r\to s</span>, with <span class="math inline">k\circ h_n=b</span> and <span class="math inline">k\circ b=b</span>. An entity of relational type at <span class="math inline">r</span> is:</p>
+<p><strong>The target <span class="math inline">s</span>.</strong> Its
+arrows <span class="math inline">s\to s</span> are <span
+class="math inline">1</span> and an idempotent <span
+class="math inline">k\ne1</span>. It carries the full action-model
+domains over one individual. An entity of relational type is a pair of
+extensions <span class="math inline">(U,V)</span>, at <span
+class="math inline">1</span> and at <span class="math inline">k</span>,
+and <span class="math inline">k\cdot(U,V)=(V,V)</span>.</p>
+<p><strong>The entrance <span class="math inline">r</span>.</strong> It
+has only its identity, and arrows <span class="math inline">h_n:r\to
+s</span> (<span class="math inline">n\in\mathbb N</span>) and <span
+class="math inline">b:r\to s</span>, with <span
+class="math inline">k\circ h_n=b</span> and <span
+class="math inline">k\circ b=b</span>. An entity of relational type at
+<span class="math inline">r</span> is:</p>
 <ul>
 <li>an arbitrary current extension, together with</li>
-<li>target entities <span class="math inline">d_n</span> (its transports along the <span class="math inline">h_n</span>) and <span class="math inline">d_\infty</span> (along <span class="math inline">b</span>),</li>
+<li>target entities <span class="math inline">d_n</span> (its transports
+along the <span class="math inline">h_n</span>) and <span
+class="math inline">d_\infty</span> (along <span
+class="math inline">b</span>),</li>
 </ul>
 <p>subject to</p>
 <p><span class="math display">
-k\cdot d_n=d_\infty,\qquad k\cdot d_\infty=d_\infty,\qquad d_n=d_\infty\text{ for all but finitely many }n .
+k\cdot d_n=d_\infty,\qquad k\cdot d_\infty=d_\infty,\qquad
+d_n=d_\infty\text{ for all but finitely many }n .
 </span></p>
-<p>Write <span class="math inline">d_\infty=(V,V)</span> and <span class="math inline">d_n=(U_n,V)</span>. Then <span class="math inline">U_n=V</span> for all but finitely many <span class="math inline">n</span>.</p>
-<p>Evaluation point: <span class="math inline">1_r</span>. The constants of Σ denote top elements.</p>
+<p>Write <span class="math inline">d_\infty=(V,V)</span> and <span
+class="math inline">d_n=(U_n,V)</span>. Then <span
+class="math inline">U_n=V</span> for all but finitely many <span
+class="math inline">n</span>.</p>
+<p>Evaluation point: <span class="math inline">1_r</span>. The constants
+of Σ denote top elements.</p>
 <h2 id="a-model-of-c">A model of C</h2>
-<p>Current extensions are unrestricted, and logical constants have constant target parts. So, as in the stationary entrance, it is enough to check the target parts of a term with parameters.</p>
+<p>Current extensions are unrestricted, and logical constants have
+constant target parts. So, as in the stationary entrance, it is enough
+to check the target parts of a term with parameters.</p>
 <ul>
-<li><strong>Cofiniteness.</strong> Let <span class="math inline">X</span> be the union of the parameters’ finitely many exceptional indices. Outside <span class="math inline">X</span>, the transported parameters at <span class="math inline">h_n</span> and at <span class="math inline">b</span> coincide, so the term’s denotations there coincide.</li>
-<li><strong>Fixed by <span class="math inline">k</span>.</strong> At <span class="math inline">b</span> the parameters are fixed by <span class="math inline">k</span>, so by naturality the term’s denotation there is fixed by <span class="math inline">k</span>.</li>
+<li><strong>Cofiniteness.</strong> Let <span
+class="math inline">X</span> be the union of the parameters’ finitely
+many exceptional indices. Outside <span class="math inline">X</span>,
+the transported parameters at <span class="math inline">h_n</span> and
+at <span class="math inline">b</span> coincide, so the term’s
+denotations there coincide.</li>
+<li><strong>Fixed by <span class="math inline">k</span>.</strong> At
+<span class="math inline">b</span> the parameters are fixed by <span
+class="math inline">k</span>, so by naturality the term’s denotation
+there is fixed by <span class="math inline">k</span>.</li>
 </ul>
 <p>So the domains are closed under the terms of C.</p>
-<h2 id="strong-atomicity-at-r-and-atomicity">Strong Atomicity at <span class="math inline">r</span>, and □Atomicity</h2>
-<p>At <span class="math inline">r</span>, at every relational type, two kinds of singleton are admitted:</p>
+<h2 id="strong-atomicity-at-r-and-atomicity">Strong Atomicity at <span
+class="math inline">r</span>, and □Atomicity</h2>
+<p>At <span class="math inline">r</span>, at every relational type, two
+kinds of singleton are admitted:</p>
 <ul>
-<li><strong>one current tuple</strong>, with all target parts <span class="math inline">0</span>;</li>
-<li><strong>one tuple <span class="math inline">\bar a</span> at one arrow <span class="math inline">h_n</span></strong>, with <span class="math inline">d_n:=(\{\bar a\},\varnothing)</span> and every other target part <span class="math inline">0</span>. This is allowed, since <span class="math inline">k\cdot(\{\bar a\},\varnothing)=0</span>.</li>
+<li><strong>one current tuple</strong>, with all target parts <span
+class="math inline">0</span>;</li>
+<li><strong>one tuple <span class="math inline">\bar a</span> at one
+arrow <span class="math inline">h_n</span></strong>, with <span
+class="math inline">d_n:=(\{\bar a\},\varnothing)</span> and every other
+target part <span class="math inline">0</span>. This is allowed, since
+<span class="math inline">k\cdot(\{\bar a\},\varnothing)=0</span>.</li>
 </ul>
-<p><strong>Every nonzero entity at <span class="math inline">r</span> contains one of them.</strong> Consider where it is nonempty:</p>
+<p><strong>Every nonzero entity at <span class="math inline">r</span>
+contains one of them.</strong> Consider where it is nonempty:</p>
 <ul>
-<li>in its current extension, or at an exceptional <span class="math inline">h_n</span>: immediate;</li>
-<li>in <span class="math inline">V</span>, its extension at <span class="math inline">b</span>: then pick <span class="math inline">\bar a\in V</span> and an <span class="math inline">n</span> outside its exceptions, so that <span class="math inline">\bar a\in U_n</span>.</li>
+<li>in its current extension, or at an exceptional <span
+class="math inline">h_n</span>: immediate;</li>
+<li>in <span class="math inline">V</span>, its extension at <span
+class="math inline">b</span>: then pick <span class="math inline">\bar
+a\in V</span> and an <span class="math inline">n</span> outside its
+exceptions, so that <span class="math inline">\bar a\in U_n</span>.</li>
 </ul>
 <p>There is no atom at <span class="math inline">b</span> itself.</p>
-<p><strong>They are strong atoms.</strong> A current singleton transports to <span class="math inline">0</span> everywhere. The singleton at <span class="math inline">(h_n,\bar a)</span> transports to <span class="math inline">(\{\bar a\},\varnothing)</span> along <span class="math inline">h_n</span> and to <span class="math inline">0</span> elsewhere. And <span class="math inline">(\{\bar a\},\varnothing)</span> is an atom of the full target that <span class="math inline">k</span> sends to <span class="math inline">0</span>, so it necessarily decides everything.</p>
-<p>Hence Strong Atomicity holds at <span class="math inline">r</span>. The full target is atomic at every type, so □Atomicity holds.</p>
-<h2 id="strong-atomicity-fails-at-t">□Strong Atomicity fails at <span class="math inline">t</span></h2>
-<p>At <span class="math inline">s</span>, the proposition <span class="math inline">\{k\}</span> is an atom, but <span class="math inline">k\cdot\{k\}=\{1,k\}</span>, which the proposition <span class="math inline">\{1\}</span> splits at <span class="math inline">k</span>. So <span class="math inline">\{k\}</span> is not a strong atom. Being an atom, it has no other possible proposition below it. So Strong Atomicity fails at <span class="math inline">t</span> at <span class="math inline">s</span>, and □Strong Atomicity at <span class="math inline">t</span> fails at <span class="math inline">r</span>.</p>
-<h2 id="the-barcan-formula-at-r-and-its-failure-at-s">The Barcan Formula at <span class="math inline">r</span>, and its failure at <span class="math inline">s</span></h2>
-<p><strong>Transport along each <span class="math inline">h_n</span> is onto.</strong> At <span class="math inline">e</span> this is trivial. At a relational type, given a target entity <span class="math inline">d</span>, the entity with <span class="math inline">d_n:=d</span>, every other <span class="math inline">d_m:=k\cdot d</span> and <span class="math inline">d_\infty:=k\cdot d</span> is admitted, by idempotence, and transports to <span class="math inline">d</span> along <span class="math inline">h_n</span>.</p>
-<p><strong>BF holds at <span class="math inline">r</span>, at every type.</strong> Let <span class="math inline">F</span> at <span class="math inline">r</span> be such that every entity necessarily has <span class="math inline">F</span>.</p>
+<p><strong>They are strong atoms.</strong> A current singleton
+transports to <span class="math inline">0</span> everywhere. The
+singleton at <span class="math inline">(h_n,\bar a)</span> transports to
+<span class="math inline">(\{\bar a\},\varnothing)</span> along <span
+class="math inline">h_n</span> and to <span class="math inline">0</span>
+elsewhere. And <span class="math inline">(\{\bar a\},\varnothing)</span>
+is an atom of the full target that <span class="math inline">k</span>
+sends to <span class="math inline">0</span>, so it necessarily decides
+everything.</p>
+<p>Hence Strong Atomicity holds at <span class="math inline">r</span>.
+The full target is atomic at every type, so □Atomicity holds.</p>
+<h2 id="strong-atomicity-fails-at-t">□Strong Atomicity fails at <span
+class="math inline">t</span></h2>
+<p>At <span class="math inline">s</span>, the proposition <span
+class="math inline">\{k\}</span> is an atom, but <span
+class="math inline">k\cdot\{k\}=\{1,k\}</span>, which the proposition
+<span class="math inline">\{1\}</span> splits at <span
+class="math inline">k</span>. So <span class="math inline">\{k\}</span>
+is not a strong atom. Being an atom, it has no other possible
+proposition below it. So Strong Atomicity fails at <span
+class="math inline">t</span> at <span class="math inline">s</span>, and
+□Strong Atomicity at <span class="math inline">t</span> fails at <span
+class="math inline">r</span>.</p>
+<h2 id="the-barcan-formula-at-r-and-its-failure-at-s">The Barcan Formula
+at <span class="math inline">r</span>, and its failure at <span
+class="math inline">s</span></h2>
+<p><strong>Transport along each <span class="math inline">h_n</span> is
+onto.</strong> At <span class="math inline">e</span> this is trivial. At
+a relational type, given a target entity <span
+class="math inline">d</span>, the entity with <span
+class="math inline">d_n:=d</span>, every other <span
+class="math inline">d_m:=k\cdot d</span> and <span
+class="math inline">d_\infty:=k\cdot d</span> is admitted, by
+idempotence, and transports to <span class="math inline">d</span> along
+<span class="math inline">h_n</span>.</p>
+<p><strong>BF holds at <span class="math inline">r</span>, at every
+type.</strong> Let <span class="math inline">F</span> at <span
+class="math inline">r</span> be such that every entity necessarily has
+<span class="math inline">F</span>.</p>
 <ul>
-<li>At each <span class="math inline">h_n</span>, every target entity is the transport of some entity at <span class="math inline">r</span>, so the extension of <span class="math inline">F</span> there is the whole domain.</li>
-<li>At <span class="math inline">b</span>, the extension of <span class="math inline">F</span> is its extension at any <span class="math inline">h_n</span> outside <span class="math inline">F</span>’s finitely many exceptions, so it is everything too.</li>
-<li>At <span class="math inline">r</span> itself, <span class="math inline">F</span> holds of everything by T.</li>
+<li>At each <span class="math inline">h_n</span>, every target entity is
+the transport of some entity at <span class="math inline">r</span>, so
+the extension of <span class="math inline">F</span> there is the whole
+domain.</li>
+<li>At <span class="math inline">b</span>, the extension of <span
+class="math inline">F</span> is its extension at any <span
+class="math inline">h_n</span> outside <span
+class="math inline">F</span>’s finitely many exceptions, so it is
+everything too.</li>
+<li>At <span class="math inline">r</span> itself, <span
+class="math inline">F</span> holds of everything by T.</li>
 </ul>
-<p>So necessarily everything has <span class="math inline">F</span>. The arrow <span class="math inline">b</span> is not onto, but no admitted predicate at <span class="math inline">r</span> can detect this.</p>
-<p><strong>BF fails at <span class="math inline">t</span> at <span class="math inline">s</span>.</strong> Let <span class="math inline">X</span> hold at <span class="math inline">1</span> of all four propositions, and at <span class="math inline">k</span> of <span class="math inline">\bot</span> and <span class="math inline">\top</span>. Since <span class="math inline">k</span> transports every proposition to <span class="math inline">\bot</span> or <span class="math inline">\top</span>, every proposition necessarily has <span class="math inline">X</span>. But at <span class="math inline">k</span> the proposition <span class="math inline">\{1\}</span> lacks it. So □BF at <span class="math inline">t</span> fails at <span class="math inline">r</span>.</p>
-<p>A target predicate can be lifted along any one <span class="math inline">h_n</span>. But its lift need not satisfy the Barcan antecedent along the other arrows, so this failure does not contradict BF at <span class="math inline">r</span>.</p>
+<p>So necessarily everything has <span class="math inline">F</span>. The
+arrow <span class="math inline">b</span> is not onto, but no admitted
+predicate at <span class="math inline">r</span> can detect this.</p>
+<p><strong>BF fails at <span class="math inline">t</span> at <span
+class="math inline">s</span>.</strong> Let <span
+class="math inline">X</span> hold at <span class="math inline">1</span>
+of all four propositions, and at <span class="math inline">k</span> of
+<span class="math inline">\bot</span> and <span
+class="math inline">\top</span>. Since <span
+class="math inline">k</span> transports every proposition to <span
+class="math inline">\bot</span> or <span
+class="math inline">\top</span>, every proposition necessarily has <span
+class="math inline">X</span>. But at <span class="math inline">k</span>
+the proposition <span class="math inline">\{1\}</span> lacks it. So □BF
+at <span class="math inline">t</span> fails at <span
+class="math inline">r</span>.</p>
+<p>A target predicate can be lifted along any one <span
+class="math inline">h_n</span>. But its lift need not satisfy the Barcan
+antecedent along the other arrows, so this failure does not contradict
+BF at <span class="math inline">r</span>.</p>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds), Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated 16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition and footnote locators in this map refer to that draft’s numbering. — §3.5, pp. 58–61; Appendix D, pp. 73–74. Full action models, here the target, with a restricted domain at the entrance.</li>
+<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian
+Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds),
+Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map
+was built from the draft dated 16 May 2023, 87 pages, which does not
+differ materially from the published version; all page, proposition and
+footnote locators in this map refer to that draft’s numbering. — §3.5,
+pp. 58–61; Appendix D, pp. 73–74. Full action models, here the target,
+with a restricted domain at the entrance.</li>
 </ul>
 </body></html>

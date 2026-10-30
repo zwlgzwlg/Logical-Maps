@@ -1581,6 +1581,14 @@ def gallin_comprehension_implies_nd : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.schemaIn
 
+/-- `gallin-comprehension-implies-self-atoms-are-strong-atoms-r`
+
+Gallin Extensional Comprehension ⇒ Self-atoms are strong atoms -/
+def gallin_comprehension_implies_self_atoms_are_strong_atoms_r : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.GallinExtensionalComprehension.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.SelfAtomsAreStrongAtoms.schemaIn
+
 /-- `gallin-comprehension-implies-strong-actuality`
 
 Gallin Extensional Comprehension ⇒ Strong Actuality -/
@@ -2001,6 +2009,15 @@ def nd_t_and_bf_t_imply_necessary_nd_t : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctnessT.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BarcanT.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecNecessityOfDistinctnessT.schemaIn
+
+/-- `nd-t-and-five-to-nd-collapse-imply-necessary-nd`
+
+ND (type t) ∧ 5-necessities are ND-necessary ⇒ □ND -/
+def nd_t_and_five_to_nd_collapse_imply_necessary_nd : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctnessT.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.FiveImpliesNdNecessity.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecNecessityOfDistinctness.schemaIn
 
 /-- `necessary-actuality-and-necessary-bf-imply-necessary-inextensible-comprehension`
 
@@ -5214,6 +5231,15 @@ def vicinity_and_relational_choice_imply_transversal_choice : Prop :=
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RelationalChoice.schemaIn →
     Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TransversalChoice.schemaIn
 
+/-- `vicinity-and-truth-implies-five-necessity-imply-actuality`
+
+Vicinity ∧ Truths are 5-necessary ⇒ Actuality -/
+def vicinity_and_truth_implies_five_necessity_imply_actuality : Prop :=
+  ∀ {Sig : Classicism.Meta.Signature} (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Vicinity.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TruthImpliesFiveNecessity.schemaIn →
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Actuality.schemaIn
+
 /-- `vicinity-and-weakly-inextensible-comprehension-imply-actuality`
 
 Vicinity ∧ Weakly Inextensible Comprehension ⇒ Actuality -/
@@ -5425,6 +5451,101 @@ def coalesced_pinned_substitutions_truncations_root : Prop :=
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomlessness.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.SelfAtomicityT.schemaIn
 
+/-- `finite-source-prefix-paired-individuals`
+
+Paired-individuals model with a singleton-source prefix: a witness satisfying 3 principles
+and violating 1. -/
+def finite_source_prefix_paired_individuals : Prop :=
+  ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomicity.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RelationalChoice.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecFiveImpliesTwoHatNecessity.schemaIn
+
+/-- `interpretation-cover-covariant-surjections`
+
+Interpretation cover: covariant surjections: a witness satisfying 4 principles
+and violating 0. -/
+def interpretation_cover_covariant_surjections : Prop :=
+  ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.distinctnessC _) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.InextensibleComprehension.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Barcan.schemaIn
+
+/-- `interpretation-cover-henkin-full-traces`
+
+Interpretation cover: Henkin and full subset traces: a witness satisfying 5 principles
+and violating 1. -/
+def interpretation_cover_henkin_full_traces : Prop :=
+  ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Barcan.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RelationalChoice.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Vicinity.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possibilityPlusSig _) ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidPower.schemaIn
+
+/-- `interpretation-cover-progressive-substitutions`
+
+Interpretation cover: progressive substitutions: a witness satisfying 5 principles
+and violating 2. -/
+def interpretation_cover_progressive_substitutions : Prop :=
+  ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.TransversalChoice.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.AxiomOfInfinityE.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.possibilityPlusSig _) ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeaklyInextensibleComprehension.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BarcanT.schemaIn
+
+/-- `interpretation-cover-stitched-cohen-middle`
+
+Interpretation cover: identity-only over the stitched Cohen middle: a witness satisfying 2 principles
+and violating 1. -/
+def interpretation_cover_stitched_cohen_middle : Prop :=
+  ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Barcan.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcanT.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcanRelational.schemaIn
+
+/-- `interpretation-cover-surjective-chain-names`
+
+Interpretation cover: surjective chain names: a witness satisfying 4 principles
+and violating 1. -/
+def interpretation_cover_surjective_chain_names : Prop :=
+  ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.distinctnessC _) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Barcan.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.DistinctnessPreservingCollapse.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeaklyInextensibleComprehension.schemaIn
+
+/-- `nominal-cofinite-double-retraction-entrance`
+
+Nominal cofinite entrance: double-retraction tail: a witness satisfying 4 principles
+and violating 1. -/
+def nominal_cofinite_double_retraction_entrance : Prop :=
+  ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.SelfAtomicity.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBooleanCompleteness.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecInextensibleComprehension.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecStrongActuality.schemaIn
+
+/-- `nominal-cofinite-sections-entrance`
+
+Nominal cofinite entrance over sections and projection: a witness satisfying 2 principles
+and violating 3. -/
+def nominal_cofinite_sections_entrance : Prop :=
+  ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.StrongAtomicity.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecInextensibleComprehension.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicityT.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BarcanT.schemaIn
+
 /-- `stitched-cohen-coalesced-middle`
 
 Stitched Cohen model with a coalesced middle world: a witness satisfying 5 principles
@@ -5445,6 +5566,45 @@ def stitched_cohen_coalesced_middle : Prop :=
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.separatedStructure _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.independence _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.distinctnessC _)
+
+/-- `supported-boolean-finite-tail-middle`
+
+Supported Boolean model: finite tail subsets at a middle evaluation: a witness satisfying 4 principles
+and violating 1. -/
+def supported_boolean_finite_tail_middle : Prop :=
+  ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBooleanCompletenessT.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecessityOfDistinctness.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidPower.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecNecessityOfDistinctnessT.schemaIn
+
+/-- `supported-product-coordinate-symmetry`
+
+Supported-product action model: external coordinate symmetry: a witness satisfying 6 principles
+and violating 4. -/
+def supported_product_coordinate_symmetry : Prop :=
+  ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
+    Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.logicalNecessity _) ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBooleanCompletenessT.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBarcan.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecCountableBooleanCompleteness.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecTameRigidity.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Vicinity.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.WeaklyInextensibleComprehension.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RigidPower.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.RelationalChoice.schemaIn
+
+/-- `symmetric-surjections-finite-terminal`
+
+Symmetric surjections: a two-individual finite terminal: a witness satisfying 2 principles
+and violating 1. -/
+def symmetric_surjections_finite_terminal : Prop :=
+  ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.Atomlessness.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecInextensibleComprehension.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomlessness.schemaIn
 
 /-- `ultraproduct-finite-full-s5`
 
@@ -5472,6 +5632,22 @@ def ultraproduct_finite_full_s5 : Prop :=
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.separatedStructure _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.independence _) ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax (Classicism.Meta.AxiomSet.distinctnessC _)
+
+/-- `wreath-cofinite-old-new-entrance`
+
+Wreath-supported cofinite entrance over old and new individuals: a witness satisfying 6 principles
+and violating 3. -/
+def wreath_cofinite_old_new_entrance : Prop :=
+  ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.StrongAtomicity.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompleteness.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomicity.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBooleanCompletenessT.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BarcanT.schemaIn ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecRigidPower.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecInextensibleComprehension.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecBooleanCompleteness.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BarcanRelational.schemaIn
 
 /-- `actuality`, variant `actual-profile`
 

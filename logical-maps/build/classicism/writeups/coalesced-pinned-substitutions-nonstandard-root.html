@@ -323,58 +323,274 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
 <script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Coalesced sum: substitution arrows over an atomless component with nonstandard arithmetic</h1></header><p class="cert">
-Model — Source: Misc.; produced by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for cheaply settled verdicts, 29 October 2026 (a variant of Cian Dorr’s coalesced-pinned-substitutions-root with one chosen component); recorded by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 29 October 2026.
+Model — Source: Misc.; produced by Claude Opus 5.5 (Anthropic), prompted
+by Cian Dorr, in a trawl for cheaply settled verdicts, 29 October 2026
+(a variant of Cian Dorr’s coalesced-pinned-substitutions-root with one
+chosen component); recorded by Claude Opus 5.5 (Anthropic), prompted by
+Cian Dorr, 29 October 2026.
 </p>
 <h2 id="package">Package</h2>
 <ul>
-<li><strong>□Atomlessness.</strong> Necessarily, every possible proposition has a possible proposition strictly below it.</li>
-<li><strong>BF.</strong> The Barcan Formula at every type. The predicate formulation closes the formula schema using lambda abstraction.</li>
-<li><strong>Axiom of Infinity (type e).</strong> There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.</li>
-<li><strong>Two-hat necessities are ND-necessary.</strong> Whatever is two-hat necessary is ND-necessary: the distinctness-preserving modality agrees with its hat.</li>
-<li><strong>5-necessities are two-hat necessary.</strong> Whatever is 5-necessary is two-hat necessary.</li>
-<li><strong>Transversal Choice.</strong> Every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.</li>
-<li><strong>¬ Necessity of Arithmetic.</strong> Every arithmetical sentence is either necessarily true or necessarily false, given that possibly zero is not a successor and successor is injective on numbers, where the numbers are the finite cardinalities of properties of a type <span class="math inline">\sigma</span>. One sentence for each type <span class="math inline">\sigma</span> and each arithmetical sentence at <span class="math inline">\sigma</span>.</li>
-<li><strong>¬ Necessity of Analysis.</strong> Every first-order analytical sentence is either true in every real number structure in every possible world or false in every real number structure in every possible world. One sentence for each type <span class="math inline">\sigma</span> and each first-order analytical sentence.</li>
-<li><strong>¬ Arithmetic Necessitism.</strong> Given that necessarily zero is not a successor and successor is injective on numbers, the numbers at <span class="math inline">\sigma</span> form a rigid property with necessarily distinct instances. One sentence for each type <span class="math inline">\sigma</span>.</li>
-<li><strong>¬ □BF (type t).</strong> Necessarily, if every proposition necessarily has a property, then necessarily every proposition has it.</li>
-<li><strong>¬ Vicinity.</strong> There is a true proposition that entails the possibility of each true proposition.</li>
-<li><strong>¬ Weakly Inextensible Comprehension.</strong> Every relation, including a proposition, is coextensive with a weakly inextensible one.</li>
-<li><strong>¬ Boolean Completeness (type t).</strong> Every property of propositions has a greatest lower bound.</li>
-<li><strong>¬ Truths are 5-necessary.</strong> Every truth is 5-necessary: necessary under every S5 operator.</li>
+<li><strong>□Atomlessness.</strong> Necessarily, every possible
+proposition has a possible proposition strictly below it.</li>
+<li><strong>BF.</strong> The Barcan Formula at every type. The predicate
+formulation closes the formula schema using lambda abstraction.</li>
+<li><strong>Axiom of Infinity (type e).</strong> There are not finitely
+many individuals. No finite cardinality holds of the universal property,
+so the domain of the type cannot be exhausted by finitely many steps
+from the empty property.</li>
+<li><strong>Two-hat necessities are ND-necessary.</strong> Whatever is
+two-hat necessary is ND-necessary: the distinctness-preserving modality
+agrees with its hat.</li>
+<li><strong>5-necessities are two-hat necessary.</strong> Whatever is
+5-necessary is two-hat necessary.</li>
+<li><strong>Transversal Choice.</strong> Every equivalence relation, at
+any type including e, has a transversal, that is, a property with
+exactly one instance in each of its cells.</li>
+<li><strong>¬ Necessity of Arithmetic.</strong> Every arithmetical
+sentence is either necessarily true or necessarily false, given that
+possibly zero is not a successor and successor is injective on numbers,
+where the numbers are the finite cardinalities of properties of a type
+<span class="math inline">\sigma</span>. One sentence for each type
+<span class="math inline">\sigma</span> and each arithmetical sentence
+at <span class="math inline">\sigma</span>.</li>
+<li><strong>¬ Necessity of Analysis.</strong> Every first-order
+analytical sentence is either true in every real number structure in
+every possible world or false in every real number structure in every
+possible world. One sentence for each type <span
+class="math inline">\sigma</span> and each first-order analytical
+sentence.</li>
+<li><strong>¬ Arithmetic Necessitism.</strong> Given that necessarily
+zero is not a successor and successor is injective on numbers, the
+numbers at <span class="math inline">\sigma</span> form a rigid property
+with necessarily distinct instances. One sentence for each type <span
+class="math inline">\sigma</span>.</li>
+<li><strong>¬ □BF (type t).</strong> Necessarily, if every proposition
+necessarily has a property, then necessarily every proposition has
+it.</li>
+<li><strong>¬ Vicinity.</strong> There is a true proposition that
+entails the possibility of each true proposition.</li>
+<li><strong>¬ Weakly Inextensible Comprehension.</strong> Every
+relation, including a proposition, is coextensive with a weakly
+inextensible one.</li>
+<li><strong>¬ Boolean Completeness (type t).</strong> Every property of
+propositions has a greatest lower bound.</li>
+<li><strong>¬ Truths are 5-necessary.</strong> Every truth is
+5-necessary: necessary under every S5 operator.</li>
 </ul>
 <h2 id="definition">Definition</h2>
-<p>Let <span class="math inline">T</span> be C together with <span class="math inline">\Box</span>Atomlessness, <span class="math inline">\Box I^*_e</span> and the negation of BF at type <span class="math inline">t</span>, a recursively axiomatized theory. <span class="math inline">T</span> holds in finite-support-monotone-maps, which is atomless, fails BF at type <span class="math inline">t</span>, and has infinitely many individuals and the standard numerals as its numbers at <span class="math inline">e</span> (the property of being a numeral is pinned down by <span class="math inline">\emptyset</span>); it has one object, so its boxes are idle. So <span class="math inline">T</span> is consistent, by soundness. <span class="math inline">T</span> proves <span class="math inline">I^*_e</span>, and so the Peano axioms for its numbers at <span class="math inline">e</span>, so by Gödel’s second incompleteness theorem <span class="math inline">T+\neg\operatorname{Con}(T)</span> is consistent, and by the completeness of action models for C (Classicism, Theorem 3.23: every formula consistent with C holds at some world of some action model) it holds at an object <span class="math inline">V_2</span> of some action model. The single component is that model cut down to the objects reachable from <span class="math inline">V_2</span>, so that every closed sentence keeps its truth value at each object. The root <span class="math inline">W_0</span> is built over it exactly as in coalesced-pinned-substitutions-root: an arrow <span class="math inline">\langle V,I\rangle</span> into each object <span class="math inline">V</span> of the component for each interpretation <span class="math inline">I</span> of <span class="math inline">\Sigma^+</span> there, and an arrow from <span class="math inline">W_0</span> to itself for each type-preserving map of the constants of <span class="math inline">\Sigma^+</span>. Evaluation point: <span class="math inline">W_0</span>, at its identity arrow. Interpretation of Σ as there. The write-up’s argument that the root is a model of C does not use the completeness of the family of components, only that each is an action model of C.</p>
-<p>As for interpretation arrows, and the root has besides an arrow to itself for every type-preserving map of the signature’s constants to themselves, acting on the root’s individuals and composing with the interpretation arrows by precomposition.</p>
-<p>As in coalesced-pinned-substitutions-root, intensions over the arrows out of <span class="math inline">W_0</span> pinned down by a finite set of constants of <span class="math inline">\Sigma^+</span>, whose transports along the arrows into the component land in its domains.</p>
-<p><em>A member of the group Coalesced sums at a new root, which supplies this definition with the record’s settings, and the arguments marked as shared.</em></p>
+<p>Let <span class="math inline">T</span> be C together with <span
+class="math inline">\Box</span>Atomlessness, <span
+class="math inline">\Box I^*_e</span> and the negation of BF at type
+<span class="math inline">t</span>, a recursively axiomatized theory.
+<span class="math inline">T</span> holds in
+finite-support-monotone-maps, which is atomless, fails BF at type <span
+class="math inline">t</span>, and has infinitely many individuals and
+the standard numerals as its numbers at <span
+class="math inline">e</span> (the property of being a numeral is pinned
+down by <span class="math inline">\emptyset</span>); it has one object,
+so its boxes are idle. So <span class="math inline">T</span> is
+consistent, by soundness. <span class="math inline">T</span> proves
+<span class="math inline">I^*_e</span>, and so the Peano axioms for its
+numbers at <span class="math inline">e</span>, so by Gödel’s second
+incompleteness theorem <span
+class="math inline">T+\neg\operatorname{Con}(T)</span> is consistent,
+and by the completeness of action models for C (Classicism, Theorem
+3.23: every formula consistent with C holds at some world of some action
+model) it holds at an object <span class="math inline">V_2</span> of
+some action model. The single component is that model cut down to the
+objects reachable from <span class="math inline">V_2</span>, so that
+every closed sentence keeps its truth value at each object. The root
+<span class="math inline">W_0</span> is built over it exactly as in
+coalesced-pinned-substitutions-root: an arrow <span
+class="math inline">\langle V,I\rangle</span> into each object <span
+class="math inline">V</span> of the component for each interpretation
+<span class="math inline">I</span> of <span
+class="math inline">\Sigma^+</span> there, and an arrow from <span
+class="math inline">W_0</span> to itself for each type-preserving map of
+the constants of <span class="math inline">\Sigma^+</span>. Evaluation
+point: <span class="math inline">W_0</span>, at its identity arrow.
+Interpretation of Σ as there. The write-up’s argument that the root is a
+model of C does not use the completeness of the family of components,
+only that each is an action model of C.</p>
+<p>As for interpretation arrows, and the root has besides an arrow to
+itself for every type-preserving map of the signature’s constants to
+themselves, acting on the root’s individuals and composing with the
+interpretation arrows by precomposition.</p>
+<p>As in coalesced-pinned-substitutions-root, intensions over the arrows
+out of <span class="math inline">W_0</span> pinned down by a finite set
+of constants of <span class="math inline">\Sigma^+</span>, whose
+transports along the arrows into the component land in its domains.</p>
+<p><em>A member of the group Coalesced sums at a new root, which
+supplies this definition with the record’s settings, and the arguments
+marked as shared.</em></p>
 <h2 id="arguments">Arguments</h2>
 <h3 id="holds-atomlessness-bf.">Holds □Atomlessness, BF.</h3>
-<p>The arrows out of <span class="math inline">W_0</span> end at <span class="math inline">W_0</span> (the maps of the constants) or at objects of the component, and a closed sentence holds at an arrow iff it holds at the identity of its target. At every object of the component Atomlessness holds, by <span class="math inline">\Box</span>Atomlessness at <span class="math inline">V_2</span>, the component being generated from <span class="math inline">V_2</span>. At <span class="math inline">W_0</span> it holds by the argument atomlessness of coalesced-pinned-substitutions-root, which uses of the components only that <span class="math inline">\top\ne\bot</span> at each of their objects: a possible <span class="math inline">p</span> pinned down by <span class="math inline">S</span> that contains a map is split by a fresh individual constant, and one that contains only arrows into the component by a fresh propositional constant sent to <span class="math inline">\top</span> or to <span class="math inline">\bot</span>. So <span class="math inline">\Box</span>Atomlessness holds. BF holds at every type by the argument barcan of that model, which uses only fresh constants.</p>
-<p><em>Address: <code>coalesced-pinned-substitutions-nonstandard-root#atomlessness</code>. By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for cheaply settled verdicts; audited by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-29.</em></p>
-<h3 id="holds-axiom-of-infinity-type-e.-fails-necessity-of-arithmetic-necessity-of-analysis-arithmetic-necessitism.">Holds Axiom of Infinity (type e). Fails Necessity of Arithmetic, Necessity of Analysis, Arithmetic Necessitism.</h3>
-<p>At type <span class="math inline">e</span>. <span class="math inline">W_0</span> is extensionally full at its identity: any set of tuples there is the extension of the entity with that value at every map of the constants and <span class="math inline">\bot</span> at every arrow into the component, pinned down by <span class="math inline">\emptyset</span> and landing. So the property with the numerals as its extension is an inductive property at <span class="math inline">W_0</span>, the numbers there are the standard numerals, and Sum and Prod are standard on them (a relation refuting a false instance is in the domain). The individuals at <span class="math inline">W_0</span> are the infinitely many individual constants, so distinct numerals are distinct there and <span class="math inline">I^*_e</span> holds at <span class="math inline">W_0</span>, and it holds throughout the component by <span class="math inline">\Box I^*_e</span> at <span class="math inline">V_2</span>; so <span class="math inline">\Box I^*_e</span> holds at <span class="math inline">W_0</span>. With <span class="math inline">A:=\operatorname{Con}(T)</span>, an arithmetical sentence, <span class="math inline">A</span> holds at <span class="math inline">W_0</span>, whose arithmetic is standard, and fails at <span class="math inline">V_2</span>; so neither <span class="math inline">\Box(I\to A)</span> nor <span class="math inline">\Box(I\to\neg A)</span> holds at <span class="math inline">W_0</span>, and the Necessity of Arithmetic fails. The Necessity of Analysis fails as in coalesced-two-extensional-arithmetics-root, with <span class="math inline">W_0</span> and <span class="math inline">V_2</span> for the two components: the Dedekind cuts over the numbers form a real number structure at each, every real number structure at a world is isomorphic to it, and <span class="math inline">\exists n\in N\,.\,\operatorname{Proof}_T(n,\bot)</span> is false in those at <span class="math inline">W_0</span> and true in those at <span class="math inline">V_2</span>. Arithmetic Necessitism fails by the inextensibility of <span class="math inline">\mathbb N_e</span>: let <span class="math inline">X:=\lambda x\, .\,\mathbb N x\land\neg\exists m\in\mathbb N\, .\,m&lt;x\land \operatorname{Proof}_T(m,\bot)</span>, a closed pure term. Each number at <span class="math inline">W_0</span> is a numeral <span class="math inline">\mathbf n</span>, and at every world <span class="math inline">X\mathbf n</span> holds, since under <span class="math inline">I^*_e</span> the numbers below <span class="math inline">\mathbf n</span> are the numerals below it and each <span class="math inline">\neg\operatorname{Proof}_T(\mathbf m,\bot)</span> is a true bounded sentence, <span class="math inline">T</span> being consistent. But at <span class="math inline">V_2</span> some number <span class="math inline">m</span> codes a proof of <span class="math inline">\bot</span> from <span class="math inline">T</span>, and <span class="math inline">\operatorname{Suc}m</span> is a number lacking <span class="math inline">X</span>; so <span class="math inline">\mathbb N_e\le X</span> fails. The Axiom of Infinity (type e) holds at <span class="math inline">W_0</span>: its finite cardinalities are the numerals, and none holds of the universal property, which has infinitely many instances there.</p>
-<p><em>Address: <code>coalesced-pinned-substitutions-nonstandard-root#arithmetic</code>. By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for cheaply settled verdicts; audited by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-29.</em></p>
+<p>The arrows out of <span class="math inline">W_0</span> end at <span
+class="math inline">W_0</span> (the maps of the constants) or at objects
+of the component, and a closed sentence holds at an arrow iff it holds
+at the identity of its target. At every object of the component
+Atomlessness holds, by <span class="math inline">\Box</span>Atomlessness
+at <span class="math inline">V_2</span>, the component being generated
+from <span class="math inline">V_2</span>. At <span
+class="math inline">W_0</span> it holds by the argument atomlessness of
+coalesced-pinned-substitutions-root, which uses of the components only
+that <span class="math inline">\top\ne\bot</span> at each of their
+objects: a possible <span class="math inline">p</span> pinned down by
+<span class="math inline">S</span> that contains a map is split by a
+fresh individual constant, and one that contains only arrows into the
+component by a fresh propositional constant sent to <span
+class="math inline">\top</span> or to <span
+class="math inline">\bot</span>. So <span
+class="math inline">\Box</span>Atomlessness holds. BF holds at every
+type by the argument barcan of that model, which uses only fresh
+constants.</p>
+<p><em>Address:
+<code>coalesced-pinned-substitutions-nonstandard-root#atomlessness</code>.
+By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for
+cheaply settled verdicts; audited by Claude Opus 5.5 (Anthropic),
+prompted by Cian Dorr, 2026-10-29.</em></p>
+<h3
+id="holds-axiom-of-infinity-type-e.-fails-necessity-of-arithmetic-necessity-of-analysis-arithmetic-necessitism.">Holds
+Axiom of Infinity (type e). Fails Necessity of Arithmetic, Necessity of
+Analysis, Arithmetic Necessitism.</h3>
+<p>At type <span class="math inline">e</span>. <span
+class="math inline">W_0</span> is extensionally full at its identity:
+any set of tuples there is the extension of the entity with that value
+at every map of the constants and <span class="math inline">\bot</span>
+at every arrow into the component, pinned down by <span
+class="math inline">\emptyset</span> and landing. So the property with
+the numerals as its extension is an inductive property at <span
+class="math inline">W_0</span>, the numbers there are the standard
+numerals, and Sum and Prod are standard on them (a relation refuting a
+false instance is in the domain). The individuals at <span
+class="math inline">W_0</span> are the infinitely many individual
+constants, so distinct numerals are distinct there and <span
+class="math inline">I^*_e</span> holds at <span
+class="math inline">W_0</span>, and it holds throughout the component by
+<span class="math inline">\Box I^*_e</span> at <span
+class="math inline">V_2</span>; so <span class="math inline">\Box
+I^*_e</span> holds at <span class="math inline">W_0</span>. With <span
+class="math inline">A:=\operatorname{Con}(T)</span>, an arithmetical
+sentence, <span class="math inline">A</span> holds at <span
+class="math inline">W_0</span>, whose arithmetic is standard, and fails
+at <span class="math inline">V_2</span>; so neither <span
+class="math inline">\Box(I\to A)</span> nor <span
+class="math inline">\Box(I\to\neg A)</span> holds at <span
+class="math inline">W_0</span>, and the Necessity of Arithmetic fails.
+The Necessity of Analysis fails as in
+coalesced-two-extensional-arithmetics-root, with <span
+class="math inline">W_0</span> and <span class="math inline">V_2</span>
+for the two components: the Dedekind cuts over the numbers form a real
+number structure at each, every real number structure at a world is
+isomorphic to it, and <span class="math inline">\exists n\in
+N\,.\,\operatorname{Proof}_T(n,\bot)</span> is false in those at <span
+class="math inline">W_0</span> and true in those at <span
+class="math inline">V_2</span>. Arithmetic Necessitism fails by the
+inextensibility of <span class="math inline">\mathbb N_e</span>: let
+<span class="math inline">X:=\lambda x\, .\,\mathbb N x\land\neg\exists
+m\in\mathbb N\, .\,m&lt;x\land \operatorname{Proof}_T(m,\bot)</span>, a
+closed pure term. Each number at <span class="math inline">W_0</span> is
+a numeral <span class="math inline">\mathbf n</span>, and at every world
+<span class="math inline">X\mathbf n</span> holds, since under <span
+class="math inline">I^*_e</span> the numbers below <span
+class="math inline">\mathbf n</span> are the numerals below it and each
+<span class="math inline">\neg\operatorname{Proof}_T(\mathbf
+m,\bot)</span> is a true bounded sentence, <span
+class="math inline">T</span> being consistent. But at <span
+class="math inline">V_2</span> some number <span
+class="math inline">m</span> codes a proof of <span
+class="math inline">\bot</span> from <span class="math inline">T</span>,
+and <span class="math inline">\operatorname{Suc}m</span> is a number
+lacking <span class="math inline">X</span>; so <span
+class="math inline">\mathbb N_e\le X</span> fails. The Axiom of Infinity
+(type e) holds at <span class="math inline">W_0</span>: its finite
+cardinalities are the numerals, and none holds of the universal
+property, which has infinitely many instances there.</p>
+<p><em>Address:
+<code>coalesced-pinned-substitutions-nonstandard-root#arithmetic</code>.
+By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for
+cheaply settled verdicts; audited by Claude Opus 5.5 (Anthropic),
+prompted by Cian Dorr, 2026-10-29.</em></p>
 <h3 id="fails-bf-type-t.">Fails □BF (type t).</h3>
-<p>BF at type <span class="math inline">t</span> is a closed pure sentence false at <span class="math inline">V_2</span>, an object reachable from <span class="math inline">W_0</span>. With BF at <span class="math inline">W_0</span>, the recorded result that Tame Rigidity and BF (type t) give <span class="math inline">\Box</span>BF (type t) makes Tame Rigidity fail at the root.</p>
-<p><em>Address: <code>coalesced-pinned-substitutions-nonstandard-root#bf-component</code>. By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for cheaply settled verdicts; audited by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-29.</em></p>
-<h3 id="holds-two-hat-necessities-are-nd-necessary-5-necessities-are-two-hat-necessary.-fails-vicinity-weakly-inextensible-comprehension-boolean-completeness-type-t-truths-are-5-necessary.">Holds Two-hat necessities are ND-necessary, 5-necessities are two-hat necessary. Fails Vicinity, Weakly Inextensible Comprehension, Boolean Completeness (type t), Truths are 5-necessary.</h3>
-<p>The arguments as-in-all-maps and collapse-at-root of coalesced-pinned-substitutions-root apply unchanged. They use the maps of the constants and propositions and properties containing no arrow into a component, whose transports there are <span class="math inline">\bot</span> and land, together with the fact that no composite of an arrow into a component with anything is a map; none of this depends on which action models the components are. For Vicinity, the worlds seen from a map <span class="math inline">f</span> collapsing two individual constants <span class="math inline">c,d</span> are the maps <span class="math inline">g\circ f</span> and the arrows <span class="math inline">\langle V,I\circ f\rangle</span>, all of which identify them.</p>
-<p><em>Address: <code>coalesced-pinned-substitutions-nonstandard-root#as-in-pinned-substitutions</code>. By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for cheaply settled verdicts; audited by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-29.</em></p>
+<p>BF at type <span class="math inline">t</span> is a closed pure
+sentence false at <span class="math inline">V_2</span>, an object
+reachable from <span class="math inline">W_0</span>. With BF at <span
+class="math inline">W_0</span>, the recorded result that Tame Rigidity
+and BF (type t) give <span class="math inline">\Box</span>BF (type t)
+makes Tame Rigidity fail at the root.</p>
+<p><em>Address:
+<code>coalesced-pinned-substitutions-nonstandard-root#bf-component</code>.
+By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for
+cheaply settled verdicts; audited by Claude Opus 5.5 (Anthropic),
+prompted by Cian Dorr, 2026-10-29.</em></p>
+<h3
+id="holds-two-hat-necessities-are-nd-necessary-5-necessities-are-two-hat-necessary.-fails-vicinity-weakly-inextensible-comprehension-boolean-completeness-type-t-truths-are-5-necessary.">Holds
+Two-hat necessities are ND-necessary, 5-necessities are two-hat
+necessary. Fails Vicinity, Weakly Inextensible Comprehension, Boolean
+Completeness (type t), Truths are 5-necessary.</h3>
+<p>The arguments as-in-all-maps and collapse-at-root of
+coalesced-pinned-substitutions-root apply unchanged. They use the maps
+of the constants and propositions and properties containing no arrow
+into a component, whose transports there are <span
+class="math inline">\bot</span> and land, together with the fact that no
+composite of an arrow into a component with anything is a map; none of
+this depends on which action models the components are. For Vicinity,
+the worlds seen from a map <span class="math inline">f</span> collapsing
+two individual constants <span class="math inline">c,d</span> are the
+maps <span class="math inline">g\circ f</span> and the arrows <span
+class="math inline">\langle V,I\circ f\rangle</span>, all of which
+identify them.</p>
+<p><em>Address:
+<code>coalesced-pinned-substitutions-nonstandard-root#as-in-pinned-substitutions</code>.
+By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for
+cheaply settled verdicts; audited by Claude Opus 5.5 (Anthropic),
+prompted by Cian Dorr, 2026-10-29.</em></p>
 <h3 id="holds-transversal-choice.">Holds Transversal Choice.</h3>
-<p>As in coalesced-pinned-substitutions-root, by the general argument transversal-choice-extensionally-full applied at the root alone: any set of tuples at the identity is the extension there of the entity with that value at every map of the constants and empty at every arrow into the component, pinned down by <span class="math inline">\emptyset</span> and landing.</p>
-<p><em>By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for cheaply settled verdicts; audited by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-29.</em></p>
+<p>As in coalesced-pinned-substitutions-root, by the general argument
+transversal-choice-extensionally-full applied at the root alone: any set
+of tuples at the identity is the extension there of the entity with that
+value at every map of the constants and empty at every arrow into the
+component, pinned down by <span class="math inline">\emptyset</span> and
+landing.</p>
+<p><em>By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl
+for cheaply settled verdicts; audited by Claude Opus 5.5 (Anthropic),
+prompted by Cian Dorr, 2026-10-29.</em></p>
 <h2 id="notes">Notes</h2>
-<p>A variant of coalesced-pinned-substitutions-root proposed on 29 October 2026 in a trawl for the open questions created by □Atomlessness: the substitution arrows keep the root atomless, and the one component is atomless at every object but disagrees with the root about arithmetic and about BF. Audited by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 29 October 2026; it inherits the model-of-C argument of coalesced-pinned-substitutions-root, which has not had a second reader. No Lean verification is claimed.</p>
+<p>A variant of coalesced-pinned-substitutions-root proposed on 29
+October 2026 in a trawl for the open questions created by □Atomlessness:
+the substitution arrows keep the root atomless, and the one component is
+atomless at every object but disagrees with the root about arithmetic
+and about BF. Audited by Claude Opus 5.5 (Anthropic), prompted by Cian
+Dorr, 29 October 2026; it inherits the model-of-C argument of
+coalesced-pinned-substitutions-root, which has not had a second reader.
+No Lean verification is claimed.</p>
 <h2 id="sources">Sources</h2>
 <ul>
-<li><strong>Dorr 19 Oct</strong> — Cian Dorr, construction of 19 October 2026 (coalesced-pinned-substitutions-root), with Claude Opus 5.5 (Anthropic); the choice of component here by Claude Opus 5.5 (Anthropic), 29 October 2026.</li>
-<li><strong>Classicism</strong> — Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Theorem 3.23, §3.4, p. 57; Appendix D, Definitions D.1–D.3 and Proposition D.4, pp. 73–74; Appendix E, Definition E.2, pp. 80–83.</li>
+<li><strong>Dorr 19 Oct</strong> — Cian Dorr, construction of 19 October
+2026 (coalesced-pinned-substitutions-root), with Claude Opus 5.5
+(Anthropic); the choice of component here by Claude Opus 5.5
+(Anthropic), 29 October 2026.</li>
+<li><strong>Classicism</strong> — Andrew Bacon and Cian Dorr,
+Classicism, draft of 16 May 2023, Theorem 3.23, §3.4, p. 57; Appendix D,
+Definitions D.1–D.3 and Proposition D.4, pp. 73–74; Appendix E,
+Definition E.2, pp. 80–83.</li>
 </ul>
 <p class="cert">
-Record: <code>topics/classicism/models/coalesced-pinned-substitutions-nonstandard-root.yaml</code>
+Record:
+<code>topics/classicism/models/coalesced-pinned-substitutions-nonstandard-root.yaml</code>
 </p>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds), Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated 16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition and footnote locators in this map refer to that draft’s numbering. — Theorem 3.23, §3.4, p. 57; Appendix D, pp. 73–74; Appendix E, pp. 80–83. Soundness and completeness of action models for C (Theorem 3.23) supply the consistency of T and the component; the root is pinned down by finite sets of constants as in coalesced-pinned-substitutions-root.</li>
+<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian
+Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds),
+Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map
+was built from the draft dated 16 May 2023, 87 pages, which does not
+differ materially from the published version; all page, proposition and
+footnote locators in this map refer to that draft’s numbering. — Theorem
+3.23, §3.4, p. 57; Appendix D, pp. 73–74; Appendix E, pp. 80–83.
+Soundness and completeness of action models for C (Theorem 3.23) supply
+the consistency of T and the component; the root is pinned down by
+finite sets of constants as in coalesced-pinned-substitutions-root.</li>
 </ul>
 </body></html>

@@ -14,9 +14,12 @@ sources:
   symmetric-infinite-classes (Cian Dorr, 27 September 2026).
 - Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, §3 (symmetric
   ideally-full models).
+- GPT-6 Astra, prompted by Daniel Kodsi, Full SOAN in the original permutation-class model,
+  30 October 2026, sections 1–7 (unpaginated); proof in [proof](../writeups/symmetric-permutations-infinite-classes-analysis.md).
 source_names:
 - Opus 29 Oct
 - BC does not imply RC
+- Astra and Kodsi 30 Oct
 references:
 - paper: dorr-bc-not-rc
   role: background
@@ -142,6 +145,23 @@ arguments:
     $g\cdot Y$ is a member too and $I$ assigns it the cardinality it assigns $Y$; so $g\cdot Y=Y$, and every
     member is pinned down by $N$. Their union, taken arrow by arrow, is then symmetric and pinned down by
     $N$, so in the domain, and it is the least upper bound, the order being inclusion of intensions.
+
+- id: second-order-analytic-necessitism-same-carrier
+  holds: [second-order-analytic-necessitism]
+  when: {sigma: top}
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  text: >-
+    For either recorded individual setting, every possible real field at a fixed
+    carrier type gives a current one. The admitted all-solution numeral and rational-cut
+    profiles make it externally standard. Its finite parameter pin fixes every carrier
+    member under designated symmetries; the model's stabilizer-generation lemma then
+    gives a single pin for those members under all arrows. Direct-image field profiles
+    and whole represented-power families are therefore admitted, rigid, and represent
+    every target relation at every future arrow, at that same carrier type.
+    See [proof](../writeups/symmetric-permutations-infinite-classes-analysis.md), sections 1–4.
+    This uses ambient ZFC and establishes full SOAN in the base and singleton variants.
+    The existing negative Transversal argument remains restricted to base individuals.
 
 notes: >-
   With all surjections as arrows this is symmetric-infinite-classes. Separates C5 from Transversal (and so from Transversal Choice and Actuality, which implies Transversal):

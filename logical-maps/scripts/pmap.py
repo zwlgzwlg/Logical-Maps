@@ -3433,6 +3433,94 @@ def lean_source_links(topic_id: str, data: dict) -> dict | None:
 LYNCHPIN_ID_FIELDS = ("premises", "premise_sets", "conclusion", "conclusions", "principle", "model")
 
 
+# PMAP_LOSSLESS_TABLE_CODEC_V1
+import base64 as _pmap_base64
+_PMAP_LZW_ENCODING = 'pmap-lzw16le-v1'
+
+def _pmap_lzw_compress(raw: bytes) -> bytes:
+    table = {bytes([i]): i for i in range(256)}
+    next_code = 258
+    result = bytearray((0, 1))  # CLEAR
+    word = b''
+    for value in raw:
+        char = bytes([value])
+        combined = word + char
+        if combined in table:
+            word = combined
+            continue
+        code = table[word]
+        result.extend((code & 255, code >> 8))
+        if next_code < 65536:
+            table[combined] = next_code
+            next_code += 1
+        else:
+            result.extend((0, 1))
+            table = {bytes([i]): i for i in range(256)}
+            next_code = 258
+        word = char
+    if word:
+        code = table[word]
+        result.extend((code & 255, code >> 8))
+    result.extend((1, 1))  # END
+    return bytes(result)
+
+
+def _pmap_lzw_decompress(packed: bytes, expected_size: int) -> bytes:
+    if len(packed) % 2 or packed[:2] != b'\x00\x01':
+        raise ValueError('Invalid LZW stream header or length')
+    table = [bytes([i]) for i in range(256)] + [None, None]
+    previous = None
+    output = bytearray()
+    ended = False
+    for offset in range(0, len(packed), 2):
+        code = packed[offset] | (packed[offset + 1] << 8)
+        if code == 256:
+            table = [bytes([i]) for i in range(256)] + [None, None]
+            previous = None
+            continue
+        if code == 257:
+            if offset + 2 != len(packed):
+                raise ValueError('Trailing compressed data')
+            ended = True
+            break
+        if code < len(table) and table[code] is not None:
+            entry = table[code]
+        elif code == len(table) and previous is not None:
+            entry = previous + previous[:1]
+        else:
+            raise ValueError('Invalid LZW dictionary reference')
+        output.extend(entry)
+        if len(output) > expected_size:
+            raise ValueError('Decoded data exceeds declared size')
+        if previous is not None and len(table) < 65536:
+            table.append(previous + entry[:1])
+        previous = entry
+    if not ended or len(output) != expected_size:
+        raise ValueError('Incomplete LZW stream or incorrect decoded size')
+    return bytes(output)
+
+
+def _pmap_pack_large_table(value):
+    raw = json.dumps(value, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode('utf-8')
+    if len(raw) < 1024 * 1024:
+        return value
+    compressed = _pmap_lzw_compress(raw)
+    if _pmap_lzw_decompress(compressed, len(raw)) != raw:
+        raise ValueError('Lossless round-trip check failed')
+    result = {'encoding': _PMAP_LZW_ENCODING, 'bytes': len(raw),
+              'data': _pmap_base64.b64encode(compressed).decode('ascii')}
+    if len(json.dumps(result, separators=(',', ':')).encode()) >= len(raw):
+        return value
+    return result
+
+
+def _pmap_unpack_large_table(value):
+    if not isinstance(value, dict) or value.get('encoding') != _PMAP_LZW_ENCODING:
+        return value
+    raw = _pmap_lzw_decompress(_pmap_base64.b64decode(value['data'], validate=True), value['bytes'])
+    return json.loads(raw.decode('utf-8'))
+
+
 def compact_viewer_payload(payload: dict) -> dict:
     """The payload as the viewer receives it (data.json and the page), encoded to fit the website
     host's 25 MiB limit per file; `decodePayload` in viewer/template.html restores it exactly.
@@ -3489,6 +3577,10 @@ def compact_viewer_payload(payload: dict) -> dict:
                 {"$ref": ref[k]} if (k := json.dumps(a, sort_keys=True, ensure_ascii=False)) in ref else a
                 for a in m["arguments"]]} if m.get("arguments") else m
             for m in payload.get("models", [])]
+    # Losslessly encode large generated statistics; retain all mathematical records.
+    for field in ('lynchpins', 'progress'):
+        if field in out:
+            out[field] = _pmap_pack_large_table(out[field])
     return out
 
 

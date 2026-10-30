@@ -1,0 +1,26 @@
+id: vicinity-and-truth-implies-five-necessity-imply-actuality
+premises: [vicinity, truth-implies-five-necessity]
+conclusion: actuality
+status: proved
+certificate:
+  source_id: misc
+  produced_by: Christopher Sun (the 5-necessity form of Vicinity, 19 October 2026);
+    consequence by GPT-6 Astra, prompted by Daniel Kodsi, 30 October 2026
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi, 30 October 2026
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- Christopher Sun, argument sent to Cian Dorr on 19 October 2026, recorded in the five-necessity equivalent
+  form of Vicinity, unpaginated.
+- 'GPT-6 Astra, prompted by Daniel Kodsi, Recovered rule: Vicinity and truth-to-5 necessity imply Actuality,
+  30 October 2026, displayed rule and proof, unpaginated.'
+source_names: [Sun 19 Oct, Vicinity consequence 30 Oct]
+proof: >-
+  By Sun's recorded 5-necessity form of Vicinity, take a true $v$ with
+  $\forall q\, .\,\Box_5q\to v\le q$. The other current premise gives $q\to\Box_5q$
+  for every proposition $q$. Hence $\forall q\, .\,q\to v\le q$, and the same true $v$
+  witnesses Actuality. No optional premise is necessitated.
+notes: >-
+  This is a direct consequence of the existing equivalent form, with no Maximalism premise.
+  No boxed version or separately duplicated stronger ND-necessity corollary is added.

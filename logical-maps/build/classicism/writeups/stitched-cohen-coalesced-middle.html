@@ -322,103 +322,332 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <link rel="stylesheet" href="../math/katex.min.css">
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
-<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Stitched Cohen model with a coalesced middle world</h1></header><p>The construction and verification are by GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, in a research note of 22 October 2026 that is listed in Daniel Kodsi’s pull request #18. OpenAI Codex (GPT-6) integrated it, also prompted by Daniel Kodsi, in his pull request #21 of 28 October 2026. Claude Fable 5.1 (Anthropic), prompted by Cian Dorr, audited it on 29 October 2026; the forcing lemma and its proofs below follow that audit. Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, wrote this version for the map.</p>
-<p>At its evaluation point <span class="math inline">r</span>, the model satisfies:</p>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Stitched Cohen model with a coalesced middle world</h1></header><p>The construction and verification are by GPT-6 Astra (OpenAI),
+prompted by Daniel Kodsi, in a research note of 22 October 2026 that is
+listed in Daniel Kodsi’s pull request #18. OpenAI Codex (GPT-6)
+integrated it, also prompted by Daniel Kodsi, in his pull request #21 of
+28 October 2026. Claude Fable 5.1 (Anthropic), prompted by Cian Dorr,
+audited it on 29 October 2026; the forcing lemma and its proofs below
+follow that audit. Claude Opus 5.5 (Anthropic), prompted by Cian Dorr,
+wrote this version for the map.</p>
+<p>At its evaluation point <span class="math inline">r</span>, the model
+satisfies:</p>
 <ul>
-<li>Rigid Comprehension at every relational type, with any argument types;</li>
-<li>□Strong Atomicity (type <span class="math inline">t</span>), and so □Actuality;</li>
-<li>□BF (type <span class="math inline">t</span>), and BF at type <span class="math inline">e</span>;</li>
+<li>Rigid Comprehension at every relational type, with any argument
+types;</li>
+<li>□Strong Atomicity (type <span class="math inline">t</span>), and so
+□Actuality;</li>
+<li>□BF (type <span class="math inline">t</span>), and BF at type <span
+class="math inline">e</span>;</li>
 <li>□Relational Choice;</li>
-<li>□Boolean Completeness (type <span class="math inline">t</span>).</li>
+<li>□Boolean Completeness (type <span
+class="math inline">t</span>).</li>
 </ul>
 <p>It fails:</p>
 <ul>
-<li>□Rigid Comprehension, □Weak Rigid Comprehension and □Boolean Completeness, each at type <span class="math inline">et</span>;</li>
-<li>BF at type <span class="math inline">et</span>, and so BF at relational types;</li>
+<li>□Rigid Comprehension, □Weak Rigid Comprehension and □Boolean
+Completeness, each at type <span class="math inline">et</span>;</li>
+<li>BF at type <span class="math inline">et</span>, and so BF at
+relational types;</li>
 <li>Atomicity at type <span class="math inline">(et)t</span>;</li>
 <li>ND at type <span class="math inline">t</span>.</li>
 </ul>
-<p>The model’s purpose is to bound [[strong-atomicity-t-rigid-comprehension-and-barcan-relational-imply-necessary-rigid-comprehension]]. That result’s premise, BF at relational types, cannot be weakened to □BF (type <span class="math inline">t</span>), even with the additions listed above.</p>
+<p>The model’s purpose is to bound
+[[strong-atomicity-t-rigid-comprehension-and-barcan-relational-imply-necessary-rigid-comprehension]].
+That result’s premise, BF at relational types, cannot be weakened to □BF
+(type <span class="math inline">t</span>), even with the additions
+listed above.</p>
 <h2 id="the-construction">The construction</h2>
-<p><strong>Metatheory.</strong> Let <span class="math inline">V</span> be a model of ZFC, let <span class="math inline">\mathbb P</span> be Cohen forcing, and let <span class="math inline">G</span> be <span class="math inline">\mathbb P</span>-generic over <span class="math inline">V</span>, with Cohen real <span class="math inline">c\subseteq\mathbb N</span>. The model is a structure in <span class="math inline">V[G]</span>, as in the stitched forcing models.</p>
-<p><strong>The category.</strong> There are four objects: <span class="math inline">r</span>, <span class="math inline">s</span>, <span class="math inline">A</span> and <span class="math inline">B</span>. Besides the identities, the arrows are <span class="math inline">h\colon r\to s</span>, <span class="math inline">a\colon s\to A</span>, <span class="math inline">b\colon s\to B</span>, and the composites <span class="math inline">ah</span> and <span class="math inline">bh</span>. Every set of arrows out of an object is a proposition, so there are sixteen propositions at <span class="math inline">r</span>, eight at <span class="math inline">s</span>, and two at each of <span class="math inline">A</span> and <span class="math inline">B</span>.</p>
+<p><strong>Metatheory.</strong> Let <span class="math inline">V</span>
+be a model of ZFC, let <span class="math inline">\mathbb P</span> be
+Cohen forcing, and let <span class="math inline">G</span> be <span
+class="math inline">\mathbb P</span>-generic over <span
+class="math inline">V</span>, with Cohen real <span
+class="math inline">c\subseteq\mathbb N</span>. The model is a structure
+in <span class="math inline">V[G]</span>, as in the stitched forcing
+models.</p>
+<p><strong>The category.</strong> There are four objects: <span
+class="math inline">r</span>, <span class="math inline">s</span>, <span
+class="math inline">A</span> and <span class="math inline">B</span>.
+Besides the identities, the arrows are <span class="math inline">h\colon
+r\to s</span>, <span class="math inline">a\colon s\to A</span>, <span
+class="math inline">b\colon s\to B</span>, and the composites <span
+class="math inline">ah</span> and <span class="math inline">bh</span>.
+Every set of arrows out of an object is a proposition, so there are
+sixteen propositions at <span class="math inline">r</span>, eight at
+<span class="math inline">s</span>, and two at each of <span
+class="math inline">A</span> and <span class="math inline">B</span>.</p>
 <p><strong>The terminals.</strong></p>
 <ul>
-<li><span class="math inline">A</span> is the full extensional one-world hierarchy over <span class="math inline">\mathbb N</span> built in <span class="math inline">V</span>.</li>
-<li><span class="math inline">B</span> is the same hierarchy built in <span class="math inline">V[G]</span>.</li>
+<li><span class="math inline">A</span> is the full extensional one-world
+hierarchy over <span class="math inline">\mathbb N</span> built in <span
+class="math inline">V</span>.</li>
+<li><span class="math inline">B</span> is the same hierarchy built in
+<span class="math inline">V[G]</span>.</li>
 </ul>
-<p><strong>The middle world <span class="math inline">s</span>.</strong> It is the coalesced sum of <span class="math inline">A</span> and <span class="math inline">B</span>, with the fullest domains.</p>
+<p><strong>The middle world <span class="math inline">s</span>.</strong>
+It is the coalesced sum of <span class="math inline">A</span> and <span
+class="math inline">B</span>, with the fullest domains.</p>
 <ul>
-<li>Its individuals are <span class="math inline">\mathbb N\times\mathbb N</span>, and <span class="math inline">a</span> and <span class="math inline">b</span> act on them as the two projections.</li>
-<li>At a relational type <span class="math inline">\tau=\bar\sigma t</span>, <span class="math inline">D_{s,\tau}=\mathcal P^{V[G]}(D_{s,\bar\sigma})\times D_{A,\tau}\times D_{B,\tau}</span>.</li>
-<li>An entity <span class="math inline">(F_s,F_A,F_B)</span> applied to an argument <span class="math inline">\bar x</span> gives the proposition <span class="math inline">(\bar x\in F_s,\ a\bar x\in F_A,\ b\bar x\in F_B)</span>.</li>
+<li>Its individuals are <span class="math inline">\mathbb N\times\mathbb
+N</span>, and <span class="math inline">a</span> and <span
+class="math inline">b</span> act on them as the two projections.</li>
+<li>At a relational type <span class="math inline">\tau=\bar\sigma
+t</span>, <span class="math inline">D_{s,\tau}=\mathcal
+P^{V[G]}(D_{s,\bar\sigma})\times D_{A,\tau}\times
+D_{B,\tau}</span>.</li>
+<li>An entity <span class="math inline">(F_s,F_A,F_B)</span> applied to
+an argument <span class="math inline">\bar x</span> gives the
+proposition <span class="math inline">(\bar x\in F_s,\ a\bar x\in F_A,\
+b\bar x\in F_B)</span>.</li>
 </ul>
-<p><strong>The root <span class="math inline">r</span>.</strong> It has the same individuals as <span class="math inline">s</span>, and <span class="math inline">h</span> is the identity on them. Call a <span class="math inline">\mathbb P</span>-name <span class="math inline">u</span> <em>invariant</em> if <span class="math inline">1</span> forces <span class="math inline">u</span> to be an element of <span class="math inline">D_{s,\tau}</span> fixed by every finite bit-flip of the Cohen real. Let <span class="math inline">Q_\tau</span> be the set in <span class="math inline">V</span> of invariant names, taken up to equality forced by <span class="math inline">1</span>. Then <span class="math inline">D_{r,\tau}=\mathcal P^V(D_{r,\bar\sigma})\times Q_\tau</span>, and every pair is admitted. An entity <span class="math inline">(E,[u])</span> has extension <span class="math inline">E</span> at <span class="math inline">r</span> and transport <span class="math inline">u^G</span> along <span class="math inline">h</span>.</p>
-<p>This is Barton and Goodsell’s stitching (Continuum Contingency, §8, Definition 1, with trivial group) of a ground-model root onto the coalesced sum, with one change: elements definable in <span class="math inline">V[G]</span> from ground parameters are replaced by invariantly named ones. The second class is strictly larger. For example, the set of finite modifications of <span class="math inline">c</span> has an invariant name but is not ground-definable. Every argument below works for either class.</p>
+<p><strong>The root <span class="math inline">r</span>.</strong> It has
+the same individuals as <span class="math inline">s</span>, and <span
+class="math inline">h</span> is the identity on them. Call a <span
+class="math inline">\mathbb P</span>-name <span
+class="math inline">u</span> <em>invariant</em> if <span
+class="math inline">1</span> forces <span class="math inline">u</span>
+to be an element of <span class="math inline">D_{s,\tau}</span> fixed by
+every finite bit-flip of the Cohen real. Let <span
+class="math inline">Q_\tau</span> be the set in <span
+class="math inline">V</span> of invariant names, taken up to equality
+forced by <span class="math inline">1</span>. Then <span
+class="math inline">D_{r,\tau}=\mathcal P^V(D_{r,\bar\sigma})\times
+Q_\tau</span>, and every pair is admitted. An entity <span
+class="math inline">(E,[u])</span> has extension <span
+class="math inline">E</span> at <span class="math inline">r</span> and
+transport <span class="math inline">u^G</span> along <span
+class="math inline">h</span>.</p>
+<p>This is Barton and Goodsell’s stitching (Continuum Contingency, §8,
+Definition 1, with trivial group) of a ground-model root onto the
+coalesced sum, with one change: elements definable in <span
+class="math inline">V[G]</span> from ground parameters are replaced by
+invariantly named ones. The second class is strictly larger. For
+example, the set of finite modifications of <span
+class="math inline">c</span> has an invariant name but is not
+ground-definable. Every argument below works for either class.</p>
 <h2 id="the-forcing-lemma">The forcing lemma</h2>
-<p>Cohen forcing is weakly homogeneous under finite bit-flips: for any two conditions, some bit-flip makes the first compatible with the second. An <em>invariant sentence</em> is a formula whose parameters are check-names and invariant names.</p>
+<p>Cohen forcing is weakly homogeneous under finite bit-flips: for any
+two conditions, some bit-flip makes the first compatible with the
+second. An <em>invariant sentence</em> is a formula whose parameters are
+check-names and invariant names.</p>
 <ol type="1">
-<li><strong>Invariant sentences are decided.</strong> If <span class="math inline">p\Vdash\varphi</span> and <span class="math inline">q\Vdash\neg\varphi</span>, flip <span class="math inline">p</span> to be compatible with <span class="math inline">q</span>; the flipped condition still forces <span class="math inline">\varphi</span>, which is a contradiction. So every invariant sentence is decided by <span class="math inline">1</span>.</li>
-<li><strong>Ground values.</strong> An invariant name forced into a ground set <span class="math inline">X</span> is forced equal to a unique element of <span class="math inline">X</span>. An invariant name forced to be a subset of <span class="math inline">X</span> names a set in <span class="math inline">V</span>.</li>
-<li><strong>Injectivity.</strong> For invariant names <span class="math inline">u</span> and <span class="math inline">u&#39;</span>, <span class="math inline">u^G=u&#39;^G</span> if and only if <span class="math inline">1\Vdash u=u&#39;</span>.</li>
-<li><strong>Closure.</strong> A name forced equal to a term in ground parameters and invariant names is invariant.</li>
+<li><strong>Invariant sentences are decided.</strong> If <span
+class="math inline">p\Vdash\varphi</span> and <span
+class="math inline">q\Vdash\neg\varphi</span>, flip <span
+class="math inline">p</span> to be compatible with <span
+class="math inline">q</span>; the flipped condition still forces <span
+class="math inline">\varphi</span>, which is a contradiction. So every
+invariant sentence is decided by <span
+class="math inline">1</span>.</li>
+<li><strong>Ground values.</strong> An invariant name forced into a
+ground set <span class="math inline">X</span> is forced equal to a
+unique element of <span class="math inline">X</span>. An invariant name
+forced to be a subset of <span class="math inline">X</span> names a set
+in <span class="math inline">V</span>.</li>
+<li><strong>Injectivity.</strong> For invariant names <span
+class="math inline">u</span> and <span
+class="math inline">u&#39;</span>, <span
+class="math inline">u^G=u&#39;^G</span> if and only if <span
+class="math inline">1\Vdash u=u&#39;</span>.</li>
+<li><strong>Closure.</strong> A name forced equal to a term in ground
+parameters and invariant names is invariant.</li>
 </ol>
-<p>The structure at <span class="math inline">s</span>, and the whole model, have invariant names, since they are forced equal to terms in ground parameters. So the truth at <span class="math inline">r</span> of any formula with root parameters is decided by <span class="math inline">1</span>. In particular, the root extension of a term is a set in <span class="math inline">V</span>, and its transport has an invariant name. A ground set of representatives for each <span class="math inline">Q_\tau</span> exists by the usual mixing argument.</p>
-<p><strong>Image lemma.</strong> Let <span class="math inline">E</span> be a ground set of root tuples, and let <span class="math inline">hE</span> be the set of their images at <span class="math inline">s</span>.</p>
+<p>The structure at <span class="math inline">s</span>, and the whole
+model, have invariant names, since they are forced equal to terms in
+ground parameters. So the truth at <span class="math inline">r</span> of
+any formula with root parameters is decided by <span
+class="math inline">1</span>. In particular, the root extension of a
+term is a set in <span class="math inline">V</span>, and its transport
+has an invariant name. A ground set of representatives for each <span
+class="math inline">Q_\tau</span> exists by the usual mixing
+argument.</p>
+<p><strong>Image lemma.</strong> Let <span class="math inline">E</span>
+be a ground set of root tuples, and let <span
+class="math inline">hE</span> be the set of their images at <span
+class="math inline">s</span>.</p>
 <ul>
 <li><span class="math inline">hE</span> has an invariant name.</li>
-<li>Each component of a tuple of <span class="math inline">E</span> has, as its <span class="math inline">A</span>-projection, an invariant name forced into a ground set. By (2) that projection is a value computed in <span class="math inline">V</span>, so <span class="math inline">a(hE)</span> is a ground set.</li>
-<li><span class="math inline">b(hE)</span> is in <span class="math inline">B</span>, which is full in <span class="math inline">V[G]</span>.</li>
+<li>Each component of a tuple of <span class="math inline">E</span> has,
+as its <span class="math inline">A</span>-projection, an invariant name
+forced into a ground set. By (2) that projection is a value computed in
+<span class="math inline">V</span>, so <span
+class="math inline">a(hE)</span> is a ground set.</li>
+<li><span class="math inline">b(hE)</span> is in <span
+class="math inline">B</span>, which is full in <span
+class="math inline">V[G]</span>.</li>
 </ul>
-<p>So <span class="math inline">R_E:=(hE,a(hE),b(hE))</span> is in <span class="math inline">D_{s,\bar\sigma t}</span> with an invariant name, and <span class="math inline">Y_E:=(E,[R_E])</span> is a root entity.</p>
-<p><strong>The obstruction.</strong> By (2), the image of <span class="math inline">D_{r,et}</span> at <span class="math inline">s</span> is exactly <span class="math inline">\mathcal P^V(\mathbb N\times\mathbb N)\times\mathcal P^V(\mathbb N)\times\mathcal P^V(\mathbb N)</span>. So <span class="math inline">X:=(c\times\{0\},\varnothing,\varnothing)</span>, which lies in <span class="math inline">D_{s,et}</span>, is not the image of any root entity.</p>
+<p>So <span class="math inline">R_E:=(hE,a(hE),b(hE))</span> is in <span
+class="math inline">D_{s,\bar\sigma t}</span> with an invariant name,
+and <span class="math inline">Y_E:=(E,[R_E])</span> is a root
+entity.</p>
+<p><strong>The obstruction.</strong> By (2), the image of <span
+class="math inline">D_{r,et}</span> at <span
+class="math inline">s</span> is exactly <span
+class="math inline">\mathcal P^V(\mathbb N\times\mathbb N)\times\mathcal
+P^V(\mathbb N)\times\mathcal P^V(\mathbb N)</span>. So <span
+class="math inline">X:=(c\times\{0\},\varnothing,\varnothing)</span>,
+which lies in <span class="math inline">D_{s,et}</span>, is not the
+image of any root entity.</p>
 <h2 id="it-is-a-model-of-c">It is a model of C</h2>
 <ul>
-<li><strong>At <span class="math inline">A</span>.</strong> The model sits in <span class="math inline">V[G]</span>, but <span class="math inline">A</span> is a one-world structure built in <span class="math inline">V</span>. The interpretation of a term in <span class="math inline">A</span> is computed by recursion within <span class="math inline">A</span>, so it is absolute and stays in <span class="math inline">A</span>’s domains.</li>
-<li><strong>At <span class="math inline">s</span>.</strong> The domains are the fullest ones, so an abstraction’s <span class="math inline">s</span>-extension is just some subset in <span class="math inline">V[G]</span>. Its terminal components are the interpretations in <span class="math inline">A</span> and <span class="math inline">B</span>, and application commutes with <span class="math inline">a</span> and <span class="math inline">b</span>.</li>
-<li><strong>At <span class="math inline">r</span>.</strong> An abstraction with root parameters has a ground root extension and an invariant transport, by the forcing lemma. Equality of root entities is equality of profiles, by (3).</li>
+<li><strong>At <span class="math inline">A</span>.</strong> The model
+sits in <span class="math inline">V[G]</span>, but <span
+class="math inline">A</span> is a one-world structure built in <span
+class="math inline">V</span>. The interpretation of a term in <span
+class="math inline">A</span> is computed by recursion within <span
+class="math inline">A</span>, so it is absolute and stays in <span
+class="math inline">A</span>’s domains.</li>
+<li><strong>At <span class="math inline">s</span>.</strong> The domains
+are the fullest ones, so an abstraction’s <span
+class="math inline">s</span>-extension is just some subset in <span
+class="math inline">V[G]</span>. Its terminal components are the
+interpretations in <span class="math inline">A</span> and <span
+class="math inline">B</span>, and application commutes with <span
+class="math inline">a</span> and <span
+class="math inline">b</span>.</li>
+<li><strong>At <span class="math inline">r</span>.</strong> An
+abstraction with root parameters has a ground root extension and an
+invariant transport, by the forcing lemma. Equality of root entities is
+equality of profiles, by (3).</li>
 </ul>
-<h2 id="verdicts-at-r">Verdicts at <span class="math inline">r</span></h2>
+<h2 id="verdicts-at-r">Verdicts at <span
+class="math inline">r</span></h2>
 <ul>
-<li><strong>Rigid Comprehension.</strong> Given <span class="math inline">(E,[u])</span>, the entity <span class="math inline">Y_E</span> of the image lemma is coextensive with it.
+<li><strong>Rigid Comprehension.</strong> Given <span
+class="math inline">(E,[u])</span>, the entity <span
+class="math inline">Y_E</span> of the image lemma is coextensive with
+it.
 <ul>
-<li>It is weakly persistent at <span class="math inline">r</span>, since every member of <span class="math inline">E</span> has its image in <span class="math inline">hE</span>, <span class="math inline">a(hE)</span> and <span class="math inline">b(hE)</span>.</li>
-<li>It is weakly inextensible at <span class="math inline">r</span>, since every member of <span class="math inline">hE</span>, <span class="math inline">a(hE)</span> and <span class="math inline">b(hE)</span> is the image of a member of <span class="math inline">E</span>.</li>
-<li><span class="math inline">R_E</span> is weakly rigid at <span class="math inline">s</span> by the same exact-image argument, and everything is rigid at <span class="math inline">A</span> and <span class="math inline">B</span>.</li>
+<li>It is weakly persistent at <span class="math inline">r</span>, since
+every member of <span class="math inline">E</span> has its image in
+<span class="math inline">hE</span>, <span
+class="math inline">a(hE)</span> and <span
+class="math inline">b(hE)</span>.</li>
+<li>It is weakly inextensible at <span class="math inline">r</span>,
+since every member of <span class="math inline">hE</span>, <span
+class="math inline">a(hE)</span> and <span
+class="math inline">b(hE)</span> is the image of a member of <span
+class="math inline">E</span>.</li>
+<li><span class="math inline">R_E</span> is weakly rigid at <span
+class="math inline">s</span> by the same exact-image argument, and
+everything is rigid at <span class="math inline">A</span> and <span
+class="math inline">B</span>.</li>
 </ul>
-So <span class="math inline">Y_E</span> is rigid. This holds with any argument types, including <span class="math inline">e</span>.</li>
-<li><strong>Strong Atomicity (type <span class="math inline">t</span>), necessarily.</strong>
+So <span class="math inline">Y_E</span> is rigid. This holds with any
+argument types, including <span class="math inline">e</span>.</li>
+<li><strong>Strong Atomicity (type <span class="math inline">t</span>),
+necessarily.</strong>
 <ul>
-<li>At every object, every proposition is a set of arrows. Each singleton is possible, and it decides every proposition there.</li>
-<li>Its transports are <span class="math inline">\bot</span> or singletons, along <span class="math inline">h</span>, or <span class="math inline">\bot</span> or <span class="math inline">\top</span>, at <span class="math inline">A</span> and <span class="math inline">B</span>.</li>
-<li>So the singletons are strong atoms, and every nonzero proposition contains one.</li>
+<li>At every object, every proposition is a set of arrows. Each
+singleton is possible, and it decides every proposition there.</li>
+<li>Its transports are <span class="math inline">\bot</span> or
+singletons, along <span class="math inline">h</span>, or <span
+class="math inline">\bot</span> or <span
+class="math inline">\top</span>, at <span class="math inline">A</span>
+and <span class="math inline">B</span>.</li>
+<li>So the singletons are strong atoms, and every nonzero proposition
+contains one.</li>
 </ul></li>
-<li><strong>BF (type <span class="math inline">t</span>) necessarily, and BF at type <span class="math inline">e</span>.</strong> Every transport map is onto, both on propositions and, by the projections, on individuals.</li>
-<li><strong>Relational Choice, necessarily.</strong> At <span class="math inline">r</span>, a serial root relation has a serial ground extension, and choice in <span class="math inline">V</span> gives a functional ground subrelation, with <span class="math inline">\bot</span> as its transport. At <span class="math inline">s</span>, choice in <span class="math inline">V[G]</span> does the same. <span class="math inline">A</span> and <span class="math inline">B</span> are full, in <span class="math inline">V</span> and in <span class="math inline">V[G]</span> respectively.</li>
-<li><strong>Boolean Completeness (type <span class="math inline">t</span>), necessarily.</strong> Every propositional algebra is a finite power set.</li>
-<li><strong>No Rigid Comprehension or Weak Rigid Comprehension at <span class="math inline">s</span>, at type <span class="math inline">et</span>.</strong>
+<li><strong>BF (type <span class="math inline">t</span>) necessarily,
+and BF at type <span class="math inline">e</span>.</strong> Every
+transport map is onto, both on propositions and, by the projections, on
+individuals.</li>
+<li><strong>Relational Choice, necessarily.</strong> At <span
+class="math inline">r</span>, a serial root relation has a serial ground
+extension, and choice in <span class="math inline">V</span> gives a
+functional ground subrelation, with <span
+class="math inline">\bot</span> as its transport. At <span
+class="math inline">s</span>, choice in <span
+class="math inline">V[G]</span> does the same. <span
+class="math inline">A</span> and <span class="math inline">B</span> are
+full, in <span class="math inline">V</span> and in <span
+class="math inline">V[G]</span> respectively.</li>
+<li><strong>Boolean Completeness (type <span
+class="math inline">t</span>), necessarily.</strong> Every propositional
+algebra is a finite power set.</li>
+<li><strong>No Rigid Comprehension or Weak Rigid Comprehension at <span
+class="math inline">s</span>, at type <span
+class="math inline">et</span>.</strong>
 <ul>
-<li>Suppose <span class="math inline">Y=(c\times\{0\},C,C&#39;)</span> is weakly rigid at <span class="math inline">s</span>.</li>
-<li>Weak persistence gives <span class="math inline">c\subseteq C</span>.</li>
-<li>For <span class="math inline">n\notin c</span>, every <span class="math inline">(k,0)</span> with <span class="math inline">k\in c</span> necessarily falls under <span class="math inline">Z_n:=(\mathbb N\times\mathbb N,\mathbb N\setminus\{n\},\mathbb N)</span>. So weak inextensibility gives <span class="math inline">C\subseteq\mathbb N\setminus\{n\}</span>.</li>
-<li>So <span class="math inline">C=c\notin V</span>, which is impossible, since <span class="math inline">C</span> must be a ground set.</li>
+<li>Suppose <span class="math inline">Y=(c\times\{0\},C,C&#39;)</span>
+is weakly rigid at <span class="math inline">s</span>.</li>
+<li>Weak persistence gives <span class="math inline">c\subseteq
+C</span>.</li>
+<li>For <span class="math inline">n\notin c</span>, every <span
+class="math inline">(k,0)</span> with <span class="math inline">k\in
+c</span> necessarily falls under <span class="math inline">Z_n:=(\mathbb
+N\times\mathbb N,\mathbb N\setminus\{n\},\mathbb N)</span>. So weak
+inextensibility gives <span class="math inline">C\subseteq\mathbb
+N\setminus\{n\}</span>.</li>
+<li>So <span class="math inline">C=c\notin V</span>, which is
+impossible, since <span class="math inline">C</span> must be a ground
+set.</li>
 </ul></li>
-<li><strong>No Boolean Completeness at <span class="math inline">s</span>, at type <span class="math inline">(et)t</span>.</strong>
+<li><strong>No Boolean Completeness at <span
+class="math inline">s</span>, at type <span
+class="math inline">(et)t</span>.</strong>
 <ul>
-<li>The family of the haecceities <span class="math inline">(\{(k,0)\},\{k\},\{0\})</span> of <span class="math inline">(k,0)</span>, for <span class="math inline">k\in c</span>, would have a least upper bound <span class="math inline">J</span>.</li>
-<li>Then <span class="math inline">c\subseteq J_A</span>, and <span class="math inline">J\le Z_n</span> for each <span class="math inline">n\notin c</span>, so <span class="math inline">J_A=c</span>, which is not a ground set.</li>
+<li>The family of the haecceities <span
+class="math inline">(\{(k,0)\},\{k\},\{0\})</span> of <span
+class="math inline">(k,0)</span>, for <span class="math inline">k\in
+c</span>, would have a least upper bound <span
+class="math inline">J</span>.</li>
+<li>Then <span class="math inline">c\subseteq J_A</span>, and <span
+class="math inline">J\le Z_n</span> for each <span
+class="math inline">n\notin c</span>, so <span
+class="math inline">J_A=c</span>, which is not a ground set.</li>
 </ul></li>
-<li><strong>No BF at type <span class="math inline">et</span>.</strong> The root entity <span class="math inline">Y_{D_{r,et}}</span> holds necessarily of every root entity of type <span class="math inline">et</span>. But at <span class="math inline">s</span> it misses <span class="math inline">X</span>.</li>
-<li><strong>No Atomicity at type <span class="math inline">(et)t</span>.</strong>
+<li><strong>No BF at type <span class="math inline">et</span>.</strong>
+The root entity <span class="math inline">Y_{D_{r,et}}</span> holds
+necessarily of every root entity of type <span
+class="math inline">et</span>. But at <span class="math inline">s</span>
+it misses <span class="math inline">X</span>.</li>
+<li><strong>No Atomicity at type <span
+class="math inline">(et)t</span>.</strong>
 <ul>
-<li>The property <span class="math inline">F</span> of being one of the <span class="math inline">s</span>-entities that are not images of root entities, with empty terminal components, is a nonzero root entity.</li>
-<li>A nonzero <span class="math inline">W\le F</span> with a single instance at <span class="math inline">s</span> would have that instance invariantly named, and so it would be an image. That is a contradiction.</li>
-<li>So <span class="math inline">W</span> has two instances, and a ground coordinate test at <span class="math inline">s</span> splits it.</li>
+<li>The property <span class="math inline">F</span> of being one of the
+<span class="math inline">s</span>-entities that are not images of root
+entities, with empty terminal components, is a nonzero root entity.</li>
+<li>A nonzero <span class="math inline">W\le F</span> with a single
+instance at <span class="math inline">s</span> would have that instance
+invariantly named, and so it would be an image. That is a
+contradiction.</li>
+<li>So <span class="math inline">W</span> has two instances, and a
+ground coordinate test at <span class="math inline">s</span> splits
+it.</li>
 </ul></li>
-<li><strong>No ND at type <span class="math inline">t</span>.</strong> <span class="math inline">\{1_r\}</span> and <span class="math inline">\bot</span> are distinct at <span class="math inline">r</span>, but both become <span class="math inline">\bot</span> at <span class="math inline">s</span>.</li>
+<li><strong>No ND at type <span class="math inline">t</span>.</strong>
+<span class="math inline">\{1_r\}</span> and <span
+class="math inline">\bot</span> are distinct at <span
+class="math inline">r</span>, but both become <span
+class="math inline">\bot</span> at <span
+class="math inline">s</span>.</li>
 </ul>
+<h2 id="type-clarification">Type clarification</h2>
+<p>OpenAI Codex, prompted by Daniel Kodsi, 30 October 2026. In the
+Boolean Completeness failure argument above, the represented family has
+type <span class="math inline">(et)t</span>, while its members and the
+hypothetical join <span class="math inline">J</span> have type <span
+class="math inline">et</span>. Thus the displayed witness refutes
+Boolean Completeness at <span class="math inline">et</span>, as the
+model record states. The heading’s <span
+class="math inline">(et)t</span> identifies the family type, not the
+type of the Boolean algebra. The original argument and its verdicts are
+unchanged.</p>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Background: Continuum Contingency.</strong> Barton, Neil, and Zachary Goodsell. Continuum Contingency. Draft dated 14 October 2026, 47 pages. Stitches a ground model of set theory to the canonical model of a forcing extension to show that Classicism with □Rigid Comprehension, □Relational Choice and an axiom of infinity is consistent with first- and second-order continuum contingency, together with □Atomicity at type t (Theorem 21) or with Recombination (Theorem 22, which refutes Atomicity at type t, Corollary 23); formalizes the coin-toss argument (Theorem 9). Read directly on 19 October 2026; locators refer to this draft. — §7.1; §8, Definition 1. The stitching construction, here applied over a coalesced sum and with invariantly named rather than ground-definable elements.</li>
+<li><strong>Background: Continuum Contingency.</strong> Barton, Neil,
+and Zachary Goodsell. Continuum Contingency. Draft dated 14 October
+2026, 47 pages. Stitches a ground model of set theory to the canonical
+model of a forcing extension to show that Classicism with □Rigid
+Comprehension, □Relational Choice and an axiom of infinity is consistent
+with first- and second-order continuum contingency, together with
+□Atomicity at type t (Theorem 21) or with Recombination (Theorem 22,
+which refutes Atomicity at type t, Corollary 23); formalizes the
+coin-toss argument (Theorem 9). Read directly on 19 October 2026;
+locators refer to this draft. — §7.1; §8, Definition 1. The stitching
+construction, here applied over a coalesced sum and with invariantly
+named rather than ground-definable elements.</li>
 </ul>
 </body></html>

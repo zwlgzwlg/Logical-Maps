@@ -1,0 +1,104 @@
+id: interpretation-cover-henkin-full-traces
+name: 'Interpretation cover: Henkin and full subset traces'
+definition: 'In ZFC retain a set-sized family of faithful pointed C action models witnessing every C-consistent
+  pure sentence, with the action-model-existence input of the interpretation covers. Add two disjoint
+  isolated terminal components: the full finite-type hierarchy K on N and a countable elementary Henkin
+  substructure H retaining every individual n. The inclusion used to construct H is not a category arrow.
+  Rebuild the named-permutation interpretation cover with auxiliary typed name sets large enough for every
+  old domain and the prescribed set-sized free signature. Root loops are all typed name permutations,
+  designated root symmetry is trivial, and arrows to old objects are all typed interpretations. Admit
+  exactly finite-name-pinned profiles with whole admitted old sections. Interpret constants by designated
+  names and named lifts, and evaluate at the root identity. The two terminal components are part of this
+  particular model.'
+certificate:
+  source_id: misc
+  produced_by: Daniel Kodsi, with ChatGPT assistance, after the named interpretation-cover and component-assembly
+    methods credited below
+  recorded_by: GPT-6 Astra (OpenAI), prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- Daniel Kodsi, with ChatGPT assistance, Incompatible subset traces in an augmented interpretation cover,
+  30 October 2026, construction and proof reproduced in the companion write-up, Sections 1–6.
+- OpenAI Codex, prompted by Daniel Kodsi, Observer covers and Boolean completeness, 26 October 2026, Sections
+  8.2–8.3; GPT-6 Astra, prompted by Daniel Kodsi, named-cover expansion and additional verdicts, 29–30
+  October 2026.
+- Cian Dorr, interpretation-root and pinned-substitution constructions, 19 October 2026; coalesced-sum
+  rigid-power arguments and component-specific haecceities of Bottom, as recorded in the map.
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, pp. 73–79, and Appendix E,
+  pp. 80–83.
+source_names:
+- Subset-trace obstruction 30 Oct
+- Named interpretation cover
+- Dorr interpretation roots
+- Classicism
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, pp. 73–79; Appendix E, pp. 80–83
+  note: Action-model semantics and component constructions.
+arguments:
+- id: barcan-and-relational-choice
+  holds:
+  - barcan-r
+  - relational-choice-r
+  by: Daniel Kodsi, with ChatGPT assistance, applying the named-cover proofs of OpenAI Codex, prompted
+    by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-henkin-full-traces
+  text: Root-loop witnesses lift through inverse permutations. An old interpretation can be matched on
+    a predicate's finite pin by an onto interpretation, obtained by finite modification of an infinite-fibre
+    interpretation; named lifts then reach every target entity. This gives current BF on the enlarged
+    domains. Arbitrary current relation tables are admitted with constant root rows and Bottom old sections,
+    so external choice supplies the selecting relational graphs for current Relational Choice, including
+    individual outputs.
+- id: vicinity-and-atomlessness
+  holds:
+  - vicinity
+  - atomlessness
+  by: Daniel Kodsi, with ChatGPT assistance, applying the named-cover proofs of GPT-6 Astra, prompted
+    by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-henkin-full-traces
+  text: The root-only truth mask witnesses Vicinity because each root loop has an inverse. A nonbottom
+    scalar splits either by a fresh-name permutation at a root loop or by changing a fresh propositional
+    interpretation between old Top and Bottom. These proofs apply to all profiles admitted after the two
+    terminal components have been added.
+- id: named-possibility
+  holds:
+  - possibility-plus-signature-r
+  by: Daniel Kodsi, with ChatGPT assistance, applying the named-cover expansion of GPT-6 Astra, prompted
+    by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-henkin-full-traces
+  text: Existentially close a consistent fixed-signature formula after replacing its constants by typed
+    variables. A retained pure witness supplies their values and those of the displayed individual variables.
+    The exact Possibility+ antecedent makes the required root name assignments compatible. Named lifts
+    preserve the entire old denotation. Pure and signature Max are derived consequences.
+- id: incompatible-subset-traces
+  fails:
+  - rigid-power-r
+  by: Daniel Kodsi, with ChatGPT assistance
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-henkin-full-traces
+  text: Both terminal components contain all individual singletons s_n, but H has only countably many
+    admitted traces on them. Choose A subset N not represented by an H trace; full K has the singleton
+    subfamily Y_A. A rigid root F of type (et)t has current members a_n, with singleton images s_n at
+    H and K and Bottom images elsewhere. For every current rigid R below F, separate admitted singleton-complement
+    tests force its H and K singleton traces to equal {n:R(a_n)}. No such R can therefore land as Y_A
+    at K. The actual canonical power of F nevertheless contains Y_A at K. An admitted higher test excluding
+    Y_A only there is necessary on every current member of that power but fails on this future member.
+    The power is not weakly inextensible. The failed bound type is (et)t and its power property has type
+    ((et)t)t.
+notes: Both added terminal components individually satisfy Rigid Power. Its failure arises from their
+  different admitted subset traces at the common root. It is a verdict for this augmented cover, not for
+  every possible old family in the [named-permutation construction](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/writeups/interpretation-cover-named-permutations.md).
+  The source positive proofs are re-established for the enlarged domains; none is boxed. No Boolean Completeness,
+  Functional Choice or Strong Possibility verdict is asserted. The semantic existence input remains relative
+  to the interpretation-root construction. Mathematical review was carried out with ChatGPT assistance;
+  no independent human check or Lean proof is recorded.

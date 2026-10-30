@@ -322,11 +322,15 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <link rel="stylesheet" href="../math/katex.min.css">
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
-<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Symmetric ideally-full model: ℕ and a point, all maps</h1></header><p>Cian Dorr’s symmetric version (29 October 2026) of the two-object model of <em>Classicism</em>, Appendix D, p. 79, which is recorded as finite-support-two-object-all-maps. Verification by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 29 October 2026.</p>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Symmetric ideally-full model: ℕ and a point, all maps</h1></header><p>Cian Dorr’s symmetric version (29 October 2026) of the two-object
+model of <em>Classicism</em>, Appendix D, p. 79, which is recorded as
+finite-support-two-object-all-maps. Verification by Claude Opus 5.5
+(Anthropic), prompted by Cian Dorr, 29 October 2026.</p>
 <p>At <span class="math inline">W_0</span> the model satisfies:</p>
 <ul>
 <li>Boolean Completeness at every relational type;</li>
-<li>□Boolean Completeness (type <span class="math inline">t</span>);</li>
+<li>□Boolean Completeness (type <span
+class="math inline">t</span>);</li>
 <li>BF.</li>
 </ul>
 <p>It does not satisfy:</p>
@@ -336,48 +340,141 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <li>Actuality;</li>
 <li>Relational Choice.</li>
 </ul>
-<p>It witnesses the separation BC (type <span class="math inline">t</span>) + BF ⇏ □BF (type <span class="math inline">t</span>) of GPT-6 Astra’s Ω-valued cofinite-interior model (Daniel Kodsi’s pull request #18, item 20), within the symmetric ideally-full framework.</p>
+<p>It witnesses the separation BC (type <span
+class="math inline">t</span>) + BF ⇏ □BF (type <span
+class="math inline">t</span>) of GPT-6 Astra’s Ω-valued
+cofinite-interior model (Daniel Kodsi’s pull request #18, item 20),
+within the symmetric ideally-full framework.</p>
 <h2 id="the-model">The model</h2>
 <ul>
-<li><strong>Objects and arrows.</strong> There are two objects, <span class="math inline">W_0</span> with base <span class="math inline">\mathbb N</span> and <span class="math inline">W_1</span> with base <span class="math inline">\{0\}</span>, and the arrows are all maps between the bases. Write <span class="math inline">!</span> for the arrow <span class="math inline">W_0\to W_1</span> and <span class="math inline">c_n</span> for the arrow <span class="math inline">W_1\to W_0</span> with value <span class="math inline">n</span>.</li>
-<li><strong>Symmetry groups.</strong> The symmetry group is <span class="math inline">\operatorname{Sym}(\mathbb N)</span> at <span class="math inline">W_0</span> and trivial at <span class="math inline">W_1</span>.</li>
-<li><strong>Pinning.</strong> Both objects carry the ideal of finite sets.</li>
-<li><strong>Evaluation point.</strong> <span class="math inline">1_{W_0}</span>.</li>
+<li><strong>Objects and arrows.</strong> There are two objects, <span
+class="math inline">W_0</span> with base <span
+class="math inline">\mathbb N</span> and <span
+class="math inline">W_1</span> with base <span
+class="math inline">\{0\}</span>, and the arrows are all maps between
+the bases. Write <span class="math inline">!</span> for the arrow <span
+class="math inline">W_0\to W_1</span> and <span
+class="math inline">c_n</span> for the arrow <span
+class="math inline">W_1\to W_0</span> with value <span
+class="math inline">n</span>.</li>
+<li><strong>Symmetry groups.</strong> The symmetry group is <span
+class="math inline">\operatorname{Sym}(\mathbb N)</span> at <span
+class="math inline">W_0</span> and trivial at <span
+class="math inline">W_1</span>.</li>
+<li><strong>Pinning.</strong> Both objects carry the ideal of finite
+sets.</li>
+<li><strong>Evaluation point.</strong> <span
+class="math inline">1_{W_0}</span>.</li>
 </ul>
 <h2 id="the-propositions">The propositions</h2>
 <p><strong>At <span class="math inline">W_0</span>.</strong></p>
 <ul>
-<li>A proposition <span class="math inline">p</span> is symmetric, so it is closed under left composition by permutations. It is pinned down by a finite <span class="math inline">S</span>, so membership of a map <span class="math inline">f:\mathbb N\to\mathbb N</span> depends only on <span class="math inline">f|_S</span>.</li>
-<li>Together, membership depends only on which points of <span class="math inline">S</span> the map <span class="math inline">f</span> identifies. So <span class="math inline">p</span> is a set of partitions of <span class="math inline">S</span>, together with a bit for <span class="math inline">!</span>.</li>
-<li>The part over <span class="math inline">W_0</span> is atomless: a nonempty set of patterns on <span class="math inline">S</span> splits by patterns on <span class="math inline">S\cup\{a\}</span> for a fresh <span class="math inline">a</span>, which can join any block or start a new one.</li>
-<li><span class="math inline">\{!\}</span> is an atom, but it is false.</li>
-<li>So Atomicity (type <span class="math inline">t</span>) and Actuality fail at <span class="math inline">W_0</span>.</li>
+<li>A proposition <span class="math inline">p</span> is symmetric, so it
+is closed under left composition by permutations. It is pinned down by a
+finite <span class="math inline">S</span>, so membership of a map <span
+class="math inline">f:\mathbb N\to\mathbb N</span> depends only on <span
+class="math inline">f|_S</span>.</li>
+<li>Together, membership depends only on which points of <span
+class="math inline">S</span> the map <span class="math inline">f</span>
+identifies. So <span class="math inline">p</span> is a set of partitions
+of <span class="math inline">S</span>, together with a bit for <span
+class="math inline">!</span>.</li>
+<li>The part over <span class="math inline">W_0</span> is atomless: a
+nonempty set of patterns on <span class="math inline">S</span> splits by
+patterns on <span class="math inline">S\cup\{a\}</span> for a fresh
+<span class="math inline">a</span>, which can join any block or start a
+new one.</li>
+<li><span class="math inline">\{!\}</span> is an atom, but it is
+false.</li>
+<li>So Atomicity (type <span class="math inline">t</span>) and Actuality
+fail at <span class="math inline">W_0</span>.</li>
 </ul>
-<p><strong>At <span class="math inline">W_1</span>.</strong> Symmetry forces <span class="math inline">c_n\in p\iff c_{gn}\in p</span>. So there are four propositions: whether <span class="math inline">1_{W_1}</span> is in <span class="math inline">p</span>, and whether all the <span class="math inline">c_n</span> or none of them are.</p>
+<p><strong>At <span class="math inline">W_1</span>.</strong> Symmetry
+forces <span class="math inline">c_n\in p\iff c_{gn}\in p</span>. So
+there are four propositions: whether <span
+class="math inline">1_{W_1}</span> is in <span
+class="math inline">p</span>, and whether all the <span
+class="math inline">c_n</span> or none of them are.</p>
 <h2 id="boolean-completeness">Boolean Completeness</h2>
-<p>Dorr’s hull conditions hold with <span class="math inline">M_0=\varnothing</span>, so the group’s argument boolean-completeness applies at <span class="math inline">W_0</span>, at every relational type.</p>
+<p>Dorr’s hull conditions hold with <span
+class="math inline">M_0=\varnothing</span>, so the group’s argument
+boolean-completeness applies at <span class="math inline">W_0</span>, at
+every relational type.</p>
 <ul>
-<li><strong>(B1).</strong> Every map <span class="math inline">\mathbb N\to\mathbb N</span> is an arrow, so prescriptions that agree on <span class="math inline">P\cap Q</span> splice. There is only one arrow into <span class="math inline">W_1</span>.</li>
-<li><strong>(B2).</strong> A permutation fixing <span class="math inline">N</span> pointwise moves the finitely many points of <span class="math inline">P</span> outside <span class="math inline">N</span> off <span class="math inline">Q</span>.</li>
+<li><strong>(B1).</strong> Every map <span class="math inline">\mathbb
+N\to\mathbb N</span> is an arrow, so prescriptions that agree on <span
+class="math inline">P\cap Q</span> splice. There is only one arrow into
+<span class="math inline">W_1</span>.</li>
+<li><strong>(B2).</strong> A permutation fixing <span
+class="math inline">N</span> pointwise moves the finitely many points of
+<span class="math inline">P</span> outside <span
+class="math inline">N</span> off <span
+class="math inline">Q</span>.</li>
 </ul>
-<p>So BC holds at <span class="math inline">W_0</span>. At <span class="math inline">W_1</span>, BC (type <span class="math inline">t</span>) holds because there are four propositions, so it holds at every world: □BC (type <span class="math inline">t</span>).</p>
+<p>So BC holds at <span class="math inline">W_0</span>. At <span
+class="math inline">W_1</span>, BC (type <span
+class="math inline">t</span>) holds because there are four propositions,
+so it holds at every world: □BC (type <span
+class="math inline">t</span>).</p>
 <h2 id="bf-at-w_0">BF at <span class="math inline">W_0</span></h2>
-<p>Suppose <span class="math inline">\forall x\,\Box Fx</span> at <span class="math inline">W_0</span>, with <span class="math inline">F</span> pinned down by a finite <span class="math inline">S</span>. Let <span class="math inline">h</span> be an arrow out of <span class="math inline">W_0</span> and <span class="math inline">y</span> an entity at its target, pinned down by <span class="math inline">M</span>.</p>
+<p>Suppose <span class="math inline">\forall x\,\Box Fx</span> at <span
+class="math inline">W_0</span>, with <span class="math inline">F</span>
+pinned down by a finite <span class="math inline">S</span>. Let <span
+class="math inline">h</span> be an arrow out of <span
+class="math inline">W_0</span> and <span class="math inline">y</span> an
+entity at its target, pinned down by <span
+class="math inline">M</span>.</p>
 <ul>
-<li>Choose an arrow <span class="math inline">h&#39;</span> agreeing with <span class="math inline">h</span> on <span class="math inline">S</span> that is surjective. The target’s base is <span class="math inline">\mathbb N</span> or <span class="math inline">\{0\}</span>, and a map can be changed off a finite set.</li>
-<li>By the section construction of the group’s argument barcan-surjective, <span class="math inline">y=h&#39;\cdot x</span> for some symmetric, finitely pinned <span class="math inline">x</span> at <span class="math inline">W_0</span>.</li>
-<li>So <span class="math inline">y</span> is in <span class="math inline">F_{h&#39;}</span>, which is <span class="math inline">F_h</span> by pinning.</li>
+<li>Choose an arrow <span class="math inline">h&#39;</span> agreeing
+with <span class="math inline">h</span> on <span
+class="math inline">S</span> that is surjective. The target’s base is
+<span class="math inline">\mathbb N</span> or <span
+class="math inline">\{0\}</span>, and a map can be changed off a finite
+set.</li>
+<li>By the section construction of the group’s argument
+barcan-surjective, <span class="math inline">y=h&#39;\cdot x</span> for
+some symmetric, finitely pinned <span class="math inline">x</span> at
+<span class="math inline">W_0</span>.</li>
+<li>So <span class="math inline">y</span> is in <span
+class="math inline">F_{h&#39;}</span>, which is <span
+class="math inline">F_h</span> by pinning.</li>
 </ul>
-<h2 id="bf-fails-at-type-t-at-w_1">BF fails at type <span class="math inline">t</span> at <span class="math inline">W_1</span></h2>
+<h2 id="bf-fails-at-type-t-at-w_1">BF fails at type <span
+class="math inline">t</span> at <span
+class="math inline">W_1</span></h2>
 <ul>
-<li>Along any <span class="math inline">c_n</span>, the four propositions at <span class="math inline">W_1</span> transport to <span class="math inline">\varnothing</span>, <span class="math inline">\{!\}</span>, <span class="math inline">\operatorname{Hom}(W_0,W_0)</span>, and <span class="math inline">\operatorname{Hom}(W_0,W_0)\cup\{!\}</span>.</li>
-<li>Let <span class="math inline">F</span> have, at <span class="math inline">1_{W_1}</span>, all four propositions, and at each <span class="math inline">c_n</span>, those four transports.</li>
-<li><span class="math inline">F</span> is pinned down by <span class="math inline">\varnothing</span>, and it is symmetric, since a permutation fixes the four transports. So every proposition at <span class="math inline">W_1</span> necessarily has <span class="math inline">F</span>.</li>
-<li>But at <span class="math inline">c_0</span>, the proposition <span class="math inline">\{f:f(0)=f(1)\}</span> at <span class="math inline">W_0</span> doesn’t.</li>
-<li>So BF (type <span class="math inline">t</span>) fails at <span class="math inline">W_1</span>, which <span class="math inline">W_0</span> sees, and □BF (type <span class="math inline">t</span>) fails at <span class="math inline">W_0</span>.</li>
+<li>Along any <span class="math inline">c_n</span>, the four
+propositions at <span class="math inline">W_1</span> transport to <span
+class="math inline">\varnothing</span>, <span
+class="math inline">\{!\}</span>, <span
+class="math inline">\operatorname{Hom}(W_0,W_0)</span>, and <span
+class="math inline">\operatorname{Hom}(W_0,W_0)\cup\{!\}</span>.</li>
+<li>Let <span class="math inline">F</span> have, at <span
+class="math inline">1_{W_1}</span>, all four propositions, and at each
+<span class="math inline">c_n</span>, those four transports.</li>
+<li><span class="math inline">F</span> is pinned down by <span
+class="math inline">\varnothing</span>, and it is symmetric, since a
+permutation fixes the four transports. So every proposition at <span
+class="math inline">W_1</span> necessarily has <span
+class="math inline">F</span>.</li>
+<li>But at <span class="math inline">c_0</span>, the proposition <span
+class="math inline">\{f:f(0)=f(1)\}</span> at <span
+class="math inline">W_0</span> doesn’t.</li>
+<li>So BF (type <span class="math inline">t</span>) fails at <span
+class="math inline">W_1</span>, which <span
+class="math inline">W_0</span> sees, and □BF (type <span
+class="math inline">t</span>) fails at <span
+class="math inline">W_0</span>.</li>
 </ul>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Background: Boolean Completeness does not imply Rigid Comprehension.</strong> Dorr, Cian. Boolean Completeness does not imply Rigid Comprehension. Unpublished draft in progress, 30 July 2026, 27 pages. All page, proposition and lemma locators for this source refer to that draft. Parts of the draft were drafted with AI assistance; its mathematical claims are attributed to the author. — Definitions 15–18, p. 8; Theorem 36, p. 18. Symmetric ideally-full models and the hull theorem.</li>
+<li><strong>Background: Boolean Completeness does not imply Rigid
+Comprehension.</strong> Dorr, Cian. Boolean Completeness does not imply
+Rigid Comprehension. Unpublished draft in progress, 30 July 2026, 27
+pages. All page, proposition and lemma locators for this source refer to
+that draft. Parts of the draft were drafted with AI assistance; its
+mathematical claims are attributed to the author. — Definitions 15–18,
+p. 8; Theorem 36, p. 18. Symmetric ideally-full models and the hull
+theorem.</li>
 </ul>
 </body></html>

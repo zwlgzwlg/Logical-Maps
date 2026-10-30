@@ -1,0 +1,959 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Symmetric Cohen model: arithmetic growth</title><link rel="icon" type="image/png" href="../favicon.png">
+<style>/* Fixed forest palette, adapted from the supplied style example.
+   Semantic and source hues retain their meaning in both modes. */
+:root {
+  --bg: #f3f1e8;
+  --panel: #f8f7f0;
+  --panel-2: #e9ecdf;
+  --line: #d4d9c9;
+  --line-strong: #a2ae97;
+  --ink: #283c28;
+  --ink-2: #4f604b;
+  --ink-3: #5f6d58;
+  --accent: #356044;
+  --link-hover: #914b30;
+  --human: #3e7052;
+  --assisted: #746044;
+  --ai: #a35b36;
+  --derived: #7b8271;
+  --indep: #a0483a;
+  --open: #e2e5d9;
+  --open-ink: #65705f;
+  --conj: #896b27;
+  --node-fill: #f8f7f0;
+  --node-stroke: #98a68b;
+  --junction: #52634b;
+  --hl: #e0e7cd;
+  --focus: #914b30;
+  --badge-ink: #ffffff;
+  --warning-bg: #f4e6dc;
+  --source-forest: #3e7052;
+  --source-rust: #a25336;
+  --source-ochre: #896b27;
+  --source-slate: #4c7279;
+  --source-berry: #80556d;
+  --source-olive: #69753c;
+  --source-misc: #696d61;
+  --shadow: 0 4px 24px rgb(40 60 40 / 12%);
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --serif: var(--sans);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0e1912;
+  --panel: #142018;
+  --panel-2: #1d2b20;
+  --line: #304332;
+  --line-strong: #596e51;
+  --ink: #d7dfca;
+  --ink-2: #b3c1a7;
+  --ink-3: #96aa8d;
+  --accent: #a6c699;
+  --link-hover: #dfab89;
+  --human: #94bc95;
+  --assisted: #c1ad8d;
+  --ai: #dca17b;
+  --derived: #83937c;
+  --indep: #e09b86;
+  --open: #243327;
+  --open-ink: #a2b398;
+  --conj: #d0b36b;
+  --node-fill: #19261c;
+  --node-stroke: #627957;
+  --junction: #b3c1a7;
+  --hl: #30422a;
+  --focus: #dfab89;
+  --badge-ink: #0e1912;
+  --warning-bg: #32251f;
+  --source-forest: #94bc95;
+  --source-rust: #dca17b;
+  --source-ochre: #d0b36b;
+  --source-slate: #95bcc1;
+  --source-berry: #c5a0b7;
+  --source-olive: #b6c383;
+  --source-misc: #a9b09c;
+  --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); scrollbar-color: var(--line-strong) var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.6 var(--sans); }
+button, input, select { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 3px; }
+input[type="checkbox"] { accent-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+::selection { background: var(--hl); color: var(--ink); }
+.theme-toggle { border: 0; padding: 6px 0; background: transparent; color: var(--ink-2); cursor: pointer; font: 13px var(--sans); white-space: nowrap; }
+.theme-toggle:hover { color: var(--link-hover); }
+.display-toggles { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 16px; }
+.theme-toggle[aria-pressed="true"] { color: var(--accent); }
+
+/* A prismatic name: one rainbow wheel around a point in the word, spinning;
+   --prism-x and --prism-y move that point off the middle.
+   Pure spectral stops, turned by a registered angle rather than a hue
+   filter, which would muddy them. */
+@property --prism { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.prismatic { font-weight: 600; color: transparent; background: conic-gradient(from var(--prism) at var(--prism-x, 50%) var(--prism-y, 50%), #ff1a1a, #ff8a00, #ffd000, #22c33a, #00a8f0, #3d4bff, #b026ff, #ff1a1a); -webkit-background-clip: text; background-clip: text; animation: prism-spin 6s linear infinite; }
+/* As a link it keeps the gradient on hover, under an accent underline. */
+a.prismatic, a.prismatic:hover { color: transparent; }
+a.prismatic:hover { text-decoration-color: var(--accent); }
+@keyframes prism-spin { to { --prism: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .prismatic { animation: none; } }
+
+/* Standalone write-ups use the same quiet, ruled typography as the map. */
+html:has(body.writeup-page) { background: var(--bg); }
+body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; font: 16px/1.7 var(--sans); overflow-wrap: anywhere; }
+.writeup-nav { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 24px; font-size: 13px; }
+.writeup-page h1 { font-size: 1.4em; line-height: 1.4; margin: 0 0 20px; color: var(--ink); }
+.writeup-page h2 { font-size: 1.15em; line-height: 1.4; margin: 1.8em 0 .5em; padding-top: 14px; border-top: 1px solid var(--line); }
+.writeup-page h3 { font-size: 1em; }
+.writeup-page p { margin: 0 0 12px; }
+.writeup-page .cert { color: var(--ink-2); font-size: .85em; }
+.writeup-page code, .writeup-page pre { font: .85em/1.6 var(--mono); color: var(--ink); }
+.writeup-page pre { padding: 14px; background: var(--panel-2); overflow-x: auto; }
+.writeup-page blockquote { color: var(--ink-2); border-left: 2px solid var(--line-strong); margin-left: 0; padding-left: 20px; }
+.writeup-page math[display="block"] { display: block; overflow-x: auto; padding: 8px 0; }
+.writeup-page table { display: block; overflow-x: auto; border-collapse: collapse; }
+.writeup-page th, .writeup-page td { border-bottom: 1px solid var(--line); padding: 8px 12px; }
+@media (max-width: 600px) {
+  body.writeup-page { margin: 1.5em auto; padding: 0 1em 2em; }
+}
+@media print {
+  :root, :root[data-theme="dark"] { --bg: white; --ink: #283c28; --ink-2: #4f604b; --accent: #356044; --line: #d4d9c9; color-scheme: light; }
+  .writeup-nav { display: none; }
+  body.writeup-page { max-width: none; margin: 0; padding: 0; }
+}
+
+/* Teal-grey, muted rust, deep teal and warm stone. Screen-only overrides
+   preserve print styling. */
+@media screen {
+  :root {
+    --bg: #ebf1f1;
+    --panel: #e1eae9;
+    --panel-2: #d0dfde;
+    --line: #c0cecd;
+    --line-strong: #849997;
+    --ink: #303b3a;
+    --ink-2: #4a5a59;
+    --ink-3: #526160;
+    --accent: #884932;
+    --link-hover: #6f3827;
+    --derived: #6f8180;
+    --open: #d6e2e1;
+    --open-ink: #526160;
+    --node-fill: #f1f6f6;
+    --node-stroke: #7f9391;
+    --junction: #596b6a;
+    --human: #2f6b66;
+    --source-forest: #2f6b66;
+    --hl: #e6ddd0;
+    --focus: #884932;
+    --shadow: 0 4px 24px rgb(48 59 58 / 10%);
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #171e1d;
+    --panel: #202a29;
+    --panel-2: #2b3736;
+    --line: #3d4b4a;
+    --line-strong: #6b817f;
+    --ink: #dbe8e7;
+    --ink-2: #b9cbca;
+    --ink-3: #a6bdbb;
+    --accent: #e2ad92;
+    --link-hover: #f0c3aa;
+    --derived: #87a09e;
+    --open: #303d3c;
+    --open-ink: #aec6c4;
+    --node-fill: #263130;
+    --node-stroke: #738d8b;
+    --junction: #b3cbc9;
+    --human: #86c0b6;
+    --source-forest: #86c0b6;
+    --hl: #463f37;
+    --focus: #e2ad92;
+    --badge-ink: #171e1a;
+    --shadow: 0 4px 24px rgb(0 0 0 / 24%);
+  }
+}
+
+/* Shared Okabe–Ito palette: https://jfly.uni-koeln.de/color/#pallet
+   Loaded after topic themes. Sky blue and orange distinguish positive and
+   negative relations; darker inks keep small labels readable in light mode.
+   Neutral surfaces are identical across maps. Print uses the shared theme. */
+@media screen {
+  :root[data-palette="colourblind"] {
+    --bg: #f4f5f6;
+    --panel: #ffffff;
+    --panel-2: #e9edf0;
+    --line: #d0d6da;
+    --line-strong: #87949d;
+    --ink: #202930;
+    --ink-2: #45535d;
+    --ink-3: #586670;
+    --accent: #0072b2;
+    --link-hover: #925f00;
+    --human: #0072b2;
+    --assisted: #80506a;
+    --ai: #a44500;
+    --derived: #687780;
+    --indep: #925f00;
+    --open: #e9edf0;
+    --open-ink: #586670;
+    --conj: #80506a;
+    --node-fill: #ffffff;
+    --node-stroke: #7a8b96;
+    --junction: #45535d;
+    --hl: #dce4ea;
+    --focus: #0072b2;
+    --badge-ink: #ffffff;
+    --warning-bg: #fff0ce;
+    --source-forest: #56b4e9;
+    --source-rust: #e69f00;
+    --source-ochre: #d55e00;
+    --source-slate: #0072b2;
+    --source-berry: #cc79a7;
+    --source-olive: #009e73;
+    --source-misc: #687780;
+    --rel-positive: #56b4e9;
+    --rel-negative: #e69f00;
+    --shadow: 0 4px 24px rgb(32 41 48 / 12%);
+  }
+  :root[data-palette="colourblind"][data-theme="dark"] {
+    --bg: #111820;
+    --panel: #18222b;
+    --panel-2: #23303b;
+    --line: #354550;
+    --line-strong: #718492;
+    --ink: #edf2f5;
+    --ink-2: #c1ced7;
+    --ink-3: #a5b5c1;
+    --accent: #56b4e9;
+    --link-hover: #e69f00;
+    --human: #56b4e9;
+    --assisted: #cc79a7;
+    --ai: #e69f00;
+    --derived: #91a1ad;
+    --indep: #e69f00;
+    --open: #23303b;
+    --open-ink: #a5b5c1;
+    --conj: #cc79a7;
+    --node-fill: #1c2933;
+    --node-stroke: #8094a3;
+    --junction: #c1ced7;
+    --hl: #354654;
+    --focus: #56b4e9;
+    --badge-ink: #111820;
+    --warning-bg: #352b18;
+    --source-misc: #91a1ad;
+    --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  }
+  /* Source swatches use the unmodified palette; outlined badges allow their
+     text to keep the normal contrast on both light and dark surfaces. */
+  :root[data-palette="colourblind"] .badge.source {
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--source-color);
+    border-left-width: 4px;
+  }
+}
+</style>
+<script>/* Apply before paint; share the preference between every map and write-up. */
+(() => {
+  const key = 'pmap-theme';
+  const paletteKey = 'pmap-palette';
+  const system = window.matchMedia?.('(prefers-color-scheme: dark)');
+  let preference;
+  let palette;
+  try { preference = localStorage.getItem(key); } catch (_) {}
+  try { palette = localStorage.getItem(paletteKey); } catch (_) {}
+  if (!['light', 'dark'].includes(preference)) preference = null;
+  if (palette !== 'colourblind') palette = 'default';
+  function apply(theme) {
+    document.documentElement.dataset.theme = theme;
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.textContent = theme === 'dark' ? '[Light mode]' : '[Dark mode]';
+      button.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+    });
+  }
+  function applyPalette() {
+    document.documentElement.dataset.palette = palette;
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.setAttribute('aria-pressed', String(palette === 'colourblind'));
+      button.textContent = `[Colourblind mode: ${palette === 'colourblind' ? 'on' : 'off'}]`;
+    });
+  }
+  const initial = () => preference || (system?.matches ? 'dark' : 'light');
+  apply(initial());
+  applyPalette();
+  document.addEventListener('DOMContentLoaded', () => {
+    apply(initial());
+    applyPalette();
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        preference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        apply(preference);
+        try { localStorage.setItem(key, preference); } catch (_) {}
+      });
+    });
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        palette = palette === 'colourblind' ? 'default' : 'colourblind';
+        applyPalette();
+        try { localStorage.setItem(paletteKey, palette); } catch (_) {}
+      });
+    });
+  });
+  system?.addEventListener('change', () => { if (!preference) apply(initial()); });
+  window.addEventListener('storage', event => {
+    if (event.key === key || event.key === null) {
+      preference = ['light', 'dark'].includes(event.newValue) ? event.newValue : null;
+      apply(initial());
+    }
+    if (event.key === paletteKey || event.key === null) {
+      palette = event.newValue === 'colourblind' ? 'colourblind' : 'default';
+      applyPalette();
+    }
+  });
+})();
+</script>
+<link rel="stylesheet" href="../math/katex.min.css">
+<script defer src="../math/katex.min.js"></script>
+<script defer src="../math/contrib/auto-render.min.js"></script>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Symmetric Cohen model: arithmetic growth</h1></header><p>GPT-6 Astra, prompted by Daniel Kodsi. Original construction and
+proof dated 29 October 2026. Here SANA denotes the map’s Second-Order
+Analytic Necessitism (SOAN).</p>
+<p>The construction gives a model of</p>
+<p><span class="math display">
+C+\mathrm{SANA}+\neg\mathrm{Arithmetic\ Necessitism}.
+</span></p>
+<p>SANA, and consequently Analytic Necessitism, holds because there is
+necessarily no genuine real structure at any admitted type. Arithmetic
+Necessitism fails at the canonical individual-counting instance despite
+<span class="math inline">\Box I_e^*</span>. Its failure is
+inextensibility of the number property; standard numerals remain
+necessarily distinct.</p>
+<p>The metatheory is ZFC. Generic extensions establish Boolean values,
+and a Boolean-Henkin reduction separately produces an actual countable
+classical Henkin model. No countable transitive model of ZFC is assumed.
+The nonstandard component A is constructed inside the ground universe
+before the final auxiliary generic evaluation and has trivial group
+action.</p>
+<h2 id="fixed-conventions">1. Fixed conventions</h2>
+<p>Types are generated from <span class="math inline">e,t</span>,
+allowing an arrow only when its output is not <span
+class="math inline">e</span>. Every relational type can consequently be
+written <span class="math inline">\sigma_1\cdots\sigma_k t</span>,
+including <span class="math inline">k=0</span>.</p>
+<p>Native necessity is the term <span class="math inline">\Box
+p=(p=\top)</span>, and possibility is <span
+class="math inline">p\ne\bot</span>. Equality at an evaluated classical
+point must be actual object identity. Distinct propositions with the
+same current truth value must <strong>not</strong> be identified.</p>
+<p>A genuine <span class="math inline">\operatorname{Real}_\tau</span>
+structure uses literal equality, an antisymmetric linear order,
+functional field operations, and completeness for <strong>all admitted
+subproperties</strong> of its carrier. A quotient presentation with a
+separate equivalence relation is not enough.</p>
+<p>Let <span class="math inline">\nu=(et)t</span>. Write <span
+class="math inline">N</span> for the canonical Frege number property,
+<span class="math inline">\bar n</span> for the standard numeral terms,
+and <span class="math inline">&lt;</span> for the definable strict
+natural-number order.</p>
+<h2 id="the-finite-support-boolean-hierarchy">2. The finite-support
+Boolean hierarchy</h2>
+<p>Work in the metatheoretic universe <span
+class="math inline">V</span>. Let</p>
+<p><span class="math display">
+\Omega=(2^\omega)^\omega,
+\qquad B=\operatorname{RO}(\Omega).
+</span></p>
+<p>Thus <span class="math inline">B</span> is the complete regular-open
+Boolean algebra of a countable product of Cohen-real coordinates. For
+finite <span class="math inline">J\subseteq\omega</span>, let <span
+class="math inline">B_J</span> be the embedded complete regular-open
+algebra depending only on coordinates in <span
+class="math inline">J</span>. Put</p>
+<p><span class="math display">
+B_{\mathrm{fs}}=\bigcup_{J\subseteq\omega\text{ finite}}B_J.
+</span></p>
+<p>At each coordinate, a finite-prefix permutation permutes all binary
+strings of some fixed finite length and leaves their tails unchanged.
+Let <span class="math inline">G</span> be the group of products of these
+permutations at finitely many coordinates. Let <span
+class="math inline">G_J</span> be its subgroup acting trivially on the
+coordinates in <span class="math inline">J</span>.</p>
+<p>An object has support <span class="math inline">J</span> when it is
+fixed by every member of <span class="math inline">G_J</span>. The
+action on function spaces is conjugation:</p>
+<p><span class="math display">
+(g\cdot f)(x)=g\cdot f(g^{-1}\cdot x).
+</span></p>
+<p>Define the base hierarchy recursively:</p>
+<p><span class="math display">
+D_e=\omega\quad\text{with trivial action},\qquad
+D_t=B_{\mathrm{fs}},
+</span></p>
+<p>and <span class="math inline">D_{\sigma\tau}</span> consists of all
+finitely supported functions <span class="math inline">D_\sigma\to
+D_\tau</span>, for admitted arrow types.</p>
+<p>Application is actual function evaluation. Equality is crisp:</p>
+<p><span class="math display">
+\llbracket x=y\rrbracket=
+\begin{cases}1&amp;x=y,\\0&amp;x\ne y.\end{cases}
+</span></p>
+<p>Connectives are Boolean operations. Quantification uses the meet or
+join in the complete ambient algebra <span
+class="math inline">B</span>:</p>
+<p><span class="math display">
+\llbracket\forall x\,F x\rrbracket
+=\bigwedge_{x\in D_\sigma}F(x).
+</span></p>
+<h3 id="why-quantifiers-stay-in-the-domain">2.1 Why quantifiers stay in
+the domain</h3>
+<p>The fixed-point algebra of <span class="math inline">G_J</span>
+acting on <span class="math inline">B</span> is exactly <span
+class="math inline">B_J</span>. To see this, an invariant open set has,
+at each fixed <span class="math inline">J</span>-coordinate value, an
+outside-coordinate section invariant under all finite-prefix
+permutations. Any nonempty such open section is the whole outside space:
+translates of any basic cylinder cover it. Regular openness then gives
+the asserted embedded regular-open algebra.</p>
+<p>If <span class="math inline">F</span> has support <span
+class="math inline">J</span>, then</p>
+<p><span class="math display">
+g\Bigl(\bigwedge_xF(x)\Bigr)
+=\bigwedge_xF(gx)=\bigwedge_xF(x)
+\quad(g\in G_J).
+</span></p>
+<p>Its meet therefore belongs to <span class="math inline">B_J</span>.
+The same holds for joins. Lambda denotations have support contained in
+the union of the supports of their finitely many parameters: all logical
+operations, including these quantifiers, are equivariant. Thus
+unrestricted syntactic lambda comprehension is retained.</p>
+<h3 id="soundness-for-c-and-c5">2.2 Soundness for C and C5</h3>
+<p>The usual induction gives Boolean soundness for H. If H proves two
+lambda bodies equivalent, their Boolean values agree at every
+assignment. Their function denotations are literally identical. This
+validates C’s Logical Equivalence schema with its theoremhood side
+condition intact.</p>
+<p>Native necessity in this base hierarchy is</p>
+<p><span class="math display">
+\Box b=\delta[b=1].
+</span></p>
+<p>Crisp equality makes all instances of necessary distinctness valid;
+hence this base validates C5. These observations establish validity of
+the relevant axioms at Boolean value 1, not just truth in one
+arbitrarily chosen filter.</p>
+<h3 id="canonical-arithmetic-is-standard-in-the-base">2.3 Canonical
+arithmetic is standard in the base</h3>
+<p>Let <span class="math inline">K=\{\bar n:n\in\omega\}</span> be the
+ground set of standard numeral objects. Each numeral is fixed by <span
+class="math inline">G</span>. The characteristic predicate of <span
+class="math inline">K</span> is an admitted support-empty predicate on
+<span class="math inline">D_\nu</span>.</p>
+<p>It contains zero and is successor closed. In the impredicative
+definition of <span class="math inline">N</span>, this predicate
+excludes every object outside <span class="math inline">K</span>.
+Conversely, finite induction establishes <span class="math inline">N\bar
+n=1</span> for every standard <span class="math inline">n</span>. Hence
+<span class="math inline">N</span> is exactly the crisp characteristic
+predicate of <span class="math inline">K</span>.</p>
+<p>The numerals are distinct: evaluate them on crisp finite subsets of
+<span class="math inline">D_e=\omega</span> of the appropriate sizes.
+Successor is injective on <span class="math inline">K</span>. Therefore
+<span class="math inline">I_e^*=1</span>, and <span
+class="math inline">\Box I_e^*=1</span>.</p>
+<h2 id="generic-evaluation-and-the-strong-symmetry-lemma">3. Generic
+evaluation and the strong symmetry lemma</h2>
+<p>For the next argument work in a forcing extension with a <span
+class="math inline">V</span>-generic Cohen point <span
+class="math inline">u\in\Omega</span>, or equivalently argue with the
+forcing theorem. Let <span class="math inline">U</span> be its Boolean
+generic ultrafilter. Interpret a proposition <span
+class="math inline">b</span> as true iff <span class="math inline">b\in
+U</span>. Domains remain the <strong>ground</strong> <span
+class="math inline">D_\sigma</span>’s.</p>
+<p>Genericity supplies the quantifier truth clauses. For any ground
+predicate <span class="math inline">F</span>, the conditions deciding
+its existential join by going below one of its values form a dense set.
+Thus if <span class="math inline">\bigvee_x F(x)\in U</span>, some
+ground <span class="math inline">x</span> satisfies <span
+class="math inline">F(x)\in U</span>. The witness comes from an admitted
+ground predicate.</p>
+<h3 id="moving-an-object-while-fixing-the-evaluation-point">3.1 Moving
+an object while fixing the evaluation point</h3>
+<p><strong>Lemma.</strong> Let <span class="math inline">x</span> be any
+ground object of a ground <span class="math inline">G</span>-set. If
+<span class="math inline">x</span> is not fixed by <span
+class="math inline">G_J</span>, then there is a single-coordinate
+finite-prefix transposition <span class="math inline">h\in G_J</span>
+such that</p>
+<p><span class="math display">
+h^2=1,\qquad h(u)=u,\qquad h(x)\ne x.
+</span></p>
+<p><strong>Proof.</strong> Let <span class="math inline">O_x</span> be
+the union of the fixed-point regions <span
+class="math inline">\operatorname{Fix}(h)</span> of all such
+transpositions <span class="math inline">h\in G_J</span> that move <span
+class="math inline">x</span>. It is a ground open set. Suppose a basic
+cylinder <span class="math inline">p</span> missed <span
+class="math inline">O_x</span>.</p>
+<p>Fix any coordinate <span class="math inline">i\notin J</span>. At a
+sufficiently large finite prefix depth, the restrictions imposed by
+<span class="math inline">p</span> leave at least three possible
+prefixes at coordinate <span class="math inline">i</span>. Every
+transposition at that depth swaps only two prefixes, and therefore has a
+fixed-point cylinder meeting <span class="math inline">p</span>. Since
+<span class="math inline">p\cap O_x</span> is empty, every such
+transposition must fix <span class="math inline">x</span>. These
+transpositions generate the entire prefix-permutation group at that
+depth. Taking arbitrarily large depths shows that every finite-prefix
+permutation at coordinate <span class="math inline">i</span> fixes <span
+class="math inline">x</span>. Doing this at every <span
+class="math inline">i\notin J</span> shows that all of <span
+class="math inline">G_J</span> fixes <span class="math inline">x</span>,
+a contradiction.</p>
+<p>Thus <span class="math inline">O_x</span> is dense. Genericity gives
+<span class="math inline">u\in O_x</span>, yielding the required
+transposition. <span class="math inline">\square</span></p>
+<p>Only actual finite transpositions are used. There is no appeal to the
+external finite order of an element of a nonstandard model’s internally
+finite group.</p>
+<h3 id="why-this-is-an-ordinary-order-automorphism">3.2 Why this is an
+ordinary order automorphism</h3>
+<p>Suppose an admitted structure <span class="math inline">\mathfrak
+R</span> at type <span class="math inline">\tau</span> is a genuine real
+field at <span class="math inline">U</span>. Choose a finite support
+<span class="math inline">J</span> for its entire finite tuple of data,
+including its distinguished elements.</p>
+<p>A permutation fixing <span class="math inline">J</span> need not
+preserve truth at <span class="math inline">U</span>. <strong>We use
+only permutations that also fix <span
+class="math inline">U</span>.</strong> Such an <span
+class="math inline">h</span> is an automorphism of the evaluated
+classical Henkin structure, because</p>
+<p><span class="math display">
+b\in U\iff h(b)\in U.
+</span></p>
+<p>Since it fixes the field data, it induces an ordinary order
+automorphism of this particular evaluated field. An involution
+preserving a linear order fixes every element: either <span
+class="math inline">x&lt;hx</span> or <span
+class="math inline">hx&lt;x</span> would reverse after applying <span
+class="math inline">h</span>.</p>
+<p>By the lemma, every element of the field carrier must therefore be
+fixed by all of <span class="math inline">G_J</span>. This is the
+precise reason a field’s carrier is forced into its finite support;
+invariance of the Boolean-valued data alone would not suffice.</p>
+<h2 id="no-genuine-real-field-at-any-type">4. No genuine real field at
+any type</h2>
+<p>Put</p>
+<p><span class="math display">
+F_{\tau,J}=\{x\in D_\tau:g x=x\text{ for all }g\in G_J\}.
+</span></p>
+<p>The alleged field carrier lies in this ground set. When its arguments
+lie in <span class="math inline">F_{\tau,J}</span>, every Boolean
+coefficient of its structure lies in <span
+class="math inline">B_J</span>. Thus its carrier and ordinary field
+operations belong to the intermediate extension <span
+class="math inline">V[U_J]</span>, and agree there with their
+interpretations in <span class="math inline">V[U]</span>.</p>
+<h3 id="all-intermediate-subproperties-are-represented">4.1 All
+intermediate subproperties are represented</h3>
+<p>Let <span class="math inline">S</span> be any subset of this carrier
+belonging to <span class="math inline">V[U_J]</span>. Choose a <span
+class="math inline">B_J</span>-name for <span
+class="math inline">S</span>. For each ground <span
+class="math inline">x\in F_{\tau,J}</span>, let <span
+class="math inline">b_x\in B_J</span> be its Boolean membership
+coefficient. Define a ground predicate on <span
+class="math inline">D_\tau</span> by</p>
+<p><span class="math display">
+P(x)=b_x\quad(x\in F_{\tau,J}),\qquad
+P(x)=0\quad(x\notin F_{\tau,J}).
+</span></p>
+<p>This predicate has support <span class="math inline">J</span>: the
+fixed points are pointwise fixed, their membership coefficients lie in
+<span class="math inline">B_J</span>, and their complement is invariant.
+Therefore <span class="math inline">P</span> is an admitted predicate,
+and its current extension is exactly <span
+class="math inline">S</span>.</p>
+<p>The field’s internal completeness consequently implies ordinary
+Dedekind completeness for every subset of its carrier in <span
+class="math inline">V[U_J]</span>. It is a complete ordered field in
+that intermediate universe.</p>
+<h3 id="a-fresh-cut-is-also-admitted">4.2 A fresh cut is also
+admitted</h3>
+<p>Choose <span class="math inline">k\notin J</span>. Coordinate <span
+class="math inline">k</span> supplies a new real over <span
+class="math inline">V[U_J]</span>, hence a new bounded rational Dedekind
+cut. For example, inject the new binary sequence into the Cantor subset
+of <span class="math inline">[0,1]</span>.</p>
+<p>Inside <span class="math inline">V[U_{J\cup\{k\}}]</span>, form the
+subset of the alleged field consisting of the rational elements in this
+cut. It has a ground Boolean name on <span
+class="math inline">F_{\tau,J}</span> with coefficients in <span
+class="math inline">B_{J\cup\{k\}}</span>. The same zero-extension
+construction represents it by an admitted predicate with support <span
+class="math inline">J\cup\{k\}</span>.</p>
+<p>This is an admitted bounded subproperty <strong>at the very same
+evaluation point</strong> as the field. Any supremum in the field would
+determine the new rational cut, but every field element lies in <span
+class="math inline">V[U_J]</span>, where that cut is absent.
+Contradiction.</p>
+<p>Therefore no genuine real field exists at any admitted type in any
+generic evaluation. By the forcing theorem and the quantifier truth
+lemma,</p>
+<p><span class="math display">
+\llbracket\exists\mathfrak R\,\operatorname{Real}_\tau(\mathfrak
+R)\rrbracket=0
+\quad\text{for every admitted }\tau.
+</span></p>
+<p>Its negation has value 1, and native necessity of its negation has
+value 1 as well.</p>
+<p>The argument does not infer noReal from external countability.
+Countable Henkin structures can be internally complete fields. It
+instead constructs an admitted bad cut for every alleged field.</p>
+<h2 id="boolean-henkin-reduction-without-an-actual-generic-over-v">5.
+Boolean-Henkin reduction without an actual generic over V</h2>
+<p>Here is the reduction used twice below.</p>
+<p>Take the set-sized, many-sorted semantic structure containing:</p>
+<ul>
+<li>the complete ambient Boolean algebra <span
+class="math inline">B</span>;</li>
+<li>each admitted domain <span class="math inline">D_\sigma</span>;</li>
+<li>application, logical constants, and quantifier operations;</li>
+<li>the Boolean value map <span class="math inline">v_0:D_t\to
+B</span>;</li>
+<li>the operations interpreting every lambda term with its finite
+parameter tuple.</li>
+</ul>
+<p>There are countably many types and syntactic lambda operations. Name
+any countably many special witnesses that should be retained. Take a
+countable elementary substructure <span
+class="math inline">K</span>.</p>
+<p>For <span class="math inline">F\in D_{\sigma t}^K</span>, write <span
+class="math inline">j(F)=v_0(\exists_\sigma F)</span>. Elementarity
+retains the density property</p>
+<p><span class="math display">
+0&lt;b\le j(F)\quad\Longrightarrow\quad
+\exists x\in D_\sigma^K\ [b\wedge v_0(Fx)\ne0].
+</span></p>
+<p>It holds in the full structure because <span
+class="math inline">j(F)</span> is the complete ambient join of the
+values <span class="math inline">v_0(Fx)</span>.</p>
+<p>On the countable Boolean algebra <span
+class="math inline">B^K</span>, meet the dense set</p>
+<p><span class="math display">
+\Delta_F=
+\{b&gt;0:b\le\neg j(F)\}
+\ \cup\
+\{b&gt;0:\exists x\in D_\sigma^K\ b\le v_0(Fx)\}
+</span></p>
+<p>for every admitted <span class="math inline">F</span>, as well as the
+Boolean decision requirements. A descending construction gives an
+ultrafilter <span class="math inline">u</span> meeting all these
+countably many requirements.</p>
+<p>Declare a proposition <span class="math inline">p\in D_t^K</span>
+true iff <span class="math inline">v_0(p)\in u</span>. The dense sets
+give precisely</p>
+<p><span class="math display">
+\exists_\sigma F\text{ is true}
+\iff
+Fx\text{ is true for some }x\in D_\sigma^K.
+</span></p>
+<p>Lambda closure handles every formula with parameters in <span
+class="math inline">K</span>, so induction gives the full classical
+Henkin truth lemma. Crisp first-coordinate equality makes truth of
+equality exactly literal object identity.</p>
+<p><strong>Do not quotient proposition objects by agreement of their
+current truth values.</strong> The ultrafilter is used only to define
+truth. Distinct true propositions remain different objects, preserving
+the native definition of necessity.</p>
+<p>All closed axioms whose Boolean value was 1 remain true. In
+particular the base construction gives an actual countable model <span
+class="math inline">A_0</span> of</p>
+<p><span class="math display">
+T=C5+\Box I_e^*
++\{\Box\neg\exists\operatorname{Real}_\tau:\tau\text{ admitted}\}.
+</span></p>
+<p>The canonical naturals of <span class="math inline">A_0</span> are
+externally standard: the full Boolean number predicate was exactly the
+characteristic predicate of the standard numeral objects, all of which
+are retained as term values.</p>
+<h2 id="the-nonstandard-c5-component">6. The nonstandard C5
+component</h2>
+<p>Take the elementary diagram of the countable Henkin structure <span
+class="math inline">A_0</span>, in its countable expanded algebraic
+signature. Add a constant <span class="math inline">c</span> of number
+type with</p>
+<p><span class="math display">
+N(c)=\top,
+\qquad (\bar n&lt;c)=\top
+\quad(n\in\omega).
+</span></p>
+<p>These are object equations, equivalently the corresponding boxed
+assertions. Every finite subset is realized by a sufficiently large
+standard numeral of <span class="math inline">A_0</span>. Compactness
+and countable Löwenheim-Skolem give a countable elementary extension
+<span class="math inline">A</span> with such a <span
+class="math inline">c</span>.</p>
+<p>Both steps take place in <span class="math inline">V</span>: first
+the ground Boolean-value calculation and Boolean-Henkin reduction
+construct <span class="math inline">A_0</span> in <span
+class="math inline">V</span>; then ordinary compactness constructs <span
+class="math inline">A</span> in <span class="math inline">V</span>. For
+the final hybrid, every domain and operation of <span
+class="math inline">A</span> is a ground set and its <span
+class="math inline">G</span>-action is trivial. Only after this
+construction do we use a fresh <span
+class="math inline">V</span>-generic Cohen evaluation as an auxiliary
+proof device. This ordering is essential: an arbitrary component
+selected in <span class="math inline">V[U]</span> could encode the
+supposedly fresh coordinates and would invalidate the
+intermediate-extension argument.</p>
+<p>Use the original admitted application, lambda, and quantifier
+operations of <span class="math inline">A</span>. Do not replace its
+higher-type domains by arbitrary external function spaces.</p>
+<p>Its proposition objects form a Boolean algebra <span
+class="math inline">B_A</span>. C5 makes its equality propositions
+crisp, and its native necessity is <span
+class="math inline">a\mapsto\delta[a=\top_A]</span>. In particular, from
+the axioms of <span class="math inline">T</span>,</p>
+<p><span class="math display">
+(I_e^*)_A=\top_A,
+\qquad (\exists\operatorname{Real}_\tau)_A=\bot_A.
+</span></p>
+<p>These exact object equalities matter for the gluing; mere current
+falsity of real existence would not suffice.</p>
+<p>An elementary extension of standard-arithmetic <span
+class="math inline">A_0</span> suffices. The separation does not require
+a contingent first-order arithmetical sentence.</p>
+<h2 id="the-hybrid-root-hierarchy">7. The hybrid root hierarchy</h2>
+<p>Reuse the Cohen algebra, finite-support group, and support
+convention. Let</p>
+<p><span class="math display">
+D_e^r=\omega\times D_e^A,
+\qquad \pi_e(n,a)=a,
+</span></p>
+<p>with trivial <span class="math inline">G</span>-action.</p>
+<p>For a relational type <span
+class="math inline">\tau=\sigma_1\cdots\sigma_k t</span>, define</p>
+<p><span class="math display">
+D_\tau^r=
+\{(f_0,a):
+f_0:D_{\sigma_1}^r\times\cdots\times D_{\sigma_k}^r
+       \to B_{\mathrm{fs}}\text{ is finitely supported},
+\ a\in D_\tau^A\}.
+</span></p>
+<p>For <span class="math inline">k=0</span>, this says <span
+class="math inline">D_t^r=B_{\mathrm{fs}}\times B_A</span>. Put <span
+class="math inline">\pi(f_0,a)=a</span>. The group acts on the current
+profile and trivially on its <span
+class="math inline">A</span>-component.</p>
+<p>Application is</p>
+<p><span class="math display">
+(f_0,a)\cdot x=(f_0(x,-),\ a\cdot_A\pi x).
+</span></p>
+<p>Boolean operations are componentwise. Equality at any type is</p>
+<p><span class="math display">
+\operatorname{Eq}_r(x,y)=
+(\delta[x=y],\operatorname{Eq}_A(\pi x,\pi y)).
+</span></p>
+<p>For <span class="math inline">F=(f_0,a)\in D_{\sigma t}^r</span>,</p>
+<p><span class="math display">
+\forall_r F=
+\left(\bigwedge_{x\in D_\sigma^r}f_0(x),\ \forall_A a\right).
+</span></p>
+<p>The current meet lies in <span
+class="math inline">B_{\mathrm{fs}}</span> by support invariance. Lambda
+abstraction uses the current Boolean body profile and the component’s
+original lambda operation with projected parameters. A term induction
+proves that <span class="math inline">\pi</span> commutes with every
+term operation.</p>
+<p>Every <span class="math inline">\pi_\sigma</span> is surjective: this
+is explicit at <span class="math inline">e</span>, and a relational
+component <span class="math inline">a</span> has the root lift <span
+class="math inline">(0,a)</span>.</p>
+<h3 id="soundness-for-c">7.1 Soundness for C</h3>
+<p>The current coordinate is a Boolean interpretation of H with literal
+current equality and all required lambda denotations. The second
+coordinate interprets the same terms in <span
+class="math inline">A</span>. An H-theorem has current Boolean value 1,
+and its component is <span class="math inline">\top_A</span>.</p>
+<p>For an instance of Logical Equivalence, H-equivalent bodies have
+identical current profiles; their component lambda denotations are
+identical because <span class="math inline">A</span> is a C model.
+Therefore the corresponding root lambda objects are literally identical.
+This validates C without replacing actual coextensionality by
+identity.</p>
+<p>Native root necessity is</p>
+<p><span class="math display">
+\Box(b,a)=
+\bigl(\delta[b=1\text{ and }a=\top_A],\ \delta[a=\top_A]\bigr).
+</span></p>
+<p>Equivalently, its second coordinate is <span
+class="math inline">\Box_A a</span>. The first coordinate is 1 exactly
+when <strong>both</strong> coordinates of the original proposition
+object are top. This formula follows from the displayed equality clause;
+it is not an independently imposed modal operator.</p>
+<h3 id="noreal-is-retained">7.2 NoReal is retained</h3>
+<p>The generic-symmetry proof applies unchanged to the hybrid domains. A
+<span class="math inline">U</span>-fixing transposition fixing the
+support of the field tuple is an automorphism of the evaluated current
+field. Its elements are therefore <span
+class="math inline">J</span>-fixed. Every required current subproperty
+is still available: its finite-support current profile may be paired
+with any admitted <span class="math inline">A</span>-component, for
+example bottom.</p>
+<p>Consequently the current Boolean coordinate of every existential Real
+statement is 0. Its component is <span class="math inline">\bot_A</span>
+by <span class="math inline">T</span>. Thus the <strong>entire
+proposition object</strong> is bottom:</p>
+<p><span class="math display">
+(\exists\operatorname{Real}_\tau)_r=(0,\bot_A).
+</span></p>
+<p>Therefore <span
+class="math inline">\Box\neg\exists\operatorname{Real}_\tau</span> holds
+for every type. Every antecedent of SANA is false. SANA, and hence
+ordinary Analytic Necessitism, holds vacuously.</p>
+<h3 id="canonical-numbers-grow">7.3 Canonical numbers grow</h3>
+<p>Let <span class="math inline">K=\{\bar n^r:n\in\omega\}</span>. Each
+standard root numeral is fixed by <span class="math inline">G</span>.
+Use explicitly the admitted predicate</p>
+<p><span class="math display">
+W=(\chi_K,\top_{\nu t}^A).
+</span></p>
+<p>Its current profile is inductive and excludes every nonstandard root
+number object; its component is the constantly true predicate and is
+inductive as well. Finite induction supplies the converse inclusion.
+Hence</p>
+<p><span class="math display">
+N_r=(\chi_K,N_A).
+</span></p>
+<p>The current canonical numbers are exactly the standard numerals,
+whereas the projected number property contains the nonstandard <span
+class="math inline">c</span>.</p>
+<p>Both coordinates of <span class="math inline">I_e^*</span> are top:
+current successor is injective on the standard numerals, and the
+component is <span class="math inline">\top_A</span>. Thus <span
+class="math inline">\Box I_e^*</span> holds at the root.</p>
+<h3 id="explicit-failure-of-inextensibility">7.4 Explicit failure of
+inextensibility</h3>
+<p>Let</p>
+<p><span class="math display">
+X_A:=\lambda n\,[N_A(n)\land n&lt;c],
+\qquad X_r:=(\chi_K,X_A).
+</span></p>
+<p>For every current root number <span class="math inline">\bar
+n^r</span>, its current <span class="math inline">X_r</span>-value is 1
+and its component is <span class="math inline">\top_A</span>, by the
+boxed constraints on <span class="math inline">c</span>. Therefore</p>
+<p><span class="math display">
+\forall n\,[N_r n\to\Box X_r n]
+</span></p>
+<p>has current Boolean value 1.</p>
+<p>But <span class="math inline">N_A\not\le X_A</span>, since <span
+class="math inline">c</span> is a number and is not below itself. Hence
+the root relation objects do not satisfy <span
+class="math inline">N_r\le X_r</span>: their current profiles agree, but
+the component prevents the required algebraic identity. So the unboxed
+inextensibility condition already fails, and therefore the boxed
+inextensibility condition fails.</p>
+<p>This witnesses</p>
+<p><span class="math display">
+\Box I_e^*\land\neg\operatorname{Rigid}(N_e).
+</span></p>
+<p>Standard natural numbers remain necessarily distinct. The Arithmetic
+Necessitism failure is specifically the inextensibility failure just
+exhibited.</p>
+<p>Apply the Boolean-Henkin reduction again, naming <span
+class="math inline">X_r</span> and the countable component as needed.
+The closed target statements retain their Boolean values. The result is
+an actual countable classical Henkin model of C, SANA, and failure of
+Arithmetic Necessitism.</p>
+<h2 id="verdicts-justified-by-this-construction">8. Verdicts justified
+by this construction</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Assertion</th>
+<th>Status in the constructed root model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C</td>
+<td>Holds by the interpretation and Logical Equivalence argument</td>
+</tr>
+<tr>
+<td><span class="math inline">\Box I_e^*</span></td>
+<td>Holds</td>
+</tr>
+<tr>
+<td><span
+class="math inline">\Box\neg\exists\operatorname{Real}_\tau</span>,
+every admitted <span class="math inline">\tau</span></td>
+<td>Holds</td>
+</tr>
+<tr>
+<td>SANA</td>
+<td>Holds, because every possible-Real guard is false</td>
+</tr>
+<tr>
+<td>Analytic Necessitism</td>
+<td>Holds for the same reason</td>
+</tr>
+<tr>
+<td>Arithmetic Necessitism at <span class="math inline">e</span></td>
+<td>Fails</td>
+</tr>
+<tr>
+<td>Inextensibility of canonical <span
+class="math inline">N_e</span></td>
+<td>Fails, with the explicit <span class="math inline">X_r</span>
+above</td>
+</tr>
+<tr>
+<td>Necessary distinctness restricted to current <span
+class="math inline">N_e</span></td>
+<td>Holds</td>
+</tr>
+<tr>
+<td>Contingency of a first-order arithmetic sentence</td>
+<td>Not claimed; unnecessary for this countermodel</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sources-and-attribution">Sources and attribution</h2>
+<ul>
+<li><a href="https://andrew-bacon.github.io/papers/Classicism.pdf">Bacon
+and Dorr, Classicism (earlier draft, 1 July 2022)</a>, for the framework
+and Henkin semantics. Exact map conventions are given in Background,
+Framework and Analysis.</li>
+<li><a href="https://karagila.org/files/Forcing-2023.pdf">Karagila,
+Lecture Notes: Forcing &amp; Symmetric Extensions</a>, for forcing and
+finite-support background, not this construction.</li>
+<li>The Boolean hierarchy, truth-preserving involution lemma, no-real
+argument, ground nonstandard component and hybrid arithmetic-growth
+construction above are given in this construction.</li>
+</ul>
+<h2 id="paper-references">Paper references</h2>
+<ul>
+<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian
+Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds),
+Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map
+was built from the draft dated 16 May 2023, 87 pages, which does not
+differ materially from the published version; all page, proposition and
+footnote locators in this map refer to that draft’s numbering.. C and
+its Henkin/action semantics. This hybrid construction and its no-real
+proof are new, not asserted as a source theorem.</li>
+</ul>
+</body></html>

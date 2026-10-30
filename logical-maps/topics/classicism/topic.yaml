@@ -76,6 +76,9 @@ source_catalog:
 - id: misc
   name: Misc.
   kind: misc
+- id: kodsi-finite-type-necessitism-2026
+  name: Kodsi, Finite-Type Necessitism (2026)
+  kind: misc
 notation: All type schemata use the fixed relational type system. Types and application associate to the
   right; curried application is parenthesized. Box applies after closing object variables. See Background
   for definitions and schema side conditions.
@@ -133,11 +136,11 @@ background_presets:
   category: comprehension
   principles:
   - necessary-rigid-comprehension-r
-
 lattice_views:
 - id: self-atoms
   name: Self-atoms and strong atoms
-  description: 'Atomicity, Self-Atomicity, Strong Atomicity, and the four bridge principles between atoms, self-atoms and strong atoms.'
+  description: Atomicity, Self-Atomicity, Strong Atomicity, and the four bridge principles between atoms,
+    self-atoms and strong atoms.
   principles:
   - atomicity-r
   - self-atomicity-r
@@ -161,8 +164,8 @@ lattice_views:
 - id: combinatorialism
   name: Combinatorialism
   description: 'Logical Combinatorialism and its relatives for the signature Σ: Logical Necessity, the
-    witnessed-possibility principles, Modal Freedom, Separated Structure, No Contingency, Maximalism and the
-    Possibility schemata.'
+    witnessed-possibility principles, Modal Freedom, Separated Structure, No Contingency, Maximalism and
+    the Possibility schemata.'
   principles:
   - strong-possibility-signature-r
   - logical-necessity-r
@@ -198,6 +201,29 @@ lattice_views:
   - weak-rigid-comprehension-r
   - rigid-comprehension-r
   - strong-atomicity-r
+- id: finite-type-heights
+  name: Finite-type heights
+  description: F0, SOAN (=F1), F2, full FTN and its invariant strengthening. The paper proves independence
+    at every exact finite height.
+  principles:
+  - finite-type-necessitism
+  - invariant-finite-type-necessitism
+  - finite-type-necessitism-height-zero
+  - second-order-analytic-necessitism
+  - finite-type-necessitism-height-two
+- id: finite-type-mathematics
+  name: Finite types and mathematical necessity
+  description: F0 and SOAN (=F1) with the seven existing mathematical principles. No additional existence
+    assumption.
+  principles:
+  - finite-type-necessitism-height-zero
+  - arithmetic-necessitism
+  - necessity-of-arithmetic
+  - analytic-necessitism
+  - second-order-analytic-necessitism
+  - necessity-of-analysis
+  - necessity-of-second-order-analysis
+  - non-contingency-of-ch
 lean_lib: Classicism
 lean:
   index:
@@ -214,7 +240,8 @@ lean:
     principle: Classicism.Meta.AxiomSet.Entails Ax {def}
     falsum: ¬ Classicism.Meta.AxiomSet.Consistent Ax
   model:
-    binder: '∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧'
+    binder: '∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig),
+      Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧'
     principle: Classicism.Meta.AxiomSet.Entails Ax {def}
   verdict:
     imports:
@@ -234,10 +261,9 @@ lean:
     - Classicism.Models.FixedPointEntranceModel
     holds: ({model}).IsModel ∧ ({model}).HoldsAx {def}
     fails: ({model}).IsModel ∧ ¬ ({model}).HoldsAx {def}
-    relative_categories: [signature]
+    relative_categories:
+    - signature
     relative: ({model}).Admitted
-    # A model with Σ interpreted, built from the record's model of the pure language by its
-    # setting `sigma` (Semantics/Interpretations.lean).
     relative_models:
       setting: sigma
       values:
@@ -249,9 +275,29 @@ lean:
             sigma-top: Classicism.Meta.Intensional.Premodel.withTop_sigmaTop ({is_model})
           given: Classicism.Meta.Intensional.Premodel.holdsAx_interp_ofPure.2 ({proof})
   argument:
-    binder: '∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel Sig C), A.IsModel →'
+    binder: '∀ {Sig : Classicism.Meta.Signature} {C : Type} [CategoryTheory.SmallCategory C] (A : Classicism.Meta.Intensional.Premodel
+      Sig C), A.IsModel →'
     model: A
     condition: '{cond} {model}'
     holds: ({model}).HoldsAx {def}
     fails: ¬ ({model}).HoldsAx {def}
     relative: ({model}).Admitted
+views:
+- id: finite-type-mathematics
+  name: Finite types and mathematical necessity
+  description: FTN, its invariant variant, F0 and F2, the boxed canonical-arithmetic infinity assumption,
+    and the seven existing mathematical principles. F1 is the equivalent formulation of SOAN; arithmetic
+    infinity is an optional assumption.
+  principles:
+  - finite-type-necessitism
+  - invariant-finite-type-necessitism
+  - finite-type-necessitism-height-zero
+  - finite-type-necessitism-height-two
+  - necessary-arithmetic-infinity
+  - arithmetic-necessitism
+  - necessity-of-arithmetic
+  - analytic-necessitism
+  - second-order-analytic-necessitism
+  - necessity-of-analysis
+  - necessity-of-second-order-analysis
+  - non-contingency-of-ch

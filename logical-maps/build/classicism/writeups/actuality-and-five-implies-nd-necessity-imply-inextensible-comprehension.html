@@ -322,59 +322,151 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <link rel="stylesheet" href="../math/katex.min.css">
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
-<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Actuality and the 5-necessity collapse imply Inextensible Comprehension</h1></header><p>Assume Actuality and that 5-necessities are ND-necessary, in the map’s fixed relational type system. The conclusion is Inextensible Comprehension: every relation is coextensive with an inextensible one. The theorem and argument are Cian Dorr’s, found with help from GPT-6 Astra (OpenAI) on 29 October 2026. Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, checked and adapted the text. No independent checker or Lean verification is recorded.</p>
-<p>The argument is the one for <a href="actuality-and-bf-imply-inextensible-comprehension.md">BF and Actuality</a>, with BF replaced by a restricted Barcan formula. That formula is derived from the premises.</p>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Actuality and the 5-necessity collapse imply Inextensible Comprehension</h1></header><p>Assume Actuality and that 5-necessities are ND-necessary, in the
+map’s fixed relational type system. The conclusion is Inextensible
+Comprehension: every relation is coextensive with an inextensible one.
+The theorem and argument are Cian Dorr’s, found with help from GPT-6
+Astra (OpenAI) on 29 October 2026. Claude Opus 5.5 (Anthropic), prompted
+by Cian Dorr, checked and adapted the text. No independent checker or
+Lean verification is recorded.</p>
+<p>The argument is the one for <a
+href="actuality-and-bf-imply-inextensible-comprehension.md">BF and
+Actuality</a>, with BF replaced by a restricted Barcan formula. That
+formula is derived from the premises.</p>
 <h2 id="definitions">Definitions</h2>
-<p><span class="math inline">\Box_{\ne}p:=\exists q\, .\,q\land\Box(\Diamond q\to p)</span>, with dual</p>
+<p><span class="math inline">\Box_{\ne}p:=\exists q\,
+.\,q\land\Box(\Diamond q\to p)</span>, with dual</p>
 <p><span class="math display">
-\Diamond_{\ne}p\ \leftrightarrow\ \forall q\, .\,q\to\Diamond(\Diamond q\land p).
+\Diamond_{\ne}p\ \leftrightarrow\ \forall q\, .\,q\to\Diamond(\Diamond
+q\land p).
 </span></p>
-<p><span class="math inline">\Box_5</span> is necessity under every S5 operator, with dual <span class="math inline">\Diamond_5</span> (Background, Varieties of necessity). C proves <span class="math inline">\Box_{\ne}\le\Box_5</span>. The premise <span class="math inline">\forall p\, .\,\Box_5p\to\Box_{\ne}p</span> therefore makes the two operators coextensive, and so also their duals. Inextensibility and Actuality are as in the BF write-up. Let <span class="math inline">a</span> witness Actuality.</p>
-<h2 id="step-1-actuality-gives-diamond_ne-a-simple-form">Step 1: Actuality gives <span class="math inline">\Diamond_{\ne}</span> a simple form</h2>
-<p>Put <span class="math inline">D_ap:=\Diamond(\Diamond a\land p)</span>. Then</p>
+<p><span class="math inline">\Box_5</span> is necessity under every S5
+operator, with dual <span class="math inline">\Diamond_5</span>
+(Background, Varieties of necessity). C proves <span
+class="math inline">\Box_{\ne}\le\Box_5</span>. The premise <span
+class="math inline">\forall p\, .\,\Box_5p\to\Box_{\ne}p</span>
+therefore makes the two operators coextensive, and so also their duals.
+Inextensibility and Actuality are as in the BF write-up. Let <span
+class="math inline">a</span> witness Actuality.</p>
+<h2 id="step-1-actuality-gives-diamond_ne-a-simple-form">Step 1:
+Actuality gives <span class="math inline">\Diamond_{\ne}</span> a simple
+form</h2>
+<p>Put <span class="math inline">D_ap:=\Diamond(\Diamond a\land
+p)</span>. Then</p>
 <p><span class="math display">
 (1)\qquad \forall p\, .\,D_ap\leftrightarrow\Diamond_{\ne}p.
 </span></p>
-<p>Right to left, take <span class="math inline">q:=a</span>, which is true. Left to right, let <span class="math inline">q</span> be true. Then <span class="math inline">a\le q</span>, so <span class="math inline">\Box(\Diamond a\to\Diamond q)</span> by 4 and K, and <span class="math inline">\Diamond(\Diamond a\land p)</span> gives <span class="math inline">\Diamond(\Diamond q\land p)</span>.</p>
-<h2 id="step-2-the-5-necessity-collapse">Step 2: the 5-necessity collapse</h2>
+<p>Right to left, take <span class="math inline">q:=a</span>, which is
+true. Left to right, let <span class="math inline">q</span> be true.
+Then <span class="math inline">a\le q</span>, so <span
+class="math inline">\Box(\Diamond a\to\Diamond q)</span> by 4 and K, and
+<span class="math inline">\Diamond(\Diamond a\land p)</span> gives <span
+class="math inline">\Diamond(\Diamond q\land p)</span>.</p>
+<h2 id="step-2-the-5-necessity-collapse">Step 2: the 5-necessity
+collapse</h2>
 <p>With the premise, (1) gives</p>
 <p><span class="math display">
 (2)\qquad \forall p\, .\,D_ap\leftrightarrow\Diamond_5p.
 </span></p>
-<p>This is coextensiveness at the actual world only. The argument never needs the operators to be identical or necessarily coextensive.</p>
-<h2 id="step-3-a-barcan-formula-restricted-to-diamond-a">Step 3: a Barcan formula restricted to <span class="math inline">\Diamond a</span></h2>
-<p><span class="math inline">\Box_5</span> obeys the Barcan formula at every type, as a theorem of C. This is Prior’s derivation from B (Background, [[box5-barcan]]). Dually, for tuples, <span class="math inline">\Diamond_5\exists\bar x\, .\,R[\bar x]\to\exists\bar x\, .\,\Diamond_5R[\bar x]</span>.</p>
-<p>Transfer this through (2), applying (2) once to <span class="math inline">\exists\bar x\, .\,R[\bar x]</span> and once to each <span class="math inline">R[\bar x]</span>:</p>
+<p>This is coextensiveness at the actual world only. The argument never
+needs the operators to be identical or necessarily coextensive.</p>
+<h2 id="step-3-a-barcan-formula-restricted-to-diamond-a">Step 3: a
+Barcan formula restricted to <span class="math inline">\Diamond
+a</span></h2>
+<p><span class="math inline">\Box_5</span> obeys the Barcan formula at
+every type, as a theorem of C. This is Prior’s derivation from B
+(Background, [[box5-barcan]]). Dually, for tuples, <span
+class="math inline">\Diamond_5\exists\bar x\, .\,R[\bar x]\to\exists\bar
+x\, .\,\Diamond_5R[\bar x]</span>.</p>
+<p>Transfer this through (2), applying (2) once to <span
+class="math inline">\exists\bar x\, .\,R[\bar x]</span> and once to each
+<span class="math inline">R[\bar x]</span>:</p>
 <p><span class="math display">
 \text{(RB)}\qquad
 \Diamond\exists\bar x\, .\,\Diamond a\land R[\bar x]
 \ \to\ \exists\bar x\, .\,\Diamond(\Diamond a\land R[\bar x]).
 </span></p>
-<p>This holds at the actual world, for every relation <span class="math inline">R</span> and at every type.</p>
+<p>This holds at the actual world, for every relation <span
+class="math inline">R</span> and at every type.</p>
 <h2 id="step-4-inextensibility">Step 4: inextensibility</h2>
-<p>Fix <span class="math inline">F</span> of type <span class="math inline">\bar\sigma t</span> and put <span class="math inline">C:=\lambda\bar z\, .\,\Diamond(a\land F[\bar z])</span>. As in the BF write-up, Actuality makes <span class="math inline">C</span> coextensive with <span class="math inline">F</span>. Suppose <span class="math inline">C</span> is not inextensible. With <span class="math inline">A(X):=\forall\bar y\, .\,C[\bar y]\to\Box X[\bar y]</span>,</p>
+<p>Fix <span class="math inline">F</span> of type <span
+class="math inline">\bar\sigma t</span> and put <span
+class="math inline">C:=\lambda\bar z\, .\,\Diamond(a\land F[\bar
+z])</span>. As in the BF write-up, Actuality makes <span
+class="math inline">C</span> coextensive with <span
+class="math inline">F</span>. Suppose <span class="math inline">C</span>
+is not inextensible. With <span class="math inline">A(X):=\forall\bar
+y\, .\,C[\bar y]\to\Box X[\bar y]</span>,</p>
 <p><span class="math display">
 (3)\qquad \Diamond\exists X\, .\,A(X)\land\Diamond\exists\bar z\, .\,
   C[\bar z]\land\neg X[\bar z].
 </span></p>
 <ol type="1">
-<li><strong>Extract <span class="math inline">X</span>.</strong> The matrix of (3) implies <span class="math inline">\Diamond a</span>. Its second conjunct gives <span class="math inline">\Diamond\Diamond a</span>, since <span class="math inline">C[\bar z]</span> implies <span class="math inline">\Diamond a</span>, and then 4 applies. So (RB), at the type of <span class="math inline">X</span>, gives an <span class="math inline">X</span> with <span class="math display">(4)\qquad\Diamond(\Diamond a\land A(X)\land\Diamond\exists\bar z\, .\,C[\bar z]\land\neg X[\bar z]).</span></li>
-<li><strong>Extract <span class="math inline">\bar z</span>.</strong> By 4, <span class="math inline">\Diamond\exists\bar z\, .\,C[\bar z]\land\neg X[\bar z]</span>. Its matrix implies <span class="math inline">\Diamond a</span>, so (RB) at the types <span class="math inline">\bar\sigma</span> gives <span class="math inline">\bar z</span> with <span class="math inline">\Diamond(C[\bar z]\land\neg X[\bar z])</span>.</li>
-<li><strong>Facts at the actual world.</strong> <span class="math inline">\Diamond C[\bar z]</span> gives <span class="math inline">C[\bar z]</span> by 4, hence <span class="math inline">F[\bar z]</span>; also <span class="math inline">\Diamond\neg X[\bar z]</span>. Actuality gives <span class="math inline">a\le F[\bar z]</span> and <span class="math inline">a\le\Diamond\neg X[\bar z]</span>. By 4 and K, <span class="math display">(5)\qquad\Box(\Diamond a\to C[\bar z]\land\Diamond\neg X[\bar z]).</span></li>
-<li><strong>Contradiction.</strong> (4) gives a world where <span class="math inline">A(X)</span> and <span class="math inline">\Diamond a</span> hold. There, (5) gives <span class="math inline">C[\bar z]</span> and <span class="math inline">\Diamond\neg X[\bar z]</span>. But <span class="math inline">A(X)</span>, instantiated at <span class="math inline">\bar z</span>, gives <span class="math inline">\Box X[\bar z]</span>.</li>
+<li><strong>Extract <span class="math inline">X</span>.</strong> The
+matrix of (3) implies <span class="math inline">\Diamond a</span>. Its
+second conjunct gives <span class="math inline">\Diamond\Diamond
+a</span>, since <span class="math inline">C[\bar z]</span> implies <span
+class="math inline">\Diamond a</span>, and then 4 applies. So (RB), at
+the type of <span class="math inline">X</span>, gives an <span
+class="math inline">X</span> with <span
+class="math display">(4)\qquad\Diamond(\Diamond a\land
+A(X)\land\Diamond\exists\bar z\, .\,C[\bar z]\land\neg X[\bar
+z]).</span></li>
+<li><strong>Extract <span class="math inline">\bar z</span>.</strong> By
+4, <span class="math inline">\Diamond\exists\bar z\, .\,C[\bar
+z]\land\neg X[\bar z]</span>. Its matrix implies <span
+class="math inline">\Diamond a</span>, so (RB) at the types <span
+class="math inline">\bar\sigma</span> gives <span
+class="math inline">\bar z</span> with <span
+class="math inline">\Diamond(C[\bar z]\land\neg X[\bar z])</span>.</li>
+<li><strong>Facts at the actual world.</strong> <span
+class="math inline">\Diamond C[\bar z]</span> gives <span
+class="math inline">C[\bar z]</span> by 4, hence <span
+class="math inline">F[\bar z]</span>; also <span
+class="math inline">\Diamond\neg X[\bar z]</span>. Actuality gives <span
+class="math inline">a\le F[\bar z]</span> and <span
+class="math inline">a\le\Diamond\neg X[\bar z]</span>. By 4 and K, <span
+class="math display">(5)\qquad\Box(\Diamond a\to C[\bar
+z]\land\Diamond\neg X[\bar z]).</span></li>
+<li><strong>Contradiction.</strong> (4) gives a world where <span
+class="math inline">A(X)</span> and <span class="math inline">\Diamond
+a</span> hold. There, (5) gives <span class="math inline">C[\bar
+z]</span> and <span class="math inline">\Diamond\neg X[\bar z]</span>.
+But <span class="math inline">A(X)</span>, instantiated at <span
+class="math inline">\bar z</span>, gives <span class="math inline">\Box
+X[\bar z]</span>.</li>
 </ol>
-<p>So <span class="math inline">C</span> is inextensible and coextensive with <span class="math inline">F</span>.</p>
+<p>So <span class="math inline">C</span> is inextensible and coextensive
+with <span class="math inline">F</span>.</p>
 <h2 id="remarks">Remarks</h2>
 <ul>
-<li><strong>What replaces BF.</strong> BF is used in the earlier proof only to bring quantifiers out from under a possibility. Every such possibility there is compatible with <span class="math inline">\Diamond a</span>, so the restricted form (RB) is enough.
+<li><strong>What replaces BF.</strong> BF is used in the earlier proof
+only to bring quantifiers out from under a possibility. Every such
+possibility there is compatible with <span class="math inline">\Diamond
+a</span>, so the restricted form (RB) is enough.
 <ul>
-<li>(RB) follows from the 5-necessity collapse at the actual world, because <span class="math inline">\Box_5</span> satisfies the Barcan formula outright.</li>
+<li>(RB) follows from the 5-necessity collapse at the actual world,
+because <span class="math inline">\Box_5</span> satisfies the Barcan
+formula outright.</li>
 </ul></li>
-<li><strong>The boxed version.</strong> It follows by necessitating the theorem, since the premises are used only at finitely many closed instances.</li>
-<li><strong>Consequences on the map.</strong> Self-Atomicity and Strong Atomicity, at type <span class="math inline">t</span> or at every type, give Actuality and the 5-necessity collapse through the recorded results. So they now give Inextensible Comprehension.</li>
+<li><strong>The boxed version.</strong> It follows by necessitating the
+theorem, since the premises are used only at finitely many closed
+instances.</li>
+<li><strong>Consequences on the map.</strong> Self-Atomicity and Strong
+Atomicity, at type <span class="math inline">t</span> or at every type,
+give Actuality and the 5-necessity collapse through the recorded
+results. So they now give Inextensible Comprehension.</li>
 </ul>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Background: The Bounds of Possibility.</strong> Dorr, Cian, John Hawthorne, and Juhani Yli-Vakkuri (2021). The Bounds of Possibility. Oxford University Press. Appendix D, Narrower Modalities in Higher-Order S4, pp. 400–409; locators follow the OUP corrected proof dated 9 May 2024. Its background logic HS4 (a primitive S4 operator over higher-order logic) is read into C by interpreting the primitive box as <span class="math inline">\lambda p\, .\,p=\top</span>, under which every theorem of HS4 is a theorem of C. — Appendix D, pp. 400–409. The 5-necessity operator.</li>
+<li><strong>Background: The Bounds of Possibility.</strong> Dorr, Cian,
+John Hawthorne, and Juhani Yli-Vakkuri (2021). The Bounds of
+Possibility. Oxford University Press. Appendix D, Narrower Modalities in
+Higher-Order S4, pp. 400–409; locators follow the OUP corrected proof
+dated 9 May 2024. Its background logic HS4 (a primitive S4 operator over
+higher-order logic) is read into C by interpreting the primitive box as
+<span class="math inline">\lambda p\, .\,p=\top</span>, under which
+every theorem of HS4 is a theorem of C. — Appendix D, pp. 400–409. The
+5-necessity operator.</li>
 </ul>
 </body></html>

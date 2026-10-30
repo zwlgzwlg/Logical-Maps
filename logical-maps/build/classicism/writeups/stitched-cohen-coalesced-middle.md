@@ -140,6 +140,11 @@ entity.
   - So $W$ has two instances, and a ground coordinate test at $s$ splits it.
 - **No ND at type $t$.** $\{1_r\}$ and $\bot$ are distinct at $r$, but both become $\bot$ at $s$.
 
+
+## Type clarification
+
+OpenAI Codex, prompted by Daniel Kodsi, 30 October 2026. In the Boolean Completeness failure argument above, the represented family has type $(et)t$, while its members and the hypothetical join $J$ have type $et$. Thus the displayed witness refutes Boolean Completeness at $et$, as the model record states. The heading's $(et)t$ identifies the family type, not the type of the Boolean algebra. The original argument and its verdicts are unchanged.
+
 ## Paper references
 
 - **Background: Continuum Contingency.** Barton, Neil, and Zachary Goodsell. Continuum Contingency. Draft dated 14 October 2026, 47 pages. Stitches a ground model of set theory to the canonical model of a forcing extension to show that Classicism with □Rigid Comprehension, □Relational Choice and an axiom of infinity is consistent with first- and second-order continuum contingency, together with □Atomicity at type t (Theorem 21) or with Recombination (Theorem 22, which refutes Atomicity at type t, Corollary 23); formalizes the coin-toss argument (Theorem 9). Read directly on 19 October 2026; locators refer to this draft. — §7.1; §8, Definition 1. The stitching construction, here applied over a coalesced sum and with invariantly named rather than ground-definable elements.

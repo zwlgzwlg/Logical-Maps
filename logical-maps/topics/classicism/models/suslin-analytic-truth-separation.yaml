@@ -1,0 +1,62 @@
+id: suslin-analytic-truth-separation
+name: Suslin-tree analytical truth with Analytic Necessitism and necessary CH
+definition: Relative to Con(ZFC), take an ordinary countable M of ZFC+CH+SH. Internally let P be Jech's
+  all-countable-length regular-graph forcing, A=RO(P), B=2 x A, D_e=omega^M, and take the internally full
+  typed Boolean hierarchy. Evaluate at the isolated first coordinate. Countable closure adds no reals
+  and preserves CH, while Jech's theorem supplies a Suslin tree in the forcing interpretation. The construction
+  does not require a transitive or externally well-founded ground model.
+certificate:
+  source_id: misc
+  produced_by: Daniel Kodsi, with ChatGPT assistance
+  recorded_by: ChatGPT, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- Daniel Kodsi, with ChatGPT assistance, Suslin-tree truth with Analytic Necessitism and necessary CH,
+  30 October 2026, Sections 1–8 (unpaginated); explicit typed sentence and exact joint separation.
+- Tomas Jech, Non-provability of Souslin's hypothesis, Commentationes Mathematicae Universitatis Carolinae
+  8(2) (1967), 291–305, Sections 2.3, 4.2–4.3, Lemmas 4.7–4.8 and Sections 4.18–4.19; original forcing
+  theorem.
+- Keith Devlin and Havard Johnsbraten, The Souslin Problem, Lecture Notes in Mathematics 405 (1974), chapter
+  Con(ZF) -> Con(ZFC+GCH+SH), pp. 113–121, DOI 10.1007/BFb0065989; Jensen's consistency theorem, invoked
+  rather than re-proved.
+- Andrew Bacon, Boolean-valued construction; Daniel Kodsi with AI assistance, prior Boolean interpretation,
+  full-name transfer, and all-type Analytic Necessitism/no-new-reals analysis, as explained in the accompanying
+  writeup and the existing repeated-forcing writeup.
+source_names:
+- Kodsi / ChatGPT, 30 Oct
+- Jech 1967
+- Devlin–Johnsbraten 1974
+- Bacon / Kodsi Boolean interpretation
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Section 1.3
+  note: The fixed C framework and Logical Equivalence.
+arguments:
+- id: an-necessary-ch-and-variable-analytical-truth
+  holds:
+  - analytic-necessitism
+  - non-contingency-of-ch
+  fails:
+  - necessity-of-second-order-analysis
+  by: Daniel Kodsi, with ChatGPT assistance
+  date: '2026-10-30'
+  choice: uses
+  writeup: suslin-analytic-truth-separation
+  text: No new reals, together with the all-type capacity argument, supplies rigid necessarily complete
+    real fields at every carrier where a field is possible. CH holds in the ground and is forced, so the
+    positive boxed universal CH alternative holds at every carrier, including fields real only on a proper
+    Boolean support. At et a fixed endpoint-coded field R0 has Real value (1,1_A), while the finite unary/binary
+    sentence ST expressing Suslin-tree existence has value (0,1_A). Instantiation at R0 bounds the two
+    native universal matrices by (0,1_A) and (1,0_A), respectively. Both are proper values, so both native
+    top-test boxes fail. Sections 1–7 give the construction, transfer, all-type AN proof and exact boxed-universal
+    calculation.
+notes: One relative-consistency model with exactly two positive seeds and one negative seed. Necessary
+  positive CH is stronger formula metadata, not an additional node. The negative is one failed Necessity
+  of Second-Order Analysis instance at et, not a failure at every carrier or a necessary failure. The
+  necessarily real field makes the failure nonvacuous. No SOAN, Boolean-completeness, choice, Strong Possibility
+  or unrelated model flags are imported. The same model ID replaces any conditional predecessor rather
+  than supplementing it. Classical consistency/forcing and inherited Boolean semantics retain their credits.
+  No independent human check, formal verification or literature-wide novelty claim is made.

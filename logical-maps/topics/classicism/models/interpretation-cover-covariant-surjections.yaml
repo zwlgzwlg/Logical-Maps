@@ -1,0 +1,101 @@
+id: interpretation-cover-covariant-surjections
+name: 'Interpretation cover: covariant surjections'
+definition: >-
+  In ZFC, take a set-sized family of faithful pointed C action models witnessing every
+  C-consistent pure sentence, using the same action-model-existence input as the
+  interpretation-root construction. Retain their objects, domains, arrows and semantics.
+  Choose an infinite auxiliary name set C_sigma at each admitted type, large enough for
+  the constants of a prescribed set-sized free signature Sigma. Add a root with individuals
+  C_e, all typewise surjections of the name sets as loops, all typewise permutations as
+  designated symmetries, and every typed interpretation of names as an arrow to each old
+  object. There are no old-to-root arrows. At each relational type admit exactly the
+  profiles pinned by finitely many typed names, covariant under postcomposition by every
+  root permutation, and landing as a whole admitted entity at every old interpretation.
+  Rows use the full argument domains of their targets; transport is precomposition.
+  Interpret individual constants by distinct designated names and relational constants
+  by their named lifts with empty root rows and the assigned old sections. Evaluate at
+  the root identity.
+certificate:
+  source_id: misc
+  produced_by: Daniel Kodsi, with ChatGPT assistance, after the interpretation-cover and symmetric-surjection methods credited below
+  recorded_by: GPT-6 Astra (OpenAI), prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- Daniel Kodsi, with ChatGPT assistance, Covariant surjections and inextensible coextensions, 30 October 2026, construction and proofs reproduced in the companion write-up, Sections 1–7.
+- Cian Dorr, interpretation-root construction, with the whole-landing correction supplied by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 19 October 2026; coalesced-pinned-interpretations-root write-up.
+- Claude Opus 5.5 (Anthropic), prompted and checked by Cian Dorr, all-relational-type Inextensible Comprehension for symmetric-all-surjections, 27 September 2026, injectivity-mask and tuple-preimage argument.
+- OpenAI Codex, prompted by Daniel Kodsi, Observer covers and Boolean completeness, 26 October 2026, Sections 2–3 and 8, typed names, whole landing and complete interpretation covers.
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, pp. 73–79, and Appendix E, pp. 80–83.
+source_names:
+- Covariant cover 30 Oct
+- Dorr interpretation root
+- Symmetric-surjection IC 27 Sep
+- Kodsi interpretation covers
+- Classicism
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, pp. 73–79; Appendix E, pp. 80–83
+  note: Action-model semantics and interpretation roots.
+arguments:
+- id: named-maximalism
+  holds: [distinctness-signature-r]
+  by: Daniel Kodsi, with ChatGPT assistance
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-covariant-surjections
+  text: >-
+    Every pure C-consistent sentence retains its old witness. For a C(Sigma)-consistent
+    sentence, replace its finitely many constants by variables and existentially close;
+    choose the corresponding old witness and assign its values to those names. Named lifts
+    land as exactly the assigned whole entities. This gives fixed-signature Max, and pure
+    Max follows. The reference theory is C(Sigma), without optional root assumptions.
+- id: atomlessness
+  holds: [atomlessness]
+  by: Daniel Kodsi, with ChatGPT assistance
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-covariant-surjections
+  text: >-
+    A nonbottom proposition with a root-loop truth splits by the admitted equality cylinder
+    on two fresh individual names: finite prescriptions extend to surjections both identifying
+    and separating them while preserving the proposition's pin. If its truth is only at an
+    old interpretation, vary a fresh propositional name between old Top and Bottom. Its named
+    lift splits the proposition. Both intersections are nonbottom.
+- id: inextensible-coextensions
+  holds: [inextensible-comprehension-r]
+  by: Daniel Kodsi, with ChatGPT assistance, extending the injectivity-mask argument of Claude Opus 5.5 (Anthropic), prompted by Cian Dorr
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-covariant-surjections
+  text: >-
+    For X pinned by S, let delta_S mean that the root loop is injective on S and be Bottom
+    at every old target. The admitted relation Y=delta_S and X coextends X. A loop fixing S
+    lifts any tuple through a permutation fixing S; covariance keeps that lift inside X's
+    current extension. Normalizing any loop injective on S proves weak inextensibility of Y
+    against every admitted test. Collapsing loops and all old entrances send Y to Bottom;
+    other loops send it to the same construction on the image pin. Thus Y is necessarily
+    weakly inextensible. This proves current comprehension at every relational arity,
+    including the empty tuple, with the required box inside Inextensible(Y).
+- id: barcan
+  holds: [barcan-r]
+  by: Daniel Kodsi, with ChatGPT assistance
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-covariant-surjections
+  text: >-
+    A root-loop witness has an exact preimage by the finite-pin permutation lift. At an old
+    target, assign an arbitrary witness to one fresh name outside the predicate's pin; the
+    changed interpretation has the same predicate row and the current named lift reaches
+    the witness. These two cases prove the dual Barcan schema at every admitted type.
+notes: >-
+  One relative construction supplies this joint package. The action-model-existence input
+  is inherited from the interpretation covers, not proved anew. The whole old components
+  and their quantified domains are unchanged. The recorded comprehension and BF schemata
+  are unboxed; no Boolean Completeness, Forcing Possibilism, Strong Possibility or choice
+  verdict is added. Full typed permutation covariance is essential to the within-extension
+  tuple lift. A larger signature may require larger auxiliary name sets. Mathematical
+  review was carried out with ChatGPT assistance; no independent human check or Lean proof
+  is recorded.

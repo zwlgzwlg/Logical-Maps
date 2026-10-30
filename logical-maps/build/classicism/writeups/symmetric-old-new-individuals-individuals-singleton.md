@@ -4,6 +4,7 @@
 
 ## Package
 
+- **□Transversal Choice.** Necessarily, every equivalence relation, at any type including e, has a transversal, that is, a property with exactly one instance in each of its cells.
 - **□Self-atoms are atoms.** Necessarily, at each relational type, every self-atom is an atom.
 - **□Self-atoms are strong atoms.** Necessarily, at each relational type, every self-atom is a strong atom: it necessarily entails every entity of the type or its negation.
 - **□Strong Actuality.** Necessarily, there is a true strong atom: a true proposition that necessarily entails every proposition or its negation.
@@ -41,6 +42,12 @@ Interpretation of Σ, fixed for this record: every constant of Σ is relational,
 *A member of the group Symmetric ideally-full models, which supplies this definition with the record's settings, and the arguments marked as shared.*
 
 ## Arguments
+
+### Holds □Transversal Choice.
+
+At both objects every type domain is finite and every designated symmetry acts trivially. Inductively, finitely pinned intensions are constant on each arrow kind: a target symmetry matches any two arrows of that kind on their finite pinning set. At E there are two outgoing kinds; at O there are three, and composition preserves kinds. Each intension is therefore a finite list of subsets of finite tuple domains, and source symmetries fix that list. For an actual equivalence relation choose one element from each of its finitely many cells and represent the transversal by a finite disjunction of equalities. This works at every admitted type at both E and O, proving boxed Transversal Choice. Boxed Relational Choice is derived from the existing boxed TC-to-RC theorem and is not duplicated here. Original proof: OpenAI Codex, prompted by Daniel Kodsi, singleton applications §3, 22 October 2026, unpaginated; direct source misc. Only finite choice is used.
+
+*Write-up: [symmetric-singleton-relational-choice](symmetric-singleton-relational-choice.html). Address: `symmetric-old-new-individuals-individuals-singleton#singleton-necessary-transversal-choice`. By OpenAI Codex, prompted by Daniel Kodsi, 2026-10-30.*
 
 ### Holds □Self-atoms are atoms, □Self-atoms are strong atoms.
 
@@ -154,6 +161,7 @@ Found by Claude Fable 5.1 as a countermodel to a principle from another context,
 
 ## Sources
 
+- **Singleton choice verdicts (22 Oct 2026)** — OpenAI Codex, prompted by Daniel Kodsi, Singleton-individual variants: direct choice verdicts from the stabilizer theorem, 22 October 2026, §§1–4, unpaginated; Relational Choice forces Transversal Choice in symmetric ideally-full map categories, §§1–2, same date, unpaginated.
 - **Fable 5.1, 6 Oct** — Claude Fable 5.1 (Anthropic), prompted by Cian Dorr, 6 October 2026, in a session with Cian Dorr, as a countermodel to a principle (“Frex*”) from another context; it satisfies □Strong Actuality and refutes Inextensible Comprehension.
 - **Opus 5.5, 6 Oct** — Claude Opus 5.5 (Anthropic), 6 October 2026, at Cian Dorr's direction; the corrected argument for the failure of Inextensible Comprehension, and the verdicts on ND, Atomicity, Boolean Completeness, BF and Strong Atomicity; see the write-up.
 - **BC does not imply RC** — Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, Definitions 15–18, p. 8; Proposition 20 (symmetric ideally-full models are models of C).

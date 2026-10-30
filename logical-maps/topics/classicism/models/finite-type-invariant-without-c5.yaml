@@ -1,0 +1,39 @@
+id: finite-type-invariant-without-c5
+name: 'Finite two-point model: invariant FTN without C5'
+definition: Use the full two-point construction of Finite-Type Necessitism, Section 6.1, equations (6.1)–(6.4),
+  with A=B={*}. Evaluate at the root. The finite-type guide states the common construction; Appendix A
+  gives this specialization.
+certificate:
+  source_id: kodsi-finite-type-necessitism-2026
+  produced_by: Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI)
+  recorded_by: ChatGPT, at Daniel Kodsi’s request
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- 'Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI), Finite-Type Necessitism: Arithmetic, analysis,
+  and mathematical non-contingency, 30 October 2026, 12-page revision including Appendix A. Appendix A,
+  after Theorem A.1'
+source_names:
+- Kodsi, Finite-Type Necessitism (30 Oct 2026)
+references:
+- paper: kodsi-finite-type-necessitism-2026
+  role: proof
+  locator: Appendix A, after Theorem A.1
+  note: Supplied 12-page paper; the PDF and LaTeX source are included with this contribution.
+arguments:
+- id: paper-verdicts
+  holds:
+  - invariant-finite-type-necessitism
+  fails:
+  - necessary-distinctness-necessary-r
+  by: Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI)
+  date: '2026-10-30'
+  choice: uses
+  writeup: finite-type-non-contingency-guide
+  text: Every finite-type domain at each point is finite, so no Peano presentation is possible and every
+    invariant FTN instance is vacuous. Nevertheless the native two-point modality falsifies necessary
+    5, equivalently C5.
+notes: This is the counterexample to dropping the activation guard in Theorem A.1. [Paper (PDF)](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.pdf);
+  [LaTeX source](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.tex).
+  No independent human verification or Lean proof is claimed.

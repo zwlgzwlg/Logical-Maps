@@ -1,0 +1,41 @@
+id: finite-height-separation-2
+name: 'Finite-height independence: omit height 2'
+definition: Use the full two-point model of Finite-Type Necessitism, Sections 6.1–6.2, with A⊆B, |A|=beth_1
+  and |B|=beth_2, evaluated at the root. Individual transport is inclusion; relational domains, paired-profile
+  operations and full quantifiers are exactly equations (6.1)–(6.3). The common construction is given
+  once in the linked finite-type guide and in the paper.
+certificate:
+  source_id: kodsi-finite-type-necessitism-2026
+  produced_by: Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI)
+  recorded_by: ChatGPT, at Daniel Kodsi’s request
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- 'Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI), Finite-Type Necessitism: Arithmetic, analysis,
+  and mathematical non-contingency, 30 October 2026, 12-page revision. Theorem 6.1
+  and Corollary 6.2'
+source_names:
+- Kodsi, Finite-Type Necessitism (30 Oct 2026)
+references:
+- paper: kodsi-finite-type-necessitism-2026
+  role: proof
+  locator: Theorem 6.1 and Corollary 6.2
+  note: Supplied 12-page paper; the PDF and LaTeX source are included with this contribution.
+arguments:
+- id: paper-verdicts
+  holds:
+  - finite-type-necessitism-height-zero
+  - second-order-analytic-necessitism
+  fails:
+  - finite-type-necessitism-height-two
+  by: Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI)
+  date: '2026-10-30'
+  choice: uses
+  writeup: finite-type-non-contingency-guide
+  text: 'Theorem 6.1 with j=2 gives every exact height except 2: the individual-type capacity is the only
+    obstruction; every relational-type instance holds by the projection-section argument. F0 and SOAN
+    (=F1) hold, hence all seven existing principles. F2 fails, so full FTN fails (Corollary 6.2).'
+notes: This is one instance of the single arbitrary-height construction, not a separate construction or
+  a replacement for the general theorem. [Paper](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.pdf),
+  Theorem 6.1 and Corollary 6.2; [shared construction and guide](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/writeups/finite-type-non-contingency-guide.md).

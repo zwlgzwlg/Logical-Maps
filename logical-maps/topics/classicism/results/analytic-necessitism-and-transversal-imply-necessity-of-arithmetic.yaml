@@ -1,0 +1,39 @@
+id: analytic-necessitism-and-transversal-imply-necessity-of-arithmetic
+premises:
+- analytic-necessitism
+- transversal-r
+conclusion: necessity-of-arithmetic
+status: proved
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, Current Transversal supplies a literal real field, 30 October
+  2026, §§7–8; Nonvacuous Analytic Necessitism forces Arithmetic Necessitism, 30 October 2026, Arithmetical truth
+  corollary. Both unpaginated.
+- Zachary Goodsell, Arithmetic is Necessary, draft of 5 June 2024, Definitions 3–8 and Theorem 9, pp.
+  19–21; the I implies I* argument is Lemma 5 of the accompanying native write-up for Countable Boolean
+  Completeness implies Necessity of Arithmetic.
+- Claude Fable 5.1 (Anthropic), prompted by Zachary Goodsell, Analytic Necessitism implies the Necessity
+  of Analysis, 23 October 2026, Lemmas 1–2 (unpaginated), after Barton and Goodsell, Continuum Contingency,
+  Theorem 7, and Bacon, Could the truths of mathematics have been different?, Lemmas C.1 and C.3.
+source_names:
+- Current Transversal and arithmetic truth 30 Oct
+- Arithmetic is Necessary
+- Given-field analytical stability 23 Oct
+proof: See the write-up. Fix a counting type sigma and an arithmetic sentence A. If current I_sigma fails,
+  S4 makes it necessarily false and both guarded disjuncts hold. Otherwise the C theorem I_sigma implies
+  I*_sigma and one current Transversal instance give a current real field at rho=((sigma t)t)t. ANA at
+  that same host supplies a rigid necessarily-real tuple. Current relational Peano matching preserves
+  the canonical Sum and Prod graphs, so a discharged C theorem identifies A, under I*_sigma, with its
+  first-order analytical translation on the field naturals. Necessitate this theorem, use the necessary
+  real-field condition and I implies I*, and combine with stability of the translated sentence on the
+  given rigid field. This yields exactly Box(I_sigma implies A) or Box(I_sigma implies not A).
+notes: The truth guard is I_sigma=Diamond I*_sigma inside each box; no Box I*_sigma premise is used. AN
+  and Transversal are current. No optional premise or chosen selector is necessitated. The separate Arithmetic
+  Necessitism implication keeps its own Box I*_sigma guard. No implication from bare AN or bare Transversal
+  is asserted.

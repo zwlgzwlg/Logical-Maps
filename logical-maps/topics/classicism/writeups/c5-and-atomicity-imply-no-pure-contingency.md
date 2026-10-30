@@ -129,6 +129,15 @@ Logical Equivalence, $F$ commutes with each of them, and $F\bot=\bot$.
 
 ## 4. Conjugation to all types
 
+**Typing convention.** At the individual type, $F^*_e x$ below is the metalinguistic
+abbreviation $x$, not the application of an object-language operator of type $ee$.
+The displayed $F^*_e:=\lambda x\, .\,x$ is schematic notation for that convention;
+only the $F^*_\sigma$ with $\sigma\ne e$ are admitted terms. In particular the
+arrow clause with individual domain reads
+$F^*_{e\tau}X:=\lambda x^e\, .\,F^*_\tau(Xx)$, which has an admitted type.
+Use the same abbreviation throughout Lemmas 5–7: the individual case is just
+$x=x$, and no quantification or abstraction of type $ee$ is needed.
+
 Define closed terms $F^*_\sigma:\sigma\to\sigma$ (with parameters $w,w'$) by
 recursion on the type:
 

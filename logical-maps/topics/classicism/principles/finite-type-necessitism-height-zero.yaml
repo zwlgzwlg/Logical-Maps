@@ -1,0 +1,34 @@
+id: finite-type-necessitism-height-zero
+name: 'Finite-Type Necessitism: height 0'
+category: mathematical-contingency
+statement: The exact height-0 fragment of Finite-Type Necessitism, at every carrier type. A possible Peano
+  presentation has a rigid realization at the same type, with its full rigid represented power.
+formal: $\Diamond\exists\mathcal A\,\operatorname{Arith}^{\tau}_0(\mathcal A)\ \to\ \exists\mathcal A\,[\operatorname{Arith}^{\tau}_0(\mathcal
+  A)\land\operatorname{RigidStr}(\mathcal A)\land\operatorname{RepPower}_1(\mathsf P(X_0),X_0)]\qquad(n=0)$
+definitions: $\operatorname{Arith}^{\tau}_n(\mathcal A):=\operatorname{Peano}(X_0,z,S)\land\bigwedge_{i<n}\operatorname{Pow}(X_i,X_{i+1},E_i)$.
+  All $X_i$ have type $\tau t$, $z$ has type $\tau$, and $S,E_i$ have type $\tau\tau t$. $\operatorname{Pow}(X,Y,E)$
+  says that $E$ is supported on $X\times Y$ and $\forall F^{\tau t}\exists!y\in Y\,\forall x\in X\,(E(x,y)\leftrightarrow
+  Fx)$. The levels may overlap. $\operatorname{RigidStr}$ requires rigid carriers and relations, and necessary
+  distinctness of carrier members. $\mathsf P(X):=\lambda B\,(\operatorname{Rigid}(B)\land B\le X)$, with
+  necessary inclusion. $\operatorname{RepPower}_1(Q,X)$ is the existing full rigid represented-power formula.
+  The extra power has its native predicate type and need not fit into $\tau$. Types and finite heights
+  are metalinguistic schema indices. Necessary correctness of the hierarchy is a consequence (Lemma 2.3),
+  not an added hypothesis or conjunct.
+date: '2026-10-30'
+sources:
+- 'Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI), Finite-Type Necessitism: Arithmetic, analysis,
+  and mathematical non-contingency, 30 October 2026, 12-page revision. Definition
+  1.1; Theorem 6.1 and Corollary 6.2; Theorems 3.1 and 4.4'
+source_names:
+- Kodsi, Finite-Type Necessitism (30 Oct 2026)
+references:
+- paper: kodsi-finite-type-necessitism-2026
+  role: proof
+  locator: Definition 1.1; Theorem 6.1 and Corollary 6.2; Theorems 3.1 and 4.4
+  note: Supplied 12-page paper; the PDF and LaTeX source are included with this contribution.
+about: '[Read the paper (PDF)](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.pdf)
+  · [LaTeX source](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.tex).
+  Daniel Kodsi suggestion, with assistance from GPT-6 Astra (OpenAI).'
+notes: $F_0$ entails Arithmetic Necessitism, Necessity of Arithmetic and Necessity of Analysis. It is
+  incomparable with $F_1$ (equivalently SOAN) and does not entail Analytic Necessitism. See [the finite-type
+  guide](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/writeups/finite-type-non-contingency-guide.md).

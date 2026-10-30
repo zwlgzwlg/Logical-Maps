@@ -8,6 +8,7 @@ certificate:
   checked_by: []
   date: '2026-10-06'
 sources:
+- "OpenAI Codex, prompted by Daniel Kodsi, Singleton-individual variants: direct choice verdicts from the stabilizer theorem, 22 October 2026, \xA7\xA71\u20134, unpaginated; Relational Choice forces Transversal Choice in symmetric ideally-full map categories, \xA7\xA71\u20132, same date, unpaginated."
 - Claude Fable 5.1 (Anthropic), prompted by Cian Dorr, 6 October 2026, in a session with Cian Dorr, as a countermodel to a principle
   (“Frex*”) from another context; it satisfies □Strong Actuality and refutes Inextensible Comprehension.
 - Claude Opus 5.5 (Anthropic), 6 October 2026, at Cian Dorr's direction; the corrected argument for the
@@ -19,6 +20,7 @@ sources:
   research note of 22 October 2026 (unpaginated), in Daniel Kodsi's submission of 24 October 2026 (branch
   classicism-results-2026-10-24 of github.com/dkodsi/Logical-Maps); the correction of Boolean Completeness.
 source_names:
+- Singleton choice verdicts (22 Oct 2026)
 - Fable 5.1, 6 Oct
 - Opus 5.5, 6 Oct
 - BC does not imply RC
@@ -58,6 +60,28 @@ meets:
     into $E$, $G_O$ and $K$, the last two separated by whether the arrow sends a given new individual
     to a new one.
 arguments:
+- id: singleton-necessary-transversal-choice
+  when: {individuals: singleton}
+  holds: [necessary-transversal-choice-r]
+  by: OpenAI Codex, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: free
+  writeup: symmetric-singleton-relational-choice
+  text: >-
+    At both objects every type domain is finite and every designated symmetry
+    acts trivially. Inductively, finitely pinned intensions are constant on each
+    arrow kind: a target symmetry matches any two arrows of that kind on their
+    finite pinning set. At E there are two outgoing kinds; at O there are three,
+    and composition preserves kinds. Each intension is therefore a finite list
+    of subsets of finite tuple domains, and source symmetries fix that list.
+    For an actual equivalence relation choose one element from each of its
+    finitely many cells and represent the transversal by a finite disjunction
+    of equalities. This works at every admitted type at both E and O, proving
+    boxed Transversal Choice. Boxed Relational Choice is derived from the
+    existing boxed TC-to-RC theorem and is not duplicated here. Original proof:
+    OpenAI Codex, prompted by Daniel Kodsi, singleton applications §3,
+    22 October 2026, unpaginated; direct source misc. Only finite choice is used.
+
 - holds:
   - necessary-self-atoms-are-atoms-r
   - necessary-self-atoms-are-strong-atoms-r

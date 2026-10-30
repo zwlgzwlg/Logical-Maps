@@ -1,0 +1,35 @@
+id: necessary-arithmetic-infinity
+name: Necessary arithmetic infinity
+category: mathematical-contingency
+statement: Necessarily, the canonical successor at type rho never takes a number to zero and is injective
+  on the canonical numbers. One instance for each finite source type rho.
+formal: $\Box I^*_{\rho}$
+definitions: $\mathbb N_\sigma$ is the least property containing the canonical zero $0_\sigma$ and closed
+  under the canonical successor $S_\sigma$, at number type $\nu_\sigma=(\sigma t)t$. Write $I^*_\sigma:=(\forall
+  a\in\mathbb N_\sigma\,S_\sigma a\ne0_\sigma)\land(\forall a,b\in\mathbb N_\sigma\,(S_\sigma a=S_\sigma
+  b\to a=b))$. The type letter $\rho$ is a metalinguistic schema index over all finite types, not an object-language
+  quantifier.
+date: '2026-10-30'
+sources:
+- 'Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI), Finite-Type Necessitism: Arithmetic, analysis,
+  and mathematical non-contingency, 30 October 2026, 12-page revision. Section 3, pp. 4–5.'
+source_names:
+- Kodsi, Finite-Type Necessitism, Section 3
+references:
+- paper: kodsi-finite-type-necessitism-2026
+  role: formulation
+  locator: Section 3, equation (3.1) and the antecedent in equation (3.3), pp. 4–5
+aliases:
+- Box I*
+- Necessary canonical-arithmetic infinity
+about: This node is the boxed canonical-arithmetic assumption $\Box I^*_{\rho}$ itself. It is an optional
+  assumption, not a theorem of Classicism and not the conditional $\Box I^*_{\rho}\to\Box I^*_{et}$. The
+  latter remains a supporting transfer lemma in Section 3 of the paper. The node introduces no additional
+  conjunct about rigidity or necessary distinctness. [Statement and scope](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/writeups/necessary-arithmetic-infinity.md).
+  [Paper (PDF)](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.pdf)
+  · [LaTeX source](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.tex).
+notes: The type letter is a metalinguistic schema index, not an existential quantifier over types. Do
+  not identify this formula with necessary quantified individual Infinity, or with Arithmetic Necessitism,
+  whose consequent asserts rigidity and necessary distinctness conditional on this assumption. No empty-premise
+  theorem or automatic model verdict is assigned to this node. This entry records an existing canonical-arithmetic
+  assumption; it is not attributed as a new FTN proposal.

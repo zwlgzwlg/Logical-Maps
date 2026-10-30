@@ -1,19 +1,15 @@
 id: second-order-analytic-necessitism
 name: Second-Order Analytic Necessitism
 category: mathematical-contingency
-statement: >-
-  If there could be a real number structure, there is a rigid one, necessarily a real number structure,
-  together with represented powers of every arity up to $n$: rigid properties of rigid relations among
-  the structure's elements that necessarily represent every relation on them. One sentence for each type
-  $\sigma$ and each $n\ge1$.
-formal: >-
-  $\Diamond\exists\mathfrak R\, .\,\operatorname{Real}_\sigma(\mathfrak R)\;\to\;
-  \exists\mathfrak R\,\mathcal P_1\cdots\mathcal P_n\, .\,\operatorname{RigidStr}(\mathfrak R)\land
-  \Box\operatorname{Real}_\sigma(\mathfrak R)\land\textstyle\bigwedge_{k\le n}
-  \operatorname{RepPower}_k(\mathcal P_k,X)$
-definitions: >-
-  See Background, Analysis, for $\operatorname{RigidStr}$ and $\operatorname{RepPower}_k$. A
-  represented power of arity $k$ is a rigid property of rigid $k$-ary relations among the structure's
+statement: 'If there could be a real number structure, there is a rigid one, necessarily a real number
+  structure, together with represented powers of every arity up to $n$: rigid properties of rigid relations
+  among the structure''s elements that necessarily represent every relation on them. One sentence for
+  each type $\sigma$ and each $n\ge1$.'
+formal: $\Diamond\exists\mathfrak R\, .\,\operatorname{Real}_\sigma(\mathfrak R)\;\to\; \exists\mathfrak
+  R\,\mathcal P_1\cdots\mathcal P_n\, .\,\operatorname{RigidStr}(\mathfrak R)\land \Box\operatorname{Real}_\sigma(\mathfrak
+  R)\land\textstyle\bigwedge_{k\le n} \operatorname{RepPower}_k(\mathcal P_k,X)$
+definitions: See Background, Analysis, for $\operatorname{RigidStr}$ and $\operatorname{RepPower}_k$.
+  A represented power of arity $k$ is a rigid property of rigid $k$-ary relations among the structure's
   elements such that, necessarily, every $k$-ary relation agrees on those elements with one of them. A
   rigid continuum does not fix which of its subproperties and relations exist; this adds that they too
   are fixed.
@@ -33,19 +29,50 @@ references:
   role: origin
   locator: §5.8, eqs. (33)–(35); §5.9, Theorem 7
   note: Their Second-Order Continuum Necessitism adds to the first-order principle that the property of
-    rigid properties of reals is rigid with necessarily distinct instances; under Rigid Comprehension that
-    property is a represented power of arity one, and relations reduce to properties by pairing.
-about: >-
-  The entity-level counterpart of the Necessity of Second-Order Analysis. Representation is asked up to
-  agreement on the structure's elements, which is all that analytical sentences can see (Bacon's
+    rigid properties of reals is rigid with necessarily distinct instances; under Rigid Comprehension
+    that property is a represented power of arity one, and relations reduce to properties by pairing.
+about: The entity-level counterpart of the Necessity of Second-Order Analysis. Representation is asked
+  up to agreement on the structure's elements, which is all that analytical sentences can see (Bacon's
   Proposition C.3); the arities are bounded in each instance so that each instance is a single sentence,
   and a second-order analytical sentence uses only finitely many.
-notes: >-
-  Implies Analytic Necessitism ([[second-order-analytic-necessitism-implies-analytic-necessitism]]) and
-  the Necessity of Second-Order Analysis
-  ([[second-order-analytic-necessitism-implies-necessity-of-second-order-analysis]]), hence the
-  Non-contingency of the Continuum Hypothesis. Bacon's proof of his Theorem 5.2 shows, from Atomicity at
-  every type and □Rigid Comprehension, that the canonical real number structure and the property of its
-  rigid subproperties are rigid, which is this principle at the type of the canonical reals; whether
-  those premises give it at every type is not settled by that argument. Fails in
-  [[stitched-cohen-extension]], with Analytic Necessitism.
+notes: Implies Analytic Necessitism ([[second-order-analytic-necessitism-implies-analytic-necessitism]])
+  and the Necessity of Second-Order Analysis ([[second-order-analytic-necessitism-implies-necessity-of-second-order-analysis]]),
+  hence the Non-contingency of the Continuum Hypothesis. Bacon's proof of his Theorem 5.2 shows, from
+  Atomicity at every type and □Rigid Comprehension, that the canonical real number structure and the property
+  of its rigid subproperties are rigid, which is this principle at the type of the canonical reals; whether
+  those premises give it at every type is not settled by that argument. Fails in [[stitched-cohen-extension]],
+  with Analytic Necessitism.
+variants:
+- id: finite-type-height-one
+  name: Height-one Finite-Type Necessitism (F1)
+  statement: The exact height-1 fragment of Finite-Type Necessitism, at every carrier type. A possible
+    presentation of numbers and their subset codes has such a rigid realization, with a full rigid power
+    of the subset-code carrier.
+  formal: $\Diamond\exists\mathcal A\,\operatorname{Arith}^{\tau}_1(\mathcal A)\ \to\ \exists\mathcal
+    A\,[\operatorname{Arith}^{\tau}_1(\mathcal A)\land\operatorname{RigidStr}(\mathcal A)\land\operatorname{RepPower}_1(\mathsf
+    P(X_1),X_1)]$
+  definitions: $\operatorname{Arith}^{\tau}_n(\mathcal A):=\operatorname{Peano}(X_0,z,S)\land\bigwedge_{i<n}\operatorname{Pow}(X_i,X_{i+1},E_i)$.
+    All $X_i$ have type $\tau t$, $z$ has type $\tau$, and $S,E_i$ have type $\tau\tau t$. $\operatorname{Pow}(X,Y,E)$
+    says that $E$ is supported on $X\times Y$ and $\forall F^{\tau t}\exists!y\in Y\,\forall x\in X\,(E(x,y)\leftrightarrow
+    Fx)$. The levels may overlap. $\operatorname{RigidStr}$ requires rigid carriers and relations, and
+    necessary distinctness of carrier members. $\mathsf P(X):=\lambda B\,(\operatorname{Rigid}(B)\land
+    B\le X)$, with necessary inclusion. $\operatorname{RepPower}_1(Q,X)$ is the existing full rigid represented-power
+    formula. The extra power has its native predicate type and need not fit into $\tau$. Types and finite
+    heights are metalinguistic schema indices. Necessary correctness of the hierarchy is a consequence
+    (Lemma 2.3), not an added hypothesis or conjunct.
+  equivalence: At each carrier type, Theorem 4.3 of the linked paper proves this equivalent to SOAN. Lemma
+    4.2 identifies the two possibility antecedents. Dedekind cuts in a height-one rigid hierarchy give
+    a rigid real field; restrict its top represented power to the cut carrier. Conversely, SOAN gives
+    rigid numbers and Cantor codes for their subsets inside the real carrier, and its represented power
+    restricts to that code carrier. Lemma 4.1 supplies all finite relation arities from the unary power.
+    No additional existence assumption is used. See [paper](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.pdf),
+    Lemmas 4.1–4.2 and Theorem 4.3.
+  references:
+  - paper: kodsi-finite-type-necessitism-2026
+    role: proof
+    locator: Lemma 4.1, Lemma 4.2 and Theorem 4.3
+changes:
+- date: '2026-10-30'
+  by: Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI)
+  summary: Record height-one Finite-Type Necessitism (F1) as an equivalent formulation; Theorem 4.3 of
+    the linked paper. The existing SOAN statement is unchanged.

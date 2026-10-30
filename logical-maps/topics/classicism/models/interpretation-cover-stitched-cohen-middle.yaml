@@ -1,0 +1,88 @@
+id: interpretation-cover-stitched-cohen-middle
+name: 'Interpretation cover: identity-only over the stitched Cohen middle'
+definition: >-
+  In the ambient Cohen extension of the existing stitched-cohen-coalesced-middle construction,
+  keep its entire four-object component r,s,A,B, all typed domains and all arrows unchanged.
+  Choose a countably infinite auxiliary name set C_sigma at each admitted type. Add a root o
+  with individuals C_e and only the identity endomorphism. For every old object v include all
+  total typed interpretations I_sigma:C_sigma->D_sigma(v) as arrows o->v. Compose by old transport;
+  there are no old-to-root arrows. At each relational type admit exactly the root profiles with
+  arbitrary current row, one finite typed-name pin on same-target old interpretations, and whole
+  old sections belonging to the unchanged old domains. Transport is precomposition. Relational
+  signature constants denote top. Evaluate at o. The writeup gives the recursion, named lifts,
+  closure proof and inherited forcing assumptions.
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- 'GPT-6 Astra, prompted by Daniel Kodsi, Fixed-component interpretation cover: a typed Barcan
+  propagation corollary, 30 October 2026, Sections 1, 3, 5–7 (unpaginated).'
+- 'GPT-6 Astra, prompted by Daniel Kodsi, Independent review: fixed-component Barcan cover,
+  30 October 2026, Sections 1, 3–6 (unpaginated), especially the identity-only construction in Section 5.'
+- Cian Dorr, interpretation-root construction, 19 October 2026, coalesced-pinned-interpretations-root,
+  sections The construction, The entities hat c, It is a model of C, and BF holds at every type
+  (unpaginated); whole-domain landing added by Claude Opus 5.5, prompted by Cian Dorr.
+- GPT-6 Astra, prompted by Daniel Kodsi, Stitched forcing model with a coalesced middle world,
+  22 October 2026, Sections 1–7 (unpaginated); native stitched-cohen-coalesced-middle construction,
+  forcing/image lemma and Barcan verdicts, as integrated by OpenAI Codex, prompted by Daniel Kodsi,
+  and written for the map by Claude Opus 5.5, prompted by Cian Dorr.
+- Neil Barton and Zachary Goodsell, Continuum Contingency, draft of 14 October 2026,
+  Section 7.1 and Section 8, Definition 1, for the inherited stitching framework.
+source_names:
+- Fixed-component Barcan corollary
+- Identity-only cover reconstruction
+- Dorr interpretation root
+- Stitched Cohen middle
+- Continuum Contingency
+references:
+- paper: barton-goodsell-continuum-contingency
+  role: background
+  locator: Section 7.1; Section 8, Definition 1
+  note: The stitching framework of the retained old component, not the new fixed-component cover corollary.
+arguments:
+- id: fresh-name-current-barcan
+  holds: [barcan-r]
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-stitched-cohen-middle
+  text: >-
+    For any current predicate F of sigma-entities, a possible witness at the identity is already
+    current. For a witness b at an old interpretation I, choose a sigma-name c outside a finite
+    pin of F and change only I(c) to b. The new interpretation has the same full F-row. The
+    current named lift of c transports to the whole entity b, proving the native dual BF formula.
+    This relocates the witness; it does not claim that a fixed interpretation is onto. See Sections 2–4.
+- id: necessary-propositional-barcan
+  holds: [necessary-barcan-t]
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-stitched-cohen-middle
+  text: >-
+    BF_t holds at o by the fresh-name proof. At every old object the proposition domain is the
+    full finite powerset of its outgoing arrows, and every old proposition transport is onto.
+    All possible targets are o or one of these unchanged old objects. Direct verification at
+    those targets gives necessary BF_t, without necessitating a current optional premise. See Section 5.
+- id: inherited-necessary-relational-barcan-failure
+  fails: [necessary-barcan-relational]
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-stitched-cohen-middle
+  text: >-
+    At the accessible old root r, the admitted exact-image property of D_et(r) necessarily
+    contains every current et-entity. At s it misses the entity (c times {0}, empty, empty),
+    whose first coordinate uses the new Cohen real. This refutes BF_et at r. All old domains,
+    tests and outgoing arrows remain unchanged, so necessary BF at relational types fails at o.
+    Necessary all-type BF failure is derived from this same witness. See Sections 1 and 6.
+notes: >-
+  One fixed-component application of Dorr's interpretation-root construction. Its contribution is
+  current all-type BF together with necessary propositional BF and failure of necessary relational BF.
+  The root has only the identity loop.
+  The ambient forcing setup is inherited from stitched-cohen-coalesced-middle. Given that component,
+  the cover is a ZFC set construction. This does not settle whether current
+  all-type BF plus necessary relational BF implies necessary all-type BF.

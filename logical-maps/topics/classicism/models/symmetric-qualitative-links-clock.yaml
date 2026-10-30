@@ -1,0 +1,51 @@
+id: symmetric-qualitative-links-clock
+name: Qualitative-link model with a translation clock
+definition: Start from the singleton-individual symmetric qualitative-link model with auxiliary base B,
+  monoid M and designated symmetry G. Replace its auxiliary base by B disjoint-union omega, arrows by
+  M×(omega,+), acting by m on B and translation by n on the clock, and symmetry by G×{0}. Keep actual
+  individuals singleton. Use the exact symmetric ideally-full domains with finite pins at every type;
+  each admitted profile has one finite spatial pin uniform across clock values, and the clock point 0
+  determines the translation. Evaluate at the identity. Signature constants may be top. The writeup constructs
+  recursive equivariant injections of old domains, slices all new tests, and constructs exact-image field/power
+  profiles at every relational carrier.
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- 'GPT-6 Astra, prompted by Daniel Kodsi, SOAN does not imply Tame Rigidity: a translation-coordinate model,
+  Sections 2–6, 30 October 2026 (unpaginated).'
+- Cian Dorr, symmetric ideally-full model construction and qualitative-link model; Logical Maps symmetric-qualitative-links.yaml,
+  singleton-individual tame-rigidity argument dated 11 October 2026 (unpaginated).
+- Daniel Kodsi, Integer-shift predecessor with contingent Barcan, Sections 1–3; Central-map complete gluing;
+  and Logical Maps supported-product-free-monoids-glued-constants, Section 9 (unpaginated), for the translation-coordinate
+  and exact-image code-field methods.
+arguments:
+- id: all-carrier-clock-fields-and-powers
+  holds:
+  - second-order-analytic-necessitism
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: symmetric-qualitative-links-clock
+  text: For each relational carrier, late-disagreement clock codes form a continuum preserved injectively
+    by every shift. Their exact-image ordinary real field, every finite-arity subset profile, and the
+    whole family of transported representatives share one clock pin and are rigid. Arbitrary future relations
+    are represented by pullback; the singleton e carrier has impossible antecedent. Writeup §§5–6.
+- id: qualitative-link-witness-survives-all-tests
+  fails:
+  - tame-rigidity-r
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: symmetric-qualitative-links-clock
+  text: The old weakly rigid nonrigid relation has type (tt)t. Recursive injections commute with every
+    transport. Every newly admitted test restricts at each fixed clock to an admitted old test with the
+    same finite spatial pin, preserving weak inextensibility. The lifted old later failure/test remains,
+    so the relation is currently weakly rigid but not rigid. Writeup §§2–4.
+notes: ZFC construction under the standard symmetric ideally-full soundness theorem. The direct SOAN proof
+  does not use the disputed all-carrier analytic general arguments. AN is derived. No arithmetic, choice,
+  Boolean-completeness, Barcan or Maximalism verdict is adopted.

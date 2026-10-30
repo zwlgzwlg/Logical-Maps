@@ -1,0 +1,24 @@
+id: necessary-world-atomicity
+name: Atomicity by necessarily-world propositions
+category: lattice
+statement: Every possible proposition is entailed by a proposition that is necessarily a world.
+formal: '$\forall p^t\, .\,p\ne\bot\to\exists w^t\, .\,\Box\operatorname{Atom}_t(w)\land w\le p$'
+definitions: 'Here a world is a propositional atom: $\operatorname{Atom}_t(w):=w\ne\bot\land\forall q^t\, .\,w\le q\lor w\le\neg q$, equivalently the atom predicate in Background. The order is algebraic entailment, so $w\le p$ is $\Box(w\to p)$. Necessary atomhood includes necessary nonzeroness; it does not assert that $w$ is necessarily true.'
+date: '2026-10-30'
+sources:
+- Daniel Kodsi suggestion, with assistance from ChatGPT, recorded 30 October 2026.
+- OpenAI Codex, prompted by Daniel Kodsi, Adjunctions, atom projection, and persistent worlds, 28 October 2026, §§2–5, unpaginated; Pure uniformity and one necessary atom, §§3–4, unpaginated.
+source_names:
+- Daniel Kodsi suggestion
+- Persistent atoms and necessary worlds
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.2, pp. 23–26; §2.3, p. 33, draft of 16 May 2023
+  note: Boolean atoms, Actuality, and the native C5 equivalences used in the proof.
+- paper: bacon-2024-book
+  role: background
+  locator: §8.2, pp. 165–166
+  note: Weak worlds are propositional atoms; the necessary-atom requirement here is stronger than the strong-world condition that permits becoming bottom.
+about: 'This strengthens propositional Atomicity by requiring the witnessing world to remain a nonzero atom at every accessible evaluation. It is equivalent in C to [[necessary-plenitude-r]] and [[necessary-gallin-extensional-comprehension-r]].'
+notes: 'The witness order is $\exists w\,\Box\operatorname{Atom}_t(w)$, not merely necessary existence of some atom. It is stronger than [[strong-atomicity-t]]: a strong atom may become bottom.'

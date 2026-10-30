@@ -1,0 +1,20 @@
+id: necessary-world-atomicity-implies-necessary-plenitude
+premises:
+- necessary-world-atomicity
+conclusion: necessary-plenitude-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi, 30 October 2026
+  checked_by: []
+  date: '2026-10-28'
+  lean: none
+sources:
+- OpenAI Codex, prompted by Daniel Kodsi, Adjunctions, atom projection, and persistent worlds, 28 October 2026, §§2–5, unpaginated; Pure uniformity and one necessary atom, §§3–4, unpaginated.
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Proposition 2.2, p. 22; Proposition 2.6, pp. 25–26; §2.3, concluding equivalences, p. 33, for the native bridges.
+source_names:
+- Persistent atoms and necessary worlds
+- Classicism
+proof: 'See [the common proof](../writeups/necessary-world-atomicity.md), §§1–2. Coverage makes a true necessarily atomic proposition necessarily available. Such a proposition witnesses Actuality and forces current propositional ND. Necessitating the closed implication yields necessary Actuality and necessary propositional ND. The recorded type-transfer theorem gives C5; the native C5 plus necessary Actuality theorem gives Atomicity, and C5 plus Atomicity gives boxed Plenitude.'
+notes: No optional premise is necessitated. Necessary nonzeroness is used in deriving ND; strong atomhood alone does not suffice. The all-type boxed Gallin consequence follows through existing results.

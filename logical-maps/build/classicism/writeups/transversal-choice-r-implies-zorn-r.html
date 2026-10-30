@@ -322,69 +322,226 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <link rel="stylesheet" href="../math/katex.min.css">
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
-<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Transversal Choice implies Zorn&#x27;s Lemma</h1></header><p>The proof follows the route through the Bourbaki–Witt fixed-point lemma in Serge Lang, <em>Algebra</em>, Appendix 2. It applies the Bourbaki–Witt lemma (Background, “Relations, orders and fixed points”) to the <span class="math inline">R</span>-chains, preordered by inclusion. The step function adds a chosen point to any chain that can be extended. A fixed point is then a chain that nothing extends, and an upper bound of such a chain is maximal. The translation into C is by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 27 October 2026.</p>
-<p><strong>Claim.</strong> For each type <span class="math inline">\sigma</span>, including <span class="math inline">e</span>, Transversal Choice implies Zorn’s Lemma at <span class="math inline">\sigma</span>. The proof uses two consequences of Transversal Choice:</p>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Transversal Choice implies Zorn&#x27;s Lemma</h1></header><p>The proof follows the route through the Bourbaki–Witt fixed-point
+lemma in Serge Lang, <em>Algebra</em>, Appendix 2. It applies the
+Bourbaki–Witt lemma (Background, “Relations, orders and fixed points”)
+to the <span class="math inline">R</span>-chains, preordered by
+inclusion. The step function adds a chosen point to any chain that can
+be extended. A fixed point is then a chain that nothing extends, and an
+upper bound of such a chain is maximal. The translation into C is by
+Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 27 October 2026.</p>
+<p><strong>Claim.</strong> For each type <span
+class="math inline">\sigma</span>, including <span
+class="math inline">e</span>, Transversal Choice implies Zorn’s Lemma at
+<span class="math inline">\sigma</span>. The proof uses two consequences
+of Transversal Choice:</p>
 <ul>
-<li>Transversal at <span class="math inline">\sigma</span>, which is Transversal Choice at <span class="math inline">\sigma t</span> for coextension;</li>
-<li>Relational Choice at <span class="math inline">(\sigma t,\sigma)</span>, by the recorded result that Transversal Choice implies Relational Choice.</li>
+<li>Transversal at <span class="math inline">\sigma</span>, which is
+Transversal Choice at <span class="math inline">\sigma t</span> for
+coextension;</li>
+<li>Relational Choice at <span class="math inline">(\sigma
+t,\sigma)</span>, by the recorded result that Transversal Choice implies
+Relational Choice.</li>
 </ul>
-<p>Preorder, Total and TotalOrder are as in Background. Everything is unboxed, and the whole argument takes place at the evaluation point.</p>
+<p>Preorder, Total and TotalOrder are as in Background. Everything is
+unboxed, and the whole argument takes place at the evaluation point.</p>
 <h2 id="setting">Setting</h2>
-<p>Fix a preorder <span class="math inline">R^{\sigma\sigma t}</span>, write <span class="math inline">x\preccurlyeq y</span> for <span class="math inline">(Rx)y</span>, and suppose every <span class="math inline">R</span>-chain has an upper bound. Here an <span class="math inline">R</span>-chain is a property <span class="math inline">C</span> with <span class="math inline">\operatorname{TotalOrder}(R,C)</span>.</p>
-<p>For <span class="math inline">C^{\sigma t}</span> and <span class="math inline">y^\sigma</span> put <span class="math inline">C+y:=\lambda z\, .\,Cz\lor z=y</span>. Say that <span class="math inline">y</span> <em>extends</em> <span class="math inline">C</span> if <span class="math inline">\neg Cy</span> and <span class="math inline">C+y</span> is an <span class="math inline">R</span>-chain. Whether <span class="math inline">y</span> extends <span class="math inline">C</span> depends only on the extension of <span class="math inline">C</span>.</p>
+<p>Fix a preorder <span class="math inline">R^{\sigma\sigma t}</span>,
+write <span class="math inline">x\preccurlyeq y</span> for <span
+class="math inline">(Rx)y</span>, and suppose every <span
+class="math inline">R</span>-chain has an upper bound. Here an <span
+class="math inline">R</span>-chain is a property <span
+class="math inline">C</span> with <span
+class="math inline">\operatorname{TotalOrder}(R,C)</span>.</p>
+<p>For <span class="math inline">C^{\sigma t}</span> and <span
+class="math inline">y^\sigma</span> put <span
+class="math inline">C+y:=\lambda z\, .\,Cz\lor z=y</span>. Say that
+<span class="math inline">y</span> <em>extends</em> <span
+class="math inline">C</span> if <span class="math inline">\neg Cy</span>
+and <span class="math inline">C+y</span> is an <span
+class="math inline">R</span>-chain. Whether <span
+class="math inline">y</span> extends <span class="math inline">C</span>
+depends only on the extension of <span class="math inline">C</span>.</p>
 <h2 id="the-step-relation">The step relation</h2>
 <p>The relation</p>
 <p><span class="math display">
-(UC)y:=(\neg\exists y&#39;\, .\,y&#39;\text{ extends }C)\lor y\text{ extends }C
+(UC)y:=(\neg\exists y&#39;\, .\,y&#39;\text{ extends }C)\lor y\text{
+extends }C
 </span></p>
-<p>is serial, so Relational Choice gives a functional <span class="math inline">S\subseteq U</span>. Transversal gives <span class="math inline">\mathcal T^{(\sigma t)t}</span>, with exactly one instance coextensive with each property. Put</p>
+<p>is serial, so Relational Choice gives a functional <span
+class="math inline">S\subseteq U</span>. Transversal gives <span
+class="math inline">\mathcal T^{(\sigma t)t}</span>, with exactly one
+instance coextensive with each property. Put</p>
 <p><span class="math display">
 \begin{aligned}
-(FC)D:=\exists C&#39;\,k\, .\,{}&amp;\mathcal TC&#39;\land C&#39;\equiv C\land(SC&#39;)k\\
+(FC)D:=\exists C&#39;\,k\, .\,{}&amp;\mathcal TC&#39;\land C&#39;\equiv
+C\land(SC&#39;)k\\
 &amp;\land\bigl((k\text{ extends }C\land D\equiv C+k)\lor
 (\neg\,k\text{ extends }C\land D\equiv C)\bigr).
 \end{aligned}
 </span></p>
-<p>In words: to step from <span class="math inline">C</span>, take the <span class="math inline">\mathcal T</span>-representative <span class="math inline">C&#39;</span> of <span class="math inline">C</span>’s coextension class, take the point <span class="math inline">k</span> that <span class="math inline">S</span> chooses for <span class="math inline">C&#39;</span>, and add <span class="math inline">k</span> to <span class="math inline">C</span> if it extends <span class="math inline">C</span>.</p>
+<p>In words: to step from <span class="math inline">C</span>, take the
+<span class="math inline">\mathcal T</span>-representative <span
+class="math inline">C&#39;</span> of <span
+class="math inline">C</span>’s coextension class, take the point <span
+class="math inline">k</span> that <span class="math inline">S</span>
+chooses for <span class="math inline">C&#39;</span>, and add <span
+class="math inline">k</span> to <span class="math inline">C</span> if it
+extends <span class="math inline">C</span>.</p>
 <h2 id="applying-bourbakiwitt">Applying Bourbaki–Witt</h2>
-<p>Apply the lemma at type <span class="math inline">\sigma t</span>, with:</p>
+<p>Apply the lemma at type <span class="math inline">\sigma t</span>,
+with:</p>
 <ul>
-<li><span class="math inline">X:=\lambda C\, .\,\operatorname{TotalOrder}(R,C)</span>, the <span class="math inline">R</span>-chains;</li>
-<li><span class="math inline">\preccurlyeq\ :=\ \subseteq</span>, so that <span class="math inline">\approx</span> is <span class="math inline">\equiv</span>;</li>
+<li><span class="math inline">X:=\lambda C\,
+.\,\operatorname{TotalOrder}(R,C)</span>, the <span
+class="math inline">R</span>-chains;</li>
+<li><span class="math inline">\preccurlyeq\ :=\ \subseteq</span>, so
+that <span class="math inline">\approx</span> is <span
+class="math inline">\equiv</span>;</li>
 <li><span class="math inline">F</span> as above.</li>
 </ul>
 <p>The hypotheses hold as follows.</p>
-<p><strong>Hypothesis 1.</strong> Inclusion is reflexive and transitive.</p>
-<p><strong>Hypothesis 2: chains have suprema.</strong> Let <span class="math inline">Z</span> be a family of <span class="math inline">R</span>-chains that <span class="math inline">\subseteq</span> totally preorders, and put <span class="math inline">J:=\lambda x\, .\,\exists C\, .\,ZC\land Cx</span>.</p>
+<p><strong>Hypothesis 1.</strong> Inclusion is reflexive and
+transitive.</p>
+<p><strong>Hypothesis 2: chains have suprema.</strong> Let <span
+class="math inline">Z</span> be a family of <span
+class="math inline">R</span>-chains that <span
+class="math inline">\subseteq</span> totally preorders, and put <span
+class="math inline">J:=\lambda x\, .\,\exists C\, .\,ZC\land
+Cx</span>.</p>
 <ul>
-<li><span class="math inline">J</span> is an <span class="math inline">R</span>-chain. Each of Trans, Antisymm and Total concerns at most three instances of <span class="math inline">J</span>. Each of these lies in a member of <span class="math inline">Z</span>, and the members are comparable under inclusion, so the largest of those members contains all of them. That member is an <span class="math inline">R</span>-chain.</li>
-<li>Every member of <span class="math inline">Z</span> is included in <span class="math inline">J</span>, and <span class="math inline">J</span> is included in every property that includes all the members.</li>
-<li>So <span class="math inline">J</span> is a supremum of <span class="math inline">Z</span>. When <span class="math inline">Z</span> is empty, <span class="math inline">J</span> is <span class="math inline">\bot_{\sigma t}</span>.</li>
+<li><span class="math inline">J</span> is an <span
+class="math inline">R</span>-chain. Each of Trans, Antisymm and Total
+concerns at most three instances of <span class="math inline">J</span>.
+Each of these lies in a member of <span class="math inline">Z</span>,
+and the members are comparable under inclusion, so the largest of those
+members contains all of them. That member is an <span
+class="math inline">R</span>-chain.</li>
+<li>Every member of <span class="math inline">Z</span> is included in
+<span class="math inline">J</span>, and <span
+class="math inline">J</span> is included in every property that includes
+all the members.</li>
+<li>So <span class="math inline">J</span> is a supremum of <span
+class="math inline">Z</span>. When <span class="math inline">Z</span> is
+empty, <span class="math inline">J</span> is <span
+class="math inline">\bot_{\sigma t}</span>.</li>
 </ul>
-<p><strong>Hypothesis 3: <span class="math inline">F</span> is progressive and invariant.</strong> Let <span class="math inline">C</span> be an <span class="math inline">R</span>-chain.</p>
+<p><strong>Hypothesis 3: <span class="math inline">F</span> is
+progressive and invariant.</strong> Let <span
+class="math inline">C</span> be an <span
+class="math inline">R</span>-chain.</p>
 <ul>
-<li><em>Existence.</em> <span class="math inline">\mathcal T</span> has an instance <span class="math inline">C&#39;\equiv C</span>, and <span class="math inline">S</span> gives <span class="math inline">k</span> with <span class="math inline">(SC&#39;)k</span>, so <span class="math inline">C</span> has an <span class="math inline">F</span>-value.</li>
-<li><em>Progress.</em> Every <span class="math inline">F</span>-value <span class="math inline">D</span> includes <span class="math inline">C</span>. It is an <span class="math inline">R</span>-chain, since it is coextensive with <span class="math inline">C+k</span> for a <span class="math inline">k</span> that extends <span class="math inline">C</span>, or else with <span class="math inline">C</span>, and TotalOrder depends only on extensions.</li>
-<li><em>Invariance.</em> Let <span class="math inline">C\equiv C_1</span>, <span class="math inline">(FC)D</span> and <span class="math inline">(FC_1)D_1</span>. The two witnesses for <span class="math inline">C&#39;</span> are <span class="math inline">\mathcal T</span>-instances coextensive with <span class="math inline">C</span>, so they are identical by the uniqueness clause of Transversal. Functionality of <span class="math inline">S</span> then gives the same <span class="math inline">k</span>. Since <span class="math inline">k</span> extends <span class="math inline">C</span> iff it extends <span class="math inline">C_1</span>, <span class="math inline">D\equiv D_1</span>.</li>
+<li><em>Existence.</em> <span class="math inline">\mathcal T</span> has
+an instance <span class="math inline">C&#39;\equiv C</span>, and <span
+class="math inline">S</span> gives <span class="math inline">k</span>
+with <span class="math inline">(SC&#39;)k</span>, so <span
+class="math inline">C</span> has an <span
+class="math inline">F</span>-value.</li>
+<li><em>Progress.</em> Every <span class="math inline">F</span>-value
+<span class="math inline">D</span> includes <span
+class="math inline">C</span>. It is an <span
+class="math inline">R</span>-chain, since it is coextensive with <span
+class="math inline">C+k</span> for a <span class="math inline">k</span>
+that extends <span class="math inline">C</span>, or else with <span
+class="math inline">C</span>, and TotalOrder depends only on
+extensions.</li>
+<li><em>Invariance.</em> Let <span class="math inline">C\equiv
+C_1</span>, <span class="math inline">(FC)D</span> and <span
+class="math inline">(FC_1)D_1</span>. The two witnesses for <span
+class="math inline">C&#39;</span> are <span class="math inline">\mathcal
+T</span>-instances coextensive with <span class="math inline">C</span>,
+so they are identical by the uniqueness clause of Transversal.
+Functionality of <span class="math inline">S</span> then gives the same
+<span class="math inline">k</span>. Since <span
+class="math inline">k</span> extends <span class="math inline">C</span>
+iff it extends <span class="math inline">C_1</span>, <span
+class="math inline">D\equiv D_1</span>.</li>
 </ul>
-<p>Invariance is the only place where Transversal is used. Everything else would work with <span class="math inline">S</span> applied to <span class="math inline">C</span> directly.</p>
-<h2 id="a-maximal-chain-and-a-maximal-element">A maximal chain, and a maximal element</h2>
-<p>By part (c) of the lemma, there is an <span class="math inline">R</span>-chain <span class="math inline">m</span> such that <span class="math inline">D\equiv m</span> whenever <span class="math inline">(Fm)D</span>.</p>
-<p>Nothing extends <span class="math inline">m</span>. Suppose something did. Let <span class="math inline">C&#39;</span> be the <span class="math inline">\mathcal T</span>-instance coextensive with <span class="math inline">m</span>, and <span class="math inline">k</span> the point with <span class="math inline">(SC&#39;)k</span>. Something extends <span class="math inline">C&#39;</span>, so <span class="math inline">(UC&#39;)k</span> gives that <span class="math inline">k</span> extends <span class="math inline">C&#39;</span>, and hence <span class="math inline">m</span>. Then <span class="math inline">m+k</span> is an <span class="math inline">F</span>-value of <span class="math inline">m</span>. It contains <span class="math inline">k</span>, while <span class="math inline">m</span> does not, so <span class="math inline">m+k\not\equiv m</span>, contradicting the choice of <span class="math inline">m</span>.</p>
-<p>By hypothesis, <span class="math inline">m</span> has an upper bound <span class="math inline">u</span>. Suppose <span class="math inline">u\preccurlyeq y</span> but <span class="math inline">y\not\preccurlyeq u</span>. Then <span class="math inline">\neg my</span>, since every instance of <span class="math inline">m</span> is <span class="math inline">\preccurlyeq u</span>. Also <span class="math inline">m+y</span> is an <span class="math inline">R</span>-chain:</p>
+<p>Invariance is the only place where Transversal is used. Everything
+else would work with <span class="math inline">S</span> applied to <span
+class="math inline">C</span> directly.</p>
+<h2 id="a-maximal-chain-and-a-maximal-element">A maximal chain, and a
+maximal element</h2>
+<p>By part (c) of the lemma, there is an <span
+class="math inline">R</span>-chain <span class="math inline">m</span>
+such that <span class="math inline">D\equiv m</span> whenever <span
+class="math inline">(Fm)D</span>.</p>
+<p>Nothing extends <span class="math inline">m</span>. Suppose something
+did. Let <span class="math inline">C&#39;</span> be the <span
+class="math inline">\mathcal T</span>-instance coextensive with <span
+class="math inline">m</span>, and <span class="math inline">k</span> the
+point with <span class="math inline">(SC&#39;)k</span>. Something
+extends <span class="math inline">C&#39;</span>, so <span
+class="math inline">(UC&#39;)k</span> gives that <span
+class="math inline">k</span> extends <span
+class="math inline">C&#39;</span>, and hence <span
+class="math inline">m</span>. Then <span class="math inline">m+k</span>
+is an <span class="math inline">F</span>-value of <span
+class="math inline">m</span>. It contains <span
+class="math inline">k</span>, while <span class="math inline">m</span>
+does not, so <span class="math inline">m+k\not\equiv m</span>,
+contradicting the choice of <span class="math inline">m</span>.</p>
+<p>By hypothesis, <span class="math inline">m</span> has an upper bound
+<span class="math inline">u</span>. Suppose <span
+class="math inline">u\preccurlyeq y</span> but <span
+class="math inline">y\not\preccurlyeq u</span>. Then <span
+class="math inline">\neg my</span>, since every instance of <span
+class="math inline">m</span> is <span class="math inline">\preccurlyeq
+u</span>. Also <span class="math inline">m+y</span> is an <span
+class="math inline">R</span>-chain:</p>
 <ul>
-<li>transitivity holds since <span class="math inline">R</span> is a preorder;</li>
-<li>every instance <span class="math inline">x</span> of <span class="math inline">m</span> has <span class="math inline">x\preccurlyeq u\preccurlyeq y</span>;</li>
-<li><span class="math inline">y\preccurlyeq x</span> would give <span class="math inline">y\preccurlyeq u</span>, so antisymmetry holds at <span class="math inline">y</span>.</li>
+<li>transitivity holds since <span class="math inline">R</span> is a
+preorder;</li>
+<li>every instance <span class="math inline">x</span> of <span
+class="math inline">m</span> has <span class="math inline">x\preccurlyeq
+u\preccurlyeq y</span>;</li>
+<li><span class="math inline">y\preccurlyeq x</span> would give <span
+class="math inline">y\preccurlyeq u</span>, so antisymmetry holds at
+<span class="math inline">y</span>.</li>
 </ul>
-<p>So <span class="math inline">y</span> extends <span class="math inline">m</span>, which is impossible. Hence <span class="math inline">u\preccurlyeq y</span> implies <span class="math inline">y\preccurlyeq u</span>, and <span class="math inline">u</span> is maximal. <span class="math inline">\square</span></p>
+<p>So <span class="math inline">y</span> extends <span
+class="math inline">m</span>, which is impossible. Hence <span
+class="math inline">u\preccurlyeq y</span> implies <span
+class="math inline">y\preccurlyeq u</span>, and <span
+class="math inline">u</span> is maximal. <span
+class="math inline">\square</span></p>
 <h2 id="remarks">Remarks</h2>
-<p><strong>Two kinds of chain.</strong> The lemma’s chains are families of <span class="math inline">R</span>-chains, totally preordered by inclusion, and they need not be antisymmetric. Zorn’s Lemma concerns <span class="math inline">R</span>-chains, which must be antisymmetric. The two notions meet only in hypothesis 2, where a union of <span class="math inline">R</span>-chains is shown to be an <span class="math inline">R</span>-chain.</p>
-<p><strong>Relational Choice alone.</strong> If the lemma did not require invariance, the argument would run with <span class="math inline">S</span> applied to <span class="math inline">C</span> in place of the <span class="math inline">\mathcal T</span>-mediated <span class="math inline">F</span>. It would then give Zorn’s Lemma from Relational Choice alone. Zorn’s Lemma implies Well-Ordering, which implies Transversal Choice, by the recorded results. So a proof of Zorn’s Lemma from Relational Choice alone would settle the open question whether Relational Choice implies Transversal Choice.</p>
-<p>Weak Rigid Comprehension can do the job of the transversal: choose from the weakly rigid property coextensive with <span class="math inline">C</span>, which is unique by the recorded result that Relational Choice and Weak Rigid Comprehension imply Transversal Choice.</p>
-<p><strong>Earlier proof.</strong> An earlier version of this write-up followed Jonathan Lewin’s proof by conforming subsets (“A Simple Proof of Zorn’s Lemma”, <em>American Mathematical Monthly</em> 98, 1991). The Lean certificate formalizes that earlier argument.</p>
+<p><strong>Two kinds of chain.</strong> The lemma’s chains are families
+of <span class="math inline">R</span>-chains, totally preordered by
+inclusion, and they need not be antisymmetric. Zorn’s Lemma concerns
+<span class="math inline">R</span>-chains, which must be antisymmetric.
+The two notions meet only in hypothesis 2, where a union of <span
+class="math inline">R</span>-chains is shown to be an <span
+class="math inline">R</span>-chain.</p>
+<p><strong>Relational Choice alone.</strong> If the lemma did not
+require invariance, the argument would run with <span
+class="math inline">S</span> applied to <span
+class="math inline">C</span> in place of the <span
+class="math inline">\mathcal T</span>-mediated <span
+class="math inline">F</span>. It would then give Zorn’s Lemma from
+Relational Choice alone. Zorn’s Lemma implies Well-Ordering, which
+implies Transversal Choice, by the recorded results. So a proof of
+Zorn’s Lemma from Relational Choice alone would settle the open question
+whether Relational Choice implies Transversal Choice.</p>
+<p>Weak Rigid Comprehension can do the job of the transversal: choose
+from the weakly rigid property coextensive with <span
+class="math inline">C</span>, which is unique by the recorded result
+that Relational Choice and Weak Rigid Comprehension imply Transversal
+Choice.</p>
+<p><strong>Earlier proof.</strong> An earlier version of this write-up
+followed Jonathan Lewin’s proof by conforming subsets (“A Simple Proof
+of Zorn’s Lemma”, <em>American Mathematical Monthly</em> 98, 1991). The
+Lean certificate formalizes that earlier argument.</p>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Proof: Algebra.</strong> Lang, Serge (2002). Algebra, revised third edition. Graduate Texts in Mathematics 211, Springer. Appendix 2, on Zorn’s Lemma and the Bourbaki–Witt fixed-point theorem. — Appendix 2. Lang derives Zorn’s Lemma for partial orders on sets from the Bourbaki–Witt fixed-point theorem, applied to the chains ordered by inclusion. The translation replaces sets by properties and the choice function by a functional relation. It adapts the argument to preorders, and uses Transversal to make the step invariant under coextension, which for sets is automatic.</li>
+<li><strong>Proof: Algebra.</strong> Lang, Serge (2002). Algebra,
+revised third edition. Graduate Texts in Mathematics 211, Springer.
+Appendix 2, on Zorn’s Lemma and the Bourbaki–Witt fixed-point theorem. —
+Appendix 2. Lang derives Zorn’s Lemma for partial orders on sets from
+the Bourbaki–Witt fixed-point theorem, applied to the chains ordered by
+inclusion. The translation replaces sets by properties and the choice
+function by a functional relation. It adapts the argument to preorders,
+and uses Transversal to make the step invariant under coextension, which
+for sets is automatic.</li>
 </ul>
 </body></html>

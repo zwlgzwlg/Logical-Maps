@@ -322,45 +322,188 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <link rel="stylesheet" href="../math/katex.min.css">
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
-<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Boolean Completeness and Modalized Relational Choice imply □Transversal</h1></header><p>The theorem and its proof are due to GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, in a research note of 26 October 2026 in Daniel Kodsi’s pull request #18. The presentation below, keyed to the Bourbaki–Witt lemma of the Background, is by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 28 October 2026.</p>
-<p><strong>Claim.</strong> Let <span class="math inline">\sigma</span> be any type, including <span class="math inline">e</span>, and put <span class="math inline">\rho:=\sigma t</span>. In C, Boolean Completeness at type <span class="math inline">\rho t</span> (for properties of properties of type <span class="math inline">\rho</span>) together with Modalized Relational Choice at <span class="math inline">(\rho t,\rho)</span> proves □Transversal at <span class="math inline">\sigma</span>. Both premises are unboxed.</p>
-<p>The unboxed Transversal already followed: Modalized Relational Choice implies Relational Choice, which with Boolean Completeness implies Actuality, which implies Transversal. What is new is that a single property of properties is a transversal <em>necessarily</em>.</p>
-<p><strong>The idea.</strong> Grow a necessarily partial transversal by adding, wherever a coextension class is missed, one member of it chosen by a necessarily functional selector. Partial transversals are compared by <span class="math inline">\le</span>, which is antisymmetric, and Boolean Completeness supplies joins of chains, which are again necessarily partial transversals. The Bourbaki–Witt lemma then gives a fixed point <span class="math inline">m</span>, and since the growth step is a single operation, <span class="math inline">m</span> is <em>identical</em> to its own extension. That identity, unlike a coextension at the actual world, holds at every world, and it is what rules out a missed class anywhere.</p>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Boolean Completeness and Modalized Relational Choice imply □Transversal</h1></header><p>The theorem and its proof are due to GPT-6 Astra (OpenAI), prompted
+by Daniel Kodsi, in a research note of 26 October 2026 in Daniel Kodsi’s
+pull request #18. The presentation below, keyed to the Bourbaki–Witt
+lemma of the Background, is by Claude Opus 5.5 (Anthropic), prompted by
+Cian Dorr, 28 October 2026.</p>
+<p><strong>Claim.</strong> Let <span class="math inline">\sigma</span>
+be any type, including <span class="math inline">e</span>, and put <span
+class="math inline">\rho:=\sigma t</span>. In C, Boolean Completeness at
+type <span class="math inline">\rho t</span> (for properties of
+properties of type <span class="math inline">\rho</span>) together with
+Modalized Relational Choice at <span class="math inline">(\rho
+t,\rho)</span> proves □Transversal at <span
+class="math inline">\sigma</span>. Both premises are unboxed.</p>
+<p>The unboxed Transversal already followed: Modalized Relational Choice
+implies Relational Choice, which with Boolean Completeness implies
+Actuality, which implies Transversal. What is new is that a single
+property of properties is a transversal <em>necessarily</em>.</p>
+<p><strong>The idea.</strong> Grow a necessarily partial transversal by
+adding, wherever a coextension class is missed, one member of it chosen
+by a necessarily functional selector. Partial transversals are compared
+by <span class="math inline">\le</span>, which is antisymmetric, and
+Boolean Completeness supplies joins of chains, which are again
+necessarily partial transversals. The Bourbaki–Witt lemma then gives a
+fixed point <span class="math inline">m</span>, and since the growth
+step is a single operation, <span class="math inline">m</span> is
+<em>identical</em> to its own extension. That identity, unlike a
+coextension at the actual world, holds at every world, and it is what
+rules out a missed class anywhere.</p>
 <h2 id="set-up">Set-up</h2>
-<p>Write <span class="math inline">x\equiv y</span>, for <span class="math inline">x,y</span> of type <span class="math inline">\rho</span>, when <span class="math inline">x</span> and <span class="math inline">y</span> are coextensive. It is a theorem of C that <span class="math inline">\equiv</span> is an equivalence relation, so it is necessarily one. For <span class="math inline">B^{\rho t}</span> let</p>
+<p>Write <span class="math inline">x\equiv y</span>, for <span
+class="math inline">x,y</span> of type <span
+class="math inline">\rho</span>, when <span class="math inline">x</span>
+and <span class="math inline">y</span> are coextensive. It is a theorem
+of C that <span class="math inline">\equiv</span> is an equivalence
+relation, so it is necessarily one. For <span
+class="math inline">B^{\rho t}</span> let</p>
 <p><span class="math display">
 (\Gamma B)x:=\forall y\, .\,By\land x\equiv y\to x=y .
 </span></p>
-<p>Unpacking <span class="math inline">\le</span> as necessary inclusion,</p>
+<p>Unpacking <span class="math inline">\le</span> as necessary
+inclusion,</p>
 <p><span class="math display">
-A\le\Gamma B\quad\text{iff}\quad\Box\forall x\,y\, .\,Ax\land By\land x\equiv y\to x=y. \tag{1}
+A\le\Gamma B\quad\text{iff}\quad\Box\forall x\,y\, .\,Ax\land By\land
+x\equiv y\to x=y. \tag{1}
 </span></p>
-<p>The right side is symmetric in <span class="math inline">A</span> and <span class="math inline">B</span>, since <span class="math inline">\equiv</span> is necessarily symmetric, so <span class="math inline">A\le\Gamma B</span> iff <span class="math inline">B\le\Gamma A</span>. Also <span class="math inline">\Gamma</span> is antitone: if <span class="math inline">A\le B</span> then <span class="math inline">\Gamma B\le\Gamma A</span>. Call <span class="math inline">Y^{\rho t}</span> <em>separated</em> if <span class="math inline">Y\le\Gamma Y</span>, that is, if necessarily no two distinct instances of <span class="math inline">Y</span> are coextensive.</p>
-<p><strong>The selector.</strong> Modalized Relational Choice at <span class="math inline">(\rho t,\rho)</span> gives, as in the proof of Modalized Relational Choice ⇒ □Modalized Relational Choice, an <span class="math inline">S^{(\rho t)\rho t}</span> such that necessarily, for every <span class="math inline">P^{\rho t}</span>, exactly one <span class="math inline">y</span> has <span class="math inline">(SP)y</span>, and it is an instance of <span class="math inline">P</span> if <span class="math inline">P</span> has one. (Apply the principle to <span class="math inline">\lambda P\,y\, .\,Py\lor\neg\exists z\,.\,Pz</span>, which is necessarily serial.)</p>
-<p><strong>The step.</strong> For <span class="math inline">Y^{\rho t}</span> let</p>
+<p>The right side is symmetric in <span class="math inline">A</span> and
+<span class="math inline">B</span>, since <span
+class="math inline">\equiv</span> is necessarily symmetric, so <span
+class="math inline">A\le\Gamma B</span> iff <span
+class="math inline">B\le\Gamma A</span>. Also <span
+class="math inline">\Gamma</span> is antitone: if <span
+class="math inline">A\le B</span> then <span class="math inline">\Gamma
+B\le\Gamma A</span>. Call <span class="math inline">Y^{\rho t}</span>
+<em>separated</em> if <span class="math inline">Y\le\Gamma Y</span>,
+that is, if necessarily no two distinct instances of <span
+class="math inline">Y</span> are coextensive.</p>
+<p><strong>The selector.</strong> Modalized Relational Choice at <span
+class="math inline">(\rho t,\rho)</span> gives, as in the proof of
+Modalized Relational Choice ⇒ □Modalized Relational Choice, an <span
+class="math inline">S^{(\rho t)\rho t}</span> such that necessarily, for
+every <span class="math inline">P^{\rho t}</span>, exactly one <span
+class="math inline">y</span> has <span class="math inline">(SP)y</span>,
+and it is an instance of <span class="math inline">P</span> if <span
+class="math inline">P</span> has one. (Apply the principle to <span
+class="math inline">\lambda P\,y\, .\,Py\lor\neg\exists z\,.\,Pz</span>,
+which is necessarily serial.)</p>
+<p><strong>The step.</strong> For <span class="math inline">Y^{\rho
+t}</span> let</p>
 <p><span class="math display">
-\mathrm{Miss}_Y:=\lambda y\, .\,\neg\exists x\, .\,Yx\land x\equiv y,\qquad
+\mathrm{Miss}_Y:=\lambda y\, .\,\neg\exists x\, .\,Yx\land x\equiv
+y,\qquad
 D_Y:=\lambda y\, .\,\mathrm{Miss}_Yy\land(S\,\mathrm{Miss}_Y)y,\qquad
 \Phi Y:=Y\lor D_Y .
 </span></p>
-<p>So <span class="math inline">D_Y</span> is necessarily instantiated by at most one thing, and is necessarily instantiated whenever <span class="math inline">\mathrm{Miss}_Y</span> is. <span class="math inline">\Phi</span> is given by a closed term, so it is a single operation on properties.</p>
-<h2 id="applying-the-bourbakiwitt-lemma">Applying the Bourbaki–Witt lemma</h2>
-<p>Use the lemma (Background, <em>Relations, orders and fixed points</em>) in its special case for partial orders, at type <span class="math inline">\rho t</span>, with</p>
+<p>So <span class="math inline">D_Y</span> is necessarily instantiated
+by at most one thing, and is necessarily instantiated whenever <span
+class="math inline">\mathrm{Miss}_Y</span> is. <span
+class="math inline">\Phi</span> is given by a closed term, so it is a
+single operation on properties.</p>
+<h2 id="applying-the-bourbakiwitt-lemma">Applying the Bourbaki–Witt
+lemma</h2>
+<p>Use the lemma (Background, <em>Relations, orders and fixed
+points</em>) in its special case for partial orders, at type <span
+class="math inline">\rho t</span>, with</p>
 <ul>
 <li><span class="math inline">X</span>: the separated properties;</li>
-<li><span class="math inline">R</span>: <span class="math inline">\le</span>, restricted to them;</li>
-<li><span class="math inline">F</span>: the graph of <span class="math inline">\Phi</span>, so that <span class="math inline">(FY)Z</span> iff <span class="math inline">Z=\Phi Y</span>.</li>
+<li><span class="math inline">R</span>: <span
+class="math inline">\le</span>, restricted to them;</li>
+<li><span class="math inline">F</span>: the graph of <span
+class="math inline">\Phi</span>, so that <span
+class="math inline">(FY)Z</span> iff <span class="math inline">Z=\Phi
+Y</span>.</li>
 </ul>
-<p>The lemma gives a separated <span class="math inline">m</span> with <span class="math inline">\Phi m=m</span>. This <span class="math inline">m</span> witnesses □Transversal. By <span class="math inline">\Phi m=m</span>, <span class="math inline">D_m\le m</span>. But also <span class="math inline">D_m\le\mathrm{Miss}_m</span>, and necessarily nothing is both an instance of <span class="math inline">m</span> and missed by <span class="math inline">m</span>, since <span class="math inline">\equiv</span> is reflexive. So <span class="math inline">D_m=\bot</span>: necessarily <span class="math inline">D_m</span> has no instance. Hence necessarily <span class="math inline">\mathrm{Miss}_m</span> has no instance, that is, necessarily every property of type <span class="math inline">\rho</span> is coextensive with some instance of <span class="math inline">m</span>. With separation, necessarily every property is coextensive with exactly one instance of <span class="math inline">m</span>, and so necessarily <span class="math inline">m</span> witnesses Transversal at <span class="math inline">\sigma</span>.</p>
+<p>The lemma gives a separated <span class="math inline">m</span> with
+<span class="math inline">\Phi m=m</span>. This <span
+class="math inline">m</span> witnesses □Transversal. By <span
+class="math inline">\Phi m=m</span>, <span class="math inline">D_m\le
+m</span>. But also <span
+class="math inline">D_m\le\mathrm{Miss}_m</span>, and necessarily
+nothing is both an instance of <span class="math inline">m</span> and
+missed by <span class="math inline">m</span>, since <span
+class="math inline">\equiv</span> is reflexive. So <span
+class="math inline">D_m=\bot</span>: necessarily <span
+class="math inline">D_m</span> has no instance. Hence necessarily <span
+class="math inline">\mathrm{Miss}_m</span> has no instance, that is,
+necessarily every property of type <span class="math inline">\rho</span>
+is coextensive with some instance of <span class="math inline">m</span>.
+With separation, necessarily every property is coextensive with exactly
+one instance of <span class="math inline">m</span>, and so necessarily
+<span class="math inline">m</span> witnesses Transversal at <span
+class="math inline">\sigma</span>.</p>
 <p>It remains to check the lemma’s hypotheses.</p>
-<h2 id="hypothesis-1-le-partially-orders-the-separated-properties">Hypothesis 1: <span class="math inline">\le</span> partially orders the separated properties</h2>
-<p><span class="math inline">\le</span> is reflexive, transitive and antisymmetric on all properties of type <span class="math inline">\rho t</span>, by the Boolean algebra laws of C.</p>
-<h2 id="hypothesis-2-every-chain-of-separated-properties-has-a-supremum-among-them">Hypothesis 2: every chain of separated properties has a supremum among them</h2>
-<p>Let <span class="math inline">Z</span> be a property of separated properties totally ordered by <span class="math inline">\le</span>. By Boolean Completeness at <span class="math inline">\rho t</span>, <span class="math inline">Z</span> has a least upper bound <span class="math inline">J</span> under <span class="math inline">\le</span> (the greatest lower bound of its upper bounds). It is enough to show that <span class="math inline">J</span> is separated: it is then a supremum in <span class="math inline">X</span>.</p>
-<p>First, for <span class="math inline">A</span> and <span class="math inline">B</span> in <span class="math inline">Z</span>, <span class="math inline">A\le\Gamma B</span>. If <span class="math inline">A\le B</span>, then <span class="math inline">A\le B\le\Gamma B</span>. If <span class="math inline">B\le A</span>, then <span class="math inline">A\le\Gamma A\le\Gamma B</span>, since <span class="math inline">\Gamma</span> is antitone. So for each <span class="math inline">B</span> in <span class="math inline">Z</span>, <span class="math inline">\Gamma B</span> is an upper bound of <span class="math inline">Z</span>, and <span class="math inline">J\le\Gamma B</span>. By the symmetry of (1), <span class="math inline">B\le\Gamma J</span> for every <span class="math inline">B</span> in <span class="math inline">Z</span>. So <span class="math inline">\Gamma J</span> is an upper bound of <span class="math inline">Z</span>, and <span class="math inline">J\le\Gamma J</span>. (The empty chain has supremum <span class="math inline">\bot</span>, which is separated.)</p>
-<h2 id="hypothesis-3-phi-is-progressive">Hypothesis 3: <span class="math inline">\Phi</span> is progressive</h2>
-<p><span class="math inline">Y\le\Phi Y</span> by its form, and <span class="math inline">F</span> is functional, so it remains to show that <span class="math inline">\Phi Y</span> is separated when <span class="math inline">Y</span> is. By (1), it suffices that necessarily, if <span class="math inline">x</span> and <span class="math inline">y</span> are coextensive instances of <span class="math inline">\Phi Y</span>, then <span class="math inline">x=y</span>. If both are instances of <span class="math inline">Y</span>, this is the separation of <span class="math inline">Y</span>. If both are instances of <span class="math inline">D_Y</span>, they are identical, since <span class="math inline">D_Y</span> has at most one instance. If <span class="math inline">x</span> is an instance of <span class="math inline">Y</span> and <span class="math inline">y</span> of <span class="math inline">D_Y</span>, then <span class="math inline">y</span> is missed by <span class="math inline">Y</span>, so it is coextensive with no instance of <span class="math inline">Y</span>, contradicting <span class="math inline">x\equiv y</span>; and symmetrically.</p>
+<h2
+id="hypothesis-1-le-partially-orders-the-separated-properties">Hypothesis
+1: <span class="math inline">\le</span> partially orders the separated
+properties</h2>
+<p><span class="math inline">\le</span> is reflexive, transitive and
+antisymmetric on all properties of type <span class="math inline">\rho
+t</span>, by the Boolean algebra laws of C.</p>
+<h2
+id="hypothesis-2-every-chain-of-separated-properties-has-a-supremum-among-them">Hypothesis
+2: every chain of separated properties has a supremum among them</h2>
+<p>Let <span class="math inline">Z</span> be a property of separated
+properties totally ordered by <span class="math inline">\le</span>. By
+Boolean Completeness at <span class="math inline">\rho t</span>, <span
+class="math inline">Z</span> has a least upper bound <span
+class="math inline">J</span> under <span class="math inline">\le</span>
+(the greatest lower bound of its upper bounds). It is enough to show
+that <span class="math inline">J</span> is separated: it is then a
+supremum in <span class="math inline">X</span>.</p>
+<p>First, for <span class="math inline">A</span> and <span
+class="math inline">B</span> in <span class="math inline">Z</span>,
+<span class="math inline">A\le\Gamma B</span>. If <span
+class="math inline">A\le B</span>, then <span class="math inline">A\le
+B\le\Gamma B</span>. If <span class="math inline">B\le A</span>, then
+<span class="math inline">A\le\Gamma A\le\Gamma B</span>, since <span
+class="math inline">\Gamma</span> is antitone. So for each <span
+class="math inline">B</span> in <span class="math inline">Z</span>,
+<span class="math inline">\Gamma B</span> is an upper bound of <span
+class="math inline">Z</span>, and <span class="math inline">J\le\Gamma
+B</span>. By the symmetry of (1), <span class="math inline">B\le\Gamma
+J</span> for every <span class="math inline">B</span> in <span
+class="math inline">Z</span>. So <span class="math inline">\Gamma
+J</span> is an upper bound of <span class="math inline">Z</span>, and
+<span class="math inline">J\le\Gamma J</span>. (The empty chain has
+supremum <span class="math inline">\bot</span>, which is separated.)</p>
+<h2 id="hypothesis-3-phi-is-progressive">Hypothesis 3: <span
+class="math inline">\Phi</span> is progressive</h2>
+<p><span class="math inline">Y\le\Phi Y</span> by its form, and <span
+class="math inline">F</span> is functional, so it remains to show that
+<span class="math inline">\Phi Y</span> is separated when <span
+class="math inline">Y</span> is. By (1), it suffices that necessarily,
+if <span class="math inline">x</span> and <span
+class="math inline">y</span> are coextensive instances of <span
+class="math inline">\Phi Y</span>, then <span
+class="math inline">x=y</span>. If both are instances of <span
+class="math inline">Y</span>, this is the separation of <span
+class="math inline">Y</span>. If both are instances of <span
+class="math inline">D_Y</span>, they are identical, since <span
+class="math inline">D_Y</span> has at most one instance. If <span
+class="math inline">x</span> is an instance of <span
+class="math inline">Y</span> and <span class="math inline">y</span> of
+<span class="math inline">D_Y</span>, then <span
+class="math inline">y</span> is missed by <span
+class="math inline">Y</span>, so it is coextensive with no instance of
+<span class="math inline">Y</span>, contradicting <span
+class="math inline">x\equiv y</span>; and symmetrically.</p>
 <h2 id="remarks">Remarks</h2>
-<p>Only the actual world is used in applying the lemma: the separated properties, the chain and its join are all taken there. The modal strength comes from three places: separation and <span class="math inline">\le</span> are boxed by definition, the selector <span class="math inline">S</span> is necessarily functional, and the fixed point is an identity of entities.</p>
-<p>With the result that Modalized Relational Choice implies its necessitation, Astra derives further consequences recorded through other results: □Relational Choice and □Transversal give □Transversal Choice, hence □Well-Ordering, and with Intensional Choice, Modal Well-Ordering. Astra’s note also shows that Modal Well-Ordering at <span class="math inline">\sigma</span> follows from Boolean Completeness at <span class="math inline">(\sigma t)t</span> and Modalized Relational Choice at <span class="math inline">((\sigma t)t,\sigma t)</span> alone, by a conforming well-order defined uniformly from a necessarily functional choice.</p>
+<p>Only the actual world is used in applying the lemma: the separated
+properties, the chain and its join are all taken there. The modal
+strength comes from three places: separation and <span
+class="math inline">\le</span> are boxed by definition, the selector
+<span class="math inline">S</span> is necessarily functional, and the
+fixed point is an identity of entities.</p>
+<p>With the result that Modalized Relational Choice implies its
+necessitation, Astra derives further consequences recorded through other
+results: □Relational Choice and □Transversal give □Transversal Choice,
+hence □Well-Ordering, and with Intensional Choice, Modal Well-Ordering.
+Astra’s note also shows that Modal Well-Ordering at <span
+class="math inline">\sigma</span> follows from Boolean Completeness at
+<span class="math inline">(\sigma t)t</span> and Modalized Relational
+Choice at <span class="math inline">((\sigma t)t,\sigma t)</span> alone,
+by a conforming well-order defined uniformly from a necessarily
+functional choice.</p>
 </body></html>

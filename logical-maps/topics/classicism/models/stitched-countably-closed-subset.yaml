@@ -1,0 +1,47 @@
+id: stitched-countably-closed-subset
+name: 'Stitched forcing model: countably closed subset forcing'
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, Finite-Type Necessitism and Analytic Non-Contingency, 30 October
+  2026, §7, A fixed continuum and a changing power, unpaginated.
+- Neil Barton and Zachary Goodsell, Continuum Contingency, draft of 14 October 2026, §7.1 and §8, Definition
+  1 and Lemmas 11–19, for the underlying stitching construction.
+- OpenAI Codex, prompted by Daniel Kodsi, Stitched forcing model with countably closed subset forcing,
+  30 October 2026, §§1–4 (unpaginated), for the explicit type induction, common carrier lifts, and canonical
+  second-power obstruction.
+references:
+- paper: barton-goodsell-continuum-contingency
+  role: background
+  locator: §7.1; §8, Definition 1 and Lemmas 11–19
+group: stitched-forcing
+settings:
+  forcing: Here $P=\operatorname{Fn}((\omega_1)^V,2,{<}(\omega_1)^V)$ is the set in $V$ of countable partial
+    functions from $(\omega_1)^V$ to $2$, ordered by reverse inclusion. It is countably closed and weakly
+    homogeneous. It adds a subset of $(\omega_1)^V$ but no subsets of $\omega$. Use the group's ground-model
+    root, full extensional terminal object, and ground-definable transport; the truth point is the root.
+arguments:
+- id: fixed-real-fields-at-every-carrier
+  holds:
+  - analytic-necessitism
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: stitched-countably-closed-subset
+  text: 'At every infinite relational type a uniformly ground-definable embedding of the ground real field
+    into the terminal domain has a ground-coded family of root lifts. Their carrier and field relations
+    are paired with their exact transported images, so they are rigid and the carrier has necessarily
+    distinct instances. No new subsets of omega means no new rational cuts: the same field is complete
+    at both objects, including for new bounded families at the terminal object. The individual type and
+    the remaining finite types cannot carry a real structure. Thus the same-type ANA schema holds at every
+    type. The writeup gives the type induction and the simultaneous admitted structure.'
+notes: Relative consistency in the usual ZFC forcing interpretation of the stitching construction. The
+  group's necessary Rigid Comprehension and necessary Relational Choice apply without an adds-a-real hypothesis.
+  This model supplies their joint compatibility with Analytic Necessitism; its fixed real fields actually
+  exist, for example at et. No global ND, CH-stability assertion, or general all-type ANA transfer rule
+  is used. This is distinct from the full Boolean-valued countably-closed-subset construction.

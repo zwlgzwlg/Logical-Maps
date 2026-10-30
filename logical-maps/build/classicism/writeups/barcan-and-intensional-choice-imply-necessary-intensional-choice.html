@@ -323,26 +323,78 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
 <script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>BF ∧ Intensional Choice ⇒ □Intensional Choice</h1></header><p class="cert">
-Result — Source: Misc.; produced by GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, 26 October 2026; recorded by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 28 October 2026.
+Result — Source: Misc.; produced by GPT-6 Astra (OpenAI), prompted by
+Daniel Kodsi, 26 October 2026; recorded by Claude Opus 5.5 (Anthropic),
+prompted by Cian Dorr, 28 October 2026.
 </p>
 <h2 id="premises">Premises</h2>
 <ul>
-<li><strong>BF.</strong> The Barcan Formula at every type. The predicate formulation closes the formula schema using lambda abstraction.</li>
-<li><strong>Intensional Choice.</strong> If a property is necessarily instantiated, then some property entailing it is necessarily uniquely instantiated.</li>
+<li><strong>BF.</strong> The Barcan Formula at every type. The predicate
+formulation closes the formula schema using lambda abstraction.</li>
+<li><strong>Intensional Choice.</strong> If a property is necessarily
+instantiated, then some property entailing it is necessarily uniquely
+instantiated.</li>
 </ul>
 <h2 id="conclusion">Conclusion</h2>
 <ul>
-<li><strong>□Intensional Choice.</strong> Necessarily, if a property is necessarily instantiated, then some property entailing it is necessarily uniquely instantiated.</li>
+<li><strong>□Intensional Choice.</strong> Necessarily, if a property is
+necessarily instantiated, then some property entailing it is necessarily
+uniquely instantiated.</li>
 </ul>
 <h2 id="proof">Proof</h2>
-<p>Write <span class="math inline">I(F)</span> for <span class="math inline">\exists x\, .\,Fx</span> and <span class="math inline">U(G)</span> for <span class="math inline">\exists x\, .\,Gx\land\forall y\, .\,Gy\to y=x</span>. First, Intensional Choice at <span class="math inline">\sigma</span> is equivalent in C to its entailing form <span class="math inline">\forall F\,\exists G\, .\,G\le F\land\Box(I(F)\to U(G))</span>. From the entailing form: if <span class="math inline">\Box I(F)</span>, a <span class="math inline">G</span> as there has <span class="math inline">\Box U(G)</span> by K. To it: given <span class="math inline">F</span>, <span class="math inline">F&#39;:=\lambda x\, .\,Fx\lor\neg I(F)</span> is necessarily instantiated, since it is a theorem that it is instantiated; take <span class="math inline">H\le F&#39;</span> with <span class="math inline">\Box U(H)</span>, and put <span class="math inline">G:=\lambda x\, .\,Hx\land Fx</span>. Then <span class="math inline">G\le F</span>, and necessarily, if <span class="math inline">I(F)</span> then <span class="math inline">F&#39;</span> and <span class="math inline">F</span> are coextensive, so <span class="math inline">G</span> is coextensive with <span class="math inline">H</span> and <span class="math inline">U(G)</span>. Necessitating, the equivalence holds at every world. Now the matrix <span class="math inline">G\le F\land\Box(I(F)\to U(G))</span> of the entailing form is of the form <span class="math inline">\Box A(F,G)</span>, <span class="math inline">G\le F</span> being itself a necessitated universal. And <span class="math inline">\exists G\,\Box A(F,G)\to\Box\exists G\,\Box A(F,G)</span> is a theorem of C: from <span class="math inline">\Box A(F,G)</span>, 4 gives <span class="math inline">\Box\Box A(F,G)</span>, and necessitated existential generalization gives <span class="math inline">\Box\exists G\,\Box A(F,G)</span>. So the entailing form gives <span class="math inline">\forall F\,\Box\exists G\,\Box A(F,G)</span>, and BF at type <span class="math inline">\sigma t</span> moves the box out: <span class="math inline">\Box\forall F\,\exists G\,\Box A(F,G)</span>, which is the necessitation of the entailing form, hence □Intensional Choice at <span class="math inline">\sigma</span>.</p>
+<p>Write <span class="math inline">I(F)</span> for <span
+class="math inline">\exists x\, .\,Fx</span> and <span
+class="math inline">U(G)</span> for <span class="math inline">\exists
+x\, .\,Gx\land\forall y\, .\,Gy\to y=x</span>. First, Intensional Choice
+at <span class="math inline">\sigma</span> is equivalent in C to its
+entailing form <span class="math inline">\forall F\,\exists G\, .\,G\le
+F\land\Box(I(F)\to U(G))</span>. From the entailing form: if <span
+class="math inline">\Box I(F)</span>, a <span
+class="math inline">G</span> as there has <span class="math inline">\Box
+U(G)</span> by K. To it: given <span class="math inline">F</span>, <span
+class="math inline">F&#39;:=\lambda x\, .\,Fx\lor\neg I(F)</span> is
+necessarily instantiated, since it is a theorem that it is instantiated;
+take <span class="math inline">H\le F&#39;</span> with <span
+class="math inline">\Box U(H)</span>, and put <span
+class="math inline">G:=\lambda x\, .\,Hx\land Fx</span>. Then <span
+class="math inline">G\le F</span>, and necessarily, if <span
+class="math inline">I(F)</span> then <span
+class="math inline">F&#39;</span> and <span class="math inline">F</span>
+are coextensive, so <span class="math inline">G</span> is coextensive
+with <span class="math inline">H</span> and <span
+class="math inline">U(G)</span>. Necessitating, the equivalence holds at
+every world. Now the matrix <span class="math inline">G\le
+F\land\Box(I(F)\to U(G))</span> of the entailing form is of the form
+<span class="math inline">\Box A(F,G)</span>, <span
+class="math inline">G\le F</span> being itself a necessitated universal.
+And <span class="math inline">\exists G\,\Box A(F,G)\to\Box\exists
+G\,\Box A(F,G)</span> is a theorem of C: from <span
+class="math inline">\Box A(F,G)</span>, 4 gives <span
+class="math inline">\Box\Box A(F,G)</span>, and necessitated existential
+generalization gives <span class="math inline">\Box\exists G\,\Box
+A(F,G)</span>. So the entailing form gives <span
+class="math inline">\forall F\,\Box\exists G\,\Box A(F,G)</span>, and BF
+at type <span class="math inline">\sigma t</span> moves the box out:
+<span class="math inline">\Box\forall F\,\exists G\,\Box A(F,G)</span>,
+which is the necessitation of the entailing form, hence □Intensional
+Choice at <span class="math inline">\sigma</span>.</p>
 <h2 id="notes">Notes</h2>
-<p>Only BF at type <span class="math inline">\sigma t</span> is used for the instance at <span class="math inline">\sigma</span>. The argument does not show that failures of Intensional Choice are necessary. Astra’s note also derives □Intensional Choice from Intensional Choice with ND (type <span class="math inline">t</span>) and BF, which this subsumes.</p>
+<p>Only BF at type <span class="math inline">\sigma t</span> is used for
+the instance at <span class="math inline">\sigma</span>. The argument
+does not show that failures of Intensional Choice are necessary. Astra’s
+note also derives □Intensional Choice from Intensional Choice with ND
+(type <span class="math inline">t</span>) and BF, which this
+subsumes.</p>
 <h2 id="sources">Sources</h2>
 <ul>
-<li><strong>Astra via Kodsi 26 Oct</strong> — GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, Barcan persistence of modal choice, research note of 26 October 2026, §§1–3 (unpaginated), in Daniel Kodsi’s pull request #18 of 26 October 2026 (branch classicism-integration-2026-10-26 of github.com/dkodsi/Logical-Maps).</li>
+<li><strong>Astra via Kodsi 26 Oct</strong> — GPT-6 Astra (OpenAI),
+prompted by Daniel Kodsi, Barcan persistence of modal choice, research
+note of 26 October 2026, §§1–3 (unpaginated), in Daniel Kodsi’s pull
+request #18 of 26 October 2026 (branch classicism-integration-2026-10-26
+of github.com/dkodsi/Logical-Maps).</li>
 </ul>
 <p class="cert">
-Record: <code>topics/classicism/results/barcan-and-intensional-choice-imply-necessary-intensional-choice.yaml</code>
+Record:
+<code>topics/classicism/results/barcan-and-intensional-choice-imply-necessary-intensional-choice.yaml</code>
 </p>
 </body></html>
