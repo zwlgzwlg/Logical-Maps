@@ -5,8 +5,6 @@
 ## Package
 
 - **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
-- **Analytic Necessitism.** If there could be a real number structure, there is a rigid one that is necessarily a real number structure: a rigid property with necessarily distinct instances, with rigid order, addition, multiplication and natural numbers, which necessarily form a complete ordered field. One sentence for each type $\sigma$.
-- **Second-Order Analytic Necessitism.** If there could be a real number structure, there is a rigid one, necessarily a real number structure, together with represented powers of every arity up to $n$: rigid properties of rigid relations among the structure's elements that necessarily represent every relation on them. One sentence for each type $\sigma$ and each $n\ge1$.
 - **Arithmetic Necessitism.** Given that necessarily zero is not a successor and successor is injective on numbers, the numbers at $\sigma$ form a rigid property with necessarily distinct instances. One sentence for each type $\sigma$.
 - **Gallin Extensional Comprehension.** Every relation is coextensive with one that is persistent and has a persistent pointwise negation. This is the source’s comparison with Gallin’s different rigidity convention.
 - **□Atomicity.** Necessarily, every non-bottom entity of each relational type has an atom below it.
@@ -59,9 +57,13 @@ Any two objects are isomorphic, by the unique arrow between them, and composing 
 
 ### Holds Analytic Necessitism, Second-Order Analytic Necessitism.
 
+*Withdrawn 2026-10-30 by GPT-6 Astra, prompted by Daniel Kodsi: The stated hypotheses do not establish the native all-carrier AN/SOAN schemata. A structure at tt (or another selected carrier) does not answer an instance at e or t. A counterexample is the full one-object model on the countable monoid with an absorbing zero and fixed natural-number individuals, where an actual real field at t has no necessarily distinct carrier. See [proof](../writeups/analytic-necessitism-carrier-correction.md), sections 1–3, for the full countermodels and exact condition checks. The original text and attribution are preserved; its selected-carrier construction is not rejected by this withdrawal.*
+
 At type $\tau:=et$, as analytic-necessitism-codomain-everywhere with the individuals in place of the propositions: the individuals are the same infinite set $D$ at every object, so the codomain-only intension $Y_A$ whose value at every arrow is $E^A$, for an injection $A\mapsto E^A$ from the sets of natural numbers into the sets of individuals, is in the domain, and its transports are the $Y_A$ of the targets, distinct for distinct $A$; the real number structure on the $Y_A$ by codomain-only relations is carried along every arrow to an isomorphic one. Such a structure is rigid, its instances are necessarily distinct, and it is necessarily a real number structure; and the codomain-only intension of type $((\tau)^kt)t$ whose value at each object is the set of codomain-only $k$-ary relations among the carrier there is a represented power of arity $k$, since at every world each $k$-ary relation agrees on the carrier with one of them. So the consequents of Analytic Necessitism and of its second-order form hold, and both principles hold. (The argument of the withdrawn analytic-necessitism-unretracted-arrow would refute this structure; its step from inextensibility is the gap.)
 
 *General argument `arguments/analytic-necessitism-codomain-fixed-infinite-individuals`. It requires that At every object reachable from the evaluation point, the domain contains every intension whose value at an arrow depends only on the arrow's codomain. Here: The domains are full at every object. It requires that At every object the individuals are the same infinite set, and every arrow acts on them as the identity. Here: This is the choice of individuals. By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, auditing the withdrawn arguments for the failure of Analytic Necessitism, 2026-10-29.*
+
+*Revised 2026-10-30 by GPT-6 Astra, prompted by Daniel Kodsi:* Withdrawn as an all-type sufficient-condition argument, following the 29 October counterexamples proved in the accompanying write-up. This does not assert failure of AN in every model formerly using this argument. Specific full-action replacements are proved in sections 4–5 of the linked write-up.
 
 ### Holds Arithmetic Necessitism.
 

@@ -15,3 +15,21 @@ text: >-
   structure is rigid, with necessarily distinct instances, and necessarily a real number structure: the
   consequent of Analytic Necessitism holds, and so does the principle. (The withdrawn analytic-
   necessitism-exact-collapses-symmetric built such a structure for its antecedent.)
+withdrawn:
+  date: '2026-10-30'
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  reason: >-
+    The stated hypotheses do not establish the native all-carrier AN/SOAN schemata.
+    A structure at tt (or another selected carrier) does not answer an instance at e or t.
+    A counterexample is the full one-object model on the countable monoid with an absorbing zero and fixed natural-number individuals, where an actual real field at t has no necessarily distinct carrier.
+    See [proof](../writeups/analytic-necessitism-carrier-correction.md), sections 1–3, for the full countermodels
+    and exact condition checks. The original text and attribution are preserved; its
+    selected-carrier construction is not rejected by this withdrawal.
+revisions:
+- date: '2026-10-30'
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  note: >-
+    Withdrawn as an all-type sufficient-condition argument, following the 29 October
+    counterexamples proved in the accompanying write-up. This does not assert
+    failure of AN in every model formerly using this argument. Specific full-action
+    replacements are proved in sections 4–5 of the linked write-up.

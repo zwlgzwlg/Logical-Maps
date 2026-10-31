@@ -1,0 +1,49 @@
+id: analytic-necessitism-and-transversal-imply-arithmetic-necessitism
+premises:
+- analytic-necessitism
+- transversal-r
+conclusion: arithmetic-necessitism
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex, prompted by Daniel Kodsi, 30 October 2026, combining current Transversal
+    representatives with the fixed-Peano-reference lemma of GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi, 30 October 2026
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- OpenAI Codex, prompted by Daniel Kodsi, Transversal representatives and genuine arithmetic give a real
+  field, 30 October 2026, accompanying write-up §§1–5, unpaginated; ordinary local proof.
+- GPT-6 Astra, prompted by Daniel Kodsi, Finite-type necessitism, companion proof notes, 29 October 2026,
+  §6 (fixed Peano reference lemma); Finite-type consequences, 29 October 2026, §5. Both unpaginated; the
+  transport proof is reproduced in the accompanying write-up, §4.
+- Christopher Sun, Transversal and Actuality connections, 26 September 2026; the existing Transversal
+  definition selects one literal property per current coextension class.
+- GPT-6 Astra, prompted by Daniel Kodsi, Current Transversal supplies a literal real field, 30 October
+  2026, §§2–5 (unpaginated), for explicit relational rational coding and weak-bracket estimates.
+source_names:
+- Transversal and real-field construction 30 Oct
+- Fixed Peano reference lemma
+- Sun Transversal 26 Sep
+- Current Transversal and literal real fields 30 Oct
+proof: See the write-up. Fix a source sigma and assume its necessary Peano guard. At the current point,
+  the canonical arithmetic is genuine. Transversal at nu_sigma=(sigma t)t supplies one literal representative
+  of every current coextension class of predicates on the canonical number host. Restrict its representatives
+  to rational Dedekind cuts. Comprehension gives the relational field operations and arbitrary admitted
+  bounded unions, hence a current real number structure at rho_sigma=nu_sigma t. ANA gives a fixed necessarily-real
+  structure at that same host. Its fixed Peano substructure and the source's necessary matching/range
+  lemma imply Arithmetic Necessitism at sigma under the unchanged guard. Since sigma was arbitrary, the
+  full conclusion follows.
+notes: No unconditional arithmetic existence, boxed Transversal, Functional Choice, or new type-quantified
+  existence assertion is used. The cut construction uses current literal representatives and current fullness;
+  rigidity is supplied only after applying ANA. The current cut construction and its composition with
+  the fixed-reference lemma are due to OpenAI Codex, prompted by Daniel Kodsi, 30 October 2026. With the
+  existing SOAN-to-ANA result it derives Transversal's failure in the symmetric Cohen arithmetic-growth
+  model.
+changes:
+- date: '2026-10-30'
+  by: OpenAI Codex, prompted by Daniel Kodsi
+  summary: Expanded the current field-existence proof using the explicit rational coding and interval
+    estimates of GPT-6 Astra, prompted by Daniel Kodsi, 30 October 2026. Premises, conclusion, original
+    proof credit and certificate date are unchanged.

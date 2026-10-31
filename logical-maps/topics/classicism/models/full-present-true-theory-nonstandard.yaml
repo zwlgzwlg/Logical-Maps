@@ -1,0 +1,88 @@
+id: full-present-true-theory-nonstandard
+name: 'Full present: true-theory nonstandard Henkin component'
+definition: >-
+  Let F be the full one-world extensional typed hierarchy over omega. In its countable
+  many-sorted Henkin presentation, use compactness and downward Lowenheim–Skolem to choose
+  a countable H elementarily equivalent to F with a canonical e-number c different from
+  every standard numeral. The language retains every parameterized finite lambda template.
+  Add a full present R: R_e = H_e with identity projection, and at each flattened relational
+  type tau = alpha_1 ... alpha_k t let R_tau consist of all pairs (S,a), where S is an arbitrary
+  current relation on the R_alpha_i and a belongs to H_tau. Application, abstraction and
+  quantification keep the original H operations in their second coordinates; old quantifiers
+  range over the whole H domain. Evaluate at the new present and interpret any fixed
+  relational signature constants by top. The writeup proves the C interpretation and verdicts.
+certificate:
+  source_id: misc
+  produced_by: Daniel Kodsi, with ChatGPT assistance
+  recorded_by: GPT-6 Astra, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- Daniel Kodsi, with ChatGPT assistance, Stable analytical truth with a nonstandard numerical
+  component, 29–30 October 2026, Sections 1–5 (unpaginated); the matching complete theory
+  and the joint analytical-truth, numerical-growth and analytic-necessitism verdicts.
+- Cian Dorr, coalesced-two-extensional-arithmetics-root, arithmetic-necessitism argument;
+  the standard-current/nonstandard-component inextensibility countertest.
+- OpenAI Codex, prompted by Daniel Kodsi, Classical present over an arbitrary model,
+  25 October 2026, Sections 1–2 and 5 (unpaginated); the pair construction and current
+  extensional analytical truth lemma. Classical present conservation, Section 4,
+  for the countable Henkin presentation and complete-theory method.
+source_names:
+- Stable analysis with numerical growth
+- Dorr numerical-growth countertest
+- Kodsi full-present construction
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Sections 1.3 and 2.3; Theorem 3.26 and Appendix E
+  note: The fixed C language and coalesced action-model framework.
+- paper: goodsell-arithmetic-necessary
+  role: formulation
+  locator: Definitions 3–8
+  note: The canonical numerical objects and noncollapse guard.
+arguments:
+- id: stable-analysis
+  holds: [necessity-of-second-order-analysis]
+  choice: uses
+  writeup: full-present-true-theory-nonstandard
+  text: >-
+    Fix any standard finite analytical sentence and its sign in the full real field.
+    At every carrier type, the universal assertion that all real-field tuples have that
+    sign belongs to Th(F), hence holds in H. Full current rows make each actual real
+    field at R an external complete ordered field and supply all finite-arity relations
+    on it. The analytical grammar cannot distinguish duplicate relation intensions
+    with the same current extension, so the same signed universal holds at R.
+    It therefore holds necessarily at R. This proves the full all-carrier schema,
+    including vacuous carrier instances. Sections 1–3.
+- id: nonrigid-numbers
+  fails: [arithmetic-necessitism]
+  choice: uses
+  writeup: full-present-true-theory-nonstandard
+  text: >-
+    At R, the current canonical e-numbers are exactly the standard numeral orbit.
+    Both R and H satisfy I*_e, so the boxed guard is true. Pair that orbit with
+    H's admitted predicate N_e(n) and n not equal to c. Every current R-number
+    necessarily has this predicate, but H's number c witnesses failure of the
+    necessary inclusion of N_e in it. Thus N_e fails weak inextensibility and
+    rigidity with the Arithmetic Necessitism guard true. Section 4.
+- id: no-rigid-real-carrier
+  fails: [analytic-necessitism]
+  choice: uses
+  writeup: full-present-true-theory-nonstandard
+  text: >-
+    R_et has continuum many entities, so a current real field exists there by
+    current fullness. Every such field has continuum many current elements.
+    Necessary distinctness would make their transport into the countable H_et
+    injective, which is impossible. Thus no rigid necessarily-real field at et
+    can witness Analytic Necessitism. Section 5.
+notes: >-
+  The stable truth concerns exactly the native second-order analytical grammar.
+  H is elementarily equivalent to the standard full hierarchy, not an elementary
+  substructure of it; its internal fields need not be externally complete.
+  SOAN failure follows from AN failure. No Necessity of Arithmetic, C5,
+  No Pure Contingency or additional choice/completeness verdict is asserted.
+  The construction uses ambient ZFC compactness and has a consistency upper
+  bound relative to Con(ZFC); no transitive-model hypothesis is needed.
+  This is an informal mathematical proof, with no independent human check
+  or new Lean verification recorded.

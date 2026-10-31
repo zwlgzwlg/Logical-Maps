@@ -1,0 +1,66 @@
+id: full-boolean-valued-countably-closed-subset
+name: Full Boolean-valued model with countably closed subset forcing
+definition: Inside a countable M satisfying ZFC+CH, let A be the regular-open completion of the forcing
+  of countable partial functions omega_1→2. Put B=2×A and use the internally full relational hierarchy
+  with D_e=omega^M. Externalize standard finite types and evaluate at the isolated atom (first-coordinate
+  truth); necessity is the top test. The forcing preserves reals, omega_1 and CH while adding a new subset
+  of omega_1. The writeup constructs all-carrier rigid real fields and verifies the full native represented-power
+  obstruction.
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, AN and necessary CH without SOAN, Construction, positive AN/CH and
+  negative SOAN sections, 29 October 2026 (unpaginated).
+- 'GPT-6 Astra, prompted by Daniel Kodsi, Independent audit: all-type AN in the no-new-reals collapse model,
+  Section 7, 29 October 2026 (unpaginated).'
+- Andrew Bacon, Could the truths of mathematics have been different?, draft of 9 October 2025, online Appendix
+  B.2, pp. 7–9 (PDF pp. 41–43), construction and Lemmas B.1–B.4, for the Boolean hierarchy.
+- OpenAI Codex, prompted by Daniel Kodsi, Full Boolean-valued carrier and premise audit, 25 October 2026, Sections 5 and 7 (unpaginated),
+  for fixed-label mixed fields, exact extensional transfer and endpoint rigidity.
+- 'OpenAI Codex, prompted by Daniel Kodsi, Generic-point Boolean models: observer separation with contingent CH and analysis, 25 October
+  2026, Sections 2–3, 6 and 7.2; Generic evaluation of a Boolean model: independent observer and forcing audit,
+  same date (unpaginated), for internal C soundness, necessary BF/relational choice and the no-new-reals collapse.'
+arguments:
+- id: boolean-core
+  holds:
+  - necessary-distinctness-necessary-r
+  - necessary-relational-choice-r
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-29'
+  choice: uses
+  writeup: full-boolean-valued-countably-closed-subset
+  text: The common Boolean hierarchy has crisp identity and top-test necessity. Internal relation-row
+    disjointification proves necessary relational choice at every permitted input/output type; see the
+    displayed common proof.
+- id: no-new-reals-and-universal-ch
+  holds:
+  - analytic-necessitism
+  - non-contingency-of-ch
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-29'
+  choice: uses
+  writeup: full-boolean-valued-countably-closed-subset
+  text: A continuum antichain supplies all non-e carrier capacity; endpoint fields remain complete because
+    no reals are added, while e is vacuous. Ground and forced CH, with field categoricity below every
+    candidate Boolean support, make the boxed universal CH assertion top at each type. See the positive
+    AN and CH proofs.
+- id: new-subset-defeats-all-unary-powers
+  fails:
+  - second-order-analytic-necessitism
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-29'
+  choice: uses
+  writeup: full-boolean-valued-countably-closed-subset
+  text: The generic subset of omega_1 is forced unequal to every ground subset. By CH transfer it to each
+    prospective rigid real carrier. Rigid relations and a qualifying rigid family have endpoint-valued
+    ground supports; every selected representative has agreement value zero in the forcing coordinate.
+    Their existential join cannot be top, so the boxed representation clause fails for every candidate.
+    The t, arity-one SOAN instance has true antecedent and false consequent.
+notes: Relative consistency upper bound from Con(ZFC). CH is stable, but full Necessity of Second-Order
+  Analysis is not asserted. No transitive ground or large-cardinal assumption. Necessary BF is derived.
+  This is separate from the no-new-reals collapse variant because the forcing and CH premise differ.

@@ -323,75 +323,317 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
 <script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Symmetric ideally-full model: qualitative contrast, evaluated at W1</h1></header><p class="cert">
-Model — Source: Misc.; produced by GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, 25 October 2026 (evaluation at <span class="math inline">W_1</span> and the Relational Choice verdict), on the construction of Andrew Bacon and Cian Dorr; recorded by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 28 October 2026.
+Model — Source: Misc.; produced by GPT-6 Astra (OpenAI), prompted by
+Daniel Kodsi, 25 October 2026 (evaluation at <span
+class="math inline">W_1</span> and the Relational Choice verdict), on
+the construction of Andrew Bacon and Cian Dorr; recorded by Claude Opus
+5.5 (Anthropic), prompted by Cian Dorr, 28 October 2026.
 </p>
 <h2 id="package">Package</h2>
 <ul>
-<li><strong>□ND.</strong> Necessarily, distinct things of any type are necessarily distinct.</li>
-<li><strong>Relational Choice.</strong> Every serial binary relation has a functional subrelation.</li>
-<li><strong>□Intensional Choice.</strong> Necessarily, if a property is necessarily instantiated, then some property entailing it is necessarily uniquely instantiated.</li>
-<li><strong>□Transversal.</strong> Necessarily, there is a property of properties that picks out exactly one property from each coextension class, that is, exactly one property coextensive with any given property.</li>
-<li><strong>Necessity of Second-Order Analysis.</strong> Every second-order analytical sentence is either true in every real number structure in every possible world or false in every real number structure in every possible world. One sentence for each type <span class="math inline">\sigma</span> and each second-order analytical sentence.</li>
-<li><strong>Axiom of Infinity (type t).</strong> There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.</li>
-<li><strong>Axiom of Infinity (type e).</strong> There are not finitely many individuals. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.</li>
-<li><strong>Arithmetic Necessitism.</strong> Given that necessarily zero is not a successor and successor is injective on numbers, the numbers at <span class="math inline">\sigma</span> form a rigid property with necessarily distinct instances. One sentence for each type <span class="math inline">\sigma</span>.</li>
-<li><strong>¬ □Relational Choice.</strong> Necessarily, every serial binary relation has a functional subrelation.</li>
-<li><strong>¬ Boolean Completeness (type t).</strong> Every property of propositions has a greatest lower bound.</li>
-<li><strong>¬ Countable Boolean Completeness.</strong> Every countable property of entities of a relational type has a least upper bound in that type, where a property is countable relative to a type <span class="math inline">\sigma</span> when it injects into the finite cardinalities of properties of type <span class="math inline">\sigma</span>; one instance for each <span class="math inline">\sigma</span>.</li>
-<li><strong>¬ Atomlessness.</strong> Atomlessness in the displayed closed propositional formulation.</li>
-<li><strong>¬ Forcing Possibilism.</strong> Every complete Boolean algebra that is finite or has strictly fewer elements than there are propositions is isomorphic to the entailment algebra below some proposition other than top.</li>
-<li><strong>¬ Witnessed Possibility.</strong> For pure-formulas P with free variables among a finite tuple x, and distinct matching nonlogical constants c, a witness to P entails that P at those constants is possible.</li>
-<li><strong>¬ Separated Structure.</strong> For each typed nonlogical constant c and closed same-typed terms F,G not containing c, equality after application to c implies equality of F and G.</li>
-<li><strong>¬ Independence (signature Σ).</strong> No constant of Sigma is a pure operation applied to other constants: for a closed pure term A and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied to the d’s. With n = 0, no constant denotes a pure entity.</li>
-<li><strong>¬ Maximalism (signature Σ).</strong> The Maximalism schema for the fixed nonlogical signature Σ: every closed identity of its language not provable in C(Σ) is false.</li>
+<li><strong>□ND.</strong> Necessarily, distinct things of any type are
+necessarily distinct.</li>
+<li><strong>Relational Choice.</strong> Every serial binary relation has
+a functional subrelation.</li>
+<li><strong>□Intensional Choice.</strong> Necessarily, if a property is
+necessarily instantiated, then some property entailing it is necessarily
+uniquely instantiated.</li>
+<li><strong>□Transversal.</strong> Necessarily, there is a property of
+properties that picks out exactly one property from each coextension
+class, that is, exactly one property coextensive with any given
+property.</li>
+<li><strong>Necessity of Second-Order Analysis.</strong> Every
+second-order analytical sentence is either true in every real number
+structure in every possible world or false in every real number
+structure in every possible world. One sentence for each type <span
+class="math inline">\sigma</span> and each second-order analytical
+sentence.</li>
+<li><strong>Axiom of Infinity (type t).</strong> There are not finitely
+many propositions. No finite cardinality holds of the universal
+property, so the domain of the type cannot be exhausted by finitely many
+steps from the empty property.</li>
+<li><strong>Axiom of Infinity (type e).</strong> There are not finitely
+many individuals. No finite cardinality holds of the universal property,
+so the domain of the type cannot be exhausted by finitely many steps
+from the empty property.</li>
+<li><strong>Arithmetic Necessitism.</strong> Given that necessarily zero
+is not a successor and successor is injective on numbers, the numbers at
+<span class="math inline">\sigma</span> form a rigid property with
+necessarily distinct instances. One sentence for each type <span
+class="math inline">\sigma</span>.</li>
+<li><strong>¬ □Relational Choice.</strong> Necessarily, every serial
+binary relation has a functional subrelation.</li>
+<li><strong>¬ Boolean Completeness (type t).</strong> Every property of
+propositions has a greatest lower bound.</li>
+<li><strong>¬ Countable Boolean Completeness.</strong> Every countable
+property of entities of a relational type has a least upper bound in
+that type, where a property is countable relative to a type <span
+class="math inline">\sigma</span> when it injects into the finite
+cardinalities of properties of type <span
+class="math inline">\sigma</span>; one instance for each <span
+class="math inline">\sigma</span>.</li>
+<li><strong>¬ Atomlessness.</strong> Atomlessness in the displayed
+closed propositional formulation.</li>
+<li><strong>¬ Forcing Possibilism.</strong> Every complete Boolean
+algebra that is finite or has strictly fewer elements than there are
+propositions is isomorphic to the entailment algebra below some
+proposition other than top.</li>
+<li><strong>¬ Witnessed Possibility.</strong> For pure-formulas P with
+free variables among a finite tuple x, and distinct matching nonlogical
+constants c, a witness to P entails that P at those constants is
+possible.</li>
+<li><strong>¬ Separated Structure.</strong> For each typed nonlogical
+constant c and closed same-typed terms F,G not containing c, equality
+after application to c implies equality of F and G.</li>
+<li><strong>¬ Independence (signature Σ).</strong> No constant of Sigma
+is a pure operation applied to other constants: for a closed pure term A
+and distinct constants c, d_1,…,d_n with n ≥ 0, c differs from A applied
+to the d’s. With n = 0, no constant denotes a pure entity.</li>
+<li><strong>¬ Maximalism (signature Σ).</strong> The Maximalism schema
+for the fixed nonlogical signature Σ: every closed identity of its
+language not provable in C(Σ) is false.</li>
 </ul>
 <h2 id="definition">Definition</h2>
-<p>The construction of symmetric-qualitative-contrast (Bacon and Dorr, Appendix D, p. 79): two objects <span class="math inline">W_0</span> and <span class="math inline">W_1</span>, both copies of <span class="math inline">\mathbb N</span>, all permutations of <span class="math inline">\mathbb N</span> as the arrows between any pair of objects, the ideal of finite sets at each, and the symmetry groups <span class="math inline">G_{W_0}</span> = all permutations and <span class="math inline">G_{W_1}</span> trivial. Evaluation point: <span class="math inline">W_1</span>, at its identity arrow.</p>
-<p>Individuals, fixed for this record: the individuals at each object are the base the construction describes, and the arrows act on them as on the base.</p>
-<p>Interpretation of Σ, fixed for this record: every constant of Σ is relational, and each denotes the top element of its type.</p>
-<p><em>A member of the group Symmetric ideally-full models, which supplies this definition with the record’s settings, and the arguments marked as shared.</em></p>
+<p>The construction of symmetric-qualitative-contrast (Bacon and Dorr,
+Appendix D, p. 79): two objects <span class="math inline">W_0</span> and
+<span class="math inline">W_1</span>, both copies of <span
+class="math inline">\mathbb N</span>, all permutations of <span
+class="math inline">\mathbb N</span> as the arrows between any pair of
+objects, the ideal of finite sets at each, and the symmetry groups <span
+class="math inline">G_{W_0}</span> = all permutations and <span
+class="math inline">G_{W_1}</span> trivial. Evaluation point: <span
+class="math inline">W_1</span>, at its identity arrow.</p>
+<p>Individuals, fixed for this record: the individuals at each object
+are the base the construction describes, and the arrows act on them as
+on the base.</p>
+<p>Interpretation of Σ, fixed for this record: every constant of Σ is
+relational, and each denotes the top element of its type.</p>
+<p><em>A member of the group Symmetric ideally-full models, which
+supplies this definition with the record’s settings, and the arguments
+marked as shared.</em></p>
 <h2 id="arguments">Arguments</h2>
 <h3 id="holds-nd.">Holds □ND.</h3>
-<p>As at <span class="math inline">W_0</span> (symmetric-qualitative-contrast): every arrow is invertible, so transport along an arrow is injective at every type, and identity and distinctness persist along every arrow, from every object.</p>
-<p><em>Address: <code>symmetric-qualitative-contrast-at-w1#c5</code>. By GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, 25 October 2026; checked and recorded by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-28.</em></p>
+<p>As at <span class="math inline">W_0</span>
+(symmetric-qualitative-contrast): every arrow is invertible, so
+transport along an arrow is injective at every type, and identity and
+distinctness persist along every arrow, from every object.</p>
+<p><em>Address: <code>symmetric-qualitative-contrast-at-w1#c5</code>. By
+GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, 25 October 2026; checked
+and recorded by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr,
+2026-10-28.</em></p>
 <h3 id="holds-relational-choice.">Holds Relational Choice.</h3>
-<p>At <span class="math inline">W_1</span> every relation between the entities there is the extension of a relation in the domain. Given a set <span class="math inline">R</span> of tuples, let <span class="math inline">\hat R</span> have value <span class="math inline">R</span> at every arrow into <span class="math inline">W_1</span> and <span class="math inline">\emptyset</span> at every arrow into <span class="math inline">W_0</span>. Parallel arrows get the same value, so <span class="math inline">\hat R</span> is pinned down by <span class="math inline">\emptyset</span>; at <span class="math inline">W_1</span> there is no symmetry condition, <span class="math inline">G_{W_1}</span> being trivial, and the empty value meets the one at <span class="math inline">W_0</span>. So for a serial relation, a choice of one output for each input, made in the metatheory, is the extension of a functional subrelation in the domain.</p>
-<p><em>Address: <code>symmetric-qualitative-contrast-at-w1#relational-choice</code>. By GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, 25 October 2026; checked and recorded by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-28.</em></p>
-<h3 id="holds-intensional-choice.-fails-relational-choice-boolean-completeness-type-t-countable-boolean-completeness.">Holds □Intensional Choice. Fails □Relational Choice, Boolean Completeness (type t), Countable Boolean Completeness.</h3>
-<p>Each object has arrows to both objects, so a boxed principle holds at <span class="math inline">W_1</span> iff it holds at <span class="math inline">W_0</span> and <span class="math inline">W_1</span>. Relational Choice fails at <span class="math inline">W_0</span> (the group’s argument relational-choice, the transposition of a chosen individual outside a pinning set being a symmetry of <span class="math inline">W_0</span>), so □Relational Choice fails at <span class="math inline">W_1</span>; Intensional Choice holds at both objects (symmetric-qualitative-contrast). Boolean Completeness (type <span class="math inline">t</span>) and Countable Boolean Completeness fail at <span class="math inline">W_1</span> itself, by the argument for their boxed forms in symmetric-qualitative-contrast, which is made at <span class="math inline">W_1</span>.</p>
-<p><em>Address: <code>symmetric-qualitative-contrast-at-w1#transfer-from-w0</code>. By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-28.</em></p>
-<h3 id="holds-transversal-necessity-of-second-order-analysis.">Holds □Transversal, Necessity of Second-Order Analysis.</h3>
-<p>Every arrow leads to <span class="math inline">W_0</span> or <span class="math inline">W_1</span>, and from each object to both, so a boxed sentence, or a disjunction of them, holds at <span class="math inline">W_1</span> iff at <span class="math inline">W_0</span>. Transversal holds at <span class="math inline">W_0</span> (from Actuality) and at <span class="math inline">W_1</span> (from Transversal Choice), so □Transversal holds; Necessity of Second-Order Analysis holds at <span class="math inline">W_0</span> (recorded).</p>
-<p><em>Address: <code>symmetric-qualitative-contrast-at-w1#transfer-boxed</code>. By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for cheaply settled verdicts; checked by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-28.</em></p>
-<h3 id="holds-axiom-of-infinity-type-t.">Holds Axiom of Infinity (type t).</h3>
-<p>The numerals at <span class="math inline">t</span> form a property pinned down by <span class="math inline">\varnothing</span>, so finite cardinality is standard, and the propositions that an arrow into <span class="math inline">W_1</span> sends <span class="math inline">0</span> to <span class="math inline">n</span>, one for each <span class="math inline">n</span>, are distinct.</p>
-<p><em>Address: <code>symmetric-qualitative-contrast-at-w1#infinity-t</code>. By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for cheaply settled verdicts; checked by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-28.</em></p>
-<h3 id="fails-atomlessness-forcing-possibilism.">Fails Atomlessness, Forcing Possibilism.</h3>
-<p>Any two arrows into <span class="math inline">W_0</span> differ by a member of <span class="math inline">G_{W_0}</span>, so a proposition contains all of them or none; the proposition <span class="math inline">q_0</span> of the arrows into <span class="math inline">W_0</span>, pinned down by <span class="math inline">\varnothing</span>, is an atom. A nonzero set of arrows into <span class="math inline">W_1</span>, pinned down by a finite <span class="math inline">N</span>, is split by the value of the arrow at a point outside <span class="math inline">N</span>; so the propositions below a proposition other than <span class="math inline">\top</span> number <span class="math inline">1</span>, <span class="math inline">2</span> or infinitely many. But <span class="math inline">\bot</span>, <span class="math inline">q_0</span>, <span class="math inline">\neg q_0</span> and <span class="math inline">\top</span> form a complete four-element Boolean algebra, so Forcing Possibilism fails.</p>
-<p><em>Address: <code>symmetric-qualitative-contrast-at-w1#atom-at-w0</code>. By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for cheaply settled verdicts; checked by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-28.</em></p>
-<h3 id="holds-axiom-of-infinity-type-e.">Holds Axiom of Infinity (type e).</h3>
-<p>There are infinitely many individuals, and identity at the identity arrow is literal, so no numeral counts them. The set of numerals at type <span class="math inline">e</span> is fixed by every arrow, hence symmetric and pinned down by the empty set, so finite cardinality is standard and no finite cardinality holds of the universal property.</p>
-<p><em>From the group </em>Symmetric ideally-full models<em>, shared argument <code>symmetric-ideally-full#axiom-of-infinity-e</code>. It requires that There are infinitely many individuals at the evaluation world. Here: The base is infinite. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s direction, 2026-09-20.</em></p>
-<p><em>Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr’s direction:</em> The type-<span class="math inline">e</span> half of the members’ argument, stated once; “the individuals are the natural numbers” became “there are infinitely many individuals”, which also covers the qualitative links model. The type-<span class="math inline">t</span> half is axiom-of-infinity-t.</p>
-<h3 id="holds-arithmetic-necessitism.">Holds Arithmetic Necessitism.</h3>
-<p>As the argument arithmetic-necessitism-extensionally-full, with the property of being a numeral supplied by pinning. The intension <span class="math inline">Z</span> whose value at each arrow <span class="math inline">k</span> out of the evaluation object is the set of numerals <span class="math inline">\mathbf 0_\sigma,\operatorname{Suc}_\sigma\mathbf 0_\sigma,\ldots</span> at the target of <span class="math inline">k</span> is pinned down by the empty set, its value depending on the arrow only through its target, and is symmetric, transport along a permutation of the points carrying numerals to numerals, as transport along any arrow does, numerals being closed terms; so it is in the domain, and so is its transport <span class="math inline">k\cdot Z</span> to any reachable object, whose extension there is exactly the numerals. Hence at every reachable object the numbers at <span class="math inline">\sigma</span>, the instances of the least inductive property, are exactly the numerals, which transport to numerals; persistence and, given <span class="math inline">\Box I^*_\sigma</span>, necessary distinctness are theorems of C, and inextensibility follows as in that argument. So Arithmetic Necessitism holds at every type. No choice is used.</p>
-<p><em>General argument <code>arguments/arithmetic-necessitism-finitely-pinned</code>. It requires that Write an entity of relational type at the evaluation object as its intension <span class="math inline">k\mapsto Y_k</span> over the arrows <span class="math inline">k</span> out of it, so that <span class="math inline">Y\bar a</span> holds at <span class="math inline">k</span> iff <span class="math inline">k\cdot\bar a\in Y_k</span>; <span class="math inline">Y</span> is pinned down by a finite set <span class="math inline">N</span> of the points the arrows act on when <span class="math inline">Y_k=Y_{k^{\prime}}</span> for any arrows <span class="math inline">k,k^{\prime}</span> agreeing on <span class="math inline">N</span>. Every entity in a domain is pinned down by a finite set, in the sense that <span class="math inline">k\cdot x=k^{\prime}\cdot x</span> for arrows agreeing on it, and the domain of each relational type at the evaluation object holds every intension pinned down by a finite set (in a symmetric model, every symmetric one). Here: Each object carries the ideal of finite sets, and the domains hold the finitely pinned symmetric entities of every type. By Claude Fable 5.1 (Anthropic), prompted by Zachary Goodsell, 2026-10-23.</em></p>
-<h3 id="fails-witnessed-possibility-separated-structure-independence-signature-σ-maximalism-signature-σ.">Fails Witnessed Possibility, Separated Structure, Independence (signature Σ), Maximalism (signature Σ).</h3>
-<p>Let <span class="math inline">c\in\Sigma</span> have relational type <span class="math inline">\tau</span>, so <span class="math inline">c=\top_\tau</span> necessarily. Witnessed Possibility fails for the pure formula <span class="math inline">x\ne\top_\tau</span>, witnessed by <span class="math inline">\bot_\tau</span> but impossible of <span class="math inline">c</span>; Separated Structure fails since <span class="math inline">\lambda x\, .\,x</span> and <span class="math inline">\lambda x\, .\,\top_\tau</span> agree on <span class="math inline">c</span> and differ; Independence (signature Σ) fails since <span class="math inline">c</span> denotes what the closed pure term <span class="math inline">\top_\tau</span> denotes; Distinctness Maximalism (signature Σ) fails since <span class="math inline">c=\top_\tau</span> is a true identity that C(Σ) does not prove.</p>
-<p><em>General argument <code>arguments/sigma-top</code>. It requires that Every constant of Σ is relational, and each denotes the top element of its type. Here: This is the interpretation. By Claude Fable 5.1 (Anthropic), at Cian Dorr’s request, 2026-09-22.</em></p>
-<p><em>Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr’s direction:</em> Moved from the group finite-support-one-object to the topic; it uses nothing about the model.</p>
+<p>At <span class="math inline">W_1</span> every relation between the
+entities there is the extension of a relation in the domain. Given a set
+<span class="math inline">R</span> of tuples, let <span
+class="math inline">\hat R</span> have value <span
+class="math inline">R</span> at every arrow into <span
+class="math inline">W_1</span> and <span
+class="math inline">\emptyset</span> at every arrow into <span
+class="math inline">W_0</span>. Parallel arrows get the same value, so
+<span class="math inline">\hat R</span> is pinned down by <span
+class="math inline">\emptyset</span>; at <span
+class="math inline">W_1</span> there is no symmetry condition, <span
+class="math inline">G_{W_1}</span> being trivial, and the empty value
+meets the one at <span class="math inline">W_0</span>. So for a serial
+relation, a choice of one output for each input, made in the metatheory,
+is the extension of a functional subrelation in the domain.</p>
+<p><em>Address:
+<code>symmetric-qualitative-contrast-at-w1#relational-choice</code>. By
+GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, 25 October 2026; checked
+and recorded by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr,
+2026-10-28.</em></p>
+<h3
+id="holds-intensional-choice.-fails-relational-choice-boolean-completeness-type-t-countable-boolean-completeness.">Holds
+□Intensional Choice. Fails □Relational Choice, Boolean Completeness
+(type t), Countable Boolean Completeness.</h3>
+<p>Each object has arrows to both objects, so a boxed principle holds at
+<span class="math inline">W_1</span> iff it holds at <span
+class="math inline">W_0</span> and <span class="math inline">W_1</span>.
+Relational Choice fails at <span class="math inline">W_0</span> (the
+group’s argument relational-choice, the transposition of a chosen
+individual outside a pinning set being a symmetry of <span
+class="math inline">W_0</span>), so □Relational Choice fails at <span
+class="math inline">W_1</span>; Intensional Choice holds at both objects
+(symmetric-qualitative-contrast). Boolean Completeness (type <span
+class="math inline">t</span>) and Countable Boolean Completeness fail at
+<span class="math inline">W_1</span> itself, by the argument for their
+boxed forms in symmetric-qualitative-contrast, which is made at <span
+class="math inline">W_1</span>.</p>
+<p><em>Address:
+<code>symmetric-qualitative-contrast-at-w1#transfer-from-w0</code>. By
+Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-28.</em></p>
+<h3 id="holds-transversal-necessity-of-second-order-analysis.">Holds
+□Transversal, Necessity of Second-Order Analysis.</h3>
+<p>Every arrow leads to <span class="math inline">W_0</span> or <span
+class="math inline">W_1</span>, and from each object to both, so a boxed
+sentence, or a disjunction of them, holds at <span
+class="math inline">W_1</span> iff at <span
+class="math inline">W_0</span>. Transversal holds at <span
+class="math inline">W_0</span> (from Actuality) and at <span
+class="math inline">W_1</span> (from Transversal Choice), so
+□Transversal holds; Necessity of Second-Order Analysis holds at <span
+class="math inline">W_0</span> (recorded).</p>
+<p><em>Address:
+<code>symmetric-qualitative-contrast-at-w1#transfer-boxed</code>. By
+Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for
+cheaply settled verdicts; checked by Claude Opus 5.5 (Anthropic),
+prompted by Cian Dorr, 2026-10-28.</em></p>
+<h3 id="holds-axiom-of-infinity-type-t.">Holds Axiom of Infinity (type
+t).</h3>
+<p>The numerals at <span class="math inline">t</span> form a property
+pinned down by <span class="math inline">\varnothing</span>, so finite
+cardinality is standard, and the propositions that an arrow into <span
+class="math inline">W_1</span> sends <span class="math inline">0</span>
+to <span class="math inline">n</span>, one for each <span
+class="math inline">n</span>, are distinct.</p>
+<p><em>Address:
+<code>symmetric-qualitative-contrast-at-w1#infinity-t</code>. By Claude
+Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for cheaply
+settled verdicts; checked by Claude Opus 5.5 (Anthropic), prompted by
+Cian Dorr, 2026-10-28.</em></p>
+<h3 id="fails-atomlessness-forcing-possibilism.">Fails Atomlessness,
+Forcing Possibilism.</h3>
+<p>Any two arrows into <span class="math inline">W_0</span> differ by a
+member of <span class="math inline">G_{W_0}</span>, so a proposition
+contains all of them or none; the proposition <span
+class="math inline">q_0</span> of the arrows into <span
+class="math inline">W_0</span>, pinned down by <span
+class="math inline">\varnothing</span>, is an atom. A nonzero set of
+arrows into <span class="math inline">W_1</span>, pinned down by a
+finite <span class="math inline">N</span>, is split by the value of the
+arrow at a point outside <span class="math inline">N</span>; so the
+propositions below a proposition other than <span
+class="math inline">\top</span> number <span
+class="math inline">1</span>, <span class="math inline">2</span> or
+infinitely many. But <span class="math inline">\bot</span>, <span
+class="math inline">q_0</span>, <span class="math inline">\neg
+q_0</span> and <span class="math inline">\top</span> form a complete
+four-element Boolean algebra, so Forcing Possibilism fails.</p>
+<p><em>Address:
+<code>symmetric-qualitative-contrast-at-w1#atom-at-w0</code>. By Claude
+Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for cheaply
+settled verdicts; checked by Claude Opus 5.5 (Anthropic), prompted by
+Cian Dorr, 2026-10-28.</em></p>
+<h3 id="holds-axiom-of-infinity-type-e.">Holds Axiom of Infinity (type
+e).</h3>
+<p>There are infinitely many individuals, and identity at the identity
+arrow is literal, so no numeral counts them. The set of numerals at type
+<span class="math inline">e</span> is fixed by every arrow, hence
+symmetric and pinned down by the empty set, so finite cardinality is
+standard and no finite cardinality holds of the universal property.</p>
+<p><em>From the group </em>Symmetric ideally-full models<em>, shared
+argument <code>symmetric-ideally-full#axiom-of-infinity-e</code>. It
+requires that There are infinitely many individuals at the evaluation
+world. Here: The base is infinite. By Claude Fable 5.1 (Anthropic), at
+Cian Dorr’s direction, 2026-09-20.</em></p>
+<p><em>Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr’s
+direction:</em> The type-<span class="math inline">e</span> half of the
+members’ argument, stated once; “the individuals are the natural
+numbers” became “there are infinitely many individuals”, which also
+covers the qualitative links model. The type-<span
+class="math inline">t</span> half is axiom-of-infinity-t.</p>
+<h3 id="holds-arithmetic-necessitism.">Holds Arithmetic
+Necessitism.</h3>
+<p>As the argument arithmetic-necessitism-extensionally-full, with the
+property of being a numeral supplied by pinning. The intension <span
+class="math inline">Z</span> whose value at each arrow <span
+class="math inline">k</span> out of the evaluation object is the set of
+numerals <span class="math inline">\mathbf
+0_\sigma,\operatorname{Suc}_\sigma\mathbf 0_\sigma,\ldots</span> at the
+target of <span class="math inline">k</span> is pinned down by the empty
+set, its value depending on the arrow only through its target, and is
+symmetric, transport along a permutation of the points carrying numerals
+to numerals, as transport along any arrow does, numerals being closed
+terms; so it is in the domain, and so is its transport <span
+class="math inline">k\cdot Z</span> to any reachable object, whose
+extension there is exactly the numerals. Hence at every reachable object
+the numbers at <span class="math inline">\sigma</span>, the instances of
+the least inductive property, are exactly the numerals, which transport
+to numerals; persistence and, given <span class="math inline">\Box
+I^*_\sigma</span>, necessary distinctness are theorems of C, and
+inextensibility follows as in that argument. So Arithmetic Necessitism
+holds at every type. No choice is used.</p>
+<p><em>General argument
+<code>arguments/arithmetic-necessitism-finitely-pinned</code>. It
+requires that Write an entity of relational type at the evaluation
+object as its intension <span class="math inline">k\mapsto Y_k</span>
+over the arrows <span class="math inline">k</span> out of it, so that
+<span class="math inline">Y\bar a</span> holds at <span
+class="math inline">k</span> iff <span class="math inline">k\cdot\bar
+a\in Y_k</span>; <span class="math inline">Y</span> is pinned down by a
+finite set <span class="math inline">N</span> of the points the arrows
+act on when <span class="math inline">Y_k=Y_{k^{\prime}}</span> for any
+arrows <span class="math inline">k,k^{\prime}</span> agreeing on <span
+class="math inline">N</span>. Every entity in a domain is pinned down by
+a finite set, in the sense that <span class="math inline">k\cdot
+x=k^{\prime}\cdot x</span> for arrows agreeing on it, and the domain of
+each relational type at the evaluation object holds every intension
+pinned down by a finite set (in a symmetric model, every symmetric one).
+Here: Each object carries the ideal of finite sets, and the domains hold
+the finitely pinned symmetric entities of every type. By Claude Fable
+5.1 (Anthropic), prompted by Zachary Goodsell, 2026-10-23.</em></p>
+<h3
+id="fails-witnessed-possibility-separated-structure-independence-signature-σ-maximalism-signature-σ.">Fails
+Witnessed Possibility, Separated Structure, Independence (signature Σ),
+Maximalism (signature Σ).</h3>
+<p>Let <span class="math inline">c\in\Sigma</span> have relational type
+<span class="math inline">\tau</span>, so <span
+class="math inline">c=\top_\tau</span> necessarily. Witnessed
+Possibility fails for the pure formula <span
+class="math inline">x\ne\top_\tau</span>, witnessed by <span
+class="math inline">\bot_\tau</span> but impossible of <span
+class="math inline">c</span>; Separated Structure fails since <span
+class="math inline">\lambda x\, .\,x</span> and <span
+class="math inline">\lambda x\, .\,\top_\tau</span> agree on <span
+class="math inline">c</span> and differ; Independence (signature Σ)
+fails since <span class="math inline">c</span> denotes what the closed
+pure term <span class="math inline">\top_\tau</span> denotes;
+Distinctness Maximalism (signature Σ) fails since <span
+class="math inline">c=\top_\tau</span> is a true identity that C(Σ) does
+not prove.</p>
+<p><em>General argument <code>arguments/sigma-top</code>. It requires
+that Every constant of Σ is relational, and each denotes the top element
+of its type. Here: This is the interpretation. By Claude Fable 5.1
+(Anthropic), at Cian Dorr’s request, 2026-09-22.</em></p>
+<p><em>Revised 2026-10-02 by Claude Opus 5.5 (Anthropic), at Cian Dorr’s
+direction:</em> Moved from the group finite-support-one-object to the
+topic; it uses nothing about the model.</p>
 <h2 id="notes">Notes</h2>
-<p>Recorded for the separation of Relational Choice from its necessitation under C5: Relational Choice holds at <span class="math inline">W_1</span> because its symmetry group is trivial, and fails at <span class="math inline">W_0</span>, which <span class="math inline">W_1</span> sees. Astra’s note also shows that □Relational Choice fails at <span class="math inline">W_1</span> with relational outputs as well (input and output type <span class="math inline">e\to t</span>, through haecceities), and that the model satisfies its strong “logical observer” separation principles, which the map does not record.</p>
+<p>Recorded for the separation of Relational Choice from its
+necessitation under C5: Relational Choice holds at <span
+class="math inline">W_1</span> because its symmetry group is trivial,
+and fails at <span class="math inline">W_0</span>, which <span
+class="math inline">W_1</span> sees. Astra’s note also shows that
+□Relational Choice fails at <span class="math inline">W_1</span> with
+relational outputs as well (input and output type <span
+class="math inline">e\to t</span>, through haecceities), and that the
+model satisfies its strong “logical observer” separation principles,
+which the map does not record.</p>
 <h2 id="sources">Sources</h2>
 <ul>
-<li><strong>Astra via Kodsi 25 Oct</strong> — GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, Logical observers and Choice, research note of 25 October 2026, §§3–4 (unpaginated), in Daniel Kodsi’s pull request #18 of 26 October 2026 (branch classicism-integration-2026-10-26 of github.com/dkodsi/Logical-Maps).</li>
-<li><strong>Classicism</strong> — Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, p. 79, final construction (two copies of N).</li>
+<li><strong>Astra via Kodsi 25 Oct</strong> — GPT-6 Astra (OpenAI),
+prompted by Daniel Kodsi, Logical observers and Choice, research note of
+25 October 2026, §§3–4 (unpaginated), in Daniel Kodsi’s pull request #18
+of 26 October 2026 (branch classicism-integration-2026-10-26 of
+github.com/dkodsi/Logical-Maps).</li>
+<li><strong>Classicism</strong> — Andrew Bacon and Cian Dorr,
+Classicism, draft of 16 May 2023, Appendix D, p. 79, final construction
+(two copies of N).</li>
 </ul>
 <p class="cert">
-Record: <code>topics/classicism/models/symmetric-qualitative-contrast-at-w1.yaml</code>
+Record:
+<code>topics/classicism/models/symmetric-qualitative-contrast-at-w1.yaml</code>
 </p>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds), Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated 16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition and footnote locators in this map refer to that draft’s numbering. — Appendix D, p. 79, final construction (two copies of N). The construction of symmetric-qualitative-contrast, evaluated at the other object.</li>
+<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian
+Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds),
+Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map
+was built from the draft dated 16 May 2023, 87 pages, which does not
+differ materially from the published version; all page, proposition and
+footnote locators in this map refer to that draft’s numbering. —
+Appendix D, p. 79, final construction (two copies of N). The
+construction of symmetric-qualitative-contrast, evaluated at the other
+object.</li>
 </ul>
 </body></html>

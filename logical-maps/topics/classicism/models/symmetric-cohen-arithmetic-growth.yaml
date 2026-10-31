@@ -1,0 +1,68 @@
+id: symmetric-cohen-arithmetic-growth
+name: 'Symmetric Cohen model: arithmetic growth'
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: GPT-6 Astra, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-29'
+  lean: none
+sources:
+- 'GPT-6 Astra, prompted by Daniel Kodsi, Symmetric Cohen model: arithmetic growth, 29 October 2026, Sections
+  2–7 (unpaginated).'
+- Bacon and Dorr, Classicism, for the standing C framework and Henkin semantics; the symmetric Boolean/hybrid
+  construction and NoReal argument are supplied in the direct source, not attributed to the framework
+  paper.
+source_names:
+- Kodsi–GPT-6 Astra 29 Oct
+- Classicism
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  note: C and its Henkin/action semantics. This hybrid construction and its no-real proof are new, not
+    asserted as a source theorem.
+definition: 'Over ZFC let B=RO((2^omega)^omega), let B_fs be the union of the subalgebras depending on
+  finitely many rows, and let G act by finitely many finite-prefix permutations. Build the typed finite-support
+  Boolean hierarchy with individuals omega, propositions B_fs and all finitely supported functions at
+  admitted relational types; crisp identity and ambient Boolean meets interpret equality and quantifiers.
+  A Boolean-Henkin reduction gives a countable C5 model with standard canonical numbers and necessarily
+  no real structure at any type. In the ground universe take a countable elementary extension A with a
+  number c necessarily above every standard numeral. Give A the trivial G-action.
+
+  The hybrid has root individuals omega×D_e^A, root propositions B_fs×B_A and root relations pairs of
+  a finitely supported Boolean current profile and an admitted A-component. Projection to A is surjective
+  and commutes with application and lambda; equality is (literal current identity, component equality),
+  and quantifiers use current Boolean meets and the original A-quantifiers. Apply the Boolean-Henkin reduction
+  to the current Boolean valuation, retaining the component data and witnesses. Every signature constant
+  is relational and denotes top. The full construction, soundness, generic-symmetry lemma and truth reduction
+  are in writeups/symmetric-cohen-arithmetic-growth.md.'
+arguments:
+- id: no-real-structures
+  holds:
+  - second-order-analytic-necessitism
+  text: 'For a putative field supported on J, a generic-truth-filter-fixing prefix-transposition involution
+    is an actual order automorphism. The dense-open moving-object lemma therefore forces every field element
+    to be fixed by the whole J-stabilizer. The field lies in the intermediate universe V[U_J], where all
+    of its subsets have admitted J-supported representatives. A fresh Cohen row gives a new bounded rational
+    cut, represented by an admitted predicate at the same evaluation point, with no supremum in that field.
+    Thus the current existential Real value is 0 at every type. Its A-component is also bottom, so the
+    entire proposition object is bottom: necessarily no real structure exists. Every SANA guard is false.'
+  writeup: symmetric-cohen-arithmetic-growth
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-29'
+- id: canonical-number-growth
+  fails:
+  - arithmetic-necessitism
+  text: 'The canonical root number property is (chi_K,N_A), where K is exactly the standard root numerals.
+    Both coordinates of I*_e are top. For X=(chi_K, lambda n[N_A(n) and n<c]), each current number necessarily
+    belongs to X, since c was chosen necessarily above every standard numeral. But N does not entail X:
+    in A the number c is not below itself. This explicitly refutes inextensibility of N while Box I*_e
+    holds. Standard numerals remain necessarily distinct. The same witnesses are retained by the Boolean-Henkin
+    reduction.'
+  writeup: symmetric-cohen-arithmetic-growth
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-29'
+notes: ZFC construction, with the Boolean-Henkin reduction and ground nonstandard component specified
+  in the accompanying proof. Necessarily no real structure exists at any admitted type, so SOAN and AN
+  hold vacuously. The guard Box I*_e holds while canonical-number inextensibility fails. No failure of
+  Necessity of Arithmetic is asserted.

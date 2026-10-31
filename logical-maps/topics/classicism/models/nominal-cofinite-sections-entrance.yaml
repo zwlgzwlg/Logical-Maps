@@ -1,0 +1,63 @@
+id: nominal-cofinite-sections-entrance
+name: Nominal cofinite entrance over sections and projection
+definition: Use the original finitely pinned sections/projection tail A=N, B=N×2, with sections f_T, projection
+  p and e_T=f_T p. Fix S={0} and its finite pattern set 2^S. Add root O with one individual, y:O→A, x_T=f_T
+  y, and distinct z_(eta,n):O→B, with p z=y and e_U z=x_U. Evaluate at O. The external group product_eta
+  Sym(N) permutes replicas and fixes the old tail. At every relational type admit exactly the root profiles
+  with a finitely supported current row, arbitrary A identity row, and eventually constant B identity-table
+  sequences in each pattern, with their eventual tables supplying the x_T rows. The writeup defines the
+  recursive action, landing and transport. Old domains and outgoing arrows are unchanged.
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, A finitely supported cofinite entrance, Sections 1–9, 30 October 2026
+  (unpaginated).
+- Logical Maps, finite-support-sections-and-projection, definition and Inextensible Comprehension argument
+  (unpaginated).
+- Daniel Kodsi, Strong worlds do not control modal domains, 26 October 2026, Sections 2.2 and 4 (unpaginated),
+  for the typed entrance-profile method.
+- OpenAI Codex, prompted by Daniel Kodsi, Structural algebraic core, 22 October 2026, Section 2, evaluation-and-choice
+  version, lines 92–112 (unpaginated); and GPT-6 Astra, prompted by Daniel Kodsi, Old/new Boolean completeness
+  and rigidity separation, 22 October 2026, Full Boolean Completeness at E, lines 29–67 (unpaginated), for
+  prior finite-support closure and supported-family joins.
+arguments:
+- id: strong-atoms-and-internal-joins
+  holds:
+  - strong-atomicity-r
+  - boolean-completeness-r
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: nominal-cofinite-sections-entrance
+  text: The external replica action gives whole-entity finite supports and C closure. An admitted actual
+    family has a finite support; replica transpositions force its coordinate unions to be eventually constant
+    as whole old tables. Free-coordinate order proves leastness. Every nonzero profile contains a root/y/replica
+    singleton whose nonzero transports are literal atoms in the full target algebra. Writeup §§4–7.
+- id: unchanged-tail-failures
+  fails:
+  - necessary-inextensible-comprehension-r
+  - necessary-atomicity-t
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: nominal-cofinite-sections-entrance
+  text: At accessible A the unchanged universal individual property has no inextensible coextension (the
+    section graph is not finitely pinned). A nonzero section-supported proposition splits at every fresh
+    coordinate outside any finite pin and has no atom below it. Writeup §§8–9.
+- id: missing-common-pin-proposition
+  fails:
+  - barcan-t
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: nominal-cofinite-sections-entrance
+  text: For k outside S the A proposition testing T(k) is admitted but is not the y-image of a root proposition.
+    The admitted tt root predicate has universal current/replica rows and excludes just this proposition
+    at its A identity row, giving forall P Box F(P) but not Box forall P F(P). Writeup §9.
+notes: ZFC construction. Completeness is internal for admitted families; the proposition algebra is externally
+  incomplete. No choice, boxed completeness or boxed strong atomicity verdict is asserted.

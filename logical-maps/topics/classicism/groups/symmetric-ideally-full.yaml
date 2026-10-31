@@ -128,6 +128,11 @@ lean:
   settings: {individuals: base}
 
 conditions:
+- id: moving-proposition-stabilizers
+  text: >-
+    At the evaluation object V, for every finite subset N of the pinning carrier,
+    some designated symmetry fixing N pointwise moves a proposition in D_t(V)
+    as a whole intension. The pinning carrier need not be the individual domain.
 - id: infinitely-many-orbits-everywhere
   text: >-
     At every object reachable from the evaluation point, the entities of some relational type there fall
@@ -180,6 +185,28 @@ conditions:
   lean: Classicism.Meta.Intensional.SymBase.FixesOrOmits
 
 arguments:
+
+- id: singleton-relational-choice
+  when: {individuals: singleton}
+  requires: [finitely-pinned-domains, moving-proposition-stabilizers]
+  fails: [relational-choice-r]
+  by: OpenAI Codex, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: free
+  writeup: symmetric-singleton-relational-choice
+  text: >-
+    At input type $tt$ and output type $t$. The full symmetric profile construction
+    admits the property $A$ whose profile at $w:V\to W$ is the propositions moved
+    by some symmetry of W fixing $w[N]$ pointwise. It is N-pinned, and conjugation
+    of stabilizers proves symmetry. If a selector S for the serial membership
+    relation were pinned by finite N, every symmetry fixing N would fix both S
+    and A as whole intensions. The condition makes A nonempty at V. A selected
+    member would therefore be fixed by every such symmetry, contradicting its
+    membership in A. This uses finite supports only at the evaluation object,
+    full admission of symmetric pinned profiles, and no external choice. The
+    construction-specific condition witnesses and complete proof are in the
+    writeup. Original arguments: 22 October 2026, §§1–2 of the stabilizer note
+    and §§1–2 of its singleton applications; direct source misc.
 
 - id: relational-choice
   when: {individuals: base}

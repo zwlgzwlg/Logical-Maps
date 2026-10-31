@@ -170,3 +170,46 @@ $f_T$.
   BF, C5, Distinctness-preserving collapse and Rigid Comprehension.
 - **□ND.** It fails directly as well, since $\pi$ collapses $(n,0)$ and
   $(n,1)$.
+
+
+## Identity-singleton correction (30 October 2026)
+
+GPT-6 Astra, prompted by Daniel Kodsi. This appended argument corrects the atom
+classification in the 25 October model argument while preserving its original
+text and all four bridge verdicts. The direct predecessor is the corrected
+singleton calculation in *Dorr-side priority reassessment and independent
+critique*, “Incidental consequences”, A, 29 October 2026 (unpaginated).
+
+Write A=W0, B=W1 and p=pi. At a relational type tau, write delta_(h,u) for the
+profile supported at one outgoing arrow h and one appropriate target tuple u.
+At A the atoms are exactly delta_(id_A,u). Such profiles are admitted with empty
+pin. Any profile with a nonempty identity row contains one. A nonzero profile
+supported only at sections splits by a fresh section-label coordinate outside
+its finite pin, so cannot be an atom.
+
+At B the atoms are exactly delta_(id_B,v) and delta_(p,u). The identity singleton
+is admitted using a full two-point p-fibre as pin; the p singleton is empty-pinned.
+Any profile with either row nonempty contains one of those atoms. A profile
+supported only at e_T rows splits by a fresh section-label coordinate outside its
+pin, adding a full p-fibre to the splitting profile's pin to distinguish id_B.
+The original assertion that no atom contains id_B is therefore incorrect.
+
+The transports are explicit. A's identity/tuple singleton becomes B's p/tuple
+singleton along every section. A B p/tuple singleton becomes A's identity/tuple
+singleton along p and stays a p/tuple singleton along every e_T. A B identity/tuple
+singleton becomes bottom along every nonidentity outgoing arrow. Every nonzero
+image is a singleton in the entire target algebra. Each therefore decides every
+target relation or its complement. All these atoms are strong, and hence are
+self-atoms.
+
+There are no additional self-atoms. If a self-atom at A had a section coordinate
+(f_T,v), its transport along f_T would contain both (id_B,v) and (e_T,v), since
+e_T f_T=f_T. The admitted identity singleton splits those coordinates; that
+transport cannot be an atom when instantiated at v. Similarly a self-atom at B
+cannot have an e_T coordinate, because e_T e_T=e_T gives the same two-coordinate
+obstruction after transport. A self-atom with an identity row is already an atom
+at the current evaluation. A remaining profile supported at p must transport
+along p to a true A atom and hence has exactly one p-tuple. Thus every self-atom
+is one of the displayed atoms, at every relational type. This also proves the
+self-atom-to-atom and self-atom-to-strong-atom bridge verdicts. No inference from
+only the source image algebra is used.

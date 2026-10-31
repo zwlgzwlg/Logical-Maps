@@ -3,8 +3,8 @@ papers:
   title: Classicism
   citation: Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds),
     Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated
-    16 May 2023, 87 pages, which does not differ materially from the published version; all page,
-    proposition and footnote locators in this map refer to that draft's numbering.
+    16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition
+    and footnote locators in this map refer to that draft's numbering.
 - id: barcan-1946
   title: A Functional Calculus of First Order Based on Strict Implication
   citation: Barcan, Ruth C. (1946). A Functional Calculus of First Order Based on Strict Implication.
@@ -25,8 +25,8 @@ papers:
 - id: bacon-2020
   title: Logical Combinatorialism
   citation: Bacon, Andrew (2020). Logical Combinatorialism. Philosophical Review 129(4), 537–589. As cited
-    in Classicism, §§2.5 and 3.5. Read directly for the import of 22 September 2026; section, footnote and
-    page locators refer to the published pagination.
+    in Classicism, §§2.5 and 3.5. Read directly for the import of 22 September 2026; section, footnote
+    and page locators refer to the published pagination.
 - id: the-broadest-necessity
   title: The Broadest Necessity
   citation: Bacon, Andrew (2018). The Broadest Necessity. Journal of Philosophical Logic 47(5), 733–783.
@@ -56,44 +56,42 @@ papers:
   note: Work in progress. No PDF is copied into the topic or its downloads.
 - id: goodsell-arithmetic-necessary
   title: Arithmetic is Necessary
-  citation: Goodsell, Zachary William Lee. Arithmetic is Necessary. Draft dated 5 June 2024, 28 pages. Derives
-    the necessity of arithmetic in the logic HKC (H plus K plus Countable Boolean Completeness) and shows
-    that Boolean Completeness is inconsistent with the maximalization of any recursively enumerable extension
-    of HK consistent with I, answering the question of Classicism, §2.6. Locators refer to this draft.
+  citation: Goodsell, Zachary William Lee. Arithmetic is Necessary. Draft dated 5 June 2024, 28 pages.
+    Derives the necessity of arithmetic in the logic HKC (H plus K plus Countable Boolean Completeness)
+    and shows that Boolean Completeness is inconsistent with the maximalization of any recursively enumerable
+    extension of HK consistent with I, answering the question of Classicism, §2.6. Locators refer to this
+    draft.
 - id: bacon-2024-book
   title: A Philosophical Introduction to Higher-Order Logics
   citation: 'Bacon, Andrew (2024). A Philosophical Introduction to Higher-Order Logics. Routledge. DOI
-    10.4324/9781003039181. Chapter 8, Application: Consequences and strengthenings of Classicism, pp. 155–182,
-    and Chapter 18, The model theory of classicism, pp. 389–413, were read directly on 22 September 2026;
-    locators give the book''s own page numbers. The book works in the full simple type hierarchy with Modalized
-    Functionality at all types; its results are taken in the map''s relational type system, of which its
-    models are models.'
+    10.4324/9781003039181. Chapter 8, Application: Consequences and strengthenings of Classicism, pp.
+    155–182, and Chapter 18, The model theory of classicism, pp. 389–413, were read directly on 22 September
+    2026; locators give the book''s own page numbers. The book works in the full simple type hierarchy
+    with Modalized Functionality at all types; its results are taken in the map''s relational type system,
+    of which its models are models.'
 - id: bacon-mathematical-contingency
   title: Could the truths of mathematics have been different?
-  citation: Bacon, Andrew (2025). Could the truths of mathematics have been different? Draft
-    dated 9 October 2025, with online appendix; published in Philosophical Review 135(3), 2026,
-    pp. 221–285, as cited by Barton and Goodsell. Locators refer to the draft. The full Boolean-valued
-    construction is in appendix §B.2, pp. 7–9 of the separately paginated appendix (PDF pp. 41–43);
-    Theorem 4.4 and its proof (Appendix C.1) and Lemma C.6 (Appendix C.2) were read directly on
-    19 October 2026.
+  citation: Bacon, Andrew (2025). Could the truths of mathematics have been different? Draft dated 9 October
+    2025, with online appendix; published in Philosophical Review 135(3), 2026, pp. 221–285, as cited
+    by Barton and Goodsell. Locators refer to the draft. The full Boolean-valued construction is in appendix
+    §B.2, pp. 7–9 of the separately paginated appendix (PDF pp. 41–43); Theorem 4.4 and its proof (Appendix
+    C.1) and Lemma C.6 (Appendix C.2) were read directly on 19 October 2026.
   url: https://andrew-bacon.github.io/papers/Could%20mathematics%20have%20been%20different.pdf
-  note: Used here are the Boolean-valued construction and its extensional fullness, Theorem 4.4
-    (the Necessity of Arithmetic in S5) and Lemma C.6 (possible rigid subrelations under a world
-    property are actual), with Intensional Choice from §6. The Necessity of Analysis (Theorem 5.2)
-    is not imported, the map having no principle for analysis. No PDF is redistributed.
+  note: Used here are the Boolean-valued construction and its extensional fullness, Theorem 4.4 (the Necessity
+    of Arithmetic in S5) and Lemma C.6 (possible rigid subrelations under a world property are actual),
+    with Intensional Choice from §6. The Necessity of Analysis (Theorem 5.2) is not imported, the map
+    having no principle for analysis. No PDF is redistributed.
 - id: dorr-prop-2-11-counterexample
   title: A counterexample to Proposition 2.11 of 'Classicism'
-  citation: >-
-    Cian Dorr, with Claude Opus 5.5 (Anthropic). A counterexample to Proposition 2.11 of 'Classicism':
-    Fitelson's model, as an intensional action model. Draft of 1 October 2026, reworking a construction by
-    Branden Fitelson, with Claude (Anthropic) and GPT-6 Astra (OpenAI).
+  citation: 'Cian Dorr, with Claude Opus 5.5 (Anthropic). A counterexample to Proposition 2.11 of ''Classicism'':
+    Fitelson''s model, as an intensional action model. Draft of 1 October 2026, reworking a construction
+    by Branden Fitelson, with Claude (Anthropic) and GPT-6 Astra (OpenAI).'
   url: https://github.com/zwlgzwlg/Logical-Maps/blob/main/logical-maps/topics/classicism/sources/prop-2-11-counterexample.pdf
   note: The PDF is also published with this map, in its sources folder.
   file: sources/prop-2-11-counterexample.pdf
 - id: fitelson-prop-2-11-isabelle
   title: Proposition 2.11 refuted (Isabelle/HOL)
-  citation: >-
-    Branden Fitelson, with Claude (Anthropic) and GPT-6 Astra (OpenAI). Isabelle/HOL verification
+  citation: Branden Fitelson, with Claude (Anthropic) and GPT-6 Astra (OpenAI). Isabelle/HOL verification
     that Rigid Comprehension for properties of propositions is not derivable from Classicism with □Atomicity,
     Boolean Completeness and BF; theorem proposition_2_11_refuted. Commit 4042cc0, 1 October 2026.
   url: https://github.com/fitelson/hom-isabelle/tree/4042cc0/Applications/2.11
@@ -109,21 +107,19 @@ papers:
 - id: bounds-of-possibility
   title: The Bounds of Possibility
   citation: Dorr, Cian, John Hawthorne, and Juhani Yli-Vakkuri (2021). The Bounds of Possibility. Oxford
-    University Press. Appendix D, Narrower Modalities in Higher-Order S4, pp. 400–409; locators follow the
-    OUP corrected proof dated 9 May 2024. Its background logic HS4 (a primitive S4 operator over higher-order
+    University Press. Appendix D, Narrower Modalities in Higher-Order S4, pp. 400–409; locators follow
+    the OUP corrected proof dated 9 May 2024. Its background logic HS4 (a primitive S4 operator over higher-order
     logic) is read into C by interpreting the primitive box as $\lambda p\, .\,p=\top$, under which every
     theorem of HS4 is a theorem of C.
 - id: barton-goodsell-continuum-contingency
   title: Continuum Contingency
-  citation: >-
-    Barton, Neil, and Zachary Goodsell. Continuum Contingency. Draft dated 14 October 2026, 47 pages.
-    Stitches a ground model of set theory to the canonical model of a forcing extension to show that
-    Classicism with □Rigid Comprehension, □Relational Choice and an axiom of infinity is consistent with
-    first- and second-order continuum contingency, together with □Atomicity at type t (Theorem 21) or
-    with Recombination (Theorem 22, which refutes Atomicity at type t, Corollary 23); formalizes the
+  citation: Barton, Neil, and Zachary Goodsell. Continuum Contingency. Draft dated 14 October 2026, 47
+    pages. Stitches a ground model of set theory to the canonical model of a forcing extension to show
+    that Classicism with □Rigid Comprehension, □Relational Choice and an axiom of infinity is consistent
+    with first- and second-order continuum contingency, together with □Atomicity at type t (Theorem 21)
+    or with Recombination (Theorem 22, which refutes Atomicity at type t, Corollary 23); formalizes the
     coin-toss argument (Theorem 9). Read directly on 19 October 2026; locators refer to this draft.
   note: Work in progress. No PDF is copied into the topic or its downloads.
-
 - id: bacon-modalized-domains-2026
   title: Modalized Domains on Possibility Frames
   citation: Andrew Bacon and Claude Opus 5.5 (Anthropic), Modalized Domains on Possibility Frames, draft
@@ -132,3 +128,9 @@ papers:
   note: The first-page authorship note credits Bacon with the framework and proposed applications, and
     Claude Opus 5.5 with the write-up and verification. This contribution records the pure-language applications
     in §§4–6; §7 involving E is excluded.
+- id: kodsi-finite-type-necessitism-2026
+  title: 'Finite-Type Necessitism: Arithmetic, analysis, and mathematical non-contingency'
+  citation: 'Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI), Finite-Type Necessitism: Arithmetic,
+    analysis, and mathematical non-contingency, 30 October 2026, 12-page revision.'
+  url: https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.pdf
+  note: 'Author-supplied paper, preserved unchanged. LaTeX source: https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.tex'

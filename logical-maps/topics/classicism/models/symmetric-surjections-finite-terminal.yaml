@@ -1,0 +1,75 @@
+id: symmetric-surjections-finite-terminal
+name: 'Symmetric surjections: a two-individual finite terminal'
+definition: Take two objects A=N and F={0,1}, with the displayed sets as individual domains. Arrows are
+  every surjection A->A, every A->F map with two infinite fibers, and every permutation F->F; there are
+  no F->A arrows. Symmetries are the full permutation groups and pins are finite subsets. Rebuild the
+  entire recursive hierarchy of all target-covariant finitely pinned profiles over full target tuple domains.
+  Interpret relational constants by top and evaluate at A. At F this is the full finite extensional hierarchy.
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, Finite terminal extension of the symmetric all-surjections model,
+  30 October 2026, Sections 1–7 (unpaginated).
+- Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, Definitions
+  15–18, p. 8; Section 3.1, p. 9; Lemma 21, p. 10.
+- Claude Opus 5.5, prompted by Cian Dorr, all-type Inextensible Comprehension argument for symmetric-all-surjections,
+  27 September 2026 (unpaginated), checked by Cian Dorr in the original record.
+- Daniel Kodsi's research notes Relational coding and recursion, 22 October 2026, Section 38, and Protected
+  number operations, Section 2 (unpaginated), for the predecessor/collision obstruction.
+source_names:
+- Finite terminal extension
+- Symmetric ideally-full construction
+- All-surjections IC proof
+- Numerical predecessor obstruction
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Definitions 15–18, p. 8; Section 3.1, p. 9; Lemma 21, p. 10
+  note: Symmetric ideally-full domains and the all-surjections construction; the finite terminal is the
+    extension proved here.
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, pp. 73–79
+  note: Action-model semantics.
+arguments:
+- id: root-cylinder-splitting
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: symmetric-surjections-finite-terminal
+  text: 'Every nonzero proposition, including one supported only on finite-terminal arrows, splits by
+    a fresh equality cylinder: preserve its pin and extend two prescriptions that respectively identify
+    and separate two fresh individuals. Both prescriptions extend to allowed arrows of the same target.
+    See Section 2.'
+  holds:
+  - atomlessness
+- id: masked-all-type-inextensibility
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: symmetric-surjections-finite-terminal
+  text: For X pinned by S, choose T containing S with at least three elements and mask X by injectivity
+    on T. All finite-target transports become whole bottom. On noncollapsing A-loops a permutation adjustment
+    and finite-pin lift handle every full target tuple. Both the witness inextensibility box and the outer
+    comprehension box are verified. See Section 3.
+  holds:
+  - necessary-inextensible-comprehension-r
+- id: finite-terminal-atomlessness-failure
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: symmetric-surjections-finite-terminal
+  text: The accessible F hierarchy is full extensional with exactly two propositions, so Atomlessness
+    fails there. See Sections 1–2.
+  fails:
+  - necessary-atomlessness
+notes: One joint separation of Atomlessness plus necessary Inextensible Comprehension from necessary Atomlessness.
+  The writeup additionally verifies I*_t and failure of the numerical predecessor demand through a future
+  3_t=4_t with 2_t different. These typed arithmetic claims are not identified with the separately named
+  quantified Infinity principles. Pure Maximalism fails in this construction. The original all-surjections
+  model is unchanged.

@@ -1,0 +1,103 @@
+id: henkin-compactness-full-current-surjective-cover
+name: 'Henkin compactness: full-current surjective cover'
+definition: For a countable free signature, first reduce a C-complete family of pointed action models to countably
+  many whole semantic objects, arrows and typed fibers, retaining all parameterized term operations, quantifier
+  clauses and profile-separation witnesses. Apply the surjective-chain-name interpretation cover K, with countably
+  many typed names. Add a full-current root R over K and countably many terminal singleton-individual full
+  models; use K's individual set at R, identity entrance into K and the unique entrances into the terminal
+  models. Thus the scalar algebra is 2 x B_K x 2^omega. Interpret signature constants by distinct type-matching
+  names in K and their lifts at R. For an arbitrary set-sized fixed free signature Sigma, take a model of the
+  many-sorted Henkin theory of C(Sigma) and the eight verified packages below by finite satisfiability in these
+  countable-signature constructions. All lambda templates and literal identity clauses are retained. Evaluate
+  at the designated current truth predicate.
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- 'GPT-6 Astra, prompted by Daniel Kodsi, Fixed-signature Max/FP: compactness scope gate and BF supplement,
+  30 October 2026, Sections 1–5 (unpaginated).'
+- 'GPT-6 Astra, prompted by Daniel Kodsi, Bounded composition gate: pure Max, strict FP, and current BF, 30
+  October 2026, Sections 2–5 (unpaginated).'
+- OpenAI Codex, prompted by Daniel Kodsi, Pure Maximalism and Forcing Possibilism, 25 October 2026, Sections
+  5–6 (unpaginated), the qualified countable-component product and strict-smallness criterion.
+- Cian Dorr, coalesced-pinned-interpretations-root and coalesced-constant-indexed-root, 19 October 2026, construction
+  and BF/named-witness arguments (unpaginated); whole-domain landing by Claude Opus 5.5 (Anthropic), prompted
+  by Cian Dorr.
+- 'GPT-6 Astra, prompted by Daniel Kodsi, Interpretation cover: surjective chain names, 30 October 2026, Sections
+  1–8 (unpaginated).'
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Theorem 3.23, p. 57; Appendix E, Definition
+  E.2, pp. 80–83.
+source_names:
+- Fixed-signature compactness and BF
+- Max/FP/BF composition
+- Qualified Max/FP construction
+- Dorr interpretation roots
+- Surjective chain names
+- Classicism
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Theorem 3.23, p. 57; Appendix E, Definition E.2, pp. 80–83
+  note: Action-model completeness and coalesced sums; the joint composition is the direct source result.
+arguments:
+- id: signature-max-and-possibility
+  holds:
+  - possibility-plus-signature-r
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: henkin-compactness-full-current-surjective-cover
+  text: Every consistent fixed-signature instance is reduced to a pure consistent sentence with finitely many
+    typed slots and realized by a complete old component. A total interpretation assigns those values to the
+    designated constant names and the displayed distinct fresh individual names. Whole named lifts and the
+    identity individual entrance preserve the exact freshness guard. This gives native signature Possibility+,
+    hence signature Max by its existing implication; arbitrary set-sized signatures follow from free-signature
+    conservativity and finitary Henkin compactness. Sections 3 and 7.
+- id: strict-forcing-possibilism
+  holds:
+  - forcing-possibilism
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: henkin-compactness-full-current-surjective-cover
+  text: Finite pins and countably many old semantic objects bound all whole propositions of K by the continuum.
+    At R the scalar algebra 2 x B_K x 2^omega has exactly continuum many elements and infinitely many atoms.
+    Full current rows externalize every native CBA, finiteness, cardinal-comparison and isomorphism test. An
+    infinite complete Boolean algebra has at least continuum many elements; every eligible strictly smaller
+    one is finite and is represented by a proper finite-atom interval. The quantified native schemas are retained
+    in the compactness theory. Sections 2 and 5.
+- id: current-barcan
+  holds:
+  - barcan-r
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: henkin-compactness-full-current-surjective-cover
+  text: Each entrance component has current BF. Every entrance projection is onto on whole entities, including
+    individuals. A future witness first moves to a current witness by the component's dual BF; lifting that
+    witness to R supplies a possible root witness. This uses all future target entities without claiming that
+    arbitrary composite transports are onto. Section 4.
+- id: current-root-principles
+  holds:
+  - actuality
+  - distinctness-preserving-collapse
+  - transversal-choice-r
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: henkin-compactness-full-current-surjective-cover
+  text: The proposition true only at the new root is below every current truth and equals its own possibility,
+    giving current Truths are ND-necessary and directly witnessing Actuality. Full current rows admit a chosen
+    literal representative from every class of a current equivalence relation. The property of exactly the
+    whole standard numeral terms is currently inductive; finite induction shows these and only these cardinalities
+    count finite current sets. Since R has infinitely many individuals, the quantified native Axiom of Infinity_e
+    follows. Each clause is explicit in the compactness theory. Section 6.
+notes: One joint compatibility construction for every set-sized free fixed signature, without nonlogical or
+  unique-name axioms. Max refers to C(Sigma), and Possibility+ retains only individual free variables and the
+  exact native freshness guard. The final compactness model need not have full current domains or continuum
+  cardinality; its asserted properties follow from its explicit theory. No necessary BF/FP, Boolean Completeness,
+  Strong Possibility or free relational-parameter Possibility+ is asserted.

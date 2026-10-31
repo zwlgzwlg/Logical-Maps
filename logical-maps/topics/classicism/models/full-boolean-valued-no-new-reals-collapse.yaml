@@ -1,0 +1,62 @@
+id: full-boolean-valued-no-new-reals-collapse
+name: Full Boolean-valued model with a no-new-reals collapse
+definition: Inside a countable M satisfying ZFC+not-CH, let kappa=2^omega and A be the regular-open completion
+  of the forcing of countable partial functions omega_1→kappa. Put B=2×A and use the internally full relational
+  hierarchy with D_e=omega^M. Externalize standard finite types and evaluate at the isolated atom (first-coordinate
+  truth). Necessity is the global top test and identities are crisp. The forcing adds no reals, preserves
+  omega_1 and makes CH true. The writeup specifies all-type capacity and field transfer without assuming
+  M transitive.
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, A fixed continuum at every carrier type, Sections 1–6, 29 October
+  2026 (unpaginated).
+- 'GPT-6 Astra, prompted by Daniel Kodsi, Independent audit: all-type AN in the no-new-reals collapse model,
+  Sections 1–5, 29 October 2026 (unpaginated).'
+- Andrew Bacon, Could the truths of mathematics have been different?, draft of 9 October 2025, online Appendix
+  B.2, pp. 7–9 (PDF pp. 41–43), construction and Lemmas B.1–B.4, for the Boolean hierarchy.
+- OpenAI Codex, prompted by Daniel Kodsi, Full Boolean-valued carrier and premise audit, 25 October 2026, Sections 5 and 7 (unpaginated),
+  for fixed-label mixed fields, exact extensional transfer and endpoint rigidity.
+- 'OpenAI Codex, prompted by Daniel Kodsi, Generic-point Boolean models: observer separation with contingent CH and analysis, 25 October
+  2026, Sections 2–3, 6 and 7.2; Generic evaluation of a Boolean model: independent observer and forcing audit,
+  same date (unpaginated), for internal C soundness, necessary BF/relational choice and the no-new-reals collapse.'
+arguments:
+- id: boolean-core
+  holds:
+  - necessary-distinctness-necessary-r
+  - necessary-relational-choice-r
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-29'
+  choice: uses
+  writeup: full-boolean-valued-no-new-reals-collapse
+  text: Crisp identity and top-test necessity give C5. Internal well-ordering disjointifies each relation
+    row, making the full relational-choice schema and its box top. This uses the Boolean-model
+    proof, displayed in the writeup.
+- id: rigid-real-field-at-every-possible-carrier
+  holds:
+  - analytic-necessitism
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-29'
+  choice: uses
+  writeup: full-boolean-valued-no-new-reals-collapse
+  text: The forcing has a ground-continuum antichain, so B injects into every non-e carrier by constant
+    functions. Endpoint-valued copies of the ground real field are rigid; no new reals makes them complete
+    for every new bounded relation. At e the real-field antecedent is impossible. Writeup §§2–5.
+- id: ground-and-forcing-ch-disagree
+  fails:
+  - non-contingency-of-ch
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-29'
+  choice: uses
+  writeup: full-boolean-valued-no-new-reals-collapse
+  text: Ground not-CH and forced CH give universal CH and universal not-CH values (0,1) and (1,0) at t.
+    Neither is top, so neither necessary disjunct holds. Writeup §6; the direct unary represented-power
+    obstruction is also included.
+notes: Relative consistency upper bound from Con(ZFC); no countable transitive-model or large-cardinal
+  assumption. A distinct forcing variant from the existing full-boolean-valued-atom-and-atomless record.
+  Necessary BF and failure of SOAN are derived and are not duplicated as explicit flags.

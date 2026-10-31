@@ -322,45 +322,104 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <link rel="stylesheet" href="../math/katex.min.css">
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
-<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Full Boolean-valued model: one atom and the Cohen algebra</h1></header><p>Underlying construction by Andrew Bacon (<em>Could the truths of mathematics have been different?</em>, online appendix §B.2). The choice of the Cohen algebra over <span class="math inline">L</span>, and the verification of the additional premises, are by GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, in a research note of 25 October 2026. Recorded by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 28 October 2026.</p>
-<p>This is the full Boolean-valued model with <span class="math inline">B=\mathbf 2\times A</span>, where <span class="math inline">A=\operatorname{RO}(\operatorname{Add}(\omega,1))</span> adds one Cohen real. The individuals are <span class="math inline">\omega</span>, and the model is evaluated at the atom <span class="math inline">a=(1,0_A)</span>. It differs from full-boolean-valued-atom-and-atomless in two respects:</p>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Full Boolean-valued model: one atom and the Cohen algebra</h1></header><p>Underlying construction by Andrew Bacon (<em>Could the truths of
+mathematics have been different?</em>, online appendix §B.2). The choice
+of the Cohen algebra over <span class="math inline">L</span>, and the
+verification of the additional premises, are by GPT-6 Astra (OpenAI),
+prompted by Daniel Kodsi, in a research note of 25 October 2026.
+Recorded by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 28
+October 2026.</p>
+<p>This is the full Boolean-valued model with <span
+class="math inline">B=\mathbf 2\times A</span>, where <span
+class="math inline">A=\operatorname{RO}(\operatorname{Add}(\omega,1))</span>
+adds one Cohen real. The individuals are <span
+class="math inline">\omega</span>, and the model is evaluated at the
+atom <span class="math inline">a=(1,0_A)</span>. It differs from
+full-boolean-valued-atom-and-atomless in two respects:</p>
 <ul>
-<li>that model’s algebra is chosen by cases on CH, so as to make CH contingent, whereas this algebra leaves CH unchanged;</li>
+<li>that model’s algebra is chosen by cases on CH, so as to make CH
+contingent, whereas this algebra leaves CH unchanged;</li>
 <li>this model has infinitely many individuals.</li>
 </ul>
 <h2 id="non-contingency-of-ch">Non-contingency of CH</h2>
-<p>Write <span class="math inline">\pi</span> and <span class="math inline">\rho</span> for the two coordinate projections, which are complete homomorphisms. By extensional fullness, a box-free sentence about real number structures has:</p>
+<p>Write <span class="math inline">\pi</span> and <span
+class="math inline">\rho</span> for the two coordinate projections,
+which are complete homomorphisms. By extensional fullness, a box-free
+sentence about real number structures has:</p>
 <ul>
-<li>as its <span class="math inline">\pi</span>-coordinate, its truth in the full standard model over <span class="math inline">V</span>;</li>
-<li>as its <span class="math inline">\rho</span>-coordinate, its value in <span class="math inline">V^A</span>, with relations on a ground set ranging over all names for subsets of it.</li>
+<li>as its <span class="math inline">\pi</span>-coordinate, its truth in
+the full standard model over <span class="math inline">V</span>;</li>
+<li>as its <span class="math inline">\rho</span>-coordinate, its value
+in <span class="math inline">V^A</span>, with relations on a ground set
+ranging over all names for subsets of it.</li>
 </ul>
-<p><strong>Real number structures exist in both coordinates.</strong> Each coordinate has a real number structure on a subset of <span class="math inline">D_t=B</span>, because <span class="math inline">|B|=2^{\aleph_0}</span> both in <span class="math inline">V</span> and in <span class="math inline">V^A</span>. And real number structures are unique up to isomorphism in each coordinate.</p>
-<p><strong>CH has the same truth value in both.</strong> Forcing with <span class="math inline">A</span> is ccc, so it preserves cardinals. It adds no more than <span class="math inline">(2^{\aleph_0})^{\aleph_0}=2^{\aleph_0}</span> nice names for reals, so <span class="math inline">(2^{\aleph_0})^{V^A}=(2^{\aleph_0})^V</span>.</p>
-<p>So, at every type <span class="math inline">\sigma</span>, whichever of</p>
+<p><strong>Real number structures exist in both coordinates.</strong>
+Each coordinate has a real number structure on a subset of <span
+class="math inline">D_t=B</span>, because <span
+class="math inline">|B|=2^{\aleph_0}</span> both in <span
+class="math inline">V</span> and in <span
+class="math inline">V^A</span>. And real number structures are unique up
+to isomorphism in each coordinate.</p>
+<p><strong>CH has the same truth value in both.</strong> Forcing with
+<span class="math inline">A</span> is ccc, so it preserves cardinals. It
+adds no more than <span
+class="math inline">(2^{\aleph_0})^{\aleph_0}=2^{\aleph_0}</span> nice
+names for reals, so <span
+class="math inline">(2^{\aleph_0})^{V^A}=(2^{\aleph_0})^V</span>.</p>
+<p>So, at every type <span class="math inline">\sigma</span>, whichever
+of</p>
 <p><span class="math display">
-\forall\mathfrak R\,.\,\operatorname{Real}_\sigma(\mathfrak R)\to\operatorname{CH}(\mathfrak R)
+\forall\mathfrak R\,.\,\operatorname{Real}_\sigma(\mathfrak
+R)\to\operatorname{CH}(\mathfrak R)
 \qquad\text{and}\qquad
-\forall\mathfrak R\,.\,\operatorname{Real}_\sigma(\mathfrak R)\to\neg\operatorname{CH}(\mathfrak R)
+\forall\mathfrak R\,.\,\operatorname{Real}_\sigma(\mathfrak
+R)\to\neg\operatorname{CH}(\mathfrak R)
 </span></p>
-<p>is true in <span class="math inline">V</span> has value <span class="math inline">(1,1_A)=\top</span>. Its box is then <span class="math inline">\top</span>, and Non-contingency of CH holds.</p>
-<h2 id="necessity-of-analysis-built-in-l">Necessity of Analysis, built in <span class="math inline">L</span></h2>
-<p>In the variant built in <span class="math inline">L</span>, generated by the group, the group’s argument necessity-of-analysis-constructible applies. Let <span class="math inline">\Phi</span> be the <span class="math inline">\Pi^1_3</span> analytical sentence saying that every real is constructible.</p>
+<p>is true in <span class="math inline">V</span> has value <span
+class="math inline">(1,1_A)=\top</span>. Its box is then <span
+class="math inline">\top</span>, and Non-contingency of CH holds.</p>
+<h2 id="necessity-of-analysis-built-in-l">Necessity of Analysis, built
+in <span class="math inline">L</span></h2>
+<p>In the variant built in <span class="math inline">L</span>, generated
+by the group, the group’s argument necessity-of-analysis-constructible
+applies. Let <span class="math inline">\Phi</span> be the <span
+class="math inline">\Pi^1_3</span> analytical sentence saying that every
+real is constructible.</p>
 <ul>
-<li><span class="math inline">\Phi</span> holds in <span class="math inline">L</span>.</li>
-<li>Forcing with <span class="math inline">A</span> adds a Cohen real over <span class="math inline">L</span>, which is not constructible.</li>
+<li><span class="math inline">\Phi</span> holds in <span
+class="math inline">L</span>.</li>
+<li>Forcing with <span class="math inline">A</span> adds a Cohen real
+over <span class="math inline">L</span>, which is not
+constructible.</li>
 </ul>
-<p>So <span class="math inline">\Phi</span> has value <span class="math inline">(1,0_A)</span> and <span class="math inline">\neg\Phi</span> has value <span class="math inline">(0,1_A)</span>, and both disjuncts of that instance of Necessity of Analysis are <span class="math inline">\bot</span>. Astra’s note writes <span class="math inline">\Phi</span> out in the first-order language of an ordered field with a natural-numbers predicate, coding sets of naturals by base-4 expansions. CH holds in <span class="math inline">L</span> and in <span class="math inline">L^A</span>, so the variant combines the failure of Necessity of Analysis with Non-contingency of CH.</p>
+<p>So <span class="math inline">\Phi</span> has value <span
+class="math inline">(1,0_A)</span> and <span
+class="math inline">\neg\Phi</span> has value <span
+class="math inline">(0,1_A)</span>, and both disjuncts of that instance
+of Necessity of Analysis are <span class="math inline">\bot</span>.
+Astra’s note writes <span class="math inline">\Phi</span> out in the
+first-order language of an ordered field with a natural-numbers
+predicate, coding sets of naturals by base-4 expansions. CH holds in
+<span class="math inline">L</span> and in <span
+class="math inline">L^A</span>, so the variant combines the failure of
+Necessity of Analysis with Non-contingency of CH.</p>
 <h2 id="the-other-verdicts">The other verdicts</h2>
-<p>The arguments for the other verdicts are those of full-boolean-valued-atom-and-atomless, whose proofs use only the following:</p>
+<p>The arguments for the other verdicts are those of
+full-boolean-valued-atom-and-atomless, whose proofs use only the
+following:</p>
 <ul>
 <li>fullness;</li>
 <li>crisp identity;</li>
 <li>a well-ordering of each domain;</li>
-<li>that <span class="math inline">A</span> is atomless and adds a Cohen real;</li>
-<li>that <span class="math inline">B</span> has at least continuum many elements.</li>
+<li>that <span class="math inline">A</span> is atomless and adds a Cohen
+real;</li>
+<li>that <span class="math inline">B</span> has at least continuum many
+elements.</li>
 </ul>
-<p>All of these hold here. The infinitely many individuals add the Axiom of Infinity at <span class="math inline">e</span>.</p>
-<p>Astra’s note also verifies directly a number of verdicts that the map derives:</p>
+<p>All of these hold here. The infinitely many individuals add the Axiom
+of Infinity at <span class="math inline">e</span>.</p>
+<p>Astra’s note also verifies directly a number of verdicts that the map
+derives:</p>
 <ul>
 <li>□Relational Choice, by disjointifying along a well-order;</li>
 <li>unboxed Rigid Comprehension, by crisp characteristic functions;</li>
@@ -369,6 +428,18 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 </ul>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Proof: <a href="https://andrew-bacon.github.io/papers/Could%20mathematics%20have%20been%20different.pdf">Could the truths of mathematics have been different?</a>.</strong> Bacon, Andrew (2025). Could the truths of mathematics have been different? Draft dated 9 October 2025, with online appendix; published in Philosophical Review 135(3), 2026, pp. 221–285, as cited by Barton and Goodsell. Locators refer to the draft. The full Boolean-valued construction is in appendix §B.2, pp. 7–9 of the separately paginated appendix (PDF pp. 41–43); Theorem 4.4 and its proof (Appendix C.1) and Lemma C.6 (Appendix C.2) were read directly on 19 October 2026. — pp. 22–23, note 55; online appendix §B.2, pp. 7–9 (PDF pp. 41–43). The full Boolean-valued construction, and the observation that a nonconstructible real makes an analytical truth contingent.</li>
+<li><strong>Proof: <a
+href="https://andrew-bacon.github.io/papers/Could%20mathematics%20have%20been%20different.pdf">Could
+the truths of mathematics have been different?</a>.</strong> Bacon,
+Andrew (2025). Could the truths of mathematics have been different?
+Draft dated 9 October 2025, with online appendix; published in
+Philosophical Review 135(3), 2026, pp. 221–285, as cited by Barton and
+Goodsell. Locators refer to the draft. The full Boolean-valued
+construction is in appendix §B.2, pp. 7–9 of the separately paginated
+appendix (PDF pp. 41–43); Theorem 4.4 and its proof (Appendix C.1) and
+Lemma C.6 (Appendix C.2) were read directly on 19 October 2026. —
+pp. 22–23, note 55; online appendix §B.2, pp. 7–9 (PDF pp. 41–43). The
+full Boolean-valued construction, and the observation that a
+nonconstructible real makes an analytical truth contingent.</li>
 </ul>
 </body></html>

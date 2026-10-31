@@ -8,10 +8,12 @@ certificate:
   date: '2026-09-19'
   lean: none
 sources:
+- "OpenAI Codex, prompted by Daniel Kodsi, Singleton-individual variants: direct choice verdicts from the stabilizer theorem, 22 October 2026, \xA7\xA71\u20134, unpaginated; Relational Choice forces Transversal Choice in symmetric ideally-full map categories, \xA7\xA71\u20132, same date, unpaginated."
 - Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, §3.1, p.
   9 (base); Lemma 21, p. 10; Proposition 22, p. 11; Proposition 24, p. 13; Corollary 37 and Remark 38,
   p. 19.
 source_names:
+- Singleton choice verdicts (22 Oct 2026)
 - BC does not imply RC
 references:
 - paper: dorr-bc-not-rc
@@ -43,6 +45,8 @@ settings:
   individuals: base
   sigma: top
 meets:
+  moving-proposition-stabilizers: >-
+    Choose distinct pinning points $a,b,c$ outside a given finite $N$ and the distinguished pair. The symmetry $g=(a\ c)$ fixes $N$ and preserves the distinguished pair. The symmetric proposition $p_{ab}(w)\leftrightarrow w(a)=w(b)$ is pinned by $\{a,b\}$. A surjection can collapse the distinguished pair and $a,b$ while keeping $c$ distinct; it is an allowed collapser and distinguishes $p_{ab}$ from $g\cdot p_{ab}=p_{cb}$. The points here are pinning-carrier points, also when the individual domain is a singleton. Source: OpenAI Codex, prompted by Daniel Kodsi, 22 October 2026, singleton applications §2; recorded 30 October 2026.
   exact-collapses-of-every-size: >-
     Take the fixed pair and $n-2$ further points: the surjection sending them all to one point and
     the remaining points bijectively onto the others collapses the pair.

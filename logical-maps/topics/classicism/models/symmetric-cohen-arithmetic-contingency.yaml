@@ -1,0 +1,64 @@
+id: symmetric-cohen-arithmetic-contingency
+name: 'Symmetric Cohen model: Rosser-selected component'
+definition: Use the finite-support Boolean hierarchy B_fs in RO((2^omega)^omega) and the ground countable
+  standard-arithmetic NoReal model A0 from symmetric-cohen-arithmetic-growth. Let T_H be the effective
+  many-sorted Henkin theory containing the typed term operations, truth clauses, C5, Box I*_e and boxed
+  NoReal at every type; Logical Equivalence instances have H-proof certificates. Select a standard-true
+  Rosser sentence G undecided by the arithmetic consequences of T_H, and a countable ground model A of
+  T_H with not G at counting type e. Build the symmetric Cohen hybrid with individuals omega x D_e(A),
+  propositions B_fs x B_A, and finite-support current relational profiles paired with admitted A-components.
+  Give A trivial symmetry action and keep its lambda/quantifier operations unchanged. Apply the Boolean-Henkin
+  witness reduction to obtain a countable classical model. Relational signature constants may all denote
+  top. The writeup specifies the effective theory, component choice, full NoReal preservation and exact
+  guarded arithmetic failure.
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, Symmetric Cohen hybrid with first-order arithmetic contingency,
+  30 October 2026, Sections 1–8 (unpaginated).
+- 'GPT-6 Astra, prompted by Daniel Kodsi, Symmetric Cohen model: arithmetic growth, 29 October 2026, Sections
+  2–5 and 7.1–7.2 (unpaginated), for the Boolean hierarchy, NoReal theorem, hybrid and reduction.'
+- Cian Dorr, coalesced-two-extensional-arithmetics-root, 19 October 2026, construction and arithmetic
+  argument (unpaginated), with verification by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr.
+- Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, coalesced-pinned-substitutions-nonstandard-root,
+  29 October 2026, component selection and arithmetic argument (unpaginated).
+source_names:
+- NoReal with arithmetic truth contingency
+- Symmetric Cohen NoReal construction
+- Dorr arithmetic disagreement root
+- Standard-root arithmetic disagreement
+arguments:
+- id: analytic-vacuity
+  holds:
+  - second-order-analytic-necessitism
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: symmetric-cohen-arithmetic-contingency
+  text: The entire existential Real proposition is bottom at every admitted carrier, by the all-type NoReal
+    proof and the exact component bottom equations. Every SOAN possible-real antecedent is therefore false,
+    so SOAN holds. Its existing implication gives AN. The separate arithmetic-truth failure has its original
+    nonvacuous canonical-arithmetic guard and witness. See Section 4 of the accompanying proof.
+- id: guarded-arithmetic-truth-contingency
+  fails:
+  - necessity-of-arithmetic
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: symmetric-cohen-arithmetic-contingency
+  text: The canonical current numbers and native Sum/Prod graphs are standard, by support-empty characteristic
+    tests and Boolean finite induction. For the chosen standard-true Rosser sentence G the whole root
+    value is (1,g), where g is false at A and therefore differs from top_A. I*_e and I_e are entire top
+    objects. Box(I_e -> G) is false because g differs from top_A, and Box(I_e -> not G) is false because
+    its current coordinate is 0. Thus both alternatives of the native necessity instance fail while Box
+    I*_e holds. Sections 2–3 and 5–6.
+notes: This model changes the ground component of the arithmetic-growth construction, using an effective
+  NoReal-preserving theory and Rosser incompleteness rather than an elementary extension of standard arithmetic.
+  Its contribution is arithmetic truth contingency alongside SOAN and AN, whose possible-real antecedents
+  are all false. The arithmetic guard is active. The original named-number-above-all-numerals requirement
+  is not imposed on this component. No extra Arithmetic Necessitism, global C5 or unrelated flag is asserted.

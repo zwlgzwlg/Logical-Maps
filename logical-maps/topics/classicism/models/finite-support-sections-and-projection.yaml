@@ -79,6 +79,16 @@ arguments:
     type has an atom, respectively self-atom, as its existential projection, so sits over $1_{W_0}$ or
     $\pi$ with one tuple; it is then an atom and a strong atom, its transports having at most one pair.
     So all four bridge principles hold at both objects, at every type.'
+  revisions:
+  - date: '2026-10-30'
+    by: GPT-6 Astra, prompted by Daniel Kodsi
+    note: >-
+      The original argument incorrectly excludes the identity singleton at W1, despite its
+      admission by the identity-singletons clause. At W1 the atoms include both identity/tuple
+      and projection/tuple singletons. Identity singletons become bottom under every nonidentity
+      arrow, so they are strong and do not invalidate the four bridge verdicts. The appended
+      Identity-singleton correction (30 October 2026) in the writeup gives the corrected
+      all-type atom/self-atom classification and transports. The original text is preserved.
 - holds:
   - necessary-actuality
   writeup: finite-support-sections-and-projection

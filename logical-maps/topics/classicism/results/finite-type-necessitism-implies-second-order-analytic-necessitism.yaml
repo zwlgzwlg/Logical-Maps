@@ -1,0 +1,28 @@
+id: finite-type-necessitism-implies-second-order-analytic-necessitism
+premises:
+- finite-type-necessitism
+conclusion: second-order-analytic-necessitism
+status: proved
+certificate:
+  source_id: kodsi-finite-type-necessitism-2026
+  produced_by: Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI)
+  recorded_by: ChatGPT, at Daniel Kodsi’s request
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- 'Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI), Finite-Type Necessitism: Arithmetic, analysis,
+  and mathematical non-contingency, 30 October 2026, 12-page revision. Definition
+  1.1'
+source_names:
+- Kodsi, Finite-Type Necessitism (30 Oct 2026)
+references:
+- paper: kodsi-finite-type-necessitism-2026
+  role: proof
+  locator: Definition 1.1
+  note: Supplied 12-page paper; the PDF and LaTeX source are included with this contribution.
+proof: Full FTN contains the height-one instance at every carrier type. By Theorem 4.3 this is equivalent
+  to SOAN at that type. The proof uses same-carrier Dedekind cuts in one direction, Cantor subset codes
+  in the other, and unary-to-finite-arity represented powers (Lemma 4.1). See the linked paper, Definition
+  1.1 and Theorem 4.3.
+notes: Schema restriction; no new existence assumption.

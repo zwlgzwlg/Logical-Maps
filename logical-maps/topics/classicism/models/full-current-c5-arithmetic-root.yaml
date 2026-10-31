@@ -1,0 +1,89 @@
+id: full-current-c5-arithmetic-root
+name: 'Full present: Rosser-selected C5 component'
+definition: 'Let A be the countable pointed classical Henkin C5 component selected in symmetric-cohen-arithmetic-contingency,
+  Sections 1–2: its canonical arithmetic satisfies Box I*_e and disagrees with standard arithmetic about
+  the fixed standard-true Rosser sentence G. Keep every original application, quantifier and parameterized
+  lambda operation of A. Form a new model R with individuals omega times A_e and projection q_e onto A_e.
+  For each flattened relational type tau = alpha_1 ... alpha_k t, including k = 0, take all pairs (S,a),
+  where S is an arbitrary subset of the product of the R_alpha_i and a is an A_tau entity. Application
+  and abstraction use the current row and the original A operation on projected parameters; a quantified
+  formula uses the full current R domain in its truth coordinate and the full original A domain in its
+  A coordinate. Evaluate at the new classical present. Interpret any fixed relational signature constants
+  by their top entities. The construction and its C interpretation are given in the writeup; this is a
+  different root from the symmetric Cohen construction.'
+certificate:
+  source_id: misc
+  produced_by: Daniel Kodsi, with ChatGPT assistance
+  recorded_by: GPT-6 Astra, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- Daniel Kodsi, with ChatGPT assistance, Full present over a C5 component with arithmetic contingency,
+  30 October 2026, Sections 1–7 (unpaginated); exact-image rigidity, the power lift and the joint model.
+- OpenAI Codex, prompted by Daniel Kodsi, Classical present over an arbitrary model, 25 October 2026,
+  Sections 1–2 (unpaginated); the pair construction with unchanged component quantifiers.
+- GPT-6 Astra, prompted by Daniel Kodsi, Symmetric Cohen model with a Rosser-selected component, 30 October
+  2026, Sections 1–2 (unpaginated); the effective component theory and the fixed sentence G.
+- Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, C5 implies necessary Rigid Power, 3 October 2026;
+  Christopher Sun, Possible Worlds Without Atomicity, September 2026, for C5 implying Tame Rigidity; the
+  recorded necessitation and Weakly Rigid Power composition.
+- Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, coalesced-pinned-substitutions-nonstandard-root,
+  29 October 2026, arithmetic argument, extending Cian Dorr's construction of 19 October; numeral-orbit
+  and recursion-test methods for arithmetic disagreement.
+source_names:
+- C5 component power and arithmetic separation
+- Kodsi pair construction
+- Rosser-selected component
+- C5 power and rigidity theorems
+- Dorr arithmetic-root methods
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Sections 1.3 and 2.3
+  note: The fixed C framework, Logical Equivalence and rigidity.
+- paper: sun-possible-worlds-without-atomicity
+  role: related
+  note: The component Tame Rigidity theorem; the root power-lifting argument is separate.
+- paper: goodsell-arithmetic-necessary
+  role: formulation
+  locator: Definitions 3–8 and the Necessity of Arithmetic schema
+arguments:
+- id: necessary-powers
+  holds:
+  - necessary-weakly-rigid-power-r
+  by: Daniel Kodsi, with ChatGPT assistance
+  date: '2026-10-30'
+  choice: uses
+  writeup: full-current-c5-arithmetic-root
+  text: At each finite argument tuple, a pair (S,f) is rigid exactly when f is rigid in the C5 component
+    and its current component extension is the projection of S. Crisp complement tests prove the reverse
+    image inclusion; component weak inextensibility proves sufficiency. Every admitted rigid component
+    subrelation of f then lifts to a rigid subrelation of (S,f). The literal canonical power therefore
+    has exactly the component canonical power as its projected extension. The C5 power theorem and the
+    pair necessity clause give necessary Rigid Power. The same image argument sends a weakly rigid root
+    relation to a weakly rigid component relation; component Tame Rigidity and its necessitation give
+    necessary Tame Rigidity at the root. Their recorded composition gives necessary Weakly Rigid Power.
+    The argument includes the nullary case and mixed individual arguments. Sections 3–5.
+- id: arithmetic-contingency
+  fails:
+  - necessity-of-arithmetic
+  - arithmetic-necessitism
+  by: Daniel Kodsi, with ChatGPT assistance
+  date: '2026-10-30'
+  choice: uses
+  writeup: full-current-c5-arithmetic-root
+  text: Full current rows admit the standard numeral orbit as an induction test, and separate recursion
+    tests make native Sum and Prod standard there. The same sentence G has whole value (true,g), where
+    g differs from the component top, while I*_e is the whole top pair. Thus both Box(I_e implies G) and
+    Box(I_e implies not G) fail with Box I*_e true. The component has a nonstandard current number c;
+    pair the full current row with its predicate n not equal to c. This test is necessarily true of every
+    current root number, but the full component quantifier witnesses failure of the necessary inclusion
+    of N_e in it. Hence N_e is not weakly inextensible, and Arithmetic Necessitism fails at e with its
+    guard true. Sections 6–7.
+notes: 'One model combines the power and arithmetic assertions. Necessary Rigid Power and necessary Tame
+  Rigidity are proved directly in the writeup and also follow from the minimal necessary-Weakly-Rigid-Power
+  seed through the recorded rules. The component''s NoReal properties are not transferred to this different
+  root: no Analytic Necessitism, SOAN, Boolean Completeness or root C5 verdict is asserted. The arithmetic
+  failures concern type e; no necessary failure or failure at every counting type is claimed. This is
+  an informal mathematical proof with no independent human check or new Lean verification.'

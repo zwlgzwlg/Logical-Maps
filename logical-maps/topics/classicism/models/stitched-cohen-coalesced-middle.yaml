@@ -70,6 +70,10 @@ arguments:
 - id: new-real-at-middle
   fails: [necessary-weak-rigid-comprehension-r, necessary-boolean-completeness-r]
   writeup: stitched-cohen-coalesced-middle
+  revisions:
+  - date: '2026-10-30'
+    by: OpenAI Codex, prompted by Daniel Kodsi
+    note: 'Added a type clarification to the write-up: the family of haecceities has type (et)t, while its members and hypothetical join have type et. The Boolean Completeness witness is at et, as this argument already states; the original proof text and all verdicts are preserved.'
   text: >-
     At $s$, at type $et$. If $Y=(c\times\{0\},C,C^{\prime})$ were weakly rigid, weak persistence would give
     $c\subseteq C$, and for $n\notin c$ weak inextensibility applied to $Z_n:=(\mathbb N\times\mathbb

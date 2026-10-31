@@ -1,0 +1,20 @@
+id: necessary-plenitude-implies-necessary-world-atomicity
+premises:
+- necessary-plenitude-r
+conclusion: necessary-world-atomicity
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi, 30 October 2026
+  checked_by: []
+  date: '2026-10-28'
+  lean: none
+sources:
+- OpenAI Codex, prompted by Daniel Kodsi, Adjunctions, atom projection, and persistent worlds, 28 October 2026, §§2–5, unpaginated; Pure uniformity and one necessary atom, §§3–4, unpaginated.
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §2.1, pp. 21–23; §2.3, concluding equivalences, p. 33, for the native boxed-Plenitude consequences.
+source_names:
+- Persistent atoms and necessary worlds
+- Classicism
+proof: 'See [the common proof](../writeups/necessary-world-atomicity.md), §3. Boxed Plenitude gives C5 and Atomicity. Under C5, propositional ND preserves an atom’s nonzeroness; NI preserves each Boolean decision and BF collects the decision quantifier. Thus each current atom is necessarily an atom. The atom below any given nonzero proposition supplied by Atomicity is therefore the required witness.'
+notes: No uniform choice of atoms is made. The assertion is at propositional type t; its boxed-Plenitude and boxed-Gallin equivalents remain their full native schemata.

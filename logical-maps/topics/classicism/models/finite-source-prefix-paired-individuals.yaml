@@ -1,0 +1,74 @@
+id: finite-source-prefix-paired-individuals
+name: Paired-individuals model with a singleton-source prefix
+definition: 'Start with the unsymmetric ideally-full [[paired-individuals-two-object]] category: W=N with
+  its two-element blocks and V=N union {star}, with every block-respecting map. Add a singleton object
+  A, only its identity endomorphism, every constant map from A to W or V, and no map from either old object
+  to A. Compose as ordinary maps. Use finite pins, trivial symmetry groups, and the original individual
+  action. Evaluate at A; relational signature constants may be interpreted as top. The old outgoing categories,
+  typed domains and truth values are unchanged.'
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi (finite-source prefix corollary); Cian Dorr and Claude
+    Fable 5.1 (Anthropic), prompted by Cian Dorr (paired tail)
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi (native proof reconstruction)
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, Finite-source prefix and the boxed two-hat question, research note of 29 October 2026, sections 1–3 (unpaginated).
+- Cian Dorr and Claude Fable 5.1 (Anthropic), prompted by Cian Dorr, paired-individuals two-object construction
+  and two-hat-not-five argument, 14 October 2026, with the retained argument clarified on 29 October 2026.
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, Definitions D.1–D.3 and Proposition
+  D.4, pp. 73–74.
+- GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, A fixed-point entrance model, Tame Rigidity without
+  □Tame Rigidity, research note of 22 October 2026, §§1–6 (unpaginated), as credited in symmetric-entrance-qualitative-links
+  (construction ancestry, not the paired-tail separation).
+source_names:
+- Finite-source prefix corollary
+- Dorr–Claude paired tail
+- Classicism
+- Astra (Kodsi) entrance ancestry
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, Definitions D.1–D.3 and Proposition D.4, pp. 73–74
+  note: Ideally-full action-model soundness.
+arguments:
+- id: complete-atomic-root
+  holds:
+  - boolean-completeness-r
+  - atomicity-r
+  by: OpenAI Codex, prompted by Daniel Kodsi, independent native verification
+  date: '2026-10-30'
+  choice: free
+  writeup: finite-source-prefix-paired-individuals
+  text: Every root relational profile is pinned by the singleton base, so its Boolean algebra is the full
+    powerset of arrow/target-tuple coordinates. Arbitrary meets exist and singleton coordinates are atoms.
+    The singleton identity-arrow proposition is true and entails every current truth; writeup §§1–2.
+- id: current-relational-choice
+  holds:
+  - relational-choice-r
+  by: OpenAI Codex, prompted by Daniel Kodsi, independent native verification
+  date: '2026-10-30'
+  choice: uses
+  writeup: finite-source-prefix-paired-individuals
+  text: For a current serial relation choose an ordinary graph in the ZFC metatheory and give it empty
+    rows at all nonidentity arrows. The root admits that profile, giving the native full Relational Choice
+    schema, not operation-valued choice; writeup §2.
+- id: boxed-collapse-failure
+  fails:
+  - necessary-five-implies-two-hat-necessity
+  by: OpenAI Codex, prompted by Daniel Kodsi, independent native verification
+  date: '2026-10-30'
+  choice: free
+  writeup: finite-source-prefix-paired-individuals
+  text: The untouched old world W is accessible from the singleton source. There the paired-tail two-hat-not-five
+    argument supplies a 5-necessary proposition that is not two-hat necessary. The closed collapse sentence
+    is therefore false at that accessible world, refuting its box at the source; writeup §3.
+notes: A finite-source entrance construction applied to the already recorded paired tail; not a claim
+  of a new general model family. The native verification here uses the corrected old-support reading of
+  the tail argument and not its withdrawn BF-failure claim. No positive AN or SOAN verdict, group-generated
+  general argument, Functional Choice, or necessary completeness is asserted. The earlier entrance mechanism
+  is credited in [[symmetric-entrance-qualitative-links]]; the present source uses every constant arrow
+  into the unchanged paired tail. Actuality follows from Boolean Completeness and Relational Choice in
+  the recorded closure and is also proved directly in the write-up.

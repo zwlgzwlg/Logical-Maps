@@ -1,0 +1,29 @@
+id: invariant-finite-type-necessitism
+name: Invariant Finite-Type Necessitism
+category: mathematical-contingency
+statement: The variant of Finite-Type Necessitism obtained by requiring invariance and inextensibility,
+  rather than persistence and inextensibility, throughout the witnesses and represented powers.
+formal: $\mathrm{FTN}^{\diamond}:=\mathrm{FTN}\text{ with }\operatorname{Rigid}^{\diamond}\text{ substituted
+  throughout}$
+definitions: $\operatorname{Invariant}(X):=\Box\forall x(\Diamond Xx\to\Box Xx)$ and $\operatorname{Rigid}^{\diamond}(X):=\operatorname{Invariant}(X)\land\operatorname{Inextensible}(X)$.
+  Substitute this predicate in rigid structure, represented powers and $\mathsf P(X)$. All other definitions
+  and the possibility antecedent are unchanged.
+date: '2026-10-30'
+sources:
+- 'Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI), Finite-Type Necessitism: Arithmetic, analysis,
+  and mathematical non-contingency, 30 October 2026, 12-page revision including Appendix A. Appendix A,
+  Theorem A.1'
+source_names:
+- Kodsi, Finite-Type Necessitism (30 Oct 2026)
+references:
+- paper: kodsi-finite-type-necessitism-2026
+  role: proof
+  locator: Appendix A, Theorem A.1
+  note: Supplied 12-page paper; the PDF and LaTeX source are included with this contribution.
+about: '[Read the paper (PDF)](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.pdf)
+  · [LaTeX source](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.tex).
+  Daniel Kodsi suggestion, with assistance from GPT-6 Astra (OpenAI).'
+notes: Over C this is equivalent to FTN together with the schema $\Diamond\exists\mathcal A\,\operatorname{Arith}^{\tau}_0(\mathcal
+  A)\to\Box\mathsf5$. Consequently, under possible Peano realization at some type, it is equivalent to
+  FTN plus C5. Without that activation it need not imply C5. It strictly strengthens FTN and does not
+  imply modal collapse. See [the finite-type guide](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/writeups/finite-type-non-contingency-guide.md).

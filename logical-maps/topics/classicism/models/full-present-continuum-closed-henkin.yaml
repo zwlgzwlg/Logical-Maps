@@ -1,0 +1,92 @@
+id: full-present-continuum-closed-henkin
+name: 'Full present: continuum-closed elementary Henkin leaf'
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, Subset-closed elementary Henkin leaves and full presents, 30
+  October 2026, countable-completeness sections 1–7, analytical sections 1–6, and continuum-closure/powers
+  sections 1–7 (unpaginated).
+- Daniel Kodsi, Classical present over an arbitrary model, sections 1–3 (unpaginated), for the full-current
+  pair construction and external-completeness criterion; supported-product numeral-orbit argument, section
+  10 (unpaginated).
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, section 1.3 and Appendix D, pp. 73–74,
+  for the standing C framework and typed semantics.
+source_names:
+- Subset-closed Henkin presents 30 Oct
+- Kodsi full present and numeral orbit
+- Classicism
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: section 1.3; Appendix D, pp. 73–74
+definition: 'Work in external ZFC. F is the full standard extensional relational hierarchy over omega
+  with terminal modality, in its countable many-sorted first-order presentation including all finite parameterized-lambda
+  templates. H is an elementary substructure obtained by the subset-code closure described below. Form
+  its full classical present R: R_e=omega, and at each relational type tau=alpha_1...alpha_k t set R_tau=P(product_i
+  R_alpha_i) x H_tau. The only proper future is terminal H, with transport q(S,h)=h and identity transport
+  on individuals. All current rows occur. Application, logical operations and quantifiers have their current
+  full-row values and the transported H-component. Equality is literal at each point. Evaluate at R. Put
+  c=2^aleph_0 and lambda=2^c. Seed all of F_(et)t, all individuals, and every point and graph of an ordinary
+  real-field copy at every infinite relational host. Through a c^+ elementary chain, at each successor
+  stage add the exact F predicate of every external subset of every existing sort of size at most c, then
+  take an elementary hull. The union H has size lambda and admits exact codes for all subsets of each
+  H sort of size at most c. It retains H_(et)t=F_(et)t.'
+arguments:
+- id: necessary-countable-completeness
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: elementary-henkin-presents
+  text: The elementary closure provides external H unions for all families of size at most c, hence for
+    countable families. The full present has countable canonical successor orbits at every counting source.
+    Pairing current-row unions with H unions proves native CBC for every counting/output type; H itself
+    has internal full BC. Thus the CBC schema holds necessarily. See sections 1–3.
+  holds:
+  - necessary-countable-boolean-completeness-r
+- id: necessary-strong-atoms
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: elementary-henkin-presents
+  text: Parameter comprehension supplies every singleton in each leaf relation algebra. The root product
+    algebra has atoms (current singleton,leaf bottom) and (empty current row,leaf singleton). Each decides
+    every relation at R and every future H test; the first kind may become bottom, which the native definition
+    permits. Every nonzero entity has one below it. Leaf singletons are strong atoms. Thus Strong Atomicity
+    holds at both points and all relational types. See section 4.
+  holds:
+  - necessary-strong-atomicity-r
+- id: whole-real-power-families
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: elementary-henkin-presents
+  text: Every subset T of a finite power of a seeded real field has size at most c, so an exact code for
+    T is admitted using a coded family of tuple haecceities and existential union. The whole family of
+    supported relations is admitted by parameter comprehension, not by a size bound on that family. Lift
+    the field by exact images and each T to its exact-image graph; the resulting whole family transports
+    exactly onto the supported H relations and is rigid. At each point every relation restriction is represented.
+    The same field works for every specified finite arity. Vacuous carriers are checked separately. See
+    sections 5–6 and 8.
+  holds:
+  - second-order-analytic-necessitism
+- id: missing-larger-join
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: elementary-henkin-presents
+  text: Put delta=(et)t. The leaf retains all F_delta, of size lambda, whereas H_(delta t) has at most
+    lambda members. Choose a missing extension A subset H_delta. Its singleton family has no leaf LUB,
+    since complements of omitted singletons force any LUB to have exactly extension A. The corresponding
+    admitted root family has no LUB either. The failure occurs at ((et)t)t. See section 3.
+  fails:
+  - boolean-completeness-r
+notes: A scaled version of the countably closed construction. It supplies whole finite-arity powers of
+  each seeded real field while leaving a missing Boolean join one type higher. No CH is assumed. Necessary
+  Actuality, necessary IC and necessary Transversal also follow from the proved geometry or recorded implications;
+  no propositional Boolean Completeness failure is asserted. The proof and verdicts retained here concern
+  this completeness/SOAN separation.

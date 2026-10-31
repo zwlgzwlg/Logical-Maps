@@ -57,3 +57,7 @@ changes:
   summary: 'Promoted from conjectured to proved with a hand-written write-up of Cian Dorr’s proof (with
     permission from Zachary Goodsell): two distinct atoms are exchanged by a Boolean automorphism, extended
     by conjugation to all types, which fixes every closed pure term.'
+- date: '2026-10-28'
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  summary: 'Added an explicit type-e notational convention to Section 4 of the existing write-up: the identity action on individuals is a metalinguistic abbreviation, not a term of the excluded type ee. The proof, premises, conclusion, attribution and certificate are unchanged.'
+  minor: true

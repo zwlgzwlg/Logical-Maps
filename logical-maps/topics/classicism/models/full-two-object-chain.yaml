@@ -41,7 +41,29 @@ meets:
   trivial-isomorphisms-everywhere: The only arrows are the identities and $W_0\to W_1$, which has no inverse.
   retracted-arrows-invertible-everywhere: 'No non-identity arrow has a retraction: nothing returns from
     $W_1$.'
-arguments: []
+arguments:
+- id: analytic-necessitism-same-carrier-repair
+  holds: [second-order-analytic-necessitism]
+  when: {metatheory: choice, individuals: fixed-infinite}
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-29'
+  text: >-
+    The category has finitely many arrows out of each object, and individuals form the same fixed infinite set. The type induction gives, at each carrier type, either finite domains everywhere or a coherent separated continuum at every object.
+    At e, the fixed individual set either cannot carry a real field or has a fixed
+    continuum. Apply the full-action same-carrier criterion: direct-image field
+    profiles are rigid and necessarily real, and the direct-image higher families
+    of all subset relations give represented powers of every finite arity.
+    This proves every same-carrier SOAN instance; AN is derived. ZFC and the recorded
+    fixed/singleton individual settings are essential to the stated scope.
+    Proof and construction hypotheses:
+    [proof](../writeups/analytic-necessitism-carrier-correction.md), sections 4–5.
+  revisions:
+  - date: '2026-10-30'
+    by: GPT-6 Astra, prompted by Daniel Kodsi
+    note: >-
+      Appended the carrier-sensitive SOAN proof for the explicitly guarded ZFC settings,
+      replacing lost shared support without duplicating the derived AN verdict or
+      claiming a choiceless extension. All previous arguments and certificate retained.
 notes: The cited construction is a model of the map’s relational-type framework. The description identifies
   its evaluation point; construction and verification are given at the PDF locations in References. Everything
   that implies these fails with them.

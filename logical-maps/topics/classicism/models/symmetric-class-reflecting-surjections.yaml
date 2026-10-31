@@ -10,11 +10,13 @@ certificate:
   date: '2026-10-16'
   lean: none
 sources:
+- "OpenAI Codex, prompted by Daniel Kodsi, Singleton-individual variants: direct choice verdicts from the stabilizer theorem, 22 October 2026, \xA7\xA71\u20134, unpaginated; Relational Choice forces Transversal Choice in symmetric ideally-full map categories, \xA7\xA71\u20132, same date, unpaginated."
 - Cian Dorr, construction of 16 October 2026, with Claude Opus 5.5 (Anthropic); verification in the
   write-up.
 - Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, §3 (symmetric
   ideally-full models), Definitions 15–18, p. 8, and Proposition 20.
 source_names:
+- Singleton choice verdicts (22 Oct 2026)
 - Dorr 16 Oct
 - BC does not imply RC
 references:
@@ -33,6 +35,8 @@ settings:
   individuals: base
   sigma: top
 meets:
+  moving-proposition-stabilizers: >-
+    Choose distinct pinning points $a,b,c$ outside a given finite $N$ in one infinite qualitative class. The symmetry $g=(a\ c)$ fixes $N$. The proposition $p_{ab}$ holds at an outgoing arrow $w$ exactly when $w(a)=w(b)$; it is symmetric and pinned by $\{a,b\}$. A surjection mapping each class onto itself can identify $a,b$ while keeping $c$ distinct. It reflects the qualitative equivalence, hence is an allowed arrow, and distinguishes $p_{ab}$ from $g\cdot p_{ab}=p_{cb}$. The points here are pinning-carrier points, also when the individual domain is a singleton. Source: OpenAI Codex, prompted by Daniel Kodsi, 22 October 2026, singleton applications §2; recorded 30 October 2026.
   no-actuality-anywhere: >-
     One object, so Actuality, a closed pure sentence, holds at every world iff at the identity,
     where it fails (recorded in this model’s verdicts).

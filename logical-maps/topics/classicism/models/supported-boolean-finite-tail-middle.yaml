@@ -1,0 +1,87 @@
+id: supported-boolean-finite-tail-middle
+name: 'Supported Boolean model: finite tail subsets at a middle evaluation'
+definition: In external ZFC take B=2 times A times P(N), with A a complete homogeneous atomless Boolean
+  algebra, singleton individuals, and the modified interior J(epsilon,a,S) whose first bit tests raw Top
+  and whose other coordinates are (1_A,S) exactly when a=1_A and S is cofinite. Keep every raw scalar;
+  at each permitted function type admit all nonexpansive functions having finite joint support under Aut(A)
+  times Sym(N), with tail supports finite sets of subsets, fixed setwise. Use open-valued equality and
+  full-range B quantifiers. Evaluate at any middle ultrafilter of A. The first and principal evaluations
+  together with all middle evaluations separate B and satisfy the ordinary quantifier clauses.
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, Finite tail-scalar support restores necessary propositional completeness,
+  30 October 2026, Sections 1–7 (unpaginated).
+- GPT-6 Astra, prompted by Daniel Kodsi, Finitary normalization and current Rigid Power in the tail/middle
+  model, 30 October 2026, Sections 1–7 (unpaginated).
+- 'GPT-6 Astra, prompted by Daniel Kodsi, Finite tail support: middle choice and Zorn diagnostic, 30 October
+  2026, Sections 1–4 (unpaginated).'
+- Daniel Kodsi's research note Complete Boolean root, Sections 1–2, 4–5a (unpaginated), for the Boolean/interior/nonexpansive
+  construction and finite-attainment lemma.
+source_names:
+- Finite tail support
+- All-type Rigid Power
+- Choice and Zorn witnesses
+- Complete Boolean root
+references: []
+arguments:
+- id: finite-cell-scalar-joins
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: supported-boolean-finite-tail-middle
+  text: Finite tail supports divide N into finitely many cells. Every invariant quotient-tail family has
+    as join the union of its active infinite cells. This gives represented scalar joins at every middle
+    and principal evaluation; first-coordinate completeness is immediate. The separating characters make
+    the closed BC_t value raw Top. See Sections 1–3.
+  holds:
+  - necessary-boolean-completeness-t
+- id: middle-distinctness
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: supported-boolean-finite-tail-middle
+  text: Every equality value is raw Bottom, Top, or (0,1_A,S) with S cofinite. An equality false at a
+    middle evaluation is therefore raw Bottom, so its necessary negation is true. This works at every
+    type. See Section 4.
+  holds:
+  - distinctness-necessary-r
+- id: middle-atomlessness
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: supported-boolean-finite-tail-middle
+  text: The current scalar algebra is A times P(N)/Fin, with every representative admitted. Split a nonzero
+    A part or an infinite pure-tail part. See Sections 3–4.
+  holds:
+  - atomlessness
+- id: finitary-normalization-power
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: supported-boolean-finite-tail-middle
+  text: Finite whole-row surgery gives canonical representatives of every middle member of a rigid carrier.
+    Their set has full finite support, while each member has a common finitary stabilizer. The representative-union
+    lemma yields a globally rigid power replacement, and arbitrary local power members lift outside one
+    carrier-dependent finite set. This proves current all-type RP, not necessary RP. See Sections 6–8.
+  holds:
+  - rigid-power-r
+- id: nonnecessary-distinctness
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: supported-boolean-finite-tail-middle
+  text: 'The closed ND_t raw value is (0,1_A,empty): every middle evaluation accepts it, every first/principal
+    evaluation rejects it. Its interior is Bottom. BF_t failure then derives from ND_t + BF_t implying
+    necessary ND_t. See Section 4.'
+  fails:
+  - necessary-distinctness-necessary-t
+notes: One changed-admission construction supplies the joint necessary-BC_t/current-ND/Atomlessness separation
+  from BF_t and necessary ND_t. Current RP is an additional verified property of this same model. The
+  tail support is by finitely many subsets, not finitely many integers. No all-type BC, necessary RP or
+  positive choice is asserted.

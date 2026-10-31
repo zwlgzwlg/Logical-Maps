@@ -323,27 +323,132 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
 <script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Strong Atomicity (type t) ∧ Rigid Comprehension ∧ BF (relational types) ⇒ □Rigid Comprehension</h1></header><p class="cert">
-Result — Source: Misc.; produced by GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, 22 October 2026; recorded by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 29 October 2026.
+Result — Source: Misc.; produced by GPT-6 Astra (OpenAI), prompted by
+Daniel Kodsi, 22 October 2026; recorded by Claude Opus 5.5 (Anthropic),
+prompted by Cian Dorr, 29 October 2026.
 </p>
 <h2 id="premises">Premises</h2>
 <ul>
-<li><strong>Strong Atomicity (type t).</strong> Every possible proposition is entailed by a strong atom, one that is possible and necessarily entails every proposition or its negation.</li>
-<li><strong>Rigid Comprehension.</strong> Every relation, including a proposition, is coextensive with a rigid one.</li>
-<li><strong>BF (relational types).</strong> The Barcan Formula at every relational type, that is, at every type other than e.</li>
+<li><strong>Strong Atomicity (type t).</strong> Every possible
+proposition is entailed by a strong atom, one that is possible and
+necessarily entails every proposition or its negation.</li>
+<li><strong>Rigid Comprehension.</strong> Every relation, including a
+proposition, is coextensive with a rigid one.</li>
+<li><strong>BF (relational types).</strong> The Barcan Formula at every
+relational type, that is, at every type other than e.</li>
 </ul>
 <h2 id="conclusion">Conclusion</h2>
 <ul>
-<li><strong>□Rigid Comprehension.</strong> Necessarily, every relation, including a proposition, is coextensive with a rigid one.</li>
+<li><strong>□Rigid Comprehension.</strong> Necessarily, every relation,
+including a proposition, is coextensive with a rigid one.</li>
 </ul>
 <h2 id="proof">Proof</h2>
-<p>Write <span class="math inline">D(w):=\forall q\, .\,w\le q\lor w\le\neg q</span>, so that <span class="math inline">\operatorname{SAtom}_t(w)</span> is <span class="math inline">\Diamond w\land\Box D(w)</span>. (1) By Rigid Comprehension let <span class="math inline">A</span> be a rigid property of propositions coextensive with <span class="math inline">\operatorname{SAtom}_t</span>. Each current instance <span class="math inline">w</span> has <span class="math inline">\Box D(w)</span>, so weak inextensibility of <span class="math inline">A</span> gives <span class="math inline">\Box\forall w\, .\,Aw\to D(w)</span>. And <span class="math inline">J:=\exists w\, .\,Aw\land w</span> is <span class="math inline">\top</span>: otherwise <span class="math inline">\Diamond\neg J</span>, and Strong Atomicity (type <span class="math inline">t</span>) gives a strong atom <span class="math inline">w\le\neg J</span>; but <span class="math inline">w</span> is an instance of <span class="math inline">A</span>, so <span class="math inline">w\le J</span>, and <span class="math inline">w=\bot</span>, contradicting <span class="math inline">\Diamond w</span>. So <span class="math inline">\Box\exists w\, .\,Aw\land w</span>. (2) Let <span class="math inline">\sigma</span> be a relational type and <span class="math inline">X</span> of type <span class="math inline">\sigma t</span>. Fix a current instance <span class="math inline">w</span> of <span class="math inline">A</span>. By <span class="math inline">D(w)</span>, every current <span class="math inline">z</span> has <span class="math inline">w\le Xz</span> or <span class="math inline">w\le\neg Xz</span>; by Rigid Comprehension let <span class="math inline">P</span> and <span class="math inline">Q</span> be rigid and coextensive with <span class="math inline">\lambda z\, .\,w\le Xz</span> and <span class="math inline">\lambda z\, .\,w\le\neg Xz</span>. Identities being necessary, weak inextensibility of <span class="math inline">P</span> applied to <span class="math inline">\lambda z\, .\,w\to Xz</span> gives <span class="math inline">\Box\forall z\, .\,Pz\to(w\to Xz)</span>, and likewise <span class="math inline">\Box\forall z\, .\,Qz\to(w\to\neg Xz)</span>. Every current <span class="math inline">z</span> is in <span class="math inline">P</span> or <span class="math inline">Q</span>, so, by persistence, <span class="math inline">\forall z\, .\,\Box(Pz\lor Qz)</span>, and BF at the relational type <span class="math inline">\sigma</span> gives <span class="math inline">\Box\forall z\, .\,Pz\lor Qz</span>. So necessarily, if <span class="math inline">w</span>, then <span class="math inline">X</span> is coextensive with <span class="math inline">P</span>, which is rigid ([[rigid-necessary]]): <span class="math inline">\Box(w\to E_X)</span>, with <span class="math inline">E_X:=\exists Y\, .\,\operatorname{Rigid}(Y)\land X\equiv Y</span>. Weak inextensibility of <span class="math inline">A</span> applied to <span class="math inline">\lambda w\, .\,w\to E_X</span> gives <span class="math inline">\Box\forall w\, .\,Aw\to(w\to E_X)</span>, and with (1), <span class="math inline">\Box E_X</span>. This holds for every current <span class="math inline">X</span>, so BF at the relational type <span class="math inline">\sigma t</span> gives <span class="math inline">\Box\forall X\, .\,E_X</span>: Rigid Comprehension at relational argument types is necessary. (3) Individual and mixed argument tuples reduce to relational ones by a theorem of C, which is therefore necessary. For a tuple type <span class="math inline">\bar\sigma</span> let <span class="math inline">H_{\bar x}:=\lambda\bar z\, .\,\bar z=\bar x</span>, of the relational type <span class="math inline">\delta:=\bar\sigma t</span>, and <span class="math inline">\operatorname{Code}(H):=\exists\bar x\, .\,H=H_{\bar x}</span>. Given <span class="math inline">X</span> of type <span class="math inline">\bar\sigma t</span>, let <span class="math inline">P</span> be rigid and coextensive with <span class="math inline">\lambda H\, .\,\exists\bar x\, .\,H=H_{\bar x}\land X\bar x</span>, and <span class="math inline">Y:=\lambda\bar x\, .\,P(H_{\bar x})</span>, which is coextensive with <span class="math inline">X</span> since <span class="math inline">H_{\bar x}=H_{\bar y}</span> iff <span class="math inline">\bar x=\bar y</span>. Each current instance of <span class="math inline">P</span> is a code, necessarily, so weak inextensibility gives <span class="math inline">\Box\forall H\, .\,PH\to\operatorname{Code}(H)</span>. <span class="math inline">Y</span> is persistent since <span class="math inline">P</span> is. At any point, if <span class="math inline">Y\bar x\to\Box Z\bar x</span> for all <span class="math inline">\bar x</span>, then each instance <span class="math inline">H_{\bar a}</span> of <span class="math inline">P</span> there has <span class="math inline">\Box\forall\bar x\, .\,H=H_{\bar x}\to Z\bar x</span>, and weak inextensibility of <span class="math inline">P</span> gives <span class="math inline">Y\le Z</span>. So <span class="math inline">Y</span> is rigid.</p>
+<p>Write <span class="math inline">D(w):=\forall q\, .\,w\le q\lor
+w\le\neg q</span>, so that <span
+class="math inline">\operatorname{SAtom}_t(w)</span> is <span
+class="math inline">\Diamond w\land\Box D(w)</span>. (1) By Rigid
+Comprehension let <span class="math inline">A</span> be a rigid property
+of propositions coextensive with <span
+class="math inline">\operatorname{SAtom}_t</span>. Each current instance
+<span class="math inline">w</span> has <span class="math inline">\Box
+D(w)</span>, so weak inextensibility of <span
+class="math inline">A</span> gives <span class="math inline">\Box\forall
+w\, .\,Aw\to D(w)</span>. And <span class="math inline">J:=\exists w\,
+.\,Aw\land w</span> is <span class="math inline">\top</span>: otherwise
+<span class="math inline">\Diamond\neg J</span>, and Strong Atomicity
+(type <span class="math inline">t</span>) gives a strong atom <span
+class="math inline">w\le\neg J</span>; but <span
+class="math inline">w</span> is an instance of <span
+class="math inline">A</span>, so <span class="math inline">w\le
+J</span>, and <span class="math inline">w=\bot</span>, contradicting
+<span class="math inline">\Diamond w</span>. So <span
+class="math inline">\Box\exists w\, .\,Aw\land w</span>. (2) Let <span
+class="math inline">\sigma</span> be a relational type and <span
+class="math inline">X</span> of type <span class="math inline">\sigma
+t</span>. Fix a current instance <span class="math inline">w</span> of
+<span class="math inline">A</span>. By <span
+class="math inline">D(w)</span>, every current <span
+class="math inline">z</span> has <span class="math inline">w\le
+Xz</span> or <span class="math inline">w\le\neg Xz</span>; by Rigid
+Comprehension let <span class="math inline">P</span> and <span
+class="math inline">Q</span> be rigid and coextensive with <span
+class="math inline">\lambda z\, .\,w\le Xz</span> and <span
+class="math inline">\lambda z\, .\,w\le\neg Xz</span>. Identities being
+necessary, weak inextensibility of <span class="math inline">P</span>
+applied to <span class="math inline">\lambda z\, .\,w\to Xz</span> gives
+<span class="math inline">\Box\forall z\, .\,Pz\to(w\to Xz)</span>, and
+likewise <span class="math inline">\Box\forall z\, .\,Qz\to(w\to\neg
+Xz)</span>. Every current <span class="math inline">z</span> is in <span
+class="math inline">P</span> or <span class="math inline">Q</span>, so,
+by persistence, <span class="math inline">\forall z\, .\,\Box(Pz\lor
+Qz)</span>, and BF at the relational type <span
+class="math inline">\sigma</span> gives <span
+class="math inline">\Box\forall z\, .\,Pz\lor Qz</span>. So necessarily,
+if <span class="math inline">w</span>, then <span
+class="math inline">X</span> is coextensive with <span
+class="math inline">P</span>, which is rigid ([[rigid-necessary]]):
+<span class="math inline">\Box(w\to E_X)</span>, with <span
+class="math inline">E_X:=\exists Y\, .\,\operatorname{Rigid}(Y)\land
+X\equiv Y</span>. Weak inextensibility of <span
+class="math inline">A</span> applied to <span
+class="math inline">\lambda w\, .\,w\to E_X</span> gives <span
+class="math inline">\Box\forall w\, .\,Aw\to(w\to E_X)</span>, and with
+(1), <span class="math inline">\Box E_X</span>. This holds for every
+current <span class="math inline">X</span>, so BF at the relational type
+<span class="math inline">\sigma t</span> gives <span
+class="math inline">\Box\forall X\, .\,E_X</span>: Rigid Comprehension
+at relational argument types is necessary. (3) Individual and mixed
+argument tuples reduce to relational ones by a theorem of C, which is
+therefore necessary. For a tuple type <span
+class="math inline">\bar\sigma</span> let <span
+class="math inline">H_{\bar x}:=\lambda\bar z\, .\,\bar z=\bar x</span>,
+of the relational type <span class="math inline">\delta:=\bar\sigma
+t</span>, and <span
+class="math inline">\operatorname{Code}(H):=\exists\bar x\, .\,H=H_{\bar
+x}</span>. Given <span class="math inline">X</span> of type <span
+class="math inline">\bar\sigma t</span>, let <span
+class="math inline">P</span> be rigid and coextensive with <span
+class="math inline">\lambda H\, .\,\exists\bar x\, .\,H=H_{\bar x}\land
+X\bar x</span>, and <span class="math inline">Y:=\lambda\bar x\,
+.\,P(H_{\bar x})</span>, which is coextensive with <span
+class="math inline">X</span> since <span class="math inline">H_{\bar
+x}=H_{\bar y}</span> iff <span class="math inline">\bar x=\bar y</span>.
+Each current instance of <span class="math inline">P</span> is a code,
+necessarily, so weak inextensibility gives <span
+class="math inline">\Box\forall H\,
+.\,PH\to\operatorname{Code}(H)</span>. <span
+class="math inline">Y</span> is persistent since <span
+class="math inline">P</span> is. At any point, if <span
+class="math inline">Y\bar x\to\Box Z\bar x</span> for all <span
+class="math inline">\bar x</span>, then each instance <span
+class="math inline">H_{\bar a}</span> of <span
+class="math inline">P</span> there has <span
+class="math inline">\Box\forall\bar x\, .\,H=H_{\bar x}\to Z\bar
+x</span>, and weak inextensibility of <span class="math inline">P</span>
+gives <span class="math inline">Y\le Z</span>. So <span
+class="math inline">Y</span> is rigid.</p>
 <h2 id="notes">Notes</h2>
-<p>With [[necessary-rigid-comprehension-implies-necessary-weak-rigid-comprehension]] and [[necessary-weak-rigid-comprehension-implies-necessary-boolean-completeness]], □Boolean Completeness follows. BF is used only at the evaluation point and only at relational types; BF at type <span class="math inline">e</span> is not needed, and fails in full-two-object-chain-new-individual, where Strong Atomicity and Rigid Comprehension hold. Astra also proposed a countermodel showing that BF at relational types cannot be weakened to □BF (type <span class="math inline">t</span>); it is not recorded yet.</p>
+<p>With
+[[necessary-rigid-comprehension-implies-necessary-weak-rigid-comprehension]]
+and
+[[necessary-weak-rigid-comprehension-implies-necessary-boolean-completeness]],
+□Boolean Completeness follows. BF is used only at the evaluation point
+and only at relational types; BF at type <span
+class="math inline">e</span> is not needed, and fails in
+full-two-object-chain-new-individual, where Strong Atomicity and Rigid
+Comprehension hold. Astra also proposed a countermodel showing that BF
+at relational types cannot be weakened to □BF (type <span
+class="math inline">t</span>); it is not recorded yet.</p>
 <h2 id="sources">Sources</h2>
 <ul>
-<li><strong>Astra via Kodsi 22 Oct</strong> — GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, Strong Leibniz and Rigid Comprehension propagate, research note of 22 October 2026, §§2–3 (unpaginated), in Daniel Kodsi’s submission of 24 October 2026, listed in his pull request #18 of 26 October 2026.</li>
+<li><strong>Astra via Kodsi 22 Oct</strong> — GPT-6 Astra (OpenAI),
+prompted by Daniel Kodsi, Strong Leibniz and Rigid Comprehension
+propagate, research note of 22 October 2026, §§2–3 (unpaginated), in
+Daniel Kodsi’s submission of 24 October 2026, listed in his pull request
+#18 of 26 October 2026.</li>
 </ul>
 <p class="cert">
-Record: <code>topics/classicism/results/strong-atomicity-t-rigid-comprehension-and-barcan-relational-imply-necessary-rigid-comprehension.yaml</code>
+Record:
+<code>topics/classicism/results/strong-atomicity-t-rigid-comprehension-and-barcan-relational-imply-necessary-rigid-comprehension.yaml</code>
 </p>
 </body></html>

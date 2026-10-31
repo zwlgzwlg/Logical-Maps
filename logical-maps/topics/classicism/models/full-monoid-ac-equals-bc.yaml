@@ -46,7 +46,29 @@ meets:
   incomparable-free-arrows: '$a$ and $b$: each is fixed only by $1$, and neither is a left multiple of
     the other, both having length $1$ and being distinct.'
   free-nonepic-composite: $ac=bc$ with $a\ne b$, and $ac$ is fixed only by $1$.
-arguments: []
+arguments:
+- id: analytic-necessitism-same-carrier-repair
+  holds: [second-order-analytic-necessitism]
+  when: {metatheory: choice}
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-29'
+  text: >-
+    The monoid is countable and its relation ac=bc preserves word length. For every h the words a^n h have different lengths, so every principal left ideal Mh is infinite. The countable diagonal supplies a continuum of propositions separated by every arrow, and universal/empty rows lift it to each relational carrier type.
+    At e, the fixed individual set either cannot carry a real field or has a fixed
+    continuum. Apply the full-action same-carrier criterion: direct-image field
+    profiles are rigid and necessarily real, and the direct-image higher families
+    of all subset relations give represented powers of every finite arity.
+    This proves every same-carrier SOAN instance; AN is derived. ZFC and the recorded
+    fixed/singleton individual settings are essential to the stated scope.
+    Proof and construction hypotheses:
+    [proof](../writeups/analytic-necessitism-carrier-correction.md), sections 4–5.
+  revisions:
+  - date: '2026-10-30'
+    by: GPT-6 Astra, prompted by Daniel Kodsi
+    note: >-
+      Appended the carrier-sensitive SOAN proof for the explicitly guarded ZFC settings,
+      replacing lost shared support without duplicating the derived AN verdict or
+      claiming a choiceless extension. All previous arguments and certificate retained.
 notes: 'A one-object companion to [[full-three-object-fork]]: Self-Atomicity, Atomicity, Strong Actuality
   and No Pure Contingency hold, all boxed, while Strong Atomicity (type t) and BF (type
   t) fail. The self-atom $\{a,b\}$ is not an atom.'

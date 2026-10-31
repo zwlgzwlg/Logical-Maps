@@ -59,8 +59,27 @@ notes: >-
   of some real number structure into the propositions. All five models above falsify it. It is not
   recorded as a principle until the repaired implication is proved, since by itself it would only call
   for large variants of many models.
+
+  Supplement (30 October 2026): the accompanying write-up proves a repaired statement with
+  necessary quantified individual Infinity and the correctly directed size condition: for some
+  current real structure, there is no injection from the propositions into its rigid properties.
+  Under the original map FP, necessary Rigid Comprehension, and current Intensional Choice,
+  these additions imply both possible CH and possible failure of CH. The proof derives the
+  reverse injection, so the weak non-injection becomes strict propositional largeness without
+  assuming a well-order of the reals. It also supplies the cardinal/structural bridge,
+  countermodels to omitting either addition, and a relative-ZFC model of the repaired premises.
+  Bacon's forcing argument and cloud construction, and Dorr's intended cardinality suggestion,
+  retain their credits; the interface refinements and weak-to-strict argument were developed by
+  Daniel Kodsi with ChatGPT (GPT-6 Astra, prompted by Daniel Kodsi). The historical gloss above
+  has the injection direction reversed. The original four-premise statement remains refuted
+  and its conjectured status is unchanged. No independent human check or Lean certificate is claimed.
+
 changes:
 - date: '2026-10-25'
   by: Claude Opus 5.5 (Anthropic), prompted by Cian Dorr
   summary: 'Notes: refuted as encoded, by five recorded models with exactly continuum many propositions;
     what a repaired premise would need.'
+- date: '2026-10-30'
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  summary: 'Added a full repair proof with necessary quantified individual Infinity, the corrected
+    cardinality direction and the weak-to-strict comparison; preserved the refuted original statement.'

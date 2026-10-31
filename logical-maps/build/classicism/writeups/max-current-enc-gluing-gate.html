@@ -1,0 +1,589 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Pure Maximalism with current Extensional No Collapse</title><link rel="icon" type="image/png" href="../favicon.png">
+<style>/* Fixed forest palette, adapted from the supplied style example.
+   Semantic and source hues retain their meaning in both modes. */
+:root {
+  --bg: #f3f1e8;
+  --panel: #f8f7f0;
+  --panel-2: #e9ecdf;
+  --line: #d4d9c9;
+  --line-strong: #a2ae97;
+  --ink: #283c28;
+  --ink-2: #4f604b;
+  --ink-3: #5f6d58;
+  --accent: #356044;
+  --link-hover: #914b30;
+  --human: #3e7052;
+  --assisted: #746044;
+  --ai: #a35b36;
+  --derived: #7b8271;
+  --indep: #a0483a;
+  --open: #e2e5d9;
+  --open-ink: #65705f;
+  --conj: #896b27;
+  --node-fill: #f8f7f0;
+  --node-stroke: #98a68b;
+  --junction: #52634b;
+  --hl: #e0e7cd;
+  --focus: #914b30;
+  --badge-ink: #ffffff;
+  --warning-bg: #f4e6dc;
+  --source-forest: #3e7052;
+  --source-rust: #a25336;
+  --source-ochre: #896b27;
+  --source-slate: #4c7279;
+  --source-berry: #80556d;
+  --source-olive: #69753c;
+  --source-misc: #696d61;
+  --shadow: 0 4px 24px rgb(40 60 40 / 12%);
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --serif: var(--sans);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0e1912;
+  --panel: #142018;
+  --panel-2: #1d2b20;
+  --line: #304332;
+  --line-strong: #596e51;
+  --ink: #d7dfca;
+  --ink-2: #b3c1a7;
+  --ink-3: #96aa8d;
+  --accent: #a6c699;
+  --link-hover: #dfab89;
+  --human: #94bc95;
+  --assisted: #c1ad8d;
+  --ai: #dca17b;
+  --derived: #83937c;
+  --indep: #e09b86;
+  --open: #243327;
+  --open-ink: #a2b398;
+  --conj: #d0b36b;
+  --node-fill: #19261c;
+  --node-stroke: #627957;
+  --junction: #b3c1a7;
+  --hl: #30422a;
+  --focus: #dfab89;
+  --badge-ink: #0e1912;
+  --warning-bg: #32251f;
+  --source-forest: #94bc95;
+  --source-rust: #dca17b;
+  --source-ochre: #d0b36b;
+  --source-slate: #95bcc1;
+  --source-berry: #c5a0b7;
+  --source-olive: #b6c383;
+  --source-misc: #a9b09c;
+  --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); scrollbar-color: var(--line-strong) var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.6 var(--sans); }
+button, input, select { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 3px; }
+input[type="checkbox"] { accent-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+::selection { background: var(--hl); color: var(--ink); }
+.theme-toggle { border: 0; padding: 6px 0; background: transparent; color: var(--ink-2); cursor: pointer; font: 13px var(--sans); white-space: nowrap; }
+.theme-toggle:hover { color: var(--link-hover); }
+.display-toggles { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 16px; }
+.theme-toggle[aria-pressed="true"] { color: var(--accent); }
+
+/* A prismatic name: one rainbow wheel around a point in the word, spinning;
+   --prism-x and --prism-y move that point off the middle.
+   Pure spectral stops, turned by a registered angle rather than a hue
+   filter, which would muddy them. */
+@property --prism { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.prismatic { font-weight: 600; color: transparent; background: conic-gradient(from var(--prism) at var(--prism-x, 50%) var(--prism-y, 50%), #ff1a1a, #ff8a00, #ffd000, #22c33a, #00a8f0, #3d4bff, #b026ff, #ff1a1a); -webkit-background-clip: text; background-clip: text; animation: prism-spin 6s linear infinite; }
+/* As a link it keeps the gradient on hover, under an accent underline. */
+a.prismatic, a.prismatic:hover { color: transparent; }
+a.prismatic:hover { text-decoration-color: var(--accent); }
+@keyframes prism-spin { to { --prism: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .prismatic { animation: none; } }
+
+/* Standalone write-ups use the same quiet, ruled typography as the map. */
+html:has(body.writeup-page) { background: var(--bg); }
+body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; font: 16px/1.7 var(--sans); overflow-wrap: anywhere; }
+.writeup-nav { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 24px; font-size: 13px; }
+.writeup-page h1 { font-size: 1.4em; line-height: 1.4; margin: 0 0 20px; color: var(--ink); }
+.writeup-page h2 { font-size: 1.15em; line-height: 1.4; margin: 1.8em 0 .5em; padding-top: 14px; border-top: 1px solid var(--line); }
+.writeup-page h3 { font-size: 1em; }
+.writeup-page p { margin: 0 0 12px; }
+.writeup-page .cert { color: var(--ink-2); font-size: .85em; }
+.writeup-page code, .writeup-page pre { font: .85em/1.6 var(--mono); color: var(--ink); }
+.writeup-page pre { padding: 14px; background: var(--panel-2); overflow-x: auto; }
+.writeup-page blockquote { color: var(--ink-2); border-left: 2px solid var(--line-strong); margin-left: 0; padding-left: 20px; }
+.writeup-page math[display="block"] { display: block; overflow-x: auto; padding: 8px 0; }
+.writeup-page table { display: block; overflow-x: auto; border-collapse: collapse; }
+.writeup-page th, .writeup-page td { border-bottom: 1px solid var(--line); padding: 8px 12px; }
+@media (max-width: 600px) {
+  body.writeup-page { margin: 1.5em auto; padding: 0 1em 2em; }
+}
+@media print {
+  :root, :root[data-theme="dark"] { --bg: white; --ink: #283c28; --ink-2: #4f604b; --accent: #356044; --line: #d4d9c9; color-scheme: light; }
+  .writeup-nav { display: none; }
+  body.writeup-page { max-width: none; margin: 0; padding: 0; }
+}
+
+/* Teal-grey, muted rust, deep teal and warm stone. Screen-only overrides
+   preserve print styling. */
+@media screen {
+  :root {
+    --bg: #ebf1f1;
+    --panel: #e1eae9;
+    --panel-2: #d0dfde;
+    --line: #c0cecd;
+    --line-strong: #849997;
+    --ink: #303b3a;
+    --ink-2: #4a5a59;
+    --ink-3: #526160;
+    --accent: #884932;
+    --link-hover: #6f3827;
+    --derived: #6f8180;
+    --open: #d6e2e1;
+    --open-ink: #526160;
+    --node-fill: #f1f6f6;
+    --node-stroke: #7f9391;
+    --junction: #596b6a;
+    --human: #2f6b66;
+    --source-forest: #2f6b66;
+    --hl: #e6ddd0;
+    --focus: #884932;
+    --shadow: 0 4px 24px rgb(48 59 58 / 10%);
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #171e1d;
+    --panel: #202a29;
+    --panel-2: #2b3736;
+    --line: #3d4b4a;
+    --line-strong: #6b817f;
+    --ink: #dbe8e7;
+    --ink-2: #b9cbca;
+    --ink-3: #a6bdbb;
+    --accent: #e2ad92;
+    --link-hover: #f0c3aa;
+    --derived: #87a09e;
+    --open: #303d3c;
+    --open-ink: #aec6c4;
+    --node-fill: #263130;
+    --node-stroke: #738d8b;
+    --junction: #b3cbc9;
+    --human: #86c0b6;
+    --source-forest: #86c0b6;
+    --hl: #463f37;
+    --focus: #e2ad92;
+    --badge-ink: #171e1a;
+    --shadow: 0 4px 24px rgb(0 0 0 / 24%);
+  }
+}
+
+/* Shared Okabe–Ito palette: https://jfly.uni-koeln.de/color/#pallet
+   Loaded after topic themes. Sky blue and orange distinguish positive and
+   negative relations; darker inks keep small labels readable in light mode.
+   Neutral surfaces are identical across maps. Print uses the shared theme. */
+@media screen {
+  :root[data-palette="colourblind"] {
+    --bg: #f4f5f6;
+    --panel: #ffffff;
+    --panel-2: #e9edf0;
+    --line: #d0d6da;
+    --line-strong: #87949d;
+    --ink: #202930;
+    --ink-2: #45535d;
+    --ink-3: #586670;
+    --accent: #0072b2;
+    --link-hover: #925f00;
+    --human: #0072b2;
+    --assisted: #80506a;
+    --ai: #a44500;
+    --derived: #687780;
+    --indep: #925f00;
+    --open: #e9edf0;
+    --open-ink: #586670;
+    --conj: #80506a;
+    --node-fill: #ffffff;
+    --node-stroke: #7a8b96;
+    --junction: #45535d;
+    --hl: #dce4ea;
+    --focus: #0072b2;
+    --badge-ink: #ffffff;
+    --warning-bg: #fff0ce;
+    --source-forest: #56b4e9;
+    --source-rust: #e69f00;
+    --source-ochre: #d55e00;
+    --source-slate: #0072b2;
+    --source-berry: #cc79a7;
+    --source-olive: #009e73;
+    --source-misc: #687780;
+    --rel-positive: #56b4e9;
+    --rel-negative: #e69f00;
+    --shadow: 0 4px 24px rgb(32 41 48 / 12%);
+  }
+  :root[data-palette="colourblind"][data-theme="dark"] {
+    --bg: #111820;
+    --panel: #18222b;
+    --panel-2: #23303b;
+    --line: #354550;
+    --line-strong: #718492;
+    --ink: #edf2f5;
+    --ink-2: #c1ced7;
+    --ink-3: #a5b5c1;
+    --accent: #56b4e9;
+    --link-hover: #e69f00;
+    --human: #56b4e9;
+    --assisted: #cc79a7;
+    --ai: #e69f00;
+    --derived: #91a1ad;
+    --indep: #e69f00;
+    --open: #23303b;
+    --open-ink: #a5b5c1;
+    --conj: #cc79a7;
+    --node-fill: #1c2933;
+    --node-stroke: #8094a3;
+    --junction: #c1ced7;
+    --hl: #354654;
+    --focus: #56b4e9;
+    --badge-ink: #111820;
+    --warning-bg: #352b18;
+    --source-misc: #91a1ad;
+    --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  }
+  /* Source swatches use the unmodified palette; outlined badges allow their
+     text to keep the normal contrast on both light and dark surfaces. */
+  :root[data-palette="colourblind"] .badge.source {
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--source-color);
+    border-left-width: 4px;
+  }
+}
+</style>
+<script>/* Apply before paint; share the preference between every map and write-up. */
+(() => {
+  const key = 'pmap-theme';
+  const paletteKey = 'pmap-palette';
+  const system = window.matchMedia?.('(prefers-color-scheme: dark)');
+  let preference;
+  let palette;
+  try { preference = localStorage.getItem(key); } catch (_) {}
+  try { palette = localStorage.getItem(paletteKey); } catch (_) {}
+  if (!['light', 'dark'].includes(preference)) preference = null;
+  if (palette !== 'colourblind') palette = 'default';
+  function apply(theme) {
+    document.documentElement.dataset.theme = theme;
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.textContent = theme === 'dark' ? '[Light mode]' : '[Dark mode]';
+      button.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+    });
+  }
+  function applyPalette() {
+    document.documentElement.dataset.palette = palette;
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.setAttribute('aria-pressed', String(palette === 'colourblind'));
+      button.textContent = `[Colourblind mode: ${palette === 'colourblind' ? 'on' : 'off'}]`;
+    });
+  }
+  const initial = () => preference || (system?.matches ? 'dark' : 'light');
+  apply(initial());
+  applyPalette();
+  document.addEventListener('DOMContentLoaded', () => {
+    apply(initial());
+    applyPalette();
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        preference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        apply(preference);
+        try { localStorage.setItem(key, preference); } catch (_) {}
+      });
+    });
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        palette = palette === 'colourblind' ? 'default' : 'colourblind';
+        applyPalette();
+        try { localStorage.setItem(paletteKey, palette); } catch (_) {}
+      });
+    });
+  });
+  system?.addEventListener('change', () => { if (!preference) apply(initial()); });
+  window.addEventListener('storage', event => {
+    if (event.key === key || event.key === null) {
+      preference = ['light', 'dark'].includes(event.newValue) ? event.newValue : null;
+      apply(initial());
+    }
+    if (event.key === paletteKey || event.key === null) {
+      palette = event.newValue === 'colourblind' ? 'colourblind' : 'default';
+      applyPalette();
+    }
+  });
+})();
+</script>
+<link rel="stylesheet" href="../math/katex.min.css">
+<script defer src="../math/katex.min.js"></script>
+<script defer src="../math/contrib/auto-render.min.js"></script>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Pure Maximalism with current Extensional No Collapse</h1></header><h2 id="statement">1. Statement</h2>
+<p>In the same external ZFC/action-model completeness metatheory as the
+reviewed Max interpretation covers, there is a C model whose root
+satisfies <strong>pure Maximalism and current Extensional No
+Collapse</strong> simultaneously.</p>
+<p>The root is the one-object leaf set Z with monoid M=product_d
+End(B_d). Arbitrary old C-complete Henkin/action components are attached
+below it, with no arrows back. The old components and all their higher
+domains remain unchanged. The new root domains are rebuilt with finite
+individual pinning and whole old landing; they are not asserted to equal
+the domains of the isolated Z model.</p>
+<p>The result is current. It does NOT give necessary ENC with Max. A
+one-world full extensional C model falsifies ENC (Box and every hat are
+the identity operator), so pure Max itself requires a possible failure
+of ENC and hence refutes necessary ENC. No signature-Max, BF, BC,
+Choice, Strong Possibility, or new negative primitive flag is
+proposed.</p>
+<h2 id="the-category-and-recursive-domains">2. The category and
+recursive domains</h2>
+<p>Choose a set-sized family of old C action models complete for closed
+pure C-consistent sentences. Make their categories disjoint and preserve
+each entire model: objects, outgoing arrows, typed whole domains,
+transports, designated symmetries, and evaluations. Such a family is the
+same input used in the source interpretation-root construction. No
+uniform bound, fullness, standard arithmetic, or surjective transport is
+required of the old models.</p>
+<p>Adjoin the new root Z. Its endomorphisms are exactly M from the
+accepted one-object construction. For every old object V and EVERY
+function f:Z-&gt;D_e(V), add an arrow <code>(V,f):Z-&gt;V</code>. For h
+in M define <code>(V,f)h=(V,fh)</code>. For an old arrow k:V-&gt;W
+define <code>k(V,f)=(W,k_e f)</code>, where k_e is its individual
+transport. All these arrows exist because all individual maps are
+included. Composition is associative and has the specified identities.
+There are no old-to-root arrows and no arrows between different old
+components.</p>
+<p>Only individual maps and pins are used. We introduce no auxiliary
+relational names and claim no ability to lift arbitrary old higher-type
+entities to the root. Distinct old postcompositions can give the same
+individual-map arrow. That creates compatibility requirements on the
+admitted root profiles, not an enlargement of any old domain; whole old
+landing below is essential.</p>
+<p>Put D_e(Z)=Z. Recursively for relational tau=sigma_1…sigma_k t, a
+candidate root entity A assigns every outgoing arrow a:Z-&gt;V a row</p>
+<pre class="text"><code>A_a subset D_sigma_1(V) x ... x D_sigma_k(V).</code></pre>
+<p>At root targets these argument domains are the previously constructed
+lower-type GLOBAL root domains; at old targets use their existing full
+old domains. The arrow set is independent of this recursion, so the
+definition is well founded. Admit precisely profiles satisfying both
+conditions:</p>
+<ol type="1">
+<li><strong>Finite individual pin.</strong> Some finite S subset Z has
+the property that a,b with the same target and the same individual map
+on S have A_a=A_b. This applies to all root loops, including the
+identity, and separately to the maps into each old object.</li>
+<li><strong>Whole old landing.</strong> For every f:Z-&gt;D_e(V), the
+ENTIRE old-future profile <code>k |-&gt; A_(k f)</code> is an element of
+the unchanged D_tau(V), including all its old symmetry/admission
+requirements.</li>
+</ol>
+<p>There is no additional root symmetry condition. For a root h, set
+<code>(rho_h A)_a=A_(a h)</code>. The finite set h[S] pins rho_h A. Its
+old section at f is the already admitted section of A at fh, so it
+lands. Transport along an old f is the old entity required by landing.
+Subsequent old transport agrees with reindexing. The individual
+transports and all these relational transports are functorial.</p>
+<p>Root-only Boolean profiles are particularly simple: any finite-pinned
+subset p of M, extended by FALSE at every old arrow, is admitted at t.
+All its old sections are the old whole bottom proposition. This gives
+every finite-pinned root-loop truth set without assuming arbitrary
+higher-type old lifts.</p>
+<h2 id="c-closure-with-full-target-quantifiers">3. C closure with full
+target quantifiers</h2>
+<p>This is the same whole-environment verification as Dorr’s
+interpretation cover and the reviewed surjective-name cover, restricted
+to individual pins. No onto lemma from those constructions is used.</p>
+<p>Suppose a,b from Z have the same target and agree on a pin S of A.
+For every further arrow k from that target, ka and kb still agree on S,
+since the individual transports are functions. Their A rows therefore
+agree. Consequently <code>rho_a A=rho_b A</code> as WHOLE entities at
+the common target. For an individual parameter z, including z in S
+directly ensures equal transported values. This remains true when old
+arrows are identified by equal composite individual maps: every admitted
+parameter has coherent whole old sections by definition.</p>
+<p>Given a term with finitely many free root parameters, let S contain
+the pins of all relational parameters and the individual parameters
+themselves. Evaluate its prospective profile row at each a in the target
+with the whole transported environment. If a,b agree on S, these entire
+environments coincide, so the rows agree. Bound variables in a lambda or
+quantifier range over the FULL target domains, including arbitrary old
+entities that are not transported root parameters. The equality of
+environments holds independently of such bound arguments, and therefore
+proves finite pinning of the term. Modal evaluation uses every further
+arrow and the same transported whole environment, so it is covered
+too.</p>
+<p>For any old f, structural induction on the term shows that the entire
+section over kf is exactly the old term denotation under rho_f of the
+free parameters. The old model is already C, so this denotation belongs
+to its unchanged type domain. This is a whole-entity landing proof, not
+just agreement of current extensions. In particular neither an external
+root subset nor the new root’s quantifier range enters an old
+quantifier.</p>
+<p>Application, Boolean operations, and abstraction therefore preserve
+admission. The usual profile proofs of beta and eta apply. For Logical
+Equivalence, use only an actual H-theorem equivalence: the abstractions
+have equal extensions at every row and every full argument tuple, hence
+are the same root profile; old validity is inherited. No new optional
+principle or root-only hypothesis is used to license an identity.</p>
+<p>Current Leibniz identity agrees with literal root entity identity:
+for any root entity x, the profile with constant root-loop row {x} and
+empty old rows is an admitted singleton predicate. It is empty-pinned
+and has whole old bottom sections. Such predicates distinguish different
+root individuals or profiles. Old logical identity remains the unchanged
+old identity. Transport preserves identities by functoriality.</p>
+<p>These checks establish the mixed C action model under the same
+action-model soundness/representation assumptions as the prior cover
+proofs. The full-category finite-pin theorem alone would not suffice:
+the additional old-landing calculation is indispensable and has been
+supplied.</p>
+<h2 id="endpoint-facts-and-the-root-only-cylinder-basis">4. Endpoint
+facts and the root-only cylinder basis</h2>
+<p>Write <code>O_0=Box</code>, <code>O_(n+1)=hat O_n</code>, and
+<code>D_n(q)=not O_n(not q)</code>. At EVERY point of any of the C
+action models under discussion,</p>
+<pre class="text"><code>O_n(top)=top,       O_n(bottom)=bottom,       O_n(p) -&gt; p.    (E)</code></pre>
+<p>These facts are for the native iterates, not an arbitrary operator X.
+Box has them. Any hat sends top to top, taking q=top as its true
+witness. If O_n is factive and q is currently true, then O_n(not q) is
+false, so D_n(q) is currently true. A current witness to
+<code>hat O_n(p)</code> includes <code>Box(D_n(q)-&gt;p)</code>; its
+identity instance forces p. Thus the next hat is factive and sends
+bottom to bottom. This proves (E) by induction, with the statements
+valid throughout the old models and the new root. In particular
+<code>D_n(bottom)=bottom</code> everywhere.</p>
+<p>For finite S subset Z define U_S to be true at root loops h fixing S
+and false at ALL old targets. It is S-pinned, true at the root, and has
+bottom old sections, hence is admitted. Every admitted current true
+proposition q contains U_S in the WHOLE proposition order for some pin S
+of q: loops fixing S agree with the identity, and U_S is false on the
+old branches. The native iterates and their duals are monotone; for hats
+this follows directly from their implication-consequent definition, and
+for Box it is the ordinary modal clause. Thus a true witness q in a hat
+can be replaced by such a U_S.</p>
+<p>For any old f, <code>rho_f U_S=bottom</code> as an entire old entity.
+By (E), D_n(rho_f U_S) is bottom. Therefore old arrows impose no
+constraint in <code>Box(D_n(U_S)-&gt;p)</code>, for ANY p. This is the
+precise reason they disappear from positive hats; it is not because old
+target domains have been restricted.</p>
+<h2 id="exact-positive-hat-transfer-the-o_0-exception">5. Exact
+positive-hat transfer; the O_0 exception</h2>
+<p>Let R_n^M(S) be the self-return game of the accepted isolated Z
+monoid:</p>
+<pre class="text"><code>R_0^M(S)=M;
+h in R_(n+1)^M(S) iff every finite T subset Z has k in R_n^M(T)
+                                      with kh fixing S.      (R)</code></pre>
+<p>In the glued model, for every admitted root proposition p and EVERY
+n&gt;=1,</p>
+<pre class="text"><code>O_n(p) is currently true iff some finite S has
+                         R_n^M(S) subset {h in M : p_h}.     (H+)</code></pre>
+<p>The analogous all-proposition statement for n=0 is FALSE: ordinary
+Box at the glued root also sees all old arrows. We do not assert it.</p>
+<p>Here is the corrected base. For a root h, rho_h U_S has false old
+rows. Hence</p>
+<pre class="text"><code>D_0(rho_h U_S)=not Box(not rho_h U_S)</code></pre>
+<p>is true exactly when some ROOT loop k satisfies kh fixing S. Old
+arrows cannot witness that possibility. Since R_0^M(T)=M is independent
+of T, this condition is equivalent to <code>h in R_1^M(S)</code>. At old
+arrows the corresponding D_0 is false by (E). Replacing true q by U_S in
+the hat definition now proves (H+) at n=1.</p>
+<p>Suppose (H+) holds at n&gt;=1. For root h, apply it to the arbitrary
+admitted proposition <code>not rho_h U_S</code>. The negation of that
+condition says</p>
+<pre class="text"><code>for every finite T, some k in R_n^M(T) has (rho_h U_S)_k true,</code></pre>
+<p>which is exactly the return clause <code>h in R_(n+1)^M(S)</code>. At
+every old f, D_n(rho_f U_S) remains false. The hat definition and the
+same cylinder basis therefore give (H+) at n+1. This proves the full
+induction.</p>
+<p>All quantifiers over arbitrary admitted root propositions in this
+reasoning are handled by their actual finite pins; all old quantifiers
+are handled by the old C semantics and the endpoint fact. No general
+factorization of higher domains, BF pullback, or surjectivity is
+asserted. The raw game is the same individual-map game as before, even
+though the actual operator entities now have additional old
+sections.</p>
+<h2 id="current-separators-survive-including-the-initial-step">6.
+Current separators survive, including the initial step</h2>
+<p>For n&gt;=1, use exactly the finite-pinned loop predicate from the
+accepted one-object proof:</p>
+<pre class="text"><code>p_n(h) iff h in R_(n+1)^M(S_0),        for h in M,
+p_n(f)=false,                         for old-target f.</code></pre>
+<p>For n=2j+1 choose S_0={a} in a finite-parameter top node U_j(m) of
+coordinate B_(j+1). For n=2j+2 choose it in an infinite-parameter top
+node of that coordinate. The capacity table makes these root rows depend
+only on h(a); bottom old sections establish admission. The already
+reviewed finite-trace maps, m to m+1 at the odd step and infinity to a
+sufficiently large finite parameter at the even step, give for every
+finite T a root loop in R_n^M(T) falsifying p_n. Conversely
+R_(n+1)^M(S_0) is contained in p_n by definition. Equation (H+)
+therefore yields</p>
+<pre class="text"><code>not O_n(p_n),           O_(n+1)(p_n)                    (n&gt;=1).</code></pre>
+<p>For n=0 choose distinct a,b in a size-two B_1 block. Let p_0 test
+h(a)!=h(b) on root loops and be false on old arrows. It is admitted.
+R_1^M({a,b}) is contained in its true root loops, so (H+) gives
+O_1(p_0). A total root collapse of that coordinate falsifies p_0, so
+ordinary Box p_0 is false even without using an old branch. Thus the
+initial adjacent separation survives as well, without the invalid O_0
+transfer claim.</p>
+<p>These are current truth-value differences on admitted propositions at
+the single glued root, for every external n. The operators are the
+actual glued-model closed terms O_n, not borrowed entities from the
+isolated model.</p>
+<h2 id="the-family-lands-in-arbitrary-old-henkin-domains">7. The family
+lands in arbitrary old Henkin domains</h2>
+<p>Let <code>Q={O_n^Z : n an external natural}</code> be the set of
+WHOLE glued-root operator entities. Define a profile F of type (tt)t
+by</p>
+<pre class="text"><code>F_h = Q                  for every root loop h;
+F_f = D_tt(V)            for every f:Z-&gt;D_e(V).</code></pre>
+<p>This profile is empty-pinned: root rows are the same set Q, and old
+rows depend only on the target. At old f, its ENTIRE section is the
+universal property of operators at every old future. That is the old
+admitted closed top entity of type (tt)t. Therefore F satisfies whole
+old landing even if the external set of hat iterates at V is not an
+admitted old family. We do not ask that set to be admitted there.</p>
+<p>At the root, F contains Box. Each current member X is literally some
+glued-root O_n, so its hat is O_(n+1) and again belongs. Its p_n from
+section 6 witnesses current noncoextension with its hat. These
+statements quantify over the full root D_tt and D_t. Q is formed only
+after D_tt exists; there is no internal enumeration, standard-number
+assumption, or circular domain definition.</p>
+<p>The old universal rows can contain fixed operators and need not
+satisfy any of these family clauses. That is allowed: ENC’s clauses are
+current. Closed O_n terms are fixed by root endomorphisms by naturality,
+but this does not force the chosen F to have the same selected-member
+interpretation at old targets. No necessary ENC claim has slipped into
+the family definition.</p>
+<p>Hence this admitted F witnesses the exact current ENC formula in the
+glued model.</p>
+<h2 id="pure-maximalism">8. Pure Maximalism</h2>
+<p>For every C-consistent closed PURE sentence phi, choose its
+witnessing old object V from the complete family. Since D_e(V) is
+nonempty, at least one f:Z-&gt;D_e(V) exists, and every such f is an
+outgoing arrow. Evaluation of phi along f is the unchanged old
+evaluation: it is closed and pure, and closure/landing established the
+usual term transport. Thus phi is possible at Z. This is pure Max in its
+native possibility form and hence, by the recorded equivalence in C, its
+official distinctness form. The reference theory remains C, not C
+augmented by ENC.</p>
+<p>The argument combines the current capacity separators with the
+finite-pin, whole-landing interpretation-cover construction.
+Individual-only maps suffice because no named relational witnesses,
+signature assignments, or BF are requested. The arbitrary old domains
+create no remaining closure gap under the stated admission
+definition.</p>
+<p>The conclusion is <strong>pure Max + current ENC</strong>. The
+distinct all-one-object theorem still gives necessary ENC when no
+C-complete old branches are attached; that stronger scope is
+intentionally not transferred here.</p>
+<h2 id="sources">Sources</h2>
+<p>The <a href="extensional-no-collapse-one-object-route.md">one-object
+construction</a> supplies the root and capacity separators. The source
+interpretation-cover construction supplies the complete family of old
+components and the whole-landing requirement. The standing action-model
+framework is Bacon and Dorr, <em>Classicism</em>, Appendix D and
+Appendix E.</p>
+</body></html>

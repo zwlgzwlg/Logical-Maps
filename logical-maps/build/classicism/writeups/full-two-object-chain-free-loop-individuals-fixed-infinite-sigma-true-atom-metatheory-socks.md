@@ -5,8 +5,6 @@
 ## Package
 
 - **Possible Infinity (type t).** Possibly there are not finitely many propositions: the Axiom of Infinity at this type, under a diamond.
-- **Analytic Necessitism.** If there could be a real number structure, there is a rigid one that is necessarily a real number structure: a rigid property with necessarily distinct instances, with rigid order, addition, multiplication and natural numbers, which necessarily form a complete ordered field. One sentence for each type $\sigma$.
-- **Second-Order Analytic Necessitism.** If there could be a real number structure, there is a rigid one, necessarily a real number structure, together with represented powers of every arity up to $n$: rigid properties of rigid relations among the structure's elements that necessarily represent every relation on them. One sentence for each type $\sigma$ and each $n\ge1$.
 - **Arithmetic Necessitism.** Given that necessarily zero is not a successor and successor is injective on numbers, the numbers at $\sigma$ form a rigid property with necessarily distinct instances. One sentence for each type $\sigma$.
 - **Truths are ND-necessary.** Every truth is ND-necessary, that is, necessary under the distinctness-preserving modality.
 - **□Atomicity.** Necessarily, every non-bottom entity of each relational type has an atom below it.
@@ -69,15 +67,23 @@ At $W_0$, at type $tt$. The propositions at $W_1$ are the sets of the arrows $s^
 
 ### Holds Analytic Necessitism, Second-Order Analytic Necessitism.
 
+*Withdrawn 2026-10-30 by GPT-6 Astra, prompted by Daniel Kodsi: Its type-tt construction does not establish the schema at type t. The root has four propositions and sees continuum many, so possible Real_t holds and actual Real_t fails. See the new type-t argument and [proof](../writeups/analytic-necessitism-carrier-correction.md), section 3. The original text and the earlier withdrawal remain unchanged.*
+
 At type $tt$. For a set $A$ of natural numbers let $Y_A$ be the intension whose value at every arrow into $W_1$ is $E^A$, for an injection $A\mapsto E^A$ into the sets of propositions at $W_1$, which are continuum many, and at the identity of $W_0$ is $\varnothing$. It depends only on the codomain, so it is in the full domain; its transport along $h$, or along any arrow into $W_1$, is the codomain-only intension at $W_1$ with value $E^A$; and distinct $A$ give distinct $Y_A$ at both objects. Carry the reals onto the $Y_A$ by codomain-only relations, whose values at $W_1$ are the transported sets of tuples. Along every arrow the structure goes to an isomorphic one, a real number structure at the target, the model being full. So it is rigid, with necessarily distinct instances, and necessarily a real number structure, and the codomain-only intensions of the sets of its codomain-only relations are represented powers. So Analytic Necessitism and its second-order form hold.
 
 *Address: `full-two-object-chain-free-loop-individuals-fixed-infinite-sigma-true-atom-metatheory-socks#analytic-necessitism-codomain-chain`. By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-29.*
 
+*Revised 2026-10-30 by GPT-6 Astra, prompted by Daniel Kodsi:* Withdrew only the asserted all-carrier AN/SOAN verdicts. The selected tt carrier is compatible with the counterexample; the older tt negative is not restored.
+
 ### Holds Analytic Necessitism, Second-Order Analytic Necessitism.
+
+*Withdrawn 2026-10-30 by GPT-6 Astra, prompted by Daniel Kodsi: The stated hypotheses do not establish the native all-carrier AN/SOAN schemata. A structure at tt (or another selected carrier) does not answer an instance at e or t. A counterexample is the full one-object model on the countable monoid with an absorbing zero and fixed natural-number individuals, where an actual real field at t has no necessarily distinct carrier. See [proof](../writeups/analytic-necessitism-carrier-correction.md), sections 1–3, for the full countermodels and exact condition checks. The original text and attribution are preserved; its selected-carrier construction is not rejected by this withdrawal.*
 
 At type $\tau:=et$, as analytic-necessitism-codomain-everywhere with the individuals in place of the propositions: the individuals are the same infinite set $D$ at every object, so the codomain-only intension $Y_A$ whose value at every arrow is $E^A$, for an injection $A\mapsto E^A$ from the sets of natural numbers into the sets of individuals, is in the domain, and its transports are the $Y_A$ of the targets, distinct for distinct $A$; the real number structure on the $Y_A$ by codomain-only relations is carried along every arrow to an isomorphic one. Such a structure is rigid, its instances are necessarily distinct, and it is necessarily a real number structure; and the codomain-only intension of type $((\tau)^kt)t$ whose value at each object is the set of codomain-only $k$-ary relations among the carrier there is a represented power of arity $k$, since at every world each $k$-ary relation agrees on the carrier with one of them. So the consequents of Analytic Necessitism and of its second-order form hold, and both principles hold. (The argument of the withdrawn analytic-necessitism-unretracted-arrow would refute this structure; its step from inextensibility is the gap.)
 
 *General argument `arguments/analytic-necessitism-codomain-fixed-infinite-individuals`. It requires that At every object reachable from the evaluation point, the domain contains every intension whose value at an arrow depends only on the arrow's codomain. Here: The domains are full at every object. It requires that At every object the individuals are the same infinite set, and every arrow acts on them as the identity. Here: This is the choice of individuals. By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, auditing the withdrawn arguments for the failure of Analytic Necessitism, 2026-10-29.*
+
+*Revised 2026-10-30 by GPT-6 Astra, prompted by Daniel Kodsi:* Withdrawn as an all-type sufficient-condition argument, following the 29 October counterexamples proved in the accompanying write-up. This does not assert failure of AN in every model formerly using this argument. Specific full-action replacements are proved in sections 4–5 of the linked write-up.
 
 ### Fails Analytic Necessitism.
 
@@ -197,6 +203,8 @@ Let $k$ out of the evaluation object have no retraction. The propositions $\bot$
 ## Notes
 
 The two-object chain with an infinite monoid of endomorphisms at the second object. It is recorded to refute the conjecture possible-infinity-t-implies-axiom-of-infinity-t: the evaluation object has four propositions and sees one with infinitely many. As the conjecture's notes anticipate, BF at type $t$ and No Pure Contingency both fail; the engine derives both from Possible Infinity (type $t$) and the failure of the Axiom of Infinity (type $t$), and they can be seen directly: transport along $h$ sends a proposition $p$ at $W_0$ to every arrow out of $W_1$ if $h\in p$ and to none otherwise, so the property of propositions whose extension at $h$ is $\{\emptyset,\{s^n:n\ge0\}\}$ and whose extension at the identity is everything necessarily holds of every proposition at $W_0$ and fails at $W_1$ of $\{s\}$; and the pure sentence that there are exactly four propositions is true at $W_0$ and false at $W_1$. With one individual the model is finite at $W_0$ in every type, and infinite at $W_1$ from type $t$ up.
+
+Clarification (30 October 2026; GPT-6 Astra, prompted by Daniel Kodsi): the final sentence of the original notes overstates finiteness at W0. Only its proposition domain is four-element; already at type tt an arbitrary subset of D_t(W1) can be chosen as the h-row, giving infinitely many root entities. The new negative argument uses precisely the t instance and does not assert all-type finiteness.
 
 ## Sources
 

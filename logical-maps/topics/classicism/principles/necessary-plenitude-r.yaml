@@ -1,7 +1,8 @@
 id: necessary-plenitude-r
 name: □Plenitude
 category: choice
-statement: "Necessarily, every total single-valued binary relation is represented by an operation. Its output type is relational, as required by the type system."
+statement: Necessarily, every total single-valued binary relation is represented by an operation. Its
+  output type is relational, as required by the type system.
 formal: $\Box\forall U^{\sigma\tau t}\, .\,\operatorname{Functional}(U)\to\exists X^{\sigma\tau}\, .\,\forall
   y\, .\,(Uy)(Xy)\qquad(\tau\ne e)$
 definitions: where $\operatorname{Functional}(U):=\forall x^\sigma\, .\,\exists y^\tau\, .\,(Ux)y\land\forall
@@ -9,13 +10,18 @@ definitions: where $\operatorname{Functional}(U):=\forall x^\sigma\, .\,\exists 
 date: '2026-09-17'
 sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §2.1, pp. 21–23; §§2.2–2.3, pp. 25–34.
+- OpenAI Codex, prompted by Daniel Kodsi, Adjunctions, atom projection, and persistent worlds, 28 October
+  2026, §§1–5; Pure uniformity and one necessary atom, §§3–4 (both unpaginated).
 source_names:
 - Classicism
+- Persistent atoms and necessary worlds
 references:
 - paper: bacon-dorr-classicism
   role: formulation
   locator: §2.1, pp. 21–23; §§2.2–2.3, pp. 25–34
-notes: The necessitated form of [[plenitude-r]].
+notes: The necessitated form of [[plenitude-r]]. The additional atom forms use whole relational Boolean
+  order. Necessary atomhood includes necessary nonzeroness; it is stronger than the strong-atom condition
+  that allows the atom to become bottom.
 changes:
 - date: '2026-10-03'
   by: Claude Opus 5.5 (Anthropic), prompted by Zachary Goodsell
@@ -27,6 +33,10 @@ changes:
     equivalent forms); the notes now name the base principle with a link, without the boilerplate about
     closed instances and the box; the equivalent forms are stated as necessitations of the base forms;
     definitions of its technical terms added.'
+- date: '2026-10-30'
+  by: OpenAI Codex, prompted by Daniel Kodsi
+  summary: Added separately sourced necessarily-worlds and persistent-atomic-coverage equivalent forms
+    with a proof; preserved the original formulation, polyadic form and its existing verification status.
 variants:
 - id: polyadic
   lean:
@@ -41,4 +51,22 @@ variants:
   equivalence: Each instance of the polyadic form of Plenitude is derivable in C from finitely many instances
     of the original form, and conversely; the derivations are on the page of the unboxed principle. Necessitating
     them and applying K carries the equivalence to the boxed forms.
+- id: necessarily-worlds
+  name: Necessarily atomic worlds
+  statement: Necessarily, some true proposition necessarily remains an atom, including remaining nonzero.
+  formal: $\Box\exists w^t\, .\,w\land\Box\operatorname{Atom}_t(w)$
+  equivalence: The persistent-atoms proof on this page shows that this gives necessary ND at t and necessary
+    Actuality, hence C5 and Atomicity, and therefore □Plenitude. Conversely, □Plenitude gives C5, Atomicity
+    and necessary Actuality; atoms persist under C5 and the true atoms witness this form. The source is
+    OpenAI Codex, prompted by Daniel Kodsi, 28 October 2026, §§1–5.
+- id: persistent-atomic-coverage
+  name: Persistent atomic coverage at one relational type
+  statement: Every nonzero relation contains a relation that necessarily remains an atom. Any one fixed
+    relational type suffices.
+  formal: $\forall R^\rho\, .\,R\ne\bot_\rho\to\exists a^\rho\, .\,\Box\operatorname{Atom}_\rho(a)\land
+    a\le_\rho R\qquad(\rho\ne e)$
+  equivalence: Existential projection takes necessarily atomic relations to necessarily atomic propositions.
+    Coverage at t makes a true necessary atom necessarily available, giving the previous equivalent form.
+    Conversely, □Plenitude gives Atomicity and C5; BF and necessary ND make each atom remain an atom.
+    The proof is on this page. The type ρ is fixed externally, not quantified inside the formula.
 lean_def: Classicism.P.NecPlenitude.schemaIn

@@ -87,6 +87,20 @@ arguments:
     carrier would have to be. With infinitely many individuals the general argument applies as it
     stands; this one covers the single individual, where the infinite type lies at $W_1$.
 - id: analytic-necessitism-codomain-chain
+  withdrawn:
+    date: '2026-10-30'
+    by: GPT-6 Astra, prompted by Daniel Kodsi
+    reason: >-
+      Its type-tt construction does not establish the schema at type t. The root has
+      four propositions and sees continuum many, so possible Real_t holds and actual
+      Real_t fails. See the new type-t argument and [proof](../writeups/analytic-necessitism-carrier-correction.md),
+      section 3. The original text and the earlier withdrawal remain unchanged.
+  revisions:
+  - date: '2026-10-30'
+    by: GPT-6 Astra, prompted by Daniel Kodsi
+    note: >-
+      Withdrew only the asserted all-carrier AN/SOAN verdicts. The selected tt carrier
+      is compatible with the counterexample; the older tt negative is not restored.
   holds: [analytic-necessitism, second-order-analytic-necessitism]
   choice: free
   by: Claude Opus 5.5 (Anthropic), prompted by Cian Dorr
@@ -102,6 +116,28 @@ arguments:
     rigid, with necessarily distinct instances, and necessarily a real number structure, and the codomain-only
     intensions of the sets of its codomain-only relations are represented powers. So Analytic Necessitism and
     its second-order form hold.
+- id: analytic-necessitism-fails-at-propositions
+  fails: [analytic-necessitism]
+  when: {metatheory: choice}
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-29'
+  text: >-
+    At W0 there are four propositions, the subsets of its two outgoing arrows id and h.
+    At W1 the outgoing arrows are the freely iterated s^n, so its full proposition
+    domain is P(N). Fullness admits an actual complete ordered real field on that
+    domain, including every subset in the completeness clause. Thus a Real_t is
+    possible at W0, but no ordered field has a carrier in its four propositions.
+    The necessary-Real_t consequent would imply actual Real_t by the identity arrow.
+    Hence AN_t fails. This uses neither the old tt argument nor inextensibility.
+    It applies to either individual setting and either signature in ZFC only.
+    Full proof and direct sources: [proof](../writeups/analytic-necessitism-carrier-correction.md), section 3.
+  revisions:
+  - date: '2026-10-30'
+    by: GPT-6 Astra, prompted by Daniel Kodsi
+    note: >-
+      Preserved and withdrew the codomain-chain argument's all-type verdict; appended
+      the independently supplied type-t counterexample in the ordinary ZFC settings.
+      SOAN failure is derived rather than duplicated. Original certificate unchanged.
 notes: >-
   The two-object chain with an infinite monoid of endomorphisms at the second object. It is recorded to
   refute the conjecture possible-infinity-t-implies-axiom-of-infinity-t: the evaluation object has four
@@ -114,3 +150,10 @@ notes: >-
   $W_1$ of $\{s\}$; and the pure sentence that there are exactly four propositions is true at $W_0$
   and false at $W_1$. With one individual the model is finite at $W_0$ in every type, and infinite at
   $W_1$ from type $t$ up.
+
+
+  Clarification (30 October 2026; GPT-6 Astra, prompted by Daniel Kodsi): the final
+  sentence of the original notes overstates finiteness at W0. Only its proposition
+  domain is four-element; already at type tt an arbitrary subset of D_t(W1) can be
+  chosen as the h-row, giving infinitely many root entities. The new negative
+  argument uses precisely the t instance and does not assert all-type finiteness.

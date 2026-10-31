@@ -8,9 +8,11 @@ certificate:
   date: '2026-09-19'
   lean: none
 sources:
+- "OpenAI Codex, prompted by Daniel Kodsi, Singleton-individual variants: direct choice verdicts from the stabilizer theorem, 22 October 2026, \xA7\xA71\u20134, unpaginated; Relational Choice forces Transversal Choice in symmetric ideally-full map categories, \xA7\xA71\u20132, same date, unpaginated."
 - Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, Definition
   39, p. 19; Proposition 40 and Proposition 41, p. 20; Remark 42, p. 21.
 source_names:
+- Singleton choice verdicts (22 Oct 2026)
 - BC does not imply RC
 references:
 - paper: dorr-bc-not-rc
@@ -31,6 +33,8 @@ settings:
   individuals: base
   sigma: top
 meets:
+  moving-proposition-stabilizers: >-
+    At the first object choose distinct pinning points $a,b,c$ outside a given finite $N$ and take $g=(a\ c)$. The proposition $p_{ab}(w)\leftrightarrow w(a)=w(b)$ on every outgoing arrow is symmetric and pinned by $\{a,b\}$. It is false on the arrows back to the first object, which are permutations. An arrow to the second object is any function and may identify $a,b$ while keeping $c$ distinct, distinguishing $p_{ab}$ from $g\cdot p_{ab}=p_{cb}$. Only the evaluation object's supports must be finite; the second object's improper ideal causes no difficulty. The points here are pinning-carrier points, also when the individual domain is a singleton. Source: OpenAI Codex, prompted by Daniel Kodsi, 22 October 2026, singleton applications §2; recorded 30 October 2026.
   infinitely-many-orbits-everywhere: >-
     With the base as individuals, at both objects the properties of being one of a finite set of
     individuals lie in infinitely many orbits, symmetries preserving the size of the set. With one

@@ -1,0 +1,29 @@
+id: finite-type-necessitism-height-zero-implies-arithmetic-necessitism
+premises:
+- finite-type-necessitism-height-zero
+conclusion: arithmetic-necessitism
+status: proved
+certificate:
+  source_id: kodsi-finite-type-necessitism-2026
+  produced_by: Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI)
+  recorded_by: ChatGPT, at Daniel Kodsi’s request
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- 'Daniel Kodsi, with assistance from GPT-6 Astra (OpenAI), Finite-Type Necessitism: Arithmetic, analysis,
+  and mathematical non-contingency, 30 October 2026, 12-page revision. Theorem 3.1;
+  Lemmas 2.3–2.4'
+source_names:
+- Kodsi, Finite-Type Necessitism (30 Oct 2026)
+references:
+- paper: kodsi-finite-type-necessitism-2026
+  role: proof
+  locator: Theorem 3.1; Lemmas 2.3–2.4
+  note: Supplied 12-page paper; the PDF and LaTeX source are included with this contribution.
+proof: Under the native necessary canonical-arithmetic guard, apply F0 to its Peano presentation. The
+  top represented power makes the rigid reference necessarily Peano. Peano matching transfers rigidity
+  and necessary distinctness to the canonical numbers. [Paper (PDF)](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.pdf);
+  [source](https://github.com/dkodsi/Logical-Maps/blob/classicism-next-batch-2026-10-30/logical-maps/topics/classicism/papers/finite-type-necessitism.tex).
+notes: This is the existing Arithmetic Necessitism conclusion with its original guard, not a redefinition
+  of it.

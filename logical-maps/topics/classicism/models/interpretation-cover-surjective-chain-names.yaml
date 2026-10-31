@@ -1,0 +1,97 @@
+id: interpretation-cover-surjective-chain-names
+name: 'Interpretation cover: surjective chain names'
+definition: In ZFC retain a set-sized family of pointed C action models witnessing every pure C-consistent
+  closed sentence, with all old domains and arrows unchanged. For each admitted type sigma choose an infinite
+  name cardinal kappa_sigma sufficient for the prescribed set-sized free-constant signature and let C_sigma={sigma}×kappa_sigma×N.
+  Add a root whose individuals are C_e and whose loops preserve every name chain and act on it by a nondecreasing
+  surjection N→N. Include every typed interpretation of names into each old object; there are no old-to-root
+  arrows. Root designated symmetry is trivial. At every relational type admit exactly all finite-typed-pin
+  profiles, evaluated on full target argument domains, whose entire section at every old interpretation is
+  an admitted old entity. Transport is precomposition. Relational constants denote singleton-pinned named lifts
+  with empty root rows and their assigned whole old sections; individual constants denote their designated
+  names. Evaluate at root identity.
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi, after the interpretation-root and monotone-surjection
+    constructions credited below
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, Surjective-name interpretation cover, 30 October 2026, Sections 1–10
+  (unpaginated).
+- GPT-6 Astra, prompted by Daniel Kodsi, Surjective-name lifting with old landing, 30 October 2026, Sections
+  1–3; The surjective-name cover fails weak IC at tt, same date (unpaginated).
+- Cian Dorr, interpretation-root and pinned-substitution constructions, 19 October 2026, especially BF holds
+  at every type (unpaginated).
+- OpenAI Codex, prompted by Daniel Kodsi, Observer covers and Boolean completeness, 26 October 2026, Section 8 (unpaginated).
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, Proposition D.5(2), pp. 74–75,
+  construction pp. 76–77; Proposition D.6, p. 76. Claude Fable 5.1, prompted by Cian Dorr, fixed-initial-segment
+  ND-collapse argument for the monotone-surjection model, 23 September 2026 (unpaginated).
+source_names:
+- Surjective-name cover 30 Oct
+- Lifting and weak-IC proofs 30 Oct
+- Dorr interpretation roots
+- Unrestricted cover 26 Oct
+- Classicism and fixed-pin argument
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, Proposition D.5(2), pp. 74–77; Proposition D.6, p. 76
+  note: Prior monotone-surjection models and Barcan machinery.
+arguments:
+- id: named-maximalism
+  holds:
+  - distinctness-signature-r
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-surjective-chain-names
+  text: The unchanged pure-C-complete old family witnesses every consistent pure existential closure. Replace
+    the finitely many constants in a C(Sigma)-consistent sentence by typed variables, choose its old witnesses,
+    and assign them to the designated names. Named lifts land as precisely those whole old values. This proves
+    fixed-signature Maximalism, and pure Maximalism follows. Writeup Sections 1–5 and 8.
+- id: surjective-root-and-fresh-name-barcan
+  holds:
+  - barcan-r
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-surjective-chain-names
+  text: For each surjective root loop h choose a typed set section r with hr=id. Given an S-pinned Q, complete
+    its finite root-row pattern along gr, using the empty row if no allowed loop matches, and set the old row
+    at I to Q at Ir. The pin r(S) and its whole old landing prove admission; all future rows give h.P=Q. Root
+    witnesses lift through h. For an old target witness, change one fresh typed name outside the predicate
+    pin and use its named lift. These two cases prove current BF at every type on the entire target domains.
+    Writeup Sections 6–7.
+- id: splitting-and-no-return-cylinders
+  holds:
+  - atomlessness
+  - distinctness-preserving-collapse
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: free
+  writeup: interpretation-cover-surjective-chain-names
+  text: Each chain map is deflationary, so gf fixes a finite pin S exactly when f and g both fix S. The admitted
+    root-only fixed-pin proposition q_S therefore satisfies Diamond q_S=q_S and lies below each current truth
+    pinned by S, proving the native current ND-necessity clause. Any possible proposition splits at a root
+    witness by altering a whole unused individual chain, or at an old witness by assigning a fresh propositional
+    name top and bottom. Writeup Sections 9–10.
+- id: weak-inextensibility-obstruction-at-tt
+  fails:
+  - weakly-inextensible-comprehension-r
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: free
+  writeup: interpretation-cover-surjective-chain-names
+  text: 'Use level-1 names c_n in distinct chains and their root-only fixed-name propositions p_n. The empty-pinned
+    tt profile with current family {p_n} is admitted. A proposed coextension Y has a finite pin. Collapse a
+    fresh chain while fixing that pin: Y still contains the whole target proposition p_k. The {c_k}-pinned
+    tester omits exactly p_k when that name moves and has whole old section lambda q.(q=bottom). It necessarily
+    contains all current Y-members, whose transports are the other p_n or bottom, but misses p_k in the full
+    future Y-row. Thus Y is not weakly inextensible. Writeup Section 11.'
+notes: 'The construction uses ZFC and the same C-complete action-model existence input as the interpretation-root
+  construction. Full current BF coexists with the type-tt weak-inextensibility failure: BF need not place a
+  preimage of a future entity inside the particular current family. The old Henkin components remain unchanged.
+  No necessary BF or necessary modal-collapse verdict is asserted.'

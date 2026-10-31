@@ -8,12 +8,14 @@ certificate:
   date: '2026-09-17'
   lean: none
 sources:
+- "OpenAI Codex, prompted by Daniel Kodsi, Singleton-individual variants: direct choice verdicts from the stabilizer theorem, 22 October 2026, \xA7\xA71\u20134, unpaginated; Relational Choice forces Transversal Choice in symmetric ideally-full map categories, \xA7\xA71\u20132, same date, unpaginated."
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, p. 79, final construction
   (two copies of N).
 - OpenAI Codex (GPT-6), prompted by Zachary Goodsell, 24 September 2026. Finite-support transposition proof that Relational Choice
   and Functional Choice fail at W0, following the user’s suggestion to transfer Plenitude countermodels
   to Functional Choice; see the accompanying write-up.
 source_names:
+- Singleton choice verdicts (22 Oct 2026)
 - Classicism
 - GPT-6 proof 24 Sep
 references:
@@ -48,6 +50,8 @@ settings:
   individuals: base
   sigma: top
 meets:
+  moving-proposition-stabilizers: >-
+    Fix a pinning-carrier point $k$ at $W_1$, whose designated symmetry group is trivial. For $a$ at $W_0$, let $p_a(w)$ mean that $w$ has target $W_1$ and $w(a)=k$. This proposition is symmetric and pinned by $\{a\}$; it is false on arrows ending at $W_0$. Given finite $N$, choose distinct $a,c$ outside it and $g=(a\ c)\in G_{W_0}$. Then $g\cdot p_a=p_c$. A permutation $w:W_0\to W_1$ with $w(a)=k$ has $w(c)\ne k$, so these propositions differ. No collapsing arrow is used. The points here are pinning-carrier points, also when the individual domain is a singleton. Source: OpenAI Codex, prompted by Daniel Kodsi, 22 October 2026, singleton applications §2; recorded 30 October 2026.
   infinitely-many-orbits-everywhere: >-
     With the base as individuals, at $W_0$ and $W_1$ the properties of being one of a finite set of
     individuals lie in infinitely many orbits, symmetries preserving the size of the set. With one

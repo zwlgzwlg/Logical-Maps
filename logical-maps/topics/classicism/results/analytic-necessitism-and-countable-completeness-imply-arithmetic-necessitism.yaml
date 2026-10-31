@@ -1,0 +1,44 @@
+id: analytic-necessitism-and-countable-completeness-imply-arithmetic-necessitism
+premises:
+- analytic-necessitism
+- countable-boolean-completeness-r
+conclusion: arithmetic-necessitism
+status: proved
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, Current countable Boolean completeness and real-field representation,
+  30 October 2026, sections 2–6 (unpaginated).
+- Zachary Goodsell, Arithmetic is Necessary, draft of 5 June 2024, Lemmas 3–4, 8 and Theorem 9; the native
+  source write-up identifies the numerical-haecceity construction and parameterized arithmetic stability
+  (unpaginated map transcription).
+- OpenAI Codex, prompted by Daniel Kodsi, Transversal representatives connect analytic and arithmetic
+  necessitism, 30 October 2026, sections 1–4 (unpaginated); fixed Peano reference lemma from GPT-6 Astra,
+  prompted by Daniel Kodsi, Finite-type necessitism, 29 October 2026, section 6 (unpaginated).
+source_names:
+- Current CBC and the arithmetic bridge
+- Arithmetic is Necessary
+- Cut fields and fixed Peano reference
+references:
+- paper: goodsell-arithmetic-necessary
+  role: background
+  locator: Lemmas 3–4, 8 and Theorem 9
+  note: The present implication composes the source numerical-join method with the cut-field and fixed-reference
+    constructions.
+proof: Fix sigma, nu=(sigma t)t and rho=nu t, and assume the Arithmetic Necessitism guard Box I*_sigma.
+  Current CBC at counting type sigma and join type rho gives a unique algebraic join of the numerical
+  haecceities belonging to each current rational cut. Number persistence bounds that join by N; necessary
+  numerical distinctness bounds it by the complement of each omitted singleton. Thus it has exactly the
+  cut extension. Equal current cuts have the same literal join, so one lambda-defined family supplies
+  literal cut representatives and a current complete ordered field at rho. Current AN at rho supplies
+  a rigid necessarily-real reference field, and the fixed-reference theorem makes the canonical numbers
+  rigid and necessarily distinct. The accompanying proof treats the exact counting instance, arbitrary
+  admitted bounded families, and the stronger current-I* field-existence lemma.
+notes: Only the current CBC instance joining rho-entities, where rho=((sigma t)t)t, is needed for each
+  sigma. No Transversal, boxed CBC, or propositional-only CBC premise is substituted. Current CBC already
+  implies Necessity of Arithmetic; that truth consequence is not an additional new result.

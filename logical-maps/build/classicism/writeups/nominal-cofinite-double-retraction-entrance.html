@@ -1,0 +1,602 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nominal cofinite entrance: double-retraction tail</title><link rel="icon" type="image/png" href="../favicon.png">
+<style>/* Fixed forest palette, adapted from the supplied style example.
+   Semantic and source hues retain their meaning in both modes. */
+:root {
+  --bg: #f3f1e8;
+  --panel: #f8f7f0;
+  --panel-2: #e9ecdf;
+  --line: #d4d9c9;
+  --line-strong: #a2ae97;
+  --ink: #283c28;
+  --ink-2: #4f604b;
+  --ink-3: #5f6d58;
+  --accent: #356044;
+  --link-hover: #914b30;
+  --human: #3e7052;
+  --assisted: #746044;
+  --ai: #a35b36;
+  --derived: #7b8271;
+  --indep: #a0483a;
+  --open: #e2e5d9;
+  --open-ink: #65705f;
+  --conj: #896b27;
+  --node-fill: #f8f7f0;
+  --node-stroke: #98a68b;
+  --junction: #52634b;
+  --hl: #e0e7cd;
+  --focus: #914b30;
+  --badge-ink: #ffffff;
+  --warning-bg: #f4e6dc;
+  --source-forest: #3e7052;
+  --source-rust: #a25336;
+  --source-ochre: #896b27;
+  --source-slate: #4c7279;
+  --source-berry: #80556d;
+  --source-olive: #69753c;
+  --source-misc: #696d61;
+  --shadow: 0 4px 24px rgb(40 60 40 / 12%);
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --serif: var(--sans);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0e1912;
+  --panel: #142018;
+  --panel-2: #1d2b20;
+  --line: #304332;
+  --line-strong: #596e51;
+  --ink: #d7dfca;
+  --ink-2: #b3c1a7;
+  --ink-3: #96aa8d;
+  --accent: #a6c699;
+  --link-hover: #dfab89;
+  --human: #94bc95;
+  --assisted: #c1ad8d;
+  --ai: #dca17b;
+  --derived: #83937c;
+  --indep: #e09b86;
+  --open: #243327;
+  --open-ink: #a2b398;
+  --conj: #d0b36b;
+  --node-fill: #19261c;
+  --node-stroke: #627957;
+  --junction: #b3c1a7;
+  --hl: #30422a;
+  --focus: #dfab89;
+  --badge-ink: #0e1912;
+  --warning-bg: #32251f;
+  --source-forest: #94bc95;
+  --source-rust: #dca17b;
+  --source-ochre: #d0b36b;
+  --source-slate: #95bcc1;
+  --source-berry: #c5a0b7;
+  --source-olive: #b6c383;
+  --source-misc: #a9b09c;
+  --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); scrollbar-color: var(--line-strong) var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.6 var(--sans); }
+button, input, select { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 3px; }
+input[type="checkbox"] { accent-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+::selection { background: var(--hl); color: var(--ink); }
+.theme-toggle { border: 0; padding: 6px 0; background: transparent; color: var(--ink-2); cursor: pointer; font: 13px var(--sans); white-space: nowrap; }
+.theme-toggle:hover { color: var(--link-hover); }
+.display-toggles { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 16px; }
+.theme-toggle[aria-pressed="true"] { color: var(--accent); }
+
+/* A prismatic name: one rainbow wheel around a point in the word, spinning;
+   --prism-x and --prism-y move that point off the middle.
+   Pure spectral stops, turned by a registered angle rather than a hue
+   filter, which would muddy them. */
+@property --prism { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.prismatic { font-weight: 600; color: transparent; background: conic-gradient(from var(--prism) at var(--prism-x, 50%) var(--prism-y, 50%), #ff1a1a, #ff8a00, #ffd000, #22c33a, #00a8f0, #3d4bff, #b026ff, #ff1a1a); -webkit-background-clip: text; background-clip: text; animation: prism-spin 6s linear infinite; }
+/* As a link it keeps the gradient on hover, under an accent underline. */
+a.prismatic, a.prismatic:hover { color: transparent; }
+a.prismatic:hover { text-decoration-color: var(--accent); }
+@keyframes prism-spin { to { --prism: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .prismatic { animation: none; } }
+
+/* Standalone write-ups use the same quiet, ruled typography as the map. */
+html:has(body.writeup-page) { background: var(--bg); }
+body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; font: 16px/1.7 var(--sans); overflow-wrap: anywhere; }
+.writeup-nav { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 24px; font-size: 13px; }
+.writeup-page h1 { font-size: 1.4em; line-height: 1.4; margin: 0 0 20px; color: var(--ink); }
+.writeup-page h2 { font-size: 1.15em; line-height: 1.4; margin: 1.8em 0 .5em; padding-top: 14px; border-top: 1px solid var(--line); }
+.writeup-page h3 { font-size: 1em; }
+.writeup-page p { margin: 0 0 12px; }
+.writeup-page .cert { color: var(--ink-2); font-size: .85em; }
+.writeup-page code, .writeup-page pre { font: .85em/1.6 var(--mono); color: var(--ink); }
+.writeup-page pre { padding: 14px; background: var(--panel-2); overflow-x: auto; }
+.writeup-page blockquote { color: var(--ink-2); border-left: 2px solid var(--line-strong); margin-left: 0; padding-left: 20px; }
+.writeup-page math[display="block"] { display: block; overflow-x: auto; padding: 8px 0; }
+.writeup-page table { display: block; overflow-x: auto; border-collapse: collapse; }
+.writeup-page th, .writeup-page td { border-bottom: 1px solid var(--line); padding: 8px 12px; }
+@media (max-width: 600px) {
+  body.writeup-page { margin: 1.5em auto; padding: 0 1em 2em; }
+}
+@media print {
+  :root, :root[data-theme="dark"] { --bg: white; --ink: #283c28; --ink-2: #4f604b; --accent: #356044; --line: #d4d9c9; color-scheme: light; }
+  .writeup-nav { display: none; }
+  body.writeup-page { max-width: none; margin: 0; padding: 0; }
+}
+
+/* Teal-grey, muted rust, deep teal and warm stone. Screen-only overrides
+   preserve print styling. */
+@media screen {
+  :root {
+    --bg: #ebf1f1;
+    --panel: #e1eae9;
+    --panel-2: #d0dfde;
+    --line: #c0cecd;
+    --line-strong: #849997;
+    --ink: #303b3a;
+    --ink-2: #4a5a59;
+    --ink-3: #526160;
+    --accent: #884932;
+    --link-hover: #6f3827;
+    --derived: #6f8180;
+    --open: #d6e2e1;
+    --open-ink: #526160;
+    --node-fill: #f1f6f6;
+    --node-stroke: #7f9391;
+    --junction: #596b6a;
+    --human: #2f6b66;
+    --source-forest: #2f6b66;
+    --hl: #e6ddd0;
+    --focus: #884932;
+    --shadow: 0 4px 24px rgb(48 59 58 / 10%);
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #171e1d;
+    --panel: #202a29;
+    --panel-2: #2b3736;
+    --line: #3d4b4a;
+    --line-strong: #6b817f;
+    --ink: #dbe8e7;
+    --ink-2: #b9cbca;
+    --ink-3: #a6bdbb;
+    --accent: #e2ad92;
+    --link-hover: #f0c3aa;
+    --derived: #87a09e;
+    --open: #303d3c;
+    --open-ink: #aec6c4;
+    --node-fill: #263130;
+    --node-stroke: #738d8b;
+    --junction: #b3cbc9;
+    --human: #86c0b6;
+    --source-forest: #86c0b6;
+    --hl: #463f37;
+    --focus: #e2ad92;
+    --badge-ink: #171e1a;
+    --shadow: 0 4px 24px rgb(0 0 0 / 24%);
+  }
+}
+
+/* Shared Okabe–Ito palette: https://jfly.uni-koeln.de/color/#pallet
+   Loaded after topic themes. Sky blue and orange distinguish positive and
+   negative relations; darker inks keep small labels readable in light mode.
+   Neutral surfaces are identical across maps. Print uses the shared theme. */
+@media screen {
+  :root[data-palette="colourblind"] {
+    --bg: #f4f5f6;
+    --panel: #ffffff;
+    --panel-2: #e9edf0;
+    --line: #d0d6da;
+    --line-strong: #87949d;
+    --ink: #202930;
+    --ink-2: #45535d;
+    --ink-3: #586670;
+    --accent: #0072b2;
+    --link-hover: #925f00;
+    --human: #0072b2;
+    --assisted: #80506a;
+    --ai: #a44500;
+    --derived: #687780;
+    --indep: #925f00;
+    --open: #e9edf0;
+    --open-ink: #586670;
+    --conj: #80506a;
+    --node-fill: #ffffff;
+    --node-stroke: #7a8b96;
+    --junction: #45535d;
+    --hl: #dce4ea;
+    --focus: #0072b2;
+    --badge-ink: #ffffff;
+    --warning-bg: #fff0ce;
+    --source-forest: #56b4e9;
+    --source-rust: #e69f00;
+    --source-ochre: #d55e00;
+    --source-slate: #0072b2;
+    --source-berry: #cc79a7;
+    --source-olive: #009e73;
+    --source-misc: #687780;
+    --rel-positive: #56b4e9;
+    --rel-negative: #e69f00;
+    --shadow: 0 4px 24px rgb(32 41 48 / 12%);
+  }
+  :root[data-palette="colourblind"][data-theme="dark"] {
+    --bg: #111820;
+    --panel: #18222b;
+    --panel-2: #23303b;
+    --line: #354550;
+    --line-strong: #718492;
+    --ink: #edf2f5;
+    --ink-2: #c1ced7;
+    --ink-3: #a5b5c1;
+    --accent: #56b4e9;
+    --link-hover: #e69f00;
+    --human: #56b4e9;
+    --assisted: #cc79a7;
+    --ai: #e69f00;
+    --derived: #91a1ad;
+    --indep: #e69f00;
+    --open: #23303b;
+    --open-ink: #a5b5c1;
+    --conj: #cc79a7;
+    --node-fill: #1c2933;
+    --node-stroke: #8094a3;
+    --junction: #c1ced7;
+    --hl: #354654;
+    --focus: #56b4e9;
+    --badge-ink: #111820;
+    --warning-bg: #352b18;
+    --source-misc: #91a1ad;
+    --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  }
+  /* Source swatches use the unmodified palette; outlined badges allow their
+     text to keep the normal contrast on both light and dark surfaces. */
+  :root[data-palette="colourblind"] .badge.source {
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--source-color);
+    border-left-width: 4px;
+  }
+}
+</style>
+<script>/* Apply before paint; share the preference between every map and write-up. */
+(() => {
+  const key = 'pmap-theme';
+  const paletteKey = 'pmap-palette';
+  const system = window.matchMedia?.('(prefers-color-scheme: dark)');
+  let preference;
+  let palette;
+  try { preference = localStorage.getItem(key); } catch (_) {}
+  try { palette = localStorage.getItem(paletteKey); } catch (_) {}
+  if (!['light', 'dark'].includes(preference)) preference = null;
+  if (palette !== 'colourblind') palette = 'default';
+  function apply(theme) {
+    document.documentElement.dataset.theme = theme;
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.textContent = theme === 'dark' ? '[Light mode]' : '[Dark mode]';
+      button.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+    });
+  }
+  function applyPalette() {
+    document.documentElement.dataset.palette = palette;
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.setAttribute('aria-pressed', String(palette === 'colourblind'));
+      button.textContent = `[Colourblind mode: ${palette === 'colourblind' ? 'on' : 'off'}]`;
+    });
+  }
+  const initial = () => preference || (system?.matches ? 'dark' : 'light');
+  apply(initial());
+  applyPalette();
+  document.addEventListener('DOMContentLoaded', () => {
+    apply(initial());
+    applyPalette();
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        preference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        apply(preference);
+        try { localStorage.setItem(key, preference); } catch (_) {}
+      });
+    });
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        palette = palette === 'colourblind' ? 'default' : 'colourblind';
+        applyPalette();
+        try { localStorage.setItem(paletteKey, palette); } catch (_) {}
+      });
+    });
+  });
+  system?.addEventListener('change', () => { if (!preference) apply(initial()); });
+  window.addEventListener('storage', event => {
+    if (event.key === key || event.key === null) {
+      preference = ['light', 'dark'].includes(event.newValue) ? event.newValue : null;
+      apply(initial());
+    }
+    if (event.key === paletteKey || event.key === null) {
+      palette = event.newValue === 'colourblind' ? 'colourblind' : 'default';
+      applyPalette();
+    }
+  });
+})();
+</script>
+<link rel="stylesheet" href="../math/katex.min.css">
+<script defer src="../math/katex.min.js"></script>
+<script defer src="../math/contrib/auto-render.min.js"></script>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Nominal cofinite entrance: double-retraction tail</h1></header><p>GPT-6 Astra, prompted by Daniel Kodsi, 30 October 2026. ZFC
+metatheory; the fixed logic C and its relational types.</p>
+<p>This model separates <strong>Self-Atomicity from necessary Strong
+Actuality</strong>, even in the presence of necessary all-type Boolean
+Completeness, Atomicity and Inextensible Comprehension:</p>
+<p><span class="math display">
+\mathrm{SelfAtomicity}_{\rm all}
++\Box\mathrm{BC}_{\rm all}
++\Box\mathrm{Atomicity}_{\rm all}
++\Box\mathrm{IC}_{\rm all}
++\neg\Box\mathrm{StrongActuality}.
+</span></p>
+<p>The mechanism is a self-atom that becomes divisible at a future point
+where it has no instances. Its self-atom condition survives, while its
+strongness fails. Cofinite replicas ensure that every nonzero relation
+still contains a self-atom. Supported families have joins, so the root
+retains internal completeness.</p>
+<p>The construction combines the double-retraction tail with a nominal
+cofinite entrance to obtain these simultaneous verdicts.</p>
+<h2 id="unchanged-finite-full-tail">1. Unchanged finite full tail</h2>
+<p>Use the category of the existing
+[[full-two-object-double-retraction]] model: objects A,B; arrows
+h:A-&gt;B and j_1,j_2:B-&gt;A; and e_i=h j_i:B-&gt;B. Its equations
+are</p>
+<pre><code>j_i h=1_A,     e_i h=h,
+e_k e_i=e_i,   j_k e_i=j_i.</code></pre>
+<p>The arrows out of A are 1_A,h; those out of B are
+1_B,j_1,j_2,e_1,e_2. In particular j_1 and j_2 remain DISTINCT arrows,
+even though the constant singleton individual functor sends them to the
+same individual function. General intensional action semantics is
+intended; faithfulness on individual maps is not claimed.</p>
+<p>Keep the full typed domains at both old objects and the constant
+singleton individual functor. At a relational type tau=bar-sigma t, an
+old entity is an arbitrary table of argument tuples at each outgoing
+arrow. Transport is profile reindexing by postcomposition. These are
+exactly the source’s full action domains. Every fixed old typed domain
+is finite: there are finitely many arrows and, recursively, finitely
+many argument tuples at each fixed type. Neither old quantifiers nor old
+domains are restricted later.</p>
+<p>Write the two rows of a in D_A^tau as</p>
+<pre><code>A_0 = a_(1_A),       A_1 = a_h.</code></pre>
+<p>For any arbitrary B-current table C, define b(a,C) in D_B^tau by</p>
+<pre><code>b_(1_B)=C,
+b_(j_1)=b_(j_2)=A_0,
+b_(e_1)=b_(e_2)=A_1.</code></pre>
+<p>Fullness admits this entity. Direct calculation at ALL its outgoing
+coordinates gives the whole-entity identities</p>
+<pre><code>j_i b(a,C)=a,          e_i b(a,C)=h a.</code></pre>
+<p>For example the two rows of j_i b are b_(j_i)=A_0 and b_(h
+j_i)=b_(e_i)=A_1. The rows of e_i b are A_1 at identity and each e_k,
+and A_0 at each j_k, which are precisely the rows of h a. If C=A_1, then
+b(a,C)=h a as a WHOLE entity. These calculations apply at every
+relational type, not just t.</p>
+<h2 id="the-entrance-category-and-composition">2. The entrance category
+and composition</h2>
+<p>Add a root R with no incoming arrows except 1_R. Its nonidentity
+outgoing arrows are</p>
+<pre><code>y:R-&gt;A,        x:R-&gt;B,        z_n:R-&gt;B  (n in N).</code></pre>
+<p>Set</p>
+<pre><code>h y=x,
+j_i x=y,       e_i x=x,
+j_i z_n=y,     e_i z_n=x.</code></pre>
+<p>All z_n are distinct from one another and from x. In particular, z_n
+is NOT defined as h y_n for some new y_n. It is a fresh arrow whose
+composites after a return are x. Therefore j_i h=1_A is respected:
+j_i(hy)=j_i x=y.</p>
+<p>Associativity is checked by the displayed tail relations. For
+example</p>
+<pre><code>h(j_i z_n)=hy=x=(h j_i)z_n,
+j_k(e_i z_n)=j_k x=y=(j_k e_i)z_n,
+e_k(e_i z_n)=e_k x=x=(e_k e_i)z_n.</code></pre>
+<p>The cases beginning with x or y use the same equations. The replica
+index appears only at a fresh z_n before its first nonidentity old
+postcomposition; that postcomposition always lands in the y/x cone,
+where all subsequent composites use the tail action. This proves the
+category equations for arbitrary n.</p>
+<p>Use one individual at R as well. Every individual action is the
+unique singleton map, so it respects all compositions.</p>
+<h2 id="root-domains-and-the-nominal-action">3. Root domains and the
+nominal action</h2>
+<p>Let G=Sym(N) permute replica indices, fixing the tail, y, x, and root
+individuals. It sends z_n to z_(pi(n)). Define root domains recursively
+on argument types.</p>
+<p>A root relation X of type tau has:</p>
+<ol type="1">
+<li>A current extension K_X contained in the full product of the already
+constructed root argument domains, supported by a finite set of replica
+indices under their recursive G-action.</li>
+<li>An arbitrary old entity a_X in D_A^tau, with rows
+A_0<sup>X,A_1</sup>X.</li>
+<li>Arbitrary B-current tables C_n^X, subject only to
+C_n<sup>X=A_1</sup>X for all but finitely many n.</li>
+</ol>
+<p>Set b_n<sup>X=b(a_X,C_n</sup>X), and define whole transports by</p>
+<pre><code>yX=a_X,       xX=h a_X,       z_nX=b_n^X.</code></pre>
+<p>The whole identities of section 1 prove compatibility with every old
+postcomposition. A root intension is determined by this data. The action
+of pi sends K_X to its image under the lower-type tuple action, fixes
+a_X, and replaces C_n by C_(pi^-1(n)). It is a domain automorphism.</p>
+<p>Every whole root entity has finite support: combine a support of K_X
+with its finite exceptional set {n:C_n<sup>X!=A_1</sup>X}. The old a_X
+is fixed by G. Root individuals have empty support. By recursion every
+root argument tuple has finite support, so its singleton current
+extension is admitted.</p>
+<p>There is no fixed support bound for an entire quantified domain.
+Every root variable ranges over its whole recursively defined domain,
+and every target variable ranges over the unchanged full target
+domain.</p>
+<h2 id="closure-and-c-soundness">4. Closure and C soundness</h2>
+<p>For a term with finitely many free root parameters, evaluate its
+y-environment in the old A model to obtain a_t. At z_n, outside the
+finite union of the parameters’ exception sets, the complete B
+environment is h applied to the A environment. Hence the whole term
+value is h a_t there.</p>
+<p>At an exceptional n, its old B evaluation gives a full B entity
+b_(t,n). Naturality of the old interpretation and the equalities j_i
+z_n=y, e_i z_n=x give</p>
+<pre><code>j_i b_(t,n)=a_t,        e_i b_(t,n)=h a_t.</code></pre>
+<p>In the full B profile these equations mean exactly that the j_i rows
+are the identity row of a_t, and the e_i rows are its h row. Its current
+row is arbitrary. Thus b_(t,n)=b(a_t,C_(t,n)) for an allowed table, and
+the whole cofinite condition holds.</p>
+<p>This argument covers lambda abstraction: outside the finite exception
+union the FREE environments agree as whole B entities; the bound
+variables still range independently over all B arguments. It does not
+take a union of exception sets over bound-variable values or pull a
+target quantifier back to R.</p>
+<p>At R, interpretation is equivariant under replica permutations. They
+reindex the full root domains, fix the full old domains, and relabel the
+z_n arrows. The finite union of supports of the free parameters
+consequently supports the current row of every term, including terms
+with root quantifiers and modal operators. This proves admission of the
+lambda and logical operations at every permitted type.</p>
+<p>The usual restricted-profile soundness proof for C now applies. For
+clarity: actual Boolean and quantified clauses use these entire domains;
+singleton predicates distinguish different raw current entities; lambda
+beta/eta hold at every profile coordinate; H-theorem-equivalent formulas
+agree at every coordinate and assignment, so their abstractions are
+equal profiles. Logical Equivalence is used only with its theoremhood
+condition, not with optional assumptions. S4 follows from category
+composition and identity, and persistence of equality follows from
+transport being a function on entities.</p>
+<h2 id="exact-entailment-order">5. Exact entailment order</h2>
+<p>The free coordinates are K_X, A_0^X, and C_n^X for every n. If
+X&lt;=Y these coordinates are included. Conversely suppose inclusion at
+every free coordinate. Choose n outside the two finite exception sets.
+Then C_n<sup>X=A_1</sup>X and C_n<sup>Y=A_1</sup>Y, giving A_1^X
+contained in A_1^Y. Thus all A rows are included, and the table formula
+for b_n includes all its rows as well. The x row is determined by h a.
+This proves necessary inclusion at every root and old profile
+coordinate.</p>
+<p>Hence root entailment is exactly componentwise inclusion of the
+displayed free rows. At t the Boolean algebra is 2 x 2 x FinCof(N), with
+the x truth bit recomputed as the eventual C_n bit. It is atomic,
+although its x coordinate does not give an additional singleton
+atom.</p>
+<h2 id="self-atoms-at-every-type-and-their-density">6. Self-atoms at
+every type and their density</h2>
+<p>There are three kinds of singleton free-coordinate relation.</p>
+<p><strong>Current-root tuple atom.</strong> Put one current root tuple
+into K, and put a=bottom and every C_n empty. It is admitted by finite
+support of the tuple. It is an ordinary atom by the free order, and all
+its nonidentity transports vanish. Therefore it is strong and
+self-atomic.</p>
+<p><strong>The y-identity tuple atom.</strong> For any old A argument
+tuple alpha, take K empty, A_0={alpha}, A_1 empty, and all C_n empty. It
+is admitted and is an ordinary atom by the free order. Its y transport
+is the full A singleton profile delta_(1_A,alpha). Its x and every z_n
+transport have one tuple alpha at each of the j_1,j_2 rows and empty
+current/e_i rows.</p>
+<p>This root relation is a SELF-ATOM. Its only nonempty current row at a
+world accessible directly from R is the row at y, where its whole
+transport is the atom delta_(1_A,alpha). At the B worlds x and z_n its
+current extension is empty, so the self-atom conditional is vacuous
+there; at either later j_i it again becomes delta_(1_A,alpha). Further
+e_i transports keep the false-current two-j-row profile. Thus whenever
+it is instantiated its transported whole entity is an ordinary atom in
+the FULL target algebra.</p>
+<p>It is not strong: after x or z_n, the nonzero profile with two j rows
+splits into the two admitted singleton-row profiles. Self-atoms are
+allowed precisely this kind of split at a world where they are not
+instantiated.</p>
+<p><strong>Replica tuple atom.</strong> For any n and any old B tuple
+beta, put K empty, a=bottom, C_n={beta}, and every other C_m empty. Its
+only nonzero old value is at z_n, namely delta_(1_B,beta). That old
+singleton becomes bottom after every nonidentity old arrow, because no
+such postcomposition can produce 1_B. This gives a strong atom and hence
+a self-atom. Support at the root is the single index n.</p>
+<p>Every nonzero root relation has a nonempty free coordinate, and
+contains the corresponding atom just described. If every free coordinate
+is empty, eventuality makes A_1 empty too, so the whole relation is
+bottom. Equivalently, a nonzero composite x row is reflected at
+cofinitely many C_n rows and cannot form an uncovered remainder.
+Consequently every possible root relation contains a self-atom:
+<strong>Self-Atomicity_all holds</strong>. The same density proves
+ordinary Atomicity_all.</p>
+<p>The cofinite restriction is essential. A singleton supported only at
+x would fail self-atomicity because e_i x=x; our cofinite domain does
+not admit that singleton. Any nonzero x row comes with fresh replica
+rows, and one of their self-atoms lies below it. The y atoms may be
+nonstrong, which is permitted by Self-Atomicity and is essential to the
+construction.</p>
+<h2 id="internal-boolean-completeness-with-necessary-scope">7. Internal
+Boolean completeness, with necessary scope</h2>
+<p>Let F be any admitted root property of tau-relations, and let L be
+its CURRENT extension, supported by a finite index set J. Form the
+external unions of the current rows K_X, the A-identity rows A_0^X, and
+the C_n^X tables over X in L.</p>
+<p>The union K_* is J-supported: each permutation fixing J permutes L
+and carries the current rows accordingly. The union A_* is an arbitrary
+permitted A-current table. For n,m outside J, their transposition
+permutes L while fixing all old tuples, so the union table D_n equals
+D_m. Let B_* be this common table. There is no restriction on old tables
+beyond being subsets of their full finite tuple domains.</p>
+<p>Choose a_* with rows (A_<em>,B_</em>), and use C_n^<em>=D_n. This
+sequence is eventually B_</em>, and K_* has finite support, so the
+resulting root relation is admitted. The free-coordinate order proves it
+is exactly the LUB of the current F-members. Complements give GLBs,
+including empty families. This proves native internal BC at every
+relational type.</p>
+<p>It does not assert external completeness of arbitrary unrepresented
+root families. For example the externally chosen even replica singletons
+do not form an admitted current family, since that family has no finite
+index support.</p>
+<p>Both old objects have full finite profile algebras at every fixed
+type and therefore BC and ordinary Atomicity at every type. Together
+with root BC and Atomicity, this proves <strong>necessary BC_all and
+necessary Atomicity_all</strong> at R.</p>
+<h2 id="failure-of-necessary-strong-actuality">8. Failure of necessary
+Strong Actuality</h2>
+<p>The world y reaches unchanged A. At A every true proposition p
+contains 1_A. Its h transport therefore contains both j_1 and j_2, since
+j_i h=1_A. The admitted B proposition {j_1} separates these two rows.
+Thus h p neither entails {j_1} nor entails its negation. No true
+proposition at A is strong, so Strong Actuality fails there and its
+necessitation fails at R.</p>
+<p>At R itself the root-only true proposition is strong. The y
+propositional atom from section 6 is a self-atom that is not strong;
+since it is an ordinary atom, it has no nonzero proper strong
+subrelation. Therefore Strong Atomicity_t fails at R.</p>
+<h2 id="necessary-ic-is-compatible-with-the-separation">9. Necessary IC
+is compatible with the separation</h2>
+<p>For any root relation with current extension K, retain K and set all
+old data to bottom. This current-only coextension is admitted, because K
+already has finite support. It is inextensible: at the root any tester
+necessarily containing its current members bounds it, and at every
+strict successor its transport is bottom. No arrows return to R. The
+full old objects admit exact-image profiles of every current tuple set,
+and these are rigid and inextensible. Thus necessary IC_all holds at
+R.</p>
+<h2 id="sources">10. Sources</h2>
+<p>GPT-6 Astra, prompted by Daniel Kodsi, <em>Self-atomic nominal
+entrance over the full double-retraction tail</em>, 30 October 2026,
+§§1–9 (unpaginated), supplies this construction and its simultaneous
+profile. The double-retraction category and its Strong Actuality failure
+are Cian Dorr’s construction of 6 October 2026, recorded in
+[[full-two-object-double-retraction]]. Full action semantics is given in
+Bacon and Dorr, <em>Classicism</em>, draft of 16 May 2023, §3.5,
+pp. 58–61, and Appendix D, pp. 73–74.</p>
+<p>The nominal supported-family method has antecedents in OpenAI Codex,
+prompted by Daniel Kodsi, <em>Structural algebraic research: boxed
+Plenitude and stronger world principles</em>, 22 October 2026, §2
+(unpaginated). See also <em>Old/new model: Boolean Completeness and the
+rigidity separation</em>, 22 October 2026, the all-type completeness
+argument (unpaginated). The cofinite entrance method is also used in
+[[nominal-cofinite-sections-entrance]].</p>
+<h2 id="paper-references">Paper references</h2>
+<ul>
+<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian
+Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds),
+Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map
+was built from the draft dated 16 May 2023, 87 pages, which does not
+differ materially from the published version; all page, proposition and
+footnote locators in this map refer to that draft’s numbering. — section
+3.5, pp. 58–61; Appendix D, pp. 73–74. The full action semantics of the
+old two-object tail; the restricted nominal entrance is new.</li>
+</ul>
+</body></html>

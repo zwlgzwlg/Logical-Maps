@@ -1,0 +1,37 @@
+id: protected-numbers-all-types-growth
+name: Necessary canonical noncollapse at all types with growing numerical field
+definition: Finitary Henkin component K satisfies every Box I*_rho and has an additional canonical t-number
+  c not equal to any standard numeral, plus Q necessary of every standard numeral but false of c. Attach
+  a full present using pairs (current relation, K-entity), retaining K quantifiers over their whole domains.
+  The root has all Box I*_rho, but the whole numerical predicate at t is not weakly inextensible.
+certificate:
+  source_id: misc
+  produced_by: Daniel Kodsi, with ChatGPT assistance, following earlier Codex numerical protection and
+    free-current constructions
+  recorded_by: ChatGPT, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- Daniel Kodsi, with ChatGPT assistance, Predecessor operations with a growing numerical field, 30 October
+  2026, Sections 2–4; published writeup protected-numbers-and-numerical-growth.md at commit 17dbd9a647753a9810ae689099d7f51a3a7870eb.
+source_names:
+- Kodsi numerical-growth construction
+arguments:
+- id: boxed-infinity-without-arithmetic-necessitism
+  holds:
+  - necessary-arithmetic-infinity
+  fails:
+  - arithmetic-necessitism
+  by: Daniel Kodsi, with ChatGPT assistance
+  date: '2026-10-30'
+  choice: uses
+  writeup: protected-numbers-and-numerical-growth
+  text: The same root satisfies every boxed canonical I* schema, with the active guard at t, but its whole
+    N_t has a new K-component member excluded by an admitted persistent test. Thus it is not rigid, refuting
+    Arithmetic Necessitism. Total predecessor operations follow from the bare-C boxed guard theorem.
+notes: The positive verdict is the full type schema Box I*_rho, including rho=e. The failure of Arithmetic
+  Necessitism is witnessed at counting type t with its guard true. This is not the quantified individual-Infinity
+  principle.
+construction:
+  standing: established

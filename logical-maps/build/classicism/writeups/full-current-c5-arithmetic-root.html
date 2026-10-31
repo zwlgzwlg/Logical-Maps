@@ -1,0 +1,766 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Full present: Rosser-selected C5 component</title><link rel="icon" type="image/png" href="../favicon.png">
+<style>/* Fixed forest palette, adapted from the supplied style example.
+   Semantic and source hues retain their meaning in both modes. */
+:root {
+  --bg: #f3f1e8;
+  --panel: #f8f7f0;
+  --panel-2: #e9ecdf;
+  --line: #d4d9c9;
+  --line-strong: #a2ae97;
+  --ink: #283c28;
+  --ink-2: #4f604b;
+  --ink-3: #5f6d58;
+  --accent: #356044;
+  --link-hover: #914b30;
+  --human: #3e7052;
+  --assisted: #746044;
+  --ai: #a35b36;
+  --derived: #7b8271;
+  --indep: #a0483a;
+  --open: #e2e5d9;
+  --open-ink: #65705f;
+  --conj: #896b27;
+  --node-fill: #f8f7f0;
+  --node-stroke: #98a68b;
+  --junction: #52634b;
+  --hl: #e0e7cd;
+  --focus: #914b30;
+  --badge-ink: #ffffff;
+  --warning-bg: #f4e6dc;
+  --source-forest: #3e7052;
+  --source-rust: #a25336;
+  --source-ochre: #896b27;
+  --source-slate: #4c7279;
+  --source-berry: #80556d;
+  --source-olive: #69753c;
+  --source-misc: #696d61;
+  --shadow: 0 4px 24px rgb(40 60 40 / 12%);
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --serif: var(--sans);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0e1912;
+  --panel: #142018;
+  --panel-2: #1d2b20;
+  --line: #304332;
+  --line-strong: #596e51;
+  --ink: #d7dfca;
+  --ink-2: #b3c1a7;
+  --ink-3: #96aa8d;
+  --accent: #a6c699;
+  --link-hover: #dfab89;
+  --human: #94bc95;
+  --assisted: #c1ad8d;
+  --ai: #dca17b;
+  --derived: #83937c;
+  --indep: #e09b86;
+  --open: #243327;
+  --open-ink: #a2b398;
+  --conj: #d0b36b;
+  --node-fill: #19261c;
+  --node-stroke: #627957;
+  --junction: #b3c1a7;
+  --hl: #30422a;
+  --focus: #dfab89;
+  --badge-ink: #0e1912;
+  --warning-bg: #32251f;
+  --source-forest: #94bc95;
+  --source-rust: #dca17b;
+  --source-ochre: #d0b36b;
+  --source-slate: #95bcc1;
+  --source-berry: #c5a0b7;
+  --source-olive: #b6c383;
+  --source-misc: #a9b09c;
+  --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); scrollbar-color: var(--line-strong) var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.6 var(--sans); }
+button, input, select { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 3px; }
+input[type="checkbox"] { accent-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+::selection { background: var(--hl); color: var(--ink); }
+.theme-toggle { border: 0; padding: 6px 0; background: transparent; color: var(--ink-2); cursor: pointer; font: 13px var(--sans); white-space: nowrap; }
+.theme-toggle:hover { color: var(--link-hover); }
+.display-toggles { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 16px; }
+.theme-toggle[aria-pressed="true"] { color: var(--accent); }
+
+/* A prismatic name: one rainbow wheel around a point in the word, spinning;
+   --prism-x and --prism-y move that point off the middle.
+   Pure spectral stops, turned by a registered angle rather than a hue
+   filter, which would muddy them. */
+@property --prism { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.prismatic { font-weight: 600; color: transparent; background: conic-gradient(from var(--prism) at var(--prism-x, 50%) var(--prism-y, 50%), #ff1a1a, #ff8a00, #ffd000, #22c33a, #00a8f0, #3d4bff, #b026ff, #ff1a1a); -webkit-background-clip: text; background-clip: text; animation: prism-spin 6s linear infinite; }
+/* As a link it keeps the gradient on hover, under an accent underline. */
+a.prismatic, a.prismatic:hover { color: transparent; }
+a.prismatic:hover { text-decoration-color: var(--accent); }
+@keyframes prism-spin { to { --prism: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .prismatic { animation: none; } }
+
+/* Standalone write-ups use the same quiet, ruled typography as the map. */
+html:has(body.writeup-page) { background: var(--bg); }
+body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; font: 16px/1.7 var(--sans); overflow-wrap: anywhere; }
+.writeup-nav { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 24px; font-size: 13px; }
+.writeup-page h1 { font-size: 1.4em; line-height: 1.4; margin: 0 0 20px; color: var(--ink); }
+.writeup-page h2 { font-size: 1.15em; line-height: 1.4; margin: 1.8em 0 .5em; padding-top: 14px; border-top: 1px solid var(--line); }
+.writeup-page h3 { font-size: 1em; }
+.writeup-page p { margin: 0 0 12px; }
+.writeup-page .cert { color: var(--ink-2); font-size: .85em; }
+.writeup-page code, .writeup-page pre { font: .85em/1.6 var(--mono); color: var(--ink); }
+.writeup-page pre { padding: 14px; background: var(--panel-2); overflow-x: auto; }
+.writeup-page blockquote { color: var(--ink-2); border-left: 2px solid var(--line-strong); margin-left: 0; padding-left: 20px; }
+.writeup-page math[display="block"] { display: block; overflow-x: auto; padding: 8px 0; }
+.writeup-page table { display: block; overflow-x: auto; border-collapse: collapse; }
+.writeup-page th, .writeup-page td { border-bottom: 1px solid var(--line); padding: 8px 12px; }
+@media (max-width: 600px) {
+  body.writeup-page { margin: 1.5em auto; padding: 0 1em 2em; }
+}
+@media print {
+  :root, :root[data-theme="dark"] { --bg: white; --ink: #283c28; --ink-2: #4f604b; --accent: #356044; --line: #d4d9c9; color-scheme: light; }
+  .writeup-nav { display: none; }
+  body.writeup-page { max-width: none; margin: 0; padding: 0; }
+}
+
+/* Teal-grey, muted rust, deep teal and warm stone. Screen-only overrides
+   preserve print styling. */
+@media screen {
+  :root {
+    --bg: #ebf1f1;
+    --panel: #e1eae9;
+    --panel-2: #d0dfde;
+    --line: #c0cecd;
+    --line-strong: #849997;
+    --ink: #303b3a;
+    --ink-2: #4a5a59;
+    --ink-3: #526160;
+    --accent: #884932;
+    --link-hover: #6f3827;
+    --derived: #6f8180;
+    --open: #d6e2e1;
+    --open-ink: #526160;
+    --node-fill: #f1f6f6;
+    --node-stroke: #7f9391;
+    --junction: #596b6a;
+    --human: #2f6b66;
+    --source-forest: #2f6b66;
+    --hl: #e6ddd0;
+    --focus: #884932;
+    --shadow: 0 4px 24px rgb(48 59 58 / 10%);
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #171e1d;
+    --panel: #202a29;
+    --panel-2: #2b3736;
+    --line: #3d4b4a;
+    --line-strong: #6b817f;
+    --ink: #dbe8e7;
+    --ink-2: #b9cbca;
+    --ink-3: #a6bdbb;
+    --accent: #e2ad92;
+    --link-hover: #f0c3aa;
+    --derived: #87a09e;
+    --open: #303d3c;
+    --open-ink: #aec6c4;
+    --node-fill: #263130;
+    --node-stroke: #738d8b;
+    --junction: #b3cbc9;
+    --human: #86c0b6;
+    --source-forest: #86c0b6;
+    --hl: #463f37;
+    --focus: #e2ad92;
+    --badge-ink: #171e1a;
+    --shadow: 0 4px 24px rgb(0 0 0 / 24%);
+  }
+}
+
+/* Shared Okabe–Ito palette: https://jfly.uni-koeln.de/color/#pallet
+   Loaded after topic themes. Sky blue and orange distinguish positive and
+   negative relations; darker inks keep small labels readable in light mode.
+   Neutral surfaces are identical across maps. Print uses the shared theme. */
+@media screen {
+  :root[data-palette="colourblind"] {
+    --bg: #f4f5f6;
+    --panel: #ffffff;
+    --panel-2: #e9edf0;
+    --line: #d0d6da;
+    --line-strong: #87949d;
+    --ink: #202930;
+    --ink-2: #45535d;
+    --ink-3: #586670;
+    --accent: #0072b2;
+    --link-hover: #925f00;
+    --human: #0072b2;
+    --assisted: #80506a;
+    --ai: #a44500;
+    --derived: #687780;
+    --indep: #925f00;
+    --open: #e9edf0;
+    --open-ink: #586670;
+    --conj: #80506a;
+    --node-fill: #ffffff;
+    --node-stroke: #7a8b96;
+    --junction: #45535d;
+    --hl: #dce4ea;
+    --focus: #0072b2;
+    --badge-ink: #ffffff;
+    --warning-bg: #fff0ce;
+    --source-forest: #56b4e9;
+    --source-rust: #e69f00;
+    --source-ochre: #d55e00;
+    --source-slate: #0072b2;
+    --source-berry: #cc79a7;
+    --source-olive: #009e73;
+    --source-misc: #687780;
+    --rel-positive: #56b4e9;
+    --rel-negative: #e69f00;
+    --shadow: 0 4px 24px rgb(32 41 48 / 12%);
+  }
+  :root[data-palette="colourblind"][data-theme="dark"] {
+    --bg: #111820;
+    --panel: #18222b;
+    --panel-2: #23303b;
+    --line: #354550;
+    --line-strong: #718492;
+    --ink: #edf2f5;
+    --ink-2: #c1ced7;
+    --ink-3: #a5b5c1;
+    --accent: #56b4e9;
+    --link-hover: #e69f00;
+    --human: #56b4e9;
+    --assisted: #cc79a7;
+    --ai: #e69f00;
+    --derived: #91a1ad;
+    --indep: #e69f00;
+    --open: #23303b;
+    --open-ink: #a5b5c1;
+    --conj: #cc79a7;
+    --node-fill: #1c2933;
+    --node-stroke: #8094a3;
+    --junction: #c1ced7;
+    --hl: #354654;
+    --focus: #56b4e9;
+    --badge-ink: #111820;
+    --warning-bg: #352b18;
+    --source-misc: #91a1ad;
+    --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  }
+  /* Source swatches use the unmodified palette; outlined badges allow their
+     text to keep the normal contrast on both light and dark surfaces. */
+  :root[data-palette="colourblind"] .badge.source {
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--source-color);
+    border-left-width: 4px;
+  }
+}
+</style>
+<script>/* Apply before paint; share the preference between every map and write-up. */
+(() => {
+  const key = 'pmap-theme';
+  const paletteKey = 'pmap-palette';
+  const system = window.matchMedia?.('(prefers-color-scheme: dark)');
+  let preference;
+  let palette;
+  try { preference = localStorage.getItem(key); } catch (_) {}
+  try { palette = localStorage.getItem(paletteKey); } catch (_) {}
+  if (!['light', 'dark'].includes(preference)) preference = null;
+  if (palette !== 'colourblind') palette = 'default';
+  function apply(theme) {
+    document.documentElement.dataset.theme = theme;
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.textContent = theme === 'dark' ? '[Light mode]' : '[Dark mode]';
+      button.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+    });
+  }
+  function applyPalette() {
+    document.documentElement.dataset.palette = palette;
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.setAttribute('aria-pressed', String(palette === 'colourblind'));
+      button.textContent = `[Colourblind mode: ${palette === 'colourblind' ? 'on' : 'off'}]`;
+    });
+  }
+  const initial = () => preference || (system?.matches ? 'dark' : 'light');
+  apply(initial());
+  applyPalette();
+  document.addEventListener('DOMContentLoaded', () => {
+    apply(initial());
+    applyPalette();
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        preference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        apply(preference);
+        try { localStorage.setItem(key, preference); } catch (_) {}
+      });
+    });
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        palette = palette === 'colourblind' ? 'default' : 'colourblind';
+        applyPalette();
+        try { localStorage.setItem(paletteKey, palette); } catch (_) {}
+      });
+    });
+  });
+  system?.addEventListener('change', () => { if (!preference) apply(initial()); });
+  window.addEventListener('storage', event => {
+    if (event.key === key || event.key === null) {
+      preference = ['light', 'dark'].includes(event.newValue) ? event.newValue : null;
+      apply(initial());
+    }
+    if (event.key === paletteKey || event.key === null) {
+      palette = event.newValue === 'colourblind' ? 'colourblind' : 'default';
+      applyPalette();
+    }
+  });
+})();
+</script>
+<link rel="stylesheet" href="../math/katex.min.css">
+<script defer src="../math/katex.min.js"></script>
+<script defer src="../math/contrib/auto-render.min.js"></script>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Full present: Rosser-selected C5 component</h1></header><p>Daniel Kodsi, with ChatGPT assistance. 30 October 2026.</p>
+<p>There is a classical Henkin model of <span
+class="math inline">C</span> satisfying <strong>necessary Weakly Rigid
+Power</strong>, and therefore necessary Rigid Power and necessary Tame
+Rigidity, while failing both <strong>Necessity of Arithmetic</strong>
+and <strong>Arithmetic Necessitism</strong>. The arithmetic failures
+occur at counting type <span class="math inline">e</span>, with <span
+class="math inline">\Box I^*_e</span> true. The power assertions hold at
+every finite argument tuple, including the empty tuple and tuples
+containing individuals.</p>
+<p>The construction uses the arithmetically disagreeing component from
+<a href="symmetric-cohen-arithmetic-contingency.md">the Rosser-selected
+Cohen model, §§1–2</a>, but attaches a different present to it. The
+contribution is an exact description of rigid relations in a full
+present over a C5 component, followed by the power lift and the
+arithmetic separation in that same model.</p>
+<h2 id="the-component-and-its-arithmetic">1. The component and its
+arithmetic</h2>
+<p>We first specify the component whose existence the cited proof
+supplies. Its effective many-sorted first-order theory <span
+class="math inline">T_H</span> has a sort for every admitted type, the
+original application and quantifier operations, a classical truth
+predicate, and all finite parameterized lambda-template operations. Its
+axioms include the Boolean and quantifier truth clauses, actual
+equality, the H axioms, the lambda conversion laws, C5, <span
+class="math inline">\Box I^*_e</span> and the boxed absence of real
+structures at each type. Instances of Logical Equivalence are admitted
+only with certificates of <strong>H-theoremhood</strong>. Equivalence
+from the additional premises of <span class="math inline">T_H</span>
+does not license them.</p>
+<p>The standard-arithmetic component of <a
+href="symmetric-cohen-arithmetic-growth.md">the Cohen arithmetic-growth
+proof, §§2–5</a> is a model of <span class="math inline">T_H</span>. Its
+canonical number field and its native Sum and Prod graphs are standard.
+Consequently the arithmetic theory</p>
+<p><span class="math display">
+U=\{\varphi:T_H\vdash
+  \operatorname{True}(\operatorname{val}(\varphi^e))\}
+</span></p>
+<p>is a sound computably enumerable extension of PA. Here <span
+class="math inline">\varphi^e</span> is the map’s individual-counting
+translation, with number variables of type <span
+class="math inline">\nu=(et)t</span> and addition and multiplication
+expressed by their native graphs. Numerical induction and total unique
+recursion graphs give the effective PA interpretation; no operation is
+selected from a graph. Finite certificates for enumerated axioms make
+finite proofs effectively recognizable.</p>
+<p>Rosser incompleteness gives a standard-true arithmetic sentence <span
+class="math inline">G</span> unprovable in <span
+class="math inline">U</span>. First-order completeness and countable
+Löwenheim–Skolem give a countable pointed classical Henkin model <span
+class="math inline">A</span> of</p>
+<p><span
+class="math display">T_H+\neg\operatorname{True}(\operatorname{val}(G^e)).</span></p>
+<p>Retain this particular <span class="math inline">A</span> and <span
+class="math inline">G</span>. In particular,</p>
+<p><span class="math display">
+(I^*_e)_A=\top_A,\qquad
+g:=(G^e)_A\ne\top_A.
+\tag{1}
+</span></p>
+<p>The second assertion does not say <span
+class="math inline">g=\bot_A</span>. Current falsity is sufficient. C5
+makes equality crisp as a proposition: an identity has value <span
+class="math inline">\top_A</span> and an inequality has value <span
+class="math inline">\bot_A</span>. The component retains its original
+quantifiers, ranging over every admitted object of the corresponding
+sort. These facts, with its classical truth clauses and lambda
+operations, are the hypotheses used below. We do not transfer its
+absence of real structures to the model being constructed.</p>
+<p>This is a construction in ZFC using the stated Henkin existence
+argument. It requires neither a countable transitive model of ZFC nor a
+generic over the entire universe.</p>
+<h2 id="a-full-present-over-the-component">2. A full present over the
+component</h2>
+<p>The following construction works first for any pointed classical
+Henkin C5 component <span class="math inline">K</span> with crisp
+equality. Choose a nonempty set <span class="math inline">R_e</span> and
+a map <span class="math inline">q_e:R_e\to K_e</span>. For every
+flattened relational type <span
+class="math inline">\tau=\alpha_1\cdots\alpha_k t</span>, define
+recursively</p>
+<p><span class="math display">
+R_\tau=
+\mathcal P\!\left(\prod_{i=1}^{k}R_{\alpha_i}\right)\times K_\tau,
+\qquad
+q_\tau(S,f)=f.
+\tag{2}
+</span></p>
+<p>The product for the empty tuple is a singleton; in particular, <span
+class="math inline">R_t=2\times K_t</span>. Every current row is
+admitted, independently of its component entity. For a tuple write <span
+class="math inline">\bar q</span> for the componentwise projection.</p>
+<p>Application uses the current row and the component application.
+Partial application takes the corresponding slice of the row and applies
+the component entity to the projected argument. A lambda abstraction has
+the extension of its body at the new present as its first coordinate and
+the original <span class="math inline">K</span> abstraction with
+projected parameters as its second coordinate. A quantified formula has
+its ordinary classical truth value over the full <span
+class="math inline">R</span> domain in the first coordinate and its
+original <span class="math inline">K</span> quantifier value over the
+full <span class="math inline">K</span> domain in the second coordinate.
+In particular, the second quantifier is not restricted to the image of
+<span class="math inline">q_e</span>.</p>
+<p>Induction on terms gives</p>
+<p><span class="math display">q(T^R(\bar a))=T^K(\bar q(\bar
+a)).\tag{3}</span></p>
+<p>Current singleton rows make equality at the new present literal
+identity of entities. The H axioms hold at that present and in the
+component. For an H-theorem equivalence of two bodies, their current
+lambda rows agree, and C in <span class="math inline">K</span>
+identifies their component abstractions. Thus the lambda entities
+themselves agree. This validates precisely C’s Logical Equivalence
+schema, without admitting equivalences from optional premises. The
+construction therefore gives a model of <span
+class="math inline">C</span>. It does not require an action
+representation of <span class="math inline">K</span>.</p>
+<p>For a proposition <span class="math inline">B</span> with fixed root
+parameters, equality-defined necessity has the exact truth condition</p>
+<p><span class="math display">
+R\models\Box B
+\quad\Longleftrightarrow\quad
+R\models B\ \text{ and }\ B^K=\top_K.
+\tag{4}
+</span></p>
+<p>Since equality in <span class="math inline">K</span> is crisp, <span
+class="math inline">\Box_K p</span> is <span
+class="math inline">\top_K</span> exactly when <span
+class="math inline">p=\top_K</span>, and is <span
+class="math inline">\bot_K</span> otherwise. For <span
+class="math inline">F=(S,f)</span> and <span
+class="math inline">Z=(T,z)</span>, (3)–(4) give</p>
+<p><span class="math display">
+R\models F\le Z
+\quad\Longleftrightarrow\quad
+S\subseteq T\ \text{ and }\ K\models f\le z.
+\tag{5}
+</span></p>
+<p>The second condition is the old <strong>necessary</strong> universal
+inclusion. It is stronger than inclusion between two current component
+extensions. All later uses of an outer box use (4); they are not
+applications of necessitation to an argument from optional
+assumptions.</p>
+<h2 id="exactly-which-pairs-are-rigid">3. Exactly which pairs are
+rigid</h2>
+<p>Write</p>
+<p><span class="math display">
+\operatorname{ext}_K(f)=
+\{\bar b:K\models f[\bar b]\}.
+</span></p>
+<p>First observe that a persistent component relation has only top or
+bottom membership values. For each tuple <span class="math inline">\bar
+b</span>, necessary universal elimination from persistence gives the
+Boolean inequality <span class="math inline">p\le\Box_Kp</span>, where
+<span class="math inline">p=f[\bar b]</span>. If <span
+class="math inline">p\ne\top_K</span>, crisp equality makes <span
+class="math inline">\Box_Kp=\bot_K</span>, hence <span
+class="math inline">p=\bot_K</span>. In particular, membership in a
+rigid component relation is currently true exactly when its whole value
+is top. This observation does not assert that all component propositions
+are bivalent.</p>
+<p>The key criterion is</p>
+<p><span class="math display">
+R\models\operatorname{Rigid}(S,f)
+\quad\Longleftrightarrow\quad
+K\models\operatorname{Rigid}(f)
+\ \text{ and }\
+\operatorname{ext}_K(f)=\bar q[S].
+\tag{6}
+</span></p>
+<p>For necessity, write rigidity as necessary weak rigidity. By (4),
+rigidity of <span class="math inline">(S,f)</span> makes the whole <span
+class="math inline">K</span> value of weak rigidity of <span
+class="math inline">f</span> top; hence <span
+class="math inline">f</span> is rigid in <span
+class="math inline">K</span>. Root weak persistence makes <span
+class="math inline">f[\bar q(\bar a)]</span> top for every <span
+class="math inline">\bar a\in S</span>, giving one image inclusion.</p>
+<p>For the reverse image inclusion, fix any <span
+class="math inline">\bar b\notin\bar q[S]</span>. The component
+predicate</p>
+<p><span class="math display">z_{\bar b}:=\lambda\bar x\,.\,\neg(\bar
+x=\bar b)</span></p>
+<p>is admitted. Its value is top on every tuple other than <span
+class="math inline">\bar b</span>, by crisp equality. Pair it with the
+full current row to obtain a root test <span class="math inline">Z_{\bar
+b}</span>. This test is necessarily true of every tuple in <span
+class="math inline">S</span>. Root weak inextensibility gives <span
+class="math inline">(S,f)\le Z_{\bar b}</span>, so (5) gives <span
+class="math inline">f\le z_{\bar b}</span> in <span
+class="math inline">K</span>. If <span class="math inline">\bar b</span>
+belonged to <span class="math inline">\operatorname{ext}_K(f)</span>, T
+and current universal elimination would contradict <span
+class="math inline">z_{\bar b}[\bar b]=\bot_K</span>. Each missing tuple
+is tested separately; no component predicate for the set of all missing
+tuples is assumed.</p>
+<p>For sufficiency, suppose <span class="math inline">f</span> is rigid
+and its current extension is <span class="math inline">\bar q[S]</span>.
+The membership observation gives root weak persistence. Let <span
+class="math inline">Z=(T,z)</span> be any root test necessarily true at
+every tuple in <span class="math inline">S</span>. Then <span
+class="math inline">S\subseteq T</span> and <span
+class="math inline">z</span> has whole value top on <span
+class="math inline">\bar q[S]</span>. Consequently the following
+<strong>current</strong> premise is true in <span
+class="math inline">K</span>:</p>
+<p><span class="math display">\forall\bar b\,.\,f[\bar b]\to\Box z[\bar
+b].</span></p>
+<p>Apply <span class="math inline">f</span>’s component weak
+inextensibility to obtain <span class="math inline">f\le z</span>.
+Equation (5) yields <span class="math inline">(S,f)\le Z</span>,
+establishing root weak inextensibility. Component rigidity makes the
+whole old weak-rigidity value top; (4), with the root weak rigidity just
+proved, gives full root rigidity.</p>
+<p>This argument uses the component’s current quantifier truth clause
+and its weak-inextensibility clause. It does not infer that a universal
+has whole value top merely because all its separately evaluated
+instances do.</p>
+<h2 id="the-canonical-rigid-power-and-its-box">4. The canonical rigid
+power and its box</h2>
+<p>Fix a root rigid <span class="math inline">F=(S,f)</span>. If an
+admitted component relation <span class="math inline">h</span> is rigid
+and <span class="math inline">h\le f</span>, put</p>
+<p><span class="math display">
+S_h=\{\bar a\in S:\bar q(\bar a)\in\operatorname{ext}_K(h)\},
+\qquad X_h=(S_h,h).
+</span></p>
+<p>Every component member of <span class="math inline">h</span> belongs
+to <span class="math inline">\operatorname{ext}_K(f)</span> and
+therefore has a preimage in <span class="math inline">S</span> by (6).
+Thus <span class="math inline">\bar
+q[S_h]=\operatorname{ext}_K(h)</span>. Equations (5)–(6) show that <span
+class="math inline">X_h</span> is rigid and below <span
+class="math inline">F</span>. This lifts every <strong>admitted rigid
+component subrelation</strong>; it does not claim that every current
+subset of <span class="math inline">S</span> has a rigid lift.</p>
+<p>Now consider the literal native lambda entity</p>
+<p><span class="math display">
+\mathcal P_R(F):=
+\lambda X\,.\,\operatorname{Rigid}(X)\land X\le F.
+</span></p>
+<p>Its component is exactly <span class="math inline">\mathcal
+P_K(f)</span>, by term projection. Its current row <span
+class="math inline">C_F</span> consists of all root rigid subrelations
+of <span class="math inline">F</span>. Projection sends each such member
+to a component rigid subrelation of <span class="math inline">f</span>,
+and the preceding construction supplies a preimage for every such
+component subrelation. Hence</p>
+<p><span class="math display">q_\tau[C_F]=\operatorname{ext}_K(\mathcal
+P_K(f)).\tag{7}</span></p>
+<p>The recorded C5 power theorem makes <span
+class="math inline">\mathcal P_K(f)</span> rigid. Its proof uses S5
+stability of the boxed conjuncts defining the family and component
+Barcan to obtain persistence and inextensibility. Apply (6) at the next
+type to (7): the <strong>canonical</strong> <span
+class="math inline">\mathcal P_R(F)</span> is rigid. No replacement by a
+merely coextensive family occurs.</p>
+<p>This proves Rigid Power at the new present. C5 also gives the whole
+component value of the entire Rigid Power instance as top. Equation (4)
+therefore proves its outer box at the root.</p>
+<p>Nothing requires <span class="math inline">q_e</span> to be onto.
+Mixed tuples of individuals and relations are handled by the same
+complement tests. For the empty tuple, the argument product is a
+singleton and the missing-tuple complement is bottom; the same proof
+gives the nullary instance.</p>
+<h2 id="tame-rigidity-and-weakly-rigid-power">5. Tame Rigidity and
+Weakly Rigid Power</h2>
+<p>Suppose only that <span class="math inline">F=(S,f)</span> is weakly
+rigid at the root. Both image inclusions in §3 used only weak
+persistence and weak inextensibility, so <span
+class="math inline">\operatorname{ext}_K(f)=\bar q[S]</span> still
+follows. Root weak persistence makes <span class="math inline">f[\bar
+b]</span> top for every current component member <span
+class="math inline">\bar b</span> of <span class="math inline">f</span>.
+Thus <span class="math inline">f</span> is weakly persistent in <span
+class="math inline">K</span>.</p>
+<p>For any admitted component test <span class="math inline">z</span>
+satisfying <span class="math inline">\forall\bar b(f[\bar b]\to\Box
+z[\bar b])</span> currently in <span class="math inline">K</span>, pair
+<span class="math inline">z</span> with the full root row. This root
+test is necessarily true on <span class="math inline">S</span>. Root
+weak inextensibility and (5) give <span class="math inline">f\le
+z</span> in <span class="math inline">K</span>. Therefore <span
+class="math inline">f</span> is weakly inextensible, hence weakly rigid,
+in <span class="math inline">K</span>.</p>
+<p>C5 implies Tame Rigidity, so <span class="math inline">f</span> is
+fully rigid in <span class="math inline">K</span>. Its whole
+weak-rigidity value is consequently top. Together with the given root
+weak rigidity, (4) proves full rigidity of <span
+class="math inline">F</span>. This establishes root Tame Rigidity. The
+component’s necessary Tame Rigidity makes the entire old schema value
+top; (4) supplies the required outer box.</p>
+<p>The recorded implication</p>
+<p><span class="math display">
+\Box\text{Tame Rigidity}+\Box\text{Rigid Power}
+\ \Longrightarrow\ \Box\text{Weakly Rigid Power}
+</span></p>
+<p>now gives the stated strongest power verdict. The proof of that
+implication uses necessary Tame Rigidity to identify the weak and full
+canonical power predicates at the required modal scope. The argument
+includes all the arities covered in §4.</p>
+<h2 id="standard-arithmetic-at-the-new-present">6. Standard arithmetic
+at the new present</h2>
+<p>Specialize to the component <span class="math inline">A</span> from
+§1, and take</p>
+<p><span class="math display">R_e=\omega\times A_e,\qquad
+q_e(n,a)=a.</span></p>
+<p>Use the map’s own <span class="math inline">\mathbf0_e</span>,
+successor, <span class="math inline">\mathbb N_e</span>, Sum and Prod.
+Let <span class="math inline">\bar n^R</span> be the <span
+class="math inline">n</span>-fold application of its closed successor
+term to its closed zero, and let <span class="math inline">O=\{\bar
+n^R:n\in\omega\}</span>. The row <span class="math inline">O</span>,
+paired with any component predicate, is an admitted induction test. It
+contains zero and is closed under the actual root successor. The
+least-inductive definition of <span class="math inline">\mathbb
+N_e</span> therefore excludes every entity outside <span
+class="math inline">O</span>. Conversely every admitted inductive
+predicate contains each standard iterate by finite induction. Thus</p>
+<p><span class="math display">\operatorname{ext}_R(\mathbb
+N_e)=O.\tag{8}</span></p>
+<p>Term projection sends <span class="math inline">\bar n^R</span> to
+<span class="math inline">\bar n^A</span>. The component’s <span
+class="math inline">I^*_e</span> makes its standard numerals pairwise
+distinct; root numerals are therefore pairwise distinct as well.
+Equation (8) gives current <span class="math inline">I^*_e</span>
+directly, and its component is top by (1). Hence</p>
+<p><span class="math display">(I^*_e)_R=(1,\top_A)=\top_R,\qquad
+R\models\Box I^*_e.\tag{9}</span></p>
+<p>Standard number objects alone do not settle the arithmetic graphs.
+For fixed standard <span class="math inline">m</span>, the admitted
+current row</p>
+<p><span class="math display">\{(\bar
+i^R,\overline{m+i}^R):i\in\omega\}</span></p>
+<p>satisfies the native Sum initial and closure conditions and rejects
+every incorrect standard output. Conversely any current relation
+satisfying those conditions contains each correct pair by finite
+induction. The universal definition of Sum consequently gives</p>
+<p><span class="math display">R\models\operatorname{Sum}(\bar m,\bar
+n,\bar o)
+\quad\Longleftrightarrow\quad o=m+n.</span></p>
+<p>For Prod use <span class="math inline">\{(\bar
+i^R,\overline{mi}^R):i\in\omega\}</span>. The just-established Sum
+calculation proves its closure condition. Finite induction puts each
+correct product in every test satisfying the recursion premises; the
+displayed graph excludes incorrect products. Thus Prod is standard too.
+These are relational tests admitted by full current rows, paired with
+arbitrary component entities. No arithmetic operation is selected from
+its graph.</p>
+<p>Induction on the native first-order arithmetic grammar now gives
+standard arithmetic at the root. Its restricted current quantifiers
+range over <span class="math inline">O</span>, while its component
+quantifiers retain the whole number field of <span
+class="math inline">A</span>. For the <strong>same</strong> sentence
+<span class="math inline">G^e</span> as in §1,</p>
+<p><span class="math display">(G^e)_R=(1,g),\qquad
+g\ne\top_A.\tag{10}</span></p>
+<h2 id="both-arithmetic-failures-with-the-guard-true">7. Both arithmetic
+failures with the guard true</h2>
+<p>By (9), <span class="math inline">I_e=\Diamond I^*_e</span> is also
+the whole top entity. In the exact Necessity of Arithmetic instance</p>
+<p><span class="math display">\Box(I_e\to G^e)\ \lor\ \Box(I_e\to\neg
+G^e),</span></p>
+<p>the first alternative fails by (4) and (10), because <span
+class="math inline">g\ne\top_A</span>. The second fails because <span
+class="math inline">\neg G^e</span> is currently false. This refutes the
+native guarded disjunction, with <span class="math inline">\Box
+I^*_e</span> true.</p>
+<p>For the entity-level failure, <span class="math inline">A</span> has
+a current canonical number <span class="math inline">c</span> which is
+not a standard numeral. Otherwise its PA structure, including the total
+unique Sum and Prod graphs, would be standard and could not falsify the
+standard-true <span class="math inline">G</span>. The admitted component
+predicate</p>
+<p><span class="math display">z:=\lambda n^\nu\,.\,n\ne c</span></p>
+<p>has whole value top on each standard component numeral, by crisp
+equality. Pair <span class="math inline">z</span> with the full current
+<span class="math inline">R_\nu</span> row to obtain <span
+class="math inline">Z</span>. Every current root number is a standard
+numeral by (8), so each necessarily satisfies <span
+class="math inline">Z</span>. But the whole component quantifier sees
+the current counterexample <span class="math inline">c</span> to <span
+class="math inline">\mathbb N_A\subseteq z</span>. Hence its inclusion
+formula is not top, and (5) gives</p>
+<p><span class="math display">R\not\models\mathbb N_e\le Z.</span></p>
+<p>This is a direct weak-inextensibility countertest for the canonical
+<span class="math inline">\mathbb N_e</span>. It is not rigid. Together
+with (9), it refutes the type-<span class="math inline">e</span>
+instance of Arithmetic Necessitism with its antecedent true.</p>
+<p>The two arithmetic failures and all the power verdicts concern this
+one model. No verdict about Analytic Necessitism, SOAN, Boolean
+Completeness or C5 at the root is asserted. In particular, the
+component’s absence of real structures does not pass to a root with this
+different admission rule. Neither arithmetic failure is claimed
+necessary or at every counting type.</p>
+<h2 id="sources-and-attribution">Sources and attribution</h2>
+<p>The general pair construction is OpenAI Codex, prompted by Daniel
+Kodsi, <em>Classical present over an arbitrary model</em>, 25 October
+2026, §§1–2. The explicit C interpretation is retained in §2 above. The
+Rosser-selected component is from GPT-6 Astra, prompted by Daniel Kodsi,
+<a href="symmetric-cohen-arithmetic-contingency.md">Symmetric Cohen
+model: Rosser-selected component</a>, 30 October 2026, §§1–2.</p>
+<p>The component power theorem is the recorded <em>C5 implies necessary
+Rigid Power</em>, Claude Opus 5.5 (Anthropic), answering Cian Dorr, 3
+October 2026. The component Tame Rigidity theorem is due to Christopher
+Sun, <em>Possible Worlds Without Atomicity</em>, September 2026; its
+necessitation and the necessary-power composition are recorded
+separately in the map. The exact-image criterion and its lift to the
+canonical family are the additional arguments here.</p>
+<p>The numeral-orbit and recursion-test methods have a prior instance in
+Cian Dorr’s coalesced-root constructions, especially
+<em>coalesced-pinned-substitutions-nonstandard-root</em>, Claude Opus
+5.5 (Anthropic), prompted by Cian Dorr, 29 October 2026, extending the
+19 October construction. They are checked above for this particular pair
+model and the same <span class="math inline">A,G</span>.</p>
+<p>The proof is mathematical, with no claimed independent human check or
+new Lean verification.</p>
+<h2 id="paper-references">Paper references</h2>
+<ul>
+<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian
+Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds),
+Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map
+was built from the draft dated 16 May 2023, 87 pages, which does not
+differ materially from the published version; all page, proposition and
+footnote locators in this map refer to that draft’s numbering. —
+Sections 1.3 and 2.3. The fixed C framework, Logical Equivalence and
+rigidity.</li>
+<li><strong>Related: Possible Worlds Without Atomicity.</strong> Sun,
+Christopher. Possible Worlds Without Atomicity. Unpublished draft,
+September 2026.. The component Tame Rigidity theorem; the root
+power-lifting argument is separate.</li>
+<li><strong>Formulation: Arithmetic is Necessary.</strong> Goodsell,
+Zachary William Lee. Arithmetic is Necessary. Draft dated 5 June 2024,
+28 pages. Derives the necessity of arithmetic in the logic HKC (H plus K
+plus Countable Boolean Completeness) and shows that Boolean Completeness
+is inconsistent with the maximalization of any recursively enumerable
+extension of HK consistent with I, answering the question of Classicism,
+§2.6. Locators refer to this draft. — Definitions 3–8 and the Necessity
+of Arithmetic schema</li>
+</ul>
+</body></html>

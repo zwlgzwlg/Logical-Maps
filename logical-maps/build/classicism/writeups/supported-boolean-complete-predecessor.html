@@ -322,71 +322,224 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <link rel="stylesheet" href="../math/katex.min.css">
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
-<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Supported model over the ultrafilters of a complete homogeneous algebra, with a free root</h1></header><p>The construction is due to GPT-6 Astra (OpenAI), prompted by Daniel Kodsi. It appears as a Boolean-valued model in Astra’s note <em>Observer separation with propositional completeness and divergent possibilities</em> (25 October 2026, §§1–3), listed in Kodsi’s pull request #18. OpenAI Codex (GPT-6), prompted by Daniel Kodsi, integrated it as <code>supported-boolean-complete-predecessor</code> in his pull request #21 (28 October 2026). Cian Dorr reformulated it as an action model on 29 October 2026, and Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, wrote this version.</p>
-<p>At the root <span class="math inline">r</span> the model satisfies:</p>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Supported model over the ultrafilters of a complete homogeneous algebra, with a free root</h1></header><p>The construction is due to GPT-6 Astra (OpenAI), prompted by Daniel
+Kodsi. It appears as a Boolean-valued model in Astra’s note <em>Observer
+separation with propositional completeness and divergent
+possibilities</em> (25 October 2026, §§1–3), listed in Kodsi’s pull
+request #18. OpenAI Codex (GPT-6), prompted by Daniel Kodsi, integrated
+it as <code>supported-boolean-complete-predecessor</code> in his pull
+request #21 (28 October 2026). Cian Dorr reformulated it as an action
+model on 29 October 2026, and Claude Opus 5.5 (Anthropic), prompted by
+Cian Dorr, wrote this version.</p>
+<p>At the root <span class="math inline">r</span> the model
+satisfies:</p>
 <ul>
-<li>□Boolean Completeness (type <span class="math inline">t</span>);</li>
+<li>□Boolean Completeness (type <span
+class="math inline">t</span>);</li>
 <li>□BF;</li>
 <li>Relational Choice;</li>
 <li>Actuality.</li>
 </ul>
-<p>It does not satisfy □Actuality, or Atomicity (type <span class="math inline">t</span>). In the component, Actuality is necessarily false.</p>
+<p>It does not satisfy □Actuality, or Atomicity (type <span
+class="math inline">t</span>). In the component, Actuality is
+necessarily false.</p>
 <h2 id="the-algebra">The algebra</h2>
-<p>Let <span class="math inline">B</span> be the regular open algebra of Cantor space. It is complete and atomless, and <em>homogeneous</em>: every nonzero interval <span class="math inline">[0,b]</span> is isomorphic to <span class="math inline">B</span>. Let <span class="math inline">G=\operatorname{Aut}(B)</span>.</p>
-<p>For a finite <span class="math inline">P\subseteq B</span>, let <span class="math inline">H_P</span> be the automorphisms fixing <span class="math inline">P</span> pointwise. The finite subalgebra <span class="math inline">\langle P\rangle</span> has finitely many atoms, the <em>cells</em> <span class="math inline">c_1,\dots,c_m</span>, which partition <span class="math inline">1</span>.</p>
-<p><strong>Lemma 1.</strong> The elements of <span class="math inline">B</span> fixed by <span class="math inline">H_P</span> are exactly the joins of cells.</p>
-<p><em>Proof.</em> Every member of <span class="math inline">H_P</span> fixes each cell, so it fixes their joins. Conversely, suppose <span class="math inline">0&lt;b\wedge c&lt;c</span> for a cell <span class="math inline">c</span>. Then <span class="math inline">[0,b\wedge c]</span> and <span class="math inline">[0,c-b]</span> are both isomorphic to <span class="math inline">B</span>. An isomorphism exchanging them, extended by the identity off <span class="math inline">c</span>, lies in <span class="math inline">H_P</span> and moves <span class="math inline">b</span>. <span class="math inline">\square</span></p>
-<p><strong>Lemma 2 (finite attainment).</strong> If <span class="math inline">S\subseteq B</span> is <span class="math inline">H_P</span>-invariant, then <span class="math inline">\bigvee S</span> is the join of at most two members of <span class="math inline">S</span> per cell, and <span class="math inline">\bigwedge S</span> dually.</p>
-<p><em>Proof.</em> Take a cell <span class="math inline">c</span> that some <span class="math inline">b\in S</span> meets.</p>
+<p>Let <span class="math inline">B</span> be the regular open algebra of
+Cantor space. It is complete and atomless, and <em>homogeneous</em>:
+every nonzero interval <span class="math inline">[0,b]</span> is
+isomorphic to <span class="math inline">B</span>. Let <span
+class="math inline">G=\operatorname{Aut}(B)</span>.</p>
+<p>For a finite <span class="math inline">P\subseteq B</span>, let <span
+class="math inline">H_P</span> be the automorphisms fixing <span
+class="math inline">P</span> pointwise. The finite subalgebra <span
+class="math inline">\langle P\rangle</span> has finitely many atoms, the
+<em>cells</em> <span class="math inline">c_1,\dots,c_m</span>, which
+partition <span class="math inline">1</span>.</p>
+<p><strong>Lemma 1.</strong> The elements of <span
+class="math inline">B</span> fixed by <span
+class="math inline">H_P</span> are exactly the joins of cells.</p>
+<p><em>Proof.</em> Every member of <span class="math inline">H_P</span>
+fixes each cell, so it fixes their joins. Conversely, suppose <span
+class="math inline">0&lt;b\wedge c&lt;c</span> for a cell <span
+class="math inline">c</span>. Then <span class="math inline">[0,b\wedge
+c]</span> and <span class="math inline">[0,c-b]</span> are both
+isomorphic to <span class="math inline">B</span>. An isomorphism
+exchanging them, extended by the identity off <span
+class="math inline">c</span>, lies in <span
+class="math inline">H_P</span> and moves <span
+class="math inline">b</span>. <span
+class="math inline">\square</span></p>
+<p><strong>Lemma 2 (finite attainment).</strong> If <span
+class="math inline">S\subseteq B</span> is <span
+class="math inline">H_P</span>-invariant, then <span
+class="math inline">\bigvee S</span> is the join of at most two members
+of <span class="math inline">S</span> per cell, and <span
+class="math inline">\bigwedge S</span> dually.</p>
+<p><em>Proof.</em> Take a cell <span class="math inline">c</span> that
+some <span class="math inline">b\in S</span> meets.</p>
 <ul>
-<li>If <span class="math inline">b\ge c</span>, then <span class="math inline">b</span> covers <span class="math inline">c</span>.</li>
-<li>Otherwise, the automorphism <span class="math inline">u</span> of Lemma 1 gives <span class="math inline">u(b)\in S</span> with <span class="math inline">u(b)\wedge c=c-b</span>, so <span class="math inline">b</span> and <span class="math inline">u(b)</span> together cover <span class="math inline">c</span>.</li>
+<li>If <span class="math inline">b\ge c</span>, then <span
+class="math inline">b</span> covers <span
+class="math inline">c</span>.</li>
+<li>Otherwise, the automorphism <span class="math inline">u</span> of
+Lemma 1 gives <span class="math inline">u(b)\in S</span> with <span
+class="math inline">u(b)\wedge c=c-b</span>, so <span
+class="math inline">b</span> and <span class="math inline">u(b)</span>
+together cover <span class="math inline">c</span>.</li>
 </ul>
-<p>So finitely many members of <span class="math inline">S</span> join to the union of the cells that <span class="math inline">S</span> meets. Every member of <span class="math inline">S</span> lies below that union, so it is <span class="math inline">\bigvee S</span>. <span class="math inline">\square</span></p>
+<p>So finitely many members of <span class="math inline">S</span> join
+to the union of the cells that <span class="math inline">S</span> meets.
+Every member of <span class="math inline">S</span> lies below that
+union, so it is <span class="math inline">\bigvee S</span>. <span
+class="math inline">\square</span></p>
 <h2 id="the-model">The model</h2>
-<p><strong>The worlds and the component.</strong> The worlds are the ultrafilters of <span class="math inline">B</span>. Each <span class="math inline">b\in B</span> determines the set of worlds <span class="math inline">\hat b:=\{U:b\in U\}</span>, and <span class="math inline">b\mapsto\hat b</span> is an isomorphism of <span class="math inline">B</span> onto the clopen algebra of its Stone space.</p>
+<p><strong>The worlds and the component.</strong> The worlds are the
+ultrafilters of <span class="math inline">B</span>. Each <span
+class="math inline">b\in B</span> determines the set of worlds <span
+class="math inline">\hat b:=\{U:b\in U\}</span>, and <span
+class="math inline">b\mapsto\hat b</span> is an isomorphism of <span
+class="math inline">B</span> onto the clopen algebra of its Stone
+space.</p>
 <ul>
-<li>The component has exactly one arrow between any two worlds, and a single individual. So an entity of relational type is a relation <span class="math inline">F</span> between tuples and worlds, the same at every world.</li>
-<li><span class="math inline">G</span> acts on worlds and, by conjugation, on entities.</li>
+<li>The component has exactly one arrow between any two worlds, and a
+single individual. So an entity of relational type is a relation <span
+class="math inline">F</span> between tuples and worlds, the same at
+every world.</li>
+<li><span class="math inline">G</span> acts on worlds and, by
+conjugation, on entities.</li>
 <li>An entity is admitted if it satisfies two conditions:
 <ul>
-<li><strong>it is supported:</strong> <span class="math inline">g\cdot F=F</span> for every <span class="math inline">g\in H_P</span>, for some finite <span class="math inline">P\subseteq B</span>;</li>
-<li><strong>its fibres are in <span class="math inline">B</span>:</strong> for each tuple <span class="math inline">\bar x</span>, the set of worlds at which <span class="math inline">F</span> holds of <span class="math inline">\bar x</span> is <span class="math inline">\hat b</span> for some <span class="math inline">b\in B</span>.</li>
+<li><strong>it is supported:</strong> <span class="math inline">g\cdot
+F=F</span> for every <span class="math inline">g\in H_P</span>, for some
+finite <span class="math inline">P\subseteq B</span>;</li>
+<li><strong>its fibres are in <span
+class="math inline">B</span>:</strong> for each tuple <span
+class="math inline">\bar x</span>, the set of worlds at which <span
+class="math inline">F</span> holds of <span class="math inline">\bar
+x</span> is <span class="math inline">\hat b</span> for some <span
+class="math inline">b\in B</span>.</li>
 </ul></li>
-<li>So the propositions of the component are the sets <span class="math inline">\hat b</span>, a copy of <span class="math inline">B</span>.</li>
+<li>So the propositions of the component are the sets <span
+class="math inline">\hat b</span>, a copy of <span
+class="math inline">B</span>.</li>
 </ul>
-<p><strong>The root.</strong> A root <span class="math inline">r</span> is added, with one arrow to each world and none back. A root entity is a pair <span class="math inline">(R,a)</span> of an arbitrary current extension <span class="math inline">R</span> and a component entity <span class="math inline">a</span>. So the propositions at <span class="math inline">r</span> are the pairs <span class="math inline">(\varepsilon,\hat b)</span>, a copy of <span class="math inline">2\times B</span>, and <span class="math inline">r</span> sees itself and every world.</p>
-<p><strong>Closure.</strong> The domains contain the denotations of all terms, so the structure is a model of C.</p>
+<p><strong>The root.</strong> A root <span class="math inline">r</span>
+is added, with one arrow to each world and none back. A root entity is a
+pair <span class="math inline">(R,a)</span> of an arbitrary current
+extension <span class="math inline">R</span> and a component entity
+<span class="math inline">a</span>. So the propositions at <span
+class="math inline">r</span> are the pairs <span
+class="math inline">(\varepsilon,\hat b)</span>, a copy of <span
+class="math inline">2\times B</span>, and <span
+class="math inline">r</span> sees itself and every world.</p>
+<p><strong>Closure.</strong> The domains contain the denotations of all
+terms, so the structure is a model of C.</p>
 <ul>
-<li>The logical constants are invariant under <span class="math inline">G</span>.</li>
-<li>Application, abstraction and the Boolean operations preserve support and keep fibres in <span class="math inline">B</span>.</li>
-<li>Quantifiers in an action model are evaluated world by world. So the fibre of <span class="math inline">\forall x\,Fx</span> is the intersection of the fibres <span class="math inline">\hat b_x</span> of the instances, and that of <span class="math inline">\exists x\,Fx</span> is their union.</li>
-<li>If <span class="math inline">F</span> is supported by <span class="math inline">P</span>, the set of the <span class="math inline">b_x</span> is <span class="math inline">H_P</span>-invariant. By Lemma 2 the intersection is a finite intersection, so it is again <span class="math inline">\hat b</span> for <span class="math inline">b=\bigwedge_xb_x</span>, and likewise for the union.</li>
+<li>The logical constants are invariant under <span
+class="math inline">G</span>.</li>
+<li>Application, abstraction and the Boolean operations preserve support
+and keep fibres in <span class="math inline">B</span>.</li>
+<li>Quantifiers in an action model are evaluated world by world. So the
+fibre of <span class="math inline">\forall x\,Fx</span> is the
+intersection of the fibres <span class="math inline">\hat b_x</span> of
+the instances, and that of <span class="math inline">\exists
+x\,Fx</span> is their union.</li>
+<li>If <span class="math inline">F</span> is supported by <span
+class="math inline">P</span>, the set of the <span
+class="math inline">b_x</span> is <span
+class="math inline">H_P</span>-invariant. By Lemma 2 the intersection is
+a finite intersection, so it is again <span class="math inline">\hat
+b</span> for <span class="math inline">b=\bigwedge_xb_x</span>, and
+likewise for the union.</li>
 </ul>
-<p>Without finite support, the intersection of infinitely many clopen sets needn’t be clopen, and the domains wouldn’t be closed. At the root, current extensions are arbitrary and the component parts are component entities, so the same holds there, as for the coalesced roots.</p>
+<p>Without finite support, the intersection of infinitely many clopen
+sets needn’t be clopen, and the domains wouldn’t be closed. At the root,
+current extensions are arbitrary and the component parts are component
+entities, so the same holds there, as for the coalesced roots.</p>
 <h2 id="verdicts">Verdicts</h2>
 <ul>
-<li><strong>Boolean Completeness (type <span class="math inline">t</span>), necessarily.</strong>
+<li><strong>Boolean Completeness (type <span
+class="math inline">t</span>), necessarily.</strong>
 <ul>
-<li><em>At a world of the component.</em> A family of propositions in the domain is supported, so by Lemma 2 its union is the finite union <span class="math inline">\hat b</span> with <span class="math inline">b=\bigvee_ib_i</span>. That is its least upper bound.</li>
-<li><em>At <span class="math inline">r</span>.</em> A family of root propositions <span class="math inline">(\varepsilon_i,\hat b_i)</span> is arbitrary, and its least upper bound is <span class="math inline">(\bigvee\varepsilon_i,\widehat{\bigvee b_i})</span>, with the join taken in the complete algebra <span class="math inline">B</span>. This is where completeness of <span class="math inline">B</span> is needed: a union of clopen sets needn’t be clopen, but the least clopen set containing it exists.</li>
+<li><em>At a world of the component.</em> A family of propositions in
+the domain is supported, so by Lemma 2 its union is the finite union
+<span class="math inline">\hat b</span> with <span
+class="math inline">b=\bigvee_ib_i</span>. That is its least upper
+bound.</li>
+<li><em>At <span class="math inline">r</span>.</em> A family of root
+propositions <span class="math inline">(\varepsilon_i,\hat b_i)</span>
+is arbitrary, and its least upper bound is <span
+class="math inline">(\bigvee\varepsilon_i,\widehat{\bigvee b_i})</span>,
+with the join taken in the complete algebra <span
+class="math inline">B</span>. This is where completeness of <span
+class="math inline">B</span> is needed: a union of clopen sets needn’t
+be clopen, but the least clopen set containing it exists.</li>
 </ul></li>
 <li><strong>BF, necessarily.</strong>
 <ul>
-<li>In the component, the same entities are available at every world, so BF holds trivially.</li>
-<li>At <span class="math inline">r</span>, every component entity is the transport of a root entity, the one with empty current extension.</li>
+<li>In the component, the same entities are available at every world, so
+BF holds trivially.</li>
+<li>At <span class="math inline">r</span>, every component entity is the
+transport of a root entity, the one with empty current extension.</li>
 </ul></li>
-<li><strong>Relational Choice.</strong> For a serial <span class="math inline">U</span> at <span class="math inline">r</span>, choose, in the metatheory, a functional subrelation of its current extension, and pair it with the empty component entity.</li>
-<li><strong>Actuality.</strong> At <span class="math inline">r</span>, the proposition true at <span class="math inline">r</span> alone is true and below every truth.</li>
-<li><strong>No Actuality in the component.</strong> At a world <span class="math inline">U</span>, an actual-world proposition would be some <span class="math inline">\hat b</span> with <span class="math inline">b\in U</span> and <span class="math inline">\hat b\subseteq\hat c</span> for every <span class="math inline">c\in U</span>. Then <span class="math inline">b</span> would be an atom of <span class="math inline">B</span>, and <span class="math inline">B</span> is atomless. So Actuality is false at every world of the component, and □Actuality fails at <span class="math inline">r</span>.</li>
-<li><strong>No Atomicity (type <span class="math inline">t</span>) at <span class="math inline">r</span>.</strong> Below a nonzero <span class="math inline">(0,\hat b)</span>, every <span class="math inline">(0,\hat c)</span> with <span class="math inline">c&lt;b</span> is again nonzero.</li>
+<li><strong>Relational Choice.</strong> For a serial <span
+class="math inline">U</span> at <span class="math inline">r</span>,
+choose, in the metatheory, a functional subrelation of its current
+extension, and pair it with the empty component entity.</li>
+<li><strong>Actuality.</strong> At <span class="math inline">r</span>,
+the proposition true at <span class="math inline">r</span> alone is true
+and below every truth.</li>
+<li><strong>No Actuality in the component.</strong> At a world <span
+class="math inline">U</span>, an actual-world proposition would be some
+<span class="math inline">\hat b</span> with <span
+class="math inline">b\in U</span> and <span class="math inline">\hat
+b\subseteq\hat c</span> for every <span class="math inline">c\in
+U</span>. Then <span class="math inline">b</span> would be an atom of
+<span class="math inline">B</span>, and <span
+class="math inline">B</span> is atomless. So Actuality is false at every
+world of the component, and □Actuality fails at <span
+class="math inline">r</span>.</li>
+<li><strong>No Atomicity (type <span class="math inline">t</span>) at
+<span class="math inline">r</span>.</strong> Below a nonzero <span
+class="math inline">(0,\hat b)</span>, every <span
+class="math inline">(0,\hat c)</span> with <span
+class="math inline">c&lt;b</span> is again nonzero.</li>
 </ul>
 <h2 id="remarks">Remarks</h2>
-<p><strong>The two presentations.</strong> Astra’s presentation is Boolean-valued: propositions are elements of <span class="math inline">B</span>, relations are finitely supported functions into <span class="math inline">B</span>, identity is crisp, and quantifiers are infima and suprema. There, Lemma 2 is what makes each ultrafilter a world respecting the quantifiers. In the action model the worlds come first, and Lemma 2 is what keeps the domains closed under the quantifiers. The two are the same model.</p>
-<p><strong>The fibre condition is needed.</strong> Without it, every supported relation would be admitted. The component’s propositions would then be all the <span class="math inline">H_P</span>-invariant sets of ultrafilters, a larger algebra, since <span class="math inline">G</span> isn’t transitive on the ultrafilters in a cell. That component is still a model of C, and it satisfies C5, BF, Boolean Completeness at <span class="math inline">t</span> and Atomlessness. But its algebra isn’t externally complete, and the free root would then fail Boolean Completeness.</p>
-<p><strong>Cantor space.</strong> With the countable atomless algebra in place of <span class="math inline">B</span>, Cantor space for the worlds and its homeomorphisms for <span class="math inline">G</span>, the supported sets of worlds are exactly the clopen ones. So the fibre condition comes free. The component is then a clean model of C5 + Boolean Completeness at <span class="math inline">t</span> + ¬Actuality, but the free root fails Boolean Completeness at <span class="math inline">t</span>.</p>
+<p><strong>The two presentations.</strong> Astra’s presentation is
+Boolean-valued: propositions are elements of <span
+class="math inline">B</span>, relations are finitely supported functions
+into <span class="math inline">B</span>, identity is crisp, and
+quantifiers are infima and suprema. There, Lemma 2 is what makes each
+ultrafilter a world respecting the quantifiers. In the action model the
+worlds come first, and Lemma 2 is what keeps the domains closed under
+the quantifiers. The two are the same model.</p>
+<p><strong>The fibre condition is needed.</strong> Without it, every
+supported relation would be admitted. The component’s propositions would
+then be all the <span class="math inline">H_P</span>-invariant sets of
+ultrafilters, a larger algebra, since <span class="math inline">G</span>
+isn’t transitive on the ultrafilters in a cell. That component is still
+a model of C, and it satisfies C5, BF, Boolean Completeness at <span
+class="math inline">t</span> and Atomlessness. But its algebra isn’t
+externally complete, and the free root would then fail Boolean
+Completeness.</p>
+<p><strong>Cantor space.</strong> With the countable atomless algebra in
+place of <span class="math inline">B</span>, Cantor space for the worlds
+and its homeomorphisms for <span class="math inline">G</span>, the
+supported sets of worlds are exactly the clopen ones. So the fibre
+condition comes free. The component is then a clean model of C5 +
+Boolean Completeness at <span class="math inline">t</span> + ¬Actuality,
+but the free root fails Boolean Completeness at <span
+class="math inline">t</span>.</p>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds), Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated 16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition and footnote locators in this map refer to that draft’s numbering. — §3.5, pp. 58–61; Appendix E, Definition E.2, pp. 80–83. Action models, and the unrestricted root of the coalesced sums.</li>
+<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian
+Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds),
+Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map
+was built from the draft dated 16 May 2023, 87 pages, which does not
+differ materially from the published version; all page, proposition and
+footnote locators in this map refer to that draft’s numbering. — §3.5,
+pp. 58–61; Appendix E, Definition E.2, pp. 80–83. Action models, and the
+unrestricted root of the coalesced sums.</li>
 </ul>
 </body></html>

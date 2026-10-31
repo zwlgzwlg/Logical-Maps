@@ -323,26 +323,56 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
 <script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Rigid Rigidity ∧ Rigid Power ⇒ □Rigid Power</h1></header><p class="cert">
-Result — Source: Misc.; produced by GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, 26 October 2026; recorded by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 28 October 2026.
+Result — Source: Misc.; produced by GPT-6 Astra (OpenAI), prompted by
+Daniel Kodsi, 26 October 2026; recorded by Claude Opus 5.5 (Anthropic),
+prompted by Cian Dorr, 28 October 2026.
 </p>
 <h2 id="premises">Premises</h2>
 <ul>
-<li><strong>Rigid Rigidity.</strong> Being rigid is a rigid property of relations, including propositions.</li>
-<li><strong>Rigid Power.</strong> If a relation is rigid, so is the property of being a rigid relation that entails it.</li>
+<li><strong>Rigid Rigidity.</strong> Being rigid is a rigid property of
+relations, including propositions.</li>
+<li><strong>Rigid Power.</strong> If a relation is rigid, so is the
+property of being a rigid relation that entails it.</li>
 </ul>
 <h2 id="conclusion">Conclusion</h2>
 <ul>
-<li><strong>□Rigid Power.</strong> Necessarily, if a relation is rigid, so is the property of being a rigid relation that entails it.</li>
+<li><strong>□Rigid Power.</strong> Necessarily, if a relation is rigid,
+so is the property of being a rigid relation that entails it.</li>
 </ul>
 <h2 id="proof">Proof</h2>
-<p>Let <span class="math inline">R:=\lambda X\, .\,\operatorname{Rigid}(X)</span> and <span class="math inline">Z:=\lambda F\, .\,\operatorname{Rigid}(\lambda X\, .\,\operatorname{Rigid}(X)\land X\le F)</span>. By Rigid Power, every <span class="math inline">F</span> with <span class="math inline">RF</span> has <span class="math inline">ZF</span>, and so <span class="math inline">\Box ZF</span>, since rigidity, if true, is necessary ([[rigid-necessary]]). Rigid Rigidity makes <span class="math inline">R</span> rigid, so in particular inextensible; at the actual world, by T, this says that if every <span class="math inline">F</span> with <span class="math inline">RF</span> has <span class="math inline">\Box ZF</span> then <span class="math inline">R\le Z</span>. So <span class="math inline">R\le Z</span>, that is, <span class="math inline">\Box\forall F\, .\,\operatorname{Rigid}(F)\to \operatorname{Rigid}(\lambda X\, .\,\operatorname{Rigid}(X)\land X\le F)</span>, which is □Rigid Power.</p>
+<p>Let <span class="math inline">R:=\lambda X\,
+.\,\operatorname{Rigid}(X)</span> and <span
+class="math inline">Z:=\lambda F\, .\,\operatorname{Rigid}(\lambda X\,
+.\,\operatorname{Rigid}(X)\land X\le F)</span>. By Rigid Power, every
+<span class="math inline">F</span> with <span
+class="math inline">RF</span> has <span class="math inline">ZF</span>,
+and so <span class="math inline">\Box ZF</span>, since rigidity, if
+true, is necessary ([[rigid-necessary]]). Rigid Rigidity makes <span
+class="math inline">R</span> rigid, so in particular inextensible; at
+the actual world, by T, this says that if every <span
+class="math inline">F</span> with <span class="math inline">RF</span>
+has <span class="math inline">\Box ZF</span> then <span
+class="math inline">R\le Z</span>. So <span class="math inline">R\le
+Z</span>, that is, <span class="math inline">\Box\forall F\,
+.\,\operatorname{Rigid}(F)\to \operatorname{Rigid}(\lambda X\,
+.\,\operatorname{Rigid}(X)\land X\le F)</span>, which is □Rigid
+Power.</p>
 <h2 id="notes">Notes</h2>
-<p>The instance of Rigid Rigidity used is the one at the type of <span class="math inline">F</span>, together with Rigid Power at the same type. Since □BF and Rigid Power imply Rigid Rigidity ([[necessary-barcan-and-rigid-power-imply-rigid-rigidity]]), □BF and Rigid Power imply □Rigid Power.</p>
+<p>The instance of Rigid Rigidity used is the one at the type of <span
+class="math inline">F</span>, together with Rigid Power at the same
+type. Since □BF and Rigid Power imply Rigid Rigidity
+([[necessary-barcan-and-rigid-power-imply-rigid-rigidity]]), □BF and
+Rigid Power imply □Rigid Power.</p>
 <h2 id="sources">Sources</h2>
 <ul>
-<li><strong>Astra via Kodsi 26 Oct</strong> — GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, A recurrent-colour countermodel, research note of 26 October 2026, §11 (unpaginated), in Daniel Kodsi’s pull request #18 of 26 October 2026 (branch classicism-integration-2026-10-26 of github.com/dkodsi/Logical-Maps).</li>
+<li><strong>Astra via Kodsi 26 Oct</strong> — GPT-6 Astra (OpenAI),
+prompted by Daniel Kodsi, A recurrent-colour countermodel, research note
+of 26 October 2026, §11 (unpaginated), in Daniel Kodsi’s pull request
+#18 of 26 October 2026 (branch classicism-integration-2026-10-26 of
+github.com/dkodsi/Logical-Maps).</li>
 </ul>
 <p class="cert">
-Record: <code>topics/classicism/results/rigid-rigidity-and-rigid-power-imply-necessary-rigid-power.yaml</code>
+Record:
+<code>topics/classicism/results/rigid-rigidity-and-rigid-power-imply-necessary-rigid-power.yaml</code>
 </p>
 </body></html>

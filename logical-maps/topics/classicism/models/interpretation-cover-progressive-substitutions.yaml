@@ -1,0 +1,126 @@
+id: interpretation-cover-progressive-substitutions
+name: 'Interpretation cover: progressive substitutions'
+definition: In ZFC retain a set-sized pure-C-complete family of pointed old C action models and every old domain
+  and arrow. Index each typed auxiliary name set by an infinite initial ordinal lambda, large enough for the
+  old-domain bounds and distinct names for every symbol of a fixed set-sized constant signature Sigma. Root
+  individuals are its individual names. Root loops are ALL type-preserving maps f satisfying index(f(c_alpha))
+  >= alpha, with no requirement of injectivity or order preservation between different inputs. Include every
+  typed interpretation into each old object, composed by precomposition with root maps and old transport. There
+  are no old-to-root arrows and root designated symmetry is trivial. Root relational entities are exactly the
+  finite-typed-pin profiles whose whole old sections are admitted in the unchanged targets; the same pinning
+  condition governs identity and all root loops. Transport is precomposition. Interpret individual constants
+  by distinct designated names and relational constants by the named lifts with zero root rows and whole interpreted
+  old sections. Evaluate at root identity.
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi, after Cian Dorr's typed interpretation-root machinery,
+    the OpenAI Codex unrestricted cover, and the recorded no-return cylinder construction
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi, 30 October 2026
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- 'GPT-6 Astra, prompted by Daniel Kodsi, Maximalism residual boundary: five Atomlessness pairs §§3–6, 30 October
+  2026, unpaginated.'
+- Cian Dorr, interpretation-root and pinned-substitution constructions, 19 October 2026, coalesced-pinned-interpretations-root
+  and coalesced-pinned-substitutions-root write-ups.
+- OpenAI Codex, prompted by Daniel Kodsi, Observer covers and Boolean completeness, 26 October 2026, §§8.2–8.3, unpaginated.
+- supported-product-free-monoids-glued-constants, argument for necessary Truths are ND-necessary, 25 October
+  2026, for the earlier no-return fixed-cylinder mechanism.
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix D, Definitions D.1–D.3 and Proposition
+  D.4, pp. 73–74; Appendix E, Definition E.2, pp. 80–83.
+- 'GPT-6 Astra, prompted by Daniel Kodsi, Extra progressive-cover verdicts, 30 October 2026, Sections 1–5 (unpaginated):
+  current relation fullness, choice, quantified infinity, Possibility+, and the Barcan counterexample.'
+source_names:
+- Progressive interpretation cover 30 Oct
+- Dorr interpretation roots
+- Permutation cover 26 Oct
+- Fixed-cylinder argument 25 Oct
+- Classicism
+- Additional current verdicts 30 Oct
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, pp. 73–74; Appendix E, pp. 80–83
+  note: Typed pinned action models and coalesced components.
+arguments:
+- id: progressive-cylinders-and-splitting
+  holds:
+  - atomlessness
+  - distinctness-preserving-collapse
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: free
+  writeup: interpretation-cover-progressive-substitutions
+  text: For a finite pin S, the admitted root-only proposition q_S says that the root map fixes S. Progressiveness
+    gives Diamond q_S=q_S at every coordinate. If S pins a current truth p, q_S <= p, so q_S witnesses the
+    native ND-necessity of p. Every nonzero proposition splits at a fresh coordinate, either by moving a root
+    individual-name image upwards or by assigning a fresh propositional name top/bottom in the same old target.
+- id: weak-inextensible-comprehension-obstruction
+  fails:
+  - weakly-inextensible-comprehension-r
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: free
+  writeup: interpretation-cover-progressive-substitutions
+  text: 'The empty-pinned root table E={q_{c_n}: n in N}, with empty old rows, is admitted at tt. Any coextension
+    Y has a finite pin. Move a fresh c_k while fixing that pin. Y''s future table still contains the whole
+    q_{c_k}. A pinned tester omitting that whole proposition exactly when c_k moves, and containing bottom
+    at all old targets, necessarily contains every current E-member because moved cylinders become bottom.
+    It fails on the retained q_{c_k} in Y''s future full domain, contradicting weak inextensibility.'
+- id: current-transversal-choice
+  holds:
+  - transversal-choice-r
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-progressive-substitutions
+  text: 'Every external relation on whole current entities is the row of an admitted empty-pinned profile:
+    keep that row at all root loops and take empty old rows. Select a representative of each current equivalence
+    class in ZFC and represent the selected subset by such a profile. All clauses of native Transversal Choice
+    are current. Relational Choice and Transversal follow from recorded implications; their direct proofs are
+    also given. Writeup Sections 6–7.'
+- id: quantified-individual-infinity
+  holds:
+  - axiom-of-infinity-e
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-progressive-substitutions
+  text: Current relation fullness admits the higher predicate whose extension is exactly the whole standard
+    numeral denotations Z_n. It contains Frege zero and is closed under successor, so every current finite
+    cardinality is one of these entities. Finite induction shows Z_n holds of a property exactly when its current
+    extension has n individuals. No Z_n holds of the universal infinite name set. This proves the impredicative
+    Axiom of Infinity, not merely external infinitude. Writeup Section 8.
+- id: individual-parameter-possibility-plus
+  holds:
+  - possibility-plus-signature-r
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: interpretation-cover-progressive-substitutions
+  text: Eliminate the finitely many occurring signature constants and existentially close the displayed individual
+    variables. The pure-complete old family supplies typed witnesses. Assign the pairwise-distinct current
+    names and the designated constant names their values; the native exclusion from individual constants occurring
+    in the formula makes the assignments compatible. Every typed interpretation remains available, and whole
+    named-lift landing gives the required possibility. Empty tuples are included. Pure Possibility+ and both
+    Maximalisms are derived. Writeup Section 9.
+- id: barcan-failure-at-propositions
+  fails:
+  - barcan-t
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: free
+  writeup: interpretation-cover-progressive-substitutions
+  text: Let c be the least individual name and q_c its root-only fixed-name proposition. If a progressive map
+    moves c, its name image omits c, so every transported current proposition has a finite pin omitting c.
+    The proposition q_c has no such pin. The admitted {c}-pinned tt tester is universal when c is fixed, omits
+    q_c otherwise, and has universal whole old sections. It therefore necessarily holds of every transported
+    current proposition but fails on q_c in a full future target domain. This directly refutes the native BF_t
+    formula. Writeup Section 10.
+notes: Current Truths are ND-necessary is the native distinctness-preserving-collapse principle. The monoid
+  is progressive, with no injectivity or monotonicity requirement between different inputs. Quantified Infinity,
+  Possibility+ for the fixed free-constant signature, and Transversal Choice hold currently; BF at t and Weakly
+  Inextensible Comprehension at tt fail. Pure Possibility+, both Maximalisms, Relational Choice, Transversal
+  and failure of Vicinity are derived. The unchanged old components supply the stated C-completeness input;
+  no boxed upgrade is asserted.

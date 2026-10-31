@@ -1,0 +1,718 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Subset-closed elementary Henkin presents</title><link rel="icon" type="image/png" href="../favicon.png">
+<style>/* Fixed forest palette, adapted from the supplied style example.
+   Semantic and source hues retain their meaning in both modes. */
+:root {
+  --bg: #f3f1e8;
+  --panel: #f8f7f0;
+  --panel-2: #e9ecdf;
+  --line: #d4d9c9;
+  --line-strong: #a2ae97;
+  --ink: #283c28;
+  --ink-2: #4f604b;
+  --ink-3: #5f6d58;
+  --accent: #356044;
+  --link-hover: #914b30;
+  --human: #3e7052;
+  --assisted: #746044;
+  --ai: #a35b36;
+  --derived: #7b8271;
+  --indep: #a0483a;
+  --open: #e2e5d9;
+  --open-ink: #65705f;
+  --conj: #896b27;
+  --node-fill: #f8f7f0;
+  --node-stroke: #98a68b;
+  --junction: #52634b;
+  --hl: #e0e7cd;
+  --focus: #914b30;
+  --badge-ink: #ffffff;
+  --warning-bg: #f4e6dc;
+  --source-forest: #3e7052;
+  --source-rust: #a25336;
+  --source-ochre: #896b27;
+  --source-slate: #4c7279;
+  --source-berry: #80556d;
+  --source-olive: #69753c;
+  --source-misc: #696d61;
+  --shadow: 0 4px 24px rgb(40 60 40 / 12%);
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --serif: var(--sans);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0e1912;
+  --panel: #142018;
+  --panel-2: #1d2b20;
+  --line: #304332;
+  --line-strong: #596e51;
+  --ink: #d7dfca;
+  --ink-2: #b3c1a7;
+  --ink-3: #96aa8d;
+  --accent: #a6c699;
+  --link-hover: #dfab89;
+  --human: #94bc95;
+  --assisted: #c1ad8d;
+  --ai: #dca17b;
+  --derived: #83937c;
+  --indep: #e09b86;
+  --open: #243327;
+  --open-ink: #a2b398;
+  --conj: #d0b36b;
+  --node-fill: #19261c;
+  --node-stroke: #627957;
+  --junction: #b3c1a7;
+  --hl: #30422a;
+  --focus: #dfab89;
+  --badge-ink: #0e1912;
+  --warning-bg: #32251f;
+  --source-forest: #94bc95;
+  --source-rust: #dca17b;
+  --source-ochre: #d0b36b;
+  --source-slate: #95bcc1;
+  --source-berry: #c5a0b7;
+  --source-olive: #b6c383;
+  --source-misc: #a9b09c;
+  --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); scrollbar-color: var(--line-strong) var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.6 var(--sans); }
+button, input, select { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 3px; }
+input[type="checkbox"] { accent-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+::selection { background: var(--hl); color: var(--ink); }
+.theme-toggle { border: 0; padding: 6px 0; background: transparent; color: var(--ink-2); cursor: pointer; font: 13px var(--sans); white-space: nowrap; }
+.theme-toggle:hover { color: var(--link-hover); }
+.display-toggles { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 16px; }
+.theme-toggle[aria-pressed="true"] { color: var(--accent); }
+
+/* A prismatic name: one rainbow wheel around a point in the word, spinning;
+   --prism-x and --prism-y move that point off the middle.
+   Pure spectral stops, turned by a registered angle rather than a hue
+   filter, which would muddy them. */
+@property --prism { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.prismatic { font-weight: 600; color: transparent; background: conic-gradient(from var(--prism) at var(--prism-x, 50%) var(--prism-y, 50%), #ff1a1a, #ff8a00, #ffd000, #22c33a, #00a8f0, #3d4bff, #b026ff, #ff1a1a); -webkit-background-clip: text; background-clip: text; animation: prism-spin 6s linear infinite; }
+/* As a link it keeps the gradient on hover, under an accent underline. */
+a.prismatic, a.prismatic:hover { color: transparent; }
+a.prismatic:hover { text-decoration-color: var(--accent); }
+@keyframes prism-spin { to { --prism: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .prismatic { animation: none; } }
+
+/* Standalone write-ups use the same quiet, ruled typography as the map. */
+html:has(body.writeup-page) { background: var(--bg); }
+body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; font: 16px/1.7 var(--sans); overflow-wrap: anywhere; }
+.writeup-nav { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 24px; font-size: 13px; }
+.writeup-page h1 { font-size: 1.4em; line-height: 1.4; margin: 0 0 20px; color: var(--ink); }
+.writeup-page h2 { font-size: 1.15em; line-height: 1.4; margin: 1.8em 0 .5em; padding-top: 14px; border-top: 1px solid var(--line); }
+.writeup-page h3 { font-size: 1em; }
+.writeup-page p { margin: 0 0 12px; }
+.writeup-page .cert { color: var(--ink-2); font-size: .85em; }
+.writeup-page code, .writeup-page pre { font: .85em/1.6 var(--mono); color: var(--ink); }
+.writeup-page pre { padding: 14px; background: var(--panel-2); overflow-x: auto; }
+.writeup-page blockquote { color: var(--ink-2); border-left: 2px solid var(--line-strong); margin-left: 0; padding-left: 20px; }
+.writeup-page math[display="block"] { display: block; overflow-x: auto; padding: 8px 0; }
+.writeup-page table { display: block; overflow-x: auto; border-collapse: collapse; }
+.writeup-page th, .writeup-page td { border-bottom: 1px solid var(--line); padding: 8px 12px; }
+@media (max-width: 600px) {
+  body.writeup-page { margin: 1.5em auto; padding: 0 1em 2em; }
+}
+@media print {
+  :root, :root[data-theme="dark"] { --bg: white; --ink: #283c28; --ink-2: #4f604b; --accent: #356044; --line: #d4d9c9; color-scheme: light; }
+  .writeup-nav { display: none; }
+  body.writeup-page { max-width: none; margin: 0; padding: 0; }
+}
+
+/* Teal-grey, muted rust, deep teal and warm stone. Screen-only overrides
+   preserve print styling. */
+@media screen {
+  :root {
+    --bg: #ebf1f1;
+    --panel: #e1eae9;
+    --panel-2: #d0dfde;
+    --line: #c0cecd;
+    --line-strong: #849997;
+    --ink: #303b3a;
+    --ink-2: #4a5a59;
+    --ink-3: #526160;
+    --accent: #884932;
+    --link-hover: #6f3827;
+    --derived: #6f8180;
+    --open: #d6e2e1;
+    --open-ink: #526160;
+    --node-fill: #f1f6f6;
+    --node-stroke: #7f9391;
+    --junction: #596b6a;
+    --human: #2f6b66;
+    --source-forest: #2f6b66;
+    --hl: #e6ddd0;
+    --focus: #884932;
+    --shadow: 0 4px 24px rgb(48 59 58 / 10%);
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #171e1d;
+    --panel: #202a29;
+    --panel-2: #2b3736;
+    --line: #3d4b4a;
+    --line-strong: #6b817f;
+    --ink: #dbe8e7;
+    --ink-2: #b9cbca;
+    --ink-3: #a6bdbb;
+    --accent: #e2ad92;
+    --link-hover: #f0c3aa;
+    --derived: #87a09e;
+    --open: #303d3c;
+    --open-ink: #aec6c4;
+    --node-fill: #263130;
+    --node-stroke: #738d8b;
+    --junction: #b3cbc9;
+    --human: #86c0b6;
+    --source-forest: #86c0b6;
+    --hl: #463f37;
+    --focus: #e2ad92;
+    --badge-ink: #171e1a;
+    --shadow: 0 4px 24px rgb(0 0 0 / 24%);
+  }
+}
+
+/* Shared Okabe–Ito palette: https://jfly.uni-koeln.de/color/#pallet
+   Loaded after topic themes. Sky blue and orange distinguish positive and
+   negative relations; darker inks keep small labels readable in light mode.
+   Neutral surfaces are identical across maps. Print uses the shared theme. */
+@media screen {
+  :root[data-palette="colourblind"] {
+    --bg: #f4f5f6;
+    --panel: #ffffff;
+    --panel-2: #e9edf0;
+    --line: #d0d6da;
+    --line-strong: #87949d;
+    --ink: #202930;
+    --ink-2: #45535d;
+    --ink-3: #586670;
+    --accent: #0072b2;
+    --link-hover: #925f00;
+    --human: #0072b2;
+    --assisted: #80506a;
+    --ai: #a44500;
+    --derived: #687780;
+    --indep: #925f00;
+    --open: #e9edf0;
+    --open-ink: #586670;
+    --conj: #80506a;
+    --node-fill: #ffffff;
+    --node-stroke: #7a8b96;
+    --junction: #45535d;
+    --hl: #dce4ea;
+    --focus: #0072b2;
+    --badge-ink: #ffffff;
+    --warning-bg: #fff0ce;
+    --source-forest: #56b4e9;
+    --source-rust: #e69f00;
+    --source-ochre: #d55e00;
+    --source-slate: #0072b2;
+    --source-berry: #cc79a7;
+    --source-olive: #009e73;
+    --source-misc: #687780;
+    --rel-positive: #56b4e9;
+    --rel-negative: #e69f00;
+    --shadow: 0 4px 24px rgb(32 41 48 / 12%);
+  }
+  :root[data-palette="colourblind"][data-theme="dark"] {
+    --bg: #111820;
+    --panel: #18222b;
+    --panel-2: #23303b;
+    --line: #354550;
+    --line-strong: #718492;
+    --ink: #edf2f5;
+    --ink-2: #c1ced7;
+    --ink-3: #a5b5c1;
+    --accent: #56b4e9;
+    --link-hover: #e69f00;
+    --human: #56b4e9;
+    --assisted: #cc79a7;
+    --ai: #e69f00;
+    --derived: #91a1ad;
+    --indep: #e69f00;
+    --open: #23303b;
+    --open-ink: #a5b5c1;
+    --conj: #cc79a7;
+    --node-fill: #1c2933;
+    --node-stroke: #8094a3;
+    --junction: #c1ced7;
+    --hl: #354654;
+    --focus: #56b4e9;
+    --badge-ink: #111820;
+    --warning-bg: #352b18;
+    --source-misc: #91a1ad;
+    --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  }
+  /* Source swatches use the unmodified palette; outlined badges allow their
+     text to keep the normal contrast on both light and dark surfaces. */
+  :root[data-palette="colourblind"] .badge.source {
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--source-color);
+    border-left-width: 4px;
+  }
+}
+</style>
+<script>/* Apply before paint; share the preference between every map and write-up. */
+(() => {
+  const key = 'pmap-theme';
+  const paletteKey = 'pmap-palette';
+  const system = window.matchMedia?.('(prefers-color-scheme: dark)');
+  let preference;
+  let palette;
+  try { preference = localStorage.getItem(key); } catch (_) {}
+  try { palette = localStorage.getItem(paletteKey); } catch (_) {}
+  if (!['light', 'dark'].includes(preference)) preference = null;
+  if (palette !== 'colourblind') palette = 'default';
+  function apply(theme) {
+    document.documentElement.dataset.theme = theme;
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.textContent = theme === 'dark' ? '[Light mode]' : '[Dark mode]';
+      button.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+    });
+  }
+  function applyPalette() {
+    document.documentElement.dataset.palette = palette;
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.setAttribute('aria-pressed', String(palette === 'colourblind'));
+      button.textContent = `[Colourblind mode: ${palette === 'colourblind' ? 'on' : 'off'}]`;
+    });
+  }
+  const initial = () => preference || (system?.matches ? 'dark' : 'light');
+  apply(initial());
+  applyPalette();
+  document.addEventListener('DOMContentLoaded', () => {
+    apply(initial());
+    applyPalette();
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        preference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        apply(preference);
+        try { localStorage.setItem(key, preference); } catch (_) {}
+      });
+    });
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        palette = palette === 'colourblind' ? 'default' : 'colourblind';
+        applyPalette();
+        try { localStorage.setItem(paletteKey, palette); } catch (_) {}
+      });
+    });
+  });
+  system?.addEventListener('change', () => { if (!preference) apply(initial()); });
+  window.addEventListener('storage', event => {
+    if (event.key === key || event.key === null) {
+      preference = ['light', 'dark'].includes(event.newValue) ? event.newValue : null;
+      apply(initial());
+    }
+    if (event.key === paletteKey || event.key === null) {
+      palette = event.newValue === 'colourblind' ? 'colourblind' : 'default';
+      applyPalette();
+    }
+  });
+})();
+</script>
+<link rel="stylesheet" href="../math/katex.min.css">
+<script defer src="../math/katex.min.js"></script>
+<script defer src="../math/contrib/auto-render.min.js"></script>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Subset-closed elementary Henkin presents</h1></header><p>GPT-6 Astra, prompted by Daniel Kodsi, 30 October 2026. The
+full-present construction and its product-order criterion are due to
+Daniel Kodsi, using the earlier classical-present machinery of Cian
+Dorr. The construction below chooses elementary leaves with controlled
+subset closure. The two sizes serve different purposes.</p>
+<p>Over external ZFC, the countably closed model satisfies necessary
+Countable Boolean Completeness, necessary Actuality and necessary
+Inextensible Comprehension, together with Analytic Necessitism and
+Necessity of Second-Order Analysis, but fails full Boolean Completeness
+and Second-Order Analytic Necessitism. The continuum-closed model
+satisfies Second-Order Analytic Necessitism, necessary Countable Boolean
+Completeness and necessary Strong Atomicity, while still failing full
+Boolean Completeness.</p>
+<p>All types use the fixed relational type system of C. Completeness at
+a Henkin leaf concerns admitted families. Completeness at its full
+present must also handle families whose projections are external subsets
+of the leaf algebra. This difference supplies the missing joins.</p>
+<h2 id="elementary-leaves-with-exact-subset-codes">1. Elementary leaves
+with exact subset codes</h2>
+<p>Let <span class="math inline">\mathfrak c=2^{\aleph_0}</span>, and
+let <span class="math inline">F</span> be the full standard extensional
+typed hierarchy over <span class="math inline">F_e=\omega</span>, with
+<span class="math inline">F_t=2</span> and terminal modality. Present it
+as a countable many-sorted first-order structure, with application,
+logical operations, and all finite parameterized-lambda templates. Each
+finite type is a set; all these sorts together form a set-sized
+structure. Elementary substructures retain every parameter instance of
+comprehension.</p>
+<p>For each infinite relational sort <span
+class="math inline">\tau</span>, choose an ordinary real-field copy
+<span class="math inline">X_\tau\subseteq F_\tau</span>. Include every
+point of this copy and its carrier, order, addition, multiplication and
+natural-part relations, together with zero and one, in the seed. Such a
+copy exists: an infinite relational sort is a full power set of an
+infinite argument product, so has at least <span
+class="math inline">\mathfrak c</span> members. Include every individual
+as well. There are countably many types.</p>
+<p>For the <strong>countable closure</strong>, start with an elementary
+hull of this seed of size <span class="math inline">\mathfrak c</span>.
+Build a continuous elementary chain of length <span
+class="math inline">\omega_1</span>. At each successor stage, for each
+sort, add the actual <span class="math inline">F</span>-characteristic
+predicate <span class="math inline">\chi_T</span> of every external
+countable subset <span class="math inline">T</span> of that stage’s
+domain; then take an elementary hull. The number of additions is at most
+<span class="math inline">\mathfrak c^{\aleph_0}=\mathfrak c</span>. The
+union <span class="math inline">H</span> has size <span
+class="math inline">\mathfrak c</span> and is elementary in <span
+class="math inline">F</span>. Every countable subset of a final sort is
+contained in one earlier stage, by regularity of <span
+class="math inline">\omega_1</span>, so its exact characteristic
+predicate belongs to <span class="math inline">H</span>.</p>
+<p>For the <strong>continuum closure</strong>, put <span
+class="math inline">\lambda=2^{\mathfrak c}</span>, add every member of
+<span class="math inline">F_{(et)t}</span> to the seed, and take an
+elementary chain of length <span class="math inline">\mathfrak
+c^+</span>. At each successor stage add exact characteristic predicates
+for every subset of each stage domain of size at most <span
+class="math inline">\mathfrak c</span>. Every stage and the union have
+size <span class="math inline">\lambda</span>, since</p>
+<p><span class="math display">
+\lambda^{\mathfrak c}=\lambda,\qquad \mathfrak c^+\leq\lambda.
+</span></p>
+<p>Regularity of <span class="math inline">\mathfrak c^+</span> ensures
+that every final subset of size at most <span
+class="math inline">\mathfrak c</span> is contained in one stage. Thus
+the union has precisely the required closure. Neither construction
+assumes CH or regularity of <span class="math inline">\mathfrak
+c</span>.</p>
+<p>The word <em>exact</em> matters: <span
+class="math inline">\chi_T</span> has extension <span
+class="math inline">T</span> on the entire ambient <span
+class="math inline">F</span>-domain, not merely on one stage. This
+ensures that existential unions computed in <span
+class="math inline">F</span> introduce no extra members later.</p>
+<p>Restriction to <span class="math inline">H</span> argument domains is
+faithful. Distinct relations in <span class="math inline">H</span> have
+a distinguishing tuple in <span class="math inline">F</span>, and
+elementarity supplies such a tuple in <span
+class="math inline">H</span>. Consequently <span
+class="math inline">H</span>, with these restricted applications and
+terminal modality, is an extensional Henkin model of C. Parameterized
+lambda terms and quantifiers have their inherited interpretations.</p>
+<p>Both leaves have <span class="math inline">H_e=\omega</span> and
+<span class="math inline">H_{et}=\mathcal P(\omega)</span>: every subset
+of <span class="math inline">\omega</span> receives an exact countable
+code. Every finite <span class="math inline">F</span>-sort is wholly
+retained by elementarity. Every infinite relational <span
+class="math inline">H</span>-sort contains its seeded <span
+class="math inline">\mathfrak c</span> real points. In the smaller leaf
+every such sort therefore has size exactly <span
+class="math inline">\mathfrak c</span>. In the larger leaf the sort
+sizes are at most <span class="math inline">\lambda</span>, and <span
+class="math inline">H_{(et)t}=F_{(et)t}</span> has size exactly <span
+class="math inline">\lambda</span>.</p>
+<h2 id="the-full-present-and-its-order">2. The full present and its
+order</h2>
+<p>Add a root <span class="math inline">R</span> with identity
+individual transport and, recursively at relational types <span
+class="math inline">\tau=\alpha_1\cdots\alpha_k t</span>, domains</p>
+<p><span class="math display">
+R_e=\omega,\qquad
+R_\tau=\mathcal P\!\left(\prod_iR_{\alpha_i}\right)\times H_\tau,
+\qquad q_\tau(S,h)=h.
+</span></p>
+<p>The empty argument product handles <span
+class="math inline">\tau=t</span>. There are just the root and its
+terminal future <span class="math inline">H</span>. A relation’s first
+coordinate is its arbitrary current extension; its second is its whole
+future entity. Application has the specified current truth value and the
+application of the transported entities as its future coordinate.
+Connectives, equality, quantifiers and abstractions have the
+corresponding two coordinates; identity is literal at each point.
+Modality at the root tests both the current and terminal
+evaluations.</p>
+<p>Every projection is onto: <span
+class="math inline">(\varnothing,h)</span> lifts an arbitrary relational
+<span class="math inline">h</span>, and individual transport is the
+identity. Hence quantified terms project to the original <span
+class="math inline">H</span>-quantifiers, including their entire future
+domains. Abstraction of an arbitrary formula has an admitted
+first-coordinate extension and its admitted <span
+class="math inline">H</span>-abstraction as second coordinate. These
+observations verify the application, lambda, quantifier and transport
+clauses of the full-present construction. The classical and modal rules
+hold at both evaluations. H-equivalent abstractions have the same
+current extension and the same <span
+class="math inline">H</span>-component, so are literally equal; the
+theoremhood restriction on Logical Equivalence is preserved. Thus this
+is a C model.</p>
+<p>Native order is necessary inclusion. For <span
+class="math inline">A=(S,a),B=(T,b)</span>, it is precisely</p>
+<p><span class="math display">
+A\leq B\quad\Longleftrightarrow\quad S\subseteq T\text{ and }a\leq_H b.
+\tag{1}
+</span></p>
+<p>This compares whole profiles; current-row inclusion alone would be
+insufficient.</p>
+<h2 id="countable-completeness-and-a-missing-larger-join">3. Countable
+completeness and a missing larger join</h2>
+<p>Let <span class="math inline">T\subseteq H_\tau</span> be an external
+family within the leaf’s closure bound. Its exact family code <span
+class="math inline">W=\chi_T</span> belongs to <span
+class="math inline">H_{\tau t}</span>. Parameter comprehension gives</p>
+<p><span class="math display">
+u_T=\lambda\bar x\,\exists Y^\tau(WY\land Y[\bar x]).
+</span></p>
+<p>In <span class="math inline">F</span> this is the genuine union of
+the full rows in <span class="math inline">T</span>; hence in <span
+class="math inline">H</span> it is their union and their LUB against
+every admitted upper bound. Independently, terminal <span
+class="math inline">H</span> satisfies <strong>internal full
+BC</strong>, since every admitted family has its lambda union. External
+subset closure is needed only for families not already admitted
+there.</p>
+<p>At the root, for each counting type <span
+class="math inline">\sigma</span>, the current canonical numbers are
+exactly the external successor orbit</p>
+<p><span class="math display">
+O_\sigma=\{\operatorname{Suc}_\sigma^n(\mathbf0_\sigma):n\in\omega\}.
+</span></p>
+<p>The root admits a predicate with exactly that current extension and
+an arbitrary leaf component. It is currently inductive, so leastness
+gives <span class="math inline">\mathbb N_\sigma\subseteq
+O_\sigma</span>; ordinary external finite induction gives the reverse
+inclusion. The orbit may repeat when <span
+class="math inline">\sigma</span> is finite, which does not affect
+countability.</p>
+<p>If a current family is natively countable at <span
+class="math inline">\sigma</span>, its shared-code witness assigns each
+member a code from <span class="math inline">O_\sigma</span>, with the
+same code only for equal members. Assign each member the least external
+index of an assigned successor iterate. This is an external injection
+into <span class="math inline">\omega</span>; it requires no
+object-language operation choosing codes. Thus the current family <span
+class="math inline">S\subseteq R_\tau</span> is externally countable, at
+every counting type.</p>
+<p>Its projection <span class="math inline">q[S]</span> has a leaf union
+<span class="math inline">u_{q[S]}</span>. Equation (1) proves that</p>
+<p><span class="math display">
+J=\left(\bigcup_{Y\in S}\operatorname{row}_R(Y),u_{q[S]}\right)
+</span></p>
+<p>is a root LUB against every test. This proves every current CBC
+instance, for every relational output type. Every instance also holds at
+<span class="math inline">H</span> by its internal full BC. Hence
+<strong>necessary CBC</strong> holds in both models. In fact the larger
+root has external joins for all families of size at most <span
+class="math inline">\mathfrak c</span>, by the same argument.</p>
+<p>Full BC nevertheless fails. In the smaller leaf put <span
+class="math inline">\delta=et</span>, <span
+class="math inline">\kappa=\mathfrak c</span>; in the larger put <span
+class="math inline">\delta=(et)t</span>, <span
+class="math inline">\kappa=\lambda</span>. In each case <span
+class="math inline">|H_\delta|=\kappa</span>, while <span
+class="math inline">|H_{\delta t}|\leq\kappa</span>. Choose an external
+<span class="math inline">A\subseteq H_\delta</span> not represented by
+any leaf predicate. Each singleton <span class="math inline">a_x=\lambda
+y(y=x)</span> and its complement belong to <span
+class="math inline">H_{\delta t}</span>.</p>
+<p>The external family <span class="math inline">\{a_x:x\in A\}</span>
+has <strong>no</strong> leaf LUB. Any upper bound contains <span
+class="math inline">A</span>, and the complement of each omitted
+singleton is an upper bound. A least upper bound would therefore exclude
+every point outside <span class="math inline">A</span> and represent
+<span class="math inline">A</span>, a contradiction. This rules out
+alternative upper bounds as well as the missing literal union.</p>
+<p>Lift the singletons as <span
+class="math inline">b_x=(\varnothing,a_x)</span>, and admit at the root
+a family whose current members are exactly the <span
+class="math inline">b_x</span>, with leaf component bottom. If <span
+class="math inline">(J_0,j_H)</span> were its LUB, comparison with every
+<span class="math inline">(\varnothing,z_H)</span> for a leaf upper
+bound <span class="math inline">z_H</span> would make <span
+class="math inline">j_H</span> a leaf LUB. This is impossible. Thus BC
+fails at <span class="math inline">(et)t</span> in the smaller model and
+at <span class="math inline">((et)t)t</span> in the larger. No failure
+at type <span class="math inline">t</span> is involved.</p>
+<h2 id="actuality-inextensible-coextensions-and-strong-atoms">4.
+Actuality, inextensible coextensions and strong atoms</h2>
+<p>At <span class="math inline">R</span>, the true proposition <span
+class="math inline">(1,0)</span> entails every current truth <span
+class="math inline">(1,b)</span>. At <span class="math inline">H</span>,
+top witnesses Actuality. Therefore Actuality holds necessarily.</p>
+<p>Any root relation with current row <span class="math inline">S</span>
+has coextensive representative <span
+class="math inline">(S,\bot_H)</span>. If a test is necessarily true of
+each current member, it contains the whole row now and faces no members
+in the terminal image. This proves current weak inextensibility. At the
+terminal point weak inextensibility is automatic, giving the required
+leading box. Thus the representative is inextensible. Terminal relations
+supply their own coextensions, so IC holds necessarily at every
+relational type.</p>
+<p>For completeness, singleton comprehension makes every nonzero leaf
+relation contain a singleton atom. Such an atom decides every admitted
+leaf relation and is therefore strong. The product algebra (1) has
+exactly two kinds of atoms:</p>
+<p><span class="math display">
+(\{\bar a\},\bot_H),\qquad (\varnothing,s_{\bar b}),
+</span></p>
+<p>where <span class="math inline">s_{\bar b}</span> is a leaf
+singleton. Every nonzero root relation contains one. Each atom decides
+every root relation according to its nonzero coordinate. At <span
+class="math inline">H</span>, its image is respectively bottom or a
+singleton, each of which decides every future relation. Hence each root
+atom satisfies the native boxed decision clause. A strong atom may
+become bottom; its nonzero clause is current. This proves necessary
+Strong Atomicity at every relational type, including <span
+class="math inline">t</span>, in both constructions. The displayed root
+truth atom and terminal top also witness necessary Strong Actuality.
+These are consequences of the full-present geometry with an extensional
+terminal leaf.</p>
+<h2 id="rigid-real-fields-at-the-same-carrier">5. Rigid real fields at
+the same carrier</h2>
+<p>Fix an infinite relational host <span
+class="math inline">\tau</span>. Its seed contains the entire ordinary
+real copy <span class="math inline">X_\tau=\{a_s:s\in\mathbb R\}</span>,
+together with every field graph. Lift its points to <span
+class="math inline">x_s=(\varnothing,a_s)</span>, and lift each graph
+with its graph on the <span class="math inline">x_s</span> as current
+row and its seeded graph as leaf component. The future extension of each
+graph is exactly the image of its current extension.</p>
+<p>An exact-image relation is rigid. Membership persists. If an
+arbitrary root test is necessarily true of its current tuples, it is
+true at <span class="math inline">H</span> of every image tuple, hence
+of the whole leaf graph. This is weak inextensibility against
+<strong>every</strong> test. At terminal <span
+class="math inline">H</span>, weak persistence and weak inextensibility
+hold automatically, so both native leading boxes are verified. Transport
+is injective on the chosen points, giving necessary distinctness.</p>
+<p>The same field is Real at both points. At the root it is the ordinary
+real field with all current subproperties available. At the leaf all its
+ordinary points and graphs remain present, so every admitted bounded
+nonempty subproperty has its external real supremum among the seed
+points. Its natural part is the standard one. Thus this tuple witnesses
+the consequent of AN at its original host.</p>
+<p>The finite/infinite status of each relational root sort agrees with
+its <span class="math inline">F</span>-sort, by induction through the
+pair definition. Finite carriers cannot support a real field. At the
+root <span class="math inline">e=\omega</span> cannot either, because
+full current predicates give Real its external meaning. At the leaf, the
+typed sentence asserting no real field on <span
+class="math inline">e</span>, and the corresponding sentences for finite
+sorts, transfer from <span class="math inline">F</span> by elementarity.
+Countability alone would not justify this claim about an arbitrary
+Henkin field. These cases exhaust the types. Full same-carrier AN holds
+in both models.</p>
+<h2 id="necessary-second-order-analytical-truth">6. Necessary
+second-order analytical truth</h2>
+<p>Fix a host and a standard finite sentence in the map’s analytical
+grammar. Relation variables there are used extensionally on field
+points, without modal tests or literal identity tests on the relation
+entities. Let <span class="math inline">\varepsilon</span> be its usual
+truth value in the ordinary real field with full finite-arity relation
+quantification.</p>
+<p>The typed first-order presentation of <span
+class="math inline">F</span> satisfies the sentence saying that
+<strong>every</strong> Real tuple at this host has sign <span
+class="math inline">\varepsilon</span>. Elementarity transfers that
+universal sentence to <span class="math inline">H</span>. This treats
+every admitted leaf field, not only the seeded copy, and does not assert
+that every leaf field is externally complete. At the root, full current
+rows make each Real tuple an ordinary real field and realize every
+finite-arity relation on it. The same universally signed sentence
+therefore holds there. Both points agree, proving the exact Necessity of
+Second-Order Analysis schema. Duplicate intensions do not affect the
+stipulated grammar.</p>
+<h2 id="why-the-smaller-leaf-cannot-represent-a-real-power">7. Why the
+smaller leaf cannot represent a real power</h2>
+<p>Consider any proposed root SOAN witness with current field carrier
+<span class="math inline">X</span>. Root fullness makes <span
+class="math inline">X</span> an ordinary real carrier of cardinality
+<span class="math inline">\mathfrak c</span>. Its necessarily distinct
+points have injective transport.</p>
+<p>For every external <span class="math inline">A\subseteq X</span>,
+root fullness provides a relation with precisely that extension. The
+current instance of the boxed representation clause supplies a member
+<span class="math inline">U_A</span> of the proposed power family
+agreeing with it on <span class="math inline">X</span>. This member is
+rigid and supported on <span class="math inline">X</span>, so has
+exactly extension <span class="math inline">A</span>.</p>
+<p>If <span class="math inline">x\in A\setminus B</span>, persistence
+gives <span class="math inline">\Box U_Ax</span>. Every current member
+<span class="math inline">y</span> of <span
+class="math inline">U_B</span> differs necessarily from <span
+class="math inline">x</span>, by necessary distinctness of <span
+class="math inline">X</span>. Weak inextensibility of <span
+class="math inline">U_B</span>, applied to the complement of the
+haecceity of <span class="math inline">x</span>, therefore gives <span
+class="math inline">\Box\neg U_Bx</span>. Their projections to <span
+class="math inline">H</span> differ. Choosing one representative per
+subset externally, or using uniqueness of coextensive weakly rigid
+representatives, yields an injection</p>
+<p><span class="math display">
+\mathcal P(X)\hookrightarrow H_{\tau t}.
+</span></p>
+<p>Its source has cardinality <span class="math inline">2^{\mathfrak
+c}</span>, while every smaller-leaf sort has size at most <span
+class="math inline">\mathfrak c</span>, contradiction. The argument
+defeats every field and power-family candidate. At host <span
+class="math inline">et</span> the field constructed in section 5 makes
+the possible-Real antecedent true, so SOAN fails already at unary
+power.</p>
+<h2 id="why-the-larger-leaf-admits-whole-finite-arity-powers">8. Why the
+larger leaf admits whole finite-arity powers</h2>
+<p>Fix a seeded field <span class="math inline">X</span> at host <span
+class="math inline">\tau</span> and a finite <span
+class="math inline">k\geq1</span>. Every external <span
+class="math inline">T\subseteq X^k</span> has size at most <span
+class="math inline">\mathfrak c</span>. For each tuple in <span
+class="math inline">T</span>, parameter comprehension gives its
+tuple-haecceity relation. The family of these has size at most <span
+class="math inline">\mathfrak c</span>, hence an exact admitted family
+code. Its existential union gives an <span
+class="math inline">H</span>-relation <span
+class="math inline">h_T</span> whose extension on the entire <span
+class="math inline">F</span>-domain is exactly <span
+class="math inline">T</span>.</p>
+<p>The <strong>whole family</strong> is admitted separately by
+comprehension:</p>
+<p><span class="math display">
+P_H^k=\lambda S^{\tau\cdots\tau t}\,
+       \forall\bar x(S[\bar x]\to X^k[\bar x]).
+</span></p>
+<p>Its extension is exactly <span class="math inline">\{h_T:T\subseteq
+X^k\}</span>. Every supported relation has some such external extension
+and is identified with its code by faithful extensionality. This family
+may have size <span class="math inline">2^{\mathfrak c}</span>; we did
+not apply the smaller-subset closure bound to it.</p>
+<p>Use the common exact-image field lift <span
+class="math inline">X_R</span> from section 5. For each <span
+class="math inline">T</span>, form <span
+class="math inline">U_T=(T^R,h_T)</span>, where <span
+class="math inline">T^R</span> is its inverse image under the carrier
+bijection. These relations are rigid and supported on <span
+class="math inline">X_R^k</span>. The root family</p>
+<p><span class="math display">
+P_R^k=(\{U_T:T\subseteq X^k\},P_H^k)
+</span></p>
+<p>is admitted by full current rows and has exactly its current image as
+its entire leaf extension. The same arbitrary-test proof shows that this
+<strong>family entity</strong> is rigid, as well as each member.</p>
+<p>At the root an arbitrary relation has a restriction to <span
+class="math inline">X_R^k</span>, and the corresponding <span
+class="math inline">U_T</span> represents it. At <span
+class="math inline">H</span>, the restriction of every admitted relation
+is represented by its <span class="math inline">h_T</span>. These two
+local verifications prove the boxed universal-existential representation
+clause, with its full future quantifier domain. They do not require a
+uniform witness or an exchange of box and existence.</p>
+<p>For each fixed finite bound, the families for all smaller arities
+coexist over the same field. The finite and individual-carrier vacuity
+cases are those of section 5. Thus the larger model satisfies full SOAN
+while retaining the missing higher Boolean join of section 3.</p>
+</body></html>

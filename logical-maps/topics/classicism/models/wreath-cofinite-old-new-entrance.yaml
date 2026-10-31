@@ -1,0 +1,134 @@
+id: wreath-cofinite-old-new-entrance
+name: Wreath-supported cofinite entrance over old and new individuals
+definition: >-
+  Use the base-individual symmetric old/new tail: E has individuals N, O has N disjoint union N',
+  E-to-E arrows are all injections, E-to-O arrows have old range, O-to-E arrows are all injections,
+  and O-to-O arrows are sort-preserving permutations G_O or old-range injections. Keep its symmetric
+  finitely pinned domains. Add root R with individuals N, arrows y_u and x_u corresponding to old
+  arrows out of E, and distinct replicas z_(n,g):R-to-O for n in N and g in G_O. A good O symmetry
+  postcomposes z_(n,g) to z_(n,kg); the first exiting arrow h sends it to y_(hgi) or x_(hgi), where
+  i:E-to-O is old inclusion. At each relational type, a root entity has a supported current table,
+  an admitted E-entity a, and finitely supported O tables C_n eventually equal to a_i. Its replica
+  transports have G_O rows g[C_n] and exiting rows a_(hi). Root support uses global old permutations,
+  permutations of the replica indices, and independent new-individual permutations at each replica.
+  The writeup gives the exact recursive domain, support, action and transport rules. Evaluate at R.
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, Wreath-supported upgrade of the variable-frame old/new entrance,
+  30 October 2026, §§1–8 (unpaginated).
+- GPT-6 Astra, prompted by Daniel Kodsi, Variable-frame orbit entrance into the old/new tail,
+  30 October 2026, §§1–2 and 4–7 (unpaginated), for the tail modification lemma, category and coordinate atoms.
+- GPT-6 Astra, prompted by Daniel Kodsi, Further verdicts on the same wreath-supported entrance,
+  30 October 2026, §§1–5 (unpaginated), for current propositional Barcan, relational Barcan failure and
+  necessary all-type Atomicity.
+- Logical Maps, Symmetric ideally-full model, old and new individuals, sections Atomicity at every type,
+  Inextensible Comprehension fails, BF at t and Strong Atomicity fails, and Boolean Completeness holds
+  at E and fails at O (unpaginated); original construction by Claude Fable 5.1, prompted by Cian Dorr,
+  6 October 2026, with the corrected completeness argument by GPT-6 Astra, prompted by Daniel Kodsi,
+  22 October 2026, recorded 24 October 2026.
+- Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026,
+  Definitions 15–18, p. 8, and Proposition 20, for the symmetric finitely pinned tail semantics.
+- GPT-6 Astra, prompted by Daniel Kodsi, Rigid Power gate for the wreath-supported old/new entrance,
+  30 October 2026, §§1–7 (unpaginated), for the supported inverse-image lifting proof of necessary
+  all-type Rigid Power.
+- Logical Maps, Symmetric ideally-full model, old and new individuals, rigid-power argument,
+  parts (a)–(c), 11 October 2026 (unpaginated), by GPT-6 Astra at Cian Dorr's request, checked and
+  recorded by Claude Opus 5.5, for the E uniform-pin and E/O exact-image lemmas and tail Rigid Power.
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: 'Definitions 15–18, p. 8; Proposition 20'
+arguments:
+- id: supported-coordinate-atoms-and-joins
+  holds: [strong-atomicity-r, boolean-completeness-r]
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: wreath-cofinite-old-new-entrance
+  text: >-
+    The global old and local new wreath actions preserve the category and recursive domains.
+    The union tables of an admitted family are constant outside its finite replica support;
+    independent local new permutations make the common table invariant under every new
+    permutation, and global old permutations give a common finite old pin. The resulting
+    coordinate union is admitted and is its least upper bound. Every nonzero entity contains
+    a singleton free-coordinate atom, whose nonzero old transports are a strong proposition
+    conjoined with a tuple haecceity. They decide every relation in the full target domain.
+    See §§1–5 of the writeup.
+- id: necessary-atomicity-and-propositional-completeness
+  holds: [necessary-atomicity-r, necessary-boolean-completeness-t]
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: wreath-cofinite-old-new-entrance
+  text: >-
+    Root Strong Atomicity gives root Atomicity. At both unchanged old objects the finite-pin
+    stable-class proof supplies all-type Atomicity. Their proposition algebras have four and
+    eight elements, so are complete; root Boolean Completeness includes type t. These are all
+    possible target objects, yielding precisely the two necessary verdicts. See §§5–6.
+- id: propositional-barcan
+  holds: [barcan-t]
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: wreath-cofinite-old-new-entrance
+  text: >-
+    Each y-arrow and each good z-arrow is onto the full target proposition domain. For one
+    fixed admitted root property F of propositions, the hypothesis that every root proposition
+    necessarily has F therefore makes all its replica rows universal. Outside F's finite
+    exceptional set such a row is its eventual old O table, so that table and every bad x-row
+    are universal as well. This proves the native current BF_t instance, with full target
+    quantification and no uniform bound on the exceptions of all bound propositions. See §6.
+- id: preserved-old-tail-failures
+  fails: [necessary-inextensible-comprehension-r, necessary-boolean-completeness-r]
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: wreath-cofinite-old-new-entrance
+  text: >-
+    At accessible E the universal individual property has no inextensible coextension: its
+    finite pin makes all E-target rows universal, while inextensibility excludes new individuals
+    at O and fails after their subsequent injection back into E. At accessible O the admitted
+    family of old-individual haecceities has no least upper bound, by two injections agreeing
+    on a proposed finite pin and identifying the images of a fresh old and fresh new individual.
+    The failures occur at et. Old domains and outgoing arrows are unchanged. See §7.
+- id: relational-barcan
+  fails: [barcan-relational]
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: wreath-cofinite-old-new-entrance
+  text: >-
+    No root et-entity transports to the whole haecceity of a new O-individual. At x-arrows its
+    current row is new-invariant; at z-arrows two exits agreeing on all old individuals but
+    exchanging two new ones give equal rows for a transported entity and unequal rows for
+    that haecceity. The admitted constant-replica property excluding exactly these new
+    haecceities therefore holds necessarily of every current et-entity but misses a full
+    target entity. This refutes BF_et and hence the relational schema. See §8.
+- id: necessary-rigid-power
+  holds: [necessary-rigid-power-r]
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: wreath-cofinite-old-new-entrance
+  text: >-
+    Every rigid root carrier is an exact-image profile. Its whole cofinite compatibility,
+    together with injective E-originating tuple transport, gives one finite replica exception
+    set outside which good transport agrees pointwise with the old inclusion on the entire
+    carrier. Every finitely supported subcarrier therefore has an admitted rigid exact-image
+    profile. The inverse image of any admitted target rigid subrelation is supported: at cone
+    arrows use the common pointwise E pin, and at good replicas use the target relation's own
+    finite setwise pin. Thus every target rigid subrelation lifts, and the admitted power
+    property has exact-image rows and is rigid. The unchanged E/O tail satisfies Rigid Power
+    independently, giving its necessary all-type form. See §9 of the writeup.
+notes: >-
+  ZFC construction. Boolean Completeness is internal to admitted families; all-type completeness
+  is asserted currently, and necessary completeness only at t. Necessary propositional Barcan
+  fails at the unchanged E tail; the writeup gives its direct witness and the map derives this
+  failure from the retained verdicts. The old/new tail and the wreath action distinguish this
+  model from the nominal sections/projection entrance.

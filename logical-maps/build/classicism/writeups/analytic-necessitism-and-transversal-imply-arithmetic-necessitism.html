@@ -1,0 +1,724 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Transversal representatives connect analytic and arithmetic necessitism</title><link rel="icon" type="image/png" href="../favicon.png">
+<style>/* Fixed forest palette, adapted from the supplied style example.
+   Semantic and source hues retain their meaning in both modes. */
+:root {
+  --bg: #f3f1e8;
+  --panel: #f8f7f0;
+  --panel-2: #e9ecdf;
+  --line: #d4d9c9;
+  --line-strong: #a2ae97;
+  --ink: #283c28;
+  --ink-2: #4f604b;
+  --ink-3: #5f6d58;
+  --accent: #356044;
+  --link-hover: #914b30;
+  --human: #3e7052;
+  --assisted: #746044;
+  --ai: #a35b36;
+  --derived: #7b8271;
+  --indep: #a0483a;
+  --open: #e2e5d9;
+  --open-ink: #65705f;
+  --conj: #896b27;
+  --node-fill: #f8f7f0;
+  --node-stroke: #98a68b;
+  --junction: #52634b;
+  --hl: #e0e7cd;
+  --focus: #914b30;
+  --badge-ink: #ffffff;
+  --warning-bg: #f4e6dc;
+  --source-forest: #3e7052;
+  --source-rust: #a25336;
+  --source-ochre: #896b27;
+  --source-slate: #4c7279;
+  --source-berry: #80556d;
+  --source-olive: #69753c;
+  --source-misc: #696d61;
+  --shadow: 0 4px 24px rgb(40 60 40 / 12%);
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --serif: var(--sans);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0e1912;
+  --panel: #142018;
+  --panel-2: #1d2b20;
+  --line: #304332;
+  --line-strong: #596e51;
+  --ink: #d7dfca;
+  --ink-2: #b3c1a7;
+  --ink-3: #96aa8d;
+  --accent: #a6c699;
+  --link-hover: #dfab89;
+  --human: #94bc95;
+  --assisted: #c1ad8d;
+  --ai: #dca17b;
+  --derived: #83937c;
+  --indep: #e09b86;
+  --open: #243327;
+  --open-ink: #a2b398;
+  --conj: #d0b36b;
+  --node-fill: #19261c;
+  --node-stroke: #627957;
+  --junction: #b3c1a7;
+  --hl: #30422a;
+  --focus: #dfab89;
+  --badge-ink: #0e1912;
+  --warning-bg: #32251f;
+  --source-forest: #94bc95;
+  --source-rust: #dca17b;
+  --source-ochre: #d0b36b;
+  --source-slate: #95bcc1;
+  --source-berry: #c5a0b7;
+  --source-olive: #b6c383;
+  --source-misc: #a9b09c;
+  --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); scrollbar-color: var(--line-strong) var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.6 var(--sans); }
+button, input, select { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 3px; }
+input[type="checkbox"] { accent-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+::selection { background: var(--hl); color: var(--ink); }
+.theme-toggle { border: 0; padding: 6px 0; background: transparent; color: var(--ink-2); cursor: pointer; font: 13px var(--sans); white-space: nowrap; }
+.theme-toggle:hover { color: var(--link-hover); }
+.display-toggles { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 16px; }
+.theme-toggle[aria-pressed="true"] { color: var(--accent); }
+
+/* A prismatic name: one rainbow wheel around a point in the word, spinning;
+   --prism-x and --prism-y move that point off the middle.
+   Pure spectral stops, turned by a registered angle rather than a hue
+   filter, which would muddy them. */
+@property --prism { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.prismatic { font-weight: 600; color: transparent; background: conic-gradient(from var(--prism) at var(--prism-x, 50%) var(--prism-y, 50%), #ff1a1a, #ff8a00, #ffd000, #22c33a, #00a8f0, #3d4bff, #b026ff, #ff1a1a); -webkit-background-clip: text; background-clip: text; animation: prism-spin 6s linear infinite; }
+/* As a link it keeps the gradient on hover, under an accent underline. */
+a.prismatic, a.prismatic:hover { color: transparent; }
+a.prismatic:hover { text-decoration-color: var(--accent); }
+@keyframes prism-spin { to { --prism: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .prismatic { animation: none; } }
+
+/* Standalone write-ups use the same quiet, ruled typography as the map. */
+html:has(body.writeup-page) { background: var(--bg); }
+body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; font: 16px/1.7 var(--sans); overflow-wrap: anywhere; }
+.writeup-nav { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 24px; font-size: 13px; }
+.writeup-page h1 { font-size: 1.4em; line-height: 1.4; margin: 0 0 20px; color: var(--ink); }
+.writeup-page h2 { font-size: 1.15em; line-height: 1.4; margin: 1.8em 0 .5em; padding-top: 14px; border-top: 1px solid var(--line); }
+.writeup-page h3 { font-size: 1em; }
+.writeup-page p { margin: 0 0 12px; }
+.writeup-page .cert { color: var(--ink-2); font-size: .85em; }
+.writeup-page code, .writeup-page pre { font: .85em/1.6 var(--mono); color: var(--ink); }
+.writeup-page pre { padding: 14px; background: var(--panel-2); overflow-x: auto; }
+.writeup-page blockquote { color: var(--ink-2); border-left: 2px solid var(--line-strong); margin-left: 0; padding-left: 20px; }
+.writeup-page math[display="block"] { display: block; overflow-x: auto; padding: 8px 0; }
+.writeup-page table { display: block; overflow-x: auto; border-collapse: collapse; }
+.writeup-page th, .writeup-page td { border-bottom: 1px solid var(--line); padding: 8px 12px; }
+@media (max-width: 600px) {
+  body.writeup-page { margin: 1.5em auto; padding: 0 1em 2em; }
+}
+@media print {
+  :root, :root[data-theme="dark"] { --bg: white; --ink: #283c28; --ink-2: #4f604b; --accent: #356044; --line: #d4d9c9; color-scheme: light; }
+  .writeup-nav { display: none; }
+  body.writeup-page { max-width: none; margin: 0; padding: 0; }
+}
+
+/* Teal-grey, muted rust, deep teal and warm stone. Screen-only overrides
+   preserve print styling. */
+@media screen {
+  :root {
+    --bg: #ebf1f1;
+    --panel: #e1eae9;
+    --panel-2: #d0dfde;
+    --line: #c0cecd;
+    --line-strong: #849997;
+    --ink: #303b3a;
+    --ink-2: #4a5a59;
+    --ink-3: #526160;
+    --accent: #884932;
+    --link-hover: #6f3827;
+    --derived: #6f8180;
+    --open: #d6e2e1;
+    --open-ink: #526160;
+    --node-fill: #f1f6f6;
+    --node-stroke: #7f9391;
+    --junction: #596b6a;
+    --human: #2f6b66;
+    --source-forest: #2f6b66;
+    --hl: #e6ddd0;
+    --focus: #884932;
+    --shadow: 0 4px 24px rgb(48 59 58 / 10%);
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #171e1d;
+    --panel: #202a29;
+    --panel-2: #2b3736;
+    --line: #3d4b4a;
+    --line-strong: #6b817f;
+    --ink: #dbe8e7;
+    --ink-2: #b9cbca;
+    --ink-3: #a6bdbb;
+    --accent: #e2ad92;
+    --link-hover: #f0c3aa;
+    --derived: #87a09e;
+    --open: #303d3c;
+    --open-ink: #aec6c4;
+    --node-fill: #263130;
+    --node-stroke: #738d8b;
+    --junction: #b3cbc9;
+    --human: #86c0b6;
+    --source-forest: #86c0b6;
+    --hl: #463f37;
+    --focus: #e2ad92;
+    --badge-ink: #171e1a;
+    --shadow: 0 4px 24px rgb(0 0 0 / 24%);
+  }
+}
+
+/* Shared Okabe–Ito palette: https://jfly.uni-koeln.de/color/#pallet
+   Loaded after topic themes. Sky blue and orange distinguish positive and
+   negative relations; darker inks keep small labels readable in light mode.
+   Neutral surfaces are identical across maps. Print uses the shared theme. */
+@media screen {
+  :root[data-palette="colourblind"] {
+    --bg: #f4f5f6;
+    --panel: #ffffff;
+    --panel-2: #e9edf0;
+    --line: #d0d6da;
+    --line-strong: #87949d;
+    --ink: #202930;
+    --ink-2: #45535d;
+    --ink-3: #586670;
+    --accent: #0072b2;
+    --link-hover: #925f00;
+    --human: #0072b2;
+    --assisted: #80506a;
+    --ai: #a44500;
+    --derived: #687780;
+    --indep: #925f00;
+    --open: #e9edf0;
+    --open-ink: #586670;
+    --conj: #80506a;
+    --node-fill: #ffffff;
+    --node-stroke: #7a8b96;
+    --junction: #45535d;
+    --hl: #dce4ea;
+    --focus: #0072b2;
+    --badge-ink: #ffffff;
+    --warning-bg: #fff0ce;
+    --source-forest: #56b4e9;
+    --source-rust: #e69f00;
+    --source-ochre: #d55e00;
+    --source-slate: #0072b2;
+    --source-berry: #cc79a7;
+    --source-olive: #009e73;
+    --source-misc: #687780;
+    --rel-positive: #56b4e9;
+    --rel-negative: #e69f00;
+    --shadow: 0 4px 24px rgb(32 41 48 / 12%);
+  }
+  :root[data-palette="colourblind"][data-theme="dark"] {
+    --bg: #111820;
+    --panel: #18222b;
+    --panel-2: #23303b;
+    --line: #354550;
+    --line-strong: #718492;
+    --ink: #edf2f5;
+    --ink-2: #c1ced7;
+    --ink-3: #a5b5c1;
+    --accent: #56b4e9;
+    --link-hover: #e69f00;
+    --human: #56b4e9;
+    --assisted: #cc79a7;
+    --ai: #e69f00;
+    --derived: #91a1ad;
+    --indep: #e69f00;
+    --open: #23303b;
+    --open-ink: #a5b5c1;
+    --conj: #cc79a7;
+    --node-fill: #1c2933;
+    --node-stroke: #8094a3;
+    --junction: #c1ced7;
+    --hl: #354654;
+    --focus: #56b4e9;
+    --badge-ink: #111820;
+    --warning-bg: #352b18;
+    --source-misc: #91a1ad;
+    --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  }
+  /* Source swatches use the unmodified palette; outlined badges allow their
+     text to keep the normal contrast on both light and dark surfaces. */
+  :root[data-palette="colourblind"] .badge.source {
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--source-color);
+    border-left-width: 4px;
+  }
+}
+</style>
+<script>/* Apply before paint; share the preference between every map and write-up. */
+(() => {
+  const key = 'pmap-theme';
+  const paletteKey = 'pmap-palette';
+  const system = window.matchMedia?.('(prefers-color-scheme: dark)');
+  let preference;
+  let palette;
+  try { preference = localStorage.getItem(key); } catch (_) {}
+  try { palette = localStorage.getItem(paletteKey); } catch (_) {}
+  if (!['light', 'dark'].includes(preference)) preference = null;
+  if (palette !== 'colourblind') palette = 'default';
+  function apply(theme) {
+    document.documentElement.dataset.theme = theme;
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.textContent = theme === 'dark' ? '[Light mode]' : '[Dark mode]';
+      button.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+    });
+  }
+  function applyPalette() {
+    document.documentElement.dataset.palette = palette;
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.setAttribute('aria-pressed', String(palette === 'colourblind'));
+      button.textContent = `[Colourblind mode: ${palette === 'colourblind' ? 'on' : 'off'}]`;
+    });
+  }
+  const initial = () => preference || (system?.matches ? 'dark' : 'light');
+  apply(initial());
+  applyPalette();
+  document.addEventListener('DOMContentLoaded', () => {
+    apply(initial());
+    applyPalette();
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        preference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        apply(preference);
+        try { localStorage.setItem(key, preference); } catch (_) {}
+      });
+    });
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        palette = palette === 'colourblind' ? 'default' : 'colourblind';
+        applyPalette();
+        try { localStorage.setItem(paletteKey, palette); } catch (_) {}
+      });
+    });
+  });
+  system?.addEventListener('change', () => { if (!preference) apply(initial()); });
+  window.addEventListener('storage', event => {
+    if (event.key === key || event.key === null) {
+      preference = ['light', 'dark'].includes(event.newValue) ? event.newValue : null;
+      apply(initial());
+    }
+    if (event.key === paletteKey || event.key === null) {
+      palette = event.newValue === 'colourblind' ? 'colourblind' : 'default';
+      applyPalette();
+    }
+  });
+})();
+</script>
+<link rel="stylesheet" href="../math/katex.min.css">
+<script defer src="../math/katex.min.js"></script>
+<script defer src="../math/contrib/auto-render.min.js"></script>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Transversal representatives connect analytic and arithmetic necessitism</h1></header><p>OpenAI Codex, prompted by Daniel Kodsi, 30 October 2026. The current
+cut construction and its composition are given below. The fixed Peano
+reference lemma is from GPT-6 Astra, prompted by Daniel Kodsi,
+<em>Finite-type necessitism</em>, companion proof notes, 29 October
+2026, §6 (unpaginated), and is proved in §4 below. Christopher Sun’s
+Transversal principle supplies current coextension representatives.</p>
+<h2 id="exact-types-and-the-current-existence-lemma">1. Exact types and
+the current existence lemma</h2>
+<p>For an externally fixed source type <span
+class="math inline">\sigma</span>, put</p>
+<p><span class="math display">
+\nu_\sigma=(\sigma t)t,\qquad \rho_\sigma=\nu_\sigma t.
+</span></p>
+<p>Let <span class="math inline">\mathrm{Tr}_\alpha</span> denote the
+native Transversal <strong>instance</strong> whose properties have type
+<span class="math inline">\alpha t</span>: a property of properties
+selects exactly one literal entity from each current coextension class
+on <span class="math inline">\alpha</span>. The following is a C theorem
+for each <span class="math inline">\sigma</span>:</p>
+<p><span class="math display">
+I^*_\sigma\land\mathrm{Tr}_{\nu_\sigma}
+\ \longrightarrow\
+\exists\mathfrak R\,\operatorname{Real}_{\rho_\sigma}(\mathfrak R).
+\tag{1}
+</span></p>
+<p>The host on the right is explicit. There is no quantifier over types.
+Neither the guard nor Transversal is boxed in (1). Real has the native
+definition: literal equality, an antisymmetric linear order, functional
+<strong>relational graphs</strong> for field operations, completeness
+for every admitted bounded subproperty of its carrier, and its least
+inductive number property.</p>
+<p>Write <span class="math inline">N=\mathbb N_\sigma</span>. Its
+canonical leastness already gives induction over all admitted
+predicates. With <span class="math inline">I^*_\sigma</span>, zero is
+not a successor and successor is injective. Thus it is a current Peano
+structure at the host <span class="math inline">\nu_\sigma</span>. The
+usual least recursion graphs give current addition, multiplication and
+finite coding. This uses the ordinary canonical-arithmetic
+interpretation, not an external assumption that the numbers are
+standard.</p>
+<p>For explicit rational codes, use the injective numerical pairing
+graph <span class="math inline">c=(a+b)^2+a</span>. All displayed
+arithmetic expressions abbreviate finite compositions of the canonical
+Sum and Prod <strong>relations</strong>. If <span
+class="math inline">u=a+b</span>, the code lies in <span
+class="math inline">[u^2,u^2+u]</span>; these intervals are disjoint for
+different <span class="math inline">u</span>, and the value within one
+interval determines <span class="math inline">a</span>, then <span
+class="math inline">b</span>. This is an internal Peano proof, with no
+operation object extracted.</p>
+<p>A raw rational code is a nested pairing code of <span
+class="math inline">(a,b,d)</span>, representing <span
+class="math inline">(a-b)/(d+1)</span>. Two triples are equivalent
+exactly when</p>
+<p><span class="math display">
+a(d&#39;+1)+b&#39;(d+1)=a&#39;(d+1)+b(d&#39;+1).
+</span></p>
+<p>Take as <span class="math inline">Q\subseteq N</span> the valid codes
+that are least in their classes. Each class is an admitted nonempty
+numerical predicate, so internal least-number induction gives a
+literally unique least code. Cross-multiplication defines order.
+Fraction addition, multiplication, negation and reciprocal are
+relational graphs followed by this least-code normalization. Their
+ordinary laws follow by internal cross-multiplication. A positive
+denominator has a predecessor by the Peano theorem; it is introduced
+through its successor graph. No choice of quotient objects or
+operation-valued representatives is required.</p>
+<p>This internal rational field has the precise bound needed below: for
+rational <span class="math inline">q</span> and <span
+class="math inline">\epsilon&gt;0</span>, some internal natural <span
+class="math inline">m</span> satisfies <span
+class="math inline">m\epsilon&gt;q</span>. A positive fraction <span
+class="math inline">a/b</span>, with <span
+class="math inline">b\ge1</span>, is below <span
+class="math inline">a+1</span>; apply this observation to <span
+class="math inline">q/\epsilon</span>. This does not claim that the
+numbers are externally standard or the rational field externally
+Archimedean. Induction is available for admitted predicates with
+arbitrary typed parameters, including a cut parameter.</p>
+<h2 id="literal-cut-representatives-and-field-operations">2. Literal cut
+representatives and field operations</h2>
+<p>Choose a witness <span class="math inline">F^{(\nu_\sigma t)t}</span>
+to <span class="math inline">\mathrm{Tr}_{\nu_\sigma}</span>. Define
+<span class="math inline">\operatorname{Cut}(A)</span> to say that <span
+class="math inline">A^{\nu_\sigma t}</span> is supported on <span
+class="math inline">Q</span>, nonempty, proper, downward closed in the
+rational order, and has no greatest member. Put</p>
+<p><span class="math display">
+X(A):=F(A)\land\operatorname{Cut}(A).
+</span></p>
+<p>For each admitted rational-cut predicate <span
+class="math inline">D</span>, Transversal gives one and only one <span
+class="math inline">A\in X</span> agreeing with <span
+class="math inline">D</span> on the entire host <span
+class="math inline">\nu_\sigma</span>. Conversely any two <span
+class="math inline">X</span>-members with equal cut extensions are
+<strong>identical</strong>, by uniqueness in <span
+class="math inline">F</span>. This is the step that cannot be replaced
+by mere comprehension in an intensional model. It is current equality,
+not a claim that coextensive arbitrary properties are identical or
+necessarily coextensive.</p>
+<p>Define <span class="math inline">A\leq_X B</span> by cut inclusion,
+with both arguments in <span class="math inline">X</span>. This order is
+antisymmetric because of literal representative uniqueness. The
+predicates of rationals below 0 and 1 have unique representatives; take
+these as the two field constants. Addition is the supported graph
+specifying that the result represents the lower cut</p>
+<p><span class="math display">
+q\longmapsto Qq\land
+\exists r,s\in Q\,[Ar\land Bs\land q&lt;r+s].
+\tag{2}
+</span></p>
+<p>Additive inverse represents <span class="math inline">q\mapsto
+Qq\land\exists r\in Q(\neg Ar\land q&lt;-r)</span>. For nonnegative cuts
+the product represents</p>
+<p><span class="math display">
+q\longmapsto Qq\land
+\bigl(q&lt;0\ \lor\
+   \exists r,s\in Q\,[0&lt;r\land0&lt;s\land Ar\land Bs\land
+q&lt;rs]\bigr).
+\tag{3}
+</span></p>
+<p>Use additive inverse for the remaining sign cases. For a positive
+cut, its reciprocal represents <span class="math inline">q\mapsto
+Qq\land[q&lt;0\lor\exists r\in Q(0&lt;r\land\neg Ar\land
+q&lt;1/r)]</span>; negative reciprocals follow by sign. These are finite
+admitted formulas. Every specified output cut has exactly one
+representative. Consequently their graphs are total and functional on
+<span class="math inline">X</span>. No operation-valued choice or
+Plenitude is used.</p>
+<p>The internal small-gap argument is essential. Given an admitted cut
+<span class="math inline">A</span> and rational <span
+class="math inline">\epsilon&gt;0</span>, choose <span
+class="math inline">a\in A</span>, <span class="math inline">b\notin
+A</span>, put <span class="math inline">\delta=\epsilon/2</span>, and
+find an internal natural <span class="math inline">m</span> with <span
+class="math inline">a+m\delta&gt;b</span>. The admitted predicate <span
+class="math inline">a+n\delta\notin A</span> has a least positive
+member. Its predecessor gives <span class="math inline">l\in A</span>
+and <span class="math inline">u\notin A</span> with <span
+class="math inline">u-l=\delta&lt;\epsilon</span>. The arithmetic values
+are expressed by their unique relational graphs. Thus induction uses an
+admitted predicate with parameter <span class="math inline">A</span>,
+rather than an external enumeration or a sequence of cut-valued
+outputs.</p>
+<p>Write <span class="math inline">L_r</span> for the rational principal
+cut below <span class="math inline">r</span>. If <span
+class="math inline">l\in A,u\notin A,m\in B,v\notin B</span>, the raw
+formulas give</p>
+<p><span class="math display">
+L_{l+m}\subseteq\operatorname{AddRaw}(A,B)\subseteq L_{u+v},
+\qquad
+L_{-u}\subseteq\operatorname{NegRaw}(A)\subseteq L_{-l}.
+</span></p>
+<p>For positive lower endpoints, the product bounds are <span
+class="math inline">L_{lm}</span> and <span
+class="math inline">L_{uv}</span>, and the reciprocal bounds are <span
+class="math inline">L_{1/u}</span> and <span
+class="math inline">L_{1/l}</span>. These are weak principal-cut
+inclusions: for example <span class="math inline">-u</span> need not
+belong to the negative cut. Add arbitrarily small rational slack before
+requiring strict endpoint membership. Zero inputs give the zero cut in
+the nonnegative product formula; strictly positive inputs have positive
+members and positive outside bounds, which make the reciprocal a
+nonempty proper rounded cut. Negation supplies the remaining sign
+cases.</p>
+<p>For completeness about the field laws, the common-approximation
+invariant is as follows. Every fixed finite expression in the raw
+operations has rational brackets of arbitrarily small width, obtained
+from sufficiently small brackets for its finitely many inputs. On a
+rationally bounded region <span class="math inline">|x|,|y|\le M</span>,
+sum error is at most <span class="math inline">2\delta</span> and
+product error at most <span
+class="math inline">(2M+\delta)\delta</span>. For inversion first fix a
+positive rational lower bound <span class="math inline">d</span>;
+reciprocal error is at most <span class="math inline">\delta/d^2</span>.
+Signed cases follow from negation. These are finite rational
+inequalities, valid internally. Finite induction on an expression
+chooses sufficiently small input widths; it does not form an infinite
+approximation sequence.</p>
+<p>For each field identity, evaluate both sides on the same rational
+approximants. Rational algebra makes the centers agree, and the
+preceding bounds put the two output cuts in a common arbitrarily narrow
+bracket. If they differed, choose <span class="math inline">q</span> in
+one and not the other, then <span class="math inline">q&#39;&gt;q</span>
+in the first by roundedness. A common bracket <span
+class="math inline">L_l\subseteq A,B\subseteq
+L_u</span> with <span class="math inline">u-l&lt;q&#39;-q</span> would
+force <span class="math inline">l\le q&lt;q&#39;&lt;u</span>, a
+contradiction. Thus the outputs are currently coextensive;
+selected-representative uniqueness makes them literally identical. This
+proves the ring laws, additive inverse and the nonzero reciprocal law.
+Inclusion is total on cuts; addition and positive multiplication
+preserve it directly, and cancellation gives strictness. The
+positive-member test gives positive products, so these are the
+ordered-field laws.</p>
+<p>The explicit coding and weak-bracket estimates are from GPT-6 Astra,
+prompted by Daniel Kodsi, <em>Current Transversal supplies a literal
+real field</em>, 30 October 2026, §§2–5 (unpaginated). They refine the
+details of this current construction without changing its hypotheses or
+types.</p>
+<h2 id="completeness-for-every-admitted-subproperty">3. Completeness for
+every admitted subproperty</h2>
+<p>Let <span class="math inline">Y^{\rho_\sigma t}</span> be any
+admitted nonempty subproperty of <span class="math inline">X</span>,
+bounded above by <span class="math inline">B\in X</span>. Comprehension
+forms</p>
+<p><span class="math display">
+U(q):=Qq\land\exists A\,[XA\land YA\land Aq].
+\tag{4}
+</span></p>
+<p>This is a cut: it is nonempty because <span
+class="math inline">Y</span> is; it is proper because its union is
+contained in the proper upper cut <span class="math inline">B</span>;
+downward closure and absence of a greatest element follow from a
+witnessing member cut. Transversal supplies its unique representative
+<span class="math inline">C\in X</span>. Each <span
+class="math inline">Y</span>-member is below <span
+class="math inline">C</span>, and every upper bound includes (4), so
+<span class="math inline">C</span> is its least upper bound. The
+argument covered an <strong>arbitrary admitted</strong> <span
+class="math inline">Y</span>, not just a definable or externally listed
+family.</p>
+<p>Define the field’s number predicate by the least subproperty of <span
+class="math inline">X</span> containing its zero and closed under its
+addition-by-one graph. The impredicative comprehension formula supplies
+exactly that property. It is the numberhood clause of native Real. With
+the preceding supported order and operation graphs, we have a full tuple
+satisfying <span
+class="math inline">\operatorname{Real}_{\rho_\sigma}</span>, proving
+(1).</p>
+<p>All representatives were requested one existential witness at a time.
+Transversal itself supplies their common extensional carrier, so neither
+Relational Choice nor a uniform choice operation is hidden in the proof.
+All conclusions in (1) are current; no rigidity or future fullness has
+yet been claimed.</p>
+<h2 id="the-fixed-peano-reference-lemma-with-proof">4. The fixed Peano
+reference lemma, with proof</h2>
+<p>This section spells out the source’s transport argument. A carrier is
+<em>fixed</em> when it is rigid and its current members are necessarily
+distinct. Let <span class="math inline">(K,o,S)</span> be a presentation
+at an admitted carrier type <span class="math inline">\kappa</span>,
+with <span class="math inline">K</span> fixed, <span
+class="math inline">S</span> rigid, and <span
+class="math inline">\Box\operatorname{Peano}(K,o,S)</span>. Peano here
+includes support of <span class="math inline">S</span> on <span
+class="math inline">K</span>, a unique successor for each member, zero
+not a successor, injectivity of successor, and induction for every
+admitted predicate. Fix <span class="math inline">\sigma</span> and
+assume <span class="math inline">\Box I^*_\sigma</span>.</p>
+<p>Define <span class="math inline">J^{\kappa\nu_\sigma t}</span> to be
+the least relation containing <span
+class="math inline">(o,0_\sigma)</span> and closed under simultaneous
+successors. Explicitly, <span class="math inline">J(a,b)</span> says
+that every admitted <span class="math inline">R^{\kappa\nu_\sigma
+t}</span> satisfying</p>
+<p><span class="math display">
+R(o,0_\sigma)\ \land\
+\forall x,x&#39;,y\,[R(x,y)\land S(x,x&#39;)
+                 \to R(x&#39;,\operatorname{Suc}_\sigma y)]
+</span></p>
+<p>also satisfies <span class="math inline">R(a,b)</span>. Comprehension
+admits this relation and its boxed-instance predicate. Leastness, base
+membership and successor closure follow directly by universal
+instantiation. In particular, base membership is a universally closed
+theorem of the definition; its necessitation uses the same parameter
+<span class="math inline">o</span>, without assuming a separate rigidity
+predicate for an individual.</p>
+<p>The predicate <span class="math inline">\lambda a,b\,\Box
+J(a,b)</span> contains the base pair. If <span class="math inline">\Box
+J(a,b)</span> and <span class="math inline">S(a,a&#39;)</span>,
+persistence of <span class="math inline">S</span> gives <span
+class="math inline">\Box S(a,a&#39;)</span>, and the necessary closure
+theorem for <span class="math inline">J</span> gives <span
+class="math inline">\Box J(a&#39;,\operatorname{Suc}_\sigma b)</span>.
+Thus this predicate is closed under simultaneous successors. Leastness
+gives <span class="math inline">J(a,b)\to\Box J(a,b)</span>. This proves
+weak persistence from the persistence of <span
+class="math inline">S</span>. Necessitate that <strong>closed
+conditional theorem</strong> and use the necessary persistence of <span
+class="math inline">S</span>: <span class="math inline">J</span> is
+persistent in the map’s full, boxed sense.</p>
+<p>The ordinary second-order Peano matching argument gives the following
+facts. The product <span class="math inline">K\times N_\sigma</span> is
+closed under the matching operator, so <span
+class="math inline">J</span> is supported on it. Induction on <span
+class="math inline">K</span> gives an image for each of its members, and
+induction on <span class="math inline">N_\sigma</span> gives a preimage
+for each of its members. For uniqueness, the base pair cannot be
+confused with a successor pair; in the successor step, injectivity on
+both sides reduces a possible pair of matches to the preceding matches.
+Induction therefore gives uniqueness on both sides. This is the usual
+second-order proof that the least simultaneous-successor matching is a
+bijection. It uses the admitted matching and comparison predicates, so
+it applies to these Henkin Peano structures without an external
+standardness assumption. The proof is a closed theorem with the two
+Peano conditions as hypotheses. Since both hypotheses are necessary,
+necessitation and K make support, totality, functionality and
+bijectivity necessary as well.</p>
+<p>Here is the needed functional-graph step, including inextensibility.
+Suppose <span class="math inline">D</span> is rigid, <span
+class="math inline">L</span> persistent and necessarily a total
+functional relation with domain <span class="math inline">D</span>.
+Assume a test relation <span class="math inline">Q</span> satisfies
+<span class="math inline">\forall a,b(L(a,b)\to\Box Q(a,b))</span>. For
+a current <span class="math inline">a\in D</span>, take its unique
+current <span class="math inline">L</span>-image <span
+class="math inline">b</span>. Persistence gives <span
+class="math inline">\Box L(a,b)</span>, the test hypothesis gives <span
+class="math inline">\Box Q(a,b)</span>, and necessary functionality
+yields</p>
+<p><span class="math display">
+\Box\forall b&#39;\,[L(a,b&#39;)\to b&#39;=b],
+\qquad
+\Box\forall b&#39;\,[L(a,b&#39;)\to Q(a,b&#39;)].
+</span></p>
+<p>Apply inextensibility of <span class="math inline">D</span> to <span
+class="math inline">T(a):=\forall b(L(a,b)\to Q(a,b))</span>. With
+necessary support, this yields <span class="math inline">\Box\forall
+a,b(L(a,b)\to Q(a,b))</span>. It proves weak inextensibility of <span
+class="math inline">L</span>. Rigidity of <span
+class="math inline">D</span>, persistence of <span
+class="math inline">L</span>, and the boxed functional-domain condition
+imply their own necessity by modal 4. Necessitating the proved
+conditional therefore gives full inextensibility. Hence <span
+class="math inline">L</span> is rigid. The argument chooses only an
+individual existential witness for a fixed <span
+class="math inline">a</span>, not a choice function.</p>
+<p>Apply this step to <span class="math inline">D=K</span> and <span
+class="math inline">L=J</span>. Its range <span
+class="math inline">B(b):=\exists a\,J(a,b)</span> is rigid: persistence
+follows from a witness; for inextensibility pull any test <span
+class="math inline">Q(b)</span> back to the relation <span
+class="math inline">\lambda a,b\,Q(b)</span> and apply inextensibility
+of <span class="math inline">J</span>. Necessary surjectivity gives
+<span class="math inline">\Box\forall b(B(b)\leftrightarrow N_\sigma
+b)</span>. In C this is <span class="math inline">B\le N_\sigma</span>
+and <span class="math inline">N_\sigma\le B</span>, so antisymmetry
+gives <strong>literal identity</strong> <span
+class="math inline">B=N_\sigma</span>. Rigidity of <span
+class="math inline">N_\sigma</span> now follows; it was not assumed in
+the identification.</p>
+<p>For completeness, necessary distinctness of the canonical numbers
+follows already from <span class="math inline">\Box I^*_\sigma</span>.
+Canonical numberhood is persistent: the predicate <span
+class="math inline">\lambda n\,\Box N_\sigma n</span> contains zero and
+is successor-closed by the necessary least-inductive laws, so leastness
+gives its weak persistence and necessitation gives the full version.
+Induct on <span class="math inline">n\in N_\sigma</span> to prove <span
+class="math inline">\forall m\in N_\sigma(n\ne m\to\Box(n\ne m))</span>.
+Every number is zero or a successor. Necessary non-successorhood handles
+the zero case; in the successor case necessary injectivity and the
+induction hypothesis separate the predecessors. Necessary identity
+preserves each chosen predecessor equation, and persistence of
+numberhood keeps its parameters within the necessary Peano axioms. Thus
+the required necessary distinctness holds with no global ND axiom.</p>
+<p>Finally, a rigid necessarily-real tuple supplies this reference. Its
+number predicate <span class="math inline">K</span> is rigid by RigidStr
+and inherits ND from the fixed real carrier. Its successor is the
+supported addition-by-one graph on <span class="math inline">K</span>;
+persistence follows from the rigid field operation and number predicate.
+The boxed Real condition makes this graph necessarily total and
+functional, so the functional-graph step makes it rigid. The ordinary
+real-field theorem gives Peano’s axioms for the least inductive number
+subproperty; necessitating that theorem and using boxed Real gives <span
+class="math inline">\Box\operatorname{Peano}(K,o,S)</span>. This proves
+the fixed-reference lemma from precisely the stated hypotheses, without
+a represented-power or Transversal assumption.</p>
+<h2 id="the-map-edge">5. The map edge</h2>
+<p>Now assume ANA and the full native Transversal schema. To prove
+Arithmetic Necessitism, fix any <span class="math inline">\sigma</span>
+and assume its unchanged guard <span class="math inline">\Box
+I^*_\sigma</span>. By T, current <span
+class="math inline">I^*_\sigma</span> holds; the Transversal instance in
+(1) gives a current real structure at <span
+class="math inline">\rho_\sigma</span>. It is possible, so the ANA
+instance at exactly that host supplies a rigid necessarily-real
+structure. Section 4 supplies its fixed Peano reference and transports
+rigidity and necessary distinctness to <span
+class="math inline">N_\sigma</span>, under precisely that guard. Since
+<span class="math inline">\sigma</span> was arbitrary, this is the
+existing Arithmetic Necessitism schema:</p>
+<p><span class="math display">
+\mathrm{ANA}+\mathrm{Transversal}\longrightarrow\mathrm{AR}.
+</span></p>
+<p>The fixed-reference lemma and native definitions are inherited. The
+current Transversal-to-cut construction and this map composition are due
+to OpenAI Codex, prompted by Daniel Kodsi, 30 October 2026.</p>
+<p>For the symmetric Cohen arithmetic-growth model, the <a
+href="symmetric-cohen-arithmetic-growth-consequences.md">separate
+consequence supplement</a> spells out the stronger guarded conclusions
+<span class="math inline">\Box\neg\mathrm{Tr}_{(et)t}</span> and <span
+class="math inline">\Box\neg\mathrm{Actuality}</span>, and the exact
+schema equivalence between ANA, SOAN and NoReal relative to a failed AR
+instance.</p>
+<p>The same current existence lemma also gives
+[[analytic-necessitism-and-transversal-imply-necessity-of-arithmetic]].
+That proof retains the different arithmetic-truth guard inside each
+box.</p>
+</body></html>

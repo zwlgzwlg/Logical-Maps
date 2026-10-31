@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Forcing Possibilism ⇒ Axiom of Infinity (type t)</title><link rel="icon" type="image/png" href="../favicon.png">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Forcing Possibilism implies Axiom of Infinity at t</title><link rel="icon" type="image/png" href="../favicon.png">
 <style>/* Fixed forest palette, adapted from the supplied style example.
    Semantic and source hues retain their meaning in both modes. */
 :root {
@@ -322,30 +322,177 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <link rel="stylesheet" href="../math/katex.min.css">
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
-<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Forcing Possibilism ⇒ Axiom of Infinity (type t)</h1></header><p class="cert">
-Result — Source: Could the truths of mathematics have been different? (draft); produced by Andrew Bacon (§6, the remark that Mathematical Possibilism entails the axiom of infinity); proof written out by Claude Fable 5.1 (Anthropic), prompted by Zachary Goodsell, 23 October 2026; recorded by Claude Fable 5.1 (Anthropic), prompted by Zachary Goodsell, 23 October 2026.
-</p>
-<h2 id="premises">Premises</h2>
-<ul>
-<li><strong>Forcing Possibilism.</strong> Every complete Boolean algebra that is finite or has strictly fewer elements than there are propositions is isomorphic to the entailment algebra below some proposition other than top.</li>
-</ul>
-<h2 id="conclusion">Conclusion</h2>
-<ul>
-<li><strong>Axiom of Infinity (type t).</strong> There are not finitely many propositions. No finite cardinality holds of the universal property, so the domain of the type cannot be exhausted by finitely many steps from the empty property.</li>
-</ul>
-<h2 id="proof">Proof</h2>
-<p>Suppose some finite cardinality holds of the universal property of propositions, say there are exactly <span class="math inline">N</span> propositions, <span class="math inline">q_1,\dots,q_N</span> (with <span class="math inline">N\ge2</span>, as <span class="math inline">\top\ne\bot</span>). At type <span class="math inline">tt</span> the properties <span class="math inline">\lambda p\, .\,p=q_{i_1}\lor\dots\lor p=q_{i_k}</span>, one for each subset of <span class="math inline">\{q_1,\dots,q_N\}</span>, are pairwise distinct, since two of them differ at some <span class="math inline">q_i</span>, and under inclusion they form a complete Boolean algebra with <span class="math inline">2^N</span> elements: a finite Boolean algebra is complete, and its carrier, order, meets and joins are given by abstraction. It is finite, hence small. Forcing Possibilism gives a proposition <span class="math inline">p\ne\top</span> whose entailment algebra is isomorphic to it, so there are at least <span class="math inline">2^N&gt;N</span> propositions, those entailing <span class="math inline">p</span>. Contradiction. Hence no finite cardinality holds of the universal property of propositions.</p>
-<h2 id="notes">Notes</h2>
-<p>The one general consequence of Forcing Possibilism the map records: the principle is about the propositions there could be below some proposition, so any model with finitely many propositions refutes it, and through this result every such model on the map does, which settles the questions whether principles true in finite models, Atomicity, ND or BF for instance, imply it. Its other verdicts on the map come from Bacon’s lottery model, which has it with □Rigid Comprehension and □Intensional Choice and without Atomicity.</p>
-<h2 id="sources">Sources</h2>
-<ul>
-<li><strong>Could mathematics have been different?</strong> — Andrew Bacon, Could the truths of mathematics have been different?, draft of 9 October 2025, §6, p. 27, “A straightforward consequence of Mathematical Possibilism is that it entails the axiom of infinity.”</li>
-</ul>
-<p class="cert">
-Record: <code>topics/classicism/results/forcing-possibilism-implies-axiom-of-infinity-t.yaml</code>
-</p>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Forcing Possibilism implies Axiom of Infinity at t</h1></header><p>The theorem is already credited to Andrew Bacon, <em>Could the truths
+of mathematics have been different?</em>, 9 October 2025 draft, §6,
+p. 27. The native record retains its original proof and certificate. The
+supplement below handles internal finite cardinalities directly,
+including those which are externally nonstandard in a Henkin model.</p>
+<h2 id="internal-finiteness-proof-supplement">Internal-finiteness proof
+supplement</h2>
+<p>OpenAI Codex, prompted by Daniel Kodsi, 25 October 2026, §§1–4 of
+<em>Forcing Possibilism implies quantified Infinity: internal proof</em>
+(unpaginated; direct source <code>misc</code>).</p>
+<h2 id="exact-target-and-scope">1. Exact target and scope</h2>
+<p>Work in the map’s fixed relational Classicism C. Let</p>
+<p>U := lambda p:t. top.</p>
+<p>The existing result forcing-possibilism-implies-axiom-of-infinity-t
+has premise the database’s unboxed strict Forcing Possibilism and
+conclusion</p>
+<p>not exists N:((tt)t). FiniteCardinality_t(N) and N(U).</p>
+<p>Use the precise impredicative Frege definition from
+background.md:</p>
+<p>0(X) := forall x. not X(x), Suc(Y)(X) := exists a. X(a) and Y(X-a),
+X-a := lambda x. X(x) and x != a,</p>
+<p>FiniteCardinality_t(N) := forall W. [W(0) and forall Y (W(Y) -&gt;
+W(Suc(Y)))] -&gt; W(N).</p>
+<p>Object predicates, the induction predicates below, and graph
+relations are admitted lambda abstractions in the original type system.
+No new symbols or infinitary logic are needed. All reasoning below is
+unboxed unless a box is explicitly displayed (none is needed in the
+proof).</p>
+<p>Write DedFin(X) for the database’s Fin(X): every admitted total
+injective binary relation from the current Xs to the current Xs is
+surjective. This is GRAPH-Dedekind-finiteness, not
+operation-Dedekind-finiteness. No operation with individual output is
+used or required.</p>
+<p>For propositions, x &lt;= y abbreviates the algebraic entailment
+order x and y = x. Classicism proves the Boolean-algebra laws for this
+order. In particular bottom is least, top is greatest, and</p>
+<p>s or a &lt;= z iff (s &lt;= z and a &lt;= z).</p>
+<p>The proof uses only FP’s carrier-t instance, its finite disjunct, and
+its requirement that the representing interval be proper (p != top). It
+does not use the strict cardinal bound. It therefore also works if that
+bound is replaced by the non-strict variant, with the finite disjunct
+and proper interval requirement retained. This observation does not
+identify the two full forcing principles or refine the further FP
+proposal.</p>
+<h2 id="internal-finiteness-implies-graph-dedekind-finiteness">2.
+Internal finiteness implies graph-Dedekind-finiteness</h2>
+<p>At any fixed admitted carrier type, form the induction predicate</p>
+<p>V := lambda Z. forall X (Z(X) -&gt; DedFin(X)).</p>
+<p>The zero case holds because 0(X) says there are no current Xs. Every
+injective self-relation on such a carrier is vacuously surjective.</p>
+<p>For the successor step assume V(Y), and suppose Suc(Y)(X). Its
+definition supplies a with X(a) and Y(X-a). Thus DedFin(X-a) by the
+induction hypothesis. Let R be any admitted total single-valued
+injective graph on X. Choose b in X with R(a,b); this is one existential
+witness, not Choice.</p>
+<p>The transposition graph</p>
+<p>T_ab(u,v) := (u=a and v=b) or (u=b and v=a) or (u!=a and u!=b and
+v=u)</p>
+<p>is an admitted relation. It is a bijection and its own inverse,
+including when a=b. Since a,b belong to X, it restricts to a permutation
+of X. Define the admitted composite graph</p>
+<p>G(x,y) := exists z (R(x,z) and T_ab(z,y)).</p>
+<p>On X this is a total single-valued injection, and G(a,a). If x
+belongs to X-a, its G-value cannot be a: injectivity together with
+G(a,a) would give x=a. Therefore</p>
+<p>G’(x,y) := (X-a)(x) and (X-a)(y) and G(x,y)</p>
+<p>is an injective self-relation of X-a. The induction hypothesis makes
+G’ surjective on X-a. Together with G(a,a), this makes G surjective on
+X. As T_ab is a permutation, R is also surjective on X. Thus
+DedFin(X).</p>
+<p>We have V(0) and forall Y(V(Y) -&gt; V(Suc(Y))). The exact
+impredicative definition now yields</p>
+<p>FiniteCardinality(N) and N(X) -&gt; DedFin(X).</p>
+<p>This is one internal induction, not an argument by external
+enumeration. The graph constructions impose no necessity-of-distinctness
+condition: their required mapping properties are current, as in FP’s
+definition.</p>
+<h2
+id="every-subfamily-of-an-internally-finite-propositional-carrier-has-a-join">3.
+Every subfamily of an internally finite propositional carrier has a
+join</h2>
+<p>For admitted X,F:tt and s:t, define</p>
+<p>J(X,F,s) := forall z:t. [s &lt;= z iff forall x:t ((X(x) and F(x))
+-&gt; x &lt;= z)].</p>
+<p>This says exactly that s is the least upper bound of the current
+members of X satisfying F. To see both parts, set z=s for the
+upper-bound claim; the displayed equivalence then gives leastness for
+any other upper bound.</p>
+<p>Use the single admitted induction predicate</p>
+<p>W := lambda Z. forall X:tt. Z(X) -&gt; forall F:tt. exists s:t.
+J(X,F,s).</p>
+<p>For Z=0, X has no members, so s=bottom satisfies J(X,F,s) for every
+F.</p>
+<p>For the successor step assume W(Y), and suppose Suc(Y)(X). Choose a
+with X(a) and Y(X-a). For any F, the induction hypothesis supplies s
+with J(X-a,F,s). The current Xs are precisely a together with the X-a
+members.</p>
+<p>If F(a), their F-selected members are the old family plus a. For
+every z,</p>
+<p>(s or a &lt;= z) iff (s &lt;= z and a &lt;= z) iff forall x ((X(x)
+and F(x)) -&gt; x &lt;= z).</p>
+<p>Thus s or a is the required join. If not F(a), the selected members
+are exactly the old family, so s is the required join. Ordinary
+classical case analysis gives the existential witness in either case. No
+uniform choice function selecting these joins has been asserted.</p>
+<p>Hence W(0) and forall Y(W(Y) -&gt; W(Suc(Y))). The exact Frege
+definition proves W(N) whenever FiniteCardinality_t(N).</p>
+<p>In particular, if N(U), every admitted property F of propositions has
+an algebraic join. Together with C’s Boolean-algebra laws, this is
+precisely the internal CBA(U,&lt;=) condition required by FP. It does
+not assert that every external subset is admitted or that the algebra is
+externally complete in a Henkin model.</p>
+<h2 id="apply-fp-to-the-proposition-algebra-itself">4. Apply FP to the
+proposition algebra itself</h2>
+<p>Suppose, for contradiction, that FiniteCardinality_t(N) and N(U).
+Section 2 gives DedFin(U). Section 3 gives CBA(U,&lt;=).</p>
+<p>Apply the carrier-t instance of FP to X=U and R=(&lt;=). Its finite
+disjunct applies. We obtain p != top and an admitted order-isomorphism
+graph</p>
+<p>H : U -&gt; [bottom,p].</p>
+<p>Regard H as a binary relation on the universal proposition carrier U.
+It is total, single-valued and injective on U. But top is not in its
+range: any value of H lies below p, whereas top &lt;= p implies p=top.
+This contradicts DedFin(U).</p>
+<p>Consequently no internal finite cardinality counts all
+propositions:</p>
+<p>C + Forcing Possibilism |- Axiom of Infinity (type t).</p>
+<p>The original conclusion survives unchanged. The proof applies to
+internal finite cardinalities even when their denotations are not
+externally finite in a Henkin model. It uses neither an external finite
+list nor an admitted power-set algebra of cardinality 2^N. No ND,
+Choice, Actuality, Barcan, global Boolean Completeness, or full model
+assumption is added. No optional premise has been necessitated, and no
+currently coextensive properties have been identified. Boolean
+identities used above are C theorems; the other constructions are
+ordinary formula abstractions.</p>
+<h2 id="original-recorded-proof">Original recorded proof</h2>
+<p>Suppose some finite cardinality holds of the universal property of
+propositions, say there are exactly <span class="math inline">N</span>
+propositions, <span class="math inline">q_1,\dots,q_N</span> (with <span
+class="math inline">N\ge2</span>, as <span
+class="math inline">\top\ne\bot</span>). At type <span
+class="math inline">tt</span> the properties <span
+class="math inline">\lambda p\, .\,p=q_{i_1}\lor\dots\lor
+p=q_{i_k}</span>, one for each subset of <span
+class="math inline">\{q_1,\dots,q_N\}</span>, are pairwise distinct,
+since two of them differ at some <span class="math inline">q_i</span>,
+and under inclusion they form a complete Boolean algebra with <span
+class="math inline">2^N</span> elements: a finite Boolean algebra is
+complete, and its carrier, order, meets and joins are given by
+abstraction. It is finite, hence small. Forcing Possibilism gives a
+proposition <span class="math inline">p\ne\top</span> whose entailment
+algebra is isomorphic to it, so there are at least <span
+class="math inline">2^N&gt;N</span> propositions, those entailing <span
+class="math inline">p</span>. Contradiction. Hence no finite cardinality
+holds of the universal property of propositions.</p>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Origin: <a href="https://andrew-bacon.github.io/papers/Could%20mathematics%20have%20been%20different.pdf">Could the truths of mathematics have been different?</a>.</strong> Bacon, Andrew (2025). Could the truths of mathematics have been different? Draft dated 9 October 2025, with online appendix; published in Philosophical Review 135(3), 2026, pp. 221–285, as cited by Barton and Goodsell. Locators refer to the draft. The full Boolean-valued construction is in appendix §B.2, pp. 7–9 of the separately paginated appendix (PDF pp. 41–43); Theorem 4.4 and its proof (Appendix C.1) and Lemma C.6 (Appendix C.2) were read directly on 19 October 2026. — §6, p. 27. Stated there for the axiom of infinity in the form that the finite numerical quantifiers over propositions form a natural number structure; the map’s Axiom of Infinity (type t) says that no finite cardinality holds of the universal property of propositions.</li>
+<li><strong>Origin: <a
+href="https://andrew-bacon.github.io/papers/Could%20mathematics%20have%20been%20different.pdf">Could
+the truths of mathematics have been different?</a>.</strong> Bacon,
+Andrew (2025). Could the truths of mathematics have been different?
+Draft dated 9 October 2025, with online appendix; published in
+Philosophical Review 135(3), 2026, pp. 221–285, as cited by Barton and
+Goodsell. Locators refer to the draft. The full Boolean-valued
+construction is in appendix §B.2, pp. 7–9 of the separately paginated
+appendix (PDF pp. 41–43); Theorem 4.4 and its proof (Appendix C.1) and
+Lemma C.6 (Appendix C.2) were read directly on 19 October 2026. — §6,
+p. 27. Stated there for the axiom of infinity in the form that the
+finite numerical quantifiers over propositions form a natural number
+structure; the map’s Axiom of Infinity (type t) says that no finite
+cardinality holds of the universal property of propositions.</li>
 </ul>
 </body></html>

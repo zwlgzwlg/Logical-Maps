@@ -1,0 +1,513 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Stable analytical truth with a nonstandard numerical component</title><link rel="icon" type="image/png" href="../favicon.png">
+<style>/* Fixed forest palette, adapted from the supplied style example.
+   Semantic and source hues retain their meaning in both modes. */
+:root {
+  --bg: #f3f1e8;
+  --panel: #f8f7f0;
+  --panel-2: #e9ecdf;
+  --line: #d4d9c9;
+  --line-strong: #a2ae97;
+  --ink: #283c28;
+  --ink-2: #4f604b;
+  --ink-3: #5f6d58;
+  --accent: #356044;
+  --link-hover: #914b30;
+  --human: #3e7052;
+  --assisted: #746044;
+  --ai: #a35b36;
+  --derived: #7b8271;
+  --indep: #a0483a;
+  --open: #e2e5d9;
+  --open-ink: #65705f;
+  --conj: #896b27;
+  --node-fill: #f8f7f0;
+  --node-stroke: #98a68b;
+  --junction: #52634b;
+  --hl: #e0e7cd;
+  --focus: #914b30;
+  --badge-ink: #ffffff;
+  --warning-bg: #f4e6dc;
+  --source-forest: #3e7052;
+  --source-rust: #a25336;
+  --source-ochre: #896b27;
+  --source-slate: #4c7279;
+  --source-berry: #80556d;
+  --source-olive: #69753c;
+  --source-misc: #696d61;
+  --shadow: 0 4px 24px rgb(40 60 40 / 12%);
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --serif: var(--sans);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0e1912;
+  --panel: #142018;
+  --panel-2: #1d2b20;
+  --line: #304332;
+  --line-strong: #596e51;
+  --ink: #d7dfca;
+  --ink-2: #b3c1a7;
+  --ink-3: #96aa8d;
+  --accent: #a6c699;
+  --link-hover: #dfab89;
+  --human: #94bc95;
+  --assisted: #c1ad8d;
+  --ai: #dca17b;
+  --derived: #83937c;
+  --indep: #e09b86;
+  --open: #243327;
+  --open-ink: #a2b398;
+  --conj: #d0b36b;
+  --node-fill: #19261c;
+  --node-stroke: #627957;
+  --junction: #b3c1a7;
+  --hl: #30422a;
+  --focus: #dfab89;
+  --badge-ink: #0e1912;
+  --warning-bg: #32251f;
+  --source-forest: #94bc95;
+  --source-rust: #dca17b;
+  --source-ochre: #d0b36b;
+  --source-slate: #95bcc1;
+  --source-berry: #c5a0b7;
+  --source-olive: #b6c383;
+  --source-misc: #a9b09c;
+  --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); scrollbar-color: var(--line-strong) var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.6 var(--sans); }
+button, input, select { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 3px; }
+input[type="checkbox"] { accent-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+::selection { background: var(--hl); color: var(--ink); }
+.theme-toggle { border: 0; padding: 6px 0; background: transparent; color: var(--ink-2); cursor: pointer; font: 13px var(--sans); white-space: nowrap; }
+.theme-toggle:hover { color: var(--link-hover); }
+.display-toggles { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 16px; }
+.theme-toggle[aria-pressed="true"] { color: var(--accent); }
+
+/* A prismatic name: one rainbow wheel around a point in the word, spinning;
+   --prism-x and --prism-y move that point off the middle.
+   Pure spectral stops, turned by a registered angle rather than a hue
+   filter, which would muddy them. */
+@property --prism { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.prismatic { font-weight: 600; color: transparent; background: conic-gradient(from var(--prism) at var(--prism-x, 50%) var(--prism-y, 50%), #ff1a1a, #ff8a00, #ffd000, #22c33a, #00a8f0, #3d4bff, #b026ff, #ff1a1a); -webkit-background-clip: text; background-clip: text; animation: prism-spin 6s linear infinite; }
+/* As a link it keeps the gradient on hover, under an accent underline. */
+a.prismatic, a.prismatic:hover { color: transparent; }
+a.prismatic:hover { text-decoration-color: var(--accent); }
+@keyframes prism-spin { to { --prism: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .prismatic { animation: none; } }
+
+/* Standalone write-ups use the same quiet, ruled typography as the map. */
+html:has(body.writeup-page) { background: var(--bg); }
+body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; font: 16px/1.7 var(--sans); overflow-wrap: anywhere; }
+.writeup-nav { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 24px; font-size: 13px; }
+.writeup-page h1 { font-size: 1.4em; line-height: 1.4; margin: 0 0 20px; color: var(--ink); }
+.writeup-page h2 { font-size: 1.15em; line-height: 1.4; margin: 1.8em 0 .5em; padding-top: 14px; border-top: 1px solid var(--line); }
+.writeup-page h3 { font-size: 1em; }
+.writeup-page p { margin: 0 0 12px; }
+.writeup-page .cert { color: var(--ink-2); font-size: .85em; }
+.writeup-page code, .writeup-page pre { font: .85em/1.6 var(--mono); color: var(--ink); }
+.writeup-page pre { padding: 14px; background: var(--panel-2); overflow-x: auto; }
+.writeup-page blockquote { color: var(--ink-2); border-left: 2px solid var(--line-strong); margin-left: 0; padding-left: 20px; }
+.writeup-page math[display="block"] { display: block; overflow-x: auto; padding: 8px 0; }
+.writeup-page table { display: block; overflow-x: auto; border-collapse: collapse; }
+.writeup-page th, .writeup-page td { border-bottom: 1px solid var(--line); padding: 8px 12px; }
+@media (max-width: 600px) {
+  body.writeup-page { margin: 1.5em auto; padding: 0 1em 2em; }
+}
+@media print {
+  :root, :root[data-theme="dark"] { --bg: white; --ink: #283c28; --ink-2: #4f604b; --accent: #356044; --line: #d4d9c9; color-scheme: light; }
+  .writeup-nav { display: none; }
+  body.writeup-page { max-width: none; margin: 0; padding: 0; }
+}
+
+/* Teal-grey, muted rust, deep teal and warm stone. Screen-only overrides
+   preserve print styling. */
+@media screen {
+  :root {
+    --bg: #ebf1f1;
+    --panel: #e1eae9;
+    --panel-2: #d0dfde;
+    --line: #c0cecd;
+    --line-strong: #849997;
+    --ink: #303b3a;
+    --ink-2: #4a5a59;
+    --ink-3: #526160;
+    --accent: #884932;
+    --link-hover: #6f3827;
+    --derived: #6f8180;
+    --open: #d6e2e1;
+    --open-ink: #526160;
+    --node-fill: #f1f6f6;
+    --node-stroke: #7f9391;
+    --junction: #596b6a;
+    --human: #2f6b66;
+    --source-forest: #2f6b66;
+    --hl: #e6ddd0;
+    --focus: #884932;
+    --shadow: 0 4px 24px rgb(48 59 58 / 10%);
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #171e1d;
+    --panel: #202a29;
+    --panel-2: #2b3736;
+    --line: #3d4b4a;
+    --line-strong: #6b817f;
+    --ink: #dbe8e7;
+    --ink-2: #b9cbca;
+    --ink-3: #a6bdbb;
+    --accent: #e2ad92;
+    --link-hover: #f0c3aa;
+    --derived: #87a09e;
+    --open: #303d3c;
+    --open-ink: #aec6c4;
+    --node-fill: #263130;
+    --node-stroke: #738d8b;
+    --junction: #b3cbc9;
+    --human: #86c0b6;
+    --source-forest: #86c0b6;
+    --hl: #463f37;
+    --focus: #e2ad92;
+    --badge-ink: #171e1a;
+    --shadow: 0 4px 24px rgb(0 0 0 / 24%);
+  }
+}
+
+/* Shared Okabe–Ito palette: https://jfly.uni-koeln.de/color/#pallet
+   Loaded after topic themes. Sky blue and orange distinguish positive and
+   negative relations; darker inks keep small labels readable in light mode.
+   Neutral surfaces are identical across maps. Print uses the shared theme. */
+@media screen {
+  :root[data-palette="colourblind"] {
+    --bg: #f4f5f6;
+    --panel: #ffffff;
+    --panel-2: #e9edf0;
+    --line: #d0d6da;
+    --line-strong: #87949d;
+    --ink: #202930;
+    --ink-2: #45535d;
+    --ink-3: #586670;
+    --accent: #0072b2;
+    --link-hover: #925f00;
+    --human: #0072b2;
+    --assisted: #80506a;
+    --ai: #a44500;
+    --derived: #687780;
+    --indep: #925f00;
+    --open: #e9edf0;
+    --open-ink: #586670;
+    --conj: #80506a;
+    --node-fill: #ffffff;
+    --node-stroke: #7a8b96;
+    --junction: #45535d;
+    --hl: #dce4ea;
+    --focus: #0072b2;
+    --badge-ink: #ffffff;
+    --warning-bg: #fff0ce;
+    --source-forest: #56b4e9;
+    --source-rust: #e69f00;
+    --source-ochre: #d55e00;
+    --source-slate: #0072b2;
+    --source-berry: #cc79a7;
+    --source-olive: #009e73;
+    --source-misc: #687780;
+    --rel-positive: #56b4e9;
+    --rel-negative: #e69f00;
+    --shadow: 0 4px 24px rgb(32 41 48 / 12%);
+  }
+  :root[data-palette="colourblind"][data-theme="dark"] {
+    --bg: #111820;
+    --panel: #18222b;
+    --panel-2: #23303b;
+    --line: #354550;
+    --line-strong: #718492;
+    --ink: #edf2f5;
+    --ink-2: #c1ced7;
+    --ink-3: #a5b5c1;
+    --accent: #56b4e9;
+    --link-hover: #e69f00;
+    --human: #56b4e9;
+    --assisted: #cc79a7;
+    --ai: #e69f00;
+    --derived: #91a1ad;
+    --indep: #e69f00;
+    --open: #23303b;
+    --open-ink: #a5b5c1;
+    --conj: #cc79a7;
+    --node-fill: #1c2933;
+    --node-stroke: #8094a3;
+    --junction: #c1ced7;
+    --hl: #354654;
+    --focus: #56b4e9;
+    --badge-ink: #111820;
+    --warning-bg: #352b18;
+    --source-misc: #91a1ad;
+    --shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  }
+  /* Source swatches use the unmodified palette; outlined badges allow their
+     text to keep the normal contrast on both light and dark surfaces. */
+  :root[data-palette="colourblind"] .badge.source {
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--source-color);
+    border-left-width: 4px;
+  }
+}
+</style>
+<script>/* Apply before paint; share the preference between every map and write-up. */
+(() => {
+  const key = 'pmap-theme';
+  const paletteKey = 'pmap-palette';
+  const system = window.matchMedia?.('(prefers-color-scheme: dark)');
+  let preference;
+  let palette;
+  try { preference = localStorage.getItem(key); } catch (_) {}
+  try { palette = localStorage.getItem(paletteKey); } catch (_) {}
+  if (!['light', 'dark'].includes(preference)) preference = null;
+  if (palette !== 'colourblind') palette = 'default';
+  function apply(theme) {
+    document.documentElement.dataset.theme = theme;
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.textContent = theme === 'dark' ? '[Light mode]' : '[Dark mode]';
+      button.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+    });
+  }
+  function applyPalette() {
+    document.documentElement.dataset.palette = palette;
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.setAttribute('aria-pressed', String(palette === 'colourblind'));
+      button.textContent = `[Colourblind mode: ${palette === 'colourblind' ? 'on' : 'off'}]`;
+    });
+  }
+  const initial = () => preference || (system?.matches ? 'dark' : 'light');
+  apply(initial());
+  applyPalette();
+  document.addEventListener('DOMContentLoaded', () => {
+    apply(initial());
+    applyPalette();
+    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        preference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        apply(preference);
+        try { localStorage.setItem(key, preference); } catch (_) {}
+      });
+    });
+    document.querySelectorAll('[data-colourblind-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        palette = palette === 'colourblind' ? 'default' : 'colourblind';
+        applyPalette();
+        try { localStorage.setItem(paletteKey, palette); } catch (_) {}
+      });
+    });
+  });
+  system?.addEventListener('change', () => { if (!preference) apply(initial()); });
+  window.addEventListener('storage', event => {
+    if (event.key === key || event.key === null) {
+      preference = ['light', 'dark'].includes(event.newValue) ? event.newValue : null;
+      apply(initial());
+    }
+    if (event.key === paletteKey || event.key === null) {
+      palette = event.newValue === 'colourblind' ? 'colourblind' : 'default';
+      applyPalette();
+    }
+  });
+})();
+</script>
+<link rel="stylesheet" href="../math/katex.min.css">
+<script defer src="../math/katex.min.js"></script>
+<script defer src="../math/contrib/auto-render.min.js"></script>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Stable analytical truth with a nonstandard numerical component</h1></header><p>Daniel Kodsi, with ChatGPT assistance, 29–30 October 2026.</p>
+<p>There is a model of C with full <strong>Necessity of Second-Order
+Analysis</strong> in which <strong>Arithmetic Necessitism</strong> and
+<strong>Analytic Necessitism</strong> both fail. The numerical failure
+occurs with its boxed noncollapse guard true. The construction is in
+ambient ZFC and gives a consistency upper bound relative to
+Con(ZFC).</p>
+<p>The proof combines the existing full-present construction with a
+component having the complete theory of a standard full hierarchy. Its
+canonical number field nevertheless contains a nonstandard member. No
+independent human check or Lean proof is recorded.</p>
+<h2 id="a-countable-component-with-the-right-complete-theory">1. A
+countable component with the right complete theory</h2>
+<p>Let F be the full one-world extensional hierarchy with individual
+domain <span class="math inline">\omega</span>, truth values <span
+class="math inline">\{0,1\}</span>, and all functions at every admitted
+relational type. Necessity is the identity. There are countably many
+finite type expressions and standard finite parameterized lambda
+templates. Represent F in the corresponding countable many-sorted
+first-order Henkin language, with application and the operation for
+every such template.</p>
+<p>Let <span class="math inline">T=\operatorname{Th}(F)</span>. This
+complete theory is a set; it need not be recursive. Put <span
+class="math inline">\nu=(et)t</span>, add a constant <span
+class="math inline">c:\nu</span>, and require</p>
+<p><span class="math display">
+\mathbb N_e(c),\qquad c\ne\bar n_e\quad(n\in\omega).
+</span></p>
+<p>Every finite part holds in F by choosing a standard numeral outside
+its finite list of exclusions. Compactness and downward Löwenheim–Skolem
+give a model H with every sort countable, elementarily equivalent to F
+in the original language, and with the displayed c. In particular H
+satisfies <span class="math inline">I^*_e</span>, has infinitely many
+individuals, and preserves all parameterized Henkin operations. Its
+extensionality identifies each relation entity with its function on the
+appropriate H domains.</p>
+<p>H is not asserted to be an elementary substructure of F. Its admitted
+predicates cannot include the external set of its standard numerals:
+that set would be inductive and omit its numerical c. Compactness was
+applied to a first-order presentation, without imposing full
+second-order semantics on H.</p>
+<h2 id="the-full-present">2. The full present</h2>
+<p>Take <span class="math inline">R_e=H_e</span>, with identity
+projection. For each flattened relational type <span
+class="math inline">\tau=\alpha_1\cdots\alpha_k t</span>, including
+<span class="math inline">k=0</span>, set</p>
+<p><span class="math display">
+R_\tau=\mathcal P(R_{\alpha_1}\times\cdots\times R_{\alpha_k})\times
+H_\tau.
+</span></p>
+<p>A pair <span class="math inline">(S,a)</span> has current extension S
+and projects to a. Application and lambda abstraction calculate the
+current row and the H denotation separately. A quantified formula uses
+the entire R domain currently and the entire original H domain in its H
+coordinate. In particular, old quantifiers are never restricted to
+images of current arguments.</p>
+<p>These are the standard full-present operations, as also displayed in
+<a href="full-current-c5-arithmetic-root.md">Full present over a C5
+component, Section 2</a>. Their C-validity uses the original component
+operations. For a theoremhood-qualified equivalence of the base logic H,
+the current lambda rows agree, and C-validity in the component
+identifies the second coordinates. Every finite parameterized lambda
+term remains admitted. No additional optional premise enters the Logical
+Equivalence rule. In the present case H is a one-world extensional
+Henkin model, so the construction is also the ordinary one-component
+coalesced root, with one nonidentity arrow <span
+class="math inline">h:R\to H</span>.</p>
+<p>Root identity is literal identity: arbitrary current singleton
+predicates separate distinct root entities. Terms commute with h. A
+formula at R is necessary exactly when it is true both currently and
+after transport to H, with the latter’s own full quantifier domains.
+Thus the root has four whole propositions, although its designated
+current truth is classical.</p>
+<h2 id="every-second-order-analytical-sentence-has-a-fixed-sign">3.
+Every second-order analytical sentence has a fixed sign</h2>
+<p>Fix a standard finite sentence A in the native analytical grammar,
+and let <span class="math inline">\epsilon</span> be its truth value in
+the ordinary full real field with its natural-number predicate. For each
+admitted carrier type <span class="math inline">\sigma</span>, the
+sentence</p>
+<p><span class="math display">
+U_{\sigma,A,\epsilon}:=
+\forall\mathfrak R\,
+  (\operatorname{Real}_\sigma(\mathfrak R)\to A(\mathfrak R)^\epsilon)
+</span></p>
+<p>holds in F by categoricity of full complete ordered fields and
+invariance under isomorphism. Here the superscript means A or its
+negation according to the selected sign. This is a single finite
+sentence of the Henkin language, even when no field is available at that
+carrier. It belongs to T and therefore holds in H. What transfers is the
+sentence; no claim that H’s internal real fields are externally complete
+is needed.</p>
+<p>At R, every current real-field tuple is an external complete ordered
+field. Every subset of its carrier, and every finite-arity relation on
+it, is the current restriction of an admitted row: choose that row
+freely and any H component. The least inductive field predicate is
+consequently the ordinary natural-number part. The native analytical
+grammar uses relations only by applying them to field elements and uses
+identity only between those elements. It cannot distinguish two relation
+entities that have the same current row. Induction on this grammar
+therefore gives full external analytical semantics at R, with the same
+sign <span class="math inline">\epsilon</span>.</p>
+<p>Both R and H satisfy <span
+class="math inline">U_{\sigma,A,\epsilon}</span>, so its box holds at R.
+This proves the whole Necessity of Second-Order Analysis schema, at
+every carrier and for every standard finite analytical sentence. It also
+covers fields that can occur at R but not at the corresponding type of
+F; the root argument uses their external categoricity directly.</p>
+<h2 id="the-numerical-field-is-not-weakly-inextensible">4. The numerical
+field is not weakly inextensible</h2>
+<p>Let <span class="math inline">\bar n_R</span> be the root’s closed
+e-numerals. Every inductive property contains their orbit. Conversely, R
+admits a property with precisely that orbit as its current row, and any
+H component. It is currently inductive. The definition of numberhood
+therefore gives</p>
+<p><span class="math display">
+\operatorname{ext}_R(\mathbb N_e)=\{\bar n_R:n\in\omega\}.
+</span></p>
+<p>The root individual domain is infinite and has all current unary
+rows. The current row of <span class="math inline">\bar n_R</span>
+therefore counts exactly the n-element properties, distinguishing these
+numeral entities. Zero is not a successor, and successor is injective on
+their orbit. Thus <span class="math inline">I^*_e</span> holds at R; it
+holds at H by T, so <span class="math inline">\Box I^*_e</span> holds at
+R.</p>
+<p>Parameterized Henkin comprehension in H admits <span
+class="math inline">X_H(x)=\mathbb N_e(x)\land x\ne c</span>. Form the
+root pair X whose current row is the standard numeral orbit and whose H
+component is <span class="math inline">X_H</span>. Each current root
+number is a standard numeral, and its image is the corresponding H
+numeral, different from c. Hence</p>
+<p><span class="math display">
+R\models\forall n(\mathbb N_e(n)\to\Box X(n)).
+</span></p>
+<p>But <span class="math inline">\mathbb N_e\le X</span> fails, since H
+has the number c and lacks <span class="math inline">X_H(c)</span>. This
+is exactly a weak-inextensibility countertest for the whole numerical
+predicate. Its rigidity, and hence Arithmetic Necessitism at e, fails
+while the required boxed guard is true.</p>
+<h2 id="analytic-necessitism-fails-nonvacuously">5. Analytic Necessitism
+fails nonvacuously</h2>
+<p>Since <span class="math inline">R_e</span> is countably infinite and
+<span class="math inline">H_{et}</span> is countable, <span
+class="math inline">R_{et}=\mathcal P(R_e)\times H_{et}</span> has
+continuum many members. Current fullness supplies a complete real field
+at et. Any current complete real field there has continuum many
+elements, by categoricity.</p>
+<p>If a rigid necessarily-real field witnessed Analytic Necessitism, its
+carrier’s necessary distinctness would make h injective on those current
+elements: two elements with equal H images would fail necessary
+distinctness. But <span class="math inline">H_{et}</span> is countable.
+Thus no possible witness can have the required rigidity and necessary
+realhood. AN fails at et with a true possible-real antecedent; the
+recorded implication from SOAN to AN also gives SOAN failure.</p>
+<h2 id="sources-and-scope">Sources and scope</h2>
+<p>The full-present pair construction and its current analytical truth
+lemma are due to OpenAI Codex, prompted by Daniel Kodsi, <em>Classical
+present over an arbitrary model</em>, 25 October 2026, Sections 1–2 and
+5. The companion <em>Classical present conservation</em>, Section 4,
+supplies the complete-theory Henkin method. Cian Dorr’s existing
+<code>coalesced-two-extensional-arithmetics-root</code> supplies the
+standard-current/nonstandard-component numerical-growth countertest;
+Bacon and Dorr supply the coalesced model framework.</p>
+<p>The addition here is the matching complete theory that keeps
+analytical truth fixed in the same numerical-growth model. No Necessity
+of Arithmetic, C5, No Pure Contingency, choice or completeness verdict
+is added. Neither the common complete analytical theory nor the
+countable component implies agreement on the complete pure intensional
+language.</p>
+<h2 id="paper-references">Paper references</h2>
+<ul>
+<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian
+Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds),
+Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map
+was built from the draft dated 16 May 2023, 87 pages, which does not
+differ materially from the published version; all page, proposition and
+footnote locators in this map refer to that draft’s numbering. —
+Sections 1.3 and 2.3; Theorem 3.26 and Appendix E. The fixed C language
+and coalesced action-model framework.</li>
+<li><strong>Formulation: Arithmetic is Necessary.</strong> Goodsell,
+Zachary William Lee. Arithmetic is Necessary. Draft dated 5 June 2024,
+28 pages. Derives the necessity of arithmetic in the logic HKC (H plus K
+plus Countable Boolean Completeness) and shows that Boolean Completeness
+is inconsistent with the maximalization of any recursively enumerable
+extension of HK consistent with I, answering the question of Classicism,
+§2.6. Locators refer to this draft. — Definitions 3–8. The canonical
+numerical objects and noncollapse guard.</li>
+</ul>
+</body></html>

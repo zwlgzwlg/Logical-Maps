@@ -1,0 +1,126 @@
+id: supported-product-coordinate-symmetry
+name: 'Supported-product action model: external coordinate symmetry'
+definition: Fix a set-sized finitary signature and an infinite cardinal kappa bounding its syntax. At
+  the single object let the arrow monoid be L^I, with L the free monoid on kappa letters and |I|=kappa-plus,
+  and let individuals be a singleton. At every relational type admit all profiles having both an arrow-coordinate
+  support of size at most kappa and a support of that size under external Sym(I) conjugation. Transport
+  is precomposition. Glue the signature interpretations at a fresh coordinate after fixing the pure domains.
+  Evaluate at the identity. The external permutation group restricts admission; its permutations are not
+  additional arrows.
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, Supported-coordinate symmetry probe, 30 October 2026, Sections
+  1–13 (unpaginated).
+- GPT-6 Astra, prompted by Daniel Kodsi, Logical Necessity without Actuality, 22 October 2026, Sections
+  1–10 (unpaginated); the supported-product-free-monoids-glued-constants construction.
+- Daniel Kodsi's research notes Central-map complete gluing, Sections 1–3, and Choice support obstruction,
+  Sections 1–3 (unpaginated), for the support-moving hull and selector methods.
+source_names:
+- Coordinate symmetry construction
+- Supported free-monoid product
+- Support hull and selector methods
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Sections 3.4–3.5, pp. 55–61; Appendix D, pp. 73–74
+  note: Ordinary action-model semantics.
+arguments:
+- id: signature-gluing
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: supported-product-coordinate-symmetry
+  text: After fixing the modified pure domains, last-letter gluing at one fresh coordinate recovers every
+    selected whole signature interpretation by an arrow. This gives the native current Logical Necessity
+    schema. See Section 7.
+  holds:
+  - logical-necessity-r
+- id: scalar-support-hulls
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: supported-product-coordinate-symmetry
+  text: For any admitted scalar family with permutation support T, the T-cylinder hull of its external
+    union is its least upper bound against every admitted scalar bound, by support movement and patching.
+    The pure one-object instance holds necessarily. See Section 2.
+  holds:
+  - necessary-boolean-completeness-t
+- id: surjective-transports
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: supported-product-coordinate-symmetry
+  text: Suffix stripping lifts every entity through every arrow while retaining both small supports. Thus
+    transport is onto at every type. See Section 3.
+  holds:
+  - necessary-barcan-r
+- id: countable-unions
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: supported-product-coordinate-symmetry
+  text: The closed numeral orbit has an admitted empty-supported characteristic profile; native countability
+    makes a family externally countable. Its pointwise union retains both supports. See Section 3.
+  holds:
+  - necessary-countable-boolean-completeness-r
+- id: exact-image-rigidity
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: supported-product-coordinate-symmetry
+  text: The supported approximation tests B_Q(E) force every weakly rigid profile to be the exact image
+    of its current extension; admitted exact-image profiles and their transports are rigid. See Section
+    5.
+  holds:
+  - necessary-tame-rigidity-r
+- id: fresh-coordinates
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: supported-product-coordinate-symmetry
+  text: Fresh coordinates split every nonzero scalar. Each candidate true vicinity misses a current q_j
+    with Diamond q_j=q_j. See Section 8.
+  holds:
+  - atomlessness
+  fails:
+  - vicinity
+- id: higher-coextension-obstruction
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: supported-product-coordinate-symmetry
+  text: The empty-supported family of empty-coordinate tests q_i has no weakly inextensible coextension
+    at type tt. Failure of Boolean Completeness at that output type follows by the native same-type BC-to-WIC
+    theorem. See Section 4.
+  fails:
+  - weakly-inextensible-comprehension-r
+- id: square-marker-power-obstruction
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: supported-product-coordinate-symmetry
+  text: The integer-shift exact-image carrier at bound type (tt)t has a fresh rigid subrelation whose
+    lift would require an invariant nonempty integer section avoiding -1. This is impossible. See Section
+    6.
+  fails:
+  - rigid-power-r
+- id: false-escape-selector
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: supported-product-coordinate-symmetry
+  text: 'The displayed serial false-escape relation at (t,t) has no supported functional subrelation:
+    uniqueness would produce a T-supported false scalar escaping its own support fragment. See Section
+    8.'
+  fails:
+  - relational-choice-r
+notes: One model separates Logical Necessity plus necessary BC_t from full BC, WIC and Rigid Power. These
+  are joint consequences of the changed admission rule, not additional principle nodes. No verdict is
+  transferred from the distinct finite-tail middle model. The existing supported-product group is not
+  used because its unrestricted constant-extension choice argument does not survive this support restriction.

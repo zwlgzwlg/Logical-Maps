@@ -1,0 +1,48 @@
+id: gallin-comprehension-implies-self-atoms-are-strong-atoms-r
+premises:
+- gallin-extensional-comprehension-r
+conclusion: self-atoms-are-strong-atoms-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, Gallin comprehension makes every current self-atom strong,
+  30 October 2026, Lemmas 1–3 and The theorem (unpaginated).
+- Gallin comprehension as a unique Boolean evaluator, 22 October 2026, sections 2–3 and 5
+  (unpaginated), for the globally endpoint-valued evaluator and the persistent-counterexample argument.
+- Cian Dorr, Gallin comprehension implies ND, proof of 20 September 2026; and the notion of a
+  self-atom and its bridge principles, 25 October 2026 (unpaginated).
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, section 2.3, note 37, p. 28,
+  for Gallin's comprehension convention.
+source_names:
+- Current Gallin and self-atoms 30 Oct
+- Boolean evaluator 22 Oct
+- Dorr ND and self-atoms
+- Classicism
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: section 2.3, note 37, p. 28
+proof: >-
+  Gallin supplies a current truth evaluator E with necessarily endpoint-valued outputs and gives
+  current ND. A current self-atom Q is therefore an ordinary atom. Its normalized order-character
+  J(X)=E(Q<=X) is currently Boolean, necessarily endpoint-valued, and sends Q to top. A future
+  counterexample to a finite Boolean law would be a disagreement between fixed endpoints and
+  remain a counterexample thereafter. Current B applied to the whole universally quantified law
+  rules this out, so the character is necessarily Boolean even on new future inputs. At a future
+  point its endpoint value on Z persists. At any later instance of Q, self-atomhood makes Q an
+  atom; the Boolean character forces its decision of Z to agree with that endpoint. Thus Q
+  necessarily decides every future Z, making it strong. The accompanying write-up proves each
+  step with full future-domain quantification.
+notes: >-
+  One current all-type implication, including type t. The added step applies the earlier evaluator
+  method to an atom's order-character; it is not a new evaluator-existence theorem or a claim that
+  all ordinary atoms are strong. The quantifier over self-atoms remains current. No boxed
+  self-atoms-strong conclusion follows here from current Gallin, and the boxed-Gallin consequence
+  was already recorded. No future truth correctness for E, Barcan assumption, or necessitation
+  of an optional premise is used.

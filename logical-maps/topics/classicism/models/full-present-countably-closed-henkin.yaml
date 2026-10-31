@@ -1,0 +1,116 @@
+id: full-present-countably-closed-henkin
+name: 'Full present: countably closed elementary Henkin leaf'
+certificate:
+  source_id: misc
+  produced_by: GPT-6 Astra, prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- GPT-6 Astra, prompted by Daniel Kodsi, Subset-closed elementary Henkin leaves and full presents, 30
+  October 2026, countable-completeness sections 1–7, analytical sections 1–6, and continuum-closure/powers
+  sections 1–7 (unpaginated).
+- Daniel Kodsi, Classical present over an arbitrary model, sections 1–3 (unpaginated), for the full-current
+  pair construction and external-completeness criterion; supported-product numeral-orbit argument, section
+  10 (unpaginated).
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, section 1.3 and Appendix D, pp. 73–74,
+  for the standing C framework and typed semantics.
+source_names:
+- Subset-closed Henkin presents 30 Oct
+- Kodsi full present and numeral orbit
+- Classicism
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: section 1.3; Appendix D, pp. 73–74
+definition: 'Work in external ZFC. F is the full standard extensional relational hierarchy over omega
+  with terminal modality, in its countable many-sorted first-order presentation including all finite parameterized-lambda
+  templates. H is an elementary substructure obtained by the subset-code closure described below. Form
+  its full classical present R: R_e=omega, and at each relational type tau=alpha_1...alpha_k t set R_tau=P(product_i
+  R_alpha_i) x H_tau. The only proper future is terminal H, with transport q(S,h)=h and identity transport
+  on individuals. All current rows occur. Application, logical operations and quantifiers have their current
+  full-row values and the transported H-component. Equality is literal at each point. Evaluate at R. Put
+  c=2^aleph_0. Seed all individuals and every point and graph of an ordinary real-field copy at every
+  infinite relational carrier. Through an omega_1 elementary chain, at each successor stage add the exact
+  F predicate of every external countable subset of each existing sort, then take an elementary hull.
+  The union H has size c, has H_e=omega and H_et=P(omega), and admits exact codes for all external countable
+  subsets of each H sort.'
+arguments:
+- id: necessary-countable-completeness
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: elementary-henkin-presents
+  text: Every canonical current number carrier is its external successor orbit, hence countable, because
+    the full current row for that orbit is an admitted inductive predicate. A native countable family
+    therefore has at most countably many current members. Its projected H family has an exact code and
+    an H union; pair this union with the union of its current rows. Coordinatewise necessary order proves
+    that this pair is a LUB against every root test. Terminal H has internal full BC by parameter comprehension.
+    Thus CBC holds at both points for every counting type and every relational output type. See sections
+    1–3.
+  holds:
+  - necessary-countable-boolean-completeness-r
+- id: necessary-actuality-and-inextensible-comprehension
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: elementary-henkin-presents
+  text: At R the proposition (1,0) entails every current truth. A current relation with row S has the
+    inextensible coextension (S,bottom_H); its future has no instances. At terminal H, top witnesses Actuality
+    and each relation is inextensible. Both existential sentences therefore hold at each reachable point,
+    with the native leading boxes. See section 4.
+  holds:
+  - necessary-actuality
+  - necessary-inextensible-comprehension-r
+- id: analytic-necessitism
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: elementary-henkin-presents
+  text: 'At every infinite relational host lift all seeded real points and all field graphs by exact images.
+    Transport is injective on the carrier and each graph is rigid against arbitrary future tests; the
+    entire ordinary real field is retained at H. Thus the field is necessarily Real. Finite carriers and
+    e have no possible real field: root fullness and H elementarity in F respectively prove this. This
+    treats the full schema, including the same-carrier requirement. See section 5.'
+  holds:
+  - analytic-necessitism
+- id: analytical-truth
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: elementary-henkin-presents
+  text: For each standard finite native second-order analytical sentence and each host, all full F real
+    fields have the same standard truth value. The universally signed sentence over all fields transfers
+    by elementarity to every H field. Root fullness gives the same sign over every root field. Both points
+    satisfy the same universally signed sentence, proving the exact necessity schema. See section 6.
+  holds:
+  - necessity-of-second-order-analysis
+- id: missing-uncountable-join
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: elementary-henkin-presents
+  text: 'At delta=et the leaf has H_delta=P(omega), of size c, while H_(delta t) has at most c elements.
+    Choose A subset H_delta not represented there. Its family of singleton predicates has no leaf LUB:
+    complements of all omitted singletons force any purported LUB to have exactly extension A. Lift the
+    singleton family with empty current rows and admit it as a root family. A root LUB would project to
+    a leaf LUB, contradiction. Failure is at (et)t, not t. See section 3.'
+  fails:
+  - boolean-completeness-r
+- id: no-unary-real-power
+  by: GPT-6 Astra, prompted by Daniel Kodsi
+  date: '2026-10-30'
+  choice: uses
+  writeup: elementary-henkin-presents
+  text: Every proposed root real carrier has c points and necessarily distinct members. Unary represented
+    power would assign each of its 2^c subsets a rigid representative. Persistence and weak inextensibility
+    against complements of carrier haecceities make distinct subsets have distinct H projections, but
+    the leaf sort has at most c elements. This defeats every candidate field at the active host et. See
+    section 7.
+  fails:
+  - second-order-analytic-necessitism
+notes: One countably closed elementary leaf with a full current present. Its finite proposition algebra
+  gives no failure of propositional BC. Necessary coextension Transversal follows from necessary Actuality.
+  Its analytical conjunction has other known witnesses; the new completeness separation is the joint package
+  with necessary CBC, Actuality and IC.

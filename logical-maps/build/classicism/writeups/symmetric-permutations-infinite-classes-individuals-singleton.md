@@ -8,6 +8,7 @@
 - **Atomlessness.** Atomlessness in the displayed closed propositional formulation.
 - **Boolean Completeness (type t).** Every property of propositions has a greatest lower bound.
 - **Countable Boolean Completeness.** Every countable property of entities of a relational type has a least upper bound in that type, where a property is countable relative to a type $\sigma$ when it injects into the finite cardinalities of properties of type $\sigma$; one instance for each $\sigma$.
+- **Second-Order Analytic Necessitism.** If there could be a real number structure, there is a rigid one, necessarily a real number structure, together with represented powers of every arity up to $n$: rigid properties of rigid relations among the structure's elements that necessarily represent every relation on them. One sentence for each type $\sigma$ and each $n\ge1$.
 - **BF.** The Barcan Formula at every type. The predicate formulation closes the formula schema using lambda abstraction.
 - **Arithmetic Necessitism.** Given that necessarily zero is not a successor and successor is injective on numbers, the numbers at $\sigma$ form a rigid property with necessarily distinct instances. One sentence for each type $\sigma$.
 - **No Pure Contingency.** Each closed sentence of the pure language, if true, is necessary. This is a sentence schema, not a quantifier over propositions.
@@ -57,6 +58,12 @@ Write $E_k:=\{(x,y) : kx\sim ky\}$ for an arrow $k$. If $E_k$ and $E_{k^{\prime}
 At every relational type. First, an entity $Y$ pinned down by a finite $T$ and fixed by every symmetry fixing a finite $N$ pointwise is pinned down by $N$. For $Y$'s extension at $k\circ w$ equals its extension at $k$ both when $w$ is a symmetry fixing $N$ pointwise and, by pinning, when $w$ is any permutation fixing $T$ pointwise. These $w$ generate every permutation fixing $N$ pointwise: a transposition $(a\,b)$ of points outside $N$, with $a\in T$ say, is $(a\,c)(c\,b)(a\,c)$ for $c\notin T\cup N$ in the class of $a$, where $(a\,c)$ is a symmetry fixing $N$ and $(c\,b)$ fixes $T$ if $b\notin T$ (if $b\in T$, do the same for $b$); so every finitary permutation of the points outside $N$ is generated, and every permutation fixing $N$ pointwise agrees on $T$ with one of those. Now let $X$ be countable, and let a finite $N$ pin down both $X$ and an injection $I$ of $X$ into the finite cardinalities. These are standard and fixed by every arrow, as in the group's arguments for the Axiom of Infinity, so for a symmetry $g$ fixing $N$ pointwise and a member $Y$ of $X$'s extension, $g\cdot Y$ is a member too and $I$ assigns it the cardinality it assigns $Y$; so $g\cdot Y=Y$, and every member is pinned down by $N$. Their union, taken arrow by arrow, is then symmetric and pinned down by $N$, so in the domain, and it is the least upper bound, the order being inclusion of intensions.
 
 *Address: `symmetric-permutations-infinite-classes-individuals-singleton#countable-boolean-completeness`. By Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, in a trawl for cheaply settled verdicts; checked by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 2026-10-29.*
+
+### Holds Second-Order Analytic Necessitism.
+
+For either recorded individual setting, every possible real field at a fixed carrier type gives a current one. The admitted all-solution numeral and rational-cut profiles make it externally standard. Its finite parameter pin fixes every carrier member under designated symmetries; the model's stabilizer-generation lemma then gives a single pin for those members under all arrows. Direct-image field profiles and whole represented-power families are therefore admitted, rigid, and represent every target relation at every future arrow, at that same carrier type. See [proof](../writeups/symmetric-permutations-infinite-classes-analysis.md), sections 1–4. This uses ambient ZFC and establishes full SOAN in the base and singleton variants. The existing negative Transversal argument remains restricted to base individuals.
+
+*Address: `symmetric-permutations-infinite-classes-individuals-singleton#second-order-analytic-necessitism-same-carrier`. By GPT-6 Astra, prompted by Daniel Kodsi, 2026-10-30.*
 
 ### Holds BF.
 
@@ -121,6 +128,7 @@ With all surjections as arrows this is symmetric-infinite-classes. Separates C5 
 
 - **Opus 29 Oct** — Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 29 October 2026, on Cian Dorr's question whether C5 implies Transversal; the symmetry group and the argument against Transversal are those of symmetric-infinite-classes (Cian Dorr, 27 September 2026).
 - **BC does not imply RC** — Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, draft of 30 July 2026, §3 (symmetric ideally-full models).
+- **Astra and Kodsi 30 Oct** — GPT-6 Astra, prompted by Daniel Kodsi, Full SOAN in the original permutation-class model, 30 October 2026, sections 1–7 (unpaginated); proof in [proof](../writeups/symmetric-permutations-infinite-classes-analysis.md).
 
 <p class='cert'>Record: <code>topics/classicism/models/symmetric-permutations-infinite-classes.yaml</code></p>
 
