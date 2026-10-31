@@ -5451,6 +5451,15 @@ def coalesced_pinned_substitutions_truncations_root : Prop :=
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.NecAtomlessness.schemaIn ∧
     ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.SelfAtomicityT.schemaIn
 
+/-- `cofinite-germ-functional-choice-incomplete`
+
+Cofinite-germ model: Functional Choice without Boolean Completeness: a witness satisfying 1 principles
+and violating 1. -/
+def cofinite_germ_functional_choice_incomplete : Prop :=
+  ∃ (Sig : Classicism.Meta.Signature) (_ : Sig.Admitted) (Ax : Classicism.Meta.AxiomSet Sig), Classicism.Meta.AxiomSet.Consistent Ax ∧ Classicism.Meta.AxiomSet.Complete Ax ∧
+    Classicism.Meta.AxiomSet.Entails Ax Classicism.P.FunctionalChoice.schemaIn ∧
+    ¬ Classicism.Meta.AxiomSet.Entails Ax Classicism.P.BooleanCompletenessT.schemaIn
+
 /-- `finite-source-prefix-paired-individuals`
 
 Paired-individuals model with a singleton-source prefix: a witness satisfying 3 principles

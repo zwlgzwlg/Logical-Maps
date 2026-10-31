@@ -1,0 +1,37 @@
+id: cofinite-germ-functional-choice-incomplete
+name: 'Cofinite-germ model: Functional Choice without Boolean Completeness'
+definition: At r in the cofinite-neighborhood germ model over {r} union N, all relational domains are
+  germs of arbitrary pointwise relation tables. D_e is a singleton; application and lambda abstraction
+  are table slicing and tabulation; quantifiers use full point domains. The proposition algebra at r is
+  2 x (P(N)/Fin). See complete accompanying proof note.
+certificate:
+  source_id: misc
+  produced_by: Daniel Kodsi, with ChatGPT assistance
+  recorded_by: ChatGPT, prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-10-30'
+  lean: none
+sources:
+- Daniel Kodsi, with ChatGPT assistance, Functional Choice without Boolean Completeness, 30 October 2026,
+  Sections 3–7; the substitution argument is expanded in Section 4.5.
+source_names:
+- Kodsi / ChatGPT germ construction
+arguments:
+- id: functional-choice-and-failed-join
+  holds:
+  - functional-choice-r
+  fails:
+  - boolean-completeness-t
+  by: Daniel Kodsi, with ChatGPT assistance
+  date: '2026-10-30'
+  choice: uses
+  writeup: functional-choice-countermodel
+  text: Sections 3–4 construct every admitted type and prove term locality, whole-object substitution,
+    beta, eta, and the H-restricted Logical Equivalence schema. Section 5 represents every set function
+    between the domains at r with relational output, giving all-type Functional Choice. Section 6 gives
+    an admitted family of propositions with no supremum in 2 x (P(N)/Fin). The failure of full Boolean
+    Completeness and Rigid Comprehension follows through the existing implications.
+notes: Functional Choice is unboxed. Boolean Completeness fails at proposition type t. Section 9 separately
+  shows why the construction does not satisfy necessary Functional Choice.
+construction:
+  standing: established
