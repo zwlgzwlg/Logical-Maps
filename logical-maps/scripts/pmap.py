@@ -3316,6 +3316,20 @@ def render_writeups(topic_id: str, data: dict, outdir: Path) -> dict:
     # A write-up an argument names need not belong to a record of its own; it is published too.
     named = {a["writeup"]: {"id": a["writeup"]} for s in data.get("model_sources", []) for _, a in _arguments(s)
              if isinstance(a, dict) and a.get("writeup")}
+    # Publish explicitly selected standalone notes without adding graph records.
+    publication_list = src / "standalone.json"
+    if publication_list.is_file():
+        standalone = json.loads(publication_list.read_text(encoding="utf-8"))
+        if (not isinstance(standalone, list)
+                or not all(isinstance(i, str) and _re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", i)
+                           for i in standalone)
+                or len(standalone) != len(set(standalone))):
+            raise ValueError(f"{publication_list}: expected a unique list of write-up IDs")
+        for iid in standalone:
+            hand = src / f"{iid}.md"
+            if not hand.is_file() or hand.is_symlink():
+                raise ValueError(f"{publication_list}: missing or unsafe write-up {iid}")
+            named.setdefault(iid, {"id": iid})
     records = {x["id"] for x in data["results"] + data["models"]}
     for item in data["results"] + data["models"] + [x for i, x in named.items() if i not in records]:
         iid = item["id"]
