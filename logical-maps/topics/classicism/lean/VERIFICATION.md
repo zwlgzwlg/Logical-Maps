@@ -1423,6 +1423,64 @@ rather than generated from the records. The statements were checked against the 
 by name; that is the current level of assurance, and the report says so rather than
 claiming more.
 
+## Church numerals and sequence recursion, 2 November 2026
+
+Added by Codex (OpenAI), prompted by Andrew Bacon. The new
+`Background/ChurchSequences.lean` defines Church numerals, their least inductive
+property and Peano-separation Infinity, plus sequences with accumulator
+`Church.Num α → Prop`. `Principles/Recursion.lean` states Church Numeral Infinity,
+its boxed form, Church Numeral Functional Recursion and Sequence Functional
+Recursion; `Certified/ChurchRecursionSchemas.lean` quotes the four principles,
+checks their reflections, and makes each a schema at every signature.
+
+Focused checks with the pinned Lean 4.33.1 compiler: all 11 background theorems
+pass the Equivalence gate (all in C⁻, with no axioms) and the relational
+type-system audit. `Church.cons_injective` also translates to a kernel-checked
+object-language derivation. `Church.cons_ne_nil` passes the shallow gate and
+type audit; it has no translated derivation in this contribution. The four
+principles and their schemas compile.
+
+The two functional-recursion implications are recorded with mathematical
+proofs and generated Lean statements, with `certificate.lean: none`. They are
+not claimed as Lean-certified results. The sequence result is for the revised
+accumulator, not the original t-accumulator in Bacon's 25 March 2023 note.
+The complete library/model audit was not run: this environment has the pinned
+compiler and the required core modules, but not the Mathlib dependency needed
+by the library-wide signature/model imports. No existing verification status
+was changed.
+
+## Church recursion reconstruction, 4 November 2026
+
+Codex (OpenAI), prompted by Andrew Bacon. Reconstructed the least-graph proofs
+in `Background/ChurchRecursion.lean` after the earlier local patch was lost.
+The nine numeral-graph and nine sequence-graph lemmas establish base/step,
+support, totality, unfolding, constructor inversion, functionality and persistence.
+Two shared graph-conversion lemmas reuse `mp_value`; two unary recursion cores
+are lifted to every relational output type using the existing list-rule machinery.
+The empty argument list covers proposition outputs. Neither recursion principle
+is used as a premise.
+
+Pinned Lean 4.33.1 focused checks passed: all 22 lemmas pass the Equivalence
+gate in C-minus and the relational type audit; both unary cores are certified
+as object-language derivations. Both complete schema entailments compile;
+`scripts/ChurchRecursionCheck.lean` reports only `propext` and `Quot.sound`,
+with no `sorryAx` or choice. The existing `cons_ne_nil` proof now uses explicit
+false elimination to make its translation available without changing its claim.
+
+Full integration checks also passed using the pinned Lean 4.33.1 and Mathlib
+v4.33.1 cache. All 291 modules in the `Classicism` import graph built successfully
+with one Lake build request at a time and `LEAN_NUM_THREADS=1`, in about 53 minutes.
+This includes `Strict.Audit`, `Certified.ChurchRecursion`, and `Classicism.Map`.
+The 8 GiB environment recorded no out-of-memory event or kill during this run.
+
+`python3 scripts/pmap.py lean-check classicism --update` then exited successfully:
+555 verified result/model proofs, 52 verified variants, 421 verified model verdicts,
+and 56 verified argument verdicts. Both recursion implications passed their
+generated-statement and axiom audits and were marked `lean: verified` by that
+command. The generated `map/index.json` was refreshed. An unrelated automatic
+record-status change was restored to keep this contribution scoped to recursion.
+Other pending proofs in the database remain pending; audit success does not
+assert that every recorded mathematical result is formalized.
 ## The symmetric ideally-full group's conditions, 3 November
 
 Lean models for eight more members of `symmetric-ideally-full`, and the group's conditions proved
@@ -1476,3 +1534,35 @@ its seven verdicts from the group's arguments are certified through it (`MapWitn
 
 *Checked.* `lean-check` OK (pending proofs remain): 456 model verdicts verified. The group's
 certified verdicts went from 75 (48 from arguments, 27 member by member) to 110 (75 and 35).
+
+
+## Church recursion: integration with upstream, 4 November 2026
+
+*Implementation and checks:* Codex (OpenAI), prompted by Andrew Bacon.
+
+Integrated upstream `e4a0d8a27fb9e7a6800872ef0c58e9b1b0419786` while preserving
+the complete Church recursion certificates and the existing mathematical write-ups.
+The merged Classicism import graph contains 325 local modules. All built with the
+pinned Lean 4.33.1 and Mathlib v4.33.1, scheduling local module targets sequentially.
+
+The upstream monolithic `BourbakiWitt/Derive/ActualityCode.lean` exceeded this
+executor's 8 GiB memory limit in two attempts; source-order derivation within a
+single module did not suffice. Its 17 derivations are now compiled in five
+dependency-ordered modules. The following `Derive/Actuality.lean` was also split,
+with its 14 derivations in six modules. Both original entry points retain complete
+`#classicism_derive_audit` checks (17/17 and 14/14 passed). The mathematical source
+files `BourbakiWitt/ActualityCode.lean` and `BourbakiWitt/Actuality.lean` are unchanged
+from upstream. No checks were removed, and no further out-of-memory kills occurred
+after splitting these certificate modules.
+
+The first merged database audit encountered stale on-disk `Map.olean` artifacts,
+although the compilation had succeeded. Rebuilding the map with
+`LAKE_ARTIFACT_CACHE=false` and rerunning the audit with that setting resolved the
+mismatch. The final command was `pmap lean-check classicism --update`, with
+`LEAN_NUM_THREADS=1` and `LAKE_ARTIFACT_CACHE=false`. It exited successfully:
+560 verified result/model proofs, 52 verified variants, 508 verified model
+verdicts, and 61 verified argument verdicts. Both complete recursion implications
+passed and retain `certificate.lean: verified`; `map/index.json` was regenerated.
+Unrelated automatic YAML certificate upgrades were restored. Pending proofs
+elsewhere remain pending. All-topic record validation and the public-file scan
+also passed.

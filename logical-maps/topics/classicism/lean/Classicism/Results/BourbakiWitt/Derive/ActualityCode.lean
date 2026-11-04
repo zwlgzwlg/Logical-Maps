@@ -1,10 +1,6 @@
-import Classicism.Results.BourbakiWitt.Derive.ActualityChain
-import Classicism.Results.BourbakiWitt.ActualityCode
-import Classicism.Tools.Translate
-import Classicism.Certified.Schemas
+import Classicism.Results.BourbakiWitt.Derive.ActualityCodeStep
 
-/-! Derivations of the theorems of `Classicism.Results.BourbakiWitt.ActualityCode`, in a module of their own: the translator's memory
-grows with the proof it reads, and a citation of an imported `foo.derivable` costs nothing. -/
-
+/-! Audit every theorem of ActualityCode after compiling its derivations in
+small dependency-ordered batches. The mathematical proofs are unchanged. -/
 set_option maxHeartbeats 0 in
 #classicism_derive_audit Classicism.Results.BourbakiWitt.ActualityCode
