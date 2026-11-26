@@ -177,3 +177,30 @@ and η-conversion identify the operations. This relies on the output type's endi
 *Polyadic form.* $\forall X Y^{\bar\sigma\tau}\, .\,\Box(\forall\bar z\, .\,X[\bar z]=Y[\bar z])\to X=Y$
 $(\tau\ne e)$, one argument at a time, with the box carried through.
 :::
+
+## S4 upper bound and modalized-domain models
+
+The propositional modal fragment of C is exactly S4: for a modal formula A
+with arbitrary type-t parameters and box interpreted as p = top,
+C proves A iff S4 proves A. The existing K, T and 4 results supply the
+lower bound, with necessitation. The upper bound is Bacon's *The Broadest
+Necessity* (2018), Theorem 5.1 and Corollary 7.6, transferred from HFE to C.
+See [the metatheorem and translation](writeups/classicism-s4-upper-bound.html).
+It is a metatheorem about theoremhood, not an extra object-language axiom
+or an ordinary implication node.
+
+The paper's full modalized-domain construction lifts every reflexive
+transitive Kripke countermodel to a higher-order countermodel. Thus each
+S4 non-theorem has a counterexample in this family; no assertion is made
+that each individual frame refutes every such formula. The concrete
+records [[full-modalized-kripke-chain]] and
+[[full-modalized-expanding-chain]] witness failure of B; the expanding
+instance additionally refutes BF at e, Functionality and Tractarianism.
+
+The full transformation-monoid construction in *Substitution Structures*
+(2019), §5.3, is recorded as [[full-transformation-monoid-two]] and
+[[full-transformation-monoid-naturals]], with the natural action on the
+individuals. Both validate boxed Rigid Comprehension and boxed Atomicity,
+and refute B and BF at e and t. The cardinality-dependent verdicts are
+kept separate. These additions are mathematical source records and
+ordinary arguments; no new Lean verification is claimed.
