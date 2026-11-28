@@ -1554,3 +1554,16 @@ his premises the rigid properties of the at-least numbers are the reals of one, 
 hypothesis is his cardinal statement. His theorem is kept, refuting Non-contingency of the
 Continuum Hypothesis, which like the other principles of analysis has no Lean statement here.
 
+## Strong Possibility and the unary Russell diagonal, 27 November 2026
+
+The object-language operator sends an individual marker and a tester to a unary predicate. The Russell witness and the reflection step are derived in C. For any guard \(g\), they give \(D H(g)\to\neg g\). [Object-language derivations](Classicism/StrongPossibility/Unary.lean)
+
+The semantic step uses one upper copy of each individual and a second copy wherever the old predicate is false. At the marker's twin the operator detects possible rejection of the entire transported predicate. The reading theorem quantifies over every continuation and all the individuals available there. The separator applies it to a closed tester in an arbitrary named signature. [Reading theorem](Classicism/StrongPossibility/UnaryLayerReading.lean) · [Separation](Classicism/StrongPossibility/UnarySeparation.lean)
+
+Both exported proofs use the same two pure sentences. The first, $K$, says that any two distinct individuals can become permanently distinct. To prove $DK\to K$, ask for the distinction to be restored. Equality persists, so the pair is still distinct at the visit to $K$. The second sentence is $H(K)$. For its consistency proof the descriptor root has two representatives of each name, and every exit identifies them. In the separate model used to distinguish testers, the closed diagonal itself supplies the witness to the coding condition. [Reflection](Classicism/StrongPossibility/Permanent.lean) · [Ordinary root](Classicism/StrongPossibility/UnaryUniformPositive.lean) · [Doubled root](Classicism/StrongPossibility/UnaryUniformNegative.lean)
+
+The finite-support argument licenses the two sentences in any signature whose constants have closed types. Both map statements specialize this result, including the pure language with no names. The combined Lake target builds the map and the earlier signature entry point. [Finite support and the contradiction](Classicism/StrongPossibility/PermanentReturns.lean) · [Uniform theorem](Classicism/StrongPossibility/UnaryArbitrarySignature.lean) · [Map theorems](Classicism/Results/Research/StrongPossibilityMap.lean)
+
+*Checked.* Both map entries passed `python3 scripts/pmap.py lean-check classicism` from `logical-maps/`. From the Lean directory, `lake env lean scripts/StrongPossibility.lean` checks the proof bodies for both certificates, including the two licensing models, the reflected laws and the unary diagonal. Both depend on exactly `propext`, `Classical.choice` and `Quot.sound`. [Certificate checks](scripts/StrongPossibility.lean)
+
+For both results together, the transitive first-party imports fell from 247 modules (66,169 lines) to 135 (34,021 lines). This counts whole Lean files, including comments and blank lines. At `7af43e37` the starting modules under `Classicism.StrongPossibility` were `ProxyCanonical`, `Predecessor` and `ArbitrarySignatureLicences`. Here they are `UnaryInconsistent` and `UnaryArbitrarySignature`. Each module is counted once.

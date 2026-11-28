@@ -18,10 +18,14 @@ references:
 notes: The paper leaves consistency open. The definition of Box_ne and its dual is given in Background.
   Whatever is consistent with Max(C) is already possible by Possibility Maximalism (pure), which this principle implies;
   what it adds is possibility under the distinctness-preserving modality. So incompatibilities of the
-  form Strong Possibility + □Y are recorded at Possibility Maximalism (pure) and inherited, and the collapse is the
-  one recorded principle refuted by the stronger modality alone.
+  form Strong Possibility + □Y are recorded at Possibility Maximalism (pure) and inherited. The two closed pure sentences in
+  [[strong-possibility-r-inconsistent]] are individually compatible with ordinary Maximalism. Their
+  distinctness-preserving possibilities are jointly inconsistent.
 changes:
 - date: '2026-10-19'
   by: Claude Opus 5.5 (Anthropic), prompted by Cian Dorr
   summary: 'At Cian Dorr’s request: definitions of its technical terms added.'
+- date: '2026-11-27'
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  summary: Linked the proof of inconsistency and its two pure instances.
 lean_def: (Classicism.Meta.AxiomSet.pureVersion Classicism.Meta.AxiomSet.strongPossibility)

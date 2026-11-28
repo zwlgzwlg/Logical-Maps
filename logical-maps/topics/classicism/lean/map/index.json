@@ -438,6 +438,28 @@
     "lines": [1617, 1619],
     "file": "Classicism/Map.lean",
     "axioms": ["propext", "Quot.sound"]}},
+  "strong-possibility-signature-r-inconsistent":
+  {"proofs":
+   [{"name":
+     "Classicism.Meta.StrongPossibilityMap.strong_possibility_signature_r_inconsistent",
+     "lines": [33, 37],
+     "file": "Classicism/Results/Research/StrongPossibilityMap.lean"}],
+   "certificate":
+   {"name": "Classicism.Map.strong_possibility_signature_r_inconsistent",
+    "lines": [2425, 2427],
+    "file": "Classicism/Map.lean",
+    "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
+  "strong-possibility-r-inconsistent":
+  {"proofs":
+   [{"name":
+     "Classicism.Meta.StrongPossibilityMap.strong_possibility_r_inconsistent",
+     "lines": [14, 17],
+     "file": "Classicism/Results/Research/StrongPossibilityMap.lean"}],
+   "certificate":
+   {"name": "Classicism.Map.strong_possibility_r_inconsistent",
+    "lines": [2421, 2423],
+    "file": "Classicism/Map.lean",
+    "axioms": ["propext", "Classical.choice", "Quot.sound"]}},
   "strong-possibility-r-implies-distinctness-schema-r":
   {"proofs":
    [{"name": "Classicism.Meta.strongPossibility_entails_possibility",

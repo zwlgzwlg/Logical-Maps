@@ -322,32 +322,781 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <link rel="stylesheet" href="../math/katex.min.css">
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
-<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Strong Possibility (pure) ⇒ ⊥</h1></header><p class="cert">
-Conjecture — Source: Misc.; produced by Zachary Goodsell, who had it recorded as a conjecture and ranked it gold, 26 November 2026; it is the pure counterpart of Cian Dorr’s conjecture of 22 November 2026 for Strong Possibility (signature Σ); recorded by Claude Fable 5.2 (Anthropic), prompted by Zachary Goodsell, 26 November 2026.
-</p>
-<h2 id="premises">Premises</h2>
-<ul>
-<li><strong>Strong Possibility (pure).</strong> Each closed pure sentence consistent with Maximalist Classicism is possible under the distinctness-preserving modality.</li>
-</ul>
-<h2 id="conclusion">Conclusion</h2>
-<ul>
-<li><strong>⊥.</strong> These premises cannot all hold together.</li>
-</ul>
-<h2 id="notes">Notes</h2>
-<p>Conjectured: Strong Possibility (pure) is inconsistent. <em>Classicism</em> leaves its consistency open (§2.6). The gold tier is Zachary Goodsell’s, 26 November 2026.</p>
-<p>Cian Dorr’s attempt is the write-up of [[strong-possibility-signature-r-inconsistent]]. It refutes Strong Possibility (signature Σ) whenever <span class="math inline">\Sigma</span> has a constant with an argument of a type other than <span class="math inline">e</span>. From such a constant it builds a closed term of type <span class="math inline">t\to t</span> that can be made true of any chosen set of root propositions in the models of [[coalesced-definable-root-signature]], and with it two sentences <span class="math inline">E_1</span>, <span class="math inline">E_2</span>, existential closures of identities and distinctnesses, that split a Russell–Myhill collision according to its witness. C(<span class="math inline">\Sigma</span>) proves <span class="math inline">E_1\lor E_2</span>, Maximalism (signature Σ) is consistent with <span class="math inline">\neg E_1</span> and with <span class="math inline">\neg E_2</span>, and C proves <span class="math inline">E_i\to\Box_{\ne}E_i</span>; so Strong Possibility would give <span class="math inline">\neg E_1</span> and <span class="math inline">\neg E_2</span>. The method does not reach the pure language. With no constant, no closed term has a root extension that can be chosen freely, and the write-up leaves this case open, together with the signatures all of whose constants are individual constants, propositional constants or predicates of individuals.</p>
-<p>What would settle it: a disjunction of closed pure sentences, each an existential closure of identities and distinctnesses, that Maximalism (pure) proves without proving a disjunct; or, against the conjecture, a model of Strong Possibility (pure). Neither is known. Such a model would have to refute the Infinity Schema (type e), BF (type t), Strong Actuality, Truths are ND-necessary, Two-hat necessities are ND-necessary and Maximalism (signature Σ), each of which is incompatible with Strong Possibility (pure) ([[strong-possibility-and-infinity-e-incompatible]], [[strong-possibility-incompatible-with-barcan-t]], [[strong-possibility-and-strong-actuality-incompatible]], [[strong-possibility-and-truths-are-nd-necessary-incompatible]], [[strong-possibility-and-two-hat-implies-nd-incompatible]], [[maximalism-signature-incompatible-with-strong-possibility-pure]]). The last of these makes the two forms of Strong Possibility jointly inconsistent; neither conjecture is known to give the other.</p>
-<h2 id="sources">Sources</h2>
-<ul>
-<li><strong>Goodsell 26 Nov</strong> — Zachary Goodsell, 26 November 2026, that this be recorded as a conjecture, with its gold tier.</li>
-<li><strong>Dorr 22 Nov</strong> — Cian Dorr, conjecture of 22 November 2026 that Strong Possibility (signature Σ) is inconsistent, with the partial proof in its write-up, by Claude Fable 5.2 (Anthropic), prompted by Cian Dorr, 21–22 November 2026.</li>
-<li><strong>Classicism</strong> — Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §2.6, p. 42, where the consistency of Strong Possibility is left open.</li>
-</ul>
-<p class="cert">
-Record: <code>topics/classicism/results/strong-possibility-r-inconsistent.yaml</code>
-</p>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Strong Possibility (pure) ⇒ ⊥</h1></header><p><a id="unary-proof" name="unary-proof"></a></p>
+<h2 id="a-unary-diagonal">A unary diagonal</h2>
+<p><a href="../sources/strong-possibility-inconsistency.pdf">Four-page
+typeset proof</a></p>
+<p><strong>Theorem.</strong> There are two closed pure sentences <span
+class="math inline">K</span> and <span class="math inline">H(K)</span>
+such that, in the pure language and in every admitted signature <span
+class="math inline">\Sigma</span>,</p>
+<p><span class="math display">\begin{aligned}
+&amp;\mathrm{Max}(C_\Sigma)+K \text{ is consistent},\\
+&amp;\mathrm{Max}(C_\Sigma)+H(K) \text{ is consistent},\\
+&amp;C_\Sigma\vdash\neg\bigl(DK\land D H(K)\bigr).
+\end{aligned}</span></p>
+<p>Write <span class="math inline">C_\Sigma</span> for Classicism in the
+language <span class="math inline">\Sigma</span>. Its ordinary
+Maximalist theory <span
+class="math inline">\mathrm{Max}(C_\Sigma)</span> adds every <span
+class="math inline">C_\Sigma</span>-consistent closed disequality.
+Strong Possibility (SP) asserts <span class="math inline">DP</span> for
+each closed sentence <span class="math inline">P</span> consistent with
+that theory. The first two claims therefore give the two instances of SP
+contradicted by the third.</p>
+<h3 id="the-contradiction">The contradiction</h3>
+<p>Write <span class="math inline">D=\Diamond_{\ne}</span>. Its return
+condition is</p>
+<p><span class="math display">DP\ \longleftrightarrow\ \forall
+q^t\thinspace \bigl(q\to\Diamond(P\land\Diamond q)\bigr).</span></p>
+<p>For any proposition <span class="math inline">q</span> true at <span
+class="math inline">w</span>, this gives arrows <span
+class="math inline">w\to v\to u</span> with <span
+class="math inline">P</span> true at <span class="math inline">v</span>
+and <span class="math inline">q</span> true at <span
+class="math inline">u</span>. Parameters in <span
+class="math inline">q</span> travel along those same arrows. Equality
+persists along every arrow.</p>
+<p><strong>First sentence.</strong> Put <span
+class="math inline">K=\forall x^e y^e\thinspace (x\ne
+y\to\Diamond\Box(x\ne y))</span>. We claim <span
+class="math inline">DK\to K</span>. Fix <span class="math inline">x\ne
+y</span> at <span class="math inline">w</span> and use <span
+class="math inline">q=(x\ne y)</span> in the return condition. The pair
+is distinct at <span class="math inline">u</span>, hence at <span
+class="math inline">v</span>, since equality at <span
+class="math inline">v</span> would persist to <span
+class="math inline">u</span>. Apply <span class="math inline">K</span>
+at <span class="math inline">v</span> to this pair. There is an arrow
+<span class="math inline">v\to z</span> with <span
+class="math inline">\Box(x\ne y)</span> at <span
+class="math inline">z</span>. Composing <span class="math inline">w\to
+v\to z</span> gives the required <span
+class="math inline">\Diamond\Box(x\ne y)</span> at <span
+class="math inline">w</span>.</p>
+<p><strong>Second sentence.</strong> Let <span
+class="math inline">S=e\to t</span> and <span class="math inline">T=S\to
+t</span>. Thus <span class="math inline">p:S</span> is a unary predicate
+and <span class="math inline">F:T</span> tests a unary predicate. For
+now take any pure term <span class="math inline">Q:e\to T\to S</span>
+and write <span class="math inline">Q_bF=(Q(b))(F)</span>. Define</p>
+<p><span class="math display">\begin{aligned}
+\rho_b(p)&amp;\equiv\exists F^T\thinspace (Q_bF=p\land\neg F(p)),
+&amp;d_b&amp;=Q_b\rho_b,\\
+H(g)&amp;\equiv\forall b^e\thinspace \forall F^T\thinspace
+\bigl(Q_bF=d_b\to\Box(g\to F(d_b))\bigr).
+\end{aligned}</span></p>
+<p>At every world and for every <span class="math inline">b</span>,
+<span class="math inline">\rho_b(d_b)</span> is true. Indeed, assuming
+<span class="math inline">\neg\rho_b(d_b)</span> supplies a witness to
+<span class="math inline">\rho_b(d_b)</span>, namely <span
+class="math inline">F=\rho_b</span>. Unfolding its truth now gives a
+tester <span class="math inline">F</span> with <span
+class="math inline">Q_bF=d_b</span> and <span class="math inline">\neg
+F(d_b)</span>. This is the Russell–Myhill step. <a
+href="strong-possibility-signature-r-inconsistent.md">Earlier signature
+argument</a></p>
+<p><strong>Claim.</strong> <span class="math inline">D H(g)\to\neg
+g</span>. Suppose <span class="math inline">w\models D H(g)\land
+g</span>. Choose an individual <span class="math inline">b</span> and a
+rejecting witness <span class="math inline">F</span> as above. Use the
+single guard <span class="math inline">q=g\land\neg F(d_b)</span> in the
+return condition. Along the resulting arrows the same parameters
+give</p>
+<p><span class="math display">\begin{array}{c|l}
+w &amp; Q_bF=d_b,\qquad g\land\neg F(d_b)\\
+v &amp; H(g),\quad Q_bF=d_b,\quad\text{hence }\Box(g\to F(d_b))\\
+u &amp; g\land\neg F(d_b),\quad g\to F(d_b).
+\end{array}</span></p>
+<p>The identity at <span class="math inline">v</span> is the transported
+identity from <span class="math inline">w</span>. The last line is
+contradictory. Taking <span class="math inline">g=K</span> proves <span
+class="math inline">DK\land D H(K)\to\bot</span>. It remains to choose
+<span class="math inline">Q</span> and establish the two consistency
+claims.</p>
+<h3 id="two-ordinary-maximalist-models">Two ordinary Maximalist
+models</h3>
+<p>First work in a finite signature with an individual name <span
+class="math inline">m</span> and constants of closed types. Take a
+complete family of pointed canonical <span
+class="math inline">C_\Sigma</span>-models <span
+class="math inline">(A_i,w_i)</span>. Adjoin a root <span
+class="math inline">o</span> and one entrance <span
+class="math inline">\varepsilon_i:o\to w_i</span> into each component. A
+<em>proper exit</em> is <span class="math inline">\varepsilon_i</span>
+followed by any component arrow. The identity and these exits are all
+the arrows out of <span class="math inline">o</span>.</p>
+<p>Use the definable-root construction. An individual <span
+class="math inline">b</span> at <span class="math inline">o</span> has a
+name <span class="math inline">n</span> as descriptor. A relation <span
+class="math inline">F</span> at <span class="math inline">o</span> has
+an arbitrary current extension and a closed term <span
+class="math inline">f</span> of its type as descriptor. Writing <span
+class="math inline">(\varepsilon_i)\mathstrut_{\ast}</span> for
+transport and <span
+class="math inline">\lbrack\negthinspace\lbrack  f\rbrack\negthinspace\rbrack\mathstrut_{w_i}</span>
+for the denotation of <span class="math inline">f</span> at <span
+class="math inline">w_i</span>, the defining condition is</p>
+<p><span
+class="math display">(\varepsilon_i)\mathstrut_{\ast}b=\lbrack\negthinspace\lbrack  n\rbrack\negthinspace\rbrack\mathstrut_{w_i},
+\qquad
+(\varepsilon_i)\mathstrut_{\ast}F=\lbrack\negthinspace\lbrack  f\rbrack\negthinspace\rbrack\mathstrut_{w_i}
+\qquad\text{for every }i.</span></p>
+<p>In particular, the <em>same</em> <span class="math inline">f</span>
+determines <span class="math inline">F</span> on every proper exit.
+Equality of two unary predicates means agreement along every future
+arrow on every individual at its target. For an abstraction with
+parameters, substituting their descriptors gives one descriptor for the
+abstraction. The definable-root construction therefore gives models of
+<span class="math inline">C_\Sigma</span>. For each consistent closed
+disequality <span class="math inline">s\ne t</span>, completeness gives
+some <span class="math inline">w_i\models s\ne t</span>. If <span
+class="math inline">o\models s=t</span>, transporting along <span
+class="math inline">\varepsilon_i</span> would give <span
+class="math inline">w_i\models s=t</span>. Thus both roots below satisfy
+ordinary Maximalism. <a
+href="coalesced-definable-root.md">Definable-root construction</a> · <a
+href="coalesced-definable-root-signature.md">Signature version</a></p>
+<p><strong>A root satisfying <span
+class="math inline">K</span>.</strong> Give each individual name exactly
+one representative. Distinct root individuals have different names <span
+class="math inline">i,j</span>. A one-world classical model can
+interpret them differently and hence satisfies <span
+class="math inline">\Box(i\ne j)</span>. By completeness there is an
+entrance witnessing <span class="math inline">\Box(i\ne j)</span> for
+this pair. Thus <span class="math inline">o\models K</span>. For the
+pure theorem we can use just the auxiliary name <span
+class="math inline">m</span>. In that case the root has one individual
+and <span class="math inline">K</span> holds vacuously.</p>
+<p><strong>A root satisfying <span
+class="math inline">H(K)</span>.</strong> Give each name <span
+class="math inline">n</span> two representatives <span
+class="math inline">n_0,n_1</span> with the same descriptor <span
+class="math inline">n</span>. The pair <span
+class="math inline">m_0,m_1</span> is distinct at <span
+class="math inline">o</span> and equal at every proper exit. No
+reachable world makes it permanently distinct, so <span
+class="math inline">o\models\neg K</span>. The remaining property of
+<span class="math inline">Q</span> we need is the following.</p>
+<p><strong>Separation lemma.</strong> For every individual name <span
+class="math inline">n</span> and closed tester <span
+class="math inline">f</span>,</p>
+<p><span class="math display">\bigl(\exists i\thickspace \exists (w_i\to
+z)\thickspace  z\models\neg f(d_n)\bigr)
+\quad\Longrightarrow\quad
+\bigl(\exists j\thickspace  w_j\models Q_nf\ne d_n\bigr).</span></p>
+<p>The two components <span class="math inline">i,j</span> may differ.
+The rejecting world <span class="math inline">z</span> supplies the
+input for the construction of the world that distinguishes the
+outputs.</p>
+<p>To see why this suffices, take any <span
+class="math inline">b,F</span> at the doubled root with <span
+class="math inline">Q_bF=d_b</span> and let <span
+class="math inline">n,f</span> be their descriptors. Transport gives the
+first line below. Separation, by contraposition, gives the second.</p>
+<p><span class="math display">\begin{aligned}
+&amp;\forall j\quad w_j\models Q_nf=d_n,\\
+&amp;\forall i\quad w_i\models\Box f(d_n).
+\end{aligned}</span></p>
+<p>Thus at every proper exit <span class="math inline">F(d_b)</span> is
+true, and at the identity exit <span class="math inline">K</span> is
+false. These exhaust the arrows out of <span
+class="math inline">o</span>, proving <span
+class="math inline">o\models\Box(K\to F(d_b))</span> for the chosen
+<span class="math inline">b,F</span>. This proves <span
+class="math inline">o\models H(K)</span> once separation is
+established.</p>
+<p><a id="unary-reading" name="unary-reading"></a></p>
+<h3 id="the-operator-and-its-two-layer-model">The operator and its
+two-layer model</h3>
+<p>To distinguish the two unary outputs <span
+class="math inline">Q_nf</span> and <span
+class="math inline">d_n=Q_n\rho_n</span>, it suffices to find one
+individual <span class="math inline">a</span> on which they disagree. We
+build a world where evaluating either output at <span
+class="math inline">a</span> asks whether its tester can reject the old
+predicate <span class="math inline">d_n</span>. The construction records
+that predicate in the sizes of the fibres over the old individuals.</p>
+<p>For individual parameters <span class="math inline">a,b</span> define
+the following pure terms. The variable <span
+class="math inline">x</span> ranges over individuals and <span
+class="math inline">r</span> over unary predicates.</p>
+<p><span class="math display">\begin{gathered}
+B \equiv (a=b),\\
+L_{a,b}(x)\equiv \exists y^e\thinspace \bigl(x\ne y\land\Box(B\to
+x=y)\bigr),\\
+\mathrm{Code}_{a,b}(r)\equiv
+(r=\lambda x.\Diamond r(x))\\
+\qquad{}\land\Box\bigl(\neg B\to\forall x^e\thinspace
+(\neg L_{a,b}(x)\leftrightarrow\Diamond(B\land r(x)))\bigr),\\
+(Q_bF)(a)\equiv\Diamond\bigl(\neg B\land\exists r^S\thinspace
+(\mathrm{Code}_{a,b}(r)\land\Diamond(B\land\neg F(r)))\bigr).
+\end{gathered}</span></p>
+<p>The first possibility in <span class="math inline">Q</span> chooses a
+world with distinct markers and a predicate <span
+class="math inline">r</span> there. The second chooses a later world
+with equal markers and tests the transported <span
+class="math inline">r</span>. Every output <span
+class="math inline">p=Q_bF</span> satisfies <span
+class="math inline">p=\lambda x.\Diamond p(x)</span>, since <span
+class="math inline">\Diamond\Diamond A\leftrightarrow\Diamond A</span>
+everywhere. Also <span class="math inline">\neg p(b)</span> holds
+everywhere, since equal markers stay equal. In particular both facts
+hold for <span class="math inline">p=d_b</span>.</p>
+<p><strong>Reading lemma.</strong> Fix an old pointed model <span
+class="math inline">(A,w)</span> with individual name <span
+class="math inline">n</span>. There is an extended model with a new
+world <span class="math inline">\widehat w</span> and a single
+individual <span class="math inline">a</span> there such that for
+<strong>every</strong> closed tester <span
+class="math inline">f</span>,</p>
+<p><span class="math display">\widehat w\models (Q_nf)(a)
+\quad\Longleftrightarrow\quad
+w\models\Diamond\neg f(d_n). \tag{1}</span></p>
+<p><strong>Construction.</strong> Set <span
+class="math inline">p=\lbrack\negthinspace\lbrack  d_n\rbrack\negthinspace\rbrack\mathstrut_w</span>.
+An old arrow <span class="math inline">h:w\to z</span> indexes an upper
+world <span class="math inline">\widehat h</span> over <span
+class="math inline">z</span>. Write <span
+class="math inline">p_h(u)</span> for the value of <span
+class="math inline">h_{\ast}p</span> at <span class="math inline">u\in
+A_e(z)</span>. The individuals over <span class="math inline">u</span>
+at <span class="math inline">\widehat h</span> are</p>
+<p><span class="math display">\begin{cases}
+u_0 &amp;\text{if }p_h(u),\\
+u_0,\ u_1 &amp;\text{if }\neg p_h(u).
+\end{cases}</span></p>
+<p>Each <span class="math inline">k:z\to z&#39;</span> induces an upper
+arrow <span class="math inline">\widehat h\to\widehat{kh}</span> and an
+exit <span class="math inline">\widehat h\to z&#39;</span>, where <span
+class="math inline">kh=k\circ h</span>. Upper arrows send <span
+class="math inline">u_j</span> to <span
+class="math inline">{(k_{\ast}u)}\mathstrut_{j}</span>. This is well
+defined: <span class="math inline">p_{kh}(k_{\ast}u)</span> would imply
+<span class="math inline">p_h(u)</span> by possibility-fixity, so a
+second copy, once present, persists upstairs. Exits send both copies to
+<span class="math inline">k_{\ast}u</span>. Lower worlds retain their
+original domains and arrows. At <span class="math inline">\widehat
+w=\widehat{1_w}</span> interpret <span class="math inline">n</span> by
+the first copy of its old denotation and take <span
+class="math inline">a</span> to be the second. It exists because <span
+class="math inline">p(n)</span> is false. Thus <span
+class="math inline">B=(a=n)</span> is false upstairs and true on every
+exit downstairs.</p>
+<p>At relational type <span class="math inline">\bar\sigma\to t</span>,
+an upper entity at <span class="math inline">\widehat h</span> consists
+of arbitrary rows on upper arrows, with arguments from the target
+domains, and one admitted old entity at <span
+class="math inline">z</span> giving all its exit rows. This defines the
+carriers recursively on type. Upper transport restricts the rows by
+composition and transports the old entity. The immediate exit to <span
+class="math inline">z</span> recovers that entity. Interpret other
+individual names by first copies and relation names by empty upper rows
+with their old entity downstairs. At a schematic type variable retain
+the old carrier and transport. For term closure, an abstraction has
+arbitrary permitted upper rows, and downstairs its value is the old
+abstraction on the projected parameters. This gives the required values
+also on arguments first appearing at a later world. Two unequal upper
+entities are distinguished by an upper row or by an old observation
+after an exit.</p>
+<h3 id="reading-the-predicate-and-proving-separation">Reading the
+predicate and proving separation</h3>
+<p>Let <span class="math inline">\pi(u_j)=u</span>. Upstairs <span
+class="math inline">\Box(B\to x=y)</span> holds exactly when <span
+class="math inline">\pi(x)=\pi(y)</span>: the immediate exit tests the
+two projections, and equal projections stay equal on every further exit.
+Hence <span class="math inline">L_{a,n}(x)</span> says that <span
+class="math inline">x</span> has a distinct copy over the same
+individual. The construction gives, for every upper world and every
+individual there,</p>
+<p><span class="math display">\widehat h\models\neg
+L_{a,n}(u_j)\quad\Longleftrightarrow\quad p_h(u).</span></p>
+<p>Suppose <span class="math inline">\widehat
+h\models\mathrm{Code}_{a,n}(r)</span> and let <span
+class="math inline">r^\downarrow</span> be its old component at <span
+class="math inline">z</span>. Take <strong>any</strong> <span
+class="math inline">k:z\to z&#39;</span> and <strong>any</strong> <span
+class="math inline">u\in A_e(z&#39;)</span>. Evaluate the boxed conjunct
+of <span class="math inline">\mathrm{Code}</span> on the first copy
+<span class="math inline">u_0</span> at <span
+class="math inline">\widehat{kh}</span>. It gives</p>
+<p><span class="math display">\begin{aligned}
+p_{kh}(u)
+&amp;\ \Longleftrightarrow\ \widehat{kh}\models\Diamond(B\land r(u_0))\\
+&amp;\ \Longleftrightarrow\
+z&#39;\models\Diamond\bigl((k_{\ast}r^\downarrow)(u)\bigr)\\
+&amp;\ \Longleftrightarrow\ z&#39;\models(k_{\ast}r^\downarrow)(u).
+\end{aligned}</span></p>
+<p>The middle equivalence uses the description of exits. The last uses
+<span class="math inline">r=\lambda x.\Diamond r(x)</span> transported
+downstairs. Equality for every <span class="math inline">k,u</span> is
+precisely equality of the two old unary intensions, so <span
+class="math inline">r^\downarrow=h_{\ast}p</span>. Conversely, the upper
+interpretation of the term <span class="math inline">d_n</span> has old
+component <span class="math inline">h_{\ast}p</span> by term closure and
+is possibility-fixed because it is an output of <span
+class="math inline">Q_n</span>. The same equivalences verify its boxed
+code condition. Thus a passing code exists at every upper world.</p>
+<p>This proves (1) in both directions. A witness to <span
+class="math inline">(Q_nf)(a)</span> must choose a passing <span
+class="math inline">r</span> upstairs and then cross to an old world.
+There <span class="math inline">f</span> rejects the transported <span
+class="math inline">p</span>, giving the right-hand side. Conversely,
+given an old rejection reachable from <span
+class="math inline">w</span>, take <span
+class="math inline">r=d_n</span> at <span class="math inline">\widehat
+w</span> and cross along that very arrow.</p>
+<p>To finish separation, take a rejecting old world as <span
+class="math inline">w</span>. Apply (1) twice at the
+<strong>same</strong> <span class="math inline">\widehat w,a</span>:</p>
+<p><span class="math display">\begin{aligned}
+w\models\neg f(d_n) &amp;\ \Longrightarrow\ \widehat
+w\models(Q_nf)(a),\\
+w\models\Box\rho_n(d_n) &amp;\ \Longrightarrow\ \widehat
+w\models\neg(Q_n\rho_n)(a).
+\end{aligned}</span></p>
+<p>The first line uses the identity arrow. The second uses the Russell
+argument, valid at every old world. Since <span
+class="math inline">d_n=Q_n\rho_n</span>, the two outputs differ at
+<span class="math inline">a</span>. Hence <span
+class="math inline">Q_nf\ne d_n</span> is consistent, and completeness
+puts this disequality at a canonical entrance. If <span
+class="math inline">f</span> uses schematic type variables, the
+canonical components supply the required witnesses at those sorts and
+the upper construction retains their carriers. This proves the lemma.
+The action semantics and completeness used here are those of Bacon and
+Dorr, <em>Classicism</em>, §§3.5–3.6 and Appendix E in the draft
+numbering.</p>
+<p><a id="unary-signatures" name="unary-signatures"></a></p>
+<h3 id="pure-and-signature-strong-possibility">Pure and signature Strong
+Possibility</h3>
+<p>Both <span class="math inline">K</span> and <span
+class="math inline">H(K)</span> are closed and pure: <span
+class="math inline">b</span> is bound in <span
+class="math inline">H</span>, and the definitions of <span
+class="math inline">Q,\rho,d</span> use no names. For the pure case one
+auxiliary individual name suffices to construct the two models.
+Forgetting that name preserves the two sentences and every pure
+Maximalist axiom.</p>
+<p>For any admitted free signature <span
+class="math inline">\Sigma</span>, suppose a derivation refuted either
+sentence over <span class="math inline">\mathrm{Max}(C_\Sigma)</span>.
+It uses finitely many names and finitely many Maximalist disequalities.
+Retain these names and add a fresh individual name <span
+class="math inline">m</span>. Each cited disequality is still consistent
+with <span class="math inline">C</span> in this finite language: a proof
+of its opposite equality could be returned to <span
+class="math inline">\Sigma</span> by replacing <span
+class="math inline">m</span> with a fresh individual variable and using
+existence at type <span class="math inline">e</span>. The same finite
+derivation would therefore refute the sentence in a language in which we
+have constructed its Maximalist model. This proves both consistency
+claims for <span class="math inline">\Sigma</span>. Applying SP now
+yields <span class="math inline">DK</span> and <span
+class="math inline">D H(K)</span>, and the contradiction above concludes
+the proof. <span class="math inline">\square</span></p>
+<p><a id="uniform-pair" name="uniform-pair"></a></p>
+<h2
+id="earlier-proof-using-atomlessness-and-a-six-place-diagonal">Earlier
+proof using atomlessness and a six-place diagonal</h2>
+<p><strong>Theorem.</strong> In Classicism there are two closed pure
+sentences <span class="math inline">A_0</span> and <span
+class="math inline">\Psi</span>, each consistent with ordinary pure
+Maximalism, for which</p>
+<p><span class="math display">C\vdash\neg(\Diamond_{\ne}
+A_0\land\Diamond_{\ne}\Psi).</span></p>
+<p>Consequently pure Strong Possibility is inconsistent. The same two
+sentences witness the inconsistency of Strong Possibility for every free
+signature admitted by the map, with both consistency tests taken in that
+signature.</p>
+<p>Here <span class="math inline">A_0</span> says that the Boolean
+algebra of propositions is atomless. Write <span
+class="math inline">D=\Diamond_{\ne}</span>. At a <span
+class="math inline">DP</span>-point, each currently true proposition can
+still be made true after reaching a <span
+class="math inline">P</span>-point. Applying this to a true strong atom
+shows that <span class="math inline">DA_0</span> rules out Strong
+Actuality. To define <span class="math inline">\Psi</span>, the proof
+uses the Russell–Myhill diagonal at the type of six-place relations on
+individuals. An auxiliary world for each old arrow and individual tuple
+tests the entire interpretation of such a relation. This produces a
+sentence true at a definable Maximalist root whose
+distinctness-preserving possibility contradicts the diagonal whenever
+Strong Actuality fails.</p>
+<p>OpenAI Codex (GPT-6), prompted by Daniel Kodsi, found the
+construction and completed the proof on 27 November 2026. Independent
+GPT-6 researchers checked the native types, full action-model extension,
+descriptor argument, and the two licences in each signature. The
+diagonal adapts the earlier <a
+href="strong-possibility-signature-r-inconsistent.md">higher-order-signature
+proof</a> of Cian Dorr and Claude Fable 5.2 (Anthropic), prompted by
+Cian Dorr. Lean verifies both map statements. The <a
+href="#unary-proof">unary proof</a> gives another choice of incompatible
+possibilities.</p>
+<h2 id="the-closed-terms">The closed terms</h2>
+<p>Let <span class="math inline">S=e^6t</span> denote the type of
+six-place relations on individuals. Write a tuple of six individuals as
+<span class="math inline">\bar a=(a_0,a_1,b_0,b_1,c_0,c_1)</span>. With
+this tuple as parameter define</p>
+<p><span class="math display">A=(a_0\ne a_1),\quad B=(b_0=b_1),\quad
+T=\neg A\land\neg B\land c_0\ne c_1,\quad
+U=\neg A\land\neg B\land c_0=c_1.</span></p>
+<p>Put <span class="math inline">x\sim y</span> for <span
+class="math inline">\Box(U\to x=y)</span>. Let <span
+class="math inline">C_i(x)</span> say that exactly <span
+class="math inline">i</span> current individuals <span
+class="math inline">y</span> satisfy <span class="math inline">x\sim
+y</span>, using the usual finite first-order formula, for <span
+class="math inline">1\le i\le7</span>. Set <span
+class="math inline">J=\exists x\thinspace C_7(x)</span>. These formulas
+all use the same six transported parameters. For <span
+class="math inline">p:S</span> put</p>
+<p><span class="math display">\begin{split}
+\mathrm{Code}(p;\bar a)={}&amp;(p=\lambda\bar v.\Diamond p(\bar v))\\
+&amp;{}\land\Box\bigl(T\to\forall v_1\ldots v_6\thinspace
+[(\bigwedge_{i=1}^6 C_i(v_i))
+\to(J\leftrightarrow\Diamond(B\land p(\bar v))) ]\bigr).
+\end{split}</span></p>
+<p>Define</p>
+<p><span class="math display">\begin{split}
+(QF)(\bar a)&amp;=\Diamond\left(A\land\exists p^S\thinspace
+[\mathrm{Code}(p;\bar a)
+\land\Diamond(B\land\neg Fp)]\right),\\
+\rho(x)&amp;=\exists F^{St}\thinspace [QF=x\land\neg Fx],\qquad d=Q\rho.
+\end{split}</span></p>
+<p>Here <span class="math inline">QF</span> abbreviates the
+six-individual lambda abstraction displayed above. Equivalently its
+uncurried relation takes one input of type <span
+class="math inline">St</span> followed by six inputs of type <span
+class="math inline">e</span>. In particular <span
+class="math inline">d=Q\rho</span> is a relation of type <span
+class="math inline">S</span>. All its output rows are fixed by ordinary
+possibility: <span class="math inline">QF=\lambda\bar
+v.\Diamond((QF)(\bar v))</span> by S4 and intensionality. The
+Russell–Myhill argument gives <span class="math inline">\rho
+d=\top</span>. If <span class="math inline">\rho d</span> were false,
+<span class="math inline">F=\rho</span> would make it true. Unfolding
+the resulting theorem gives</p>
+<p><span class="math display">C\vdash\exists F^{St}\thinspace [QF=d\land
+Fd\ne\top]. \tag{1}</span></p>
+<h2 id="testing-a-marked-term">Testing a marked term</h2>
+<p>Let <span class="math inline">f:St</span> be any term closed apart
+from one freely interpreted individual marker. Suppose <span
+class="math inline">f(d)=\top</span> is not provable in marked C. By
+completeness a countermodel to the identity has an ordinary continuation
+where the proposition is false. Repointing there, with the transported
+marker, gives a marked C action model <span class="math inline">w</span>
+with <span class="math inline">\neg f(d)</span>. Keep its generated cone
+unchanged. At <span class="math inline">w</span> fix the marker’s
+original individual as an anchor.</p>
+<p>Adjoin a new root <span class="math inline">o</span> and an arrow
+<span class="math inline">l:o\to w</span>. For every old arrow <span
+class="math inline">h:w\to z</span>, including the identity, and every
+tuple <span class="math inline">\bar u\in D_e(z)^6</span>, add a fresh
+object <span class="math inline">t=t_{h,\bar u}</span>, with arrows
+<span class="math inline">i_t:o\to t</span> and <span
+class="math inline">k_t:t\to z</span>. Impose <span
+class="math inline">k_t i_t=h l</span>. Also add one fresh classical
+terminal <span class="math inline">v_t</span> and an arrow <span
+class="math inline">j_t:t\to v_t</span>. These generators and the old
+compositions impose all the identifications. In particular every path
+from <span class="math inline">o</span> into the old cone factors
+through <span class="math inline">l</span>, and every path from <span
+class="math inline">t</span> into the old cone factors through <span
+class="math inline">k_t</span>.</p>
+<p>Choose a root tuple <span class="math inline">\bar a</span> with the
+three pairs distinct at <span class="math inline">o</span>. All six
+entries go to the anchor under <span class="math inline">l</span>. At
+each <span class="math inline">t</span> merge the first pair and keep
+the other two pairs distinct. At <span class="math inline">v_t</span>
+keep only the <span class="math inline">b</span>-pair distinct. Under
+<span class="math inline">k_t</span> all six transported root entries
+map to <span class="math inline">h</span> of the anchor. Thus <span
+class="math inline">A</span> holds only at <span
+class="math inline">o</span>, <span class="math inline">B</span> holds
+precisely in the old cone, <span class="math inline">T</span> holds at
+the test objects <span class="math inline">t</span>, and <span
+class="math inline">U</span> holds at the private terminals <span
+class="math inline">v_t</span>, for this choice of <span
+class="math inline">\bar a</span>.</p>
+<p>At <span class="math inline">t</span> the relation <span
+class="math inline">x\sim y</span> is exactly <span
+class="math inline">j_tx=j_ty</span>. Implement its fibres as follows.
+For each <span class="math inline">i=1,\ldots,6</span> create one fibre
+of size <span class="math inline">i</span> and send <em>every</em>
+member of that fibre to <span class="math inline">u_i</span> under <span
+class="math inline">k_t</span>. Add one fibre of size seven precisely
+when <span class="math inline">d(\bar u)</span> is true at the old point
+<span class="math inline">z</span>. Its elements can go to the
+transported anchor. Use two further fibres of size eight for the
+incoming root controls and any fillers. For example take distinct local
+control representatives except for the already merged <span
+class="math inline">a</span>-pair. Place the two <span
+class="math inline">b</span>-representatives in opposite size-eight
+fibres, the two <span class="math inline">c</span>-representatives in
+the same one, and send all control representatives to the transported
+anchor under <span class="math inline">k_t</span>. Use the fibres
+themselves as distinct terminal individuals, and let <span
+class="math inline">j_t</span> send each element to its fibre. This
+realizes the cardinalities and both required individual compositions.
+The colour of the optional fibre uses the value of an already defined
+closed term in the <strong>original</strong> component. Adding
+predecessors does not enter its interpretation there.</p>
+<p>For clarity, the new relations form an action model at every standard
+type. At a test object <span class="math inline">t</span> admit an
+arbitrary current row, one entire <span
+class="math inline">z</span>-entity, and one entire <span
+class="math inline">v_t</span>-entity. At <span
+class="math inline">o</span> admit an arbitrary current row, an
+arbitrary current row at each <span class="math inline">i_t</span>, one
+whole <span class="math inline">v_t</span>-entity per <span
+class="math inline">t</span>, and one whole <span
+class="math inline">w</span>-entity. Its value transported to <span
+class="math inline">t</span> has the prescribed test row, prescribed
+private entity, and old entity transported along <span
+class="math inline">h</span> from <span class="math inline">w</span>.
+The terminal hierarchies are full. These descriptions are inductive on
+types since rows use only lower-type arguments. Distinct entities are
+separated at their differing row or in a continuation of their differing
+old or terminal component. Lambda abstraction takes the body row on
+<em>all</em> target arguments at each new row, and takes the native
+abstraction in the original or terminal cone on transported parameters.
+Hence every abstract has the prescribed form, including those with new
+higher-type parameters. The test objects consequently preserve the
+equation <span class="math inline">k_t i_t=h l</span> also on
+higher-type parameters. The marked individual of the new pointed test
+can be any root individual transported to the original anchor.</p>
+<h2 id="what-the-code-determines">What the code determines</h2>
+<p>If <span class="math inline">p</span> satisfies <span
+class="math inline">\mathrm{Code}(p;\bar a)</span> at <span
+class="math inline">o</span>, its old projection equals <span
+class="math inline">d</span> as a <strong>whole</strong> <span
+class="math inline">S</span>-entity at <span
+class="math inline">w</span>. To check an arbitrary old row choose <span
+class="math inline">h:w\to z</span> and any six current individuals
+<span class="math inline">\bar u</span> at <span
+class="math inline">z</span>. At its test object choose a member of the
+fibre of size <span class="math inline">i</span> as <span
+class="math inline">v_i</span>, independently at each coordinate. The
+antecedent in the code holds. Possibility of <span
+class="math inline">B\land p(\bar v)</span> there is precisely
+possibility of the projected row of <span class="math inline">p</span>
+on <span class="math inline">\bar u</span> at <span
+class="math inline">z</span>, since the old continuations are exactly
+those through <span class="math inline">k_t</span>. The first code
+condition makes that row possibility-fixed. Its possibility therefore
+equals its current truth at <span class="math inline">z</span>. The
+colour <span class="math inline">J</span> is exactly the previously
+recorded truth of <span class="math inline">d(\bar u)</span> there.
+Every old row on every old tuple agrees, proving equality by
+intensionality.</p>
+<p>Conversely <span class="math inline">p=d</span> passes the code at
+<span class="math inline">o</span>. Its rows are possibility-fixed by
+construction. At a test site <em>every</em> member of the fibre of size
+<span class="math inline">i</span> has the stipulated old image, so the
+comparison holds for every tuple satisfying the antecedent. The
+transported selected root parameters disable the comparison everywhere
+else.</p>
+<p>It follows that <span class="math inline">(Qf)(\bar a)</span> is true
+at <span class="math inline">o</span>, using <span
+class="math inline">d</span> as code and the old <span
+class="math inline">w</span> itself for <span
+class="math inline">B\land\neg f(d)</span>. But <span
+class="math inline">(Q\rho)(\bar a)</span> is false. The only possible
+site satisfying <span class="math inline">A</span> is <span
+class="math inline">o</span> itself. Every passing code equals <span
+class="math inline">d</span> throughout the old cone, and <span
+class="math inline">\rho(d)=\top</span> throughout that cone. Thus <span
+class="math inline">Qf=d</span> is not a theorem of marked C.</p>
+<p>Consequently no standard marked term solves (1): whenever a marked
+term satisfies the required identity, it fails the required disequality
+in the term algebra.</p>
+<h2 id="the-contradiction-at-a-proposed-strong-possibility-point">The
+contradiction at a proposed Strong Possibility point</h2>
+<p>Let <span class="math inline">V</span> be the standard coalesced
+definable ordinary pure Maximalist root. Its sole individual supplies
+the construction’s auxiliary marker. Every relational entity there has a
+closed one-marker term descriptor, evaluated on its marked target at
+every proper exit. An abstraction with root parameters has as descriptor
+the same abstraction with their descriptors substituted. Root identities
+imply provable identities between these descriptors: the components and
+their possible marker interpretations are complete for marked C. The
+scalar true only at the identity of the root is a true strong atom. It
+decides every root proposition there and transports to bottom at each
+proper exit, so Strong Actuality (<span
+class="math inline">\mathrm{SA}</span>) holds at <span
+class="math inline">V</span>. <a
+href="coalesced-definable-root.md">Descriptor root</a></p>
+<p>If <span class="math inline">QF=d</span> holds at <span
+class="math inline">V</span>, the descriptor <span
+class="math inline">f</span> of <span class="math inline">F</span>
+satisfies <span class="math inline">Qf=d</span> provably in marked C.
+The test just proved gives provable <span
+class="math inline">f(d)=\top</span>. Consequently <span
+class="math inline">Fd=\top</span> holds at every proper exit of <span
+class="math inline">V</span>. The identity of <span
+class="math inline">V</span> satisfies <span
+class="math inline">\mathrm{SA}</span>, so the following <strong>one
+pure sentence</strong> is true at this ordinary Maximalist point:</p>
+<p><span class="math display">\Psi=\mathrm{SA}\land\forall
+F^{St}\thinspace
+[QF=d\to\Box(\neg\mathrm{SA}\to Fd=\top)].</span></p>
+<p>Pure Strong Possibility excludes Strong Actuality. Indeed there is an
+ordinary pure Maximalist point with an atomless scalar algebra. If a
+Strong Possibility point had a true strong atom, use that atom as the
+true guard in distinctness-preserving possibility of atomlessness. At
+the intermediate atomless point the transported atom is nonzero since it
+is true at a continuation. Its necessary decision of every scalar
+persists, which makes it an atom and gives a contradiction. <a
+href="https://github.com/zwlgzwlg/Logical-Maps/blob/4bb9287187ed7cb09567eb3a6302cb896c986ec4/logical-maps/build/classicism/writeups/strong-possibility-and-strong-actuality-incompatible.md">Strong-atom
+obstruction</a></p>
+<p>At a putative pure Strong Possibility point choose <span
+class="math inline">F</span> from (1). The scalar <span
+class="math inline">\neg\mathrm{SA}\land Fd\ne\top</span> is true. Apply
+<span class="math inline">\Diamond_{\ne}\Psi</span> with that scalar as
+guard. This gives an intermediate site satisfying <span
+class="math inline">\Psi</span> and a subsequent site restoring the
+guard on the transported parameter. Since identity persists, <span
+class="math inline">QF=d</span> still holds at the intermediate site.
+Its boxed conditional gives <span class="math inline">Fd=\top</span> at
+the subsequent site, contrary to the restored guard. This proves
+inconsistency of pure Strong Possibility.</p>
+<p>Explicitly, let <span class="math inline">A_0</span> be propositional
+Atomlessness. The strong-atom argument gives <span
+class="math inline">\Diamond_{\ne} A_0\to\neg\mathrm{SA}</span> already
+in C. Hence (1) and the guard above give the pure failed disjunction</p>
+<p><span class="math display">C\vdash \Box_{\ne}\neg A_0\ \lor\
+\Box_{\ne}\neg\Psi.</span></p>
+<p>Neither <span class="math inline">\neg A_0</span> nor <span
+class="math inline">\neg\Psi</span> is provable in ordinary pure
+Maximalism. Only these two Strong Possibility instances are needed.</p>
+<h2 id="extension-to-an-arbitrary-free-signature">Extension to an
+arbitrary free signature</h2>
+<p>Let <span class="math inline">\Sigma</span> be any set-sized free
+signature admitted by the map. Use <span
+class="math inline">\Sigma^+=\Sigma</span> when it already has an
+individual constant, and otherwise add one individual marker. The terms
+<span class="math inline">Q,\rho,d</span> and the sentence <span
+class="math inline">\Psi</span> remain pure.</p>
+<p>The test of a closed <span class="math inline">\Sigma^+</span>-term
+<span class="math inline">f</span> works with its constants retained.
+Start with a marked old point where <span class="math inline">\neg
+f(d)</span>. Give each relational constant its prescribed old value at
+<span class="math inline">w</span>, empty new current rows and bottom
+values at private terminals. At each test object its old component is
+the transport along <span class="math inline">h</span> of its value at
+<span class="math inline">w</span>. For each individual constant add a
+distinct individual at <span class="math inline">o</span> with its
+specified image at <span class="math inline">w</span>. At each <span
+class="math inline">t_{h,\bar u}</span> give its image a fresh fibre of
+size eight, distinct from the control and size-one-through-seven fibres.
+Send that entire fibre to <span class="math inline">h</span> of the
+constant’s old value. The image at the private terminal is its fibre.
+These choices commute with the imposed square and make no new size-seven
+classes. The control individuals themselves remain separate from the
+added individuals. The construction works for arbitrarily many constants
+since the fibres are disjoint and all eight-element fibres are ignored
+by the six selectors and the colour. The same proof gives</p>
+<p><span class="math display">C(\Sigma^+)\vdash
+Qf=d\quad\Longrightarrow\quad
+C(\Sigma^+)\vdash f(d)=\top .</span></p>
+<p>The ordinary signature-Maximalist coalesced descriptor root gives
+every entity a closed <span
+class="math inline">\Sigma^+</span>-descriptor and is strongly actual.
+It therefore satisfies the same pure <span
+class="math inline">\Psi</span>. The atomless ordinary
+signature-Maximalist point exists in this same signature, so signature
+Strong Possibility excludes Strong Actuality and also gives <span
+class="math inline">\Diamond_{\ne}\Psi</span>. Applying the same single
+return guard to (1) gives the contradiction for signature Strong
+Possibility, including first-order signatures and infinite sets of
+names. <a href="coalesced-definable-root-signature.md">Signature
+descriptor root</a> · <a
+href="#an-atomless-ordinary-maximalist-point">Atomless model in the
+given signature</a></p>
+<h2 id="an-atomless-ordinary-maximalist-point">An atomless ordinary
+Maximalist point</h2>
+<p>Fix a pointed ordinary Maximalist model <span
+class="math inline">K,w</span> for the given signature, for example the
+<a href="coalesced-definable-root-signature.md">signature descriptor
+root</a>. Take two copies <span class="math inline">G,X</span> of the
+Cantor space <span class="math inline">2^{\mathbb N}</span>, with <span
+class="math inline">G</span> acting as a group by coordinatewise
+addition modulo two. Add a new root with the individuals of <span
+class="math inline">w</span>, loops indexed by <span
+class="math inline">G</span> fixing all individuals, and an entrance to
+an independent copy of <span class="math inline">K,w</span> for each
+<span class="math inline">x\in X</span>. Each entrance absorbs every
+loop and acts identically on individuals. Include all old
+postcomposites.</p>
+<p>At each relational type <span class="math inline">\tau</span> a root
+entity consists of a locally constant table on <span
+class="math inline">G</span> of current rows and an independent locally
+constant function <span class="math inline">X\to D_\tau(w)</span> of
+whole old entities. Both ranges have the discrete topology. Loops
+right-translate the table and fix the old section. An entrance evaluates
+the section at its index. Give each relational name a constant table and
+the constant section of its prescribed old value. Individual names keep
+their old interpretations. Compactness of Cantor space gives a common
+finite prefix on which every entry of a finite list of tables depends.
+Thus the transported parameters of an abstraction are locally constant
+as whole entities along the loops, and evaluating its body on all
+current tuples gives another locally constant table. At the entrances
+the native abstraction on the transported old parameters is likewise
+locally constant as a whole old entity. This includes quantification
+over new target arguments. Differences of entities are witnessed on a
+loop or in a continuation of an old copy. The action therefore validates
+C, and the entrances retain every ordinary Maximalist possibility in the
+given signature.</p>
+<p>At scalar type every nonzero loop row or old value occurs on a
+nonempty clopen patch. Split that patch into two nonempty clopen pieces.
+Restrict the scalar to the appropriate coordinate and one piece, setting
+it to bottom elsewhere. This gives a nonzero proper part, since the
+other piece retains a nonzero value witnessed on a loop or an old
+continuation. Thus the scalar algebra at this ordinary Maximalist root
+is atomless.</p>
+<h2 id="lean-verification">Lean verification</h2>
+<p>Both exported proofs apply the same theorem for signatures whose
+constants have closed types. The first licence realizes <span
+class="math inline">K</span> at the ordinary named root. The second
+realizes <span class="math inline">H(K)</span> at the root with two
+copies of each individual name. In the unary reading lemma, the upper
+term <span class="math inline">d_b</span> itself supplies the passing
+code. <a
+href="../lean/Classicism/StrongPossibility/Permanent.lean">Permanence
+and reflection</a> · <a
+href="../lean/Classicism/StrongPossibility/UnaryUniformPositive.lean">First
+licence</a> · <a
+href="../lean/Classicism/StrongPossibility/UnaryUniformNegative.lean">Second
+licence</a> · <a
+href="../lean/Classicism/StrongPossibility/UnarySeparation.lean">Diagonal
+reading</a> · <a
+href="../lean/Classicism/StrongPossibility/UnaryArbitrarySignature.lean">Uniform
+signature theorem</a></p>
+<p>The exports are
+<code>Classicism.Map.strong_possibility_r_inconsistent</code> and
+<code>Classicism.Map.strong_possibility_signature_r_inconsistent</code>.
+The registry verifies both. The proof-body audit traces each to the two
+licences, the reflection arguments, the Russell witness, and the unary
+reading. Each uses exactly <code>propext</code>,
+<code>Classical.choice</code>, and <code>Quot.sound</code>. From
+<code>logical-maps/</code>, run
+<code>python scripts/pmap.py lean-check classicism</code> to check the
+generated statements and audit their Lean axioms. From
+<code>topics/classicism/lean/</code>, run
+<code>lake env lean scripts/StrongPossibility.lean</code> to trace both
+proof bodies to the unary reading theorem. <a
+href="../lean/scripts/StrongPossibility.lean">Proof dependency
+check</a></p>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds), Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated 16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition and footnote locators in this map refer to that draft’s numbering. — §2.6, pp. 41–42. Strong Possibility and the distinctness-preserving modality; its consistency is left open there.</li>
+<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian
+Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds),
+Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map
+was built from the draft dated 16 May 2023, 87 pages, which does not
+differ materially from the published version; all page, proposition and
+footnote locators in this map refer to that draft’s numbering. — §2.6,
+pp. 41–42. Strong Possibility and the distinctness-preserving modality;
+its consistency is left open there.</li>
 </ul>
 </body></html>

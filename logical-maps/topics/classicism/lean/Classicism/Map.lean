@@ -21,7 +21,7 @@ import Classicism.Results.BourbakiWitt.Certificates
 import Classicism.Certified.Box5
 import Classicism.Results.Existence
 import Classicism.Results.Other.Witnesses
-
+import Classicism.Results.Research.StrongPossibilityMap
 /-!
 # The map's results, certified
 
@@ -2417,5 +2417,13 @@ theorem necessary_potential_infinity_t.peano : Statements.necessary_potential_in
 theorem necessary_potential_infinity_t.at_least : Statements.necessary_potential_infinity_t.at_least := by
   map_form P.NecPotentialInfinityT.to_at_least.entails
     P.NecPotentialInfinityT.of_at_least.entails
+
+/-- `strong-possibility-r-inconsistent` -/
+theorem strong_possibility_r_inconsistent : Statements.strong_possibility_r_inconsistent :=
+  Meta.StrongPossibilityMap.strong_possibility_r_inconsistent
+
+/-- `strong-possibility-signature-r-inconsistent` -/
+theorem strong_possibility_signature_r_inconsistent : Statements.strong_possibility_signature_r_inconsistent :=
+  Meta.StrongPossibilityMap.strong_possibility_signature_r_inconsistent
 
 end Classicism.Map
