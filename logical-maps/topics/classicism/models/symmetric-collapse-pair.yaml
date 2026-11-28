@@ -231,7 +231,17 @@ arguments:
     power property $\lambda X\, .\,\operatorname{Rigid}(X)\land X\le\top$ is
     $\lambda X\, .\,\operatorname{Rigid}(X)$, since $X\le\top$ is a theorem of C, and they show
     that it is not weakly inextensible. So Rigid Rigidity fails at the same type.
-
+- id: finite-scalar-atom-obstruction
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: finite-scalar-atoms-exclude-mathematical-possibilism
+  text: >-
+    The symmetry group is the sole propositional atom. A nonempty finite-pin
+    cylinder of collapsing arrows splits on a new equality. Mathematical
+    Possibilism would require arbitrarily many propositional atoms by
+    representing the finite power algebras.
 notes: >-
   This model is not a second witness to the draft's main result but a counterweight to it. Rigid
   Comprehension holds, so the failure of Actuality in the all-surjections model is no accident.

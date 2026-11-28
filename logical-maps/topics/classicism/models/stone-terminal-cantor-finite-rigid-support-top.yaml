@@ -1,0 +1,35 @@
+id: stone-terminal-cantor-finite-rigid-support-top
+name: Cantor root loops with a finite-support component with a top proposition name
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, reinterpretation of the source
+    model
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independent OpenAI Codex review of signature substitution, preservation of pure schemata and their side
+    conditions, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- Underlying construction and pure verdicts in [[stone-terminal-cantor-finite-rigid-support]]. OpenAI Codex
+  (GPT-6), prompted by Daniel Kodsi.
+- Signature substitution uses Cian Dorr’s sigma-top-npc argument.
+source_names:
+- Cantor root loops with a finite-support component
+- Signature substitution
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39, pure and signature schemata.
+group: top-interpretations-of-pure-reducts
+settings:
+  reduct: Start with [[stone-terminal-cantor-finite-rigid-support]].
+arguments:
+- id: pure-reduct
+  holds: [forcing-possibilism, possibility-plus-r, vicinity, weakly-rigid-power-r, well-ordering-r]
+  fails: [actuality, strong-possibility-r]
+  choice: uses
+  text: The original signature interpretations still determine the chosen components and their available entities.
+    Forgetting their names retains the pure maximality witnesses and the component’s rigid powers. The pure
+    verdicts below are those of the source or consequences of its recorded verdicts over C. They transfer by
+    the pure term induction in the group definition.

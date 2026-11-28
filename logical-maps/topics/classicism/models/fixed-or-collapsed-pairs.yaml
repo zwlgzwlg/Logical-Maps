@@ -1,0 +1,74 @@
+id: fixed-or-collapsed-pairs
+name: "Fixed or collapsed pairs: glued proposition name"
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Independently reviewed by a second OpenAI Codex (GPT-6) agent prompted by Daniel Kodsi.
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, fixed-or-collapsed pair restriction, 26 November 2026.
+- Cian Dorr and Claude Fable 5.1 (Anthropic), paired-individuals necessity separation, 14 October 2026.
+- Integer stages of paired individuals with glued constants, for the symmetric family and last-letter gluing.
+source_names:
+- Kodsi and Codex, 26 Nov
+- Dorr and Fable, 14 Oct
+- Symmetric integer stages
+references:
+- paper: bounds-of-possibility
+  role: background
+  locator: Appendix D, the hat operation and Barcan for 5-necessity.
+definition: >-
+  At integer stage $n$, each integer-labelled coordinate has uncountably many
+  ordinary pairs and precisely those coordinates with label at most $n$ have a
+  singleton. Give every arrow a free-monoid word. Its individual map preserves
+  labels, fixes each ordinary pair pointwise or collapses it to one point, and
+  sends a singleton to any point in its target coordinate. A profile has a row
+  of argument tuples at every arrow, determined among arrows with common word
+  and target by the images of a countable pin. Evaluate at stage zero.
+  Give a single propositional name its last-letter interpretation in the pure model.
+meets:
+  integer-stages-with-countably-pinned-pair-profiles: >-
+    Each ordinary pair is fixed pointwise or collapsed, and all profiles with a countable pin are admitted.
+arguments:
+- id: five-necessity-of-truth
+  holds: [necessary-truth-implies-five-necessity]
+  fails: [five-implies-two-hat-necessity, two-hat-implies-nd-necessity]
+  choice: uses
+  writeup: fixed-or-collapsed-pairs
+  text: >-
+    The original two singleton tests still separate the adjacent operators.
+    Their conjunction says the target is the present stage and is 5-necessary.
+    A loop guard fixes the support of a given truth together with its partners.
+    If the guard is ND-possible at an endomorphism, no tested pair collapsed, so
+    each is fixed. Moving a tested singleton would force a return to collapse its
+    image pair and fail the test fixing both mates. Thus the endomorphism fixes
+    the pin and the truth holds there. Its conditional on the stage predicate is
+    two-hat and hence 5-necessary. K now gives 5-necessity of each truth at every stage.
+- id: countable-completeness
+  holds: [necessary-countable-boolean-completeness-r, modal-well-ordering-r, necessary-axiom-of-infinity-e, necessary-atomlessness]
+  choice: uses
+  writeup: fixed-or-collapsed-pairs
+  text: >-
+    Current rows are unrestricted, countable unions preserve countable pins, and
+    well-orders can be chosen by target. The individual domains are uncountable.
+    A test of the image of one member of a pair outside the pin splits any nonzero
+    proposition; alternative arrows may collapse that pair to either of two points.
+- id: signature
+  holds: [logical-necessity-r]
+  choice: uses
+  writeup: fixed-or-collapsed-pairs
+  text: >-
+    Translation of stage and coordinate labels preserves the arrow restriction, giving pure homogeneity. Distinct word letters realize every chosen witness for a satisfiable pure matrix on the proposition name. The countable union of the witness pins pins the name.
+- id: ordinary-barcan
+  holds: [necessary-barcan-r]
+  fails: [boolean-completeness-t]
+  choice: uses
+  writeup: fixed-or-collapsed-pairs
+  text: >-
+    The integer-stage Barcan lift changes a tester's arrow only off its pin and
+    can cover any countable target pin by collapsing fresh pairs to its members.
+    The uncountable family without a join likewise needs only the freedom to
+    collapse two distinct source pairs to prescribed targets.

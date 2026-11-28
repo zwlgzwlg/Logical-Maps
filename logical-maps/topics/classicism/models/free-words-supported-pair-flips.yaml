@@ -1,0 +1,32 @@
+id: free-words-supported-pair-flips
+name: Free words with supported flips of individual pairs
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independently reviewed by a second OpenAI Codex (GPT-6) agent, prompted by Daniel Kodsi, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, combination of free-word gluing with supported individual pairs and direct-image rigidification, 26 November 2026.
+- The map's full-free-monoid-glued-constants model for the single-object word action and gluing; the relational choice conjecture write-up for supported reversals of pairs.
+source_names:
+- Codex via Kodsi, 26 Nov
+- Free-word gluing and supported choice
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §§3.4–3.5, pp. 55–61
+- paper: bacon-2020
+  role: background
+  locator: Appendix A.3
+  note: Gluing interpretations of constants.
+group: free-words-supported-pair-flips
+settings:
+  alphabet: unrestricted
+arguments: []
+notes: >-
+  The symmetric-surjection free-word models already separate bare Logical Necessity from
+  choice. Here necessary Rigid Comprehension, necessary Rigid Power, necessary BF and
+  necessary Strong Actuality hold together in the separating model.

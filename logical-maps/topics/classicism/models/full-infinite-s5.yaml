@@ -30,7 +30,7 @@ settings:
 meets:
   arbitrary-infinite-set: $W$ is any infinite set.
   numbered-returning-arrows:
-    when: {metatheory: [choice, no-countable-choice-reals]}
+    when: {metatheory: [choice, no-countable-choice-reals, cohen-basic, sageev]}
     text: >-
       $h_n$ is the arrow to world $n$, and $r_n$ the arrow back, once $W$ contains the natural
       numbers: by choice, or because $W$ is $\mathbb N$ in the variant without countable choice.
@@ -89,4 +89,6 @@ arguments:
     choiceless S5 model, with the relation "lies in the next pair" for $F$.)
 
 notes: >-
-  In the choice metatheory the revised Mathematical Possibilism holds on the singleton variant, for any infinite set of worlds, and fails on the fixed-infinite-individual variant, including countably many worlds and individuals. See the general full-action arguments. The former socks argument used the cardinality of the propositions. Its conclusion about the revised principle in the choiceless variant is open here.
+  In the choice metatheory the revised Mathematical Possibilism holds on the singleton variant, for any infinite set of worlds, and fails on the fixed-infinite-individual variant, including countably many worlds and individuals. See the general full-action arguments. With infinitely many fixed individuals the ordinal-threshold argument refutes the revised principle in ZF as well, including the choiceless variants. The singleton-individual socks setting remains open on that argument.
+
+  With one individual and countably many worlds, the Sageev setting satisfies Mathematical Possibilism and the Cohen basic setting refutes it. Both satisfy the hypothesis of the separate ZF + ¬AC_ω(ℝ) setting.

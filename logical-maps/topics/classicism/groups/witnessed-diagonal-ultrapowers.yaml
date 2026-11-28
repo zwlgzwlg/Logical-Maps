@@ -1,0 +1,114 @@
+id: witnessed-diagonal-ultrapowers
+name: Named witnesses before diagonal ultrapowers
+definition: >-
+  Use the one-proposition signature. Form the external ultrapower of the ground classical hierarchy H over a free ultrafilter on the naturals.
+  Each base position has an attached middle point with unrestricted current rows and unrestricted whole terminal ultrapower coordinates.
+  On the base, give a relational entity independent full current and middle rows and a diagonal terminal coordinate at each position.
+  Individuals at base and middle points agree and transport diagonally to each terminal. {{shape}} {{ground}}
+parameters:
+  shape:
+    text: The base and the single named scalar.
+    values:
+      tree:
+        text: Use a Henkin compactness model of the common signed verdicts and the Possibly Witnessed Possibility schema. Finitely many instances are realized by placing their named scalar witnesses on disjoint subtrees or attachments in a finite full binary tree.
+      words:
+        text: Use countably many free word generators at a single base point. Glue whole base witnesses below fresh final letters and assign old scalar witnesses on separate fresh exits.
+  ground:
+    text: The ground hierarchy for the diagonal ultrapower.
+    generate: true
+    default: full
+    values:
+      full:
+        text: Use the full classical hierarchy over the standard naturals.
+        label: full ground
+      fixed-ch:
+        text: Use the internal hierarchy on the naturals of a countable model of Zermelo set theory with Choice, the ambient CH sign and an internal proof of contradiction in that theory.
+        label: nonstandard arithmetic and fixed CH
+      changed-ch:
+        text: Use the internal hierarchy on the naturals of a countable model of Zermelo set theory with Choice, the opposite CH sign and an internal proof of contradiction in that theory.
+        label: nonstandard arithmetic and changed CH
+arguments:
+- id: witnesses-and-rows
+  holds: [possibly-witnessed-possibility-r, necessary-strong-atomicity-r, necessary-strong-actuality, necessary-truths-are-nd-necessary, necessary-boolean-completeness-t, necessary-barcan-t, modal-well-ordering-r, necessary-axiom-of-infinity-e, necessary-inextensible-comprehension-r]
+  fails: [barcan-relational, arithmetic-necessitism, analytic-necessitism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: witnessed-possibility-before-diagonal-ultrapowers
+  text: >-
+    The independent positions realize the scalar matrices. A singleton at a position is strong, including a diagonal singleton in any occupied terminal root row.
+    Whole scalar transports are onto. Use external current orders and diagonal terminal orders. Identity-only rows give inextensible coextensions.
+    The middle numeral tester misses a new terminal number, while all points satisfy individual Infinity. A root property tester detects a nondiagonal
+    terminal singleton in a middle property. An actual real structure at individual-property type cannot have a rigid number predicate that remains a Peano domain at the terminal.
+- id: powers
+  holds: [necessary-rigid-power-r]
+  fails: [tame-rigidity-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: witnessed-possibility-before-diagonal-ultrapowers
+  text: >-
+    Single-tuple holes at each tree or word and middle position, followed by unrestricted internal holes from that middle point, make every row of a rigid base bound
+    an exact direct image. Each diagonal terminal row of the bound consequently contains only diagonal tuples and must be externally finite.
+    Every subset of the base row has an admitted rigid exact-image profile because each of its terminal images is a finite set of diagonal tuples.
+    Pulling back the current row of a future rigid subrelation gives the required rigid lift. Middle and terminal powers use the single-exit and classical arguments.
+    The universal individual predicate is weakly rigid at the base but loses weak inextensibility at the middle point.
+- id: full-ground
+  when: {ground: full}
+  holds: [boolean-completeness-r, weak-rigid-comprehension-r, necessity-of-second-order-analysis, necessity-of-arithmetic]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: witnessed-possibility-before-diagonal-ultrapowers
+  text: >-
+    The diagonal terminal factors are order-isomorphic to external powersets. Taking exact images at ordinary and middle positions
+    and the ground diagonal hull at every terminal gives weakly rigid coextensions. Ground arithmetic and analysis are standard,
+    and their first-order many-sorted formulations transfer to the terminal ultrapowers.
+- id: nonstandard-ground
+  when: {ground: [fixed-ch, changed-ch]}
+  fails: [countable-boolean-completeness-r, weak-rigid-comprehension-r, necessity-of-arithmetic, necessity-of-analysis]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: witnessed-possibility-before-diagonal-ultrapowers
+  text: >-
+    The base and middle current rows give standard arithmetic. The terminal has the arithmetical theory of the countable ground model.
+    Distinct standard singleton entries have no join since its terminal row would be the standard cut. Omission of each unwanted ground singleton
+    also precludes a weakly rigid coextension of that cut at the base.
+- id: fixed-ch
+  when: {ground: fixed-ch}
+  holds: [non-contingency-of-ch]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: witnessed-possibility-before-diagonal-ultrapowers
+  text: >-
+    All current subsets in the ground model of each point are represented. Every real structure therefore has the structural CH sign of its ground,
+    and that uniform statement transfers through the terminal ultrapower. Both signs were chosen alike.
+- id: changed-ch
+  when: {ground: changed-ch}
+  fails: [non-contingency-of-ch]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: witnessed-possibility-before-diagonal-ultrapowers
+  text: >-
+    At individual-property type real structures exist at the base and terminal, where they have the opposite prescribed CH signs.
+- id: scalar-finiteness
+  when: {shape: tree}
+  fails: [potential-infinity-t, possible-infinity-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: witnessed-possibility-before-diagonal-ultrapowers
+  text: >-
+    Each finite tree factor has a uniform finite bound on scalar size over its entire cone, giving the boxed failure of propositional Potential Infinity. This sentence transfers.
+- id: scalar-infinitude
+  when: {shape: words}
+  holds: [axiom-of-infinity-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: witnessed-possibility-before-diagonal-ultrapowers
+  text: >-
+    The base has unrestricted current rows and distinct scalar word markers, so its standard numeral cut contains no numeral counting the propositions.

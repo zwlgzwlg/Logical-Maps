@@ -1,0 +1,81 @@
+id: fixed-traces-before-symmetric-surjections
+name: Invariant traces before symmetric surjections
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two independent OpenAI Codex (GPT-6) reviews, 27 November 2026
+  date: '2026-11-27'
+  lean: none
+sources:
+- GPT-6 Astra at Daniel Kodsi's direction, 22 October 2026, extending Cian Dorr's symmetric all-surjections model. Claude Opus 5.5 checked and presented the symmetric surjection products on 28 October.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026, the entrance restricted to invariant traces, its external joins and power lifting.
+source_names:
+- Symmetric surjection products
+- Codex via Kodsi, 27 Nov
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Definitions 15–18 and Proposition 20
+  note: Symmetric action profiles in the old component.
+definition: >-
+  Prepend an isolated-identity root to the symmetric surjection product
+  with free words and singleton individuals. The coefficients are
+  surjections on a set of size $\kappa^+$ and pins have size at most
+  $\kappa$. All exits are the new entrance followed by an old arrow.
+  Each root relation consists of an unrestricted current row and one
+  old whole entity fixed by every permutation of the coefficient set.
+  Interpret relational signature symbols as top.
+arguments:
+- id: old-cone-necessity-and-transversal
+  holds: [necessary-truths-are-nd-necessary, necessary-transversal-r]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: fixed-traces-before-symmetric-surjections
+  text: >-
+    The source has a true identity-only atom and arbitrary current rows. At the old object
+    every truth with pin P has the guard that the coefficient is injective on P and the word
+    is empty. Any arrow that can reach this guard already agrees with a permutation on P
+    and has empty word, so it satisfies the truth. The old component also has necessary
+    coextension Transversal by the support-intersection argument. The source and its entire
+    old cone therefore satisfy both principles.
+- id: complete-algebras
+  holds: [necessary-boolean-completeness-r, atomicity-r, well-ordering-r, truths-are-nd-necessary]
+  fails: [necessary-actuality, barcan-t, self-atomicity-t]
+  choice: uses
+  writeup: fixed-traces-before-symmetric-surjections
+  text: >-
+    Permuting a pin disjointly away gives a second pin of the same fixed
+    entity. Surjections interpolate both prescriptions, so a fixed old
+    profile is precisely a word-indexed list of invariant tuple sets.
+    These admit all unions. The root algebra is the product with a
+    free current power set and is atomic, with word-and-orbit atoms in
+    its old factor. Its current-only true atom witnesses ND-necessity,
+    and current rows admit well-orders. The old point is atomless.
+    No self-atom can lie below a nonzero old-only proposition, since such
+    a self-atom would be instantiated at an atomless old point. A tester
+    for invariant old propositions excludes a noninvariant collision test.
+- id: rigid-images
+  holds: [rigid-comprehension-r, necessary-tame-rigidity-r, necessary-rigid-power-r, necessary-weakly-rigid-power-r]
+  fails: [rigid-rigidity-r, weakly-rigid-weak-rigidity-r]
+  choice: uses
+  writeup: fixed-traces-before-symmetric-surjections
+  text: >-
+    Each tuple projected from the root remains fixed and depends only
+    on the word. Its arbitrary image sets give an admitted rigid relation.
+    Weak rigidity forces exactly those images. Every weakly rigid or rigid
+    future subrelation of a root bound lifts using the preimage of its row
+    inside that bound; the old component supplies both hereditary powers.
+    The old haecceity of a noninvariant proposition is rigid and fails the
+    tester for invariant entities which necessarily accepts all root inputs.
+- id: mathematical-possibilism
+  holds: [forcing-possibilism]
+  choice: uses
+  writeup: fixed-traces-before-symmetric-surjections
+  text: >-
+    Singleton individuals bound the ordinal benchmark by finitely many
+    thresholds. Free current rows make every countably infinite subset
+    power-closed, so only finite carriers are revised-small. A suitable
+    finite union of word atoms supplies every finite Boolean interval.

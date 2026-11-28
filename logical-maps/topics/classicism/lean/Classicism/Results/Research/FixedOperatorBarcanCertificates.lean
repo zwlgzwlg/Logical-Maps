@@ -1,0 +1,37 @@
+import Classicism.Certified.Box5
+import Classicism.Results.Research.FixedOperatorBarcan
+
+#classicism_audit Classicism.Results.Research.FixedOperatorBarcan
+#classicism_types_audit Classicism.Results.Research.FixedOperatorBarcan
+
+#classicism_derive Classicism.FixedOperatorBarcan.s5_of_involution
+  Classicism.FixedOperatorBarcan.preserves_all
+  Classicism.FixedOperatorBarcan.preserves_eq
+  Classicism.FixedOperatorBarcan.conjugate_involutive
+  Classicism.FixedOperatorBarcan.individual_arrow_involutive
+  Classicism.FixedOperatorBarcan.barcan_function_equality
+  Classicism.FixedOperatorBarcan.fixed_individual_arrow
+  Classicism.FixedOperatorBarcan.fixes_predicate_name
+  Classicism.FixedOperatorBarcan.possible_return
+  Classicism.FixedOperatorBarcan.reflects_forall_eq
+  Classicism.FixedOperatorBarcan.not_barcan_of_possible_tester
+  Classicism.FixedOperatorBarcan.fixed_tester_refutes_operator_barcan
+  Classicism.FixedOperatorBarcan.double_conjugation
+  Classicism.FixedOperatorBarcan.fixed_unique_instance
+  Classicism.FixedOperatorBarcan.fixed_selector_passes_tester
+
+#print axioms Classicism.FixedOperatorBarcan.s5_of_involution.derivable
+#print axioms Classicism.FixedOperatorBarcan.preserves_all.derivable
+#print axioms Classicism.FixedOperatorBarcan.preserves_eq.derivable
+#print axioms Classicism.FixedOperatorBarcan.conjugate_involutive.derivable
+#print axioms Classicism.FixedOperatorBarcan.individual_arrow_involutive.derivable
+#print axioms Classicism.FixedOperatorBarcan.barcan_function_equality.derivable
+#print axioms Classicism.FixedOperatorBarcan.fixed_individual_arrow.derivable
+#print axioms Classicism.FixedOperatorBarcan.fixes_predicate_name.derivable
+#print axioms Classicism.FixedOperatorBarcan.possible_return.derivable
+#print axioms Classicism.FixedOperatorBarcan.reflects_forall_eq.derivable
+#print axioms Classicism.FixedOperatorBarcan.not_barcan_of_possible_tester.derivable
+#print axioms Classicism.FixedOperatorBarcan.fixed_tester_refutes_operator_barcan.derivable
+#print axioms Classicism.FixedOperatorBarcan.double_conjugation.derivable
+#print axioms Classicism.FixedOperatorBarcan.fixed_unique_instance.derivable
+#print axioms Classicism.FixedOperatorBarcan.fixed_selector_passes_tester.derivable

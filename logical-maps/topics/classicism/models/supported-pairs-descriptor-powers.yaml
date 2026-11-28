@@ -1,0 +1,99 @@
+id: supported-pairs-descriptor-powers
+name: 'Coalesced sum: supported pairs with finite descriptor support for weakly rigid bounds'
+certificate:
+  source_id: misc
+  produced_by: OpenAI GPT-6, prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI GPT-6, prompted by Daniel Kodsi, 27 November 2026
+  checked_by: []
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI GPT-6, prompted by Daniel Kodsi, original construction and independent AI review, 27 November 2026.
+- The finite descriptor support construction of 26 November 2026 and the swappable-pairs Henkin model of 26 October 2026.
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §3.6 and Appendix E.
+source_names:
+- GPT-6 27 Nov
+- GPT-6 26 Nov and Astra 26 Oct
+- Classicism
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §3.6 and Appendix E, pp. 62–64 and 80–83
+group: coalesced-sums
+settings:
+  root-arrows: pointed-exits
+  sigma: construction
+  construction: >-
+    Extend the public signature by a label and two option names for each natural number, and the
+    fresh auxiliary predicates of the finite descriptor support construction, as well as
+    countably many free auxiliary proposition names. The pointed theory
+    $T$ requires each auxiliary predicate to miss every matching closed tuple necessarily. Use a
+    $T$-complete family of old components closed under all independent swaps of option names.
+    Include full two-world S5 components of each positive finite individual size, with all
+    individual names coinciding and all relational names bottom.
+    The root individuals are the individual names. Every relational symbol has its own old
+    descriptor and empty current row. Evaluate at the root in the public reduct.
+  domains:
+    text: >-
+      Pair each closed old descriptor with any current tuple row fixed by all swaps that fix
+      some finite set of pair indices. Permuting option names acts on descriptors and permutes
+      the copies of the components. Each lambda has a finitely supported current row by
+      equivariance, and its trace on old arrows is given by substitution of its parameters'
+      descriptors.
+meets:
+  complete-components: >-
+    All auxiliary predicates can be bottom and the additional individual names are free; every
+    consistent public sentence occurs at a designated point.
+arguments:
+- id: signature-possibility
+  holds: [possibility-plus-signature-r]
+  by: OpenAI GPT-6, prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: supported-pairs-descriptor-powers
+  text: >-
+    Every root individual has its own name. Substitution of distinct names fresh for the given
+    public matrix preserves consistency, and a witness expands with all auxiliary predicates bottom.
+- id: finite-descriptor-powers
+  holds: [weakly-rigid-power-r]
+  by: OpenAI GPT-6, prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: supported-pairs-descriptor-powers
+  text: >-
+    The empty-row ghosts, full-row tests and finite unions of tuple-haecceities used in the
+    finite descriptor support proof are all finitely supported. The unrestricted secondary
+    root still witnesses the required consistent sentences. The local power proof and the
+    unary-ghost counterexample to propositional Barcan therefore apply.
+- id: pairs-and-representatives
+  holds: [axiom-of-infinity-e]
+  fails: [relational-choice-r]
+  by: OpenAI GPT-6, prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: supported-pairs-descriptor-powers
+  text: >-
+    A supported choice from the two options at each label would be fixed by a swap outside
+    its support, contradicting uniqueness. At each property type the properties with bottom
+    old descriptor furnish an invariant set of representatives for coextension. The standard
+    numerals form an invariant inductive current row and none counts all current individuals.
+- id: missing-non-fregean-join
+  fails: [boolean-completeness-t]
+  by: OpenAI GPT-6, prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: supported-pairs-descriptor-powers
+  text: >-
+    At the chosen finite S5 points every root descriptor has the trace of a pure sentence
+    with one individual marker. Only countably many traces occur. A finitely supported family
+    of exact individual-size cells can prescribe any subset of the positive sizes, and its
+    supremum would have to realize that trace.
+- id: isolated-atoms
+  holds: [atoms-are-strong-atoms-r]
+  fails: [forcing-possibilism]
+  by: OpenAI GPT-6, prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: supported-pairs-descriptor-powers
+  text: >-
+    Conjunction with a fresh free propositional name or its complement splits any nonzero
+    old descriptor at every relational type. Thus each root atom is a singleton current row
+    with bottom old trace, so it is strong. The propositional algebra has only one atom and
+    no four-element principal interval. The four-element Boolean algebra on fixed individual
+    labels is revised-small: a nonempty finite collection of size $k$ cannot code all the
+    subsets of a $(k-1)$-element subcollection on fewer than $k$ points.

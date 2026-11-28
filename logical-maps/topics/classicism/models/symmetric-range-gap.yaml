@@ -186,12 +186,23 @@ arguments:
     omitting $d$ it would contain $Y$ only as $h^{\prime}\cdot Z$ with $Z_{h^{\prime}}=Y_1$ and
     $h^{\prime}$ omitting $d$, which was just excluded. So $R$ is not weakly inextensible, though $F$ is
     rigid: Rigid Power fails.
-
+- id: finite-scalar-atom-obstruction
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: finite-scalar-atoms-exclude-mathematical-possibilism
+  text: >-
+    The permutations fixing the distinguished point form one atom. Maps
+    omitting that point split on equality of the images of fresh inputs.
+    Mathematical Possibilism would require arbitrarily many propositional
+    atoms by representing the finite power algebras.
 notes: >-
   The first of the draft's two variants in which BF is made to fail. Actuality and the range
   deficiency come from the same finite test here, which is what the next variant prises apart.
-  Atomicity and Rigid Comprehension are not settled in the draft and are left unknown. The source
-  is a work in progress. Everything that implies these fails with them.
+  The recorded argument for failure of propositional Atomicity refutes all-type Atomicity as well. Rigid Comprehension
+  follows from the recorded Tame Rigidity, Boolean Completeness and Actuality by
+  [[completeness-and-actuality-imply-weak-rigid-comprehension]] and [[tame-rigidity-and-weak-rigid-comprehension-imply-rigid-comprehension]].
 
 # The old `changes` log, verbatim and frozen.
 history:

@@ -1,0 +1,48 @@
+id: graded-maps-with-a-preserved-pair-top
+name: Graded maps preserving an individual pair with a top proposition name
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, reinterpretation of the source
+    model
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independent OpenAI Codex review of signature substitution, preservation of pure schemata and their side
+    conditions, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- Underlying construction and pure verdicts in [[graded-maps-with-a-preserved-pair]]. OpenAI Codex (GPT-6),
+  prompted by Daniel Kodsi, 26 November 2026.
+- Signature substitution uses Cian Dorr’s sigma-top-npc argument.
+source_names:
+- Graded maps preserving an individual pair
+- Signature substitution
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39, pure and signature schemata.
+group: top-interpretations-of-pure-reducts
+settings:
+  reduct: Start with [[graded-maps-with-a-preserved-pair]].
+arguments:
+- id: inextensibility-with-moving-word-labels
+  fails: [weakly-inextensible-comprehension-r, forcing-possibilism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: graded-maps-with-a-preserved-pair
+  text: >-
+    Give κ⁺ propositions distinct nonempty-word labels. On grade-zero empty-word arrows let
+    each test whether its own private site stays fixed. For any alleged weakly inextensible
+    coextension of their current family, move a private site outside its pin. Its row still
+    contains that whole proposition, while an admitted tester omits it there and necessarily
+    accepts every old family member. Countable scalar intersections and full current coding
+    with infinite individuals also exclude the revised-small Cantor regular-open algebra.
+- id: pure-reduct
+  holds: [modal-well-ordering-r, necessary-atomlessness, necessary-axiom-of-infinity-e, necessary-countable-boolean-completeness-r,
+    no-pure-contingency-r]
+  fails: [analytic-necessitism, barcan-t, boolean-completeness-t, tame-rigidity-r]
+  choice: uses
+  text: The preserved pair and the maps governing the individual domain determine the rigid and inextensible
+    properties in the pure reduct. The pure verdicts below are those of the source or consequences of its recorded
+    verdicts over C. They transfer by the pure term induction in the group definition.

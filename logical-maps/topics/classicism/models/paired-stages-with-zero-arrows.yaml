@@ -1,0 +1,91 @@
+id: paired-stages-with-zero-arrows
+name: Paired stages with zero arrows
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two further OpenAI Codex (GPT-6) agents independently reviewed the two modal separations, gluing and Boolean intervals.
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, isolated zero coefficients over paired integer stages, 26 November 2026.
+- Cian Dorr and Claude Fable 5.1 (Anthropic), paired-individuals-two-object, 14 October 2026.
+source_names:
+- Kodsi and Codex, 26 Nov
+- Dorr and Fable, 14 Oct
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §§2.5, 3.5 and Appendix D
+definition: >-
+  The individual domain is a singleton. External block coordinates and ordinary coefficients
+  are those of integer-stages-paired-individuals-glued-constants. Add a two-sided zero
+  coefficient between every pair of objects. Decorate all coefficients with free words.
+  Each relation gives arbitrary rows on zero arrows and uses one countable pin on
+  ordinary arrows. Transport precomposes. Interpret the signature by gluing witnesses
+  on private last-letter cylinders. Evaluate at the identity at stage 0.
+meets:
+  unrestricted-block-maps-at-paired-stages: >-
+    Adjoining zero coefficients retains every ordinary block map between the external paired coordinates.
+  integer-stages-with-countably-pinned-pair-profiles: >-
+    The paired coordinates and ordinary arrows are those of the unrestricted stages. Each zero address has an unrestricted row, and the individual domain is a singleton.
+arguments:
+- id: homogeneous-stages
+  holds: [logical-necessity-r]
+  choice: uses
+  writeup: paired-stages-with-zero-arrows
+  text: >-
+    Relabel stages and external coordinates simultaneously to preserve the pure model.
+    Each realizable pure matrix and type list contributes one chosen witness tuple.
+    On its matching named instances use a private last letter to glue those witnesses
+    on both ordinary and zero rows. Each constant uses only countably many witness pins.
+- id: finite-intervals
+  holds: [forcing-possibilism]
+  choice: uses
+  writeup: paired-stages-with-zero-arrows
+  text: >-
+    With one individual the three closed ordinal thresholds bound the benchmark.
+    Full current rows give an infinite carrier a countable power-closed subset above it.
+    Every remaining small Boolean algebra is finite and is represented below a finite
+    union of the isolated zero-arrow addresses.
+- id: strict-modal-implications
+  fails: [five-implies-two-hat-necessity, two-hat-implies-nd-necessity]
+  choice: free
+  writeup: paired-stages-with-zero-arrows
+  text: >-
+    Give both stage propositions and the pin-omission tester full rows on the zero
+    arrows. An ordinary empty-word guard can only be recovered by ordinary composition.
+    The doublet inclusion and returns of the integer-stage proof then refute the
+    respective converses. The 5-Barcan theorem applies to the universal pin-omission
+    tester as an equality of whole proposition entities.
+- id: barcan-failure
+  fails: [barcan-t]
+  choice: free
+  writeup: paired-stages-with-zero-arrows
+  text: >-
+    At a single isolated zero exit accept exactly its image of the root propositions,
+    and accept all propositions elsewhere. Transport across this exit forgets the
+    continuation coefficient, while a target proposition can distinguish two ordinary
+    maps with a common word and target.
+- id: orders-and-joins
+  holds: [necessary-countable-boolean-completeness-r, modal-well-ordering-r]
+  fails: [boolean-completeness-t, atomicity-t, actuality]
+  choice: uses
+  writeup: paired-stages-with-zero-arrows
+  text: >-
+    Current fullness makes internally countable families externally countable, and
+    pointwise unions use countable unions of pins. Target-only orders witness Modal
+    Well-Ordering. The ordinary sector retains the uncountable cylinder family without
+    a join and the fresh-pair splitting of each of its nonzero propositions. Every
+    true proposition has a nonzero ordinary part at the identity.
+- id: represented-powers-and-analysis
+  holds: [second-order-analytic-necessitism, necessity-of-second-order-analysis]
+  choice: uses
+  writeup: paired-stages-with-zero-arrows
+  text: >-
+    Every relational type has continuum many rigid labels testing the target stage,
+    with all relations on these labels and all their powers represented by target-only
+    rows at every stage. One individual cannot support a real number structure.
+    Full current rows also make every actual real number structure standard and
+    supply every unrestricted second-order relation on its numbers and reals.

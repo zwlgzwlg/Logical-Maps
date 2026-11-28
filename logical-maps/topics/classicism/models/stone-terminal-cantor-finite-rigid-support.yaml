@@ -1,0 +1,47 @@
+id: stone-terminal-cantor-finite-rigid-support
+name: 'Cantor root loops with a signature-Maximalist rigid-power component'
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, homogeneous Stone-terminal construction and verification of this variant, 26 November 2026.
+source_names:
+- Kodsi and Codex, 26 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models, and Appendix E, coalesced sums.
+group: stone-terminal-roots
+settings:
+  loops: cantor
+  core: finite-support-rigid
+  names: inherited
+arguments:
+- id: both-local-powers
+  holds: [weakly-rigid-power-r]
+  choice: uses
+  by: OpenAI GPT-6, prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: stone-terminal-cantor-finite-rigid-support
+  text: >-
+    The old value of a weakly rigid bound is weakly rigid and has exactly the projected current
+    extension. Every old rigid subrelation lifts by pulling its extension back and taking clopen
+    closures at the terminals. The old power handles subsequent old arrows; terminal subrelations
+    are finite. These tests give full rigidity of both canonical powers at the root.
+- id: old-barcan-tester
+  fails: [barcan-t]
+  by: OpenAI GPT-6, prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: stone-terminal-cantor-finite-rigid-support
+  text: >-
+    The complement of the old auxiliary predicate necessarily covers every current proposition
+    and misses a proposition at an old successor. Lift the whole old tester with top loop and
+    terminal coordinates.
+notes: >-
+  Jointly realizes signature Possibility+, revised Mathematical Possibilism, local Weakly Rigid
+  Power, local Rigid Power and Vicinity while Actuality fails. The old component still has
+  successors failing the local power schemata.

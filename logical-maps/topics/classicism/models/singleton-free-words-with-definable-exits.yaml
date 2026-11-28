@@ -1,0 +1,97 @@
+id: singleton-free-words-with-definable-exits
+name: Free words with definable exits
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - A separate OpenAI Codex (GPT-6) agent checked the descriptor construction, witness gluing, signature separation countable join argument, weak rigidity obstruction revised smallness and both power obstructions, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Cian Dorr, coalesced definable root, 20 October 2026, recorded by Claude Fable 5.1 (Anthropic).
+- The map's full-free-monoid-glued-constants construction.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026, the combined construction and signature separation.
+source_names:
+- Dorr 20 Oct
+- Free-monoid signature gluing
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix E, Definition E.2, pp. 80–83
+definition: >-
+  Add a singleton-individual source with a free monoid of endomorphisms to
+  a set of old action models complete for C. At each word add an exit to
+  every old pointed individual. A source relation has an arbitrary current
+  row and a single pure term with one individual marker at each word; the
+  term supplies its values at the ordinary exits over that word. An extra
+  independent entrance per word supplies a freely selectable value at a
+  countable infinite extensional Henkin terminal. Glue the signature
+  interpretations on different final-letter sectors. Evaluate at the source;
+  for the negative signature verdicts take any signature containing a
+  relational name or two different individual names.
+arguments:
+- id: pure-possibility-and-named-witnesses
+  holds: [possibility-plus-r, witnessed-possibility-r]
+  fails: [distinctness-signature-r, possibly-witnessed-possibility-r]
+  choice: uses
+  writeup: singleton-free-words-with-definable-exits
+  text: >-
+    A C-consistent pure unary matrix is realized at an exit, and the
+    distinctness antecedent with two current individuals is false. Every
+    actually witnessed matrix with named positions is realized on its own
+    letter by copying whole witness profiles. Two individual names always
+    agree. For a relational name, its pointwise universality cannot be
+    contingent at a C5 atomic singleton exit, since the one-marker term
+    there can be universally closed. A full two-world singleton S5 cluster
+    witnesses the corresponding contingency. Thus even ordinary signature
+    Maximalism fails, as does Possibly Witnessed Possibility.
+- id: actual-structure
+  holds: [well-ordering-r, transversal-choice-r, inextensible-comprehension-r, strong-actuality, truths-are-nd-necessary]
+  fails: [infinity-e, axiom-of-infinity-e]
+  choice: uses
+  writeup: singleton-free-words-with-definable-exits
+  text: >-
+    Actual extensions and graphs are unrestricted. The identity-only copy
+    of a current extension is inextensible, and the identity-only truth is
+    a strong atom witnessing ND-necessity of all truths. There is one individual.
+- id: lindenbaum-coordinate
+  fails: [boolean-completeness-t, countable-boolean-completeness-r]
+  choice: free
+  writeup: singleton-free-words-with-definable-exits
+  text: >-
+    At one fixed word the old-exit scalar factor is the countable
+    one-marker Lindenbaum algebra. Its countably many disjoint Fregean
+    finite-size cells cannot supply joins for all their subfamilies.
+    The family and its injection into the type-t numerals have full present rows.
+- id: numeral-traces
+  fails: [weak-rigid-comprehension-r]
+  choice: free
+  writeup: singleton-free-words-with-definable-exits
+  text: >-
+    A currently selected subfamily of standard Frege numerals has no
+    weakly rigid representative when its trace is missing from the countably
+    many one-marker terms at a full infinite Fregean exit. Persistence
+    includes the wanted numerals, and Peano-guarded disequality testers
+    exclude every omitted standard one.
+- id: mathematical-possibilism
+  fails: [forcing-possibilism]
+  choice: uses
+  writeup: singleton-free-words-with-definable-exits
+  text: >-
+    The old finite components distinguish the ordinal thresholds, making
+    the continuum-sized Cantor regular-open algebra revised-small. Every
+    complete nonzero principal interval in the product of word bits and
+    countable Lindenbaum factors has an atom in one factor. The atomless
+    Cantor algebra is therefore unrepresented.
+- id: rigid-powers
+  fails: [rigid-power-r, weakly-rigid-power-r]
+  choice: uses
+  writeup: singleton-free-words-with-definable-exits
+  text: >-
+    Correlate one word image of a tuple with its independent Henkin-terminal
+    value while pinning every ordinary exit descriptor to bottom. A rigid
+    word subrelation would force any weakly rigid lift to select an external
+    family of terminal values absent from the Henkin domain. A single-word
+    tester then refutes weak inextensibility for both powers.

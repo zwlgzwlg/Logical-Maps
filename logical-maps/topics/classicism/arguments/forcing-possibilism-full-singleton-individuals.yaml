@@ -1,0 +1,16 @@
+id: forcing-possibilism-full-singleton-individuals
+requires: [full-action-model, one-individual, infinitely-many-propositions]
+holds: [forcing-possibilism]
+choice: uses
+by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+date: '2026-11-27'
+writeup: mathematical-possibilism-in-full-action-models
+text: >-
+  A uniform finite bound on the reachable individual domains bounds the
+  inexact ordinal carrier by finitely many ordered-field thresholds.
+  With full current rows, every infinite complete Boolean algebra has
+  a countably infinite power-closed subset larger than that benchmark.
+  Therefore every small algebra is finite. Infinitely many scalar
+  propositions in a full action model require infinitely many outgoing
+  arrows, and the powerset of any finite selection of these addresses
+  is a principal interval representing the corresponding finite algebra.

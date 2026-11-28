@@ -1,0 +1,17 @@
+id: no-weakly-inextensible-coextension
+requires: [integer-stages-with-countably-pinned-pair-profiles]
+fails: [weakly-inextensible-comprehension-r]
+choice: uses
+by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+date: '2026-11-27'
+writeup: weak-inextensibility-at-the-paired-stages
+text: >-
+  Give one proposition per ordinary pair a different nonempty-word
+  profile and make its empty-word test ask whether the coefficient
+  fixes the selected seat of that pair. A predicate representing
+  this whole current family repeats its row at an endomorphism
+  collapsing a pair off its pin. The tester deleting that pair's
+  proposition on empty-word endomorphisms moving its seat still
+  necessarily accepts every old family member, by the distinct word
+  profiles and the selected seat's truth bit. It misses the repeated
+  member, so no such predicate is weakly inextensible.

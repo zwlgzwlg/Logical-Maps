@@ -1,0 +1,21 @@
+id: atomic-partial-multiset-site-with-return
+name: An atomic partial-injection and multiset site with a return
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Independent OpenAI Codex (GPT-6) researchers checked the atomic partial-injection profiles, multiset subbound obstruction and Dedekind-finite Boolean algebra.
+  date: '2026-11-27'
+  lean: none
+sources:
+- The map's bounded partial-injection and finite-multiset profile models and Functional Choice over supported stages.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, assembly with separate multiset and partial-injection supports, 27 November 2026.
+source_names: [Partial injections and multiset words with split returns, Codex via Kodsi 27 Nov]
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models.
+group: atomic-partial-injection-and-multiset-returns
+settings: {point: site, returns: one, coefficients: arbitrary}
+arguments: []

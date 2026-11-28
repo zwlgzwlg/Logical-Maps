@@ -1,0 +1,48 @@
+id: closed-cohen-forcing-with-free-words
+name: Closed Cohen forcing with free words
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two further GPT-6 researchers independently checked the forced profiles, signature witnesses and rigid direct images.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, homogeneous forcing with free words, 27 November 2026.
+- Neil Barton and Zachary Goodsell, Continuum Contingency, sections 5.8 and 5.9.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Continuum Contingency
+references:
+- paper: barton-goodsell-continuum-contingency
+  role: formulation
+  locator: Sections 5.8 and 5.9, represented powers
+definition: >-
+  Start after one generic extension for countable partial functions from omega-one to two.
+  From each site two ordinary letters preserve the current universe and a
+  forcing letter takes it to any further generic extension. A relation has
+  an independent name for its tuple row at each finite word, using one
+  forcing factor for each forcing letter. Individuals form a singleton.
+arguments:
+- id: signature-and-rigid-relations
+  holds: [logical-necessity-r, necessary-rigid-comprehension-r, necessary-tame-rigidity-r, necessary-boolean-completeness-r, necessary-barcan-r, modal-well-ordering-r, necessary-strong-actuality]
+  choice: uses
+  writeup: homogeneous-forcing-with-free-words
+  text: >-
+    Homogeneity and absorption of finite products preserve pure truth.
+    Disjoint word cylinders realize the named witnesses. Direct images of
+    current extensions give rigid representatives, pointwise unions give
+    joins, and forcing names lift whole profiles through each entrance.
+    Each word admits a name for a well-order. The identity-only scalar
+    is a true strong atom.
+- id: continuum-and-power
+  holds: [analytic-necessitism]
+  fails: [second-order-analytic-necessitism, rigid-power-r, weakly-rigid-power-r, infinity-e]
+  choice: uses
+  writeup: homogeneous-forcing-with-free-words
+  text: >-
+    No new subsets of the numbers appear, so rigid continuum labels continue to represent every real. The forcing adds a subset of an omega-one sequence of real labels. No rigid represented power can have a ground member with this new trace.
+    A new subset of separated labels also gives a rigid subrelation outside
+    the exact image of the old family of all rigid subrelations.
+    The individual carrier always has one member.

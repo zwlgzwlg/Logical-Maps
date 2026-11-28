@@ -24,6 +24,7 @@ settings:
   individuals: singleton
   sigma: top
 meets:
+  two-element-arrow-group: The only arrows are the identity and the involution.
   returning-arrow: $k$, its own inverse.
   coherent-retractions: '$r_g:=g^{-1}$: then $r_{x\circ g}\circ x=g^{-1}\circ x^{-1}\circ x=g^{-1}$.'
   nonidentity-arrow: The involution $k$.
@@ -35,7 +36,19 @@ meets:
   one-object-action-model: It has one object.
   finitely-many-propositions: The propositions at the evaluation object are the subsets of the two arrows
     out of it, four in all.
-arguments: []
+arguments:
+- id: disjoint-possible-names
+  when: {sigma: opposite-singletons}
+  fails: [modal-freedom-signature-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-26'
+  text: >-
+    Let the two distinct propositional constants be $c,d$. Each is true at its own arrow, so both
+    $\Diamond c$ and $\Diamond d$ hold. No arrow lies in both singletons, so
+    $\Diamond(c\land d)$ fails. Taking the two disjoint one-variable formulas to be their
+    respective variables refutes the signature schema. Atomicity and necessary distinctness
+    still hold at every relational type by fullness and the invertibility of the group action.
 notes: The cited construction is a model of the map’s relational-type framework. The description identifies
   its evaluation point; construction and verification are given at the PDF locations in References. Everything
   that implies these fails with them.

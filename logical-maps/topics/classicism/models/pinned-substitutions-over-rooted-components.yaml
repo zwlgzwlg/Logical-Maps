@@ -1,0 +1,61 @@
+id: pinned-substitutions-over-rooted-components
+name: Finitely pinned substitutions over rooted components
+certificate:
+  source_id: misc
+  produced_by: Cian Dorr, finitely pinned substitution model, 19 October 2026; OpenAI Codex (GPT-6), prompted by Daniel Kodsi, rigid power argument, 27 November 2026.
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) agents independently checked the power calculation, use of completeness and rootedness, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Cian Dorr and Claude Opus 5.5, finitely pinned interpretation and substitution model, 19 October 2026.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, finite-or-total classification of subfamilies of the unary names, 27 November 2026.
+source_names: [Dorr, Kodsi and Codex]
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, rooted action models; Appendix E, coalesced sums.
+group: coalesced-sums
+settings:
+  root-arrows: interpretations-and-substitutions
+  sigma: construction
+  construction: 'Take any complete family of rooted components, every object of a component reachable from its base. As in coalesced-pinned-interpretations-root, with further arrows from $W_0$ to itself: one for
+    every type-preserving map $f$ of the constants of $\Sigma^+$ to themselves, the identity among them.
+    $f$ acts on the individuals at $W_0$ as on constants; maps compose with each other as functions, and
+    $\langle V,I\rangle\circ f=\langle V,I\circ f\rangle$. Evaluation point: $W_0$, at its identity arrow.
+    Interpretation of Σ, fixed for this record: each constant $c$ of Σ denotes $\hat c$, with transport
+    $I(c)$ along $\langle V,I\rangle$ and $\widehat{f(c)}$ along $f$, and empty extension at every map.'
+  domains:
+    text: 'An entity at $W_0$ of a relational type is an intension over the arrows out of $W_0$ that is
+      pinned down by a finite set $S$ of constants of $\Sigma^+$ (two arrows $\langle V,I\rangle$,
+      $\langle V,I^{\prime}\rangle$ with $I{\restriction}S=I^{\prime}{\restriction}S$, or two maps of the
+      constants agreeing on $S$, give it the same value) and whose transport along every arrow $\langle
+      V,I\rangle$ is in the domain of $V$ in its component. Transport along a map $f$ keeps an entity in
+      the domain: it is pinned down by $f(S)$, and its transports are transports of the original.'
+meets:
+  complete-components: The models in $A$ are complete for C($\Sigma$), so in particular for C.
+  pinned-substitution-root: This is the model whose root the condition describes.
+arguments:
+- id: original-arguments
+  holds: [possibility-plus-signature-r, barcan-r]
+  choice: uses
+  writeup: pinned-substitutions-over-rooted-components
+  text: >-
+    This is the published finitely pinned substitution construction with rooted
+    component categories. Fresh interpretation values verify Barcan, and the
+    complete component family supplies the signature Possibility+ witnesses.
+- id: infinite-family-of-names
+  fails: [rigid-power-r, weakly-rigid-power-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: pinned-substitutions-over-rooted-components
+  text: >-
+    Completeness supplies a Fregean component with infinitely many individuals.
+    Code each unary property name by its interpretation there, using bottom in the
+    other components. The set of codes is a rigid root relation, since a fresh
+    name can realize any argument without altering a tester's finite pin. Any
+    infinite weakly rigid source subfamily is the whole family by the same fresh
+    substitution argument. The component's infinite proper subfamily of individual
+    haecceities consequently has no weakly rigid root lift, violating both powers.

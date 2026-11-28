@@ -33,8 +33,7 @@ notes: >-
   witness them; haecceities and their finite joins are rigid; and the instance at $X=\top$ is a
   relativised Barcan Formula, $\top$ itself being weakly inextensible exactly when BF holds at the
   argument types. The principle follows from Actuality and separately from Boolean Completeness, which
-  the recorded models show to be independent of one another, so it is strictly weaker than each. Whether
-  it implies the boxed principle, Inextensible Comprehension, is open.
+  the recorded models show to be independent of one another, so it is strictly weaker than each. In [[one-new-individual-upper-point]] even necessary Boolean Completeness and Strong Actuality hold at the root, while Inextensible Comprehension fails.
 changes:
 - date: '2026-10-19'
   by: Claude Opus 5.5 (Anthropic), prompted by Cian Dorr

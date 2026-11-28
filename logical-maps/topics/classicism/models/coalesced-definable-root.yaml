@@ -170,6 +170,14 @@ arguments:
   - tame-rigidity-r
   by: Claude Fable 5.1 (Anthropic), at Cian Dorr's direction
   date: '2026-10-20'
+  withdrawn:
+    date: '2026-11-26'
+    by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+    reason: >-
+      The admitted root property $X=\lambda x\, .\,x=d$ necessarily holds of $d$, the sole actual
+      member of $Y$. At an exit $\langle V,a\rangle$ to a two-individual object, $X$ picks out
+      $a$ and $Y$ contains both individuals. Thus $Y\not\le X$ and $Y$ is not weakly inextensible.
+      The argument for failure of Tame Rigidity, and hence of Weakly Rigid Power, does not apply.
   choice: free
   text: >-
     At type $e\to t$. Let $Y$ be the root property with the term $\lambda x\, .\,\top$ and the value
@@ -179,6 +187,18 @@ arguments:
     its transport into a component is the universal property of individuals, which is weakly inextensible at
     a world only if BF at type $e$ holds there, and some component refutes BF at its root, the components
     being complete for C. So $Y$ is weakly rigid but not rigid.
+- id: two-world-cell
+  fails: [atoms-are-self-atoms-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-26'
+  choice: free
+  writeup: coalesced-definable-root
+  text: >-
+    Take the pure cell $B$ of [[strong-possibility-incompatible-with-barcan-t]], which says
+    $\Box\mathrm{ND}_t$ holds and there are exactly one individual and four propositions. That
+    proof shows that $B$ is an atom at this root and that C proves $B\to\Box B$. At a component
+    where $B$ holds, its transport equals $\top$ in a four-element propositional Boolean algebra.
+    Hence $B$ holds there and is not an atom, so the root atom $B$ is not a self-atom.
 - id: strong-possibility
   fails:
   - strong-possibility-r

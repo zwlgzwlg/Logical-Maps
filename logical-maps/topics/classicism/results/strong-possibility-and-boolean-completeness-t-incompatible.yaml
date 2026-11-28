@@ -1,0 +1,48 @@
+id: strong-possibility-and-boolean-completeness-t-incompatible
+premises:
+- strong-possibility-r
+- boolean-completeness-t
+conclusion: false
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Two further OpenAI Codex (GPT-6) agents independently checked the diagonal argument, universal reflection and nonstandard Frege indices.
+  date: '2026-11-26'
+  lean: verified
+  lean_ref: Classicism.Map.strong_possibility_and_boolean_completeness_t_incompatible
+sources:
+- OpenAI Codex, prompted by Daniel Kodsi, finite Fregean cells, 22 October 2026, and the distinctness-preserving diagonal proof, 26 November 2026.
+source_names:
+- Codex via Kodsi, Oct–Nov 2026
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.2, pp. 23–26; §2.6, pp. 41–42; Appendix E, p. 83
+proof: >-
+  Pure Strong Possibility alone gives the contradiction by [[strong-possibility-r-inconsistent]].
+
+  Write $b_n$ for the Fregean cell with one more individual than $n$ counts.
+  At a pure Strong Possibility point the $b_n$ are nonzero and pairwise disjoint.
+  At the singleton definable Maximalist root every proposition has a finite
+  descriptor giving its value uniformly on each $b_n$. Diagonalizing over
+  these descriptors gives a primitive recursive bit $D(n)$ and a pure
+  Max-consistent sentence asserting Peano arithmetic and that every proposition
+  has the opposite value on some entire cell. Under local Boolean Completeness
+  the join $s$ of the $D$-positive cells satisfies the prescribed bit on every
+  cell. Test Strong Possibility for the diagonal sentence with the current
+  proposition asserting Peano arithmetic, nonzeroness of every cell, and
+  this universal agreement for $s$. At the intermediate point, an opposite
+  inequality holds for the transported $s$ on some $b_n$. Both the inequality
+  and numberhood persist. The primitive recursive bit is preserved between
+  Peano points. At the return the same nonzero cell therefore lies below
+  both $s$ and its complement. See the accompanying proof for the construction
+  and the treatment of nonstandard indices.
+notes: >-
+  A least upper bound for one admitted family of propositions suffices.
+  Ordinary pure Maximalism already excludes the local completeness principle by
+  [[pure-maximalism-and-boolean-completeness-t-incompatible]]. This Strong
+  Possibility proof also identifies a missing diagonal on the Fregean cells
+  and proves incompleteness in the principal intervals specified in the write-up.

@@ -1,0 +1,24 @@
+id: boolean-retraction-fixed-ch
+name: Boolean retraction with fixed CH and disagreement on arithmetic
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two independent mathematical reviews of the fixed-CH components, the base and ultrapower guards, and the transfer of the original arguments
+  date: '2026-11-27'
+  lean: none
+sources:
+- The universal Boolean retraction and the reduced-power retraction, OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026.
+- The arithmetically disagreeing Henkin components of the infinite-individual Stone-terminal models, building on Cian Dorr's coalesced arithmetic and analysis models.
+source_names:
+- Boolean retraction
+- Coalesced arithmetic models
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalesced components
+group: boolean-retractions-with-arithmetic-terminals
+settings:
+  terminals: fixed
+arguments: []

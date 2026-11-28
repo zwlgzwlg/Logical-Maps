@@ -1,0 +1,83 @@
+id: functional-choice-over-supported-stages
+name: A Functional Choice root over supported choice and power counterexamples
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) researchers independently checked the typed retraction and the three accessible choice failures. The power counterexample, ordinal bound and represented powers of the continuum received independent review.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, Functional Choice with supported stages and returns, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models.
+definition: >-
+  Individuals are singletons. The root retracts from each of countably many
+  copies of the bounded partial-injection site stage. Two further stages
+  share a permutation group and have an ordinary arrow from its
+  finite-pin stage to its unrestricted stage. Ordinary arrows absorb
+  precomposition by each entrance and postcomposition by each return.
+arguments:
+- id: selections-and-local-algebra
+  holds: [functional-choice-r, boolean-completeness-r, atomicity-r, strong-actuality, well-ordering-r]
+  fails: [necessary-relational-choice-r, necessary-transversal-choice-r, necessary-transversal-r, necessary-actuality, atoms-are-self-atoms-t, truths-are-nd-necessary]
+  choice: uses
+  writeup: functional-choice-over-supported-stages
+  text: >-
+    Each entrance embeds the root. Prescribe the selecting operation on
+    these embedded inputs using the transported chosen outputs, all of
+    which are fixed by the designated symmetries. At the site stage the
+    classmate relation and the two-pin coextension obstruction rule out
+    the three forms of choice. At the root all current sets are admitted
+    and the Boolean order is a product of powersets of orbit sets.
+- id: new-rigid-subset
+  fails: [necessary-rigid-power-r, necessary-weakly-rigid-power-r]
+  choice: free
+  writeup: functional-choice-over-supported-stages
+  text: >-
+    The orbit of scalar codes for the permutation labels forms an exact
+    rigid bound at the finite-pin stage. Each code returns to bottom. On entering the unrestricted stage it has an exact rigid subset
+    with infinite coinfinite support pattern. Every transported property
+    from the earlier stage is fixed by a finite-set stabilizer. A tester
+    for that condition excludes the new rigid subset and passes all old ones.
+- id: countably-many-site-rows
+  holds: [forcing-possibilism, second-order-analytic-necessitism, arithmetic-necessitism, necessary-axiom-of-infinity-t]
+  choice: uses
+  writeup: functional-choice-over-supported-stages
+  text: >-
+    The singleton-individual ordinal tables give a finite bound. Full root
+    extensions detect a power-closed countably infinite subset of every
+    infinite carrier. The site atoms realize all finite Boolean algebras.
+    At every relational type the site rows give continuum many distinct
+    root labels. Every arrow transports their copies coherently, and sets
+    of these labels and all their relations have exact rigid profiles.
+- id: exact-root-images
+  holds: [rigid-comprehension-r, tame-rigidity-r, rigid-power-r, weakly-rigid-power-r]
+  choice: free
+  writeup: functional-choice-over-supported-stages
+  text: >-
+    For each current tuple set take its exact direct images at all stages.
+    Transported root labels are pointwise fixed, so these rows are admitted.
+    Every weakly rigid relation is the exact relation on its extension. The
+    current row of a future weakly rigid subrelation of a source bound pulls
+    back to a source tuple set, whose exact images give that very subrelation
+    by uniqueness of weakly rigid coextensions.
+- id: all-self-atoms-are-strong
+  holds: [necessary-self-atoms-are-strong-atoms-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi; independently checked by two other GPT-6 researchers
+  date: '2026-11-27'
+  writeup: self-atoms-at-split-return-stages
+  text: >-
+    Any instantiated relation with nonzero ordinary and return coordinates splits.
+    Root self-atoms are current-only singletons, and a nonzero return coordinate
+    in a self-atom elsewhere is a pure return of such a singleton.
+    At the partial-injection sites, two finite tags split each occupied identity
+    row. At the supported permutation site an occupied exit splits by two group
+    addresses at the unrestricted site. The remaining ordinary self-atoms
+    only undergo invertible transports or become bottom.

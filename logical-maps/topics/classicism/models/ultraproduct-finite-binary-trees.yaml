@@ -1,0 +1,121 @@
+id: ultraproduct-finite-binary-trees
+name: 'Henkin ultraproduct of finite binary trees with named witnesses'
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) agents, prompted by Daniel Kodsi, independently reviewed the finite-fragment construction and its infinity verdicts, 26 November 2026.
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, finite binary subtrees realizing the signature witnesses under a Henkin ultraproduct, 26 November 2026.
+- The map's ultraproduct-finite-full-s5 model supplies the earlier Henkin ultraproduct separation of the Infinity Schema from the Axiom of Infinity.
+source_names:
+- Kodsi and Codex, 26 Nov
+- Finite S5 ultraproduct
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, n. 57, p. 38, and §3.5, pp. 58–61
+  note: Signature schemata for possibility and full action models.
+definition: >-
+  For each finite list of Possibly Witnessed Possibility instances for a fixed set-sized signature,
+  use a finite perfect binary tree with full relations, one individual everywhere, and enough
+  disjoint descendant subtrees to realize every listed matrix which occurs anywhere in the family.
+  Copy its witness tuple into its named constants on the corresponding subtree. At all other rows
+  complete the assignments arbitrarily. Take the pointed Henkin ultraproduct over an ultrafilter on
+  the finite lists containing each cone of lists that include a given instance. Evaluate at the root.
+arguments:
+- id: disjoint-witnesses
+  holds: [possibly-witnessed-possibility-r]
+  choice: uses
+  writeup: witnessed-possibility-implies-infinity-schema-t
+  text: >-
+    Every successor in a finite perfect tree roots another finite perfect tree. For the finitely
+    many realizable matrices fix one witnessing height apiece. In a large enough tree take distinct
+    branches at a common depth and descend to these heights. Independently prescribe the whole
+    relational witnesses on their disjoint subtrees. Each selected instance holds, and each fixed
+    instance belongs to a large set of factors.
+- id: finite-carriers
+  fails: [potential-infinity-t, possible-infinity-t, infinity-e]
+  choice: free
+  writeup: witnessed-possibility-implies-infinity-schema-t
+  text: >-
+    In each factor every propositional carrier has its actual size counted by a finite numeral.
+    A numeral larger than every propositional carrier in the tree cannot count any property at
+    any successor. Both fixed assertions transfer, although the numeral witnessing them may vary
+    across the factors. At individual type there is exactly one individual everywhere.
+- id: subtree-restriction
+  holds: [necessary-barcan-r, necessary-boolean-completeness-r]
+  choice: free
+  writeup: witnessed-possibility-implies-infinity-schema-t
+  text: >-
+    In the finite factors, extend any entire relation at a descendant by arbitrary rows on the
+    rest of the original subtree. Thus all typed transports are onto. Entailment is inclusion at
+    every row, with joins computed there by union. Both claims transfer instance by instance.
+- id: singleton-atoms
+  holds: [necessary-strong-atomicity-r, necessary-strong-actuality]
+  choice: free
+  writeup: witnessed-possibility-implies-infinity-schema-t
+  text: >-
+    Each occupied tuple at one vertex defines an admitted singleton below its relation. Subtree
+    restriction gives another such singleton or bottom, so the singleton is strong. The
+    proposition true only at the current vertex is a true strong atom. Transfer over the factors.
+- id: rigid-direct-images
+  holds: [necessary-rigid-comprehension-r, necessary-rigid-power-r, necessary-weakly-rigid-power-r]
+  choice: free
+  writeup: witnessed-possibility-implies-infinity-schema-t
+  text: >-
+    Weakly rigid relations consist exactly of their members' direct images, using the tester
+    that excludes a single missing tuple at a single target. All such profiles are admitted in
+    the factors. Below a rigid bound the inverse image of a future subrelation's current row,
+    restricted to the current bound, generates a rigid lift. The full power is therefore itself
+    a direct-image profile, and weak and full rigidity agree.
+- id: choice-on-each-row
+  holds: [necessary-intensional-choice-r, modal-well-ordering-r]
+  choice: free
+  writeup: witnessed-possibility-implies-infinity-schema-t
+  text: >-
+    In a finite tree choose one member at every vertex of a necessarily inhabited property.
+    These singleton rows form one relation. Likewise the rows of a single binary relation can
+    independently well-order the finite carrier at each vertex. Transfer the typed sentences.
+- id: no-interval-large-enough
+  fails: [forcing-possibilism]
+  choice: free
+  writeup: witnessed-possibility-implies-infinity-schema-t
+  text: >-
+    At each finite vertex take the complete Boolean algebra of all subsets of its current
+    proposition domain, represented by current-only properties of propositions. No finite
+    nonempty collection is power-closed, by applying the definition to its subset missing
+    one member. The algebra is therefore revised-small, but it has more elements than the
+    entire proposition domain. This gives a fixed type-$tt$ failure in every factor.
+- id: finite-peano-carriers
+  holds: [second-order-analytic-necessitism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi; checked by two other GPT-6 agents
+  date: '2026-11-27'
+  choice: free
+  writeup: witnessed-possibility-implies-infinity-schema-t
+  text: >-
+    At every vertex of a finite factor every simple type is finite. No inhabited number carrier
+    can have an injective successor omitting its zero, so no real structure exists. At each fixed
+    type the boxed assertion that none exists is one sentence and transfers to the ultraproduct.
+    This makes the antecedent of each Second-Order Analytic Necessitism instance false.
+- id: singleton-guards-and-leaf-pairs
+  holds: [necessary-truths-are-nd-necessary]
+  fails: [self-atoms-are-atoms-t, pure-b-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi; checked by two other GPT-6 agents
+  date: '2026-11-27'
+  choice: free
+  writeup: witnessed-possibility-implies-infinity-schema-t
+  text: >-
+    The proposition true only at a given vertex becomes impossible after every proper arrow,
+    so it witnesses distinctness necessity of each current truth. At any nonleaf root, the
+    proposition true only at two distinct leaves is an atom wherever instantiated, yet it splits
+    into the two leaf singletons. At the root some true proposition might be false, while at a
+    leaf this pure assertion is impossible. The negative sentences hold in a fine cone of
+    factors of positive height.
+notes: >-
+  The positive implication [[witnessed-possibility-implies-infinity-schema-t]] gives arbitrarily many
+  distinct propositions at the root. The uniform failures of the quantified principles do not
+  bound this external size by a standard integer.

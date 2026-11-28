@@ -1,0 +1,101 @@
+id: symmetric-cohen-classes-with-new-numbers
+name: Generic labelled classes with new Frege numbers
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other OpenAI Codex agents independently reviewed the model, the support and forcing arguments and the failure of weak inextensibility, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, original construction and verification, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, Definitions D.1–D.3 and Proposition D.4
+- paper: barton-goodsell-continuum-contingency
+  role: background
+  locator: §5.8, eq. (29)
+definition: >-
+  Finite diagrams on a set of labels force a partition with a Cohen real on each class.
+  Take the finitely supported ground regular opens $B$, and a ground-generic filter for
+  current truth. In an auxiliary one-object model the finite permutations act on all
+  supported $B$-valued relations on the lower sorts. At the source pair such a current
+  row on source arguments with the germ, modulo a ground nonprincipal ultrafilter $U$,
+  of a supported ground sequence of auxiliary relations. The proper arrows read this
+  sequence in an external ultrapower of the auxiliary model by an ultrafilter extending
+  $U$, followed by any ultrapower permutation. Individuals form a singleton, all individual
+  names denote it, and relational names denote bottom.
+arguments:
+- id: no-real-structures
+  holds: [second-order-analytic-necessitism]
+  choice: uses
+  writeup: symmetric-cohen-classes-with-new-numbers
+  text: >-
+    If a real number structure had finite support $F$, its standard successor orbit
+    would be an admitted inductive current row. Swaps within each infinite generic
+    class that fix $F$ fix every number, then every real by extensionality. Thus
+    their least supports lie inside $F$. The membership trace of any such representative
+    belongs to the extension restricted to $F$, by homogeneity outside $F$. A
+    fresh class label is an admitted numerical property outside that subextension,
+    contradicting fullness. The argument applies at the source and auxiliary points,
+    and the exclusion of a structure at each type transfers to the terminal by Łoś.
+- id: new-frege-number
+  holds: [necessity-of-arithmetic]
+  fails: [arithmetic-necessitism]
+  choice: uses
+  writeup: symmetric-cohen-classes-with-new-numbers
+  text: >-
+    Standard numerals exhaust the numbers at the source and auxiliary point, where
+    their set is an admitted inductive row. No numeral counts the infinite proposition
+    carrier. Each fixed guarded arithmetical sentence has its standard truth, also
+    at the terminal by Łoś. A source tester with full current row and $i$th tail
+    excluding the $i$th auxiliary numeral holds necessarily of every current number.
+    The successor's number given by the sequence of these numerals fails the tester.
+- id: atomlessness
+  holds: [necessary-atomlessness]
+  fails: [boolean-completeness-t, countable-boolean-completeness-r]
+  choice: uses
+  writeup: symmetric-cohen-classes-with-new-numbers
+  text: >-
+    A class bit at a label outside the support splits any nonzero supported Boolean
+    value. The same bit splits each nonzero coordinate of a sequence with a common
+    finite support, so the germ algebra and the source product are atomless. At the
+    terminal atomlessness transfers by Łoś. The cylinders for the first one in a fixed label's real
+    form a ground disjoint sequence. Select their current subfamily by the bits of a Cohen real.
+    The ground graph pairing each cylinder with its standard Frege numeral witnesses countability.
+    A supremum would recover the entire sequence of selected bits by ground Boolean comparisons.
+    At every relational type a fresh bit also splits any nonzero row, using a witnessing tuple
+    moved off the fresh label while fixing the row support. One bit splits every nonzero row
+    of a uniformly supported sequence, hence each nonzero germ.
+- id: numeral-trace
+  fails: [plenitude-r, weak-rigid-comprehension-r]
+  choice: free
+  writeup: symmetric-cohen-classes-with-new-numbers
+  text: >-
+    A numerical property has the fresh class real as its actual trace. For the total graph
+    assigning top or bottom according to that property, application of a representing operation
+    to the ground numeral sequence would recover the real by equality with top.
+    For a weakly persistent coextension, a true numeral membership must have current Boolean
+    value one, since any nonzero complement is true after some permutation. Comparing each
+    numeral's Boolean value with one would again recover the real. Both failures transfer from
+    the auxiliary point to the terminal by Łoś.
+- id: no-relational-choice
+  fails: [relational-choice-r]
+  choice: free
+  writeup: symmetric-cohen-classes-with-new-numbers
+  text: >-
+    Code each label by its first class-bit Boolean value. Relate each such code to the codes
+    for all other labels in its generic class, and each non-code to bottom. If a supported
+    subrelation selected one output per input, a swap in a class outside its support could
+    move a selected output while fixing its input, the selection and the generic.
+- id: singleton-individual
+  fails: [potential-infinity-e]
+  choice: free
+  writeup: symmetric-cohen-classes-with-new-numbers
+  text: >-
+    The numeral for one counts all individuals everywhere, and the numeral for two
+    cannot count an individual property at any possible point.

@@ -1,0 +1,35 @@
+id: strong-possibility-and-inextensible-comprehension-incompatible
+premises: [strong-possibility-r, inextensible-comprehension-r]
+conclusion: false
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two further OpenAI Codex (GPT-6) agents independently checked the reduced-power argument, the transport of inextensibility and the arithmetic contradiction.
+  date: '2026-11-27'
+  lean: verified
+  lean_ref: Classicism.Map.strong_possibility_and_inextensible_comprehension_incompatible
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, the moving-tuple argument in the reduced-power retraction, 26 November 2026, and its Maximalist extension and Strong Possibility consequence, 27 November 2026.
+source_names:
+- Codex via Kodsi, 26–27 Nov
+proof: >-
+  Pure Strong Possibility alone gives the contradiction by [[strong-possibility-r-inconsistent]].
+
+  Add an exit into a Maximalist point to the reduced-power retraction. Its
+  moving-tuple test forces the present extension of every inextensible relation
+  to be externally finite. Weak inextensibility then bounds that relation by the
+  finite union of its actual tuple-haecceities, making every future extension
+  Frege-finite. Thus the closed assertion that every inextensible relation is
+  necessarily Frege-finite is consistent with Max at each arity. Under Strong
+  Possibility an inextensible relation with infinite current extension could
+  return to that infinitude through the assertion. Its boxed inextensibility
+  persists at the intermediate point, giving finiteness at the return. Hence
+  every current inextensible relation has a Frege finite count. Inextensible
+  Comprehension would then give a finite coextension of the universal property
+  of propositions, contradicting the quantified Axiom of Infinity at t from Max.
+notes: >-
+  The single comprehension instance for the universal property of propositions
+  suffices. No persistence of an inextensible bound is assumed.

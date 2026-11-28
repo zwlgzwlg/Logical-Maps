@@ -100,6 +100,11 @@ parameters:
         requires: [sigma-apart, actuality-contingent]
         meets:
           sigma-true-atom: This is the interpretation.
+      opposite-singletons:
+        text: The free signature has two propositional constants. They denote respectively the singleton of the identity arrow and the singleton of the other group arrow.
+        label: two opposite proposition names
+        brief: the two names denote the two complementary singleton propositions
+        requires: [two-element-arrow-group]
   metatheory:
     text: The metatheory in which the construction is carried out. Each member is recorded with
       the axiom of choice; its variants under the other values are generated where their
@@ -128,6 +133,28 @@ parameters:
         requires: [numbered-returning-arrows]
         meets:
           countable-choice-reals-fails: This is the hypothesis.
+      cohen-basic:
+        text: >-
+          Work in Cohen's first symmetric model of ZF, which contains an infinite
+          Dedekind-finite set of reals. Some countable family of nonempty sets of
+          reals has no choice function. Take an unspecified infinite set to be the naturals.
+        label: Cohen's first model
+        brief: built in Cohen's first symmetric model of ZF
+        choiceless: true
+        requires: [numbered-returning-arrows]
+        meets:
+          countable-choice-reals-fails: An infinite Dedekind-finite set of reals gives a countable family of nonempty sets of reals with no choice function.
+      sageev:
+        text: >-
+          Work in Sageev's 1975 model of ZF in which every infinite cardinal equals
+          twice itself and some countable family of nonempty sets of reals has no
+          choice function. Take an unspecified infinite set to be the naturals.
+        label: Sageev's idemmultiple model
+        brief: every infinite cardinal equals twice itself and countable choice for sets of reals fails
+        choiceless: true
+        requires: [numbered-returning-arrows]
+        meets:
+          countable-choice-reals-fails: Sageev's model contains a countable family of nonempty sets of reals with no choice function.
       socks:
         text: >-
           Metatheory, fixed for this record: the construction is carried out in ZF together with
@@ -173,9 +200,37 @@ meets:
     $1\in k\cdot a$ would need $1\circ k=1$.
 
 conditions:
+- id: two-element-arrow-group
+  text: The pointed category has one object and its arrows form a group of order two.
 - id: sigma-apart
   text: >-
     The construction does not itself interpret Σ, so any of the group's interpretations can be
     added to it.
 
-arguments: []
+arguments:
+- id: cohen-basic-small-cylinder-algebra
+  when: {metatheory: cohen-basic}
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: mathematical-possibilism-in-full-action-models
+  text: >-
+    An infinite Dedekind-finite set of reals yields an atomless complete Boolean
+    algebra of finite-coordinate cylinders whose carrier is Dedekind-finite and
+    hence revised-small. As long as there are infinitely many arrows, their finite
+    cardinality classes code all reals at a fixed type. The cylinder algebra thus
+    has a typed presentation. Every nonzero scalar interval is a powerset with atoms.
+- id: sageev-finite-benchmark
+  when: {metatheory: sageev, individuals: singleton}
+  holds: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: mathematical-possibilism-in-full-action-models
+  text: >-
+    The singleton individual bounds the inexact ordinal benchmark by at most three
+    thresholds. Sageev's cardinal-doubling principle supplies a countably infinite
+    subset of each infinite carrier. This subset is power-closed with full current
+    rows and exceeds the benchmark. Thus every revised-small algebra is finite.
+    Infinitely many singleton-arrow atoms supply all finite Boolean intervals.

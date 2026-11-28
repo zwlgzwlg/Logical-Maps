@@ -1,0 +1,21 @@
+# Signature Maximalism and both powers without Truths are ND-necessary
+
+OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026.
+
+Start with the [coalesced point with finite descriptor support](coalesced-finite-support-rigid-root.html) in any fixed public signature. Add a group $G=\{1,s\}$ of loops at its root, with $s^2=1$. The individuals are fixed. Every proper arrow $h$ out of the root satisfies $hg=h$ for both $g\in G$. At each relational type admit profiles with one unrestricted tuple row $E_g$ for each loop and a single closed descriptor interpreted at all proper exits. Transport by $g$ sends the row indexed by $k$ to the value of the original profile at $kg$. It preserves the descriptor because $hg=h$. A lambda has the indicated row at each loop by evaluation on transported parameters. On every proper arrow it has the old lambda value with its parameters replaced by their descriptors. This verifies term closure by induction on type and term.
+
+## Why the powers survive
+
+Give every auxiliary predicate empty rows at both loops. Each predicate necessarily misses every current tuple. The old components still witness every consistent public sentence and each witness required by signature Possibility+. The fresh-predicate compactness argument for the identity-loop root applies verbatim to the old descriptors. Its second, auxiliary root can still have just the identity loop.
+
+Let $F$ be weakly rigid, and let $E$ be its current tuple extension. At every loop $g$ its row is exactly $g[E]$. Weak persistence gives the inclusion from $g[E]$ into the row. For the reverse inclusion choose a tester whose row at $g$ is $g[E]$, with full rows at the other loops and top as its old descriptor. It necessarily holds of every member of $E$, so weak inextensibility bounds $F$ by this tester.
+
+At every proper exit the row is also the image of $E$. More precisely it is the finite set of images of representatives $a_1,\ldots,a_m$ of the old descriptors of the members of $E$, as proved for the identity-loop root. This includes all postcomposites. Thus at any arrow $h$, and any following arrow $v$, the row of $F$ at $vh$ is the $v$-image of its row at $h$. This implies persistence and weak inextensibility there. In particular every current weakly rigid bound is fully rigid.
+
+For the family of rigid subrelations below $F$, each proper-exit member lifts by taking the union of the haecceities of representatives $a_i$ of its finite extension. At a loop every rigid subrelation of $gF$ lifts by $g^{-1}$, and the lift still entails $F$. Every transported current rigid subrelation remains in the family. The family therefore has exactly the images of its current members at every arrow and is rigid by the same row argument. Weakly rigid and rigid subrelations below $F$ agree at the root, at its loops and at its proper exits. This gives local Weakly Rigid Power and Rigid Power. The auxiliary unary predicate from the [Barcan counterexample](coalesced-finite-support-rigid-root.html#other-local-verdicts) necessarily misses every current proposition and has a member in an old component, so Barcan at $t$ still fails.
+
+## Necessity at the two loops
+
+For any current proposition $p$, $\Box_{\ne}p$ holds exactly when $p$ is true at both loops. Any true guard $q$ is possible from each loop by its inverse. Conversely the proposition true only at the identity is admitted, and its possibility holds exactly at the two loops. Use it as the guard in $\exists q\,(q\land\Box(\Diamond q\to p))$. Taking $p$ itself to be true only at the identity refutes Truths are ND-necessary.
+
+For completeness define an operator $J$ whose row at either loop contains exactly the propositions true at both loops, with old descriptor $\lambda p.p$. At loops this is the universal modality on the group orbit, and in every old component it is identity. The root verifies the necessary N, K and B laws by these two evaluations, so $J$ is one of the operators quantified over by $\Box_5$. Hence $\Box_5p$ implies truth at both loops. The general inequalities $\Box_{\ne}p\to\hat{\hat\Box}p\to\Box_5p$ give the converse and equate all three modalities at the designated root. [Varieties of necessity](https://github.com/zwlgzwlg/Logical-Maps/blob/4bb9287187ed7cb09567eb3a6302cb896c986ec4/logical-maps/topics/classicism/background/varieties.md)

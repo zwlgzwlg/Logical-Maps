@@ -1,0 +1,85 @@
+id: principal-entrances-with-an-ultrafilter-return
+name: Principal entrances with one ultrafilter return
+definition: >-
+  Alternate roots and ordinary sites. A root relation consists of its current tuple row and one independent site row for each ordinary entrance. A site relation consists of its current row and an internal sequence of whole root entities modulo one fixed nonprincipal ultrafilter on the naturals. An entrance evaluates its row and keeps the whole root entity as a constant return class. The site returns to its unique internal ultrapower, carrying the distinguished ultrafilter by the elementary embedding. {{setting}} Evaluate at the initial root of the finite-history tree.
+parameters:
+  setting:
+    text: The individuals, principal entrances and optional forcing excursion.
+    generate: true
+    default: single
+    values:
+      single:
+        text: Use one principal entrance and natural-number individuals. The single proposition name denotes top.
+        label: one entrance
+      sequence:
+        text: Use countably many principal entrances and singleton individuals. The single proposition name denotes one ordinary entrance address.
+        label: a sequence of entrances
+      cohen:
+        text: Use the sequence with singleton individuals over a constructible ground. Include the independent excursion adding the second uncountable cardinal many Cohen reals, with its literal ground return. The single proposition name denotes one ordinary entrance address.
+        label: a sequence and Cohen forcing
+arguments:
+- id: root-comprehension-and-choice
+  holds: [functional-choice-r, modal-well-ordering-r, boolean-completeness-r, gallin-extensional-comprehension-r, weak-rigid-comprehension-r, necessary-weakly-inextensible-comprehension-r]
+  fails: [tame-rigidity-r, inextensible-comprehension-r, necessary-weak-rigid-comprehension-r, barcan-t]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: principal-entrances-with-an-ultrafilter-return
+  text: >-
+    Root selections extend along the injective entrances. Coordinatewise unions give joins. Prescribing the exact high images of a given row yields weak rigidity. For Gallin use instead the pullback of its elementary image along the unique low return, and the literal return at a forcing site. An internally infinite root row produces a moving low tuple that defeats hereditary inextensibility. A diagonal row at an ordinary site has no weakly rigid coextension because its forced low row would consist of exactly the constant members of an infinite ground list.
+- id: unique-return-powers
+  holds: [necessary-rigid-power-r]
+  fails: [rigid-rigidity-r, weakly-rigid-weak-rigidity-r]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: principal-entrances-with-an-ultrafilter-return
+  text: >-
+    A rigid site bound sends its current row onto its low row, by the tester excluding a single surplus tuple at the unique returned root. Each rigid subbound there lifts by pulling its current row back inside the site bound and taking that subbound as its return. Root Rigid Power then covers the site power at all later arrows. At the initial root the missing entrance image of a scalar yields a rigid site haecceity outside the image of every weakly rigid root relation, because their entrance tuples are all ground images.
+- id: hereditary-self-atoms
+  holds: [necessary-strong-actuality, necessary-self-atoms-are-strong-atoms-r, necessary-truth-implies-two-hat-necessity, necessity-of-arithmetic]
+  fails: [atoms-are-self-atoms-t, self-atomicity-t, necessary-countable-boolean-completeness-r, two-hat-implies-nd-necessity, arithmetic-necessitism, analytic-necessitism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: principal-entrances-with-an-ultrafilter-return
+  text: >-
+    Every root self-atom is a current-only singleton. Its image at a site has only the atomic return, and repeated complete excursions preserve the singleton. A site self-atom is either a current-only singleton or the return of a strong root atom. The actual current bit is strong at each stage. A scalar confined to one entrance is atomic and splits where instantiated. At an ordinary site the countably indexed sequence of diagonal low atoms has no join, since every upper bound contains a further nonconstant-index atom. Root numerical rows and the number part of every real structure at a suitable infinite sort cannot be rigid.
+- id: ordinary-atomicity
+  when: {setting: [single, sequence]}
+  holds: [necessary-atomicity-r, necessity-of-second-order-analysis]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: principal-entrances-with-an-ultrafilter-return
+  text: >-
+    Root powerset coordinates are atomic. A site's return algebra is the entire corresponding atomic root algebra at the unique elementary successor. Full current rows read each real structure in the underlying set model, whose theory is unchanged by the elementary excursions.
+- id: four-and-eight-scalars
+  when: {setting: single}
+  holds: [necessary-axiom-of-infinity-e, necessary-boolean-completeness-t]
+  fails: [potential-infinity-t, forcing-possibilism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: principal-entrances-with-an-ultrafilter-return
+  text: >-
+    The two root bits give four scalars and the site bit paired with its four-valued low return gives eight. Thus every scalar family has a join at every stage, although a countably indexed family of unary relations on individuals fails to have a join at the site. The eight-element Boolean algebra is small and has no representation in a principal root interval.
+- id: sequence-possibilism
+  when: {setting: [sequence, cohen]}
+  holds: [forcing-possibilism, necessary-axiom-of-infinity-t, independence-signature-r]
+  fails: [potential-infinity-e, possibly-witnessed-possibility-r, necessary-boolean-completeness-t]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: principal-entrances-with-an-ultrafilter-return
+  text: >-
+    Singleton individuals bound the inexact ordinals by finitely many uniform extensional tables. Every infinite carrier has a countably infinite power-closed subset, and every finite Boolean algebra is represented on ordinary entrance atoms. Their constant copies at a site give every finite interval there as well. The countably indexed family with no join can be taken at the scalar sort. The named entrance atom moves under a permutation of ordinary sites and remains nonbottom through every excursion.
+- id: cohen-analysis
+  when: {setting: cohen}
+  fails: [non-contingency-of-ch, necessity-of-analysis, atomicity-t]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: principal-entrances-with-an-ultrafilter-return
+  text: >-
+    The forcing coordinate contains an atomless scalar interval. The ground and forcing site disagree on CH and on the analytical assertion that every real is constructible. Both have real structures at the scalar sort.

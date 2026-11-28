@@ -1,0 +1,9 @@
+id: sigma-top-pure-b
+requires: [sigma-top]
+given: [pure-b-r]
+holds: [signature-b-r]
+choice: free
+by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+date: '2026-11-26'
+text: >-
+  In a closed sentence of the signature replace every constant of type $\tau$ by the closed pure term $\top_\tau$. Its denotation at every arrow is the denotation of the resulting pure sentence. The pure B instance for the replacement gives the signature B instance for the original sentence.

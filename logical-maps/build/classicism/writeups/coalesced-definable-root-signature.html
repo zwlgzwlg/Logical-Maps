@@ -322,72 +322,454 @@ body.writeup-page { max-width: 82ch; margin: 3em auto; padding: 0 1.5em 3em; fon
 <link rel="stylesheet" href="../math/katex.min.css">
 <script defer src="../math/katex.min.js"></script>
 <script defer src="../math/contrib/auto-render.min.js"></script>
-<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Coalesced sum: exits into pointed components for Σ, definable root</h1></header><p>Cian Dorr gave the definable root on 20 October 2026 (coalesced-definable-root). GPT-6 Astra (OpenAI), prompted by Cian Dorr, adapted it on 1 November 2026 to a signature interpreted in the components, with a freely chosen root extension for each constant. Claude Fable 5.2 (Anthropic), prompted by Cian Dorr, wrote this description, the verification and the injectivity argument on 21–22 November 2026. Cian Dorr has checked the construction against the injectivity argument. No Lean verification is claimed.</p>
+<script defer src="../math/math.js"></script></head><body class="writeup-page"><nav class="writeup-nav" aria-label="Write-up navigation"><a href="../index.html">← Back to map</a><div class="display-toggles"><button type="button" class="theme-toggle" data-theme-toggle>[Dark mode]</button><button type="button" class="theme-toggle" data-colourblind-toggle aria-label="Colourblind mode" aria-pressed="false">[Colourblind mode: off]</button></div></nav><header id="title-block-header"><h1>Coalesced sum: exits into pointed components for Σ, definable root</h1></header><p>Cian Dorr gave the definable root on 20 October 2026
+(coalesced-definable-root). GPT-6 Astra (OpenAI), prompted by Cian Dorr,
+adapted it on 1 November 2026 to a signature interpreted in the
+components, with a freely chosen root extension for each constant.
+Claude Fable 5.2 (Anthropic), prompted by Cian Dorr, wrote this
+description, the verification and the injectivity argument on 21–22
+November 2026. Cian Dorr has checked the construction against the
+injectivity argument. No Lean verification is claimed.</p>
 <h2 id="the-construction">The construction</h2>
-<p>Let <span class="math inline">\Sigma^{+}</span> be <span class="math inline">\Sigma</span>, with an individual constant <span class="math inline">d</span> added if <span class="math inline">\Sigma</span> has none. C(<span class="math inline">\Sigma^{+}</span>) is conservative over C(<span class="math inline">\Sigma</span>).</p>
+<p>Let <span class="math inline">\Sigma^{+}</span> be <span
+class="math inline">\Sigma</span>, with an individual constant <span
+class="math inline">d</span> added if <span
+class="math inline">\Sigma</span> has none. C(<span
+class="math inline">\Sigma^{+}</span>) is conservative over C(<span
+class="math inline">\Sigma</span>).</p>
 <ul>
-<li><strong>Components.</strong> A set <span class="math inline">A</span> of pointed action models for <span class="math inline">\mathcal L(\Sigma^{+})</span>, with disjoint objects and arrows, complete for C(<span class="math inline">\Sigma^{+}</span>): every closed sentence consistent with C(<span class="math inline">\Sigma^{+}</span>) is true at the distinguished object <span class="math inline">V_{\mathfrak A}</span> of some <span class="math inline">\mathfrak A\in A</span>.</li>
-<li><strong>Arrows.</strong> Add an object <span class="math inline">W_0</span>. Its arrows out are its identity and, for each <span class="math inline">\mathfrak A</span> and each arrow <span class="math inline">k</span> of <span class="math inline">\mathfrak A</span> out of <span class="math inline">V_{\mathfrak A}</span>, an arrow <span class="math inline">k\circ\varepsilon_{\mathfrak A}</span>, where <span class="math inline">\varepsilon_{\mathfrak A}:W_0\to V_{\mathfrak A}</span> is the exit. No arrow enters <span class="math inline">W_0</span> except its identity.</li>
-<li><strong>Composition.</strong> <span class="math inline">k&#39;\circ(k\circ\varepsilon_{\mathfrak A}):=(k&#39;k)\circ\varepsilon_{\mathfrak A}</span>.</li>
-<li><strong>Individuals.</strong> The individuals at <span class="math inline">W_0</span> are the individual constants of <span class="math inline">\Sigma^{+}</span>; <span class="math inline">\varepsilon_{\mathfrak A}</span> sends each to its denotation at <span class="math inline">V_{\mathfrak A}</span>. (Closed terms of type <span class="math inline">e</span> are individual constants, no type ending in <span class="math inline">e</span> being admitted.)</li>
-<li><strong>Domains at <span class="math inline">W_0</span>.</strong> By recursion on types. An entity of type <span class="math inline">\bar\tau t</span> is an intension <span class="math inline">F</span> over the arrows out of <span class="math inline">W_0</span> such that, for some closed term <span class="math inline">u</span> of <span class="math inline">\mathcal L(\Sigma^{+})</span> of that type, the value of <span class="math inline">F</span> at <span class="math inline">k\circ\varepsilon_{\mathfrak A}</span> is the extension at <span class="math inline">k</span> of the entity <span class="math inline">u</span> denotes in <span class="math inline">\mathfrak A</span>, for every <span class="math inline">\mathfrak A</span> and <span class="math inline">k</span>. Its value at the identity is any set <span class="math inline">E</span> of tuples of root entities of the types <span class="math inline">\bar\tau</span>. Write <span class="math inline">F=(E,u)</span>, and call <span class="math inline">E</span> the <em>root extension</em> and <span class="math inline">u</span> a <em>descriptor</em>.</li>
-<li><strong>Evaluation point.</strong> <span class="math inline">1_{W_0}</span>.</li>
-<li><strong>Interpretation of <span class="math inline">\Sigma</span>.</strong> An individual constant denotes itself. A relational constant <span class="math inline">c</span> denotes <span class="math inline">(E_c,c)</span> for any chosen <span class="math inline">E_c</span>. Its transport along <span class="math inline">\varepsilon_{\mathfrak A}</span> is <span class="math inline">\mathfrak A</span>’s own interpretation of <span class="math inline">c</span>.</li>
+<li><strong>Components.</strong> A set <span
+class="math inline">A</span> of pointed action models for <span
+class="math inline">\mathcal L(\Sigma^{+})</span>, with disjoint objects
+and arrows, complete for C(<span class="math inline">\Sigma^{+}</span>):
+every closed sentence consistent with C(<span
+class="math inline">\Sigma^{+}</span>) is true at the distinguished
+object <span class="math inline">V_{\mathfrak A}</span> of some <span
+class="math inline">\mathfrak A\in A</span>.</li>
+<li><strong>Arrows.</strong> Add an object <span
+class="math inline">W_0</span>. Its arrows out are its identity and, for
+each <span class="math inline">\mathfrak A</span> and each arrow <span
+class="math inline">k</span> of <span class="math inline">\mathfrak
+A</span> out of <span class="math inline">V_{\mathfrak A}</span>, an
+arrow <span class="math inline">k\circ\varepsilon_{\mathfrak A}</span>,
+where <span class="math inline">\varepsilon_{\mathfrak A}:W_0\to
+V_{\mathfrak A}</span> is the exit. No arrow enters <span
+class="math inline">W_0</span> except its identity.</li>
+<li><strong>Composition.</strong> <span
+class="math inline">k&#39;\circ(k\circ\varepsilon_{\mathfrak
+A}):=(k&#39;k)\circ\varepsilon_{\mathfrak A}</span>.</li>
+<li><strong>Individuals.</strong> The individuals at <span
+class="math inline">W_0</span> are the individual constants of <span
+class="math inline">\Sigma^{+}</span>; <span
+class="math inline">\varepsilon_{\mathfrak A}</span> sends each to its
+denotation at <span class="math inline">V_{\mathfrak A}</span>. (Closed
+terms of type <span class="math inline">e</span> are individual
+constants, no type ending in <span class="math inline">e</span> being
+admitted.)</li>
+<li><strong>Domains at <span class="math inline">W_0</span>.</strong> By
+recursion on types. An entity of type <span class="math inline">\bar\tau
+t</span> is an intension <span class="math inline">F</span> over the
+arrows out of <span class="math inline">W_0</span> such that, for some
+closed term <span class="math inline">u</span> of <span
+class="math inline">\mathcal L(\Sigma^{+})</span> of that type, the
+value of <span class="math inline">F</span> at <span
+class="math inline">k\circ\varepsilon_{\mathfrak A}</span> is the
+extension at <span class="math inline">k</span> of the entity <span
+class="math inline">u</span> denotes in <span
+class="math inline">\mathfrak A</span>, for every <span
+class="math inline">\mathfrak A</span> and <span
+class="math inline">k</span>. Its value at the identity is any set <span
+class="math inline">E</span> of tuples of root entities of the types
+<span class="math inline">\bar\tau</span>. Write <span
+class="math inline">F=(E,u)</span>, and call <span
+class="math inline">E</span> the <em>root extension</em> and <span
+class="math inline">u</span> a <em>descriptor</em>.</li>
+<li><strong>Evaluation point.</strong> <span
+class="math inline">1_{W_0}</span>.</li>
+<li><strong>Interpretation of <span
+class="math inline">\Sigma</span>.</strong> An individual constant
+denotes itself. A relational constant <span class="math inline">c</span>
+denotes <span class="math inline">(E_c,c)</span> for any chosen <span
+class="math inline">E_c</span>. Its transport along <span
+class="math inline">\varepsilon_{\mathfrak A}</span> is <span
+class="math inline">\mathfrak A</span>’s own interpretation of <span
+class="math inline">c</span>.</li>
 </ul>
-<p>The differences from coalesced-definable-root: the components interpret the signature and are complete for C(<span class="math inline">\Sigma^{+}</span>), not only for C; one exit into each pointed component replaces the arrows for every interpretation of <span class="math inline">d</span> into every object; and the constants of <span class="math inline">\Sigma</span> are not at the top but keep their own descriptors, with root extensions left to choice.</p>
-<p><strong>Descriptors.</strong> <span class="math inline">(E,u)</span> and <span class="math inline">(E&#39;,u&#39;)</span> are the same entity iff <span class="math inline">E=E&#39;</span> and C(<span class="math inline">\Sigma^{+}</span>) proves <span class="math inline">u=u&#39;</span>. If <span class="math inline">u=u&#39;</span> is unprovable, <span class="math inline">u\ne u&#39;</span> is consistent, so it holds at some <span class="math inline">V_{\mathfrak A}</span> and the component parts differ. So each root entity has a descriptor that is well defined up to provable identity.</p>
-<p><strong>Landing.</strong> The transport of <span class="math inline">(E,u)</span> along <span class="math inline">\varepsilon_{\mathfrak A}</span> is the entity <span class="math inline">u</span> denotes at <span class="math inline">V_{\mathfrak A}</span>, so it lies in the component domain.</p>
+<p>The differences from coalesced-definable-root: the components
+interpret the signature and are complete for C(<span
+class="math inline">\Sigma^{+}</span>), not only for C; one exit into
+each pointed component replaces the arrows for every interpretation of
+<span class="math inline">d</span> into every object; and the constants
+of <span class="math inline">\Sigma</span> are not at the top but keep
+their own descriptors, with root extensions left to choice.</p>
+<p><strong>Descriptors.</strong> <span class="math inline">(E,u)</span>
+and <span class="math inline">(E&#39;,u&#39;)</span> are the same entity
+iff <span class="math inline">E=E&#39;</span> and C(<span
+class="math inline">\Sigma^{+}</span>) proves <span
+class="math inline">u=u&#39;</span>. If <span
+class="math inline">u=u&#39;</span> is unprovable, <span
+class="math inline">u\ne u&#39;</span> is consistent, so it holds at
+some <span class="math inline">V_{\mathfrak A}</span> and the component
+parts differ. So each root entity has a descriptor that is well defined
+up to provable identity.</p>
+<p><strong>Landing.</strong> The transport of <span
+class="math inline">(E,u)</span> along <span
+class="math inline">\varepsilon_{\mathfrak A}</span> is the entity <span
+class="math inline">u</span> denotes at <span
+class="math inline">V_{\mathfrak A}</span>, so it lies in the component
+domain.</p>
 <h2 id="it-is-a-model-of-c">It is a model of C</h2>
-<p>As for coalesced-definable-root. Let <span class="math inline">s</span> be a term with parameters <span class="math inline">(\bar E,\bar u)</span> from the root domains. At an arrow into <span class="math inline">\mathfrak A</span> its denotation is computed in <span class="math inline">\mathfrak A</span> from the transported parameters, which are the denotations of <span class="math inline">\bar u</span>; so it is the denotation of the closed term <span class="math inline">s[\bar u]</span>, uniformly in the arrow. At the identity its extension is the set of tuples of root entities satisfying it at <span class="math inline">W_0</span>, and nothing constrains that set. So <span class="math inline">s</span> denotes the root entity <span class="math inline">(E&#39;,s[\bar u])</span> for some <span class="math inline">E&#39;</span>. The axioms of C hold at <span class="math inline">W_0</span> because denotations are computed extensionally on intensions, and the other worlds are worlds of the components. Two consequences are used below.</p>
+<p>As for coalesced-definable-root. Let <span
+class="math inline">s</span> be a term with parameters <span
+class="math inline">(\bar E,\bar u)</span> from the root domains. At an
+arrow into <span class="math inline">\mathfrak A</span> its denotation
+is computed in <span class="math inline">\mathfrak A</span> from the
+transported parameters, which are the denotations of <span
+class="math inline">\bar u</span>; so it is the denotation of the closed
+term <span class="math inline">s[\bar u]</span>, uniformly in the arrow.
+At the identity its extension is the set of tuples of root entities
+satisfying it at <span class="math inline">W_0</span>, and nothing
+constrains that set. So <span class="math inline">s</span> denotes the
+root entity <span class="math inline">(E&#39;,s[\bar u])</span> for some
+<span class="math inline">E&#39;</span>. The axioms of C hold at <span
+class="math inline">W_0</span> because denotations are computed
+extensionally on intensions, and the other worlds are worlds of the
+components. Two consequences are used below.</p>
 <ol type="1">
-<li>A closed term <span class="math inline">u</span> denotes an entity with descriptor <span class="math inline">u</span>, whatever the root extensions <span class="math inline">E_c</span> are. Only its root extension depends on them.</li>
-<li>An application <span class="math inline">(E,u)</span> of type <span class="math inline">\sigma t</span> to a root entity <span class="math inline">x</span> with descriptor <span class="math inline">v</span> is the root proposition with descriptor <span class="math inline">uv</span>, true at the identity iff <span class="math inline">x\in E</span>.</li>
+<li>A closed term <span class="math inline">u</span> denotes an entity
+with descriptor <span class="math inline">u</span>, whatever the root
+extensions <span class="math inline">E_c</span> are. Only its root
+extension depends on them.</li>
+<li>An application <span class="math inline">(E,u)</span> of type <span
+class="math inline">\sigma t</span> to a root entity <span
+class="math inline">x</span> with descriptor <span
+class="math inline">v</span> is the root proposition with descriptor
+<span class="math inline">uv</span>, true at the identity iff <span
+class="math inline">x\in E</span>.</li>
 </ol>
-<h2 id="maximalism-signature-σ-and-possibility-signature-σ">Maximalism (signature Σ) and Possibility+ (signature Σ)</h2>
-<p>A closed sentence holds at <span class="math inline">\varepsilon_{\mathfrak A}</span> iff it holds at <span class="math inline">V_{\mathfrak A}</span>. Every closed sentence consistent with C(<span class="math inline">\Sigma</span>) is consistent with C(<span class="math inline">\Sigma^{+}</span>), so it holds at some <span class="math inline">V_{\mathfrak A}</span> and is possible at <span class="math inline">W_0</span>. A closed identity of <span class="math inline">\mathcal L(\Sigma)</span> is true at <span class="math inline">W_0</span> iff C(<span class="math inline">\Sigma</span>) proves it, by the descriptor criterion and conservativity. For Possibility+, distinct root individuals distinct from the constants in <span class="math inline">P</span> are fresh distinct constants, and substituting them for the free variables of a consistent <span class="math inline">P</span> gives a consistent sentence.</p>
-<p>This holds for every choice of the root extensions <span class="math inline">E_c</span>. The map <span class="math inline">(E,u)\mapsto[u]</span> is a homomorphism from the root domains onto the closed terms modulo provable identity.</p>
-<h2 id="constants-are-injective-on-closed-terms">Constants are injective on closed terms</h2>
-<p><strong>Proposition.</strong> Let <span class="math inline">c</span> be a constant of <span class="math inline">\Sigma</span> of type <span class="math inline">\bar\beta\,\sigma\,\bar\beta&#39;\,t</span>, and let <span class="math inline">A</span>, <span class="math inline">B</span> be closed terms of <span class="math inline">\mathcal L(\Sigma)</span> of type <span class="math inline">\sigma</span>, which may contain <span class="math inline">c</span>. If</p>
-<p><span class="math display">C(\Sigma)\vdash\forall\bar w\,\bar w&#39;\,.\,c[\bar w,A,\bar w&#39;]\leftrightarrow
+<h2 id="maximalism-signature-σ-and-possibility-signature-σ">Maximalism
+(signature Σ) and Possibility+ (signature Σ)</h2>
+<p>A closed sentence holds at <span
+class="math inline">\varepsilon_{\mathfrak A}</span> iff it holds at
+<span class="math inline">V_{\mathfrak A}</span>. Every closed sentence
+consistent with C(<span class="math inline">\Sigma</span>) is consistent
+with C(<span class="math inline">\Sigma^{+}</span>), so it holds at some
+<span class="math inline">V_{\mathfrak A}</span> and is possible at
+<span class="math inline">W_0</span>. A closed identity of <span
+class="math inline">\mathcal L(\Sigma)</span> is true at <span
+class="math inline">W_0</span> iff C(<span
+class="math inline">\Sigma</span>) proves it, by the descriptor
+criterion and conservativity. For Possibility+, distinct root
+individuals distinct from the constants in <span
+class="math inline">P</span> are fresh distinct constants, and
+substituting them for the free variables of a consistent <span
+class="math inline">P</span> gives a consistent sentence.</p>
+<p>This holds for every choice of the root extensions <span
+class="math inline">E_c</span>. The map <span
+class="math inline">(E,u)\mapsto[u]</span> is a homomorphism from the
+root domains onto the closed terms modulo provable identity.</p>
+<h2 id="constants-are-injective-on-closed-terms">Constants are injective
+on closed terms</h2>
+<p><strong>Proposition.</strong> Let <span class="math inline">c</span>
+be a constant of <span class="math inline">\Sigma</span> of type <span
+class="math inline">\bar\beta\,\sigma\,\bar\beta&#39;\,t</span>, and let
+<span class="math inline">A</span>, <span class="math inline">B</span>
+be closed terms of <span class="math inline">\mathcal L(\Sigma)</span>
+of type <span class="math inline">\sigma</span>, which may contain <span
+class="math inline">c</span>. If</p>
+<p><span class="math display">C(\Sigma)\vdash\forall\bar w\,\bar
+w&#39;\,.\,c[\bar w,A,\bar w&#39;]\leftrightarrow
 c[\bar w,B,\bar w&#39;],</span></p>
-<p>then <span class="math inline">C(\Sigma)\vdash A=B</span>. In particular, for a constant <span class="math inline">Q</span> of type <span class="math inline">\sigma t</span>: <span class="math inline">C(\Sigma)\vdash QA\leftrightarrow QB</span> only if <span class="math inline">C(\Sigma)\vdash A=B</span>.</p>
-<p><em>Proof.</em> Suppose C(<span class="math inline">\Sigma</span>) does not prove <span class="math inline">A=B</span>; then neither does C(<span class="math inline">\Sigma^{+}</span>). Take the model above with</p>
-<p><span class="math display">E_c:=\{(\bar w,x,\bar w&#39;):\text{the descriptor of }x\text{ is provably
+<p>then <span class="math inline">C(\Sigma)\vdash A=B</span>. In
+particular, for a constant <span class="math inline">Q</span> of type
+<span class="math inline">\sigma t</span>: <span
+class="math inline">C(\Sigma)\vdash QA\leftrightarrow QB</span> only if
+<span class="math inline">C(\Sigma)\vdash A=B</span>.</p>
+<p><em>Proof.</em> Suppose C(<span class="math inline">\Sigma</span>)
+does not prove <span class="math inline">A=B</span>; then neither does
+C(<span class="math inline">\Sigma^{+}</span>). Take the model above
+with</p>
+<p><span class="math display">E_c:=\{(\bar w,x,\bar w&#39;):\text{the
+descriptor of }x\text{ is provably
 identical to }A\}.</span></p>
-<p>This is specified before any denotation is computed, and by consequence 1 the denotation of <span class="math inline">A</span> has descriptor <span class="math inline">A</span> and that of <span class="math inline">B</span> has descriptor <span class="math inline">B</span> whatever <span class="math inline">E_c</span> is. So at <span class="math inline">W_0</span>, <span class="math inline">c[\bar w,A,\bar w&#39;]</span> is true for all root <span class="math inline">\bar w,\bar w&#39;</span> and <span class="math inline">c[\bar w,B,\bar w&#39;]</span> for none. Every root domain is nonempty, so the displayed sentence is false at <span class="math inline">W_0</span>, which is a model of C(<span class="math inline">\Sigma</span>). <span class="math inline">\square</span></p>
-<p>When <span class="math inline">\sigma=e</span> the statement is trivial, closed terms of type <span class="math inline">e</span> being constants.</p>
-<p><strong>Corollary.</strong> Maximalism (signature Σ) proves, for closed <span class="math inline">A</span>, <span class="math inline">B</span> and a constant <span class="math inline">Q</span> of type <span class="math inline">\sigma\tau</span> with <span class="math inline">\tau\ne e</span>: <span class="math inline">QA=QB\to A=B</span>. (If <span class="math inline">QA=QB</span> is true it is provable, hence so is the displayed biconditional for the constant <span class="math inline">Q</span>, hence <span class="math inline">A=B</span>.)</p>
-<p>The same choice of root extension shows more generally that a closed term built from <span class="math inline">c</span> by filling its other arguments is injective on closed terms. This is the property of constants that the Russell–Myhill argument in strong-possibility-signature-r-inconsistent needs.</p>
+<p>This is specified before any denotation is computed, and by
+consequence 1 the denotation of <span class="math inline">A</span> has
+descriptor <span class="math inline">A</span> and that of <span
+class="math inline">B</span> has descriptor <span
+class="math inline">B</span> whatever <span
+class="math inline">E_c</span> is. So at <span
+class="math inline">W_0</span>, <span class="math inline">c[\bar
+w,A,\bar w&#39;]</span> is true for all root <span
+class="math inline">\bar w,\bar w&#39;</span> and <span
+class="math inline">c[\bar w,B,\bar w&#39;]</span> for none. Every root
+domain is nonempty, so the displayed sentence is false at <span
+class="math inline">W_0</span>, which is a model of C(<span
+class="math inline">\Sigma</span>). <span
+class="math inline">\square</span></p>
+<p>When <span class="math inline">\sigma=e</span> the statement is
+trivial, closed terms of type <span class="math inline">e</span> being
+constants.</p>
+<p><strong>Corollary.</strong> Maximalism (signature Σ) proves, for
+closed <span class="math inline">A</span>, <span
+class="math inline">B</span> and a constant <span
+class="math inline">Q</span> of type <span
+class="math inline">\sigma\tau</span> with <span
+class="math inline">\tau\ne e</span>: <span class="math inline">QA=QB\to
+A=B</span>. (If <span class="math inline">QA=QB</span> is true it is
+provable, hence so is the displayed biconditional for the constant <span
+class="math inline">Q</span>, hence <span
+class="math inline">A=B</span>.)</p>
+<p>The same choice of root extension shows more generally that a closed
+term built from <span class="math inline">c</span> by filling its other
+arguments is injective on closed terms. This is the property of
+constants that the Russell–Myhill argument in
+strong-possibility-signature-r-inconsistent needs.</p>
 <h2 id="other-verdicts">Other verdicts</h2>
 <ul>
-<li><strong>Actuality.</strong> <span class="math inline">(\text{true},\bot)</span> is true at the identity and nowhere else, and no arrow leads back to <span class="math inline">W_0</span>; the group’s argument applies.</li>
-<li><strong>Relational Choice</strong> holds by the group’s argument, being evaluated at the identity, where root extensions are unconstrained.</li>
-<li><strong>Boxed principles.</strong> Every pure sentence consistent with C is possible at <span class="math inline">W_0</span>, so the group’s arguments from that fact apply.</li>
-<li>The map derives the rest from these and from Maximalism (signature Σ): the failure of ND (directly: <span class="math inline">(\text{false},\bot)</span> and <span class="math inline">(\text{true},\bot)</span> are distinct at <span class="math inline">W_0</span> and identical along every exit), of Atomicity, and of Strong Possibility (signature Σ); Well-Ordering and Transversal Choice; and the other signature principles.</li>
+<li><strong>Actuality.</strong> <span
+class="math inline">(\text{true},\bot)</span> is true at the identity
+and nowhere else, and no arrow leads back to <span
+class="math inline">W_0</span>; the group’s argument applies.</li>
+<li><strong>Relational Choice</strong> holds by the group’s argument,
+being evaluated at the identity, where root extensions are
+unconstrained.</li>
+<li><strong>Boxed principles.</strong> Every pure sentence consistent
+with C is possible at <span class="math inline">W_0</span>, so the
+group’s arguments from that fact apply.</li>
+<li>The map derives the rest from these and from Maximalism (signature
+Σ): the failure of ND (directly: <span
+class="math inline">(\text{false},\bot)</span> and <span
+class="math inline">(\text{true},\bot)</span> are distinct at <span
+class="math inline">W_0</span> and identical along every exit), of
+Atomicity, and of Strong Possibility (signature Σ); Well-Ordering and
+Transversal Choice; and the other signature principles.</li>
 </ul>
-<h2 id="the-root-algebra-23-november-2026">The root algebra (23 November 2026)</h2>
-<p>Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, added this section and the argument root-algebra on 23 November 2026.</p>
-<p>Let <span class="math inline">L</span> be the Lindenbaum algebra of C(<span class="math inline">\Sigma^{+}</span>). A root proposition is <span class="math inline">(e,[v])</span> with <span class="math inline">e</span> its truth value at the identity and <span class="math inline">v</span> a closed sentence. A closed sentence fails at some world seen from <span class="math inline">W_0</span> through an exit iff its negation is consistent with C(<span class="math inline">\Sigma^{+}</span>), since by necessitation <span class="math inline">\vdash v</span> iff <span class="math inline">\vdash\Box v</span>. So at <span class="math inline">W_0</span></p>
-<p><span class="math display">\Box(e,v)\iff e=1\text{ and }\vdash v,\qquad
+<h2 id="the-root-algebra-23-november-2026">The root algebra (23 November
+2026)</h2>
+<p>Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, added this
+section and the argument root-algebra on 23 November 2026.</p>
+<p>Let <span class="math inline">L</span> be the Lindenbaum algebra of
+C(<span class="math inline">\Sigma^{+}</span>). A root proposition is
+<span class="math inline">(e,[v])</span> with <span
+class="math inline">e</span> its truth value at the identity and <span
+class="math inline">v</span> a closed sentence. A closed sentence fails
+at some world seen from <span class="math inline">W_0</span> through an
+exit iff its negation is consistent with C(<span
+class="math inline">\Sigma^{+}</span>), since by necessitation <span
+class="math inline">\vdash v</span> iff <span
+class="math inline">\vdash\Box v</span>. So at <span
+class="math inline">W_0</span></p>
+<p><span class="math display">\Box(e,v)\iff e=1\text{ and }\vdash
+v,\qquad
 (e,v)\le(f,w)\iff e\le f\text{ and }\vdash v\to w .</span></p>
-<p>The propositions at <span class="math inline">W_0</span> form <span class="math inline">2\times L</span>, and every set of them is the root extension of a root property. None of this depends on <span class="math inline">A</span> or on the <span class="math inline">E_c</span>.</p>
-<p><strong>Boolean Completeness (type <span class="math inline">t</span>) fails.</strong> A greatest lower bound at <span class="math inline">W_0</span> is one in <span class="math inline">2\times L</span>, so it is enough that <span class="math inline">L</span> is not complete.</p>
+<p>The propositions at <span class="math inline">W_0</span> form <span
+class="math inline">2\times L</span>, and every set of them is the root
+extension of a root property. None of this depends on <span
+class="math inline">A</span> or on the <span
+class="math inline">E_c</span>.</p>
+<p><strong>Boolean Completeness (type <span
+class="math inline">t</span>) fails.</strong> A greatest lower bound at
+<span class="math inline">W_0</span> is one in <span
+class="math inline">2\times L</span>, so it is enough that <span
+class="math inline">L</span> is not complete.</p>
 <ul>
-<li><em><span class="math inline">\Sigma^{+}</span> countable.</em> Let <span class="math inline">\varphi_n</span> say that there are exactly <span class="math inline">n</span> individuals (<span class="math inline">n\ge1</span>). Each is consistent with C(<span class="math inline">\Sigma^{+}</span>), true in the full one-world model with <span class="math inline">n</span> individuals under any interpretation of the constants, and they are pairwise inconsistent. If <span class="math inline">L</span> were complete, <span class="math inline">S\mapsto\bigvee\{\varphi_n:n\in S\}</span> would be injective on <span class="math inline">\mathcal P(\omega)</span>, because <span class="math inline">\varphi_m\wedge\bigvee_{n\in S}\varphi_n=\bigvee_{n\in S}(\varphi_m\wedge\varphi_n)</span> is <span class="math inline">\varphi_m</span> or <span class="math inline">\bot</span> as <span class="math inline">m\in S</span> or not. But <span class="math inline">L</span> is countable.</li>
-<li><em><span class="math inline">\Sigma^{+}</span> with infinitely many constants.</em> Suppose first there are infinitely many relational constants <span class="math inline">c_0,c_1,\ldots</span>, of types <span class="math inline">\bar\rho_i t</span>. Fix closed terms <span class="math inline">\bar a_i</span> of types <span class="math inline">\bar\rho_i</span> not containing them (<span class="math inline">d</span> at type <span class="math inline">e</span>, <span class="math inline">\lambda\bar x\, .\,\bot</span> otherwise), and put <span class="math inline">P_i:=c_i(\bar a_i)</span> and <span class="math inline">a_i:=P_i\land\bigwedge_{j&lt;i}\neg P_j</span>. These are consistent and pairwise inconsistent. Let <span class="math inline">w</span> be an upper bound of the <span class="math inline">a_i</span> with <span class="math inline">i</span> even, and suppose <span class="math inline">w</span> mentions only <span class="math inline">c_j</span> with <span class="math inline">j&lt;N</span>. For even <span class="math inline">i&gt;N</span>, substituting <span class="math inline">\lambda\bar x\, .\,\top</span> for <span class="math inline">c_i</span> and <span class="math inline">\lambda\bar x\, .\,\bot</span> for <span class="math inline">c_j</span> (<span class="math inline">N\le j&lt;i</span>) in a proof of <span class="math inline">a_i\to w</span> gives <span class="math inline">\vdash \bigwedge_{j&lt;N}\neg P_j\to w</span>. So <span class="math inline">a_M\le w</span> for every odd <span class="math inline">M&gt;N</span>, and <span class="math inline">w\land\neg a_M</span> is a strictly smaller upper bound. With infinitely many individual constants instead, the same argument works with <span class="math inline">a_i:=(c_i=c_0)\land\bigwedge_{1\le j&lt;i}c_j\ne c_0</span> (<span class="math inline">i\ge1</span>): substitute <span class="math inline">c_0</span> for <span class="math inline">c_i</span> and generalize on the fresh <span class="math inline">c_j</span> to get <span class="math inline">\vdash\bigwedge_{1\le j&lt;N}c_j\ne c_0\land\exists y\, .\,y\ne c_0\to w</span>, which every <span class="math inline">a_M</span> with odd <span class="math inline">M&gt;N\ge2</span> entails.</li>
+<li><em><span class="math inline">\Sigma^{+}</span> countable.</em> Let
+<span class="math inline">\varphi_n</span> say that there are exactly
+<span class="math inline">n</span> individuals (<span
+class="math inline">n\ge1</span>). Each is consistent with C(<span
+class="math inline">\Sigma^{+}</span>), true in the full one-world model
+with <span class="math inline">n</span> individuals under any
+interpretation of the constants, and they are pairwise inconsistent. If
+<span class="math inline">L</span> were complete, <span
+class="math inline">S\mapsto\bigvee\{\varphi_n:n\in S\}</span> would be
+injective on <span class="math inline">\mathcal
+P(\omega)</span>, because <span
+class="math inline">\varphi_m\wedge\bigvee_{n\in
+S}\varphi_n=\bigvee_{n\in
+S}(\varphi_m\wedge\varphi_n)</span> is <span
+class="math inline">\varphi_m</span> or <span
+class="math inline">\bot</span> as <span class="math inline">m\in
+S</span> or not. But <span class="math inline">L</span> is
+countable.</li>
+<li><em><span class="math inline">\Sigma^{+}</span> with infinitely many
+constants.</em> Suppose first there are infinitely many relational
+constants <span class="math inline">c_0,c_1,\ldots</span>, of types
+<span class="math inline">\bar\rho_i t</span>. Fix closed terms <span
+class="math inline">\bar a_i</span> of types <span
+class="math inline">\bar\rho_i</span> not containing them (<span
+class="math inline">d</span> at type <span class="math inline">e</span>,
+<span class="math inline">\lambda\bar x\, .\,\bot</span> otherwise), and
+put <span class="math inline">P_i:=c_i(\bar a_i)</span> and <span
+class="math inline">a_i:=P_i\land\bigwedge_{j&lt;i}\neg P_j</span>.
+These are consistent and pairwise inconsistent. Let <span
+class="math inline">w</span> be an upper bound of the <span
+class="math inline">a_i</span> with <span class="math inline">i</span>
+even, and suppose <span class="math inline">w</span> mentions only <span
+class="math inline">c_j</span> with <span
+class="math inline">j&lt;N</span>. For even <span
+class="math inline">i&gt;N</span>, substituting <span
+class="math inline">\lambda\bar x\, .\,\top</span> for <span
+class="math inline">c_i</span> and <span class="math inline">\lambda\bar
+x\, .\,\bot</span> for <span class="math inline">c_j</span> (<span
+class="math inline">N\le j&lt;i</span>) in a proof of <span
+class="math inline">a_i\to w</span> gives <span
+class="math inline">\vdash
+\bigwedge_{j&lt;N}\neg P_j\to w</span>. So <span
+class="math inline">a_M\le w</span> for every odd <span
+class="math inline">M&gt;N</span>, and <span
+class="math inline">w\land\neg a_M</span> is a strictly smaller upper
+bound. With infinitely many individual constants instead, the same
+argument works with <span
+class="math inline">a_i:=(c_i=c_0)\land\bigwedge_{1\le j&lt;i}c_j\ne
+c_0</span> (<span class="math inline">i\ge1</span>): substitute <span
+class="math inline">c_0</span> for <span class="math inline">c_i</span>
+and generalize on the fresh <span class="math inline">c_j</span> to get
+<span class="math inline">\vdash\bigwedge_{1\le j&lt;N}c_j\ne
+c_0\land\exists y\, .\,y\ne c_0\to w</span>, which every <span
+class="math inline">a_M</span> with odd <span
+class="math inline">M&gt;N\ge2</span> entails.</li>
 </ul>
-<p>Every infinite signature has infinitely many constants, so the two cases cover every <span class="math inline">\Sigma</span>. Neither uses choice.</p>
-<p><strong>Self-atoms need not be atoms or strong atoms (type <span class="math inline">t</span>).</strong> Let <span class="math inline">\mathrm F</span> be the Fregean Axiom <span class="math inline">\forall p\, .\,p=\top\lor p=\bot</span>, and <span class="math inline">s:=(0,\mathrm F)</span>.</p>
+<p>Every infinite signature has infinitely many constants, so the two
+cases cover every <span class="math inline">\Sigma</span>. Neither uses
+choice.</p>
+<p><strong>Self-atoms need not be atoms or strong atoms (type <span
+class="math inline">t</span>).</strong> Let <span
+class="math inline">\mathrm F</span> be the Fregean Axiom <span
+class="math inline">\forall p\, .\,p=\top\lor p=\bot</span>, and <span
+class="math inline">s:=(0,\mathrm F)</span>.</p>
 <ul>
-<li><span class="math inline">s</span> is possible at <span class="math inline">W_0</span>, <span class="math inline">\mathrm F</span> being consistent with C(<span class="math inline">\Sigma^{+}</span>) (the full one-world model with one individual).</li>
-<li>C proves <span class="math inline">\mathrm F\to\operatorname{Atom}(\mathrm F)</span>: under <span class="math inline">\mathrm F</span> the true proposition <span class="math inline">\mathrm F</span> is <span class="math inline">\top</span>, and the only propositions are <span class="math inline">\top</span> and <span class="math inline">\bot</span>. So <span class="math inline">s\to\operatorname{Atom}(s)</span> holds at every exit, and trivially at the identity, where <span class="math inline">s</span> is false. So <span class="math inline">s</span> is a self-atom.</li>
-<li><span class="math inline">(0,\mathrm F\land\forall x\forall y\, .\,x=y)</span> lies strictly between <span class="math inline">\bot</span> and <span class="math inline">s</span>: <span class="math inline">\mathrm F</span> holds in the full one-world models with one and with two individuals. So <span class="math inline">s</span> is not an atom.</li>
-<li>A strong atom <span class="math inline">(0,v)</span> at <span class="math inline">W_0</span> must have, for each closed <span class="math inline">w</span>, <span class="math inline">\vdash v\to w</span> or <span class="math inline">\vdash v\to\neg w</span>, so <span class="math inline">v</span> must be an atom of <span class="math inline">L</span>. <span class="math inline">\mathrm F</span> is not, by the previous point. So <span class="math inline">s</span> is not a strong atom.</li>
+<li><span class="math inline">s</span> is possible at <span
+class="math inline">W_0</span>, <span class="math inline">\mathrm
+F</span> being consistent with C(<span
+class="math inline">\Sigma^{+}</span>) (the full one-world model with
+one individual).</li>
+<li>C proves <span class="math inline">\mathrm
+F\to\operatorname{Atom}(\mathrm F)</span>: under <span
+class="math inline">\mathrm F</span> the true proposition <span
+class="math inline">\mathrm F</span> is <span
+class="math inline">\top</span>, and the only propositions are <span
+class="math inline">\top</span> and <span
+class="math inline">\bot</span>. So <span
+class="math inline">s\to\operatorname{Atom}(s)</span> holds at every
+exit, and trivially at the identity, where <span
+class="math inline">s</span> is false. So <span
+class="math inline">s</span> is a self-atom.</li>
+<li><span class="math inline">(0,\mathrm F\land\forall x\forall y\,
+.\,x=y)</span> lies strictly between <span
+class="math inline">\bot</span> and <span class="math inline">s</span>:
+<span class="math inline">\mathrm F</span> holds in the full one-world
+models with one and with two individuals. So <span
+class="math inline">s</span> is not an atom.</li>
+<li>A strong atom <span class="math inline">(0,v)</span> at <span
+class="math inline">W_0</span> must have, for each closed <span
+class="math inline">w</span>, <span class="math inline">\vdash
+v\to w</span> or <span class="math inline">\vdash v\to\neg w</span>, so
+<span class="math inline">v</span> must be an atom of <span
+class="math inline">L</span>. <span class="math inline">\mathrm F</span>
+is not, by the previous point. So <span class="math inline">s</span> is
+not a strong atom.</li>
 </ul>
 <p>The map derives the versions at all relational types.</p>
+<h2 id="mathematical-possibilism-fails-for-every-signature">Mathematical
+Possibilism fails for every signature</h2>
+<p><em>The Cantor regular-open obstruction for the pure definable root
+was recorded by OpenAI Codex (GPT-6), prompted by Andrew Bacon, on 16
+November 2026. The arbitrary-signature argument here is by OpenAI Codex
+(GPT-6), prompted by Daniel Kodsi, 26 November 2026. Work in external
+ZFC.</em></p>
+<p><strong>No infinite principal interval is complete.</strong> Suppose
+<span class="math inline">[0,b]</span> is an infinite complete principal
+interval in <span class="math inline">L</span>. Choose countably many
+disjoint nonzero elements <span class="math inline">a_n\le b</span>.
+Such a sequence exists in any infinite Boolean algebra in ZFC: choose
+countably many atoms if there are infinitely many, or repeatedly split a
+nonzero element in the atomless remainder. Choose closed representatives
+for <span class="math inline">b</span> and for all the <span
+class="math inline">a_n</span>. Together these use a countable
+sublanguage. For <span class="math inline">S\subseteq\mathbb N</span>
+let <span class="math inline">s</span> represent the join of the <span
+class="math inline">a_n</span> for <span class="math inline">n\in
+S</span> in the interval. Replace the finitely many constants of <span
+class="math inline">s</span> outside the sublanguage by fresh variables
+of their respective types, and universally quantify those variables to
+obtain <span class="math inline">s_0</span>. For every <span
+class="math inline">n\in S</span>, C proves <span
+class="math inline">a_n\to s</span> and, by generalization on the fresh
+constants, <span class="math inline">a_n\to s_0</span>. As <span
+class="math inline">s_0\le s\le b</span>, its being an upper bound
+implies <span class="math inline">[s_0]=[s]</span>. Thus <em>every</em>
+such join has a representative in the same countable language. Distinct
+<span class="math inline">S</span> have distinct joins: for <span
+class="math inline">m\notin S</span>, <span
+class="math inline">b\land\neg a_m</span> is an upper bound. There are
+only countably many representatives and continuum many <span
+class="math inline">S</span>, a contradiction. An infinite principal
+interval of <span class="math inline">2\times L</span> has an infinite
+<span class="math inline">L</span>-factor; completeness of the product
+interval would make this factor complete.</p>
+<p><strong>The small complete algebra.</strong> At every root relation
+type, an arbitrary set of current tuples is allowed as the identity row,
+independently of its old descriptor (take the everywhere-bottom term).
+Consequently every current subset and every graph between the fixed
+current carriers used below is admitted, including at the types of the
+order, subcollections and injections. The ordinal benchmark <span
+class="math inline">H=\operatorname{Ordinal}_e</span> contains <span
+class="math inline">\alpha_n=\operatorname{OrdSuc}^n(\operatorname{OrdZero})</span>
+for every standard <span class="math inline">n</span>. These are
+distinct root intensions. On a finite linear order, <span
+class="math inline">\alpha_n</span> accepts precisely orders of length
+at least <span class="math inline">n</span>, by the definition of
+successor on restricted initial segments. For <span
+class="math inline">m&lt;n</span> the consistent pure sentence asserting
+such an order of length <span class="math inline">m</span> with <span
+class="math inline">\alpha_m</span> true and <span
+class="math inline">\alpha_n</span> false is realized at a component
+exit (for <span class="math inline">m=0</span> take the empty field).
+Equality at the root would persist at this exit. Thus <span
+class="math inline">|H|\ge\aleph_0</span>.</p>
+<p>Let <span class="math inline">\rho</span> be the ordinal-carrier
+type. At <span class="math inline">\rho t</span> the subsets of <span
+class="math inline">\{\alpha_n:n\in\mathbb N\}</span>, with empty old
+descriptor, provide <span class="math inline">2^{\aleph_0}</span>
+distinct carrier elements. On elements of this type code the complete
+algebra of regular opens of Cantor space, with its order, by a root
+subset and a root graph. Its size is continuum: a countable clopen basis
+bounds the number of open sets above, and Boolean joins of subfamilies
+of a countably infinite disjoint family of nonzero clopens give
+continuum many distinct regular opens. Full current rows make this an
+internal complete Boolean algebra for the actual order and all actual
+subcollections.</p>
+<p>Its carrier <span class="math inline">B</span> is small in the
+revised sense. If <span class="math inline">H&lt;Y\subseteq B</span>,
+take a countably infinite <span class="math inline">A\subseteq Y</span>.
+Then <span class="math inline">|A|&lt;|Y|</span> and the <span
+class="math inline">2^{\aleph_0}</span> external subsets of <span
+class="math inline">A</span> are all admitted current subcollections.
+The distinct codes required by <span
+class="math inline">\operatorname{Pow}(C,A)</span> would force <span
+class="math inline">|C|\ge 2^{\aleph_0}\ge |Y|</span>, contradicting
+<span class="math inline">C&lt;Y</span>. Hence no such <span
+class="math inline">Y</span> is power-closed. An actual relational order
+isomorphism of <span class="math inline">B</span> to an entailment
+interval would make that interval infinite and complete, excluded above.
+This refutes the revised [[forcing-possibilism]] at a single specified
+carrier type, for every set-sized signature.</p>
 <h2 id="left-open">Left open</h2>
-<p>The map leaves eighteen principles undecided for this model. The record lists only verdicts that hold for every <span class="math inline">\Sigma</span> and every choice of the <span class="math inline">E_c</span>, and many of these go different ways for different <span class="math inline">\Sigma</span>. The facts below were found on 23 November 2026 by Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, and are not recorded as verdicts.</p>
-<p><strong>Fresh constants.</strong> The axioms of C(<span class="math inline">\Sigma^{+}</span>) are schemata, so a constant occurring in no premise can be generalized on: if <span class="math inline">\vdash\varphi(c)</span> with <span class="math inline">c</span> not in <span class="math inline">\varphi</span>, then <span class="math inline">\vdash\forall x\, .\,\varphi(x)</span>. This is what makes the verdicts turn on how many constants <span class="math inline">\Sigma</span> has.</p>
+<p>The model record lists only verdicts that hold for every <span
+class="math inline">\Sigma</span> and every choice of the <span
+class="math inline">E_c</span>, and many of these go different ways for
+different <span class="math inline">\Sigma</span>. The facts below were
+found on 23 November 2026 by Claude Opus 5.5 (Anthropic), prompted by
+Cian Dorr, and are not recorded as verdicts.</p>
+<p><strong>Fresh constants.</strong> The axioms of C(<span
+class="math inline">\Sigma^{+}</span>) are schemata, so a constant
+occurring in no premise can be generalized on: if <span
+class="math inline">\vdash\varphi(c)</span> with <span
+class="math inline">c</span> not in <span
+class="math inline">\varphi</span>, then <span
+class="math inline">\vdash\forall x\, .\,\varphi(x)</span>. This is what
+makes the verdicts turn on how many constants <span
+class="math inline">\Sigma</span> has.</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -395,45 +777,496 @@ identical to }A\}.</span></p>
 <col style="width: 33%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>Principle</th>
 <th>Fails when</th>
 <th>Holds when</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td>BF (all types, type <span class="math inline">t</span>, relational types), Functionality, Tractarianism</td>
-<td><span class="math inline">\Sigma^{+}</span> has finitely many individual constants (BF at type <span class="math inline">e</span>); or <span class="math inline">\Sigma=\emptyset</span>, at type <span class="math inline">t</span></td>
-<td><span class="math inline">\Sigma^{+}</span> has infinitely many constants of every type</td>
+<tr>
+<td>BF (all types, type <span class="math inline">t</span>, relational
+types), Functionality, Tractarianism</td>
+<td><span class="math inline">\Sigma^{+}</span> has finitely many
+individual constants (BF at type <span class="math inline">e</span>); or
+finitely many relational constants, at every relational input type</td>
+<td><span class="math inline">\Sigma^{+}</span> has infinitely many
+constants of every type</td>
 </tr>
-<tr class="even">
-<td>Infinity Schema (type <span class="math inline">e</span>), Axiom of Infinity (type <span class="math inline">e</span>)</td>
+<tr>
+<td>Infinity Schema (type <span class="math inline">e</span>), Axiom of
+Infinity (type <span class="math inline">e</span>)</td>
 <td>finitely many individual constants</td>
 <td>infinitely many individual constants (at least the Schema)</td>
 </tr>
-<tr class="odd">
-<td>Atoms are strong atoms (type <span class="math inline">t</span>; relational types)</td>
+<tr>
+<td>Atoms are strong atoms (type <span class="math inline">t</span>;
+relational types)</td>
 <td><span class="math inline">\Sigma=\emptyset</span></td>
 <td>infinitely many relational constants</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><strong>BF, Functionality, Tractarianism.</strong> These are equivalent on the map. For a root <span class="math inline">X=(E,u)</span> of type <span class="math inline">\sigma t</span>, <span class="math inline">\forall x\, .\,\Box Xx</span> holds at <span class="math inline">W_0</span> iff every root entity is in <span class="math inline">E</span> and <span class="math inline">\vdash uw</span> for every closed <span class="math inline">w</span> of type <span class="math inline">\sigma</span>; <span class="math inline">\Box\forall x\, .\,Xx</span> holds iff, in addition, <span class="math inline">\vdash\forall x\, .\,ux</span>. With a constant of type <span class="math inline">\sigma</span> not in <span class="math inline">u</span> the second follows by generalization. At type <span class="math inline">e</span> with only <span class="math inline">c_1,\ldots,c_n</span>, <span class="math inline">\Diamond\exists x\, .\,x\ne c_1\land\cdots\land x\ne c_n</span> holds and no root individual is possibly such. At type <span class="math inline">t</span> with <span class="math inline">\Sigma=\emptyset</span>, the argument barcan of coalesced-definable-root applies unchanged: a closed sentence of <span class="math inline">\mathcal L(\{d\})</span> is not contingent at a world with C5, Atomicity and one individual.</li>
-<li><strong>Infinity at type <span class="math inline">e</span>.</strong> The root individuals are the individual constants of <span class="math inline">\Sigma^{+}</span>, and distinct constants are distinct at <span class="math inline">W_0</span>.</li>
-<li><strong>Atoms are strong atoms.</strong> With infinitely many relational constants, <span class="math inline">L</span> is atomless: if <span class="math inline">v</span> is consistent and <span class="math inline">c</span> is a constant not in <span class="math inline">v</span>, then <span class="math inline">v\land c(\bar a)</span> and <span class="math inline">v\land\neg c(\bar a)</span> are consistent (substitute <span class="math inline">\lambda\bar x\, .\,\top</span> or <span class="math inline">\lambda\bar x\, .\,\bot</span> for <span class="math inline">c</span>). Then the atoms at a relational type <span class="math inline">\bar\sigma t</span> at <span class="math inline">W_0</span> are the entities with a single tuple as root extension and descriptor <span class="math inline">\lambda\bar x\, .\,\bot</span> (the fresh-constant splitting works at every relational type). These are self-atoms and strong atoms, being <span class="math inline">\bot</span> along every exit. With <span class="math inline">\Sigma=\emptyset</span>, <span class="math inline">v:=\mathrm F\land\forall x\forall y\, .\,x=y</span> is an atom of <span class="math inline">L</span>, so <span class="math inline">(0,v)</span> is an atom at <span class="math inline">W_0</span>. But C does not prove <span class="math inline">\forall q\, .\,v\le q\lor v\le\neg q</span>. It fails at the root of the coalesced sum of two copies of the one-point Fregean model, where <span class="math inline">v</span> is the root proposition false at the root and true in both components, and <span class="math inline">q</span> is true in just one component.</li>
+<li><strong>BF, Functionality, Tractarianism.</strong> These are
+equivalent on the map. For a root <span
+class="math inline">X=(E,u)</span> of type <span
+class="math inline">\sigma t</span>, <span class="math inline">\forall
+x\, .\,\Box Xx</span> holds at <span class="math inline">W_0</span> iff
+every root entity is in <span class="math inline">E</span> and <span
+class="math inline">\vdash uw</span> for every closed <span
+class="math inline">w</span> of type <span
+class="math inline">\sigma</span>; <span class="math inline">\Box\forall
+x\, .\,Xx</span> holds iff, in addition, <span
+class="math inline">\vdash\forall x\, .\,ux</span>. With a constant of
+type <span class="math inline">\sigma</span> not in <span
+class="math inline">u</span> the second follows by generalization. At
+type <span class="math inline">e</span> with only <span
+class="math inline">c_1,\ldots,c_n</span>, <span
+class="math inline">\Diamond\exists x\, .\,x\ne c_1\land\cdots\land x\ne
+c_n</span> holds and no root individual is possibly such. At type <span
+class="math inline">t</span> with <span
+class="math inline">\Sigma=\emptyset</span>, the argument barcan of
+coalesced-definable-root applies unchanged: a closed sentence of <span
+class="math inline">\mathcal L(\{d\})</span> is not contingent at a
+world with C5, Atomicity and one individual.</li>
+<li><strong>Infinity at type <span
+class="math inline">e</span>.</strong> The root individuals are the
+individual constants of <span class="math inline">\Sigma^{+}</span>, and
+distinct constants are distinct at <span
+class="math inline">W_0</span>.</li>
+<li><strong>Atoms are strong atoms.</strong> With infinitely many
+relational constants, <span class="math inline">L</span> is atomless: if
+<span class="math inline">v</span> is consistent and <span
+class="math inline">c</span> is a constant not in <span
+class="math inline">v</span>, then <span class="math inline">v\land
+c(\bar a)</span> and <span class="math inline">v\land\neg c(\bar
+a)</span> are consistent (substitute <span
+class="math inline">\lambda\bar x\, .\,\top</span> or <span
+class="math inline">\lambda\bar x\, .\,\bot</span> for <span
+class="math inline">c</span>). Then the atoms at a relational type <span
+class="math inline">\bar\sigma t</span> at <span
+class="math inline">W_0</span> are the entities with a single tuple as
+root extension and descriptor <span class="math inline">\lambda\bar x\,
+.\,\bot</span> (the fresh-constant splitting works at every relational
+type). These are self-atoms and strong atoms, being <span
+class="math inline">\bot</span> along every exit. With <span
+class="math inline">\Sigma=\emptyset</span>, <span
+class="math inline">v:=\mathrm F\land\forall x\forall y\, .\,x=y</span>
+is an atom of <span class="math inline">L</span>, so <span
+class="math inline">(0,v)</span> is an atom at <span
+class="math inline">W_0</span>. But C does not prove <span
+class="math inline">\forall q\, .\,v\le q\lor v\le\neg q</span>. It
+fails at the root of the coalesced sum of two copies of the one-point
+Fregean model, where <span class="math inline">v</span> is the root
+proposition false at the root and true in both components, and <span
+class="math inline">q</span> is true in just one component.</li>
 </ul>
-<p>Open for every <span class="math inline">\Sigma</span> tried:</p>
+<h2 id="the-number-of-relational-constants-and-the-two-world-cell">The
+number of relational constants and the two-world cell</h2>
+<p><em>Added 26 November 2026 by OpenAI Codex (GPT-6), prompted by
+Daniel Kodsi. The two-world cell and its pointed completeness were
+proved in the October work used in
+[[strong-possibility-incompatible-with-barcan-t]].</em></p>
+<p><strong>Atoms are self-atoms at the root if and only if there are
+infinitely many relational constants.</strong> This holds for both the
+type-<span class="math inline">t</span> bridge and the schema over
+relational types. With infinitely many such constants the preceding
+fresh-constant argument shows that every root atom is strong. Suppose
+instead that there are only finitely many relational constants. The
+number of individual constants can be arbitrary. Let <span
+class="math inline">B</span> say that <span
+class="math inline">\Box\mathrm{ND}_t</span> holds and there are exactly
+one individual and four propositions, as in the proof cited above. Form
+the closed sentence</p>
+<p><span class="math display">\beta=B\land\bigwedge_{\text{relational
+}c\in\Sigma}(c=\bot_{\operatorname{type}(c)}).</span></p>
+<p>The full two-world S5 model with one individual and these
+interpretations realizes <span class="math inline">\beta</span>. C
+proves <span class="math inline">B\to\Box B</span> by step (1) of the
+cited proof, so <span class="math inline">\beta\to\Box\beta</span> by
+NI. The complete finite structure in step (2) of that proof decides
+every closed sentence of <span class="math inline">\mathcal
+L(\Sigma^+)</span> under <span class="math inline">\beta</span>. Indeed
+all relational names in such a sentence have their fixed bottom values
+throughout the cone. All individual names denote the sole individual
+there and can be replaced by a single individual variable. The pointed
+finite-structure argument applies to that variable as well. Thus <span
+class="math inline">[\beta]</span> is an atom of <span
+class="math inline">L</span>, and <span
+class="math inline">(0,[\beta])</span> is an atom in <span
+class="math inline">2\times L</span>. At an exit where <span
+class="math inline">\beta</span> holds, that atom transports to <span
+class="math inline">\beta=\top</span>. It is true there, and a
+four-element Boolean algebra has a proper nonzero element below <span
+class="math inline">\top</span>. Hence this root atom is not a
+self-atom, refuting the scheme already at type <span
+class="math inline">t</span>.</p>
+<p><strong>BF fails at each relational input type when there are
+finitely many relational constants.</strong> Consider an input type
+<span class="math inline">\tau=\bar\sigma t</span>. Fix a closed tuple
+<span class="math inline">\bar d</span> of argument terms in <span
+class="math inline">\mathcal L(\Sigma^+)</span>, with any individual
+name at <span class="math inline">e</span> and bottom at other types.
+For arity zero take the empty tuple. Give a root property empty current
+extension and descriptor</p>
+<p><span class="math display">\lambda Y^\tau\, .\, \beta\land Y[\bar
+d]\ne\top\land Y[\bar d]\ne\bot .</span></p>
+<p>For any root <span class="math inline">Y</span> its application to
+<span class="math inline">\bar d</span> projects to a closed
+proposition. That proposition has a fixed truth value throughout all
+<span class="math inline">\beta</span>-points by completeness. Since
+<span class="math inline">\beta</span> persists, at any <span
+class="math inline">\beta</span>-point it equals one of the two
+endpoints. Consequently no root <span class="math inline">Y</span> can
+possibly satisfy the displayed property. At a <span
+class="math inline">\beta</span> exit choose a proposition strictly
+between the endpoints; the constant relation with this value satisfies
+the property there. This refutes <span
+class="math inline">\Diamond\exists Y\, .\,HY\to\exists Y\, .\,\Diamond
+HY</span>. It covers signatures with arbitrarily many individual
+names.</p>
+<p><strong>Conversely, infinitely many relational constants suffice for
+BF at type <span class="math inline">t</span>, even if there are only
+finitely many of each type.</strong> Suppose <span
+class="math inline">X=(E,v)</span> has <span class="math inline">\forall
+p\, .\,\Box Xp</span> at the root. Then <span
+class="math inline">E</span> is full and C proves <span
+class="math inline">v(s)</span> for every closed proposition <span
+class="math inline">s</span> of <span class="math inline">\mathcal
+L(\Sigma^+)</span>, by completeness at the exits. Choose a relational
+constant <span class="math inline">c</span> absent from <span
+class="math inline">v</span>, of type <span class="math inline">\bar\tau
+t</span>. Use the closed proposition <span
+class="math inline">s=\forall\bar y\, .\,c[\bar y]</span> (just <span
+class="math inline">c</span> at arity zero). In the resulting theorem
+substitute <span class="math inline">\lambda\bar y\, .\,p</span> for
+<span class="math inline">c</span>, where <span
+class="math inline">p</span> is fresh. Quantification of an
+input-independent proposition over nonempty sorts gives that
+proposition. Thus C proves <span class="math inline">v(p)</span>
+uniformly and hence <span class="math inline">\forall p\,
+.\,v(p)</span>. This and the full identity row give <span
+class="math inline">\Box\forall p\, .\,Xp</span> at the root. Together
+with the preceding proof, <span class="math inline">\mathrm{BF}_t</span>
+holds here exactly when the signature has infinitely many relational
+constants. Freshness concerns relation symbols; the construction already
+supplies an auxiliary individual name if it needs one.</p>
+<p><strong>Every infinite signature refutes Tame Rigidity and Weakly
+Rigid Power in this model.</strong> When the relational constants are
+infinite, actual <span class="math inline">\mathrm{BF}_t</span> makes
+the universal property of propositions weakly rigid: weak persistence is
+immediate and its weak inextensibility is exactly <span
+class="math inline">\mathrm{BF}_t</span>. But some component fails <span
+class="math inline">\mathrm{BF}_t</span>, because its failure is
+C-consistent, also in an expansion by freely interpreted constants. Thus
+this property is not rigid. This also follows from
+[[tame-rigidity-and-bf-t-imply-necessary-bf-t]] and pure Maximalism. If
+the relational constants are finite and the signature is infinite, its
+individual constants are infinite and the earlier individual-sort
+argument applies. In both cases apply
+[[weakly-rigid-power-implies-tame-rigidity]]. This leaves the finite
+signatures for the all-type weak power question in this family.</p>
+<p><strong>Strong Possibility in these signatures.</strong> The
+denotation of <span class="math inline">\beta</span> itself at the root
+is <span class="math inline">(0,[\beta])</span>. Its current bit is zero
+because the root has infinitely many propositions, as witnessed by the
+pairwise incompatible, consistent individual-cardinality sentences. Thus
+<span class="math inline">\operatorname{Atom}_t(\beta)</span> is
+consistent with Maximalism in this very signature. It is a universal
+Boolean combination of identities, so the reflection lemma of
+[[strong-possibility-and-strong-actuality-incompatible]] applies in the
+fixed language. Strong Possibility (signature <span
+class="math inline">\Sigma</span>) therefore gives <span
+class="math inline">\operatorname{Atom}_t(\beta)</span>. At every <span
+class="math inline">\beta</span>-point <span
+class="math inline">\beta</span> equals top in the four-element algebra,
+which proves in C(<span class="math inline">\Sigma</span>) that <span
+class="math inline">\beta</span> is not a self-atom. Hence Strong
+Possibility (signature <span class="math inline">\Sigma</span>) is
+incompatible with Atoms are self-atoms (type <span
+class="math inline">t</span>) under the finite-relational-constant
+hypothesis. The result for the pure language is recorded at
+[[strong-possibility-incompatible-with-atoms-are-self-atoms-t]].</p>
+<h2 id="power-at-the-singleton-individual-root">Power at the
+singleton-individual root</h2>
+<p><em>OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November
+2026.</em></p>
+<p>Suppose <span class="math inline">\Sigma^+</span> has exactly one
+individual name <span class="math inline">d</span>, and let <span
+class="math inline">F</span> be weakly rigid at the root. Separate its
+individual arguments <span class="math inline">\bar x</span> from its
+relational arguments <span class="math inline">\bar z</span> and write
+<span class="math inline">D(\bar x)</span> for <span
+class="math inline">\bigwedge_i(x_i=d)</span>. Every actual member
+necessarily satisfies <span class="math inline">D</span>. By weak
+inextensibility <span class="math inline">F\le D</span>, so throughout
+the cone <span class="math inline">F</span> equals <span
+class="math inline">D(\bar x)\land G(\bar z)</span>, where <span
+class="math inline">G(\bar z)=F(d,\ldots,d,\bar z)</span>. This applies
+also to infinite extensions and does not assume BF.</p>
+<p>The slice <span class="math inline">s(X)(\bar z)=X(d,\ldots,d,\bar
+z)</span> and the extension <span class="math inline">t(Y)(\bar x,\bar
+z)=D(\bar x)\land Y(\bar z)</span> are inverse, order-preserving term
+operations on the subrelations of <span class="math inline">F</span> and
+<span class="math inline">G</span> at every future point. Weak
+persistence transfers by necessity of identity. For weak inextensibility
+of a slice, pull a test <span class="math inline">Q</span> back to the
+tuple test <span class="math inline">(\bar x,\bar z)\mapsto Q(\bar
+z)</span>. For an extension, evaluate a tuple test at <span
+class="math inline">(d,\ldots,d,\bar z)</span> and then substitute equal
+individuals. These arguments also transfer full rigidity by applying
+them throughout the cone. Thus each canonical power at one bound is the
+direct image of its counterpart at the other under the corresponding
+term operation. Direct images preserve rigidity ([[rigid-direct-image]])
+and also weak rigidity: for the latter, lift an actual image member for
+persistence, and for inextensibility pull a necessary test back to the
+domain. Consequently the two power questions here reduce exactly to
+arities with only relational arguments, including the empty tuple. The
+case of a relation on individual arguments alone reduces to a
+proposition and satisfies both power principles. For any arity the
+separate [[internally-finite-rigid-power|Frege-finite bound lemma]]
+applies.</p>
+<h2 id="finite-subrelations-detected-by-root-tests">Finite subrelations
+detected by root tests</h2>
+<p><em>OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November
+2026.</em></p>
+<p>Suppose <span class="math inline">F</span> is weakly rigid and a
+tester <span class="math inline">W</span> holds necessarily of each
+current rigid <span class="math inline">X\le F</span>. At any component
+point <span class="math inline">W</span> holds of <strong>every</strong>
+weakly rigid <span class="math inline">Z\le F</span> having externally
+finite current extension. The tuples of <span
+class="math inline">Z</span> may be unnamed at that point. The general
+[[finite-subrelations-of-rigid-bounds|finite-subrelation lemma]] applies
+in any C model, including to transported nonstandard counts. The
+ground-term argument below also gives a finite-tuple realization
+property specific to this construction. The conclusion applies also to a
+tester of all current weakly rigid subrelations, which include the rigid
+ones.</p>
+<p>Let <span class="math inline">u,w</span> be the descriptors of <span
+class="math inline">F,W</span>, and let <span
+class="math inline">S</span> consist of the descriptor tuples of actual
+members of <span class="math inline">F</span>. By persistence <span
+class="math inline">\vdash u(\bar s)</span> for each <span
+class="math inline">\bar s\in S</span>. The root tester with full actual
+row and arbitrary descriptor <span class="math inline">v</span> shows by
+weak inextensibility and completeness of the old components that <span
+class="math display">(\forall\bar s\in S\;\vdash v(\bar s))
+       \quad\Longrightarrow\quad
+  \vdash\forall\bar x\,(u(\bar x)\to v(\bar x)).</span> Consequently any
+consistent formula <span class="math inline">\exists\bar x_1\cdots\bar
+x_m\,
+  (\bigwedge_i u(\bar x_i)\land A(\bar x_1,\ldots,\bar x_m))</span> can
+be realized with <span class="math inline">\bar x_i</span> equal to some
+<span class="math inline">\bar s_i\in S</span>, possibly at a different
+point. For the first tuple take <span class="math inline">v(\bar
+x_1)</span> to negate the existential condition on the remaining tuples.
+The displayed implication supplies an <span class="math inline">\bar
+s_1</span> for which that remaining condition is consistent. Substitute
+it before treating the next tuple. All provability and consistency tests
+here are over the fixed descriptor language; <span
+class="math inline">A</span> can contain arbitrary typed quantifiers and
+modalities.</p>
+<p>At a point with an externally finite weakly rigid <span
+class="math inline">Z</span>, let <span class="math inline">\bar
+x_1,\ldots,\bar x_m</span> enumerate its current members. As an entity
+<span class="math inline">Z</span> equals the union <span
+class="math inline">H(\bar x_1,\ldots,\bar x_m)</span> of their
+tuple-haecceities. Weak inextensibility tested on that union gives one
+inclusion and weak persistence the other. If <span
+class="math inline">W</span> failed there, take <span
+class="math inline">A=\neg w(H(\bar x_1,\ldots,\bar x_m))</span> above.
+Choose original <span class="math inline">F</span>-members with the
+resulting descriptors <span class="math inline">\bar s_i</span>. Their
+finite haecceity union is rigid, entails <span
+class="math inline">F</span> by persistence and necessarily passes <span
+class="math inline">W</span>. On the old components this gives <span
+class="math inline">\vdash w(H(\bar s_1,\ldots,\bar s_m))</span>,
+contradicting the retained consistency. For <span
+class="math inline">m=0</span> use the actual bottom subrelation
+directly.</p>
+<p>Thus even on an infinite <span class="math inline">Z</span> no test
+detectable by finitely many actual membership observations can witness a
+failure. In particular this covers testers of the form <span
+class="math inline">\forall\bar y\,\theta(Z,\bar y)</span> where <span
+class="math inline">\theta</span> is a Boolean combination of finitely
+many applications of <span class="math inline">Z</span> to terms
+independent of <span class="math inline">Z</span> and arbitrary formulas
+independent of <span class="math inline">Z</span>. Fix witnesses <span
+class="math inline">\bar y</span> to failure and take the haecceity
+union of the observed tuples belonging to <span
+class="math inline">Z</span>. This rigid subrelation entails <span
+class="math inline">Z</span> by weak persistence, has the same observed
+bits, and would itself fail the tester. The same argument applies to the
+boxed version at a further point provided <span
+class="math inline">Z</span> is rigid throughout that part of the cone.
+External finiteness in the first conclusion allows each ordinary finite
+size; a single nonstandard finite extension need not admit such an
+external enumeration.</p>
+<p><strong>Fregean components in finite monadic signatures.</strong>
+Suppose the signature contains only finitely many individual,
+propositional and unary individual-predicate names, and every input of
+<span class="math inline">F</span> is an individual or a first-order
+relation <span class="math inline">e^n\to t</span>, including <span
+class="math inline">n=0</span>. At any component satisfying the Fregean
+Axiom, the finite-subrelation argument covers <em>all</em> weakly rigid
+subrelations of the image of <span class="math inline">F</span>, for any
+size of individual domain. To see this, color each individual by the
+truth values of the named unary predicates. Every name-fixing
+transposition of two individuals of the same color induces an
+automorphism of the local typed structure. At a Fregean point necessity
+is the identity on the two-element propositional algebra and actual
+coextension suffices for identity. Recursively the action on <span
+class="math inline">\bar\sigma t</span> sends <span
+class="math inline">f</span> to <span class="math inline">\lambda\bar
+y\, .\,\exists\bar x\,(\bigwedge_i T_i(x_i,y_i)\land f[\bar x])</span>,
+where the <span class="math inline">T_i</span> are the graphs of the
+actions already defined at the input sorts. At <span
+class="math inline">e</span> use the definable graph of the two-point
+swap and at <span class="math inline">t</span> use identity. Each
+resulting map is an involution and preserves application and
+quantification. This works with Henkin domains, because the transformed
+relation is given by a lambda term. All closed descriptors are
+fixed.</p>
+<p>Use a tester with full actual row and descriptor saying that, if the
+Fregean Axiom holds, every relation argument is fixed by all such
+transpositions and each individual argument is one of the individual
+names of <span class="math inline">\Sigma^+</span>. This necessarily
+holds on all root members, hence weak inextensibility puts <span
+class="math inline">F</span> below the tester. In a Fregean component
+each permitted <span class="math inline">e^n\to t</span> relation is a
+union of the finitely many tuple classes given by equality patterns,
+equalities to names and colors. Any two tuples of the same class are
+connected by a finite product of the allowed swaps. Every union of
+classes is given by a closed finite disjunction, and every allowed
+individual coordinate is named by the separate guard. Thus the image of
+<span class="math inline">F</span> is supported on a finite list of
+named tuples there. This excludes these components as sites of failure
+for root power testers. Non-Fregean or higher-type cases remain.</p>
+<h2 id="remaining-questions-for-the-family">Remaining questions for the
+family</h2>
 <ul>
-<li><strong>Atoms are self-atoms</strong> (type <span class="math inline">t</span>; relational types). They hold when <span class="math inline">L</span> is atomless, by the previous point. For <span class="math inline">\Sigma=\emptyset</span> the question is whether some atom <span class="math inline">v</span> of <span class="math inline">L</span> has <span class="math inline">\vdash v\to\neg\operatorname{Atom}(v)</span>. A finite axiomatization of the full S5 model with two worlds and one individual would give one.</li>
-<li><strong>Tame Rigidity</strong> and <strong>Weakly Rigid Power.</strong> Both fail when <span class="math inline">\Sigma^{+}</span> has infinitely many individual constants. The root property with every constant in its root extension and descriptor <span class="math inline">\lambda x\, .\,\top</span> is weakly rigid at <span class="math inline">W_0</span>, by generalization on a fresh constant. It is rigid only if C proves BF at type <span class="math inline">e</span>. Weakly Rigid Power implies Tame Rigidity. With finitely many constants, a weakly rigid root relation with finite root extension has a descriptor provably equal to a disjunction of haecceities of closed terms, and so is rigid. The infinite case is open.</li>
-<li><strong>Rigid Power.</strong></li>
-<li><strong>Forcing Possibilism</strong>, in the formulation of Andrew Bacon’s pull request (dated 16 November 2026, merged 24 November 2026), and <strong>Contingency of Cardinal CH</strong>, <strong>Possible Cardinal CH</strong> and <strong>Possible failure of Cardinal CH</strong>, added in the same revision. These have not been examined for this model. Under the earlier formulation, in which the algebras counted were the finite ones and those with fewer elements than the propositions, Forcing Possibilism failed with infinitely many relational constants and held with <span class="math inline">\Sigma=\emptyset</span>. With infinitely many relational constants <span class="math inline">L</span> is atomless, so no interval <span class="math inline">[\bot,p]</span> has four elements. With <span class="math inline">\Sigma=\emptyset</span> the atoms <span class="math inline">\mathrm F\land{}</span>“exactly <span class="math inline">n</span> individuals” of <span class="math inline">L</span> give every finite interval. Whether the smallness condition of the new formulation admits the same algebras at <span class="math inline">W_0</span> has not been checked.</li>
+<li><strong>Tame Rigidity</strong> and <strong>Weakly Rigid
+Power.</strong> Both fail for every infinite signature, as shown above.
+When there are infinitely many individual constants the original
+argument is as follows. The root property with every constant in its
+root extension and descriptor <span class="math inline">\lambda x\,
+.\,\top</span> is weakly rigid at <span class="math inline">W_0</span>,
+by generalization on a fresh constant. It is rigid only if C proves BF
+at type <span class="math inline">e</span>. Weakly Rigid Power implies
+Tame Rigidity. With finitely many constants, a weakly rigid root
+relation with finite root extension has a descriptor provably equal to a
+disjunction of haecceities of closed terms, and so is rigid. For finite
+signatures, a bound with infinitely many current tuples is still a
+potential obstruction.</li>
+<li><strong>Rigid Power</strong> holds <a
+href="coalesced-definable-root-unary-signature.md">with one individual
+name and countably infinitely many unary predicate names</a>. The member
+with this signature separates Rigid Power from both Tame Rigidity and
+Weakly Rigid Power even under signature Maximalism.</li>
+<li><strong>Contingency of Cardinal CH</strong>, <strong>Possible
+Cardinal CH</strong> and <strong>Possible failure of Cardinal
+CH</strong>, added on 24 November 2026, remain undecided. The earlier
+strict-smallness argument for Forcing Possibilism is historical. The
+revised Mathematical Possibilism is refuted above.</li>
 </ul>
-<p>The group’s shared arguments for Tame Rigidity and Rigid Power transfer a component’s counterexample to the root. They build root entities with freely chosen component parts, which are not available here.</p>
+<p>The group’s shared arguments for Tame Rigidity and Rigid Power
+transfer a component’s counterexample to the root. They build root
+entities with freely chosen component parts, which are not available
+here.</p>
+<h2 id="weakly-rigid-bounds-have-finite-numerical-images">Weakly rigid
+bounds have finite numerical images</h2>
+<p><em>OpenAI GPT-6, prompted by Daniel Kodsi, 26 November 2026.
+Independently reviewed ordinary proof.</em></p>
+<p>Let <span class="math inline">F</span> be weakly rigid at the
+signature-definable root, with descriptor <span
+class="math inline">u</span>. Suppose <span class="math inline">d(\bar
+x)</span> is a term such that <span class="math inline">\mathrm
+C(\Theta)\vdash u(\bar x)\to\mathbb N_e(d(\bar x))</span>. There is a
+finite set <span class="math inline">K</span> of standard natural
+numbers for which <span class="math display">\mathrm C(\Theta)\vdash
+   \forall\bar x\,\Big(u(\bar x)\to
+          \bigvee_{k\in K}d(\bar x)=\bar k_e\Big).</span> In particular
+every weakly rigid bound below the Frege numbers at <span
+class="math inline">e</span> has finite descriptor support, even when
+its current row contains many entities in each descriptor fibre. The
+same holds whenever <span class="math inline">d</span> is C-provably
+injective on <span class="math inline">u</span>. Both canonical powers
+of these bounds are fully rigid.</p>
+<p>Let <span class="math inline">S</span> be the descriptor tuples of
+the actual <span class="math inline">F</span>-members. Every <span
+class="math inline">\bar s\in S</span> satisfies <span
+class="math inline">\vdash u(\bar s)</span>. Each <span
+class="math inline">d(\bar s)</span> is C-provably equal to a standard
+numeral: the actual set of standard numeral denotations is an available
+identity row of an inductive predicate at the root, and equality of two
+closed terms there implies provable identity by completeness of the old
+components.</p>
+<p>Suppose infinitely many standard indices occur on <span
+class="math inline">S</span>. Let <span
+class="math inline">\Delta</span> say that <span
+class="math inline">I_e^*</span> holds and that <span
+class="math inline">d[u]</span> is cofinal in <span
+class="math inline">\mathbb N_e</span>. This is consistent: interpret
+the free constants in a full classical one-world hierarchy over <span
+class="math inline">e=\mathbb N</span>. Its Frege numbers at <span
+class="math inline">e</span> are standard, and each provable <span
+class="math inline">u(\bar s)</span> and <span
+class="math inline">d(\bar s)=\bar k_e</span> holds there. An infinite
+subset of these standard indices is cofinal.</p>
+<p>In the ordinary first-order arithmetic language form the theory <span
+class="math inline">T=\{A:\mathrm C(\Theta)+\Delta\vdash A^e\}</span>,
+where <span class="math inline">A^e</span> is the Frege interpretation.
+It is consistent, recursively enumerable and extends PA under the Peano
+condition in <span class="math inline">\Delta</span>. For effectiveness
+only the finite sublanguage of <span class="math inline">\Delta</span>
+is needed, by conservativity of adjoining free constants. Fix the usual
+primitive recursive verification of proof certificates for <span
+class="math inline">T</span> with enumeration certificates for its
+recursively enumerable axioms. For every fixed standard <span
+class="math inline">k</span>, PA verifies the finite assertion that no
+code <span class="math inline">i\le k</span> is a <span
+class="math inline">T</span>-proof of contradiction. Thus the tester
+<span class="math display">v(\bar x):=\Delta\to
+   \forall i\in\mathbb N_e\,
+     (i\le d(\bar x)\to\neg\mathrm{Prf}_T(i,\bot))</span> is C-provable
+on each <span class="math inline">\bar s\in S</span>. Weak
+inextensibility, applied to the full current row with old descriptor
+<span class="math inline">v</span>, gives <span
+class="math inline">\mathrm C(\Theta)\vdash\forall\bar x\,(u(\bar x)\to
+v(\bar x))</span>. The cofinality conjunct of <span
+class="math inline">\Delta</span> now implies <span
+class="math inline">T\vdash\mathrm{Con}(T)</span>, contrary to Gödel’s
+second incompleteness theorem. The arithmetic interpretation used here
+is also used in
+[[possibility-and-necessity-of-arithmetic-incompatible]].</p>
+<p>The indices occurring on <span class="math inline">S</span> therefore
+form a finite <span class="math inline">K</span>. Their disjunction is
+C-provable on every member of <span class="math inline">S</span>; the
+same weak inextensibility argument proves the displayed theorem. If the
+numerical labeling is injective on <span class="math inline">u</span>,
+any two ground tuples with the same index are provably identical,
+leaving only finitely many descriptor classes. With one actual
+representative of each class, weak persistence and weak inextensibility
+identify every old transport of <span class="math inline">F</span> with
+the finite union of their transported tuple-haecceities. At every old
+point each weakly rigid subrelation is consequently a finite subunion
+and lifts from a rigid finite subunion at the root. This gives full
+rigidity of both powers: root weak subrelations have the same
+finite-support property, and the old finite-bound instances follow from
+[[internally-finite-rigid-power]].</p>
 <h2 id="paper-references">Paper references</h2>
 <ul>
-<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds), Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map was built from the draft dated 16 May 2023, 87 pages, which does not differ materially from the published version; all page, proposition and footnote locators in this map refer to that draft’s numbering. — Appendix E, Definition E.2, pp. 80–83; Theorem 3.26, §3.6, pp. 62–64. The coalesced sum, here with the root domains cut down to the intensions definable by closed terms of the signature, and completeness of the action models for C(Σ).</li>
+<li><strong>Background: Classicism.</strong> Bacon, Andrew, and Cian
+Dorr (2024). Classicism. In Peter Fritz and Nicholas K. Jones (eds),
+Higher-Order Metaphysics, Oxford University Press, pp. 109–190. The map
+was built from the draft dated 16 May 2023, 87 pages, which does not
+differ materially from the published version; all page, proposition and
+footnote locators in this map refer to that draft’s numbering. —
+Appendix E, Definition E.2, pp. 80–83; Theorem 3.26, §3.6, pp. 62–64.
+The coalesced sum, here with the root domains cut down to the intensions
+definable by closed terms of the signature, and completeness of the
+action models for C(Σ).</li>
 </ul>
 </body></html>

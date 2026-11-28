@@ -16,4 +16,8 @@ notes: >-
   of the same type as $F$, so the power property has type $(\bar\sigma\to t)\to t$. That property is
   persistent in C alone, since rigidity and entailment are both necessitated conditions and 4 holds; so
   the principle's content is the boxed weak inextensibility of the power property.
+  The [[internally-finite-rigid-power|internally finite bound lemma]] proves this instance whenever
+  the current tuple set of the weakly rigid bound has a Frege finite cardinality.
+  For an arbitrary bound, [[finite-subrelations-of-rigid-bounds|the finite-subrelation test]] covers
+  every future weakly rigid subrelation counted by the transport of a current Frege number.
 lean_def: Classicism.P.RigidPower.schemaIn

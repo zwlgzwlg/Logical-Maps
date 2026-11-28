@@ -1,0 +1,54 @@
+id: pinned-interpretations-over-the-periodic-integer-entrance
+name: Pinned interpretation arrows over the periodic integer entrance
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - A second OpenAI Codex (GPT-6) agent, prompted by Daniel Kodsi, independently checked the finite-pin witness, the finite-orbit countertester at individual-property type, and the scalar transports on 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Cian Dorr's finitely pinned interpretation root, 19 October 2026.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, periodic integer entrance and its Barcan witnesses, 27 November 2026.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, selection of the periodic integer entrance as the sole component of the interpretation root, 27 November 2026.
+source_names:
+- Dorr 19 Oct
+- Periodic integer entrance
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, Proposition D.4, and Appendix E, Definition E.2.
+group: coalesced-sums
+settings:
+  root-arrows: interpretations
+  sigma: construction
+  construction: >-
+    Use the pure reduct of [[periodic-integer-entrance]] as the sole
+    component. Adjoin the root of [[coalesced-pinned-interpretations-root]]
+    with interpretation arrows for an expanded signature having infinitely
+    many names at every type. Each individual name denotes itself at the
+    root. Each relational name has empty root row and projects to its
+    interpreted whole entity at every entrance. Evaluate at the new root.
+  domains:
+    text: >-
+      The root individuals are the expanded signature's individual names.
+      A relational profile has arbitrary identity row, a finite pin of names,
+      and transports belonging to the original component domains.
+meets:
+  free-root-component: Every set of current tuples occurs at the identity with empty rows at every entrance.
+arguments:
+- id: barcan-scopes
+  holds: [barcan-r, necessary-barcan-t, necessary-strong-actuality]
+  fails: [necessary-barcan-relational]
+  choice: free
+  writeup: pinned-interpretations-and-barcan
+  text: >-
+    The fresh-name witness gives every local Barcan instance at the new
+    root. The old scalar entrance projects a pair of bits onto its terminal
+    bit. Every transported individual property there has finite translation
+    orbit, while the terminal admits the singleton of the integer zero.
+    The finite-orbit tester at the old source refutes relational Barcan.
+    The current-only scalar witnesses Strong Actuality at the new and old
+    roots, and top does so at the terminal.

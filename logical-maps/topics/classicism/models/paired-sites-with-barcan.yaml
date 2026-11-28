@@ -1,0 +1,52 @@
+id: paired-sites-with-barcan
+name: Barcan paired sites with an atomless proposition algebra
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two independent OpenAI Codex (GPT-6) researchers checked the Barcan lifts, atom calculation, ordinal bound and modal guards.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, Cantor duplication of the pinned substitution entrance in the paired-site model, 27 November 2026.
+- Cian Dorr, pinned substitution root of 19 October 2026 and paired-site construction with Claude Fable of 14 October 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Dorr, October 2026
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalesced sums.
+definition: >-
+  Take the two-coordinate paired-site core with all block-preserving maps.
+  Give it Cantor-many absorbing copies of the pinned substitution root.
+  Relational values on the old copies are locally constant as whole
+  entities. Evaluate with a singleton in just the second coordinate, using
+  one public proposition name.
+arguments:
+- id: barcan-and-witnesses
+  holds: [barcan-r, possibility-plus-signature-r, well-ordering-r]
+  choice: uses
+  writeup: paired-sites-with-barcan
+  text: >-
+    Reserve a fresh source doublet for each block in the target witness
+    pin and invert its embedding without changing the tester pin. On an
+    old copy use local Barcan there and lift the old witness with a
+    constant section. The old entrance preserves eligible individual
+    tuples and current fullness supplies representing well-orders.
+- id: modal-tests
+  fails: [five-implies-two-hat-necessity, two-hat-implies-nd-necessity, boolean-completeness-t]
+  choice: free
+  writeup: paired-sites-with-barcan
+  text: >-
+    The paired-site modal guards vanish at every exit and their decisive
+    returns use only core arrows. The old Cantor coordinate has a family
+    of even cylinders with no least clopen upper section.
+- id: atomlessness
+  holds: [atomlessness]
+  choice: free
+  writeup: paired-sites-with-barcan
+  text: >-
+    Any nonzero core row splits on a fresh block and any nonzero old
+    section splits on two clopen patches carrying the same old entity.

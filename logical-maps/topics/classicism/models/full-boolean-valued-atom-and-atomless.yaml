@@ -161,8 +161,9 @@ arguments:
     gives $\rho[\![\exists y\, .\,\operatorname{GLB}_t(y,X)]\!]=\bigvee_{U\subseteq\omega}[\![s=\check
     U]\!]$, the value of "$s$ is a ground set". Forcing with $A$ adds a Cohen real; taking the $c_n$ to
     be its coordinates, $[\![s=\check U]\!]=0_A$ for every $U$, so the closed
-    instance of Boolean Completeness (type $t$) has value exactly $a$: true, and not necessary. Whether
-    it is necessary for an algebra adding no reals is open.
+    instance of Boolean Completeness (type $t$) has value exactly $a$: true, and not necessary. For a comparison with forcing that adds no reals, [[boolean-valued-cohen-over-the-constructible-universe]]
+    uses countably closed forcing adding a subset of $\omega_1$. Necessary propositional Boolean Completeness
+    fails there as well, although necessary Countable Boolean Completeness holds.
   revisions:
   - date: '2026-10-24'
     by: Claude Opus 5.5 (Anthropic), prompted by Cian Dorr

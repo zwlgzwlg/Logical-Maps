@@ -1,0 +1,49 @@
+id: stone-terminal-bounded-catalogue
+name: Stone terminals over the bounded Boolean algebra catalogue
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two independent OpenAI Codex (GPT-6) agents reviewed the ordinal guard, order graph and signature scope.
+  date: '2026-11-27'
+  lean: verified
+  lean_ref: Classicism.Meta.Coalesced.StoneFan.CatalogueModel.certificate
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, bounded catalogue construction and native Lean proof, 27 November 2026.
+- Andrew Bacon's revised Mathematical Possibilism and the PR 28 finite-power cardinal formulation.
+source_names:
+- Kodsi and Codex, 27 Nov
+- Bacon, PR 28 finite powers
+definition: >-
+  In the signature with one proposition name, take the canonical signature-Maximalist old component, the
+  full singleton terminal and the identity-loop Stone root. Set μ to the beth strong limit above the fixed
+  ordinal bound as in the linked proof. The catalogue has one factor for each Boolean algebra structure
+  on each subset of the chosen type representing μ. Label terminal entrances by the prime spectrum
+  of the Boolean ring of this product, with its Stone topology. Each root relation admits every current
+  row, one whole old coordinate, and the locally constant terminal profiles. The name inherits its old
+  interpretation. The same theorem works for every countable signature of closed types.
+arguments:
+- id: bounded-catalogue
+  holds: [distinctness-schema-r, distinctness-signature-r, forcing-possibilism]
+  choice: uses
+  writeup: stone-terminal-maximalist
+  text: >-
+    The old entrance preserves signature and pure Maximalism. Native rigidity bounds the actual
+    inexact ordinals independently of the terminal space. Each current set of size at least μ contains
+    a power-closed subcarrier of size μ, using full current rows for its membership graphs. Hence
+    each revised-small complete Boolean algebra occurs in the catalogue. The interval below the unit of
+    its factor has precisely its order and the root admits the graph of the representing bijection.
+lean:
+  model: Classicism.Meta.Coalesced.StoneFan.CatalogueModel.model
+  is_model: Classicism.Meta.Coalesced.StoneFan.CatalogueModel.isModel
+  verdicts:
+  - holds: distinctness-schema-r
+    ref: Classicism.Meta.Coalesced.StoneFan.CatalogueModel.pure_maximalism
+    status: verified
+  - holds: distinctness-signature-r
+    ref: Classicism.Meta.Coalesced.StoneFan.CatalogueModel.signature_maximalism
+    status: verified
+  - holds: forcing-possibilism
+    ref: Classicism.Meta.Coalesced.StoneFan.CatalogueModel.mathematical_possibilism
+    status: verified

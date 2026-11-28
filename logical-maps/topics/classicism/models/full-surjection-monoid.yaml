@@ -43,7 +43,7 @@ meets:
     requires the kernel of $k$ to lie inside that of $k^{\prime}$.
   arbitrary-infinite-set: The monoid is that of the surjections of any infinite set.
   continuum-many-arrows:
-    when: {metatheory: [choice, no-countable-choice-reals]}
+    when: {metatheory: [choice, no-countable-choice-reals, cohen-basic, sageev]}
     text: >-
       Once the infinite set contains the natural numbers (by choice, or because it is $\mathbb N$ in
       the variant without countable choice), a set $C$ of natural numbers is sent to the surjection

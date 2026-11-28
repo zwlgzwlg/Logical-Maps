@@ -20,4 +20,10 @@ source_names:
 - Dorr 25 Oct
 proof: Necessitate the recorded [[atoms-are-strong-atoms-t-and-self-atoms-are-atoms-t-imply-self-atoms-are-strong-atoms-t]],
   a theorem of C between closed instances of its principles, and distribute by K.
-notes: The boxed form of [[atoms-are-strong-atoms-t-and-self-atoms-are-atoms-t-imply-self-atoms-are-strong-atoms-t]].
+notes: >-
+  The boxed form of [[atoms-are-strong-atoms-t-and-self-atoms-are-atoms-t-imply-self-atoms-are-strong-atoms-t]].
+  The second premise alone suffices at type $t$. Lift it by
+  [[necessary-self-atoms-are-atoms-t-implies-necessary-self-atoms-are-atoms-r]],
+  apply [[necessary-self-atoms-are-atoms-r-implies-necessary-self-atoms-are-strong-atoms-r]],
+  and take the scalar instance by
+  [[necessary-self-atoms-are-strong-atoms-r-implies-necessary-self-atoms-are-strong-atoms-t]].

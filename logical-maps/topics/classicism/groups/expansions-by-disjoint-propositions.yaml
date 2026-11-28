@@ -1,0 +1,69 @@
+id: expansions-by-disjoint-propositions
+name: Expansions by independent disjoint propositions
+definition: >-
+  {{source}} Adjoin two propositional constants. Take a model of the complete pure theory, the Independence schema
+  for these two names, and the assertions that they are nonzero and disjoint.
+parameters:
+  source:
+    text: The original pure pointed action model.
+    generate: true
+    default: full-infinite-s5
+    values:
+      symmetric-all-surjections:
+        text: >-
+          Take the pointed pure reduct of [[symmetric-all-surjections]], whose propositional domain satisfies [[infinity-t]].
+        label: 'Symmetric ideally-full model: all surjections of N (Base 1)'
+      full-infinite-s5:
+        text: >-
+          Take the pointed pure reduct of [[full-infinite-s5]], whose propositional domain satisfies [[infinity-t]].
+        label: 'Full action model: infinite S5'
+      finite-support-permutations:
+        text: >-
+          Take the pointed pure reduct of [[finite-support-permutations]], whose propositional domain satisfies [[infinity-t]].
+        label: 'Finite-support action model: permutations of N'
+arguments:
+- id: finite-avoidance
+  holds: [independence-signature-r]
+  fails: [modal-freedom-signature-r, no-contingency-signature-r, witnessed-possibility-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    With $k$ disjoint nonzero propositions, each forbidden equation for one name in terms of the other rules out at
+    most $k$ ordered choices. A sufficiently large finite family avoids every equation in a finite list. Compactness
+    gives two independent nonzero disjoint names. Their joint truth is impossible although both are possible; the
+    actual pair $(\top,\top)$ witnesses that the conjunction can be true of a pair.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: pure-theory-symmetric-all-surjections
+  when:
+    source: symmetric-all-surjections
+  holds: [necessary-atomlessness, necessary-inextensible-comprehension-r, necessary-truths-are-nd-necessary, no-pure-contingency-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    These pure verdicts hold at the designated point of [[symmetric-all-surjections]] and are preserved by its complete
+    pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: pure-theory-full-infinite-s5
+  when:
+    source: full-infinite-s5
+  holds: [forcing-possibilism, necessary-axiom-of-infinity-t, necessary-functional-choice-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    These pure verdicts hold at the designated point of [[full-infinite-s5]] and are preserved by its complete pure
+    theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: pure-theory-finite-support-permutations
+  when:
+    source: finite-support-permutations
+  holds: [necessary-atomlessness, necessary-distinctness-necessary-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    These pure verdicts hold at the designated point of [[finite-support-permutations]] and are preserved by its complete
+    pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'

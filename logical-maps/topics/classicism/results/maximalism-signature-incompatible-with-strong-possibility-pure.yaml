@@ -11,7 +11,8 @@ certificate:
   recorded_by: Claude Fable 5.1 (Anthropic), prompted by Cian Dorr, 20 October 2026
   checked_by: []
   date: '2026-10-20'
-  lean: stated
+  lean: verified
+  lean_ref: Classicism.Map.maximalism_signature_incompatible_with_strong_possibility_pure
 sources:
 - Cian Dorr, argument of 20 October 2026.
 - Claude Fable 5.1 (Anthropic), prompted by Cian Dorr, 20 October 2026, for the amendments and the model witnessing the consistency
@@ -20,6 +21,8 @@ source_names:
 - Dorr 20 Oct
 - Fable 20 Oct
 proof: >-
+  Pure Strong Possibility alone gives the contradiction by [[strong-possibility-r-inconsistent]].
+
   Suppose $\Sigma$ has a constant $c$ of type $t$. Let C5 be $\Box$ND and let $F:=\lambda p\, .\,
   (\Diamond p\land\Diamond\neg p)\land\mathrm{C5}\land\mathrm{Atomicity}\land\forall x\forall y\, .\,
   x=y$, a closed pure term of type $tt$: being contingent while $\Box$ND, Atomicity and "there is exactly
@@ -56,9 +59,8 @@ notes: >-
   sentence $\Psi$, whose consistency with Maximalist Classicism is witnessed by a model rather than by a
   principle of the map. The conjunct $\forall x\forall y\, .\,x=y$ in $F$ is an amendment: without it the
   consistency of $\Psi$ would need every closed sentence with the individual constant of the model's
-  signature, not only the pure ones, to be non-contingent under $\Box$ND + Atomicity. The argument does not
-  reach Strong Possibility for $\Sigma$, whose consistency premise is stronger; whether Maximalism for
-  $\Sigma$ is compatible with it stays open.
+  signature, not only the pure ones, to be non-contingent under $\Box$ND + Atomicity. The signature schema has a stronger consistency premise. Its compatibility with signature
+  Maximalism is now settled by [[strong-possibility-signature-r-inconsistent]].
 
 
   A different proof was given later and independently by GPT-6 Astra (OpenAI), prompted by Daniel Kodsi,

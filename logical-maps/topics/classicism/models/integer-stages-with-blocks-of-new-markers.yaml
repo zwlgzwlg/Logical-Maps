@@ -1,0 +1,67 @@
+id: integer-stages-with-blocks-of-new-markers
+name: Integer stages introducing a full block of markers
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two independent OpenAI Codex (GPT-6) reviews of the support-omission tests, common pins, both sides of the Rigid Power separation and Logical Necessity, 27 November 2026
+  date: '2026-11-27'
+  lean: none
+sources:
+- The paired integer-stage word assignment and the single-new-individual test at the injective integer stages.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, the full fresh block, the common-pin theorem and its rigidity consequence, 27 November 2026.
+source_names:
+- Integer stages and marked individuals
+- Codex via Kodsi, 27 Nov
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Definitions 15–18 and Proposition 20
+  note: Source pins and target equivariance in action models.
+definition: >-
+  Stage $n$ has one ordinary pool of size $\kappa^+$ and $\kappa$ fixed
+  markers for each integer $i\le n$. A map is injective, sends ordinary
+  individuals to ordinary ones, and sends each marker to itself or an
+  ordinary individual. Append free words. Relational entities are
+  equivariant under ordinary target permutations and pinned on at most
+  $\kappa$ source points. Interpret one proposition name by suffix gluing,
+  and evaluate at zero.
+arguments:
+- id: common-pin-and-powers
+  holds: [necessary-rigid-power-r]
+  choice: uses
+  writeup: integer-stages-with-blocks-of-new-markers
+  text: >-
+    All current tuples transported one stage up have pins avoiding its
+    entire fresh marker block. Test this by weak inextensibility, then
+    test avoidance of the whole transported block at the upper stage.
+    Rigidity allows this second test. On return send the new markers
+    over all sites of a chosen tuple pin outside the bound's pin.
+    Intersection of group supports and interpolation at a representative
+    of each arrow kind show that the bound's pin pins every one of its
+    current members. Exact direct images of arbitrary subsets are now
+    admitted. Pulling back the extension of a future rigid subrelation
+    gives an exact rigid lift, which proves Rigid Power at every stage.
+- id: weak-bound
+  fails: [tame-rigidity-r, weakly-rigid-power-r]
+  choice: uses
+  writeup: integer-stages-with-blocks-of-new-markers
+  text: >-
+    The ordinary individuals outside the images of the source markers
+    form a weakly rigid property: any candidate ordinary point outside
+    the marked images may be reached while preserving a tester pin.
+    At the next stage a fresh marker is missing. Its image reappears on
+    return in that property's row, defeating weak inextensibility.
+    Weakly Rigid Power implies Tame Rigidity.
+- id: stage-and-kind-properties
+  holds: [logical-necessity-r, necessary-strong-actuality, necessary-boolean-completeness-r]
+  choice: uses
+  writeup: integer-stages-with-blocks-of-new-markers
+  text: >-
+    Translation identifies the pure stage theories, and whole-profile
+    prescription on disjoint word sectors gives Logical Necessity.
+    The scalar endomorphism kind keeping every current marker is a true
+    strong atom. Unions at a bijective representative of each arrow
+    kind extend equivariantly by one family pin to give least upper
+    bounds at every type.

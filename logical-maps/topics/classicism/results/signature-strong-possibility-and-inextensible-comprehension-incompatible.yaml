@@ -1,0 +1,32 @@
+id: signature-strong-possibility-and-inextensible-comprehension-incompatible
+premises: [strong-possibility-signature-r, inextensible-comprehension-r]
+conclusion: false
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two further OpenAI Codex (GPT-6) agents checked the finite-bound argument and the use of a signature-Maximalist exit.
+  date: '2026-11-27'
+  lean: verified
+  lean_ref: Classicism.Map.signature_strong_possibility_and_inextensible_comprehension_incompatible
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, the moving-tuple argument in the reduced-power retraction and its Maximalist extension, 26–27 November 2026.
+source_names:
+- Codex via Kodsi, 26–27 Nov
+proof: >-
+  Signature Strong Possibility alone gives the contradiction by [[strong-possibility-signature-r-inconsistent]].
+
+  For the given signature use a reduced-power retraction with an exit into a
+  signature-Maximalist point, sending each named entity to its old interpretation.
+  The resulting signature-Maximalist root satisfies the same pure sentence
+  asserting that every current inextensible relation is necessarily Frege-finite.
+  Test signature Strong Possibility for this sentence with the present infinitude
+  of a purported inextensible counterexample. Inextensibility persists to the
+  intermediate point, whose bound contradicts the return. The universal property
+  of propositions has no inextensible coextension by the quantified Axiom of
+  Infinity at t from pure Maximalism.
+notes: >-
+  Applies to every admitted fixed signature. The construction and return are
+  detailed in [[strong-possibility-and-inextensible-comprehension-incompatible]].

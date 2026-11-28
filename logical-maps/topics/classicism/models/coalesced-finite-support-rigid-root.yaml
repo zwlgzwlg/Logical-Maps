@@ -1,0 +1,91 @@
+id: coalesced-finite-support-rigid-root
+name: 'Coalesced sum: finite descriptor support for weakly rigid bounds'
+certificate:
+  source_id: misc
+  produced_by: OpenAI GPT-6, prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI GPT-6, prompted by Daniel Kodsi, 26 November 2026
+  checked_by: []
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI GPT-6, prompted by Daniel Kodsi, original ordinary mathematical argument and independent
+  AI reviews, 26 November 2026.
+- Cian Dorr's definable coalesced root of 20 October 2026 and the signature version recorded in
+  coalesced-definable-root-signature on 22 November 2026.
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, Appendix E, Definition E.2, and
+  Theorem 3.26 on Henkin completeness for action models.
+source_names:
+- GPT-6 26 Nov
+- Dorr, Astra, Fable 22 Nov
+- Classicism
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §3.6 and Appendix E, pp. 62–64 and 80–83
+group: coalesced-sums
+settings:
+  root-arrows: pointed-exits
+  sigma: construction
+  construction: >-
+    Fix the public signature $\Sigma$. Add one individual name if needed, and uncountably many
+    auxiliary predicates for each nonempty input tuple of types, forming a set-sized language
+    $\Theta$. Take components complete for the pointed theory $T$ consisting of C($\Theta$) and
+    $\Box\neg b(\bar t)$ for every auxiliary predicate $b$ and every closed $\Theta$-tuple
+    of matching types. There is one exit into each distinguished point, together with its old
+    postcomposites. The root individuals are the individual names. Assign each public relational
+    constant its own old descriptor and any actual extension. Assign each auxiliary predicate its
+    own descriptor and the empty actual extension. Evaluate at this root and take its public
+    $\Sigma$-reduct.
+  domains:
+    text: >-
+      At the root a relational entity is a pair of an unrestricted current extension and the
+      common old trace of one closed $\Theta$-term, with descriptors identified when $T$ proves
+      their identity. Old domains and their internal arrows are unchanged.
+meets:
+  complete-components: >-
+    Assigning every auxiliary predicate bottom expands every pointed C($\Sigma$)-model to one
+    satisfying $T$, so the old family realizes every consistent public sentence, including pure ones.
+  free-root-component: The extension at the identity is unrestricted for every old descriptor.
+arguments:
+- id: public-maximalism
+  holds:
+  - possibility-plus-signature-r
+  by: OpenAI GPT-6, prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: coalesced-finite-support-rigid-root
+  text: >-
+    Every consistent public sentence occurs in the old family. For Possibility+ represent the
+    given distinct root individuals by their names. The side condition makes these fresh for
+    the formula. Interpret them as a witnessing tuple in a consistent pointed source model,
+    then expand by bottom auxiliaries.
+- id: finite-support-powers
+  holds:
+  - weakly-rigid-power-r
+  by: OpenAI GPT-6, prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: coalesced-finite-support-rigid-root
+  text: >-
+    A fresh auxiliary predicate necessarily misses every current tuple. If a weakly rigid
+    bound had infinitely many different member descriptors, compactness and a second
+    descriptor root would give an old component in which some member of its bound descriptor
+    belongs to that auxiliary predicate. This contradicts weak inextensibility. A weakly rigid
+    bound with finite descriptor support is fully rigid, as are both its canonical powers.
+    Thus Tame Rigidity and Rigid Power also hold locally.
+- id: barcan-fails-at-propositions
+  fails:
+  - barcan-t
+  by: OpenAI GPT-6, prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: coalesced-finite-support-rigid-root
+  text: >-
+    The closed propositions asserting distinct finite individual cardinalities have pairwise
+    inequivalent old descriptors. Apply the fresh-predicate construction to the universal
+    property of propositions: a unary auxiliary predicate can hold of a proposition at an old
+    point although it necessarily misses each current proposition. Its complement witnesses
+    failure of Barcan at $t$.
+notes: >-
+  This gives simultaneous local consistency of Maximalism (signature $\Sigma$), Weakly Rigid
+  Power and Rigid Power for every fixed public signature. The finite support bounds the number
+  of distinct old descriptor tuples represented by a weakly rigid relation, even when its
+  actual extension is infinite. The components range over a constrained auxiliary vocabulary.
+  The stronger auxiliary-language Maximalism would contradict the constraints used in the construction.

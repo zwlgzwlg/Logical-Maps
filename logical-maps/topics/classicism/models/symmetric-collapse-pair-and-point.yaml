@@ -135,6 +135,18 @@ arguments:
     agreeing with $h$ on $S$; for $x\notin S$ two collapsers agreeing with $h$ on $S$ send $x$ to $h0$ and
     outside $h[S]$ respectively, and they are separated by $\{h\in q : hx=h0\}$, symmetric and pinned down by
     $S\cup\{x\}$.
+- id: finite-scalar-atom-obstruction
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: finite-scalar-atoms-exclude-mathematical-possibilism
+  text: >-
+    The symmetry group and the unique exit to the point give two atoms. A
+    finite restriction of any remaining map, including a constant, extends to
+    collapsers differing on a fresh merge. Mathematical Possibilism would
+    require arbitrarily many propositional atoms by representing the finite
+    power algebras.
 notes: >-
   Cian Dorr's suggestion of 29 October 2026: the one-object model symmetric-collapse-pair as $W_0$, with a
   point $W_1$ added as in symmetric-two-object-all-maps. The constant maps forced by composition do not spoil

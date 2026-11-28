@@ -1,0 +1,51 @@
+id: symmetric-cohen-classes-infinite-individuals
+name: Generic labelled classes with infinitely many individuals
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Independent Codex reviews of the forcing, finite supports and arithmetic comparison at the two points, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- The finite-support forcing and ultrapower construction in [[symmetric-cohen-classes-with-new-numbers]], with the infinite individual domain in its write-up.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, Definitions D.1–D.3 and Proposition D.4
+definition: >-
+  Use the generic partition into Cohen-real-labelled classes and the two-point model of
+  [[symmetric-cohen-classes-with-new-numbers]]. The source and auxiliary individual sort
+  is all labels and one fixed point. The group permutes the labels and the proper map
+  on individuals is diagonal. Individual names denote the fixed point and relation
+  names denote bottom.
+arguments:
+- id: numbers-and-analysis
+  holds: [second-order-analytic-necessitism, necessary-axiom-of-infinity-e, necessity-of-arithmetic]
+  fails: [arithmetic-necessitism]
+  choice: uses
+  writeup: symmetric-cohen-classes-with-new-numbers
+  text: >-
+    Every individual sort is now infinite. The standard numerals exhaust the numbers at
+    the source and auxiliary points and none counts the whole individual carrier. The
+    corresponding guarded arithmetical truths transfer to the terminal. The terminal
+    has new Frege numbers excluded by a tester that necessarily holds of each source
+    number. All sorts still carry finite label supports. A real structure pinned by
+    finitely many labels would have to represent a fresh class's real by the trace
+    of an object supported on those pins, contrary to relative homogeneity.
+- id: supported-relations
+  holds: [necessary-atomlessness]
+  fails: [boolean-completeness-t, countable-boolean-completeness-r, plenitude-r,
+    weak-rigid-comprehension-r, relational-choice-r]
+  choice: uses
+  writeup: symmetric-cohen-classes-with-new-numbers
+  text: >-
+    A fresh bit splits each nonzero supported Boolean row and each germ. The first-one
+    cylinders selected by a fresh real make a countable scalar family without a
+    supremum. The same fresh numeral trace refutes Plenitude and Weak Rigid
+    Comprehension by comparison with ground top values. A supported selection of a
+    distinct class mate for every label code contradicts a within-class swap. The
+    constructions use the same sorts and numerals as in the singleton case.

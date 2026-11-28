@@ -38,9 +38,14 @@ notes: >-
   through Countable Boolean Completeness, and Arithmetic Necessitism gives it from □Potential Infinity
   ([[arithmetic-necessitism-and-necessary-potential-infinity-t-imply-possible-infinity-t]]). Without it the
   argument fails at its first step: the possible worlds with many propositions may each have a count that is
-  a number only there. Whether Potential Infinity (type $t$) implies Possible Infinity (type $t$) in C alone is
-  open; see the notes to [[potential-infinity-t]]. The conclusion is Possible Infinity and not the Axiom of
+  a number only there. This happens in [[absorbing-entrance-hyperfinite-group]], which satisfies necessary
+  Boolean Completeness at type $t$ and Potential Infinity there, and refutes Possible Infinity. The conclusion is Possible Infinity and not the Axiom of
   Infinity: [[full-two-object-chain-free-loop]] has □Rigid Comprehension and Potential Infinity (type $t$),
   with four propositions at its evaluation point. At type $e$ there is no such result: in
   [[full-omega-chain-new-individuals]], which has □Rigid Comprehension, the propositions that there are exactly
   $n$ individuals are infinitely many, and no world has infinitely many individuals.
+changes:
+- date: '2026-11-26'
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  summary: >-
+    The new hyperfinite entrance shows why the completeness premise cannot be replaced by necessary Boolean Completeness at type $t$.

@@ -1,0 +1,63 @@
+id: isolated-root-before-truncation-words
+name: An isolated root before truncations with words
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two independent OpenAI Codex (GPT-6) reviews of the truncation guard, the entrance and the rigid power lifts.
+  date: '2026-11-27'
+  lean: none
+sources:
+- The truncation-word model extends Proposition D.5(6) of Bacon and Dorr.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+source_names: [Classicism, Codex via Kodsi]
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, Proposition D.5(6)
+definition: >-
+  Prepend a root with only an identity loop to [[truncation-words]]. Each
+  root relation consists of any current tuple subset and one independent whole
+  relation at the old object. The entrance projects the second coordinate,
+  and its postcomposites are distinct copies of the old arrows. Each
+  object has one individual. The signature may be taken to have one top
+  proposition name.
+arguments:
+- id: true-guards-and-atoms
+  holds: [strong-actuality, necessary-atomicity-r, necessary-truths-are-nd-necessary]
+  fails: [necessary-actuality]
+  choice: free
+  writeup: isolated-entrances-and-modal-necessities
+  text: >-
+    The true root-only atom disappears at all proper futures and guards
+    each root truth. An old true proposition holds at all high truncations
+    with empty word. The possibility of this pinned guard forces membership
+    in it by coefficient minimum and word concatenation. The old algebras
+    are atomic and so are their products with the root current power sets.
+    Every old true proposition contains several distinct truncation atoms.
+- id: countability-and-choice
+  holds: [necessary-countable-boolean-completeness-r, forcing-possibilism, modal-well-ordering-r, inextensible-comprehension-r]
+  fails: [boolean-completeness-t]
+  choice: uses
+  writeup: isolated-entrances-and-modal-necessities
+  text: >-
+    Countably many old pins have a joint pin. Full current numeral cuts
+    turn represented countability into external countability. Projection
+    of a join of the lifted cofinal truncation family would give an old
+    join. Constant old well-order rows and any present root well-order
+    yield Modal Well-Ordering. Singleton individuals bound the ordinal
+    benchmark, so finite unions of old atoms suffice for the revised
+    Mathematical Possibilism test. A root row with empty exit is inextensible.
+- id: both-powers
+  holds: [necessary-tame-rigidity-r, necessary-weakly-rigid-power-r, necessary-rigid-power-r]
+  fails: [rigid-comprehension-r]
+  choice: free
+  writeup: isolated-entrances-and-modal-necessities
+  text: >-
+    A root weakly rigid relation projects to an old weakly rigid relation,
+    whose current members are all fixed by a common truncation. A tester
+    on the high empty-word tail forces the projected current root members
+    to exhaust this row. Its subcollections share that fixing truncation
+    and their exact-image profiles lift old power members. The whole old
+    proposition carrier has no common fixing truncation.

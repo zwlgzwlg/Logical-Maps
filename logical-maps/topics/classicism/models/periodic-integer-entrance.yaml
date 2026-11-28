@@ -1,0 +1,60 @@
+id: periodic-integer-entrance
+name: Periodic integer entrance with strong atoms and no higher-type atomicity
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Three independent OpenAI Codex (GPT-6) researchers checked the periodic orbit split, terminal self-atoms and completeness. Two checked the additional choice, rigidity and arithmetic arguments.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, periodic suborbits in an integer action and the distinction between propositional and higher-type atomicity, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, intensional action models.
+definition: >-
+  An entrance from a singleton individual at r to the fixed point in the
+  full classical hierarchy on the integers plus one fixed point at s
+  commutes with integer translations at both objects. A root relation
+  consists of independent current and terminal rows, each fixed by a
+  finite-index subgroup of the integers.
+arguments:
+- id: periodic-orbits
+  holds: [necessary-atoms-are-strong-atoms-r, necessary-self-atoms-are-strong-atoms-r, necessary-strong-atomicity-t, necessary-strong-actuality, necessary-truths-are-nd-necessary]
+  fails: [self-atomicity-r, atomicity-r]
+  choice: free
+  writeup: periodic-integer-entrance
+  text: >-
+    Every nonsingleton orbit of a finite-index subgroup splits under a
+    further finite-index subgroup. Consequently any atom is an isolated
+    tuple in one coordinate and stays a singleton or bottom under every
+    transport. The terminal-only individual property of being an integer
+    has no self-atom below it, since each nonempty periodic subrow is
+    infinite in the full terminal. The scalar algebras are finite.
+- id: supported-unions-and-images
+  holds: [necessary-boolean-completeness-r, necessary-rigid-comprehension-r, necessary-tame-rigidity-r, necessary-barcan-t, necessary-transversal-r]
+  fails: [rigid-power-r, weakly-rigid-power-r, rigid-rigidity-r, weakly-rigid-weak-rigidity-r, barcan-relational, transversal-choice-r, relational-choice-r, intensional-choice-r]
+  choice: free
+  writeup: periodic-integer-entrance
+  text: >-
+    Coordinate unions have the period of their indexing family.
+    Exact-image pairs give the rigid coextensions and exhaust the weakly
+    rigid ones. Selecting the zero residue separately in each modulus
+    gives a terminal rigid subproperty of infinite orbit. Current choice
+    fails on the unbounded finite cyclic orbits of residue-class codes.
+- id: number-systems
+  holds: [arithmetic-necessitism, necessity-of-arithmetic, necessity-of-second-order-analysis]
+  fails: [analytic-necessitism, forcing-possibilism]
+  choice: uses
+  writeup: periodic-integer-entrance
+  text: >-
+    The period of a Peano system fixes all successive standard numerals,
+    making their external set an admitted inductive row. In a real
+    structure the same period fixes all numbers and all reals, admitting
+    all relations on them. Root individual properties are countable,
+    whereas the terminal supports a real structure there. A finite
+    eight-element algebra also exceeds the entire root scalar algebra.

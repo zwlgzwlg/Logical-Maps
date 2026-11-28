@@ -1,0 +1,75 @@
+id: cantor-entrance-to-nonstandard-cantor-arithmetic
+name: Cantor entrance to nonstandard Cantor arithmetic
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two further OpenAI Codex (GPT-6) researchers independently checked the Cantor tables, standard and nonstandard arithmetic and the bounded subrelation lifts.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Cian Dorr's two-component arithmetic model, 19 October 2026.
+- The map's Cantor-loop profiles and entrance to one nonstandard arithmetic group.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+source_names: [Dorr 19 Oct, Cantor and arithmetic entrances, Codex via Kodsi 27 Nov]
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalesced sums.
+definition: >-
+  At the source the loops form the Cantor group. A proper entrance absorbing
+  these loops leads to a one-object Cantor-loop model constructed internally
+  in a countable model of Zermelo set theory with Choice, the ambient sign of
+  CH, and the negation of the consistency of that combined theory. Types at
+  both objects use whole tuple rows depending on a finite prefix in their own
+  universe. A source relation additionally has one independent whole old
+  value. Individuals are singleton throughout. Evaluate at the source, with
+  its single propositional name testing the zeroth bit on the core and having
+  old value bottom.
+meets:
+  one-individual: Both individual carriers are singletons.
+arguments:
+- id: rigid-powers
+  holds: [necessary-barcan-r, necessary-rigid-power-r, necessary-weakly-rigid-power-r, necessary-tame-rigidity-r, necessary-rigid-rigidity-r, necessary-weakly-rigid-weak-rigidity-r]
+  choice: free
+  writeup: cantor-entrance-to-nonstandard-cantor-arithmetic
+  text: >-
+    All maps are onto. A weakly rigid bound has hereditary persistence, hence
+    exact images along invertible loops. If an extra old tuple occurs at the
+    entrance, delete all its translates at their respective old loops using
+    its internally finite prefix, with the source rows full. This contradicts
+    weak inextensibility. For an old rigid subbound with current extension D,
+    intersect the source row and all its loop rows with the inverse image of D.
+    That intersection preserves the prefix bound and gives a rigid lift of the
+    entire old relation. Taking the whole source inverse image also lifts
+    arbitrary old rigid relations.
+- id: disjoint-arithmetics
+  holds: [necessary-axiom-of-infinity-t, non-contingency-of-ch]
+  fails: [necessity-of-arithmetic, arithmetic-necessitism, necessity-of-analysis, pure-b-r]
+  choice: uses
+  writeup: cantor-entrance-to-nonstandard-cantor-arithmetic
+  text: >-
+    Source current rows select the standard numeral orbit; the old group has
+    full current rows internally and its scalar Frege numbers are precisely
+    the naturals of its ambient nonstandard model. Both satisfy the Peano
+    guard and Infinity at scalar type. Their arithmetic disagrees about the
+    consistency of the old base theory. At tt both modes have a current real
+    structure and the same disagreement in its number part. Structural CH
+    agrees since both hierarchies have their respective full current rows
+    and the same ground sign of CH.
+- id: atomlessness-and-choice
+  holds: [necessary-atomlessness, modal-well-ordering-r, necessary-modalized-relational-choice-r, necessary-vicinity, necessary-five-implies-nd-necessity, independence-signature-r]
+  fails: [forcing-possibilism, weakly-inextensible-comprehension-r, truth-implies-five-necessity, countable-boolean-completeness-r, witnessed-possibility-r]
+  choice: uses
+  writeup: cantor-entrance-to-nonstandard-cantor-arithmetic
+  text: >-
+    Split any occupied row by a fresh bit beyond its prefix, in the
+    appropriate universe. Current well-orders and choices of functional
+    subrows on finitely many cells give the modal choice conclusions.
+    Inverse loops preserve the possibility of each actual truth; the
+    represented S5 operator testing truth throughout each mode bounds
+    5-necessity. The coordinate halfspaces have no common open stabilizer
+    and hence no weakly inextensible coextension. Alternate first-one
+    cylinders give a countable family without a join. The name moves
+    under a loop and never becomes top.

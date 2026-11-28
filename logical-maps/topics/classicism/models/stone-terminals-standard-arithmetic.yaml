@@ -1,0 +1,25 @@
+id: stone-terminals-standard-arithmetic
+name: 'Stone terminals with infinite individuals and standard arithmetic'
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, independent mathematical reviews of the construction and verdicts
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, infinite-individual variant of the homogeneous Stone-terminal model, 26 November 2026.
+- Cian Dorr's coalesced constructions with classical Henkin components.
+source_names:
+- Kodsi and Codex, 26 Nov
+- Dorr coalesced sums
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalesced sums.
+group: stone-terminals-infinite-individuals
+settings:
+  frame: identity
+  components: standard
+arguments: []

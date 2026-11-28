@@ -1,0 +1,100 @@
+id: split-root-before-integer-stages
+name: Split root before the paired integer stages
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two independent OpenAI Codex (GPT-6) reviews of abstraction, root choice, both upper modal tests, rigid powers and Possibilism, 27 November 2026
+  date: '2026-11-27'
+  lean: none
+sources:
+- The integer-stage modal separations in symmetric-integer-paired-stages, based on Cian Dorr's paired-points models.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, split-root construction and the present combination, 27 November 2026.
+source_names:
+- Dorr and the integer-stage constructions
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bounds-of-possibility
+  role: background
+  locator: Appendix D, pp. 400–409
+  note: Two-hat necessity and the Barcan formula for 5-necessity.
+definition: >-
+  Take the symmetric integer stages with their paired coefficient sets and
+  one actual individual. At a new source $r$ every old stage has an entrance
+  $h_v$ and a return $j_v$ splitting that entrance. Old arrows absorb
+  entrances on the right and returns on the left. A root relation consists
+  of an unrestricted actual row and one invariant row at each entrance.
+  A relation at an upper stage has the usual ordinary pinned and equivariant
+  profile plus an independent reset value at the root.
+arguments:
+- id: source-choice-and-actuality
+  holds: [functional-choice-r, distinctness-necessary-r, strong-actuality, truth-implies-two-hat-necessity, well-ordering-r]
+  choice: uses
+  writeup: split-root-before-integer-stages
+  text: >-
+    Every entrance has a left inverse and fixes its parameters under the
+    entire target symmetry group. Specify an operation separately at the
+    injected source inputs in each target and at the unrestricted current
+    row. The identity-only source truth transports to the sole-return
+    atom, and any upper entrance has a true ordinary test permanently
+    extinguished by that return. Current row fullness admits well-orders.
+- id: upper-modal-separations
+  fails: [necessary-five-implies-two-hat-necessity, necessary-two-hat-implies-nd-necessity]
+  choice: free
+  writeup: split-root-before-integer-stages
+  text: >-
+    Keep the original ordinary pair-marker tests at the paired stages.
+    Give the compared propositions and the universal pin-omission tester
+    top reset coordinates. Give the positive pin guards and the contrary
+    injectivity testers bottom reset coordinates so a continuation
+    realizing a guard is ordinary. The usual two ordinary returns satisfy
+    the pin obligations for every expanded upper parameter. The Barcan
+    formula for 5-necessity yields the positive universal test.
+- id: rigid-source
+  holds: [rigid-comprehension-r, tame-rigidity-r, rigid-power-r, weakly-rigid-power-r, boolean-completeness-r]
+  fails: [barcan-t]
+  choice: free
+  writeup: split-root-before-integer-stages
+  text: >-
+    Every source tuple set has a profile with exactly its images at all
+    entrances. Every weakly rigid profile is such an exact profile by an
+    orbit-deletion tester. A future weakly rigid subrelation of a source
+    bound pulls back to a source subset with identical transported
+    extension, hence with identical transported entity. Joins are ordinary
+    coordinate unions of invariant rows. The scalar testing words at an
+    upper stage is absent from the entrance image.
+- id: mathematical-possibilism
+  holds: [forcing-possibilism]
+  choice: uses
+  writeup: split-root-before-integer-stages
+  text: >-
+    Uniform individual order and field tables give a finite individual
+    ordinal benchmark at the singleton individual sort. Limits of rigid
+    families see exactly the transported root members. The unrestricted
+    current graphs then exclude every infinite carrier from revised
+    smallness. The independent stage truth bits at the root give
+    principal intervals for all finite Boolean algebras.
+- id: self-atoms
+  holds: [necessary-self-atoms-are-strong-atoms-r]
+  choice: free
+  writeup: split-root-before-integer-stages
+  text: >-
+    At an ordinary upper occurrence the instantiated relation splits on
+    whether two fresh points have the same image, without changing the
+    row on its pin. A self-atom therefore has no ordinary occurrence.
+    At the root it must be a root-only tuple singleton; at an upper
+    stage it must be the sole-return copy of that singleton. These
+    are atoms at every point where they survive.
+- id: exact-number-labels
+  holds: [second-order-analytic-necessitism, necessary-axiom-of-infinity-t, arithmetic-necessitism, necessity-of-arithmetic]
+  choice: uses
+  writeup: split-root-before-integer-stages
+  text: >-
+    The independent stage bits supply continuum-many labels at every
+    relational type, transported bijectively as a family even after
+    returning to the root. Exact relations on those labels and the
+    exact families of all such relations realize standard full real
+    structures with their represented powers. Individual type is a
+    singleton. The closed standard numeral values give a transported
+    inductive cut; scalar carriers are everywhere infinite.

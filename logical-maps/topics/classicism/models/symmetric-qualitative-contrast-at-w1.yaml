@@ -52,6 +52,23 @@ meets:
     Each object carries the ideal of finite sets, and the domains hold the finitely pinned symmetric
     entities of every type.
 arguments:
+- id: trivial-target-rows
+  holds: [well-ordering-r, necessary-intensional-choice-r]
+  fails: [actuality, atomicity-t, boolean-completeness-t, countable-boolean-completeness-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  text: >-
+    A well-order of any current type is represented by using its graph on all arrows
+    into the object with trivial symmetries and the empty row elsewhere. For any nonzero
+    proposition confined to this object, take an arrow it contains and a fresh coefficient
+    outside its finite pin. Testing the image of that coefficient splits the proposition
+    by permuting two fresh inputs. The object-only truth therefore contains no atom, and no
+    atom is true here. The countable nonjoin at this same point is the family in the
+    necessary-countable-boolean-completeness argument of symmetric-qualitative-contrast.
+    Neither its counting graph nor its permutations require moving actual individuals.
+    The proof of Intensional Choice at both objects in that record also applies with
+    singleton individuals. The objects reached from either evaluation are the same.
 - id: c5
   holds: [necessary-distinctness-necessary-r]
   by: GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, 25 October 2026; checked and recorded by Claude Opus
@@ -118,6 +135,18 @@ arguments:
     a point outside $N$; so the propositions below a proposition number $1$, $2$ or
     infinitely many. But $\bot$, $q_0$, $\neg q_0$ and $\top$ form a complete four-element Boolean
     algebra, so Forcing Possibilism fails.
+- id: finite-scalar-atom-obstruction
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: finite-scalar-atoms-exclude-mathematical-possibilism
+  text: >-
+    Arrows to the fully symmetric object give the only atom. At the trivially
+    symmetric target, two permutations can agree on the finite pin and take a
+    fresh input to different values. Mathematical Possibilism would require
+    arbitrarily many propositional atoms by representing the finite power
+    algebras.
 notes: >-
   Recorded for the separation of Relational Choice from its necessitation under C5: Relational Choice
   holds at $W_1$ because its symmetry group is trivial, and fails at $W_0$, which $W_1$ sees. Astra's note

@@ -1,0 +1,33 @@
+id: arithmetic-necessitism-and-necessary-potential-infinity-e-imply-necessity-of-arithmetic
+premises:
+- arithmetic-necessitism
+- necessary-potential-infinity-e
+conclusion: necessity-of-arithmetic
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two independent reviews of the ordinary proof
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, rigidity of Frege arithmetic and cross-type Peano comparison, 26 November 2026.
+source_names:
+- Kodsi and Codex, 26 Nov
+references:
+- paper: goodsell-arithmetic-necessary
+  role: background
+  locator: Definitions 3–9, Frege arithmetical sentences
+proof: >-
+  The necessarily Peano Frege numbers at the indicated type are rigid with necessarily
+  distinct current instances. The positive sum and product graphs persist. For a false
+  operation equation transport the true output and use necessary distinctness and Peano
+  functionality. Induct through guarded quantification using weak inextensibility for a
+  true universal and a transported old counterexample for a false one. This fixes the
+  truth of every arithmetical sentence at the indicated type throughout the cone. At
+  any other counting type with the local Peano guard, the least zero- and successor-matching
+  relation gives an internal Peano isomorphism with those numbers, preserving the sentence.
+notes: >-
+  Any one necessarily Peano counting type suffices. This instance uses type e.

@@ -1,0 +1,23 @@
+id: stone-terminal-cantor-paired
+name: 'Cantor root loops with Maximalism and a Barcan counterexample'
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, homogeneous Stone-terminal construction and verification of this variant, 26 November 2026.
+source_names:
+- Kodsi and Codex, 26 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models, and Appendix E, coalesced sums.
+group: stone-terminal-roots
+settings:
+  loops: cantor
+  core: paired
+  names: inherited
+arguments: []

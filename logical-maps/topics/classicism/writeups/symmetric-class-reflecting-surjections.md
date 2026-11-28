@@ -166,13 +166,32 @@ The recorded proof of that last implication takes the least upper bound of the
 haecceities of the instances of $X$. That family is not countable in this
 model, so the argument says nothing about Countable Boolean Completeness.
 
+## Weak rigidity gives exact images
+
+Write $A$ for the actual extension of a weakly rigid relation $F$, and $N$ for a finite pin. At every arrow $f$, we claim $F_f=fA$ (transport the whole tuple, including any relational entries). Weak persistence gives $fA\subseteq F_f$. For a finite $S\supseteq N$, use the auxiliary profile
+$$
+B_S(A)_f=\{tz:z\in A,\ t|_S=f|_S\}.
+$$
+It is $S$-pinned and left equivariant by composing with target permutations. It necessarily contains each current member of $F$, so weak inextensibility gives $F\le B_S(A)$. Conversely $F_f$ contains each $tz$ in the displayed set by weak persistence at $t$ and pinning of $F$. Thus this is also a description of $F_f$ for every larger $S$.
+
+Take $y\in F_f$ and let $T$ be a finite pin of its tuple entries. Include an individual entry itself when it is from the moving base. Each target $E$-class has a unique source ancestor under $f$: surjectivity supplies one, and reflection prevents two. Every source class is the ancestor of some target class. Put $D=T\cup fN$ and, for each $d\in D$, choose $x_d$ with $f(x_d)=d$. Use the preceding description with $S=N\cup\{x_d:d\in D\}$ to obtain $y=tz$, where $z\in A$ and $t|_S=f|_S$. Let $L$ include $N$ and a finite pin of $z$.
+
+Choose a target permutation $v\in\operatorname{Aut}(E)$ fixing $D$. Move the finitely many classes of $t(L)$ disjoint from $D$ to classes whose $f$-ancestors are pairwise distinct and avoid the ancestors of all classes meeting $D$. The infinitely many available source classes allow this choice. For $l\in L$ choose $u(l)$ with $f(u(l))=v(t(l))$, taking $u(l)=l$ on $N$. This finite prescription reflects $E$. Indeed, if $u(l)$ and $u(l')$ are in one class, then the classes of $vt(l)$ and $vt(l')$ share an ancestor. For the moved classes this forces the classes to coincide, and $t$-reflection gives $l\mathrel E l'$. In the other case choose $d,d'\in D$ in the two classes. The preimages $x_d,x_{d'}$ lie in one source class. Since $t(x_d)=d$ and $t(x_{d'})=d'$, reflection gives $l\mathrel E x_d\mathrel E x_{d'}\mathrel E l'$.
+
+Every such finite prescription extends to an allowed surjection. Assign each already mentioned target class to its forced source class, allocate fresh target classes to the remaining source classes, and map each infinite source class onto the assigned target classes respecting the finitely many specified points. Thus $u$ is an arrow fixing $N$, and $uz\in F_u=F_1=A$. On $L$ we have $fu=vt$. The tuple pins give $f(uz)=v(tz)=y$, since $v$ fixes $T$. This proves the claim. Exact image rows persist under composition and give weak inextensibility after every arrow, since every later member comes from a current member. Hence Tame Rigidity holds necessarily. The argument works in both individual-domain variants.
+
+## Countable joins
+
+A whole entity fixed by all symmetries fixing a finite $N$ pointwise is pinned down by $N$. To prove this for a relational entity, start with any finite pin $S$. Given $f,g$ agreeing on $N$, extend their common restriction to an arrow $h$ under which each source class is ancestor to only finitely many target classes: assign the finitely many target classes that meet $fN$ as required, then allocate remaining classes bijectively to the unassigned source classes. Map onto each assigned range, respecting the finitely many prescribed values.
+
+Compare $f$ with $h$. For the extra points of $S$ in a class meeting $N$, choose pairwise distinct target values in $[f(n)]_E=[h(n)]_E$ for one $n$ of that class, avoiding $fN$. Preimages under $f$ and $h$ both belong to the original source class. For each class of $S$ disjoint from $N$, choose a target class whose $f$- and $h$-ancestors respectively avoid the source classes of $N$ and the previously chosen ancestors. This is possible: infinitely many different $f$-ancestors remain, and the finitely many prohibited $h$-ancestors exclude only finitely many target classes. Choose distinct target values there. The resulting lists of preimages under $f$ and $h$ have precisely the equality and equivalence pattern of the original $S$, including their relations to $N$. They extend to permutations $a,b\in\operatorname{Aut}(E)$ fixing $N$ pointwise, with $fa$ and $hb$ agreeing on $S$. Since the whole entity is fixed by $a,b$, its rows at $f$ and $h$ coincide. Comparison of $g$ with the same $h$ proves the pin claim.
+
+For an internally countable current family of relations, take a common finite pin $N$ of the family and its numerical indexing graph. At any index type the standard Frege numeral terms give an invariant row that can be used at every arrow, with empty pin. The row is inductive, so all actual Frege numbers are standard numeral denotations and are fixed by every symmetry. A symmetry fixing $N$ preserves the indexing and the family; distinct members cannot receive the same numerical label. Each member is consequently fixed as a whole entity. By the pin claim, $N$ pins every member. Their rowwise union is left equivariant, is pinned by $N$, and is their least upper bound. This proves necessary Countable Boolean Completeness for all admitted index types and relation types.
+
+These two proofs are due to OpenAI Codex (GPT-6) at Daniel Kodsi's direction, 27 November 2026, with independent checks by two other Codex agents. The model construction and the earlier local Boolean refutation retain their original attributions.
+
 ## Left open
 
-- **Countable Boolean Completeness.** As in symmetric-old-new-individuals, a
-  countable property's instances are invariant under the symmetries fixing a
-  finite set. The step from invariance to uniform pinning has to deal with
-  arrows that split classes.
-- **The rigidity family:** Tame Rigidity, Rigid Power, Rigid Rigidity and
-  their weak forms. Their recorded arguments assume all surjections or section
-  arrows. Section arrows fail here: when an arrow splits one class across two
-  target classes, a section of points in both would have to merge classes.
+Rigid Power, Rigid Rigidity and their weak forms remain open in this model. The exact image criterion above reduces the powers question to lifting rigid subrelations of transported bounds.
+
+The truth-collapse argument above applies at the single object for every proposition parameter there. The box of the closed truth-collapse schema therefore holds too. Combined with necessary Tame Rigidity and the original failure of Transversal, this separates the conjunction of the two necessary schemata from Transversal.

@@ -24,3 +24,14 @@ proof: >-
 references: []
 notes: >-
   Instance of the pattern of maximalist-distinctness-incompatible-with-necessary-boolean-completeness-r.
+  For the unboxed principle, the accompanying write-up proves that a point with signature
+  Maximalism and local Boolean Completeness can be extended to a new point with the same
+  two principles and a true proposition that fails 5-necessity, if such a starting point
+  exists. The stronger unboxed result
+  [[pure-maximalism-and-boolean-completeness-t-incompatible]] now excludes
+  such a starting point even under pure Maximalism.
+changes:
+- date: '2026-11-26'
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  summary: Added a conditional construction for the question about unboxed Boolean Completeness.
+  minor: true

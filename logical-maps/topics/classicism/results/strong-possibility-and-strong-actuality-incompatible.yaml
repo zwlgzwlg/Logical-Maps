@@ -10,7 +10,8 @@ certificate:
   recorded_by: Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 28 October 2026
   checked_by: []
   date: '2026-10-28'
-  lean: stated
+  lean: verified
+  lean_ref: Classicism.Map.strong_possibility_and_strong_actuality_incompatible
 sources:
 - >-
   GPT-6 Astra (OpenAI), prompted by Daniel Kodsi, Strong Possibility: products, reduced products, and minimal
@@ -21,6 +22,8 @@ sources:
 source_names:
 - Astra via Kodsi 22 Oct
 proof: >-
+  Pure Strong Possibility alone gives the contradiction by [[strong-possibility-r-inconsistent]].
+
   (1) Reflection: if $U$ is a closed sentence $\forall\bar x\,\theta(\bar x)$ with $\theta$ a Boolean
   combination of identities between terms, then $\Diamond_{\ne}U\to U$ is a theorem of C. For suppose
   $\theta(\bar a)$ fails. Let $q$ be the conjunction of the negations of the identities in $\theta(\bar a)$

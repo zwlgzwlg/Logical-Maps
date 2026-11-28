@@ -1,0 +1,40 @@
+id: separate-exits-for-pure-and-named-witnesses
+name: Separate exits for pure and named witnesses
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Independent GPT-6 researchers checked the action model, the gluing of named tuples and the failed binary instance, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+- The map's coalesced-definable-root model for a family of components complete for C and full-free-monoid-glued-constants model for gluing on independent word sectors.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Coalesced and free-monoid models
+references:
+- paper: bacon-dorr-classicism
+  role: formulation
+  locator: §§2.5–2.6, pp. 37–41
+definition: >-
+  A free-word root has one set of entrances realizing every consistent pure
+  individual matrix on every distinct root tuple, and another set of entrances
+  accepting arbitrarily prescribed finite named tuples. Every nonempty word
+  and every entrance of the second kind identifies two fixed unnamed individuals.
+  Give the root arbitrary word rows and a whole old entity independently at
+  every word and entrance. Evaluate at the identity.
+arguments:
+- id: the-two-gluings
+  holds: [possibility-plus-r, possibly-witnessed-possibility-r]
+  fails: [possibility-plus-signature-r]
+  choice: uses
+  writeup: separate-exits-for-pure-and-named-witnesses
+  text: >-
+    The first kind of entrance realizes the pure parameter instances. For possible
+    named witnesses, copy root tuples under distinct initial letters and old
+    tuples at distinct direct entrances of the second kind. A fixed relational
+    name is universal currently and top throughout every direct entrance of
+    the first kind. The two reserved individuals therefore cannot remain distinct
+    while that name is nonuniversal, although their conjunction is C-consistent.

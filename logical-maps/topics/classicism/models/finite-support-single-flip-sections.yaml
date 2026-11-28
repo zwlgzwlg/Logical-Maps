@@ -104,6 +104,17 @@ arguments:
     At $W_1$, $\{1_{W_1}\}$ is a proposition (identity-singletons) distinct from $\bot$, and its transport
     along $\pi$ is $\bot$, since $1_{W_1}$ is not of the form $k\circ\pi$. So ND at type $t$ fails at $W_1$,
     and it is not necessary at $W_0$.
+- id: ordinal-benchmark-and-scalar-intervals
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: countable-bases-and-mathematical-possibilism
+  text: >-
+    The countable pinning base gives each realized arrow a countable scalar
+    neighborhood base. An infinite individual carrier and full current coding
+    present the small complete atomless Cantor algebra, which has no
+    countably based ultrafilter.
 notes: >-
   Restricting the sections of finite-support-sections-and-projection to those flipping at most one point
   gives a propositional algebra at $W_0$ that is atomic, the finite–cofinite algebra on the flips times the

@@ -26,5 +26,12 @@ proof: >-
 references: []
 notes: >-
   With unboxed Relational Choice the argument fails: $F$ is then instantiated only at the evaluation
-  point, while Intensional Choice needs it necessarily instantiated. Whether Relational Choice with
-  Intensional Choice implies Modalized Relational Choice is open.
+  point, while Intensional Choice needs it necessarily instantiated. The model [[coalesced-swappable-pairs-root]] already refutes the unboxed
+  strengthening. In [[injective-entrances-to-old-and-new-individuals]], the root also
+  satisfies Relational Choice and necessary Intensional Choice; at an upper object no
+  selector can choose a member of every individual pair.
+changes:
+- date: '2026-11-26'
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  summary: Replaced the obsolete open question by recorded countermodels.
+  minor: true

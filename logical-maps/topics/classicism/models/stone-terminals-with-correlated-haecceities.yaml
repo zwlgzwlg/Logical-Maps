@@ -1,0 +1,66 @@
+id: stone-terminals-with-correlated-haecceities
+name: Stone terminals with correlated haecceities
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) agents, prompted by Daniel Kodsi, audited the paired terminal calculations, signature transfer and Stone extension, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, correlated haecceity codes at a full and a supported terminal over a common Maximalist predecessor, 27 November 2026.
+- Cian Dorr's finitely pinned substitution root supplies the signature Possibility+ and Barcan component.
+source_names:
+- Kodsi and Codex, 27 Nov
+- Dorr, 19 Oct
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalesced sums.
+definition: >-
+  A root with arbitrary current rows has three independent exits. Two are extensional
+  one-world models on countably many pairs of individuals, one with full types and
+  one with types supported by finitely many pairs. The third is the finitely pinned
+  substitution root for a signature with one propositional name. Each of these
+  entrances is bijective on individuals. Add the locally constant finite terminal
+  sections of the homogeneous Stone construction.
+arguments:
+- id: possibilities-and-barcan
+  holds: [possibility-plus-signature-r, barcan-r]
+  choice: uses
+  writeup: stone-terminals-with-correlated-haecceities
+  text: >-
+    The individual bijection into the substitution root preserves the eligibility
+    conditions for every signature Possibility+ instance. All initial exits are
+    onto at every type. The Barcan principle at the substitution root controls
+    all its further continuations; the other exits are terminal.
+- id: correlated-powers
+  fails: [rigid-power-r, weakly-rigid-power-r]
+  choice: free
+  writeup: stone-terminals-with-correlated-haecceities
+  text: >-
+    A rigid family of individual properties at the root pairs each haecceity in the
+    full terminal with the haecceity of its image under a fixed external bijection in
+    the supported terminal. A rigid subfamily in the first terminal has no weakly rigid
+    root lift, since its correlated image would pick one inhabitant of every pair in
+    the supported terminal. Separate single-tuple testers force both terminal projections.
+- id: small-algebras
+  holds: [forcing-possibilism]
+  choice: uses
+  writeup: stone-terminals-with-correlated-haecceities
+  text: >-
+    Bound the ordinal predicate by the entities with an extensional row on root
+    orders and fields, arbitrary values in the three independent exits and a
+    constant finite Stone section. This bound is fixed before choosing the size
+    of the Boolean product; its factors represent every revised-small algebra.
+- id: root-and-supported-choice
+  holds: [strong-actuality, truths-are-nd-necessary, well-ordering-r, transversal-r]
+  fails: [necessary-relational-choice-r, necessary-transversal-choice-r, modal-well-ordering-r]
+  choice: uses
+  writeup: stone-terminals-with-correlated-haecceities
+  text: >-
+    The identity-only proposition is a true strong atom and is impossible at the
+    exits. All current graphs and selectors exist at the root. At the supported
+    terminal neither a transversal of the individual pairs nor a functional
+    selector of their two-member properties can have finite support.

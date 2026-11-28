@@ -1,0 +1,48 @@
+id: sequence-cover-of-a-swapped-terminal-pair
+name: Sequence cover of a swapped terminal pair
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Independent OpenAI Codex researchers checked the old atom, root density and modal scopes.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, sequence cover, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, intensional action models.
+definition: >-
+  The old entrance has one individual and lands at the fixed point of the
+  classical hierarchy on three individuals, two of which are interchanged.
+  Old source relations have an arbitrary current row and an invariant terminal
+  row. Add a root with one entrance there and countably many independent
+  terminal entrances, whose whole values agree cofinitely with the old
+  terminal projection. Use top relations and the designated fixed individual.
+arguments:
+- id: atom-scopes
+  holds: [strong-atomicity-r, necessary-atomicity-r, necessary-strong-atomicity-t, necessary-atoms-are-strong-atoms-t, necessary-strong-actuality, barcan-r, necessary-barcan-t]
+  fails: [necessary-atoms-are-self-atoms-r, necessary-atoms-are-strong-atoms-r, necessary-barcan-relational]
+  choice: free
+  writeup: sequence-covers-of-a-pair-and-a-fork
+  text: >-
+    The two swapped individuals form one orbit and hence an old source atom,
+    which splits at the terminal. The scalar bits stay strong. Current and
+    isolated tuple singletons supply strong atoms densely at the new root.
+    Every possible witness for a root predicate at the limit also occurs at
+    an isolated coordinate where it lifts.
+- id: ordinal-benchmark-and-scalar-intervals
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: countable-bases-and-mathematical-possibilism
+  text: >-
+    Changing one component in the sequence of terminal individuals gives
+    arbitrarily large finite root fields. Arbitrary current rows present the
+    small regular-open algebra of Cantor space, whereas each nonzero scalar
+    interval has an atom.

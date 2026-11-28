@@ -1,0 +1,37 @@
+id: functional-choice-with-two-site-returns
+name: Functional Choice with two returns from one supported site
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - An independent OpenAI Codex (GPT-6) researcher checked both return coordinates, whole-entity choice and the self-atom that splits after the entrance.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two returns in the countable-site Functional Choice model, 27 November 2026.
+- Cian Dorr's full two-object double retraction, for the distinction between self-atoms and strong atoms.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Dorr, double retraction
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models.
+definition: >-
+  In the supported-stage Functional Choice model, equip one site with two
+  distinct returns to the root, each splitting the entrance. Its relations
+  have independent whole source coordinates on the two returns.
+arguments:
+- id: two-returns
+  holds: [functional-choice-r, forcing-possibilism, second-order-analytic-necessitism, arithmetic-necessitism, necessary-axiom-of-infinity-t, boolean-completeness-r, atomicity-r, well-ordering-r, rigid-comprehension-r, tame-rigidity-r, rigid-power-r, weakly-rigid-power-r]
+  fails: [self-atoms-are-strong-atoms-t, strong-actuality, necessary-relational-choice-r, necessary-transversal-choice-r, necessary-transversal-r, necessary-rigid-power-r, necessary-weakly-rigid-power-r, truths-are-nd-necessary]
+  choice: uses
+  writeup: functional-choice-over-supported-stages
+  text: >-
+    The source-only truth is a self-atom since it is true only at the root.
+    At the distinguished site its transport splits into two nonempty
+    independent return coordinates. Each entrance still embeds the entire
+    source, admitting the choice operations, coherent continua and exact
+    image profiles. The ordinal tables and finite Boolean intervals are
+    unchanged.

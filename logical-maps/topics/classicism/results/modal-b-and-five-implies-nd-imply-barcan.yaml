@@ -1,0 +1,41 @@
+id: modal-b-and-five-implies-nd-imply-barcan
+premises:
+- modal-b
+- five-implies-nd-necessity
+conclusion: barcan-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two independent reviews of the ordinary proof, 26 November 2026
+  date: '2026-11-26'
+  lean: verified
+  lean_ref: Classicism.Map.modal_b_and_five_implies_nd_imply_barcan
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026.
+- The map's Barcan formula for 5-necessity, from Prior's argument for S5 operators.
+source_names:
+- Codex via Kodsi, 26 Nov
+- Classicism map, Barcan for 5-necessity
+references:
+- paper: bounds-of-possibility
+  role: background
+  locator: Appendix D, pp. 400–409, for the two operators.
+proof: >-
+  Given $\Box_{\ne}p$, choose a true $q$ with $\Box(\Diamond q\to p)$.
+  Modal B yields $\Box\Diamond q$, so K gives $\Box p$. For a relation $F$
+  of any input type, suppose every current $x$ satisfies $\Box Fx$.
+  Then each satisfies $\Box_5Fx$ by the ordering of the operators in C.
+  The [[box5-barcan|Barcan formula for 5-necessity]] gives $\Box_5\forall x\,Fx$.
+  The second premise gives $\Box_{\ne}\forall x\,Fx$ and the first step
+  yields $\Box\forall x\,Fx$.
+notes: >-
+  Both premises are local. Modal B is equivalent in C to ND at type $t$:
+  follow [[modal-b-implies-distinctness-necessary-r]],
+  [[distinctness-necessary-r-implies-distinctness-necessary-t]],
+  [[distinctness-necessary-t-implies-modal-five]] and [[modal-five-implies-modal-b]].
+  Thus Plenitude also suffices as the first premise by
+  [[plenitude-r-implies-distinctness-necessary-r]], and Functional Choice suffices by
+  [[functional-choice-r-implies-plenitude-r]].

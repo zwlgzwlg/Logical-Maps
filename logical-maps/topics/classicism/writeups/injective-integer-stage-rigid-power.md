@@ -1,0 +1,25 @@
+## Rigid Power at every stage
+
+For a stage $n$ and a finite type tuple, let $E$ be a set of current tuples invariant under the source symmetries fixing a set $K$ of at most $\kappa$ individuals. Include every source marker in $K$. In each arrow kind choose a representative $b:n\to m$ which is bijective in every coordinate onto the permitted range. That range is either the entire target coordinate or its ordinary pool, so is invariant under target symmetries. Write $b[E]$ for the image under typed transport, which need not be injective on relations.
+
+There is a weakly rigid relation $W(E)$ with current extension $E$. Give it the row $b[E]$ at each representative, and the row $g(b[E])$ at an arrow $f$ of the same kind when the target symmetry $g$ satisfies $gb|_K=f|_K$. Every target symmetry fixing $bK$ restricts on the range of $b$ to the conjugate of a source symmetry fixing $K$. Hence each prescribed row is independent of the interpolating symmetry and the profile is equivariant and $K$-pinned. The identity can be taken as the representative of its kind. In fact every onto-range representative $b'$ of a kind has row $b'[E]$, since $b'$ differs from $b$ by a target symmetry. For $x\in E$, interpolate on the pin of $x$ together with $K$ to see that $fx$ belongs to the prescribed row. This proves weak persistence. If a tester necessarily contains every current $x\in E$, at each representative its row contains $b[E]$. Interpolating on the tester’s pin together with $K$ extends the inclusion to every arrow. This proves weak inextensibility. By uniqueness of weakly rigid coextensions, every weakly rigid relation with extension $E$ equals $W(E)$.
+
+Suppose $F=W(E)$ is fully rigid and $E_0\subseteq E$ is any symmetry-supported subset. Enlarge $K$ to support both. We show $W(E_0)$ is fully rigid. Take successive onto-range kind representatives $b:n\to m$ and $c:m\to l$. In the composite kind choose an onto-range representative $d:n\to l$ agreeing with $cb$ on $K$, by interpolation on $K$. On the range of $d$ define $t(d a)=cb a$ for individuals $a$. At a coordinate where the permitted range omits the target marker, extend $t$ by fixing the marker. This gives a coordinatewise injection of the target into itself, fixes every target marker, sends ordinary points to ordinary points and fixes $dK$. To see the marker assertion when the range includes a marker, the composite kind preserves the corresponding source marker, and so do $d$ and $cb$.
+
+The injection $t$ acts on every target tuple by taking a genuine symmetry agreeing with it on that tuple’s individual pin. There are $\kappa^+$ ordinary points per coordinate, so the partial bijections on pins extend to permutations. The result is independent of the chosen symmetry, and this virtual action is injective since a common interpolation handles any two tuples. In particular $t(dx)=(cb)x$ by interpolating on the image under $d$ of a pin for $x$. For the row $D=d[E]$, full rigidity of $F$ and the representative formula at $b$ and at $c$ give
+$$
+ t[D]=(cb)[E]=c[b[E]]=F_{cb}=F_d=D.
+$$
+The last equality uses agreement on $K$ at the same kind. The subset $S=d[E_0]$ of $D$ is invariant under the target symmetries fixing $dK$, by the same conjugation on the permitted range. For every target tuple $z$, membership of $z$ in $S$ is equivalent to membership of $tz$ in $S$. Indeed one symmetry agrees with $t$ on $dK$ and on a pin for $z$. Since $t[D]=D$, it follows that $t[S]=S$. Consequently
+$$
+ c[b[E_0]]=(cb)[E_0]=d[E_0]=W(E_0)_{cb}.
+$$
+Thus, for each representative $b$, the transport $bW(E_0)$ has precisely the representative rows of $W(b[E_0])$, so is weakly rigid. Any other arrow agrees with a symmetry followed after a representative on the pin of $W(E_0)$ and gives the same whole transport there. Weak rigidity is invariant under target symmetries. This proves full rigidity of $W(E_0)$. Its inclusion in $F$ follows from inclusion of their rows at representatives.
+
+Finally, let $Y$ be a rigid relation entailing $bF$ at an onto-range representative $b:n\to m$, with current extension $T\subseteq b[E]$. Take
+$$
+ E_0=\{x\in E:bx\in T\}.
+$$
+This is supported at the source. Add to a pin for $E$ every source marker and the inverse image under $b$ of a pin for $T$. For a source symmetry fixing this enlarged set, conjugate it on the range of $b$ and extend by the identity on the omitted markers. The resulting target symmetry fixes the pin of $T$. By the preceding argument $W(E_0)$ is a rigid source subrelation of $F$. Its transport has extension $b[E_0]=T$ and hence equals $Y$ by uniqueness.
+
+The property of being a rigid subrelation of $F$ therefore has at every representative exactly the image of its current extension, the forward inclusion being persistence of rigidity and entailment. The characterization by representative rows makes this property weakly rigid. This argument applies at each stage to every fully rigid bound, and the bound stays rigid under transport. Its power is thus fully rigid at each stage, proving necessary Rigid Power.

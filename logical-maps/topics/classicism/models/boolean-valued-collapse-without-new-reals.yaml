@@ -1,0 +1,65 @@
+id: boolean-valued-collapse-without-new-reals
+name: Boolean-valued collapse without new reals
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two further OpenAI Codex (GPT-6) agents independently reviewed rigid real structures, both Boolean completeness verdicts and the forcing argument.
+  date: '2026-11-26'
+  lean: none
+sources:
+- Andrew Bacon, Could the truths of mathematics have been different?, online appendix §B.2, full Boolean-valued semantics.
+- Neil Barton and Zachary Goodsell, Continuum Contingency, Theorem 20, for the continuum collapse.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, the no-new-reals specialization, its rigid real structures and the missing uncountable meet, 26 November 2026.
+source_names:
+- Bacon, Boolean-valued model
+- Barton and Goodsell, Theorem 20
+- Kodsi and Codex, 26 Nov
+references:
+- paper: bacon-mathematical-contingency
+  role: proof
+  locator: Online appendix §B.2, Lemmas B.1–B.4
+- paper: barton-goodsell-continuum-contingency
+  role: background
+  locator: §§7–8, Theorem 20
+definition: >-
+  In a ground model of ZFC in which CH fails, let A be the regular-open algebra of
+  the countably closed collapse of the old continuum to omega-one. Interpret all
+  relational types in the full Boolean-valued model over B = 2 × A, with crisp identity,
+  one individual, and the two-element projection as designated truth. Take every
+  signature constant relational and interpreted by top.
+arguments:
+- id: no-new-reals
+  holds: [analytic-necessitism]
+  fails: [non-contingency-of-ch]
+  choice: uses
+  writeup: boolean-valued-collapse-without-new-reals
+  text: >-
+    A ground antichain supplies distinct labels for the numbers and all ground reals
+    at every relational type by constant lifts. Their crisp characteristic functions
+    and graphs are rigid. Countable closure prevents new sets of numbers, so this is
+    a necessary real number structure. The individual type is too small. The collapse
+    gives a new bijection of omega-one with the same reals, changing CH at type t.
+- id: countable-and-uncountable-meets
+  holds: [necessary-countable-boolean-completeness-r, boolean-completeness-r]
+  fails: [necessary-boolean-completeness-t]
+  choice: uses
+  writeup: boolean-valued-collapse-without-new-reals
+  text: >-
+    Every forcing-countable family is a ground family because the forcing adds no
+    countable sequences of ground elements and the internal numbers lie in the
+    standard numeral orbit. Its ground pointwise bounds work. For the uncountable
+    antichain indexed by omega-one, any ground meet for complements selected by
+    the generic subset of omega-one would recover that subset in the ground model.
+- id: rigid-coextensions-and-choice
+  holds: [functional-choice-r, rigid-comprehension-r, necessary-intensional-choice-r, modal-well-ordering-r, necessary-distinctness-necessary-r, necessary-barcan-r, strong-actuality]
+  fails: [atomicity-t, forcing-possibilism, infinity-e]
+  choice: uses
+  writeup: boolean-valued-collapse-without-new-reals
+  text: >-
+    Crisp characteristic functions rigidify the designated extensions. Full function
+    domains admit choice at the designated atom. Ground well-orders persist and
+    disjoint refinements select Boolean singletons. Ground identity and constant
+    domains give boxed ND and Barcan. The atomless factor has no nonzero finite
+    interval, and the other factor has just one atom. No four-element interval exists.

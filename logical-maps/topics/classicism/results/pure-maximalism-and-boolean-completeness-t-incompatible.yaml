@@ -1,0 +1,43 @@
+id: pure-maximalism-and-boolean-completeness-t-incompatible
+premises: [distinctness-schema-r, boolean-completeness-t]
+conclusion: false
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two further GPT-6 researchers independently reviewed the finite-support partition model, the upper-bound argument at newly available numbers, and the arithmetic contradiction.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026, the partition model and its recurrent family of propositions.
+- Zachary Goodsell, Arithmetic is Necessary, Theorems 9 and 11, the arithmetic induction and incompleteness arguments.
+source_names: [Codex via Kodsi, Arithmetic is Necessary]
+references:
+- paper: goodsell-arithmetic-necessary
+  role: background
+  locator: Theorem 9, pp. 19–21, and Theorem 11, pp. 24–26.
+proof: >-
+  In an S5 model of finitely supported relations on a countably infinite
+  set of individuals, a world is an ordered partition into finitely many
+  infinite blocks. Its block count is the greatest size of a finite family
+  of disjoint infinite unary rows. This gives a closed pure guard G and
+  disjoint labels J(n) for which every number's label is possible throughout
+  each G-cone. If the family of G-and-J(n) propositions indexed by the
+  source Frege numbers had a supremum, its leastness and induction at a
+  G-point would force that supremum to cover the cells of every number
+  newly available there. Testing the same supremum with an arbitrary
+  numerically indexed predicate yields the Barcan inference for numerical
+  quantifiers restricted to G-points. Goodsell's induction then fixes
+  every arithmetic sentence throughout the accessible G-points. The
+  consistent effective theory of C under G interprets PA, so Rosser's
+  theorem gives opposite G-consistent arithmetic signs. Ordinary pure
+  Maximalism makes both possible. The accompanying write-up gives the
+  pure label, both upper bounds, and the calculation for nonstandard numbers.
+notes: >-
+  Already the supremum of one closed, internally countably indexed family
+  of propositions is impossible. The incompatibility with signature
+  Maximalism follows because it includes the pure possibility instances.
+  The stated Boolean Completeness is local. An external strengthening gives a single sequence of closed pure
+  propositions for which every infinite subsequence lacks a supremum.

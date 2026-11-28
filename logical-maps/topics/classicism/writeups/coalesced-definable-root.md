@@ -1,6 +1,16 @@
 # Coalesced sum: interpretation arrows into every component object, definable root
 
-The strict-smallness argument below concerns the earlier axiom. The current model record proves failure of the revised Mathematical Possibilism by the Cantor regular-open algebra.
+The strict-smallness argument below concerns the earlier axiom. The
+model argument mathematical-possibilism of 16 November 2026, by OpenAI
+Codex (GPT-6), prompted by Andrew Bacon, refutes the revised Mathematical
+Possibilism. The current ordinal benchmark contains the distinct standard
+finite thresholds. At every relation type the current row can be any
+subset of the argument tuples with bottom as descriptor, so the root
+admits the Cantor regular-open algebra, all its subcollections, and all
+the required graphs. Its continuum-sized carrier is small by the
+countable-subset power argument, while this root has only countably many
+propositions. The corresponding proof for arbitrary signature sizes is
+in [[coalesced-definable-root-signature]].
 
 Cian Dorr gave this construction on 20 October 2026, for the sentence $\Psi$
 below; Claude Fable 5.1 (Anthropic) wrote the verification and the arguments.
@@ -228,6 +238,22 @@ Dedekind finiteness to finiteness.
   $d$ hold of every individual everywhere; but its transport, the universal
   property, is weakly inextensible at a component world only where BF at type
   $e$ holds, and some component refutes that. Weakly Rigid Power fails with it.
+  *Withdrawn 26 November 2026 by OpenAI Codex (GPT-6), prompted by Daniel
+  Kodsi.* Take the root test property $X=\lambda x\, .\,x=d$. Necessarily
+  $Xd$ by reflexivity and NI. At an exit $\langle V,a\rangle$ into a
+  two-individual component $X$ contains only $a$ whereas the transported
+  $Y$ contains both individuals. This refutes $Y\le X$ and hence the
+  asserted weak inextensibility. Changing the designated individual in a
+  second exit changes the interpretation of $d$ in the tester as well.
+  The all-type Tame Rigidity and Weakly Rigid Power verdicts remain open
+  for this model.
+- **Atoms are self-atoms fails** at type $t$. Take the two-world cell $B$
+  used in [[strong-possibility-incompatible-with-barcan-t]]. As shown
+  there, $B$ is an atom at this root and C proves $B\to\Box B$. At a
+  component satisfying $B$, its transport is $\top$ and there are four
+  propositions. Hence the transported $B$ is true and has a proper nonzero
+  part. This witnesses failure of the bridge at the root. *OpenAI Codex
+  (GPT-6), prompted by Daniel Kodsi, 26 November 2026.*
 - **Boxed principles.** The group's argument that every pure sentence
   consistent with C is possible at the root refutes □Vicinity, □Weakly
   Inextensible Comprehension and □Transversal.

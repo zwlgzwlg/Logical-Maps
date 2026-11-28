@@ -1,0 +1,100 @@
+id: mixed-reduced-power-retraction
+name: Reduced-power retraction with principal and free entrances
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two additional GPT-6 agents independently reviewed the reduced construction and finite-ordinal argument.
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, mixed reduced-power retraction, 26 November 2026.
+- The map's reduced-power retraction and retraction with countably many sections.
+source_names:
+- Codex via Kodsi, 26 Nov
+- Retraction models
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §§3.4–3.5, pp. 55–61, typed action semantics
+definition: >-
+  Use the reduced-power retraction with its one and two individual base carriers.
+  Partition the countable entrance index set into infinite $A,B$. Quotient the
+  target-row sequences by equality outside a finite subset of $B$. At each
+  entrance use ultrafilters disjoint from that ideal, indexed by the current
+  outer ultrafilter as in the original construction. In particular all principal
+  ultrafilters on $A$ and free ultrafilters on $B$ are available. The evaluation
+  point is the initial $r$-stage. One propositional name denotes a proposition
+  distinct from every closed pure denotation.
+arguments:
+- id: possibilism-and-incompleteness
+  holds: [forcing-possibilism]
+  fails: [countable-boolean-completeness-r, boolean-completeness-t, atomicity-t]
+  choice: uses
+  writeup: mixed-reduced-power-retraction
+  text: >-
+    The proposition algebra is $\mathbf 2\times\mathcal P(A)\times(\mathcal P(B)/\mathrm{Fin})$.
+    The finite ordinal-table bound for the retraction with countably many sections
+    applies modulo the row ideal: a finite rigid family equals its actual members'
+    finite haecceity union, with all its common target tables valid off one
+    negligible set. Small carriers are therefore finite. Every finite Boolean
+    algebra occurs below a finite subset of $A$. A countable partition of $B$
+    into infinite blocks has no join in the last factor, and is enumerated by an
+    admitted current graph on standard numerals.
+- id: choice-and-barcan
+  holds: [functional-choice-r, gallin-extensional-comprehension-r]
+  fails: [barcan-t]
+  choice: uses
+  writeup: mixed-reduced-power-retraction
+  text: >-
+    Each $h_i$ is injective, so the chosen outputs can be spliced on all
+    transported input slices. A constant entrance row pulled back from the
+    current row along $j$ has membership preserved in both directions at every
+    step, giving Gallin comprehension. The tester for the images of the $h_i$
+    witnesses the failure of every type instance of Barcan.
+- id: inextensibility-and-powers
+  holds: [necessary-weakly-inextensible-comprehension-r, necessary-tame-rigidity-r, necessary-weakly-rigid-power-r, necessary-rigid-power-r]
+  fails: [inextensible-comprehension-r]
+  choice: uses
+  writeup: mixed-reduced-power-retraction
+  text: >-
+    The diagonals against infinite inextensible or weakly rigid root extensions
+    use just $B$, leaving all tester rows at $A$ full. A weakly rigid relation at
+    $s$ has a rigid return coordinate with finite current row equal to the
+    projection of its $s$-row. Every later weakly rigid subrelation lifts by
+    selecting a subset of these finitely many projected tuples. The proofs of
+    both powers and weakly inextensible comprehension of the reduced retraction
+    thus transfer.
+- id: mathematics
+  holds: [necessary-axiom-of-infinity-t, necessity-of-arithmetic, necessity-of-second-order-analysis]
+  fails: [arithmetic-necessitism, analytic-necessitism, infinity-e, possible-infinity-e, potential-infinity-e]
+  choice: uses
+  writeup: mixed-reduced-power-retraction
+  text: >-
+    Current full rows yield standard canonical arithmetic wherever the guard
+    holds at either base, as well as standard structures whenever a real
+    structure exists. These sentence-level facts transfer by Łoś. The root
+    Frege number relation at $t$ and the numbers of any actual real structure
+    have infinite rows, hence fail weak rigidity. A real structure exists at
+    $t$. Every individual domain has one or two members.
+- id: atoms-and-two-hat
+  holds: [necessary-strong-actuality, necessary-self-atoms-are-strong-atoms-r, necessary-truth-implies-two-hat-necessity]
+  fails: [atoms-are-self-atoms-t]
+  choice: uses
+  writeup: mixed-reduced-power-retraction
+  text: >-
+    The current-only true atoms remain strong. A self-atom cannot have
+    nonzero root entrance component: at some observing ultrafilter it is
+    instantiated and has a nonzero return component simultaneously. The
+    two-hat witness at an even stage is its current-only true atom; at odd
+    stages the new current-only true atom has no possible return. A propositional
+    atom supported on a single index of $A$ splits at its principal entrance.
+- id: well-orders-and-independent-name
+  holds: [modal-well-ordering-r, independence-signature-r]
+  choice: uses
+  writeup: mixed-reduced-power-retraction
+  text: >-
+    Use well-orders on the corresponding two base carriers and Łoś at the
+    iterated stages. The one propositional name may be chosen outside the
+    countably many pure term denotations in the continuum-sized proposition algebra.

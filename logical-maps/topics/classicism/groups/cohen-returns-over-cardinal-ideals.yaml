@@ -1,0 +1,84 @@
+id: cohen-returns-over-cardinal-ideals
+name: Cohen returns over cardinal ideals
+definition: >-
+  In a countable ground structure obtained from the constructible universe,
+  use the continuum-ideal high entrances of [[countable-ideal-retraction]].
+  {{columns}} Add to each root relation a name for its current row at this
+  forcing site. The forcing entrance reads the name and retains the whole
+  ground entity for the return, as in [[cardinal-ideal-retraction-with-continuum-collapse]].
+  Individuals are the natural numbers at every stage. Evaluate at the first
+  root, giving individual names zero and relational names top.
+parameters:
+  columns:
+    text: The number of Cohen reals in the forcing excursion.
+    generate: true
+    default: one
+    values:
+      one:
+        text: Use finite partial functions adding one Cohen real.
+        label: one Cohen real
+      many:
+        text: Use finite partial functions adding one Cohen real for each member of the second uncountable ordinal of the ground.
+        label: many Cohen reals
+arguments:
+- id: selection-and-rigid-bounds
+  holds: [functional-choice-r, gallin-extensional-comprehension-r, modal-well-ordering-r, necessary-tame-rigidity-r, necessary-weakly-inextensible-comprehension-r]
+  fails: [rigid-power-r, weakly-rigid-power-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: cohen-returns-and-countable-joins
+  text: >-
+    Ground selectors extend to both entrances by their return tags.
+    Weakly rigid bounds at a root have size at most the ground continuum
+    and have exact images. At a forcing site the return of a weakly rigid
+    bound is itself weakly rigid. The high entrance produces a rigid
+    subproperty that no ground power test can lift.
+- id: new-real-and-missing-join
+  holds: [countable-boolean-completeness-r, arithmetic-necessitism, necessity-of-arithmetic, necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t]
+  fails: [necessary-countable-boolean-completeness-r, boolean-completeness-t, analytic-necessitism, necessity-of-analysis]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: cohen-returns-and-countable-joins
+  text: >-
+    Root joins of internally countable families are coordinatewise.
+    At the forcing site a Cohen real picks from an old disjoint sequence.
+    Its join in the return coordinate would recover that real in the ground.
+    All numbers remain standard. Every real is constructible in the ground,
+    and the same analytical sentence is false at the forcing site.
+    A rigid real structure from the ground also misses the new subset
+    of its number labels.
+- id: atoms
+  holds: [necessary-atoms-are-strong-atoms-r, necessary-self-atoms-are-strong-atoms-r, necessary-strong-actuality]
+  fails: [atomicity-t, self-atomicity-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: cohen-returns-and-countable-joins
+  text: >-
+    The forcing algebra and high quotient are atomless. Root atoms are
+    current singletons. A site atom is a current singleton or supported
+    on an atom of the return coordinate. The same computation gives
+    necessary strength of self-atoms.
+- id: continuum-fixed
+  when: {columns: one}
+  holds: [non-contingency-of-ch]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: cohen-returns-and-countable-joins
+  text: >-
+    Every ground satisfies CH, as does its extension by one Cohen real.
+    Actual real structures compute that sign from the full internal rows.
+- id: continuum-changes
+  when: {columns: many}
+  fails: [non-contingency-of-ch]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: cohen-returns-and-countable-joins
+  text: >-
+    Adding the second uncountable cardinal's worth of Cohen reals
+    preserves cardinals and makes CH false. The source and the forcing
+    site both admit a real structure at propositional type.

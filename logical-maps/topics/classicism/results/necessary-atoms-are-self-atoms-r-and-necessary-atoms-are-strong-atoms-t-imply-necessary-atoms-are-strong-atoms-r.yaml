@@ -1,0 +1,25 @@
+id: necessary-atoms-are-self-atoms-r-and-necessary-atoms-are-strong-atoms-t-imply-necessary-atoms-are-strong-atoms-r
+premises:
+- necessary-atoms-are-self-atoms-r
+- necessary-atoms-are-strong-atoms-t
+conclusion: necessary-atoms-are-strong-atoms-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other GPT-6 researchers independently checked the modal scopes and the argument at arbitrary relational types.
+  date: '2026-11-27'
+  lean: verified
+  lean_ref: Classicism.Map.necessary_atoms_are_self_atoms_r_and_necessary_atoms_are_strong_atoms_t_imply_necessary_atoms_are_strong_atoms_r
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+- Cian Dorr's self-atoms and the 30 October instance-proposition argument of Claude Opus 5.5 prompted by Cian Dorr.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Dorr and Opus, 30 Oct
+proof: >-
+  Apply the local implication at every accessible point to the two necessarily available premises.
+notes: >-
+  The local result is [[atoms-are-self-atoms-r-and-atoms-are-strong-atoms-t-imply-atoms-are-strong-atoms-r]].

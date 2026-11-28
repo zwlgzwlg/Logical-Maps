@@ -20,4 +20,7 @@ source_names:
 - Dorr 25 Oct
 proof: Necessitate the recorded [[atoms-are-strong-atoms-r-and-self-atoms-are-atoms-r-imply-self-atoms-are-strong-atoms-r]],
   a theorem of C between closed instances of its principles, and distribute by K.
-notes: The boxed form of [[atoms-are-strong-atoms-r-and-self-atoms-are-atoms-r-imply-self-atoms-are-strong-atoms-r]].
+notes: >-
+  The boxed form of [[atoms-are-strong-atoms-r-and-self-atoms-are-atoms-r-imply-self-atoms-are-strong-atoms-r]].
+  The second premise alone suffices by
+  [[necessary-self-atoms-are-atoms-r-implies-necessary-self-atoms-are-strong-atoms-r]].

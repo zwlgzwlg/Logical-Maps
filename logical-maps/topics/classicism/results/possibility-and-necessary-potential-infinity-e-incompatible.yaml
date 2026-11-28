@@ -37,3 +37,8 @@ notes: >-
   (pure) refutes $\Box Y$ whenever a model of C refutes the closed pure $Y$. Since the boxed Axiom of
   Infinity at type $e$ implies □Potential Infinity there, Maximalism refutes that too. The unboxed Potential
   Infinity (type $e$) follows from Maximalism, through Possible Infinity.
+  More generally, at any point with Arithmetic Necessitism where Necessity of Arithmetic fails,
+  Potential Infinity at type $e$ cannot hold necessarily, by
+  [[arithmetic-necessitism-and-necessary-potential-infinity-e-imply-necessity-of-arithmetic]].
+  Pure Maximalism supplies both conditions by [[maximalism-implies-arithmetic-necessitism]]
+  and [[possibility-and-necessity-of-arithmetic-incompatible]].

@@ -1,0 +1,49 @@
+id: split-return-between-two-permutation-sites
+name: Split return between two permutation sites
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Independent GPT-6 researchers checked the typed direct images, the resets and the inaccessible subrelation, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- The map's functional-choice-over-supported-stages model for the rooted split returns and the finite-support power witness.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, necessary rigid coextensions at all remaining sites, 27 November 2026.
+source_names:
+- Split returns over supported stages
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.3 and Appendix E
+definition: >-
+  Retain the split root, the finite-support permutation site and the unrestricted
+  permutation site of the Functional Choice model over supported stages. Replace
+  each partial-injection stage by a separate single-identity ordinary category
+  with trivial symmetry. Keep the independent root return coordinate at every
+  nonroot point, with singleton individuals everywhere. Evaluate at the root.
+arguments:
+- id: exact-images-at-all-sites
+  holds: [necessary-rigid-comprehension-r, rigid-power-r, weakly-rigid-power-r, functional-choice-r]
+  fails: [necessary-rigid-power-r, necessary-weakly-rigid-power-r]
+  choice: uses
+  writeup: split-return-between-two-permutation-sites
+  text: >-
+    On the finite-support permutations an actual row has a finite symmetry support,
+    which pins its direct images at both permutation endpoints. An exact root
+    return supplies all reset rows. At the root every future rigid subrelation
+    lifts by taking its inverse image within the bound, and the entrances admit
+    arbitrary selectors on old inputs. At the supported site a coinfinite
+    selection of scalar codes at the unrestricted site has no finite support.
+- id: ordinal-and-analytical-labels
+  holds: [forcing-possibilism, second-order-analytic-necessitism]
+  choice: uses
+  writeup: split-return-between-two-permutation-sites
+  text: >-
+    The uniform ordinal tables on one individual form a finite bound. The
+    countably many extra root coordinates give intervals for every finite
+    Boolean algebra and continuum many injectively transported labels.
+    Their coherent tuple relations and families give the ordinary continuum
+    and its represented powers.

@@ -81,6 +81,18 @@ meets:
     the empty set.
 
 arguments:
+- id: transversal-at-both-objects
+  holds: [necessary-transversal-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  text: >-
+    Actuality gives Transversal at the fully symmetric object. At the other object the
+    symmetry group is trivial. An externally selected transversal of current coextension
+    is the row of the empty-pin profile using this row at every arrow into that object and
+    the empty row at the symmetric one. Thus both objects satisfy every instance, as in
+    the transfer-boxed argument of symmetric-qualitative-contrast-at-w1. Both choices of
+    individual domain have the same two symmetry groups, and the assertion is pure.
 
 # Restructured on 2 October 2026 (Claude Opus 5.5, at Cian Dorr's direction): every argument this
 # record shared in substance with another symmetric model is now a shared argument of the group
@@ -157,13 +169,23 @@ arguments:
     the identity and of nothing at arrows into $W_0$, so pinned down by $\emptyset$ and symmetric.
     The numerals at $t$ are standard at $W_1$ by the same fullness, so the family is countable
     relative to $t$. This uses no individuals, so it holds in every variant.
+- id: finite-scalar-atom-obstruction
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: finite-scalar-atoms-exclude-mathematical-possibilism
+  text: >-
+    All arrows into the symmetric object form one atom. At the trivially
+    symmetric target, a finite permutation cylinder splits by prescribing a
+    fresh input's image. Mathematical Possibilism would require arbitrarily
+    many propositional atoms by representing the finite power algebras.
 notes: >-
   The cited construction is a model of the map’s relational-type framework. The description
   identifies its evaluation point; construction and verification are given at the PDF locations in
   References. Everything that implies these fails with them. Plenitude still holds by C5 plus
   Actuality and Propositions 2.5 and 2.14, so this model separates it from Functional Choice even
-  under C5, Rigid Comprehension and Boolean Completeness. This does not settle whether C5 plus
-  Functional Choice implies Atomicity: the model fails the proposed premise.
+  under C5, Rigid Comprehension and Boolean Completeness. For C5 together with Functional Choice and failed Atomicity, see [[boolean-valued-collapse-without-new-reals]].
 
 was_conjectured: true
 

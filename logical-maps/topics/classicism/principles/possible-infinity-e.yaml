@@ -12,7 +12,7 @@ source_names:
 notes: >-
   Weaker than the Axiom of Infinity at this type by T. Since the Axiom of Infinity at type $e$ is
   consistent with C, Possibility Maximalism (pure) implies this principle. With No Pure Contingency, or with BF, it
-  gives the Axiom back; whether it does so in C alone is recorded as an open question. See Background for
+  gives the Axiom back. In [[hyperfinite-retracts-of-infinite-sites]] the root has an internally finite individual domain and sees a site with an infinite one. See Background for
   $\mathbf{0}$, $\operatorname{Suc}$ and $\operatorname{FiniteCardinality}$.
   It implies Potential Infinity (type $e$), which asks only that for each number there could be at
   least that many ([[possible-infinity-e-implies-potential-infinity-e]]).

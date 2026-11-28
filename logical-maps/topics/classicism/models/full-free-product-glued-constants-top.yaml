@@ -1,0 +1,39 @@
+id: full-free-product-glued-constants-top
+name: Free product with idempotent and bicyclic factors with a top proposition name
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, reinterpretation of the source
+    model
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independent OpenAI Codex review of signature substitution, preservation of pure schemata and their side
+    conditions, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- Underlying construction and pure verdicts in [[full-free-product-glued-constants]]. Claude Fable 5.1 (Anthropic),
+  at Cian Dorr's direction, 14 October 2026, by Bacon's gluing construction (Logical Combinatorialism, Appendix
+  A.3; A Philosophical Introduction to Higher-Order Logics, Definition 18.15) at Cian Dorr's suggestion of
+  varying the monoid.
+- Signature substitution uses Cian Dorr’s sigma-top-npc argument.
+source_names:
+- Free product with idempotent and bicyclic factors
+- Signature substitution
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39, pure and signature schemata.
+group: top-interpretations-of-pure-reducts
+settings:
+  reduct: Start with [[full-free-product-glued-constants]].
+arguments:
+- id: pure-reduct
+  holds: [forcing-possibilism, necessary-atomicity-r, necessary-axiom-of-infinity-t, necessary-intensional-choice-r,
+    necessary-rigid-comprehension-r, no-pure-contingency-r, second-order-analytic-necessitism, strong-actuality,
+    transversal-choice-r]
+  fails: [infinity-e, self-atoms-are-atoms-t, truth-implies-five-necessity, two-hat-implies-nd-necessity]
+  choice: uses
+  text: The return tests for the distinguished arrows are admissible propositions of the action model. Replacing
+    the named constants preserves those tests and the resulting modal separations. The pure verdicts below
+    are those of the source or consequences of its recorded verdicts over C. They transfer by the pure term
+    induction in the group definition.

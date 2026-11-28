@@ -1,0 +1,35 @@
+id: analytic-necessitism-and-countable-boolean-completeness-imply-arithmetic-necessitism
+premises:
+- analytic-necessitism
+- countable-boolean-completeness-r
+conclusion: arithmetic-necessitism
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) researchers independently checked the countability, extensionality and hereditary transfer arguments, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, coding subsets of Frege numbers by joins of numerical haecceities, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: goodsell-arithmetic-necessary
+  role: background
+  locator: §3.1, eq. (10), and Definition 6
+- paper: barton-goodsell-continuum-contingency
+  role: formulation
+  locator: §5.8, eqs. (29)–(32)
+proof: >-
+  Under the necessary Peano guard, distinct current Frege numbers remain distinct.
+  Their haecceities are therefore disjoint in the Boolean order. The haecceities
+  selected by any current property of numbers form an internally countable family.
+  Its least upper bound codes exactly those numbers, and two properties with the
+  same current number instances give the same least upper bound. These codes and
+  the haecceities carry a real number structure. Analytic Necessitism supplies a
+  rigid necessarily real structure at the same type. Matching its zero and successors
+  to the Frege numbers transfers rigidity, as in
+  [[analytic-necessitism-and-transversal-imply-arithmetic-necessitism]].

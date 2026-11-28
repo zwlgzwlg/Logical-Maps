@@ -47,3 +47,4 @@ changes:
   by: OpenAI Codex (GPT-6), prompted by Andrew Bacon
   summary: Replaced strict propositional smallness with the power-closed test at the inexact ordinal carrier and
     admitted top as a representing proposition.
+lean_def: (Classicism.Meta.Coalesced.StoneFan.CatalogueModel.revisedMP _)

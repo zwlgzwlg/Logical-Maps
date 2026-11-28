@@ -1,0 +1,41 @@
+id: paired-stages-with-zero-arrows-top
+name: Paired stages with zero arrows with a top proposition name
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, reinterpretation of the source
+    model
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independent OpenAI Codex review of signature substitution, preservation of pure schemata and their side
+    conditions, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- Underlying construction and pure verdicts in [[paired-stages-with-zero-arrows]]. OpenAI Codex (GPT-6), prompted
+  by Daniel Kodsi.
+- Signature substitution uses Cian Dorr’s sigma-top-npc argument.
+source_names:
+- Paired stages with zero arrows
+- Signature substitution
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39, pure and signature schemata.
+group: top-interpretations-of-pure-reducts
+settings:
+  reduct: Start with [[paired-stages-with-zero-arrows]].
+meets:
+  unrestricted-block-maps-at-paired-stages: >-
+    The ordinary coefficients are exactly those of [[paired-stages-with-zero-arrows]] under the change of names.
+  integer-stages-with-countably-pinned-pair-profiles: >-
+    The top interpretation preserves the pointed pure action and all its type domains from [[paired-stages-with-zero-arrows]].
+arguments:
+- id: pure-reduct
+  holds: [forcing-possibilism, modal-well-ordering-r, necessary-axiom-of-infinity-t, necessary-countable-boolean-completeness-r,
+    no-pure-contingency-r, second-order-analytic-necessitism]
+  fails: [atomicity-t, barcan-t, boolean-completeness-t, five-implies-two-hat-necessity]
+  choice: uses
+  text: The zero arrows and paired-stage return maps remain available in the same cones. The ordinal bound
+    and the comparison of the intermediate modalities concern the pure typed structure. The pure verdicts below
+    are those of the source or consequences of its recorded verdicts over C. They transfer by the pure term
+    induction in the group definition.

@@ -1,4 +1,6 @@
 import Classicism.Statements
+import Classicism.Results.Research.ArithmeticRigidity
+import Classicism.Results.Research.LocalModalBarcan
 import Classicism.Results.Arity
 import Classicism.Results.Boxed
 import Classicism.Results.SentenceSchemas.Incompatibilities
@@ -21,7 +23,8 @@ import Classicism.Results.BourbakiWitt.Certificates
 import Classicism.Certified.Box5
 import Classicism.Results.Existence
 import Classicism.Results.Other.Witnesses
-
+import Classicism.Results.Research.StrongPossibilityMap
+import Classicism.Results.Research.StrongPossibilityCorollaries
 /-!
 # The map's results, certified
 
@@ -496,6 +499,10 @@ theorem maximalist_distinctness_incompatible_with_necessary_tractarianism_r : St
     (not_consistent_mono (B := maximalist ∪ P.NecTractarianism.schema)
       (union_subset_union_right (A := maximalist) (B := AxiomSet.box P.Tractarianism.schema)
         (B' := P.NecTractarianism.schema) (by map_box)) maximalist_necTractarianism_inconsistent)
+
+/-- `modal-b-and-five-implies-nd-imply-barcan` -/
+theorem modal_b_and_five_implies_nd_imply_barcan : Statements.modal_b_and_five_implies_nd_imply_barcan := by
+  map_cert Proofs.modal_b_and_five_implies_nd_imply_barcan.entails
 
 /-- `modal-b-implies-distinctness-necessary-r` -/
 theorem modal_b_implies_distinctness_necessary_r : Statements.modal_b_implies_distinctness_necessary_r := by
@@ -1365,6 +1372,16 @@ theorem necessary_rigid_power_r_implies_rigid_power_r : Statements.necessary_rig
 /-- `necessary-rigid-comprehension-implies-necessary-weak-rigid-comprehension` -/
 theorem necessary_rigid_comprehension_implies_necessary_weak_rigid_comprehension : Statements.necessary_rigid_comprehension_implies_necessary_weak_rigid_comprehension := by
   map_cert Proofs.necessary_rigid_comprehension_implies_necessary_weak_rigid_comprehension.entails
+
+/-- `necessary-countable-boolean-completeness-implies-arithmetic-necessitism` -/
+theorem necessary_countable_boolean_completeness_implies_arithmetic_necessitism :
+    Statements.necessary_countable_boolean_completeness_implies_arithmetic_necessitism := by
+  map_cert Proofs.necessary_countable_boolean_completeness_implies_arithmetic_necessitism.entails
+
+/-- `tame-rigidity-and-countable-boolean-completeness-imply-arithmetic-necessitism` -/
+theorem tame_rigidity_and_countable_boolean_completeness_imply_arithmetic_necessitism :
+    Statements.tame_rigidity_and_countable_boolean_completeness_imply_arithmetic_necessitism := by
+  map_cert Proofs.tame_rigidity_and_countable_boolean_completeness_imply_arithmetic_necessitism.entails
 
 /-- `necessary-rigid-comprehension-implies-arithmetic-necessitism` -/
 theorem necessary_rigid_comprehension_implies_arithmetic_necessitism : Statements.necessary_rigid_comprehension_implies_arithmetic_necessitism := by
@@ -2417,5 +2434,13 @@ theorem necessary_potential_infinity_t.peano : Statements.necessary_potential_in
 theorem necessary_potential_infinity_t.at_least : Statements.necessary_potential_infinity_t.at_least := by
   map_form P.NecPotentialInfinityT.to_at_least.entails
     P.NecPotentialInfinityT.of_at_least.entails
+
+/-- `strong-possibility-r-inconsistent` -/
+theorem strong_possibility_r_inconsistent : Statements.strong_possibility_r_inconsistent :=
+  Meta.StrongPossibilityMap.strong_possibility_r_inconsistent
+
+/-- `strong-possibility-signature-r-inconsistent` -/
+theorem strong_possibility_signature_r_inconsistent : Statements.strong_possibility_signature_r_inconsistent :=
+  Meta.StrongPossibilityMap.strong_possibility_signature_r_inconsistent
 
 end Classicism.Map

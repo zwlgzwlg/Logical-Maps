@@ -362,3 +362,18 @@ arguments:
     $g$-preimage $\bar a'\in E$ of $\bar a$. So anything that necessarily holds of every member of $E$
     contains $Y$ at every arrow. Inextensible Comprehension holds at $1$, and as a closed pure sentence in a
     one-object model, necessarily. Choice picks the preimages and the extending permutations.
+- id: canonical-transversal
+  holds: [necessary-transversal-r]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: transversals-from-intersecting-supports
+  text: >-
+    Two pointwise supports for a current extension have an intersection which
+    still supports it, by extending permutations on spare blocks. Take the
+    union of the images of the extension by all automorphisms agreeing with
+    the coefficient on some support, using the identity monoid coordinate
+    and the current target. Intersecting supports shows that each support
+    pins this representative. Its assignment is equivariant and its current
+    row recovers the extension. The family of these representatives is thus
+    an invariant current row selecting one entity per coextension class.

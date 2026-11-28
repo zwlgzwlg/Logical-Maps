@@ -20,6 +20,19 @@ group: modalized-atomless-cloud
 settings:
   family: Use the one-element family consisting of the Cohen algebra RO(Fn(ω,2)).
 arguments:
+- id: necessity-of-analysis-constructible
+  when: {universe: constructible}
+  fails: [necessity-of-analysis]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, independently checked by a second GPT-6 agent
+  date: '2026-11-26'
+  writeup: modalized-cloud-analysis
+  text: >-
+    Its one factor is the Cohen algebra. The parameter-free analytical
+    sentence that every real is constructible holds at the isolated root built in $L$.
+    The Cohen factor forces a nonconstructible real. At type $et$ there is a real number
+    structure at the root and a forced one in that factor, so neither necessity disjunct
+    holds. In an arbitrary ground universe the verdict depends on its analytical theory.
 - id: infinity-t
   holds: [axiom-of-infinity-t]
   choice: free

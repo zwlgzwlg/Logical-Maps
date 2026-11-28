@@ -1,0 +1,49 @@
+id: periodic-entrance-over-finite-cycles
+name: A periodic entrance over shared finite cycles
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - An independent OpenAI Codex (GPT-6) researcher checked the shared-domain variant, the regular orbit of the zero-residue selector and the represented analytical powers.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, the periodic action on finite cycles of unbounded orders, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models.
+definition: >-
+  In the periodic integer entrance take the same countable individual domain
+  at both objects, with a distinguished fixed point and one cyclic orbit of
+  each order at least two. The entrance acts identically on individuals.
+  The source has periodic pairs of rows and the terminal is full and classical.
+arguments:
+- id: periodic-rows
+  holds: [necessary-atoms-are-strong-atoms-r, necessary-self-atoms-are-strong-atoms-r, necessary-strong-atomicity-t, necessary-strong-actuality, necessary-truths-are-nd-necessary, necessary-boolean-completeness-r, necessary-rigid-comprehension-r, necessary-tame-rigidity-r, necessary-barcan-t, necessary-transversal-r]
+  fails: [self-atomicity-r, atomicity-r, rigid-power-r, weakly-rigid-power-r, rigid-rigidity-r, weakly-rigid-weak-rigidity-r, barcan-relational, transversal-choice-r, relational-choice-r]
+  choice: free
+  writeup: periodic-integer-entrance
+  text: >-
+    Both rows have finite orbit. Every nonsingleton orbit splits under a
+    smaller finite-index subgroup, so the atoms remain strong. The subset
+    choosing the zero element of every terminal cycle has an infinite orbit.
+    That orbit admits no self-atom, and the subset itself is a new rigid
+    subproperty of the transported universal individual property. Families
+    have periodic unions and exact image rows give rigid comprehension.
+- id: fixed-labels
+  holds: [necessary-axiom-of-infinity-e, second-order-analytic-necessitism, arithmetic-necessitism, necessity-of-arithmetic]
+  fails: [forcing-possibilism]
+  choice: uses
+  writeup: periodic-integer-entrance
+  text: >-
+    Unions of whole cycles give continuum many distinct fixed labels,
+    which pass up the relational types. Their source copies project to the
+    corresponding labels and every relation on them has exact rigid rows.
+    These provide an ordinary continuum with all its represented powers.
+    Both countable individual domains are infinite and their current Frege
+    numbers are standard. The finite scalar algebra still omits a small
+    finite Boolean algebra.

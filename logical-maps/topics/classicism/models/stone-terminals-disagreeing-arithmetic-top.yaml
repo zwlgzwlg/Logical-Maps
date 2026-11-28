@@ -1,0 +1,35 @@
+id: stone-terminals-disagreeing-arithmetic-top
+name: Stone terminals with disagreement on arithmetic and CH with a top proposition name
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, reinterpretation of the source
+    model
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independent OpenAI Codex review of signature substitution, preservation of pure schemata and their side
+    conditions, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- Underlying construction and pure verdicts in [[stone-terminals-disagreeing-arithmetic]]. OpenAI Codex (GPT-6),
+  prompted by Daniel Kodsi.
+- Signature substitution uses Cian Dorr’s sigma-top-npc argument.
+source_names:
+- Stone terminals with disagreement on arithmetic and CH
+- Signature substitution
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39, pure and signature schemata.
+group: top-interpretations-of-pure-reducts
+settings:
+  reduct: Start with [[stone-terminals-disagreeing-arithmetic]].
+arguments:
+- id: pure-reduct
+  holds: [forcing-possibilism, modal-well-ordering-r, necessary-axiom-of-infinity-e, necessary-boolean-completeness-t,
+    necessary-strong-actuality, necessary-truths-are-nd-necessary, necessary-weakly-rigid-weak-rigidity-r]
+  fails: [atomicity-t, necessary-potential-infinity-t, necessity-of-arithmetic, non-contingency-of-ch, weakly-rigid-power-r]
+  choice: uses
+  text: The root sees the same ordinary and nonstandard components whose internal arithmetic and continuums
+    disagree. The pure verdicts below are those of the source or consequences of its recorded verdicts over
+    C. They transfer by the pure term induction in the group definition.

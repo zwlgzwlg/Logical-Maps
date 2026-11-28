@@ -1,0 +1,24 @@
+id: profinite-s5-fixed-world
+name: 'Profinite S5 Boolean algebras at a fixed world'
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two independent reviews of the model and its verdicts
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, profinite S5 Henkin models, 26 November 2026.
+- M. H. Stone, The theory of representations for Boolean algebras, Transactions of the American Mathematical Society 40 (1936), 37–111.
+source_names:
+- Kodsi and Codex, 26 Nov
+- Stone 1936
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models.
+group: profinite-s5-boolean-algebras
+settings:
+  point: fixed
+arguments: []

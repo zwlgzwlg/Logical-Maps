@@ -1,0 +1,86 @@
+id: integer-stages-with-compressible-coordinates
+name: Integer stages with successively compressible coordinates
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) researchers independently checked the affected coordinates in the Boolean join, the necessary self-atom bridge, the cardinality argument and both counterexamples.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, Definition 39 and Proposition 41.
+- GPT-6 Astra (OpenAI), prompted by Cian Dorr, equality tests on pairs of coefficient sites, 11 October 2026.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, successive countable-image compressions and Mathematical Possibilism, 27 November 2026.
+source_names:
+- Dorr, BC does not imply RC
+- Astra via Dorr, 11 Oct 2026
+- Codex via Kodsi, 27 Nov 2026
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Definition 39, p. 19, and Propositions 40–41, p. 20
+definition: >-
+  Integers are stages and each integer is also the index of an auxiliary
+  coordinate with $\aleph_1$ sites. At stage $n$, coordinates $i<n$ admit
+  permutations and countable-image endomaps; coordinates $i\ge n$ admit
+  permutations. Arrows $n\to m$ exist for $m\ge n$. On the coordinates
+  changing kind they use arbitrary functions. Target symmetry acts by
+  coordinatewise permutations. An arrow table may depend on all past
+  coordinates and at most countably many other source sites. The
+  individual carrier is a singleton. Take one propositional name with
+  constant value top and evaluate at stage zero.
+arguments:
+- id: homogeneity-and-joins
+  holds: [no-pure-contingency-r, necessary-boolean-completeness-r, necessary-weak-rigid-comprehension-r, necessary-inextensible-comprehension-r]
+  choice: uses
+  writeup: integer-stages-with-compressible-coordinates
+  text: >-
+    Simultaneously translating stage and coordinate indices preserves the
+    typed model. To form a join, aggregate member rows at entrances
+    varying the coordinates that change kind off the common pin.
+    Unchanged permutation coordinates are absorbed by source symmetries.
+    Moving a member's extra pin off an upper bound's pin gives leastness.
+    Actuality then supplies Weak Rigid Comprehension. Rows supported on
+    the permutation loops give inextensible coextensions.
+- id: self-atoms
+  holds: [necessary-self-atoms-are-strong-atoms-r, necessary-strong-actuality, necessary-truths-are-nd-necessary]
+  choice: free
+  writeup: integer-stages-with-compressible-coordinates
+  text: >-
+    The permutation loops form a true strong scalar atom. At any occupied
+    nonunit loop, fix its countable image on a singular coordinate by a
+    countable-image endomap. At any occupied entrance fix the image of
+    the source pin on one newly compressible coordinate instead. In each
+    case the transport is instantiated and its unit and nonunit parts
+    are both nonzero. Thus every self-atom is supported on the units,
+    and is strong.
+- id: mathematical-possibilism
+  holds: [forcing-possibilism]
+  choice: uses
+  writeup: integer-stages-with-compressible-coordinates
+  text: >-
+    Singleton individuals give a uniformly finite ordinal benchmark.
+    Countable families of entities have a common pin and admit all current
+    relations on their members. An infinite carrier therefore has a
+    countable power-closed subset larger than that benchmark. Distinct
+    kernel patterns on a past coordinate give arbitrarily many distinct
+    scalar atoms. Their finite unions realize every finite Boolean algebra.
+- id: compression
+  fails: [tame-rigidity-r, rigid-comprehension-r, intensional-choice-r]
+  choice: free
+  writeup: integer-stages-with-compressible-coordinates
+  text: >-
+    At $n$ use the equality tests of site pairs in coordinate $n$.
+    The lower property of tests sharing one specified site is weakly
+    rigid, since a fresh site can be sent to any desired value on an
+    entrance, but its image at stage $n+1$ fails weak inextensibility
+    under a constant map. At that entrance a necessarily inhabited
+    demand for the equality test of a distinct pair admits no unique
+    selection. The stabilizer of a constant map's image fixes no such
+    unordered pair.
+notes: >-
+  The mathematical and comprehension assertions hold at all stages.
+  The passage between two consecutive coordinate kinds is the
+  [finite-image target construction](symmetric-finite-image-target.html)
+  with countable pins and countable-image singular endomaps.

@@ -14,7 +14,12 @@ notes: >-
   content is that rigidity is inextensible. It is the instance of Rigid Power at $\lambda\bar x\,
   .\,\top$, whose power property is rigidity itself; so it follows from Rigid Power wherever $\lambda\bar
   x\, .\,\top$ is rigid, that is, given □BF (and at type $t$ outright). It implies □BF, and its own
-  necessitation by 4. Whether it implies Rigid Power is open: the argument would need rigidity to be
-  closed under conjunction, which fails in C when identity is contingent (the conjunction of the
-  haecceities of distinct but possibly identical $x,y$ is persistent but not weakly inextensible).
+  necessitation by 4. Rigid Rigidity can hold while Rigid Power fails, as witnessed by the
+  coalesced arithmetic model and the supported-product models
+  ([[rigid-rigidity-implies-rigid-power]]). Rigidity can fail to be closed under conjunction
+  when identity is contingent.
+changes:
+- date: '2026-11-26'
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  summary: Updated the converse to match the October countermodels already cited in its conjecture record.
 lean_def: Classicism.P.RigidRigidity.schemaIn

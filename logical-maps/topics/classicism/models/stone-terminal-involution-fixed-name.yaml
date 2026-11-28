@@ -1,0 +1,28 @@
+id: stone-terminal-involution-fixed-name
+name: 'Stone terminals with a root involution and a name fixed at top'
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by: []
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, homogeneous Stone-terminal construction and verification of this variant, 26 November 2026.
+source_names:
+- Kodsi and Codex, 26 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models, and Appendix E, coalesced sums.
+group: stone-terminal-roots
+settings:
+  loops: involution
+  core: paired
+  names: top
+arguments:
+- id: reinterpretation
+  holds: [possibility-plus-r]
+  fails: [distinctness-signature-r]
+  writeup: stone-terminal-maximalist
+  text: Pure Possibility+ survives the change of interpretation. The named proposition equals top at the root, although this identity of a free constant is unprovable in C.

@@ -1,0 +1,43 @@
+id: strong-possibility-r-implies-possibility-plus-r
+premises:
+- strong-possibility-r
+conclusion: possibility-plus-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 22 October and 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - OpenAI Codex (GPT-6), a further independent agent checked the pure unary case, local monism and signature restrictions.
+  date: '2026-11-26'
+  lean: verified
+  lean_ref: Classicism.Map.strong_possibility_r_implies_possibility_plus_r
+sources:
+- OpenAI Codex, prompted by Daniel Kodsi, profile-root-construction, §6, 22 October 2026.
+- OpenAI Codex, prompted by Daniel Kodsi, direct distinctness-preserving proof, 26 November 2026.
+source_names:
+- Codex via Kodsi, 22 Oct
+- Codex via Kodsi, 26 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.6, pp. 41–42 and n. 61; Appendix E, p. 83
+proof: >-
+  By [[strong-possibility-r-inconsistent]], any theory satisfying the premises proves $\bot$ and hence every instance of Possibility+ (pure).
+
+  Fix an instance $A=\forall\bar x\, .\,D(\bar x)\to\Diamond P(\bar x)$ of pure
+  Possibility+, with $D$ the conjunction of the pairwise disequalities. This is a closed
+  pure sentence consistent with pure Maximalism, since both hold in
+  [[coalesced-single-individual-root]]. Strong Possibility therefore gives
+  $\Diamond_{\ne}A$. If $A$ failed, some current tuple $\bar a$ would satisfy
+  $D(\bar a)\land\Box\neg P(\bar a)$. Test $\Diamond_{\ne}A$ with the true
+  proposition $D(\bar a)$, taking it to be $\top$ for an empty conjunction.
+  This gives an accessible point satisfying $A\land\Diamond D(\bar a)$.
+  By necessity of identity, possible joint distinctness entails current joint
+  distinctness there. By 4, $\Box\neg P(\bar a)$ still holds there, contradicting
+  $A$ at the transported tuple.
+notes: >-
+  The October argument uses the singleton-individual consequence of pure Strong
+  Possibility in [[strong-possibility-and-infinity-e-incompatible]], together
+  with the unary Possibility+ consequence of pure Maximalism. The argument above
+  also works with signatures under their own consistency condition.

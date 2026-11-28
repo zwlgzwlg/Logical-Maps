@@ -1,0 +1,154 @@
+id: reduced-power-retraction
+name: Reduced-power retraction
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two additional OpenAI Codex (GPT-6) agents independently reviewed the model and its verdicts.
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, reduced-power retraction, 26 November 2026.
+- The map's full two-object retraction and iterated-ultrafilter-front constructions.
+source_names:
+- Codex via Kodsi, 26 Nov
+- Retraction and ultrafilter models
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §§3.4–3.5, pp. 55–61, typed intensional action models
+definition: >-
+  Stages alternate between two sorts of base structures. At $r$ an entity of relational type
+  consists of a full current row and a sequence of entrance rows on $s$-arguments modulo
+  eventual equality of whole rows. At $s$ it consists of a full current row and a return
+  coordinate in the corresponding $r$-sort. A step from $r$ evaluates the sequence after a
+  free-ultrafilter extension, chosen per current index. A step from $s$ projects to the return
+  coordinate. The designated point is the initial $r$-stage. Its individual domain is a
+  singleton. The $s$-domain has an additional individual. The signature has one propositional
+  name whose root denotation differs from that of every closed pure term.
+arguments:
+- id: functional-choice
+  holds: [functional-choice-r]
+  choice: uses
+  writeup: reduced-power-retraction
+  text: >-
+    Choose an output $Y_a$ for each current input of the serial relation.
+    Each representative entrance map $h_i$ has common left inverse $j$.
+    Prescribe the selector's $i$th row on $h_i a$ by the current row of
+    $h_iY_a$, and similarly prescribe its current row on $a$. The resulting
+    operation returns each selected output as an entire entity.
+- id: strong-atoms
+  holds: [necessary-atoms-are-strong-atoms-r, necessary-strong-actuality]
+  choice: uses
+  writeup: reduced-power-retraction
+  text: >-
+    Every nonzero sequence class splits on two infinite sets of indices.
+    The only $r$-atoms are singletons in the current row. At an entrance each
+    becomes a singleton on the return coordinate and projecting carries it back.
+    At $s$ every atom is a current singleton, which projects to bottom, or a
+    return-coordinate atom. These computations pass to every iterated stage by
+    Łoś. The current singleton at $t$ is a true strong atom in both base structures.
+- id: barcan
+  fails: [barcan-t]
+  choice: uses
+  writeup: reduced-power-retraction
+  text: >-
+    At any input type let the root tester have full current row and $i$th entrance
+    row the image of $h_i$. Every current input necessarily satisfies it through
+    all entrance and return steps. At each index some target entity lies outside
+    the image: at a relational type choose a different current row above a
+    fixed return coordinate, and at $e$ use the extra individual. An ultrapower
+    family of those entities fails the tester at the first entrance. Thus BF
+    fails at each input type, including $t$.
+- id: finite-weak-bounds
+  holds: [necessary-tame-rigidity-r, necessary-weakly-rigid-power-r, necessary-rigid-power-r]
+  choice: uses
+  writeup: reduced-power-retraction
+  text: >-
+    If a weakly rigid root bound contains distinct tuples $x_n$ for all standard $n$,
+    persistence puts $h_i x_n$ in the entrance row on a cofinite set for each fixed $n$.
+    Choose $k(i)$ tending to infinity with $h_i x_{k(i)}$ in the bound on a cofinite set.
+    Excluding just that tuple in the $i$th tester row preserves necessary membership
+    for every old tuple by injectivity of $h_i$, but the first ultrapower has a
+    counterexample to weak inextensibility. Root weak bounds are therefore finite
+    haecceity unions; they and their two canonical powers are rigid. At $s$ a
+    weakly rigid relation has a rigid return coordinate whose finite current
+    row is exactly the return image of its $s$-row. This follows by lifting
+    return testers with full current row. Any later weakly rigid subrelation
+    selects finitely many of those tuple images, and lifts by selecting their
+    preimages in the $s$-row. Thus Tame Rigidity and both powers hold at both
+    base kinds and necessarily by Łoś.
+- id: inextensible-coextensions
+  holds: [necessary-weakly-inextensible-comprehension-r]
+  fails: [inextensible-comprehension-r]
+  choice: uses
+  writeup: reduced-power-retraction
+  text: >-
+    At a return, weak inextensibility requires the return row to lie in the
+    projection of the current row. At every first entrance, full inextensibility
+    therefore requires this containment on a cofinite set of indices. If the
+    root extension is infinite, choose entrance members with distinct projections
+    and exclude one per tester row. All old tuples necessarily pass, contradicting
+    weak inextensibility at the root. Exactly the finite extensions have
+    inextensible coextensions. A current row with all entrance rows empty at
+    $r$, or with bottom return at $s$, always gives a weakly inextensible coextension.
+- id: numbers-and-reals
+  holds: [necessary-axiom-of-infinity-t, necessity-of-arithmetic, necessity-of-second-order-analysis]
+  fails: [arithmetic-necessitism, analytic-necessitism]
+  choice: uses
+  writeup: reduced-power-retraction
+  text: >-
+    Both base kinds admit all current extensions. At each, the standard Frege
+    numerals exhaust the numbers, and at proposition type all standard finite
+    sizes occur. The Peano guard at $t$ thus holds throughout. The root number
+    row is infinite and cannot be weakly rigid. The continuum-sized root
+    proposition sort also carries a real number structure, but every such
+    structure has an infinite number row. For the sentence schemata, every
+    guarded arithmetic at either base kind is standard, and every real
+    structure there has the ordinary natural numbers, their full powerset and
+    all external relations on them. Each fixed sentence transfers by Łoś.
+- id: incomplete-proposition-algebra
+  fails: [atomicity-t, boolean-completeness-t, countable-boolean-completeness-r]
+  choice: uses
+  writeup: reduced-power-retraction
+  text: >-
+    The atomless factor $\mathcal P(\mathbb N)/\mathrm{Fin}$ has a countable
+    partition into classes of infinite blocks with no join. From any upper
+    bound remove one point in each block to get a strictly smaller upper bound.
+    Full current predicates and graphs code the family and its injection into
+    the standard Frege numerals at $t$.
+- id: well-orders-and-signature
+  holds: [modal-well-ordering-r, independence-signature-r]
+  choice: uses
+  writeup: reduced-power-retraction
+  text: >-
+    Take a current well-order of a base $r$-sort and put a fixed well-order
+    of the $s$-sort at every entrance. All later stages satisfy well-ordering
+    by Łoś. For the specified signature choose one propositional constant
+    outside the countably many denotations of closed pure terms in the
+    continuum-sized root proposition algebra.
+- id: self-atoms-and-two-hat-necessity
+  holds: [necessary-self-atoms-are-strong-atoms-r, necessary-truth-implies-two-hat-necessity]
+  choice: uses
+  writeup: reduced-power-retraction
+  text: >-
+    Any nonzero $r$-entrance component gives a future where its relation
+    is instantiated and both factors are nonzero, precluding self-atomhood.
+    At $s$ an uninstantiated self-atom must have a self-atom as its return
+    coordinate. Consequently every self-atom is an atom, and hence strong.
+    The true current-only atom at $r$ holds on even steps, where each original
+    truth still holds. At odd steps the new true current-only $s$-atom becomes
+    impossible under the obligatory next return and witnesses failure of
+    $\Diamond_{\ne}$ of the original atom. At $s$ its own current-only
+    atom directly witnesses two-hat necessity of every truth.
+- id: finite-boolean-test-and-individuals
+  fails: [forcing-possibilism, infinity-e, possible-infinity-e, potential-infinity-e]
+  choice: uses
+  writeup: reduced-power-retraction
+  text: >-
+    The four-element Boolean algebra is present and small: a finite nonempty
+    set of size $k$ cannot be power-closed since its $(k-1)$-element subset
+    has at least $k$ subsets. The root proposition algebra has only one atom,
+    so has no four-element principal ideal. Every individual domain is a
+    one- or two-element set throughout the iterated ultrapowers.

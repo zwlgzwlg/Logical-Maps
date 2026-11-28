@@ -1,0 +1,45 @@
+id: signature-strong-possibility-and-relational-barcan-incompatible
+premises: [strong-possibility-signature-r, barcan-relational]
+conclusion: false
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Independent GPT-6 researchers reviewed the finite action, Boolean involutions, typed quantifiers, first-order names and reflection.
+  date: '2026-11-27'
+  lean: verified
+  lean_ref: Classicism.Map.signature_strong_possibility_and_relational_barcan_incompatible
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026, the fixed-operator tester and finite two-stage counterpoint.
+- Cian Dorr with Claude Fable 5.2, 21–25 November 2026, the Russell–Myhill inconsistency for signatures containing a higher-order constant.
+- Cian Dorr, John Hawthorne and Juhani Yli-Vakkuri, The Bounds of Possibility, Appendix D, Corollary D6 on the Barcan law for an NKB operator.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Dorr and Fable, 25 Nov
+- Bounds, App D
+references:
+- paper: bounds-of-possibility
+  role: background
+  locator: Appendix D, Proposition D3 and Corollary D6, pp. 402–406
+proof: >-
+  Signature Strong Possibility alone gives the contradiction by [[strong-possibility-signature-r-inconsistent]].
+
+  For first-order signatures use the pure tester on operators Y which says
+  that every necessarily Boolean involution fixing all current scalars under
+  necessary individual Barcan also fixes Y by conjugation. Such involutions
+  respect quantifiers by Prior’s Barcan argument and fix all first-order names,
+  hence all closed descriptors. At a finite point over a four-world S5 clique,
+  the admitted scalar traces are unions of two pairs. A swap inside one pair
+  fixes all these traces, but moves the operator that exchanges the pairs
+  under conjugation. At the signature-definable Maximalist root
+  every current operator therefore passes the test necessarily, although the
+  tester is not top. These universal identity conditions reflect from ND
+  possibility to the signature Strong Possibility point, refuting Barcan at
+  input type tt. Signatures with a higher-order constant fall under the
+  established Russell–Myhill inconsistency.
+notes: >-
+  The first-order argument allows arbitrarily many individual names,
+  propositional names and predicates on individuals, of unbounded finite
+  arity. The scalar-input Barcan question remains distinct.

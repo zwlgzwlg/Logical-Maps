@@ -1,0 +1,49 @@
+id: iterated-ultrafilter-fronts-top
+name: Iterated ultrafilter fronts with a top proposition name
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, reinterpretation of the source
+    model
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independent OpenAI Codex review of signature substitution, preservation of pure schemata and their side
+    conditions, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- Underlying construction and pure verdicts in [[iterated-ultrafilter-fronts]]. OpenAI Codex (GPT-6), prompted
+  by Daniel Kodsi, 26 November 2026.
+- Signature substitution uses Cian Dorr’s sigma-top-npc argument.
+source_names:
+- Iterated ultrafilter fronts
+- Signature substitution
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39, pure and signature schemata.
+group: top-interpretations-of-pure-reducts
+settings:
+  reduct: Start with [[iterated-ultrafilter-fronts]].
+arguments:
+- id: pure-reduct
+  holds: [modal-well-ordering-r, necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t, necessary-barcan-relational,
+    necessary-strong-atomicity-r, necessary-tame-rigidity-r, necessary-truths-are-nd-necessary, no-pure-contingency-r]
+  fails: [arithmetic-necessitism, barcan-r, boolean-completeness-t, weakly-rigid-power-r]
+  choice: uses
+  text: The one-step branching front introduces an ultrapower Frege number omitted by the root tester. The
+    same obstruction prevents a rigid real-number structure. The iterated Łoś calculation makes the stages
+    agree on every closed pure sentence. The pure verdicts below are those of the source or consequences of
+    its recorded verdicts over C. They transfer by the pure term induction in the group definition.
+- id: small-atomless-algebra-at-the-root
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: countable-bases-and-mathematical-possibilism
+  text: >-
+    At the empty front the individual set is infinite and an arbitrary
+    current row has the representative with all proper-address rows
+    empty. The ordinal thresholds therefore give a countable sequence
+    in the benchmark, and the regular-open algebra of Cantor space has
+    a small complete presentation. Strong Atomicity ensures that every
+    nonzero scalar interval contains an atom.

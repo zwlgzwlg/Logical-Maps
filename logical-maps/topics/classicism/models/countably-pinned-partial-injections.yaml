@@ -1,0 +1,60 @@
+id: countably-pinned-partial-injections
+name: Mathematical Possibilism without Transversal on countably pinned sites
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) researchers independently checked the countable-support extension, the ordinal threshold, the represented finite intervals and the obstruction to a transversal.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, countable pins and the singleton-individual ordinal test on the partial-injection model, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models.
+definition: >-
+  In the bounded partial-injection word model take a singleton individual
+  domain and auxiliary sites in aleph-one classes of size aleph-one. Allow
+  countable source pins, keeping the finite observation bound on the rank
+  tag. The infinite tag places no restriction on the domain of a partial
+  injection. Take a pointed model of its complete pure theory and Logical
+  Necessity for the chosen signature, using finite last-letter gluing.
+arguments:
+- id: modal-comparison-on-permutation-units
+  holds: [necessary-five-implies-nd-necessity]
+  fails: [truth-implies-five-necessity]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: partial-embeddings-of-infinite-classes
+  text: >-
+    Quantifying over the entire subgroup of permutation units gives an admitted S5 operator. The guard requiring a live injective
+    restriction to the pin, the empty word and, when present, a sufficiently high tag ensures agreement on the pin with a permutation.
+    This makes every 5-necessity ND-necessary. An invertible change of the class pattern of two outputs refutes 5-necessity of their original pattern.
+- id: finite-small-algebras
+  holds: [forcing-possibilism, logical-necessity-r]
+  choice: uses
+  writeup: bounded-partial-injections
+  text: >-
+    Countably many entities are fixed pointwise by one pin stabilizer. Every
+    set of tuples invariant under that stabilizer is an admitted current row,
+    by extending its images on coefficient restrictions matching a permutation.
+    Every infinite algebra carrier therefore contains a countable power-closed
+    set exceeding the finite singleton-individual ordinal bound. Every finite
+    Boolean algebra occurs in the interval of a finite union of word-specific
+    zero-tag atoms. The pointwise graph of the isomorphism has a common pin.
+- id: class-and-word-tests
+  holds: [necessary-axiom-of-infinity-t, arithmetic-necessitism, second-order-analytic-necessitism]
+  fails: [infinity-e, transversal-r, transversal-choice-r, relational-choice-r, boolean-completeness-t, countable-boolean-completeness-r]
+  choice: uses
+  writeup: bounded-partial-injections
+  text: >-
+    Each equivalence class has enough sites to move a countable pin off
+    itself outside the classifier's pin. A partial identity with infinite
+    tag preserves its first pin and erases the moved pin. The word labels
+    give the rigid continuum and its powers as before. Finite tag bounds
+    still preclude the join of the countable family of exact even tags.

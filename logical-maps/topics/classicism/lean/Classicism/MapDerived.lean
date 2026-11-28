@@ -1229,6 +1229,74 @@ theorem full_involution_group_sigma_true_atom.relational_choice_r : Statements.M
 theorem full_involution_group_sigma_true_atom.transversal_choice_r : Statements.Models.full_involution_group_sigma_true_atom.transversal_choice_r :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol))⟩
 
+/-- `full-involution-group-sigma-opposite-singletons`: Gallin Extensional Comprehension holds, by the argument `coherent-retractions`. -/
+theorem full_involution_group_sigma_opposite_singletons.gallin_extensional_comprehension_r : Statements.Models.full_involution_group_sigma_opposite_singletons.gallin_extensional_comprehension_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.coherent_retractions.gallin_extensional_comprehension_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.FullActionModels.group_coherent Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: Possible Infinity (type t) fails, by the argument `finitely-many-propositions-everywhere`. -/
+theorem full_involution_group_sigma_opposite_singletons.possible_infinity_t : Statements.Models.full_involution_group_sigma_opposite_singletons.possible_infinity_t :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.finitely_many_propositions_everywhere.possible_infinity_t (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.FullActionModels.mset_finitely_many_everywhere Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: Infinity Schema (type t) fails, by the argument `finitely-many-propositions`. -/
+theorem full_involution_group_sigma_opposite_singletons.infinity_t : Statements.Models.full_involution_group_sigma_opposite_singletons.infinity_t :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.finitely_many_propositions.infinity_t (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol) (Classicism.Map.Meets.mset_finitely_many_propositions Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: Axiom of Infinity (type t) fails, by the argument `finitely-many-propositions`. -/
+theorem full_involution_group_sigma_opposite_singletons.axiom_of_infinity_t : Statements.Models.full_involution_group_sigma_opposite_singletons.axiom_of_infinity_t :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.finitely_many_propositions.axiom_of_infinity_t (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol) (Classicism.Map.Meets.mset_finitely_many_propositions Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: □Atomicity holds, by the argument `full-atomicity`. -/
+theorem full_involution_group_sigma_opposite_singletons.necessary_atomicity_r : Statements.Models.full_involution_group_sigma_opposite_singletons.necessary_atomicity_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.full_atomicity.necessary_atomicity_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: □BF holds, by the argument `full-epic-barcan`. -/
+theorem full_involution_group_sigma_opposite_singletons.necessary_barcan_r : Statements.Models.full_involution_group_sigma_opposite_singletons.necessary_barcan_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.full_epic_barcan.necessary_barcan_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.FullActionModels.group_epic Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: □Rigid Comprehension holds, by the argument `full-rigid-comprehension`. -/
+theorem full_involution_group_sigma_opposite_singletons.necessary_rigid_comprehension_r : Statements.Models.full_involution_group_sigma_opposite_singletons.necessary_rigid_comprehension_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.full_rigid_comprehension.necessary_rigid_comprehension_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: □ND holds, by the argument `invertible-arrows`. -/
+theorem full_involution_group_sigma_opposite_singletons.necessary_distinctness_necessary_r : Statements.Models.full_involution_group_sigma_opposite_singletons.necessary_distinctness_necessary_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.invertible_arrows.necessary_distinctness_necessary_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.FullActionModels.group_invertible Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: Truths are ND-necessary fails, by the argument `nd-necessity-returning-arrow`. -/
+theorem full_involution_group_sigma_opposite_singletons.truths_are_nd_necessary : Statements.Models.full_involution_group_sigma_opposite_singletons.truths_are_nd_necessary :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.nd_necessity_returning_arrow.truths_are_nd_necessary (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.FullActionModels.group_returning Classicism.Meta.Intensional.Invol.k Classicism.Meta.Intensional.Invol.k_ne_one)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: No Pure Contingency holds, by the argument `no-pure-contingency-one-object`. -/
+theorem full_involution_group_sigma_opposite_singletons.no_pure_contingency_r : Statements.Models.full_involution_group_sigma_opposite_singletons.no_pure_contingency_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.no_pure_contingency_one_object.no_pure_contingency_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.Premodel.oneObject_of_subsingleton _)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: Fregean Axiom fails, by the argument `nonidentity-arrow`. -/
+theorem full_involution_group_sigma_opposite_singletons.fregean_axiom : Statements.Models.full_involution_group_sigma_opposite_singletons.fregean_axiom :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.nonidentity_arrow.fregean_axiom (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.FullActionModels.mset_nonidentity Classicism.Meta.Intensional.Invol.k Classicism.Meta.Intensional.Invol.k_ne_one)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: Infinity Schema (type e) fails, by the argument `one-individual`. -/
+theorem full_involution_group_sigma_opposite_singletons.infinity_e : Statements.Models.full_involution_group_sigma_opposite_singletons.infinity_e :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.one_individual.infinity_e (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Map.Meets.mset_one_individual Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: Axiom of Infinity (type e) fails, by the argument `one-individual`. -/
+theorem full_involution_group_sigma_opposite_singletons.axiom_of_infinity_e : Statements.Models.full_involution_group_sigma_opposite_singletons.axiom_of_infinity_e :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.one_individual.axiom_of_infinity_e (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Map.Meets.mset_one_individual Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: Possible Infinity (type e) fails, by the argument `one-individual`. -/
+theorem full_involution_group_sigma_opposite_singletons.possible_infinity_e : Statements.Models.full_involution_group_sigma_opposite_singletons.possible_infinity_e :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.one_individual.possible_infinity_e (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Map.Meets.mset_one_individual Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: □Relational Choice holds, by the argument `relational-choice-full-boxed`. -/
+theorem full_involution_group_sigma_opposite_singletons.necessary_relational_choice_r : Statements.Models.full_involution_group_sigma_opposite_singletons.necessary_relational_choice_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.relational_choice_full_boxed.necessary_relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: Relational Choice holds, by the argument `relational-choice-full`. -/
+theorem full_involution_group_sigma_opposite_singletons.relational_choice_r : Statements.Models.full_involution_group_sigma_opposite_singletons.relational_choice_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.relational_choice_full.relational_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol)⟩
+
+/-- `full-involution-group-sigma-opposite-singletons`: Transversal Choice holds, by the argument `transversal-choice-extensionally-full`. -/
+theorem full_involution_group_sigma_opposite_singletons.transversal_choice_r : Statements.Models.full_involution_group_sigma_opposite_singletons.transversal_choice_r :=
+  ⟨Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol, Classicism.Map.Arguments.transversal_choice_extensionally_full.transversal_choice_r (Classicism.Meta.Intensional.MSet.model Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.MSet.model_isModel Classicism.Meta.Intensional.Invol) (Classicism.Meta.Intensional.Premodel.Full.extFull _ (Classicism.Meta.Intensional.MSet.model_full Classicism.Meta.Intensional.Invol))⟩
+
 /-- `full-permutation-group-infinite-set`: Gallin Extensional Comprehension holds, by the argument `coherent-retractions`. -/
 theorem full_permutation_group_infinite_set.gallin_extensional_comprehension_r : Statements.Models.full_permutation_group_infinite_set.gallin_extensional_comprehension_r :=
   ⟨Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ), Classicism.Map.Arguments.coherent_retractions.gallin_extensional_comprehension_r (Classicism.Meta.Intensional.MSet.model (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_isModel (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.MSet.model_full (Equiv.Perm ℕ)) (Classicism.Meta.Intensional.FullActionModels.group_coherent (Equiv.Perm ℕ))⟩

@@ -1,0 +1,60 @@
+id: sequence-cover-of-periodic-integer-entrance
+name: A sequence cover of the periodic integer entrance
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two independent OpenAI Codex researchers checked the type closure and all three strong atom cases. A separate pass included Barcan and the missing scalar join.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, intensional action models.
+definition: >-
+  Before [[periodic-integer-entrance]] adjoin a new root with a free entrance
+  to its first object and countably many independent entrances to its terminal.
+  Each root relation consists of an arbitrary current row, a whole entity
+  at the old first object, and a sequence of terminal entities eventually
+  equal to its terminal transport. Use the same eventual equality for
+  individuals. Evaluate at the new root, with relational names top and
+  individual names projecting to the fixed individual throughout.
+arguments:
+- id: three-sorts-of-atoms
+  holds: [strong-atomicity-r, necessary-strong-atomicity-t, necessary-atoms-are-strong-atoms-r]
+  fails: [necessary-atomicity-r, necessary-self-atomicity-r, self-atoms-are-atoms-t]
+  choice: free
+  writeup: sequence-cover-of-periodic-integer-entrance
+  text: >-
+    Singleton current tuples, singleton tuples at the old first object with
+    empty terminal row, and singletons at isolated terminal coordinates are
+    strong atoms. Every nonzero limit row occurs at some isolated coordinate.
+    The old periodic property of integers has no atom or self-atom below it.
+    The scalar supported on just two isolated terminal coordinates is a
+    self-atom that splits at the new root.
+- id: witnesses-and-even-coordinates
+  holds: [barcan-r, necessary-barcan-t]
+  fails: [necessary-barcan-relational, countable-boolean-completeness-r, boolean-completeness-t]
+  choice: free
+  writeup: sequence-cover-of-periodic-integer-entrance
+  text: >-
+    Every witness at an isolated coordinate lifts, and every predicate at
+    the limit agrees with its isolated values off a finite set. The periodic
+    component retains its counterexample to relational Barcan. The even
+    isolated scalar atoms are countable but have no join.
+- id: ordinal-benchmark-and-scalar-intervals
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: countable-bases-and-mathematical-possibilism
+  text: >-
+    Individual arrays with distinct finite exceptions give an infinite root
+    individual carrier. Full current rows make Cantor regular open sets a
+    small complete Boolean algebra, while every nontrivial scalar interval
+    contains an atom.

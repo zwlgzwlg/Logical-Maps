@@ -17,7 +17,7 @@ sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §2.6, p. 42; Appendix E, p. 83.
 source_names:
 - Classicism
-proof: 'Let $E_1$ be the closed pure sentence that there is exactly one individual. Both $E_1$ and $\neg
+proof: 'Pure Strong Possibility alone gives the contradiction by [[strong-possibility-r-inconsistent]]. Let $E_1$ be the closed pure sentence that there is exactly one individual. Both $E_1$ and $\neg
   E_1$ are consistent with Maximalist Classicism: the coalesced sum with a singleton individual root satisfies
   Possibility Maximalism (pure) and $E_1$, the maximalist root satisfies Possibility Maximalism (pure) and $\neg E_1$. Let $P$
   be whichever of $E_1$, $\neg E_1$ is false. Strong Possibility (pure) gives $\Diamond_{\ne}P$. Truths are

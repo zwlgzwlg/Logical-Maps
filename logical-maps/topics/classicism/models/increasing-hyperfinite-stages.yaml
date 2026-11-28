@@ -1,0 +1,114 @@
+id: increasing-hyperfinite-stages
+name: Increasing hyperfinite stages
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Three other OpenAI Codex (GPT-6) researchers independently checked the term closure, elementary transitions and internal Frege-number calculation, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, increasing hyperfinite stages with ultrafilter germs.
+- The four-proposition entrance into a hyperfinite group gives the earlier unboxed separation.
+source_names:
+- Kodsi and Codex, 27 Nov
+- Four-proposition hyperfinite entrance
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, Definitions D.1–D.3 and Proposition D.4, pp. 73–74
+- paper: goodsell-arithmetic-necessary
+  role: background
+  locator: §4, Definitions 3–5 and 8
+definition: >-
+  At successive elementary extensions of a set structure with a nonprincipal ultrafilter on
+  the positive integers, each new stage parameter belongs to every earlier ultrafilter-large
+  set. At a stage with parameter k, the loops form the internal cyclic group of size k.
+  Each later stage has a unique absorbing entrance. A relation has arbitrary internal loop
+  rows and a germ of future rows modulo the internal ultrafilter. On a strict entrance its
+  current row is evaluated at the new stage parameter and its germ is retained.
+  Individuals are singletons and relational names are top.
+arguments:
+- id: finite-everywhere-unbounded-at-each-stage
+  holds: [necessary-potential-infinity-t]
+  fails: [possible-infinity-t]
+  choice: uses
+  writeup: increasing-hyperfinite-stages
+  text: >-
+    The internal scalar algebra has finite size 2^(k+1). The Frege number C_n has on each
+    loop the row of properties with n current instances and the germ of these rows as the
+    stage size varies. Deleting one member gives successor C_(n+1), and internal induction
+    identifies the native numbers with precisely these C_n. Each stage has a number
+    counting its entire scalar domain. Every number of a stage is exceeded by the next
+    stage size, where its transport counts an admitted property.
+- id: homogeneous-signature
+  holds: [no-contingency-signature-r]
+  choice: free
+  writeup: increasing-hyperfinite-stages
+  text: >-
+    Each closed formula has one uniform set-theoretic interpretation as a predicate of the
+    stage parameter. The ultrafilter decides its truth at every chosen generic stage, and
+    every loop preserves the designated interpretations of the names.
+- id: atomic-rows
+  holds: [necessary-atomicity-r, necessary-boolean-completeness-t, necessary-strong-actuality]
+  fails: [atoms-are-self-atoms-t]
+  choice: uses
+  writeup: increasing-hyperfinite-stages
+  text: >-
+    The scalar algebra is internally finite and every admitted current family is internal.
+    An occupied loop row contains a singleton tuple, while a nonzero germ contains a
+    singleton-row germ by internal Choice. The singleton identity with zero germ is a
+    true strong atom. The atom with empty loop table and germ one becomes top at each
+    subsequent stage, where it is true and splits.
+- id: finite-families-of-germs
+  holds: [necessary-tame-rigidity-r, necessary-weakly-rigid-power-r, necessary-rigid-power-r]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: hyperfinite-stage-rigid-powers
+  text: >-
+    In the internal-ultrapower presentation a tester can exclude any
+    first-target tuple outside the image of the current members of a weakly
+    rigid relation. The row at that target is therefore exactly their
+    image. Its internal set of germ tuples contains only diagonal elements,
+    so comes from an internally finite family by diagonalization. The same
+    finite family lifts every later member, and every subset of its image
+    comes from a source subfamily. Exact image rows give rigidity, and a
+    selected source subfamily lifts each future rigid subrelation.
+- id: inextensible-loop-rows
+  holds: [necessary-inextensible-comprehension-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: hyperfinite-stage-rigid-powers
+  text: >-
+    For a given current extension use its transported images at the loops
+    and an empty germ. At each loop the subsequent loop rows are exact
+    images of the current members, and every row after a strict entrance
+    is empty. This gives inextensibility at every stage.
+- id: well-ordered-rows
+  holds: [modal-well-ordering-r]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: hyperfinite-stage-rigid-powers
+  text: >-
+    Internally choose a well-order of the given sort at every positive
+    integer. Use the selected order for the current loop rows and the
+    function of all these orders for the germ. At every subsequent stage
+    the row well-orders the internal domain, and every admitted nonempty
+    property has an internal extension.
+- id: loop-necessity
+  holds: [necessary-five-implies-two-hat-necessity, necessary-two-hat-implies-nd-necessity]
+  fails: [truth-implies-five-necessity]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: hyperfinite-stage-rigid-powers
+  text: >-
+    Every loop has a return, while the guard true on current loops with
+    empty germ disappears above. Hence distinctness-preserving necessity
+    tests precisely all current loops. This operator satisfies N, K and B
+    at every stage by the group laws, so it agrees with 5-necessity and
+    two-hat necessity. The identity-only truth fails the test.

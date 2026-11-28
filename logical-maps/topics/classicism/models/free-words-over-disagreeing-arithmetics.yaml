@@ -1,0 +1,114 @@
+id: free-words-over-disagreeing-arithmetics
+name: Free words over two disagreeing arithmetics
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independently reviewed by two further OpenAI Codex (GPT-6) agents, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- Cian Dorr, two disagreeing extensional arithmetics, 19 October 2026, with Claude Opus 5.5 (Anthropic), who verified the original coalescence.
+- The map's full-free-monoid-glued-constants construction for signature gluing on words.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, replicated terminal entrances and the combined model.
+source_names:
+- Dorr 19 Oct
+- Free-monoid signature gluing
+- Codex via Kodsi, 26 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix E, Definition E.2, pp. 80–83
+definition: >-
+  The root has a free monoid of words acting by suffix shifts on its
+  arrays of terminal individuals. At every word there is an independent entrance to each of
+  four extensional terminals, comprising the standard hierarchy on the natural numbers, the
+  internally full hierarchy of a countable model of Zermelo set theory with
+  Choice and its own inconsistency, and two further such hierarchies that
+  disagree on CH.
+  A root relation has an unrestricted current tuple row at each word and one
+  whole terminal coordinate at each entrance. Evaluate at the root with the
+  given signature glued on disjoint final-letter sectors.
+arguments:
+- id: possible-witnesses
+  holds: [possibly-witnessed-possibility-r]
+  choice: uses
+  writeup: free-words-over-disagreeing-arithmetics
+  text: >-
+    Pick one tuple per realized pure matrix and list of matching names at each
+    object. Give each requirement a fresh letter. For a root tuple, copy the
+    whole individual arrays and relational values, including terminal coordinates,
+    onto that last-letter sector. For terminal witnesses prescribe just the
+    required coordinates of the names. This realizes every possibly witnessed matrix.
+- id: arithmetic
+  holds: [necessary-axiom-of-infinity-e, axiom-of-infinity-t]
+  fails: [necessity-of-arithmetic, arithmetic-necessitism, necessity-of-analysis, non-contingency-of-ch, necessary-potential-infinity-t]
+  choice: uses
+  writeup: free-words-over-disagreeing-arithmetics
+  text: >-
+    All terminals have Peano Frege arithmetic on their respective naturals.
+    The standard and nonstandard arithmetical terminals disagree on the arithmetical consistency sentence for Zermelo set
+    theory with Choice. The full present numeral cut at the root and the internal
+    arithmetic of each infinite terminal exclude any finite cardinality of the
+    universal individual property.
+- id: barcan-and-boolean-structure
+  holds: [necessary-barcan-r, necessary-strong-atomicity-r, necessary-boolean-completeness-t]
+  choice: free
+  writeup: free-words-over-disagreeing-arithmetics
+  text: >-
+    Word shifts have lifts at every relational type by copying whole profiles
+    on a suffix, and each terminal coordinate is free. The root proposition
+    algebra is a full powerset, and all terminal proposition algebras have two
+    values. Single tuple relations at one root word or terminal entrance are
+    available below every occupied relation and transport to strong atoms or
+    bottom.
+- id: modal-well-order
+  holds: [modal-well-ordering-r]
+  choice: uses
+  writeup: free-words-over-disagreeing-arithmetics
+  text: >-
+    Put external root orders at every word and the corresponding internally
+    available well-orders at all terminal entrances.
+- id: rigidity
+  holds: [necessary-weakly-rigid-weak-rigidity-r, necessary-rigid-rigidity-r]
+  choice: uses
+  writeup: free-words-over-disagreeing-arithmetics
+  text: >-
+    A tester may exclude one tuple at exactly one arrow, so weak rigidity is
+    equivalent to having precisely direct images at all arrows and is hereditary.
+    A requested rigid target relation has a rigid source preimage: choose sections
+    copying each relevant argument onto its word suffix or terminal coordinate
+    and fix all other data. Its sectioned tuple set has internally admitted direct
+    images at every terminal.
+- id: power
+  fails: [rigid-power-r, weakly-rigid-power-r]
+  choice: uses
+  writeup: free-words-over-disagreeing-arithmetics
+  text: >-
+    Correlate a word image with the independent nonstandard terminal coordinate
+    by a surjection. The resulting bound is rigid with full future rows. A rigid
+    subrelation at the chosen word encodes countably many word tags; any eligible
+    root lift would have to project onto the external family of singleton
+    standard numbers at the nonstandard terminal. A tester omitting just the
+    unliftable subrelation at that word refutes weak inextensibility of both powers.
+- id: modal-witnesses
+  holds: [necessary-truths-are-nd-necessary]
+  fails: [self-atoms-are-atoms-t, pure-b-r]
+  choice: free
+  writeup: free-words-over-disagreeing-arithmetics
+  text: >-
+    The identity-only truth gives the ND guard at the root, and true suffices in
+    each terminal. The truth supported at all terminal entrances is a self-atom
+    but splits at the root. The pure existence of a true but possibly false
+    proposition holds now and is impossible from any terminal.
+- id: mathematical-possibilism
+  fails: [forcing-possibilism]
+  choice: uses
+  writeup: free-words-over-disagreeing-arithmetics
+  text: >-
+    The finite ordinal thresholds give an infinite ordinal benchmark. An atomless
+    complete Boolean algebra of size continuum is revised-small: any larger-than-
+    benchmark subfamily contains a countably infinite smaller subset whose exact
+    power codes already require continuum many elements. Every root propositional
+    interval is an atomic powerset algebra.

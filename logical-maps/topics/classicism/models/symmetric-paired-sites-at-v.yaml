@@ -1,0 +1,57 @@
+id: symmetric-paired-sites-at-v
+name: Symmetric paired sites evaluated at V
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) researchers independently checked the two recovery maps, target symmetry, and the 5-necessity argument on 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Cian Dorr's two-object block-map model and the modal tests on paired sites, 29 October 2026.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, single-coordinate target symmetry and modal comparison, 27 November 2026.
+source_names:
+- Dorr, 29 Oct 2026
+- Codex via Kodsi, 27 Nov 2026
+references:
+- paper: bounds-of-possibility
+  role: background
+  locator: Appendix D, Propositions D17 and D21 and the Barcan theorem for 5-necessity
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Definitions 15–18 and Lemma 21
+group: symmetric-ideally-full
+settings:
+  construction: >-
+    W has countably many two-element blocks; V adds one singleton.
+    Between either pair of objects the arrows are all block-respecting
+    functions. A relational entity is a finitely source-pinned tuple-row
+    profile equivariant under the target group of all block permutations.
+    Evaluate at the identity of V.
+  individuals: base
+  sigma: top
+arguments:
+- id: all-truths-five
+  holds: [necessary-truth-implies-five-necessity]
+  choice: free
+  writeup: symmetric-paired-sites-and-truth-necessity
+  text: >-
+    At W the proposition P of ending at W is 5-necessary by the Barcan
+    theorem for 5-necessity and the predicate of having a pin omitting
+    V's singleton. For every W truth p, an injectivity guard on its
+    saturated pin gives ND-necessity of P implying p. Normality gives
+    5-necessity of p. At V every truth is already two-hat necessary.
+- id: equality-at-v
+  holds: [truth-implies-two-hat-necessity, five-implies-two-hat-necessity]
+  fails: [truths-are-nd-necessary, two-hat-implies-nd-necessity, necessary-truth-implies-two-hat-necessity]
+  choice: free
+  writeup: symmetric-paired-sites-and-truth-necessity
+  text: >-
+    Protect the singleton and the saturated pin of a truth by an
+    endomorphism guard. ND-possibility of that guard forces the singleton
+    to remain at the singleton, by testing distinct images of the doublet
+    it would otherwise enter. Thus the transport agrees on the pin with
+    a symmetry and the truth is two-hat necessary. Sending the singleton
+    into a fresh doublet defeats ND-necessity of the V-target proposition.
+    W is accessible and has a truth failing two-hat necessity.

@@ -1,0 +1,49 @@
+id: cantor-loops-with-reduced-returns-and-maximalist-exits
+name: Cantor loops with reduced returns and Maximalist exits
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - A separate OpenAI Codex (GPT-6) agent checked the loop/germ term calculation, moving tuple, inextensibility testers and both necessity operators, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, the reduced-power retraction, 26 November 2026, and the Cantor-copy Maximalist construction and their combination, 27 November 2026.
+source_names:
+- Codex via Kodsi, 26–27 Nov
+definition: >-
+  Give a reduced-power retraction Cantor-group loops at the root kind and
+  a Cantor-parameterized old exit coordinate into a signature-Maximalist model.
+  All loop tables and old sections are locally constant in whole rows,
+  whole reduced germs or whole old entities. Evaluate at the initial point.
+arguments:
+- id: maximalist-and-atomless
+  choice: uses
+  holds: [possibility-plus-signature-r, atomlessness, well-ordering-r, transversal-choice-r, axiom-of-infinity-t]
+  fails: [infinity-e, actuality, boolean-completeness-t, countable-boolean-completeness-r]
+  writeup: cantor-loops-with-reduced-returns-and-maximalist-exits
+  text: >-
+    Take the public signature to have a propositional constant, with no
+    individuals named. The old entrance shares the singleton individual of
+    the old signature Possibility+ root. The Cantor rows and sections split
+    each positive patch. All current subsets and graphs exist.
+- id: moving-omission
+  choice: uses
+  holds: [weakly-rigid-power-r]
+  fails: [weakly-inextensible-comprehension-r, barcan-t]
+  writeup: cantor-loops-with-reduced-returns-and-maximalist-exits
+  text: >-
+    Distinct finite Cantor-group orbits supply the tuples omitted by the
+    reduced-power moving tester. Every weakly rigid bound is finite and has
+    both rigid powers. A weakly inextensible coextension of current truth
+    would require its extension to have an open stabilizer.
+- id: modal-operators
+  choice: uses
+  holds: [five-implies-two-hat-necessity]
+  fails: [two-hat-implies-nd-necessity, truth-implies-five-necessity]
+  writeup: cantor-loops-with-reduced-returns-and-maximalist-exits
+  text: >-
+    Both two-hat and 5-necessity on root propositions mean truth on every
+    root loop. The guard with full loop row and empty other coordinates
+    witnesses two-hat necessity and fails ND-necessity after an entrance.

@@ -17,6 +17,8 @@ sources:
 source_names:
 - Dorr 16 Oct
 proof: >-
+  Pure Strong Possibility alone gives the contradiction by [[strong-possibility-r-inconsistent]].
+
   Let $E_1:=\forall x^e y^e\, .\,x=y$, that there is exactly one individual. Lemma (a theorem of C):
   $\Diamond_{\ne}E_1\to E_1$. If $a\ne b$, the true proposition $r:=(a\ne b)$ has $\Box(\Diamond r\to
   \neg E_1)$, since by NI $\Diamond(a\ne b)$ implies $a\ne b$; so $\Box_{\ne}\neg E_1$, which is

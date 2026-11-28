@@ -1,0 +1,107 @@
+id: two-colour-multisets-with-a-word-guard
+name: Two-colour multisets with a word guard
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) agents, prompted by Daniel Kodsi, checked the coefficient comparisons, propositional Barcan witness and ordinal bound, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two-colour variant of the finite-multiset word model, 27 November 2026.
+source_names:
+- Kodsi and Codex, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models.
+definition: >-
+  The single object has one individual. Arrows are finite multisets of labels in two
+  uncountable colour classes, paired with words. The rows of a relation depend on the
+  word, total multiset size, and multiplicities on a countable set of labels. When
+  the word omits a distinguished letter, the row may also depend on total multiplicity
+  in the first colour class. Use fresh letters to interpret the signature.
+arguments:
+- id: named-witnesses
+  holds: [logical-necessity-r]
+  choice: uses
+  writeup: two-colour-multisets-with-a-word-guard
+  text: >-
+    Gluing each true matrix's witness profiles along a fresh final letter preserves
+    the extra colour observation, since none of these letters is the distinguished
+    one. There is just one possible value for any individual name.
+- id: single-arrow-atoms
+  holds: [necessary-strong-atomicity-r, necessary-strong-actuality, necessary-truths-are-nd-necessary]
+  choice: free
+  writeup: two-colour-multisets-with-a-word-guard
+  text: >-
+    Pinning the finitely many labels of an arrow, with its word and total size,
+    isolates that arrow. Each single-arrow single-tuple atom stays a singleton or
+    bottom by cancellation; the identity-only truth is impossible after all proper arrows.
+- id: lost-colour
+  fails: [barcan-t]
+  choice: free
+  writeup: two-colour-multisets-with-a-word-guard
+  text: >-
+    After the distinguished letter, no prior proposition can distinguish the two
+    colours at all degree-one singleton multisets. A tester at that arrow omitting
+    the proposition which makes this distinction necessarily accepts every prior proposition.
+- id: countability
+  holds: [necessary-countable-boolean-completeness-r, necessary-axiom-of-infinity-t]
+  fails: [boolean-completeness-t]
+  choice: uses
+  writeup: two-colour-multisets-with-a-word-guard
+  text: >-
+    Admitted current rows include the standard numeral cut and the propositional domain
+    is infinite. Countable unions preserve countable support. An uncountable subfamily
+    of singleton atoms over the distinguished word has no join when its omitted labels
+    are likewise uncountable.
+- id: finite-ordinal-benchmark
+  holds: [forcing-possibilism]
+  choice: uses
+  writeup: two-colour-multisets-with-a-word-guard
+  text: >-
+    With one individual, a relation on orders and fields having the same extensional
+    truth table at all arrows is drawn from a fixed finite set. The ordinal constructors
+    preserve that set, using the finite haecceity union for a rigid family of its members.
+    Only finite Boolean algebras are revised-small, and every finite Boolean algebra
+    is represented by a finite collection of propositional atoms.
+- id: exact-rows-and-unit-comprehension
+  holds: [necessary-tame-rigidity-r, necessary-inextensible-comprehension-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: rigid-relations-in-the-multiset-models
+  text: >-
+    The tester deleting one tuple at one isolated address forces every
+    weakly rigid bound to have exactly its current members' images there.
+    Composition makes these equalities hereditary. An arbitrary current
+    set has an inextensible representative with its exact images on
+    the group of units and empty rows at all nonunits.
+- id: two-word-rigid-bound
+  fails: [rigid-power-r, weakly-rigid-power-r]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: rigid-relations-in-the-multiset-models
+  text: >-
+    Index a rigid bound by the multiset labels: at degree zero a member
+    codes a word profile on one private suffix, and at degree one it
+    has its label's singleton mark on another suffix. At degree one
+    the full bound has the same residual marker for every label. The
+    first suffix has a rigid subbound selecting a set of labels that
+    cannot be pinned. Any source sublift would have to distinguish those
+    labels by that same residual marker, violating admission.
+- id: missing-rigid-haecceity
+  fails: [rigid-rigidity-r, weakly-rigid-weak-rigidity-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: rigid-relations-in-the-multiset-models
+  text: >-
+    At the distinguished letter the haecceity of the proposition
+    missing from its image is rigid. No old weakly rigid relation
+    can transport to it, since its exact current projection would
+    then contain that missing proposition. Delete just this haecceity
+    at that one address to refute weak inextensibility of both predicates.

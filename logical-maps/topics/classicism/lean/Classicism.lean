@@ -51,6 +51,7 @@ import Classicism.Models.ContingentBarcan
 import Classicism.Models.MonoidModel
 import Classicism.Models.Monoids
 import Classicism.Models.Permutations
+import Classicism.Models.PeriodicIntegerRows
 import Classicism.Models.Pointed
 import Classicism.Models.PointedParts
 -- Metalogical results, each with the object-level reasoning it rests on
@@ -92,6 +93,11 @@ import Classicism.Strict.Tests
 import Classicism.Statements
 import Classicism.Map
 import Classicism.MapAtoms
+import Classicism.Results.Research.SelfAtomsUnderNecessity
+import Classicism.Results.Research.MixedAtomicity
+import Classicism.Results.Research.GallinSelfAtoms
+import Classicism.Results.Research.FixedOperatorBarcanCertificates
+import Classicism.Results.Research.RecurrentPossibility
 import Classicism.Tools.MapIndex
 import Classicism.ModelStatements
 import Classicism.MapModels

@@ -1,0 +1,97 @@
+id: symmetric-finite-image-target
+name: Symmetric two-object model with finite-image nonunits at the target
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) researchers independently reviewed the target monoid, the atom and hull arguments, and the failure of Tame Rigidity.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Cian Dorr, Boolean Completeness does not imply Rigid Comprehension, Definition 39 and Propositions 40–41, for the two-object construction and the original separation.
+- GPT-6 Astra (OpenAI), prompted by Cian Dorr, 11 October 2026, propositional failure of Tame Rigidity in the singleton-individuals variant.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, finite-image modification of the target and the necessary self-atom bridge, 27 November 2026.
+source_names:
+- Dorr, BC does not imply RC
+- Astra via Dorr, 11 Oct 2026
+- Codex via Kodsi, 27 Nov 2026
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Definition 39, p. 19, Propositions 40–41, p. 20, and Remark 42, p. 21
+group: symmetric-ideally-full
+settings:
+  construction: Two copies of the natural numbers. The loops at the first object are all permutations. Every function is an entrance to the second object, which has no arrows back. The loops at the second object are all permutations and all functions with finite image. Both symmetry groups are the permutations. Use finite pins at the first object and the improper ideal at the second. Evaluate at the identity of the first object.
+  individuals: base
+  sigma: top
+meets:
+  actuality-contingent: The true scalar consisting of the permutation arrows is false at every entrance.
+  hull-conditions: For an entrance arbitrary functions splice on compatible finite prescriptions. The permutation loops are separated by the empty pin. A permutation fixing any finite pin can move the remainder of any finite set away from another finite set.
+arguments:
+- id: self-atoms
+  holds: [necessary-self-atoms-are-strong-atoms-r, necessary-strong-actuality, necessary-truths-are-nd-necessary]
+  choice: free
+  writeup: symmetric-finite-image-target
+  text: >-
+    The permutation-only scalar is a true strong atom at either object. No
+    nonunit has a continuation to a unit. At the upper object a finite-image
+    arrow is fixed by a finite-image endomap of its target. At an entrance
+    one can fix the image of the finite pin of the relation instead.
+    Thus every relation with a tuple on one of those arrows has a transport
+    instantiated on the identity row and also on a nonunit row. The
+    permutation-only scalar splits that transport. A self-atom has support
+    only over units, where transport is invertible, so it is strong.
+- id: comprehension
+  holds: [necessary-boolean-completeness-r, necessary-weak-rigid-comprehension-r, necessary-inextensible-comprehension-r]
+  choice: free
+  writeup: symmetric-finite-image-target
+  text: >-
+    The lower object has Dorr's hull conditions. At the upper object
+    arbitrary unions of symmetric profiles are symmetric. Thus both
+    objects satisfy Boolean Completeness and Actuality, giving Weak Rigid
+    Comprehension. At the lower object keep the given extension on
+    permutations and put empty rows at entrances for an inextensible
+    coextension. At the upper object the exact direct image of the given
+    extension gives even a rigid coextension.
+- id: untamed
+  fails: [tame-rigidity-r, rigid-comprehension-r]
+  choice: free
+  writeup: symmetric-finite-image-target
+  text: >-
+    With individuals the base sites, the universal individual property is
+    weakly rigid at the lower object since a function can hit any specified
+    point off a tester's finite pin. At the upper object the range-of-arrow
+    tester refutes its weak inextensibility along a constant. With singleton
+    individuals the same computation applies to the property of equality
+    tests of site images described in the write-up. A weakly rigid relation
+    coextensive with a rigid one equals it, so Rigid Comprehension also fails.
+- id: bounded-powers
+  holds: [necessary-rigid-power-r]
+  choice: free
+  writeup: symmetric-finite-image-target
+  text: >-
+    For a fully rigid lower bound, transport along a bijective entrance
+    and then retract onto the image of its finite pin. The retraction
+    fixes all images of current bound members. Interpolating arbitrary
+    entrance maps on each member's pin by finite-image maps shows that
+    one common finite pin controls all their entrance transports.
+    Consequently every bounded rigid upper subrelation lifts by taking
+    an inverse image on the lower extension. At the upper object the
+    unrestricted symmetric domains admit all exact-image hulls.
+- id: finite-scalar-atom-obstruction
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: finite-scalar-atoms-exclude-mathematical-possibilism
+  text: >-
+    The permutation loops make one atom. The unrestricted entrance maps split
+    on equality of two fresh images, regardless of subsequent target loops.
+    Mathematical Possibilism would require arbitrarily many propositional
+    atoms by representing the finite power algebras.
+notes: >-
+  The original [[symmetric-two-object-unpinned]] allows every target
+  endomap and fails the necessary self-atom bridge. This model changes
+  only that monoid. Both sites remain accessible and both satisfy the
+  positive necessary claims.

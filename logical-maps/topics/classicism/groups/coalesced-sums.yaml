@@ -76,6 +76,12 @@ parameters:
             The singleton root proposition, true at the root's identity arrow and nowhere in a
             component, is in the domain and entails every truth; the components have no arrows back
             to the root (Classicism, Appendix E, p. 83, on the distinctness-preserving collapse).
+      absorbed-involution:
+        label: involution at the root
+        text: >-
+          The root loops form a group of order two, acting trivially on individuals. Each
+          component has one distinguished entrance. Composing an entrance or any of its
+          postcomposites on the right with either root loop gives the same arrow.
   construction:
     text: The components, how their individuals and constants meet at the root, and the evaluation
       point, as the member's source gives them.

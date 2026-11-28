@@ -1,0 +1,55 @@
+id: coalesced-finite-support-involution
+name: 'Coalesced sum: finite descriptor support with a root involution'
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, independent review of the group action, power witnesses and distinctness-preserving necessity, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, involution variant of the coalesced model with finite descriptor support, 26 November 2026.
+source_names:
+- Codex via Kodsi, 26 Nov
+group: coalesced-sums
+settings:
+  root-arrows: absorbed-involution
+  sigma: construction
+  construction: >-
+    Use the public signature, auxiliary pointed theory, individuals and complete family of
+    old components of [[coalesced-finite-support-rigid-root]]. Evaluate at the identity
+    of the new root. Give each auxiliary predicate empty extension at both root loops.
+  domains:
+    text: >-
+      At a relational type, choose a separate arbitrary tuple extension at each of the
+      two loops and one closed auxiliary-language descriptor shared by all proper exits.
+      A loop translates the loop rows and fixes the descriptor.
+meets:
+  free-root-component: The identity row is unrestricted at each relational type.
+  complete-components: Every public consistent sentence is witnessed in an old component by interpreting all auxiliary predicates as bottom.
+arguments:
+- id: maximalism-powers-and-barcan
+  holds: [possibility-plus-signature-r, weakly-rigid-power-r]
+  fails: [barcan-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: coalesced-finite-support-involution
+  text: >-
+    The auxiliary nonmembership tests still have empty rows at every root loop. The fresh
+    predicate argument gives finite descriptor support at proper exits. At a loop $g$,
+    a tester with $g$-row the image of the current extension shows that a weakly rigid
+    bound has exactly that image there. Rigid subrelations lift at loops by the inverse,
+    and at proper exits by finite unions of tuple haecceities. The unary auxiliary test
+    that refutes Barcan at propositions has empty rows at both loops.
+- id: necessities-at-the-root
+  holds: [five-implies-nd-necessity]
+  fails: [truths-are-nd-necessary]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: coalesced-finite-support-involution
+  text: >-
+    Distinctness-preserving necessity is truth at both loops. The operator requiring
+    truth at both loops and acting as identity in every old component is an admitted
+    S5 operator, so 5-necessity also requires truth at both loops. The proposition
+    supported at the identity separates truth from these necessities.

@@ -1,0 +1,59 @@
+id: coalesced-analytic-agreement-disagreeing-arithmetic
+name: Actual reals with agreement on analysis and disagreement on arithmetic
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Independent OpenAI Codex (GPT-6) researchers, prompted by Daniel Kodsi, checked the interpreted incompleteness argument, source semantics and analytical guards.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two arithmetically disagreeing components without real structures, 27 November 2026.
+- The symmetric Cohen-class construction and Cian Dorr's coalesced arithmetic models.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Generic classes and coalesced sums
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalesced sums.
+definition: >-
+  Coalesce three components at a new fullest root with singleton individuals.
+  Two are countable one-object group models with no real number structures,
+  necessarily infinitely many propositions and differing arithmetical theories.
+  The third is a full standard S5 model on countably infinitely many worlds,
+  with one individual and identity transports. Relational names are top.
+arguments:
+- id: nonvacuous-analysis
+  holds: [necessity-of-second-order-analysis, necessary-axiom-of-infinity-t, necessary-barcan-r, well-ordering-r, strong-actuality]
+  fails: [necessity-of-arithmetic, arithmetic-necessitism, analytic-necessitism, infinity-e]
+  choice: uses
+  writeup: analysis-with-disagreeing-arithmetic
+  text: >-
+    Every real structure is either at the full-current root or in the full
+    S5 component and has standard numbers, reals and higher relations.
+    Such structures exist at propositional type. The other components have
+    no possible real structures and disagree on one arithmetical consistency
+    sentence. One has a nonstandard Frege number omitted by a tester
+    necessarily accepting every source number. Surjective projections and
+    internal bijections give necessary Barcan. The source has full current
+    well-order graphs and the current-only true atom.
+- id: finite-boolean-intervals
+  holds: [forcing-possibilism]
+  choice: uses
+  writeup: analysis-with-disagreeing-arithmetic
+  text: >-
+    With a singleton individual throughout, uniform extensional order and
+    field tables give the finite ordinal bound. Free current rows make any
+    countably infinite subset of a carrier power-closed. Each finite Boolean
+    algebra occurs below a finite union of single-world atoms in the S5
+    coordinate with the other coordinates bottom.
+- id: generic-classmate-choice
+  fails: [necessary-relational-choice-r, modalized-relational-choice-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: analysis-with-disagreeing-arithmetic
+  text: >-
+    Its first generic-class component has a serial scalar relation asking for a different classmate. A transposition fixing a selector pin and its input exchanges the chosen output with a fresh member. The unrestricted current row at the outer source gives local choice. The accessible failure prevents both boxed and modalized Relational Choice.

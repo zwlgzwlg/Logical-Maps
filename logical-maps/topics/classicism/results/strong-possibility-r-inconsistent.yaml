@@ -2,58 +2,69 @@ id: strong-possibility-r-inconsistent
 premises:
 - strong-possibility-r
 conclusion: false
-status: conjectured
+status: proved
+was_conjectured: true
 tier: gold
 certificate:
   source_id: misc
-  produced_by: Zachary Goodsell, who had it recorded as a conjecture and ranked it gold, 26 November 2026; it
-    is the pure counterpart of Cian Dorr's conjecture of 22 November 2026 for Strong Possibility (signature Σ)
+  produced_by: Zachary Goodsell proposed the pure conjecture and ranked it gold on 26 November 2026.
+    It is the pure counterpart of Cian Dorr's signature conjecture of 22 November 2026.
+    OpenAI Codex (GPT-6), prompted by Daniel Kodsi, supplied the full proof on 27 November 2026.
   recorded_by: Claude Fable 5.2 (Anthropic), prompted by Zachary Goodsell, 26 November 2026
-  checked_by: []
+  checked_by:
+  - Independent OpenAI Codex (GPT-6) researchers, prompted by Daniel Kodsi, checked the typed
+    construction, descriptor projection and restoration of the guard on 27 November 2026.
+  - Lean 4 verified the generated map statement for pure Strong Possibility, 27 November 2026.
   date: '2026-11-26'
-  lean: stated
+  lean: verified
+  lean_ref: Classicism.Map.strong_possibility_r_inconsistent
 sources:
 - Zachary Goodsell, 26 November 2026, that this be recorded as a conjecture, with its gold tier.
 - Cian Dorr, conjecture of 22 November 2026 that Strong Possibility (signature Σ) is inconsistent, with the
   partial proof in its write-up, by Claude Fable 5.2 (Anthropic), prompted by Cian Dorr, 21–22 November 2026.
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §2.6, p. 42, where the consistency of Strong
   Possibility is left open.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026, the six-place Russell–Myhill construction and the two incompatible pure instances.
+  The unary proof uses singleton and twin fibres to recover each tester's argument.
 source_names:
 - Goodsell 26 Nov
 - Dorr 22 Nov
 - Classicism
-proof: ''
+- Codex via Kodsi
+proof: >-
+  Let K say that any two distinct individuals can become permanently distinct.
+  Strong possibility of K implies K. Ask for the present distinction to be
+  restored after a visit to K. The two individuals must still differ at the
+  visit, so K supplies a continuation where they remain distinct forever.
+  An ordinary Maximalist root whose individuals are names satisfies K.
+  Now give every name two representatives that merge on every proper exit.
+  This root is still Maximalist and satisfies a second pure sentence H(K).
+  It says that a tester sharing the Russell tester's unary output must accept
+  that output wherever K holds. A second copy of an individual records a
+  false predicate value, letting one distinguish any closed tester that would
+  violate the law from Russell's tester. Strong possibility of the law brings
+  it back to the starting world. Since some tester shares the output and
+  rejects it there, the law gives the negation of K.
 references:
 - paper: bacon-dorr-classicism
   role: background
   locator: §2.6, pp. 41–42
   note: Strong Possibility and the distinctness-preserving modality; its consistency is left open there.
 notes: >-
-  Conjectured: Strong Possibility (pure) is inconsistent. *Classicism* leaves its consistency open (§2.6). The
-  gold tier is Zachary Goodsell's, 26 November 2026.
-
-
-  Cian Dorr's attempt is the write-up of [[strong-possibility-signature-r-inconsistent]]. It refutes Strong
-  Possibility (signature Σ) whenever $\Sigma$ has a constant with an argument of a type other than $e$. From
-  such a constant it builds a closed term of type $t\to t$ that can be made true of any chosen set of root
-  propositions in the models of [[coalesced-definable-root-signature]], and with it two sentences $E_1$,
-  $E_2$, existential closures of identities and distinctnesses, that split a Russell–Myhill collision
-  according to its witness. C($\Sigma$) proves $E_1\lor E_2$, Maximalism (signature Σ) is consistent with
-  $\neg E_1$ and with $\neg E_2$, and C proves $E_i\to\Box_{\ne}E_i$; so Strong Possibility would give
-  $\neg E_1$ and $\neg E_2$. The method does not reach the pure language. With no constant, no closed term
-  has a root extension that can be chosen freely, and the write-up leaves this case open, together with the
-  signatures all of whose constants are individual constants, propositional constants or predicates of
-  individuals.
-
-
-  What would settle it: a disjunction of closed pure sentences, each an existential closure of identities
-  and distinctnesses, that Maximalism (pure) proves without proving a disjunct; or, against the conjecture,
-  a model of Strong Possibility (pure). Neither is known. Such a model would have to refute the Infinity
-  Schema (type e), BF (type t), Strong Actuality, Truths are ND-necessary, Two-hat necessities are
-  ND-necessary and Maximalism (signature Σ), each of which is incompatible with Strong Possibility (pure)
-  ([[strong-possibility-and-infinity-e-incompatible]], [[strong-possibility-incompatible-with-barcan-t]],
-  [[strong-possibility-and-strong-actuality-incompatible]],
+  Zachary Goodsell proposed and ranked the pure conjecture on 26 November 2026.
+  The very same two pure sentences resolve [[strong-possibility-signature-r-inconsistent]].
+  The write-up also preserves the earlier six-place proof. Cian Dorr’s earlier approach is recorded
+  in the write-up for that signature result. Earlier necessary conditions on any putative pure model
+  were established in [[strong-possibility-and-infinity-e-incompatible]],
+  [[strong-possibility-incompatible-with-barcan-t]], [[strong-possibility-and-strong-actuality-incompatible]],
   [[strong-possibility-and-truths-are-nd-necessary-incompatible]],
-  [[strong-possibility-and-two-hat-implies-nd-incompatible]],
-  [[maximalism-signature-incompatible-with-strong-possibility-pure]]). The last of these makes the two
-  forms of Strong Possibility jointly inconsistent; neither conjecture is known to give the other.
+  [[strong-possibility-and-two-hat-implies-nd-incompatible]] and
+  [[maximalism-signature-incompatible-with-strong-possibility-pure]].
+changes:
+- date: '2026-11-27'
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  summary: Recorded the full inconsistency proof using a closed pure six-place test and
+    two individually Maximalist-compatible sentences.
+- date: '2026-11-27'
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  summary: Gave a uniform unary proof using a distinction that can become permanent and a pair that merges on every exit.

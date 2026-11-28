@@ -1,0 +1,27 @@
+id: signature-strong-possibility-implies-rigid-power
+premises:
+- strong-possibility-signature-r
+conclusion: rigid-power-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) researchers reviewed the Cantor model and universal reflection. The
+    finite-bound transfer also received independent review.
+  date: '2026-11-27'
+  lean: verified
+  lean_ref: Classicism.Map.signature_strong_possibility_implies_rigid_power
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, strong-atom reflection and finite rigid bounds for every
+  signature, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov 2026
+proof: By [[strong-possibility-signature-r-inconsistent]], any theory satisfying the premises proves $\bot$ and hence every instance of Rigid Power. The signature-Maximalist descriptor root with a true strong atom has standard finite proper transports
+  of every rigid relation. At signature Strong Possibility, Strong Actuality fails by universal reflection.
+  A nonfinite current rigid relation would therefore require a return witnessing both failures through
+  the closed sentence describing those proper transports. Its persistent rigidity forces the opposite
+  finite verdict at the return. The internal finite-power theorem applies at every arity.
+notes: The consistency condition throughout is Maximalist Classicism in the same fixed signature. [Construction
+  and proof](strong-possibility-signature-and-finite-rigid-bounds.html)

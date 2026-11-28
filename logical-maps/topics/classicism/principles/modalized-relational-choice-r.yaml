@@ -15,9 +15,10 @@ notes: >-
   Due to Cian Dorr. It implies Intensional Choice (its polyadic form at the empty tuple is Intensional
   Choice) and Relational Choice; □Relational Choice with Intensional Choice implies it, the
   necessarily instantiated property of being a functional subrelation of a necessarily serial relation
-  being necessarily uniquely instantiated below. Whether unboxed Relational Choice with Intensional
-  Choice suffices is open: the argument needs the functional subrelations to exist at every world.
-  Boxed, □Modalized Relational Choice is equivalent to □Relational Choice with □Intensional Choice.
+  being necessarily uniquely instantiated below. The recorded models
+  [[coalesced-swappable-pairs-root]], [[supported-boolean-complete-predecessor]]
+  and [[symmetric-qualitative-contrast-at-w1]] refute the implication with
+  unboxed Relational Choice, as does [[injective-entrances-to-old-and-new-individuals]]. Boxed, □Modalized Relational Choice is equivalent to □Relational Choice with □Intensional Choice.
   It implies its own necessitation
   ([[modalized-relational-choice-implies-necessary-modalized-relational-choice]]), so it is equivalent
   to □Relational Choice with Intensional Choice, and to its boxed form.
@@ -29,6 +30,10 @@ changes:
   by: Claude Opus 5.5 (Anthropic), prompted by Cian Dorr
   minor: true
   summary: Notes say that the principle implies its necessitation (GPT-6 Astra, prompted by Daniel Kodsi).
+- date: '2026-11-26'
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  summary: Replaced the obsolete open question by its recorded countermodels.
+  minor: true
 variants:
 - id: entailing
   name: Entailing form

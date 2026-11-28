@@ -1,0 +1,99 @@
+id: free-words-over-infinite-arithmetic-shifts
+name: Free words over four infinite arithmetic shifts
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - A second OpenAI Codex (GPT-6) agent, prompted by Daniel Kodsi, checked the shifted component semantics, new and old Frege numbers, rigid lifts and power failures, and the Boolean and ordinal arguments on 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Cian Dorr's coalesced arithmetics and the four arithmetic and CH components of the free-word construction.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, replacing each classical component by its internal action on the additive monoid of natural numbers, 27 November 2026.
+source_names:
+- Coalesced arithmetics and free words
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalescences.
+definition: >-
+  At each of the four arithmetic and CH components of the free-word model, use its
+  full action on its own additive monoid of natural numbers. The monoid acts
+  trivially on its individuals. Each root word has an independent entrance to
+  each component, followed by any of its internal shifts. A root entity has an
+  unrestricted tuple row at each word and one whole component entity at each
+  word and component. Root individuals are arrays with one individual entry
+  at each such coordinate. Choose names on disjoint final-letter sectors.
+arguments:
+- id: named-possibilities
+  holds: [possibly-witnessed-possibility-r]
+  choice: uses
+  writeup: free-words-over-infinite-arithmetic-shifts
+  text: >-
+    Give each realized named matrix a distinct final letter. At a root
+    witness copy its entire word and component profiles there. A witness at
+    a component can be prescribed at its zero-shift entrance as a whole entity.
+- id: infinite-sorts-and-disagreement
+  holds: [necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t]
+  fails: [necessity-of-arithmetic, arithmetic-necessitism, necessity-of-analysis, non-contingency-of-ch, pure-b-r]
+  choice: uses
+  writeup: free-words-over-infinite-arithmetic-shifts
+  text: >-
+    Every component computes the Frege numbers of each infinite sort as
+    its own natural numbers. The infinite shift monoid gives infinitely
+    many scalar singletons there. A current numeral test gives just the
+    standard numerals at the root. The respective components still
+    disagree on arithmetic and structural CH. Their closed arithmetical
+    truths are invariant under their loops.
+- id: singletons-and-shifts
+  holds: [necessary-barcan-r, necessary-strong-atomicity-r, necessary-truths-are-nd-necessary]
+  fails: [self-atoms-are-atoms-t]
+  choice: free
+  writeup: free-words-over-infinite-arithmetic-shifts
+  text: >-
+    All projections and suffix shifts have sections at each type. A
+    singleton tuple at one arrow is admitted and remains a singleton or
+    bottom by cancellation. The truth supported just at the identity
+    becomes impossible after every proper arrow, also in a component.
+    A truth supported at two distinct component entrances, on their
+    zero shifts only, is a self-atom with two nonzero parts at the root.
+- id: well-orders
+  holds: [modal-well-ordering-r]
+  choice: uses
+  writeup: free-words-over-infinite-arithmetic-shifts
+  text: >-
+    Use fixed external well-orders on all root word rows and fixed
+    internal well-orders on the rows at all shifts of each component.
+- id: lifting-rigid-relations
+  holds: [necessary-rigid-rigidity-r, necessary-weakly-rigid-weak-rigidity-r]
+  choice: uses
+  writeup: free-words-over-infinite-arithmetic-shifts
+  text: >-
+    The tester excluding one tuple at one arrow makes weak rigidity
+    equivalent to exact image rows. A rigid relation at a word lifts by
+    copying its arguments onto the word suffix. At a component entrance
+    vary just that whole coordinate; at a component shift use its internal
+    suffix section. Exact image rows of these lifted tuple sets are
+    admitted. Thus the rigidity predicates also have exact image rows.
+- id: missing-subfamilies
+  fails: [rigid-power-r, weakly-rigid-power-r, boolean-completeness-t, countable-boolean-completeness-r]
+  choice: uses
+  writeup: free-words-over-infinite-arithmetic-shifts
+  text: >-
+    Correlate an independent nonstandard component coordinate with a
+    word shift by a surjection, carrying countably many word tags to
+    the individual haecceities of the standard numbers. Their external
+    family cannot be a row in the nonstandard component. The same
+    standard cut indexes a countable family of component single-arrow
+    scalar atoms whose missing union prevents a least upper bound.
+- id: small-atomless-algebra
+  fails: [forcing-possibilism]
+  choice: uses
+  writeup: free-words-over-infinite-arithmetic-shifts
+  text: >-
+    The root has all current graphs and an infinite individual domain.
+    Its finite ordinal thresholds make the regular-open algebra of
+    Cantor space revised-small. Every nontrivial principal scalar
+    interval is atomic, so none represents that atomless algebra.

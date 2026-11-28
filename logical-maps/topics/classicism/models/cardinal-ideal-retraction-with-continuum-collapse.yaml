@@ -1,0 +1,68 @@
+id: cardinal-ideal-retraction-with-continuum-collapse
+name: Cardinal-ideal retraction with a continuum-collapse return
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two other OpenAI Codex researchers checked the forced row names, hereditary rigid real structures, powers and countable joins. The forcing-site Tame proof uses a separate ground inequality tester for each omitted tuple.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026, adding a split forcing excursion to the cardinal-ideal retraction.
+- Neil Barton and Zachary Goodsell, Continuum Contingency, Theorem 20, continuum collapse.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Barton and Goodsell, Theorem 20
+references:
+- paper: barton-goodsell-continuum-contingency
+  role: background
+  locator: Theorem 20, the forcing which changes CH.
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, intensional action models.
+definition: >-
+  Use [[countable-ideal-retraction]] with the continuum as the ideal
+  bound, starting in a ground structure satisfying the negation of CH.
+  Add to each root relation a forcing name for its current row in a
+  countably closed collapse of the continuum. At a forcing site use
+  extension-current rows with whole ground root entities as return
+  coordinates. The added entrance evaluates its name and keeps its
+  source entity for the deterministic return. The other entrances are
+  the elementary generic ultrapowers for the cardinal ideal. Evaluate
+  at the first root with zero individual names and top relational names.
+arguments:
+- id: bounds-and-selection
+  holds: [functional-choice-r, gallin-extensional-comprehension-r, modal-well-ordering-r, necessary-tame-rigidity-r]
+  fails: [rigid-power-r, weakly-rigid-power-r]
+  choice: uses
+  writeup: cardinal-ideal-retraction-with-continuum-collapse
+  text: >-
+    The return tags allow coherent selectors. Ground sets up to the
+    continuum have rigid exact-image representatives through both kinds
+    of excursion. A larger row is excluded by the high-index omission
+    argument. One new subset of the continuum at a high entrance is a
+    rigid subrelation missed by a ground tester.
+- id: changing-continuum
+  holds: [analytic-necessitism, arithmetic-necessitism, necessity-of-analysis, necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t]
+  fails: [non-contingency-of-ch]
+  choice: uses
+  writeup: cardinal-ideal-retraction-with-continuum-collapse
+  text: >-
+    The high embeddings map the old real labels onto the new ones. The
+    forcing excursions add no reals. The number, real, successor and
+    membership rows are rigid through either step. Structural CH changes
+    from false at the root to true in the collapse, with real structures
+    present at both points.
+- id: countable-joins-and-atoms
+  holds: [necessary-countable-boolean-completeness-r, necessary-atoms-are-strong-atoms-r, necessary-self-atoms-are-strong-atoms-r, necessary-strong-actuality]
+  fails: [boolean-completeness-t, atomicity-t, self-atomicity-t]
+  choice: uses
+  writeup: cardinal-ideal-retraction-with-continuum-collapse
+  text: >-
+    Countable projections at a forcing site are ground sequences of
+    return entities. All countable joins therefore exist. The high
+    quotient still lacks its uncountable block join. The noncurrent
+    root sectors are atomless, leaving only current singletons as
+    possible self-atoms and atoms at the root. Site atoms supported
+    on a return coordinate inherit the strength of that coordinate.

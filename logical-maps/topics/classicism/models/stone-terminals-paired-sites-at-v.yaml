@@ -1,0 +1,92 @@
+id: stone-terminals-paired-sites-at-v
+name: Stone terminals with two-hat necessity of every truth
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - An independent OpenAI Codex (GPT-6) researcher, prompted by Daniel Kodsi, checked the return guard at the paired source and the singleton mate test, 27 November 2026.
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, paired-site extension of the homogeneous Stone-terminal construction, 26 November 2026.
+- Cian Dorr and Claude Fable 5.1 (Anthropic), paired-individuals action models, 14 October 2026.
+source_names:
+- Kodsi and Codex, 26 Nov
+- Dorr and Fable, 14 Oct
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models, and Appendix E, coalesced sums.
+- paper: bounds-of-possibility
+  role: background
+  locator: Appendix D, the hat operation and the Barcan formula for 5-necessity.
+definition: >-
+  Take two objects with countably many ordinary pairs, one also having a singleton.
+  An arrow fixes each ordinary pair pointwise or collapses it, and may send the
+  singleton to any target site. Evaluate at the object with the singleton.
+  All core objects share the single individual of the signature-definable coalesced point
+  for one proposition name, and core arrows act identically on individuals. From each core
+  object give absorbing exits to that old point and to homogeneous Stone terminals as in
+  the write-up. A relational entity has an arbitrary finitely pinned table of core rows,
+  an independent whole old value, and a locally constant terminal section. The proposition
+  name has its old interpretation, constant core rows and a homogeneous terminal value.
+arguments:
+- id: inherited-possibilities
+  holds: [possibility-plus-signature-r]
+  choice: uses
+  writeup: stone-terminals-paired-sites
+  text: >-
+    At the entrance to the signature-definable point the individual carrier and named
+    individual values are preserved. Every eligible tuple retains its old possibility
+    witness by composition, including the empty-tuple instances.
+- id: small-algebras
+  holds: [forcing-possibilism]
+  choice: uses
+  writeup: stone-terminals-paired-sites
+  text: >-
+    Inexact ordinals have extension-invariant rows at every core arrow and constant
+    terminal section. At the rigid limit step the empty-pinned tester assigning to
+    each core target its set of such entities controls all future members, and a
+    separate terminal tester forces a common terminal extension. This bounds the
+    ordinals before choosing the Stone space. Each revised-small CBA occurs as a
+    principal interval supported on its factor.
+- id: two-hat-necessity-of-truth
+  holds: [truth-implies-two-hat-necessity]
+  fails: [two-hat-implies-nd-necessity]
+  choice: free
+  writeup: stone-terminals-paired-sites
+  text: >-
+    For a truth use the guard on core endomorphisms fixing its pin, the mates of
+    its ordinary sites, and the singleton. ND-possibility of this guard rules out
+    collapse of a tested pair, hence forces it to be fixed. If the singleton
+    moved into an ordinary pair, a return would collapse that pair, defeating
+    the target test fixing both its sites. Thus any relevant arrow agrees with
+    the identity on the truth's entire pin. Nevertheless any true ND guard can
+    return after sending the singleton into a fresh pair in the other object.
+    The proposition saying the singleton is still present fails at this exit.
+- id: current-graphs
+  holds: [well-ordering-r]
+  choice: uses
+  writeup: stone-terminals-paired-sites
+  text: >-
+    Every current graph is admitted. Apply this to an external well-order of the
+    current domain.
+- id: terminal-self-atom
+  fails: [self-atoms-are-atoms-t, atomicity-t]
+  choice: uses
+  writeup: stone-terminals-paired-sites
+  text: >-
+    The isolated unit of the complete atomless regular-open Cantor algebra factor has
+    no atom below it. Wherever it holds it is top at a full two-valued terminal.
+- id: old-missing-join
+  fails: [boolean-completeness-t]
+  choice: uses
+  writeup: stone-terminals-paired-sites
+  text: >-
+    The old proposition algebra is a principal interval. Its family with no join is
+    currently available. A root join would lie in that interval and give an old join.
+- id: one-individual
+  fails: [infinity-e]
+  choice: free
+  text: The sole individual is the individual of the old coalesced point.

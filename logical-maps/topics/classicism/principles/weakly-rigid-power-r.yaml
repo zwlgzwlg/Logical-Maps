@@ -16,5 +16,9 @@ notes: >-
   variant in the candidate list). Here $X$ ranges over relations of the same type as $F$, so the power
   property has type $(\bar\sigma t)t$. It implies Tame Rigidity and Rigid Power, and □Tame Rigidity
   with Rigid Power implies it; with BF it implies □Tame Rigidity, so under BF it is equivalent to □Tame
-  Rigidity and Rigid Power. Whether Tame Rigidity and Rigid Power imply it is open.
+  Rigidity and Rigid Power. With Tame Rigidity only at the evaluation point, the converse fails in [[symmetric-finite-compression-entrance]].
+  The [[internally-finite-rigid-power|internally finite bound lemma]] proves this instance whenever
+  the current tuple set of the weakly rigid bound has a Frege finite cardinality.
+  For an arbitrary bound, [[finite-subrelations-of-rigid-bounds|the finite-subrelation test]] covers
+  every future weakly rigid subrelation counted by the transport of a current Frege number.
 lean_def: Classicism.P.WeaklyRigidPower.schemaIn

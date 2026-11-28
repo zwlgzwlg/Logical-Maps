@@ -1,0 +1,140 @@
+id: boolean-retractions-with-arithmetic-terminals
+name: Boolean retractions with arithmetically disagreeing terminals
+definition: >-
+  Extend the universal Boolean retraction, retaining its countable mod-finite part
+  and its Boolean quotient containing the product of all complete algebras below
+  a strong limit. At the base mode $r$ a relational entity also has four independent
+  coordinates in one-world classical hierarchies. {{terminals}} An $r$-stage
+  indexed by an ultrafilter $D$ may enter the corresponding $D$-ultrapower of
+  each terminal by coordinate projection. The other mode $s$ retains its single
+  return to $r$. Evaluate at the initial $r$. Use one propositional name outside
+  the countably many pure closed denotations with top at all four terminals.
+parameters:
+  terminals:
+    text: The four classical terminal hierarchies.
+    values:
+      mixed: >-
+        Use the full hierarchy on the naturals and the internal full hierarchies
+        on the naturals of three countable Zermelo-with-Choice models, one
+        satisfying the negation of its consistency statement and two disagreeing on CH.
+      fixed: >-
+        Let T be Zermelo set theory with Choice plus the actual sign of CH.
+        Use two copies of the full hierarchy on the naturals and two copies of the
+        internal full hierarchy on the naturals of a countable model of T + ¬Con(T).
+arguments:
+- id: necessary-powers
+  holds: [necessary-rigid-power-r, necessary-weakly-rigid-power-r, necessary-tame-rigidity-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: boolean-retraction-disagreeing-arithmetic
+  text: >-
+    The mod-finite part still forces each weakly rigid bound at the base $r$ to have
+    finitely many current tuples. The separating tester is full on the four terminal
+    coordinates. At $s$ a weakly rigid bound has rigid return with current extension
+    the projected current tuples. A finite subcollection at a later stage lifts by
+    taking the inverse image of its chosen finite list at the return. Both powers
+    follow at the base kinds and throughout the iterated stages by Łoś.
+- id: arithmetic-and-analysis
+  holds: [necessary-axiom-of-infinity-e]
+  fails: [necessity-of-arithmetic, necessity-of-analysis, analytic-necessitism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: boolean-retraction-disagreeing-arithmetic
+  text: >-
+    All base and terminal individual domains are infinite in their local hierarchy.
+    The classical terminals disagree on a fixed arithmetic consistency sentence
+    in their Frege numbers and their real number structures. There is a current real
+    structure on propositions, while each terminal has only two propositions.
+- id: representing-algebras
+  holds: [forcing-possibilism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: boolean-retraction-disagreeing-arithmetic
+  text: >-
+    The two extension-invariant order/field tables and the four fixed terminal
+    coordinates bound all current ordinal codes independently of the universal
+    Boolean factor. Rigid limit families are finite. Each revised-small
+    complete algebra occurs in its own factor of the proposition order.
+- id: local-tests
+  holds: [modal-well-ordering-r, necessary-strong-actuality, independence-signature-r]
+  fails: [countable-boolean-completeness-r, atomicity-t, rigid-comprehension-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: boolean-retraction-disagreeing-arithmetic
+  text: >-
+    Choose the component well-orders in their respective hierarchies and use
+    the current-only true atoms at the two retraction modes. The mod-finite
+    proposition factor is atomless and has a countable family without a join.
+    No finite weakly rigid current row is coextensive with the infinite
+    individual domain. The propositional name avoids all pure closed terms.
+- id: return-guards
+  holds: [necessary-truth-implies-two-hat-necessity]
+  fails: [truths-are-nd-necessary, pure-b-r, necessary-potential-infinity-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: free
+  writeup: boolean-retraction-disagreeing-arithmetic
+  text: >-
+    The current-only root truth is two-hat necessary by the odd-stage current guard;
+    it becomes bottom at the new terminals. Its ND-necessity fails on the old
+    entrance-return pair. A classical terminal lacks contingent truths and
+    cannot possibly realize the third propositional numeral.
+- id: old-and-new-tests
+  fails: [barcan-t, inextensible-comprehension-r, gallin-extensional-comprehension-r, rigid-rigidity-r, weakly-rigid-weak-rigidity-r, boolean-completeness-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: boolean-retraction-disagreeing-arithmetic
+  text: >-
+    Take the old diagonal testers full at the new terminals. The constant individual
+    projection also identifies two distinct current individuals. Every current rigid
+    or weakly rigid property has finite image in the standard terminal and misses
+    the infinite rigid universal property there.
+- id: three-kinds-of-propositional-part
+  fails: [self-atomicity-t, atoms-are-self-atoms-t, self-atoms-are-atoms-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: boolean-retraction-disagreeing-arithmetic
+  text: >-
+    Every nonzero element of the mod-finite factor splits as soon as its entrance
+    row is true, since its nonzero return is also visible. The same splitting applies
+    to a scalar atom in the universal Boolean factor. Two isolated terminal
+    units together are a self-atom with a proper nonzero part.
+- id: one-independent-name
+  fails: [witnessed-possibility-r, separated-structure-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: boolean-retraction-disagreeing-arithmetic
+  text: >-
+    The named proposition has top terminal coordinates and cannot possibly equal
+    bottom. Its meet with the Fregean Axiom agrees with that axiom everywhere,
+    although the corresponding pure operations differ at bottom.
+- id: disagreement-on-ch
+  when: {terminals: mixed}
+  fails: [non-contingency-of-ch]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: boolean-retraction-disagreeing-arithmetic
+  text: >-
+    Two classical terminals disagree on CH in their internal real number
+    structures at individual-property type.
+- id: agreement-on-ch
+  when: {terminals: fixed}
+  holds: [non-contingency-of-ch]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: fixed-ch-and-disagreeing-arithmetic
+  text: >-
+    The base modes have full current rows, so each real structure there has
+    the ambient continuum and CH sign. All four classical terminals have the
+    same sign by construction. Each fixed guarded CH sentence passes to all
+    iterated stages by Łoś. The standard and nonstandard terminals still
+    disagree about the arithmetical sentence Con(T).

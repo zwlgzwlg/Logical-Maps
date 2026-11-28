@@ -1,0 +1,48 @@
+id: gallin-root-over-transformation-monoids
+name: A Gallin comprehension root over full transformation monoids
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two other OpenAI Codex researchers independently checked Gallin coextensions and the ordinary-only self-atom at the accessible site.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, intensional action models.
+definition: >-
+  At each of countably many sites use the ordinary monoid of all maps on
+  the natural numbers with the permutation group as symmetries, and a
+  separate entrance and return to a common root. Their composite at the
+  root is the identity. Ordinary maps absorb the entrance and preserve
+  the return. Every individual domain is a singleton. Root relations have
+  an arbitrary current row and an invariant row at each site. Site
+  relations have an equivariant ordinary profile and an independent whole
+  root entity as their return. Evaluate at the root with relational names top.
+arguments:
+- id: split-root
+  holds: [gallin-extensional-comprehension-r, functional-choice-r, rigid-comprehension-r, tame-rigidity-r, rigid-power-r, weakly-rigid-power-r, boolean-completeness-r, atomicity-r, forcing-possibilism]
+  choice: uses
+  writeup: gallin-root-over-transformation-monoids
+  text: >-
+    Pull the current row back along each return for its Gallin coextension.
+    Injective entrances realize selectors, and exact images of all current
+    subsets give both rigid powers. The singleton individual domain bounds
+    the inexact ordinal benchmark by finitely many uniform tables. Distinct
+    site atoms represent every finite Boolean algebra.
+- id: split-self-atom
+  fails: [necessary-self-atoms-are-atoms-t, necessary-self-atoms-are-strong-atoms-t, necessary-strong-actuality]
+  choice: free
+  writeup: gallin-root-over-transformation-monoids
+  text: >-
+    At a site take the inverse image of the permutation orbit under right
+    multiplication by the successor injection, with bottom return. Every
+    instantiated transport is a single ordinary orbit with bottom return,
+    but the original profile splits into two nonempty invariant pieces.
+    The true site atom has this nonatomic transport and hence fails to be strong.

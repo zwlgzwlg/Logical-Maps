@@ -1,0 +1,21 @@
+id: cardinal-ideal-retraction-with-cohen-returns
+name: Cardinal-ideal retraction with Cohen returns
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two further GPT-6 researchers independently checked the missing countable join, the analytical sentence, and the two CH signs.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+- The cardinal-ideal retraction with a continuum-collapse return.
+source_names: [Codex via Kodsi, Cardinal-ideal retraction]
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, intensional action models.
+group: cohen-returns-over-cardinal-ideals
+settings: {columns: one}
+arguments: []

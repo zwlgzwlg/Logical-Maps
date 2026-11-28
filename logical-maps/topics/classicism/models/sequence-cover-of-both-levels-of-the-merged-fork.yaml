@@ -1,0 +1,49 @@
+id: sequence-cover-of-both-levels-of-the-merged-fork
+name: Sequence cover of both levels of the fork with a merged composite
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Independent OpenAI Codex researchers checked the old atom, root density and modal scopes.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Claude Fable 5.1 (Anthropic), prompted by Cian Dorr, full three-object fork, 25 October 2026.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, sequence cover, 27 November 2026.
+source_names:
+- Fable via Dorr, 25 Oct
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, intensional action models.
+definition: >-
+  Use [[full-three-object-fork]]. Add a new root with one entrance to its
+  initial object and countably many independent entrances to each of its two
+  other objects. For each such object the corresponding whole entities must
+  agree cofinitely with the projection of the initial-object entity there.
+  Take arbitrary current rows, singleton individuals and top relational names.
+arguments:
+- id: atom-scopes
+  holds: [strong-atomicity-r, necessary-atomicity-r, necessary-self-atomicity-r, necessary-atoms-are-self-atoms-r, necessary-strong-actuality, barcan-r]
+  fails: [necessary-atoms-are-strong-atoms-t, necessary-barcan-t]
+  choice: free
+  writeup: sequence-covers-of-a-pair-and-a-fork
+  text: >-
+    A nonempty middle or terminal row now occurs at an isolated copy, and
+    every middle-object atom is strong. These and current singletons give
+    strong atoms densely at the new root. Every possible witness beyond
+    the root lifts directly or on another entrance with the same tester.
+    The merged address and the unequal-bit Barcan tester persist in the old fork.
+- id: ordinal-benchmark-and-scalar-intervals
+  holds: [forcing-possibilism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: countable-bases-and-mathematical-possibilism
+  text: >-
+    Individuals are singletons throughout. Full current rows make infinite
+    algebras large relative to the finite ordinal benchmark; the independent
+    isolated sequence indices provide enough scalar atoms to represent every
+    finite algebra.

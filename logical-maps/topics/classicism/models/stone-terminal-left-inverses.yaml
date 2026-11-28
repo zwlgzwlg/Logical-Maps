@@ -1,0 +1,38 @@
+id: stone-terminal-left-inverses
+name: 'Stone terminals with two left inverses at the root'
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) agents, prompted by Daniel Kodsi, checked the unit calculation and the two-hat argument, 27 November 2026.
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, homogeneous Stone-terminal construction and verification of this variant, 26 November 2026.
+source_names:
+- Kodsi and Codex, 26 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models, and Appendix E, coalesced sums.
+group: stone-terminal-roots
+settings:
+  loops: left-inverses
+  core: paired
+  names: inherited
+arguments:
+- id: two-returns
+  holds: [actuality]
+  fails: [strong-actuality, five-implies-nd-necessity]
+  writeup: stone-terminal-left-inverses
+  text: The identity singleton is a strongest truth. After the successor loop every current truth holds at both distinct left inverses and can be split. The proposition supported on the units separates the 5 and distinctness-preserving necessities.
+- id: trivial-units
+  holds: [truth-implies-two-hat-necessity]
+  choice: free
+  writeup: stone-terminal-left-inverses
+  text: >-
+    Every word reduces by cancelling a left inverse against the successor on its right.
+    A surviving rightmost left inverse prevents injectivity, and a positive power of
+    successor alone prevents surjectivity. Thus the identity is the only unit. The
+    identity-only guard witnesses two-hat necessity for every current truth.

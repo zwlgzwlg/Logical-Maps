@@ -1,0 +1,42 @@
+id: strong-possibility-and-witnessed-possibility-incompatible
+premises:
+- strong-possibility-r
+- witnessed-possibility-r
+conclusion: false
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by: []
+  date: '2026-11-26'
+  lean: verified
+  lean_ref: Classicism.Map.strong_possibility_and_witnessed_possibility_incompatible
+sources:
+- OpenAI Codex, prompted by Daniel Kodsi, 26 November 2026.
+source_names:
+- Codex via Kodsi 26 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 38–39; §2.6, p. 42
+proof: >-
+  Pure Strong Possibility alone gives the contradiction by [[strong-possibility-r-inconsistent]].
+
+  Fix a nonindividual constant $c$ as in the map's signature convention,
+  and let $b$ be any nonzero closed pure proposition.
+  For a variable $X$ of its type put $T(X)=\forall\bar z\, .\,X[\bar z]$,
+  with $T(X)=X$ at type $t$. The two pure formulas
+  $\Diamond(b\land T(X))$ and $\Diamond(b\land\neg T(X))$ have current
+  witnesses, respectively the constant top and bottom relations of that type,
+  since $\Diamond b$. Applying Witnessed Possibility to each formula with
+  the same $c$, and then applying 4, gives both $\Diamond(b\land T(c))$
+  and $\Diamond(b\land\neg T(c))$. Thus $T(c)$ splits every such $b$ into
+  two nonzero parts. But pure Strong Possibility makes the conjunction of
+  the Fregean Axiom with exactly one individual a nonzero Boolean atom,
+  by the finite Fregean cell argument in
+  [[maximalism-signature-incompatible-with-strong-possibility-pure]]. This
+  contradicts the splitting assertion.
+notes: >-
+  The splitting argument applies to every nonzero closed pure proposition.
+  It uses just Witnessed Possibility, whose antecedent requires a current witness.

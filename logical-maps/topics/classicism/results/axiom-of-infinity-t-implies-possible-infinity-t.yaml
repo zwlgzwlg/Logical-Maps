@@ -18,4 +18,4 @@ source_names:
 proof: >-
   By T for the defined necessity, $p\to\Diamond p$, applied to the Axiom of Infinity at type $t$.
 references: []
-notes: Whether the converse holds is recorded as an open question, possible-infinity-t-implies-axiom-of-infinity-t.
+notes: The converse fails in [[hyperfinite-retracts-of-infinite-sites]]. Its root has internally finitely many propositions and sees an infinite propositional domain.

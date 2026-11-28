@@ -1,0 +1,115 @@
+id: partial-embeddings-of-infinite-classes
+name: Partial embeddings of infinite classes
+definition: >-
+  At one object, take a free word on countably many letters and a partial injection of a set of sites carrying an equivalence relation.
+  On its live domain the partial injection preserves and reflects the relation. All undefined sites map to the default when sites are individuals.
+  Rows depend on the live coefficient on a pin, the word and the available tag observations, and are equivariant under target class automorphisms.
+  {{observations}} {{names}}
+parameters:
+  observations:
+    text: The support size, rank information and individuals for the construction.
+    generate: true
+    default: cutoff
+    values:
+      cutoff:
+        text: >-
+          Use countably many countable classes, finite pins, singleton individuals, and rank tags in the naturals with infinity adjoined.
+          A finite tag bounds the rank, tags compose by minimum and each row reads a finite truncation.
+        label: finite pins and rank cutoffs
+      exact:
+        text: >-
+          Use aleph-one classes of size aleph-one, countable pins and singleton individuals. Keep the same bounds on rank, but allow every row to read the exact tag.
+        label: countable pins and exact tags
+      untagged:
+        text: >-
+          Use aleph-one classes of size aleph-one and countable pins, omit the tag entirely and use the sites and default as individuals.
+        label: countable pins without tags
+  names:
+    text: The interpretation of a signature with one propositional name.
+    generate: true
+    default: glued
+    values:
+      glued:
+        text: Realize Logical Necessity by finite last-letter gluing and pointed Henkin compactness, retaining the whole pure pointed theory.
+        label: Logical Necessity
+      top:
+        text: Interpret the name by top in the displayed model.
+        label: top name
+arguments:
+- id: class-guards
+  holds: [necessary-truths-are-nd-necessary, necessary-axiom-of-infinity-t, arithmetic-necessitism, second-order-analytic-necessitism]
+  fails: [actuality, self-atomicity-t, transversal-r, relational-choice-r, transversal-choice-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: partial-embeddings-of-infinite-classes
+  text: >-
+    The guard keeps every pinned site live with empty word and sufficient tag. Any partial embedding meeting these requirements agrees on the pin
+    with a class automorphism. A current truth is therefore ND-necessary. A partial identity erasing the second of two pins precludes a transversal
+    for properties representing fresh classes. The independent word coordinate supplies persistent real labels and exact representatives of all their powers.
+- id: finite-rank
+  when: {observations: cutoff}
+  holds: [necessary-atomicity-r]
+  fails: [boolean-completeness-t, countable-boolean-completeness-r, forcing-possibilism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: partial-embeddings-of-infinite-classes
+  text: >-
+    A saturated finite-rank orbit supplies an atom below every nonzero row. The even-tag family has no join and
+    the represented Dedekind-finite clopen algebra has no atomic principal interval as its representative.
+- id: countable-unions
+  when: {observations: [exact, untagged]}
+  holds: [necessary-countable-boolean-completeness-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: partial-embeddings-of-infinite-classes
+  text: Countably many pins have a common pin and an arbitrary countable union of whole rows still meets the word and tag restrictions.
+- id: singleton-individuals
+  when: {observations: [exact, cutoff]}
+  fails: [potential-infinity-e]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: free
+  writeup: partial-embeddings-of-infinite-classes
+  text: Exactly one individual exists at every stage.
+- id: exact-tag
+  when: {observations: exact}
+  holds: [forcing-possibilism]
+  fails: [atomicity-t, boolean-completeness-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: partial-embeddings-of-infinite-classes
+  text: >-
+    The zero-tag atoms supply all finite Boolean intervals, and singletons bound the ordinal benchmark. A scalar requiring
+    infinitely many live inputs has no atom below it. The tag-one atoms labelled by one class have no least upper bound.
+- id: untagged
+  when: {observations: untagged}
+  holds: [necessary-boolean-completeness-t, necessary-atomlessness, necessary-axiom-of-infinity-e]
+  fails: [boolean-completeness-r, forcing-possibilism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: partial-embeddings-of-infinite-classes
+  text: >-
+    A scalar join tests whether some member can hold at the word with the specified live bits on the family pin.
+    Moving its other pinned inputs away from a competing bound proves leastness. Live bits on fresh sites split every scalar.
+    A unary family collecting the live images of the members of one class has no join.
+- id: logical-necessity
+  when: {names: glued}
+  holds: [logical-necessity-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: partial-embeddings-of-infinite-classes
+  text: At finitely many distinct final letters prescribe whole witnessing profiles and pass to a pointed Henkin model by compactness.
+- id: signature-invariance
+  when: {names: top}
+  holds: [no-contingency-signature-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: free
+  writeup: partial-embeddings-of-infinite-classes
+  text: Every arrow fixes the top name in this one-object model.

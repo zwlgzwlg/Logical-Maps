@@ -231,7 +231,17 @@ arguments:
     of both, but after a collapse $k$ merging $d_0$ and $d_1$ it holds of $C_{kd_0}$ alone, while
     $U_{kh}$ has both companions' codes. So $h\cdot U$ is not weakly inextensible: $U$ is weakly rigid
     and not rigid.
-
+- id: finite-scalar-atom-obstruction
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: finite-scalar-atoms-exclude-mathematical-possibilism
+  text: >-
+    The symmetry group is the sole propositional atom. The model's supported
+    merge test splits each nonempty part of the collapser sector.
+    Mathematical Possibilism would require arbitrarily many propositional
+    atoms by representing the finite power algebras.
 notes: >-
   This is the draft's answer to the question its two-object model leaves open. Boxed Boolean
   Completeness, boxed Actuality and the boxed type-e instance of BF all hold, and Rigid

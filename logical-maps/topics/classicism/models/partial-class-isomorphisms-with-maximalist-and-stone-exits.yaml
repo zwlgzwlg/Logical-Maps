@@ -1,0 +1,24 @@
+id: partial-class-isomorphisms-with-maximalist-and-stone-exits
+name: Partial class isomorphisms with Maximalist and Stone exits
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two independent OpenAI Codex (GPT-6) mathematical reviews of the entrance, symmetry and ordinal arguments, 27 November 2026
+  date: '2026-11-27'
+  lean: none
+sources:
+- Cian Dorr's coalesced pinned-substitutions model supplies the old signature Possibility+ and Barcan point.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, combining the partial class isomorphism and Stone-terminal constructions, 27 November 2026.
+source_names:
+- Dorr, coalesced pinned substitutions
+- Kodsi and Codex, 27 Nov
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Definitions 15–18 and Proposition 20
+  note: Left-equivariant pinned action profiles.
+group: partial-class-isomorphisms-with-maximalist-exits
+settings: {terminals: stone}
+arguments: []

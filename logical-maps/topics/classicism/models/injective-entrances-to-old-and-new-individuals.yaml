@@ -1,0 +1,133 @@
+id: injective-entrances-to-old-and-new-individuals
+name: Injective entrances to old and new individuals
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independently reviewed by two further OpenAI Codex (GPT-6) agents, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- "Claude Fable 5.1 (Anthropic), prompted by Cian Dorr, 6 October 2026: the symmetric old-and-new model and obstruction to Inextensible Comprehension, with later verification by Claude Opus 5.5."
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, the single new individual and the independent root with unrestricted injective entrances.
+source_names:
+- Dorr and Claude, 6 Oct
+- Codex via Kodsi, 26 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, symmetric intensional models
+definition: >-
+  Start with the symmetric old-and-new model on a countably infinite $E$ and
+  $O=E\sqcup\{*\}$. Between the two objects the only arrows targeting $O$
+  whose ranges contain $*$ are the permutations fixing it. From a third
+  countably infinite root admit every injection into either object, including
+  injections whose ranges contain $*$. There are no returns to the root.
+  Relations are finitely pinned on source individuals and equivariant under
+  permutations of the target preserving the designated point. The root has
+  only the identity loop and an unrestricted current row. For the signature
+  verdicts assign the one propositional constant the event that a designated
+  root individual maps to the new point.
+arguments:
+- id: strong-atoms
+  holds: [strong-atomicity-r, necessary-atomicity-r]
+  choice: free
+  writeup: injective-entrances-to-old-and-new-individuals
+  text: >-
+    At any occupied upper row, modify the entrance off its finite pin to cover
+    the tuple's finite support and the unique new individual if the target has
+    one. The orbit of that tuple with those preimages marked is an atom. At an
+    unmarked target, finite partial bijections extend to permutations there;
+    at the marked target, the marked preimage forces every further occupied
+    row to occur along a permutation. Its transports are atoms or bottom.
+    At the upper objects the same finite marking within each arrow class gives
+    ordinary atoms below all nonzero relations.
+- id: inextensibility
+  fails: [necessary-inextensible-comprehension-r]
+  choice: free
+  writeup: injective-entrances-to-old-and-new-individuals
+  text: >-
+    At $E$, a coextension of the universal property has full rows at every
+    injection into $E$, by finite approximation with permutations. Weak
+    inextensibility forces its row at the old inclusion into $O$ to omit $*$.
+    All these members remain different from $*$ by injectivity, but after
+    returning to $E$ the row contains the image of $*$. This contradicts
+    inextensibility at the inclusion.
+- id: barcan
+  holds: [barcan-r]
+  fails: [necessary-barcan-t]
+  choice: free
+  writeup: injective-entrances-to-old-and-new-individuals
+  text: >-
+    A bijective entrance agreeing on the tester's pin lifts any target value
+    by extending its rows along the matching finite restrictions. At $E$ all
+    old propositions identify the two kinds of endomorphism after entering
+    $O$, while a target proposition distinguishes them. A root of this upper
+    model therefore fails propositional BF.
+- id: countable-completeness
+  fails: [countable-boolean-completeness-r, boolean-completeness-t]
+  choice: free
+  writeup: injective-entrances-to-old-and-new-individuals
+  text: >-
+    For each old root individual the proposition that its image is the new
+    point is admitted. The even-indexed family is countable. A join would
+    separate fresh even and odd marked preimages, which no finite pin can do.
+- id: choice
+  holds: [well-ordering-r, necessary-intensional-choice-r]
+  fails: [modalized-relational-choice-r, necessary-relational-choice-r]
+  choice: uses
+  writeup: injective-entrances-to-old-and-new-individuals
+  text: >-
+    Free current rows admit well-orders and hence choices at the root. For
+    Intensional Choice take one witness per orbit of the finite pin's images.
+    A common finite list of additional source points supplies enough unmarked
+    images to fix the support of the chosen witnesses. This gives an equivariant
+    unique choice at every arrow. At the upper unmarked object, swapping two
+    individuals outside a selector's finite pin prevents any choice of an
+    element from each two-element individual property, even for a necessarily
+    serial relation.
+- id: arithmetic-and-analysis
+  holds: [arithmetic-necessitism, necessity-of-arithmetic, necessity-of-second-order-analysis, necessary-axiom-of-infinity-e, axiom-of-infinity-t]
+  fails: [analytic-necessitism, necessary-potential-infinity-t]
+  choice: uses
+  writeup: injective-entrances-to-old-and-new-individuals
+  text: >-
+    At upper points every present subset fixed by the stabilizer of a finite
+    support is admitted. Thus the standard numeral cut is admitted. The
+    structure data of any real structure admit all external subsets and
+    relations of its numbers and reals, which are pointwise fixed by its
+    stabilizer. The root supports a real structure on its continuum many
+    individual properties; the upper unmarked object has only countably many
+    individual properties and has no such structure. Upper proposition sorts
+    are finite, the root proposition sort and all individual sorts infinite.
+- id: modal-obstruction
+  fails: [pure-b-r, witnessed-possibility-r]
+  choice: free
+  writeup: injective-entrances-to-old-and-new-individuals
+  text: >-
+    Only the root has a current well-order of individuals, since a fresh
+    transposition preserves any proposed upper order having a finite pin.
+    This pure truth cannot return from an upper object. Coupling it with
+    the two requirements that the same name is respectively top and bottom
+    prevents Witnessed Possibility.
+- id: mathematical-possibilism
+  fails: [forcing-possibilism]
+  choice: uses
+  writeup: injective-entrances-to-old-and-new-individuals
+  text: >-
+    Finite ordinal thresholds and full current rows make the continuum-sized
+    regular-open algebra of Cantor space revised-small. The root has enough
+    individual properties to carry this algebra but all its propositional
+    intervals are atomic.
+- id: marked-propositions
+  holds: [independence-signature-r, truths-are-nd-necessary, necessary-truth-implies-five-necessity]
+  fails: [self-atoms-are-atoms-t]
+  choice: free
+  writeup: injective-entrances-to-old-and-new-individuals
+  text: >-
+    A marked-preimage name moves under a permutation of root individuals fixing
+    all pure denotations. The union of two distinct such events is a self-atom
+    but splits at the root. The isolated root identity gives the ND guard for
+    all root truths, and the upper model's two-hat and 5-necessity calculations
+    for all upper truths hold with one distinguished new point.

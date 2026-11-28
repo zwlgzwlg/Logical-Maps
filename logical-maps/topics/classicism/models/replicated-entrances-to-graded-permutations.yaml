@@ -1,0 +1,56 @@
+id: replicated-entrances-to-graded-permutations
+name: Replicated entrances to graded permutations
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independently reviewed by two further OpenAI Codex (GPT-6) agents, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026.
+- The map's graded-maps-free-words-glued-constants construction for pinned action models.
+source_names:
+- Codex via Kodsi, 26 Nov
+- Graded maps
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §§3.4–3.5, pp. 55–61
+definition: >-
+  Give the upper point singleton individuals, countably pinned relation profiles,
+  and endomorphisms $1$ and $(g,n)$ for permutations of an uncountable coefficient
+  set and positive grades. From a new root take entrances $(m,i)$ for each upper
+  arrow $m$ and $i$ a natural number or $\infty$. A positive continuation sends the
+  entrance to the infinite-indexed copy of the composite. Root relations have
+  unrestricted current rows and one central upper relation. For each $m$ the finite
+  copies may differ from its central row at only finitely many indices.
+arguments:
+- id: necessary-barcan
+  holds: [necessary-barcan-r]
+  choice: free
+  writeup: replicated-entrances-to-graded-permutations
+  text: >-
+    Each positive arrow admits a preimage of any pinned profile by shifting its
+    grades and composing the coefficient permutations with the inverse. Every
+    entrance is onto because a central preimage with no exceptional rows works.
+- id: atomicity
+  holds: [strong-atomicity-r, necessary-self-atomicity-r, necessary-strong-actuality]
+  fails: [necessary-atomicity-t]
+  choice: free
+  writeup: replicated-entrances-to-graded-permutations
+  text: >-
+    Every occupied root relation contains a single current tuple or a single
+    tuple at a finite-indexed entrance. These atoms transport to atoms or bottom.
+    The upper point has a true identity-only atom, and a nonzero relation there
+    can be restricted to one grade and tuple to obtain a self-atom. Every nonzero
+    subproposition of its grade-one slice splits at a fresh permutation coordinate.
+- id: countable-completeness
+  fails: [countable-boolean-completeness-r]
+  choice: free
+  writeup: replicated-entrances-to-graded-permutations
+  text: >-
+    The even-indexed singleton entrances over the identity form a countable family.
+    A least upper bound would be true on them but false on each odd-indexed copy,
+    contrary to required eventual agreement at the identity.

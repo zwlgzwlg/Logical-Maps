@@ -85,3 +85,7 @@ $F$ pinned down by a finite $S$.
 The arguments of coalesced-pinned-interpretations-root use only the arrows
 $\langle V,I\rangle$, so they carry over unchanged. Maximalism (for $\Sigma$
 and pure) and Possibility+ (for $\Sigma$ and pure) hold.
+
+## Rigid Power for rooted component families
+
+When every object of each component is reachable from its designated root, both Rigid Power and Weakly Rigid Power fail. The proof uses a Fregean component with infinitely many individuals and the ability to change the interpretation of a fresh predicate name while fixing a finite pin. [Rooted-family proof and scope](pinned-substitutions-over-rooted-components.html)

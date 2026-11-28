@@ -46,8 +46,8 @@ notes: >-
   ([[second-order-analytic-necessitism-implies-necessity-of-second-order-analysis]]), hence the
   Non-contingency of the Continuum Hypothesis. Bacon's proof of his Theorem 5.2 shows, from Atomicity at
   every type and □Rigid Comprehension, that the canonical real number structure and the property of its
-  rigid subproperties are rigid, which is this principle at the type of the canonical reals; whether
-  those premises give it at every type is not settled by that argument. Fails in
+  rigid subproperties are rigid, which gives the instance at the type of the canonical reals. In [[absorbing-entrance-swappable-pairs]]
+  both premises hold, yet even Analytic Necessitism fails. Second-Order Analytic Necessitism also fails in
   [[stitched-cohen-extension]], with Analytic Necessitism.
 changes:
 - date: '2026-11-26'

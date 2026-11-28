@@ -1,0 +1,85 @@
+id: injective-stages-with-surjections
+name: Injective integer stages with an auxiliary surjection
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Independent OpenAI Codex (GPT-6) review of the two-coordinate Boolean join, splitting and marked-coordinate tests, 27 November 2026
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026, injective integer stages and the present mixed product.
+- Cian Dorr's symmetric surjections and the join argument for symmetric-surjection-products.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Dorr, symmetric surjections
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Theorem 36 and the use of source pins and target symmetry.
+definition: >-
+  Use the integer stages with the marked or ordinary injection coordinates
+  and the free-word labels of injective-integer-stages. Independently label
+  every arrow by an arbitrary surjection of an auxiliary set of size
+  $\kappa^+$, with full auxiliary target permutation symmetry and combined
+  source pins of size at most $\kappa$. Auxiliary maps act trivially on
+  actual individuals. Interpret one proposition name by disjoint final words.
+arguments:
+- id: boolean-joins
+  holds: [necessary-boolean-completeness-r, logical-necessity-r]
+  choice: uses
+  writeup: injective-stages-with-surjections
+  text: >-
+    At any injection-kind representative take the union over all current
+    members at auxiliary surjections agreeing with the given one on the
+    family pin. Move an additional member pin off a bound pin to combine
+    the two auxiliary prescriptions. At the representative this gives the
+    least row, and interpolation of the injection component on the pins
+    gives all remaining comparisons. Integer translation and suffix gluing
+    yield Logical Necessity.
+- id: splitting
+  holds: [necessary-atomlessness, necessary-atoms-are-strong-atoms-r, necessary-self-atoms-are-strong-atoms-r]
+  choice: free
+  writeup: injective-stages-with-surjections
+  text: >-
+    On a positive row two fresh auxiliary source points may have the same
+    or distinct images, leaving the entire row unchanged. The equality
+    test on those images splits every nonzero relation. No atom or
+    self-atom of any relational type is ever instantiated.
+- id: weakly-rigid-coordinate
+  fails: [inextensible-comprehension-r, tame-rigidity-r, barcan-t, relational-choice-r]
+  choice: free
+  writeup: injective-stages-with-surjections
+  text: >-
+    Hold the auxiliary coefficient fixed in the marked-coordinate
+    inextensibility tests, using the identity on the entrance and return.
+    Original markers survive the composite but the new marker lands back
+    in the source coordinate. The same entrance also prevents the lifting
+    of the marker-preservation proposition. A fresh ordinary transposition
+    obstructs selecting a member from a pair.
+- id: arithmetic
+  holds: [necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t, arithmetic-necessitism, necessity-of-arithmetic]
+  choice: free
+  writeup: injective-stages-with-surjections
+  text: >-
+    Standard closed Frege numerals have an invariant targetwise cut and
+    the individual and proposition domains are infinite everywhere.
+    Guarded arithmetic is standard and the necessary Peano guard gives
+    exact transport on the number row.
+- id: rigid-power
+  holds: [necessary-rigid-power-r]
+  choice: uses
+  writeup: injective-stages-with-surjections
+  text: >-
+    Use representatives which are bijections onto the permitted injection
+    ranges and have auxiliary surjections with every fibre of size
+    $\kappa^+$. Their rows in a weakly rigid relation are the direct images
+    of its current extension. Composites retain the auxiliary fibre size,
+    so the virtual injection argument for the integer stages makes every
+    supported subset of a rigid bound rigid under these rows. To lift a
+    future rigid subrelation, normalize the auxiliary pins of preimages
+    by selecting one point in each fibre outside the bound's fixed pin.
+    Closing these preimages under source symmetries fixing the pulled-back
+    target pin still maps into the subrelation, by its persistence under
+    target surjections. This proves the power assertion at every stage.

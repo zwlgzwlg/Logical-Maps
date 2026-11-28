@@ -1,0 +1,25 @@
+id: necessary-self-atomicity-r-and-necessary-strong-atomicity-t-imply-necessary-strong-atomicity-r
+premises:
+- necessary-self-atomicity-r
+- necessary-strong-atomicity-t
+conclusion: necessary-strong-atomicity-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other GPT-6 researchers independently checked the modal scopes and the argument at arbitrary relational types.
+  date: '2026-11-27'
+  lean: verified
+  lean_ref: Classicism.Map.necessary_self_atomicity_r_and_necessary_strong_atomicity_t_imply_necessary_strong_atomicity_r
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+- Cian Dorr's self-atoms and the 30 October instance-proposition argument of Claude Opus 5.5 prompted by Cian Dorr.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Dorr and Opus, 30 Oct
+proof: >-
+  Apply the local density argument at each accessible point using Self-Atomicity there and Strong Atomicity at propositional type there.
+notes: >-
+  The local result is [[self-atomicity-r-and-strong-atomicity-t-imply-strong-atomicity-r]].

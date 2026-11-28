@@ -148,15 +148,33 @@ closed over $p$ (and $q$):
 - **.2 (G):** $\forall p\, .\,\Diamond\Box p\to\Box\Diamond p$.
 - **.3:** $\forall p\,q\, .\,\Box(\Box p\to q)\lor\Box(\Box q\to p)$.
 
-Expected connections, to be checked before recording:
-- 5 implies .2 and .3.
-- M with 5 yields $\Diamond p\to\Box p$, which collapses the modality and conflicts
-  with any contingency. 4 is a theorem of C, so B already gives S5, and M with B
-  (equivalently ND) collapses too.
-- Grz with B likewise collapses, since Grz over S5 forces $p\to\Box p$.
-- Their relations to NPC, Atomicity and the existence of worlds need working out,
-  as do their boxed forms. With $\Box$ the broadest necessity, boxed and unboxed
-  forms may differ.
+**Checked connections over C.** The following implications concern the displayed, unboxed
+axioms at the evaluation point. OpenAI Codex (GPT-6), prompted by Daniel Kodsi,
+26 November 2026.
+
+- **5 entails .2 and .3.** For .2, $\Diamond\Box p$ gives $\Diamond p$ by T, hence
+  $\Box\Diamond p$ by 5. Failure of .3 would give both
+  $\Diamond(\Box p\land\neg q)$ and $\Diamond(\Box q\land\neg p)$. The first
+  gives $\Diamond\Box p$, hence $\Box p$ by the dual of 5; the second gives
+  $\Diamond\neg p$.
+- **McKinsey together with 5 is equivalent to the Fregean Axiom.** From
+  $\Diamond p$, apply 5, McKinsey and the dual of 5 in turn to get
+  $\Box\Diamond p$, $\Diamond\Box p$ and $\Box p$. If $p$ is true, T gives
+  $\Diamond p$ and hence $\Box p$; apply the same argument to $\neg p$ when
+  $p$ is false. Intensionality gives $p=\top$ or $p=\bot$ respectively.
+- **Grz together with 5 is also equivalent to the Fregean Axiom.** Suppose
+  $\Diamond p$ and $\neg p$. Local 5 gives $\Box\Diamond p$ and
+  $\Box\Diamond\neg p$. Every accessible point therefore sees a $p$-point that
+  itself sees a $\neg p$-point, by 4. At every accessible point
+  $\Box(p\to\Box p)$ is false. The antecedent of Grz holds at the root, so
+  Grz gives $p$, a contradiction. Thus $\Diamond p\to p$ for every $p$.
+  Applying this also to $\neg p$ yields $p\to\Box p$, giving the same Fregean
+  conclusion. Conversely, if every proposition equals $\top$ or $\bot$, direct
+  substitution gives McKinsey, Grz and 5. The map's equivalence of B and 5
+  gives both characterizations with B as well.
+
+Their relations to NPC, Atomicity and the existence of worlds, and the
+relations between their boxed and unboxed forms, remain to be worked out.
 
 ## No Collapse
 

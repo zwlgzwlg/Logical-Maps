@@ -1,0 +1,64 @@
+id: countable-entrances-with-finite-ideal-returns
+name: Countable-ideal entrances with finite-ideal returns
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two other OpenAI Codex researchers checked the typed construction, the generic and elementary arrows, Functional Choice and the failure of Tame Rigidity. A separate review checked the finite bound for rigid relations.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, intensional action models.
+definition: >-
+  Alternate two kinds of typed generic ultrapower stage. At the first use
+  the countable ideal on the first uncountable ordinal. At the second
+  use the finite ideal on the natural numbers, with a germ of whole
+  first-stage entities as return coordinate. Individuals are the
+  structure's natural numbers at both stages. A first-stage entity
+  enters the second stage with its own elementary image as a constant
+  return germ. Evaluate at the initial first stage, with individual
+  names zero and relational names top.
+arguments:
+- id: alternating-ideals
+  holds: [functional-choice-r, rigid-power-r]
+  fails: [tame-rigidity-r]
+  choice: uses
+  writeup: countable-entrances-with-finite-ideal-returns
+  text: >-
+    The entrance tags let an operation realize any chosen current
+    selector. Every two-step composite is elementary on root
+    parameters, and the first generic preserves the individual
+    domain onto. The universal individual property is therefore weakly
+    rigid. At the next site a tester excludes the generic number of
+    each low return while necessarily admitting all its current inputs.
+    A moving excluded tuple also rules out infinite rigid root bounds.
+- id: even-and-odd-atoms
+  holds: [necessary-atoms-are-self-atoms-r, self-atoms-are-atoms-r, necessary-truth-implies-two-hat-necessity]
+  fails: [self-atoms-are-strong-atoms-t, necessary-self-atoms-are-atoms-t, strong-actuality, two-hat-implies-nd-necessity]
+  choice: uses
+  writeup: countable-entrances-with-finite-ideal-returns
+  text: >-
+    Both germ algebras split every nonzero support. Current-only singleton
+    atoms remain atoms where instantiated, but even the unique true root
+    atom has a nonzero nonatomic return germ at an odd stage. The even
+    truth bit guards two-hat necessity because the odd-stage identity bit
+    dies immediately. Every true root guard recurs at the next even stage.
+- id: finite-inextensible-bounds-and-analysis
+  holds: [necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t, necessity-of-arithmetic, necessity-of-second-order-analysis]
+  fails: [inextensible-comprehension-r, arithmetic-necessitism, analytic-necessitism]
+  choice: uses
+  writeup: countable-entrances-with-finite-ideal-returns
+  text: >-
+    The moving-tuple argument rules out every infinite inextensible root
+    bound. The canonical number row and the number row of any real
+    structure are infinite. Scalar labels admit a real structure locally.
+    Both base modes compute the same internal classical arithmetic and
+    analytical theories, and their fixed assertions transfer to all later
+    elementary ultrapowers.

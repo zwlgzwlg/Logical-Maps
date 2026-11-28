@@ -1,0 +1,80 @@
+id: partitioned-graded-maps-with-a-single-individual
+name: Partitioned graded coefficients and one individual
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - An independent GPT-6 researcher checked scalar site codes, the Barcan lifts, both power failures, the finite benchmark and the represented powers of the reals.
+  date: '2026-11-27'
+  lean: none
+sources:
+- The graded maps construction and simultaneous signature gluing in [[graded-maps-free-words-glued-constants]].
+- The pair-image witness to failure of Tame Rigidity in [[graded-maps-with-a-preserved-pair]].
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, combined a collapsible large part with a second unrestricted large part, and verified the resulting verdicts.
+source_names: [Graded maps, Pair-preserving graded maps, Codex via Kodsi 27 Nov]
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Section 3.5 and Appendix D, intensional action models
+definition: >-
+  Use a singleton individual domain and partition the auxiliary coefficient sites A into two parts L and C, both of size κ⁺, and choose a pair B in L.
+  Take κ at least the continuum and the cardinality of the signature. In the one-object action,
+  an arrow consists of a function on the coefficient sites, a natural grade and a word on κ letters. At grade
+  zero only the identity function occurs. At positive grades the function maps L into B and is
+  arbitrary on C. Composition composes functions, adds grades and prepends the later word.
+  At fixed grade and word, a relation row depends only on the function's restriction to a single
+  pin of size at most κ. Transport is by precomposition. Fix the sole individual and
+  glue realizations on separate last-letter sectors. Evaluate at the identity.
+arguments:
+- id: necessity-and-barcan
+  holds: [logical-necessity-r, necessary-barcan-r]
+  choice: uses
+  writeup: partitioned-graded-maps-with-free-words
+  text: >-
+    Every positive-grade function agrees on the tested pin with a surjection, using the
+    unrestricted part C. All typed entities lift through this surjection by choosing preimages of
+    the pin. Simultaneous suffix gluing and the unique individual assignment implement
+    every realizable assignment on the symbols of a sentence.
+- id: power-and-tameness
+  fails: [tame-rigidity-r, rigid-power-r, weakly-rigid-power-r]
+  choice: uses
+  writeup: partitioned-graded-maps-with-free-words
+  text: >-
+    A site x is coded by the proposition testing whether the coefficient sends x to a fixed
+    member of B. These distinct codes transport by the coefficient function. The property
+    whose rows consist of L-codes at grade zero and B-codes at positive grades is weakly
+    rigid and loses weak inextensibility after a positive arrow. The set of all site codes
+    gives a rigid bound. Every weakly rigid subrelation has small or full-code positive rows,
+    whereas a rigid subrelation at the positive target can have a large proper current code set.
+- id: grading-and-atoms
+  holds: [necessary-self-atomicity-r, necessary-strong-actuality, necessary-atoms-are-strong-atoms-r, necessary-inextensible-comprehension-r, necessary-truths-are-nd-necessary]
+  fails: [atomicity-t]
+  choice: uses
+  writeup: partitioned-graded-maps-with-free-words
+  text: >-
+    A single occupied tuple, grade and word defines a self-atom. A positive-grade occurrence
+    splits by changing a fresh C-input, so genuine atoms are singletons of one grade-zero address.
+    These transport to atoms or bottom, and the identity-only truth is a true strong atom which
+    witnesses ND-necessity of every truth. A current-only row gives an inextensible coextension.
+- id: countability-and-orders
+  holds: [necessary-countable-boolean-completeness-r, modal-well-ordering-r, necessary-axiom-of-infinity-t]
+  fails: [boolean-completeness-t, potential-infinity-e]
+  choice: uses
+  writeup: partitioned-graded-maps-with-free-words
+  text: >-
+    The countable union of pins is a pin. A large family distinguished on the unrestricted
+    C sites lacks a scalar join. Constant rows provide necessary well-orders. There are
+    infinitely many propositions and the standard numeral cut is admitted. The unique
+    individual remains the only individual at every point.
+- id: small-algebras-and-real-labels
+  holds: [forcing-possibilism, second-order-analytic-necessitism]
+  choice: uses
+  writeup: partitioned-graded-maps-with-free-words
+  text: >-
+    Singleton individuals give a finite ordinal benchmark. Every infinite current carrier contains
+    a countably infinite power-closed set larger than the benchmark, while the grade-zero word
+    atoms realize every finite Boolean interval. At each relational type leftmost-letter labels
+    encode continuum many objects that stay distinct. Their exact subsets of tuples, and the
+    family of all such exact relations at each finite arity, depend only on the word, so they
+    form rigid real structures and their represented powers.

@@ -1,0 +1,156 @@
+id: iterated-ultrafilter-fronts
+name: Iterated ultrafilters on well-founded fronts
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two independent reviews of the model and its local verdicts, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, construction using iterated ultrafilters and variable-depth refinement, 26 November 2026.
+- The map's free-word gluing for the signature interpretation; the map's formulation of the canonical Frege numbers and their weak inextensibility.
+source_names:
+- Codex via Kodsi, 26 Nov
+- Free-word gluing and Frege cardinalities
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §§3.4–3.5, pp. 55–61
+- paper: barton-goodsell-continuum-contingency
+  role: background
+  locator: §5.8, eq. (29)
+- paper: bacon-2020
+  role: background
+  locator: Appendix A.3
+definition: >-
+  Objects are well-founded trees with deterministic labelled edges and countably branching
+  ultrafilter nodes. Arrows substitute arbitrary such trees at their leaves. At the trivial
+  tree local individuals form an infinite set, and raw relational profiles have arbitrary
+  rows on finite paths. Identify two profiles when their rows agree on almost all leaves
+  of every tree under its iterated ultrafilter. At each tree take the corresponding
+  ultrapower of the local sorts. Refinements transport relations by sections at leaf paths.
+  The designated point is the trivial tree with signature witnesses glued at deterministic
+  letters; arbitrary set-sized signatures are permitted.
+arguments:
+- id: logical-necessity
+  holds: [logical-necessity-r]
+  choice: uses
+  writeup: iterated-ultrafilter-fronts
+  text: >-
+    Refinements allow a separate separating tree at each leaf, giving extensional identity,
+    admissible lambda profiles and Łoś for all formulas. Thus every object has the same
+    pure theory. Glue realizing assignments below different deterministic first letters,
+    whose individual actions realize the chosen assignments of individual names too.
+- id: arithmetic
+  fails: [arithmetic-necessitism]
+  holds: [necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t]
+  choice: uses
+  writeup: iterated-ultrafilter-fronts
+  text: >-
+    The root admits the standard numerals as an inductive current row, and both individual
+    and proposition domains are infinite. Hence $\Box I^*_e$. A root tester excludes the
+    $i$th numeral only at the one-edge branching path $i$. Every fixed numeral necessarily
+    satisfies it, while the ultrapower number $[i\mapsto i]$ fails it at the one-step front.
+    Thus $\mathbb N_e$ fails weak inextensibility.
+- id: relational-barcan
+  holds: [necessary-barcan-relational]
+  fails: [barcan-r]
+  choice: uses
+  writeup: iterated-ultrafilter-fronts
+  text: >-
+    Lift any target relation by prefixing its independently specified representative below
+    each leaf of the source front refinement. At type $e$ the one-step ultrapower contains
+    a new individual; the tester excluding $a_i$ at immediate branching leaf $i$, for
+    distinct $a_i$, contains every old individual necessarily.
+- id: modal-well-ordering
+  holds: [modal-well-ordering-r]
+  choice: uses
+  writeup: iterated-ultrafilter-fronts
+  text: >-
+    The constant raw rows of a well-order of any base sort have the same well-order as every
+    section. Łoś gives its well-ordering property at every future tree.
+- id: strong-actuality
+  holds: [necessary-strong-actuality]
+  choice: uses
+  writeup: iterated-ultrafilter-fronts
+  text: >-
+    The proposition true only at the empty string is a true atom. Its transport to every
+    proper front is bottom. Its strong actuality propagates as a closed pure formula.
+- id: strong-atomicity
+  holds: [necessary-strong-atomicity-r]
+  choice: uses
+  writeup: iterated-ultrafilter-fronts
+  text: >-
+    Given a nonzero relation, choose a front where it is occupied and concentrate a subprofile
+    on one tuple at each occupied leaf. Any two fronts agree on the measure of subsets of
+    their common leaves. Their ultrafilters therefore decide every subrelation of this profile,
+    while each path section is bottom or an atom of the same form.
+- id: no-countable-propositional-join
+  fails: [countable-boolean-completeness-r, boolean-completeness-t]
+  choice: uses
+  writeup: iterated-ultrafilter-fronts
+  text: >-
+    The atoms on the constant branching-depth fronts, indexed by the standard Frege
+    numerals, form an admissible countable propositional family. Given an upper bound
+    form a front with branching depths increasing modulo the ultrafilter, on which
+    that bound is true. The atom of this front is disjoint from each fixed-depth atom;
+    its complement is an upper bound which the proposed join does not entail.
+- id: truths-are-nd-necessary
+  holds: [necessary-truths-are-nd-necessary]
+  choice: free
+  writeup: iterated-ultrafilter-fronts
+  text: >-
+    Let $q$ be true only at the identity. At every proper arrow its transport is bottom,
+    so for every currently true $p$ the identity witnesses $q$ and every arrow
+    satisfies $\Diamond q\to p$. Thus $p$ is ND-necessary. The universally quantified
+    pure sentence holds throughout the model.
+- id: tame-rigidity
+  holds: [necessary-tame-rigidity-r]
+  choice: uses
+  writeup: iterated-ultrafilter-fronts
+  text: >-
+    If a future tuple at a front is outside the transported current extension, its singleton
+    profile on the leaves of that front gives, by complementation, a weak inextensibility
+    tester. Weakly rigid relations thus have exact transported images. Those images compose,
+    giving full rigidity.
+- id: rigid-power
+  fails: [rigid-power-r, weakly-rigid-power-r]
+  choice: uses
+  writeup: iterated-ultrafilter-fronts
+  text: >-
+    In the cardinality sort the standard numerals have no weakly rigid coextension, by the
+    nonstandard diagonal at the one-step branching front. A countably infinite family of
+    propositions marking separate deterministic letters, embedded in the same sort, does
+    have a rigid coextension. Correlate the projections at two deterministic letters by a
+    permutation between these two sets. The resulting bound has full extension at every
+    proper front and is rigid, but its rigid subrelation at the first letter cannot lift,
+    as its image at the second letter would rigidify the standard numerals.
+- id: analytic-necessitism
+  fails: [analytic-necessitism, second-order-analytic-necessitism]
+  choice: uses
+  writeup: iterated-ultrafilter-fronts
+  text: >-
+    At every relational type a current real number structure exists by unrestricted current
+    rows and the injection of the ordinary continuum into propositions. Its Peano number
+    domain is externally countably infinite by current induction. If its members were
+    necessarily distinct, the one-step ultrafilter would yield a number distinct from every
+    transported old member. The exact-image criterion therefore excludes the required rigidity.
+- id: small-atomless-algebra-at-the-root
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: countable-bases-and-mathematical-possibilism
+  text: >-
+    At the empty front the individual set is infinite and an arbitrary
+    current row has the representative with all proper-address rows
+    empty. The ordinal thresholds therefore give a countable sequence
+    in the benchmark, and the regular-open algebra of Cantor space has
+    a small complete presentation. Strong Atomicity ensures that every
+    nonzero scalar interval contains an atom.
+notes: >-
+  Each object agrees on all pure sentences with the designated point, while number carriers
+  can grow above the entire transported previous numerical domain. The arithmetic verdict
+  uses the entity-level principle Arithmetic Necessitism.

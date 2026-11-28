@@ -28,5 +28,4 @@ proof: >-
 references: []
 notes: >-
   The proof is schematic in the type $\sigma$ and needs BF at $\sigma$ alone; the type-$e$ record reads
-  it with $\sigma=e$. It shows that the open question possible-infinity-t-implies-axiom-of-infinity-t is
-  settled positively under BF (type $t$).
+  it with $\sigma=e$. Without local BF at the counting type, [[hyperfinite-retracts-of-infinite-sites]] gives a counterexample to the implication at both $t$ and $e$.

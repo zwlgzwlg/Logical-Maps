@@ -1,0 +1,54 @@
+id: two-returning-sites-with-named-witnesses
+name: Two returning sites with named witnesses
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other GPT-6 researchers independently checked the signature gluing, the pure B argument and the distinguishing pure sentence. One also checked the remaining verdicts.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+- The map's full-free-monoid-glued-constants model for the gluing of whole relational witnesses.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Free-monoid signature gluing
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, n. 57, and §3.5
+definition: >-
+  The full action model on a free category has two objects with infinite individual
+  carriers. The designated object has many generators to each object extending every
+  finite prescription on individual names, an extra loop fixing individuals and a
+  constant exit. The sole generator departing from the other object collapses all
+  individuals. Glue the relational names on distinct first-generator sectors.
+arguments:
+- id: named-witnesses-and-pure-return
+  holds: [possibly-witnessed-possibility-r, pure-b-r]
+  fails: [logical-necessity-r]
+  choice: uses
+  writeup: two-returning-sites-with-named-witnesses
+  text: >-
+    Every possible pure matrix has its witnessing tuple copied under a fresh generator.
+    Each object can return to either object, giving pure B. The pure sentence saying
+    that the disequality of some distinct individuals is a propositional atom is false
+    here and true at the other object. Its negation refutes empty-tuple Logical Necessity.
+- id: full-path-rows
+  holds: [necessary-boolean-completeness-r, necessary-strong-atomicity-r, necessary-strong-actuality, necessary-truths-are-nd-necessary, necessary-barcan-relational]
+  fails: [barcan-r]
+  choice: free
+  writeup: two-returning-sites-with-named-witnesses
+  text: >-
+    Unions and singleton positions give completeness and strong atoms. The identity
+    singleton becomes bottom after every proper path. Extending a sector gives
+    relational surjectivity, while the constant individual exit omits an individual.
+- id: direct-image-powers-and-choice
+  holds: [necessary-rigid-comprehension-r, necessary-rigid-power-r, necessary-weakly-rigid-power-r, modal-well-ordering-r, necessary-intensional-choice-r]
+  choice: uses
+  writeup: two-returning-sites-with-named-witnesses
+  text: >-
+    Arbitrary current rows have rigid direct-image extensions. A subrow of a
+    transported rigid bound lifts by taking its inverse image inside the bound.
+    Choosing a well-order or a member on each path supplies the modal choices.

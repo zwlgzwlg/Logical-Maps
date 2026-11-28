@@ -1,0 +1,146 @@
+id: integer-stages-paired-individuals-glued-constants
+name: Integer stages of paired individuals with glued constants
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independently reviewed by two further OpenAI Codex (GPT-6) agents, prompted by Daniel Kodsi, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, translated stages, countable pins and free-word gluing, 26 November 2026; see the write-up.
+- Cian Dorr and Claude Fable 5.1 (Anthropic), the block-respecting two-object separation of two-hat necessity and 5-necessity, 14 October 2026; see paired-individuals-two-object.
+- The earlier free-word gluing of typed constants in supported-product-free-monoids-glued-constants.
+source_names:
+- Codex via Kodsi, 26 Nov
+- Dorr and Fable, 14 Oct
+- Supported free-monoid gluing
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §3.5, pp. 58–61; Appendix D, pp. 73–76
+- paper: bounds-of-possibility
+  role: background
+  locator: Appendix D, pp. 400–409
+  note: The hat operation, 5-necessity, and its Barcan formula.
+definition: >-
+  Stages are indexed by integers. At stage $n$ take a labelled individual coordinate for
+  every $i\in\mathbb Z$. Each coordinate has $\omega_1$ disjoint pairs; for $i\le n$ it
+  also has a singleton block. Arrows are all coordinate-preserving block-respecting
+  maps decorated by a word in a free monoid. At a relational type a profile assigns each
+  arrow a row on argument tuples at its target. Among arrows with common target and word,
+  the row depends only on the images of a countable pin of source individuals.
+  Transport is precomposition. Evaluate at the identity at stage 0. One propositional
+  constant suffices for the countermodel. More generally use any admitted purely relational
+  signature, an alphabet of size $\max(\aleph_0,|\Sigma|)$, and the glued interpretation
+  in the write-up.
+meets:
+  unrestricted-block-maps-at-paired-stages: >-
+    All coordinate-preserving block-respecting maps with any word are available as ordinary arrows.
+  integer-stages-with-countably-pinned-pair-profiles: >-
+    The construction uses all coordinate-preserving block maps, with a countable pin for profiles at every relational type.
+  infinitely-many-individuals-everywhere: Each stage contains infinitely many doublets in every coordinate.
+  infinitely-many-propositions-everywhere: For every word the proposition true at exactly the arrows bearing that word has empty pin; these propositions are all distinct.
+  finite-extension-properties-everywhere: >-
+    For $\sigma=e,t$, use at an arrow to $v$ the row of properties whose current
+    extension at $v$ is finite. It depends only on $v$ and is preserved by
+    target automorphisms, which act by bijections. This is an empty-pinned
+    profile; equality at each identity is literal. Equivalently, the targetwise
+    row of the external standard closed Frege numerals is admitted and inductive.
+arguments:
+- id: logical-necessity
+  holds: [logical-necessity-r]
+  choice: uses
+  writeup: integer-stages-paired-individuals-glued-constants
+  text: >-
+    Simultaneous translation of the stage and coordinate labels gives all stages the same
+    pure theory. In the pure model choose one realizing tuple for each realizable pure
+    matrix and type list. Glue the corresponding rows of the constants on a separate
+    last letter for each tuple of names. Each constant uses only countably many different
+    witness pins, whose union pins it. A loop labelled by that letter realizes all of
+    the named assignments simultaneously. This gives the possible-witness direction;
+    pure homogeneity gives the converse.
+- id: five-and-two-hat
+  fails: [five-implies-two-hat-necessity]
+  choice: free
+  writeup: integer-stages-paired-individuals-glued-constants
+  text: >-
+    The proposition that coordinate 1 still lacks a singleton fails after the inclusion
+    from stage 0 to 1. Every current truth is distinctness-preservingly possible there:
+    return by sending the new singleton to a fresh pair outside the next test's pin, then
+    collapse that pair back. For 5-necessity use the property of admitting a pin that
+    omits that singleton at targets where it exists. Its universal quantification is
+    exactly the stage proposition. Each current proposition satisfies the property
+    two-hat necessarily, for an arrow undoable on its pin together with the partners at
+    coordinate 1 cannot send that part of the pin onto a singleton. The Barcan formula
+    for 5-necessity gives the claim. Translation repeats the separation at every stage.
+- id: two-hat-and-nd
+  fails: [two-hat-implies-nd-necessity]
+  choice: free
+  writeup: integer-stages-paired-individuals-glued-constants
+  text: >-
+    The proposition that coordinate 0 has a singleton is two-hat necessary. A loop test
+    can demand that the singleton be fixed; at a target lacking it, test both members
+    of the pair containing its image, which a return to the singleton must collapse.
+    Distinctness-preserving necessity fails: send the singleton to a fresh pair outside
+    any given pin and collapse that pair on return. The composite fixes the given pin.
+- id: barcan
+  holds: [necessary-barcan-r]
+  choice: free
+  writeup: integer-stages-paired-individuals-glued-constants
+  text: >-
+    At each stage and every type, one may modify a given arrow off a tester's pin to
+    cover a pin of any proposed target argument. Source rows on the resulting cylinders
+    lift the argument; the chosen preimages control its pin and right cancellation
+    controls word labels. The modified arrow agrees with the original tester. Therefore
+    whatever necessarily holds of every current argument necessarily holds universally.
+- id: countable-completeness
+  holds: [necessary-countable-boolean-completeness-r]
+  choice: uses
+  writeup: integer-stages-paired-individuals-glued-constants
+  text: >-
+    Every possible current row is available, so the current Frege numbers consist of
+    standard numeral denotations at every counting type. Internally countable families
+    are externally at most countable. The pointwise union of any such family of
+    relational profiles is pinned by the countable union of its members' pins.
+- id: modal-well-ordering
+  holds: [modal-well-ordering-r]
+  choice: uses
+  writeup: integer-stages-paired-individuals-glued-constants
+  text: >-
+    Externally choose a well-order on the local type domain of every stage. Its graph
+    at the target of each arrow is an empty-pinned profile necessarily well-ordering
+    that type. This also gives necessary Relational Choice and Transversal Choice.
+- id: atomlessness
+  holds: [necessary-atomlessness]
+  choice: free
+  writeup: integer-stages-paired-individuals-glued-constants
+  text: >-
+    Given an arrow supporting the truth of a nonzero proposition, vary its value on a
+    pair outside a countable pin of the proposition while keeping its target and word.
+    A one-point image test splits off a nonzero proper part.
+- id: individual-infinity
+  holds: [necessary-axiom-of-infinity-e]
+  choice: free
+  writeup: integer-stages-paired-individuals-glued-constants
+  text: >-
+    Local arbitrary current rows admit the inductive set of standard Frege numeral
+    denotations. No such count applies to the uncountable individual domain at any stage.
+- id: no-full-boolean-completeness
+  fails: [boolean-completeness-t]
+  choice: free
+  writeup: integer-stages-paired-individuals-glued-constants
+  text: >-
+    Use uncountably many cylinders distinguished by one individual's target image;
+    cylinder $j$ tests a further individual $a_j$ in its own fresh pair. Their family
+    is an admitted current row. Any proposed join misses one tested pair in its
+    countable pin. Varying that pair's image then puts two arrows agreeing on the pin
+    on opposite sides of the join.
+notes: >-
+  Logical Necessity is equivalent to Converse Witnessed Possibility together with
+  Possibly Witnessed Possibility. Thus the model refutes the implication from their
+  conjunction to the assertion that 5-necessities are two-hat necessary. At every
+  stage both intermediate implications are strict: there are 5-necessities that
+  are not two-hat necessary, and two-hat necessities that are not distinctness-preservingly
+  necessary.

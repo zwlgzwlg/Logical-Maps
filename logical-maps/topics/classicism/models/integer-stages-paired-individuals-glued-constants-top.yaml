@@ -1,0 +1,40 @@
+id: integer-stages-paired-individuals-glued-constants-top
+name: Integer stages of paired individuals with a top proposition name
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, reinterpretation of the source
+    model
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independent OpenAI Codex review of signature substitution, preservation of pure schemata and their side
+    conditions, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- Underlying construction and pure verdicts in [[integer-stages-paired-individuals-glued-constants]]. OpenAI
+  Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026.
+- Signature substitution uses Cian Dorr’s sigma-top-npc argument.
+source_names:
+- Integer stages of paired individuals
+- Signature substitution
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39, pure and signature schemata.
+group: top-interpretations-of-pure-reducts
+settings:
+  reduct: Start with [[integer-stages-paired-individuals-glued-constants]].
+meets:
+  unrestricted-block-maps-at-paired-stages: >-
+    The ordinary coefficients are exactly those of [[integer-stages-paired-individuals-glued-constants]] under the change of names.
+  integer-stages-with-countably-pinned-pair-profiles: >-
+    The top interpretation preserves the pointed pure action and all its type domains from [[integer-stages-paired-individuals-glued-constants]].
+arguments:
+- id: pure-reduct
+  holds: [modal-well-ordering-r, necessary-atomlessness, necessary-axiom-of-infinity-e, necessary-barcan-r,
+    necessary-countable-boolean-completeness-r, no-pure-contingency-r]
+  fails: [boolean-completeness-t, five-implies-two-hat-necessity]
+  choice: uses
+  text: Translated stages agree on pure sentences, and the return maps for the paired coordinate give the same
+    separations of the intermediate necessities. The pure verdicts below are those of the source or consequences
+    of its recorded verdicts over C. They transfer by the pure term induction in the group definition.

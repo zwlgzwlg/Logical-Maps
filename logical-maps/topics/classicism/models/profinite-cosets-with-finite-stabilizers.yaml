@@ -1,0 +1,64 @@
+id: profinite-cosets-with-finite-stabilizers
+name: Profinite cosets with finite stabilizers
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) agents, prompted by Daniel Kodsi, independently checked the free tail orbits, absence of a necessary selector and the terminal extension, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, free tail orbits with stabilizers moving the required choice at unbounded bits, 27 November 2026.
+- The profinite Boolean models provide the supported S5 type interpretation and the fixed-code real structures.
+source_names:
+- Kodsi and Codex, 27 Nov
+- Supported profinite models
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models.
+definition: >-
+  Use one S5 cluster with one individual. The countable product of two-element
+  groups acts on the world set, comprising its regular orbit and the coset space
+  of its nth order-two subgroup for each n. Shared relational domains are all
+  profiles invariant under some tail group, acting jointly on worlds and
+  arguments; transport between sites is the identity. Evaluate in the regular orbit.
+arguments:
+- id: all-current-graphs
+  holds: [necessary-well-ordering-r, necessary-transversal-choice-r, necessary-relational-choice-r, necessary-barcan-r]
+  choice: uses
+  writeup: free-tail-orbits-and-intensional-choice
+  text: >-
+    At each core point a sufficiently deep tail group acts freely on its orbit,
+    so every external set of current tuples extends equivariantly there. These
+    rows give local well-orders and selectors at every stage. Every transport
+    is onto at every type.
+- id: incompatible-local-choices
+  fails: [intensional-choice-r, modal-well-ordering-r]
+  choice: free
+  writeup: free-tail-orbits-and-intensional-choice
+  text: >-
+    On the coset orbit with the nth stabilizer require one of the two
+    propositions distinguishing the nth bit of the regular orbit. For any
+    proposed necessary selector choose an index beyond its support. Its bit
+    flip fixes a site there and swaps the only two candidates.
+- id: homogeneous-core
+  holds: [necessary-distinctness-necessary-r, no-pure-contingency-r, atomlessness, necessary-atoms-are-strong-atoms-r]
+  choice: free
+  writeup: free-tail-orbits-and-intensional-choice
+  text: >-
+    A permutation commuting with a sufficiently deep tail swaps freely acting
+    tail orbits through any chosen pair of worlds and extends through all types.
+    The worlds therefore have the same pure theory. Every occupied core
+    observation splits by varying a sufficiently high bit while fixing its tuple,
+    and identity transports preserve the entire Boolean orders.
+- id: fixed-codes
+  holds: [second-order-analytic-necessitism, necessary-axiom-of-infinity-t]
+  choice: uses
+  writeup: free-tail-orbits-and-intensional-choice
+  text: >-
+    Unions of the countably many components supply continuum many pointwise
+    fixed codes at every relational type. Constant-world relations on them
+    present the full real structure and its rigid finite-arity powers. Current
+    rows also supply the standard Frege numeral cut on the infinite proposition sort.

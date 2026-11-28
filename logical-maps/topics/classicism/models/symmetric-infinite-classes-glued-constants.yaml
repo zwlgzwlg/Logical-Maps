@@ -1,0 +1,108 @@
+id: symmetric-infinite-classes-glued-constants
+name: Symmetric surjections of infinite classes with glued constants
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two independent reviews of the coextension counterexample, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- Cian Dorr's rich individual structure construction, 27 September 2026; the equivalence classes selected by Claude Opus 5.5 (Anthropic) in the symmetric-infinite-classes model.
+- GPT-6 Astra (OpenAI), symmetric surjection products with free-word gluing, 22 October 2026; independently checked and written up for the map by Claude Opus 5.5 (Anthropic).
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, combined the constructions and supplied the two-pin argument for infinite supports on 26 November 2026.
+source_names:
+- Dorr 27 Sep
+- Symmetric surjection products
+- Codex via Kodsi, 26 Nov
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: §3, Lemma 21 and Theorem 36
+- paper: bacon-2020
+  role: background
+  locator: Appendix A.3
+definition: >-
+  For an infinite cardinal $\kappa\ge |\Sigma|$ take $\kappa^+$ classes of individuals, each
+  of size $\kappa^+$. The arrows at one object are pairs consisting of a free word on
+  $\kappa$ letters and an arbitrary surjection on individuals. Relational profiles are
+  equivariant under left composition with class automorphisms. For fixed word their rows
+  depend on the surjection on a pin of size at most $\kappa$, uniform over words.
+  Assign relational constants by gluing profiles at distinct last letters and individual
+  constants to distinct individuals. Evaluate at the identity.
+arguments:
+- id: modal-comparison-on-permutation-units
+  holds: [necessary-five-implies-nd-necessity]
+  fails: [truth-implies-five-necessity]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: partial-embeddings-of-infinite-classes
+  text: >-
+    Quantifying over the entire subgroup of permutation units gives an admitted S5 operator. The guard requiring a live injective
+    restriction to the pin, the empty word and, when present, a sufficiently high tag ensures agreement on the pin with a permutation.
+    This makes every 5-necessity ND-necessary. An invertible change of the class pattern of two outputs refutes 5-necessity of their original pattern.
+- id: logical-necessity
+  holds: [logical-necessity-r]
+  choice: uses
+  writeup: symmetric-infinite-classes-glued-constants
+  text: >-
+    A surjection acts onto every relational domain by lifting the pin along an arbitrary
+    permutation arrow. Prescribe the individual values of each realizable sentence on its
+    own surjection and glue its relational lifts along its own last letter. Each glued
+    profile is symmetric and has a pin of size at most $\kappa$.
+- id: transversal
+  fails: [transversal-r]
+  choice: uses
+  writeup: symmetric-infinite-classes-glued-constants
+  text: >-
+    A classifier with pin $P$ would uniquely select a property $Y$ with current row a
+    class $C$ disjoint from $P$. Every automorphism fixing $P$ and preserving $C$ fixes
+    $Y$. Use within-class transpositions to move a pin $T$ of $Y$ off itself outside $P$.
+    The two pins intersect in another pin, since compatible small partial maps combine
+    and extend to surjections. Thus $P$ pins $Y$, while a class swap fixing $P$ moves $C$.
+- id: ordinary-barcan
+  holds: [necessary-barcan-r]
+  choice: uses
+  writeup: symmetric-infinite-classes-glued-constants
+  text: >-
+    Each surjection lifts every target pin by distinct preimages. Word transport is onto
+    by extending any profile on its suffix and using empty rows elsewhere.
+- id: boolean-completeness
+  holds: [necessary-boolean-completeness-r]
+  choice: uses
+  writeup: symmetric-infinite-classes-glued-constants
+  text: >-
+    The union of family members over arrows of the same word agreeing on the family pin
+    is its join. To compare with any upper bound, within-class permutations fixing the
+    family pin move a member's remaining pin off the upper bound's pin.
+- id: rigid-powers
+  holds: [necessary-tame-rigidity-r, necessary-rigid-power-r, necessary-weakly-rigid-power-r]
+  choice: uses
+  writeup: symmetric-infinite-classes-glued-constants
+  text: >-
+    The exact-image and power lifting arguments of symmetric-surjection-products §§6–7
+    use arbitrary surjections as arrows. Their union-of-images hulls are symmetric for the
+    class-automorphism group. Every weakly rigid relation is its direct-image profile and
+    every future rigid subrelation can be lifted at an arrow agreeing on the tester's pin.
+- id: atomless-infinite
+  holds: [necessary-atomlessness, necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t]
+  choice: free
+  writeup: symmetric-infinite-classes-glued-constants
+  text: >-
+    Split any nonempty support cylinder by whether two fresh individuals are identified.
+    The invariant empty-pinned predicate of standard numerals bounds all internal numbers.
+    Both individual and proposition domains are infinite.
+- id: choices
+  fails: [relational-choice-r, intensional-choice-r]
+  choice: free
+  writeup: symmetric-infinite-classes-glued-constants
+  text: >-
+    A within-class transposition away from a selector's pin exchanges the two possible
+    answers on a two-member individual property. For Intensional Choice, a surjection
+    collapsing the pin and a parameter $a$ to one point leaves no invariant singleton
+    subrow of the transported property of differing from $a$.
+notes: >-
+  The type-e failure concerns representatives for coextension classes of properties.
+  The model accommodates an arbitrary set-sized signature, including individual names.

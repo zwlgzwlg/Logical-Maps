@@ -1,0 +1,30 @@
+id: distinctness-necessary-t-and-strong-actuality-imply-self-atoms-are-strong-atoms-r
+premises: [distinctness-necessary-t, strong-actuality]
+conclusion: self-atoms-are-strong-atoms-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two other OpenAI Codex researchers independently checked the use of propositional ND, selfhood and the strong actual atom with new parameters.
+  date: '2026-11-27'
+  lean: verified
+  lean_ref: Classicism.Map.distinctness_necessary_t_and_strong_actuality_imply_self_atoms_are_strong_atoms_r
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+proof: >-
+  Let $a$ be a true strong proposition and $X$ a self-atom of any relational
+  type. Both $a$ and the proposition that $X$ is instantiated differ from
+  bottom. Propositional ND preserves these differences at every successor.
+  Suppose a tester $Y$ splits $X$ somewhere. There are continuations
+  instantiating $X\land Y$ and $X\land\neg Y$, respectively. At each $X$ is
+  an atom by selfhood, so the first continuation satisfies $X\le Y$ and the
+  second satisfies $X\le\neg Y$. Each order judgment persists to a further
+  continuation where $a$ is true. Since $X$ remains nonzero, these two
+  continuations disagree on $X\le Y$. At the place where $Y$ was chosen,
+  the transported strong $a$ decides that very proposition. This contradiction
+  proves strong atomhood. In particular the result applies under Gallin
+  Extensional Comprehension by its recorded implications to ND and Strong Actuality.

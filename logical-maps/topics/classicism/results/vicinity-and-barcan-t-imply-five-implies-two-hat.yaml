@@ -43,5 +43,4 @@ proof: 'Let $w$ witness Vicinity: $w$ is true and $\forall t(t\to\Box(w\to\Diamo
   satisfies BF at type $t$ at the actual world. Finally relativize as in Proposition D8: with $C$ the
   true closed sentence that $\hat{\hat\Box}$ is NKJF$_{\langle\rangle}$, the operator $\lambda p\, .\,C\to\hat{\hat\Box}p$
   is coextensive with $\hat{\hat\Box}$ and necessarily NKJF$_{\langle\rangle}$, so $\Box_5p\to\hat{\hat\Box}p$.'
-notes: Vicinity alone is not known to suffice; see the conjecture. With Actuality in place of Vicinity
-  the result holds without BF.
+notes: Vicinity alone suffices by [[vicinity-implies-five-implies-two-hat]]. The proof above exhibits the local propositional Barcan argument for the two-hat operator.

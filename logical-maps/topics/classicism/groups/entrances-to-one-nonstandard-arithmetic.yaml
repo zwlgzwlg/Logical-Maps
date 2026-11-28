@@ -1,0 +1,118 @@
+id: entrances-to-one-nonstandard-arithmetic
+name: Entrances to one nonstandard arithmetic
+definition: >-
+  Take a countable model M of T + ¬Con(T), where T is Zermelo set theory with Choice and the specified sign of CH.
+  {{continuum}} {{component}} Adjoin a fresh root with one generating entrance into the M-component and no proper root loops.
+  Individuals project identically. Recursively, a root relation consists of an arbitrary actual tuple row and one whole M-component entity.
+  Evaluate at the new root.
+parameters:
+  component:
+    text: The single old component and the nonlogical name.
+    values:
+      classical:
+        text: Use the internal classical hierarchy on M's naturals, with one old identity arrow. The sole name is a unary individual predicate with empty current row and terminal extension a singleton.
+      group:
+        text: Use one individual and M's full action model of its additive group of integers. All composites of the entrance with group elements are distinct. The sole name is a proposition false at the root with old support the group identity.
+  continuum:
+    text: CH in the component relative to the ambient universe.
+    generate: true
+    default: changed
+    values:
+      changed:
+        text: Choose the sign of CH opposite to the ambient sign.
+        label: opposite CH
+      fixed:
+        text: Choose the ambient sign of CH.
+        label: fixed CH
+arguments:
+- id: exact-images
+  holds: [necessary-barcan-r, necessary-tame-rigidity-r, necessary-rigid-power-r, necessary-weakly-rigid-power-r, necessary-inextensible-comprehension-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: one-nonstandard-arithmetic-terminal
+  text: >-
+    Projection and every group translation are onto. For a weakly rigid root bound, a tester may omit a single tuple
+    at a single old address, so each later extension is exactly the image of the root row. If a represented rigid
+    subrelation is requested there, translate it back to the generating entrance and restrict the root row to its
+    inverse image. This lifts the whole subrelation. Giving a current row empty old coordinates gives an inextensible coextension.
+- id: choice-and-atoms
+  holds: [modal-well-ordering-r, necessary-strong-atomicity-r, necessary-atoms-are-strong-atoms-r, necessary-self-atoms-are-strong-atoms-r, necessary-strong-actuality, truths-are-nd-necessary, independence-signature-r]
+  fails: [weak-rigid-comprehension-r, countable-boolean-completeness-r, possibly-witnessed-possibility-r, pure-b-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: one-nonstandard-arithmetic-terminal
+  text: >-
+    Single occupied tuples at single addresses give exactly the atoms and remain atoms or become bottom.
+    Every nonzero self-atom is already a singleton at one address. The orders use arbitrary root rows
+    and internally chosen old orders. The true root-only proposition guards every root truth.
+    A standard-cut family of old singletons has no join. The name is nonpure at the old component and never bottom.
+    The true guarded arithmetic assertion at the root is impossible at the old component.
+- id: arithmetic
+  fails: [necessity-of-arithmetic, arithmetic-necessitism, necessity-of-analysis]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: one-nonstandard-arithmetic-terminal
+  text: >-
+    An unrestricted current row picks out just the standard numeral orbit at the root, whereas the infinite
+    counting sort in the old component has its internal Frege numbers, including a nonstandard proof of a
+    contradiction in T. Arithmetic therefore differs at two Peano points. Both points admit a real
+    structure at a common higher sort, whose interpreted arithmetic has the corresponding sign.
+- id: changed-continuum
+  when: {continuum: changed}
+  fails: [non-contingency-of-ch]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: one-nonstandard-arithmetic-terminal
+  text: >-
+    At a common higher type the root has a copy of all ambient reals and the old component a copy of all its
+    internal reals. These disagree on CH.
+- id: fixed-continuum
+  when: {continuum: fixed}
+  holds: [non-contingency-of-ch]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: one-nonstandard-arithmetic-terminal
+  text: >-
+    All actual subsets and graphs are available at the root. At the old component the same assertion holds
+    internally. Each actual real structure therefore computes the CH sign of its own universe, which agrees in this setting.
+- id: classical-component
+  when: {component: classical}
+  holds: [necessary-axiom-of-infinity-e, necessary-boolean-completeness-t, necessary-truths-are-nd-necessary]
+  fails: [possible-infinity-t, forcing-possibilism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: one-nonstandard-arithmetic-terminal
+  text: >-
+    Individuals are infinite at both worlds. The proposition algebras have four and two elements, respectively.
+    The eight-element Boolean algebra is revised-small and exceeds every root interval. At the terminal all truths are necessary.
+- id: group-component
+  when: {component: group}
+  holds: [necessary-axiom-of-infinity-t, forcing-possibilism]
+  fails: [potential-infinity-e, boolean-completeness-t, necessary-truth-implies-five-necessity]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: one-nonstandard-arithmetic-terminal
+  text: >-
+    The group supplies infinitely many scalar addresses, but individuals remain a singleton.
+    Uniform extensional tables on a singleton bound the ordinal benchmark by a finite family.
+    Every revised-small algebra is thus finite at the root and is represented by finitely many scalar atoms.
+    The standard-cut singleton family in the old group lacks a least upper bound at the root.
+    Ordinary group necessity is an admitted S5 operator at the old component, where the identity-only proposition is a contingent truth.
+- id: isolated-root-signature
+  fails: [witnessed-possibility-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: free
+  writeup: witnessed-possibility-before-diagonal-ultrapowers
+  text: >-
+    In the classical setting the existence of four propositions holds only at the root. In the group setting a truth can
+    become permanently false only at the root. Conjoin this root-isolating pure sentence separately with equality of the
+    argument to top and to bottom. Both actual witnesses exist, while the one root address cannot make a relational
+    name equal to both. This excludes every re-interpretation meeting the standing signature condition.

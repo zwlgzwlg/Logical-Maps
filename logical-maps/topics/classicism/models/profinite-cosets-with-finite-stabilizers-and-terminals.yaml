@@ -1,0 +1,63 @@
+id: profinite-cosets-with-finite-stabilizers-and-terminals
+name: Profinite cosets with finite stabilizers and classical exits
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) agents, prompted by Daniel Kodsi, independently checked the free tail orbits, absence of a necessary selector and the terminal extension, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, free tail orbits with stabilizers moving the required choice at unbounded bits, 27 November 2026.
+- The profinite Boolean models provide the supported S5 type interpretation and the fixed-code real structures.
+source_names:
+- Kodsi and Codex, 27 Nov
+- Supported profinite models
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models.
+definition: >-
+  Extend the profinite coset cluster with one independent classical
+  singleton-individual terminal for each natural number. Every core world
+  has one entrance to every terminal. Each core relation has its supported
+  core table and an arbitrary whole value at each terminal. Evaluate in the regular orbit.
+arguments:
+- id: all-current-graphs
+  holds: [necessary-well-ordering-r, necessary-transversal-choice-r, necessary-relational-choice-r, necessary-barcan-r]
+  choice: uses
+  writeup: free-tail-orbits-and-intensional-choice
+  text: >-
+    At each core point a sufficiently deep tail group acts freely on its orbit,
+    so every external set of current tuples extends equivariantly there. These
+    rows give local well-orders and selectors at every stage. Every transport
+    is onto at every type.
+- id: incompatible-local-choices
+  fails: [intensional-choice-r, modal-well-ordering-r]
+  choice: free
+  writeup: free-tail-orbits-and-intensional-choice
+  text: >-
+    On the coset orbit with the nth stabilizer require one of the two
+    propositions distinguishing the nth bit of the regular orbit. For any
+    proposed necessary selector choose an index beyond its support. Its bit
+    flip fixes a site there and swaps the only two candidates.
+- id: terminal-atoms
+  holds: [necessary-atoms-are-strong-atoms-r, forcing-possibilism]
+  choice: uses
+  writeup: free-tail-orbits-and-intensional-choice
+  text: >-
+    Every nonempty core observation splits by a smooth scalar test. The atoms
+    are exactly the single-tuple observations in a single terminal, all strong.
+    The unique individual bounds the ordinal benchmark by finitely many
+    uniform truth tables. Only finite algebras are revised-small, and the
+    terminal propositional atoms represent every finite Boolean algebra.
+- id: terminal-subrelations
+  holds: [necessary-tame-rigidity-r, necessary-weakly-rigid-power-r, necessary-rigid-power-r]
+  choice: free
+  writeup: free-tail-orbits-and-intensional-choice
+  text: >-
+    Single-tuple deletion tests force every weakly rigid relation to have the
+    same core row at every site and exactly its projection at each terminal.
+    For a subrelation at one terminal, take its inverse image in that supported
+    core row and use exact terminal projections. This supplies a rigid lift.

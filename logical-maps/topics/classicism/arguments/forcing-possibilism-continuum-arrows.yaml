@@ -2,15 +2,25 @@ id: forcing-possibilism-continuum-arrows
 requires:
 - full-action-model
 - infinitely-many-individuals-everywhere
-choice: uses
+choice: free
 fails:
 - forcing-possibilism
-by: OpenAI Codex (GPT-6), prompted by Andrew Bacon
+by: OpenAI Codex (GPT-6), prompted by Andrew Bacon. Choice-free strengthening by OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
 date: '2026-11-16'
-text: 'The successive finite inexact ordinals are distinct: a well-order on n current individuals distinguishes
-  threshold n from threshold n+1. Fullness realizes their enumeration, so countably many objects inject into H.
-  The regular-open algebra of Cantor space is coded at a relational type by subsets of a countable base. Its carrier
-  has size at most the continuum and is small: if it contained power-closed Y larger than H, a countably infinite
-  subset of Y would have power of continuum size represented by a strictly smaller subset of Y, impossible. Current
-  extensions and relations are full. Each entailment interval is a powerset of arrows, atomic or trivial. None
-  represents this nontrivial atomless complete algebra, including the interval below top.'
+writeup: choiceless-ordinal-obstruction-to-mathematical-possibilism
+text: >-
+  The closed finite order thresholds give a definable injection from the
+  naturals into the inexact ordinal benchmark H. For each n an order on n
+  individuals distinguishes consecutive thresholds, without choosing such
+  orders simultaneously. Full current rows on these thresholds code all
+  subsets of the naturals. Present the complete atomless regular-open
+  algebra B of Cantor space using its canonical injection into those codes.
+  If H were strictly smaller than a power-closed subset Y of B, its
+  witnessing injection H to Y would give a specific countably infinite
+  image A in Y, strictly smaller than Y since A embeds in H. A represented
+  power of A in C strictly smaller than Y has one unique code for each
+  subset of A. But Y embeds in B, hence in the powerset of the naturals
+  and thus in the powerset of A. Composition gives an injection Y to C,
+  a contradiction in ZF. This makes B revised-small. Each propositional
+  interval in a full action model is a power set, atomic or trivial, and
+  cannot represent B.

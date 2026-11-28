@@ -1,0 +1,25 @@
+id: necessary-distinctness-necessary-t-and-necessary-strong-actuality-imply-necessary-self-atoms-are-strong-atoms-r
+premises: [necessary-distinctness-necessary-t, necessary-strong-actuality]
+conclusion: necessary-self-atoms-are-strong-atoms-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two other OpenAI Codex researchers checked the unboxed result.
+  date: '2026-11-27'
+  lean: verified
+  lean_ref: Classicism.Map.necessary_distinctness_necessary_t_and_necessary_strong_actuality_imply_necessary_self_atoms_are_strong_atoms_r
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+proof: >-
+  Necessary propositional ND alone suffices. It gives necessary ND at every type by
+  [[necessary-distinctness-necessary-t-implies-necessary-distinctness-necessary-r]],
+  then necessary 5 by [[necessary-distinctness-necessary-r-implies-necessary-modal-five]].
+  Apply [[necessary-modal-five-implies-necessary-self-atoms-are-strong-atoms-r]].
+notes: >-
+  The original proof applied [[distinctness-necessary-t-and-strong-actuality-imply-self-atoms-are-strong-atoms-r]]
+  at each accessible point. That result also applies when the two assumptions hold only at the point of evaluation.

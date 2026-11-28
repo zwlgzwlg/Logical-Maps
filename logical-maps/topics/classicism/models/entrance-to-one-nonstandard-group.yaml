@@ -1,0 +1,22 @@
+id: entrance-to-one-nonstandard-group
+name: Entrance to one nonstandard arithmetic group
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two additional OpenAI Codex (GPT-6) researchers independently checked the one-component power lift and the two readings of Frege arithmetic.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Cian Dorr's coalesced sum of two disagreeing extensional arithmetics, 19 October 2026.
+- The map's full group actions and singleton-individual ordinal bound.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, single-component construction, 27 November 2026.
+source_names: [Dorr 19 Oct, Full group actions, Codex via Kodsi 27 Nov]
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalesced sums.
+group: entrances-to-one-nonstandard-arithmetic
+settings: {component: group, continuum: changed}
+arguments: []

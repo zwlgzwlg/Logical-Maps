@@ -1,0 +1,662 @@
+id: independent-expansions-of-pure-models
+name: Independent expansions of pure models
+definition: >-
+  {{source}} Preserve the complete pure theory of its designated point. In the numerical cases adjoin one relation
+  constant of type $\nu_\sigma t$ and take a compactness model of the pure theory and the numerical conditions described
+  in the shared proof. In the two finite entrance cases take the rooted category of arrows from the source and name
+  the haecceity of the root individual.
+parameters:
+  source:
+    text: The original pointed pure model and the type of the added relation.
+    generate: true
+    default: ultralimit-fork
+    values:
+      absorbing-entrance-hyperfinite-group:
+        text: >-
+          Use [[absorbing-entrance-hyperfinite-group]]. Use Frege numerals counted at $t$, distinguished by [[potential-infinity-t]].
+        label: Four-proposition entrance into a hyperfinite group action
+      absorbing-entrance-swappable-pairs:
+        text: >-
+          Use [[absorbing-entrance-swappable-pairs]]. Use Frege numerals counted at $e$, distinguished by [[infinity-e]].
+        label: Absorbing entrance to an integer action, with finitely supported swappable pairs
+      boolean-valued-collapse-without-new-reals:
+        text: >-
+          Use [[boolean-valued-collapse-without-new-reals]]. Use Frege numerals counted at $t$. The factor given by
+          the regular-open algebra of the continuum collapse is infinite.
+        label: Boolean-valued collapse without new reals
+      descriptor-entrance-to-two-returns:
+        text: >-
+          Use [[descriptor-entrance-to-two-returns]]. Use Frege numerals counted at $t$. Infinitely many auxiliary
+          proposition descriptors are distinguished by the freely varying old assignments.
+        label: Descriptor entrance to the two-return category
+      finite-support-sections-and-projection:
+        text: >-
+          Use [[finite-support-sections-and-projection]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: 'Finite-support action model: N and N×2, sections and projection'
+      finite-support-truncations:
+        text: >-
+          Use [[finite-support-truncations]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: 'Finite-support action model: truncations of N'
+      finite-support-two-object-all-maps-at-singleton:
+        text: >-
+          Use [[finite-support-two-object-all-maps-at-singleton]]. Use Frege numerals counted at $t$, distinguished
+          by [[infinity-t]].
+        label: 'Finite-support action model: N and singleton, all maps, evaluated at the singleton'
+      four-proposition-entrance-to-paired-stages:
+        text: >-
+          Use [[four-proposition-entrance-to-paired-stages]]. Use Frege numerals counted at $t$. The entrance reaches
+          stage zero, where tests for different subsets of the integer stages give infinitely many distinct propositions.
+        label: Four-proposition entrance to the paired integer stages
+      full-boolean-valued-atom-and-cohen-real-universe-constructible:
+        text: >-
+          Use [[full-boolean-valued-atom-and-cohen-real]], in its built in L setting. Use Frege numerals counted at
+          $t$, distinguished by [[infinity-t]].
+        label: 'Full Boolean-valued model: one atom and the Cohen algebra, with infinitely many individuals [built
+          in L]'
+      full-infinite-s5-metatheory-socks:
+        text: >-
+          Use [[full-infinite-s5]], in its ZF + socks setting. Use Frege numerals counted at $t$, distinguished by
+          [[infinity-t]].
+        label: 'Full action model: infinite S5 [ZF + socks]'
+      full-monoid-ac-equals-bc:
+        text: >-
+          Use [[full-monoid-ac-equals-bc]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: 'Full action model: the monoid with ac = bc'
+      full-omega-chain-new-individuals:
+        text: >-
+          Use [[full-omega-chain-new-individuals]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: 'Full action model: ω-chain, one new individual at each step'
+      full-two-object-double-retraction-individuals-fixed-infinite:
+        text: >-
+          Use [[full-two-object-double-retraction]], in its infinitely many fixed individuals setting. Use Frege numerals
+          counted at $e$, distinguished by [[infinity-e]].
+        label: 'Full action model: two-object retract with two retractions [infinitely many fixed individuals]'
+      iterated-ultrafilter-fronts:
+        text: >-
+          Use [[iterated-ultrafilter-fronts]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: Iterated ultrafilters on well-founded fronts
+      paired-individuals-two-object:
+        text: >-
+          Use [[paired-individuals-two-object]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: 'Paired-individuals two-object model: block-respecting maps'
+      paired-stages-with-zero-arrows:
+        text: >-
+          Use [[paired-stages-with-zero-arrows]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: Paired stages with zero arrows
+      profinite-s5-regular-world:
+        text: >-
+          Use [[profinite-s5-regular-world]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: Profinite S5 Boolean algebras at a regular world
+      stationary-entrance-successor:
+        text: >-
+          Use [[stationary-entrance-successor]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: Eventually stationary entrance to the full successor action
+      stitched-ch-reversing-universe-constructible:
+        text: >-
+          Use [[stitched-ch-reversing]], in its over L setting. Use Frege numerals counted at $e$, distinguished by
+          [[infinity-e]].
+        label: 'Stitched forcing model: ground-model root with a CH-reversing extension at its one other world [over
+          L]'
+      stone-terminal-cantor:
+        text: >-
+          Use [[stone-terminal-cantor]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: Cantor root loops with Maximalism and current Barcan
+      supported-diagonal-tail-permutations:
+        text: >-
+          Use [[supported-diagonal-tail-permutations]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: Supported model over Cantor space with diagonal tail permutations
+      symmetric-class-reflecting-surjections:
+        text: >-
+          Use [[symmetric-class-reflecting-surjections]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: 'Symmetric ideally-full model: class-reflecting surjections of infinitely many infinite classes'
+      symmetric-collapse-pair:
+        text: >-
+          Use [[symmetric-collapse-pair]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: 'Symmetric ideally-full model: permutations and collapsers of a fixed pair (Base 2)'
+      symmetric-entrance-qualitative-links:
+        text: >-
+          Use [[symmetric-entrance-qualitative-links]]. Use Frege numerals counted at $t$, distinguished by [[potential-infinity-t]].
+        label: 'Symmetric ideally-full model: a one-point entrance to the qualitative-links tail'
+      symmetric-infinite-classes:
+        text: >-
+          Use [[symmetric-infinite-classes]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: 'Symmetric ideally-full model: automorphisms of infinitely many infinite classes'
+      symmetric-old-new-individuals:
+        text: >-
+          Use [[symmetric-old-new-individuals]]. Use Frege numerals counted at $e$, distinguished by [[infinity-e]].
+        label: 'Symmetric ideally-full model: old and new individuals'
+      symmetric-qualitative-links:
+        text: >-
+          Use [[symmetric-qualitative-links]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: 'Symmetric ideally-full model: qualitative link structure (Base 3)'
+      symmetric-two-object-unpinned:
+        text: >-
+          Use [[symmetric-two-object-unpinned]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: 'Symmetric ideally-full model: two objects, the second unpinned'
+      symmetry-constrained-full-point-and-three:
+        text: >-
+          Use [[symmetry-constrained-full-point-and-three]]. Use the root individual and the two distinct transports
+          into the three-individual object.
+        label: 'Symmetry-constrained full model: a one-point object and all maps to three individuals'
+      symmetry-constrained-full-point-and-three-forward:
+        text: >-
+          Use [[symmetry-constrained-full-point-and-three-forward]]. Use the root individual and the two distinct
+          transports into the three-individual object.
+        label: 'Symmetry-constrained full model: a one-point object, its maps into three individuals, and their permutations'
+      ultralimit-fork:
+        text: >-
+          Use [[ultralimit-fork]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: 'Action model: a fork with an ultralimit world'
+      ultraproduct-finite-full-s5:
+        text: >-
+          Use [[ultraproduct-finite-full-s5]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: 'Henkin ultraproduct: finite full S5 models, n worlds and n individuals'
+      universal-actual-diagonal-tails:
+        text: >-
+          Use [[universal-actual-diagonal-tails]]. Use Frege numerals counted at $t$, distinguished by [[infinity-t]].
+        label: Universal diagonal-tail model at an isolated fixed world
+arguments:
+- id: independent-nonempty
+  holds: [independence-signature-r]
+  fails: [witnessed-possibility-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    In the numerical variants every finite list of closed pure terms excludes at most finitely many distinct numeral
+    haecceities. Compactness supplies a necessarily nonempty predicate unequal to every such term. In the two finite
+    entrance variants the named haecceity has unequal transports along arrows with the same old target, whereas every
+    closed pure term has equal transports. The bottom predicate witnesses emptiness at the starting point and the
+    named predicate cannot be empty.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: one-constant-modal-freedom
+  when:
+    source: [finite-support-truncations, full-infinite-s5-metatheory-socks, full-monoid-ac-equals-bc, iterated-ultrafilter-fronts,
+      paired-stages-with-zero-arrows, supported-diagonal-tail-permutations, symmetric-class-reflecting-surjections,
+      symmetric-collapse-pair, symmetric-infinite-classes, symmetric-qualitative-links, ultraproduct-finite-full-s5]
+  holds: [modal-freedom-signature-r]
+  choice: free
+  writeup: independent-numeral-predicates
+  text: >-
+    The two tuples of constants in a Modal Freedom instance are disjoint. With only one available symbol, at least
+    one side is pure. No Pure Contingency makes that side necessary whenever it is possible, so it may be conjoined
+    with the other side at an accessible witness.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: pure-term-signature-b-r
+  when:
+    source: [boolean-valued-collapse-without-new-reals, finite-support-sections-and-projection, finite-support-truncations,
+      finite-support-two-object-all-maps-at-singleton, full-boolean-valued-atom-and-cohen-real-universe-constructible,
+      full-infinite-s5-metatheory-socks, full-monoid-ac-equals-bc, full-two-object-double-retraction-individuals-fixed-infinite,
+      iterated-ultrafilter-fronts, paired-individuals-two-object, paired-stages-with-zero-arrows, profinite-s5-regular-world,
+      supported-diagonal-tail-permutations, symmetric-class-reflecting-surjections, symmetric-collapse-pair, symmetric-infinite-classes,
+      symmetric-old-new-individuals, symmetric-qualitative-links, ultraproduct-finite-full-s5, universal-actual-diagonal-tails]
+  holds: [signature-b-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    Every finite approximation interprets the new constant by a closed pure numeral haecceity. Replacing the constant
+    by that term gives a pure instance of the source schema. Compactness preserves all requested signature instances
+    together with Independence.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: pure-term-no-contingency-signature-r
+  when:
+    source: [finite-support-truncations, full-infinite-s5-metatheory-socks, full-monoid-ac-equals-bc, iterated-ultrafilter-fronts,
+      paired-stages-with-zero-arrows, supported-diagonal-tail-permutations, symmetric-class-reflecting-surjections,
+      symmetric-collapse-pair, symmetric-infinite-classes, symmetric-qualitative-links, ultraproduct-finite-full-s5]
+  holds: [no-contingency-signature-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    Every finite approximation interprets the new constant by a closed pure numeral haecceity. Replacing the constant
+    by that term gives a pure instance of the source schema. Compactness preserves all requested signature instances
+    together with Independence.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-absorbing-entrance-hyperfinite-group
+  when:
+    source: absorbing-entrance-hyperfinite-group
+  holds: [potential-infinity-t]
+  fails: [possible-infinity-t]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[absorbing-entrance-hyperfinite-group]] has these pure verdicts. The construction preserves
+    its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-absorbing-entrance-swappable-pairs
+  when:
+    source: absorbing-entrance-swappable-pairs
+  holds: [intensional-choice-r]
+  fails: [necessary-intensional-choice-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[absorbing-entrance-swappable-pairs]] has these pure verdicts. The construction preserves
+    its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-boolean-valued-collapse-without-new-reals
+  when:
+    source: boolean-valued-collapse-without-new-reals
+  holds: [analytic-necessitism, functional-choice-r, necessary-distinctness-necessary-r]
+  fails: [non-contingency-of-ch]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[boolean-valued-collapse-without-new-reals]] has these pure verdicts. The construction
+    preserves its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-descriptor-entrance-to-two-returns
+  when:
+    source: descriptor-entrance-to-two-returns
+  holds: [self-atomicity-r]
+  fails: [necessary-strong-actuality]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[descriptor-entrance-to-two-returns]] has these pure verdicts. The construction preserves
+    its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-finite-support-sections-and-projection
+  when:
+    source: finite-support-sections-and-projection
+  holds: [distinctness-necessary-r, necessary-strong-actuality]
+  fails: [plenitude-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[finite-support-sections-and-projection]] has these pure verdicts. The construction preserves
+    its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-finite-support-truncations
+  when:
+    source: finite-support-truncations
+  holds: [atomicity-r, no-pure-contingency-r, truths-are-nd-necessary]
+  fails: [boolean-completeness-t, countable-boolean-completeness-r, weakly-inextensible-comprehension-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[finite-support-truncations]] has these pure verdicts. The construction preserves its
+    complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-finite-support-two-object-all-maps-at-singleton
+  when:
+    source: finite-support-two-object-all-maps-at-singleton
+  holds: [boolean-completeness-r, necessary-rigid-power-r, necessary-self-atoms-are-strong-atoms-r, necessary-transversal-choice-r,
+    plenitude-r, tame-rigidity-r]
+  fails: [necessary-vicinity, necessary-weakly-rigid-power-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[finite-support-two-object-all-maps-at-singleton]] has these pure verdicts. The construction
+    preserves its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-four-proposition-entrance-to-paired-stages
+  when:
+    source: four-proposition-entrance-to-paired-stages
+  holds: [atomicity-t]
+  fails: [necessary-five-implies-two-hat-necessity]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[four-proposition-entrance-to-paired-stages]] has these pure verdicts. The construction
+    preserves its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-full-boolean-valued-atom-and-cohen-real-universe-constructible
+  when:
+    source: full-boolean-valued-atom-and-cohen-real-universe-constructible
+  holds: [barcan-r, functional-choice-r, non-contingency-of-ch]
+  fails: [necessary-countable-boolean-completeness-r, necessity-of-analysis]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[full-boolean-valued-atom-and-cohen-real]] in its built in L setting has these pure verdicts.
+    The construction preserves its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-full-infinite-s5-metatheory-socks
+  when:
+    source: full-infinite-s5-metatheory-socks
+  holds: [necessary-distinctness-necessary-r, necessary-strong-actuality]
+  fails: [intensional-choice-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[full-infinite-s5]] in its ZF + socks setting has these pure verdicts. The construction
+    preserves its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-full-monoid-ac-equals-bc
+  when:
+    source: full-monoid-ac-equals-bc
+  holds: [necessary-atomicity-r, necessary-self-atomicity-r, no-pure-contingency-r, truths-are-nd-necessary]
+  fails: [strong-atomicity-t]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[full-monoid-ac-equals-bc]] has these pure verdicts. The construction preserves its complete
+    pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-full-omega-chain-new-individuals
+  when:
+    source: full-omega-chain-new-individuals
+  holds: [necessary-potential-infinity-e]
+  fails: [infinity-e, possible-infinity-e]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[full-omega-chain-new-individuals]] has these pure verdicts. The construction preserves
+    its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-full-two-object-double-retraction-individuals-fixed-infinite
+  when:
+    source: full-two-object-double-retraction-individuals-fixed-infinite
+  holds: [distinctness-necessary-r, necessary-rigid-comprehension-r, necessary-transversal-choice-r]
+  fails: [necessary-self-atoms-are-atoms-t, strong-actuality]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[full-two-object-double-retraction]] in its infinitely many fixed individuals setting
+    has these pure verdicts. The construction preserves its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-iterated-ultrafilter-fronts
+  when:
+    source: iterated-ultrafilter-fronts
+  holds: [no-pure-contingency-r]
+  fails: [analytic-necessitism, arithmetic-necessitism]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[iterated-ultrafilter-fronts]] has these pure verdicts. The construction preserves its
+    complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-paired-individuals-two-object
+  when:
+    source: paired-individuals-two-object
+  holds: [two-hat-implies-nd-necessity]
+  fails: [five-implies-two-hat-necessity]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[paired-individuals-two-object]] has these pure verdicts. The construction preserves
+    its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-paired-stages-with-zero-arrows
+  when:
+    source: paired-stages-with-zero-arrows
+  holds: [no-pure-contingency-r]
+  fails: [five-implies-two-hat-necessity]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[paired-stages-with-zero-arrows]] has these pure verdicts. The construction preserves
+    its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-profinite-s5-regular-world
+  when:
+    source: profinite-s5-regular-world
+  holds: [necessary-distinctness-necessary-r]
+  fails: [boolean-completeness-t, countable-boolean-completeness-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[profinite-s5-regular-world]] has these pure verdicts. The construction preserves its
+    complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-stationary-entrance-successor
+  when:
+    source: stationary-entrance-successor
+  holds: [necessary-strong-atomicity-r]
+  fails: [barcan-t]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[stationary-entrance-successor]] has these pure verdicts. The construction preserves
+    its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-stitched-ch-reversing-universe-constructible
+  when:
+    source: stitched-ch-reversing-universe-constructible
+  holds: [necessary-atomicity-t, necessary-barcan-t, necessary-rigid-comprehension-r]
+  fails: [necessity-of-analysis, non-contingency-of-ch, pure-b-r, rigid-power-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[stitched-ch-reversing]] in its over L setting has these pure verdicts. The construction
+    preserves its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-stone-terminal-cantor
+  when:
+    source: stone-terminal-cantor
+  holds: [possibility-plus-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[stone-terminal-cantor]] has these pure verdicts. The construction preserves its complete
+    pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-supported-diagonal-tail-permutations
+  when:
+    source: supported-diagonal-tail-permutations
+  holds: [necessary-boolean-completeness-t, necessary-distinctness-necessary-r, necessary-intensional-choice-r, no-pure-contingency-r]
+  fails: [transversal-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[supported-diagonal-tail-permutations]] has these pure verdicts. The construction preserves
+    its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-symmetric-class-reflecting-surjections
+  when:
+    source: symmetric-class-reflecting-surjections
+  holds: [no-pure-contingency-r, second-order-analytic-necessitism, truths-are-nd-necessary]
+  fails: [transversal-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[symmetric-class-reflecting-surjections]] has these pure verdicts. The construction preserves
+    its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-symmetric-collapse-pair
+  when:
+    source: symmetric-collapse-pair
+  holds: [barcan-r, no-pure-contingency-r, rigid-comprehension-r]
+  fails: [rigid-rigidity-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[symmetric-collapse-pair]] has these pure verdicts. The construction preserves its complete
+    pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-symmetric-entrance-qualitative-links
+  when:
+    source: symmetric-entrance-qualitative-links
+  holds: [necessary-potential-infinity-t, possible-infinity-t, self-atoms-are-strong-atoms-r]
+  fails: [infinity-t, necessary-self-atoms-are-atoms-t]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[symmetric-entrance-qualitative-links]] has these pure verdicts. The construction preserves
+    its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-symmetric-infinite-classes
+  when:
+    source: symmetric-infinite-classes
+  holds: [inextensible-comprehension-r, no-pure-contingency-r]
+  fails: [transversal-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[symmetric-infinite-classes]] has these pure verdicts. The construction preserves its
+    complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-symmetric-old-new-individuals
+  when:
+    source: symmetric-old-new-individuals
+  holds: [boolean-completeness-r, distinctness-necessary-r, necessary-strong-actuality]
+  fails: [tame-rigidity-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[symmetric-old-new-individuals]] has these pure verdicts. The construction preserves
+    its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-symmetric-qualitative-links
+  when:
+    source: symmetric-qualitative-links
+  holds: [barcan-r, boolean-completeness-r, necessary-self-atomicity-t, no-pure-contingency-r, truths-are-nd-necessary]
+  fails: [intensional-choice-r, rigid-comprehension-r, rigid-power-r, self-atoms-are-strong-atoms-t]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[symmetric-qualitative-links]] has these pure verdicts. The construction preserves its
+    complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-symmetric-two-object-unpinned
+  when:
+    source: symmetric-two-object-unpinned
+  holds: [self-atoms-are-strong-atoms-r]
+  fails: [necessary-self-atoms-are-atoms-t, necessary-self-atoms-are-strong-atoms-t]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[symmetric-two-object-unpinned]] has these pure verdicts. The construction preserves
+    its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-symmetry-constrained-full-point-and-three
+  when:
+    source: symmetry-constrained-full-point-and-three
+  holds: [necessary-well-ordering-r, plenitude-r]
+  fails: [intensional-choice-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[symmetry-constrained-full-point-and-three]] has these pure verdicts. The construction
+    preserves its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-symmetry-constrained-full-point-and-three-forward
+  when:
+    source: symmetry-constrained-full-point-and-three-forward
+  holds: [necessary-rigid-comprehension-r, necessary-rigid-power-r, necessary-strong-atomicity-t]
+  fails: [atoms-are-self-atoms-r, pure-b-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[symmetry-constrained-full-point-and-three-forward]] has these pure verdicts. The construction
+    preserves its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-ultralimit-fork
+  when:
+    source: ultralimit-fork
+  holds: [necessary-atomicity-r, necessary-barcan-r, necessary-boolean-completeness-r, necessary-rigid-power-r]
+  fails: [rigid-comprehension-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[ultralimit-fork]] has these pure verdicts. The construction preserves its complete pure
+    theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-ultraproduct-finite-full-s5
+  when:
+    source: ultraproduct-finite-full-s5
+  holds: [infinity-e, infinity-t, necessary-functional-choice-r]
+  fails: [possible-infinity-e]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[ultraproduct-finite-full-s5]] has these pure verdicts. The construction preserves its
+    complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: reduct-universal-actual-diagonal-tails
+  when:
+    source: universal-actual-diagonal-tails
+  holds: [forcing-possibilism, necessary-distinctness-necessary-r, rigid-comprehension-r]
+  fails: [intensional-choice-r, necessary-transversal-r]
+  choice: uses
+  writeup: independent-numeral-predicates
+  text: >-
+    The designated point of [[universal-actual-diagonal-tails]] has these pure verdicts. The construction preserves
+    its complete pure theory.
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+- id: finite-atoms-in-the-pure-reduct
+  when:
+    source: [boolean-valued-collapse-without-new-reals, full-boolean-valued-atom-and-cohen-real-universe-constructible, four-proposition-entrance-to-paired-stages, symmetric-collapse-pair, symmetric-entrance-qualitative-links, symmetric-old-new-individuals, symmetric-qualitative-links, symmetric-two-object-unpinned]
+  fails: [forcing-possibilism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: finite-scalar-atoms-exclude-mathematical-possibilism
+  text: >-
+    The indicated reduct has a fixed finite bound on its number of scalar
+    atoms. In the Boolean-valued examples the second Boolean factor is
+    atomless. The four-proposition entrance, the fixed one-point entrance
+    to qualitative links and the old-and-new-individuals example have
+    finite scalar carriers. In the three remaining symmetric cases all
+    nonpermutation cylinders split. A finite upper bound on the number
+    of scalar atoms is a single pure sentence, and is preserved by the
+    expansion. Small finite Boolean algebras require arbitrarily many
+    scalar atoms for Mathematical Possibilism.
+- id: ordinal-benchmark-sources-obstructing-possibilism
+  when:
+    source: [finite-support-sections-and-projection, finite-support-truncations, finite-support-two-object-all-maps-at-singleton, full-omega-chain-new-individuals, full-two-object-double-retraction-individuals-fixed-infinite, iterated-ultrafilter-fronts]
+  fails: [forcing-possibilism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: countable-bases-and-mathematical-possibilism
+  text: >-
+    Each source sees finite individual fields of every standard size
+    and has full current coding. In the finite-pin cases there is a
+    countably based observation in every nonzero scalar interval. In
+    the full action models and the iterated fronts each such interval
+    contains an atom. A presented small Cantor regular-open algebra
+    witnesses the failure; this pure instance persists in the expansion.
+- id: finite-benchmark-sources-satisfying-possibilism
+  when:
+    source: [full-monoid-ac-equals-bc, ultralimit-fork]
+  holds: [forcing-possibilism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: countable-bases-and-mathematical-possibilism
+  text: >-
+    At both chosen source settings there is one individual throughout,
+    the current rows are unrestricted, and arbitrarily many scalar
+    atoms give finite principal intervals. Thus every small algebra has
+    a representation there. The expansion preserves each pure instance.
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39; §3.5, pp. 58–61, signatures and action models.

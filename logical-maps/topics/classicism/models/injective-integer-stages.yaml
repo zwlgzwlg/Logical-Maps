@@ -1,0 +1,111 @@
+id: injective-integer-stages
+name: Integer stages with injective old-and-new coordinates
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two independent OpenAI Codex (GPT-6) reviews of the joins, strong atoms, gluing and comprehension counterexamples, 27 November 2026
+  date: '2026-11-27'
+  lean: none
+sources:
+- Claude Fable 5.1 at Cian Dorr's direction, the old-and-new individuals model, 6 October 2026, with the corrected inextensibility argument by Claude Opus 5.5.
+- Integer-stage translation and free-word gluing in the integer-stages-paired-individuals-glued-constants construction; single-new-individual joins in the upper-point model.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026, the stagewise injection product and its joint verdicts.
+source_names:
+- Dorr and Claude, 6 Oct
+- Integer stages and marked individuals
+- Codex via Kodsi, 27 Nov
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Definitions 15–18 and Proposition 20
+  note: Source pinning and target equivariance in symmetric action models.
+definition: >-
+  Stage $n\in\mathbb Z$ has a coordinate for each integer, each with an
+  ordinary pool of size $\kappa^+$, where $\kappa\ge2^{\aleph_0}$, and one extra marked point exactly at
+  coordinates $i\le n$. Individuals form the disjoint union. Local arrows
+  are injections into unmarked targets, injections into the ordinary part
+  of marked targets, and marker-preserving permutations between marked
+  ends. Compose coordinatewise and append free words. Relations have source
+  pins of size at most $\kappa$ and are equivariant under independent target
+  coordinate permutations fixing the markers. Interpret one proposition
+  name by final-word gluing at stage zero.
+arguments:
+- id: modal-and-boolean
+  holds: [logical-necessity-r, necessary-strong-actuality, necessary-boolean-completeness-r]
+  choice: uses
+  writeup: injective-integer-stages
+  text: >-
+    All countably many source markers fit into one pin. Each arrow kind,
+    word and target is a scalar atom; the kind preserving every current marker
+    becomes one return kind or bottom. For each kind choose a representative
+    bijective onto each local permitted range. Conjugating symmetries along
+    it preserves the source markers, so unions of representative rows of any
+    current family have one common pin and give its least upper bound.
+    Translation identifies the pure theories and disjoint final words
+    realize the witnesses for the proposition name.
+- id: comprehension-and-tameness
+  fails: [inextensible-comprehension-r, tame-rigidity-r, barcan-t, relational-choice-r]
+  choice: free
+  writeup: injective-integer-stages
+  text: >-
+    At the coordinate about to gain a marker, ordinary individuals form a
+    weakly rigid predicate. Any possible ordinary member can be realized
+    without changing a tester's pin. At the next stage the new point is
+    missing. On a return its image lies in the extension, breaking weak
+    inextensibility there. The same return defeats every inextensible
+    coextension of the original coordinate. Roots cannot lift the proposition
+    testing preservation of that new marker. A fresh transposition prevents
+    selection from pairs of individuals.
+- id: arithmetic
+  holds: [necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t, arithmetic-necessitism, necessity-of-arithmetic]
+  choice: free
+  writeup: injective-integer-stages
+  text: >-
+    The standard numeral denotations give an admitted inductive row at
+    each target and type. Each stage has infinite individual and proposition
+    carriers. At Peano types the arithmetic is standard, with exactly the
+    images of the same necessarily distinct numerals under the necessary
+    Peano guard.
+- id: atomicity-and-selections
+  holds: [necessary-atomicity-r, necessary-transversal-r, necessary-intensional-choice-r]
+  choice: uses
+  writeup: injective-integer-stages
+  text: >-
+    Each positive row can be restricted to one orbit of a tuple and its
+    marked source preimages, an atom by interpolation on joint pins.
+    Supports of a current tuple set are closed under intersection, giving
+    an equivariant representative for every coextension class. For a
+    necessarily occupied profile, choose one target tuple per arrow kind.
+    Additional source probes carry its ordinary support to every arrow of
+    that kind. The number of kinds and the resulting common pin are at
+    most the chosen support bound.
+- id: rigid-power
+  holds: [necessary-rigid-power-r]
+  choice: uses
+  writeup: injective-integer-stage-rigid-power
+  text: >-
+    At an arrow bijective onto the ranges permitted by its kind, every weakly
+    rigid relation has as its row the direct image of its current extension.
+    A symmetry-supported subset of the current extension of a fully rigid
+    relation again gives a fully rigid relation when defined by these rows.
+    For two successive representatives, their composite differs from an
+    onto-range representative on the left by an injection of the ordinary
+    pools fixing the combined parameter pin and all target markers. This
+    injection acts by local interpolation with symmetries. Full rigidity
+    makes it surjective on the larger representative row, whence it is
+    also surjective on the supported subset. A future rigid subrelation
+    therefore lifts by taking its inverse image within the current bound
+    at a representative. The proof applies at every stage.
+- id: ordinal-benchmark-and-scalar-intervals
+  fails: [forcing-possibilism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: countable-bases-and-mathematical-possibilism
+  text: >-
+    Every scalar is a union of injection kinds, invariant under source
+    symmetries. Word events provide real codes; arbitrary current graphs on
+    these and the pure ordinal thresholds are admitted. The resulting small
+    complete atomless algebra cannot occur in an atomic scalar interval.

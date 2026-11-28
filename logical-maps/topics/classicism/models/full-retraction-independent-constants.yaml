@@ -1,0 +1,63 @@
+id: full-retraction-independent-constants
+name: Full retraction with independently movable constants
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two independent reviews of the construction and its local verdicts, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, independent interpretation of the constants by involutions, 26 November 2026.
+- Bacon and Dorr, Classicism, §3.5, the two-object retraction.
+source_names:
+- Codex via Kodsi, 26 Nov
+- Classicism
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §3.5, pp. 59–61
+definition: >-
+  At a fixed set-sized signature take the product of the two-object retraction
+  $r\mathop{\longrightarrow}^{h}s\mathop{\longrightarrow}^{j}r$, $jh=1_r$ and
+  $hj\ne1_s$, with the direct sum of one group of order two per constant.
+  At $r$ the individuals are a fixed element and a disjoint pair for each individual
+  name. At $s$ add one new element which $j$ sends to the fixed element.
+  The group generators exchange their own individual pair when present.
+  Relations at each object have unrestricted rows at every outgoing arrow.
+  Evaluate at $r$, with the interpretation of the signature in the write-up.
+meets:
+  full-action-model: Every relational type contains all profiles of rows on outgoing arrows at both objects.
+  full-model: All typed intensions are present at both objects.
+  extensionally-full: Each current set of tuples can be assigned as the identity row.
+  retractions: Every arrow out of the designated root is a split monomorphism, including each with a group label.
+  noninvertible-retracted-arrow: The entrance with the neutral group label has left inverse $j$ and its other composite is the proper idempotent $hj$.
+  nonepic-arrow: The distinct target maps $1_s$ and $hj$, both with neutral group label, agree after $h$.
+arguments:
+- id: independent-constants
+  holds: [independence-signature-r]
+  choice: free
+  writeup: full-retraction-independent-constants
+  text: >-
+    Each name has a root loop moving its value and fixing the other names.
+    Every application of a closed pure operation to the other names remains
+    fixed along this loop, so it differs from the moving name.
+- id: functional-choice
+  holds: [functional-choice-r]
+  choice: uses
+  writeup: full-retraction-independent-constants
+  text: >-
+    Choose an output for each current input of a serial relation. Each outgoing
+    arrow injects the current inputs, since it has a left inverse. In the
+    operation's row at that arrow prescribe the transported output for each
+    such transported input. These rows yield a full operation returning the
+    chosen outputs as entities.
+- id: barcan
+  fails: [barcan-r]
+  choice: free
+  writeup: full-retraction-independent-constants
+  text: >-
+    At each arrow let an individual property have exactly the transported root
+    individuals as its row. Each current individual necessarily satisfies it,
+    but the new individual at $s$ fails it at $h$.

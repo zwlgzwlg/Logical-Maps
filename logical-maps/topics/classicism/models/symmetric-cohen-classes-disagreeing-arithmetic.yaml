@@ -1,0 +1,52 @@
+id: symmetric-cohen-classes-disagreeing-arithmetic
+name: Generic classes over two disagreeing arithmetics
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Independent OpenAI Codex (GPT-6) researchers, prompted by Daniel Kodsi, checked the interpreted incompleteness argument, source semantics and analytical guards.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two arithmetically disagreeing components without real structures, 27 November 2026.
+- The symmetric Cohen-class construction and Cian Dorr's coalesced arithmetic models.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Generic classes and coalesced sums
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalesced sums.
+definition: >-
+  Two countable one-object group components with singleton individuals and no
+  real structures disagree on the consistency of the arithmetical consequences
+  of a fixed recursive action theory at propositional type. Put their codes in
+  a fresh ground and use its generic labelled equivalence classes to evaluate
+  finitely supported Boolean-valued current rows at the source. Add the two
+  old coordinates independently and let source permutation loops fix them.
+  Interpret relational names by top and individual names by the sole individual.
+arguments:
+- id: generic-current-analysis
+  holds: [second-order-analytic-necessitism, necessary-axiom-of-infinity-t, necessary-barcan-r]
+  fails: [necessity-of-arithmetic, arithmetic-necessitism, infinity-e]
+  choice: uses
+  writeup: analysis-with-disagreeing-arithmetic
+  text: >-
+    Every proposed real structure at the source has one finite pin for all
+    its numbers and real codes. Their membership traces belong to the
+    restricted generic extension, which omits the Cohen real of a fresh
+    class despite the admitted property for its trace. Neither old cone has
+    any possible real structure. Their arithmetics disagree on Con(T_ar)
+    and one has a nonstandard number missed by a tester necessarily covering
+    all source numbers. Every exit projects onto the entire old domain and
+    all other arrows are bijective. All three points have quantified
+    infinity at propositional type.
+- id: generic-classmate-choice
+  fails: [relational-choice-r, necessary-relational-choice-r, modalized-relational-choice-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: analysis-with-disagreeing-arithmetic
+  text: >-
+    At the generic source and at its first old component, the serial relation assigns to each class-bit scalar the other labels in its generic class. A putative selector with finite support has its output exchanged with a fresh classmate by a permutation fixing the input, support and generic. The old coordinates are fixed by these permutations.

@@ -1,0 +1,37 @@
+id: coalesced-pinned-substitutions-root-top
+name: Finitely pinned root with substitution arrows with a top proposition name
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, reinterpretation of the source
+    model
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independent OpenAI Codex review of signature substitution, preservation of pure schemata and their side
+    conditions, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- Underlying construction and pure verdicts in [[coalesced-pinned-substitutions-root]]. Cian Dorr, 19 October
+  2026 (the construction, a variant of coalesced-pinned-interpretations-root with substitutions of constants
+  as further root arrows), with Claude Opus 5.5 (Anthropic), who wrote the verification.
+- Signature substitution uses Cian Dorr’s sigma-top-npc argument.
+source_names:
+- Finitely pinned root with substitution arrows
+- Signature substitution
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39, pure and signature schemata.
+group: top-interpretations-of-pure-reducts
+settings:
+  reduct: Start with [[coalesced-pinned-substitutions-root]].
+arguments:
+- id: pure-reduct
+  holds: [atomlessness, barcan-r, five-implies-two-hat-necessity, possibility-plus-r, transversal-choice-r,
+    two-hat-implies-nd-necessity]
+  fails: [boolean-completeness-t, truths-are-nd-necessary, vicinity, weakly-inextensible-comprehension-r]
+  choice: uses
+  text: The interpretation and substitution arrows, supports and component interpretations all remain part
+    of the underlying action. Its pure Possibility statements still use the same pure benchmark theory. The
+    pure verdicts below are those of the source or consequences of its recorded verdicts over C. They transfer
+    by the pure term induction in the group definition.

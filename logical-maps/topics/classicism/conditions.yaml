@@ -278,3 +278,17 @@ conditions:
 - id: infinitely-many-propositions-eventually-everywhere
   text: Every object reachable from the evaluation point has an arrow to an object with infinitely many
     propositions.
+- id: integer-stages-with-countably-pinned-pair-profiles
+  text: >-
+    The pointed pure action model, including its admitted profiles at every type,
+    is isomorphic to one of [[integer-stages-paired-individuals-glued-constants]],
+    [[fixed-or-collapsed-pairs]] or [[paired-stages-with-zero-arrows]]. Ordinary
+    arrows have free words and their rows have countable pins in the paired
+    coordinates. In the zero-arrow construction those coordinates are external,
+    the individual domain is a singleton and the zero rows are unrestricted.
+- id: unrestricted-block-maps-at-paired-stages
+  text: >-
+    Between every two paired stages, all coordinate-preserving block-respecting
+    maps of their paired coordinates are admitted as ordinary coefficients.
+    In particular an ordinary pair may be sent bijectively to a different
+    ordinary pair in its coordinate.

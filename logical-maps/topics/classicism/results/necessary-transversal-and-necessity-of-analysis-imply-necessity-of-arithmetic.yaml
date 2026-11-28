@@ -1,0 +1,31 @@
+id: necessary-transversal-and-necessity-of-analysis-imply-necessity-of-arithmetic
+premises:
+- necessary-transversal-r
+- necessity-of-analysis
+conclusion: necessity-of-arithmetic
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two independent reviews of the ordinary proof
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, local representation of Frege arithmetic in a real number structure, 26 November 2026.
+source_names:
+- Kodsi and Codex, 26 Nov
+references:
+- paper: goodsell-arithmetic-necessary
+  role: formulation
+  locator: Definitions 3–9, arithmetical sentences and their interpretation
+proof: >-
+  Fix a counting type and an arithmetical sentence. At each accessible point satisfying the
+  Peano guard, send each Frege number to its haecceity. The local coextension transversal
+  supplies exactly one code for each property of these numbers, giving a real number structure
+  at the same fixed higher type at every such point. The number map preserves zero, successor,
+  sum and product. The arithmetical sentence therefore agrees with its fixed number-only
+  analytical translation there. Necessity of Analysis gives one sign of this translation
+  throughout the cone, hence that sign of the arithmetical sentence wherever the guard holds.
+notes: The two schemata here concern the truth of sentences. Necessary Actuality also suffices for the Transversal premise.

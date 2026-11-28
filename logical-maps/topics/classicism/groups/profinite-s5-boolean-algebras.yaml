@@ -1,0 +1,118 @@
+id: profinite-s5-boolean-algebras
+name: Profinite S5 models of Mathematical Possibilism
+definition: >-
+  Use the Cantor group with its decreasing subgroups fixing the first n bits. Worlds consist
+  of countably many fixed points, one regular group orbit, and the induced Stone spaces of the
+  countable algebras specified in the write-up. All worlds see each other. There is one
+  individual. Relations are the open-subgroup-invariant subsets of worlds times argument tuples,
+  with the diagonal group action. Transport is identity at every type. Relational names denote
+  top. {{point}}
+parameters:
+  point:
+    text: Evaluation world.
+    values:
+      fixed: Evaluate at one of the countably many fixed points.
+      free: Evaluate at the identity of the regular group orbit.
+arguments:
+- id: accessible-even-cylinders
+  fails: [necessary-boolean-completeness-t, necessary-countable-boolean-completeness-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: profinite-s5-boolean-algebras
+  text: >-
+    Every world sees the free-orbit world. There the countable first-one cylinder family
+    in regular-point has no least upper bound among the supported clopens.
+- id: extensional-identity
+  holds: [necessary-distinctness-necessary-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: profinite-s5-boolean-algebras
+  text: >-
+    Domains are common to all worlds. An entity is its whole profile, and every arrow
+    transports it identically. Consequently both identity and distinctness persist.
+- id: small-algebras
+  holds: [forcing-possibilism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: profinite-s5-boolean-algebras
+  text: >-
+    At a fixed world a small algebra has finite fixed subalgebras for each sufficiently
+    small open subgroup. Otherwise a countably infinite pointwise fixed subset is power-closed
+    above the finite ordinal benchmark. Such a Boolean algebra is countable externally.
+    Its Stone space in the model gives exactly its clopens as supported propositions below
+    the designated fiber. The equivariant Stone graph is represented. At the regular world
+    full current graphs already make every small algebra finite.
+- id: no-atoms-on-regular-orbit
+  fails: [atomicity-t, necessary-actuality]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: profinite-s5-boolean-algebras
+  text: >-
+    Propositions below the regular orbit form the clopen algebra of the Cantor group.
+    Any nonempty clopen there splits on a fresh bit. At its identity every true proposition
+    contains a clopen neighbourhood of the identity and misses the condition for a true atom.
+- id: fixed-code-continuum
+  holds: [second-order-analytic-necessitism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: profinite-s5-boolean-algebras
+  text: >-
+    At every relational type the profiles supported on arbitrary subsets of the fixed
+    worlds give a continuum of individually fixed codes. The ordinary natural numbers
+    and the sets of natural numbers on those codes give a rigid real number structure
+    everywhere. All constant relations on code tuples and their family are globally
+    fixed and rigid, giving represented powers of every finite arity. At individual
+    type no real number structure is possible.
+- id: necessary-choice-failures
+  fails: [intensional-choice-r, necessary-relational-choice-r, necessary-transversal-choice-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: profinite-s5-boolean-algebras
+  text: >-
+    At the nth fixed world ask for one of the two propositions testing bit n on the
+    regular orbit. A single finite-prefix support cannot make all these choices.
+    At a fixed world the same pairs obstruct both a choice relation with distinct
+    fixed inputs and a transversal of the equivalence relation with these paired classes.
+- id: fixed-point
+  when: {point: fixed}
+  holds: [strong-actuality, boolean-completeness-r, rigid-comprehension-r]
+  fails: [relational-choice-r, transversal-choice-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: profinite-s5-boolean-algebras
+  text: >-
+    The fixed-world singleton is a true strong atom. Any supported current set gives a
+    rigid constant-world coextension. Intersecting a supported current family of global
+    relations gives a supported greatest lower bound. The paired bit propositions have
+    no supported selector at this world.
+- id: regular-point
+  when: {point: free}
+  holds: [well-ordering-r]
+  fails: [actuality, boolean-completeness-t, countable-boolean-completeness-r]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: profinite-s5-boolean-algebras
+  text: >-
+    Transport an arbitrary chosen actual row along the free group orbit, taking the row
+    empty elsewhere. This admits every current well-order and every counting graph.
+    The cylinders with first 1 at an even position have no least clopen upper bound.
+- id: equivariant-coextension-representatives
+  holds: [necessary-transversal-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-26'
+  writeup: profinite-s5-boolean-algebras
+  text: >-
+    For each current extension at a world take its least sufficient finite-prefix support
+    relative to the world stabilizer. Extend its row equivariantly over the corresponding
+    orbit and take empty rows elsewhere. The construction commutes with the entire
+    world stabilizer. Its range is therefore an admitted current row selecting exactly
+    one representative per coextension class.

@@ -1,0 +1,66 @@
+id: recurrent-worlds-with-disagreeing-arithmetic
+name: Recurrent worlds with disagreeing arithmetic
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Independent OpenAI Codex (GPT-6) researchers, prompted by Daniel Kodsi, checked the set-theoretic construction, higher-type admission, arithmetic guards and local choice.
+  date: '2026-11-28'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, recurrent two-world arithmetic countermodel and independent mathematical review, 27–28 November 2026.
+source_names:
+- Codex via Kodsi, 27–28 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix E, action-model semantics.
+definition: >-
+  Two mutually accessible worlds carry Peano presentations on the individuals.
+  Their set universes disagree on one fixed arithmetic consistency statement.
+  The return to the positive world acts by an elementary map. Relations have
+  a current row and a description of their behaviour on future arguments.
+  At the negative world a relation reads one set of numerical answers from
+  a table in the presented positive successor. Countable saturation inside
+  the negative universe gives comprehension at every finite relational type.
+  Evaluate at the positive world. Individual constants may denote zero
+  and relational constants may denote the everywhere-true relations.
+arguments:
+- id: recurrent-arithmetic-disagreement
+  fails: [necessity-of-arithmetic]
+  choice: uses
+  writeup: recurrent-worlds-with-disagreeing-arithmetic
+  text: >-
+    At both worlds local induction holds for every admitted numerical row.
+    The mixed successor relation identifies each local Peano presentation
+    with the Frege arithmetic at counting type $e$. Both guards hold, and
+    after every move either arithmetic verdict is reachable.
+- id: gallin-at-the-positive-world
+  holds: [gallin-extensional-comprehension-r]
+  choice: uses
+  writeup: recurrent-worlds-with-disagreeing-arithmetic
+  text: >-
+    Keep the given positive row. At negative, test the elementary image
+    of that row on the arguments projected to the positive return. The
+    negative table implements this test on fresh arguments too. Both
+    membership and nonmembership persist.
+- id: well-ordering-at-the-positive-world
+  holds: [well-ordering-r]
+  choice: uses
+  writeup: recurrent-worlds-with-disagreeing-arithmetic
+  text: >-
+    In the positive set universe well-order the quotient of admissible
+    representatives by whole identity at each type. Pull the order back
+    to the representatives for its current row and use a constantly false
+    outgoing program. Every inhabited admitted row has a least member.
+- id: no-operation-for-the-truth-tests
+  fails: [plenitude-r]
+  choice: uses
+  writeup: recurrent-worlds-with-disagreeing-arithmetic
+  text: >-
+    An admitted local graph assigns each numerical formula code its
+    higher-type test on the current numerical extension of a predicate.
+    On fresh negative predicates one operation representing the graph
+    would uniformly evaluate these tests from a single program and a real
+    parameter. Diagonal substitution contradicts its value at that real.

@@ -84,15 +84,20 @@ notes: >-
   Boolean Completeness supplies the weak inextensibility ([[countable-boolean-completeness-and-potential-infinity-t-imply-possible-infinity-t]]),
   and so therefore do Boolean Completeness and Rigid Comprehension; Arithmetic Necessitism supplies it from the
   necessitation ([[arithmetic-necessitism-and-necessary-potential-infinity-t-imply-possible-infinity-t]]).
-  No recorded model separates the two, and no action model whose numbers at type $t$ are the numerals at every
-  reachable object can. Whether Potential Infinity (type $t$) implies Possible Infinity (type $t$) in C alone
-  is open. A countermodel would need worlds that are finite by their own numbers and larger than every number
-  of the evaluation point: for instance an entrance with four propositions and one absorbing arrow into a
-  hyperfinite world, such as [[ultraproduct-finite-full-s5]]; that this is a model of C has not been checked.
-  At type $e$ the two do come apart ([[full-omega-chain-new-individuals]]).
+  The four-proposition entrance into a hyperfinite group action ([[absorbing-entrance-hyperfinite-group]])
+  realizes the proposed separation, even with necessary Boolean Completeness at type $t$. At its root every
+  internal number is a standard numeral and each has an instance at the future object. A nonstandard finite
+  cardinality counts all the future object's propositions. Potential Infinity also fails at that object, so
+  the root separates the unboxed principle from its necessitation. No action model whose numbers at type $t$
+  are the numerals at every reachable object can separate Potential from Possible Infinity there. At type
+  $e$ the two come apart in [[full-omega-chain-new-individuals]].
 changes:
 - date: '2026-11-25'
   by: Claude Fable 5.2 (Anthropic), prompted by Zachary Goodsell
   summary: 'Credit corrected: Bacon''s comparison of the exact and at-least numbers (28 October 2026, pull request
     #19 of this repository) is added to the sources. It proved that the at-least form implies the Peano form.'
+- date: '2026-11-26'
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  summary: >-
+    The four-proposition entrance with a hyperfinite future verifies the proposed separation from Possible Infinity, even with necessary Boolean Completeness at type $t$.
 lean_def: Classicism.P.PotentialInfinityT.schemaIn

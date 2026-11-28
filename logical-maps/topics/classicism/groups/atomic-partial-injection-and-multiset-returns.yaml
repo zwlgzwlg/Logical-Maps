@@ -1,0 +1,178 @@
+id: atomic-partial-injection-and-multiset-returns
+name: Atomic partial-injection and multiset sites with returns
+definition: >-
+  A singleton-individual root has an entrance to each of countably many sites.
+  Each entrance has a left inverse. {{returns}} Ordinary site arrows combine
+  tagged partial injections on an auxiliary equivalence relation, finite
+  multisets on the first uncountable ordinal, and words. {{coefficients}} Compose arrows as in
+  the split-return construction. Use finite pins and finite tag cutoffs for
+  the partial injections, countable pins for the multisets, and left
+  equivariance under class automorphisms. A root relation has an unrestricted
+  current row and an independent invariant row at every site. A site relation
+  adds one independent whole root entity for each return. The single
+  propositional name denotes top. {{point}}
+parameters:
+  coefficients:
+    text: Restrictions on the live auxiliary sites of an ordinary partial injection.
+    generate: true
+    default: arbitrary
+    values:
+      arbitrary:
+        text: Allow every partial injection on the auxiliary sites.
+        label: arbitrary injections
+      classes:
+        text: On its domain require the partial injection to preserve and reflect membership in the same equivalence class.
+        label: class embeddings
+  returns:
+    text: Number of returns from the first site.
+    values:
+      one: {text: Every site has exactly one return.}
+      two: {text: The first site has two distinct returns and the others have one.}
+  point:
+    text: Evaluation point.
+    values:
+      root: {text: Evaluate at the root.}
+      site: {text: Evaluate at the first site.}
+arguments:
+- id: accessible-even-tags
+  fails: [necessary-boolean-completeness-t, necessary-countable-boolean-completeness-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: free
+  writeup: atomic-partial-injection-and-multiset-returns
+  text: >-
+    Every evaluation point reaches the first site. The exact even finite tags at its empty word
+    and zero multiset are counted by the represented standard numeral graph. A join would
+    distinguish even from odd finite tags at the empty partial map above any finite cutoff.
+    The witness uses only ordinary addresses and works with either number of returns.
+- id: atomic-at-every-type
+  holds: [necessary-atomicity-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: atomic-partial-injection-and-multiset-returns
+  text: >-
+    A finite partial injection saturating its tag isolates the orbit of a
+    chosen occupied arrow and tuple. The multiset is isolated by its finite
+    support and total degree. The reset factors have independent root atoms.
+- id: arithmetic-and-analysis
+  holds: [second-order-analytic-necessitism, arithmetic-necessitism, necessary-axiom-of-infinity-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: atomic-partial-injection-and-multiset-returns
+  text: >-
+    Continuum many relational labels remain distinct across the entire
+    category by their root coordinates on the countably many sites.
+    Relations on the labels and the power families have exact-image
+    profiles. The standard Frege numeral cut is invariant at every point.
+- id: unique-returns
+  when: {returns: one}
+  holds: [necessary-self-atoms-are-strong-atoms-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: atomic-partial-injection-and-multiset-returns
+  text: >-
+    Any ordinary instantiation at a site splits on two finite tags.
+    A self-atom can therefore live only on a unique root tuple or on its
+    single return copy. All transports of either are atoms or bottom.
+- id: source-choice-and-powers
+  when: {point: root}
+  holds: [functional-choice-r, forcing-possibilism, boolean-completeness-r, well-ordering-r, rigid-comprehension-r, tame-rigidity-r, rigid-power-r, weakly-rigid-power-r]
+  fails: [necessary-transversal-r, necessary-transversal-choice-r, necessary-relational-choice-r, necessary-rigid-power-r, necessary-weakly-rigid-power-r, necessary-actuality, atoms-are-self-atoms-t, truths-are-nd-necessary]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: atomic-partial-injection-and-multiset-returns
+  text: >-
+    Each source choice can prescribe its outputs on the pointwise fixed
+    entrance images, and every current set has a rigid exact-image relation.
+    Inverse images in a bound lift its rigid subrelations. Free rows and
+    infinitely many site atoms suffice for revised Mathematical Possibilism.
+    Site-only scalar atoms split at their instantiation; the root-only truth
+    is lost at the entrance although every source truth is recoverable.
+    One accessible site fails the three choices and both rigid powers.
+- id: source-strong-actuality
+  when: {point: root, returns: one}
+  holds: [strong-actuality]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: free
+  writeup: atomic-partial-injection-and-multiset-returns
+  text: The root-only true proposition transports to a single return atom.
+- id: source-split-true-atom
+  when: {point: root, returns: two}
+  fails: [strong-actuality, self-atoms-are-strong-atoms-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: free
+  writeup: atomic-partial-injection-and-multiset-returns
+  text: The unique true atom splits across the two independent returns at the first site.
+- id: ordinary-site-obstructions
+  when: {point: site}
+  fails: [actuality, transversal-r, transversal-choice-r, relational-choice-r, weakly-rigid-power-r, rigid-power-r, countable-boolean-completeness-r, boolean-completeness-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: atomic-partial-injection-and-multiset-returns
+  text: >-
+    The bounded partial injections obstruct class selectors, classmate
+    choice and coextension representatives. Every currently true scalar
+    splits at finite tags. The even tags give a countable family with no
+    join. Grafting an uncountably indexed family of words onto distinct
+    multiset addresses obstructs both powers of an explicitly rigid bound.
+- id: site-small-atomless-algebra
+  when: {point: site}
+  fails: [forcing-possibilism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: dedekind-finite-small-algebras-at-bounded-partial-injections
+  text: >-
+    The finite-coordinate clopen algebra on the auxiliary sites is internally
+    complete and Dedekind finite. It is therefore revised-small, but the
+    scalar algebra is atomic and cannot supply its interval.
+- id: source-two-hat-guard
+  when: {point: root}
+  holds: [truth-implies-two-hat-necessity]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: free
+  writeup: class-embeddings-and-two-hat-necessity-at-return-sites
+  text: >-
+    The root-only current truth can recur from an entrance only on a return to the root. Every such return makes the site's current ordinary truth permanently impossible. Therefore the root-only truth witnesses two-hat necessity of each root truth, also when two returns reach the root.
+- id: ordinary-units-and-qualitative-truth
+  when: {coefficients: arbitrary}
+  fails: [necessary-truth-implies-two-hat-necessity]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: free
+  writeup: class-embeddings-and-two-hat-necessity-at-return-sites
+  text: >-
+    At a site, membership of the live images of a chosen pair in the same class holds currently and can fail under an invertible ordinary permutation. At that unit every true original guard is distinctness-possibly true, since its inverse returns to the identity and the unit can then be replayed.
+- id: class-embedding-guards
+  when: {coefficients: classes}
+  holds: [necessary-truth-implies-two-hat-necessity]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: class-embeddings-and-two-hat-necessity-at-return-sites
+  text: >-
+    At a site use a guard requiring the empty word, zero multiset, adequate rank tag and liveness on a pin of the given true proposition, with every return row empty. A continuation realizing this guard forces the original arrow already to satisfy it. Its restriction to the pin extends to a class automorphism, so the proposition holds. This gives ND-necessity of every site truth. The root-only guard gives two-hat necessity at the root.
+- id: original-site-pair-test
+  when: {coefficients: arbitrary, point: site}
+  fails: [truth-implies-two-hat-necessity]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: free
+  writeup: class-embeddings-and-two-hat-necessity-at-return-sites
+  text: At this site a unit can separate the classes of the images of a pair. Its inverse and its replay keep every true guard distinctness-possibly true there.
+- id: site-guards-constrain-the-pin
+  when: {coefficients: classes, point: site}
+  holds: [truths-are-nd-necessary]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: class-embeddings-and-two-hat-necessity-at-return-sites
+  text: The live-pin guard has bottom at every return. Any ordinary arrow that can reach it already agrees on the designated pin with a class automorphism, which preserves the given actual truth.

@@ -1,0 +1,21 @@
+id: partial-embeddings-of-infinite-classes
+name: Finite-rank partial embeddings with Logical Necessity
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Independent GPT-6 researchers checked the modal guards, rank saturation, countable-pin joins, choice and the two Boolean representation arguments.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Cian Dorr, the class-pattern guard in the symmetric model with class-reflecting surjections, 16 October 2026.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, partial injections on equivalence classes and their modal comparisons, 27 November 2026.
+source_names: [Dorr's class-pattern argument, Codex via Kodsi]
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Section 3, symmetric models and finite pinning.
+group: partial-embeddings-of-infinite-classes
+settings: {observations: cutoff, names: glued}
+arguments: []

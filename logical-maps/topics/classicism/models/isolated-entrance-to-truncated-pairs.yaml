@@ -1,0 +1,22 @@
+id: isolated-entrance-to-truncated-pairs
+name: Isolated entrance to truncated paired stages
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - An independent GPT-6 researcher checked both directions of the atom transfer and the Barcan and comprehension arguments.
+  date: '2026-11-27'
+  lean: none
+sources:
+- The original component constructions, linked with each setting.
+- The isolated entrance, coalesced models of Bacon and Dorr, and the Stone-terminal catalogue.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, combined source and local transfers, 27 November 2026.
+source_names: [Original component records, Coalesced sums and Stone catalogue, Codex via Kodsi 27 Nov]
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalesced sums.
+group: isolated-entrances-to-existing-components
+settings: {component: truncated-pairs}
+arguments: []

@@ -12,6 +12,11 @@ import Classicism.Coalesced.Interpretations
 import Classicism.Coalesced.Definable
 import Classicism.Coalesced.Pinned
 import Classicism.Coalesced.PinnedBarcan
+import Classicism.Coalesced.StoneCurrent
+import Classicism.Coalesced.StoneMaximalist
+import Classicism.Coalesced.StoneCatalogue
+import Classicism.Coalesced.StoneOrdinalBound
+import Classicism.Coalesced.StonePossibilism
 
 /-!
 # Coalesced sums
@@ -64,6 +69,24 @@ members. Over distinguished arrows with the fullest root domains a root entity i
 at the root and its parts in the components, chosen freely (`SumData.thread`, `Transfer.lean`):
 so a component's counterexample at its root transfers to the root, for BF and Atomicity at `t`
 (`SumData.not_holds_barcanT`, `SumData.not_holds_atomicityT`).
+
+The Stone fan restricts a distinguished component's profile to locally constant functions
+of its root-arrow label. It is a model (`StoneFan.isModel`), with every current relation
+extension at the root (`StoneFan.current_ext_full`). For a countable signature of closed
+types, the canonical Maximalist and a full singleton leaf give a fan satisfying
+Maximalism (`StoneFan.Canonical.singleton_fan_maximalist`). Root proposition entailment
+is the product of the current truth bit, the old proposition order, and inclusion on the
+clopen sets of the label space (`StoneFan.Canonical.proposition_order`). For every bounding
+type κ, one such fan simultaneously represents every current typed Boolean algebra whose
+carrier embeds into κ by a native graph onto an entailment interval
+(`StoneFan.Canonical.maximalist_represents_bounded`). The actual PR 28 inexact ordinals
+inject into a type independent of the leaf space (`StoneFan.Canonical.ordinalEmbedding`). Their bound
+yields a strong-limit cut above which no current carrier meets the revised smallness
+test. For a countable signature of closed types the resulting catalogue fan satisfies
+signature Maximalism, pure Maximalism and revised Mathematical Possibilism at every
+type (`StoneFan.Canonical.maximalist_mathematical_possibilism`). The theorem
+`StoneFan.Canonical.joint_complete_theory` gives the corresponding complete,
+consistent theory over an admitted one-constant signature.
 
 In standard terms the coalesced sum of the categories is the *collage* (cograph) of the
 profunctor from the one-object category `End` to `Σ k, C k` given by `R`, and an action is

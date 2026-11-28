@@ -1,0 +1,109 @@
+id: three-object-diagonal-ultrapower
+name: Three-object chain into a diagonal ultrapower
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, independent review of the local Boolean Completeness and failure of Arithmetic Necessitism arguments, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, the three-object action model and verification of local Boolean Completeness with failure of Arithmetic Necessitism, 26 November 2026, in the accompanying write-up.
+source_names:
+- Codex via Kodsi, 26 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §3.5, pp. 58–61; Appendix D, Definitions D.1–D.3 and Proposition D.4, pp. 73–74
+  note: Action models and closure of the typed domains.
+- paper: barton-goodsell-continuum-contingency
+  role: background
+  locator: §5.8, eq. (29)
+  note: Arithmetic Necessitism.
+definition: >-
+  Take the thin chain $r\to s\to t$. At $t$ use the one-world many-sorted ultrapower ${}^*H$ of the
+  full extensional hierarchy $H$ over $\mathbb N$, over a nonprincipal ultrafilter on the positive
+  integers. Let $\delta:H\to{}^*H$ be the diagonal elementary embedding. Individuals at $r$ and $s$
+  are $\mathbb N$, with identity transport to $s$ and diagonal transport to $t$. At each relational
+  type $\tau$ let $T_w$ be the product of its argument domains at $w$. An entity at $s$ is an
+  arbitrary pair in $\mathcal P(T_s)\times{}^*H_\tau$. An entity at $r$ is an arbitrary triple in
+  $\mathcal P(T_r)\times\mathcal P(T_s)\times\delta H_\tau$. Transport drops earlier rows. The
+  last coordinate is the whole terminal relation, tested on every terminal tuple. Individual
+  constants denote $0$ or its image, and relational constants denote top. Evaluate at $r$.
+arguments:
+- id: boolean-completeness
+  holds: [boolean-completeness-r, necessary-boolean-completeness-t]
+  writeup: three-object-diagonal-ultrapower
+  choice: free
+  text: >-
+    At every relational type the root order is a product of two powersets and a Boolean algebra
+    isomorphic via $\delta$ to the full powerset of $H$-argument tuples. This product has infima of
+    every external family, hence of the current extension of any admitted predicate. At type $t$
+    the three proposition algebras have eight, four and two elements, and are all complete.
+- id: arithmetic-necessitism
+  holds: [necessary-axiom-of-infinity-e]
+  fails: [arithmetic-necessitism]
+  writeup: three-object-diagonal-ultrapower
+  choice: free
+  text: >-
+    At $r$ and $s$ the root or middle identity row can select precisely the external numeral
+    denotations. It is inductive there, so every individual-type number is a standard numeral and
+    none counts all individuals. The terminal satisfies the individual Axiom of Infinity by transfer.
+    Thus $\Box I_e^*$ holds at $r$. At $s$ take a tester with full identity row and terminal value
+    the class of the predicates containing the first $j+1$ numeral denotations, from zero through
+    $j$. It is necessary of every current number and misses the terminal number given by the
+    $(j+1)$st numerals. Hence $\mathbb N_e$ is not weakly inextensible at $s$ and is not rigid at $r$.
+- id: finite-proposition-domains
+  fails: [potential-infinity-t]
+  writeup: three-object-diagonal-ultrapower
+  choice: free
+  text: >-
+    The numeral for nine is an internal number. No accessible object has nine propositions, so this
+    numeral cannot have an instance at any of them.
+- id: well-ordering
+  holds: [necessary-well-ordering-r]
+  writeup: three-object-diagonal-ultrapower
+  choice: uses
+  text: >-
+    In the metatheory choose a well-ordering of each current type carrier at $r$ and at $s$.
+    Its graph with empty later rows is admitted. At the terminal the well-ordering sentence for
+    each type transfers from the full hierarchy $H$.
+- id: strong-atomicity
+  holds: [necessary-strong-atomicity-r]
+  writeup: three-object-diagonal-ultrapower
+  choice: free
+  text: >-
+    Each nonzero row contains a singleton of a tuple in that row. At the root's last coordinate a
+    nonempty diagonal relation contains a diagonal singleton, still a singleton in the ultrapower.
+    With other rows empty this is a strong atom: at every target its transport is an atom in the
+    corresponding row or is bottom. At $s$ arbitrary internal terminal singletons are available,
+    and the terminal also contains singletons of all its tuples. This works at every relational type.
+- id: barcan
+  holds: [necessary-barcan-t]
+  fails: [barcan-relational]
+  writeup: three-object-diagonal-ultrapower
+  choice: free
+  text: >-
+    The transports on propositions are the three finite row projections and are surjective, giving BF
+    at $t$ everywhere. At type $et$ a middle property can have a nondiagonal terminal row. A root
+    tester of $et$-arguments can take the full current row, the set of middle properties having
+    diagonal terminal row at $s$, and top at $t$. It is necessary of every root property and fails
+    of the middle property with a nondiagonal tail, refuting BF at the relational type $et$.
+- id: isolated-root-witness-and-rigidity
+  holds: [necessary-rigid-power-r, weak-rigid-comprehension-r, necessary-inextensible-comprehension-r, modal-well-ordering-r]
+  fails: [witnessed-possibility-r, tame-rigidity-r, analytic-necessitism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: witnessed-possibility-before-diagonal-ultrapowers
+  text: >-
+    The existence of eight scalar entities isolates the root. Testing equality to top and bottom under this guard
+    refutes Witnessed Possibility for every allowed naming. This frame is the height-zero diagonal-tree construction.
+    Its root rigid bounds have externally finite diagonal terminal projections, so every subset of a rigid root bound lifts exactly.
+    The weak hull of any current row uses its ground diagonal closure. The universal individual bound is weak but loses weak
+    inextensibility at the middle point. A rigid number predicate of a real structure would have only finitely many terminal members.
+notes: >-
+  Even local Boolean Completeness at every relational type, with necessary Strong Atomicity and
+  necessary Well-Ordering, fails to imply Arithmetic Necessitism. The middle object is essential:
+  weak inextensibility of the numbers at the evaluation point does not supply it at the next object.

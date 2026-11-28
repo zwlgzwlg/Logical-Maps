@@ -1,0 +1,198 @@
+id: symmetric-integer-paired-stages
+name: Symmetric integer stages of paired individuals
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two independent reviews of the construction and its local verdicts, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, symmetric integer-stage construction, 26 November 2026.
+- The stages, word gluing and doublet return arguments of integer-stages-paired-individuals-glued-constants, adapting the two-object model of Cian Dorr and Claude Fable 5.1.
+- The Boolean join proof of symmetric-surjection-products, based on Cian Dorr's symmetric surjection model.
+source_names:
+- Codex via Kodsi, 26 Nov
+- Paired integer stages
+- Symmetric surjection products
+references:
+- paper: bounds-of-possibility
+  role: background
+  locator: Appendix D, pp. 400–409
+  note: Two-hat necessity, 5-necessity and the Barcan formula for 5-necessity.
+definition: >-
+  At integer stage $n$ the individuals have coordinates $i\in\mathbb Z$, each
+  with $\aleph_1$ doublets and also a singleton if $i\le n$. Arrows are all
+  coordinate-preserving maps sending each block into a block, with a free-word
+  label. At a relational type require a common countable pin of source
+  individuals for all profile rows at fixed target and word. In addition,
+  postcomposing a map with a coordinate-preserving block automorphism must
+  transport its row by that automorphism. Transport is precomposition.
+  Evaluate at stage zero. For Logical Necessity use one proposition name or
+  the purely relational signature interpretation in the write-up.
+meets:
+  infinitely-many-individuals-everywhere: Each stage contains infinitely many doublets in every coordinate.
+  infinitely-many-propositions-everywhere: For every word the proposition true at exactly the arrows bearing that word has empty pin; these propositions are all distinct.
+  finite-extension-properties-everywhere: >-
+    For $\sigma=e,t$, use at an arrow to $v$ the row of properties whose current
+    extension at $v$ is finite. It depends only on $v$ and is preserved by
+    target automorphisms, which act by bijections. This is an empty-pinned
+    profile; equality at each identity is literal. Equivalently, the targetwise
+    row of the external standard closed Frege numerals is admitted and inductive.
+arguments:
+- id: boolean-joins
+  holds: [necessary-boolean-completeness-r]
+  choice: uses
+  writeup: symmetric-integer-paired-stages
+  text: >-
+    Pin a current family by a countable block-closed set $N$ containing all
+    source singletons. At each target, word and map take the union of the
+    members' rows over maps agreeing there on $N$. The union is pinned and
+    equivariant. For any upper bound, move the additional pin doublets of a
+    chosen member off the upper bound's pin by an automorphism fixing $N$,
+    then amalgamate the two prescribed restrictions on whole blocks. The
+    moved member remains in the family and the upper bound contains the
+    original contribution. The constructed union is least at each type.
+- id: barcan
+  holds: [necessary-barcan-r]
+  choice: uses
+  writeup: symmetric-integer-paired-stages
+  text: >-
+    On the pin of a property a possible witnessing map agrees with a
+    block-respecting split epimorphism. For every target block reserve a
+    fresh source doublet to supply its section. Transport along the section
+    lifts any typed entity, and stripping a word suffix lifts the remaining
+    word coordinate. This yields Barcan at every stage and all types.
+- id: modal-separations
+  fails: [five-implies-two-hat-necessity, necessary-five-implies-two-hat-necessity, two-hat-implies-nd-necessity, necessary-two-hat-implies-nd-necessity]
+  choice: free
+  writeup: symmetric-integer-paired-stages
+  text: >-
+    The coordinate inclusion and its approximate returns defeat two-hat
+    necessity of the proposition that coordinate one lacks a singleton. For
+    5-necessity, use the equivariant property of admitting a pin omitting
+    that singleton. Each current proposition passes its test two-hat
+    necessarily: require a possible return injective on the original pin
+    and its partners. The Barcan formula for 5-necessity gives the result.
+    For the reverse separation use the coordinate-zero singleton and test
+    distinctness of the images of its replacement doublet. Translation
+    repeats both separations at every stage.
+- id: atomlessness
+  holds: [necessary-atomlessness]
+  choice: free
+  writeup: symmetric-integer-paired-stages
+  text: >-
+    Keep a witnessing arrow fixed on the pin of a nonzero proposition.
+    At a fresh ordinary doublet one may send the two inputs to distinct
+    or coinciding values. Testing their distinctness is equivariant and
+    splits the original proposition into two nonempty parts at every stage.
+- id: logical-necessity
+  holds: [logical-necessity-r]
+  choice: uses
+  writeup: symmetric-integer-paired-stages
+  text: >-
+    Translating stages and coordinate labels preserves the symmetry and all
+    pure sentences. Assign the constants a realizing tuple for each possible
+    pure matrix on its designated final letter. Equivariance is preserved
+    separately on each last-letter sector. Sharing the tuples across choices
+    of names keeps the pin of each constant countable.
+- id: inextensible-comprehension
+  holds: [necessary-inextensible-comprehension-r]
+  choice: uses
+  writeup: symmetric-integer-paired-stages
+  text: >-
+    Enlarge the pin of a current row to a union of blocks containing all
+    source singletons. Use empty nonempty-word rows; otherwise take images
+    of current members under maps agreeing on that pin and embedding a
+    countable block support of the member. At the identity each such partial
+    embedding extends to a block automorphism fixing the pin, giving the
+    original row. To test inextensibility after any arrow, factor a witnessing
+    map through fresh intermediate doublets outside the later tester's pin.
+    The second map can then keep its tester row and still send the intermediate
+    member to the prescribed future tuple.
+- id: tame-rigidity
+  holds: [necessary-tame-rigidity-r]
+  choice: uses
+  writeup: symmetric-integer-paired-stages
+  text: >-
+    A weakly rigid relation with block-closed pin $P$ containing all the
+    source singletons equals the union of the typed images of its current
+    members over maps agreeing on $P$: persistence gives inclusion in the
+    relation, and weak inextensibility gives the reverse. Postcomposition
+    proves persistence after each arrow. For future weak inextensibility
+    factor an individual witnessing map through fresh intermediate doublets
+    while keeping the tester's pin fixed. Thus every transport is weakly rigid.
+- id: both-rigid-powers
+  holds: [necessary-rigid-power-r, necessary-weakly-rigid-power-r]
+  choice: uses
+  writeup: symmetric-integer-paired-stages
+  text: >-
+    Replace a witnessing arrow, on the pins of the bound and tester, by a split
+    epimorphism $j$ that is a block isomorphism off countable exception sets.
+    A future rigid subrelation with current row $D$ lifts to the rigid relation
+    formed by saturating $\{a\in F_{\rm current}:ja\in D\}$ under maps
+    agreeing on the source exception set. Closure under endomaps fixing that
+    set follows by factoring them across $j$ to endomaps fixing the target
+    subrelation's pin. The lift lies below $F$ and its image under $j$ has
+    exactly row $D$. Rigid coextension makes it the desired subrelation as an
+    entity, so it passes every power tester. Tame Rigidity identifies the
+    two candidate power properties at each stage.
+- id: represented-powers-of-the-reals
+  holds: [second-order-analytic-necessitism]
+  choice: free
+  writeup: symmetric-integer-paired-stages
+  text: >-
+    At each relational type the profiles testing membership of the target stage in a subset of the integers give continuum-many labels preserved distinctly by every transport. Arbitrary sets of labelled tuples and all their powers have equivariant target-only rows with empty pin, giving a rigid real number structure and its represented powers. At individual type a countable pin for any proposed structure, enlarged by partners and all singletons, contains every individual fixed by its pointwise block stabilizer. It contains the standard successor iterates, whose set is an admitted inductive property, so these are all the numbers. The stabilizer fixes every real by extensionality. Fullness would put a different individual in the countable pin for every subset of the numbers, since every such subset is an admitted current row.
+- id: necessary-individual-infinity
+  holds: [necessary-axiom-of-infinity-e]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi; independently reviewed by a second OpenAI Codex (GPT-6) agent
+  date: '2026-11-27'
+  text: >-
+    At each target stage take the set of the denotations of the standard
+    Frege numerals counting individuals. These target-only rows have empty
+    pin and are equivariant, since every target block automorphism fixes
+    the denotation of every closed numeral. The resulting current inductive
+    row contains zero and all successors of its members, so every current
+    finite cardinality belongs to that set. No standard numeral counts the
+    universal property of the uncountable individual domain. This proves the
+    Axiom of Infinity at $e$ at every accessible stage.
+- id: all-truths-five
+  holds: [necessary-truth-implies-five-necessity]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  text: >-
+    At stage $n$, the two modal tests in the write-up give 5-necessity of both
+    $m\le n$ and $m\ge n$. The former is 5-necessary by the Barcan argument,
+    the latter two-hat necessary by the singleton-pair test. Hence the stage
+    equality proposition $D$ is 5-necessary. For any true $p$ enlarge its
+    countable pin to a union $N$ of blocks containing all source singletons.
+    The true guard on empty-word endomorphisms injective on $N$ and fixing the
+    singletons is target-equivariant. If it is ND-possible at an endomorphism
+    $h$, a return witnesses injectivity on $N$. Every ordinary pair in $N$
+    maps bijectively to a distinct ordinary pair. Each singleton also stays
+    fixed: if it went to an ordinary $b$, the true equivariant target test
+    requiring the pair of $b$ to keep distinct images would defeat every
+    return to the guard. Thus $h$ has empty word and agrees on $N$ with a
+    block automorphism, by extending the countable partial bijections among
+    the uncountably many pairs in each coordinate. Equivariance gives $p$
+    the same truth on that automorphism as on the identity, so $p$ holds
+    at $h$. This proves two-hat and hence 5-necessity of $D\to p$, and
+    therefore 5-necessity of $p$. The proof applies at every stage.
+- id: canonical-transversal
+  holds: [necessary-transversal-r]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: transversals-from-intersecting-supports
+  text: >-
+    Two pointwise supports for a current extension have an intersection which
+    still supports it, by extending permutations on spare blocks. Take the
+    union of the images of the extension by all automorphisms agreeing with
+    the coefficient on some support, using the identity monoid coordinate
+    and the current target. Intersecting supports shows that each support
+    pins this representative. Its assignment is equivariant and its current
+    row recovers the extension. The family of these representatives is thus
+    an invariant current row selecting one entity per coextension class.

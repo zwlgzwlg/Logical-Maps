@@ -1,0 +1,39 @@
+id: supported-product-surjections-glued-constants-top
+name: Supported product with individual surjections with a top proposition name
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, reinterpretation of the source
+    model
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independent OpenAI Codex review of signature substitution, preservation of pure schemata and their side
+    conditions, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- Underlying construction and pure verdicts in [[supported-product-surjections-glued-constants]]. GPT-6 Astra
+  (OpenAI), prompted by Daniel Kodsi, 22 October 2026; further verdicts by Claude Opus 5.5 (Anthropic), prompted
+  by Cian Dorr, 28 October 2026.
+- Signature substitution uses Cian Dorr’s sigma-top-npc argument.
+source_names:
+- Supported product with individual surjections
+- Signature substitution
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39, pure and signature schemata.
+group: top-interpretations-of-pure-reducts
+settings:
+  reduct: Start with [[supported-product-surjections-glued-constants]].
+arguments:
+- id: pure-reduct
+  holds: [atomlessness, necessary-axiom-of-infinity-e, necessary-countable-boolean-completeness-r, necessary-modalized-relational-choice-r,
+    necessary-rigid-rigidity-r, necessary-tame-rigidity-r, necessary-transversal-choice-r, necessary-two-hat-implies-nd-necessity,
+    no-pure-contingency-r]
+  fails: [analytic-necessitism, necessary-boolean-completeness-t, rigid-power-r, truths-are-nd-necessary, vicinity,
+    weakly-inextensible-comprehension-r]
+  choice: uses
+  text: The individual actions are still surjective and the supported rows use exactly the old pins. The necessary
+    and possible pure formulas have the same values at their witnessing arrows. The pure verdicts below are
+    those of the source or consequences of its recorded verdicts over C. They transfer by the pure term induction
+    in the group definition.

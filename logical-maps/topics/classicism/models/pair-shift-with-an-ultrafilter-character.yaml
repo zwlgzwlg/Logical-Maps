@@ -1,0 +1,96 @@
+id: pair-shift-with-an-ultrafilter-character
+name: Pair shift with an ultrafilter character
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) agents, prompted by Daniel Kodsi, independently reviewed the twisted action, the split unary atom and gluing of all signatures, 26 November 2026.
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, twisted pair action and hereditarily supported word profiles, 26 November 2026.
+- The existing supported pair-flip word model provides the earlier gluing construction and the calculation for propositional singleton-word atoms.
+source_names:
+- Kodsi and Codex, 26 Nov
+- Supported free-word models
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, n. 57, p. 38, and §3.5, pp. 58–61
+definition: >-
+  On the free monoid on a shift and sufficiently many additional letters, countably supported
+  profiles are required to remain supported under every suffix restriction. Independent flips
+  act on pairs at levels indexed by the naturals, with uncountably many pairs per level. At the
+  shift the old levels move up by one and all new pairs are flipped by the same bit, calculated
+  by an ultrafilter containing the cocountable sets. Individuals are likewise supported word
+  arrays of pair labels. Named witnesses are glued on disjoint final-letter parts.
+arguments:
+- id: signature-witnesses
+  holds: [logical-necessity-r]
+  choice: uses
+  writeup: pair-shift-with-an-ultrafilter-character
+  text: >-
+    Choose one witness tuple per realized pure matrix and type pattern. Use distinct nonshift
+    letters for different named instances. Both individual arrays and relational profiles can
+    prescribe the chosen witnesses on these suffixes. Each name uses only countably many
+    distinct witnesses, so all prescriptions have an admissible common pin.
+- id: strong-word-atoms
+  holds: [necessary-strong-atomicity-t, necessary-strong-actuality, necessary-boolean-completeness-t]
+  choice: free
+  writeup: pair-shift-with-an-ultrafilter-character
+  text: >-
+    Every subset of the word monoid is an admitted proposition. Each singleton word remains
+    a singleton or bottom by right cancellation; the identity word is currently true.
+- id: splitting-pair
+  fails: [atoms-are-self-atoms-r]
+  choice: free
+  writeup: pair-shift-with-an-ultrafilter-character
+  text: >-
+    Put the new pair only at the shift word. No countable source pin forces the ultrafilter
+    bit, so every admitted nonzero part contains both members. At that word the transported
+    pair is instantiated at the identity. Each identity-only singleton part now has an
+    admissible one-coordinate pin. This unary atom is not a self-atom.
+- id: finite-orbits
+  holds: [necessary-atomicity-r]
+  choice: free
+  writeup: pair-shift-with-an-ultrafilter-character
+  text: >-
+    For an occupied tuple at a fixed word consider its finitely many suffix factorizations.
+    For each, pin the shifted-back high-level support of the tuple and the corresponding
+    transported relation. Only one collective flip per remaining low level is left, so the
+    generated group has a finite orbit inside the given row. The orbit at just that word is
+    hereditarily admitted and contains a minimal nonzero subprofile.
+- id: countable-unions
+  holds: [necessary-countable-boolean-completeness-r]
+  fails: [boolean-completeness-r]
+  choice: uses
+  writeup: pair-shift-with-an-ultrafilter-character
+  text: >-
+    The current standard numeral orbit is an admitted inductive set. Countable unions preserve
+    each suffix support. For an uncountable family at type $eet$, couple one fixed new pair
+    at the shift to each of the other new pairs by matching their bits. Opposite-bit pairs
+    give complementary upper bounds. A join at the shift successor would distinguish matching
+    bits at uncountably many independently flippable coordinates, violating countable support.
+- id: barcan-and-infinity
+  holds: [necessary-barcan-t, necessary-axiom-of-infinity-t]
+  fails: [barcan-relational]
+  choice: free
+  writeup: pair-shift-with-an-ultrafilter-character
+  text: >-
+    Right cancellation makes suffix transport onto the full powerset of words, giving
+    propositional Barcan. That powerset is infinite, and its current standard numeral
+    cut is represented. In contrast, neither of the two identity-only singleton
+    properties of the new pair is the shift of any source property. A tester omitting
+    just these two properties at the shift refutes Barcan for unary individual properties.
+- id: ordinal-benchmark-and-scalar-intervals
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: countable-bases-and-mathematical-possibilism
+  text: >-
+    The pair flips act trivially on the full scalar powerset of words. Word
+    codes and the closed ordinal thresholds therefore admit the current
+    graphs for the small complete atomless Cantor algebra. Every nonempty
+    scalar interval has a singleton-word atom.

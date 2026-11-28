@@ -88,6 +88,17 @@ arguments:
     to $S\cup\{a\}$, and the atom $\{!\}$ is false; so Atomicity (type $t$) and Actuality fail. Boolean
     Completeness holds at $W_0$ (the group's argument, with the hull conditions), and at $W_1$, which has four
     propositions, at type $t$; so it holds at type $t$ at every world.
+- id: finite-scalar-atom-obstruction
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: finite-scalar-atoms-exclude-mathematical-possibilism
+  text: >-
+    The singleton exit is the sole atom. The cylinder of any endomap with a
+    fixed finite restriction splits on a fresh equality of images.
+    Mathematical Possibilism would require arbitrarily many propositional
+    atoms by representing the finite power algebras.
 notes: >-
   Without the symmetry this is finite-support-two-object-all-maps. Separates Boolean Completeness (every type), □BC (type $t$) and BF from □BF (type $t$), the separation that
   GPT-6 Astra's Ω-valued cofinite-interior model gave (Daniel Kodsi's pull request #18, item 20).

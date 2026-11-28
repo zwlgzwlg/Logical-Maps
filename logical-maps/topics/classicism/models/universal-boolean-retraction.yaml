@@ -1,0 +1,89 @@
+id: universal-boolean-retraction
+name: Reduced-power retraction with universal Boolean factor
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two additional GPT-6 agents independently reviewed the quotient representation, ordinal estimate and countable-factor arguments.
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, universal Boolean factor in a reduced-power retraction, 26 November 2026.
+- Roman Sikorski, homomorphism extension theorem, Annales de la Société Polonaise de Mathématique 21 (1948), 332–335.
+source_names:
+- Codex via Kodsi, 26 Nov
+- Sikorski
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §§3.4–3.5, pp. 55–61, typed action semantics
+definition: >-
+  Use the mixed reduced-power retraction with individuals $\mathbb N$ at $r$
+  and $\mathbb N\sqcup\{\star\}$ at $s$, inclusion at each entrance and a
+  return sending $\star$ to zero. Fix a strong-limit $\mu>2^{2^{\aleph_0}}$
+  and form the product $L$ of all nontrivial complete Boolean algebras of
+  size below $\mu$ up to isomorphism. Represent $L=\mathcal P(A)/K$ by
+  Sikorski's theorem. Over $A\sqcup B$ with $B$ disjoint and countably infinite
+  quotient whole-row sequences by $J=K\oplus\mathrm{Fin}(B)$ and use all
+  entrance ultrafilters disjoint from $J$. The initial $r$-stage is designated.
+  One propositional name denotes a value outside all closed pure term denotations.
+arguments:
+- id: small-algebras
+  holds: [forcing-possibilism]
+  fails: [countable-boolean-completeness-r, boolean-completeness-t, atomicity-t]
+  choice: uses
+  writeup: universal-boolean-retraction
+  text: >-
+    The root Boolean algebra is $\mathbf 2\times L\times\mathcal P(B)/\mathrm{Fin}$.
+    The independent $B$-diagonal forces every rigid family to have finite
+    current row. Thus the two extensional tables on countable individual
+    domains are closed under all rigid ordinal limits, giving
+    $|H|\le 2^{2^{\aleph_0}}<\mu$. Every carrier of size at least $\mu$
+    has a $\mu$-sized power-closed subset above $H$ by the strong-limit
+    property. A smaller complete algebra has its own principal interval in
+    $L$. The final factor provides a countable partition of $B$ into infinite
+    blocks having no join, as well as a nonzero element with no atom below it.
+- id: choice-and-rigidity
+  holds: [functional-choice-r, gallin-extensional-comprehension-r, necessary-weakly-inextensible-comprehension-r, necessary-tame-rigidity-r, necessary-rigid-power-r, necessary-weakly-rigid-power-r]
+  fails: [barcan-t, inextensible-comprehension-r]
+  choice: uses
+  writeup: universal-boolean-retraction
+  text: >-
+    The common left inverse allows splicing selected rows for Functional
+    Choice, and exact pullback of a current row gives Gallin comprehension.
+    The image tester omits a new input at each sort. All the diagonals against
+    infinite root inextensible bounds can use only $B$. At the return the
+    finite image condition and lifting of sub-bounds are unchanged from the
+    mixed model, yielding both necessary powers.
+- id: arithmetic-and-analysis
+  holds: [necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t, infinity-e, necessity-of-arithmetic, necessity-of-second-order-analysis]
+  fails: [arithmetic-necessitism, analytic-necessitism]
+  choice: uses
+  writeup: universal-boolean-retraction
+  text: >-
+    The individual and proposition carriers at both base kinds are infinite,
+    with all current extensions. Standard numeral cuts exhaust the numbers
+    there, and all standard finite cardinalities occur. Hence both infinity
+    axioms are necessary by Łoś; the entity-level arithmetic principle fails
+    at both sorts by the finite weakly rigid bound. Every actual real number
+    structure has an infinite number row, and one exists at $t$. The guarded
+    sentence-level theories are standard wherever instantiated at either base.
+- id: atoms-and-hats
+  holds: [necessary-strong-actuality, necessary-self-atoms-are-strong-atoms-r, necessary-truth-implies-two-hat-necessity]
+  fails: [atoms-are-self-atoms-t]
+  choice: uses
+  writeup: universal-boolean-retraction
+  text: >-
+    Current-only true atoms and the even/odd two-hat witnesses behave exactly
+    as in the mixed model. Any nonzero entrance support of a root relation
+    is visible at some ultrafilter disjoint from $J$. A root atom supported
+    on the two-element factor of $L$ splits upon such an entrance.
+- id: well-orders-and-signature
+  holds: [modal-well-ordering-r, independence-signature-r]
+  choice: uses
+  writeup: universal-boolean-retraction
+  text: >-
+    A pair of well-orders on the two base carriers supplies a necessary
+    internal well-order by Łoś. There are more root propositions than closed
+    pure terms, so the designated one-proposition signature can be independent.

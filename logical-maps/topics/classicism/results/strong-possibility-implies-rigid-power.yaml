@@ -1,0 +1,34 @@
+id: strong-possibility-implies-rigid-power
+premises:
+- strong-possibility-r
+conclusion: rigid-power-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two further OpenAI Codex (GPT-6) agents independently checked the Max witness, return argument and finite-power theorem at every arity.
+  date: '2026-11-27'
+  lean: verified
+  lean_ref: Classicism.Map.strong_possibility_implies_rigid_power
+sources:
+- OpenAI Codex (GPT-6), Pure Strong Possibility forces rigid relations to be Frege-finite, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov 2026
+proof: >-
+  By [[strong-possibility-r-inconsistent]], any theory satisfying the premises proves $\bot$ and hence every instance of Rigid Power.
+
+  At the Maximalist point with finite descriptor support, each proper transport
+  of any current rigid relation has a standard finite extension. Strong Actuality
+  holds at the identity. Thus for each arity the closed pure sentence asserting
+  that every current rigid relation is necessarily Frege-finite wherever Strong
+  Actuality fails is consistent with Max. At a pure Strong Possibility point,
+  Strong Actuality fails. Given an infinite current rigid relation, require a
+  return to that failure and to its infinitude through the displayed sentence.
+  Rigidity persists at the intermediate point, giving finiteness at the return.
+  The resulting contradiction proves current Frege-finiteness. The internally
+  finite rigid-power theorem now applies at every arity.
+notes: >-
+  Frege-finiteness counts tuple-haecceity codes. Its witness can be a nonstandard
+  number. Pure Strong Possibility alone remains conjecturally inconsistent.

@@ -1,0 +1,59 @@
+id: descriptor-entrance-to-two-returns
+name: Descriptor entrance to the two-return category
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) agents, prompted by Daniel Kodsi, independently checked the fresh-symbol self-atom argument and the loss of Strong Actuality at the old point, 26 November 2026.
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, local self-atoms over two distinct return arrows, 26 November 2026.
+- The map's coalesced definable roots and its implication from Actuality with two-hat-to-ND necessity to Strong Actuality.
+source_names:
+- Kodsi and Codex, 26 Nov
+- Dorr definable roots and the two-hat implication
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalesced sums.
+- paper: bounds-of-possibility
+  role: background
+  locator: Appendix D, Propositions D1, D14 and D19.
+definition: >-
+  Use the full two-object category with singleton individuals, one arrow from $w$ to $v$ with
+  two distinct left inverses, and the composites they generate. Prepend a root with one marked
+  entrance for each old object under every assignment of an auxiliary language with infinitely
+  many constants of every relational type. A root relation has any present row and one uniform
+  closed auxiliary descriptor giving its values on all the branches. Relational names in the
+  original signature may be interpreted by top.
+arguments:
+- id: fresh-atom
+  holds: [self-atomicity-r]
+  choice: free
+  writeup: descriptor-entrance-to-two-returns
+  text: >-
+    A root tuple gives a current-only atom. An occupied old tuple gives a copy rooted at that
+    same object, retaining the finitely many descriptor parameters and assigning a fresh symbol
+    the actually instantiated identity-row atom. Intersect the descriptor with the fresh relation
+    and the assertion that this relation is an atom. The result is nonzero. Wherever it is
+    instantiated, it is a nonzero part of that atom and hence is itself an atom.
+- id: actuality-and-two-returns
+  holds: [strong-actuality, necessary-actuality]
+  fails: [necessary-two-hat-implies-nd-necessity, necessary-strong-actuality]
+  choice: free
+  writeup: descriptor-entrance-to-two-returns
+  text: >-
+    The new root identity gives a true strong atom, and each old identity gives a true atom.
+    At $w$ the unique true atom transports along the common section to contain both left inverses,
+    which a singleton proposition splits. Thus Strong Actuality fails at $w$. Actuality with
+    two-hat-to-ND necessity would imply Strong Actuality there.
+- id: splitting-old-descriptors
+  fails: [atomicity-t]
+  choice: free
+  writeup: descriptor-entrance-to-two-returns
+  text: >-
+    Every nonzero part of the old-only proposition can be split by a fresh propositional symbol.
+    Use two assignments at a witnessing old target that agree on the descriptor and differ on
+    that symbol. Consequently the old-only proposition has no ordinary atom below it.

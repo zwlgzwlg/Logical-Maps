@@ -1,0 +1,68 @@
+id: supported-stone-pairs
+name: Supported Stone terminals with Possibility+, both rigid powers and failure of choice
+certificate:
+  source_id: misc
+  produced_by: OpenAI GPT-6, prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI GPT-6, prompted by Daniel Kodsi, 27 November 2026
+  checked_by: []
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI GPT-6, prompted by Daniel Kodsi, supported Stone-terminal construction, 27 November 2026.
+- The Stone-terminal and finite descriptor support constructions of 26 November 2026.
+- Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §3.6 and Appendix E.
+source_names:
+- GPT-6 27 Nov
+- GPT-6 26 Nov
+- Classicism
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §3.6 and Appendix E, pp. 62–64 and 80–83
+definition: >-
+  Use the supported-pairs descriptor model as the old point, with independent pair-swap
+  group $G$. Add a root with an identity entrance on individuals to this point, and
+  singleton-individual full one-world terminals indexed by the external Stone ultrafilters
+  of $L$. Here $L$ is the finitely supported product of all small presentations of
+  algebras complete for supported families, using the finite-index coinduced algebra
+  for each stabilizer action. A root relation has any finitely supported current row,
+  any old value, and any continuous section to its finite terminal type. Evaluate at the
+  new root with its sole identity loop.
+meets:
+  actual-world-isolated: The root-only proposition is admitted and no proper arrow returns.
+arguments:
+- id: supported-algebra-intervals
+  holds: [forcing-possibilism]
+  by: OpenAI GPT-6, prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: supported-stone-pairs
+  text: >-
+    Inexact ordinal entities are fixed pointwise by the swaps and satisfy the constant-terminal
+    ordinal bound. An external carrier at or above the strong limit of uncountable cofinality
+    has a power-closed subcollection of that size fixed pointwise by one finite pin. Each
+    remaining small internal Boolean algebra has its stabilizer-equivariant principal factor in $L$.
+- id: supported-rigid-lifts
+  holds: [weakly-rigid-power-r]
+  by: OpenAI GPT-6, prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: supported-stone-pairs
+  text: >-
+    The old coordinate of a weakly rigid bound is weakly rigid and has exactly the projected
+    current extension. Old rigid subrelations lift by taking clopen closures of supported
+    unions of leaf membership sets; terminal subrelations have finitely many tuple values.
+    The old fully rigid power and these lifts verify both powers.
+- id: surviving-possibility-and-choices
+  holds: [possibility-plus-signature-r, atoms-are-strong-atoms-r, axiom-of-infinity-e, strong-actuality]
+  fails: [relational-choice-r, boolean-completeness-t]
+  by: OpenAI GPT-6, prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: supported-stone-pairs
+  text: >-
+    The old entrance preserves eligible individual tuples and the disagreeing analytical
+    futures. All atoms in the three coordinates are strong. The fixed labels and interchangeable
+    options still obstruct a choice, and the old supported family without a join remains in
+    its principal interval. Standard individual numerals and the finite one-world terminal
+    give the two arithmetic verdicts.

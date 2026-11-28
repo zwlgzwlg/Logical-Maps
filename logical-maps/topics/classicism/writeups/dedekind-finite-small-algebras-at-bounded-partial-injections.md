@@ -1,0 +1,25 @@
+# Dedekind-finite carriers are revised-small
+
+A carrier is Dedekind finite at a point if there is no represented injective self-map omitting an element. In C every such carrier is small for the revised [Mathematical Possibilism](../index.html#principle/forcing-possibilism). This gives an instance of its failure at the finite-pin bounded partial-injection models, including the model with Logical Necessity and the atomic site with a return.
+
+## Smallness in C
+
+Suppose a carrier $B$ is Dedekind finite. Take a nonempty $Y\subseteq B$ and an element $a\in Y$. The property $A=Y\setminus\{a\}$ is strictly smaller than $Y$. An injection from $Y$ into $A$ could be extended by the identity on $B\setminus Y$ to give an injective endomap of $B$ omitting $a$. The inclusion $A\to Y$ is available by equality.
+
+Suppose $C\subseteq Y$ is strictly smaller than $Y$. Choose $y\in Y\setminus C$ and restrict the transposition of $a,y$ to $C$ to obtain an injection $i:C\to A$. If $y=a$ use the inclusion. The graph of the transposition is a relation defined by equality cases, including at individual type. Suppose that an admitted incidence relation $J(c,z)$ codes every admitted subset of $A$ by a member of $C$. Form the actual subset
+$$
+     D(z)=A(z)\land\neg\exists c\,[C(c)\land i(c)=z\land J(c,z)] .
+$$
+If $c$ codes $D$, then $D(i(c))\leftrightarrow\neg J(c,i(c))$, by injectivity. This contradicts the coding condition. Consequently $A$ witnesses that $Y$ is not power-closed. The empty carrier cannot be strictly larger than the inexact ordinal benchmark, so there is no power-closed $Y\subseteq B$ larger than that benchmark. This proves revised smallness using current graphs and comprehension alone.
+
+## An internally complete atomless algebra
+
+Let $A$ now denote the auxiliary set in [bounded partial injections](bounded-partial-injections.html), partitioned into infinitely many infinite classes. Let $G$ be its class automorphism group and $P$ a finite set of its points. For a finite-coordinate clopen $D\subseteq 2^A$ write $p_D$ for the scalar whose value at an ordinary arrow with partial injection $f$ says that the characteristic function of $\operatorname{dom}f$ lies in $D$. Use bottom on all returns if the model has them. The upper tag only restricts the available partial maps. At infinite tag every finite prescription on the domain is possible, so $D\mapsto p_D$ is injective. Its finite coordinate set pins the scalar, and $G$ permutes these scalars by the corresponding coordinate permutations. Thus their carrier and the relation coding ordinary inclusion of the clopens are $G$-invariant current rows. They are represented by taking the same invariant row at ordinary arrows and empty reset rows. This specifies the internal order without requiring that complement of a code in the ambient scalar algebra be the code of its complement.
+
+For any admitted family $X$ of these clopens there is a finite $P$ whose pointwise stabilizer preserves $X$ at the current point. Its union $O$ is dense in each cylinder on the bits in $P$ that it meets. To see this, choose a finite cylinder in $O$ meeting the indicated $P$-cylinder and refine it by that $P$-condition. Given any finite further extension of the $P$-condition, move the additional coordinates of the chosen cylinder off the proposed extension, by an automorphism fixing $P$. This is possible within each of the infinitely populated equivalence classes. The moved cylinder still lies in $O$ and is compatible with the proposed extension. Hence the closure of $O$ is the finite union of the $P$-cylinders it meets, itself clopen. Its code is the least upper bound. Taking complements gives all greatest lower bounds. A fresh bit splits every nonempty clopen, so this is a nontrivial atomless Boolean algebra.
+
+A single clopen invariant under all automorphisms fixing $P$ is itself a union of $P$-cylinders, by the same density argument applied to that clopen. There are only finitely many such clopens. If a represented injective self-map omitted $b$, iterate it from $b$ externally. All iterates are distinct, while a common finite stabilizer for the graph and $b$ fixes each iterate. This contradicts the finite bound. The represented algebra is therefore Dedekind finite and, by the first argument, revised-small. The actual scalar algebra in each of these models is atomic. A nontrivial principal interval of an atomic algebra has an atom, precluding the required isomorphism.
+
+The construction uses only finitely many auxiliary points to pin each clopen and each candidate injection graph. The entire counterexample at type $t$ is a single pure sentence and passes through the pointed compactness argument adding Logical Necessity. Separate [countably pinned models](bounded-partial-injections.html) have the opposite possibilism verdict.
+
+OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026. Two additional GPT-6 researchers independently checked the Dedekind-finiteness argument, the diagonal and the finite-support computation of clopen joins.

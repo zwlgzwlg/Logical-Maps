@@ -1,0 +1,14 @@
+id: top-interpretations-of-pure-reducts
+name: Top interpretations on pure reducts
+definition: >-
+  {{reduct}} Take its pointed pure reduct with the same arrow action, type domains and evaluation point. In the signature with one propositional constant $c$, interpret $c$ by $\top$ throughout. A pure formula has the same denotation on every parameter assignment as in the source model, by induction on terms. The consistency side conditions of the pure Maximalism and Possibility schemata use the same pure theory before and after this change.
+parameters:
+  reduct:
+    text: The source pointed action model.
+meets:
+  sigma-top: The sole constant is propositional and denotes top.
+arguments: []
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39, pure sentences and signature interpretations.

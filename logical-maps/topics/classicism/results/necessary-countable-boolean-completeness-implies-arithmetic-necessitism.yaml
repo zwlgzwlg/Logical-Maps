@@ -1,0 +1,34 @@
+id: necessary-countable-boolean-completeness-implies-arithmetic-necessitism
+premises:
+- necessary-countable-boolean-completeness-r
+conclusion: arithmetic-necessitism
+status: proved
+certificate:
+  source_id: goodsell-arithmetic-necessary
+  produced_by: Zachary Goodsell (Lemmas 3, 4 and 8); applied to the map's Arithmetic Necessitism by OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independently reviewed by a second OpenAI Codex (GPT-6) agent, prompted by Daniel Kodsi, 26 November 2026
+  date: '2026-11-26'
+  lean: verified
+  lean_ref: Classicism.Map.necessary_countable_boolean_completeness_implies_arithmetic_necessitism
+sources:
+- Zachary Goodsell, Arithmetic is Necessary, draft of 5 June 2024, §5, Lemmas 3, 4 and 8.
+source_names:
+- Arithmetic is Necessary
+references:
+- paper: goodsell-arithmetic-necessary
+  role: proof
+  locator: §5, Lemmas 3, 4 and 8, pp. 14–19
+proof: >-
+  Fix $\sigma$. Lemma 3 gives persistence of the numbers in C. At each point, Lemma 8 gives
+  weak inextensibility from Countable Boolean Completeness at the counting type $\sigma$ and
+  the relation type $\nu_\sigma t$, where $\nu_\sigma=(\sigma t)t$. Necessitating this implication
+  and applying K to the boxed premise gives inextensibility. Thus the numbers are rigid.
+  Lemma 4 gives $m\ne n\to\Box(I^*_\sigma\to m\ne n)$ on numbers, so the principle's
+  own antecedent $\Box I^*_\sigma$ gives their necessary distinctness.
+notes: >-
+  This settles the question whether Necessary Actuality and Necessary Boolean Completeness
+  together imply Arithmetic Necessitism. Only the countable instances of the latter are used.
+  The related [[countable-boolean-completeness-implies-necessity-of-arithmetic]] concerns
+  the modal status of arithmetic sentences. Here the target concerns the property of being a number.

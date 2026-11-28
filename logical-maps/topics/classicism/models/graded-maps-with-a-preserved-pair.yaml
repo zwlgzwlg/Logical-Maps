@@ -1,0 +1,108 @@
+id: graded-maps-with-a-preserved-pair
+name: Graded maps preserving an individual pair
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two independent reviews of the construction and its local verdicts, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, preserving a pair at grade zero and sending all individuals into it at positive grades.
+- The map's graded-maps-free-words-glued-constants and symmetric-surjection-products constructions for bounded pins and last-letter gluing.
+source_names:
+- Codex via Kodsi, 26 Nov
+- Graded maps and free-word gluing
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §§3.4–3.5, pp. 55–61
+- paper: bacon-2020
+  role: background
+  locator: Appendix A.3
+definition: >-
+  Take an infinite cardinal $\kappa\ge\max(2^{\aleph_0},|\Sigma|)$ and one object with
+  $\kappa^+$ individuals, including a distinguished two-element set $B$. Arrows carry a
+  natural-number grade, a free word, and a map on the individuals. At grade zero the map
+  sends $B$ into itself; at positive grades its entire image lies in $B$. At each fixed
+  grade and word, a relation profile's rows depend on the map on a pin of size at most
+  $\kappa$, uniform over grades and words. Evaluate at the identity, with the constants
+  glued at last letters for the given signature.
+arguments:
+- id: inextensibility-with-moving-word-labels
+  fails: [weakly-inextensible-comprehension-r, forcing-possibilism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: graded-maps-with-a-preserved-pair
+  text: >-
+    Give κ⁺ propositions distinct nonempty-word labels. On grade-zero empty-word arrows let
+    each test whether its own private site stays fixed. For any alleged weakly inextensible
+    coextension of their current family, move a private site outside its pin. Its row still
+    contains that whole proposition, while an admitted tester omits it there and necessarily
+    accepts every old family member. Countable scalar intersections and full current coding
+    with infinite individuals also exclude the revised-small Cantor regular-open algebra.
+- id: logical-necessity
+  holds: [logical-necessity-r]
+  choice: uses
+  writeup: graded-maps-with-a-preserved-pair
+  text: >-
+    For each realizable assignment on a sentence choose a fresh letter and a surjective
+    grade-zero map fixing $B$ and prescribing its named individual values. Lift the
+    relational witnesses using a right inverse fixing $B$, and glue their profiles at
+    these last letters. There are at most $\kappa$ pins to unite for each constant.
+- id: tame-rigidity
+  fails: [tame-rigidity-r]
+  choice: free
+  writeup: graded-maps-with-a-preserved-pair
+  text: >-
+    Take the individual property with full grade-zero rows and row $B$ at every positive
+    arrow. It is weakly persistent. A tester covering all its old members necessarily must
+    contain every required target: change the image of one fresh input outside its pin and
+    $B$. After a positive arrow its transport is the constant $B$-row property. The tester
+    with rows $g[B]$ covers both current members necessarily, but misses one at a collapse
+    of $B$. Thus the transport fails weak inextensibility.
+- id: countable-completeness
+  holds: [necessary-countable-boolean-completeness-r]
+  fails: [boolean-completeness-t]
+  choice: uses
+  writeup: graded-maps-with-a-preserved-pair
+  text: >-
+    An admitted current row of standard numeral values bounds the numbers. Any countable
+    family is externally countable, so the union of its pins supports its rowwise join.
+    A family of grade-zero cylinders indexed by $\kappa^+$ distinct values on one fixed
+    input can test a different fresh input in each fiber. A supremum would require a
+    pin containing all these tested inputs.
+- id: ordinary-barcan
+  fails: [barcan-t, barcan-r]
+  choice: free
+  writeup: graded-maps-with-a-preserved-pair
+  text: >-
+    All positive arrows send every old individual into $B$ and every old proposition
+    to a $B$-pinned proposition. A tester imposing the corresponding condition only
+    at positive grades admits every old argument necessarily but omits a target.
+- id: atomlessness
+  holds: [necessary-atomlessness]
+  choice: free
+  writeup: graded-maps-with-a-preserved-pair
+  text: >-
+    A fresh input outside the pin and $B$ can be sent to either member of the pair
+    at any grade. This splits a nonempty proposition at its witnessing grade and word.
+- id: modal-well-ordering
+  holds: [modal-well-ordering-r]
+  choice: uses
+  writeup: graded-maps-with-a-preserved-pair
+  text: >-
+    Constant rows of an external well-order of a type form a single relation
+    that well-orders the type at every arrow.
+- id: infinite-domains
+  holds: [necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t]
+  fails: [analytic-necessitism, second-order-analytic-necessitism]
+  choice: uses
+  writeup: graded-maps-with-a-preserved-pair
+  text: >-
+    The individual and proposition domains are infinite and their standard numeral
+    cuts are admitted. The individual sort has room for a current ordinary real
+    number structure, but a positive constant map can identify any two distinct
+    individuals, precluding its rigid number sort with necessarily distinct members.

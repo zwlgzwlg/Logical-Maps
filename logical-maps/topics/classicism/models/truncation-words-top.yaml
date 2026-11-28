@@ -1,0 +1,35 @@
+id: truncation-words-top
+name: Truncations of a regular cardinal with a top proposition name
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, reinterpretation of the source
+    model
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independent OpenAI Codex review of signature substitution, preservation of pure schemata and their side
+    conditions, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- Underlying construction and pure verdicts in [[truncation-words]]. OpenAI Codex (GPT-6), prompted by Daniel
+  Kodsi.
+- Signature substitution uses Cian Dorr’s sigma-top-npc argument.
+source_names:
+- Truncations of a regular cardinal
+- Signature substitution
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39, pure and signature schemata.
+group: top-interpretations-of-pure-reducts
+settings:
+  reduct: Start with [[truncation-words]].
+arguments:
+- id: pure-reduct
+  holds: [forcing-possibilism, necessary-atomicity-r, necessary-axiom-of-infinity-t, necessary-countable-boolean-completeness-r,
+    necessary-self-atoms-are-strong-atoms-r, necessary-weakly-rigid-power-r, no-pure-contingency-r, transversal-choice-r]
+  fails: [boolean-completeness-t, infinity-e, potential-infinity-e, weakly-inextensible-comprehension-r]
+  choice: uses
+  text: The truncations, word action and support bounds on the pure sort domains are those of the source. The
+    pure verdicts below are those of the source or consequences of its recorded verdicts over C. They transfer
+    by the pure term induction in the group definition.

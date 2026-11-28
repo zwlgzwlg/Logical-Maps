@@ -1,0 +1,39 @@
+id: strong-possibility-signature-r-implies-possibility-plus-signature-r
+premises:
+- strong-possibility-signature-r
+conclusion: possibility-plus-signature-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by: []
+  date: '2026-11-26'
+  lean: verified
+  lean_ref: Classicism.Map.strong_possibility_signature_r_implies_possibility_plus_signature_r
+sources:
+- OpenAI Codex, prompted by Daniel Kodsi, distinctness-preserving proof, 26 November 2026.
+source_names:
+- Codex via Kodsi 26 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39; §2.6, pp. 41–42
+proof: >-
+  By [[strong-possibility-signature-r-inconsistent]], any theory satisfying the premises proves $\bot$ and hence every instance of Possibility+ (signature Σ).
+
+  For a fixed signature Possibility+ instance put
+  $A=\forall\bar x\, .\,D(\bar x)\to\Diamond P(\bar x)$, where $D$
+  says that the displayed individuals are pairwise distinct and differ from the
+  individual constants occurring in $P$. The closed sentence $A$ is consistent
+  with $\operatorname{Max}(C(\Sigma))$, since [[coalesced-definable-root-signature]]
+  satisfies both. Signature Strong Possibility gives $\Diamond_{\ne}A$.
+  A countertuple $\bar a$ to $A$ would satisfy $D(\bar a)\land\Box\neg P(\bar a)$.
+  Testing $\Diamond_{\ne}A$ with $D(\bar a)$ gives an accessible point where
+  $A\land\Diamond D(\bar a)$ holds. Necessity of identity gives $D(\bar a)$
+  there, including the disequalities with the named individuals. By 4 the
+  transported tuple still satisfies $\Box\neg P(\bar a)$, contradicting $A$.
+  With an empty guard the same test is $\top$.
+notes: >-
+  The argument applies to every signature, including the first-order signatures
+  for which consistency of signature Strong Possibility remains open.

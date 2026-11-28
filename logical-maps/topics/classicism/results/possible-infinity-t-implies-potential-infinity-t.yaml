@@ -25,4 +25,10 @@ proof: >-
   X\, .\,nX$, by 4, so that Potential Infinity would be impossible.
 notes: >-
   So Potential Infinity (type $t$) is the weakest of the infinity principles at this type that the map
-  records. Whether the converse holds is open; see the notes to [[potential-infinity-t]].
+  records. The converse fails in [[absorbing-entrance-hyperfinite-group]], even with necessary Boolean
+  Completeness at type $t$.
+changes:
+- date: '2026-11-26'
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  summary: >-
+    The new hyperfinite entrance makes the recorded implication strict.

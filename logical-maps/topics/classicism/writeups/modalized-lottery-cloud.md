@@ -1,6 +1,6 @@
 # Modalized domains: lottery cloud
 
-The published representation theorem below uses the original strict-propositional smallness. For the revised Mathematical Possibilism one must additionally bound the inexact individual ordinal carrier at the root, as specified in the current model record.
+The published representation theorem below uses the original strict-propositional smallness. With the revised smallness test this particular root fails Mathematical Possibilism, already at carrier type $t$. Its collapse components distinguish at least $\mu$ inexact ordinal thresholds. [Proof for the revised principle](singular-lottery-ordinal-thresholds.html)
 
 Source: [*Modalized Domains on Possibility Frames*](https://andrew-bacon.github.io/techdoc/modalized-domains.pdf), Andrew Bacon and Claude Opus 5.5 (Anthropic), draft of 20 October 2026; §6, Theorem 6.8 and Corollary 6.9. Transcribed by OpenAI Codex on 21 October 2026. No independent checker or Lean verification is claimed.
 

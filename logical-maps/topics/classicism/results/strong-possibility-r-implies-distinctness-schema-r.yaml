@@ -15,7 +15,7 @@ sources:
 - Andrew Bacon and Cian Dorr, Classicism, draft of 16 May 2023, §2.6, p. 42.
 source_names:
 - Classicism
-proof: If P is C-consistent, then $\Diamond P$ is a theorem of Max(C). The source’s consistency theorem
+proof: By [[strong-possibility-r-inconsistent]], any theory satisfying the premises proves $\bot$ and hence every instance of Maximalism (pure). If P is C-consistent, then $\Diamond P$ is a theorem of Max(C). The source’s consistency theorem
   for Max(C) therefore makes $\Diamond P$ consistent with that theory. Strong Possibility gives $\Diamond_{\ne}\Diamond
   P$, which implies $\Diamond\Diamond P$ and hence $\Diamond P$ by 4.
 references:

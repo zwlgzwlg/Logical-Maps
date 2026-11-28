@@ -1,0 +1,68 @@
+id: hyperfinite-retracts-of-infinite-sites
+name: Hyperfinite retracts of infinite sites
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other GPT-6 researchers independently checked the action category, full typed selectors and infinity verdicts, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, full split actions at finite roots and their pointed ultraproduct, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §§2.3 and 3.5
+- paper: goodsell-arithmetic-necessary
+  role: background
+  locator: §4, Definitions 3–5 and 8
+definition: >-
+  In factor k take the product of the cyclic group of order k and a two-object
+  split retraction. The larger object has infinite cyclic endomorphisms together
+  with the zero projecting through the smaller object. The root has k individuals,
+  its larger site has k copies of the natural numbers, and all relational path
+  rows are unrestricted. Take a nonprincipal pointed ultraproduct over k.
+arguments:
+- id: hyperfinite-here-infinite-there
+  holds: [infinity-e, infinity-t, possible-infinity-e, possible-infinity-t, necessary-potential-infinity-e, necessary-potential-infinity-t]
+  fails: [axiom-of-infinity-e, axiom-of-infinity-t]
+  choice: uses
+  writeup: hyperfinite-retracts-of-infinite-sites
+  text: >-
+    Factor roots have k individuals and a powerset of 2k path addresses as
+    propositions. Their two finite sizes grow without bound. At the returning
+    larger site both carriers are infinite and only standard numerals are Frege
+    numbers. Necessary possible actual infinity and both local failures transfer
+    as single sentences; each external finite lower bound transfers separately.
+- id: selections-at-split-arrows
+  holds: [functional-choice-r]
+  choice: uses
+  writeup: hyperfinite-retracts-of-infinite-sites
+  text: >-
+    Pick a whole output for each input. At each path prescribe its output row on
+    transported inputs and extend arbitrarily. A left inverse gives injectivity
+    on the inputs, so all prescriptions agree and yield a selecting operation.
+- id: full-relations
+  holds: [necessary-boolean-completeness-r, necessary-rigid-comprehension-r, necessary-rigid-power-r, necessary-weakly-rigid-power-r, necessary-strong-actuality, modal-well-ordering-r]
+  fails: [atoms-are-self-atoms-t]
+  choice: uses
+  writeup: hyperfinite-retracts-of-infinite-sites
+  text: >-
+    Unions compute joins. Rigid rows are exactly the direct images of their
+    current members, and taking inverse images within a bound lifts each
+    target subrelation. Identity atoms have at most one point after transport.
+    A single entrance atom splits at the larger site. Full rows admit a
+    target well-order at every path.
+- id: guarded-mathematics
+  holds: [arithmetic-necessitism, necessity-of-second-order-analysis]
+  fails: [analytic-necessitism]
+  choice: free
+  writeup: hyperfinite-retracts-of-infinite-sites
+  text: >-
+    Every guarded number system in a factor consists of exactly the standard
+    numerals, which transport onto the next system. Every realized continuum
+    carries the ambient full analysis. At propositional type there is a continuum
+    at the larger site, whereas the root has only finitely many propositions.

@@ -1,0 +1,36 @@
+id: symmetric-integer-paired-stages-top
+name: Symmetric integer stages of paired individuals with a top proposition name
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, reinterpretation of the source
+    model
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independent OpenAI Codex review of signature substitution, preservation of pure schemata and their side
+    conditions, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- Underlying construction and pure verdicts in [[symmetric-integer-paired-stages]]. OpenAI Codex (GPT-6), prompted
+  by Daniel Kodsi, 26 November 2026.
+- Signature substitution uses Cian Dorr’s sigma-top-npc argument.
+source_names:
+- Symmetric integer stages of paired individuals
+- Signature substitution
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39, pure and signature schemata.
+group: top-interpretations-of-pure-reducts
+settings:
+  reduct: Start with [[symmetric-integer-paired-stages]].
+arguments:
+- id: pure-reduct
+  holds: [necessary-atomlessness, necessary-barcan-r, necessary-boolean-completeness-r, necessary-inextensible-comprehension-r,
+    necessary-weakly-rigid-power-r, no-pure-contingency-r, second-order-analytic-necessitism]
+  fails: [necessary-five-implies-two-hat-necessity]
+  choice: uses
+  text: The coordinate inclusion and partial returns separate 5-necessity from two-hat necessity, and two-hat
+    necessity from ND-necessity. Simultaneous translation of stages and labels preserves pure truth. The pure
+    verdicts below are those of the source or consequences of its recorded verdicts over C. They transfer by
+    the pure term induction in the group definition.

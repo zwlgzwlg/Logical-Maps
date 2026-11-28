@@ -1,0 +1,77 @@
+id: bounded-partial-injections-logical-necessity
+name: Logical Necessity over bounded partial injections
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Independent OpenAI Codex (GPT-6) reviewers, prompted by Daniel Kodsi, checked the atomic profile model and its classifier obstruction. A further review checked scalar coding and finite gluing for compactness.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, coding the sites by propositions and realizing finite fragments of Logical Necessity, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5 and Appendix D.
+definition: >-
+  Use the tagged partial-injection model on a countable set of infinitely many
+  infinite classes for the auxiliary sites. The object language now has just
+  one individual. Use an infinite free alphabet for the word coordinate.
+  Take a pointed Henkin model of its entire pure pointed theory together
+  with Logical Necessity for the chosen set-sized signature.
+arguments:
+- id: modal-comparison-on-permutation-units
+  holds: [necessary-five-implies-nd-necessity]
+  fails: [truth-implies-five-necessity]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: partial-embeddings-of-infinite-classes
+  text: >-
+    Quantifying over the entire subgroup of permutation units gives an admitted S5 operator. The guard requiring a live injective
+    restriction to the pin, the empty word and, when present, a sufficiently high tag ensures agreement on the pin with a permutation.
+    This makes every 5-necessity ND-necessary. An invertible change of the class pattern of two outputs refutes 5-necessity of their original pattern.
+- id: finite-signature-obligations
+  holds: [logical-necessity-r, necessary-atomicity-r, necessary-axiom-of-infinity-t]
+  fails: [infinity-e, transversal-r, transversal-choice-r, relational-choice-r]
+  choice: uses
+  writeup: bounded-partial-injections
+  text: >-
+    The scalar testing whether an arrow is defined at a site represents
+    that site. The class argument therefore refutes a transversal even for
+    properties of propositions, and the class and classmate choices fail.
+    Saturated bounded arrows still supply atoms. For any finite list of
+    witnessed pure matrices install the witnesses as named values after
+    distinct last letters. The union of their pins and maximum of their
+    cutoffs are finite. Possible named truth already implies some current
+    witness in the one-object model. Compactness gives all instances
+    together with every pure pointed sentence used here.
+- id: word-labels-and-even-tags
+  holds: [second-order-analytic-necessitism, arithmetic-necessitism]
+  fails: [countable-boolean-completeness-r, boolean-completeness-t]
+  choice: uses
+  writeup: bounded-partial-injections
+  text: >-
+    Distinct sets of initial letters label propositions, or full-or-empty
+    higher-type rows, that stay distinct after every suffix shift. Arbitrary
+    relations on these labels and their represented powers have exact image
+    rows depending only on the word. At individual type a finite group pin
+    cannot fix infinitely many distinct successor iterates. The invariant
+    numeral row makes all Frege numbers standard. In contrast, the
+    internally countable family of exact even tags has no join, since no
+    scalar can alternate indefinitely at a fixed coefficient and word.
+- id: internally-finite-clopens
+  fails: [forcing-possibilism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: dedekind-finite-small-algebras-at-bounded-partial-injections
+  text: >-
+    The finite-coordinate clopens on auxiliary sites form a represented
+    internally complete atomless algebra. It is Dedekind finite because a
+    fixed finite pin fixes only finitely many clopens. Every Dedekind-finite
+    carrier is revised-small, and no principal scalar interval is atomless
+    and nontrivial. The assertion is a single pure instance at type t.

@@ -142,6 +142,23 @@ arguments:
     classes onto the remaining classes. By pinning $Y_1=Y_k\subseteq Z^m_k=\mathbb N\setminus([n_0]\cup
     D)$, while $D\subseteq Y_1$. So Weakly Inextensible Comprehension fails, and with it Boolean
     Completeness and Inextensible Comprehension.
+- id: tame-and-countable-joins
+  holds: [necessary-tame-rigidity-r, necessary-countable-boolean-completeness-r, necessary-truths-are-nd-necessary]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, with two independent Codex reviews
+  date: '2026-11-27'
+  choice: uses
+  writeup: symmetric-class-reflecting-surjections
+  text: >-
+    A weakly rigid relation has exact direct-image rows. Choose preimages
+    of the finitely many target points pinning a proposed new member,
+    and move its other involved classes to target classes with distinct
+    fresh source ancestors. A reflecting finite prescription then lifts
+    that member to the actual extension. For countable joins, all members
+    of a numerically indexed family are fixed by the stabilizer of the
+    indexing pin. Each is genuinely pinned by that set: compare two maps
+    agreeing there with one common extension that splits each source
+    class into only finitely many target classes. Their rowwise union
+    is therefore an admitted supremum.
 notes: 'Found on 16 October 2026 to show that the closed pure sentence "each individual is contingently
   distinct from some other, but no functional relation takes each individual to an individual
   contingently distinct from it" is consistent with C, a premise of
@@ -150,10 +167,8 @@ notes: 'Found on 16 October 2026 to show that the closed pure sentence "each ind
   separates the Truth-implies-necessity principles from Transversal. The nearest recorded model,
   symmetric-all-surjections (Base 1), differs from it on Transversal. Boolean Completeness, Inextensible
   and Weakly Inextensible Comprehension fail (added later on 16 October), the arguments for them in
-  symmetric-all-surjections needing arrows that cannot split a class. Left unknown: Countable Boolean
-  Completeness, and the rigidity family (Tame
-  Rigidity, Rigid Power, Rigid Rigidity and their weak forms), whose recorded arguments assume all
-  surjections or section arrows, the latter failing here. No Lean verification is claimed.'
+  symmetric-all-surjections needing arrows that cannot split a class. A subsequent argument establishes necessary Countable Boolean Completeness and necessary Tame
+  Rigidity at all types. Rigid Power, Rigid Rigidity and their weak forms remain open here. No Lean verification is claimed.'
 lean:
   param: Classicism.Meta.Intensional.SymIdeal.Base.toSym Classicism.Meta.Intensional.SymIdeal.classReflect
   meets:

@@ -28,5 +28,5 @@ references:
   role: background
   locator: §2.3, n. 47, p. 32
 notes: >-
-  The converse fails, by a compactness argument that a nonstandard model would witness. The map does not
-  yet record such a model, so the schema-to-axiom direction stays open rather than refuted.
+  The pointed ultraproduct [[hyperfinite-retracts-of-infinite-sites]] witnesses failure of the converse.
+  Its root satisfies every standard finite lower bound while an internal finite cardinality counts the whole domain at this type.

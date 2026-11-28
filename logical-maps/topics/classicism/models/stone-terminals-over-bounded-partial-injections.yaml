@@ -1,0 +1,48 @@
+id: stone-terminals-over-bounded-partial-injections
+name: Signature Possibility+ and Mathematical Possibilism without Transversal
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - A second OpenAI Codex (GPT-6) researcher checked the uniform ordinal bound, the large-pin representation of graphs, and the persistence of the selection obstruction through both kinds of exits.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, Stone terminals on bounded partial-injection stages, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalesced sums.
+definition: >-
+  Add an absorbing entrance to a signature Possibility+ point and homogeneous
+  ordinary Stone terminals to the bounded partial-injection word model. Core
+  arrows fix the old individual's domain pointwise. Auxiliary sites have
+  kappa-plus classes of size kappa-plus and profiles have pins of size at
+  most kappa. Choose a strong limit mu above the ordinal table bound before
+  choosing kappa at least mu or the catalogue of Boolean algebra factors.
+arguments:
+- id: ordinal-bound-and-exits
+  holds: [forcing-possibilism, possibility-plus-signature-r]
+  choice: uses
+  writeup: stone-terminals-over-bounded-partial-injections
+  text: >-
+    One extensional ordinal table works at every core arrow, with a single
+    old coordinate and constant terminal value. Its profiles are fixed by every
+    core transport, and a test for any set of them controls rigid limits.
+    One common pin admits all small comparison and coding graphs. Stone factors
+    supply all small complete algebras, and the old exit preserves the eligible
+    individual tuples of every signature Possibility+ instance.
+- id: class-tests-and-rank-tags
+  fails: [transversal-r, transversal-choice-r, relational-choice-r, boolean-completeness-t, countable-boolean-completeness-r, actuality]
+  choice: uses
+  writeup: stone-terminals-over-bounded-partial-injections
+  text: >-
+    A selected representative of a fresh class of site codes has two pins
+    disjoint off the classifier's pin. A partial identity and a class
+    exchange give incompatible rows. The same classes preclude relational
+    and transversal choice. Finite cutoffs preclude the join of the even
+    tag tests. A partial identity erases a fresh live site while preserving
+    any proposed actualizing truth.

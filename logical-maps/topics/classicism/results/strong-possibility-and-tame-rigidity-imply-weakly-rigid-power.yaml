@@ -1,0 +1,30 @@
+id: strong-possibility-and-tame-rigidity-imply-weakly-rigid-power
+premises:
+- strong-possibility-r
+- tame-rigidity-r
+conclusion: weakly-rigid-power-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two further OpenAI Codex (GPT-6) agents independently checked the use of local Tame Rigidity and the finite-power theorem.
+  date: '2026-11-27'
+  lean: verified
+  lean_ref: Classicism.Map.strong_possibility_and_tame_rigidity_imply_weakly_rigid_power
+sources:
+- OpenAI Codex (GPT-6), Pure Strong Possibility forces rigid relations to be Frege-finite, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov 2026
+proof: >-
+  By [[strong-possibility-r-inconsistent]], any theory satisfying the premises proves $\bot$ and hence every instance of Weakly Rigid Power.
+
+  By [[strong-possibility-implies-rigid-power]], every current rigid relation
+  has Frege-finite extension at a pure Strong Possibility point. Under local
+  Tame Rigidity this applies to every current weakly rigid relation. The
+  [[internally-finite-rigid-power|internally finite bound theorem]] identifies
+  its weak and full power predicates as entire entities and shows that they
+  are rigid. The weak predicate is therefore weakly rigid.
+notes: >-
+  The converse from Weakly Rigid Power to Tame Rigidity already holds in C.

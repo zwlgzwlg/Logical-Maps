@@ -1,0 +1,153 @@
+id: graded-maps-free-words-glued-constants
+name: Graded maps with free words and glued constants
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two independent reviews of the model and its local verdicts, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, graded-map construction and separation, 26 November 2026.
+- The supported product and free-word gluing in symmetric-surjection-products, adapted to graded maps.
+source_names:
+- Codex via Kodsi, 26 Nov
+- Supported products and gluing
+definition: >-
+  Given a set-sized signature $\Sigma$, put $\kappa=\max(\aleph_0,|\Sigma|)$ and take
+  $\kappa^+$ individuals. Arrows at one object consist of a finite word over an alphabet of
+  size $\kappa$, a natural-number grade, and a map of the individuals. Every map is allowed
+  in positive grade and only the identity map in grade zero. Composition adds grades,
+  composes maps, and concatenates words. At each relational type an entity assigns each
+  arrow a row of argument tuples. At a fixed grade and word the row depends only on
+  the map's values on one set of at most $\kappa$ individuals, common to all grades and
+  words of that entity. Transport is precomposition. Interpret the constants by the
+  simultaneous assignments in the write-up.
+arguments:
+- id: tame-at-every-type
+  holds: [necessary-tame-rigidity-r, necessary-inextensible-comprehension-r, modal-well-ordering-r, necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t]
+  fails: [rigid-rigidity-r, weakly-rigid-weak-rigidity-r, forcing-possibilism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: graded-maps-free-words-glued-constants
+  text: >-
+    Saturating the transported current members over maps agreeing on a pin gives precisely the
+    rows of a weakly rigid property. Two positive-grade functions can be perturbed on fresh
+    intermediate points to match any further tuple from this saturation while preserving
+    the tester's pin. Thus every transport remains weakly rigid. Identity-only rows give
+    inextensible coextensions, and constant-row well-orders and current numeral cuts are admitted.
+    The original rigid-power counterexample is over the universal bound and witnesses both
+    failures about rigidity itself. Countable scalar intersections and the infinite individual
+    carrier preclude a representation of the small Cantor regular-open algebra.
+- id: self-atomicity
+  holds: [necessary-self-atomicity-r]
+  choice: free
+  writeup: graded-maps-free-words-glued-constants
+  text: >-
+    Choose an occurrence of a tuple in a nonzero entity. Restrict the entity to that
+    tuple, grade, and word. The restriction is nonzero. Wherever instantiated, it has
+    just one tuple at the identity and an empty row at all other arrows, since only
+    the identity continuation preserves both the grade and the word. It is an atom
+    there. This works at every relational type, including propositions.
+- id: strong-actuality
+  holds: [necessary-strong-actuality]
+  choice: free
+  writeup: graded-maps-free-words-glued-constants
+  text: >-
+    The proposition supported at the monoid identity is a true atom. Its transport at
+    every other arrow is bottom. Consequently at every arrow it entails each proposition
+    or its complement. The same true strong atom is available at the sole object.
+- id: barcan
+  holds: [necessary-barcan-r]
+  choice: uses
+  writeup: graded-maps-free-words-glued-constants
+  text: >-
+    Given a possible witness for a property, agree with the witnessing map on the
+    property's pin and choose a surjective map at the same grade and word. This
+    preserves the property's row. Along a surjective map every typed entity lifts:
+    choose preimages for its pin, prescribe the lifted rows on continuation cylinders,
+    and use right cancellation of words and addition of grades for compatibility.
+    The witness therefore comes from a current entity. The proof applies at the sole object.
+- id: logical-necessity
+  holds: [logical-necessity-r]
+  choice: uses
+  writeup: graded-maps-free-words-glued-constants
+  text: >-
+    Choose one assignment per realizable sentence over the given signature. Use distinct
+    initial individual names and choose a positive-grade surjection to each assignment
+    of those names. Lift relational assignments along this surjection. Glue the lifts
+    on distinct final letters; their at most $\kappa$ pins together have size at most
+    $\kappa$. All names take the chosen values together after the prescribed arrow.
+    The single object gives the converse for the Logical Necessity scheme.
+- id: missing-boolean-join
+  fails: [boolean-completeness-t, necessary-boolean-completeness-t]
+  choice: free
+  writeup: graded-maps-free-words-glued-constants
+  text: >-
+    Fix individuals $d,b$, distinct $a_i$ away from $d$, and distinct $c_i$, indexed
+    by $\kappa^+$. Admit the family of propositions $p_i$ selecting exactly grade-one,
+    empty-word maps with $f(d)=c_i$ and $f(a_i)=b$. A proposed join has a pin omitting
+    some $a_j$. Two maps agreeing on the pin can share $f(d)=c_j$ and disagree on
+    whether $f(a_j)=b$. The positive case lies in $p_j$. The negative case lies in a
+    cylinder disjoint from every $p_i$, whose complement is an upper bound. A join
+    must distinguish the two maps, contrary to its pin.
+- id: atomless-slice
+  fails: [atomicity-t, necessary-atomicity-t]
+  choice: free
+  writeup: graded-maps-free-words-glued-constants
+  text: >-
+    Take the proposition selecting precisely grade-one, empty-word arrows. For any
+    nonzero subproposition choose a witnessing map and an individual outside the
+    subproposition's pin. Changing the map there gives another witness. The
+    proposition testing its original value at that individual divides the
+    subproposition into two nonzero admitted parts. The selected slice has no
+    propositional atom below it.
+- id: countable-joins
+  holds: [necessary-countable-boolean-completeness-r]
+  choice: uses
+  writeup: graded-maps-free-words-glued-constants
+  text: >-
+    The external set of standard numeral values at any base type is an admitted
+    current inductive row. All current internal numbers therefore belong to this
+    at most countable set. A countable family's nonempty, pairwise disjoint
+    numerical fibers then show that it is externally at most countable. Its
+    rowwise union is admitted by taking the union of a countable choice of pins,
+    and it is the least upper bound. The argument holds at the sole object.
+- id: every-atom-is-strong
+  holds: [necessary-atoms-are-strong-atoms-r]
+  choice: free
+  writeup: graded-maps-free-words-glued-constants
+  text: >-
+    A positive-grade occurrence of any tuple splits a relation into two nonzero
+    parts by changing a single map value outside its pin. Thus an atom has only
+    grade-zero occurrences. One word and one tuple there already give a nonzero
+    singleton subrelation, so the atom equals that singleton. Transport gives
+    bottom or a singleton, by cancellation of words and uniqueness of the
+    grade-zero map. Hence every atom is strong at every relational type.
+- id: rigid-powers
+  fails: [rigid-power-r, necessary-rigid-power-r, weakly-rigid-power-r, necessary-weakly-rigid-power-r]
+  choice: free
+  writeup: graded-maps-free-words-glued-constants
+  text: >-
+    Every current weakly rigid individual property has small or full extension
+    after any positive-grade arrow. For a small current extension $D$ use the
+    tester with rows $f[D]$. For large $D$, changing the value of $f$ at a
+    member of $D$ outside the property's pin makes persistence force the whole
+    target row. The rigid top has a rigid subproperty with large proper present
+    extension, constructed using that set at grade zero and full rows at positive
+    grades. An admitted tester accepts every property at grade zero and only the
+    small- or full-extension properties at positive grades. It necessarily
+    accepts each old (weakly) rigid subproperty, yet misses the constructed
+    rigid subproperty in the target of any positive-grade arrow. Thus both
+    power properties of top fail weak inextensibility.
+- id: truths-are-nd-necessary
+  holds: [necessary-truths-are-nd-necessary]
+  choice: free
+  writeup: graded-maps-free-words-glued-constants
+  text: >-
+    Let $q$ be true only at the identity. At every proper arrow its transport is bottom,
+    so for every currently true $p$ the identity witnesses $q$ and every arrow
+    satisfies $\Diamond q\to p$. Thus $p$ is ND-necessary. The universally quantified
+    pure sentence holds throughout the model.

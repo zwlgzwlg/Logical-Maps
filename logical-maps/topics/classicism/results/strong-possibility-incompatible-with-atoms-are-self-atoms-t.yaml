@@ -1,0 +1,41 @@
+id: strong-possibility-incompatible-with-atoms-are-self-atoms-t
+premises:
+- strong-possibility-r
+- atoms-are-self-atoms-t
+conclusion: false
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by: []
+  date: '2026-11-26'
+  lean: verified
+  lean_ref: Classicism.Map.strong_possibility_incompatible_with_atoms_are_self_atoms_t
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, finite-cell application of 26 November 2026.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, finite-c5-profile-cells and signature-sp-barcan,
+  22 October 2026, and Strong Possibility, explicit Barcan failures and the signature boundary,
+  28 October 2026, §§2–3, in Daniel Kodsi's pull request 21.
+source_names:
+- Codex via Kodsi 26 Nov
+- Codex via Kodsi 28 Oct
+proof: >-
+  Pure Strong Possibility alone gives the contradiction by [[strong-possibility-r-inconsistent]].
+
+  Take the closed pure sentence $B$ used in [[strong-possibility-incompatible-with-barcan-t]]:
+  $\Box\mathrm{ND}_t$, exactly one individual and exactly four propositions. Steps (1)–(3) of
+  that proof establish $\vdash_C B\to\Box B$ and show that Strong Possibility (pure) gives
+  $\operatorname{Atom}_t(B)$. At every $B$-point $B=\top$ and the four-element propositional
+  algebra has a proper nonzero element. Hence $\vdash_C B\to\neg\operatorname{Atom}_t(B)$.
+  A self-atom must be possible and necessarily an atom wherever true, so C proves
+  $\neg\operatorname{SelfAtom}_t(B)$. The atom $B$ therefore refutes the proposed bridge.
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.6, p. 42
+  note: Strong Possibility and the distinctness-preserving modality.
+notes: >-
+  The same two-world cell applies in a fixed signature with finitely many relational constants
+  after fixing their values at bottom; see the write-up of [[coalesced-definable-root-signature]].
+  Pure Strong Possibility alone remains open.

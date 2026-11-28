@@ -1,0 +1,121 @@
+id: finite-multisets-free-words-involution
+name: Finite multisets with free words and an involution
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two independent reviews of the model and its local verdicts, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, involution variant of finite-multisets-free-words, 26 November 2026.
+source_names:
+- Codex via Kodsi, 26 Nov
+definition: >-
+  Start with finite-multisets-free-words and take the direct product of its
+  arrow monoid with the two-element group. Thus an arrow is a finite multiset,
+  a word, and a bit. The individual domain is a singleton. At each relational
+  type require a pin of at most $\kappa=\max(\aleph_0,|\Sigma|)$ multiset
+  coordinates when comparing rows of the same size, word, and bit. There
+  are $\kappa^+$ multiset coordinates. Transport is precomposition. Glue
+  the signature's assignments along one-letter arrows with zero multiset and
+  bit zero.
+arguments:
+- id: strong-atoms
+  holds: [necessary-strong-atomicity-r, necessary-strong-actuality]
+  choice: free
+  writeup: finite-multisets-free-words-involution
+  text: >-
+    Specifying the multiset size and its finite support with multiplicities,
+    together with the word and bit, singles out each arrow. Each nonzero
+    relation has a single-arrow, single-tuple atom below it. By right
+    cancellation, all its transports are singletons or bottom, so the atom
+    is strong. The identity singleton is a true strong atom.
+- id: barcan
+  holds: [necessary-barcan-r]
+  choice: free
+  writeup: finite-multisets-free-words-involution
+  text: >-
+    The multiset-and-word lift extends along any arrow by undoing its bit in
+    each prescribed row. The pin is the target pin together with the finite
+    support of the arrow's multiset. Every typed entity lifts, giving Barcan.
+- id: logical-necessity
+  holds: [logical-necessity-r]
+  choice: uses
+  writeup: finite-multisets-free-words-involution
+  text: >-
+    Glue one realizing assignment for each realizable sentence on words
+    ending in its chosen letter, retaining the bit coordinate. The zero-bit,
+    zero-multiset arrow with this letter realizes the assignment; the union
+    of the constituent pins has size at most $\kappa$. There is just one
+    object and one individual.
+- id: countable-joins
+  holds: [necessary-countable-boolean-completeness-r]
+  choice: uses
+  writeup: finite-multisets-free-words-involution
+  text: >-
+    Every current set of standard numeral values is an admitted inductive
+    row, so each internally countable family is externally at most countable.
+    The rowwise union of its members has a pin of size at most $\kappa$
+    obtained by taking the union of their pins.
+- id: missing-join
+  fails: [boolean-completeness-t, necessary-boolean-completeness-t]
+  choice: free
+  writeup: finite-multisets-free-words-involution
+  text: >-
+    In the size-one, empty-word, zero-bit slice use the family of singleton
+    atoms indexed by one half of a partition into two sets of size $\kappa^+$.
+    A least upper bound would include the first half and exclude the second,
+    although its pin misses an index in each half.
+- id: true-proposition-fails-five
+  fails: [truth-implies-five-necessity, necessary-truth-implies-five-necessity]
+  choice: free
+  writeup: finite-multisets-free-words-involution
+  text: >-
+    Let $s$ be the unit with bit one. An admitted constant-row operator $X$
+    tests a proposition at both the identity and $s$, so at any arrow $h$
+    its test reads $p(h)$ and $p(sh)$. This two-point test satisfies N, K
+    and B necessarily; B uses $s^2=1$. The proposition supported exactly
+    at the identity is true but fails the test. It is not 5-necessary.
+- id: exact-rows-and-unit-comprehension
+  holds: [necessary-tame-rigidity-r, necessary-inextensible-comprehension-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: rigid-relations-in-the-multiset-models
+  text: >-
+    The tester deleting one tuple at one isolated address forces every
+    weakly rigid bound to have exactly its current members' images there.
+    Composition makes these equalities hereditary. An arbitrary current
+    set has an inextensible representative with its exact images on
+    the group of units and empty rows at all nonunits.
+- id: two-word-rigid-bound
+  fails: [rigid-power-r, weakly-rigid-power-r]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: rigid-relations-in-the-multiset-models
+  text: >-
+    Index a rigid bound by the multiset labels: at degree zero a member
+    codes a word profile on one private suffix, and at degree one it
+    has its label's singleton mark on another suffix. At degree one
+    the full bound has the same residual marker for every label. The
+    first suffix has a rigid subbound selecting a set of labels that
+    cannot be pinned. Any source sublift would have to distinguish those
+    labels by that same residual marker, violating admission.
+- id: rigidity-of-the-rigidity-predicates
+  holds: [necessary-rigid-rigidity-r, necessary-weakly-rigid-weak-rigidity-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: rigid-relations-in-the-multiset-models
+  text: >-
+    Extend typed inputs by empty rows outside the suffix of the
+    prescribed arrow. To calculate a translate of this section,
+    cancel the common shorter word suffix and the coordinatewise
+    minimum of multiset coefficients. For a rigid target relation this
+    gives an admitted exact-image relation on the lifted tuples, pinned
+    by the target pin and the finite support of the prescribed arrow.
+    Thus every future rigid relation has a rigid preimage. The weak
+    and full rigidity predicates agree everywhere.

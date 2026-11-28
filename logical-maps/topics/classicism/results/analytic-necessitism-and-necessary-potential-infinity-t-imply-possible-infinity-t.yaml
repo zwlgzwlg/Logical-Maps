@@ -1,0 +1,43 @@
+id: analytic-necessitism-and-necessary-potential-infinity-t-imply-possible-infinity-t
+premises:
+- analytic-necessitism
+- necessary-potential-infinity-t
+conclusion: possible-infinity-t
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - A second OpenAI Codex (GPT-6) researcher independently checked the finite-family induction and the modal scopes, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, applying finite conjunctions at an accessible point to the possible-Actuality criterion for Arithmetic Necessitism.
+- Zachary Goodsell's implication from Potential Infinity with weakly inextensible numbers to Possible Infinity at propositional type.
+source_names:
+- Kodsi and Codex, 27 Nov
+- Goodsell, 24–25 Nov
+proof: >-
+  We prove the stronger $\Box\Diamond\operatorname{AxInf}_t$. First, whenever the
+  propositions are Frege-finite there is Actuality. By Frege induction on $n$, for
+  each family $X$ counted by $n$ there is a true proposition $q$ entailing every
+  currently true member of $X$. For zero take top. For successor take a removed member
+  $a$ and apply induction to the remaining family. If $a$ is true, meet the resulting
+  $q$ with $a$; otherwise keep $q$. Apply this to the universal family to obtain
+  Actuality. Now suppose some accessible point has no possibility of the Axiom of
+  Infinity at $t$. Its propositions are Frege-finite there, so Actuality is possible
+  from the starting point. The possible-Actuality argument in
+  [[analytic-necessitism-and-transversal-imply-arithmetic-necessitism]] supplies
+  Arithmetic Necessitism at that starting point. Its necessary Peano antecedent at
+  $t$ holds by [[potential-infinity-forms]]. The Frege numbers at $t$ are therefore
+  rigid, in particular weakly inextensible at every accessible point. Potential Infinity
+  holds at each of those points by hypothesis. Goodsell's argument
+  [[potential-infinity-and-possible-infinity]] gives Possible Infinity at the very
+  point assumed to lack it. This proves the stronger conclusion and hence the stated one.
+notes: >-
+  The model [[increasing-hyperfinite-stages]] separates necessary Potential Infinity
+  from Possible Infinity in C alone. More generally any counterexample to Analytic
+  Necessitism implying Arithmetic Necessitism must satisfy the necessary Axiom of
+  Infinity at propositional type, since even one reachable Frege-finite scalar domain
+  supplies possible Actuality.

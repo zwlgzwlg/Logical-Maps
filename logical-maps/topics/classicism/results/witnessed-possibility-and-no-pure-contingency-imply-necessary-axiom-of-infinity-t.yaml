@@ -1,0 +1,47 @@
+id: witnessed-possibility-and-no-pure-contingency-imply-necessary-axiom-of-infinity-t
+premises:
+- witnessed-possibility-r
+- no-pure-contingency-r
+conclusion: necessary-axiom-of-infinity-t
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, independent review of the alternation-rank argument and its extension to internal Frege numbers, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, proof using bounded initial segments of Frege numbers and a typed iteration of the alternating modal tests, 26 November 2026, in the accompanying write-up.
+source_names:
+- Codex via Kodsi, 26 Nov
+references:
+- paper: goodsell-arithmetic-necessary
+  role: background
+  locator: §4, Definitions 3–5 and 8, pp. 11–13, 19
+  note: Frege cardinalities and the numbers defined by induction.
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, n. 57, p. 38
+  note: Witnessed Possibility and the side conditions at constants of the fixed signature.
+proof: >-
+  Suppose there is a realized number $h$ of exact truth-value alternations of a current proposition for
+  which no current proposition has exact rank $\operatorname{Suc}h$. A bounded initial segment of the
+  realized Frege numbers is weakly
+  inextensible. This lets No Pure Contingency choose such an $h$ small enough to fit inside every later
+  terminal rank. Witnessed Possibility then gives a single signature proposition that possibly has a
+  terminal rank beginning with either truth value. Its set of points permitting $h+1$ alternations is
+  closed under predecessors. Giving that set a constant truth value, opposite to one accessible exact
+  rank-$h$ point outside it, produces a current proposition of exact rank $h+1$. The layers supply a
+  property with that many instances, contradicting the choice of $h$. The argument defines iteration by
+  one higher-order formula for every internal number. Hence the realized exact ranks are closed under
+  successor. They include zero, so they include every internal finite number, with either prescribed
+  initial bit. No Pure Contingency makes that pure claim necessary. A finite count $a$ of all
+  propositions would make $\operatorname{Suc}a$ unrealized, which proves the stated conclusion.
+notes: >-
+  In particular Converse Witnessed Possibility and Possibly Witnessed Possibility imply necessary
+  Potential Infinity at type $t$, by [[converse-witnessed-possibility-r-implies-no-pure-contingency-r]],
+  [[possibly-witnessed-possibility-r-implies-witnessed-possibility-r]] and [[necessary-axiom-of-infinity-t-implies-necessary-potential-infinity-t]]. Logical Necessity likewise supplies the two premises. Evaluation at a fixed tuple extends the infinity
+  conclusion to every relational type. At type $e$, [[full-free-monoid-glued-constants-singleton]]
+  satisfies Logical Necessity with one individual.

@@ -1,0 +1,66 @@
+id: free-words-over-infinite-arithmetic-shifts-one-individual
+name: Free words over four infinite arithmetic shifts with one individual
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - A second OpenAI Codex (GPT-6) agent, prompted by Daniel Kodsi, checked the singleton ordinal bound and revised Mathematical Possibilism, the scalar arithmetic and CH witnesses, and the rigid lifting and power arguments on 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- The four arithmetic shift components and the free-word gluing of their profiles.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, singleton-individual variant, 27 November 2026.
+source_names:
+- Free words over infinite arithmetic shifts
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalescences.
+definition: >-
+  In free-words-over-infinite-arithmetic-shifts replace the individual domain at
+  each object by a singleton. Keep each component's original internal additive
+  monoid of natural numbers, powersets at relational types, independent whole
+  component coordinates, unrestricted root word rows and final-letter gluing
+  of the signature. Evaluate at the root.
+arguments:
+- id: same-transports
+  holds: [possibly-witnessed-possibility-r, necessary-barcan-r, necessary-strong-atomicity-r, necessary-truths-are-nd-necessary, modal-well-ordering-r, necessary-rigid-rigidity-r, necessary-weakly-rigid-weak-rigidity-r]
+  fails: [self-atoms-are-atoms-t]
+  choice: uses
+  writeup: free-words-over-infinite-arithmetic-shifts
+  text: >-
+    The word and component sections on individuals are now the unique maps
+    of a singleton. The same suffix copies, isolated arrows, direct image
+    rows and row well-orders give these conclusions at the stated scopes.
+- id: scalar-arithmetic
+  holds: [necessary-axiom-of-infinity-t]
+  fails: [potential-infinity-e, necessity-of-arithmetic, arithmetic-necessitism, necessity-of-analysis, non-contingency-of-ch, pure-b-r]
+  choice: uses
+  writeup: free-words-over-infinite-arithmetic-shifts
+  text: >-
+    At each component the scalars form its powerset of its naturals.
+    Its Frege numbers counted there and its tagged scalar copies of the
+    numbers and their subsets witness the disagreements. The root has the
+    standard Frege numbers at scalar type. At individual type two is a
+    number which no property can ever realize.
+- id: missing-subfamilies
+  fails: [rigid-power-r, weakly-rigid-power-r, boolean-completeness-t, countable-boolean-completeness-r]
+  choice: uses
+  writeup: free-words-over-infinite-arithmetic-shifts
+  text: >-
+    In the correlation take the unary predicates of the sole individual
+    supported at one standard shift in the nonstandard component. Their
+    external family would define the standard cut. The scalar atoms at
+    those shifts have no least upper bound at the root.
+- id: finite-ordinal-benchmark
+  holds: [forcing-possibilism]
+  choice: uses
+  writeup: free-words-over-infinite-arithmetic-shifts
+  text: >-
+    Uniform extensional tables on an order and a field on the single
+    individual form a finite inductive bound on the inexact ordinals.
+    Every infinite actual carrier has a countably infinite power-closed
+    subset exceeding that bound. Each finite Boolean algebra is represented
+    below the union of the appropriate finite number of scalar atoms.

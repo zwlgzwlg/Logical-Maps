@@ -1,0 +1,125 @@
+id: absorbing-entrance-hyperfinite-group
+name: Four-proposition entrance into a hyperfinite group action
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, completing the entrance proposed in the notes to Potential Infinity (type t)
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by: []
+  date: '2026-11-26'
+  lean: none
+sources:
+- The proposal in the 24–25 November 2026 map records for Potential Infinity (type t) and its comparison with Possible Infinity, to put a four-proposition entrance before a hyperfinite world.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, construction with finite cyclic groups and verification of the entrance's domains and infinity verdicts, 26 November 2026, in the accompanying write-up.
+source_names:
+- Potential Infinity notes, Nov 2026
+- Codex via Kodsi, 26 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §3.5, pp. 58–61; Appendix D, Definitions D.1–D.3 and Proposition D.4, pp. 73–74
+  note: Action-model intensions, transport and term closure.
+- paper: goodsell-arithmetic-necessary
+  role: background
+  locator: §4, Definitions 3–5 and 8, pp. 11–13, 19
+  note: The Frege cardinalities and the internal numbers.
+definition: >-
+  Fix a nonprincipal ultrafilter on the positive integers. The object $s$ is the many-sorted ultraproduct
+  of the one-object full action models on the cyclic groups $G_j$ of order $j$, with the group, typed
+  carriers, actions and tagged incidence in the ultraproduct signature. Its endomorphisms form
+  $G=\prod_j G_j/U$. Add an object $r$ with exactly two outgoing arrows, $1_r$ and $h:r\to s$, and set
+  $g\circ h=h$ for all $g\in G$. Individuals are singletons. At each relational type a root entity
+  consists of an arbitrary extension over the root argument domains and an admitted entity at $s$ fixed
+  by every $g\in G$. These are its identity row and its transport along $h$, respectively. Evaluate at
+  $1_r$. Every individual constant denotes the sole individual and every relational constant denotes top.
+arguments:
+- id: potential-infinity
+  holds: [potential-infinity-t]
+  writeup: absorbing-entrance-hyperfinite-group
+  choice: free
+  text: >-
+    At $r$ the external set of denotations of the standard numerals is the extension of an admitted
+    property, using empty transport along $h$. This property contains zero and is closed under successor,
+    so the impredicative definition of $\mathbb N_t$ puts every root number in it. Each standard numeral
+    transports to the same numeral at $s$. For each fixed $k$, all factors with $2^j\ge k$ have a property
+    of exactly $k$ propositions, so the $k$-th numeral has an instance at $s$ by Łoś's theorem.
+- id: possible-infinity
+  fails: [possible-infinity-t]
+  writeup: absorbing-entrance-hyperfinite-group
+  choice: free
+  text: >-
+    At $r$ there are four propositions, counted by the fourth numeral. At $s$ the sentence that some
+    finite cardinality counts the universal property of propositions transfers from all factors. Its
+    witness in the $j$-th factor is the numeral for $2^j$. These are the only objects reachable from $r$.
+- id: necessary-potential-infinity
+  fails: [necessary-potential-infinity-t]
+  writeup: absorbing-entrance-hyperfinite-group
+  choice: free
+  text: >-
+    In factor $j$, the numeral for $2^j+1$ is an internal number which cannot count a property of
+    propositions at any arrow, since every arrow has the same target. Thus the single sentence denying
+    Potential Infinity holds at $s$ by transfer. The arrow $h$ witnesses its possibility at $r$.
+- id: boolean-completeness-t
+  holds: [necessary-boolean-completeness-t]
+  writeup: absorbing-entrance-hyperfinite-group
+  choice: free
+  text: >-
+    The proposition algebra at $r$ is the powerset of $\{1_r,h\}$. The intersection of the current
+    members of any property of propositions is its greatest lower bound there. At $s$ the type-$t$
+    greatest-lower-bound sentence transfers from the finite full Boolean algebras of the factors.
+- id: peano-and-the-continuum
+  holds: [arithmetic-necessitism, necessity-of-arithmetic, necessity-of-second-order-analysis]
+  fails: [analytic-necessitism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi; checked by two other GPT-6 agents
+  date: '2026-11-27'
+  writeup: absorbing-entrance-hyperfinite-group
+  text: >-
+    At $s$ every fixed type inherits the failure of the Peano condition and the absence of any
+    real structure from finite factors. The root admits every current row, so its Peano systems
+    are standard and its real structures carry the usual full second-order analysis. A continuum
+    of group-fixed old properties of propositions, distinguished by which standard finite
+    cardinalities of subsets of $G_j$ they accept, supplies a real structure at type $tt$ at the
+    root. No such structure is possible at its successor.
+- id: fixed-and-unrestricted-atoms
+  holds: [necessary-atomicity-r, necessary-self-atoms-are-strong-atoms-r, necessary-strong-actuality]
+  fails: [self-atomicity-t, atoms-are-self-atoms-t]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi; checked by two other GPT-6 agents
+  date: '2026-11-27'
+  writeup: absorbing-entrance-hyperfinite-group
+  text: >-
+    A nonzero fixed group table has a fixed singleton-row table below it, but can be split in
+    the unrestricted algebra by restricting to one arrow. Thus the root algebra is atomic.
+    A self-atom there has empty old trace and is a singleton current tuple, hence strong.
+    The atom with empty current bit and true old trace has no self-atom below it.
+    A true strong atom is given by the current identity at either object.
+- id: fixed-rows-and-rigidity
+  holds: [necessary-tame-rigidity-r, necessary-rigid-power-r, necessary-weakly-rigid-power-r, necessary-inextensible-comprehension-r]
+  fails: [rigid-rigidity-r, weakly-rigid-weak-rigidity-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi; checked by two other GPT-6 agents
+  date: '2026-11-27'
+  writeup: absorbing-entrance-hyperfinite-group
+  text: >-
+    A weakly rigid source relation with row $A$ has old row exactly $h[A]$, by testing against
+    constant old tables deleting one tuple. Since all its members are individually fixed,
+    every old rigid subrelation with row $V$ lifts rigidly on $A\cap h^{-1}[V]$. Current
+    rows paired with empty old rows supply Inextensible Comprehension. At the old object a
+    nonfixed proposition has a nonfixed rigid haecceity, unreachable from every source
+    entity, so both rigidity predicates fail weak inextensibility at the root.
+- id: orders-and-truth-guards
+  holds: [modal-well-ordering-r, truths-are-nd-necessary]
+  fails: [necessary-truth-implies-five-necessity]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi; checked by two other GPT-6 agents
+  date: '2026-11-27'
+  writeup: absorbing-entrance-hyperfinite-group
+  text: >-
+    A root well-order can be paired with an invariant old table of factorwise finite linear
+    orders. The identity-only source proposition becomes impossible after the entrance. At
+    the old group object ordinary necessity is an S5 operator and fails on a contingent truth.
+notes: >-
+  Possible Infinity (type $t$) strictly implies Potential Infinity (type $t$) in C. Even necessary
+  Boolean Completeness at type $t$ leaves the converse false. Countable Boolean Completeness at all
+  relational types implies the converse by making $\mathbb N_t$ weakly inextensible
+  ([[countable-boolean-completeness-and-potential-infinity-t-imply-possible-infinity-t]]).

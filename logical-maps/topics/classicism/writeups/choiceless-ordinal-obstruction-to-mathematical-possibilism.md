@@ -1,0 +1,18 @@
+# Infinite individuals refute Mathematical Possibilism in full action models over ZF
+
+The [full-action obstruction to Mathematical Possibilism](../index.html#argument/forcing-possibilism-continuum-arrows) applies over ZF, including when the individual set is infinite and has no countably infinite subset. Fix the evaluation point of a full action model with infinitely many individuals everywhere. Work throughout inside the metatheory in which the model is full.
+
+The inexact ordinal benchmark $H$ contains the values $z_n$ of its ordinal zero and the successive finite iterations of ordinal successor. All the $z_n$ are distinct. On a well-order of a finite field with $k$ members, $z_n$ holds exactly when $k\ge n$. This follows by induction from the well-order test for zero and the initial-segment test for successor. For each particular $k$ the infinite individual carrier contains a $k$-element set, and an order on that set is an available current relation. The map $n\mapsto z_n$ is defined by evaluating the closed terms. Its definition makes no selections of individuals or orders.
+
+Every subset $S$ of the ordinary naturals now has a specific code at type $\rho t$, where $\rho$ is the ordinal-candidate type: use the action profile with row $\{z_n:n\in S\}$ at the identity and empty rows elsewhere. Fullness admits each of these profiles. This coding works uniformly in $S$. Let $B=\mathrm{RO}(2^\omega)$, the algebra of regular open subsets of Cantor space. It is complete in ZF since the regularization of the union of any given set of its members is their least upper bound. It is nontrivial and atomless since any nonempty open set contains two disjoint basic clopens. The map sending $U$ to the set of finite binary strings $s$ with $[s]\subseteq U$ injects $B$ into $\mathcal P(\omega)$ using a fixed recursive enumeration of the strings. Present $B$ on the corresponding typed codes. All of its subsets, its order, and the comparison graphs are available by fullness.
+
+Suppose $Y\subseteq B$ and $H<Y$ in the native injection comparison. Take the witnessing injection $f:H\to Y$ and set $A=\{f(z_n):n\in\omega\}$. Its displayed enumeration is a bijection with $\omega$. Also $A<Y$: inclusion gives the forward injection, whereas an injection $Y\to A$ would compose with $A\to H$ to contradict $H<Y$. If $Y$ were power-closed there would be $C\subseteq Y$ with $C<Y$ representing all subsets of $A$. The native power condition requires both existence of a code and identity of two codes with the same extension. Hence the graph taking each subset to its unique code is a function in ZF. Its injectivity gives $\mathcal P(A)\hookrightarrow C$. Composing the displayed injections
+$$
+Y\hookrightarrow B\hookrightarrow\mathcal P(\omega)
+  \simeq\mathcal P(A)\hookrightarrow C
+$$
+contradicts $C<Y$. Thus $B$ is small in the revised sense.
+
+In a full action model the propositional algebra at the designated point is the powerset of its outgoing arrows. Each nontrivial principal interval has singleton atoms and the interval at bottom is trivial. No such interval represents $B$. This establishes the negative verdict in particular for fixed infinite individuals in the map's full infinite S5, full permutation and full surjection examples, in both choiceless metatheories where the relevant variant is defined. The finite-individual cases require a separate argument because the injection into $H$ used above requires infinitely many finite order thresholds.
+
+The original full-action argument was recorded by OpenAI Codex, prompted by Andrew Bacon, on 16 November 2026. OpenAI Codex (GPT-6), prompted by Daniel Kodsi, supplied the choice-free proof on 27 November 2026.

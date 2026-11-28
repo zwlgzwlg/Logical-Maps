@@ -1,0 +1,44 @@
+id: signature-strong-possibility-and-atoms-are-strong-imply-atomlessness
+premises:
+- strong-possibility-signature-r
+- atoms-are-strong-atoms-t
+conclusion: atomlessness
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Independently reviewed by a second OpenAI Codex (GPT-6) researcher on 27 November 2026.
+  date: '2026-11-27'
+  lean: verified
+  lean_ref: Classicism.Map.signature_strong_possibility_and_atoms_are_strong_imply_atomlessness
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, strong-atom reflection for every signature and its atomlessness corollary, 27 November 2026.
+- Cian Dorr and Claude Fable 5.1 (Anthropic), absence of atoms and the strong-atom bridges, 25 October 2026.
+source_names:
+- Codex via Kodsi, 27 Nov 2026
+- Dorr, 25 Oct 2026
+proof: >-
+  By [[strong-possibility-signature-r-inconsistent]], any theory satisfying the premises proves $\bot$ and hence every instance of Atomlessness.
+
+  Let $U$ say that there are no strong atoms of type $t$. The proof of
+  [[signature-strong-possibility-and-strong-actuality-incompatible]] establishes $U$ itself.
+  In every admitted signature there is an atomless model of signature Maximalism,
+  so Strong Possibility in that signature gives $\Diamond_{\ne} U$. The universal
+  identity reflection lemma gives $U$ at the evaluation point. By the second
+  premise every propositional atom there would be strong. Thus there are no
+  propositional atoms. Equivalently, every nonzero proposition has a nonzero
+  proper part, which is Atomlessness.
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.6, p. 42 and Appendix D, p. 76
+  note: Distinctness-preserving possibility and the formulation of Atomlessness.
+notes: >-
+  [[atomlessness-implies-atoms-are-strong-atoms-r]] and
+  [[atoms-are-strong-atoms-r-implies-atoms-are-strong-atoms-t]] give the converse
+  implications. Hence under signature Strong Possibility, Atomlessness and the
+  type-$t$ and all-relational-type strong-atom bridges are equivalent. In the
+  pure case the finite cell in [[strong-possibility-incompatible-with-atoms-are-self-atoms-t]]
+  already supplies a propositional atom that fails to be a self-atom.

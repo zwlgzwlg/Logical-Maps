@@ -250,6 +250,17 @@ arguments:
     invertible, so, $W_1$ being full, $\{1_{W_1}\}$ is two-hat necessary and not ND-necessary there: the
     identity $\Box_{\ne}=\hat{\hat\Box}$ fails. (The verdicts this argument also establishes but does
     not record are derived by the engine.)'
+- id: finite-scalar-atom-obstruction
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: finite-scalar-atoms-exclude-mathematical-possibilism
+  text: >-
+    The unique map into the singleton is the only atom. An endomap cylinder
+    always splits by prescribing equal or unequal images at two fresh inputs.
+    Mathematical Possibilism would require arbitrarily many propositional
+    atoms by representing the finite power algebras.
 notes: The cited construction is a model of the map’s relational-type framework. The description identifies
   its evaluation point; construction and verification are given at the PDF locations in References. Everything
   that implies these fails with them.

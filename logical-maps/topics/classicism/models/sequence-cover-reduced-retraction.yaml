@@ -1,0 +1,136 @@
+id: sequence-cover-reduced-retraction
+name: Complete strongly atomic cover of the reduced-power retraction
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two further OpenAI Codex (GPT-6) agents checked typed transport, the ordinal bound, Barcan, the modal failure and the Rigid Power extension.
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, exact-sequence cover and verification, 26 November 2026.
+- The reduced-power retraction, for its old action model and the diagonal argument bounding its inextensible relations.
+source_names:
+- Kodsi and Codex, 26 Nov
+- Reduced-power retraction
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §§3.4–3.5, typed intensional action models.
+definition: >-
+  From a fresh singleton-individual root take an entrance $b$ to the old base point $r$ of the
+  reduced-power retraction and countably many entrances $a_i$ to its ordinary base $s$, each
+  followed by the deterministic return $j$ satisfying $ja_i=b$. A relational entity has an
+  arbitrary root row, an arbitrary old $r$ row and an exact sequence of old base-$s$ rows.
+  The $b$-image takes the entrance sequence modulo finite differences; the $a_i$-image takes
+  its actual $i$th row with the whole $b$-image as its return coordinate. Interpret the sole
+  propositional name outside the closed pure term denotations and transport it in the rooted unfolding.
+arguments:
+- id: complete-strong-atoms
+  holds: [boolean-completeness-r, strong-atomicity-r, necessary-atoms-are-strong-atoms-r]
+  choice: uses
+  writeup: sequence-cover-reduced-retraction
+  text: >-
+    The root order is the full powerset of the tuples in its current row, old current row and
+    indexed entrance rows. A singleton in an entrance row is current-only at that entrance
+    and disappears on return. A singleton in the old current row is the old hereditary strong
+    atom, and at each separate entrance its value is the strong return-coordinate atom.
+    A singleton in the new current row disappears on every exit. The old cone also satisfies
+    the boxed bridge from atoms to strong atoms.
+- id: old-failures
+  fails: [necessary-inextensible-comprehension-r, necessary-atomicity-t, necessary-boolean-completeness-t, necessary-barcan-t, necessary-two-hat-implies-nd-necessity, necessary-five-implies-nd-necessity]
+  choice: uses
+  writeup: sequence-cover-reduced-retraction
+  text: >-
+    At the accessible original point the diagonal tester excludes every infinite
+    inextensible current bound, the entrance quotient has an atomless interval and missing
+    join, and the old Barcan counterexample remains. Its true current-only proposition is
+    two-hat necessary and hence 5-necessary. After any first old entrance it is false,
+    while any chosen guard true initially can return to truth on the diagonal.
+- id: mathematical-possibilism
+  holds: [forcing-possibilism]
+  choice: uses
+  writeup: sequence-cover-reduced-retraction
+  text: >-
+    The inexact ordinals have extension-invariant tables on the root and old individuals,
+    with a single common table at all indexed entrances. There are finitely many such
+    whole entities. A rigid limit over this finite set is a limit over a finite union of
+    haecceities, so it has the same table condition. The revised-small CBAs are therefore
+    finite and are realized by finite joins of independent entrance atoms.
+- id: barcan
+  holds: [barcan-relational]
+  fails: [barcan-r]
+  choice: uses
+  writeup: sequence-cover-reduced-retraction
+  text: >-
+    The old entrance and each indexed entrance are onto every relational domain. A
+    tester necessarily holding of all old arguments has full rows in each coordinate.
+    At the individual type the additional base-$s$ individual lies outside each indexed
+    image, and the tester containing only the transported individual refutes Barcan.
+- id: root-guard
+  holds: [truths-are-nd-necessary]
+  fails: [self-atoms-are-atoms-t]
+  choice: free
+  writeup: sequence-cover-reduced-retraction
+  text: >-
+    The identity-only truth is impossible at each proper continuation. A proposition
+    supported on two indexed entrances is a self-atom, since at either entrance it
+    is the true current-only atom, but it splits at the root.
+- id: modal-well-order
+  holds: [modal-well-ordering-r]
+  choice: uses
+  writeup: sequence-cover-reduced-retraction
+  text: >-
+    Select a well-order at each of the three ordinary bases and use a constant sequence
+    of old target orders. The old modal well-order calculation handles all ultrapowers.
+- id: arithmetic-and-analysis
+  holds: [necessary-axiom-of-infinity-t, necessity-of-arithmetic, necessity-of-second-order-analysis]
+  fails: [arithmetic-necessitism, analytic-necessitism]
+  choice: uses
+  writeup: sequence-cover-reduced-retraction
+  text: >-
+    Current fullness gives standard numeral domains and full ordinary real structures
+    wherever the guards hold. The old bases have the same guarded sentence theories
+    and each fixed sentence passes to their ultrapowers. There are infinitely many
+    root propositions and the Peano guard at $t$ holds throughout. A rigid canonical
+    number property or a necessarily real rigid structure would give an infinite
+    weakly rigid number row at the accessible original point, against its finite-bounds theorem.
+- id: no-rigid-comprehension
+  fails: [rigid-comprehension-r]
+  choice: uses
+  writeup: sequence-cover-reduced-retraction
+  text: >-
+    A rigid coextension of the universal property of propositions would have, at
+    the accessible original point, a rigid extension containing the image of every
+    current proposition. The image is the entire infinite old domain, contradicting
+    its finite-bounds theorem.
+- id: independent-name
+  holds: [independence-signature-r]
+  choice: uses
+  writeup: sequence-cover-reduced-retraction
+  text: >-
+    The continuum of sequence coordinates contains a possible denotation of the sole
+    name outside the countable collection of closed pure term denotations.
+- id: rigid-power
+  holds: [necessary-rigid-power-r]
+  choice: uses
+  writeup: sequence-cover-reduced-retraction
+  text: >-
+    For a rigid relation with current extension $E$ the other rows equal $bE$ and
+    $a_iE$, by applying inextensibility to the tester with these exact rows.
+    At the old base its finite union of haecceities forces all $a_iy=h_i(by)$
+    simultaneously for $y$ in $E$, off one finite set of indices. Every subset
+    of $E$ therefore gives a rigid restriction by taking its images as the other
+    rows. Inverse images lift all rigid subrelations at $b$ and $a_i$, proving
+    weak inextensibility for the power property. The old stages already satisfy
+    Rigid Power.
+- id: no-functional-choice
+  fails: [functional-choice-r]
+  choice: free
+  writeup: sequence-cover-reduced-retraction
+  text: >-
+    Two root propositions differing only in their current truth have a common
+    old value at $b$. A current serial graph can require outputs top and bottom
+    respectively. Any selecting operation would give the same output at their
+    common image.

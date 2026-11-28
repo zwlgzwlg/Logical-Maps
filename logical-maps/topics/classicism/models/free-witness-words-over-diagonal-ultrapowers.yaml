@@ -1,0 +1,21 @@
+id: free-witness-words-over-diagonal-ultrapowers
+name: Free witness words over diagonal ultrapowers
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two independent OpenAI Codex (GPT-6) researchers checked the named witnesses, terminal finiteness, rigid-power lift and arithmetic settings.
+  date: '2026-11-27'
+  lean: none
+sources:
+- The map's three-object diagonal ultrapower, one-nonstandard-classical entrance, and finite-tree compactness construction of Possibly Witnessed Possibility.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, combination and finite terminal projection argument, 27 November 2026.
+source_names: [Diagonal ultrapowers and finite-tree witnesses, Codex via Kodsi 27 Nov]
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5 and Appendix D, witnessed possibility and typed action models.
+group: witnessed-diagonal-ultrapowers
+settings: {shape: words, ground: full}
+arguments: []

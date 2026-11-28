@@ -1,0 +1,130 @@
+id: finite-multisets-free-words
+name: Finite multisets with free words
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two independent reviews of the model and its local verdicts, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, finite-multiset construction and separation, 26 November 2026.
+- The earlier free-word gluing of typed constants in supported-product-free-monoids-glued-constants.
+source_names:
+- Codex via Kodsi, 26 Nov
+- Supported free-monoid gluing
+definition: >-
+  For a set-sized signature $\Sigma$ let $\kappa=\max(\aleph_0,|\Sigma|)$. At one
+  object the individual domain is a singleton. Arrows are pairs $(s,w)$ comprising
+  a finite multiset on a set of size $\kappa^+$ and a finite word on an alphabet of
+  size $\kappa$. Composition adds multisets and concatenates words. At a relational
+  type a profile assigns to each arrow a row on argument tuples. Among arrows with
+  equal total multiset size and equal word, its row depends only on the multiplicities
+  on a single set of at most $\kappa$ coordinates. Transport is precomposition.
+  Use the word assignments in the write-up for the constants.
+arguments:
+- id: necessary-strong-atoms
+  holds: [necessary-strong-atomicity-r]
+  choice: free
+  writeup: finite-multisets-free-words
+  text: >-
+    The finite support of $s$ singles out the arrow $(s,w)$ among arrows of the
+    same multiset size and word. Restrict a nonzero entity to one such arrow and
+    one tuple there. Its profile is admitted and is an atom. Right cancellation
+    makes its transport at every arrow either bottom or another single-arrow,
+    single-tuple atom, so it is a strong atom. This holds necessarily at all
+    relational types.
+- id: barcan
+  holds: [necessary-barcan-r]
+  choice: free
+  writeup: finite-multisets-free-words
+  text: >-
+    Every entity lifts along every arrow $(h,w)$. For a relation, prescribe the
+    target rows on the right multiples of that arrow, stripping off $h$ and the
+    suffix $w$, and use empty rows elsewhere. A pin for the lift consists of a
+    pin for the target together with the finite support of $h$. The individual
+    case uses the singleton domain. This yields necessary Barcan at all types.
+- id: logical-necessity
+  holds: [logical-necessity-r]
+  choice: uses
+  writeup: finite-multisets-free-words
+  text: >-
+    Give each realizable sentence in the signature its own letter and choose a
+    realizing assignment at the sole object. On words ending in that letter glue
+    the assigned relational profiles after stripping off the letter. Each constant
+    uses at most $\kappa$ pins, and the individual assignment is unique. Transport
+    along the one-letter arrow with zero multiset realizes the chosen assignment
+    simultaneously. This yields Logical Necessity at the designated identity.
+- id: no-propositional-join
+  fails: [boolean-completeness-t, necessary-boolean-completeness-t]
+  choice: free
+  writeup: finite-multisets-free-words
+  text: >-
+    Partition the index set into two pieces of size $\kappa^+$. Take as a current
+    family the singleton propositions selecting the one-element multiset and
+    empty word at each index of the first piece. A join would contain all those
+    arrows and omit all analogous arrows in the other piece, since each omitted
+    singleton's complement is an upper bound. Its pin of size at most $\kappa$
+    misses indices in both pieces, where the row would have to agree.
+- id: countable-joins
+  holds: [necessary-countable-boolean-completeness-r]
+  choice: uses
+  writeup: finite-multisets-free-words
+  text: >-
+    The external set of standard numeral values at any base type is an admitted
+    current inductive row. All current internal numbers therefore belong to this
+    at most countable set. A countable family's nonempty, pairwise disjoint
+    numerical fibers then show that it is externally at most countable. Its
+    rowwise union is admitted by taking the union of a countable choice of pins,
+    and it is the least upper bound. The argument holds at the sole object.
+- id: truths-are-nd-necessary
+  holds: [necessary-truths-are-nd-necessary]
+  choice: free
+  writeup: finite-multisets-free-words
+  text: >-
+    Let $q$ be true only at the identity. At every proper arrow its transport is bottom,
+    so for every currently true $p$ the identity witnesses $q$ and every arrow
+    satisfies $\Diamond q\to p$. Thus $p$ is ND-necessary. The universally quantified
+    pure sentence holds throughout the model.
+- id: exact-rows-and-unit-comprehension
+  holds: [necessary-tame-rigidity-r, necessary-inextensible-comprehension-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: rigid-relations-in-the-multiset-models
+  text: >-
+    The tester deleting one tuple at one isolated address forces every
+    weakly rigid bound to have exactly its current members' images there.
+    Composition makes these equalities hereditary. An arbitrary current
+    set has an inextensible representative with its exact images on
+    the group of units and empty rows at all nonunits.
+- id: two-word-rigid-bound
+  fails: [rigid-power-r, weakly-rigid-power-r]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: rigid-relations-in-the-multiset-models
+  text: >-
+    Index a rigid bound by the multiset labels: at degree zero a member
+    codes a word profile on one private suffix, and at degree one it
+    has its label's singleton mark on another suffix. At degree one
+    the full bound has the same residual marker for every label. The
+    first suffix has a rigid subbound selecting a set of labels that
+    cannot be pinned. Any source sublift would have to distinguish those
+    labels by that same residual marker, violating admission.
+- id: rigidity-of-the-rigidity-predicates
+  holds: [necessary-rigid-rigidity-r, necessary-weakly-rigid-weak-rigidity-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: rigid-relations-in-the-multiset-models
+  text: >-
+    Extend typed inputs by empty rows outside the suffix of the
+    prescribed arrow. To calculate a translate of this section,
+    cancel the common shorter word suffix and the coordinatewise
+    minimum of multiset coefficients. For a rigid target relation this
+    gives an admitted exact-image relation on the lifted tuples, pinned
+    by the target pin and the finite support of the prescribed arrow.
+    Thus every future rigid relation has a rigid preimage. The weak
+    and full rigidity predicates agree everywhere.

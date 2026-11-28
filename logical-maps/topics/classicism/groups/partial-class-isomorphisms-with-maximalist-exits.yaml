@@ -1,0 +1,85 @@
+id: partial-class-isomorphisms-with-maximalist-exits
+name: Partial class isomorphisms with Maximalist exits
+definition: >-
+  The core loops are surjective partial class isomorphisms on κ⁺ auxiliary classes of size
+  κ⁺, with left-equivariant relation profiles pinned on at most κ sites. Core individuals are
+  the countably many individuals of the coalesced pinned-substitutions point w, with all
+  loops acting identically. Add an independent copy of w and its successors for each point
+  of Cantor space. Relations have a locally constant section of whole w-entities. All
+  entrances absorb the core loops. The single proposition name has its inherited constant
+  old section and empty other coordinates. Evaluate at the core identity. {{terminals}}
+parameters:
+  terminals:
+    text: Additional classical terminal entrances.
+    values:
+      stone: Include a full singleton-individual terminal at every point of the Stone space of a product of all complete Boolean algebras below a strong limit μ. Use locally constant terminal sections. Choose μ above the ordinal bound in the proof and κ at least μ.
+      none: Use just the Cantor family of old entrances. Any infinite κ suffices.
+arguments:
+- id: old-possibility-and-barcan
+  holds: [possibility-plus-signature-r, barcan-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: partial-class-isomorphisms-with-maximalist-exits
+  text: >-
+    The identity entrance on individuals preserves each eligible tuple at the old
+    Possibility+ point. Core maps lift a profile using the unique live preimages of its
+    pin. Constant sections lift every value at each entrance. Local BF at the old point
+    then establishes acceptance of every argument at its further successors.
+- id: live-pins
+  holds: [inextensible-comprehension-r, truths-are-nd-necessary]
+  fails: [transversal-r, relational-choice-r, actuality]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: partial-class-isomorphisms-with-maximalist-exits
+  text: >-
+    Transport a current extension along units while its pin survives and take bottom at
+    the exits. Every member then has a preimage and after losing the pin the relation stays
+    empty. Liveness of a truth's pin witnesses its ND-necessity. Site-liveness codes in a
+    fresh class obstruct Transversal and Relational Choice. Every true scalar splits by a
+    fresh liveness test.
+- id: individuals
+  holds: [axiom-of-infinity-e]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: free
+  writeup: partial-class-isomorphisms-with-maximalist-exits
+  text: >-
+    The current set of standard Frege numerals is admitted and inductive. Each finite
+    subset of the countably infinite individual carrier is available, and no numeral
+    counts the entire carrier.
+- id: alternating-cylinders
+  fails: [countable-boolean-completeness-r, boolean-completeness-t, weak-rigid-comprehension-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: free
+  writeup: partial-class-isomorphisms-with-maximalist-exits
+  text: >-
+    The countable family of old-section bits on the even first-one cylinders has no
+    join. Leastness would give alternating top and bottom old values near the all-zero
+    point. For a weakly rigid coextension, persistence at the even cylinders and the
+    bottom-haecceity tester at each odd cylinder give the same obstruction.
+- id: represented-intervals
+  when: {terminals: stone}
+  holds: [forcing-possibilism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: partial-class-isomorphisms-with-maximalist-exits
+  text: >-
+    Core images of each weakly rigid family are exact. The inexact ordinals therefore
+    fit in a fixed set of uniform core tables, old sections and homogeneous terminal
+    values. Every graph on at most μ tuples is admitted via a common pin. Revised-small
+    algebras have external size below μ and occur as complete principal intervals of
+    the independent Stone factor, with an admitted isomorphism graph.
+- id: no-terminal-atoms
+  when: {terminals: none}
+  holds: [atomlessness]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: free
+  writeup: partial-class-isomorphisms-with-maximalist-exits
+  text: >-
+    A nonempty ordinary row splits on a fresh liveness bit, and a nonzero locally
+    constant old section splits over disjoint clopen pieces of an occupied neighbourhood.

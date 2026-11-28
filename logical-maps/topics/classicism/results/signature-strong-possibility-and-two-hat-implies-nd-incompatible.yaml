@@ -1,0 +1,27 @@
+id: signature-strong-possibility-and-two-hat-implies-nd-incompatible
+premises:
+- strong-possibility-signature-r
+- two-hat-implies-nd-necessity
+conclusion: 'false'
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) researchers reviewed the Cantor model and universal reflection. The
+    finite-bound transfer also received independent review.
+  date: '2026-11-27'
+  lean: verified
+  lean_ref: Classicism.Map.signature_strong_possibility_and_two_hat_implies_nd_incompatible
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, strong-atom reflection and finite rigid bounds for every
+  signature, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov 2026
+proof: Signature Strong Possibility alone gives the contradiction by [[strong-possibility-signature-r-inconsistent]]. Let U be the universal identity sentence excluding strong propositional atoms. The atomless Cantor
+  model and universal reflection make U true. The necessitated reflection principle makes U its own true
+  guard for two-hat necessity. Signature Maximalism also has a Strong Actuality model, so signature Strong
+  Possibility makes the negation of U ND-possible. Thus U is two-hat necessary and fails ND-necessity.
+notes: The consistency condition throughout is Maximalist Classicism in the same fixed signature. [Construction
+  and proof](strong-possibility-signature-and-finite-rigid-bounds.html)

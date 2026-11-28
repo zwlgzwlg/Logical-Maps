@@ -1,0 +1,53 @@
+id: four-proposition-entrance-to-paired-stages
+name: Four-proposition entrance to the paired integer stages
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) agents, prompted by Daniel Kodsi, independently checked the descriptor domain, homogeneity and modal verdicts, 26 November 2026.
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, descriptor-restricted entrance to the homogeneous paired stages, 26 November 2026.
+- Cian Dorr's coalesced definable root construction and paired-individuals separation form the basis for the two parts of this model.
+source_names:
+- Kodsi and Codex, 26 Nov
+- Dorr coalesced roots and paired individuals
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalesced sums.
+definition: >-
+  Prepend a one-individual root with one entrance to stage zero of the paired integer-stage model
+  with singleton actual individuals and external coefficient maps. Root relations have independent
+  unrestricted current rows and old coordinates denoted by closed pure terms, with a marker for the
+  unique individual. The old component and its outgoing arrows keep their original interpretation.
+  All original relational names may be interpreted by top.
+arguments:
+- id: four-proposition-algebra
+  holds: [atomicity-t, strong-actuality, boolean-completeness-t]
+  fails: [infinity-t]
+  choice: free
+  writeup: four-proposition-entrance-to-paired-stages
+  text: >-
+    Pure stage translation fixes the individual marker and preserves every closed term. Every
+    closed old proposition is true at all old points or false at all of them, hence is top or bottom
+    as an entity. The independent current bit gives the other Boolean factor. The two atoms are
+    the identity-only proposition, which is strong, and the old-only proposition.
+- id: old-modal-separations
+  fails: [necessary-five-implies-two-hat-necessity, necessary-two-hat-implies-nd-necessity]
+  choice: free
+  writeup: four-proposition-entrance-to-paired-stages
+  text: >-
+    At the old stage the two paired-coordinate tests respectively separate 5-necessity from
+    two-hat necessity and two-hat necessity from ND-necessity. All old quantifiers, arrow
+    continuations and coefficient pins at that stage are unchanged by the incoming root.
+- id: current-extensions
+  holds: [well-ordering-r]
+  choice: uses
+  writeup: four-proposition-entrance-to-paired-stages
+  text: >-
+    Give a root relation any chosen well-order on its current tuples and the constantly false
+    old descriptor. Root quantifiers can test the external well-order against every admitted
+    current subcollection.

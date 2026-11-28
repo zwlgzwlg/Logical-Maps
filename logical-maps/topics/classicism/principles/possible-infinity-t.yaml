@@ -12,14 +12,20 @@ source_names:
 notes: >-
   Weaker than the Axiom of Infinity at this type by T. Since the Axiom of Infinity at type $t$ is
   consistent with C, Possibility Maximalism (pure) implies this principle, and indeed the Axiom itself by a longer
-  route. With No Pure Contingency, or with BF (type $t$), this principle gives the Axiom back; whether it
-  does so in C alone is recorded as an open question. See Background for $\mathbf{0}$,
+  route. With No Pure Contingency, or with BF (type $t$), this principle gives the Axiom back. In C alone,
+  [[full-two-object-chain-free-loop]] has Possible Infinity at the entrance and four propositions there.
+  See Background for $\mathbf{0}$,
   $\operatorname{Suc}$ and $\operatorname{FiniteCardinality}$.
   It implies Potential Infinity (type $t$), which asks only that for each number there could be at
-  least that many ([[possible-infinity-t-implies-potential-infinity-t]]).
+  least that many ([[possible-infinity-t-implies-potential-infinity-t]]). The converse fails in
+  [[absorbing-entrance-hyperfinite-group]].
 changes:
 - date: '2026-11-24'
   by: Claude Fable 5.2 (Anthropic), prompted by Zachary Goodsell
   summary: 'Notes: the link to Potential Infinity at this type.'
   minor: true
+- date: '2026-11-26'
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  summary: >-
+    The free-loop model already refutes the implication to the Axiom of Infinity. The new hyperfinite entrance separates Possible Infinity from Potential Infinity.
 lean_def: Classicism.P.PossibleInfinityT.schemaIn

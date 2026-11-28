@@ -1,0 +1,21 @@
+id: principal-entrances-with-generic-returns
+name: Principal entrance with generic returns
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two independent GPT-6 researchers checked the deterministic entrances, generic returns and finite inextensible bound. A further GPT-6 researcher checked the singleton ordinal and representation calculation.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, the mixed-ideal retraction and the Cohen return construction, 27 November 2026.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, substituting isolated principal entrances to obtain local Boolean Completeness and Weak Rigid Comprehension with failure of Tame Rigidity.
+source_names: [Mixed-ideal retraction and Cohen returns, Codex via Kodsi]
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and intensional extensionality.
+group: principal-entrances-with-generic-returns
+settings: {setting: single}
+arguments: []

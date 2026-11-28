@@ -1,0 +1,87 @@
+id: countably-many-sections
+name: Full retraction with countably many sections
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two additional GPT-6 research agents independently reviewed the ordinal bound, choice and Barcan arguments.
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, retraction with countably many sections, 26 November 2026.
+- Andrew Bacon and Cian Dorr, Classicism, full action models and the two-object retraction.
+source_names:
+- Codex via Kodsi, 26 Nov
+- Classicism
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §3.5, pp. 58–61 and Appendix D
+definition: >-
+  The category has two objects $r,s$, countably many arrows $f_i:r\to s$, and one
+  arrow $j:s\to r$, with $jf_i=1_r$. The other nonidentity arrows are the
+  endomorphisms $e_i=f_i j$ of $s$. Individuals form a singleton at $r$ and
+  a doubleton at $s$. All sections take the single individual to the same
+  member of that doubleton. Every relation profile is present at both objects.
+  Evaluate at $r$. The signature has a single propositional name with a
+  denotation different from those of all closed pure terms.
+meets:
+  full-model: Every intension is present at both objects.
+  full-action-model: All sorts have their full action-model domains.
+  extensionally-full: Independent rows can prescribe any current extension at either object.
+  finite-extension-properties-everywhere: All singletons and all current predicate extensions occur.
+  identity-singletons: The singleton of each identity arrow is a proposition there.
+  codomain-intensions: All target row profiles are available.
+  rigid-haecceity-disjunctions: The transported images of any chosen extension form an admitted profile.
+  retractions: $j$ retracts every nonidentity arrow out of $r$.
+  coherent-retractions: >-
+    Choose the identity for $1_r$ and $j$ for every $f_i$. Coherence under
+    each possible continuation follows from $jf_i=1_r$ and $je_i=j$.
+  unique-retractions-everywhere: >-
+    Each $f_i$ has exactly one retraction, $j$. Neither $j$ nor any $e_i$
+    has a left inverse, and each identity has exactly one retraction.
+  boundedly-many-individuals: Every object has at most two individuals.
+  finitely-many-individuals-everywhere: The two individual domains have sizes one and two.
+  infinitely-many-propositions: Distinct subsets of the countably many arrows give distinct propositions.
+  returning-arrow: $f_0$ has the retraction $j$.
+  nonepic-arrow: $1_s f_0=e_0 f_0$ and $1_s\ne e_0$.
+  noninvertible-retracted-arrow: $jf_0=1_r$ but $f_0j\ne1_s$.
+  trivial-isomorphisms-everywhere: Each $e_i$ is a nonidentity idempotent and $j$ is not invertible.
+arguments:
+- id: mathematical-possibilism
+  holds: [forcing-possibilism]
+  choice: uses
+  writeup: countably-many-sections
+  text: >-
+    At the ordinal type take root entities using one extensional row table
+    at $r$ and another common table for all the sections at $s$. There are
+    finitely many since the individual sets have sizes one and two. Zero and
+    successor preserve these tables. A rigid family of them is the finite
+    union of its actual members' haecceities; its limit is calculated by the
+    same finite list along each section and again has the required tables.
+    The actual ordinal benchmark is therefore finite. Any infinite carrier
+    contains a countable power-closed subset above the benchmark. Every small
+    algebra is finite, and the powerset of the arrows out of $r$ realizes one
+    with $k$ atoms below a proposition consisting of $k$ arrows.
+- id: choice-without-barcan
+  holds: [functional-choice-r]
+  fails: [barcan-t]
+  choice: uses
+  writeup: countably-many-sections
+  text: >-
+    The common left inverse makes each section injective on all types.
+    Choose outputs and splice their whole transported rows on the distinct
+    transported inputs at each section. This represents the selector.
+    A tester containing exactly the images at each section necessarily holds
+    of every old input. The new individual, or at a relational sort a
+    target with unequal identity and $e_i$ rows, falsifies the future universal.
+    Thus Barcan fails at every input type.
+- id: independent-name
+  holds: [independence-signature-r]
+  choice: free
+  writeup: countably-many-sections
+  text: >-
+    There are only countably many closed pure propositional terms, whereas
+    rows on the sections give continuum many propositions. Interpret the
+    single propositional name outside the denotations of the pure terms.

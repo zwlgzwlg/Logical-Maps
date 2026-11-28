@@ -1,0 +1,29 @@
+id: maximalist-diagonal-tails-cantor
+name: Diagonal tails with Maximalist exits at a Cantor point
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Additional GPT-6 researchers independently checked the choice obstructions, componentwise semantics and representation of small Boolean algebras.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, supported diagonal-tail core with Maximalist and Boolean-valued exits.
+- GPT-6 Astra (OpenAI), prompted by Cian Dorr, on supported diagonal tail permutations, 30 October 2026.
+- Cian Dorr, signature-definable Maximalist point, October 2026.
+source_names:
+- Kodsi and Codex, 27 Nov
+- Astra via Dorr, 30 Oct
+- Dorr, Oct 2026
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.6 and Appendix E, Maximalism and coalesced models
+- paper: bacon-mathematical-contingency
+  role: background
+  locator: Online appendix §B.2, Boolean-valued interpretation
+group: diagonal-tails-with-maximalist-exits
+settings:
+  point: cantor
+arguments: []

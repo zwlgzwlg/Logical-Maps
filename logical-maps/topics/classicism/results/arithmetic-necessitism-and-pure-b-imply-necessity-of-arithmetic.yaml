@@ -1,0 +1,37 @@
+id: arithmetic-necessitism-and-pure-b-imply-necessity-of-arithmetic
+premises:
+- arithmetic-necessitism
+- pure-b-r
+conclusion: necessity-of-arithmetic
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independently reviewed by two further OpenAI Codex (GPT-6) agents, 26 November 2026
+  date: '2026-11-26'
+  lean: none
+sources:
+- Zachary Goodsell, Arithmetic is Necessary, draft of 5 June 2024, Lemmas 3–7 and Theorem 9.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, applying pure B to the Peano guard and Arithmetic Necessitism to the restricted quantifier.
+source_names:
+- Goodsell
+- Codex via Kodsi, 26 Nov
+references:
+- paper: goodsell-arithmetic-necessary
+  role: background
+  locator: Lemmas 3–7 and Theorem 9, pp. 19–21
+proof: >-
+  At each counting type, $I$ is equivalent in C to both $\Diamond I$ and $I^*$.
+  The B instance on the closed pure sentence $I$ therefore gives $I\to\Box I^*$.
+  If $I$ is impossible the arithmetic schema is immediate. Otherwise Arithmetic
+  Necessitism supplies rigid numbers and necessarily distinct current number
+  values. True sum and product instances persist, and a wrong proposed output
+  stays distinct from the necessarily correct one. In the arithmetic formula
+  induction, weak inextensibility of the numbers lifts every universally true
+  matrix on the old numbers to all future numbers, while a current counterexample
+  persists. This gives either sign of each closed arithmetic sentence necessarily.
+notes: >-
+  Only the B instance for the closed pure Peano guard is used at each counting
+  type. The actual Arithmetic Necessitism schema suffices.

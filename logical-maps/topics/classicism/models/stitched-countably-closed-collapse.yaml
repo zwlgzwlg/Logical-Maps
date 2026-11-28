@@ -1,0 +1,89 @@
+id: stitched-countably-closed-collapse
+name: Stitched collapse preserving the reals and changing CH
+certificate:
+  source_id: barton-goodsell-continuum-contingency
+  produced_by: Neil Barton and Zachary Goodsell (the stitching construction and the bare CH-reversing collapse); OpenAI Codex (GPT-6), prompted by Daniel Kodsi (all-type Analytic Necessitism and the verdicts at the type of sets of reals).
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - OpenAI Codex (GPT-6), prompted by Daniel Kodsi, independent mathematical review
+  date: '2026-11-26'
+  lean: none
+sources:
+- Neil Barton and Zachary Goodsell, Continuum Contingency, §7.1, §7.2.5 and §8, Definition 1, Lemmas 15–19 and Theorem 20.
+- Claude Opus 5.5 (Anthropic), prompted by Cian Dorr, 25 October 2026, stitched-ch-reversing, noting that the bare collapse preserves reals.
+source_names:
+- Continuum Contingency
+- Stitched CH-reversing model
+references:
+- paper: barton-goodsell-continuum-contingency
+  role: proof
+  locator: §7.1, §7.2.5 and §8, Definition 1, Lemmas 15–19 and Theorem 20
+definition: >-
+  Use the two-object stitched forcing construction over a ground model $V$ of ZFC with
+  $2^{\aleph_0}>\aleph_1$. Force with the bare countably closed collapse
+  $\operatorname{Col}(\omega_1,2^{\aleph_0})$. The terminal is the full one-world extensional
+  hierarchy on the naturals in $V[G]$. The individuals at the root are the same naturals.
+  Each root relation has an arbitrary current extension in $V$ and an independent terminal
+  relation definable in $V[G]$ from ground parameters, using the ground codes of the stitching
+  construction. The sole proper arrow reads this terminal coordinate. Evaluate at the root.
+  Use a relational signature with a propositional name, and interpret every name as top.
+meets:
+  sigma-top: Every name denotes top.
+  finitely-many-propositions-everywhere: There are four root propositions and two at the terminal.
+  fewer-propositions-after: The terminal has two propositions and sees only itself.
+  infinitely-many-individuals-everywhere: The individual domain is the naturals at both objects.
+  finite-extension-properties-everywhere: >-
+    Finiteness of an extension and the singletons have ground-definable terminal predicates.
+    Choosing the corresponding ground current rows gives the required root tests.
+arguments:
+- id: retained-reals
+  holds: [analytic-necessitism]
+  fails: [non-contingency-of-ch]
+  choice: uses
+  writeup: stitched-countably-closed-collapse
+  text: >-
+    A relational type with an individual argument anywhere in its type tree has a
+    ground-coded continuum of root labels with distinct terminal images. Exact images
+    of the natural numbers and reals on these labels give a rigid real number
+    structure at both objects, because the forcing adds no reals. The purely
+    propositional types are finite and individuals remain countable. At individual-property
+    type CH is false at the root and true in the extension.
+- id: exact-images-and-unions
+  holds: [necessary-rigid-comprehension-r, necessary-boolean-completeness-r, necessary-well-ordering-r]
+  choice: uses
+  writeup: stitched-countably-closed-collapse
+  text: >-
+    For every ground current extension its exact terminal image is ground-definable.
+    Pairing the two gives its rigid coextension. Current unions and unions of the
+    corresponding terminal values give both coordinates of each requested join.
+    Each universe has well-orders of its own carriers.
+- id: first-new-subsets
+  fails: [weakly-rigid-power-r, rigid-power-r, weakly-rigid-weak-rigidity-r, rigid-rigidity-r, barcan-relational, intensional-choice-r, atomicity-r, modal-well-ordering-r]
+  choice: uses
+  writeup: stitched-countably-closed-collapse
+  text: >-
+    Ground and terminal reals agree, but the collapse adds a subset of that ground
+    set. Weak homogeneity rules out any ground-parameter definition of a new subset.
+    The property of being an old subset tests the power of the rigid universal bound
+    on individual properties and the rigidity predicates. Its complement has no
+    ground-definable singleton or selected element.
+- id: finite-proposition-profile
+  holds: [necessary-strong-atomicity-t, necessary-barcan-t, necessary-self-atoms-are-strong-atoms-r, necessary-truths-are-nd-necessary]
+  fails: [infinity-t]
+  choice: free
+  writeup: stitched-countably-closed-collapse
+  text: >-
+    Propositions are arbitrary truth bits at the two objects; the root-only bit
+    guards every root truth. A self-atom has one root tuple and empty
+    terminal value or empty root row and one definable terminal tuple, and its transport
+    is an atom or bottom.
+- id: indistinguishable-generics
+  fails: [atoms-are-self-atoms-r, atoms-are-strong-atoms-r]
+  choice: uses
+  writeup: stitched-forcing-generic-orbits
+  text: >-
+    Countably supported coordinate permutations of the collapse act weakly
+    homogeneously. A common range derangement at every coordinate sends the
+    generic to a different orbit. The root predicate for the orbits generating
+    this extension has no definable proper nonempty terminal subpredicate,
+    yet its terminal extension splits.

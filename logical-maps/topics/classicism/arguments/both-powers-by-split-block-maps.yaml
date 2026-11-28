@@ -1,0 +1,16 @@
+id: both-powers-by-split-block-maps
+requires: [integer-stages-with-countably-pinned-pair-profiles, unrestricted-block-maps-at-paired-stages]
+given: [necessary-tame-rigidity-r]
+holds: [necessary-rigid-power-r, necessary-weakly-rigid-power-r]
+choice: uses
+by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+date: '2026-11-27'
+writeup: rigid-powers-at-the-unrestricted-paired-stages
+text: >-
+  Match an ordinary arrow on a common pin of the bound and tester by
+  a map split on every target block. Pull a future rigid subrelation
+  back through this map and saturate its preimage over an enlarged
+  source pin. The resulting rigid subrelation has the required whole
+  image. Zero arrows, when present, already give exact images, and
+  absorb the endomorphisms used in the saturation. Necessary Tame
+  Rigidity identifies the two power properties at every stage.

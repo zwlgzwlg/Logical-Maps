@@ -1,14 +1,29 @@
 id: modalized-atomless-cloud
 name: 'Modalized domains: atomless cloud'
-definition: Work in ZFC. {{family}} Take the disjoint union of the nonzero parts of these complete Boolean
+definition: "{{universe}} {{family}} Take the disjoint union of the nonzero parts of these complete Boolean
   algebras, with refinement given by their Boolean orders, and adjoin a refinement-isolated root r. The
   root sees every point and each cloud point sees its refinements. Use the full modalized-domain model
   of Definitions 2.1–2.10 and 4.1, with constant individual domain ω and literal individual identity.
   At t use all regular-open propositions; at function types use the full underlying function sets with
   the partial equivalence relations of Definition 2.2. Quantification uses existing entities at all refinements,
   as in §2.3. Evaluate at r. Interpret any relational signature constants as top; no signature verdict
-  is recorded.
+  is recorded."
 parameters:
+  universe:
+    text: Ground universe in which the algebras and all typed domains are formed.
+    generate: true
+    default: zfc
+    values:
+      zfc:
+        text: Work in an arbitrary ground universe satisfying ZFC.
+        label: in ZFC
+        brief: built in an arbitrary model of ZFC
+      constructible:
+        text: >-
+          Carry out the entire construction inside Gödel's constructible universe L.
+          The algebras, domains and evaluations are those formed in L.
+        label: built in L
+        brief: built inside the constructible universe
   family:
     text: A nonempty family of nontrivial complete Boolean algebras, containing an atomless factor.
 references:
@@ -180,3 +195,17 @@ arguments:
     Extensionality at $t$ fails at the root (Theorem 4.4(c)) and holds at every cloud point (Remark
     4.6(iv)), which sees only cloud points; so its negation is true at the root and not possible at any
     cloud point.
+- id: analytic-necessitism-finite-cloud-propositions
+  fails: [analytic-necessitism, second-order-analytic-necessitism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, independently checked by a second GPT-6 agent
+  date: '2026-11-26'
+  writeup: modalized-cloud-analysis
+  text: >-
+    The atomless factor has a countable disjoint family of nonzero elements, whose joins
+    give at least continuum many root propositions. All current extensions on their
+    identity classes are available at the root. At type $t$ these present the usual
+    numbers, reals, successor and membership, giving an actual real number structure.
+    At every cloud point propositions are internally limited to top and bottom
+    (Remark 4.6(iv)), so no real number structure of this type exists there.
+    Hence none is necessarily a real number structure. This refutes both principles.

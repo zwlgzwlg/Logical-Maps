@@ -1,0 +1,71 @@
+id: partitioned-graded-maps-with-free-words
+name: Graded maps collapsing a large part into a pair
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - An independent GPT-6 researcher checked signature gluing, the Barcan lifts, the small-or-full row test and the interval obstruction.
+  date: '2026-11-27'
+  lean: none
+sources:
+- The graded maps construction and simultaneous signature gluing in [[graded-maps-free-words-glued-constants]].
+- The pair-image witness to failure of Tame Rigidity in [[graded-maps-with-a-preserved-pair]].
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, combined a collapsible large part with a second unrestricted large part, and verified the resulting verdicts.
+source_names: [Graded maps, Pair-preserving graded maps, Codex via Kodsi 27 Nov]
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Section 3.5 and Appendix D, intensional action models
+definition: >-
+  Partition the individuals A into two parts L and C, both of size κ⁺, and choose a pair B in L.
+  Take κ at least the continuum and the cardinality of the signature. In the one-object action,
+  an arrow consists of an individual function, a natural grade and a word on κ letters. At grade
+  zero only the identity function occurs. At positive grades the function maps L into B and is
+  arbitrary on C. Composition composes functions, adds grades and prepends the later word.
+  At fixed grade and word, a relation row depends only on the function's restriction to a single
+  pin of size at most κ. Transport is by precomposition. Start the individual names in C and
+  glue realizations on separate last-letter sectors. Evaluate at the identity.
+arguments:
+- id: necessity-and-barcan
+  holds: [logical-necessity-r, necessary-barcan-r]
+  choice: uses
+  writeup: partitioned-graded-maps-with-free-words
+  text: >-
+    Every positive-grade function agrees on the tested pin with a surjection, using the
+    unrestricted part C. All typed entities lift through this surjection by choosing preimages of
+    the pin. Simultaneous suffix gluing and the choice of initial individuals in C implement
+    every realizable assignment on the symbols of a sentence.
+- id: power-and-tameness
+  fails: [tame-rigidity-r, rigid-power-r, weakly-rigid-power-r, rigid-rigidity-r, weakly-rigid-weak-rigidity-r]
+  choice: uses
+  writeup: partitioned-graded-maps-with-free-words
+  text: >-
+    The property with row L at grade zero and B at positive grades is weakly rigid by varying
+    a fresh L-input outside each tester pin. Its positive transport is constantly B and loses
+    weak inextensibility when a further map collapses B. Every weakly rigid property's positive
+    row is small or full, according to the size of its current intersection with C. A rigid
+    property with large proper current extension in C therefore escapes the power tester at
+    a positive grade. The bound is universal, giving both failures about rigidity itself.
+- id: grading-and-atoms
+  holds: [necessary-self-atomicity-r, necessary-strong-actuality, necessary-atoms-are-strong-atoms-r, necessary-inextensible-comprehension-r, necessary-truths-are-nd-necessary]
+  fails: [atomicity-t]
+  choice: uses
+  writeup: partitioned-graded-maps-with-free-words
+  text: >-
+    A single occupied tuple, grade and word defines a self-atom. A positive-grade occurrence
+    splits by changing a fresh C-input, so genuine atoms are singletons of one grade-zero address.
+    These transport to atoms or bottom, and the identity-only truth is a true strong atom which
+    witnesses ND-necessity of every truth. A current-only row gives an inextensible coextension.
+- id: countability-and-orders
+  holds: [necessary-countable-boolean-completeness-r, modal-well-ordering-r, necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t, necessity-of-second-order-analysis]
+  fails: [boolean-completeness-t, analytic-necessitism, forcing-possibilism]
+  choice: uses
+  writeup: partitioned-graded-maps-with-free-words
+  text: >-
+    Countably many pins have a common pin, while the independently toggled grade-one scalar
+    family in the unrestricted part lacks a join. All types have unrestricted current rows,
+    constant external well-orders and their standard numeral cut. Any current real structure
+    presents full analysis. At e a real structure exists, but a positive arrow can identify every
+    individual, defeating necessary distinctness. Scalar intervals have countably complete
+    evaluation ultrafilters and hence cannot represent the revised-small Cantor regular-open algebra.

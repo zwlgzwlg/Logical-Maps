@@ -1,0 +1,67 @@
+id: one-new-individual-upper-point
+name: Old individuals with one new individual at the upper point
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two independent OpenAI Codex (GPT-6) reviews of the joins, typed ordering and inherited inextensibility obstruction, 27 November 2026
+  date: '2026-11-27'
+  lean: none
+sources:
+- The symmetric old-and-new model of Claude Fable 5.1 at Cian Dorr's direction, 6 October 2026, with the corrected inextensibility argument by Claude Opus 5.5.
+- GPT-6 Astra, prompted by Daniel Kodsi, 22 October 2026, the Boolean Completeness argument at the unmarked point.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, single-new-individual upper objects of the marked entrance construction, 26 November, and their Boolean Completeness at both points, 27 November 2026.
+source_names:
+- Dorr and Claude, 6 Oct
+- Astra via Kodsi, 22 Oct
+- Codex via Kodsi, 26–27 Nov
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Definitions 15–18 and Proposition 20, p. 8
+  note: Symmetric ideally-full action semantics.
+definition: >-
+  At $E$ the individuals are the natural numbers and at $O$ they are the
+  natural numbers together with one new point. Arrows are all injections
+  into $E$, all injections into the old part of $O$, and the permutations
+  of $O$ fixing its new point. Use relations with finite source pins and
+  equivariance under target permutations preserving the new point. Evaluate
+  at the identity of $E$ with all relational signature constants denoting top.
+arguments:
+- id: all-type-completeness
+  holds: [necessary-boolean-completeness-r]
+  writeup: one-new-individual-upper-point
+  choice: free
+  text: >-
+    Enlarge a pin at $O$ by its sole new point. Choose one bijection onto
+    the permitted range for each arrow kind. Every target symmetry fixing
+    the representative image of a family pin restricts along this bijection
+    to a source symmetry fixing that pin. Hence the union of the representative
+    rows of all current family members has a common finite pin. Finite
+    interpolation with target permutations gives its extension to all
+    arrows; the representative rows read off the entire entailment order.
+- id: necessity-and-comprehension
+  holds: [distinctness-necessary-r, necessary-strong-actuality]
+  fails: [inextensible-comprehension-r, barcan-t]
+  writeup: one-new-individual-upper-point
+  choice: free
+  text: >-
+    Injections out of $E$ admit inverses on each finite pin. The event of
+    ending at $E$ there and the permutation event at $O$ witness Strong
+    Actuality. A weakly inextensible coextension of all individuals must omit
+    the new point on entry into $O$, yet after returning to $E$ it contains
+    the image of that point, violating weak inextensibility at the entrance.
+    The $O$-permutation event is absent from every transport of an $E$
+    proposition into $O$; the tester excluding it only at those entrances
+    refutes propositional Barcan.
+- id: upper-point-inheritance
+  holds: [necessary-atomicity-r, necessary-intensional-choice-r, arithmetic-necessitism, necessity-of-arithmetic, necessity-of-second-order-analysis, necessary-axiom-of-infinity-e, necessary-truth-implies-five-necessity]
+  fails: [relational-choice-r, potential-infinity-t]
+  writeup: one-new-individual-upper-point
+  choice: uses
+  text: >-
+    These are the upper objects in the marked-entrance construction. Its
+    proofs of the boxed verdicts already apply at both upper objects.
+    At $E$ the fresh-transposition argument prevents a selector for pairs
+    of individuals. There are at most eight propositions at every point.

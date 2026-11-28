@@ -1,0 +1,52 @@
+id: pinned-interpretations-over-the-growing-individual-chain
+name: Pinned interpretation arrows over a growing individual domain
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - A second OpenAI Codex (GPT-6) agent, prompted by Daniel Kodsi, independently checked the finite-pin witness at every type, the individual countertester, and the scope of the relational Barcan instances on 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Cian Dorr's full two-object chain with one individual becoming two, 11 October 2026, and his finitely pinned interpretation root, 19 October 2026.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, selecting this single component for the interpretation root, 27 November 2026.
+source_names:
+- Dorr 11 and 19 Oct
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, Proposition D.4, and Appendix E, Definition E.2.
+group: coalesced-sums
+settings:
+  root-arrows: interpretations
+  sigma: construction
+  construction: >-
+    Use the pure reduct of [[full-two-object-chain-new-individual]] as the
+    sole component. Adjoin the root of [[coalesced-pinned-interpretations-root]]
+    with interpretation arrows for an expanded signature having infinitely
+    many names at every type. Each individual name denotes itself at the
+    root. Each relational name has empty root row and projects to its
+    interpreted whole entity at every entrance. Evaluate at the new root.
+  domains:
+    text: >-
+      The root individuals are the expanded signature's individual names.
+      A relational profile has arbitrary identity row, a finite pin of names,
+      and transports belonging to the original component domains.
+meets:
+  free-root-component: Every set of current tuples occurs at the identity with empty rows at every entrance.
+arguments:
+- id: barcan-scopes
+  holds: [barcan-r, necessary-barcan-relational, necessary-strong-actuality]
+  fails: [necessary-barcan-r]
+  choice: free
+  writeup: pinned-interpretations-and-barcan
+  text: >-
+    At a possible witness beyond the new root, change a fresh name outside
+    the tester's pin to denote that witness. The new root thus satisfies
+    Barcan at every type. In the old full chain every terminal relation
+    lifts by prescribing its row at the nonidentity arrow, but the second
+    terminal individual is absent from the image of the earlier singleton.
+    The current-only scalar is a true strong atom at the new root and at
+    the old initial point, and top is a true strong atom at the terminal.

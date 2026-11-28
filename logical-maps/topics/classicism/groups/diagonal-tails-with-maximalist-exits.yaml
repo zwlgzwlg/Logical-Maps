@@ -1,0 +1,68 @@
+id: diagonal-tails-with-maximalist-exits
+name: Diagonal tails with Maximalist exits
+definition: >-
+  The core consists of Cantor space with the diagonal tail action and one isolated fixed
+  point. For a fixed admitted signature add a common absorbing exit to its signature-definable
+  Maximalist point. The core and old point share the same individuals. Add a second projection
+  to a smooth Boolean-valued type hierarchy over a single individual. The Boolean algebra
+  is the smooth product of the coinduced factors described in the write-up. Each core relation
+  has a smooth clopen-fibre table on core sites, an independent old value and an independent
+  Boolean-valued terminal value. Core transports are identities. Names project to their
+  specified old interpretations. {{point}}
+parameters:
+  point:
+    text: Evaluation site within the common core.
+    values:
+      fixed: Evaluate at the isolated fixed site.
+      cantor: Evaluate at the all-zero Cantor point.
+arguments:
+- id: signature-witnesses
+  holds: [possibility-plus-signature-r]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: diagonal-tails-with-maximalist-exits
+  text: >-
+    The old projection is the identity on individuals and preserves the value of
+    every name. Eligible individual assignments remain eligible at the old point.
+    Any old possibility makes the new proposition nonbottom.
+- id: small-algebra-intervals
+  when: {point: fixed}
+  holds: [forcing-possibilism, strong-actuality]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: diagonal-tails-with-maximalist-exits
+  text: >-
+    The ordinal benchmark is fixed by the group and bounded independently of the terminal
+    algebra. Its members have uniform extensional core tables and finite Boolean-polynomial
+    terminal tables. Testers control both tables for limits of rigid families. Any
+    sufficiently large smooth algebra contains a large pointwise-fixed power-closed subset.
+    Each remaining internally complete algebra is a factor on one coset of the universal
+    product, and its interval graph is supported. The isolated core singleton is a true strong atom.
+- id: fixed-pair-selection
+  when: {point: fixed}
+  fails: [relational-choice-r, transversal-choice-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: diagonal-tails-with-maximalist-exits
+  text: >-
+    Pair every Cantor clopen with its relative complement, setting the old and Boolean
+    coordinates to bottom. A fresh bit flip interchanges the two halves of one pair
+    and fixes its canonical input property. A supported current selector or transversal
+    cannot distinguish its members.
+- id: cantor-point-selection
+  when: {point: cantor}
+  fails: [transversal-r, relational-choice-r]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: diagonal-tails-with-maximalist-exits
+  text: >-
+    A selector supported at a finite level cannot choose a proper true clopen subpart
+    of the cylinder of that level through the evaluation. Its stabilizer has dense
+    orbits off the evaluation point in that cylinder. For Transversal, the shifted
+    membership row at a second Cantor point has no consistently selected representative:
+    conjugating a deeper tail permutation fixes any selected representative and the
+    evaluation but moves the second point.

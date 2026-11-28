@@ -1,0 +1,164 @@
+id: isolated-entrances-to-existing-components
+name: Isolated entrances to existing components
+definition: >-
+  {{component}} Add a root with just an identity loop and a generating entrance to the designated point w, together with all old postcomposites.
+  Use the old individuals, with identity projection. A root relation has an arbitrary current tuple row and one independent whole value at w.
+  In the catalogue settings add a classical singleton-individual terminal for each point of the Stone catalogue in the proof, with a locally constant section of whole terminal values.
+  Use a single operator name with bottom proper-exit values and an actual row outside all pure closed denotations. Evaluate at the root.
+parameters:
+  component:
+    text: The old pointed model and the choice of entrances.
+    generate: true
+    default: truncated-pairs
+    values:
+      truncated-pairs:
+        text: >-
+          Use the pure reduct of [[truncated-paired-stages]]. Use the single entrance.
+        label: truncated pairs
+      partial-injections:
+        text: >-
+          Use the pure reduct of [[bounded-partial-injections]]. Use the single entrance.
+        label: partial injections
+      partial-class-isomorphisms:
+        text: >-
+          Use the pure reduct of [[partial-class-isomorphisms-with-terminals]]. Use the single entrance.
+        label: partial class isomorphisms
+      finite-s5-ultraproduct:
+        text: >-
+          Use the pure reduct of [[ultraproduct-finite-full-s5]]. Use the single entrance.
+        label: finite s5 ultraproduct
+      countable-s5-ultraproduct:
+        text: >-
+          Use the pure reduct of [[ultraproduct-countable-full-s5-finite-individuals]]. Use the single entrance.
+        label: countable s5 ultraproduct
+      choiceless-s5:
+        text: >-
+          Use the pure reduct of [[full-infinite-s5-metatheory-no-countable-choice-reals]]. Use the single entrance.
+        label: choiceless s5
+      integer-pairs-catalogue:
+        text: >-
+          Use the pure reduct of [[symmetric-integer-paired-stages]]. Include the independent Stone catalogue.
+        label: integer pairs catalogue
+      qualitative-links-catalogue:
+        text: >-
+          Use the pure reduct of [[symmetric-qualitative-links]]. Include the independent Stone catalogue.
+        label: qualitative links catalogue
+      three-point-catalogue:
+        text: >-
+          Use the pure reduct of [[symmetry-constrained-full-point-and-three-forward]]. Include the independent Stone catalogue.
+        label: three point catalogue
+arguments:
+- id: powers-over-s5-entrances
+  when: {component: [finite-s5-ultraproduct, countable-s5-ultraproduct, choiceless-s5]}
+  holds: [necessary-weakly-rigid-power-r]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: isolated-entrances-to-existing-components
+  text: >-
+    The old S5 point has necessary distinctness, Tame Rigidity and both hereditary powers.
+    The old coordinate of a weakly rigid root bound is weakly rigid. Testing against each
+    old tuple's persistent inequality removes anything outside the image of its root row.
+    Old subbounds therefore lift by retaining them as the entire old coordinate and taking
+    their preimages in the root row. These lifts and the old power's inextensibility cover
+    every later test. This proves the weak power necessarily and yields both other boxed conclusions.
+- id: isolated-root
+  holds: [strong-actuality, well-ordering-r, truths-are-nd-necessary, inextensible-comprehension-r, independence-signature-r]
+  fails: [possibly-witnessed-possibility-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: isolated-entrances-to-existing-components
+  text: >-
+    The identity-only truth is a true strong atom and guards the ND-necessity of each present truth. Every current well-order is available.
+    A relation with all exit values bottom is inextensible. The new name is independent and is never top, while the pure matrix asking for top has a witness.
+- id: truncated-pairs-component
+  when: {component: truncated-pairs}
+  holds: [forcing-possibilism, modalized-relational-choice-r, necessary-atomicity-t, necessary-axiom-of-infinity-t, necessary-truth-implies-five-necessity, necessary-well-ordering-r]
+  fails: [necessary-boolean-completeness-t, necessary-five-implies-two-hat-necessity]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: isolated-entrances-to-existing-components
+  text: >-
+    The old cone has necessary Atomicity and witnesses a failure of the comparison of 5-necessity with two-hat necessity. The singleton individuals and infinitely many old scalar atoms give the finite-interval proof of Mathematical Possibilism.
+- id: partial-injections-component
+  when: {component: partial-injections}
+  holds: [necessary-atomicity-r, necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t]
+  fails: [necessary-boolean-completeness-t, necessary-countable-boolean-completeness-r, necessary-relational-choice-r, necessary-transversal-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: isolated-entrances-to-existing-components
+  text: >-
+    The finite-rank atoms of the original component are dense at all types. Its two-pin obstruction to Transversal and its failures of Boolean completeness remain accessible.
+- id: partial-class-isomorphisms-component
+  when: {component: partial-class-isomorphisms}
+  holds: [forcing-possibilism, necessary-barcan-r, necessary-inextensible-comprehension-r, necessary-truths-are-nd-necessary]
+  fails: [necessary-relational-choice-r, necessary-transversal-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: isolated-entrances-to-existing-components
+  text: >-
+    The original component supplies all-type Barcan, inextensible coextensions and the failure of Transversal. Its classical exits supply infinitely many scalar atoms and its individual domains are singletons.
+- id: finite-s5-ultraproduct-component
+  when: {component: finite-s5-ultraproduct}
+  holds: [arithmetic-necessitism, axiom-of-infinity-e, axiom-of-infinity-t, modalized-relational-choice-r, necessary-barcan-r, necessary-self-atoms-are-strong-atoms-t, necessary-strong-atomicity-t, necessity-of-second-order-analysis]
+  fails: [analytic-necessitism, necessary-potential-infinity-e, necessary-potential-infinity-t, necessary-truth-implies-five-necessity]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: isolated-entrances-to-existing-components
+  text: >-
+    Each old standard sort is internally finite, while the source individual and scalar carriers are both externally infinite. The resulting arithmetic and real-structure guards are computed in the shared proof.
+- id: countable-s5-ultraproduct-component
+  when: {component: countable-s5-ultraproduct}
+  holds: [axiom-of-infinity-e, modalized-relational-choice-r, necessary-axiom-of-infinity-t, necessary-barcan-r, necessary-self-atoms-are-strong-atoms-t, necessary-strong-atomicity-t]
+  fails: [necessary-potential-infinity-e, necessary-truth-implies-five-necessity]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: isolated-entrances-to-existing-components
+  text: >-
+    The old individual carrier has arbitrarily many distinct individuals but is internally finite. Its countably infinite world sets give necessary scalar Infinity. The old singleton truths at distinct worlds refute 5-necessity of every truth.
+- id: choiceless-s5-component
+  when: {component: choiceless-s5}
+  holds: [necessary-axiom-of-infinity-t, necessary-barcan-r, necessary-self-atoms-are-strong-atoms-t, necessary-strong-atomicity-t]
+  fails: [necessary-intensional-choice-r, necessary-potential-infinity-e, necessary-relational-choice-r, necessary-truth-implies-five-necessity]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: isolated-entrances-to-existing-components
+  text: >-
+    At the old S5 component the countable-choice obstruction for reals refutes the two choice principles. Its world singletons are strong scalar atoms and distinguish truth from 5-necessity.
+- id: integer-pairs-catalogue-component
+  when: {component: integer-pairs-catalogue}
+  holds: [forcing-possibilism, necessary-barcan-r, necessary-inextensible-comprehension-r, necessary-transversal-r, necessary-truth-implies-five-necessity]
+  fails: [necessary-five-implies-two-hat-necessity, necessary-relational-choice-r, self-atoms-are-atoms-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: isolated-entrances-to-existing-components
+  text: >-
+    The old paired stages supply all-type Barcan and accessible failures of Relational Choice and of the modal comparison. The Stone factor represents each revised-small algebra.
+- id: qualitative-links-catalogue-component
+  when: {component: qualitative-links-catalogue}
+  holds: [forcing-possibilism, necessary-barcan-r, necessary-strong-actuality, necessary-truths-are-nd-necessary]
+  fails: [atomicity-r, necessary-intensional-choice-r, necessary-relational-choice-r, necessary-rigid-power-r, necessary-tame-rigidity-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: isolated-entrances-to-existing-components
+  text: >-
+    The qualitative-links component supplies necessary Barcan and Strong Actuality and fails choice, powers and tameness in its cone. The catalogue represents the revised-small algebras.
+- id: three-point-catalogue-component
+  when: {component: three-point-catalogue}
+  holds: [forcing-possibilism, necessary-barcan-t, necessary-strong-actuality, necessary-truths-are-nd-necessary, necessary-well-ordering-r]
+  fails: [atomicity-t, atoms-are-self-atoms-r, necessary-potential-infinity-e, necessary-potential-infinity-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: isolated-entrances-to-existing-components
+  text: >-
+    The three-point component supplies a higher-type atom which fails selfhood, despite propositional Barcan, and accessible failures of potential infinity. The independent Stone interval gives revised Mathematical Possibilism.

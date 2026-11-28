@@ -30,6 +30,7 @@ settings:
   forcing: 'Here $P$ is Cohen forcing, which adds one real.'
 
 meets:
+  generic-orbit-multiplicity: Finite bit flips act weakly homogeneously on Cohen conditions. Flipping all bits yields another generic outside the finite-flip orbit. The forcing is countable.
   adds-a-real: Cohen forcing adds the Cohen real.
   preserves-ch: Cohen forcing is countable, so $V[G]$ has the cardinals of $V$ and $(\aleph_0^{\aleph_0})^V$
     nice names for reals, so the same continuum.

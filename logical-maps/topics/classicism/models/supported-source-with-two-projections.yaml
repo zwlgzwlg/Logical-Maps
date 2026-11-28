@@ -1,0 +1,58 @@
+id: supported-source-with-two-projections
+name: A supported source with two projections back to it
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) agents, prompted by Daniel Kodsi, independently checked the two projection tests, typed lambda closure and rigidity arguments, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, two split projections and an unsupported image of a rigid subrelation, 27 November 2026.
+source_names:
+- Kodsi and Codex, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, action models.
+definition: >-
+  The arrow from $w$ to $v$ has two left inverses and these generate the category. Individuals
+  at $w$ are countably many pairs and at $v$ are ordered pairs of those individuals. The maps
+  are the diagonal and the two projections. Relations at $w$ have a current row and a
+  successor row jointly supported by finitely many individual pairs under independent flips.
+  At $v$ the current row is unrestricted, and the two return coordinates are arbitrary
+  entities at $w$. Evaluate at $w$. Original relational names may denote top.
+arguments:
+- id: injective-entrance
+  holds: [distinctness-necessary-r, actuality, transversal-r]
+  choice: free
+  writeup: supported-source-with-two-projections
+  text: >-
+    The only nonidentity outgoing arrow has a left inverse at every type, so preserves every
+    inequality. The identity-only proposition is a true atom. Each represented current extent
+    has the canonical representative with empty successor row; the family of these representatives
+    is invariant under all flips, so is an admitted transversal of coextension.
+- id: correlated-projections
+  fails: [necessary-rigid-power-r, necessary-weakly-rigid-power-r]
+  choice: free
+  writeup: supported-source-with-two-projections
+  text: >-
+    At the successor take the graph of a bijection sending the union of the even-indexed
+    individual pairs onto a set containing one member of every pair. Its two return rows are
+    the full individual domain, and it is rigid by exact images. A weakly rigid subrelation
+    projecting to the even-indexed part on the first return must project to the unsupported
+    set on the second return. Testers that exclude a single individual on just one return
+    force these projections to be exact. The missing rigid subrelation defeats both power tests.
+- id: powers-at-the-source
+  holds: [rigid-power-r, weakly-rigid-power-r, tame-rigidity-r, boolean-completeness-r]
+  choice: free
+  writeup: supported-source-with-two-projections
+  text: >-
+    Every weakly rigid source relation has exactly the images of its current members at
+    each arrow. Below the image of such a bound, the two projections of a weakly rigid
+    successor subrelation coincide. Single-tuple testers determine its rows on each
+    return and each composite. The common projection therefore gives a rigid source
+    subrelation lifting it. Both powers have exact images at the source. The union
+    of a supported current family of source relations is supported in both rows,
+    giving Boolean Completeness.

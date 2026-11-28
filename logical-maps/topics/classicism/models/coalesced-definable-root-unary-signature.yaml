@@ -1,0 +1,63 @@
+id: coalesced-definable-root-unary-signature
+name: 'Signature-definable root with one individual name and infinitely many unary predicates'
+certificate:
+  source_id: misc
+  produced_by: Cian Dorr with GPT-6 Astra and Claude Fable 5.2, prompted by Cian Dorr (signature-definable root), and OpenAI Codex (GPT-6), prompted by Daniel Kodsi (Rigid Power).
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Independent OpenAI Codex (GPT-6) researchers, prompted by Daniel Kodsi, checked descriptor separation, finiteness and lifting of rigid subrelations for this signature.
+  date: '2026-11-28'
+  lean: none
+sources:
+- The construction and the infinite-signature Barcan argument in coalesced-definable-root-signature, by Cian Dorr with GPT-6 Astra and Claude Fable 5.2, prompted by Cian Dorr.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, Rigid Power at the signature-definable root, independently reviewed November 2026.
+source_names:
+- Dorr, Astra and Fable
+- Codex via Kodsi, Nov 2026
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Section 3.6 and Appendix E, Henkin completeness and coalesced sums.
+group: coalesced-sums
+settings:
+  root-arrows: pointed-exits
+  sigma: construction
+  construction: >-
+    Take [[coalesced-definable-root-signature]] with exactly one individual
+    name and countably infinitely many unary individual predicate names.
+    Evaluate at the new root of any family of pointed components complete
+    for this signature. The current extensions of its predicate names are
+    arbitrary and their old descriptors are the names themselves.
+  domains:
+    text: >-
+      The sole individual is its name. Each relation has any current row
+      on the root domains and the old trace of a closed public term at
+      every component exit and its postcomposites.
+meets:
+  complete-components: Every consistent public sentence has a designated component.
+  free-root-component: The current row at the identity is unrestricted for each descriptor.
+arguments:
+- id: signature-root-properties
+  holds: [possibility-plus-signature-r, barcan-t]
+  fails: [forcing-possibilism]
+  writeup: coalesced-definable-root-signature
+  text: >-
+    The signature-root construction gives Possibility+ and the root
+    algebra refutations for every signature. Here infinitely many
+    relational names also give Barcan at propositional type by fresh-name
+    generalization. The incomplete-interval argument refutes revised
+    Mathematical Possibilism for the same root.
+- id: rigid-power-from-finite-descriptors
+  holds: [rigid-power-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-28'
+  choice: uses
+  writeup: coalesced-definable-root-unary-signature
+  text: >-
+    Every represented member of a rigid bound gives a provable ground
+    membership in its single closed descriptor. In the auxiliary root with
+    finite descriptor support, interpreting all private names by bottom
+    preserves separation of public descriptors. Only finitely many occur.
+    At each proper exit the transported bound is a finite union of tuple
+    haecceities, and every rigid subrelation lifts to such a union at the
+    source. Hence the canonical power is rigid.

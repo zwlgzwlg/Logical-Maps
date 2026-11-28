@@ -1,0 +1,45 @@
+id: injective-integer-stages-top
+name: Integer stages with injective coordinates and a top proposition name
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - A second OpenAI Codex (GPT-6) agent, prompted by Daniel Kodsi, independently checked the source Rigid Power argument, pure translation and named-witness failure on 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Underlying construction and pure verdicts in [[injective-integer-stages]].
+- Cian Dorr's sigma-top-npc argument for the signature interpretation.
+source_names:
+- Integer stages with injective coordinates
+- Signature substitution
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39, signature schemata.
+group: top-interpretations-of-pure-reducts
+settings:
+  reduct: Start with [[injective-integer-stages]].
+arguments:
+- id: pure-reduct
+  holds: [no-pure-contingency-r, necessary-strong-actuality, necessary-boolean-completeness-r, necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t, arithmetic-necessitism, necessity-of-arithmetic, necessary-atomicity-r, necessary-transversal-r, necessary-intensional-choice-r, necessary-rigid-power-r]
+  fails: [inextensible-comprehension-r, tame-rigidity-r, barcan-t, relational-choice-r]
+  choice: uses
+  text: >-
+    Simultaneous translation of stages and coordinate labels identifies the
+    pure structures at every point. All the listed verdicts concern pure
+    formulas on their unchanged domains and arrow actions. In particular the
+    onto-range representatives still lift rigid subrelations, while admitting
+    one new marker refutes inextensibility and Tame Rigidity.
+- id: ordinal-benchmark-and-scalar-intervals
+  fails: [forcing-possibilism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: countable-bases-and-mathematical-possibilism
+  text: >-
+    The word events and pure ordinal thresholds are invariant under every
+    stage symmetry, admitting all the current comparisons for the small
+    Cantor algebra. Every scalar is a union of injection kinds, so its
+    nonzero interval contains an atom.

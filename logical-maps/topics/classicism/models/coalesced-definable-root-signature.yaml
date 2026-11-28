@@ -104,6 +104,23 @@ arguments:
     $(0,\mathrm F\land\forall x\forall y\, .\,x=y)$ lies strictly between $\bot$ and $s$, the full one-world
     models with one and with two individuals both satisfying $\mathrm F$ under any interpretation of
     $\Sigma^{+}$.
+- id: mathematical-possibilism
+  fails: [forcing-possibilism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-26'
+  choice: uses
+  writeup: coalesced-definable-root-signature
+  text: >-
+    No infinite principal interval of the closed-sentence Lindenbaum algebra $L$ is complete,
+    even for uncountable signatures. For a sequence of disjoint nonzero elements in such an
+    interval, all subsequence joins would be representable in a single countable sublanguage:
+    universally generalize any extra free constants from a proposed join. This contradicts
+    the distinctness of the continuum many joins. The same conclusion holds in $2\times L$.
+    The root admits every actual subset and every actual relational graph. Standard finite
+    inexact ordinal thresholds belong to the benchmark $H$ and are distinguished at component
+    exits realizing finite well-orders. As in [[coalesced-definable-root]], the external
+    Cantor regular-open algebra can therefore be represented by a small actual carrier
+    of continuum size. It cannot be order-isomorphic to a complete entailment interval.
 notes: >-
   The version of coalesced-definable-root in which the signature is interpreted in the components and
   each constant keeps a freely chosen root extension. It is a model of Maximalism (signature Σ) for
@@ -115,15 +132,17 @@ notes: >-
   the write-up of [[strong-possibility-signature-r-inconsistent]].
 
 
-  The one verdict recorded is the one that holds for every Σ and every choice and that the map does
-  not derive. From it and the arguments of the group the map derives, among others, Actuality, the
+  The initial Maximalism verdict holds for every Σ and every choice. From it and the arguments of the group the map derives, among others, Actuality, the
   failure of ND and of Strong Possibility (signature Σ), Relational Choice and Well-Ordering. The
   argument root-algebra (23 November 2026) adds the failure of Boolean Completeness (type $t$) and of the
-  bridge principles from self-atoms. Eighteen principles are left open, listed in the write-up. These
+  bridge principles from self-atoms. The write-up lists the remaining questions for this family. These
   hold for some Σ and fail for others: BF at each type, Functionality, Tractarianism, the two Infinity
-  principles at type $e$, and the principles that atoms are strong atoms. Tame Rigidity, the Rigid Power
-  principles, and the principles that atoms are self-atoms are open even for particular Σ. Forcing
-  Possibilism and the three Cardinal CH principles, as revised on 24 November 2026, have not been
-  examined. That it is a model of C is argued in
+  principles at type $e$, and the principles that atoms are strong atoms. The write-up classifies the bridge from atoms to self-atoms by the
+  number of relational constants. BF at type t holds exactly when the relational constants are
+  infinite; with finitely many it fails at each relational input type. Tame Rigidity and Weakly Rigid
+  Power fail for every infinite signature and remain open for finite signatures in this model.
+  Rigid Power holds in the member [[coalesced-definable-root-unary-signature]], with one individual name and countably infinitely many unary predicate names. The revised Mathematical Possibilism fails for all signatures by
+  the argument mathematical-possibilism (26 November 2026). The three Cardinal CH principles
+  remain open for this model. That it is a model of C is argued in
   the write-up; Cian Dorr has checked the construction against the use made of it in the injectivity
   proof, and no Lean verification is claimed.

@@ -1,0 +1,75 @@
+id: boolean-valued-cohen-with-fixed-analysis
+name: Boolean-valued Cohen extension with fixed analytical truth
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two further GPT-6 researchers independently checked the forcing, full analytical semantics and exclusion of all candidate represented powers.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Andrew Bacon, Could the truths of mathematics have been different?, online appendix §B.2, full Boolean-valued semantics.
+- The map's Boolean-valued collapse without new reals for the designated-atom calculation.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, countably closed Cohen forcing and analytical powers, 27 November 2026.
+source_names:
+- Bacon, Boolean-valued model
+- Countably closed collapse
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-mathematical-contingency
+  role: background
+  locator: Online appendix §B.2, Lemmas B.1–B.4
+- paper: barton-goodsell-continuum-contingency
+  role: formulation
+  locator: §§5.8–5.9
+definition: >-
+  First adjoin countably many columns of Cohen subsets of omega-one over L
+  using countable conditions.
+  In that ground use the full Boolean-valued model on the product of the
+  two-element algebra and the regular-open algebra of countable partial
+  binary functions on omega-one. The individual carrier is a singleton.
+  Evaluate at the two-element coordinate and interpret relational names by top.
+arguments:
+- id: the-continuum-and-its-powers
+  holds: [analytic-necessitism]
+  fails: [second-order-analytic-necessitism]
+  choice: uses
+  writeup: countably-closed-cohen-forcing-and-analysis
+  text: >-
+    No new reals appear, so crisp ground labels and relations give a necessary
+    rigid continuum at every relational type. A represented unary power of any
+    proposed rigid continuum at propositional type would be crisp, with crisp
+    ground members. The new subset of omega-one, placed on a ground family
+    of real labels, agrees with no ground member on any positive condition.
+- id: absorption-of-another-column
+  holds: [necessity-of-second-order-analysis]
+  choice: uses
+  writeup: countably-closed-cohen-forcing-and-analysis
+  text: >-
+    The preliminary forcing adds no countable sequences, so the further
+    poset is the old poset. One more column is absorbed by reindexing the
+    countably many original columns. Homogeneity makes the original
+    forcing decide every parameter-free analytical sentence. Both coordinates
+    consequently compute the same full second-order analytical truth.
+- id: countable-bounds
+  holds: [necessary-countable-boolean-completeness-r, boolean-completeness-r]
+  fails: [necessary-boolean-completeness-t]
+  choice: uses
+  writeup: countably-closed-cohen-forcing-and-analysis
+  text: >-
+    Countable sequences of ground elements remain ground sequences, so their
+    pointwise bounds are available in both coordinates. Any ground meet of
+    complements of omega-one disjoint Boolean cells selected by the generic
+    subset would determine that subset by ground comparisons.
+- id: designated-atom
+  holds: [functional-choice-r, rigid-comprehension-r, necessary-intensional-choice-r, modal-well-ordering-r, necessary-distinctness-necessary-r, necessary-barcan-r, strong-actuality]
+  fails: [atomicity-t, forcing-possibilism, infinity-e]
+  choice: uses
+  writeup: countably-closed-cohen-forcing-and-analysis
+  text: >-
+    Crisp ground predicates rigidify actual rows, and full ground functions
+    admit choice at the designated atom. Disjoint refinement gives modal
+    singleton choices and ground well-orders persist. Ground identity and
+    constant domains give boxed ND and Barcan. There is one atom and an
+    atomless factor, giving no interval representing the four-element algebra.

@@ -1,0 +1,117 @@
+id: universal-actual-diagonal-tails
+name: Universal diagonal-tail model at an isolated fixed world
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two additional GPT-6 agents independently reviewed the fixed point, Baire construction and diagonal-tail obstruction.
+  date: '2026-11-26'
+  lean: none
+sources:
+- GPT-6 Astra (OpenAI), prompted by Cian Dorr, diagonal-tail permutation countermodel to Transversal, 30 October 2026.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, isolated fixed world and universal Boolean components, 26 November 2026.
+source_names:
+- Astra via Dorr, 30 Oct
+- Codex via Kodsi, 26 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §3.5, pp. 58–61, typed action semantics
+definition: >-
+  The worlds of a single constant-domain S5 cluster form the disjoint sum of
+  Cantor space, countably many isolated fixed worlds, a discrete regular group orbit, and induced action
+  spaces for small Boolean algebras. The group permutes finite binary
+  prefixes on Cantor space. Its subgroup $K_n$ acts by the same tail
+  permutation on all length-$n$ cylinders. For each countable smooth
+  $K_n$-Boolean algebra with finite deeper fixed algebras and joins for the
+  corresponding element orbits, take its Stone space restricted to an
+  invariant dense Baire subspace where the deeper orbits are dense in fixed
+  clopen cells; induce this space to the full group. Relations have clopen
+  fibres and are supported by some $K_n$. All transports are the identity
+  and there is one individual. Evaluate at an isolated fixed world $\star$.
+  Interpret all relational signature names as top.
+meets:
+  one-individual: The singleton domain is shared by all worlds.
+  sigma-top: Every designated relational name is interpreted by the full relation.
+arguments:
+- id: fixed-point-comprehension
+  holds: [actuality, rigid-comprehension-r, gallin-extensional-comprehension-r, transversal-r, boolean-completeness-r, necessary-distinctness-necessary-r, necessary-barcan-r]
+  choice: free
+  writeup: universal-actual-diagonal-tails
+  text: >-
+    The fixed isolated singleton is a true atom. A $K_n$-supported relation
+    has a $K_n$-invariant row at $\star$, whose constant profile is an
+    admitted rigid coextension. The class of constant profiles selects one
+    from each coextension class there. For a supported current family its
+    pointwise union has open fibres, invariant under a deeper subgroup
+    fixing the arguments, hence clopen by the orbit construction. It is an
+    admitted join. Identity transfers give necessary distinctness and Barcan.
+- id: represented-intervals
+  holds: [forcing-possibilism]
+  choice: uses
+  writeup: universal-actual-diagonal-tails
+  text: >-
+    A revised-small internally complete Boolean algebra at $\star$
+    supported by $K_n$ has finite $K_m$-fixed subalgebras for all $m\ge n$:
+    a countably infinite set of fixed elements would be power-closed above
+    the finite ordinal benchmark. The algebra is therefore countable and
+    each $K_m$-orbit has an admitted supremum. Its induced component has a
+    distinguished $K_n$-fixed copy. After restricting the Stone space to
+    the countable intersection of the orbit-join dense open sets, the
+    admitted clopens in this copy are exactly the original algebra. The
+    supported Stone graph realizes the required isomorphism at $\star$.
+- id: no-necessary-transversal
+  fails: [necessary-transversal-r]
+  choice: free
+  writeup: universal-actual-diagonal-tails
+  text: >-
+    At the all-zero Cantor world, a proposed $K_n$-supported selector must
+    represent the evaluation row of the world obtained by flipping digit
+    $n+1$. Uniqueness fixes that representative under the stabilizer of
+    both worlds. A deeper tail flip and a conjugated finite-prefix swap
+    then fix the current world and the chosen representative while moving
+    the evaluated world, contrary to separation by the Cantor clopens.
+    This is the October diagonal-tail argument within the enlarged S5 cluster.
+- id: choice-failures
+  fails: [transversal-choice-r, relational-choice-r, intensional-choice-r, atomicity-t]
+  choice: free
+  writeup: universal-actual-diagonal-tails
+  text: >-
+    Within the Cantor component, pair each clopen with its relative
+    complement. At any proposed support depth the two halves given by the
+    next bit are exchanged by the tail group, ruling out a transversal.
+    Since local Transversal holds, Relational Choice also fails. At the
+    $j$th marked fixed world require a proposition in the orbit of a
+    length-$j$ Cantor cylinder. Its measure is $2^{-j}$, while a $K_m$-fixed
+    Cantor clopen has measure a multiple of $2^{-m}$. Thus no single support
+    depth can give a necessary unique choice. The Cantor component itself
+    contains no propositional atom.
+- id: rigid-properties-and-analysis
+  holds: [necessary-weakly-rigid-weak-rigidity-r, necessary-rigid-rigidity-r, necessary-tame-rigidity-r, necessary-weakly-rigid-power-r, necessary-rigid-power-r, second-order-analytic-necessitism]
+  choice: uses
+  writeup: universal-actual-diagonal-tails
+  text: >-
+    Weak persistence and weak inextensibility force a relation below its
+    own necessarily persistent core, so weakly rigid profiles are exactly
+    the constant ones. Their class and the constant sub-bounds of each
+    rigid relation have admitted rigid constant profiles. At every
+    relational sort, arbitrary subsets of the countably many marked worlds
+    give continuum many globally fixed entities. These code a rigid
+    standard real structure and constant representatives of all relations
+    on its number and real tuples. The singleton individual sort is vacuous.
+- id: countable-family-at-a-free-world
+  holds: [necessary-axiom-of-infinity-t]
+  fails: [necessary-boolean-completeness-t, necessary-countable-boolean-completeness-r, independence-signature-r, infinity-e, possible-infinity-e, potential-infinity-e]
+  choice: free
+  writeup: universal-actual-diagonal-tails
+  text: >-
+    At the identity of the regular discrete orbit, any tuple set is an
+    admitted current row by transporting that row equivariantly along
+    the orbit. There the family of Cantor cylinders $[0^{2n}1]$ is
+    countably indexed by the standard Frege numerals at $t$ but has no
+    join: every clopen upper bound contains a neighborhood of the all-zero
+    sequence, hence a removable deep odd cylinder. The globally invariant
+    standard numeral set exhausts the numbers at $t$ via its constant-row
+    inductive test, and no standard finite count exhausts the proposition
+    carrier. The single individual is fixed and each relational name denotes top.

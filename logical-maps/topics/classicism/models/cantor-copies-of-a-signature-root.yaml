@@ -1,0 +1,35 @@
+id: cantor-copies-of-a-signature-root
+name: An atomless signature-Maximalist root with Cantor copies of its exits
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - An independent OpenAI Codex (GPT-6) researcher checked the locally constant whole-entity sections, signature transfer and atomless scalar order.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, independent Cantor parameters for loops and copies of a signature Possibility+ entrance, 27 November 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, action models and coalescences.
+definition: >-
+  Add Cantor-group loops and Cantor-many absorbing entrances to identical
+  copies of a fixed signature Possibility+ model. A relational profile has
+  independently locally constant loop rows and a locally constant section
+  of whole old entities. Individuals and public names have their old
+  entrance values.
+arguments:
+- id: two-clopen-splittings
+  holds: [possibility-plus-signature-r, atomlessness, well-ordering-r]
+  fails: [actuality, boolean-completeness-t, countable-boolean-completeness-r]
+  choice: uses
+  writeup: strong-possibility-signature-and-finite-rigid-bounds
+  text: >-
+    Any nonzero loop patch or old section splits on two disjoint nonempty
+    clopen subsets. The loop cylinders also have a countable family lacking
+    a join. Full current rows admit well-orders, and the identity on
+    individuals at each old entrance preserves every eligible named tuple.

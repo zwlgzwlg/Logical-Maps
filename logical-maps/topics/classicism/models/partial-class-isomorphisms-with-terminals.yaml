@@ -1,0 +1,83 @@
+id: partial-class-isomorphisms-with-terminals
+name: Surjective partial class isomorphisms with terminal exits
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Independent OpenAI Codex (GPT-6) reviews of the partial-map lifts, exact images, modal guard, two-pin obstruction and terminal extension, 27 November 2026
+  date: '2026-11-27'
+  lean: none
+sources:
+- Cian Dorr's symmetric ideally-full models and the truth-collapse proof for symmetric-class-reflecting-surjections.
+- The two-pin coextension obstruction of bounded-partial-injections.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, the partial-isomorphism construction and terminal extension, 27 November 2026.
+source_names:
+- Dorr, symmetric surjections
+- Bounded partial injections
+- Codex via Kodsi, 27 Nov
+references:
+- paper: dorr-bc-not-rc
+  role: background
+  locator: Definitions 15–18 and Proposition 20
+  note: Symmetric pinned profiles and their semantics.
+definition: >-
+  The auxiliary sites form $\kappa^+$ equivalence classes of size
+  $\kappa^+$ with $\kappa$ infinite. An ordinary loop maps some subset
+  of each class bijectively onto the entire corresponding target class,
+  under a permutation of the classes. Compose partial injections. Add
+  countably many independent classical terminal exits absorbing the loops,
+  with singleton individuals everywhere. Relations have ordinary
+  left-equivariant profiles with pins of size at most $\kappa$ and
+  arbitrary terminal values. Evaluate at the loop identity.
+arguments:
+- id: barcan-and-guards
+  holds: [necessary-barcan-r, necessary-truths-are-nd-necessary]
+  choice: uses
+  writeup: partial-class-isomorphisms-with-terminals
+  text: >-
+    Pull an upper relation's pin back along the unique live preimages
+    of any coefficient. A table on that preimage gives a whole lift,
+    and the terminal coordinates are also onto. For each ordinary truth
+    the liveness of its pin, false at the terminals, witnesses its
+    ND-necessity: whenever liveness remains possible, the arrow agrees on
+    the pin with an automorphism.
+- id: rigidity-and-inextensibility
+  holds: [necessary-tame-rigidity-r, necessary-inextensible-comprehension-r]
+  choice: uses
+  writeup: partial-class-isomorphisms-with-terminals
+  text: >-
+    Enlarge a weakly rigid relation's pin by a live reference in each
+    of its classes for the coefficient under consideration. Persistence
+    and weak inextensibility compare its row with images under all maps
+    agreeing on that pin. Pull each such image back through the coefficient
+    by a class-isomorphic prescription fixing the original pin. This gives
+    exact images at all arrows. For Inextensible Comprehension transport
+    a current set along group elements while its pin survives, and use
+    empty rows after its loss and at the terminals. A group element
+    matching the live inverse on the tuple support gives each required
+    preimage.
+- id: selection-and-atoms
+  holds: [necessary-atoms-are-strong-atoms-r]
+  fails: [transversal-r, relational-choice-r, actuality]
+  choice: free
+  writeup: partial-class-isomorphisms-with-terminals
+  text: >-
+    The liveness codes for a fresh class would have a canonical
+    representative carrying two almost disjoint pins outside a selector
+    pin. Preserve one and erase the other on a surjective partial map;
+    swapping classes then contradicts equivariance. Fresh transpositions
+    prevent selecting a classmate. Every occupied ordinary row splits on
+    a fresh liveness bit, so all atoms are terminal tuple singletons and
+    no scalar atom is true at the source.
+- id: finite-intervals
+  holds: [forcing-possibilism]
+  choice: uses
+  writeup: partial-class-isomorphisms-with-terminals
+  text: >-
+    Singleton individuals bound the inexact ordinals by finitely many
+    threshold tables. For countably many source tuples a common pin fixes
+    all of them, so all comparison and powerset graphs needed to exclude
+    an infinite carrier from smallness are present. The independent
+    terminal scalar bits have intervals of every finite Boolean-algebra
+    size.

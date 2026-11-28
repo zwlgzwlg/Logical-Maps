@@ -1,0 +1,65 @@
+id: paired-descriptor-sites
+name: Paired descriptor sites with both rigid powers
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two independent GPT-6 researchers checked the core factorizations, finite descriptor and terminal lifts, the modal guards, and the atomicity claims.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, paired-site lifting with finite descriptor support and a Stone catalogue, 27 November 2026.
+- Cian Dorr's paired-individuals model and the lifting proof of GPT-6 Astra, prompted by Cian Dorr, October 2026.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Dorr and Astra, Oct
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E.
+definition: >-
+  Take two coordinates of unrestricted block maps on the paired sites,
+  with or without a singleton in each coordinate. Attach a complete family
+  for the ground ghost theory, the Stone catalogue.
+  Core relational values consist of finitely pinned tables with independent
+  exit data and one old descriptor. Evaluate with a singleton only in the
+  second coordinate, with one public proposition name.
+arguments:
+- id: possible-mathematics
+  holds: [possibility-plus-signature-r, forcing-possibilism, well-ordering-r]
+  choice: uses
+  writeup: paired-sites-with-finite-descriptor-support
+  text: >-
+    The complete old components witness each eligible individual tuple.
+    Core rows are unrestricted at the identity. The old descriptor bound
+    precedes the choice of catalogue and the ordinal testers have full
+    old values, so each revised-small algebra occurs as a principal interval.
+- id: lifting-powers
+  holds: [tame-rigidity-r, rigid-power-r, weakly-rigid-power-r]
+  choice: uses
+  writeup: paired-sites-with-finite-descriptor-support
+  text: >-
+    Weak bounds have finite old descriptor support, core rows given by
+    their finite-pin hulls and clopen terminal fibres given by the closure
+    of the realized tuples. Core transports preserve all exit projections.
+    A suitable surjection lifts the core rigid subrelations. Finite unions
+    of haecceities and the finite intersection of dense open tuple fibres
+    cover the old and terminal subrelations.
+- id: strict-modalities
+  fails: [five-implies-two-hat-necessity, two-hat-implies-nd-necessity]
+  choice: free
+  writeup: paired-sites-with-finite-descriptor-support
+  text: >-
+    The two paired-site tests and their returns use core arrows while
+    their guards vanish at every exit.
+- id: stone-self-atom
+  fails: [self-atoms-are-atoms-t, atomicity-t]
+  choice: uses
+  writeup: paired-sites-with-finite-descriptor-support
+  text: The atomless regular-open Cantor factor gives a nonzero self-atom interval without any atom below its unit.
+- id: atom-transport
+  holds: [atoms-are-strong-atoms-r]
+  choice: free
+  writeup: paired-sites-with-finite-descriptor-support
+  text: The core and old factors are atomless; every atom is a singleton terminal tuple on an isolated Stone point and is strong.

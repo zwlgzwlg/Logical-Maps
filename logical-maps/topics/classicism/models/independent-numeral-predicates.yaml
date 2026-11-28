@@ -1,0 +1,26 @@
+id: independent-numeral-predicates
+name: Pointed pure models with one independent relation
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - A second OpenAI Codex (GPT-6) agent, prompted by Daniel Kodsi, independently checked the distinct numeral haecceities,
+    finite avoidance and the modal substitution argument.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, construction preserving the complete pure theory with an independent
+  relational constant, 26–27 November 2026.
+- The original models and their selected settings are identified in each variant.
+source_names:
+- Codex via Kodsi 27 Nov
+- Classicism map model records
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, pp. 37–39, signature schemata.
+group: independent-expansions-of-pure-models
+settings:
+  source: ultralimit-fork
+arguments: []

@@ -1,0 +1,60 @@
+# Mathematical Possibilism in full action models
+
+In ZFC, a full intensional action model satisfies revised Mathematical Possibilism at $r$ exactly when both of the following conditions hold.
+
+1. There are infinitely many outgoing arrows from $r$, counting its identity and all composites.
+2. One external finite $K$ bounds the cardinalities of the individual domains at every object reachable from $r$.
+
+The negative direction works in ZF. In particular, the individual domains may each be finite and still obstruct Mathematical Possibilism if their sizes along the cone are unbounded.
+
+If there are only $j$ outgoing arrows, there are exactly $j$ scalar atoms at $r$, the singleton addresses. Mathematical Possibilism requires arbitrarily many. Small finite Boolean algebras with every standard finite atom count can be presented by iterating finite unions of current haecceities, increasing type when necessary. [The finite-atom obstruction](finite-scalar-atoms-exclude-mathematical-possibilism.html)
+
+If the reachable individual domains have unbounded sizes, then for each standard $n$ there is a target whose individuals contain an $n$-element field. Fullness supplies a current well-order on that field. It distinguishes at that target the consecutive closed inexact ordinal thresholds $z_n$ and $z_{n+1}$. This distinguishes those entities at $r$ as well. No simultaneous selection of fields and no world with an infinite individual domain is required. The standard threshold map gives $\omega\hookrightarrow H$. The full current rows at $r$ now give a small complete atomless algebra of regular open sets of Cantor space. Every nonzero principal interval in the powerset of the outgoing arrows is atomic, so the required representation fails. [The choice-free coding and smallness proof](choiceless-ordinal-obstruction-to-mathematical-possibilism.html)
+
+Suppose instead that the uniform bound $K$ exists. The threshold $z_n$ holds of precisely the well-ordered fields with at least $n$ members, by induction on standard $n$ using the earlier proper cut in the successor operator. This is true at every reachable point. Thus $z_{K+1}$ is the bottom entity. The finite property
+\[
+  Z(\alpha)\equiv\bigvee_{0\le n\le K+1}\alpha=z_n
+\]
+contains the ordinal zero and is closed under ordinal successor. For its limit clause, let $Y$ be rigid and suppose all its present members lie in that finite list. Then $Y$ is necessarily equal in membership to the union of the haecceities of its current members. Persistence gives one inclusion and weak inextensibility tested with that finite union gives the other. For a nonempty list, taking the intersection of its thresholds on well-orders gives its most restrictive threshold at every subsequent point, even if thresholds coalesce after transport. An empty list gives $z_0$ under the well-order guard. Thus the ordinal limit belongs to $Z$ as a whole entity. This finite inductive property bounds the benchmark $H$.
+
+With choice, every infinite carrier of a presented complete Boolean algebra has a countably infinite subset $Y$. The full current types realize the comparison $H<Y$ and all current graphs on $Y$. Since every strictly smaller subset of $Y$ is finite, its power can be coded in a finite subset of $Y$. Hence $Y$ is power-closed and the algebra fails the revised smallness test. Every small algebra is therefore finite. With infinitely many outgoing arrows, the power set of any chosen finite set of $k$ addresses is a principal interval and represents the finite Boolean algebra with $k$ atoms. The empty set of addresses also gives the trivial interval. This proves the converse.
+
+In the full $\omega$-chain that adds one individual at each step, all stages have finite individual domains, while the sizes $1,2,3,\ldots$ in the initial cone are unbounded. Its failure of Mathematical Possibilism follows from the second paragraph of the negative argument. [The full chain with new individuals](../index.html#model/full-omega-chain-new-individuals)
+
+For finite-pin models whose current extensions are full, the same threshold and smallness arguments can apply even when scalar intervals are not full powersets. [Countable bases and scalar intervals](countable-bases-and-mathematical-possibilism.html)
+
+OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026. Two other OpenAI Codex researchers independently verified the equivalence, including the case of unbounded finite individual domains.
+
+## Two models without countable choice for reals
+
+Consider the full S5 action model with one individual and worlds indexed by the natural numbers. Work inside a universe of ZF and form all of its typed domains there. In Sageev's 1975 universe this action model satisfies revised Mathematical Possibilism. In Cohen's first symmetric universe it refutes the principle. Both universes have a countable family of nonempty sets of reals with no choice function. The same ground distinction applies to the full permutation and surjection examples on the natural numbers with a single individual.
+
+### Which algebras are small
+
+Write $H$ for the inexact ordinal benchmark. At a full action root with a uniform finite bound on all reachable individual domains, $H$ is finite. With a single individual throughout it contains at most the three ordered-field thresholds for cardinalities zero, one and two. The finite bound and its rigid-limit step hold in ZF.
+
+In any such model, a presented carrier $B$ is revised-small exactly when it is Dedekind-finite. If $B$ has a countably infinite subset $Y$, then $H<Y$. Each strictly smaller subset of $Y$ is finite, and its power set can be represented in a finite subset of $Y$. Full current rows realize all the graphs, so $Y$ is power-closed.
+
+For the converse, every subset $Y$ of a Dedekind-finite carrier is Dedekind-finite. If $Y$ is nonempty, choose $a\in Y$ and set $A=Y\setminus\{a\}$. Then $A<Y$. For any $C\subseteq Y$ with $C<Y$ there is a missing point $y\in Y\setminus C$. Transposing $a,y$ sends $C$ into $A$. A represented power of $A$ in $C$ would give an injection $\mathcal P(A)\to C$, contradicting Cantor's theorem after this transposition. The empty $Y$ cannot exceed $H$. This proves the smallness of a Dedekind-finite carrier for any benchmark.
+
+Consequently, under the uniform finite individual bound, revised Mathematical Possibilism at a full root with outgoing arrow set $W$ is equivalent in ZF to the following condition. Every complete Boolean algebra on a Dedekind-finite carrier presented at a finite type is isomorphic to $\mathcal P(S)$ for some $S\subseteq W$. Full current graphs present each such isomorphism, and $\mathcal P(S)$ is precisely the interval below the scalar $S$.
+
+### An atomless obstruction in Cohen's first model
+
+Suppose $X$ is an infinite set such that its set of finite subsets $[X]^{<\omega}$ is Dedekind-finite. The Boolean algebra of finite unions of finite-coordinate cylinders of $2^X$ is complete, atomless and Dedekind-finite. Karagila and Schlicht establish the finite-decision and topological characterizations for this Cohen poset. Here is a direct verification of the consequence for Boolean algebras. [Karagila and Schlicht, Theorem 6.1 and Lemma 6.11](https://doi.org/10.1098/rspa.2019.0782)
+
+Give a cylinder specifying $k$ coordinates mass $2^{-k}$ and use finite additivity on unions of cylinders. For an open set $O$ let $\lambda(O)$ be the supremum of the masses of finite-coordinate clopens contained in $O$. For a regular open $U$ and a coordinate flip $\tau_i$, put $\delta_i=\lambda(U\setminus\overline{\tau_i U})$. If $\tau_iU\ne U$, the flip being involutive, $U$ is not contained in $\tau_iU$. Regular openness then makes $U\setminus\overline{\tau_iU}$ nonempty, so $\delta_i>0$.
+
+For each positive integer $n$, choose a finite-coordinate clopen $V\subseteq U$ with $\lambda(V)>\lambda(U)-1/n$. For $i$ outside its coordinate set, $V=\tau_iV\subseteq\tau_iU$. Adding $V$ to a finite-coordinate clopen in $U\setminus\overline{\tau_iU}$ gives $\delta_i<1/n$. Thus each canonically defined set $F_n=\{i:\delta_i\ge1/n\}$ is finite. This argument chooses one approximant for a fixed $n$. It never selects a sequence of approximants. The increasing sequence $(F_n)$ has finite union, since infinitely many distinct terms would give an injection of $\omega$ into $[X]^{<\omega}$.
+
+Outside that finite union every coordinate flip fixes $U$. Within each cell determined by the union, finite compositions of the other flips give a dense orbit of any point. A cell meeting $U$ therefore lies in $\operatorname{int}\overline U=U$. This proves that every regular open is a finite-coordinate clopen. Regular opens form a complete Boolean algebra in ZF, with supremum given by interior of closure of union. A fresh coordinate splits any nonempty cylinder, giving atomlessness. Finally, the essential coordinates of a finite-coordinate clopen form its canonical least finite support. A sequence of distinct elements would have infinitely many such supports, since only finitely many clopens use a fixed finite support. Dedekind finiteness of $[X]^{<\omega}$ excludes this.
+
+Cohen's first model contains an infinite Dedekind-finite set $X$ of reals. Its finite subsets are Dedekind-finite as a family. Otherwise a countable sequence of distinct finite subsets would have infinite union. Sorting each finite subset by the real order enumerates that union, contradicting Dedekind finiteness of $X$. This $X$ also witnesses failure of countable choice for sets of reals. The nonempty sets of codes of increasing $n$-tuples of distinct elements of $X$ form a countable family. A choice sequence would enumerate infinitely many members of $X$. [Karagila and Schlicht on Cohen's first model and linearly orderable Dedekind-finite sets](https://pmc.ncbi.nlm.nih.gov/articles/PMC7426041/)
+
+The obstruction applies to **every** full action model in this universe. Finitely many arrows already give too few scalar atoms. If the root has an infinite set $W$ of outgoing arrows, identify $D_t$ with $\mathcal P(W)$. Code each real $S\subseteq\omega$ by a current-only unary predicate whose row consists of the finite $q\subseteq W$ with $|q|\in S$. Every standard finite size occurs in $W$ separately, so distinct reals receive distinct codes even when $W$ itself is Dedekind-finite. The finite-coordinate clopens over $X$ also have codes at a fixed type. For example, use the unique algebraic normal form of a Boolean function as a finite collection of squarefree monomials in its essential coordinates. This is a finite set of finite subsets of $X$, and two successive current-only predicate lifts encode these sets. Fullness supplies the carrier, order and all current graphs. The coded algebra is revised-small and atomless. Every nonzero principal interval of $\mathcal P(W)$ contains a singleton atom, so none represents this algebra. [The finite-arrow obstruction](finite-scalar-atoms-exclude-mathematical-possibilism.html)
+
+### The positive case in Sageev's model
+
+Sageev constructed a model of ZF where every infinite cardinal $m$ satisfies $m+m=m$ and some countable family of nonempty sets of reals has no choice function. Each infinite set $B$ there has an injection into a proper subset, by restricting a cardinal-doubling bijection to one copy of $B$. Iterating the injection from a missed element gives a countably infinite subset. Hence the only Dedekind-finite carriers are finite. Under a uniform finite individual bound, every revised-small complete Boolean algebra is finite. If there are infinitely many outgoing arrows, an interval consisting of all subsets of $k$ chosen arrows represents the algebra with $k$ atoms. This proves the positive verdict in Sageev's model without appealing to any choice principle which fails there. [Gershon Sageev, *An independence result concerning the axiom of choice* (1975)](https://doi.org/10.1016/0003-4843(75)90002-9)
+
+OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.

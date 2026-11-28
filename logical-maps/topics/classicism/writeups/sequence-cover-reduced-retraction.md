@@ -1,0 +1,78 @@
+# A complete strongly atomic cover of the reduced-power retraction
+
+Strong Atomicity and Boolean Completeness can hold together at every relational type while Inextensible Comprehension, propositional Atomicity, Barcan at type $t$, and the collapse of 5-necessity to ND-necessity all fail at an accessible world. The same root satisfies revised Mathematical Possibilism. The model keeps the exact sequence of entrance rows that the [reduced-power retraction](reduced-power-retraction.html) reads modulo finite differences. We work in ZFC.
+
+## The old action model and the new arrows
+
+Use the two base carriers $E^r,E^s$ of the reduced-power retraction. At a relational type $\tau=\sigma_1\ldots\sigma_k t$ write $A^d=\prod_l E^d_{\sigma_l}$ for the local tuple domain. The old carriers are
+$$
+E^r_\tau=\mathcal P(A^r)\times(\mathcal P(A^s)^\mathbb N/{=^*}),\qquad
+E^s_\tau=\mathcal P(A^s)\times E^r_\tau.
+$$
+The return $j$ projects an $s$-entity to its $r$-coordinate. A selected representative for the entrance class of $x\in E^r_\tau$ gives indexwise maps $h_i x=(U^x_i,x)$. They implement the genuine old entrances only after passing to a free ultrafilter. The old action model includes its initial point $r$, the iterated ultrapower entrances and deterministic returns. Include the ordinary base point $s$ with its single return to the ordinary point $r$ and its composites, interpreted by the same base-$s$ calculation in that model. This can be done by adjoining a copy of base $s$ with entrance $j$ into the existing history tree; its futures are exactly the ordinary base-$s$ futures.
+
+From a new root $o$ adjoin an arrow $b:o\to r$ and distinct arrows $a_i:o\to s$ for $i\in\mathbb N$, with $j a_i=b$. Every proper old continuation from the base $s$ factors through $j$, so this specifies all composites of new arrows. The only arrow into $o$ is its identity. At type $e$ give $o$ the same singleton as $r$, let $b$ be the identity on it and each $a_i$ send it to $0$ among the individuals $0,1$ at $s$.
+
+Inductively take the root relational entities to be
+$$
+E^o_\tau=\mathcal P(A^o)\times\mathcal P(A^r)\times\mathcal P(A^s)^\mathbb N.
+$$
+For $F=(Q,A,(U_i))$ its present row is $Q$. Set
+$$
+ bF=(A,[U_i])=:x,\qquad a_i F=(U_i,x).
+$$
+This gives $j a_i F=bF$. Old arrows transport these values in the old model. Give the one propositional name a root value outside the denotations of the countably many closed pure terms. This is possible since its sequence coordinate ranges over the powerset of the naturals, and it gives Independence in this single-name signature. Interpret the name by transport in the rooted unfolding, so that parallel entrances into a common old target can give it their different values without changing any pure calculation.
+
+**Term closure.** For a term in finitely many parameters choose its current row by evaluation at $o$, its $r$-row by evaluation at $r$ on the $b$-images, and its $i$-row by evaluation at $s$ on the $a_i$-images. For each parameter $P$ the equalities $a_iP=h_i(bP)$ hold for cofinitely many $i$, since the exact entrance sequence of $P$ represents the class of $bP$. This statement also holds for individuals. For finitely many parameters the equalities hold on a common cofinite set. There the entire rows of the term on those parameters agree, including every newly bound argument of an abstraction. The old term-closure calculation for the reduced-power retraction now gives exactly the required old $r$-entity as the $b$-image of this term. At every $a_i$ its current row was prescribed, and its return coordinate is correct because the old $j$ commutes with terms. Thus its entire $a_i$-image is correct even at exceptional $i$. This works for partial application, Boolean operations, equality, abstraction and quantification over the admitted target domains. Different root profiles differ at $1_o$, at $b$ or at some $a_i$ and tuple. Old values retain their original intensional equality criterion. This proves the action-model clauses for C.
+
+## Complete atomic Boolean algebras
+
+At the root, the order at any relational type is componentwise inclusion on the three displayed coordinates. Necessary inclusion implies it by testing $1_o,b,a_i$ at their current rows. Conversely, inclusion of the $r$-rows and pointwise inclusion of the sequence rows entail native order of the old $b$-values and the $a_i$-values, by the old coordinate and quotient comparisons (over equality modulo finite differences). Every continuation is thereby covered. Hence the root lattice is the entire powerset of the disjoint union $A^o\sqcup A^r\sqcup(\mathbb N\times A^s)$. All external unions are present. In particular the Boolean Completeness schema holds at every type.
+
+Every atom of this powerset is strong.
+
+- A singleton observation at $1_o$ becomes bottom at all proper continuations.
+- A singleton observation at index $i$ has old $b$-value bottom, because its sequence is zero off $i$. At $a_i$ it becomes the old $s$-atom with its one current tuple and bottom return coordinate. At every other $a_k$ it is bottom. The unique return kills the current-only atom.
+- A singleton observation in $A^r$ has old value $x=(\{\bar v\},[\varnothing])$. It is an old strong atom at $r$. Its value at each $a_i$ is $(\varnothing,x)$, the old $s$-atom supported only in the return coordinate. That atom also is strong. The hereditary calculation is proved in the [old model](reduced-power-retraction.html): after an old entrance an $r$-current singleton becomes a return-only singleton, and projection recovers the diagonal of the original atom. The same calculation applies in each ultrapower.
+
+Thus at every accessible stage an image of the indicated atom is bottom or is an atom. Every nonzero root relation contains one of the three kinds of singleton, proving Strong Atomicity at all relational types.
+
+## The accessible failures
+
+The distinguished $b$-successor is the original reduced-power point. It fails Inextensible Comprehension, since a relation with infinite current row admits no inextensible coextension there. It fails Atomicity and Boolean Completeness at $t$ because its old proposition order has an atomless $\mathcal P(\mathbb N)/\mathrm{Fin}$ factor with a countable family missing its join. Its Barcan counterexample at type $t$ is also unchanged. These failures refute the respective boxed principles at $o$.
+
+For the modal separation consider at $r$ the true current-only proposition $p=(1,[\varnothing])$. Every truth there is two-hat necessary by the [old return argument](reduced-power-retraction.html), hence is 5-necessary. For every true $q$ at $r$ its current component is true. At any first entrance $p$ is false and $\Diamond q$ holds, because the deterministic return restores the diagonal of the original true $q$. Thus no true guard $q$ satisfies $\Box(\Diamond q\to p)$, proving $\neg\Box_{\ne}p$. The same witness therefore separates two-hat and 5-necessity from ND-necessity at an accessible point.
+
+## Revised Mathematical Possibilism
+
+Let $\rho=(e\to e\to t)\to(e\to t)\to t$. Consider the root $\rho$-entities in $Z$ whose rows depend only on the current extensions of their order and field arguments in each of the three coordinates, with the same extensional table at every $a_i$. There are only finitely many such entire root entities. Their coordinates are exactly one table over the singleton root individual domain, one over the singleton at $r$, and one over the two individuals at $s$. Every current subset is an admitted predicate extension at all three base points.
+
+The ordinal zero belongs to $Z$. Successor preserves $Z$ since current well-orderhood and restriction to a strict initial segment are extensional in the order and field, and the same formula is applied in the same base $s$ structure at every $a_i$. If $Y$ is rigid and all its current members lie in $Z$, its current extension is a finite set. Thus $Y$ is the finite disjunction of the haecceities of those members. Indeed persistence puts their transported images in $Y$, and weak inextensibility bounds $Y$ by this finite disjunction, which necessarily accepts each current member. This includes the empty disjunction. At every coordinate the limit of $Y$ consequently evaluates well-orderhood and the finitely many applications of those same members. Their tables are extensional and identical across $i$. Hence the limit again belongs to $Z$. The root can test membership in $Z$, so impredicative ordinal induction bounds the number of inexact ordinals by $|Z|$.
+
+Every infinite carrier contains a countably infinite subcollection strictly exceeding this bound. Its strictly smaller subsets are finite and its countably many points suffice to code every subset of any one such finite subset with distinct codes. All required current comparison and membership graphs are admitted. Thus every revised-small CBA is finite. A finite Boolean algebra with $k$ atoms is isomorphic to the interval below the join of any $k$ different propositional atoms among the $a_i$ observations. Bottom handles $k=0$, and the isomorphism has an admitted current graph. This is Mathematical Possibilism at every carrier type.
+
+## Other local verifications
+
+At each relational input type both $b$ and each $a_i$ are onto. Given an old $r$-entity, take any representative sequence and its given $r$-row. To lift $(V,x)$ at $a_i$ do the same for $x$, changing the $i$-row to $V$, which preserves its class. Consequently if a tester necessarily holds of every current argument, its current rows at $1_o,b,a_i$ are all full. Its root entity is top by coordinate equality. This proves Barcan for relational inputs. At $e$ instead, the tester with full $o$ and $r$ rows and $s$ rows $\{0\}$ accepts the sole current individual necessarily and rejects $1$ at each $a_i$. All its later rows on transported old inputs follow by the same representative/return calculation as in the old individual Barcan counterexample.
+
+For Modal Well-Ordering choose a well-order at each fixed type on the domains at $o,r,s$. Use their three graphs, constant across the $s$ sequence. The old model's modal well-order proof verifies all later ultrapower stages by Łoś. At the old deterministic return the prescribed order is precisely the $r$-order. Hence the new relation necessarily well-orders its type.
+
+The proposition supported just at the new identity is a true guard for ND-necessity of every root truth, because it is impossible at every proper continuation. The new root and all old points satisfy Atoms are strong atoms at every relational type. The boxed bridge therefore holds. In contrast, the proposition supported just on $a_0$ and $a_1$ is a self-atom: at each of the only two arrows where it holds, it is the old current-only propositional atom. Its two root atoms make it fail to be an atom at the root.
+
+All current subsets of the root domains are admitted. Since its proposition domain is infinite, its Frege numbers at $t$ are the distinct standard numerals: their set is an available inductive row, and each numeral belongs to every inductive row. All finite sizes occur and zero is not a successor and successor is injective there. The old proof establishes the same Peano guard and Axiom of Infinity at $t$ throughout the old cone. Consequently necessary Axiom of Infinity at $t$ holds, and the arithmetic guard holds necessarily at the new root. Arithmetic Necessitism would make the canonical number property at $t$ rigid and hence rigid at the old $r$; there it has an infinite number row and fails even weak rigidity, as in the old proof. Analytic Necessitism fails as well. A real structure is possible at $r$, but any necessarily real rigid structure at the new root would give a real structure with rigid number row at $r$, where all weakly rigid number rows are finite.
+
+The sentence-level Necessity of Arithmetic and Necessity of Second-Order Analysis extend to the new point. At each type with the Peano guard, current full rows give exactly the standard natural numbers with their recursive operations. For any real structure, full current rows make its numbers standard with all their subsets present as reals and all finite-arity relations among its numbers and reals available. Thus each guarded sentence agrees with its ordinary truth value, as it does in the old base structures and, for each fixed sentence, at their iterated ultrapowers by Łoś.
+
+Finally Rigid Comprehension fails at the new root. If a rigid relation is coextensive there with the universal property of propositions, persistence and surjectivity of $b$ place every old $r$-proposition in its $b$-extension. The transported relation is rigid at $r$, whereas the reduced-power finite-bounds theorem gives finite current extension for every weakly rigid relation there. The old proposition domain is infinite.
+
+## Rigid Power
+
+Let $F$ be rigid at $o$ with current tuple set $E$. Its rows at $b$ and $a_i$ are exactly $bE$ and $a_iE$. Persistence gives the inclusions from left to right in $bE\subseteq F_b$ and $a_iE\subseteq F_{a_i}$. For the reverse inclusions take the root tester with rows $E,bE,(a_iE)_i$. It contains the haecceity of each tuple in $E$ by the coordinate order, so inextensibility bounds $F$ by the tester.
+
+The old entity $bF$ is rigid at $r$. Hence $bE$ is finite and $bF$ is the finite union of the haecceities of its members, by the old finite-bounds theorem. On a cofinite set of indices the entire $i$-row of this finite union equals $h_i[bE]$, where $h_i$ acts pointwise on tuples. Thus $a_iE=h_i[bE]$ on that one cofinite set. For each $y\in E$ and every such $i$ we actually have $a_i y=h_i(b y)$, since $j a_i y=by$ and $jh_i=1$.
+
+For any $E'\subseteq E$ let $F'$ have rows $E',bE',(a_iE')_i$. It lies below $F$. At $b$ it is the finite union of the haecceities of $bE'$, because $a_i E'=h_i[bE']$ on the same cofinite set. This is rigid. At each $a_i$ the old $s$-classification of the reduced-power model applies: its return coordinate $bF'$ is rigid, with current row $bE'=j[a_iE']$. Thus its $a_i$-value is likewise rigid. At $o$, $F'$ is weakly persistent because every member of $E'$ is in its indicated image rows and those exit values are persistent, and weakly inextensible because any tester necessarily holding of every member contains each of the three rows. At every proper continuation it is already rigid by the two exit calculations. Hence $F'$ is rigid.
+
+Every rigid $G\le bF$ at $r$ lifts to a rigid $F'\le F$ by taking $E'=\{y\in E:by\in G_1\}$. Its image at $b$ and $G$ are rigid and have the same current extension. Every rigid $G\le a_i F$ at $s$ similarly lifts at $a_i$ by taking the inverse image under $a_i$ of its current extension. Rigid coextensive relations are identical. At the root the power property of $F$ is persistent by C, and weakly inextensible because these lifts at $b$ and every $a_i$ include all its respective members and the coordinate order tests every inclusion. At every proper continuation the power property is rigid by the old necessary Rigid Power and the rigidity of the transported $F$. This proves Rigid Power at the new root and hence throughout.
+
+Functional Choice fails. Take distinct root propositions $p,q$ with $bp=bq$ (vary their new current truth only), and choose two root propositions with distinct $b$-images, for instance top and bottom. A serial relation may prescribe top as the sole output for $p$ and bottom for $q$ using its arbitrary current row, with any single output elsewhere. No operation can make these choices because its transport along $b$ must have the same value at $bp=bq$.

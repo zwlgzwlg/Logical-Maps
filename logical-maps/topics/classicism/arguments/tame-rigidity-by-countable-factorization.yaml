@@ -1,0 +1,17 @@
+id: tame-rigidity-by-countable-factorization
+requires: [integer-stages-with-countably-pinned-pair-profiles]
+holds: [necessary-tame-rigidity-r]
+choice: uses
+by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+date: '2026-11-27'
+writeup: tame-rigidity-at-the-paired-stages
+text: >-
+  A weakly rigid relation has the union of the images of its current
+  members over arrows agreeing on any enlarged countable pin. Enlarge
+  the source pin to include the source copies of intermediate ordinary
+  pairs meeting the next tester's pin or the image of the enlarged
+  source pin. Pairs required to stay fixed can now stay fixed through
+  both factors. Fresh intermediate pairs implement the prescribed
+  values on the remaining member support. Thus any tester necessarily
+  covering an intermediate row also covers every later row. Zeros,
+  when present, have exact current images by their isolated addresses.

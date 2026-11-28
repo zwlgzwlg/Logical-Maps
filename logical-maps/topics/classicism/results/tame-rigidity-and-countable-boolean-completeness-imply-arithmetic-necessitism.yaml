@@ -1,0 +1,41 @@
+id: tame-rigidity-and-countable-boolean-completeness-imply-arithmetic-necessitism
+premises:
+- tame-rigidity-r
+- countable-boolean-completeness-r
+conclusion: arithmetic-necessitism
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026, using Zachary Goodsell's Lemmas 3, 4 and 8
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Independently reviewed by a second OpenAI Codex (GPT-6) agent, prompted by Daniel Kodsi, 26 November 2026
+  date: '2026-11-26'
+  lean: verified
+  lean_ref: Classicism.Map.tame_rigidity_and_countable_boolean_completeness_imply_arithmetic_necessitism
+sources:
+- Zachary Goodsell, Arithmetic is Necessary, draft of 5 June 2024, §5, Lemmas 3, 4 and 8.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, application of Tame Rigidity to the property of being a number, 26 November 2026.
+source_names:
+- Arithmetic is Necessary
+- Codex via Kodsi, 26 Nov
+references:
+- paper: goodsell-arithmetic-necessary
+  role: proof
+  locator: §5, Lemmas 3, 4 and 8, pp. 14–19
+- paper: sun-possible-worlds-without-atomicity
+  role: background
+  note: Tame Rigidity.
+proof: >-
+  Fix $\sigma$. By Goodsell's Lemma 3 every current number is necessarily a number.
+  By Lemma 8, Countable Boolean Completeness at the counting type $\sigma$ and relation
+  type $\nu_\sigma t$, where $\nu_\sigma=(\sigma t)t$, gives weak inextensibility of
+  $\mathbb N_\sigma$. Its weak persistence and weak inextensibility give weak rigidity.
+  Tame Rigidity at $\nu_\sigma t$ makes $\mathbb N_\sigma$ rigid. Lemma 4 makes
+  distinct current numbers necessarily distinct under the principle's own antecedent
+  $\Box I^*_\sigma$.
+notes: >-
+  Consequently Rigid Comprehension at the evaluation point suffices, by
+  [[rigid-comprehension-implies-tame-rigidity]],
+  [[rigid-comprehension-r-implies-boolean-completeness-r]], and
+  [[boolean-completeness-r-implies-countable-boolean-completeness-r]].

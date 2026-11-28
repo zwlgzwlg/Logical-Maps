@@ -1,0 +1,25 @@
+id: self-atomicity-r-and-strong-atomicity-t-imply-strong-atomicity-r
+premises:
+- self-atomicity-r
+- strong-atomicity-t
+conclusion: strong-atomicity-r
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - Two other GPT-6 researchers independently checked the modal scopes and the argument at arbitrary relational types.
+  date: '2026-11-27'
+  lean: verified
+  lean_ref: Classicism.Map.self_atomicity_r_and_strong_atomicity_t_imply_strong_atomicity_r
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+- Cian Dorr's self-atoms and the 30 October instance-proposition argument of Claude Opus 5.5 prompted by Cian Dorr.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Dorr and Opus, 30 Oct
+proof: >-
+  Below any nonbottom relation choose a self-atom X. Its instance proposition p is nonzero, so choose a strong scalar atom w below p. Restrict X by w pointwise. Its instance proposition is w. Wherever the restriction is inhabited it is a nonzero subrelation of the then-atom X and equals X there. Thus the restriction is a self-atom with strong instance proposition, hence strong. It lies below the original relation.
+notes: >-
+  The interval argument is given in [[atoms-are-self-atoms-r-and-atoms-are-strong-atoms-t-imply-atoms-are-strong-atoms-r]], using the local observation in [[self-atoms-are-strong-atoms-t-implies-self-atoms-are-strong-atoms-r]].

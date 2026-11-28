@@ -1,0 +1,99 @@
+id: truncated-paired-stages
+name: "Truncated paired stages: glued proposition name"
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Independent OpenAI Codex (GPT-6) reviewers, prompted by Daniel Kodsi, checked the coefficient composition, modal guards, rigid powers and cutoff bounds, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, nonexpansive tail coefficients and cutoff construction, 27 November 2026.
+- The integer stages of paired individuals, the fixed-or-collapsed modal tests, and the finite-support truncation models.
+source_names:
+- Kodsi and Codex, 27 Nov
+- Paired stages and truncations
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendices D and E, supported action models and truncations.
+- paper: bounds-of-possibility
+  role: background
+  locator: Appendix D, hats and Barcan for 5-necessity.
+definition: >-
+  At integer stage $n$ each integer-labelled coordinate has pairs indexed by the
+  countable ordinals, and precisely the coordinates at most $n$ have a singleton.
+  There is one actual individual. At resolution $\alpha$ the earlier paired sites
+  are separate cells and all remaining sites in a coordinate form one tail cell.
+  Coefficients preserve the partitions in the nonexpansive sense at every resolution
+  and either fix each ordinary pair pointwise or collapse it. Decorate each map with
+  a free-monoid word and a cutoff $\gamma\le\omega_1$; bounded cutoffs require the
+  coefficient to be constant on each source cell at that resolution. Compose by
+  minimum of cutoffs. A countable site pin and the cutoff up to one countable
+  bound determine the rows at arrows with common target and word. Evaluate at zero.
+  Give the sole propositional name its last-letter interpretation.
+arguments:
+- id: atomicity-and-completeness
+  holds: [necessary-atomicity-r, necessary-countable-boolean-completeness-r]
+  fails: [boolean-completeness-t, atoms-are-self-atoms-t]
+  choice: uses
+  writeup: truncated-paired-stages
+  text: >-
+    A bounded cutoff is isolated by its exact value and one site per cell across
+    the countably many coordinates. Truncating above a countable pin preserves that
+    pin and gives a bounded arrow witnessing the same nonempty row. Countable joins
+    use unions of pins and suprema of bounds. Alternating cofinally along the
+    truncations cannot be the truth table of a join. The singleton atom of a
+    constant-per-coordinate cutoff-zero arrow splits after that arrow.
+- id: all-truths-five
+  holds: [necessary-truth-implies-five-necessity]
+  fails: [five-implies-two-hat-necessity, two-hat-implies-nd-necessity]
+  choice: uses
+  writeup: truncated-paired-stages
+  text: >-
+    Tail maps moving the new singleton to a sufficiently late pair and collapsing the
+    tail back are nonexpansive and fix the two countable pins on return. The old
+    Barcan-for-5 argument separates the first two operators. At the other coordinate,
+    returning an ordinary pair to the singleton defeats the target test fixing its mates.
+    When a loop guard fixes the partners and demands a sufficiently high cutoff,
+    ND-possibility forces all tested ordinary pairs and existing singletons to be fixed.
+    With the 5-necessary stage predicate this proves 5-necessity of every truth.
+- id: rigid-powers
+  holds: [necessary-tame-rigidity-r, necessary-weakly-rigid-power-r, necessary-rigid-power-r]
+  choice: uses
+  writeup: truncated-paired-stages
+  text: >-
+    For a weakly rigid relation the row at every isolated arrow is the image of
+    its current extension, since a tester may restrict just that row. An idempotent
+    truncation above the pin therefore fixes every member of the extension.
+    All rows are exact images by precomposing with this truncation, and the same
+    construction on any subset of the extension gives a rigid subrelation.
+    Taking inverse images lifts each member of either power at every arrow.
+- id: mathematical-possibilism
+  holds: [forcing-possibilism]
+  fails: [barcan-t]
+  choice: uses
+  writeup: truncated-paired-stages
+  text: >-
+    A finite set of uniform extensional tables on the single individual bounds
+    the inexact ordinals by closure under successor and rigid limits. Each revised-small
+    CBA is finite and occurs as the interval below finitely many isolated addresses.
+    At a cutoff-zero arrow a tester can reject a target proposition that distinguishes
+    continuation cutoffs, although no transported source proposition does so.
+- id: mathematics
+  holds: [modal-well-ordering-r, arithmetic-necessitism, necessity-of-arithmetic, necessary-axiom-of-infinity-t, second-order-analytic-necessitism, necessity-of-second-order-analysis]
+  choice: uses
+  writeup: truncated-paired-stages
+  text: >-
+    At relational counting types numeral denotations form exactly the local natural
+    numbers and transport bijectively. For analysis use the codes indexed by subsets
+    of the integer target labels, whose relations and represented powers have exact-image
+    rows at every arrow. Full current subsets and graphs give the ordinary guarded
+    sentence theories; target-specific well-orders give Modal Well-Ordering.
+- id: signature
+  holds: [logical-necessity-r]
+  choice: uses
+  writeup: truncated-paired-stages
+  text: >-
+    Translate stages and coordinate labels simultaneously for pure homogeneity. The free word letters realize the chosen witnesses for all satisfiable pure matrices at the name; their countable family has a common countable support and bounded supremum of cutoff bounds.

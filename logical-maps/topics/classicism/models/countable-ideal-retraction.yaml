@@ -1,0 +1,168 @@
+id: countable-ideal-retraction
+name: Retraction over the countable ideal on the first uncountable ordinal
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two additional OpenAI Codex (GPT-6) agents independently checked the typed domains, iterated generic ultrapowers, selection operation and both rigid-power failures.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+- The reduced-power retraction and its typed entrance and return construction.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Reduced-power retraction
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §§3.4–3.5, pp. 55–61, typed intensional action models
+group: cardinal-ideal-retractions
+settings: {bound: countable}
+arguments:
+- id: selection
+  holds: [functional-choice-r]
+  choice: uses
+  writeup: countable-ideal-retraction
+  text: >-
+    Choose an allowed whole output for each current input. At every index the
+    virtual entrance records the whole input in its return coordinate, so the
+    selection operation can give these distinct virtual images the current
+    rows of the corresponding virtual outputs. Application recovers the
+    prescribed whole output modulo the null ideal.
+- id: new-rigid-subset
+  fails: [rigid-power-r, weakly-rigid-power-r]
+  choice: uses
+  writeup: countable-ideal-retraction
+  text: >-
+    A labelled scalar family of size equal to the null bound has a rigid
+    exact-image representative. An injection from the index cardinal into
+    its power set makes the subset at the generic index different from every
+    old subset of labels. A tester accepting all properties except those
+    with this new extension at each entrance necessarily holds of every
+    current weakly rigid subproperty. At the first entrance the omitted row
+    is represented by a rigid subproperty with its exact-image return.
+- id: bounded-current-extensions
+  holds: [necessary-tame-rigidity-r, necessary-weakly-inextensible-comprehension-r]
+  fails: [weak-rigid-comprehension-r, inextensible-comprehension-r]
+  choice: uses
+  writeup: countable-ideal-retraction
+  text: >-
+    A weakly rigid row larger than the null bound would have positively many distinct
+    members that persist at distinct virtual indices. Omitting exactly one
+    chosen member there preserves each fixed member modulo the ideal and
+    violates weak inextensibility at a generic entrance. Rows of at most the null bound have
+    exact-image representatives because generic embeddings map those sets
+    onto their pointwise images. A weakly rigid relation at a return has a
+    weakly rigid return coordinate, hence is rigid as well. For a fully
+    inextensible relation the same size bound follows by choosing omitted
+    tuples with distinct return projections. Empty entrance or return rows
+    give weakly inextensible coextensions of all current rows.
+- id: strong-atoms
+  holds: [necessary-atoms-are-strong-atoms-r, necessary-strong-actuality]
+  fails: [atomicity-t]
+  choice: uses
+  writeup: countable-ideal-retraction
+  text: >-
+    Every positive scalar or relation germ splits on two positive sets of
+    occupied indices. The root atoms are current singletons, each projecting
+    to an atom of the return factor at entrances. The other atoms at an
+    entrance are current singletons with bottom return. These computations
+    are preserved along elementary embeddings. At either kind the singleton
+    of the empty tuple in the current row is a true strong atom.
+- id: countable-unions
+  holds: [necessary-countable-boolean-completeness-r]
+  fails: [boolean-completeness-t]
+  choice: uses
+  writeup: countable-ideal-retraction
+  text: >-
+    Native countability supplies an internal enumeration, and the ideal
+    absorbs every internal countable union of exceptions. Rowwise union
+    therefore gives a join for any such family at either kind. The scalar
+    germs of a partition into a positive number of positive blocks have no join:
+    removing one covered index per block strictly lowers any upper bound.
+- id: comprehension-and-orders
+  holds: [gallin-extensional-comprehension-r, modal-well-ordering-r]
+  fails: [barcan-t]
+  choice: uses
+  writeup: countable-ideal-retraction
+  text: >-
+    Use the inverse image of a current extension under the return projection
+    for every virtual entrance row. Both membership signs then persist,
+    including on newly available tuples. Internal well-orders on the two
+    entire current carriers give a necessary well-order. The tester for the
+    virtual images of the source scalars misses at an entrance a scalar with
+    a changed current bit and the same return.
+- id: numbers-and-reals
+  holds: [necessary-axiom-of-infinity-e, necessary-axiom-of-infinity-t, arithmetic-necessitism, necessity-of-second-order-analysis]
+  choice: uses
+  writeup: countable-ideal-retraction
+  text: >-
+    All stages have the standard naturals and full internal current rows.
+    Thus the Frege number properties have exactly the standard numerals as
+    members, and these transport bijectively. Every real-number structure
+    computes the full internal analytic hierarchy of its ground, with the
+    same theory on all branches by elementary equivalence.
+
+- id: self-atoms-and-hats
+  holds: [necessary-self-atoms-are-strong-atoms-r, necessary-truth-implies-two-hat-necessity]
+  fails: [self-atomicity-t, two-hat-implies-nd-necessity]
+  choice: uses
+  writeup: countable-ideal-retraction
+  text: >-
+    A root relation with a nonzero germ is instantiated at an entrance
+    where its return is also nonzero, so its transport splits. The remaining
+    root self-atoms are current singletons. At an entrance a self-atom is a
+    current singleton or has a self-atom return alone and is strong.
+    The current-only bit at each entrance disappears after its return, giving
+    ND-necessity of all truths there. The root-only bit holds at every root
+    revisit, where original truths persist by elementarity, and is not
+    ND-possible at any entrance. It witnesses two-hat necessity for every
+    root truth, while every true root guard recurs after the first entrance.
+- id: one-name-and-finite-algebras
+  holds: [independence-signature-r]
+  fails: [forcing-possibilism]
+  choice: uses
+  writeup: countable-ideal-retraction
+  text: >-
+    Give the sole propositional name an entrance support with both it and its
+    complement positive. Closed pure scalar terms have constant entrance
+    row because their virtual entrance evaluation has no parameters. The
+    four-element Boolean algebra is revised-small; any interval isomorphic
+    to it would have two distinct global atoms, while the root scalar
+    algebra has just one.
+
+- id: real-carrier-over-the-countable-ideal
+  when: {bound: countable}
+  fails: [analytic-necessitism]
+  choice: uses
+  writeup: countable-ideal-retraction
+  text: >-
+    The scalar sort contains an internal continuum of labels and admits a
+    real structure. Every such structure has an internally uncountable real
+    carrier, whereas every weakly rigid current row is internally countable.
+- id: real-carriers-at-the-continuum
+  when: {bound: continuum}
+  holds: [analytic-necessitism]
+  fails: [second-order-analytic-necessitism]
+  choice: uses
+  writeup: countable-ideal-retraction
+  text: >-
+    Coherent labels carry the natural numbers and every internal real,
+    all preserved bijectively by the generic embeddings. Their exact-image
+    carriers and relations witness the analytic guard at each relational
+    type. The individual sort is countable throughout. At propositional
+    type a rigid representing power would require at least two to the
+    continuum many members, exceeding the rigid-row bound.
+- id: powers-of-the-real-carriers
+  when: {bound: power-of-continuum}
+  holds: [second-order-analytic-necessitism]
+  choice: uses
+  writeup: countable-ideal-retraction
+  text: >-
+    For each finite arity take the exact-image predicates for all internal
+    relations on the number and real labels, and the exact-image family of
+    these predicates. Its size is at most the chosen null bound. No new
+    subsets of these label tuples appear under any generic embedding, so
+    every relation at every continuation agrees there with a representative.

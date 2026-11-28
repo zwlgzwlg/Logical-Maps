@@ -31,6 +31,13 @@ settings:
     forcings is weakly homogeneous), hence $V$-decisive.'
 
 meets:
+  generic-orbit-multiplicity: >-
+    For $\operatorname{Add}(\omega,\omega_2)$ use the group of finite bit flips
+    on its coordinate set and the all-bit flip. For the product of the collapse
+    with Cohen forcing, combine ground range permutations supported at countably
+    many collapse coordinates with finite Cohen flips. The all-bit flip on the
+    Cohen coordinate is outside each orbit. In both cases the set of conditions
+    injects into the powerset of the ground reals.
   adds-a-real: In either case $P$ adds a Cohen real.
   changes-ch: CH holds in $V[G]$ iff it fails in $V$, by the choice of $P$.
 

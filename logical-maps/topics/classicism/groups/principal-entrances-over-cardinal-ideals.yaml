@@ -1,0 +1,96 @@
+id: principal-entrances-over-cardinal-ideals
+name: Principal entrances with returns over cardinal ideals
+definition: >-
+  Give each root countably many ordinary entrances. A relational entity has a current tuple row and one site row per entrance.
+  The site reads that row and retains the entire root entity as a constant return germ. For $K=\lambda^+$,
+  identify sequences of return entities agreeing outside at most $\lambda$ indices and take all generic ultrapower returns.
+  Iterate through finite histories from a countable elementary substructure of a sufficiently large regular $H_\theta$.
+  Individuals are singletons and the one propositional name denotes an ordinary entrance address. {{setting}}
+parameters:
+  setting:
+    text: The size cutoff for null sets of return indices and the optional forcing entrance.
+    generate: true
+    default: countable
+    values:
+      countable:
+        text: Use the ideal of countable sets.
+        label: countable ideal
+      continuum:
+        text: Take $\lambda$ equal to the continuum.
+        label: continuum ideal
+      power-of-continuum:
+        text: Take $\lambda$ equal to the size of the powerset of the reals.
+        label: power of the continuum
+      collapse:
+        text: >-
+          Start with a ground satisfying $\neg\mathrm{CH}$, use its continuum for $\lambda$ and add a countably closed forcing
+          entrance collapsing that cardinal to $\aleph_1$. Read a name for the forcing row and return the original ground entity.
+        label: continuum ideal and collapse
+arguments:
+- id: cutoff
+  holds: [functional-choice-r, modal-well-ordering-r, boolean-completeness-r, necessary-countable-boolean-completeness-r, weak-rigid-comprehension-r, necessary-weakly-inextensible-comprehension-r]
+  fails: [rigid-power-r, weakly-rigid-power-r, tame-rigidity-r, inextensible-comprehension-r, barcan-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: principal-entrances-over-cardinal-ideals
+  text: >-
+    A set has a rigid exact-image representative up to size $\lambda$. Above the cutoff a tester omitting a varying member at the low return
+    eliminates every inextensible coextension. At the cutoff a new subset in the ultrapower gives a rigid subrelation missed by a second tester.
+    Constant entrance tags give completely independent selector tables. Countable unions of null sets remain null at every ordinary site.
+- id: principal-addresses
+  holds: [necessary-truth-implies-two-hat-necessity, self-atoms-are-atoms-r, forcing-possibilism, necessary-axiom-of-infinity-t, independence-signature-r, arithmetic-necessitism]
+  fails: [potential-infinity-e, possibly-witnessed-possibility-r, strong-actuality, self-atomicity-t, self-atoms-are-strong-atoms-t, necessary-atomicity-t, two-hat-implies-nd-necessity]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: principal-entrances-over-cardinal-ideals
+  text: >-
+    Countably many isolated addresses represent all finite Boolean algebras, exhausting the small algebras under the finite ordinal bound.
+    A permutation moves the named address, and it stays nonbottom. At an ordinary site each nonzero scalar germ splits.
+    The current root bit guards two-hat necessity but fails ND-necessity. Every return is onto the internal naturals.
+- id: elementary-stages
+  when: {setting: [countable, continuum, power-of-continuum]}
+  holds: [atomicity-r, necessity-of-second-order-analysis]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: principal-entrances-over-cardinal-ideals
+  text: >-
+    The root factors are full powersets. All current rows realize their set model's second-order analytical quantifiers,
+    and every completed excursion is elementary.
+- id: countable-rigidity
+  when: {setting: countable}
+  fails: [analytic-necessitism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: principal-entrances-over-cardinal-ideals
+  text: With a countable cutoff, the real carrier at scalar type exceeds every possible rigid bound.
+- id: continuum-rigidity
+  when: {setting: [continuum, collapse]}
+  holds: [analytic-necessitism]
+  fails: [second-order-analytic-necessitism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: principal-entrances-over-cardinal-ideals
+  text: >-
+    Every relational sort admits enough labels for a rigid structure for the reals. All their subsets cannot fit into a rigid represented power.
+    The collapse introduces no new reals.
+- id: higher-analysis
+  when: {setting: power-of-continuum}
+  holds: [second-order-analytic-necessitism]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: principal-entrances-over-cardinal-ideals
+  text: Each family of canonical representatives of subsets of a finite product of real labels now lies within the rigidity bound.
+- id: collapse-of-the-continuum
+  when: {setting: collapse}
+  fails: [atomicity-t, non-contingency-of-ch]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: principal-entrances-over-cardinal-ideals
+  text: The atomless forcing changes the cardinality of the reals. Ground and extension both have real structures at scalar type.

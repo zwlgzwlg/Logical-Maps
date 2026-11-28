@@ -189,5 +189,17 @@ arguments:
     its transport along $h_1$; but an instance $x$ of a rigid carrier $X$ is, since for $y$ with
     $h_1\cdot y=h_1\cdot x$ persistence gives $h_1\cdot y\in X_{h_1}$, inextensibility $Xy$, and
     necessary distinctness $y=x$.
+- id: ordinal-benchmark-and-scalar-intervals
+  holds: [forcing-possibilism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: countable-bases-and-mathematical-possibilism
+  text: >-
+    Singleton individuals at every object bound the ordinal benchmark by
+    three. Root rows are unrestricted, so an infinite complete Boolean
+    algebra contains a countably infinite power-closed set exceeding that
+    benchmark. Finite algebras are represented by the separately addressable
+    terminal atoms.
 notes: 'It is a model: the limit condition commutes with every finite operation, so every term denotes
   in the domains (write-up, Lemma 2).'

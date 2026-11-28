@@ -1,0 +1,88 @@
+id: truncation-words
+name: Truncations of a regular cardinal with free words
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two additional GPT-6 agents independently checked the signature construction and necessary Atomicity without Actuality.
+  date: '2026-11-26'
+  lean: none
+sources:
+- Andrew Bacon and Cian Dorr, Classicism, Appendix D, Proposition D.5(6), truncation example.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, regular-cardinal truncations with free words, 26 November 2026.
+source_names:
+- Classicism
+- Codex via Kodsi, 26 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix D, Proposition D.5(6), pp. 74–75, 78–79
+definition: >-
+  For any set-sized signature set $\kappa=\max(\aleph_0,|\Sigma|)$ and choose
+  a regular $\lambda>\kappa$. The one-object arrow monoid is $T\times W$,
+  where $T$ consists of the identity and the maps $g_\alpha(\beta)=\min(\alpha,\beta)$
+  on $\lambda$, and $W$ is free on $\kappa$ letters. Individuals form a
+  singleton. A relational profile has arbitrary rows subject to one pin
+  of size less than $\lambda$ on the truncation component, uniform over all
+  words. Interpret the signature by disjoint last-letter cylinders of chosen
+  witnesses. Evaluate at the identity.
+meets:
+  one-object-action-model: There is one object, with the indicated arrow monoid.
+  one-individual: The unique individual is fixed by every arrow.
+  extensionally-full: Each constant-row profile has empty truncation pin.
+  finite-extension-properties-everywhere: All current rows and tuple singletons can be represented.
+  infinitely-many-propositions: Distinct isolated truncation addresses yield distinct singleton propositions.
+  no-actuality-anywhere: No true proposition at the one object is an atom.
+arguments:
+- id: signature
+  holds: [logical-necessity-r, possibly-witnessed-possibility-r]
+  choice: uses
+  writeup: truncation-words
+  text: >-
+    Assign a different last letter to each pure formula and list of matching
+    constants with an actual witnessing tuple. On its cylinder put the
+    chosen value of each relational position, as an entire profile. Uniting
+    their pins preserves the strict $\lambda$ bound by regularity. Each
+    individual position already has its unique witness. Shifting by the
+    chosen letter realizes the full tuple. Pure existential truth is
+    uniform in a one-object model, giving both possibility directions.
+- id: atomic-without-actuality
+  holds: [necessary-atomicity-r]
+  fails: [actuality, atoms-are-self-atoms-t]
+  choice: free
+  writeup: truncation-words
+  text: >-
+    An individual truncation address at a fixed word is isolated by the
+    marker $\alpha+1$ and supports a singleton tuple atom. A profile
+    occupied at an identity-truncation address is also occupied at every
+    sufficiently high truncation at that word. Hence every nonzero relation
+    contains an atom, but every true proposition contains many disjoint
+    atoms. A truncation singleton splits when transported by its idempotent.
+- id: countable-joins
+  holds: [necessary-countable-boolean-completeness-r, forcing-possibilism]
+  fails: [boolean-completeness-t]
+  choice: uses
+  writeup: truncation-words
+  text: >-
+    Countable families have a rowwise-union profile on the union of their pins.
+    Current full rows bound the Frege numbers by the standard numeral orbit,
+    so internal countability implies external countability. A cofinal and
+    co-cofinal family of singleton truncations at the empty word has no
+    join. The singleton individual bounds the inexact ordinal benchmark by
+    the three closed thresholds, so all revised-small algebras are finite.
+    Arbitrary finite sets of isolated addresses give every finite Boolean interval.
+- id: inextensibility-and-rigid-powers
+  holds: [necessary-tame-rigidity-r, necessary-weakly-rigid-power-r, necessary-rigid-power-r]
+  fails: [weakly-inextensible-comprehension-r]
+  choice: uses
+  writeup: truncation-words
+  text: >-
+    The actual universal row is repeated at all sufficiently high
+    truncations. A tester full except for the image at one such isolated
+    truncation necessarily accepts every old proposition but misses a new
+    one, excluding any weakly inextensible coextension. For a weakly rigid
+    bound the same tests force exact images at isolated truncations. Its
+    current members thus share one idempotent fixing them all, and the
+    exact-image description holds at the identity-truncation addresses too.
+    Subsets inherit this common bound, so every later power member lifts.

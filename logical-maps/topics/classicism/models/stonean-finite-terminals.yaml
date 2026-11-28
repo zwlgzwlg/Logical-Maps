@@ -1,0 +1,121 @@
+id: stonean-finite-terminals
+name: Stone space of a complete Boolean algebra with finite classical terminals
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Two additional GPT-6 agents independently checked the construction, rigid coextensions, both powers and the ordinal bound.
+  date: '2026-11-27'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+- The Stone-terminal constructions on this map and the finite-individual upper bound on the inexact ordinals.
+source_names:
+- Codex via Kodsi, 27 Nov
+- Stone-terminal constructions
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §3.5, pp. 58–61, action semantics
+definition: >-
+  In ZFC, let $X$ be the Stone space of the complete Boolean algebra
+  $\mathcal P(\omega)\times\operatorname{RO}(2^\omega)$. The root has one
+  arrow to each of the full one-world classical terminals indexed by $X$
+  and no other nonidentity arrows. All objects share a singleton individual
+  domain. At each relational type a root value is an arbitrary current
+  extension paired with a locally constant map to the corresponding common
+  terminal carrier. Each such carrier is finite. The entrance at $x$
+  evaluates the map at $x$. Evaluate at the root. Use a single
+  propositional name chosen outside all pure closed denotations.
+meets:
+  one-individual: Each object has the same singleton individual domain.
+  extensionally-full: Each possible current tuple subset occurs, both at the root and at the leaves.
+  boundedly-many-individuals: Every individual domain has size one.
+  infinitely-many-propositions: The powerset-of-naturals and regular-open factors are both infinite.
+arguments:
+- id: rigid-coextensions
+  holds: [necessary-rigid-comprehension-r, necessary-tame-rigidity-r, necessary-rigid-rigidity-r, necessary-weakly-rigid-weak-rigidity-r]
+  choice: free
+  writeup: stonean-finite-terminals
+  text: >-
+    For a current tuple set $E$, let $O_b$ be the open set of terminals
+    where some member projects to $b$. Its closure is clopen because the
+    Boolean algebra is complete. These finitely many closures give
+    the leaf membership fibres of a relation with current extension $E$.
+    It is persistent, and every tester necessary on $E$ covers each closure
+    since its own $b$-fibre is closed. Conversely any weakly rigid
+    coextension is this relation by persistence and weak inextensibility.
+    Every leaf relation has a rigid lift by using constant leaf labels for
+    its finitely many tuples; this gives weak inextensibility of both
+    rigidity predicates. All terminal relations are rigid.
+- id: finite-terminal-powers
+  holds: [necessary-rigid-power-r, necessary-weakly-rigid-power-r]
+  choice: free
+  writeup: stonean-finite-terminals
+  text: >-
+    For a rigid bound with current row $E$ and a terminal subrelation $D$
+    at $x$, the finitely many opens $O_b$ for $b\in D$ simultaneously
+    contain a dense subset of the clopen neighborhood
+    $\bigcap_{b\in D}\overline{O_b}$ of $x$. There a finite union of
+    haecceities of members of $E$ projects to exactly $D$. Any tester
+    necessary on the current subrelations therefore accepts $D$ throughout
+    that neighborhood, its $D$-fibre being closed. The empty subrelation
+    lifts by bottom.
+- id: atoms
+  holds: [necessary-atoms-are-strong-atoms-r, necessary-self-atomicity-r, necessary-strong-actuality]
+  fails: [atomicity-t, self-atoms-are-atoms-t]
+  choice: free
+  writeup: stonean-finite-terminals
+  text: >-
+    The nonzero interval confined to the regular open factor is atomless.
+    An atom is a single current tuple or a singleton tuple on an isolated
+    leaf, both strong. The root-only truth is an actual strong atom.
+    Every occupied relation contains a current-only singleton or a leaf-only
+    singleton tuple on a nonempty clopen fibre; the latter is an atom
+    wherever instantiated. A leaf-only truth on the atomless factor is a
+    self-atom that splits at the root.
+- id: complete-order-and-choice
+  holds: [necessary-boolean-completeness-r, modal-well-ordering-r, necessary-barcan-r, necessary-truths-are-nd-necessary]
+  fails: [pure-b-r, gallin-extensional-comprehension-r]
+  choice: uses
+  writeup: stonean-finite-terminals
+  text: >-
+    The root relation algebra is a product of complete Boolean algebras,
+    one power set and one Stone factor per terminal tuple. Choose separate
+    well-orders of the root and finite terminal domains, using a constant
+    terminal table. The entrances are onto by constant sections. Every root
+    truth is ND-necessary using the current-only true proposition; terminal
+    truths are necessary. The possible loss of some true proposition is
+    actual but impossible at a terminal, refuting pure B. A current row
+    distinguishing top from the proposition false only at the root cannot
+    persist together with its complement, since the two become identical at
+    the terminals. This refutes Gallin comprehension.
+- id: mathematical-possibilism
+  holds: [forcing-possibilism]
+  choice: uses
+  writeup: stonean-finite-terminals
+  text: >-
+    Ordinal-type entities with one extensional order/field table at the
+    root and another shared table at the singleton terminals form a finite
+    closure test. A rigid subfamily has finite current extension and equals
+    its finite haecceity union, so its limit again uses the same terminal
+    table everywhere. Thus the inexact ordinal benchmark is finite. Inside
+    any infinite carrier a countably infinite current subset is power-closed
+    above that benchmark, using the full current graphs for finite powers.
+    Each revised-small complete Boolean algebra is finite and is represented
+    on a finite union of isolated points from the powerset component.
+- id: finite-terminal-sorts
+  holds: [necessity-of-arithmetic, necessity-of-second-order-analysis, axiom-of-infinity-t, independence-signature-r]
+  fails: [analytic-necessitism, necessary-potential-infinity-t, potential-infinity-e, infinity-e, witnessed-possibility-r]
+  choice: uses
+  writeup: stonean-finite-terminals
+  text: >-
+    Only the root can support Peano arithmetic or a real structure at any
+    fixed type. Its current rows are full at every arity. At $t$ there
+    are continuum many propositions for a real structure and no finite
+    cardinality counts the whole type, while the two terminal propositions
+    cannot carry a real structure. Individuals are singletons everywhere.
+    The only name has no pure definition. Witnessed Possibility fails on
+    the condition that the argument equal top and the Fregean axiom fail,
+    which can only be realized at the root.

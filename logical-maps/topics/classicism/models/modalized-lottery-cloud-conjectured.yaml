@@ -1,0 +1,53 @@
+id: modalized-lottery-cloud-conjectured
+name: Modalized lottery cloud satisfies revised Mathematical Possibilism
+status: conjectured
+satisfies:
+- relational-choice-r
+- necessary-self-atomicity-r
+- necessary-rigid-comprehension-r
+- necessary-intensional-choice-r
+- necessary-barcan-r
+- axiom-of-infinity-e
+- necessary-truths-are-nd-necessary
+- forcing-possibilism
+violates:
+- non-contingency-of-ch
+- self-atoms-are-atoms-t
+- atomicity-t
+- distinctness-necessary-t
+- rigid-rigidity-r
+- rigid-power-r
+- necessary-axiom-of-infinity-t
+- necessary-potential-infinity-t
+- pure-b-r
+model_check:
+  model: modalized-lottery-cloud
+  satisfies:
+  - forcing-possibilism
+  violates: []
+certificate:
+  source_id: bacon-modalized-domains-2026
+  produced_by: Andrew Bacon and Claude Opus 5.5 (Anthropic)
+  recorded_by: OpenAI Codex, prompted by Andrew Bacon, 21 October 2026
+  checked_by: []
+  date: '2026-10-21'
+  lean: none
+sources:
+- Andrew Bacon and Claude Opus 5.5 (Anthropic), Modalized Domains on Possibility Frames, draft of 20 October
+  2026, Theorem C; Theorem 6.8 and Corollary 6.9, p. 29.
+- Andrew Bacon, Arbitrarily Large Models of Classicism with □Rigid Comprehension, Intensional Choice and Mathematical
+  Possibilism, handout supplied 19 October 2026, §§2–8, the same frame and proposition algebra with constant
+  domains, recorded until 23 October 2026 as lottery-algebra-actual-point.
+references:
+- paper: bacon-modalized-domains-2026
+  role: proof
+  locator: Theorem C; Theorem 6.8 and Corollary 6.9, p. 29
+source_names:
+- Modalized Domains (2026)
+- Large models handout
+description: The specified strong-limit lottery at its designated root, as in [[modalized-lottery-cloud]].
+notes: The lottery represents all complete Boolean algebras of size below μ. To obtain the revised verdict it
+  suffices to prove that the root inexact ordinal carrier has size below μ. Then any carrier of size at least
+  μ contains a subset of size μ, strictly larger than H and power-closed by strong limit and full current extensions.
+  The strict-propositional-smallness calculation alone does not give the ordinal bound. The proposed bound and
+  the model check are refuted by the ordinal thresholds in the base model’s write-up.

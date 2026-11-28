@@ -105,6 +105,18 @@ arguments:
     .\,y=x$, is true at the identity of $W_0$ and false at every other world, each later object having
     at least two individuals. So it is true at the evaluation point, and at the world $f_{01}$ it is not
     possible.
+- id: unbounded-finite-individuals-exclude-possibilism
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: mathematical-possibilism-in-full-action-models
+  text: >-
+    Each external finite size occurs as the size of a well-ordered
+    individual field somewhere in the chain. Thus the finite ordinal
+    thresholds are all distinct at its root. Full current rows give a
+    revised-small Cantor regular-open algebra, while every nontrivial
+    principal interval in the powerset of the outgoing arrows is atomic.
 notes: 'Every world has finitely many individuals and sees worlds with more, so Potential Infinity (type
   e) holds, necessarily, while Possible Infinity (type e) fails: Potential Infinity does not imply Possible
   Infinity at type $e$, even with □Rigid Comprehension, □Relational Choice and the boxed Axiom of Infinity

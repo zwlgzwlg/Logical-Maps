@@ -1,0 +1,69 @@
+id: split-returns-over-definable-exits
+name: Split returns through finite cardinalities over definable exits
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026
+  checked_by:
+  - A separate OpenAI Codex (GPT-6) agent checked the action profiles, signature instance, rigid powers, atom splitting and hat computation. Another agent checked the Boolean interval argument, 27 November 2026.
+  date: '2026-11-27'
+  lean: none
+sources:
+- Cian Dorr's coalesced definable root, 20 October 2026.
+- The finite auxiliary-descriptor bound of coalesced-finite-support-rigid-root, 26 November 2026.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026, the split-return construction.
+source_names:
+- Dorr 20 Oct
+- Codex via Kodsi, 26 Nov
+- Codex via Kodsi, 27 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: Appendix E, Definition E.2, pp. 80–83
+definition: >-
+  A singleton-individual root r has one arrow to a site of each positive finite
+  individual cardinality, and each such arrow has two distinct left inverses.
+  These are the generators and relations of the core category. Attach the
+  complete family of old points of coalesced-finite-support-rigid-root to r.
+  Each new relation has independent rows on outgoing core arrows and one old
+  descriptor for each reduced core path back to r. Evaluate at r in a public
+  signature with a relational constant and at most one individual constant.
+arguments:
+- id: returns-and-hats
+  holds: [possibility-plus-signature-r, actuality, truth-implies-two-hat-necessity]
+  fails: [two-hat-implies-nd-necessity, strong-actuality, atoms-are-self-atoms-t, self-atomicity-t, self-atoms-are-atoms-t]
+  choice: uses
+  writeup: split-returns-over-definable-exits
+  text: >-
+    Complete old exits provide signature Possibility+. The identity-only truth is an
+    actual atom. Every nonzero relation splits over the two return sectors after an
+    excursion. The atom supported at a single excursion is a true nonatom there;
+    the old Fregean proposition is a nontrivially split self-atom at the root.
+    Every current truth remains possible on each excursion but the actual atom
+    becomes ND-impossible there, so the atom witnesses two-hat necessity of
+    every root truth and fails ND-necessity itself.
+- id: powers
+  holds: [weakly-rigid-power-r]
+  fails: [weak-rigid-comprehension-r, barcan-t]
+  choice: uses
+  writeup: split-returns-over-definable-exits
+  text: >-
+    The auxiliary predicates bound the number of old descriptors represented in
+    any weakly rigid relation. Its current extension has exact direct images at
+    every arrow. Every subcollection has the same finite descriptor bound, and
+    its direct-image profile is rigid. Every weak subrelation at every target
+    lifts from such a subcollection. The universal current property of scalars
+    has infinite descriptor support, and the auxiliary nonmembership test also
+    refutes Barcan at t.
+- id: current-graphs-and-cardinals
+  holds: [well-ordering-r, transversal-choice-r, inextensible-comprehension-r, axiom-of-infinity-t]
+  fails: [infinity-e, countable-boolean-completeness-r, boolean-completeness-t, forcing-possibilism]
+  choice: uses
+  writeup: split-returns-over-definable-exits
+  text: >-
+    Current rows and graphs are unrestricted. The old-descriptor bits on finite
+    all-bottom Fregean models omit one countable join of pure size cells. In
+    the old algebra every infinite principal interval fails completeness by
+    renaming putative joins into one countable sublanguage. Every nonzero
+    complete principal interval of the whole product therefore has an atom,
+    excluding the small complete atomless Cantor algebra.

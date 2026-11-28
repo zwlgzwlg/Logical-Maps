@@ -88,6 +88,13 @@ conditions:
   text: >-
     The continuum hypothesis has different truth values in $V[G]$ and in $V$.
 
+- id: generic-orbit-multiplicity
+  text: >-
+    The forcing admits a ground subgroup $N$ of automorphisms acting weakly
+    homogeneously, and another ground automorphism sending the generic filter
+    outside its $N$-orbit in every generic extension. The forcing set injects
+    in the ground universe into the powerset of the ground reals.
+
 meets:
   sigma-top: This is the interpretation the definition fixes.
   finitely-many-propositions-everywhere: The root has four propositions and $C_0$ two.
@@ -105,22 +112,43 @@ meets:
 arguments:
 - id: self-atoms-and-strong-atoms
   holds:
-  - necessary-atoms-are-self-atoms-r
-  - necessary-atoms-are-strong-atoms-r
   - necessary-self-atoms-are-atoms-r
   - necessary-self-atoms-are-strong-atoms-r
-  by: Claude Fable 5.1 (Anthropic), prompted by Cian Dorr, 25 October 2026
+  - necessary-atoms-are-self-atoms-t
+  - necessary-atoms-are-strong-atoms-t
+  by: Claude Fable 5.1 (Anthropic), prompted by Cian Dorr, 25 October 2026; corrected by OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
   date: '2026-10-25'
   choice: free
-  text: The root sees itself and $C_0$ through one arrow each, and $C_0$ sees only itself. An entity at
-    the root of a relational type is a pair $(E,D)$ of a root extension $E$ and a definable element $D$
-    of $C_0$, with transport $D$ along the arrow to $C_0$. It is an atom iff $E$ is a singleton and $D=\bot$,
-    or $E=\varnothing$ and $D$ is a definable singleton of $C_0$; a self-atom likewise, since its transport
-    along the identity is itself and along the arrow to $C_0$ is $D$, each of which must be an atom where
-    the entity is instantiated. Each such entity is a strong atom, its two transports being an atom or
-    bottom. At $C_0$, a one-world model with full extensional domains, the atoms are the singletons, which
-    are self-atoms and strong atoms. So all four bridge principles hold at both worlds, at every type.
-
+  writeup: stitched-forcing-generic-orbits
+  text: >-
+    A root self-atom with a current instance is already an atom and must
+    have exactly that tuple and empty terminal extension. A root self-atom
+    instantiated only at the terminal has a singleton extension there. These
+    entities transport to atoms or bottom. The two terminal truth values and
+    four root truth profiles also give strongness of all propositional atoms.
+  revisions:
+  - date: '2026-11-26'
+    by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, independent mathematical reviews by two further GPT-6 agents
+    note: >-
+      The 25 October argument also asserted that all higher-type root atoms
+      transport to atoms or bottom. It assumed that an atom of the algebra of
+      ground-parameter-definable subsets is a singleton. The generic-orbit
+      argument gives the opposite verdict in the recorded forcing instances.
+      The two self-atom implications and the propositional cases still hold.
+- id: generic-orbit-atom
+  requires: [generic-orbit-multiplicity]
+  fails: [atoms-are-self-atoms-r, atoms-are-strong-atoms-r]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-26'
+  choice: uses
+  writeup: stitched-forcing-generic-orbits
+  text: >-
+    Take the root predicate with empty current row whose terminal members
+    are the small-change orbits of ground generics producing this same
+    extension. Weak homogeneity decides every ground-parameter formula about
+    the orbit name, so this definable set has no proper nonempty definable
+    subfamily. It has at least two terminal members. The root predicate is
+    therefore an atom, whereas its instantiated terminal transport splits.
 - id: rigid-comprehension
   holds: [necessary-rigid-comprehension-r]
   by: Neil Barton and Zachary Goodsell; in the map's terms by Claude Fable 5.1 (Anthropic), prompted by

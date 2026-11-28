@@ -392,11 +392,9 @@ permutations.
 
 1. **Choice.** Logical Necessity uses choice in the metatheory, in choosing the witnesses
    $J_\alpha$, and so do the lifts in BF and Rigid Power.
-2. **What is left open.** Transversal holds in the finite model and is open here. The finite
-   argument breaks in two places:
-   - It takes least supports, which need not exist for pinning sets of size $\kappa$.
-   - It relabels an arrow fixing the pinning set into one that leaves the entity unchanged. The
-     monoid coordinate blocks that step. For Inextensible Comprehension, which had the same
-     obstacle, §10 avoids it by making the witness empty once the monoid coordinate leaves $1_K$.
+2. **Transversal.** Transversal holds necessarily in all four variants. Taking the
+   union over all supporting sets gives a canonical representative even when there is
+   no least infinite support. Its rows can be empty off the identity monoid coordinate.
+   [Proof using intersections of two supports](transversals-from-intersecting-supports.html)
 3. **Source.** Astra's note also gives the general criterion: with any monoid factor $K$, BF holds
    iff $K$ is right cancellative. The map records the two instances above.

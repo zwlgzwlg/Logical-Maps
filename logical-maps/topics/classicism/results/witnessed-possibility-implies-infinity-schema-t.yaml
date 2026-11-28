@@ -1,0 +1,37 @@
+id: witnessed-possibility-implies-infinity-schema-t
+premises:
+- witnessed-possibility-r
+conclusion: infinity-t
+status: proved
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 26 November 2026
+  checked_by:
+  - Two other OpenAI Codex (GPT-6) agents, prompted by Daniel Kodsi, independently checked the external rank induction and the counting inference, 26 November 2026.
+  date: '2026-11-26'
+  lean: none
+sources:
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, proof by ordinary finite iteration of opposite-color possibility tests in the accompanying write-up, 26 November 2026.
+source_names:
+- Kodsi and Codex, 26 Nov
+references:
+- paper: bacon-dorr-classicism
+  role: background
+  locator: §2.5, n. 57, p. 38
+  note: Signature side conditions for Witnessed Possibility.
+proof: >-
+  Write $E_j^b(p)$ for the finite modal formula saying that $p$ has exactly $j$ truth-value
+  alternations from present color $b$. Induct externally on $j$. Constants give rank zero.
+  From local witnesses for both colors, Witnessed Possibility makes both exact colors possible
+  for one proposition obtained by universally closing a relational signature constant. Its
+  actual color and the opposite accessible witness give $j+1$ possible alternations. On the
+  predecessor-closed region permitting this many alternations, set the color constant and
+  opposite to a possible exact rank-$j$ point outside. All later points outside retain their
+  prior ranks. This new coloring has exact rank $j+1$ here, and complementation gives the
+  opposite color. From any point of exact rank $j$, each lower exact layer is possible.
+  These $j+1$ layers are pairwise disjoint nonzero propositions, establishing every fixed
+  instance of the Infinity Schema.
+notes: >-
+  Uses the map's standing assumption of a relational signature constant. Even Possibly Witnessed
+  Possibility permits internal finiteness at every future in [[ultraproduct-finite-binary-trees]].

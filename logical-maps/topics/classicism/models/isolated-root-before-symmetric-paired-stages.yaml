@@ -1,0 +1,59 @@
+id: isolated-root-before-symmetric-paired-stages
+name: An isolated root before the symmetric paired stages
+certificate:
+  source_id: misc
+  produced_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  recorded_by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  checked_by:
+  - Independent OpenAI Codex (GPT-6) review of the entrance and the two inherited modal separations.
+  date: '2026-11-27'
+  lean: none
+sources:
+- The symmetric integer stages of paired individuals adapt Cian Dorr's paired-points constructions.
+- OpenAI Codex (GPT-6), prompted by Daniel Kodsi, 27 November 2026.
+source_names: [Symmetric integer stages of paired individuals, Codex via Kodsi]
+references:
+- paper: bounds-of-possibility
+  role: background
+  locator: Appendix D, pp. 400–409
+definition: >-
+  Prepend an isolated-identity root to stage zero of
+  [[symmetric-integer-paired-stages]]. Take the same individuals as at
+  stage zero. A root relation has an unrestricted current row and an
+  arbitrary whole stage-zero relation as its exit coordinate. All
+  postcomposites of the entrance are indexed by old arrows. Use one
+  proposition name interpreted as top.
+arguments:
+- id: barcan-and-modal-comparisons
+  holds: [strong-actuality, truths-are-nd-necessary, necessary-barcan-r, necessary-truth-implies-five-necessity, necessary-axiom-of-infinity-e, well-ordering-r, inextensible-comprehension-r]
+  fails: [necessary-actuality, necessary-five-implies-two-hat-necessity, necessary-two-hat-implies-nd-necessity]
+  choice: uses
+  writeup: isolated-entrances-and-modal-necessities
+  text: >-
+    The entrance is onto at each sort and the Barcan Formula holds on the
+    old cone, hence at the new root too. The root-only true strong atom
+    witnesses ND-necessity of each root truth. Every old truth is 5-necessary
+    by the stage-equality and pin tests. The two original coordinate tests
+    still refute the converse modal comparisons at stage zero, where
+    atomlessness also prevents Actuality. Full current subsets provide
+    well-orders and numeral cuts at the root, and an empty exit gives an
+    inextensible representative.
+- id: finite-scalar-atom-obstruction
+  fails: [forcing-possibilism]
+  choice: free
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: finite-scalar-atoms-exclude-mathematical-possibilism
+  text: >-
+    The free current truth bit gives one atom and the old paired-stage scalar
+    factor is atomless. Mathematical Possibilism would require arbitrarily
+    many propositional atoms by representing the finite power algebras.
+- id: all-countable-joins-and-a-missing-scalar-join
+  holds: [necessary-countable-boolean-completeness-r]
+  fails: [boolean-completeness-t]
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  choice: uses
+  writeup: scalar-joins-before-symmetric-paired-stages
+  text: >-
+    A countable union of old countable pins is still a pin, so every externally countable family has its coordinatewise union. For an uncountable scalar family index source doublets by the countable ordinals. The event that a given doublet is the first one collapsed has a countable pin. A join of the even cells would have to distinguish an even first collapse from an odd first collapse beyond any prescribed countable pin, which two endomorphisms agreeing on the pin can realize. The free current rows admit this family at the new root.

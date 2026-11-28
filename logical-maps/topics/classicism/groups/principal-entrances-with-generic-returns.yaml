@@ -1,0 +1,96 @@
+id: principal-entrances-with-generic-returns
+name: Principal entrances with generic returns
+definition: >-
+  Alternate roots and ordinary sites. A root relation has its current tuple row and one independent site row for each principal entrance.
+  A site relation has its current row and a sequence of whole root entities modulo finite differences.
+  An entrance evaluates its row and keeps the whole root entity as a constant return germ.
+  A return is a generic ultrapower for the finite ideal on the naturals.
+  {{setting}} Evaluate at the initial root, starting from a countable elementary substructure with standard naturals.
+parameters:
+  setting:
+    text: The ordinary entrances, individual domain and optional forcing excursion.
+    generate: true
+    default: single
+    values:
+      single:
+        text: Use one principal entrance, natural-number individuals, and one propositional name interpreted by top.
+        label: one entrance
+      sequence:
+        text: Use countably many principal entrances and singleton individuals. The single proposition name denotes one isolated entrance address.
+        label: a sequence of entrances
+      cohen:
+        text: >-
+          Use the sequence with singleton individuals over a constructible ground. Also give each root relation a name for its row in the extension adding the ground's second uncountable ordinal many Cohen reals.
+          The forcing entrance evaluates that name and retains the ground entity as its literal return. The single proposition name denotes one ordinary entrance address.
+        label: a sequence and Cohen forcing
+arguments:
+- id: complete-choice-root
+  holds: [functional-choice-r, modal-well-ordering-r, boolean-completeness-r, weak-rigid-comprehension-r, necessary-weakly-inextensible-comprehension-r, rigid-power-r]
+  fails: [tame-rigidity-r, inextensible-comprehension-r, barcan-t]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: principal-entrances-with-generic-returns
+  text: >-
+    Coordinatewise unions give all local joins. Entrance tags distinguish the inputs of a ground selector.
+    For a current row E, the relation with entrance rows the images of E is weakly rigid.
+    Every full excursion beginning at a root is elementary on old root parameters or returns them identically.
+    At an ordinary site a tester can omit a moving tuple at the low return while necessarily accepting each present tuple with a constant return tag.
+    Hence every inextensible root relation has internally finite extension. The finite-bound lemma supplies Rigid Power, but an infinite weakly rigid relation fails to be rigid.
+    An ordinary site has scalars with nonconstant returns outside the entrance image.
+- id: atoms-and-scope
+  holds: [self-atoms-are-atoms-r, necessary-truth-implies-two-hat-necessity, necessity-of-arithmetic]
+  fails: [strong-actuality, self-atomicity-t, self-atoms-are-strong-atoms-t, necessary-self-atoms-are-atoms-t, necessary-atomicity-t, necessary-countable-boolean-completeness-r, two-hat-implies-nd-necessity, arithmetic-necessitism, analytic-necessitism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: principal-entrances-with-generic-returns
+  text: >-
+    Every root self-atom is a current-only singleton. Its nonzero constant germ splits at an ordinary site.
+    A scalar confined to one entrance is an atom yet splits where instantiated. Low germs split on infinite subsets,
+    and the scalar family indexed by the blocks of a partition of the naturals has no join modulo finite differences.
+    The current root bit guards two-hat necessity because a current-only site guard cannot recur after departure.
+    The infinite numerical carrier and the number part of any real structure cannot be rigid. Elementary paths and forcing preserve arithmetic.
+- id: ordinary-stages
+  when: {setting: [single, sequence]}
+  holds: [atomicity-r, necessity-of-second-order-analysis]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: principal-entrances-with-generic-returns
+  text: >-
+    All root algebras are products of full internal powersets, with singleton observations below every nonempty element.
+    At both modes the full current rows interpret analysis in the underlying set model, and completed excursions preserve its sentences.
+- id: single-entrance
+  when: {setting: single}
+  holds: [necessary-axiom-of-infinity-e, possible-infinity-t]
+  fails: [axiom-of-infinity-t, forcing-possibilism]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: principal-entrances-with-generic-returns
+  text: >-
+    The two scalar bits make a four-element root algebra. It cannot have an interval isomorphic to the eight-element algebra, which is small.
+    An ordinary site's scalar algebra is infinite and the individuals are the respective set model's naturals throughout.
+- id: sequence-of-entrances
+  when: {setting: [sequence, cohen]}
+  holds: [forcing-possibilism, necessary-axiom-of-infinity-t, independence-signature-r]
+  fails: [potential-infinity-e, possibly-witnessed-possibility-r]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: principal-entrances-with-generic-returns
+  text: >-
+    Singleton individuals bound the ordinal benchmark by finitely many tables. Current graphs supply a countably infinite power-closed subset of every infinite carrier.
+    All small algebras are therefore finite, and each occurs below a finite union of ordinary entrance atoms.
+    The named address moves under a pure symmetry and is never bottom.
+- id: forcing-excursion
+  when: {setting: cohen}
+  fails: [non-contingency-of-ch, necessity-of-analysis, atomicity-t]
+  choice: uses
+  by: OpenAI Codex (GPT-6), prompted by Daniel Kodsi
+  date: '2026-11-27'
+  writeup: principal-entrances-with-generic-returns
+  text: >-
+    The Cohen coordinate gives an atomless scalar interval. Both the ground and the generic extension have real structures at t.
+    The ground satisfies CH and every real is constructible. The extension has at least the second uncountable cardinal many distinct Cohen reals.
